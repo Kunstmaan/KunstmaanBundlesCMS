@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -15,7 +16,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class KunstmaanMediaExtension extends Extension implements PrependExtensionInterface
 {
-
     /**
      * Loads configuration
      *
@@ -25,7 +25,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
@@ -61,15 +61,14 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
     public function prepend(ContainerBuilder $container)
     {
-
         if (!$container->hasParameter('kunstmaan_media.upload_dir')) {
             $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
         }
 
         $twigConfig = array();
-        $twigConfig['globals']['upload_dir']          = $container->getParameter('kunstmaan_media.upload_dir');
+        $twigConfig['globals']['upload_dir'] = $container->getParameter('kunstmaan_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
-        $twigConfig['globals']['mediamanager']        = "@kunstmaan_media.media_manager";
+        $twigConfig['globals']['mediamanager'] = '@kunstmaan_media.media_manager';
         $container->prependExtensionConfig('twig', $twigConfig);
 
         $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));

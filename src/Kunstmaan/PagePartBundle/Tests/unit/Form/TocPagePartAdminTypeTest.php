@@ -10,7 +10,6 @@ use Kunstmaan\PagePartBundle\Tests\unit\Form\PagePartAdminTypeTestCase;
  */
 class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
 {
-
     /**
      * @var TocPagePartAdminType
      */
@@ -35,6 +34,6 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TocPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\TocPagePart');
     }
 }

@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * Class DomainConfiguration
  *
  * Default (single domain) configuration handling
- *
- * @package Kunstmaan\AdminBundle\Helper
  */
 class DomainConfiguration implements DomainConfigurationInterface
 {
@@ -127,8 +125,6 @@ class DomainConfiguration implements DomainConfigurationInterface
 
     /**
      * @param string|null $host
-     *
-     * @return null
      */
     public function getRootNode($host = null)
     {
@@ -169,8 +165,6 @@ class DomainConfiguration implements DomainConfigurationInterface
 
     /**
      * @param string|null $host
-     *
-     * @return null
      */
     public function getFullHost($host = null)
     {
@@ -179,17 +173,12 @@ class DomainConfiguration implements DomainConfigurationInterface
 
     /**
      * @param int $id
-     *
-     * @return null
      */
     public function getFullHostById($id)
     {
         return null;
     }
 
-    /**
-     * @return null
-     */
     public function getHostSwitched()
     {
         return null;
@@ -197,12 +186,9 @@ class DomainConfiguration implements DomainConfigurationInterface
 
     /**
      * @param string|null $host
-     *
-     * @return null
      */
     public function getHostBaseUrl($host = null)
     {
         return null;
     }
-
 }

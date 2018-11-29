@@ -30,7 +30,7 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     public function testSetGetThanks()
     {
         $object = $this->object;
-        $value = "thanks";
+        $value = 'thanks';
         $object->setThanks($value);
         $this->assertEquals($value, $object->getThanks());
     }
@@ -38,7 +38,7 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     public function testSetGetSubject()
     {
         $object = $this->object;
-        $value = "some subject";
+        $value = 'some subject';
         $object->setSubject($value);
         $this->assertEquals($value, $object->getSubject());
     }
@@ -46,7 +46,7 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     public function testSetGetToEmail()
     {
         $object = $this->object;
-        $value = "example@example.com";
+        $value = 'example@example.com';
         $object->setToEmail($value);
         $this->assertEquals($value, $object->getToEmail());
     }
@@ -54,7 +54,7 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     public function testSetGetFromEmail()
     {
         $object = $this->object;
-        $value = "example@example.com";
+        $value = 'example@example.com';
         $object->setFromEmail($value);
         $this->assertEquals($value, $object->getFromEmail());
     }

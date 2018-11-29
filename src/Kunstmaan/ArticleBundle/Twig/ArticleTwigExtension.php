@@ -15,7 +15,7 @@ use Twig_Extension;
 class ArticleTwigExtension extends Twig_Extension
 {
     /**
-     * @var EntityManagerInterface $em
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -63,7 +63,6 @@ class ArticleTwigExtension extends Twig_Extension
         );
     }
 
-
     /**
      * Get tags array for view.
      *
@@ -93,6 +92,7 @@ class ArticleTwigExtension extends Twig_Extension
      *
      * @param Request $request
      * @param string  $className
+     *
      * @return array
      */
     public function getCategories(Request $request, $className)
@@ -123,6 +123,7 @@ class ArticleTwigExtension extends Twig_Extension
     public function getArticleTagRouterPath($slug, $tag, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $routeName = sprintf('_slug_tag_%s', $locale);
+
         return $this->getArticleRouterPath($routeName, 'tag', $slug, $tag, $locale, $parameters, $referenceType);
     }
 
@@ -138,6 +139,7 @@ class ArticleTwigExtension extends Twig_Extension
     public function getArticleCategoryRouterPath($slug, $category, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $routeName = sprintf('_slug_category_%s', $locale);
+
         return $this->getArticleRouterPath($routeName, 'category', $slug, $category, $locale, $parameters, $referenceType);
     }
 
@@ -174,12 +176,14 @@ class ArticleTwigExtension extends Twig_Extension
         if (!isset($parameters['_locale'])) {
             $parameters['_locale'] = $locale;
         }
+
         return $this->router->generate($routeName, $parameters, $referenceType);
     }
 
     /**
      * @param string $type
      * @param string $locale
+     *
      * @return bool
      */
     protected function articleRouteExists($type, $locale)

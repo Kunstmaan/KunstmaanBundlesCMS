@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -10,7 +11,6 @@ use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
  */
 class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Media
      */
@@ -23,7 +23,7 @@ class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->media  = new Media();
+        $this->media = new Media();
         $this->object = new RemoteVideoHelper($this->media);
     }
 

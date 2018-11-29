@@ -9,5 +9,4 @@ use Kunstmaan\VotingBundle\Repository\AbstractVoteRepository;
  */
 class FacebookLikeRepository extends AbstractVoteRepository
 {
-
 }

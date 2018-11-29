@@ -19,7 +19,6 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
         $this->domainConfiguration = $domainConfiguration;
     }
 
-
     /**
      * Get Twig functions defined in this extension.
      *
@@ -47,14 +46,14 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
     public function renderWidget(Twig_Environment $env, $route, array $parameters = [])
     {
         $template = $env->loadTemplate(
-            "@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig"
+            '@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig'
         );
 
         return $template->render(
             \array_merge(
                 $parameters, [
                     'hosts' => $this->getAdminDomainHosts(),
-                    'route' => $route
+                    'route' => $route,
                 ]
             )
         );
@@ -94,6 +93,6 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
     {
         return $this->domainConfiguration->getHosts();
     }
-    
+
 }
 

@@ -21,7 +21,7 @@ class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new EmailFormSubmissionField;
+        $this->object = new EmailFormSubmissionField();
     }
 
     public function testSetGetValue()

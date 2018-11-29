@@ -21,7 +21,7 @@ class SlugSecurityListener
      * @var EntityManager
      */
     protected $em;
-    
+
     /**
      * @var NodeMenu
      */
@@ -37,9 +37,9 @@ class SlugSecurityListener
         AuthorizationCheckerInterface $authorizationChecker,
         NodeMenu $nodeMenu
     ) {
-        $this->em                   = $entityManager;
+        $this->em = $entityManager;
         $this->authorizationChecker = $authorizationChecker;
-        $this->nodeMenu             = $nodeMenu;
+        $this->nodeMenu = $nodeMenu;
     }
 
     /**
@@ -52,9 +52,9 @@ class SlugSecurityListener
      */
     public function onSlugSecurityEvent(SlugSecurityEvent $event)
     {
-        $node            = $event->getNode();
+        $node = $event->getNode();
         $nodeTranslation = $event->getNodeTranslation();
-        $request         = $event->getRequest();
+        $request = $event->getRequest();
 
         if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedException(
@@ -67,12 +67,12 @@ class SlugSecurityListener
         if (!$isPreview && !$nodeTranslation->isOnline()) {
             throw new NotFoundHttpException('The requested page is not online');
         }
-        
+
         $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($nodeTranslation->getLang());
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($isPreview);
-        
+
         $request->attributes->set('_nodeMenu', $nodeMenu);
     }
 }

@@ -34,7 +34,7 @@ class IconFontController extends Controller
         $loader->setData($loaderData);
 
         return array(
-            'loader' => $loader
+            'loader' => $loader,
         );
     }
 }

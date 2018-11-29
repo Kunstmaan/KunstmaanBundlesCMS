@@ -14,7 +14,7 @@ class TagCategoryRouter extends SlugRouter
      */
     public function getRouteCollection()
     {
-        if (! is_null($this->routeCollection)) {
+        if (!is_null($this->routeCollection)) {
             return $this->routeCollection;
         }
         $this->routeCollection = new RouteCollection();
@@ -38,11 +38,11 @@ class TagCategoryRouter extends SlugRouter
                 );
 
                 foreach ($routePathParts as $routeName => $routePart) {
-                    $slugParameters  = $baseSlugParameters;
+                    $slugParameters = $baseSlugParameters;
                     $slugParameters['path'] = '/{_locale}/{url}' . $routePart;
 
                     $slugPreviewParameters = $baseSlugPreviewParameters;
-                    $slugPreviewParameters['path'] = '/{_locale}/admin/preview/{url}' . $routePart;;
+                    $slugPreviewParameters['path'] = '/{_locale}/admin/preview/{url}' . $routePart;
 
                     $routeName .= '_' . $locale;
                     $this->addRoute($routeName . '_preview', $slugPreviewParameters);
@@ -53,7 +53,7 @@ class TagCategoryRouter extends SlugRouter
             $categoryTrans = $translator->trans('article_overview_page.route.category');
             $tagTrans = $translator->trans('article_overview_page.route.tag');
 
-            $slugParameters  = $baseSlugParameters;
+            $slugParameters = $baseSlugParameters;
             $slugPreviewParameters = $baseSlugPreviewParameters;
 
             $routePathParts = array(

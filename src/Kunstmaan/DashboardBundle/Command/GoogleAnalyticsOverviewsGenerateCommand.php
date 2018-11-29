@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,10 +69,11 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
         }
 
         // get params
-        $configId  = false;
+        $configId = false;
         $segmentId = false;
+
         try {
-            $configId  = $input->getOption('config');
+            $configId = $input->getOption('config');
             $segmentId = $input->getOption('segment');
         } catch (\Exception $e) {
         }
@@ -91,9 +93,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
         } catch (\InvalidArgumentException $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
         }
-
     }
-
 
     /**
      * Get all overviews of a segment
@@ -108,7 +108,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
     {
         /** @var AnalyticsSegmentRepository $segmentRepository */
         $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $segment           = $segmentRepository->find($segmentId);
+        $segment = $segmentRepository->find($segmentId);
 
         if (!$segment) {
             throw new \InvalidArgumentException('Unknown segment ID');
@@ -129,8 +129,8 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      */
     private function generateOverviewsOfConfig($configId)
     {
-        $configRepository   = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $segmentRepository  = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
         // get specified config
         $config = $configRepository->find($configId);
@@ -158,10 +158,10 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      */
     private function generateAllOverviews()
     {
-        $configRepository   = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-        $segmentRepository  = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $configs            = $configRepository->findAll();
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $configs = $configRepository->findAll();
 
         foreach ($configs as $config) {
             // add overviews if none exist yet

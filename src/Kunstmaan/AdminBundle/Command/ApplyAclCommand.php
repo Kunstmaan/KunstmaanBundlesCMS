@@ -20,7 +20,6 @@ use Kunstmaan\AdminBundle\Service\AclManager;
  */
 class ApplyAclCommand extends ContainerAwareCommand
 {
-
     /**
      * @var EntityManager
      */
@@ -60,7 +59,7 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         $this->setName('kuma:acl:apply')
              ->setDescription('Apply ACL changeset.')
-             ->setHelp("The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.");
+             ->setHelp('The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.');
     }
 
     /**
@@ -92,7 +91,7 @@ class ApplyAclCommand extends ContainerAwareCommand
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function isRunning()
     {
@@ -111,5 +110,4 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         return false;
     }
-
 }

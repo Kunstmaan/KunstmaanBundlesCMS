@@ -27,7 +27,7 @@ class RawHTMLPagePartTest extends PHPUnit_Framework_TestCase
 
     public function testToString()
     {
-        $this->assertEquals("RawHTMLPagePart " . htmlentities($this->object->getContent()), $this->object->__toString());
+        $this->assertEquals('RawHTMLPagePart ' . htmlentities($this->object->getContent()), $this->object->__toString());
     }
 
     public function testGetDefaultView()
@@ -37,8 +37,8 @@ class RawHTMLPagePartTest extends PHPUnit_Framework_TestCase
 
     public function testSetGetContent()
     {
-        $this->object->setContent("tèst content with s3ç!àL");
-        $this->assertEquals($this->object->getContent(), "tèst content with s3ç!àL");
+        $this->object->setContent('tèst content with s3ç!àL');
+        $this->assertEquals($this->object->getContent(), 'tèst content with s3ç!àL');
     }
 
     public function testGetDefaultAdminType()

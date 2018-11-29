@@ -22,7 +22,6 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
-     *
      */
     protected $metaTitle;
 
@@ -30,7 +29,6 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
-     *
      */
     protected $metaDescription;
 
@@ -119,28 +117,28 @@ class Seo extends AbstractEntity
     protected $ogArticleSection;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_title", type="string", length=255, nullable=true)
      */
     protected $twitterTitle;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_description", type="text", nullable=true)
      */
     protected $twitterDescription;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_site", type="string", length=255, nullable=true)
      */
     protected $twitterSite;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_creator", type="string", length=255, nullable=true)
      */

@@ -119,7 +119,7 @@ class EmailPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:EmailPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:EmailPagePart:view.html.twig';
     }
 
     /**
@@ -132,7 +132,7 @@ class EmailPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $efsf = new EmailFormSubmissionField();
-        $efsf->setFieldName("field_" . $this->getUniqueId());
+        $efsf->setFieldName('field_' . $this->getUniqueId());
         $efsf->setLabel($this->getLabel());
         $efsf->setSequence($sequence);
 
@@ -156,9 +156,9 @@ class EmailPagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
             EmailFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);

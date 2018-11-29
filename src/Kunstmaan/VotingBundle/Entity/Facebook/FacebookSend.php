@@ -15,5 +15,4 @@ use Kunstmaan\VotingBundle\Entity\AbstractVote;
  */
 class FacebookSend extends AbstractVote
 {
-
 }

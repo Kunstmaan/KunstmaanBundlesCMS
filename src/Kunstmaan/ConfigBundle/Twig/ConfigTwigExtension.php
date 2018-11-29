@@ -4,7 +4,6 @@ namespace Kunstmaan\ConfigBundle\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
 
 /**
@@ -13,12 +12,12 @@ use Twig_Extension;
 class ConfigTwigExtension extends Twig_Extension
 {
     /**
-     * @var EntityManagerInterface $em
+     * @var EntityManagerInterface
      */
     private $em;
 
     /**
-     * @var array $configuration
+     * @var array
      */
     private $configuration;
 
@@ -62,7 +61,7 @@ class ConfigTwigExtension extends Twig_Extension
         }
 
         foreach ($this->configuration['entities'] as $class) {
-            $entity = new $class;
+            $entity = new $class();
 
             if ($entity->getInternalName() == $internalName) {
                 $repo = $this->em->getRepository($class);

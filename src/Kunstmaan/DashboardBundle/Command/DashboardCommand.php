@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
@@ -54,9 +55,8 @@ class DashboardCommand extends ContainerAwareCommand
         /** @var DashboardWidget[] $widgets */
         $widgets = $this->widgetManager->getWidgets();
         foreach ($widgets as $widget) {
-            /** @var DashboardWidget $widget */
+            /* @var DashboardWidget $widget */
             $widget->getCommand()->execute($input, $output);
         }
     }
-
 }

@@ -21,49 +21,49 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testGetHostWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('multilangdomain.tld', $object->getHost());
     }
 
     public function testGetHostWithSingleLanguage()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('singlelangdomain.tld', $object->getHost());
     }
 
     public function testGetHostWithAlias()
     {
         $request = $this->getAliasedRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('singlelangdomain.tld', $object->getHost());
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::__construct
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
      */
     public function testGetHostWithOverrideOnFrontend()
     {
         $request = $this->getRequestWithOverride('/frontend-uri');
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('multilangdomain.tld', $object->getHost());
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::__construct
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
      */
     public function testGetHostWithOverrideOnBackend()
     {
         $request = $this->getRequestWithOverride('/nl/admin/backend-uri');
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('singlelangdomain.tld', $object->getHost());
     }
 
@@ -84,98 +84,98 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testGetHosts()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('multilangdomain.tld', 'singlelangdomain.tld'), $object->getHosts());
     }
 
     public function testGetDefaultLocale()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('en_GB', $object->getDefaultLocale());
     }
 
     public function testGetDefaultLocaleWithUnknownDomain()
     {
         $request = $this->getUnknownDomainRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('en', $object->getDefaultLocale());
     }
 
     public function testGetExtraDataWithoutDataSet()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array(), $object->getExtraData());
     }
 
     public function testGetExtraDataWithDataSet()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('foo' => 'bar'), $object->getExtraData());
     }
 
     public function testGetRootNode()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals($this->node, $object->getRootNode());
     }
 
     public function testGetRootNodeWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertNull($object->getRootNode());
     }
 
     public function testIsMultiDomainHostWithSingleLanguage()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertTrue($object->isMultiDomainHost());
     }
 
     public function testIsMultiDomainHostWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertTrue($object->isMultiDomainHost());
     }
 
     public function testIsMultiDomainHostWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertFalse($object->isMultiDomainHost());
     }
 
     public function testIsMultiLanguageWithSingleLanguage()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertFalse($object->isMultiLanguage());
     }
 
     public function testIsMultiLanguageWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertTrue($object->isMultiLanguage());
     }
 
     public function testIsMultiLanguageWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertFalse($object->isMultiLanguage());
     }
 
     public function testGetFrontendLocalesWithSingleLanguage()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('en'), $object->getFrontendLocales());
     }
 
@@ -243,35 +243,35 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testGetFrontendLocalesWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('nl', 'fr', 'en'), $object->getFrontendLocales());
     }
 
     public function testGetFrontendLocalesWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('en'), $object->getFrontendLocales());
     }
 
     public function testGetBackendLocalesWithSingleLanguage()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('en_GB'), $object->getBackendLocales());
     }
 
     public function testGetBackendLocalesWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('nl_BE', 'fr_BE', 'en_GB'), $object->getBackendLocales());
     }
 
     public function testGetBackendLocalesWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals(array('en'), $object->getBackendLocales());
     }
 
@@ -286,7 +286,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('doctrine.orm.entity_manager', 1, $this->getEntityManager()),
-            array('kunstmaan_admin.adminroute.helper', 1, $this->getAdminRouteHelper())
+            array('kunstmaan_admin.adminroute.helper', 1, $this->getAdminRouteHelper()),
         );
 
         $container
@@ -426,7 +426,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
             array('multilanguage', false),
             array('defaultlocale', 'en'),
             array('requiredlocales', 'en'),
-            array('kunstmaan_multi_domain.hosts', $hostMap)
+            array('kunstmaan_multi_domain.hosts', $hostMap),
         );
 
         $object = new DomainConfiguration($this->getContainer($map, $request));

@@ -5,7 +5,9 @@ namespace Kunstmaan\TranslatorBundle\Model\Export;
 class ExportCommand
 {
     private $domains = false;
+
     private $format = 'yml';
+
     private $locales = false;
 
     public function getDomains()

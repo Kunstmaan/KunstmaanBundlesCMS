@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
-
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Symfony\Component\Filesystem\Filesystem;

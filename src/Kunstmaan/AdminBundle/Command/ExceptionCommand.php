@@ -46,13 +46,13 @@ class ExceptionCommand extends ContainerAwareCommand
             ->setDescription('Remove resolved exceptions based on days.')
             ->setDefinition(
                 [
-                    new InputArgument('days', InputArgument::OPTIONAL, 'Days', 7)
+                    new InputArgument('days', InputArgument::OPTIONAL, 'Days', 7),
                 ]
             );
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -62,7 +62,7 @@ class ExceptionCommand extends ContainerAwareCommand
         }
 
         $days = (int) $input->getArgument('days');
-        if ( $days <= 0 ) {
+        if ($days <= 0) {
             $output->writeln('<bg=red;options=bold>Days number must be higher than 0</>');
         }
 
@@ -73,10 +73,10 @@ class ExceptionCommand extends ContainerAwareCommand
 
         $cp = 0;
         $exceptions = $this->em->getRepository(Exception::class)->findAllHigherThanDays($convertDate);
-        if ( $exceptions ) {
-            foreach ( $exceptions as $exception ) {
+        if ($exceptions) {
+            foreach ($exceptions as $exception) {
                 $this->em->remove($exception);
-                $cp++;
+                ++$cp;
             }
             $this->em->flush();
         }

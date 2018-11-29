@@ -3,18 +3,15 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -31,6 +28,7 @@ class GroupsController extends BaseSettingsController
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function listAction(Request $request)
@@ -40,7 +38,7 @@ class GroupsController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->container->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator($em));
+        $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -56,6 +54,7 @@ class GroupsController extends BaseSettingsController
      * @Template("@KunstmaanUserManagement/Groups/add.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function addAction(Request $request)
@@ -76,7 +75,7 @@ class GroupsController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->container->get('translator')->trans('kuma_user.group.add.flash.success', array(
-                        '%groupname%' => $group->getName()
+                        '%groupname%' => $group->getName(),
                     ))
                 );
 
@@ -99,6 +98,7 @@ class GroupsController extends BaseSettingsController
      * @Template("@KunstmaanUserManagement/Groups/edit.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function editAction(Request $request, $id)
@@ -120,7 +120,7 @@ class GroupsController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->container->get('translator')->trans('kuma_user.group.edit.flash.success', array(
-                        '%groupname%' => $group->getName()
+                        '%groupname%' => $group->getName(),
                     ))
                 );
 
@@ -129,8 +129,8 @@ class GroupsController extends BaseSettingsController
         }
 
         return array(
-            'form'  => $form->createView(),
-            'group' => $group
+            'form' => $form->createView(),
+            'group' => $group,
         );
     }
 
@@ -143,6 +143,7 @@ class GroupsController extends BaseSettingsController
      * @Method({"GET", "POST"})
      *
      * @throws AccessDeniedException
+     *
      * @return RedirectResponse
      */
     public function deleteAction($id)
@@ -159,12 +160,11 @@ class GroupsController extends BaseSettingsController
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->container->get('translator')->trans('kuma_user.group.delete.flash.success', array(
-                    '%groupname%' => $group->getName()
+                    '%groupname%' => $group->getName(),
                 ))
             );
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
     }
-
 }

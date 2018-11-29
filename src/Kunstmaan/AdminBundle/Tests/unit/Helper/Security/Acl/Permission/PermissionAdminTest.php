@@ -34,7 +34,7 @@ use Kunstmaan\AdminBundle\Tests\Entity\TestEntity;
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var PermissionAdmin $object
+     * @var PermissionAdmin
      */
     protected $object;
 

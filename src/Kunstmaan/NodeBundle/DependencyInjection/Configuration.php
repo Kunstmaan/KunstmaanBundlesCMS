@@ -14,14 +14,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $root = $treeBuilder->root('kunstmaan_node');
 
-        /** @var ArrayNodeDefinition $pages */
+        /* @var ArrayNodeDefinition $pages */
         $root
             ->children()
                 ->arrayNode('pages')
@@ -37,7 +37,9 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('allowed_children')
                                 ->prototype('array')
                                     ->beforeNormalization()
-                                        ->ifString()->then(function ($v) { return ["class" => $v]; })
+                                        ->ifString()->then(function ($v) {
+                                            return ['class' => $v];
+                                        })
                                     ->end()
                                     ->children()
                                         ->scalarNode('class')->isRequired()->end()

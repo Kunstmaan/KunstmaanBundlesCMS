@@ -23,21 +23,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Translation\TranslatorInterface;
 
-
 class TranslatorController extends AdminListController
 {
-
     /**
      * @var AbstractAdminListConfigurator
      */
     private $adminListConfigurator;
-
 
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
      * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -45,7 +43,7 @@ class TranslatorController extends AdminListController
         $configurator = $this->getAdminListConfigurator();
 
         /* @var AdminList $adminList */
-        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createList($configurator);
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
         $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
@@ -66,9 +64,10 @@ class TranslatorController extends AdminListController
 
     /**
      * @param Request $request
-     * @param string $keyword
-     * @param string $domain
-     * @param string $locale
+     * @param string                                    $keyword
+     * @param string                                    $domain
+     * @param string                                    $locale
+     *
      * @return array|RedirectResponse
      * @throws \Doctrine\ORM\OptimisticLockException
      *
@@ -135,14 +134,15 @@ class TranslatorController extends AdminListController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param $id
+     *
      * @throws \InvalidArgumentException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
-
 
         $translations = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findBy(['translationId' => $id]);
         if (count($translations) < 1) {
@@ -261,6 +261,7 @@ class TranslatorController extends AdminListController
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws NotFoundHttpException
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete")
@@ -321,7 +322,7 @@ class TranslatorController extends AdminListController
         $id = isset($values['pk']) ? (int)$values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
         /**
-         * @var TranslatorInterface $translator
+         * @var TranslatorInterface
          */
         $translator = $this->container->get('translator');
 

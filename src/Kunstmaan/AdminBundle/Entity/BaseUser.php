@@ -131,7 +131,7 @@ abstract class BaseUser extends AbstractUser
     /**
      * is passwordChanged
      *
-     * @return boolean
+     * @return bool
      */
     public function isPasswordChanged()
     {
@@ -141,7 +141,7 @@ abstract class BaseUser extends AbstractUser
     /**
      * Set passwordChanged
      *
-     * @param boolean $passwordChanged
+     * @param bool $passwordChanged
      *
      * @return User
      */
@@ -177,18 +177,18 @@ abstract class BaseUser extends AbstractUser
         $metadata->addPropertyConstraints(
             'plainPassword',
             array(
-                new NotBlank(array("groups" => array("Registration"))),
-                new PasswordRestrictions(array("groups" => array("Registration","Default"))),
+                new NotBlank(array('groups' => array('Registration'))),
+                new PasswordRestrictions(array('groups' => array('Registration', 'Default'))),
             )
         );
         $metadata->addPropertyConstraint('email', new NotBlank());
         $metadata->addPropertyConstraint('email', new Email());
         $metadata->addConstraint(new UniqueEntity(array(
-            'fields'  => 'username',
+            'fields' => 'username',
             'message' => 'errors.user.loginexists',
         )));
         $metadata->addConstraint(new UniqueEntity(array(
-            'fields'  => 'email',
+            'fields' => 'email',
             'message' => 'errors.user.emailexists',
         )));
     }
@@ -207,5 +207,4 @@ abstract class BaseUser extends AbstractUser
     {
         return $this->isEnabled();
     }
-
 }

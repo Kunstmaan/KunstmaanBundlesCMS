@@ -42,7 +42,7 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     public function testSetGetFieldName()
     {
         $object = $this->object;
-        $fieldName = "someFieldName";
+        $fieldName = 'someFieldName';
         $object->setFieldName($fieldName);
         $this->assertEquals($fieldName, $object->getFieldName());
     }
@@ -50,7 +50,7 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $label = "Some label";
+        $label = 'Some label';
         $object->setLabel($label);
         $this->assertEquals($label, $object->getLabel());
     }

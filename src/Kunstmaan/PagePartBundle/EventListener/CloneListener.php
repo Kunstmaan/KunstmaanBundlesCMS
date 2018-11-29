@@ -15,7 +15,6 @@ use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
  */
 class CloneListener
 {
-
     /**
      * @var EntityManager|EntityManagerInterface
      */
@@ -35,8 +34,7 @@ class CloneListener
         EntityManagerInterface $em,
         PagePartConfigurationReaderInterface $pagePartReader,
         PageTemplateConfigurationService $pageTemplateConfiguratiorService
-    )
-    {
+    ) {
         $this->em = $em;
         $this->pagePartReader = $pagePartReader;
         $this->pageTemplateConfiguratiorService = $pageTemplateConfiguratiorService;

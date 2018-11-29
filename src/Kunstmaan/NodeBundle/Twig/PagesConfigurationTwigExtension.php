@@ -18,7 +18,6 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
         $this->pagesConfiguration = $pagesConfiguration;
     }
 
-
     /**
      * Returns a list of functions to add to the existing list.
      *

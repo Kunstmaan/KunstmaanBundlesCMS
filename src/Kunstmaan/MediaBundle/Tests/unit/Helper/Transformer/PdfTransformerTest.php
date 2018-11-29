@@ -13,7 +13,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     /** @var PdfTransformer */
     protected $object;
 
-    /** @var Filesystem  */
+    /** @var Filesystem */
     protected $filesystem;
 
     /** @var string */

@@ -144,6 +144,7 @@ class Translation
 
     /**
      * @param string $id
+     *
      * @return Translation
      */
     public function setId($id)
@@ -163,6 +164,7 @@ class Translation
 
     /**
      * @param string $keyword
+     *
      * @return Translation
      */
     public function setKeyword($keyword)
@@ -182,6 +184,7 @@ class Translation
 
     /**
      * @param string $locale
+     *
      * @return Translation
      */
     public function setLocale($locale)
@@ -201,6 +204,7 @@ class Translation
 
     /**
      * @param string $file
+     *
      * @return Translation
      */
     public function setFile($file)
@@ -220,6 +224,7 @@ class Translation
 
     /**
      * @param string $text
+     *
      * @return Translation
      */
     public function setText($text)
@@ -239,6 +244,7 @@ class Translation
 
     /**
      * @param string $domain
+     *
      * @return Translation
      */
     public function setDomain($domain)
@@ -258,6 +264,7 @@ class Translation
 
     /**
      * @param \DateTime $createdAt
+     *
      * @return Translation
      */
     public function setCreatedAt(DateTime $createdAt)
@@ -277,6 +284,7 @@ class Translation
 
     /**
      * @param DateTime $updatedAt
+     *
      * @return Translation
      */
     public function setUpdatedAt(DateTime $updatedAt)
@@ -296,6 +304,7 @@ class Translation
 
     /**
      * @param string $flag
+     *
      * @return Translation
      */
     public function setFlag($flag)
@@ -307,6 +316,7 @@ class Translation
 
     /**
      * @param string $translationId
+     *
      * @return Translation
      */
     public function setTranslationId($translationId)

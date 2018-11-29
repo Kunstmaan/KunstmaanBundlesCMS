@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -11,13 +10,17 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class AdminRouteHelperTest extends \PHPUnit_Framework_TestCase
 {
     protected static $ADMIN_KEY = 'admin';
+
     protected static $ALTERNATIVE_ADMIN_KEY = 'vip';
+
     protected static $NON_ADMIN_URL = '/en/some_path/%s/nodes';
+
     protected static $ADMIN_URL = '/en/%s/nodes';
+
     protected static $PREVIEW_ADMIN_URL = '/en/%s/preview/blog/page/1';
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
+     * @covers \Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
      */
     public function testIsAdminRouteReturnsTrueWhenAdminUrl()
     {
@@ -31,7 +34,7 @@ class AdminRouteHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
+     * @covers \Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
      */
     public function testIsAdminRouteReturnsFalseWhenFrontendUrl()
     {
@@ -45,7 +48,7 @@ class AdminRouteHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
+     * @covers \Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
      */
     public function testIsAdminRouteReturnsFalseWhenPreviewUrl()
     {

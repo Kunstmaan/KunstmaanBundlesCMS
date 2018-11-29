@@ -29,7 +29,7 @@ class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, Ha
      */
     public function getDefaultView()
     {
-        return "KunstmaanSitemapBundle:SitemapPage:view.html.twig";
+        return 'KunstmaanSitemapBundle:SitemapPage:view.html.twig';
     }
 
     /**

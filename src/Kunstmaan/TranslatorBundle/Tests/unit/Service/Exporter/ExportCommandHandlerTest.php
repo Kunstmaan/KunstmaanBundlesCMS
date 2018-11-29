@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Exporter;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
@@ -6,7 +7,6 @@ use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
 
 class ExportCommandHandlerTest extends BaseTestCase
 {
-
     private $exportCommandHandler;
 
     public function setUp()
@@ -17,7 +17,7 @@ class ExportCommandHandlerTest extends BaseTestCase
 
     public function testGetExportFiles()
     {
-        $exportCommand = new ExportCommand;
+        $exportCommand = new ExportCommand();
         $exportCommand
                 ->setDomains(false)
                 ->setLocales(false)

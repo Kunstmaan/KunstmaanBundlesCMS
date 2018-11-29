@@ -20,11 +20,9 @@ class FolderType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -34,7 +32,7 @@ class FolderType extends AbstractType
                 'name',
                 TextType::class,
                 array(
-                    'label' => 'media.folder.addsub.form.name'
+                    'label' => 'media.folder.addsub.form.name',
                 )
             )
             ->add(
@@ -55,7 +53,7 @@ class FolderType extends AbstractType
                     'required' => true,
                     'query_builder' => function (FolderRepository $er) use ($folder) {
                         return $er->selectFolderQueryBuilder($folder);
-                    }
+                    },
                 )
             )
             ->add(
@@ -63,7 +61,7 @@ class FolderType extends AbstractType
                 TextType::class,
                 array(
                     'label' => 'media.folder.addsub.form.internal_name',
-                    'required' => false
+                    'required' => false,
                 )
             );
     }
@@ -81,14 +79,14 @@ class FolderType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
                 'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
-                'folder' => null
+                'folder' => null,
             )
         );
     }

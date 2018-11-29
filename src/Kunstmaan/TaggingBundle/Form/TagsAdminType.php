@@ -5,14 +5,12 @@ namespace Kunstmaan\TaggingBundle\Form;
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
 use Symfony\Component\Form\AbstractType;
-
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagsAdminType extends AbstractType
 {
-
     protected $tagManager;
 
     public function __construct(TagManager $tagManager)

@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupInterface;
@@ -140,12 +139,13 @@ class Group implements RoleInterface, GroupInterface
      * @param Role $role
      *
      * @return GroupInterface
+     *
      * @throws InvalidArgumentException
      */
     public function addRole($role)
     {
         if (!$role instanceof Role) {
-            throw new InvalidArgumentException("addRole takes a Role object as the parameter");
+            throw new InvalidArgumentException('addRole takes a Role object as the parameter');
         }
 
         if (!$this->hasRole($role->getRole())) {
@@ -175,7 +175,7 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
      *
-     * @param Role[] $roles array of Role objects.
+     * @param Role[] $roles array of Role objects
      *
      * @return GroupInterface
      */

@@ -113,7 +113,7 @@ class DomainConfiguration extends BaseDomainConfiguration
         if (isset($this->hosts[$host])) {
             $hostInfo = $this->hosts[$host];
 
-            return ('multi_lang' === $hostInfo['type']);
+            return 'multi_lang' === $hostInfo['type'];
         }
 
         return parent::isMultiLanguage();
@@ -290,7 +290,6 @@ class DomainConfiguration extends BaseDomainConfiguration
 
         return null;
     }
-
 
     /**
      * @param int $id

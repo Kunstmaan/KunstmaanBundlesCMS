@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-
 class OAuthController
 {
     public function checkAction()

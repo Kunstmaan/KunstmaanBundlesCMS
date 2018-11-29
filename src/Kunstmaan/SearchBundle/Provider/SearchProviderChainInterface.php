@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SearchBundle\Provider;
 
-interface SearchProviderChainInterface 
+interface SearchProviderChainInterface
 {
     /**
      * Add a SearchProvider to the chain

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  */
 class HeaderPagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -83,7 +83,7 @@ class HeaderPagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "HeaderPagePart " . $this->getTitle();
+        return 'HeaderPagePart ' . $this->getTitle();
     }
 
     /**
@@ -91,7 +91,7 @@ class HeaderPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:HeaderPagePart:view.html.twig';
     }
 
     /**

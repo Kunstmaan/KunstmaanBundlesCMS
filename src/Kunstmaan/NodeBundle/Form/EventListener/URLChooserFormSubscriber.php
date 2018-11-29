@@ -36,7 +36,6 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
             // Check if e-mail address
             if ($this->isEmailAddress($data)) {
                 $form->get('link_type')->setData(URLChooserType::EMAIL);
-
             } // Check if internal link
             elseif ($this->isInternalLink($data) || $this->isInternalMediaLink($data)) {
                 $form->get('link_type')->setData(URLChooserType::INTERNAL);

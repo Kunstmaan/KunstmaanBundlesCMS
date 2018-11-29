@@ -7,7 +7,7 @@ use Symfony\Component\Inflector\Inflector;
 class ArrayAdd implements MethodInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function canSet($object, $property, $value)
     {
@@ -15,7 +15,7 @@ class ArrayAdd implements MethodInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function set($object, $property, $value)
     {
@@ -28,7 +28,7 @@ class ArrayAdd implements MethodInterface
     /**
      * finds the method used to append values to the named property
      *
-     * @param mixed $object
+     * @param mixed  $object
      * @param string $property
      *
      * @return string|null
@@ -39,7 +39,7 @@ class ArrayAdd implements MethodInterface
             return $method;
         }
         if (class_exists('Symfony\Component\PropertyAccess\StringUtil') && method_exists('Symfony\Component\PropertyAccess\StringUtil', 'singularify')) {
-            foreach ((array)Inflector::singularize($property) as $singularForm) {
+            foreach ((array) Inflector::singularize($property) as $singularForm) {
                 if (is_callable([$object, $method = 'add' . $singularForm])) {
                     return $method;
                 }

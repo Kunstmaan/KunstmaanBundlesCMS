@@ -32,7 +32,7 @@ class SitemapController extends Controller
 
         return array(
             'nodemenu' => $nodeMenu,
-            'locale'   => $locale,
+            'locale' => $locale,
         );
     }
 
@@ -58,7 +58,7 @@ class SitemapController extends Controller
 
         return array(
             'locales' => $locales,
-            'host'    => $request->getSchemeAndHttpHost()
+            'host' => $request->getSchemeAndHttpHost(),
         );
     }
 }

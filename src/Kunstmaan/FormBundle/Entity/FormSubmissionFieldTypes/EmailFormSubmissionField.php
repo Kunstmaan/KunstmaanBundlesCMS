@@ -14,7 +14,6 @@ use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
  */
 class EmailFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="efsf_value", type="string")
      */
@@ -39,7 +38,7 @@ class EmailFormSubmissionField extends FormSubmissionField
     {
         $value = $this->getValue();
 
-        return !empty($value) ? $value : "";
+        return !empty($value) ? $value : '';
     }
 
     /**

@@ -26,12 +26,13 @@ class MappingListener
 
     /**
      * Called when class meta data is fetched.
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {
         $classMetadata = $eventArgs->getClassMetadata();
-        $entityName = (string)$classMetadata->getName();
+        $entityName = (string) $classMetadata->getName();
 
         // We dynamically set the user class that was configured in the configuration
         if ($entityName == 'Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction') {
@@ -42,7 +43,7 @@ class MappingListener
                     'name' => 'user_id',
                     'referencedColumnName' => 'id',
                     'unique' => false,
-                    'nullable' => true
+                    'nullable' => true,
                 )),
             );
             $classMetadata->mapManyToOne($mapping);

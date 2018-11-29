@@ -19,7 +19,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
      * @var ObjectManager
      */
     private $objectManager;
-    
+
     public function __construct(ContainerInterface $container, ObjectManager $em)
     {
         $this->setContainer($container);
@@ -35,9 +35,10 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     }
 
     /**
-     * @param BaseUser $user
+     * @param BaseUser        $user
      * @param NodeTranslation $nodeTranslation
-     * @param bool $isPublicNodeVersion
+     * @param bool            $isPublicNodeVersion
+     *
      * @return bool
      */
     public function isNodeVersionLocked(BaseUser $user, NodeTranslation $nodeTranslation, $isPublicNodeVersion)
@@ -46,15 +47,18 @@ class NodeVersionLockHelper implements ContainerAwareInterface
             $this->removeExpiredLocks($nodeTranslation);
             $this->createNodeVersionLock($user, $nodeTranslation, $isPublicNodeVersion); // refresh lock
             $locks = $this->getNodeVersionLocksByNodeTranslation($nodeTranslation, $isPublicNodeVersion, $user);
+
             return count($locks) ? true : false;
         }
+
         return false;
     }
 
     /**
      * @param NodeTranslation $nodeTranslation
-     * @param BaseUser $userToExclude
-     * @param bool $isPublicNodeVersion
+     * @param BaseUser        $userToExclude
+     * @param bool            $isPublicNodeVersion
+     *
      * @return array
      */
     public function getUsersWithNodeVersionLock(NodeTranslation $nodeTranslation, $isPublicNodeVersion, BaseUser $userToExclude = null)
@@ -63,6 +67,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
             $this->getNodeVersionLocksByNodeTranslation($nodeTranslation, $isPublicNodeVersion, $userToExclude),
             function ($return, NodeVersionLock $item) {
                 $return[] = $item->getOwner();
+
                 return $return;
             },
             []
@@ -84,18 +89,18 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     /**
      * When editing the node, create a new node translation lock.
      *
-     * @param BaseUser $user
+     * @param BaseUser        $user
      * @param NodeTranslation $nodeTranslation
-     * @param bool $isPublicVersion
+     * @param bool            $isPublicVersion
      */
     protected function createNodeVersionLock(BaseUser $user, NodeTranslation $nodeTranslation, $isPublicVersion)
     {
         $lock = $this->objectManager->getRepository('KunstmaanNodeBundle:NodeVersionLock')->findOneBy([
             'owner' => $user->getUsername(),
             'nodeTranslation' => $nodeTranslation,
-            'publicVersion' => $isPublicVersion
+            'publicVersion' => $isPublicVersion,
         ]);
-        if (! $lock) {
+        if (!$lock) {
             $lock = new NodeVersionLock();
         }
         $lock->setOwner($user->getUsername());
@@ -111,8 +116,9 @@ class NodeVersionLockHelper implements ContainerAwareInterface
      * When editing a node, check if there is a lock for this node translation.
      *
      * @param NodeTranslation $nodeTranslation
-     * @param bool $isPublicVersion
-     * @param BaseUser $userToExclude
+     * @param bool            $isPublicVersion
+     * @param BaseUser        $userToExclude
+     *
      * @return NodeVersionLock[]
      */
     protected function getNodeVersionLocksByNodeTranslation(NodeTranslation $nodeTranslation, $isPublicVersion, BaseUser $userToExclude = null)
@@ -120,6 +126,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
         $threshold = $this->container->getParameter('kunstmaan_node.lock_threshold');
         /** @var NodeVersionLockRepository $objectRepository */
         $objectRepository = $this->objectManager->getRepository('KunstmaanNodeBundle:NodeVersionLock');
+
         return $objectRepository->getLocksForNodeTranslation($nodeTranslation, $isPublicVersion, $threshold, $userToExclude);
     }
 }

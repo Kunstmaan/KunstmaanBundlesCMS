@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Migrations;
 
 use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;

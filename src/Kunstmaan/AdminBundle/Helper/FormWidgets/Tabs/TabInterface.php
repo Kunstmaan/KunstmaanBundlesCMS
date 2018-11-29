@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidgetInterface;
@@ -8,10 +9,8 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidgetInterface;
  */
 interface TabInterface extends FormWidgetInterface
 {
-
     /**
      * @return string
      */
     public function getTitle();
-
 }

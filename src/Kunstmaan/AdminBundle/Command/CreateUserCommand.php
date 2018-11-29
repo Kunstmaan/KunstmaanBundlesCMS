@@ -72,7 +72,7 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:user:create</info> command creates a user:
 
   <info>php bin/console kuma:user:create matthieu --group=Users</info>
@@ -102,11 +102,10 @@ EOT
         $this->groups = $this->getGroups();
     }
 
-
     /**
      * Executes the current command.
      *
-     * @param InputInterface $input The input
+     * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
      *
      * @return int
@@ -150,13 +149,12 @@ EOT
         // Attach groups
         $groupOutput = [];
 
-
         foreach (explode(',', $groupOption) as $groupId) {
-
-            if ((int)$groupId === 0) {
+            if ((int) $groupId === 0) {
                 foreach ($this->groups as $value) {
                     if ($groupId === $value->getName()) {
                         $group = $value;
+
                         break;
                     }
                 }
@@ -188,17 +186,15 @@ EOT
     /**
      * Interacts with the user.
      *
-     * @param InputInterface $input The input
+     * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
      *
      * @throws \InvalidArgumentException
-     *
-     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         if (!$input->getArgument('username')) {
-            $question = New Question('Please choose a username:');
+            $question = new Question('Please choose a username:');
             $question->setValidator(function ($username) {
                 if (null === $username) {
                     throw new \InvalidArgumentException('Username can not be empty');
@@ -215,7 +211,7 @@ EOT
         }
 
         if (!$input->getArgument('email')) {
-            $question = New Question('Please choose an email:');
+            $question = new Question('Please choose an email:');
             $question->setValidator(function ($email) {
                 if (null === $email) {
                     throw new \InvalidArgumentException('Email can not be empty');
@@ -232,8 +228,7 @@ EOT
         }
 
         if (!$input->getArgument('password')) {
-
-            $question = New Question('Please choose a password:');
+            $question = new Question('Please choose a password:');
             $question->setHidden(true);
             $question->setHiddenFallback(false);
             $question->setValidator(function ($password) {
@@ -269,14 +264,13 @@ EOT
             );
             $question->setMultiselect(true);
             $question->setValidator(function ($groupsInput) {
-
                 if (!$this->groups) {
                     throw new \RuntimeException('No user group(s) could be found');
                 }
 
                 // Validate that the chosen group options exist in the available groups
                 $groupNames = array_unique(explode(',', $groupsInput));
-                if (count(array_intersect_key(array_flip($groupNames),$this->groups)) !== count($groupNames)) {
+                if (count(array_intersect_key(array_flip($groupNames), $this->groups)) !== count($groupNames)) {
                     throw new InvalidArgumentException('You have chosen non existing group(s)');
                 }
 
@@ -285,6 +279,7 @@ EOT
                         'Group(s) must be of type integer and can not be empty'
                     );
                 }
+
                 return $groupsInput;
             });
 
@@ -301,7 +296,7 @@ EOT
 
         // reindexing the array, using the db id as the key
         $newGroups = [];
-        foreach($groups as $group) {
+        foreach ($groups as $group) {
             $newGroups[$group->getId()] = $group;
         }
 

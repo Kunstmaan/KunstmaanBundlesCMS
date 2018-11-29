@@ -27,7 +27,7 @@ class RedirectRouter implements RouterInterface
     private $domainConfiguration;
 
     /**
-     * @param ObjectRepository $redirectRepository
+     * @param ObjectRepository             $redirectRepository
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(ObjectRepository $redirectRepository, DomainConfigurationInterface $domainConfiguration)
@@ -52,22 +52,22 @@ class RedirectRouter implements RouterInterface
      *
      * If there is no route with the given name, the generator must throw the RouteNotFoundException.
      *
-     * @param string $name The name of the route
-     * @param mixed $parameters An array of parameters
-     * @param Boolean|string $referenceType The type of reference to be generated (one of the constants)
+     * @param string      $name          The name of the route
+     * @param mixed       $parameters    An array of parameters
+     * @param bool|string $referenceType The type of reference to be generated (one of the constants)
      *
      * @return string The generated URL
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException              If the named route doesn't exist
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException When some parameters are missing that are mandatory for the route
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException           When a parameter value for a placeholder is not correct because
-     *                                             it does not match the requirement
+     *                                                                                  it does not match the requirement
      *
      * @api
      */
     public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
     {
-        throw new RouteNotFoundException("You cannot generate a url from a redirect");
+        throw new RouteNotFoundException('You cannot generate a url from a redirect');
     }
 
     /**
@@ -138,6 +138,7 @@ class RedirectRouter implements RouterInterface
 
     /**
      * @param Redirect $redirect
+     *
      * @return bool
      */
     private function isWildcardRedirect(Redirect $redirect)
@@ -147,12 +148,14 @@ class RedirectRouter implements RouterInterface
         if (substr($origin, -2) == '/*') {
             return $this->isPathInfoWildcardMatch($matchSegment);
         }
+
         return false;
     }
 
     private function isPathInfoWildcardMatch($matchSegment)
     {
         $path = $this->context->getPathInfo();
+
         return strstr($path, $matchSegment);
     }
 

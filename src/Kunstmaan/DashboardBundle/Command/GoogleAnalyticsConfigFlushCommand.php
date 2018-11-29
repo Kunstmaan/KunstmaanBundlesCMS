@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -62,7 +63,7 @@ class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
         }
 
         $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $configId  = $input->getOption('config');
+        $configId = $input->getOption('config');
         $configs = [];
 
         try {

@@ -15,7 +15,6 @@ class RadioButtonSubContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-
     }
 
     /**
@@ -30,7 +29,6 @@ class RadioButtonSubContext extends BehatContext
      * @param string $radioLabel
      *
      * @throws ElementNotFoundException
-     * @return void
      * @Given /^I select the "([^"]*)" radio button$/
      */
     public function iSelectTheRadioButton($radioLabel)

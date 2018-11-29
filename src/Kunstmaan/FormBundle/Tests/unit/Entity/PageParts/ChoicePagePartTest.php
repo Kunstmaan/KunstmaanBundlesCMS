@@ -23,7 +23,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoicePagePart;
+        $this->object = new ChoicePagePart();
     }
 
 
@@ -101,5 +101,4 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($object->getRequired());
         $this->assertEquals('fix your code!', $object->getErrorMessageRequired());
     }
-
 }

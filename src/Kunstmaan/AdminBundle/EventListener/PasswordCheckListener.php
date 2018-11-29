@@ -49,11 +49,11 @@ class PasswordCheckListener
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TokenStorageInterface $tokenStorage
-     * @param Router $router
-     * @param Session $session
-     * @param TranslatorInterface $translator
-     * @param AdminRouteHelper $adminRouteHelper
+     * @param TokenStorageInterface         $tokenStorage
+     * @param Router                        $router
+     * @param Session                       $session
+     * @param TranslatorInterface           $translator
+     * @param AdminRouteHelper              $adminRouteHelper
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper)
     {

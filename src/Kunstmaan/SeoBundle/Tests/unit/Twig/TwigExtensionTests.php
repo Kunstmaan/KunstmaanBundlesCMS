@@ -5,7 +5,6 @@ namespace Kunstmaan\SeoBundle\Tests\Entity;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 use PHPUnit_Framework_TestCase;
-
 /**
  * Class TwigExtensionTests
  * @package Tests\Kunstmaan\SeoBundle\Entity
@@ -13,7 +12,9 @@ use PHPUnit_Framework_TestCase;
 class TwigExtensionTests extends PHPUnit_Framework_TestCase
 {
     protected $emMock;
+
     protected $entityMock;
+
     protected $seoRepoMock;
 
     /**
@@ -38,9 +39,7 @@ class TwigExtensionTests extends PHPUnit_Framework_TestCase
 
         $object = new SeoTwigExtension($this->emMock);
 
-
         $result = $object->getTitleFor($this->entityMock);
-
 
         $this->assertEquals($name, $result);
     }
@@ -58,9 +57,7 @@ class TwigExtensionTests extends PHPUnit_Framework_TestCase
 
         $object = new SeoTwigExtension($this->emMock);
 
-
         $result = $object->getTitleFor($this->entityMock);
-
 
         $this->assertEquals($name, $result);
     }
@@ -125,5 +122,4 @@ class TwigExtensionTests extends PHPUnit_Framework_TestCase
 
         $this->wireUpSeoRepo();
     }
-
 }

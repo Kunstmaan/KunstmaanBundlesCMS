@@ -46,7 +46,7 @@ class RebuildFolderTreeCommand extends ContainerAwareCommand
 
         $this->setName('kuma:media:rebuild-folder-tree')
             ->setDescription('Rebuild the media folder tree.')
-            ->setHelp("The <info>kuma:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.");
+            ->setHelp('The <info>kuma:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.');
     }
 
     /**

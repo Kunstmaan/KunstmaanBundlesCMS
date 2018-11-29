@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
@@ -6,8 +7,8 @@ use Symfony\Component\Finder\Finder;
 
 class ImporterTest extends BaseTestCase
 {
-
     private $importer;
+
     private $translationRepository;
 
     public function setUp()
@@ -58,7 +59,7 @@ class ImporterTest extends BaseTestCase
 
     public function getNewDomainTestFinder()
     {
-        $finder = new Finder;
+        $finder = new Finder();
 
         $finder->files()
                 ->name('newdomain.de.yml')
@@ -67,9 +68,9 @@ class ImporterTest extends BaseTestCase
         return $finder;
     }
 
-     public function getExistingDomainTestFinder()
+    public function getExistingDomainTestFinder()
     {
-        $finder = new Finder;
+        $finder = new Finder();
 
         $finder->files()
                 ->name('messages.en.yml')

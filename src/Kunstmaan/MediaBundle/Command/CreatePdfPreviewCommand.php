@@ -4,7 +4,7 @@ namespace Kunstmaan\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use \ImagickException;
+use ImagickException;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -90,12 +90,9 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         );
         /** @var Media $media */
         foreach ($medias as $media) {
-            try
-            {
+            try {
                 $this->pdfTransformer->apply($this->webRoot . $media->getUrl());
-            }
-            catch(ImagickException $e)
-            {
+            } catch (ImagickException $e) {
                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
             }
         }

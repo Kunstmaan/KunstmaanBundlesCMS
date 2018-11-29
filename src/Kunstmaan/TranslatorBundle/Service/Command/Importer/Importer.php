@@ -41,7 +41,7 @@ class Importer
 
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
             if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
-                $importedTranslations++;
+                ++$importedTranslations;
             }
         }
 
@@ -154,8 +154,9 @@ class Importer
 
     /**
      * Validate the loaders
-     * @param  array $loaders
-     * @return void
+     *
+     * @param array $loaders
+     *
      * @throws \Exception If no loaders are defined
      */
     public function validateLoaders($loaders = [])

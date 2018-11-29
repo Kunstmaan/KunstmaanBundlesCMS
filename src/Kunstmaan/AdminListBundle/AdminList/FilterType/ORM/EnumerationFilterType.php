@@ -17,7 +17,7 @@ class EnumerationFilterType extends AbstractORMFilterType
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
-        $data['value']      = $request->query->get('filter_value_' . $uniqueId);
+        $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }
 
     /**
@@ -31,10 +31,12 @@ class EnumerationFilterType extends AbstractORMFilterType
                 case 'in':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->in($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
                     $this->queryBuilder->setParameter('var_' . $uniqueId, $data['value'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+
                     break;
                 case 'notin':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->notIn($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
                     $this->queryBuilder->setParameter('var_' . $uniqueId, $data['value'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+
                     break;
             }
         }

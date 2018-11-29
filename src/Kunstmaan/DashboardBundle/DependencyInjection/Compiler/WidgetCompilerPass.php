@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -7,7 +8,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class WidgetCompilerPass implements CompilerPassInterface
 {
-
     /**
      * You can modify the container here before it is dumped to PHP code.
      *

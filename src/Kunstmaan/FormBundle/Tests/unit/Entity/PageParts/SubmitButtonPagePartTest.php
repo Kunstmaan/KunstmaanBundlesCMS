@@ -21,13 +21,13 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new SubmitButtonPagePart;
+        $this->object = new SubmitButtonPagePart();
     }
 
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $label = "Test label";
+        $label = 'Test label';
         $object->setLabel($label);
         $this->assertEquals($label, $object->getLabel());
     }

@@ -35,8 +35,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             return;
-        }
-        else if ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                 $menuItem = new MenuItem($menu);
                 $menuItem

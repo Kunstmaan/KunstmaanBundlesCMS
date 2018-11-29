@@ -93,6 +93,7 @@ class PopupTwigExtension extends \Twig_Extension
 
     /**
      * @param AbstractRule $rule
+     *
      * @return array
      */
     public function getRuleProperties(AbstractRule $rule)
@@ -128,6 +129,7 @@ class PopupTwigExtension extends \Twig_Extension
      * Get the available popup types for a specific popup.
      *
      * @param AbstractPopup $popup
+     *
      * @return array
      */
     public function getAvailableRuleTypes(AbstractPopup $popup)

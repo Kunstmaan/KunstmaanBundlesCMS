@@ -11,7 +11,6 @@ use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
  */
 class TranslationGroupManager
 {
-
     private $translationRepository;
 
     /**
@@ -29,12 +28,14 @@ class TranslationGroupManager
 
     /**
      * Create new TranslationGroup instance (with the given locales of any are set)
-     * @param  array            $locales
+     *
+     * @param array $locales
+     *
      * @return TranslationGroup
      */
     public function newGroupInstance($locales = array())
     {
-        $translationGroup = new TranslationGroup;
+        $translationGroup = new TranslationGroup();
 
         foreach ($locales as $locale) {
             $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation();
@@ -56,7 +57,7 @@ class TranslationGroupManager
             return null;
         }
 
-        $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation;
+        $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation();
         $translation->setLocale($locale);
         $translation->setText($text);
         $translation->setDomain($translationGroup->getDomain());
@@ -81,7 +82,7 @@ class TranslationGroupManager
         $this->translationRepository->persist($translation);
         $this->translationRepository->flush($translation);
 
-        return ;
+        return;
     }
 
     /**
@@ -90,7 +91,7 @@ class TranslationGroupManager
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
     {
         $translations = $this->translationRepository->findBy(array('keyword' => $keyword, 'domain' => $domain));
-        $translationGroup = new TranslationGroup;
+        $translationGroup = new TranslationGroup();
         $translationGroup->setDomain($domain);
         $translationGroup->setKeyword($keyword);
         if (empty($translations)) {
@@ -112,5 +113,4 @@ class TranslationGroupManager
     {
         $this->translationRepository = $translationRepository;
     }
-
 }

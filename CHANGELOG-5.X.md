@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.0.12 / 2018-11-29
+
+* [AllBundles] Changes for upcoming travis-ci infra migration [#2180](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2180) ([@acrobat](https://github.com/acrobat))
+* [Docs] Fix slack channel link [#2178](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2178) ([@diskwriter](https://github.com/diskwriter))
+* [AllBundles] Backport styleci fixes to 5.0 [#2175](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2175) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix icons ckeditor again [#2174](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2174) ([@dbeerten](https://github.com/dbeerten))
+* [GeneratorBundle] fix gulp dependency [#2172](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2172) ([@diskwriter](https://github.com/diskwriter))
+* [GeneratorBundle] Remove unnecessary roles on dom nodes [#2170](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2170) ([@diskwriter](https://github.com/diskwriter))
+* [AdminListBundle] use datepicker for DateTimeType filters [#2159](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2159) ([@dbeerten](https://github.com/dbeerten))
+* [TranslatorBundle] fix non-unique locales in TranslationAdminConfigurator [#2156](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2156) ([@treeleaf](https://github.com/treeleaf))
+* [AllBundles] Disable styleci checks for 5.0 [#2151](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2151) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] revert CKeditor to original version [#2134](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2134) ([@dbeerten](https://github.com/dbeerten))
+* [NodeBundle] Revert "Fix bug in NodeChoiceType (#2115)" [#2133](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2133) ([@deZinc](https://github.com/deZinc))
+
 ## 5.0.11 / 2018-09-12
 
 * [NodeSearchBunde] [SearchBundle]  Add parameters for ES authentication and use them in version check [#2120](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2120) ([@wesleylancel](https://github.com/wesleylancel)) 

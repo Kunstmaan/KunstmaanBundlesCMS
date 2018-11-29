@@ -36,8 +36,8 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
      */
     public function testHostOverrideMessageIsSetForAdmin()
     {
@@ -54,8 +54,8 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
      */
     public function testHostOverrideMessageIsNotSetForAdminRedirectResponse()
     {
@@ -71,8 +71,8 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
      */
     public function testHostOverrideMessageIsNotSetForSubRequest()
     {
@@ -88,8 +88,8 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
      */
     public function testHostOverrideMessageIsNotSetForXmlRequest()
     {
@@ -105,8 +105,8 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
      */
     public function testHostOverrideMessageIsNotSetForPreview()
     {
@@ -122,8 +122,8 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
      */
     public function testHostOverrideMessageIsNotSetForFrontend()
     {
@@ -156,7 +156,7 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $adminRouteReturnValueMap = array(
             array('/nl/admin/preview/some-uri', false),
             array('/nl/some-uri', false),
-            array('/nl/admin/some-admin-uri', true)
+            array('/nl/admin/some-admin-uri', true),
         );
 
         $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')

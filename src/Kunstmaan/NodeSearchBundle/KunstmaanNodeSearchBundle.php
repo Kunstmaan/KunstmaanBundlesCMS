@@ -9,5 +9,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class KunstmaanNodeSearchBundle extends Bundle
 {
-
 }

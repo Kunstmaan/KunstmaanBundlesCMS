@@ -7,7 +7,6 @@ use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
 
 class ImportCommandHandlerTest extends BaseTestCase
 {
-
     private $importCommandHandler;
 
     public function setUp()
@@ -41,13 +40,13 @@ class ImportCommandHandlerTest extends BaseTestCase
             ->setDefaultBundle(false);
 
         $locales = $this->importCommandHandler->determineLocalesToImport($importCommand);
-        $this->assertEquals(array('nl','en','de'), $locales);
+        $this->assertEquals(array('nl', 'en', 'de'), $locales);
     }
 
     public function testParseRequestedLocalesMulti()
     {
         $locale = 'nl,De,   FR';
-        $expectedArray = array('nl','de','fr');
+        $expectedArray = array('nl', 'de', 'fr');
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
         $this->assertEquals($expectedArray, $locales);
     }
@@ -62,15 +61,14 @@ class ImportCommandHandlerTest extends BaseTestCase
 
     public function testParseRequestedLocalesArray()
     {
-        $locale = array('dE','NL','es');
-        $expectedArray = array('de','nl','es');
+        $locale = array('dE', 'NL', 'es');
+        $expectedArray = array('de', 'nl', 'es');
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
         $this->assertEquals($expectedArray, $locales);
     }
 
     public function testImportGlobalTranslationFiles()
     {
-
     }
 
     public function testImportBundleTranslationFiles()

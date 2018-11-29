@@ -7,9 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Symfony\Component\Console\Input\InputInterface;
-
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -53,7 +51,7 @@ class CreateRoleCommand extends ContainerAwareCommand
             ->setDefinition(array(
                 new InputArgument('role', InputArgument::REQUIRED, 'The role'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:role:create</info> command creates a role:
 
   <info>php bin/console kuma:role:create ROLE_ADMIN</info>

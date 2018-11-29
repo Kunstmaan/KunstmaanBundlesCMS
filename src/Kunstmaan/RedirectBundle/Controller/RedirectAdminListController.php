@@ -44,6 +44,7 @@ class RedirectAdminListController extends AdminListController
      *
      * @Route("/add", name="kunstmaanredirectbundle_admin_redirect_add")
      * @Method({"GET", "POST"})
+     *
      * @return Response
      */
     public function addAction(Request $request)
@@ -88,6 +89,7 @@ class RedirectAdminListController extends AdminListController
      *
      * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="kunstmaanredirectbundle_admin_redirect_export")
      * @Method({"GET", "POST"})
+     *
      * @return Response
      */
     public function exportAction(Request $request, $_format)

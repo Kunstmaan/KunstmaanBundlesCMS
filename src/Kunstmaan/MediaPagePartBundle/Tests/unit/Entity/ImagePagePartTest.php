@@ -22,7 +22,7 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ImagePagePart;
+        $this->object = new ImagePagePart();
     }
 
     public function testGetSetOpenInNewWindow()
@@ -61,7 +61,7 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()

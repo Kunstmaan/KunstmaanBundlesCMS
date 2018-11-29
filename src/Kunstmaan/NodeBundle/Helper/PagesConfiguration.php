@@ -66,7 +66,7 @@ class PagesConfiguration
             $refName,
             'hidden_from_tree',
             function ($page) {
-                /** @noinspection PhpDeprecationInspection */
+                /* @noinspection PhpDeprecationInspection */
                 return $page instanceof HideFromNodeTreeInterface;
             }
         );
@@ -83,7 +83,7 @@ class PagesConfiguration
             $refName,
             'indexable',
             function ($page) {
-                /** @var IndexableInterface $page */
+                /* @var IndexableInterface $page */
                 return false === $page instanceof IndexableInterface || $page->isIndexable();
             }
         );
@@ -100,7 +100,7 @@ class PagesConfiguration
             $refName,
             'search_type',
             function ($page) {
-                /** @noinspection PhpDeprecationInspection */
+                /* @noinspection PhpDeprecationInspection */
                 return $page instanceof SearchTypeInterface ? $page->getSearchType() : ClassLookup::getClass($page);
             }
         );
@@ -117,7 +117,7 @@ class PagesConfiguration
             $refName,
             'structure_node',
             function ($page) {
-                /** @noinspection PhpDeprecationInspection */
+                /* @noinspection PhpDeprecationInspection */
                 return $page instanceof HasNodeInterface && $page->isStructureNode();
             }
         );
@@ -134,7 +134,7 @@ class PagesConfiguration
             $refName,
             'allowed_children',
             function ($page) {
-                /** @noinspection PhpDeprecationInspection */
+                /* @noinspection PhpDeprecationInspection */
                 return ($page instanceof HasNodeInterface) ? $page->getPossibleChildTypes() : [];
             }
         );
@@ -158,7 +158,7 @@ class PagesConfiguration
             $refName,
             'is_homepage',
             function ($page) {
-                /** @noinspection PhpDeprecationInspection */
+                /* @noinspection PhpDeprecationInspection */
                 return $page instanceof HomePageInterface;
             }
         );
@@ -183,7 +183,7 @@ class PagesConfiguration
     /**
      * @param string         $ref
      * @param string         $name
-     * @param Callable|mixed $default
+     * @param callable|mixed $default
      *
      * @return mixed
      */
@@ -199,7 +199,7 @@ class PagesConfiguration
             return $default;
         }
 
-        $page = \is_string($ref) ? new $refName : $ref;
+        $page = \is_string($ref) ? new $refName() : $ref;
         $result = $default($page);
         unset($page);
 

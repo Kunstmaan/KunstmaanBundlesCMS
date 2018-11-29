@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -67,7 +68,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
         }
 
         // get params
-        $configId  = $input->getOption('config');
+        $configId = $input->getOption('config');
         $segmentId = $input->getOption('segment');
 
         try {
@@ -75,7 +76,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
 
             if ($segmentId) {
                 $overviews = $this->getOverviewsOfSegment($segmentId);
-            } else if ($configId) {
+            } elseif ($configId) {
                 $overviews = $this->getOverviewsOfConfig($configId);
             } else {
                 $overviews = $this->getAllOverviews();
@@ -84,7 +85,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
             if (count($overviews)) {
                 $result = "\t".'<fg=green>' . count($overviews) . '</fg=green> overviews found:';
                 $output->writeln($result);
-                foreach($overviews as $overview) {
+                foreach ($overviews as $overview) {
                     $result = "\t".'(id: <fg=cyan>' .$overview->getId() . '</fg=cyan>)';
                     $result .= "\t".'(config: <fg=cyan>' .$overview->getconfig()->getId() . '</fg=cyan>)';
                     if ($overview->getSegment()) {
@@ -102,13 +103,13 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
         }
-
     }
-
 
     /**
      * get all overviews of a segment
+     *
      * @param int $segmentId
+     *
      * @return array
      */
     private function getOverviewsOfSegment($segmentId)
@@ -127,7 +128,9 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
 
     /**
      * get all overviews of a config
+     *
      * @param int $configId
+     *
      * @return array
      */
     private function getOverviewsOfConfig($configId)
@@ -153,6 +156,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
     {
         // get all overviews
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+
         return $overviewRepository->findAll();
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ExceptionDataCollector extends AbstractDataCollector
 {
     /**
-     * @var EntityManagerInterface $em
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -34,9 +34,9 @@ class ExceptionDataCollector extends AbstractDataCollector
     public function collectData()
     {
         $model = $this->em->getRepository(Exception::class)->findExceptionStatistics();
-        if ( isset($model['cp_all'], $model['cp_sum']) ) {
+        if (isset($model['cp_all'], $model['cp_sum'])) {
             return [
-                'data' => $model
+                'data' => $model,
             ];
         } else {
             return [];
@@ -50,7 +50,7 @@ class ExceptionDataCollector extends AbstractDataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        if ( false === $this->isEnabled() ) {
+        if (false === $this->isEnabled()) {
             $this->data = false;
         } else {
             $this->data = $this->collectData();
