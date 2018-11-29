@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class AbstractArticleOverviewPagePagePartAdminConfiguratorTest
- * @package Tests\Kunstmaan\ArticleBundle\Form
  */
 class AbstractArticleOverviewPagePagePartAdminConfiguratorTest extends PHPUnit_Framework_TestCase
 {

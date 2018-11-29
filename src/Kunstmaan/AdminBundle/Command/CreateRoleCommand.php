@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

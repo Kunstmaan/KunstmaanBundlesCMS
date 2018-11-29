@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanRedirectExtensionTest
- * @package Tests\Kunstmaan\RedirectBundle\DependencyInjection
  */
 class KunstmaanRedirectExtensionTest extends AbstractPrependableExtensionTestCase
 {
@@ -20,12 +19,11 @@ class KunstmaanRedirectExtensionTest extends AbstractPrependableExtensionTestCas
         return [new KunstmaanRedirectExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('empty_extension', true);
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('empty_extension', true );
+        $this->assertContainerBuilderHasParameter('empty_extension', true);
     }
 }

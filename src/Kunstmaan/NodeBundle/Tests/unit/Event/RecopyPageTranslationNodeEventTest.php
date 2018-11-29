@@ -9,16 +9,12 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use PHPUnit_Framework_TestCase;
-use Kunstmaan\NodeBundle\Tests\Entity\TestEntity;
 
 /**
  * Class RecopyPageTranslationNodeEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class RecopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
 {
-
-
     public function testGetSet()
     {
         /** @var Node $node */
@@ -48,5 +44,4 @@ class RecopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
     }
-
 }

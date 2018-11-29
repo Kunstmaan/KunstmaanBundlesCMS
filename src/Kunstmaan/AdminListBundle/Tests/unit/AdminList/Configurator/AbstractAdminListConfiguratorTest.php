@@ -31,7 +31,6 @@ class AbstractAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-
         $session = $this->createMock(Session::class);
         $session->expects($this->any())->method('has')->willReturn(true);
         $session->expects($this->any())->method('get')->willReturn([

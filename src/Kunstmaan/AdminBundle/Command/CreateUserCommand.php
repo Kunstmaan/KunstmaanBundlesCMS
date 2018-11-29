@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\GroupManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;

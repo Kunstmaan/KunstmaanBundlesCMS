@@ -21,6 +21,7 @@ class FakeClient extends Client
 {
     /**
      * @return \Psr\Http\Message\ResponseInterface|void
+     *
      * @throws Exception
      */
     public function post()
@@ -49,7 +50,7 @@ class VersionCheckTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->container = $this->createMock(ContainerInterface::class);
-        $this->container->expects($this->any())->method('getParameter')->will($this->onConsecutiveCalls('https://nasa.gov', 123, true ));
+        $this->container->expects($this->any())->method('getParameter')->will($this->onConsecutiveCalls('https://nasa.gov', 123, true));
         $this->cache = $this->createMock(Cache::class);
         $this->object = new VersionChecker($this->container, $this->cache);
     }
@@ -60,7 +61,7 @@ class VersionCheckTest extends PHPUnit_Framework_TestCase
     public function testVersionChecker()
     {
         $currentPath = getcwd();
-        if(strpos($currentPath, 'src') !== false) {
+        if (strpos($currentPath, 'src') !== false) {
             $currentPath = strstr($currentPath, 'src', true);
         }
         $path = realpath($currentPath.'/src');
@@ -107,7 +108,7 @@ class VersionCheckTest extends PHPUnit_Framework_TestCase
         $this->object = new VersionChecker($this->container, $this->cache);
         $this->cache->expects($this->never())->method('fetch');
         $currentPath = getcwd();
-        if(strpos($currentPath, 'src') !== false) {
+        if (strpos($currentPath, 'src') !== false) {
             $currentPath = strstr($currentPath, 'src', true);
         }
         $path = realpath($currentPath.'/src');
@@ -138,7 +139,7 @@ class VersionCheckTest extends PHPUnit_Framework_TestCase
         $this->cache->expects($this->once())->method('fetch')->willReturn('not_an_array');
         $this->cache->expects($this->once())->method('save')->willReturn(true);
         $currentPath = getcwd();
-        if(strpos($currentPath, 'src') !== false) {
+        if (strpos($currentPath, 'src') !== false) {
             $currentPath = strstr($currentPath, 'src', true);
         }
         $path = realpath($currentPath.'/src');
@@ -182,7 +183,7 @@ class VersionCheckTest extends PHPUnit_Framework_TestCase
     public function testCheckGetPackagesThrowsExceptionWhenNoPackagesInLock()
     {
         $currentPath = getcwd();
-        if(strpos($currentPath, 'src') !== false) {
+        if (strpos($currentPath, 'src') !== false) {
             $currentPath = strstr($currentPath, 'src', true);
         }
         $path = realpath($currentPath.'/src/Kunstmaan/AdminBundle/Tests/Helper/VersionCheck');
@@ -208,7 +209,7 @@ class VersionCheckTest extends PHPUnit_Framework_TestCase
     public function testCheckGetPackagesThrowsExceptionWithBadJson()
     {
         $currentPath = getcwd();
-        if(strpos($currentPath, 'src') !== false) {
+        if (strpos($currentPath, 'src') !== false) {
             $currentPath = strstr($currentPath, 'src', true);
         }
         $path = realpath($currentPath.'/src/Kunstmaan/AdminBundle/Tests/Helper');

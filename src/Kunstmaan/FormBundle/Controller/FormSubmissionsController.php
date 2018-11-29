@@ -98,7 +98,7 @@ class FormSubmissionsController extends Controller
 
         /** @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
-            new FormSubmissionAdminListConfigurator($em, $nodeTranslation,$deletableFormsubmission),
+            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $deletableFormsubmission),
             $em
         );
         $adminList->bindRequest($request);

@@ -49,7 +49,7 @@ class GenerateFormPageCommand extends KunstmaanGenerateCommand
     private $parentPages;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $generateFormPageParts;
 
@@ -93,7 +93,7 @@ EOT
                 'command' => 'kuma:generate:form-pageparts',
                 '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
                 '--prefix' => $this->prefix,
-                '--quiet' => false
+                '--quiet' => false,
             ];
 
             $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_DEBUG);

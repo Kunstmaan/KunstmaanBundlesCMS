@@ -5,9 +5,9 @@ namespace Kunstmaan\SeoBundle\Tests\Entity;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 use PHPUnit_Framework_TestCase;
+
 /**
  * Class TwigExtensionTests
- * @package Tests\Kunstmaan\SeoBundle\Entity
  */
 class TwigExtensionTests extends PHPUnit_Framework_TestCase
 {

@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class RawHTMLPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
 class RawHTMLPagePartTest extends PHPUnit_Framework_TestCase
 {

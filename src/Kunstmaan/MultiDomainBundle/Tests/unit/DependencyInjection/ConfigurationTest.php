@@ -21,10 +21,9 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         return new Configuration();
     }
 
-
     public function testInvalidConfiguration()
     {
-        $this->assertConfigurationIsInvalid( [[]], 'The child node "hosts" at path "kunstmaan_multi_domain" must be configured.');
+        $this->assertConfigurationIsInvalid([[]], 'The child node "hosts" at path "kunstmaan_multi_domain" must be configured.');
     }
 
     public function testProcessedValueContainsRequiredValue()

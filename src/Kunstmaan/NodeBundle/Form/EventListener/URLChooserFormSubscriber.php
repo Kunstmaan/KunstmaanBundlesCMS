@@ -51,9 +51,11 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
             switch ($firstOption) {
                 case URLChooserType::INTERNAL:
                     $attributes['choose_url'] = true;
+
                     break;
                 case URLChooserType::EXTERNAL:
                     $attributes['placeholder'] = 'https://';
+
                     break;
             }
 

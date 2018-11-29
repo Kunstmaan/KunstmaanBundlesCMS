@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\unit;
 
 use AppKernel;
@@ -19,7 +20,9 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
     public $kernel;
 
     public $connection;
+
     public $em;
+
     public static $databaseCreated = false;
 
     public function setUp()

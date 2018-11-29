@@ -26,14 +26,12 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new ChoicePagePart();
     }
 
-
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
         $this->assertTrue(is_string($stringValue));
     }
-
 
     public function testAdaptForm()
     {
@@ -57,12 +55,10 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(count($fields) > 0);
     }
 
-
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(ChoicePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
-
 
     public function testSetGetExpanded()
     {
@@ -71,7 +67,6 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $object->setExpanded(true);
         $this->assertTrue($object->getExpanded());
     }
-
 
     public function testSetGetMultiple()
     {

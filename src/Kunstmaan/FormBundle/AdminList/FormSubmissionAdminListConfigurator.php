@@ -162,7 +162,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
         if (!$this->deletableFormsubmissions) {
             return [];
         }
-        
+
         return [
             'path' => 'KunstmaanFormBundle_formsubmissions_delete',
             'params' => ['id' => $item->getId()],

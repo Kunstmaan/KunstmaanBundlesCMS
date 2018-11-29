@@ -44,7 +44,7 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     protected function getMockedEntityManager()
     {
         $configuration = Stub::make(Configuration::class, [
-            'getQuoteStrategy' => null
+            'getQuoteStrategy' => null,
         ]);
 
         $repository = Stub::make(EntityRepository::class, [
@@ -55,10 +55,10 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
         /** @var \Doctrine\ORM\EntityManager $emMock */
         $emMock = Stub::make(EntityManager::class, [
             'getRepository' => $repository,
-            'getClassMetaData' => (object)['name' => 'aClass'],
+            'getClassMetaData' => (object) ['name' => 'aClass'],
             'getConfiguration' => $configuration,
             'persist' => null,
-            'flush' => null
+            'flush' => null,
         ]);
 
         return $emMock;

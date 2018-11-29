@@ -19,7 +19,6 @@ class KunstmaanNodeSearchExtensionTest extends AbstractPrependableExtensionTestC
         return [new KunstmaanNodeSearchExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->load();

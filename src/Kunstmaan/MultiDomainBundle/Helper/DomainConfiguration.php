@@ -47,7 +47,6 @@ class DomainConfiguration extends BaseDomainConfiguration
             $this->adminRouteHelper = $this->container->get('kunstmaan_admin.adminroute.helper');
             $this->hosts = $this->container->getParameter('kunstmaan_multi_domain.hosts');
             $this->em = $this->container->get('doctrine.orm.entity_manager');
-
         } else {
             $this->adminRouteHelper = $adminRouteHelper;
             $this->hosts = $hosts;

@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class TopMenuItemTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\Menu
  */
 class TopMenuItemTest extends PHPUnit_Framework_TestCase
 {

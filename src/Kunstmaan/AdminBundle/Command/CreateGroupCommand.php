@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
@@ -42,7 +41,6 @@ class CreateGroupCommand extends ContainerAwareCommand
 
         $this->em = $em;
     }
-
 
     /**
      * Configures the current command

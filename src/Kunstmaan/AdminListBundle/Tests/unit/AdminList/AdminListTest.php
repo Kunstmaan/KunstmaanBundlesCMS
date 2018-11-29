@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use ArrayIterator;
@@ -15,8 +16,6 @@ use PHPUnit_Framework_TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-
-
 
 class PrivateObject
 {
@@ -36,11 +35,9 @@ class PublicObject extends PrivateObject
 
 /**
  * Class AdminListTest
- * @package Tests\Kunstmaan\AdminListBundle\AdminList
  */
 class AdminListTest extends PHPUnit_Framework_TestCase
 {
-
     public function testStuff()
     {
         $item = new MenuItem();
@@ -122,8 +119,6 @@ class AdminListTest extends PHPUnit_Framework_TestCase
         $itemActions = $adminList->getItemActions();
         $this->assertFalse($hasItemActions);
         $this->assertEmpty($itemActions);
-
-
     }
 
     public function testGetValue()
@@ -134,11 +129,9 @@ class AdminListTest extends PHPUnit_Framework_TestCase
         $em = $this->createMock(EntityManager::class);
         $meta = $this->createMock(ClassMetadata::class);
 
-
         $collection = new PersistentCollection($em, $meta, new ArrayCollection([
             new PublicObject(),
         ]));
-
 
         $object = new stdClass();
         $object->name = 'delboy1978uk';
@@ -160,7 +153,7 @@ class AdminListTest extends PHPUnit_Framework_TestCase
             'key' => $date,
             'array' => [
                 'random',
-                'strings'
+                'strings',
             ],
             'bool' => true,
             'string' => 'strings!',
@@ -180,7 +173,6 @@ class AdminListTest extends PHPUnit_Framework_TestCase
         ];
         $this->assertEquals('', $adminList->getStringValue($array, 'persistent'));
     }
-
 
     public function testBindRequest()
     {

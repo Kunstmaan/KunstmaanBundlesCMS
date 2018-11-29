@@ -33,7 +33,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             ],
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
-            'web_root' => '%kernel.project_dir%/web'
+            'web_root' => '%kernel.project_dir%/web',
         ];
 
         if (Kernel::VERSION_ID >= 40000) {

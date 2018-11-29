@@ -46,7 +46,7 @@ class FormPageGenerator extends KunstmaanGenerator
     private $parentPages;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $generateFormPageParts;
 
@@ -65,7 +65,7 @@ class FormPageGenerator extends KunstmaanGenerator
      * @param string          $template              The page template
      * @param array           $sections              The page sections
      * @param array           $parentPages           The parent pages
-     * @param boolean         $generateFormPageParts Boolean to check if form pageparts need to be generated
+     * @param bool            $generateFormPageParts Boolean to check if form pageparts need to be generated
      *
      * @throws \RuntimeException
      */
@@ -199,7 +199,7 @@ class FormPageGenerator extends KunstmaanGenerator
         $namespace = $this->generateFormPageParts ? $this->bundle->getNamespace() : 'Kunstmaan\FormBundle';
         $this->filesystem->copy($this->skeletonDir.'/Resources/config/pageparts/formpage.yml', $pagepartFile, false);
         GeneratorUtils::replace('~~~ENTITY~~~', $this->entity, $pagepartFile);
-        GeneratorUtils::replace("~~~FORM_BUNDLE~~~", $namespace, $pagepartFile);
+        GeneratorUtils::replace('~~~FORM_BUNDLE~~~', $namespace, $pagepartFile);
 
         $pagetemplateFile = $dirPath.'/Resources/config/pagetemplates/'.$this->template.'.yml';
         $this->filesystem->copy($this->skeletonDir.'/Resources/config/pagetemplates/formpage.yml', $pagetemplateFile, false);

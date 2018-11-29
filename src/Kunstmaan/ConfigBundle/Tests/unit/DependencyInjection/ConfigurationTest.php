@@ -24,7 +24,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testConfigGeneratesAsExpected()
     {
         $array = [
-            'entities' => []
+            'entities' => [],
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

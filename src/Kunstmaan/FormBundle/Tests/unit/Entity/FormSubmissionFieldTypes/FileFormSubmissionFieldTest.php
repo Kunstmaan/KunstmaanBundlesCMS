@@ -57,7 +57,6 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('the-file-name.jpeg', $safeName);
     }
 
-
     public function testGettersAndSetters()
     {
         $object = $this->object;

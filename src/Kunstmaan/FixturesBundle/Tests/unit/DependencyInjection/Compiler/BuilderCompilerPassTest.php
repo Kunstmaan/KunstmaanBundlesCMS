@@ -27,7 +27,7 @@ class BuilderCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addBuilder',
-            [ new Reference($svcId), 'someAlias']
+            [new Reference($svcId), 'someAlias']
         );
     }
 }

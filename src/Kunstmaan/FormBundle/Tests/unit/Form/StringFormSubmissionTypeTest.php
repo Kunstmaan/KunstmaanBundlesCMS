@@ -8,7 +8,6 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * Class StringFormSubmissionTypeTest
- * @package Tests\Kunstmaan\FormBundle\Entity
  */
 class StringFormSubmissionTypeTest extends TypeTestCase
 {

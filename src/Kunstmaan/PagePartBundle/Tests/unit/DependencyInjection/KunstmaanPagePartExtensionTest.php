@@ -19,12 +19,11 @@ class KunstmaanPagePartExtensionTest extends AbstractPrependableExtensionTestCas
         return [new KunstmaanPagePartExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_page_part.page_parts_presets' );
-        $this->assertContainerBuilderHasParameter('kunstmaan_page_part.page_templates_presets' );
+        $this->assertContainerBuilderHasParameter('kunstmaan_page_part.page_parts_presets');
+        $this->assertContainerBuilderHasParameter('kunstmaan_page_part.page_templates_presets');
     }
 }

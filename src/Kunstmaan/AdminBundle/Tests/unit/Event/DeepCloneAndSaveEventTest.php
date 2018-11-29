@@ -9,12 +9,9 @@ use stdClass;
 
 /**
  * Class DeepCloneAndSaveEventTest
- * @package Tests\Kunstmaan\AdminBundle\Event
  */
 class DeepCloneAndSaveEventTest extends PHPUnit_Framework_TestCase
 {
-
-
     public function testGetSet()
     {
         $date = new DateTime();
@@ -33,5 +30,4 @@ class DeepCloneAndSaveEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(stdClass::class, $event->getEntity());
         $this->assertInstanceOf(stdClass::class, $event->getClonedEntity());
     }
-
 }

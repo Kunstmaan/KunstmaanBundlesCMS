@@ -24,19 +24,21 @@ class FormPage extends AbstractFormPage
     {
         return null;
     }
+
     public function getPagePartAdminConfigurations()
     {
         return [
             [
-                'name'  => 'ContentPage',
-                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
+                'name' => 'ContentPage',
+                'class' => '{{ namespace }}\Entity\Pages\ContentPage',
             ],
             [
-                'name'  => 'FormPage',
-                'class' => '{{ namespace }}\Entity\Pages\FormPage'
-            ]
+                'name' => 'FormPage',
+                'class' => '{{ namespace }}\Entity\Pages\FormPage',
+            ],
         ];
     }
+
     public function getDefaultView()
     {
         return 'some.twig';

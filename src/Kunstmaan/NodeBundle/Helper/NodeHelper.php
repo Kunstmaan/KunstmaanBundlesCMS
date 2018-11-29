@@ -42,10 +42,10 @@ class NodeHelper
     /**
      * NodeHelper constructor.
      *
-     * @param EntityManagerInterface $em
-     * @param NodeAdminPublisher $nodeAdminPublisher
-     * @param TokenStorageInterface $tokenStorage
-     * @param CloneHelper $cloneHelper
+     * @param EntityManagerInterface   $em
+     * @param NodeAdminPublisher       $nodeAdminPublisher
+     * @param TokenStorageInterface    $tokenStorage
+     * @param CloneHelper              $cloneHelper
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -63,9 +63,9 @@ class NodeHelper
     }
 
     /**
-     * @param HasNodeInterface $page The page
-     * @param NodeTranslation $nodeTranslation The node translation
-     * @param NodeVersion $nodeVersion The node version
+     * @param HasNodeInterface $page            The page
+     * @param NodeTranslation  $nodeTranslation The node translation
+     * @param NodeVersion      $nodeVersion     The node version
      *
      * @return NodeVersion
      */
@@ -111,10 +111,10 @@ class NodeHelper
     }
 
     /**
-     * @param NodeVersion $nodeVersion
+     * @param NodeVersion     $nodeVersion
      * @param NodeTranslation $nodeTranslation
-     * @param int $nodeVersionTimeout
-     * @param bool $nodeVersionIsLocked
+     * @param int             $nodeVersionTimeout
+     * @param bool            $nodeVersionIsLocked
      */
     public function prepareNodeVersion(NodeVersion $nodeVersion, NodeTranslation $nodeTranslation, $nodeVersionTimeout, $nodeVersionIsLocked)
     {
@@ -143,12 +143,13 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
-     * @param NodeTranslation $nodeTranslation
-     * @param NodeVersion $nodeVersion
+     * @param Node             $node
+     * @param NodeTranslation  $nodeTranslation
+     * @param NodeVersion      $nodeVersion
      * @param HasNodeInterface $page
-     * @param boolean $isStructureNode
-     * @param TabPane $tabPane
+     * @param bool             $isStructureNode
+     * @param TabPane          $tabPane
+     *
      * @return NodeTranslation
      */
     public function updatePage(
@@ -190,10 +191,11 @@ class NodeHelper
     }
 
     /**
-     * @param string $refEntityType
-     * @param string $pageTitle
-     * @param string $locale
+     * @param string    $refEntityType
+     * @param string    $pageTitle
+     * @param string    $locale
      * @param Node|null $parentNode
+     *
      * @return NodeTranslation
      */
     public function createPage(
@@ -243,8 +245,9 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $locale
+     *
      * @return NodeTranslation
      */
     public function deletePage(Node $node, $locale)
@@ -273,22 +276,24 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $locale
+     *
      * @return HasNodeInterface
      */
-    public function getPageWithNodeInterface(Node $node, $locale) 
+    public function getPageWithNodeInterface(Node $node, $locale)
     {
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        
+
         return $nodeVersion->getRef($this->em);
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $sourceLocale
      * @param string $locale
+     *
      * @return NodeTranslation
      */
     public function copyPageFromOtherLanguage(Node $node, $sourceLocale, $locale)
@@ -322,9 +327,10 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $locale
      * @param string $title
+     *
      * @return NodeTranslation|null
      */
     public function duplicatePage(Node $node, $locale, $title = 'New page')
@@ -358,9 +364,10 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
-     * @param int $sourceNodeTranslationId
+     * @param Node   $node
+     * @param int    $sourceNodeTranslationId
      * @param string $locale
+     *
      * @return NodeTranslation
      */
     public function createPageDraftFromOtherLanguage(Node $node, $sourceNodeTranslationId, $locale)
@@ -394,8 +401,9 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $locale
+     *
      * @return NodeTranslation
      */
     public function createEmptyPage(Node $node, $locale)
@@ -436,7 +444,7 @@ class NodeHelper
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $locale
      */
     protected function deleteNodeChildren(Node $node, $locale)
@@ -475,7 +483,7 @@ class NodeHelper
             );
         }
     }
-    
+
     /**
      * @return mixed|null
      */

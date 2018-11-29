@@ -9,17 +9,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class FileFormSubmissionTypeTest
- * @package Tests\Kunstmaan\FormBundle\Entity
  */
 class FileFormSubmissionTypeTest extends TypeTestCase
 {
     /**
-     * @var UploadedFile $file
+     * @var UploadedFile
      */
     private $file;
 
     /**
-     * @var UploadedFile $image
+     * @var UploadedFile
      */
     private $image;
 
@@ -47,8 +46,6 @@ class FileFormSubmissionTypeTest extends TypeTestCase
         $field->file = $this->image;
 
         $form = $this->factory->create(FileFormSubmissionType::class, $field);
-
-
 
         $form->submit($formData);
 

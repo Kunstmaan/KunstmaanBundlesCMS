@@ -17,7 +17,6 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
      */
     protected $node;
 
-
     public function testGetHostWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
@@ -73,7 +72,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testHostOverrideReturnsNull()
     {
         $request = new Request();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $reflection = new ReflectionClass(DomainConfiguration::class);
         $method = $reflection->getMethod('getHostOverride');
         $method->setAccessible(true);
@@ -182,25 +181,25 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testGetHostBaseUrl()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertEquals('http://multilangdomain.tld', $object->getHostBaseUrl('multilangdomain.tld'));
     }
 
     public function testGetFullHost()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertNull($object->getFullHost('not-here.tld'));
     }
 
     public function testGetLocalesExtraData()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $data = $object->getLocalesExtraData();
         $this->assertEmpty($data);
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $data = $object->getLocalesExtraData();
         $this->assertArrayHasKey('foo', $data);
     }
@@ -208,7 +207,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testGetFullHostConfig()
     {
         $request = $this->getSingleLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $array = $object->getFullHostConfig();
         $this->assertArrayHasKey('multilangdomain.tld', $array);
         $this->assertArrayHasKey('singlelangdomain.tld', $array);
@@ -217,14 +216,14 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testHasHostSwitched()
     {
         $request = $this->getRequestWithOverride('/admin/somewhere');
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertTrue($object->hasHostSwitched());
     }
 
     public function testGetHostSwitched()
     {
         $request = $this->getRequestWithOverride('/admin/somewhere');
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $switched = $object->getHostSwitched();
         $this->assertArrayHasKey('id', $switched);
         $this->assertArrayHasKey('host', $switched);
@@ -235,7 +234,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     public function testFullHostById()
     {
         $request = $this->getMultiLanguageRequest();
-        $object  = $this->getDomainConfiguration($request);
+        $object = $this->getDomainConfiguration($request);
         $this->assertNull($object->getFullHostById(666));
         $this->assertNotNull($object->getFullHostById(123));
     }
@@ -397,29 +396,29 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     private function getDomainConfiguration($request)
     {
         $hostMap = array(
-            'multilangdomain.tld'  => [
-                'id'              => 456,
-                'host'            => 'multilangdomain.tld',
-                'protocol'        => 'http',
-                'type'            => 'multi_lang',
-                'default_locale'  => 'en_GB',
-                'locales'         => ['nl' => 'nl_BE', 'fr' => 'fr_BE', 'en' => 'en_GB'],
+            'multilangdomain.tld' => [
+                'id' => 456,
+                'host' => 'multilangdomain.tld',
+                'protocol' => 'http',
+                'type' => 'multi_lang',
+                'default_locale' => 'en_GB',
+                'locales' => ['nl' => 'nl_BE', 'fr' => 'fr_BE', 'en' => 'en_GB'],
                 'reverse_locales' => ['nl_BE' => 'nl', 'fr_BE' => 'fr', 'en_GB' => 'en'],
-                'root'            => 'homepage_multi',
-                'aliases'         => ['multi-alias.tld'],
-                'extra'           => ['foo' => 'bar'],
-                'locales_extra'   => ['foo' => 'bar'],
+                'root' => 'homepage_multi',
+                'aliases' => ['multi-alias.tld'],
+                'extra' => ['foo' => 'bar'],
+                'locales_extra' => ['foo' => 'bar'],
             ],
             'singlelangdomain.tld' => [
-                'id'              => 123,
-                'host'            => 'singlelangdomain.tld',
-                'type'            => 'single_lang',
-                'default_locale'  => 'en_GB',
-                'locales'         => ['en' => 'en_GB'],
+                'id' => 123,
+                'host' => 'singlelangdomain.tld',
+                'type' => 'single_lang',
+                'default_locale' => 'en_GB',
+                'locales' => ['en' => 'en_GB'],
                 'reverse_locales' => ['en_GB' => 'en'],
-                'root'            => 'homepage_single',
-                'aliases'         => ['single-alias.tld'],
-            ]
+                'root' => 'homepage_single',
+                'aliases' => ['single-alias.tld'],
+            ],
         );
 
         $map = array(

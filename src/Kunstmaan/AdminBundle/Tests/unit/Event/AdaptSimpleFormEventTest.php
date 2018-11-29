@@ -27,7 +27,6 @@ class AdaptSimpleFormEventTest extends PHPUnit_Framework_TestCase
         $this->object = new AdaptSimpleFormEvent(new Request(), EmailPagePart::class, ['data' => 123], ['data2' => 123]);
     }
 
-
     public function testGetSet()
     {
         /** @var TabPane $tabPane */
@@ -50,5 +49,4 @@ class AdaptSimpleFormEventTest extends PHPUnit_Framework_TestCase
         $this->object->setRequest(new Request());
         $this->assertInstanceOf(Request::class, $this->object->getRequest());
     }
-
 }

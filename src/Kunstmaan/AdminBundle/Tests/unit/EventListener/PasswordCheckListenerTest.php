@@ -44,7 +44,7 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $adminRouteHelper->method('isAdminRoute')->will($this->returnValueMap([
             ['/en/admin/', true],
             ['/en/random', false],
-            ['/en/admin/preview/', false]
+            ['/en/admin/preview/', false],
         ]));
 
         $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);

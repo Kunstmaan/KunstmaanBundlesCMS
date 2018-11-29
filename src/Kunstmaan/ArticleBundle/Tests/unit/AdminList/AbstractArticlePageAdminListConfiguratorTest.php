@@ -36,7 +36,6 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
 
 /**
  * Class AbstractArticlePageAdminListConfiguratorTest
- * @package Tests\Kunstmaan\ArticleBundle\AdminList
  */
 class AbstractArticlePageAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
 {
@@ -46,7 +45,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends PHPUnit_Framework_Tes
     protected $object;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     protected $em;
 
@@ -70,8 +69,8 @@ class AbstractArticlePageAdminListConfiguratorTest extends PHPUnit_Framework_Tes
 
         $this->em = $em;
 
-        /** @var EntityManager $em */
-        /** @var AclHelper $acl */
+        /* @var EntityManager $em */
+        /* @var AclHelper $acl */
         $this->object = new Configurator($em, $acl, 'nl', 'admin', $repo);
     }
 
@@ -107,7 +106,8 @@ class AbstractArticlePageAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $this->assertArrayHasKey('params', $url);
         $this->assertEquals('KunstmaanNodeBundle_nodes_edit', $url['path']);
         $this->assertCount(1, $url['params']);
-        $this->assertEquals(1314, $url['params']['id']);$url = $this->object->getEditUrlFor($item);
+        $this->assertEquals(1314, $url['params']['id']);
+        $url = $this->object->getEditUrlFor($item);
 
         $url = $this->object->getDeleteUrlFor($item);
 
@@ -145,7 +145,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $prop->setAccessible(true);
         $prop->setValue($this->object, $em);
 
-        /** @var QueryBuilder $qb */
+        /* @var QueryBuilder $qb */
         $this->object->adaptQueryBuilder($qb);
         $qb = $method->invoke($this->object);
         $this->assertInstanceOf(QueryBuilder::class, $qb);

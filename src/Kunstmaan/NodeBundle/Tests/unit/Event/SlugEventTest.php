@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SlugEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class SlugEventTest extends PHPUnit_Framework_TestCase
 {

@@ -14,12 +14,10 @@ class PagePart extends AbstractPagePart
     public function getDefaultAdminType()
     {
     }
-
 }
 
 /**
  * Class AbstractPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
 class AbstractPagePartTest extends PHPUnit_Framework_TestCase
 {

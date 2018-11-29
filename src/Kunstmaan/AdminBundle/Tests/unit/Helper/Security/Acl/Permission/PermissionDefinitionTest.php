@@ -23,7 +23,6 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->object = new PermissionDefinition(array('VIEW'));
     }
 
-
     /**
      * @expectedException \InvalidArgumentException
      */

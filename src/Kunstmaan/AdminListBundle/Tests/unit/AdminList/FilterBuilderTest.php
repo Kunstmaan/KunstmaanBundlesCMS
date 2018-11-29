@@ -90,7 +90,5 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
         $this->object->bindRequest($request);
 
         $this->assertEquals($filterDef, $this->object->getFilterDefinitions());
-
-
     }
 }

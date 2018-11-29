@@ -84,6 +84,7 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
         $output->writeln('<info>Removing all Media from the file system that have their status set to deleted in the database.</info>');
 
         $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAllDeleted();
+
         try {
             $this->em->beginTransaction();
             foreach ($medias as $media) {

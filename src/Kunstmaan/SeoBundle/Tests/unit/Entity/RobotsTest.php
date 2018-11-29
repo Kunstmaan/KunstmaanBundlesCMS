@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class RobotsTest
- * @package Tests\Kunstmaan\SeoBundle\Entity
  */
 class RobotsTest extends PHPUnit_Framework_TestCase
 {

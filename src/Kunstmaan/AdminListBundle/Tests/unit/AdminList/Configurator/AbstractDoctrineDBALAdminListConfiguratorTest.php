@@ -51,8 +51,6 @@ class DBAL extends AbstractDoctrineDBALAdminListConfigurator implements Sortable
     {
         return 'sortfield';
     }
-
-
 }
 
 class AbstractDoctrineDBALAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
@@ -150,7 +148,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends PHPUnit_Framework_Te
 
         $pager = $this->createMock(Pagerfanta::class);
         $pager->expects($this->once())->method('getNbResults')->willReturn(5);
-        $pager->expects($this->once())->method('getCurrentPageResults')->willReturn([1,2,3,4,5]);
+        $pager->expects($this->once())->method('getCurrentPageResults')->willReturn([1, 2, 3, 4, 5]);
 
         $mirror = new ReflectionClass(AbstractDoctrineDBALAdminListConfigurator::class);
         $property = $mirror->getProperty('pagerfanta');

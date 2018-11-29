@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class RevertNodeActionTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class RevertNodeActionTest extends PHPUnit_Framework_TestCase
 {

@@ -11,6 +11,7 @@ finder:
     exclude:
         - 'src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle'
     not-path:
+        - "Tests/_support"
         - "TranslatorBundle/Tests/app2"
         - "TranslatorBundle/Tests/app"
         - "vendor_bower"

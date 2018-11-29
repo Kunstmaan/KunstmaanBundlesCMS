@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BooleanFilterTypeTest
- * @package Tests\Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL
  */
 class BooleanFilterTypeTest extends Unit
 {

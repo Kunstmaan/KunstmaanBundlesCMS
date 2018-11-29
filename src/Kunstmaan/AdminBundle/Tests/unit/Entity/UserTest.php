@@ -87,7 +87,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->hasRole('ROLE_CUSTOM'));
     }
 
-
     public function testGettersAndSetters()
     {
         $user = $this->object;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -9,25 +10,24 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class AdminListTest
- * @package Tests\Kunstmaan\AdminListBundle\AdminList
  */
 class DoctrineDBALAdapterTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var DoctrineDBALAdapter $adapter
+     * @var DoctrineDBALAdapter
      */
     private $adapter;
 
     /**
-     * @var QueryBuilder $conn
+     * @var QueryBuilder
      */
     private $qb;
 
     public function setUp()
     {
         $statement = $this->createMock(Statement::class);
-        $statement->expects($this->any())->method('fetchAll')->willReturn([1,2,3]);
-        $statement->expects($this->any())->method('fetchColumn')->willReturn([1,2,3]);
+        $statement->expects($this->any())->method('fetchAll')->willReturn([1, 2, 3]);
+        $statement->expects($this->any())->method('fetchColumn')->willReturn([1, 2, 3]);
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
         $qb->expects($this->any())->method('setFirstResult')->willReturn($qb);

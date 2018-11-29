@@ -277,7 +277,6 @@ class MediaController extends Controller
 
     private function returnJsonError($code, $message)
     {
-
         return new JsonResponse(
             [
                 'jsonrpc' => '2.0',
@@ -489,6 +488,7 @@ class MediaController extends Controller
      * @param Request $request
      *
      * @return JsonResponse|Response
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function bulkMoveAction(Request $request)

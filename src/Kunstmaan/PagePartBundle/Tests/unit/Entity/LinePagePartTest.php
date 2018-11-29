@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class LinePagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
 class LinePagePartTest extends PHPUnit_Framework_TestCase
 {

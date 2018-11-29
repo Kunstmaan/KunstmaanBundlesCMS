@@ -12,12 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AdaptFormEventTest
- * @package Tests\Kunstmaan\AdminListBundle\Event
  */
 class AdaptFormEventTest extends PHPUnit_Framework_TestCase
 {
-
-
     public function testGetSet()
     {
         $request = new Request();
@@ -39,5 +36,4 @@ class AdaptFormEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
     }
-
 }

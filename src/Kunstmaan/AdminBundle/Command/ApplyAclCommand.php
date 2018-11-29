@@ -4,8 +4,6 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -87,7 +85,7 @@ class ApplyAclCommand extends ContainerAwareCommand
             return;
         }
 
-       $this->aclManager->applyAclChangesets();
+        $this->aclManager->applyAclChangesets();
     }
 
     /**

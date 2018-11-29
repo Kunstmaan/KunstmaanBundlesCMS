@@ -25,7 +25,6 @@ class LoginListenerTest extends PHPUnit_Framework_TestCase
         $event->expects($this->once())->method('getAuthenticationToken')->willReturn($token);
         $token->expects($this->once())->method('getUser')->willReturn($user);
 
-
         $listener = new LoginListener($logger, $version);
         $listener->onSecurityInteractiveLogin($event);
     }

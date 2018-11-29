@@ -8,10 +8,8 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use PHPUnit_Framework_TestCase;
 
-
 /**
  * Class PagePartRefTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
 class PagePartRefTest extends PHPUnit_Framework_TestCase
 {

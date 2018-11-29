@@ -10,7 +10,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class RedirectAdminListConfiguratorTest
- * @package Tests\Kunstmaan\RedirectBundle\Tests\Entity
  */
 class RedirectAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
 {

@@ -16,7 +16,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class CloneListenerTest
- * @package Tests\Kunstmaan\PagePartBundle\EventListener
  */
 class CloneListenerTest extends PHPUnit_Framework_TestCase
 {

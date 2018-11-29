@@ -7,11 +7,9 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class AbstractSearchPageTest
- * @package Tests\Kunstmaan\NodeSearchBundle\Entity
  */
 class AbstractSearchPageTest extends PHPUnit_Framework_TestCase
 {
-
     public function testGetters()
     {
         $page = new AbstractSearchPage();

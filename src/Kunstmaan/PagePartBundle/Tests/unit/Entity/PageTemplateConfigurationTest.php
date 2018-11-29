@@ -12,7 +12,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class LinkPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Tests\Entity
  */
 class PageTemplateConfigurationTest extends PHPUnit_Framework_TestCase
 {

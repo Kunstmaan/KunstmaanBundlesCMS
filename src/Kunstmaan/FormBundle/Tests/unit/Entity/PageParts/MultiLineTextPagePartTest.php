@@ -26,7 +26,6 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new MultiLineTextPagePart();
     }
 
-
     public function testSetGetRegex()
     {
         $object = $this->object;

@@ -90,6 +90,7 @@ class VersionChecker
      * Get the version details via webservice.
      *
      * @return mixed a list of bundles if available
+     *
      * @throws ParseException
      */
     public function check()
@@ -108,7 +109,7 @@ class VersionChecker
             'host' => $host,
             'installed' => $installed,
             'bundles' => $bundles,
-            'project' => $title
+            'project' => $title,
         ));
 
         try {

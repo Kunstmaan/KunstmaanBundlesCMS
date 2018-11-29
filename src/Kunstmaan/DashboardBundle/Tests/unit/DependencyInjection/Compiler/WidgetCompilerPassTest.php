@@ -28,7 +28,7 @@ class WidgetCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addWidget',
-            [ new Reference($svcId)]
+            [new Reference($svcId)]
         );
     }
 }

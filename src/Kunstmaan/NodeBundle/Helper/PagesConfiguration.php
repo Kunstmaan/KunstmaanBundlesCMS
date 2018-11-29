@@ -11,8 +11,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * Class PagesConfiguration
- *
- * @package Kunstmaan\NodeBundle\Helper
  */
 class PagesConfiguration
 {

@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UpVoteEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class UpVoteEventTest extends PHPUnit_Framework_TestCase
 {

@@ -21,5 +21,4 @@ class ClassLookupTest extends \PHPUnit_Framework_TestCase
         $class = ClassLookup::getClassName(new Response());
         $this->assertEquals('Response', $class);
     }
-
 }

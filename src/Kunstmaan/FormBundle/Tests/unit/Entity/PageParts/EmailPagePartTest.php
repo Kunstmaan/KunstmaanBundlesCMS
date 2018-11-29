@@ -26,7 +26,6 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new EmailPagePart();
     }
 
-
     public function testSetErrorMessageRequired()
     {
         $object = $this->object;
@@ -37,7 +36,6 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $object->setErrorMessageRequired($message);
         $this->assertEquals($message, $object->getErrorMessageRequired());
     }
-
 
     public function testSetErrorMessageInvalid()
     {
@@ -50,14 +48,12 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message, $object->getErrorMessageInvalid());
     }
 
-
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
         $this->assertTrue(is_string($stringValue));
     }
-
 
     public function testAdaptForm()
     {
@@ -81,7 +77,6 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }
-
 
     public function testGetDefaultAdminType()
     {
