@@ -10,84 +10,84 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class MediaTokenTransformer implements DataTransformerInterface
 {
-	/**
-	 * @param mixed $content
-	 *
-	 * @return string
-	 */
-	public function transform($content)
-	{
-		if (!trim($content)) {
-			return '';
-		}
+    /**
+     * @param mixed $content
+     *
+     * @return string
+     */
+    public function transform($content)
+    {
+        if (!trim($content)) {
+            return '';
+        }
 
-		$crawler = new Crawler();
-		$crawler->addHtmlContent($content);
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($content);
 
-		$crawler->filter('img')->each(
-			function (Crawler $node) {
-				$image = $node->getNode(0);
-				if ($image->hasAttribute('data-src')) {
-					$src = $image->getAttribute('data-src');
-					$image->setAttribute('src', $src);
-					$image->removeAttribute('data-src');
-				}
-			}
-		);
+        $crawler->filter('img')->each(
+            function (Crawler $node) {
+                $image = $node->getNode(0);
+                if ($image->hasAttribute('data-src')) {
+                    $src = $image->getAttribute('data-src');
+                    $image->setAttribute('src', $src);
+                    $image->removeAttribute('data-src');
+                }
+            }
+        );
 
-		try {
-			return $crawler->html();
-		}
-		catch (\InvalidArgumentException $exception) {
-			return $content;
-		}
-	}
+        try {
+            return $crawler->html();
+        }
+        catch (\InvalidArgumentException $exception) {
+            return $content;
+        }
+    }
 
-	/**
-	 * @param mixed $content
-	 *
-	 * @return string
-	 */
-	public function reverseTransform($content)
-	{
-		if (!trim($content)) {
-			return '';
-		}
+    /**
+     * @param mixed $content
+     *
+     * @return string
+     */
+    public function reverseTransform($content)
+    {
+        if (!trim($content)) {
+            return '';
+        }
 
-		$crawler = new Crawler();
-		$crawler->addHtmlContent($content);
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($content);
 
-		// Get all img tags and parse the token.
-		$crawler->filter('img')->each(
-			function (Crawler $node) {
-				$image = $node->getNode(0);
-				$src = $image->getAttribute('src');
-				$parsed = parse_url($src, PHP_URL_QUERY);
-				parse_str($parsed, $query);
+        // Get all img tags and parse the token.
+        $crawler->filter('img')->each(
+            function (Crawler $node) {
+                $image = $node->getNode(0);
+                $src = $image->getAttribute('src');
+                $parsed = parse_url($src, PHP_URL_QUERY);
+                parse_str($parsed, $query);
 
-				if (isset($query['token'])) {
-					$image->setAttribute('src', $query['token']);
-				}
-				$image->setAttribute('data-src', $src);
-			}
-		);
+                if (isset($query['token'])) {
+                    $image->setAttribute('src', $query['token']);
+                }
+                $image->setAttribute('data-src', $src);
+            }
+        );
 
-		try {
-			$html = $crawler->filter('body')->html();
+        try {
+            $html = $crawler->filter('body')->html();
 
-			// URL-decode square brackets in img and a tags
-			$html = preg_replace_callback(
-				'/<(img|a)\s+[^>]*>/',
-				function ($matches) {
-					return str_replace(['%5B', '%5D'], ['[', ']'], $matches[0]);
-				},
-				$html
-			);
+            // URL-decode square brackets in img and a tags
+            $html = preg_replace_callback(
+                '/<(img|a)\s+[^>]*>/',
+                function ($matches) {
+                    return str_replace(['%5B', '%5D'], ['[', ']'], $matches[0]);
+                },
+                $html
+            );
 
-			return $html;
-		}
-		catch (\InvalidArgumentException $exception) {
-			return $content;
-		}
-	}
+            return $html;
+        }
+        catch (\InvalidArgumentException $exception) {
+            return $content;
+        }
+    }
 }
