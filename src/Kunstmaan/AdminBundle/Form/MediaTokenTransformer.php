@@ -37,8 +37,7 @@ class MediaTokenTransformer implements DataTransformerInterface
 
         try {
             return $crawler->html();
-        }
-        catch (\InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             return $content;
         }
     }
@@ -85,8 +84,7 @@ class MediaTokenTransformer implements DataTransformerInterface
             );
 
             return $html;
-        }
-        catch (\InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             return $content;
         }
     }
