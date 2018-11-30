@@ -37,11 +37,6 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     private $request;
 
     /**
-     * @var int
-     */
-    private $limit;
-
-    /**
      * @param EntityManager $em           The entity manager
      * @param MediaManager  $mediaManager The media manager
      * @param Folder        $folder       The current folder
@@ -116,26 +111,6 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function canDelete($item)
     {
         return false;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLimit()
-    {
-        return $this->limit;
-    }
-
-    /**
-     * @param int $limit
-     *
-     * @return MediaAdminListConfigurator
-     */
-    protected function setLimit($limit)
-    {
-        $this->limit = $limit;
-
-        return $this;
     }
 
     /**
