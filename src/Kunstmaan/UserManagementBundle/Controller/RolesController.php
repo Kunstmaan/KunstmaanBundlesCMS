@@ -3,7 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
@@ -29,15 +28,16 @@ class RolesController extends BaseSettingsController
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function listAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $em        = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->container->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
+        $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -53,6 +53,7 @@ class RolesController extends BaseSettingsController
      * @Template("@KunstmaanUserManagement/Roles/add.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array|RedirectResponse
      */
     public function addAction(Request $request)
@@ -73,7 +74,7 @@ class RolesController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->container->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
-                        '%role%' => $role->getRole()
+                        '%role%' => $role->getRole(),
                     ])
                 );
 
@@ -96,6 +97,7 @@ class RolesController extends BaseSettingsController
      * @Template("@KunstmaanUserManagement/Roles/edit.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array|RedirectResponse
      */
     public function editAction(Request $request, $id)
@@ -117,7 +119,7 @@ class RolesController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->container->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
-                        '%role%' => $role->getRole()
+                        '%role%' => $role->getRole(),
                     ])
                 );
 
@@ -127,7 +129,7 @@ class RolesController extends BaseSettingsController
 
         return array(
             'form' => $form->createView(),
-            'role' => $role
+            'role' => $role,
         );
     }
 
@@ -140,6 +142,7 @@ class RolesController extends BaseSettingsController
      * @Method({"GET", "POST"})
      *
      * @throws AccessDeniedException
+     *
      * @return RedirectResponse
      */
     public function deleteAction($id)
@@ -157,12 +160,11 @@ class RolesController extends BaseSettingsController
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->container->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
-                    '%role%' => $role->getRole()
+                    '%role%' => $role->getRole(),
                 ])
             );
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
     }
-
 }

@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class RoleTypeTest
- * @package Tests\Kunstmaan\AdminBundle\Form
  */
 class RoleTypeTest extends PHPUnit_Framework_TestCase
 {
@@ -22,7 +21,7 @@ class RoleTypeTest extends PHPUnit_Framework_TestCase
             ->method('add')
             ->willReturn(true);
 
-        /** @var FormBuilder $builder */
+        /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
         $this->assertEquals('role', $type->getBlockPrefix());

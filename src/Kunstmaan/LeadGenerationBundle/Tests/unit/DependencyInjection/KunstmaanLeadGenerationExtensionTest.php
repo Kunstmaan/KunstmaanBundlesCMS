@@ -5,6 +5,7 @@ namespace Kunstmaan\LeadGenerationBundle\Tests\DependencyInjection;
 use Kunstmaan\LeadGenerationBundle\DependencyInjection\KunstmaanLeadGenerationExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
+
 /**
  * Class KunstmaanLeadGenerationExtensionTest
  */
@@ -18,10 +19,8 @@ class KunstmaanLeadGenerationExtensionTest extends AbstractPrependableExtensionT
         return [new KunstmaanLeadGenerationExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
-
         $this->load([
             'popup_types' => ['abc'],
             'debug' => true,

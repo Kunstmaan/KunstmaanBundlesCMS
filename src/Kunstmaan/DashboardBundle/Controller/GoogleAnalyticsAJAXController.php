@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
@@ -15,72 +16,69 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GoogleAnalyticsAJAXController extends Controller
 {
-
     /**
      * @Route("/updateData", name="KunstmaanDashboardBundle_analytics_update")
      */
     public function runUpdateAction(Request $request)
     {
-        $configId  = $request->query->get('configId');
+        $configId = $request->query->get('configId');
         $segmentId = $request->query->get('segmentId');
 
         $command = new GoogleAnalyticsDataCollectCommand();
         $command->setContainer($this->container);
-        $input  = new ArrayInput(array('--config' => $configId, '--segment' => $segmentId));
+        $input = new ArrayInput(array('--config' => $configId, '--segment' => $segmentId));
         $output = new NullOutput();
         $command->run($input, $output);
 
         return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
     }
 
-
     /**
      * Return an ajax response with all data for an overview
      *
      * @Route("/getOverview/{id}", requirements={"id" = "\d+"}, name="KunstmaanDashboardBundle_analytics_overview_ajax")
-     *
      */
     public function getOverviewAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
         $analyticsOverviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-        $overview                    = $analyticsOverviewRepository->find($id);
+        $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
         $goals = array();
         foreach ($overview->getActiveGoals() as $key => $goal) {
-            /** @var AnalyticsGoal $goal */
-            $goals[$key]['name']      = $goal->getName();
-            $goals[$key]['visits']    = $goal->getVisits();
-            $goals[$key]['id']        = $goal->getId();
+            /* @var AnalyticsGoal $goal */
+            $goals[$key]['name'] = $goal->getName();
+            $goals[$key]['visits'] = $goal->getVisits();
+            $goals[$key]['id'] = $goal->getId();
             $goals[$key]['chartData'] = json_decode($goal->getChartData());
         }
 
         // overview data
         $overviewData = array(
-            'id'                       => $overview->getId(),
-            'chartData'                => json_decode($overview->getChartData(), true),
-            'chartDataMaxValue'        => $overview->getChartDataMaxValue(),
-            'title'                    => $overview->getTitle(),
-            'timespan'                 => $overview->getTimespan(),
-            'startOffset'              => $overview->getStartOffset(),
-            'sessions'                 => number_format($overview->getSessions()),
-            'users'                    => number_format($overview->getUsers()),
-            'pagesPerSession'          => round($overview->getPagesPerSession(), 2),
-            'avgSessionDuration'       => $overview->getAvgSessionDuration(),
-            'returningUsers'           => number_format($overview->getReturningUsers()),
-            'newUsers'                 => round($overview->getNewUsers(), 2),
-            'pageViews'                => number_format($overview->getPageViews()),
+            'id' => $overview->getId(),
+            'chartData' => json_decode($overview->getChartData(), true),
+            'chartDataMaxValue' => $overview->getChartDataMaxValue(),
+            'title' => $overview->getTitle(),
+            'timespan' => $overview->getTimespan(),
+            'startOffset' => $overview->getStartOffset(),
+            'sessions' => number_format($overview->getSessions()),
+            'users' => number_format($overview->getUsers()),
+            'pagesPerSession' => round($overview->getPagesPerSession(), 2),
+            'avgSessionDuration' => $overview->getAvgSessionDuration(),
+            'returningUsers' => number_format($overview->getReturningUsers()),
+            'newUsers' => round($overview->getNewUsers(), 2),
+            'pageViews' => number_format($overview->getPageViews()),
             'returningUsersPercentage' => $overview->getReturningUsersPercentage(),
-            'newUsersPercentage'       => $overview->getNewUsersPercentage(),
+            'newUsersPercentage' => $overview->getNewUsersPercentage(),
         );
 
         // put all data in the return array
         $return = array(
             'responseCode' => 200,
-            'overview'     => $overviewData,
-            'goals'        => $goals,
+            'overview' => $overviewData,
+            'goals' => $goals,
         );
 
         // return json response
@@ -95,7 +93,7 @@ class GoogleAnalyticsAJAXController extends Controller
     public function getAccountsAction(Request $request)
     {
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configId     = $request->query->get('configId');
+        $configId = $request->query->get('configId');
         if ($configId) {
             $configHelper->init($configId);
         }
@@ -110,7 +108,7 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function saveAccountAction(Request $request)
     {
-        $accountId    = $request->query->get('id');
+        $accountId = $request->query->get('id');
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configHelper->saveAccountId($accountId);
 
@@ -124,9 +122,9 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function getPropertiesAction(Request $request)
     {
-        $accountId    = $request->query->get('accountId');
+        $accountId = $request->query->get('accountId');
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configId     = $request->query->get('configId');
+        $configId = $request->query->get('configId');
         if ($configId) {
             $configHelper->init($configId);
         }
@@ -141,7 +139,7 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function savePropertyAction(Request $request)
     {
-        $propertyId   = $request->query->get('id');
+        $propertyId = $request->query->get('id');
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configHelper->savePropertyId($propertyId);
 
@@ -155,10 +153,10 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function getProfilesAction(Request $request)
     {
-        $accountId    = $request->query->get('accountId');
-        $propertyId   = $request->query->get('propertyId');
+        $accountId = $request->query->get('accountId');
+        $propertyId = $request->query->get('propertyId');
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configId     = $request->query->get('configId');
+        $configId = $request->query->get('configId');
         if ($configId) {
             $configHelper->init($configId);
         }
@@ -173,7 +171,7 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function saveProfileAction(Request $request)
     {
-        $propertyId   = $request->query->get('id');
+        $propertyId = $request->query->get('id');
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configHelper->saveProfileId($propertyId);
 
@@ -188,14 +186,14 @@ class GoogleAnalyticsAJAXController extends Controller
     public function saveConfigAction(Request $request)
     {
         // get params
-        $configId     = $request->query->get('configId');
-        $accountId    = $request->query->get('accountId');
-        $propertyId   = $request->query->get('propertyId');
-        $profileId    = $request->query->get('profileId');
+        $configId = $request->query->get('configId');
+        $accountId = $request->query->get('accountId');
+        $propertyId = $request->query->get('propertyId');
+        $profileId = $request->query->get('profileId');
         $disableGoals = $request->query->get('disableGoals');
 
         // edit the config
-        $em     = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
         if ($accountId && $propertyId && $profileId) {
             $config->setAccountId($accountId);
@@ -233,7 +231,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $configId = $request->query->get('configId');
 
         // edit the config
-        $em     = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
         $em->remove($config);
         $em->flush();
@@ -246,8 +244,8 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function getConfigAction(Request $request)
     {
-        $em        = $this->getDoctrine()->getManager();
-        $config    = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+        $em = $this->getDoctrine()->getManager();
+        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
         $accountId = $config->getAccountId();
 
         if (!$accountId) {
@@ -268,12 +266,12 @@ class GoogleAnalyticsAJAXController extends Controller
     public function addSegmentAction(Request $request)
     {
         $configId = $request->query->get('configId');
-        $em       = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         // create a new segment
         $segment = new AnalyticsSegment();
-        $query   = $request->query->get('query');
-        $name    = $request->query->get('name');
+        $query = $request->query->get('query');
+        $name = $request->query->get('name');
         $segment->setQuery($query);
         $segment->setName($name);
 
@@ -310,9 +308,9 @@ class GoogleAnalyticsAJAXController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $id      = $request->query->get('id');
-        $query   = $request->query->get('query');
-        $name    = $request->query->get('name');
+        $id = $request->query->get('id');
+        $query = $request->query->get('query');
+        $name = $request->query->get('name');
         $segment = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->find($id);
         $segment->setName($name);
         $segment->setQuery($query);

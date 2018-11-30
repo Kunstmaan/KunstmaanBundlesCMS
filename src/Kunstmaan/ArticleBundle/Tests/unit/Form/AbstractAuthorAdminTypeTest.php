@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class AbstractAuthorAdminTypeTest
- * @package Tests\Kunstmaan\ArticleBundle\Entity
  */
 class AbstractAuthorAdminTypeTest extends PHPUnit_Framework_TestCase
 {

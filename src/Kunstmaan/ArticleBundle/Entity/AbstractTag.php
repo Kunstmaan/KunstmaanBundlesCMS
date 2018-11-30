@@ -101,4 +101,3 @@ class AbstractTag extends AbstractEntity implements Translatable
         return $this->getName();
     }
 }
-

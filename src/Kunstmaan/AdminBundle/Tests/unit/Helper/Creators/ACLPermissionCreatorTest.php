@@ -15,7 +15,6 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 
 /**
  * Class ACLPermissionCreatorTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\AdminPanel
  */
 class ACLPermissionCreatorTest extends PHPUnit_Framework_TestCase
 {
@@ -36,7 +35,7 @@ class ACLPermissionCreatorTest extends PHPUnit_Framework_TestCase
         $provider->expects($this->once())->method('updateAcl')->willReturn($mutableAcl);
 
         $aclCreator = new ACLPermissionCreator($provider, $strategy);
-        $aclCreator->initByExample($user,  new User(), true);
+        $aclCreator->initByExample($user, new User(), true);
     }
 
     public function testInitByMap()
@@ -52,6 +51,6 @@ class ACLPermissionCreatorTest extends PHPUnit_Framework_TestCase
         $provider->expects($this->once())->method('deleteAcl')->willThrowException(new AclNotFoundException());
 
         $aclCreator = new ACLPermissionCreator($provider, $strategy);
-        $aclCreator->initByMap($user,  ['key' => 'value'], true);
+        $aclCreator->initByMap($user, ['key' => 'value'], true);
     }
 }

@@ -22,5 +22,4 @@ class AbstractORMFilterTypeTest extends \PHPUnit_Framework_TestCase
 
         $object->setQueryBuilder($queryBuilder);
     }
-
 }

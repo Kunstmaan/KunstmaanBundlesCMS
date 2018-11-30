@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UrlTransactionNamingStrategyTest
- * @package Tests\Kunstmaan\UtilitiesBundle\Helper\Cipher
  */
 class UrlTransactionNamingStrategyTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,5 +17,4 @@ class UrlTransactionNamingStrategyTest extends \PHPUnit_Framework_TestCase
         $name = $strategy->getTransactionName($request);
         $this->assertEquals('/', $name);
     }
-
 }

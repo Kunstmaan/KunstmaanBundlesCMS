@@ -10,7 +10,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class NodeVersionLockTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
 class QueuedNodeTranslationActionTest extends PHPUnit_Framework_TestCase
 {

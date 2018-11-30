@@ -27,7 +27,7 @@ class SearchConfigurationCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addConfiguration',
-            [ new Reference($svcId), 'someAlias']
+            [new Reference($svcId), 'someAlias']
         );
     }
 }

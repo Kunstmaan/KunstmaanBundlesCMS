@@ -42,7 +42,6 @@ interface SearcherInterface
 
     /**
      * @return mixed
-     *
      * @return SearcherInterface
      */
     public function getData();

@@ -15,5 +15,4 @@ class Popup extends AbstractPopup
     {
         return null;
     }
-
 }

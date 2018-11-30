@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": "^7.1",
         "symfony/symfony": "~3.4",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
@@ -67,7 +67,8 @@
         "matthiasnoback/symfony-config-test": "2.2.0",
         "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
         "ekino/newrelic-bundle": "^1.4",
-        "codeception/codeception": "^2.4"
+        "codeception/codeception": "^2.4",
+        "friendsofphp/php-cs-fixer": "^2.13"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",
@@ -104,7 +105,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.1-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

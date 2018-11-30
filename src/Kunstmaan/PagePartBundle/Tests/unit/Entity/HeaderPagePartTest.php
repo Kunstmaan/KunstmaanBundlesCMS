@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Class HeaderPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
 class HeaderPagePartTest extends PHPUnit_Framework_TestCase
 {

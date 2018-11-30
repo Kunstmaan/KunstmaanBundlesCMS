@@ -21,7 +21,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoiceFormSubmissionField;
+        $this->object = new ChoiceFormSubmissionField();
     }
 
     public function testGetDefaultAdminType()

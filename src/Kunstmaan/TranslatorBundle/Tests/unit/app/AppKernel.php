@@ -22,7 +22,6 @@ class AppKernel extends Kernel
         );
 
         return $bundles;
-
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

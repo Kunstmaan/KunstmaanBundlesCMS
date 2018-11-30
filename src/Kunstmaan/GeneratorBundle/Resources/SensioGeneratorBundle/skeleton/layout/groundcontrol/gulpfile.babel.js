@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 import gulp from 'gulp';
 import chug from 'gulp-chug';
 
@@ -18,24 +16,24 @@ import {
     generateStyleguide,
     cssStyleguideOptimized,
     bundleStyleguideOptimized,
+    copyStyleguide,
     server,
     buildOnChange,
-    testOnChange
+    testOnChange,
 } from './groundcontrol/configured-tasks';
 
 const analyze = gulp.series(
     eslint,
-    stylelint
+    stylelint,
 );
 
-const test = gulp.series(
-    analyze
-);
+const test = gulp.series(analyze);
 
 const buildStyleguide = gulp.series(
     cssStyleguideOptimized,
     bundleStyleguideOptimized,
-    generateStyleguide
+    generateStyleguide,
+    copyStyleguide,
 );
 
 const buildLocal = gulp.series(
@@ -45,7 +43,7 @@ const buildLocal = gulp.series(
     cssLocal,
     bundleLocal,
     bundleAdminExtraLocal,
-    buildStyleguide
+    buildStyleguide,
 );
 
 const buildOptimized = gulp.series(
@@ -55,12 +53,12 @@ const buildOptimized = gulp.series(
     cssOptimized,
     bundleOptimized,
     bundleAdminExtraOptimized,
-    buildStyleguide
+    buildStyleguide,
 );
 
 const testAndBuildOptimized = gulp.series(
     test,
-    buildOptimized
+    buildOptimized,
 );
 
 const startLocal = gulp.series(
@@ -68,26 +66,22 @@ const startLocal = gulp.series(
     buildLocal,
     server,
     buildOnChange,
-    testOnChange
+    testOnChange,
 );
 
 const startOptimized = gulp.series(
     analyze,
     buildOptimized,
-    server
+    server,
 );
 
-const buildCmsAssets = gulp.series(
-    () => {
-        return gulp.src('vendor/kunstmaan/bundles-cms/gulpfile.babel.js', { read: false })
-            .pipe(chug({
-                args: [
-                    '--rootPath',
-                    '../../../../../../../web/assets/'
-                ],
-                tasks: ['buildOptimized']
-            }));
-    }
-);
+const buildCmsAssets = gulp.series(() => gulp.src('vendor/kunstmaan/bundles-cms/gulpfile.babel.js', { read: false })
+    .pipe(chug({
+        args: [
+            '--rootPath',
+            '../../../../../../../web/assets/',
+        ],
+        tasks: ['buildOptimized'],
+    })));
 
-export {test, buildOptimized, testAndBuildOptimized, startLocal, startOptimized, buildCmsAssets};
+export { test, buildOptimized, testAndBuildOptimized, startLocal, startOptimized, buildCmsAssets };

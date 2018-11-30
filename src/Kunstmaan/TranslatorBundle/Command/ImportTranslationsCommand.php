@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @final since 5.1
+ *
  * @deprecated since 5.1
  * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  * NEXT_MAJOR file will be renamed
@@ -50,27 +51,25 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         $this
             ->setName('kuma:translator:import')
             ->setDescription('Import translation files into database')
-            ->addOption('force',         'f', InputOption::VALUE_NONE,     'Force import, overwrite all existing database entries')
-            ->addOption('locales',       'l', InputOption::VALUE_REQUIRED, 'Language import, only import a specific locale')
-            ->addOption('globals',       'g', InputOption::VALUE_NONE,     'Global app import, import the global translations of your app')
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries')
+            ->addOption('locales', 'l', InputOption::VALUE_REQUIRED, 'Language import, only import a specific locale')
+            ->addOption('globals', 'g', InputOption::VALUE_NONE, 'Global app import, import the global translations of your app')
             ->addOption('defaultbundle', 'd', InputOption::VALUE_REQUIRED, 'Import the translations for specific bundles, use "own", "all" or "custom"')
-            ->addOption('bundles',       'b', InputOption::VALUE_OPTIONAL, 'A list of bundle names that need to be imported (comma delimited) , only used When "defaultbundle" is set to "custom"')
+            ->addOption('bundles', 'b', InputOption::VALUE_OPTIONAL, 'A list of bundle names that need to be imported (comma delimited) , only used When "defaultbundle" is set to "custom"')
         ;
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $force          = $input->getOption('force');
-        $locales        = $input->getOption('locales');
-        $globals        = $input->getOption('globals');
-        $defaultBundle  = $input->getOption('defaultbundle') ;
-        $bundles        = $input->hasOption('bundles') ? array_map('trim', explode(',', $input->getOption('bundles'))) : array();
+        $force = $input->getOption('force');
+        $locales = $input->getOption('locales');
+        $globals = $input->getOption('globals');
+        $defaultBundle = $input->getOption('defaultbundle');
+        $bundles = $input->hasOption('bundles') ? array_map('trim', explode(',', $input->getOption('bundles'))) : array();
         if (null === $this->importCommandHandler) {
             $this->importCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler');
         }
@@ -85,6 +84,6 @@ class ImportTranslationsCommand extends ContainerAwareCommand
 
         $imported = $this->importCommandHandler->executeImportCommand($importCommand);
 
-        $output->writeln(sprintf("Translation imported: %d", $imported));
+        $output->writeln(sprintf('Translation imported: %d', $imported));
     }
 }

@@ -59,11 +59,11 @@ class KunstmaanGenerator extends Generator
         CommandAssistant $assistant,
         ContainerInterface $container = null
     ) {
-        $this->filesystem  = $filesystem;
-        $this->registry    = $registry;
+        $this->filesystem = $filesystem;
+        $this->registry = $registry;
         $this->skeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
-        $this->assistant   = $assistant;
-        $this->container   = $container;
+        $this->assistant = $assistant;
+        $this->container = $container;
 
         $this->setSkeletonDirs(array($this->skeletonDir, GeneratorUtils::getFullSkeletonPath('/common')));
     }
@@ -73,7 +73,7 @@ class KunstmaanGenerator extends Generator
      *
      * @param string $keyword
      *
-     * @return boolean
+     * @return bool
      */
     public function isReservedKeyword($keyword)
     {
@@ -92,6 +92,7 @@ class KunstmaanGenerator extends Generator
      * @param bool            $withRepository
      *
      * @return array
+     *
      * @throws \RuntimeException
      */
     protected function generateEntity(
@@ -113,7 +114,7 @@ class KunstmaanGenerator extends Generator
         );
 
         $entityClass = $this->registry->getAliasNamespace($bundle->getName()) . ($namePrefix ? '\\' . $namePrefix : '') . '\\' . $name;
-        $entityPath  = $bundle->getPath() . '/Entity/' . ($namePrefix ? $namePrefix . '/' : '') . str_replace('\\', '/', $name) . '.php';
+        $entityPath = $bundle->getPath() . '/Entity/' . ($namePrefix ? $namePrefix . '/' : '') . str_replace('\\', '/', $name) . '.php';
         if (file_exists($entityPath)) {
             throw new \RuntimeException(sprintf('Entity "%s" already exists.', $entityClass));
         }
@@ -141,7 +142,7 @@ class KunstmaanGenerator extends Generator
         }
         $class->setPrimaryTable(
             array(
-                'name' => strtolower($dbPrefix . strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name))) . 's'
+                'name' => strtolower($dbPrefix . strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name))) . 's',
             )
         );
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);
@@ -189,21 +190,21 @@ class KunstmaanGenerator extends Generator
         $extendClass = '\Symfony\Component\Form\AbstractType'
     ) {
         $className = $entityName . 'AdminType';
-        $savePath  = $bundle->getPath() . '/Form/' . $entityPrefix . '/' . $className . '.php';
-        $name      = str_replace(
-                "\\",
+        $savePath = $bundle->getPath() . '/Form/' . $entityPrefix . '/' . $className . '.php';
+        $name = str_replace(
+                '\\',
                 '_',
                 strtolower($bundle->getNamespace())
             ) . '_' . strtolower($entityName) . 'type';
 
         $params = array(
-            'className'     => $className,
-            'name'          => $name,
-            'namespace'     => $bundle->getNamespace(),
-            'entity'        => '\\' . $bundle->getNamespace() . '\Entity\\' . $entityPrefix . '\\' . $entityName,
-            'fields'        => $fields,
+            'className' => $className,
+            'name' => $name,
+            'namespace' => $bundle->getNamespace(),
+            'entity' => '\\' . $bundle->getNamespace() . '\Entity\\' . $entityPrefix . '\\' . $entityName,
+            'fields' => $fields,
             'entity_prefix' => $entityPrefix,
-            'extend_class'  => $extendClass
+            'extend_class' => $extendClass,
         );
         $this->renderFile('/Form/EntityAdminType.php', $savePath, $params);
     }
@@ -216,7 +217,7 @@ class KunstmaanGenerator extends Generator
     protected function installDefaultPageTemplates($bundle)
     {
         // Configuration templates
-        $dirPath     = sprintf('%s/Resources/config/pagetemplates/', $bundle->getPath());
+        $dirPath = sprintf('%s/Resources/config/pagetemplates/', $bundle->getPath());
         $skeletonDir = sprintf('%s/Resources/config/pagetemplates/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         // Only copy templates over when the folder does not exist yet...
@@ -225,16 +226,16 @@ class KunstmaanGenerator extends Generator
                 'default-one-column.yml',
                 'default-two-column-left.yml',
                 'default-two-column-right.yml',
-                'default-three-column.yml'
+                'default-three-column.yml',
             );
             foreach ($files as $file) {
                 $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
-                GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . $file);
+                GeneratorUtils::replace('~~~BUNDLE~~~', $bundle->getName(), $dirPath . $file);
             }
         }
 
         // Twig templates
-        $dirPath     = sprintf('%s/Resources/views/Pages/Common/', $bundle->getPath());
+        $dirPath = sprintf('%s/Resources/views/Pages/Common/', $bundle->getPath());
         $skeletonDir = sprintf('%s/Resources/views/Pages/Common/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         if (!$this->filesystem->exists($dirPath)) {
@@ -242,7 +243,7 @@ class KunstmaanGenerator extends Generator
                 'one-column-pagetemplate.html.twig',
                 'two-column-left-pagetemplate.html.twig',
                 'two-column-right-pagetemplate.html.twig',
-                'three-column-pagetemplate.html.twig'
+                'three-column-pagetemplate.html.twig',
             );
             foreach ($files as $file) {
                 $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
@@ -267,7 +268,7 @@ class KunstmaanGenerator extends Generator
     protected function installDefaultPagePartConfiguration($bundle)
     {
         // Pagepart configuration
-        $dirPath     = sprintf('%s/Resources/config/pageparts/', $bundle->getPath());
+        $dirPath = sprintf('%s/Resources/config/pageparts/', $bundle->getPath());
         $skeletonDir = sprintf('%s/Resources/config/pageparts/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         // Only copy when folder does not exist yet
@@ -321,11 +322,11 @@ class KunstmaanGenerator extends Generator
     /**
      * Render all files in the source directory and copy them to the target directory.
      *
-     * @param string $sourceDir The source directory where we need to look in
-     * @param string $targetDir The target directory where we need to copy the files too
-     * @param string $filename The name of the file that needs to be rendered
-     * @param array $parameters The parameters that will be passed to the templates
-     * @param bool $override Whether to override an existing file or not
+     * @param string      $sourceDir      The source directory where we need to look in
+     * @param string      $targetDir      The target directory where we need to copy the files too
+     * @param string      $filename       The name of the file that needs to be rendered
+     * @param array       $parameters     The parameters that will be passed to the templates
+     * @param bool        $override       Whether to override an existing file or not
      * @param string|null $targetFilename The name of the target file (if null, then use $filename)
      */
     public function renderSingleFile($sourceDir, $targetDir, $filename, array $parameters, $override = false, $targetFilename = null)
@@ -423,18 +424,18 @@ class KunstmaanGenerator extends Generator
     {
         $twig = new \Twig_Environment(
             new \Twig_Loader_Filesystem(array($sourceDir)), array(
-                'debug'            => true,
-                'cache'            => false,
+                'debug' => true,
+                'cache' => false,
                 'strict_variables' => true,
-                'autoescape'       => false
+                'autoescape' => false,
             )
         );
 
         // Ruby erb template syntax
         $lexer = new \Twig_Lexer(
             $twig, array(
-                'tag_comment'  => array('<%#', '%>'),
-                'tag_block'    => array('<%', '%>'),
+                'tag_comment' => array('<%#', '%>'),
+                'tag_block' => array('<%', '%>'),
                 'tag_variable' => array('<%=', '%>'),
             )
         );

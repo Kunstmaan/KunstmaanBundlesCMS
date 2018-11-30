@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\SearchBundle\Tests\DependencyInjection\Configuration;
 
-
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
 
 class SearchConfigurationChainTest extends \PHPUnit_Framework_TestCase

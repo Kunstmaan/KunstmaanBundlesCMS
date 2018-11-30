@@ -22,7 +22,7 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new AclChangeset;
+        $this->object = new AclChangeset();
     }
 
     public function test__construct()
@@ -90,7 +90,4 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($user, $this->object->getUser());
     }
-
 }
-
-

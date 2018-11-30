@@ -22,19 +22,15 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ExportService;
+        $this->object = new ExportService();
     }
 
-    /**
-     */
     public function testGetSupportedExtensions()
     {
         $extensions = ExportService::getSupportedExtensions();
         $this->assertEquals(['Csv' => 'csv', 'Ods' => 'ods', 'Excel' => 'xlsx'], $extensions);
     }
 
-    /**
-     */
     public function testGetDownloadableResponseReturnsStreamedResponseWithExcel()
     {
         /** @var ExportableInterface $adminList */
@@ -45,8 +41,6 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
 
-    /**
-     */
     public function testGetDownloadableResponseReturnsStreamedResponseWithOds()
     {
         /** @var ExportableInterface $adminList */
@@ -57,8 +51,6 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
 
-    /**
-     */
     public function testGetDownloadableResponseReturnsStreamedResponseWithCsv()
     {
         /** @var ExportableInterface $adminList */

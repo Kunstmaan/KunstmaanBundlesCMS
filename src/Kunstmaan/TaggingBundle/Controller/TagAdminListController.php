@@ -42,6 +42,7 @@ class TagAdminListController extends AdminListController
      * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
+     *
      * @return array
      */
     public function addAction(Request $request)

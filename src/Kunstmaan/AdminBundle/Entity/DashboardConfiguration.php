@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DashboardConfiguration extends AbstractEntity
 {
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */

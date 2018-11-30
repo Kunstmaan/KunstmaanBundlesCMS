@@ -32,7 +32,7 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $value = "Some label";
+        $value = 'Some label';
         $object->setLabel($value);
         $this->assertEquals($value, $object->getLabel());
     }

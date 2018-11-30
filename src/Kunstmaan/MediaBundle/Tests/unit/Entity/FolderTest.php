@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;

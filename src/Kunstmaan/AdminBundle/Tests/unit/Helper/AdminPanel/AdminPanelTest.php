@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class AdminPanelActionTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\AdminPanel
  */
 class AdminPanelTest extends PHPUnit_Framework_TestCase
 {
@@ -20,6 +19,5 @@ class AdminPanelTest extends PHPUnit_Framework_TestCase
         $panel->addAdminPanelAdaptor($adapter);
         $actions = $panel->getAdminPanelActions();
         $this->assertEmpty($actions);
-
     }
 }

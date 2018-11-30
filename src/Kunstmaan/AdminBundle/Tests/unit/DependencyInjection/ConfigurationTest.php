@@ -51,7 +51,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                 'min_special_characters' => 2,
                 'min_length' => 16,
                 'max_length' => 26,
-            ]
+            ],
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

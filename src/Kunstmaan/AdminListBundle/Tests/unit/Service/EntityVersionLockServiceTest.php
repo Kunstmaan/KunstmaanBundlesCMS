@@ -13,15 +13,24 @@ use Kunstmaan\AdminListBundle\Tests\unit\Model\TestLockableEntityInterfaceImplem
  */
 class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
 {
-    protected static $TEST_CLASS = "Kunstmaan\\AdminListBundle\\Tests\\unit\\Model\\TestLockableEntityInterfaceImplementation";
-    protected static $TEST_NEW_ENTITY_ID = "1";
-    protected static $TEST_ID = "5";
-    protected static $TEST_ENTITY_ID = "5";
-    protected static $ALTERNATIVE_TEST_ID = "391";
-    protected static $ALTERNATIVE_TEST_ENTITY_ID = "391";
-    protected static $USER_ID = "104";
-    protected static $USER_NAME = "Kevin Test";
-    protected static $ALTERNATIVE_USER = "Alternative Test";
+    protected static $TEST_CLASS = 'Kunstmaan\\AdminListBundle\\Tests\\unit\\Model\\TestLockableEntityInterfaceImplementation';
+
+    protected static $TEST_NEW_ENTITY_ID = '1';
+
+    protected static $TEST_ID = '5';
+
+    protected static $TEST_ENTITY_ID = '5';
+
+    protected static $ALTERNATIVE_TEST_ID = '391';
+
+    protected static $ALTERNATIVE_TEST_ENTITY_ID = '391';
+
+    protected static $USER_ID = '104';
+
+    protected static $USER_NAME = 'Kevin Test';
+
+    protected static $ALTERNATIVE_USER = 'Alternative Test';
+
     protected static $THRESHOLD = 35;
 
     /**
@@ -61,7 +70,7 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
         $outDatedEntity->method('getId')->willReturn(self::$ALTERNATIVE_TEST_ID);
         $outDatedEntity->method('getEntityClass')->willReturn(self::$TEST_CLASS);
         $outDatedEntity->method('getEntityId')->willReturn(self::$ALTERNATIVE_TEST_ENTITY_ID);
-        $outDatedEntity->method('getUpdated')->willReturn(new \DateTime("-1 days"));
+        $outDatedEntity->method('getUpdated')->willReturn(new \DateTime('-1 days'));
 
         $newEntityVersionLock = new EntityVersionLock();
         $newEntityVersionLock->setOwner(self::$ALTERNATIVE_USER);
@@ -114,7 +123,7 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
 
         $repositoryMap = [
             ['KunstmaanAdminListBundle:EntityVersionLock', $mockLockRepository],
-            ['KunstmaanAdminListBundle:LockableEntity', $mockLockableRepository]
+            ['KunstmaanAdminListBundle:LockableEntity', $mockLockableRepository],
         ];
         $mockObjectManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
             ->disableOriginalConstructor()
@@ -151,7 +160,6 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testIsEntityBelowThresholdReturnsFalseWhenEntityUpdatedAtIsOverTreshold()
     {
-
         $result = $this->object->isEntityBelowThreshold(new TestLockableEntityInterfaceImplementation(self::$ALTERNATIVE_TEST_ENTITY_ID));
 
         $this->assertFalse($result);

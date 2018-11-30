@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanTranslatorExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -28,7 +28,7 @@ class KunstmaanTranslatorExtension extends Extension
             return;
         }
 
-        if(!$container->hasParameter('requiredlocales')) {
+        if (!$container->hasParameter('requiredlocales')) {
             $container->setParameter('requiredlocales', ['nl', 'fr', 'en']);
         }
         $container->setParameter('kuma_translator.enabled', $config['enabled']);

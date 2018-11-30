@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class FileHelperTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Media
      */

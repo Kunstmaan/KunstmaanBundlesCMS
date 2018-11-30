@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Filter
 {
     /**
-     * @var string $columnName
+     * @var string
      */
     protected $columnName = null;
 
@@ -38,9 +37,9 @@ class Filter
      */
     public function __construct($columnName, array $filterDefinition, $uniqueId)
     {
-        $this->columnName       = $columnName;
+        $this->columnName = $columnName;
         $this->filterDefinition = $filterDefinition;
-        $this->uniqueId         = $uniqueId;
+        $this->uniqueId = $uniqueId;
     }
 
     /**

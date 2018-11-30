@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FacebookLikeEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class FacebookLikeEventTest extends PHPUnit_Framework_TestCase
 {

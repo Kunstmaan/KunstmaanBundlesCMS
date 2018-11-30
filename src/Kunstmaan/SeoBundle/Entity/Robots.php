@@ -8,6 +8,7 @@ use Kunstmaan\SeoBundle\Form\RobotsType;
 
 /**
  * Robots.txt data
+ *
  * @ORM\Entity
  * @ORM\Table(name="kuma_robots")
  */
@@ -51,7 +52,6 @@ class Robots extends AbstractEntity
      */
     public function __toString()
     {
-        return "Robots";
+        return 'Robots';
     }
-
 }

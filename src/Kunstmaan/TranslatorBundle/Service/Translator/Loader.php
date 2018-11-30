@@ -12,6 +12,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 class Loader implements LoaderInterface
 {
     private $translationRepository;
+
     private $catalogues = array();
 
     /**

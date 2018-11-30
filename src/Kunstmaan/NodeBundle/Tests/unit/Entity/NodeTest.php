@@ -4,7 +4,6 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\Node;

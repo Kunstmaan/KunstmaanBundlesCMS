@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 use Doctrine\ORM\QueryBuilder;
-
 use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
 
 /**
@@ -12,7 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
 abstract class AbstractORMFilterType extends AbstractFilterType
 {
     /**
-     * @var QueryBuilder $queryBuilder
+     * @var QueryBuilder
      */
     protected $queryBuilder;
 

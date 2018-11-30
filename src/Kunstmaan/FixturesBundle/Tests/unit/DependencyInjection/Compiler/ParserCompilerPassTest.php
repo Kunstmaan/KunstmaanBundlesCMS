@@ -28,13 +28,13 @@ class ParserCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addParser',
-            [ new Reference($svcId), 'someAlias']
+            [new Reference($svcId), 'someAlias']
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addSpecParser',
-            [ new Reference($svcId), 'someAlias']
+            [new Reference($svcId), 'someAlias']
         );
     }
 }

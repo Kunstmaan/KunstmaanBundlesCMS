@@ -7,7 +7,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class PageTemplateConfigurationParser implements PageTemplateConfigurationParserInterface
 {
-
     /**
      * @var KernelInterface
      */
@@ -29,7 +28,9 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
      * This will read the $name file and parse it to the PageTemplate
      *
      * @param string $name
+     *
      * @return PageTemplateInterface
+     *
      * @throws \Exception
      */
     public function parse($name)
@@ -50,7 +51,7 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
         }
 
         $result->setRows($rows);
-        $result->setTemplate($rawData["template"]);
+        $result->setTemplate($rawData['template']);
 
         return $result;
     }
@@ -59,6 +60,7 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
      * This builds a Region out of the rawRegion from the Yaml
      *
      * @param array $rawRegion
+     *
      * @return Region
      */
     private function buildRegion($rawRegion)
@@ -84,11 +86,11 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
         return new Region($rawRegion['name'], $rawRegion['span'], $rawRegion['template'], $children, $rows);
     }
 
-
     /**
      * This builds a Row out of the rawRow from the Yaml
      *
      * @param array $rawRow
+     *
      * @return Row
      */
     private function buildRow($rawRow)
@@ -106,6 +108,7 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
      * @param $name
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function getRawData($name)
@@ -118,7 +121,7 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
             throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
         }
 
-        list ($namespace, $name) = explode(':', $name, 2);
+        list($namespace, $name) = explode(':', $name, 2);
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
         $rawData = Yaml::parse(file_get_contents($path));
 

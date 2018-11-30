@@ -9,7 +9,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class AbstractArticleAuthorAdminListConfiguratorTest
- * @package Tests\Kunstmaan\AdminListBundle\AdminList
  */
 class AbstractArticleAuthorAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
 {

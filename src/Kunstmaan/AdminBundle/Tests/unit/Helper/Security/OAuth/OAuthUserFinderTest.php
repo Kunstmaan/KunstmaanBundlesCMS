@@ -12,12 +12,12 @@ use PHPUnit_Framework_TestCase;
 class OAuthUserFinderTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var OAuthUserFinder $object
+     * @var OAuthUserFinder
      */
     private $object;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em;
 

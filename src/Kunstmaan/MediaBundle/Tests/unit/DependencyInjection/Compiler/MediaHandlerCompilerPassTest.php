@@ -30,13 +30,13 @@ class MediaHandlerCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'kunstmaan_media.media_manager',
             'addHandler',
-            [ new Reference('kunstmaan_media.media_manager')]
+            [new Reference('kunstmaan_media.media_manager')]
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'kunstmaan_media.icon_font_manager',
             'addLoader',
-            [ new Reference('kunstmaan_media.icon_font_manager'), 'kunstmaan_media.icon_font_manager']
+            [new Reference('kunstmaan_media.icon_font_manager'), 'kunstmaan_media.icon_font_manager']
         );
     }
 }

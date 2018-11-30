@@ -26,7 +26,7 @@ class AdminPanelCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'kunstmaan_admin.admin_panel',
             'addAdminPanelAdaptor',
-            [ new Reference('kunstmaan_admin.admin_panel'), 0]
+            [new Reference('kunstmaan_admin.admin_panel'), 0]
         );
     }
 }

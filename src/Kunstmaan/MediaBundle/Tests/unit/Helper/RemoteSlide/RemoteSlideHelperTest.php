@@ -11,7 +11,6 @@ use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper;
  */
 class RemoteSlideHelperTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Media
      */

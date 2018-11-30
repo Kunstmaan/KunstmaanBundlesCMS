@@ -9,7 +9,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class NodeVersionLockTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
 class NodeVersionLockTest extends PHPUnit_Framework_TestCase
 {

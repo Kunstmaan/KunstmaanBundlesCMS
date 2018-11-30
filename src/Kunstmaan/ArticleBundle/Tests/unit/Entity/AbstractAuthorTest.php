@@ -3,7 +3,6 @@
 namespace Kunstmaan\ArticleBundle\Tests\Entity;
 
 use Kunstmaan\ArticleBundle\Entity\AbstractAuthor;
-use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 use PHPUnit_Framework_TestCase;
 
 /**

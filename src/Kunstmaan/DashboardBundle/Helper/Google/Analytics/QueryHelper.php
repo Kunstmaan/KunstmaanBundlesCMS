@@ -1,11 +1,9 @@
 <?php
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 
 class QueryHelper
 {
-
     /** @var ServiceHelper */
     private $serviceHelper;
 
@@ -15,9 +13,10 @@ class QueryHelper
     /**
      * constructor
      *
-     * @var ServiceHelper $serviceHelper
+     * @var ServiceHelper
      */
-    public function __construct(ServiceHelper $serviceHelper, ConfigHelper $configHelper) {
+    public function __construct(ServiceHelper $serviceHelper, ConfigHelper $configHelper)
+    {
         $this->serviceHelper = $serviceHelper;
         $this->configHelper = $configHelper;
     }
@@ -25,10 +24,10 @@ class QueryHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param int $timespan Timespan for the data to query in days
-     * @param int $startOffset An offset in days
-     * @param string $metrics The needed metrics
-     * @param array $extra Extra options suchs as dimentions, sort data, filter data,..
+     * @param int    $timespan    Timespan for the data to query in days
+     * @param int    $startOffset An offset in days
+     * @param string $metrics     The needed metrics
+     * @param array  $extra       Extra options suchs as dimentions, sort data, filter data,..
      *
      * @return \Google_GaData result    A data object containing the queried data
      */
@@ -48,10 +47,10 @@ class QueryHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param string $from Start date for the data to query
-     * @param string $to End date in the past
+     * @param string $from    Start date for the data to query
+     * @param string $to      End date in the past
      * @param string $metrics The needed metrics
-     * @param array $extra Extra options suchs as dimentions, sort data, filter data,..
+     * @param array  $extra   Extra options suchs as dimentions, sort data, filter data,..
      *
      * @return \Google_GaData result    A data object containing the queried data
      */
@@ -73,9 +72,8 @@ class QueryHelper
      *
      *  @return ServiceHelper $serviceHelper
      */
-    public function getServiceHelper() {
+    public function getServiceHelper()
+    {
         return $this->serviceHelper;
     }
-
-
 }

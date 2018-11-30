@@ -23,13 +23,13 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new SingleLineTextPagePart;
+        $this->object = new SingleLineTextPagePart();
     }
 
     public function testSetGetRegex()
     {
         $object = $this->object;
-        $regex = ".*example.*";
+        $regex = '.*example.*';
         $object->setRegex($regex);
         $this->assertEquals($regex, $object->getRegex());
     }
@@ -37,7 +37,7 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     public function testSetErrorMessageRegex()
     {
         $object = $this->object;
-        $message = "Some example error message";
+        $message = 'Some example error message';
         $object->setErrorMessageRegex($message);
         $this->assertEquals($message, $object->getErrorMessageRegex());
     }
@@ -53,7 +53,7 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->object;
         $object->setRequired(true);
-        $object->setRegex(".*example.*");
+        $object->setRegex('.*example.*');
 
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()

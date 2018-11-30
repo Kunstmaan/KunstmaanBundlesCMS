@@ -15,20 +15,19 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
  */
 class HasGuessableExtensionValidator extends ConstraintValidator
 {
-
     /**
-     * @var ExtensionGuesserInterface $extensionGuesser
+     * @var ExtensionGuesserInterface
      */
     private $extensionGuesser;
 
     /**
-     * @var MimeTypeGuesserInterface $mimeTypeGuesser
+     * @var MimeTypeGuesserInterface
      */
     private $mimeTypeGuesser;
 
     /**
      * @param $value
-     * @param Constraint  $constraint
+     * @param Constraint $constraint
      *
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
@@ -49,7 +48,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
             $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
         }
 
-        if ($pathInfo['extension'] === NULL) {
+        if ($pathInfo['extension'] === null) {
             $this->context->buildViolation($constraint->notGuessableErrorMessage)
                 ->setCode(HasGuessableExtension::NOT_GUESSABLE_ERROR)
                 ->addViolation();
@@ -69,6 +68,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
      */
     public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
-        $this->mimeTypeGuesser= $mimeTypeGuesserFactory->get();
+        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
     }
 }

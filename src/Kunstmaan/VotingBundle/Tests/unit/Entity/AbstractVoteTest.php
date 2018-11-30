@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class AbstractVoteTest
- * @package Tests\Kunstmaan\TaggingBundle\Entity
  */
 class AbstractVoteTest extends PHPUnit_Framework_TestCase
 {
@@ -35,6 +34,5 @@ class AbstractVoteTest extends PHPUnit_Framework_TestCase
         $object->prePersist();
         $this->assertInstanceOf(DateTime::class, $object->getTimestamp());
         $this->assertEquals(FacebookLike::DEFAULT_VALUE, $object->getValue());
-
     }
 }

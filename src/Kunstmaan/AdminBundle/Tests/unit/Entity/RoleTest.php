@@ -23,7 +23,6 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->object = new Role('ROLE_TEST');
     }
 
-
     public function test__construct()
     {
         $this->assertEquals('ROLE_TEST', $this->object->getRole());
@@ -44,5 +43,4 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(null, $this->object->getId());
     }
-
 }

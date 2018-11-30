@@ -18,7 +18,7 @@ class AbstractVote
     /**
      * Default value of any vote is 1
      *
-     * @var integer
+     * @var int
      */
     const DEFAULT_VALUE = 1;
 
@@ -49,7 +49,7 @@ class AbstractVote
     /**
      * Use this field to add the ID of a meta entity containing meta information of this vote
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -63,7 +63,7 @@ class AbstractVote
     protected $ip;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */

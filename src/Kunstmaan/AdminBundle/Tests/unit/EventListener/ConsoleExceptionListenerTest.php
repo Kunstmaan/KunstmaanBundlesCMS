@@ -18,7 +18,7 @@ class ConsoleExceptionListenerTest extends PHPUnit_Framework_TestCase
         $listener = new ConsoleExceptionListener($logger);
 
         $event = $this->createMock(ConsoleExceptionEvent::class);
-        if (class_exists(ConsoleErrorEvent::class)){
+        if (class_exists(ConsoleErrorEvent::class)) {
             $this->assertNull($listener->onConsoleException($event));
         } else {
             $command = new ApplyAclCommand();

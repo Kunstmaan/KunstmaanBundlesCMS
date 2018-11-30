@@ -12,7 +12,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class NodeVersionTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
 class NodeVersionTest extends PHPUnit_Framework_TestCase
 {
@@ -67,7 +66,7 @@ class NodeVersionTest extends PHPUnit_Framework_TestCase
     {
         /** @var HasNodeInterface $entity */
         $entity = Stub::makeEmpty(HasNodeInterface::class, [
-            'getId' => 1
+            'getId' => 1,
         ]);
 
         $em = $this->getMockBuilder(EntityManager::class)

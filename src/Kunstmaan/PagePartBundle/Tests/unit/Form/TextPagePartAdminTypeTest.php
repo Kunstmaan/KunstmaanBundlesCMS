@@ -7,7 +7,6 @@ use Kunstmaan\PagePartBundle\Tests\unit\Form\PagePartAdminTypeTestCase;
 
 /**
  * Class TextPagePartAdminTypeTest
- * @package Tests\Kunstmaan\PagePartBundle\Form
  */
 class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
 {
@@ -32,6 +31,6 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
     }
 }

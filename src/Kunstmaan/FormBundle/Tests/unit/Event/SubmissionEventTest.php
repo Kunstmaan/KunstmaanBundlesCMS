@@ -12,12 +12,11 @@ use Kunstmaan\FormBundle\Event\SubmissionEvent;
  */
 class SubmissionEventTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testEvent()
     {
         $submission = new FormSubmission();
         $page = Stub::makeEmpty(AbstractFormPage::class, [
-            'getId' => 2
+            'getId' => 2,
         ]);
 
         $submission->setId(1);

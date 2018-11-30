@@ -93,8 +93,8 @@ class FormHandler implements FormHandlerInterface
                 return new RedirectResponse($page->generateThankYouUrl($router, $context));
             }
         }
-        $context["frontendform"] = $form->createView();
-        $context["frontendformobject"] = $form;
+        $context['frontendform'] = $form->createView();
+        $context['frontendformobject'] = $form;
 
         return null;
     }

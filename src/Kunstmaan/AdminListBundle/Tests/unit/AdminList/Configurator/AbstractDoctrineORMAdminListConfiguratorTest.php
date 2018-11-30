@@ -56,8 +56,6 @@ class ORM extends AbstractDoctrineORMAdminListConfigurator implements SortableIn
     {
         return 'sortfield';
     }
-
-
 }
 
 class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
@@ -192,7 +190,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
 
         $pager = $this->createMock(Pagerfanta::class);
         $pager->expects($this->once())->method('getNbResults')->willReturn(5);
-        $pager->expects($this->once())->method('getCurrentPageResults')->willReturn([1,2,3,4,5]);
+        $pager->expects($this->once())->method('getCurrentPageResults')->willReturn([1, 2, 3, 4, 5]);
 
         $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
         $property = $mirror->getProperty('pagerfanta');
@@ -256,7 +254,6 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $property = $mirror->getProperty('permissionDef');
         $property->setAccessible(true);
         $property->setValue($config, new PermissionDefinition(['admin']));
-
 
         $qb->expects($this->any())->method('getQuery')->willReturn($query);
         $query = $config->getQuery();

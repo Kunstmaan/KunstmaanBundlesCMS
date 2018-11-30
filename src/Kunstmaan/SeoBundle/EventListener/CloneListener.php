@@ -3,7 +3,6 @@
 namespace Kunstmaan\SeoBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
@@ -14,7 +13,6 @@ use Kunstmaan\SeoBundle\Entity\Seo;
  */
 class CloneListener
 {
-
     /**
      * @var EntityManager
      */
@@ -56,5 +54,4 @@ class CloneListener
             }
         }
     }
-
 }

@@ -65,7 +65,7 @@ abstract class FormSubmissionField
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -161,7 +161,7 @@ abstract class FormSubmissionField
     /**
      * Get sequence
      *
-     * @return integer
+     * @return int
      */
     public function getSequence()
     {
@@ -221,7 +221,7 @@ abstract class FormSubmissionField
      */
     public function __toString()
     {
-        return "FormSubmission Field";
+        return 'FormSubmission Field';
     }
 
     /**

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TabTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs
  */
 class TabTest extends PHPUnit_Framework_TestCase
 {
@@ -27,8 +26,8 @@ class TabTest extends PHPUnit_Framework_TestCase
         $builder = $this->createMock(FormBuilder::class);
         $view = $this->createMock(FormView::class);
         $widget = $this->createMock(FormWidget::class);
-        $widget->expects($this->once())->method('getExtraParams')->willReturn([1,2,3,4,5]);
-        $widget->expects($this->once())->method('getFormErrors')->willReturn([1,2,3,4,5]);
+        $widget->expects($this->once())->method('getExtraParams')->willReturn([1, 2, 3, 4, 5]);
+        $widget->expects($this->once())->method('getFormErrors')->willReturn([1, 2, 3, 4, 5]);
         $widget->expects($this->once())->method('buildForm')->willReturn(true);
         $widget->expects($this->once())->method('bindRequest')->willReturn(true);
         $widget->expects($this->once())->method('persist')->willReturn(true);

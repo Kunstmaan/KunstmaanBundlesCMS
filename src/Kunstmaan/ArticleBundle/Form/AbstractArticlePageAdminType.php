@@ -35,23 +35,24 @@ class AbstractArticlePageAdminType extends PageAdminType
                 'required' => true,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'date_format' => 'dd/MM/yyyy'
+                'date_format' => 'dd/MM/yyyy',
             )
         );
 
         $builder->add('summary', TextType::class, array(
-            'label' => 'article.form.summary.label'
+            'label' => 'article.form.summary.label',
         ));
     }
 
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)    {
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage'
+            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage',
         ));
     }
 

@@ -16,13 +16,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class SearchService
- * @package Kunstmaan\NodeSearchBundle\Services
  */
 class SearchService
 {
     /**
      * @var RenderContext
-     *
      */
     protected $renderContext;
 
@@ -33,7 +31,6 @@ class SearchService
 
     /**
      * @var RequestStack
-     *
      */
     protected $requestStack;
 
@@ -44,8 +41,8 @@ class SearchService
 
     /**
      * @param ContainerInterface $container
-     * @param RequestStack $requestStack
-     * @param int $defaultPerPage
+     * @param RequestStack       $requestStack
+     * @param int                $defaultPerPage
      */
     public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10)
     {
@@ -57,7 +54,6 @@ class SearchService
 
     /**
      * @param int $defaultPerPage
-     *
      */
     public function setDefaultPerPage($defaultPerPage)
     {
@@ -123,11 +119,12 @@ class SearchService
         $entity = $request->attributes->get('_entity');
 
         $pageNumber = $this->getRequestedPage($request);
-        $searcher   = $this->container->get($entity->getSearcher());
+        $searcher = $this->container->get($entity->getSearcher());
         $this->applySearchParams($searcher, $request, $this->renderContext);
 
-        $adapter    = new SearcherRequestAdapter($searcher);
+        $adapter = new SearcherRequestAdapter($searcher);
         $pagerfanta = new Pagerfanta($adapter);
+
         try {
             $pagerfanta
                 ->setMaxPerPage($this->getDefaultPerPage())
@@ -148,11 +145,11 @@ class SearchService
     {
         // Retrieve the search parameters
         $queryString = trim($request->query->get('query'));
-        $queryType   = $request->query->get('type');
-        $lang        = $request->getLocale();
+        $queryType = $request->query->get('type');
+        $lang = $request->getLocale();
 
         $context['q_query'] = $queryString;
-        $context['q_type']  = $queryType;
+        $context['q_type'] = $queryType;
 
         $searcher
             ->setData($this->sanitizeSearchQuery($queryString))
@@ -195,4 +192,3 @@ class SearchService
         return $pageNumber;
     }
 }
-

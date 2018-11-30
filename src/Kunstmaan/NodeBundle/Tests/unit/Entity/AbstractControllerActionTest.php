@@ -19,7 +19,6 @@ class Action extends AbstractControllerAction
     {
         return false;
     }
-
 }
 
 class AbstractControllerActionTest extends PHPUnit_Framework_TestCase

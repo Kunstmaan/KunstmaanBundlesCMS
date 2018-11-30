@@ -41,7 +41,7 @@ class AudioPagePartTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:AudioPagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:AudioPagePart:view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()

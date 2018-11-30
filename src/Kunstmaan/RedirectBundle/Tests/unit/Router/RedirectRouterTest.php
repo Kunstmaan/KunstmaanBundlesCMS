@@ -11,7 +11,6 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * Class RedirectRouterTest
- * @package Tests\Kunstmaan\RedirectBundle\Router
  */
 class RedirectRouterTest extends PHPUnit_Framework_TestCase
 {
@@ -48,15 +47,15 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
         $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
         $this->repository->expects($this->any())->method('findAll')->will($this->returnValue($this->getRedirects()));
 
-        $this->firstObject     = new RedirectRouter($this->repository, $firstDomainConfiguration);
-        $this->secondObject     = new RedirectRouter($this->repository, $secondDomainConfiguration);
+        $this->firstObject = new RedirectRouter($this->repository, $firstDomainConfiguration);
+        $this->secondObject = new RedirectRouter($this->repository, $secondDomainConfiguration);
     }
 
     /**
-     * @param int     $id
-     * @param string  $origin
-     * @param string  $target
-     * @param boolean $permanent
+     * @param int    $id
+     * @param string $origin
+     * @param string $target
+     * @param bool   $permanent
      *
      * @return Redirect
      */
@@ -79,7 +78,7 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
     private function getRedirects()
     {
         if (!isset($this->redirects)) {
-            $this->redirects   = array();
+            $this->redirects = array();
             $this->redirects[] = $this->getRedirect(1, 'test1', '/target1', false, null);
             $this->redirects[] = $this->getRedirect(2, 'test2', '/target2', true, null);
             $this->redirects[] = $this->getRedirect(3, 'test3', '/target3', true, 'sub.domain.com');
@@ -126,9 +125,9 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/target1',
-                'permanent'   => false,
-                '_route'      => '_redirect_route_1'
+                'path' => '/target1',
+                'permanent' => false,
+                '_route' => '_redirect_route_1',
             ),
             $redirect
         );
@@ -137,9 +136,9 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/target2',
-                'permanent'   => true,
-                '_route'      => '_redirect_route_2'
+                'path' => '/target2',
+                'permanent' => true,
+                '_route' => '_redirect_route_2',
             ),
             $redirect
         );
@@ -148,9 +147,9 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/target3',
-                'permanent'   => true,
-                '_route'      => '_redirect_route_3'
+                'path' => '/target3',
+                'permanent' => true,
+                '_route' => '_redirect_route_3',
             ),
             $redirect
         );
@@ -165,9 +164,9 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/target4',
-                'permanent'   => true,
-                '_route'      => '_redirect_route_4'
+                'path' => '/target4',
+                'permanent' => true,
+                '_route' => '_redirect_route_4',
             ),
             $redirect
         );

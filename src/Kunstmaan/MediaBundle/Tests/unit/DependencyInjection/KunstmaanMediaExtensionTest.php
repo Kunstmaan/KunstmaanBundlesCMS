@@ -19,7 +19,6 @@ class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanMediaExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('twig.form.resources', []);

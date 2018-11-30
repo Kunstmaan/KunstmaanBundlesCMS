@@ -54,10 +54,10 @@ class PagePartGenerator extends KunstmaanGenerator
      */
     public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, array $sections, $behatTest)
     {
-        $this->bundle   = $bundle;
-        $this->entity   = $entity;
-        $this->prefix   = $prefix;
-        $this->fields   = $fields;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
+        $this->fields = $fields;
         $this->sections = $sections;
 
         $this->generatePagePartEntity();
@@ -92,15 +92,15 @@ class PagePartGenerator extends KunstmaanGenerator
         );
 
         // Add some extra functions in the generated entity :s
-        $params    = array(
-            'bundle'    => $this->bundle->getName(),
-            'pagepart'  => $this->entity,
-            'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType'
+        $params = array(
+            'bundle' => $this->bundle->getName(),
+            'pagepart' => $this->entity,
+            'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
         );
         $extraCode = $this->render('/Entity/PageParts/ExtraFunctions.php', $params);
 
-        $pos        = strrpos($entityCode, "\n}");
-        $trimmed    = substr($entityCode, 0, $pos);
+        $pos = strrpos($entityCode, "\n}");
+        $trimmed = substr($entityCode, 0, $pos);
         $entityCode = $trimmed."\n\n".$extraCode."\n}\n";
 
         // Write class to filesystem
@@ -131,7 +131,7 @@ class PagePartGenerator extends KunstmaanGenerator
             'pagepart' => strtolower(
                     preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
                 ) . '-pp',
-            'fields'   => $this->fields
+            'fields' => $this->fields,
         );
         $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
 
@@ -151,8 +151,8 @@ class PagePartGenerator extends KunstmaanGenerator
                     $data['types'] = array();
                 }
                 $data['types'][] = array(
-                    'name'  => str_replace('PagePart', '', $this->entity),
-                    'class' => $this->bundle->getNamespace() . '\\Entity\\PageParts\\' . $this->entity
+                    'name' => str_replace('PagePart', '', $this->entity),
+                    'class' => $this->bundle->getNamespace() . '\\Entity\\PageParts\\' . $this->entity,
                 );
 
                 $ymlData = Yaml::dump($data);
@@ -172,9 +172,9 @@ class PagePartGenerator extends KunstmaanGenerator
 
         // Get the context names for each section config file
         $sectionInfo = array();
-        $dir         = $configDir . '/pageparts/';
+        $dir = $configDir . '/pageparts/';
         foreach ($this->sections as $section) {
-            $data                                    = Yaml::parse(file_get_contents($dir . $section));
+            $data = Yaml::parse(file_get_contents($dir . $section));
             $sectionInfo[basename($section, '.yml')] = array('context' => $data['context'], 'pagetempates' => array());
         }
 
@@ -198,10 +198,10 @@ class PagePartGenerator extends KunstmaanGenerator
 
         $contextTemplates = array();
         foreach ($templateFinder as $templatePath) {
-            $parts    = explode("/", $templatePath);
+            $parts = explode('/', $templatePath);
             $fileName = basename($parts[count($parts) - 1], '.yml');
 
-            $data         = Yaml::parse(file_get_contents($templatePath));
+            $data = Yaml::parse(file_get_contents($templatePath));
             $templateName = $data['name'];
             if (array_key_exists('rows', $data) && is_array($data['rows'])) {
                 foreach ($data['rows'] as $row) {
@@ -276,13 +276,13 @@ class PagePartGenerator extends KunstmaanGenerator
 
         $pages = array();
         foreach ($finder as $pageFile) {
-            $parts     = explode("/", $pageFile);
+            $parts = explode('/', $pageFile);
             $className = basename($parts[count($parts) - 1], '.php');
 
             $contents = file_get_contents($pageFile);
             if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false && strpos($contents, 'trait ') === false) {
                 $classNamespace = '\\' . $this->bundle->getNamespace() . '\Entity\Pages\\' . $className;
-                $entity         = new $classNamespace;
+                $entity = new $classNamespace();
 
                 if (!method_exists($entity, 'getPagePartAdminConfigurations') || !method_exists(
                         $entity,
@@ -296,26 +296,26 @@ class PagePartGenerator extends KunstmaanGenerator
                 $ptConfigs = $entity->getPageTemplates();
 
                 foreach ($ppConfigs as $ppConfig) {
-                    $parts            = explode(":", $ppConfig);
+                    $parts = explode(':', $ppConfig);
                     $ppConfigFilename = $parts[count($parts) - 1];
 
                     // Context found in this Page class
                     if (array_key_exists($ppConfigFilename, $sectionInfo)) {
                         // Search for templates
                         foreach ($ptConfigs as $ptConfig) {
-                            $parts            = explode(":", $ptConfig);
+                            $parts = explode(':', $ptConfig);
                             $ptConfigFilename = $parts[count($parts) - 1];
 
                             // Page template found
                             if (array_key_exists($ptConfigFilename, $sectionInfo[$ppConfigFilename]['pagetempates'])) {
                                 // Get all page properties
-                                $form     = $this->container->get('form.factory')->create($entity->getDefaultAdminType());
+                                $form = $this->container->get('form.factory')->create($entity->getDefaultAdminType());
                                 $children = $form->createView()->children;
 
                                 $pageFields = array();
                                 foreach ($children as $field) {
-                                    $name   = $field->vars['name'];
-                                    $attr   = $field->vars['attr'];
+                                    $name = $field->vars['name'];
+                                    $attr = $field->vars['attr'];
                                     $blocks = $field->vars['block_prefixes'];
 
                                     if ($name == 'title' || $name == 'pageTitle') {
@@ -328,34 +328,34 @@ class PagePartGenerator extends KunstmaanGenerator
                                         // do nothing
                                     } elseif ($blocks[1] == 'datetime') {
                                         $pageFields[]['datetime'] = array(
-                                            'label'       => $this->labelCase($name),
+                                            'label' => $this->labelCase($name),
                                             'date_random' => DateTime::date('d/m/Y'),
-                                            'time_random' => DateTime::time('H:i')
+                                            'time_random' => DateTime::time('H:i'),
                                         );
                                     } elseif ($blocks[1] == 'number') {
                                         $pageFields[]['decimal'] = array(
-                                            'label'  => $this->labelCase($name),
-                                            'random' => Base::randomFloat(2, 0, 99999)
+                                            'label' => $this->labelCase($name),
+                                            'random' => Base::randomFloat(2, 0, 99999),
                                         );
                                     } elseif ($blocks[1] == 'integer') {
                                         $pageFields[]['integer'] = array(
-                                            'label'  => $this->labelCase($name),
-                                            'random' => Base::randomNumber(3000, 99999)
+                                            'label' => $this->labelCase($name),
+                                            'random' => Base::randomNumber(3000, 99999),
                                         );
                                     } elseif ($blocks[1] == 'checkbox') {
                                         $pageFields[]['boolean'] = array(
-                                            'label' => $this->labelCase($name)
+                                            'label' => $this->labelCase($name),
                                         );
                                     } elseif ($blocks[1] == 'media') {
-                                        $id                    = (count($images) > 0 ? $images[0]->getId() : 1);
+                                        $id = (count($images) > 0 ? $images[0]->getId() : 1);
                                         $pageFields[]['media'] = array(
-                                            'label'  => $this->labelCase($name),
-                                            'random' => $id
+                                            'label' => $this->labelCase($name),
+                                            'random' => $id,
                                         );
                                     } elseif ($blocks[2] == 'urlchooser') {
                                         $pageFields[]['link'] = array(
-                                            'label'  => $this->labelCase($name),
-                                            'random' => 'http://www.' . strtolower(Lorem::word()) . '.com'
+                                            'label' => $this->labelCase($name),
+                                            'random' => 'http://www.' . strtolower(Lorem::word()) . '.com',
                                         );
                                     } elseif ($blocks[2] == 'textarea' && array_key_exists(
                                             'class',
@@ -363,22 +363,22 @@ class PagePartGenerator extends KunstmaanGenerator
                                         ) && $attr['class'] == 'js-rich-editor rich-editor'
                                     ) {
                                         $pageFields[]['rich_text'] = array(
-                                            'label'  => $this->labelCase($name),
-                                            'random' => Lorem::sentence()
+                                            'label' => $this->labelCase($name),
+                                            'random' => Lorem::sentence(),
                                         );
                                     } elseif ($blocks[2] == 'textarea' || $blocks[1] == 'text') {
                                         $pageFields[]['text'] = array(
-                                            'label'  => $this->labelCase($name),
-                                            'random' => Lorem::word()
+                                            'label' => $this->labelCase($name),
+                                            'random' => Lorem::word(),
                                         );
                                     }
                                 }
 
                                 $pages[] = array(
-                                    'name'     => $className,
-                                    'section'  => $sectionInfo[$ppConfigFilename]['context'],
+                                    'name' => $className,
+                                    'section' => $sectionInfo[$ppConfigFilename]['context'],
                                     'template' => $sectionInfo[$ppConfigFilename]['pagetempates'][$ptConfigFilename],
-                                    'fields'   => $pageFields,
+                                    'fields' => $pageFields,
                                 );
                             }
                         }
@@ -432,66 +432,74 @@ class PagePartGenerator extends KunstmaanGenerator
                     case 'single_line':
                         $values[0]['random1'] = Lorem::word();
                         $values[0]['random2'] = Lorem::word();
-                        $values[0]['lName']   = $this->labelCase($values[0]['fieldName']);
+                        $values[0]['lName'] = $this->labelCase($values[0]['fieldName']);
+
                         break;
                     case 'rich_text':
                         $values[0]['random1'] = Lorem::sentence();
                         $values[0]['random2'] = Lorem::sentence();
-                        $values[0]['lName']   = $this->labelCase($values[0]['fieldName']);
+                        $values[0]['lName'] = $this->labelCase($values[0]['fieldName']);
+
                         break;
                     case 'link':
-                        $values['url']['random1']      = 'http://www.' . strtolower(Lorem::word()) . '.com';
-                        $values['url']['random2']      = 'http://www.' . strtolower(Lorem::word()) . '.com';
-                        $values['url']['lName']        = $this->labelCase($values['url']['fieldName']);
-                        $values['text']['random1']     = Lorem::word();
-                        $values['text']['random2']     = Lorem::word();
-                        $values['text']['lName']       = $this->labelCase($values['text']['fieldName']);
+                        $values['url']['random1'] = 'http://www.' . strtolower(Lorem::word()) . '.com';
+                        $values['url']['random2'] = 'http://www.' . strtolower(Lorem::word()) . '.com';
+                        $values['url']['lName'] = $this->labelCase($values['url']['fieldName']);
+                        $values['text']['random1'] = Lorem::word();
+                        $values['text']['random2'] = Lorem::word();
+                        $values['text']['lName'] = $this->labelCase($values['text']['fieldName']);
                         $values['new_window']['lName'] = $this->labelCase($values['new_window']['fieldName']);
+
                         break;
                     case 'image':
                         if (count($images) > 0) {
                             if (count($images) > 1) {
-                                $values['image']['id_random1']  = $images[0]->getId();
+                                $values['image']['id_random1'] = $images[0]->getId();
                                 $values['image']['url_random1'] = $images[0]->getUrl();
-                                $values['image']['id_random2']  = $images[1]->getId();
+                                $values['image']['id_random2'] = $images[1]->getId();
                                 $values['image']['url_random2'] = $images[1]->getUrl();
                             } else {
-                                $values['image']['id_random1']  = $values['image']['id_random2'] = $images[0]->getId();
+                                $values['image']['id_random1'] = $values['image']['id_random2'] = $images[0]->getId();
                                 $values['image']['url_random1'] = $values['image']['url_random2'] = $images[0]->getUrl(
                                 );
                             }
                         } else {
-                            $values['image']['id_random1']  = $values['image']['id_random2'] = '1';
+                            $values['image']['id_random1'] = $values['image']['id_random2'] = '1';
                             $values['image']['url_random1'] = $values['image']['url_random2'] = 'XXX';
                         }
-                        $values['image']['lName']      = $this->labelCase($values['image']['fieldName']);
+                        $values['image']['lName'] = $this->labelCase($values['image']['fieldName']);
                         $values['alt_text']['random1'] = Lorem::word();
                         $values['alt_text']['random2'] = Lorem::word();
-                        $values['alt_text']['lName']   = $this->labelCase($values['alt_text']['fieldName']);
+                        $values['alt_text']['lName'] = $this->labelCase($values['alt_text']['fieldName']);
+
                         break;
                     case 'boolean':
                         $values[0]['lName'] = $this->labelCase($values[0]['fieldName']);
+
                         break;
                     case 'integer':
                         $values[0]['random1'] = Base::randomNumber(3000, 99999);
                         $values[0]['random2'] = Base::randomNumber(3000, 99999);
-                        $values[0]['lName']   = $this->labelCase($values[0]['fieldName']);
+                        $values[0]['lName'] = $this->labelCase($values[0]['fieldName']);
+
                         break;
                     case 'decimal':
                         $values[0]['random1'] = Base::randomFloat(2, 0, 99999);
                         $values[0]['random2'] = Base::randomFloat(2, 0, 99999);
-                        $values[0]['lName']   = $this->labelCase($values[0]['fieldName']);
+                        $values[0]['lName'] = $this->labelCase($values[0]['fieldName']);
+
                         break;
                     case 'datetime':
-                        $values[0]['date_random1']     = DateTime::date('d/m/Y');
-                        $values[0]['date_random2']     = DateTime::date('d/m/Y');
-                        $values[0]['time_random1']     = DateTime::time('H:i');
-                        $values[0]['time_random2']     = DateTime::time('H:i');
-                        $dparts                        = explode('/', $values[0]['date_random1']);
+                        $values[0]['date_random1'] = DateTime::date('d/m/Y');
+                        $values[0]['date_random2'] = DateTime::date('d/m/Y');
+                        $values[0]['time_random1'] = DateTime::time('H:i');
+                        $values[0]['time_random2'] = DateTime::time('H:i');
+                        $dparts = explode('/', $values[0]['date_random1']);
                         $values[0]['datetime_random1'] = $dparts[2] . '-' . $dparts[1] . '-' . $dparts[0] . ' ' . $values[0]['time_random1'] . ':00';
-                        $dparts                        = explode('/', $values[0]['date_random2']);
+                        $dparts = explode('/', $values[0]['date_random2']);
                         $values[0]['datetime_random2'] = $dparts[2] . '-' . $dparts[1] . '-' . $dparts[0] . ' ' . $values[0]['time_random2'] . ':00';
-                        $values[0]['lName']            = $this->labelCase($values[0]['fieldName']);
+                        $values[0]['lName'] = $this->labelCase($values[0]['fieldName']);
+
                         break;
                 }
 
@@ -500,9 +508,9 @@ class PagePartGenerator extends KunstmaanGenerator
         }
 
         $params = array(
-            'name'   => $this->entity,
-            'pages'  => $pages,
-            'fields' => $this->fields
+            'name' => $this->entity,
+            'pages' => $pages,
+            'fields' => $this->fields,
         );
         $this->renderFile(
             '/Features/PagePart.feature',
@@ -524,5 +532,4 @@ class PagePartGenerator extends KunstmaanGenerator
     {
         return ucfirst(str_replace('_', ' ', Container::underscore($text)));
     }
-
 }

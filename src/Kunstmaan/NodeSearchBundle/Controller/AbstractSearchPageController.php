@@ -17,10 +17,10 @@ class AbstractSearchPageController extends Controller
     public function serviceAction(Request $request)
     {
         if ($request->query->has('query')) {
-            $search     = $this->container->get('kunstmaan_node_search.search.service');
+            $search = $this->container->get('kunstmaan_node_search.search.service');
             $pagerfanta = $search->search();
             /** @var RenderContext $renderContext */
-            $renderContext               = $search->getRenderContext();
+            $renderContext = $search->getRenderContext();
             $renderContext['pagerfanta'] = $pagerfanta;
 
             $request->attributes->set('_renderContext', $renderContext);

@@ -14,11 +14,11 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class GeneratorUtils
 {
-
     /**
      * Cleans the prefix. Prevents a double underscore from happening.
      *
      * @param $prefixString
+     *
      * @return string
      */
     public static function cleanPrefix($prefixString)
@@ -113,9 +113,7 @@ class GeneratorUtils
             $content = str_replace($toReplace, $replaceText, $content);
             file_put_contents($filename, $content);
         }
-
     }
-
 
     public static function getFullSkeletonPath($pathInSkeleton)
     {
@@ -147,6 +145,7 @@ class GeneratorUtils
      * Replaces '\' with '/'.
      *
      * @param $namespace
+     *
      * @return string
      */
     public static function fixNamespace($namespace)
@@ -171,6 +170,6 @@ class GeneratorUtils
      */
     public static function getInputAssistant(InputInterface &$input, OutputInterface $output, QuestionHelper $questionHelper, Kernel $kernel, ContainerInterface $container)
     {
-	return new InputAssistant($input, $output, $questionHelper, $kernel, $container);
+        return new InputAssistant($input, $output, $questionHelper, $kernel, $container);
     }
 }

@@ -19,7 +19,6 @@ class KunstmaanDashboardExtensionTest extends AbstractPrependableExtensionTestCa
         return [new KunstmaanDashboardExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->load();

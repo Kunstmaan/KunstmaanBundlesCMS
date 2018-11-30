@@ -9,7 +9,6 @@ use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class Importer
@@ -41,7 +40,7 @@ class Importer
 
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
             if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
-                $importedTranslations++;
+                ++$importedTranslations;
             }
         }
 
@@ -52,7 +51,9 @@ class Importer
      * @param string $file
      * @param array  $locales
      * @param bool   $force
+     *
      * @return int
+     *
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
      * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
@@ -100,15 +101,17 @@ class Importer
                             throw new LogicException(sprintf('Header: %s, should be present in the file!', $header));
                         }
                     }
+
                     continue;
                 }
                 $domain = $row[array_search('domain', $headers)];
                 $keyword = $row[array_search('keyword', $headers)];
                 foreach ($locales as $locale) {
                     $this->importSingleTranslation($keyword, $row[array_search($locale, $headers)], $locale, $file, $domain, $force);
-                    $importedTranslations++;
+                    ++$importedTranslations;
                 }
             }
+
             break;
         }
         $reader->close();
@@ -123,6 +126,7 @@ class Importer
      * @param      $filename
      * @param      $domain
      * @param bool $force
+     *
      * @return bool
      */
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
@@ -154,8 +158,9 @@ class Importer
 
     /**
      * Validate the loaders
-     * @param  array $loaders
-     * @return void
+     *
+     * @param array $loaders
+     *
      * @throws \Exception If no loaders are defined
      */
     public function validateLoaders($loaders = [])

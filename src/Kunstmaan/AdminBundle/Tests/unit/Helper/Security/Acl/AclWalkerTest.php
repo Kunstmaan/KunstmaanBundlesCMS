@@ -23,7 +23,7 @@ class AclWalkerTest extends PHPUnit_Framework_TestCase
 {
     public function testWalker()
     {
-        $range = new RangeVariableDeclaration('someschema', 's' );
+        $range = new RangeVariableDeclaration('someschema', 's');
         $expr = new PathExpression('int', 'id');
         $indexBy = new IndexBy($expr);
         $from = new FromClause([new IdentificationVariableDeclaration($range, $indexBy, [])]);

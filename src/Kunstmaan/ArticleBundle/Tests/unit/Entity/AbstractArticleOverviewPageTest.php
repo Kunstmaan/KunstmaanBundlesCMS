@@ -11,7 +11,6 @@ class ArticleOverViewPage extends AbstractArticleOverviewPage
     {
         return null;
     }
-
 }
 
 /**

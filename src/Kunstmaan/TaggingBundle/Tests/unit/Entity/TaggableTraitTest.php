@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\TaggingBundle\Tests\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TaggingBundle\Entity\Taggable;
 use Kunstmaan\TaggingBundle\Entity\TaggableTrait;
@@ -32,7 +31,6 @@ class Random implements Taggable
 
 /**
  * Class TaggableTraitTest
- * @package Tests\Kunstmaan\TaggingBundle\Entity
  */
 class TaggableTraitTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +39,9 @@ class TaggableTraitTest extends PHPUnit_Framework_TestCase
         $object = new Random();
 
         $object->setTags(new ArrayCollection());
-        $object->setTagLoader(function(){return new ArrayCollection();});
+        $object->setTagLoader(function () {
+            return new ArrayCollection();
+        });
 
         $this->assertInstanceOf(ArrayCollection::class, $object->getTags());
         $this->assertEquals(Random::class, $object->getTaggableType());
@@ -51,7 +51,9 @@ class TaggableTraitTest extends PHPUnit_Framework_TestCase
     public function testTagsByClosureLoader()
     {
         $object = new Random();
-        $object->setTagLoader(function(){return new ArrayCollection();});
+        $object->setTagLoader(function () {
+            return new ArrayCollection();
+        });
         $this->assertInstanceOf(ArrayCollection::class, $object->getTags());
     }
 }

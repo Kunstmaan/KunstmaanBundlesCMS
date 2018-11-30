@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Form\EmptyType;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -36,7 +35,7 @@ class FolderController extends Controller
     public function showAction(Request $request, $folderId)
     {
         /** @var EntityManager $em */
-        $em      = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
 
         // Check when user switches between thumb -and list view
@@ -54,12 +53,12 @@ class FolderController extends Controller
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm  = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
+        $subForm = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
 
         $emptyForm = $this->createEmptyForm();
 
@@ -73,7 +72,7 @@ class FolderController extends Controller
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('media.folder.show.success.text', array(
-                        '%folder%' => $folder->getName()
+                        '%folder%' => $folder->getName(),
                     ))
                 );
 
@@ -88,13 +87,13 @@ class FolderController extends Controller
 
         return array(
             'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
-            'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
-            'subform'       => $subForm->createView(),
-            'emptyform'     => $emptyForm->createView(),
-            'editform'      => $editForm->createView(),
-            'folder'        => $folder,
-            'adminlist'     => $adminList,
-            'type'          => null,
+            'mediamanager' => $this->get('kunstmaan_media.media_manager'),
+            'subform' => $subForm->createView(),
+            'emptyform' => $emptyForm->createView(),
+            'editform' => $editForm->createView(),
+            'folder' => $folder,
+            'adminlist' => $adminList,
+            'type' => null,
         );
     }
 
@@ -112,15 +111,15 @@ class FolderController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder       = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $folderName   = $folder->getName();
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folderName = $folder->getName();
         $parentFolder = $folder->getParent();
 
         if (is_null($parentFolder)) {
             $this->addFlash(
                 FlashTypes::ERROR,
                 $this->get('translator')->trans('media.folder.delete.failure.text', array(
-                    '%folder%' => $folderName
+                    '%folder%' => $folderName,
                 ))
             );
         } else {
@@ -128,14 +127,16 @@ class FolderController extends Controller
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('media.folder.delete.success.text', array(
-                    '%folder%' => $folderName
+                    '%folder%' => $folderName,
                 ))
             );
             $folderId = $parentFolder->getId();
         }
-        if (strpos($request->server->get('HTTP_REFERER', ''),'chooser')) {
+        if (strpos($request->server->get('HTTP_REFERER', ''), 'chooser')) {
             $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
-        } else $redirect = 'KunstmaanMediaBundle_folder_show';
+        } else {
+            $redirect = 'KunstmaanMediaBundle_folder_show';
+        }
 
         $type = $this->get('request_stack')->getCurrentRequest()->get('type');
 
@@ -175,17 +176,19 @@ class FolderController extends Controller
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('media.folder.addsub.success.text', array(
-                        '%folder%' => $folder->getName()
+                        '%folder%' => $folder->getName(),
                     ))
                 );
-                if (strpos($request->server->get('HTTP_REFERER', ''),'chooser') !== false) {
+                if (strpos($request->server->get('HTTP_REFERER', ''), 'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
-                } else $redirect = 'KunstmaanMediaBundle_folder_show';
+                } else {
+                    $redirect = 'KunstmaanMediaBundle_folder_show';
+                }
 
                 $type = $request->get('type');
 
                 return new RedirectResponse(
-                    $this->generateUrl( $redirect,
+                    $this->generateUrl($redirect,
                         array(
                             'folderId' => $folder->getId(),
                             'type' => $type,
@@ -200,10 +203,10 @@ class FolderController extends Controller
         return $this->render(
             'KunstmaanMediaBundle:Folder:addsub-modal.html.twig',
             array(
-                'subform'   => $form->createView(),
+                'subform' => $form->createView(),
                 'galleries' => $galleries,
-                'folder'    => $folder,
-                'parent'    => $parent
+                'folder' => $folder,
+                'parent' => $parent,
             )
         );
     }
@@ -230,7 +233,6 @@ class FolderController extends Controller
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-
                 $data = $form->getData();
                 $alsoDeleteFolders = $data['checked'];
 
@@ -239,29 +241,30 @@ class FolderController extends Controller
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('media.folder.empty.success.text', array(
-                        '%folder%' => $folder->getName()
+                        '%folder%' => $folder->getName(),
                     ))
                 );
-                if (strpos($request->server->get('HTTP_REFERER', ''),'chooser') !== false) {
+                if (strpos($request->server->get('HTTP_REFERER', ''), 'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
-                } else $redirect = 'KunstmaanMediaBundle_folder_show';
+                } else {
+                    $redirect = 'KunstmaanMediaBundle_folder_show';
+                }
 
                 return new RedirectResponse(
-                    $this->generateUrl( $redirect,
+                    $this->generateUrl($redirect,
                         array(
                             'folderId' => $folder->getId(),
-                            'folder' => $folder
+                            'folder' => $folder,
                         )
                     )
                 );
-
             }
         }
 
         return $this->render(
             'KunstmaanMediaBundle:Folder:empty-modal.html.twig',
             array(
-                'form'   => $form->createView(),
+                'form' => $form->createView(),
             )
         );
     }
@@ -270,14 +273,15 @@ class FolderController extends Controller
      * @Route("/reorder", name="KunstmaanMediaBundle_folder_reorder")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function reorderAction(Request $request)
     {
-        $folders         = array();
-        $nodeIds       = $request->get('nodes');
+        $folders = array();
+        $nodeIds = $request->get('nodes');
 
-        $em              = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('KunstmaanMediaBundle:Folder');
 
         foreach ($nodeIds as $id) {
@@ -294,7 +298,7 @@ class FolderController extends Controller
 
         return new JsonResponse(
             array(
-                'Success' => 'The node-translations for have got new weight values'
+                'Success' => 'The node-translations for have got new weight values',
             )
         );
     }
@@ -305,6 +309,7 @@ class FolderController extends Controller
         $form = $this->createFormBuilder($defaultData)
             ->add('checked', CheckboxType::class, array('required' => false, 'label' => 'media.folder.empty.modal.checkbox'))
             ->getForm();
+
         return $form;
     }
 }

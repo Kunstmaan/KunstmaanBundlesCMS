@@ -3,9 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-
 use Pagerfanta\Pagerfanta;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -13,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AdminList
 {
-
     /**
      * @var Request
      */
@@ -112,6 +109,7 @@ class AdminList
         if (is_null($columnName)) {
             return count($this->configurator->getSortFields()) > 0;
         }
+
         return in_array($columnName, $this->configurator->getSortFields());
     }
 

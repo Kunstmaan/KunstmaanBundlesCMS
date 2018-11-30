@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -192,7 +193,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $actions = array();
         $this->assertEquals($actions, $this->object->getFolderAddActions());
 
-        $actions = array('action1','action2');
+        $actions = array('action1', 'action2');
         $handler = $this->getCustomHandler();
         $handler
             ->expects($this->once())

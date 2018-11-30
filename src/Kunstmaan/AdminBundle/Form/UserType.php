@@ -28,11 +28,12 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
      * Setter to check if we can display all form fields
      *
      * @param $canEditAllFields
+     *
      * @return bool
      */
     public function setCanEditAllFields($canEditAllFields)
     {
-        $this->canEditAllFields = (bool)$canEditAllFields;
+        $this->canEditAllFields = (bool) $canEditAllFields;
     }
 
     /**
@@ -47,23 +48,23 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
 
         $this->canEditAllFields = $options['can_edit_all_fields'];
 
-        $builder->add('username', TextType::class, array ('required' => true, 'label' => 'settings.user.username'))
+        $builder->add('username', TextType::class, array('required' => true, 'label' => 'settings.user.username'))
                 ->add('plainPassword', RepeatedType::class, array(
                     'type' => PasswordType::class,
                     'required' => $options['password_required'],
                     'invalid_message' => 'errors.password.dontmatch',
                     'first_options' => array(
-                        'label' => 'settings.user.password'
+                        'label' => 'settings.user.password',
                     ),
                     'second_options' => array(
-                        'label' => 'settings.user.repeatedpassword'
-                    )
+                        'label' => 'settings.user.repeatedpassword',
+                    ),
                 ))
-                ->add('email', EmailType::class, array ('required' => true, 'label' => 'settings.user.email'))
+                ->add('email', EmailType::class, array('required' => true, 'label' => 'settings.user.email'))
                 ->add('adminLocale', ChoiceType::class, array(
-                    'choices'     => $languages,
-                    'label'       => 'settings.user.adminlang',
-                    'required'    => true,
+                    'choices' => $languages,
+                    'label' => 'settings.user.adminlang',
+                    'required' => true,
                     'placeholder' => false,
                 ));
 
@@ -72,7 +73,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     ->add('groups', EntityType::class, array(
                             'label' => 'settings.user.roles',
                             'class' => 'KunstmaanAdminBundle:Group',
-                            'query_builder' => function(EntityRepository $er) {
+                            'query_builder' => function (EntityRepository $er) {
                                 return $er->createQueryBuilder('g')
                                     ->orderBy('g.name', 'ASC');
                             },
@@ -82,7 +83,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             'attr' => array(
                                 'placeholder' => 'settings.user.roles_placeholder',
                                 'class' => 'js-advanced-select form-control advanced-select',
-                            )
+                            ),
                         )
                     );
         }

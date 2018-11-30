@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class DefaultAdminPanelAdapterTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\AdminPanel
  */
 class DefaultAdminPanelAdapterTest extends PHPUnit_Framework_TestCase
 {

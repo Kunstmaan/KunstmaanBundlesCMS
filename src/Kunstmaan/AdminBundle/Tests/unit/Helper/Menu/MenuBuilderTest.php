@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
@@ -26,17 +27,17 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var ContainerInterface $container (mock)
+     * @var ContainerInterface (mock)
      */
     protected $container;
 
     /**
-     * @var AuthorizationCheckerInterface $authCheck (mock)
+     * @var AuthorizationCheckerInterface (mock)
      */
     protected $authCheck;
 
     /**
-     * @var RequestStack $stack (mock)
+     * @var RequestStack (mock)
      */
     protected $stack;
 
@@ -66,7 +67,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->stack->expects($this->atLeastOnce())
             ->method('getCurrentRequest')
-            ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_settings']));
+            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings']));
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
         $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $this->object->addAdaptMenu($adapter);
@@ -81,12 +82,11 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MenuItem::class, $current);
     }
 
-
     public function testGetBreadcrumbs()
     {
         $this->stack->expects($this->atLeastOnce())
         ->method('getCurrentRequest')
-        ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_settings']));
+        ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings']));
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
         $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $this->object->addAdaptMenu($adapter);
@@ -96,12 +96,11 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TopMenuItem::class, $crumb[0]);
     }
 
-
     public function testGetLowestTopChild()
     {
         $this->stack->expects($this->atLeastOnce())
             ->method('getCurrentRequest')
-            ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_settings']));
+            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings']));
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
         $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $this->object->addAdaptMenu($adapter);
@@ -146,15 +145,14 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $array = [];
-        $adapter->adaptChildren($this->object, $array, $parent, new Request([],[],['_route' => 'KunstmaanAdminBundle_settings_bundle_version']));
+        $adapter->adaptChildren($this->object, $array, $parent, new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings_bundle_version']));
     }
-
 
     public function testModulesMenuAdaptor()
     {
         $this->stack->expects($this->atLeastOnce())
             ->method('getCurrentRequest')
-            ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_modules']));
+            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_modules']));
 
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
         $adapter = new ModulesMenuAdaptor();
@@ -170,7 +168,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->stack->expects($this->atLeastOnce())
             ->method('getCurrentRequest')
-            ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_modules']));
+            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_modules']));
 
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
         $adapter = new SimpleMenuAdaptor($this->authCheck, [[

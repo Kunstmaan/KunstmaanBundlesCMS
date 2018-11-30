@@ -46,7 +46,7 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     protected function configure()
     {
         $this->setDescription('Generates a new pagepart')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:pagepart</info> command generates a new pagepart and the pagepart configuration.
 
 <info>php bin/console kuma:generate:pagepart</info>
@@ -78,7 +78,7 @@ EOT
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
-            ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : '')
+            ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : ''),
         ));
     }
 
@@ -93,17 +93,17 @@ EOT
 
         $this->assistant->writeLine(array("This command helps you to generate a new pagepart.\n"));
 
-        /**
+        /*
          * Ask for which bundle we need to create the pagepart
          */
         $this->bundle = $this->askForBundleName('pagepart');
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
-        /**
+        /*
          * Ask the name of the pagepart
          */
         $this->assistant->writeLine(array(
@@ -117,7 +117,7 @@ EOT
             'PagePart name',
             function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
-                if ($generator->isReservedKeyword($name)){
+                if ($generator->isReservedKeyword($name)) {
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                 }
 
@@ -141,22 +141,22 @@ EOT
         );
         $this->pagepartName = $name;
 
-        /**
+        /*
          * Ask which fields need to be present
          */
         $this->assistant->writeLine(array("\nInstead of starting with a blank pagepart, you can add some fields now.\n"));
         $fields = $this->askEntityFields($this->bundle);
         $this->fields = array();
         foreach ($fields as $fieldInfo) {
-            if($fieldInfo['type'] == 'image') {
+            if ($fieldInfo['type'] == 'image') {
                 $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
                     $fieldInfo['extra'], true, $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes']);
-            }
-            elseif($fieldInfo['type'] == 'media') {
+            } elseif ($fieldInfo['type'] == 'media') {
                 $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
                     $fieldInfo['extra'], true, null, null, null, null, $fieldInfo['mimeTypes']);
+            } else {
+                $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
             }
-            else $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
         }
 
         /**
@@ -165,7 +165,7 @@ EOT
         $question = 'In which page section configuration file(s) do you want to add the pagepart (multiple possible, separated by comma)';
         $this->sections = $this->askForSections($question, $this->bundle, true);
 
-        /**
+        /*
          * Ask that you want to create behat tests for the new pagepart, if possible
          */
         if (count($this->sections) > 0 && $this->canGenerateBehatTests($this->bundle)) {

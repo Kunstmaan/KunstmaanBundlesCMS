@@ -88,6 +88,7 @@ abstract class AbstractRemoteHelper
 
     /**
      * Set code
+     *
      * @param string $code
      *
      * @return self
@@ -109,6 +110,7 @@ abstract class AbstractRemoteHelper
 
     /**
      * Set thumbnail url
+     *
      * @param string $url
      *
      * @return self
@@ -132,6 +134,7 @@ abstract class AbstractRemoteHelper
 
     /**
      * Set type
+     *
      * @param string $type
      *
      * @return self

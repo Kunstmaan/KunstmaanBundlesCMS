@@ -50,7 +50,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function getBundleName()
     {
-        return "KunstmaanArticleBundle";
+        return 'KunstmaanArticleBundle';
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function getEntityName()
     {
-        return "AbstractArticlePage";
+        return 'AbstractArticlePage';
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         $queryBuilder->andWhere('b.lang = :lang');
         $queryBuilder->andWhere('n.deleted = 0');
         $queryBuilder->andWhere('n.refEntityName = :class');
-        $queryBuilder->addOrderBy("b.updated", "DESC");
+        $queryBuilder->addOrderBy('b.updated', 'DESC');
         $queryBuilder->setParameter('lang', $this->locale);
     }
 
@@ -124,8 +124,8 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         $node = $item->getNode();
 
         return array(
-            'path'   => 'KunstmaanNodeBundle_nodes_edit',
-            'params' => array('id' => $node->getId())
+            'path' => 'KunstmaanNodeBundle_nodes_edit',
+            'params' => array('id' => $node->getId()),
         );
     }
 
@@ -142,8 +142,8 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         $node = $item->getNode();
 
         return array(
-            'path'   => 'KunstmaanNodeBundle_nodes_delete',
-            'params' => array('id' => $node->getId())
+            'path' => 'KunstmaanNodeBundle_nodes_delete',
+            'params' => array('id' => $node->getId()),
         );
     }
 
@@ -166,6 +166,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
 
     /**
      * Returns all overview pages
+     *
      * @return mixed
      */
     public function getOverviewPages()
@@ -183,6 +184,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
 
     /**
      * Returns the full entity class name
+     *
      * @return string
      */
     public function getEntityClassName()

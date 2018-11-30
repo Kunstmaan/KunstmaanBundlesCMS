@@ -19,7 +19,6 @@ class KunstmaanAdminListExtensionTest extends AbstractPrependableExtensionTestCa
         return [new KunstmaanAdminListExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('datePicker_startDate', '2014-09-18 10:00:00');

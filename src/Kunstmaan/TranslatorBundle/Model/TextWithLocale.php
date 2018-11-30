@@ -32,6 +32,7 @@ class TextWithLocale
 
     /**
      * @param string $id
+     *
      * @return TextWithLocale
      */
     public function setId($id)
@@ -51,6 +52,7 @@ class TextWithLocale
 
     /**
      * @param string $locale
+     *
      * @return TextWithLocale
      */
     public function setLocale($locale)
@@ -70,6 +72,7 @@ class TextWithLocale
 
     /**
      * @param string $text
+     *
      * @return TextWithLocale
      */
     public function setText($text)

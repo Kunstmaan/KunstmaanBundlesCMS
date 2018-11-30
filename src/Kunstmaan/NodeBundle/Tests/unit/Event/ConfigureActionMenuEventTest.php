@@ -10,12 +10,9 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class ConfigureActionMenuEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class ConfigureActionMenuEventTest extends PHPUnit_Framework_TestCase
 {
-
-
     public function testGetSet()
     {
         $factory = new MenuFactory();
@@ -29,5 +26,4 @@ class ConfigureActionMenuEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MenuItem::class, $event->getMenu());
         $this->assertInstanceOf(NodeVersion::class, $event->getActiveNodeVersion());
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Doctrine\ORM\EntityManager;
@@ -7,13 +8,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractAnalyticsCommandHelper
 {
-
     /** @var ConfigHelper $configHelper */
     protected $configHelper;
+
     /** @var GooglequeryHelper $queryHelper */
     protected $query;
+
     /** @var EntityManager $em */
     protected $em;
+
     /** @var OutputInterface $output */
     protected $output;
 
@@ -40,7 +43,8 @@ abstract class AbstractAnalyticsCommandHelper
      *
      * @return array
      */
-    protected function getTimestamps(AnalyticsOverview &$overview) {
+    protected function getTimestamps(AnalyticsOverview &$overview)
+    {
         // if yearoverview set the begin time to the first day of this year
         $profileStartDate = explode('T', $this->configHelper->getActiveProfile()['created'])[0];
         if ($overview->getUseYear()) {
@@ -61,7 +65,8 @@ abstract class AbstractAnalyticsCommandHelper
      *
      * @return array
      */
-    protected function getExtra(AnalyticsOverview $overview) {
+    protected function getExtra(AnalyticsOverview $overview)
+    {
         $extra = array();
 
         // add segment
@@ -77,7 +82,8 @@ abstract class AbstractAnalyticsCommandHelper
      *
      * @return array the resultset
      */
-    protected function executeQuery(AnalyticsOverview $overview, $metrics) {
+    protected function executeQuery(AnalyticsOverview $overview, $metrics)
+    {
         $timestamps = $this->getTimestamps($overview);
         $extra = $this->getExtra($overview);
 
@@ -92,6 +98,5 @@ abstract class AbstractAnalyticsCommandHelper
         return $results->getRows();
     }
 
-    public abstract function getData(&$overview);
-
+    abstract public function getData(&$overview);
 }

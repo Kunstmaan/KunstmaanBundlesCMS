@@ -183,7 +183,7 @@
         width: 340px;
 
         .searchbox {
-            @include box-shadow;
+            @include box-shadow();
         }
 
         .searchbox__content {

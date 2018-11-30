@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class RobotsTest
- * @package Tests\Kunstmaan\SeoBundle\Entity
  */
 class SiteMapPageTest extends PHPUnit_Framework_TestCase
 {

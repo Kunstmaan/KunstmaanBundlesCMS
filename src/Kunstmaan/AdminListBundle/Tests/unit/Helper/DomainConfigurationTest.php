@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

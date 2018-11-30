@@ -4,12 +4,9 @@ namespace Kunstmaan\SeoBundle\Helper;
 
 /**
  * Class OrderConverter
- *
- * @package Kunstmaan\SeoBundle\Helper
  */
 class OrderConverter
 {
-
     /**
      * Converts an Order object to an Array.
      *
@@ -22,7 +19,7 @@ class OrderConverter
         $orderItems = array();
 
         foreach ($order->orderItems as $orderItem) {
-            /** @var $orderItem OrderItem */
+            /* @var $orderItem OrderItem */
             $orderItems[] = array(
                 'sku' => $orderItem->getSKU(),
                 'quantity' => $this->formatNumber($orderItem->getQuantity()),
@@ -42,7 +39,7 @@ class OrderConverter
             'city' => $order->getCity(),
             'state_or_province' => $order->getStateOrProvince(),
             'country' => $order->getCountry(),
-            'order_items' => $orderItems
+            'order_items' => $orderItems,
         );
     }
 

@@ -30,7 +30,7 @@ class PopupsAdminListController extends AdminListController
                 $create_route = function (EntityInterface $item) {
                     return array(
                         'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail',
-                        'params' => array('popup' => $item->getId())
+                        'params' => array('popup' => $item->getId()),
                     );
                 };
                 $this->configurator->addItemAction(new SimpleItemAction($create_route, 'th-list', 'Manage rules'));

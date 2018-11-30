@@ -15,13 +15,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AviaryController extends Controller
 {
-
     /**
      * @param Request $request
      * @param int     $folderId The id of the Folder
      * @param int     $mediaId  The id of the image
      *
      * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
+     *
      * @return RedirectResponse
      */
     public function indexAction(Request $request, $folderId, $mediaId)
@@ -35,8 +35,8 @@ class AviaryController extends Controller
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 
-        $media      = clone $media;
-        $handler    = $mediaManager->getHandler($media);
+        $media = clone $media;
+        $handler = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);
         $fileHelper->getMediaFromUrl($request->get('url'));
         $media = $fileHelper->getMedia();

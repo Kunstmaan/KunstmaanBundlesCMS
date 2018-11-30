@@ -47,7 +47,6 @@ class DomainConfiguration extends BaseDomainConfiguration
             $this->adminRouteHelper = $this->container->get('kunstmaan_admin.adminroute.helper');
             $this->hosts = $this->container->getParameter('kunstmaan_multi_domain.hosts');
             $this->em = $this->container->get('doctrine.orm.entity_manager');
-
         } else {
             $this->adminRouteHelper = $adminRouteHelper;
             $this->hosts = $hosts;
@@ -113,7 +112,7 @@ class DomainConfiguration extends BaseDomainConfiguration
         if (isset($this->hosts[$host])) {
             $hostInfo = $this->hosts[$host];
 
-            return ('multi_lang' === $hostInfo['type']);
+            return 'multi_lang' === $hostInfo['type'];
         }
 
         return parent::isMultiLanguage();
@@ -290,7 +289,6 @@ class DomainConfiguration extends BaseDomainConfiguration
 
         return null;
     }
-
 
     /**
      * @param int $id

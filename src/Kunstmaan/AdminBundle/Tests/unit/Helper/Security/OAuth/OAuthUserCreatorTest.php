@@ -15,17 +15,17 @@ use ReflectionClass;
 class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var OAuthUserCreator $object
+     * @var OAuthUserCreator
      */
     private $object;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @var OAuthUserFinderInterface $finder
+     * @var OAuthUserFinderInterface
      */
     private $finder;
 
@@ -117,5 +117,4 @@ class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
         $levels = $method->invoke($object, 'fake@mail.com');
         $this->assertNull($levels);
     }
-
 }

@@ -9,7 +9,6 @@ use Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher;
  */
 class CipherTest extends \PHPUnit_Framework_TestCase
 {
-
     const SECRET = 'secret';
     const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
 
@@ -54,5 +53,4 @@ class CipherTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\Exception::class);
         new Cipher('');
     }
-
 }

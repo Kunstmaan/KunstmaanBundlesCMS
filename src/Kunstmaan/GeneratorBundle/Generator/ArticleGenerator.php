@@ -46,9 +46,9 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param BundleInterface $bundle The bundle
+     * @param BundleInterface $bundle         The bundle
      * @param string          $entity
-     * @param string          $prefix The prefix
+     * @param string          $prefix         The prefix
      * @param bool            $multilanguage
      * @param bool            $usesAuthor
      * @param bool            $usesCategories
@@ -61,13 +61,13 @@ class ArticleGenerator extends KunstmaanGenerator
         $this->entity = $entity;
 
         $parameters = array(
-            'namespace'         => $bundle->getNamespace(),
-            'bundle'            => $bundle,
-            'prefix'            => GeneratorUtils::cleanPrefix($prefix),
-            'entity_class'      => $entity,
-            'uses_author'       => $usesAuthor,
-            'uses_category'     => $usesCategories,
-            'uses_tag'          => $usesTags,
+            'namespace' => $bundle->getNamespace(),
+            'bundle' => $bundle,
+            'prefix' => GeneratorUtils::cleanPrefix($prefix),
+            'entity_class' => $entity,
+            'uses_author' => $usesAuthor,
+            'uses_category' => $usesCategories,
+            'uses_tag' => $usesTags,
         );
 
         $this->generateEntities($parameters);
@@ -75,7 +75,7 @@ class ArticleGenerator extends KunstmaanGenerator
         $this->generateForm($parameters);
         $this->generateAdminList($parameters);
         $this->generateController($parameters);
-	    $this->generatePageTemplateConfigs($parameters);
+        $this->generatePageTemplateConfigs($parameters);
         $this->generateTemplates($parameters, $bundleWithHomePage);
         $this->generateRouting($parameters, $multilanguage);
         $this->generateMenu($parameters);
@@ -87,12 +87,12 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateServices(array $parameters)
     {
-        $dirPath = sprintf("%s/Resources/config", $this->bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources/config", $this->skeletonDir);
+        $dirPath = sprintf('%s/Resources/config', $this->bundle->getPath());
+        $skeletonDir = sprintf('%s/Resources/config', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
         $routing = $this->render('/services.yml', $parameters);
@@ -102,7 +102,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateMenu(array $parameters)
     {
@@ -113,8 +113,8 @@ class ArticleGenerator extends KunstmaanGenerator
         $filename = 'MenuAdaptor.php';
         $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . 'MenuAdaptor.php');
 
-        $dirPath = sprintf("%s/Helper/Menu", $this->bundle->getPath());
-        $skeletonDir = sprintf("%s/Helper/Menu", $this->skeletonDir);
+        $dirPath = sprintf('%s/Helper/Menu', $this->bundle->getPath());
+        $skeletonDir = sprintf('%s/Helper/Menu', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
         $partial = '';
         $twigParameters = $parameters;
@@ -137,13 +137,13 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array $parameters The template parameters
-     * @param bool $multilanguage
+     * @param array $parameters    The template parameters
+     * @param bool  $multilanguage
      */
     public function generateRouting(array $parameters, $multilanguage)
     {
-        $dirPath = sprintf("%s/Resources/config", $this->bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources/config", $this->skeletonDir);
+        $dirPath = sprintf('%s/Resources/config', $this->bundle->getPath());
+        $skeletonDir = sprintf('%s/Resources/config', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
         $routingSource = $multilanguage ? 'routing_multilanguage' : 'routing_singlelanguage';
@@ -174,7 +174,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array  $parameters The template parameters
+     * @param array  $parameters         The template parameters
      * @param string $bundleWithHomePage
      */
     public function generateTemplates(array $parameters, $bundleWithHomePage)
@@ -215,7 +215,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateController(array $parameters)
     {
@@ -248,7 +248,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array  $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generatePageTemplateConfigs(array $parameters)
     {
@@ -269,7 +269,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateAdminList(array $parameters)
     {
@@ -299,7 +299,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateForm(array $parameters)
     {
@@ -332,8 +332,8 @@ class ArticleGenerator extends KunstmaanGenerator
             $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
         }
 
-        $dirPath = sprintf("%s/Form/Pages", $this->bundle->getPath());
-        $skeletonDir = sprintf("%s/Form/Pages", $this->skeletonDir);
+        $dirPath = sprintf('%s/Form/Pages', $this->bundle->getPath());
+        $skeletonDir = sprintf('%s/Form/Pages', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
         $partial = '';
         $twigParameters = $parameters;
@@ -361,7 +361,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateRepositories(array $parameters)
     {
@@ -375,8 +375,8 @@ class ArticleGenerator extends KunstmaanGenerator
         $filename = 'OverviewPageRepository.php';
         $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
 
-        $dirPath = sprintf("%s/Repository", $this->bundle->getPath());
-        $skeletonDir = sprintf("%s/Repository", $this->skeletonDir);
+        $dirPath = sprintf('%s/Repository', $this->bundle->getPath());
+        $skeletonDir = sprintf('%s/Repository', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
         $repository = $this->render('/PageRepositoryPartial.php.twig', $parameters);
@@ -386,7 +386,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateEntities(array $parameters)
     {
@@ -419,8 +419,8 @@ class ArticleGenerator extends KunstmaanGenerator
             $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
         }
 
-        $dirPath = sprintf("%s/Entity/Pages", $this->bundle->getPath());
-        $skeletonDir = sprintf("%s/Entity/Pages", $this->skeletonDir);
+        $dirPath = sprintf('%s/Entity/Pages', $this->bundle->getPath());
+        $skeletonDir = sprintf('%s/Entity/Pages', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
         $partial = '';
         $partialFunctions = '';
@@ -457,7 +457,7 @@ class ArticleGenerator extends KunstmaanGenerator
     }
 
     /**
-     * @param array           $parameters The template parameters
+     * @param array $parameters The template parameters
      */
     public function generateFixtures(array $parameters)
     {
@@ -471,7 +471,6 @@ class ArticleGenerator extends KunstmaanGenerator
         $this->assistant->writeLine('Generating fixtures : <info>OK</info>');
     }
 
-
     /**
      * Update the getPossibleChildTypes function of the parent Page classes
      */
@@ -479,8 +478,8 @@ class ArticleGenerator extends KunstmaanGenerator
     {
         $phpCode = "            array(\n";
         $phpCode .= "                'name' => '" . $this->entity . "OverviewPage',\n";
-        $phpCode .= "                'class'=> '" . $this->bundle->getNamespace() . "\\Entity\\Pages\\" . $this->entity . "OverviewPage'\n";
-        $phpCode .= "            ),";
+        $phpCode .= "                'class'=> '" . $this->bundle->getNamespace() . '\\Entity\\Pages\\' . $this->entity . "OverviewPage'\n";
+        $phpCode .= '            ),';
 
         // When there is a BehatTestPage, we should also allow the new page as sub page
         $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';

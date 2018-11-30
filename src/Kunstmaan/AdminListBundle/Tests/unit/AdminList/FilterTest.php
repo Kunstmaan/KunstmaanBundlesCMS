@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Filter;
@@ -59,5 +60,4 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->object = new Filter('columnName', $filterDef, 'string');
         $this->object->apply();
     }
-
 }

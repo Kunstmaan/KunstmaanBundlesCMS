@@ -36,7 +36,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     public function testSetGetIpAddress()
     {
         $object = $this->object;
-        $ip = "127.0.0.1";
+        $ip = '127.0.0.1';
         $object->setIpAddress($ip);
         $this->assertEquals($ip, $object->getIpAddress());
     }
@@ -63,7 +63,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     public function testSetGetCreated()
     {
         $object = $this->object;
-        $now = new DateTime;
+        $now = new DateTime();
         $object->setCreated($now);
         $this->assertEquals($now, $object->getCreated());
     }

@@ -20,7 +20,7 @@ class RemoteAudioHelperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->media  = new Media();
+        $this->media = new Media();
         $this->object = new RemoteAudioHelper($this->media);
     }
 

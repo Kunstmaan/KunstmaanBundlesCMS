@@ -23,7 +23,7 @@ class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
     public function testEnabledByDefault()
     {
         $container = $this->getContainer();
-        $this->extension->load(array( 'kuma_translator' => array('managed_locales' => array('nl'))), $container);
+        $this->extension->load(array('kuma_translator' => array('managed_locales' => array('nl'))), $container);
         $this->assertTrue($container->getParameter('kuma_translator.enabled'));
     }
 
@@ -47,7 +47,7 @@ class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
      */
     private function getContainer()
     {
-        $container = new ContainerBuilder;
+        $container = new ContainerBuilder();
         $container->setParameter('kernel.root_dir', 'src/Kunstmaan/ArticleBundle');
         $container->setParameter('kernel.bundles', array(new \Kunstmaan\ArticleBundle\KunstmaanArticleBundle()));
         $container->setParameter('kernel.debug', true);

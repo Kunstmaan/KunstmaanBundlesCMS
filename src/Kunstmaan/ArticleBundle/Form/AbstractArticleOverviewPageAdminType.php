@@ -30,12 +30,12 @@ class AbstractArticleOverviewPageAdminType extends PageAdminType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage'
+            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage',
         ));
     }
 

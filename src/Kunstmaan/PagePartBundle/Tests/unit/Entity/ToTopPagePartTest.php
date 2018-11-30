@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class ToTopPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
 class ToTopPagePartTest extends PHPUnit_Framework_TestCase
 {

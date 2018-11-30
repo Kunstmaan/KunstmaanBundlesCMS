@@ -30,10 +30,11 @@ class FolderRepository extends NestedTreeRepository
      */
     public function save(Folder $folder)
     {
-        $em     = $this->getEntityManager();
+        $em = $this->getEntityManager();
         $parent = $folder->getParent();
 
         $em->beginTransaction();
+
         try {
             if (!is_null($parent)) {
                 $this->persistInOrderedTree($folder, $parent);
@@ -44,6 +45,7 @@ class FolderRepository extends NestedTreeRepository
             $em->flush();
         } catch (\Exception $e) {
             $em->rollback();
+
             throw $e;
         }
     }
@@ -62,10 +64,9 @@ class FolderRepository extends NestedTreeRepository
         $em->flush();
     }
 
-
     /**
      * @param Folder $folder
-     * @param bool $alsoDeleteFolders
+     * @param bool   $alsoDeleteFolders
      */
     public function emptyFolder(Folder $folder, $alsoDeleteFolders = false)
     {
@@ -130,6 +131,7 @@ class FolderRepository extends NestedTreeRepository
      * @param int $folderId
      *
      * @return object
+     *
      * @throws EntityNotFoundException
      */
     public function getFolder($folderId)
@@ -159,7 +161,7 @@ class FolderRepository extends NestedTreeRepository
             ->select('node.id');
 
         $result = $qb->getQuery()->getScalarResult();
-        $ids    = array_map('current', $result);
+        $ids = array_map('current', $result);
 
         return $ids;
     }
@@ -279,14 +281,14 @@ class FolderRepository extends NestedTreeRepository
         $em = $this->getEntityManager();
 
         // Reset tree...
-        $sql  = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
+        $sql = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
 
         $folders = $this->findBy(array(), array('parent' => 'ASC', 'name' => 'asc'));
 
         $rootFolder = $folders[0];
-        $first      = true;
+        $first = true;
         foreach ($folders as $folder) {
             // Force parent load
             $parent = $folder->getParent();

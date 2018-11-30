@@ -12,12 +12,9 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class ConfigureActionMenuEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class CopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
 {
-
-
     public function testGetSet()
     {
         /** @var Node $node */
@@ -46,5 +43,4 @@ class CopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
     }
-
 }

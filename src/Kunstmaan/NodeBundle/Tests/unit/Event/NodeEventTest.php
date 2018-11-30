@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class NodeEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class NodeEventTest extends PHPUnit_Framework_TestCase
 {

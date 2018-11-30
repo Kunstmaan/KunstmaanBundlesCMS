@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Doctrine\ORM\Tools\EntityGenerator;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
@@ -32,10 +31,10 @@ class DefaultEntityGenerator extends KunstmaanGenerator
     private $fields;
 
     /**
-     * @param BundleInterface $bundle The bundle
-     * @param string          $entity The entity name
-     * @param string          $prefix The database prefix
-     * @param array           $fields The fields
+     * @param BundleInterface $bundle         The bundle
+     * @param string          $entity         The entity name
+     * @param string          $prefix         The database prefix
+     * @param array           $fields         The fields
      * @param bool            $withRepository
      */
     public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, $withRepository = false)
@@ -55,7 +54,7 @@ class DefaultEntityGenerator extends KunstmaanGenerator
             $withRepository
         );
 
-        $pos = strrpos($entityCode, "}");
+        $pos = strrpos($entityCode, '}');
         $trimmed = substr($entityCode, 0, $pos);
         $entityCode = $trimmed . "\n}";
 
