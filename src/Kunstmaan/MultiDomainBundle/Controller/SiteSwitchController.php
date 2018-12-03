@@ -3,8 +3,7 @@
 namespace Kunstmaan\MultiDomainBundle\Controller;
 
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +14,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class SiteSwitchController extends Controller
 {
     /**
-     * @Route("/switch-site", name="KunstmaanMultiDomainBundle_switch_site")
-     * @Method({"GET"})
+     * @Route("/switch-site", name="KunstmaanMultiDomainBundle_switch_site", methods={"GET"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

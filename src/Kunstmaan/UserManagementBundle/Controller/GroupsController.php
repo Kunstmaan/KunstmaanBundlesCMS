@@ -9,8 +9,7 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,8 +48,7 @@ class GroupsController extends BaseSettingsController
     /**
      * Add a group
      *
-     * @Route("/add", name="KunstmaanUserManagementBundle_settings_groups_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="KunstmaanUserManagementBundle_settings_groups_add", methods={"GET", "POST"})
      * @Template("@KunstmaanUserManagement/Groups/add.html.twig")
      *
      * @throws AccessDeniedException
@@ -93,8 +91,7 @@ class GroupsController extends BaseSettingsController
      *
      * @param int $id
      *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_edit", methods={"GET", "POST"})
      * @Template("@KunstmaanUserManagement/Groups/edit.html.twig")
      *
      * @throws AccessDeniedException
@@ -139,8 +136,7 @@ class GroupsController extends BaseSettingsController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_delete", methods={"GET", "POST"})
      *
      * @throws AccessDeniedException
      *
