@@ -49,8 +49,5 @@ class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
         $this->assertContainerBuilderHasParameter('aviary_api_key', null);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_path', '/uploads/media/');
         $this->assertContainerBuilderHasParameter('liip_imagine.filter.loader.background.class', 'Kunstmaan\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
-        $this->assertContainerBuilderHasParameter('liip_imagine.cache.manager.class', 'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager');
-        $this->assertContainerBuilderHasParameter('liip_imagine.cache.resolver.web_path.class', 'Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver');
-        $this->assertContainerBuilderHasParameter('liip_imagine.controller.class', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController');
     }
 }
