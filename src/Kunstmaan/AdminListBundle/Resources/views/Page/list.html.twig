@@ -26,7 +26,8 @@
                                     {% set exportparams = exportparams|merge({"_format": ext}) %}
                                     <li>
                                         <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
-                                            <i class="fa fa-file-{{ name | lower }}-o btn__icon"></i>
+                                            {% set icon = name | lower == 'ods' ? 'alt' : name | lower %}
+                                            <i class="fa fa-file-{{ icon }}-o btn__icon"></i>
                                             {{ name }}
                                         </a>
                                     </li>

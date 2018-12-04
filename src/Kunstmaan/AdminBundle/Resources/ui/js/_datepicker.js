@@ -77,14 +77,14 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             },
             widgetParent: $el,
             icons: {
-                time: 'fa fa-clock-o',
+                time: 'fa fa-clock',
                 date: 'fa fa-calendar',
                 up: 'fa fa-chevron-up',
                 down: 'fa fa-chevron-down',
                 previous: 'fa fa-arrow-left',
                 next: 'fa fa-arrow-right',
                 today: 'fa fa-crosshairs',
-                clear: 'fa fa-trash-o'
+                clear: 'fa fa-trash'
             },
             stepping: stepping
         });

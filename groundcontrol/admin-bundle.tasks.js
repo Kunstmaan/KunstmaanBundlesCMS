@@ -17,7 +17,8 @@ export const adminBundle = {
     config: {
         srcPath: './src/Kunstmaan/AdminBundle/Resources/ui/',
         distPath: './src/Kunstmaan/AdminBundle/Resources/public/',
-        publicPath: '/bundles/kunstmaanadmin'
+        publicPath: './../../../web/frontend/',
+        nodeModulesPath: './src/Kunstmaan/AdminBundle/node_modules/'
     },
     tasks: {}
 };
@@ -30,7 +31,8 @@ adminBundle.tasks.eslint = createEslintTask({
 adminBundle.tasks.stylelint = createStylelintTask({src: adminBundle.config.srcPath + 'scss/**/*.scss'});
 
 adminBundle.tasks.copy = gulp.parallel(
-    createCopyTask({src: [adminBundle.config.srcPath + 'img/**'], dest: adminBundle.config.distPath + 'img'})
+    createCopyTask({src: [adminBundle.config.srcPath + 'img/**'], dest: adminBundle.config.distPath + 'img'}),
+    createCopyTask({src: [adminBundle.config.nodeModulesPath + '@fortawesome/fontawesome-free/webfonts/**'], dest: adminBundle.config.publicPath + 'fonts/'})
 );
 
 adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});

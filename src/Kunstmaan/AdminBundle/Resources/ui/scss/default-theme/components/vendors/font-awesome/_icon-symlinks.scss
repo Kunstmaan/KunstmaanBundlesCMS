@@ -2,14 +2,13 @@
    Icon symlinks
    ========================================================================== */
 
-.fa-file-csv-o {
-    @extend .fa-file-code-o;
+.fa-file-csv {
+    @extend .fa-file-code;
 }
 
-.fa-remove-sign {
-    @extend .fa-trash-o;
+.fa-remove {
+    @extend .fa-trash;
 }
-
 
 // Glyphicon
 .glyphicon {

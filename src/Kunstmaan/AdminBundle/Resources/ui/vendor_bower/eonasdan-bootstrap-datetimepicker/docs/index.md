@@ -406,7 +406,7 @@
         $(function () {
             $('#datetimepicker8').datetimepicker({
                 icons: {
-                    time: "fa fa-clock-o",
+                    time: "fa fa-clock",
                     date: "fa fa-calendar",
                     up: "fa fa-arrow-up",
                     down: "fa fa-arrow-down"
@@ -435,7 +435,7 @@
         $(function () {
             $('#datetimepicker8').datetimepicker({
                 icons: {
-                    time: "fa fa-clock-o",
+                    time: "fa fa-clock",
                     date: "fa fa-calendar",
                     up: "fa fa-arrow-up",
                     down: "fa fa-arrow-down"

@@ -3,3 +3,5 @@
 vendor/*
 composer.lock
 composer.phar
+node_modules
+!node_modules/@fortawesome

@@ -59,6 +59,7 @@
                             {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
                             {% for name, ext in supported_export_extensions() %}
                                 {% set icon = name | lower == 'csv' ? 'csv' : 'excel' %}
+                                {% set icon = name | lower == 'ods' ? 'alt' : icon %}
                                 {% set exportparams = exportparams|merge({"_format": ext}) %}
                                 <li>
                                     <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
