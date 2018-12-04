@@ -1,7 +1,7 @@
 # System Requirements
 
 * PHP
-    * minimum version is PHP 5.6, but also working great with PHP 7.0 or PHP 7.1.
+    * minimum version is PHP 7.1
     * JSON needs to be enabled
     * ctype needs to be enabled
     * curl needs to be enabled
@@ -28,5 +28,5 @@
 * MySQL 5.x (some work on sqlite has been done but is not supported)
 * A webserver like Apache or Nginx (preferably with a Varnish server in front)
 * Imagemagick
-* Elasticsearch (1.7.3)
+* Elasticsearch
 * Memcached (optionally)

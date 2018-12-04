@@ -40,6 +40,8 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.remote_video', $config['remote_video']);
         $container->setParameter('kunstmaan_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
+        $container->setParameter('kunstmaan_media.web_root', $config['web_root']);
+        $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'] . '%kunstmaan_media.media_path%');
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');
@@ -49,12 +51,15 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         }
 
         $container->setParameter('liip_imagine.filter.loader.background.class', 'Kunstmaan\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
-        $container->setParameter('liip_imagine.cache.manager.class', 'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager');
-        $container->setParameter('liip_imagine.cache.resolver.web_path.class', 'Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver');
-        $container->setParameter('liip_imagine.controller.class', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController');
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('imagine.xml');
+
+        $container->setAlias('liip_imagine.controller', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController')->setPublic(true);
+        $container->setAlias('Liip\ImagineBundle\Controller\ImagineController', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController')->setPublic(true);
+        $container->setAlias('liip_imagine.cache.resolver.prototype.web_path', 'Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver');
+        $container->setAlias('liip_imagine.cache.manager', 'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager')->setPublic(true);
+        $container->setAlias('liip_imagine.filter.loader.background', 'kunstmaan_media.imagine.filter.loader.background')->setPublic(true);
     }
 
     public function prepend(ContainerBuilder $container)

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\AdminList\ExceptionAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

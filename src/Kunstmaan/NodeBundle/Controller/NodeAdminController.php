@@ -15,6 +15,7 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -33,17 +34,12 @@ use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Symfony\Component\Security\Acl\Model\EntryInterface;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -79,6 +75,11 @@ class NodeAdminController extends Controller
     protected $aclHelper;
 
     /**
+     * @var AclManager
+     */
+    protected $aclManager;
+
+    /**
      * @var NodeAdminPublisher
      */
     protected $nodePublisher;
@@ -97,11 +98,12 @@ class NodeAdminController extends Controller
     {
         $this->em = $this->getDoctrine()->getManager();
         $this->locale = $request->getLocale();
-        $this->authorizationChecker = $this->get('security.authorization_checker');
+        $this->authorizationChecker = $this->container->get('security.authorization_checker');
         $this->user = $this->getUser();
-        $this->aclHelper = $this->get('kunstmaan_admin.acl.helper');
-        $this->nodePublisher = $this->get('kunstmaan_node.admin_node.publisher');
-        $this->translator = $this->get('translator');
+        $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        $this->aclManager = $this->container->get('kunstmaan_admin.acl.manager');
+        $this->nodePublisher = $this->container->get('kunstmaan_node.admin_node.publisher');
+        $this->translator = $this->container->get('translator');
     }
 
     /**
@@ -151,10 +153,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/copyfromotherlanguage",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage"
+     *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage",
+     *      methods={"GET"}
      * )
-     * @Method("GET")
-     * @Template()
      *
      * @param Request $request
      * @param int     $id      The node id
@@ -204,10 +205,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/recopyfromotherlanguage",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage"
+     *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage",
+     *      methods={"POST"}
      * )
-     * @Method("POST")
-     * @Template()
      *
      * @param Request $request
      * @param int     $id      The node id
@@ -256,10 +256,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/createemptypage",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_createemptypage"
+     *      name="KunstmaanNodeBundle_nodes_createemptypage",
+     *      methods={"GET"}
      * )
-     * @Method("GET")
-     * @Template()
      *
      * @param Request $request
      * @param int     $id
@@ -299,8 +298,7 @@ class NodeAdminController extends Controller
     /**
      * @Route("/{id}/publish", requirements={"id" =
      *                         "\d+"},
-     *                         name="KunstmaanNodeBundle_nodes_publish")
-     * @Method({"GET", "POST"})
+     *                         name="KunstmaanNodeBundle_nodes_publish", methods={"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id
@@ -326,9 +324,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/unpublish",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_unpublish"
+     *      name="KunstmaanNodeBundle_nodes_unpublish",
+     *      methods={"GET", "POST"}
      * )
-     * @Method({"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id
@@ -354,9 +352,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/unschedulepublish",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_unschedule_publish"
+     *      name="KunstmaanNodeBundle_nodes_unschedule_publish",
+     *      methods={"GET", "POST"}
      * )
-     * @Method({"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id
@@ -387,10 +385,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/delete",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_delete"
+     *      name="KunstmaanNodeBundle_nodes_delete",
+     *      methods={"POST"}
      * )
-     * @Template()
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id
@@ -453,10 +450,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/duplicate",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_duplicate"
+     *      name="KunstmaanNodeBundle_nodes_duplicate",
+     *      methods={"POST"}
      * )
-     * @Template()
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id
@@ -511,7 +507,7 @@ class NodeAdminController extends Controller
         }
         $this->em->flush();
 
-        $this->updateAcl($originalNode, $nodeNewPage);
+        $this->aclManager->updateNodeAcl($originalNode, $nodeNewPage);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
@@ -528,10 +524,9 @@ class NodeAdminController extends Controller
      *      "/{id}/revert",
      *      requirements={"id" = "\d+"},
      *      defaults={"subaction" = "public"},
-     *      name="KunstmaanNodeBundle_nodes_revert"
+     *      name="KunstmaanNodeBundle_nodes_revert",
+     *      methods={"GET"}
      * )
-     * @Template()
-     * @Method("GET")
      *
      * @param Request $request
      * @param int     $id      The node id
@@ -614,10 +609,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/add",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_add"
+     *      name="KunstmaanNodeBundle_nodes_add",
+     *      methods={"POST"}
      * )
-     * @Template()
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id
@@ -662,7 +656,7 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        $this->updateAcl($parentNode, $nodeNewPage);
+        $this->aclManager->updateNodeAcl($parentNode, $nodeNewPage);
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -682,9 +676,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage")
-     * @Template()
-     * @Method("POST")
+     * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage", methods={"POST"})
      *
      * @return RedirectResponse
      *
@@ -712,7 +704,7 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         // Set default permissions
-        $this->get('kunstmaan_node.acl_permission_creator_service')
+        $this->container->get('kunstmaan_node.acl_permission_creator_service')
             ->createPermission($nodeNewPage);
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -733,8 +725,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/reorder", name="KunstmaanNodeBundle_nodes_reorder")
-     * @Method("POST")
+     * @Route("/reorder", name="KunstmaanNodeBundle_nodes_reorder", methods={"POST"})
      *
      * @param Request $request
      *
@@ -804,10 +795,10 @@ class NodeAdminController extends Controller
      *      "/{id}/{subaction}",
      *      requirements={"id" = "\d+"},
      *      defaults={"subaction" = "public"},
-     *      name="KunstmaanNodeBundle_nodes_edit"
+     *      name="KunstmaanNodeBundle_nodes_edit",
+     *      methods={"GET", "POST"}
      * )
-     * @Template()
-     * @Method({"GET", "POST"})
+     * @Template("@KunstmaanNode/NodeAdmin/edit.html.twig")
      *
      * @param Request $request
      * @param int     $id        The node id
@@ -1195,35 +1186,6 @@ class NodeAdminController extends Controller
                 )
             );
         }
-    }
-
-    /**
-     * @param $originalNode
-     * @param $nodeNewPage
-     */
-    private function updateAcl($originalNode, $nodeNewPage)
-    {
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $this->container->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $strategy */
-        $strategy = $this->container->get(
-            'security.acl.object_identity_retrieval_strategy'
-        );
-        $originalIdentity = $strategy->getObjectIdentity($originalNode);
-        $originalAcl = $aclProvider->findAcl($originalIdentity);
-
-        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
-        $newAcl = $aclProvider->createAcl($newIdentity);
-
-        $aces = $originalAcl->getObjectAces();
-        /* @var EntryInterface $ace */
-        foreach ($aces as $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
-            }
-        }
-        $aclProvider->updateAcl($newAcl);
     }
 
     /**

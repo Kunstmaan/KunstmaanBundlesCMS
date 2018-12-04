@@ -1,0 +1,57 @@
+/* ==========================================================================
+   Filters
+   ========================================================================== */
+
+.blog-filter__top__section {
+    position: relative;
+
+    padding-right: 40px;
+}
+
+.blog-filter__top__section__icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+
+    margin-top: -5px;
+
+    font-size: 10px;
+}
+
+.blog-filter__filters {
+    background: $grey--lighter;
+}
+
+.blog-filter__filters__list {
+    .toggle-item__content {
+        padding: 15px;
+        margin: 0;
+    }
+}
+
+.blog__tagcat {
+    display: inline-block;
+    margin: 5px;
+
+    a {
+        display: inline-block;
+        padding: 5px 10px;
+
+        border: 1px solid $grey;
+
+        color: $grey;
+        line-height: 1;
+
+        &:hover {
+            border-color: $blue;
+
+            color: $blue;
+        }
+    }
+}
+
+.blog__tagcat--active a {
+    border-color: $black;
+
+    color: $black;
+}

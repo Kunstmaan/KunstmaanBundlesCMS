@@ -45,9 +45,9 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     public function __construct(EntityManagerInterface $em, $locale)
     {
         parent::__construct($em->getConnection());
-
         $this->em = $em;
         $this->locale = $locale;
+        $this->setListTemplate('KunstmaanAdminListBundle:Page:list.html.twig');
     }
 
     /**
@@ -198,14 +198,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     abstract public function getOverviewPageClass();
 
     /**
-     * @return string
-     */
-    public function getListTemplate()
-    {
-        return 'KunstmaanAdminListBundle:Page:list.html.twig';
-    }
-
-    /**
      * Returns the overviewpage.
      */
     public function getOverviewPage()
@@ -223,7 +215,7 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     }
 
     /**
-     * @return
+     * @return string
      */
     abstract public function getReadableName();
 }

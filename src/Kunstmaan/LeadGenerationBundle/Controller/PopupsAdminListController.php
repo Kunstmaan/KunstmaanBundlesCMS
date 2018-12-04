@@ -7,8 +7,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\PopupAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class PopupsAdminListController extends AdminListController
@@ -55,8 +54,7 @@ class PopupsAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_popup_abstractpopup_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_popup_abstractpopup_delete", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -70,8 +68,7 @@ class PopupsAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_popup_abstractpopup_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_popup_abstractpopup_edit", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -83,8 +80,7 @@ class PopupsAdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add",  name="kunstmaanleadgenerationbundle_admin_popup_abstractpopup_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add",  name="kunstmaanleadgenerationbundle_admin_popup_abstractpopup_add", methods={"GET", "POST"})
      *
      * @return array
      */

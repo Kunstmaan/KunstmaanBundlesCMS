@@ -9,8 +9,7 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,7 @@ class RolesController extends BaseSettingsController
 
         $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList(new RoleAdminListConfigurator($em));
+        $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -48,9 +47,8 @@ class RolesController extends BaseSettingsController
     /**
      * Add a role
      *
-     * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add", methods={"GET", "POST"})
+     * @Template("@KunstmaanUserManagement/Roles/add.html.twig")
      *
      * @throws AccessDeniedException
      *
@@ -73,7 +71,7 @@ class RolesController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
+                    $this->container->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
                         '%role%' => $role->getRole(),
                     ])
                 );
@@ -92,9 +90,8 @@ class RolesController extends BaseSettingsController
      *
      * @param int $id
      *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_edit")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_edit", methods={"GET", "POST"})
+     * @Template("@KunstmaanUserManagement/Roles/edit.html.twig")
      *
      * @throws AccessDeniedException
      *
@@ -118,7 +115,7 @@ class RolesController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
+                    $this->container->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
                         '%role%' => $role->getRole(),
                     ])
                 );
@@ -138,8 +135,7 @@ class RolesController extends BaseSettingsController
      *
      * @param int $id
      *
-     * @Route ("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_delete")
-     * @Method({"GET", "POST"})
+     * @Route ("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_delete", methods={"GET", "POST"})
      *
      * @throws AccessDeniedException
      *
@@ -159,7 +155,7 @@ class RolesController extends BaseSettingsController
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
+                $this->container->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
                     '%role%' => $role->getRole(),
                 ])
             );

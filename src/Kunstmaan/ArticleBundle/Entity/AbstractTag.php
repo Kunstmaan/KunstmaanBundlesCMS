@@ -11,6 +11,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class AbstractTag extends AbstractEntity implements Translatable
 {
     /**
+     * AbstractTag constructor.
+     */
+    public function __construct()
+    {
+        if (get_class($this) === AbstractTag::class) {
+            trigger_error('Please extend this class, it will be made abstract in 6.0.', E_USER_DEPRECATED);
+        }
+    }
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)

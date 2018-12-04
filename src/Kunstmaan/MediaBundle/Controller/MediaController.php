@@ -6,9 +6,9 @@ use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -51,16 +51,19 @@ class MediaController extends Controller
                 $media = $helper->getMedia();
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-                return new RedirectResponse($this->generateUrl(
-                    'KunstmaanMediaBundle_media_show',
-                    ['mediaId' => $media->getId()]
-                ));
+                return new RedirectResponse(
+                    $this->generateUrl(
+                        'KunstmaanMediaBundle_media_show',
+                        ['mediaId' => $media->getId()]
+                    )
+                );
             }
         }
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
 
         return $this->render(
-            $showTemplate, [
+            $showTemplate,
+            [
                 'handler' => $handler,
                 'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
                 'mediamanager' => $this->get('kunstmaan_media.media_manager'),
@@ -93,9 +96,12 @@ class MediaController extends Controller
 
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', [
-                '%medianame%' => $medianame,
-            ])
+            $this->get('translator')->trans(
+                'kuma_admin.media.flash.deleted_success.%medianame%',
+                [
+                    '%medianame%' => $medianame,
+                ]
+            )
         );
 
         // If the redirect url is passed via the url we use it
@@ -114,7 +120,7 @@ class MediaController extends Controller
      * @param int $folderId
      *
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload")
-     * @Template()
+     * @Template("@KunstmaanMedia/Media/bulkUpload.html.twig")
      *
      * @return array|RedirectResponse
      */
@@ -133,7 +139,6 @@ class MediaController extends Controller
      * @param int     $folderId
      *
      * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -145,7 +150,7 @@ class MediaController extends Controller
         } else {
             $tempDir = \sys_get_temp_dir();
         }
-        $targetDir = \rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . 'plupload';
+        $targetDir = \rtrim($tempDir, '/').DIRECTORY_SEPARATOR.'plupload';
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge = 5 * 60 * 60; // Temp file age in seconds
 
@@ -162,7 +167,7 @@ class MediaController extends Controller
         } else {
             $fileName = \uniqid('file_', false);
         }
-        $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+        $filePath = $targetDir.DIRECTORY_SEPARATOR.$fileName;
 
         $chunk = 0;
         $chunks = 0;
@@ -181,7 +186,7 @@ class MediaController extends Controller
             }
 
             while (($file = \readdir($dir)) !== false) {
-                $tmpFilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
+                $tmpFilePath = $targetDir.DIRECTORY_SEPARATOR.$file;
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
@@ -253,38 +258,41 @@ class MediaController extends Controller
         }
 
         // Send headers making sure that the file is not cached (as it happens for example on iOS devices)
-        $response = new JsonResponse([
-            'jsonrpc' => '2.0',
-            'result' => '',
-            'id' => 'id',
-        ], JsonResponse::HTTP_OK, [
-            'Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT',
-            'Last-Modified' => \gmdate('D, d M Y H:i:s') . ' GMT',
-            'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
-            'Pragma' => 'no-cache',
-        ]);
+        $response = new JsonResponse(
+            [
+                'jsonrpc' => '2.0',
+                'result' => '',
+                'id' => 'id',
+            ], JsonResponse::HTTP_OK, [
+                'Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT',
+                'Last-Modified' => \gmdate('D, d M Y H:i:s').' GMT',
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+                'Pragma' => 'no-cache',
+            ]
+        );
 
         return $response;
     }
 
     private function returnJsonError($code, $message)
     {
-        return new JsonResponse([
-            'jsonrpc' => '2.0',
-            'error ' => [
-                'code' => $code,
-                'message' => $message,
-            ],
-            'id' => 'id',
-        ]);
+        return new JsonResponse(
+            [
+                'jsonrpc' => '2.0',
+                'error ' => [
+                    'code' => $code,
+                    'message' => $message,
+                ],
+                'id' => 'id',
+            ]
+        );
     }
 
     /**
      * @param Request $request
      * @param int     $folderId
      *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload")
-     * @Method({"GET", "POST"})
+     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload", methods={"GET", "POST"})
      *
      * @return JsonResponse
      */
@@ -299,10 +307,12 @@ class MediaController extends Controller
 
         if ($request->files->has('files') && $request->files->get('files')['error'] === 0) {
             $drop = $request->files->get('files');
-        } elseif ($request->files->get('file')) {
-            $drop = $request->files->get('file');
         } else {
-            $drop = $request->get('text');
+            if ($request->files->get('file')) {
+                $drop = $request->files->get('file');
+            } else {
+                $drop = $request->get('text');
+            }
         }
         $media = $this->get('kunstmaan_media.media_manager')->createNew($drop);
         if ($media) {
@@ -325,9 +335,8 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create", methods={"GET", "POST"})
+     * @Template("@KunstmaanMedia/Media/create.html.twig")
      *
      * @return array|RedirectResponse
      */
@@ -373,9 +382,12 @@ class MediaController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.flash.created', [
-                        '%medianame%' => $media->getName(),
-                    ])
+                    $this->get('translator')->trans(
+                        'media.flash.created',
+                        [
+                            '%medianame%' => $media->getName(),
+                        ]
+                    )
                 );
 
                 return new RedirectResponse($this->generateUrl($redirectUrl, $params));
@@ -384,9 +396,12 @@ class MediaController extends Controller
             if ($isInModal) {
                 $this->addFlash(
                     FlashTypes::ERROR,
-                    $this->get('translator')->trans('media.flash.not_created', array(
-                        '%mediaerrors%' => $form->getErrors(true, true),
-                    ))
+                    $this->get('translator')->trans(
+                        'media.flash.not_created',
+                        [
+                            '%mediaerrors%' => $form->getErrors(true, true),
+                        ]
+                    )
                 );
 
                 return new RedirectResponse($this->generateUrl($redirectUrl, $params));
@@ -405,9 +420,7 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create", methods={"POST"})
      *
      * @return array|RedirectResponse
      */
@@ -437,13 +450,14 @@ class MediaController extends Controller
     /**
      * @param Request $request
      *
-     * @Route("move/", name="KunstmaanMediaBundle_media_move")
-     * @Method({"POST"})
+     * @Route("move/", name="KunstmaanMediaBundle_media_move", methods={"POST"})
      *
      * @return string
      */
     public function moveMedia(Request $request)
     {
+        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanMediaBundle 5.1 and will be removed in KunstmaanMediaBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+
         $mediaId = $request->request->get('mediaId');
         $folderId = $request->request->get('folderId');
 
@@ -461,5 +475,52 @@ class MediaController extends Controller
         $mediaRepo->save($media);
 
         return new JsonResponse();
+    }
+
+    /**
+     * @Route("/bulk-move", name="KunstmaanMediaBundle_media_bulk_move")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse|Response
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function bulkMoveAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mediaRepo = $em->getRepository('KunstmaanMediaBundle:Media');
+        $form = $this->createForm(BulkMoveMediaType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Folder $folder */
+            $folder = $form->getData()['folder'];
+            $mediaIds = explode(',', $form->getData()['media']);
+
+            $mediaRepo->createQueryBuilder('m')
+                ->update()
+                ->set('m.folder', $folder->getId())
+                ->where('m.id in (:mediaIds)')
+                ->setParameter('mediaIds', $mediaIds)
+                ->getQuery()
+                ->execute();
+
+            $this->addFlash(FlashTypes::SUCCESS, $this->get('translator')->trans('media.folder.bulk_move.success.text'));
+
+            return new JsonResponse(
+                [
+                    'Success' => 'The media is moved',
+                ]
+            );
+        }
+
+        return $this->render(
+            '@KunstmaanMedia/Folder/bulk-move-modal_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

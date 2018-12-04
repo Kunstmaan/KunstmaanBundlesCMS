@@ -59,12 +59,18 @@ class ActionsMenuBuilder
     private $isEditableNode = true;
 
     /**
-     * @param FactoryInterface              $factory              The factory
-     * @param EntityManager                 $em                   The entity manager
-     * @param RouterInterface               $router               The router
-     * @param EventDispatcherInterface      $dispatcher           The event dispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker The security authorization checker
+     * @var bool
+     */
+    private $enableExportPageTemplate = true;
+
+    /**
+     * @param FactoryInterface              $factory                  The factory
+     * @param EntityManager                 $em                       The entity manager
+     * @param RouterInterface               $router                   The router
+     * @param EventDispatcherInterface      $dispatcher               The event dispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
+     * @param bool                          $enableExportPageTemplate
      */
     public function __construct(
         FactoryInterface $factory,
@@ -72,7 +78,8 @@ class ActionsMenuBuilder
         RouterInterface $router,
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
-        PagesConfiguration $pagesConfiguration
+        PagesConfiguration $pagesConfiguration,
+        $enableExportPageTemplate = true
     ) {
         $this->factory = $factory;
         $this->em = $em;
@@ -80,6 +87,7 @@ class ActionsMenuBuilder
         $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
+        $this->enableExportPageTemplate = $enableExportPageTemplate;
     }
 
     /**
@@ -179,7 +187,7 @@ class ActionsMenuBuilder
                         'extras' => ['renderType' => 'button'],
                     ]
                 );
-                if ($isSuperAdmin && is_subclass_of($node->getRefEntityName(), HasPageTemplateInterface::class)) {
+                if ($this->enableExportPageTemplate && $isSuperAdmin && is_subclass_of($node->getRefEntityName(), HasPageTemplateInterface::class)) {
                     $menu->addChild(
                         'action.exportpagetemplate',
                         [
@@ -317,7 +325,7 @@ class ActionsMenuBuilder
                             'extras' => ['renderType' => 'button'],
                         ]
                     );
-                    if ($isSuperAdmin && is_subclass_of($node->getRefEntityName(), HasPageTemplateInterface::class)) {
+                    if ($this->enableExportPageTemplate && $isSuperAdmin && is_subclass_of($node->getRefEntityName(), HasPageTemplateInterface::class)) {
                         $menu->addChild(
                             'action.exportpagetemplate',
                             [

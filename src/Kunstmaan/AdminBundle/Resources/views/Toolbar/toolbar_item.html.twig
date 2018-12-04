@@ -6,5 +6,5 @@
     {% if link is defined and link %}
         </a>
     {% endif %}
-    <div class="sf-toolbar-info">{{ text|default('') }}</div>
+    <div class="sf-toolbar-info"{% if overflow is defined and overflow %} style="overflow: auto;"{% endif %}>{{ text|default('') }}</div>
 </div>

@@ -1,0 +1,37 @@
+services:
+    Kunstmaan\AdminBundle\Command\CreateUserCommand:
+        arguments: ['@doctrine.orm.entity_manager', '@fos_user.group_manager', '%fos_user.model.user.class%', '%kunstmaan_admin.default_admin_locale%']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\CreateGroupCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\CreateRoleCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\ExceptionCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\UpdateAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.security.acl.permission.map'
+            - '%security.role_hierarchy.roles%'
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\ApplyAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_utilities.shell'
+        tags:
+            - { name: console.command }

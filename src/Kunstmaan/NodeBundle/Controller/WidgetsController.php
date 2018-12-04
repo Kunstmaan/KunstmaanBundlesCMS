@@ -8,7 +8,7 @@ use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,6 +66,8 @@ class WidgetsController extends Controller
      */
     public function selectNodesLazySearch(Request $request)
     {
+        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+
         /* @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();

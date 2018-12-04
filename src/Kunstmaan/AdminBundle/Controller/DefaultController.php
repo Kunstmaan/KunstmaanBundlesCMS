@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,7 +44,7 @@ class DefaultController extends Controller
      * The admin of the index page
      *
      * @Route("/adminindex", name="KunstmaanAdminBundle_homepage_admin")
-     * @Template()
+     * @Template("@KunstmaanAdmin/Default/editIndex.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

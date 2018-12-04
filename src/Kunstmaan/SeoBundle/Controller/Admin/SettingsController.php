@@ -6,7 +6,7 @@ use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +30,7 @@ class SettingsController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository('KunstmaanSeoBundle:Robots');
         $robot = $repo->findOneBy(array());
-        $default = $this->getParameter('robots_default');
+        $default = $this->container->getParameter('robots_default');
         $isSaved = true;
 
         if (!$robot) {
@@ -58,7 +58,7 @@ class SettingsController extends BaseSettingsController
         if (!$isSaved) {
             $this->addFlash(
                 FlashTypes::WARNING,
-                $this->get('translator')->trans('seo.robots.warning')
+                $this->container->get('translator')->trans('seo.robots.warning')
             );
         }
 

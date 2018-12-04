@@ -3,16 +3,19 @@
 namespace Kunstmaan\NodeBundle\Form\EventListener;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
-use Kunstmaan\NodeBundle\Validation\URLValidator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
+/**
+ * Class URLChooserLinkTypeSubscriber
+ */
 class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
 {
-    use URLValidator;
-
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -42,6 +45,10 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
             switch ($linkType) {
                 case URLChooserType::INTERNAL:
                     $attributes['choose_url'] = true;
+
+                    break;
+                case URLChooserType::EXTERNAL:
+                    $attributes['placeholder'] = 'https://';
 
                     break;
             }

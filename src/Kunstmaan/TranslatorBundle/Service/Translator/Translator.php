@@ -4,13 +4,19 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 
 /**
  * Translator
+ *
+ * NEXT_MAJOR remove the $profilerEnable constructor parameter en remove the profileTranslation method.
  */
 class Translator extends SymfonyTranslator
 {
+    /** @var bool */
+    private $profilerEnabled;
+
     private $translationRepository;
 
     /**
@@ -24,6 +30,13 @@ class Translator extends SymfonyTranslator
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
+
+    public function __construct(ContainerInterface $container, $formatter, $defaultLocale = null, array $loaderIds = array(), array $options = array(), $profilerEnable = false)
+    {
+        parent::__construct($container, $formatter, $defaultLocale, $loaderIds, $options);
+
+        $this->profilerEnabled = $profilerEnable;
+    }
 
     /**
      * Add resources from the database
@@ -124,9 +137,12 @@ class Translator extends SymfonyTranslator
         return $trans;
     }
 
+    /**
+     * @deprecated This method is deprecated since KunstmaanTranslatorBundle version 5.1 and will be removed in KunstmaanTranslatorBundle version 6.0
+     */
     public function profileTranslation($id, $parameters, $domain, $locale, $trans)
     {
-        if (!$this->request || $this->container->getParameter('kuma_translator.profiler') === false) {
+        if (!$this->request || $this->profilerEnabled === false) {
             return;
         }
 

@@ -24,11 +24,9 @@ export const adminBundle = {
 };
 
 adminBundle.tasks.eslint = createEslintTask({
-    src: adminBundle.config.srcPath + 'js/**/*.js',
+    src: adminBundle.config.srcPath + 'jsnext/**/*.js',
     failAfterError: !consoleArguments.continueAfterTestError
 });
-
-adminBundle.tasks.stylelint = createStylelintTask({src: adminBundle.config.srcPath + 'scss/**/*.scss'});
 
 adminBundle.tasks.copy = gulp.parallel(
     createCopyTask({src: [adminBundle.config.srcPath + 'img/**'], dest: adminBundle.config.distPath + 'img'}),

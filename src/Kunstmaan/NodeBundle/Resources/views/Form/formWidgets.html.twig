@@ -61,7 +61,7 @@
                         </button>
                     </span>
                         {% else %}
-                            <input type="text" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}">
+                            <input type="text" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}"{% if linkUrl.attr is defined and linkUrl.attr.placeholder is defined %} placeholder="{{ linkUrl.attr.placeholder }}"{% endif %}>
                         {% endif %}
                     </div>
                 </div>

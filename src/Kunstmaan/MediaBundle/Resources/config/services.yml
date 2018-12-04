@@ -17,6 +17,7 @@ services:
         class: '%kunstmaan_media.media_manager.class%'
         calls:
             - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
+        public: true
 
     kunstmaan_media.listener.doctrine:
         class: '%kunstmaan_media.listener.doctrine.class%'
@@ -71,6 +72,7 @@ services:
     kunstmaan_media.folder_manager:
         class: '%kunstmaan_media.folder_manager.class%'
         arguments: ['@kunstmaan_media.repository.folder']
+        public: true
 
     kunstmaan_media.mimetype_guesser.factory:
         class: '%kunstmaan_media.mimetype_guesser.factory.class%'
@@ -80,18 +82,35 @@ services:
 
     kunstmaan_media.command.rebuildfoldertree:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
 
     kunstmaan_media.command.cleandeletedmedia:
         class: Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_media.media_manager'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
+
+    kunstmaan_media.command.renamesoftdeleted:
+        class: Kunstmaan\MediaBundle\Command\RenameSoftDeletedCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_media.media_manager'
+        tags:
+            - { name: console.command }
 
     kunstmaan_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:
-            - '%kernel.root_dir%/../web%kunstmaan_media.media_path%'
+            - '%kunstmaan_media.full_media_path%'
             - true
 
     kunstmaan_media.filesystem:
@@ -106,3 +125,37 @@ services:
         calls:
             - [setMimeTypeGuesser, ['@kunstmaan_media.mimetype_guesser.factory']]
             - [setExtensionGuesser, ['@kunstmaan_media.extension_guesser.factory']]
+
+    kunstmaan_media.imagine.filter.loader.background:
+        class: '%liip_imagine.filter.loader.background.class%'
+        arguments:
+            - '@liip_imagine'
+        tags:
+            - { name: 'liip_imagine.filter.loader', loader: 'background' }
+
+    Kunstmaan\MediaBundle\Helper\Imagine\ImagineController:
+        arguments:
+            - '@liip_imagine.service.filter'
+            - '@liip_imagine.data.manager'
+            - '@liip_imagine.cache.signer'
+        tags:
+            - { name: 'controller.service_arguments' }
+        public: true
+
+    Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver:
+        arguments:
+            - '@filesystem'
+            - '@router.request_context'
+            - ~ # will be injected by WebPathResolverFactory
+            - ~ # will be injected by WebPathResolverFactory
+            - '@liip_imagine.filter.configuration'
+        public: true
+        abstract: true
+
+    Kunstmaan\MediaBundle\Helper\Imagine\CacheManager:
+        arguments:
+            - '@liip_imagine.filter.configuration'
+            - '@router'
+            - '@liip_imagine.cache.signer'
+            - '@event_dispatcher'
+            - '%liip_imagine.cache.resolver.default%'

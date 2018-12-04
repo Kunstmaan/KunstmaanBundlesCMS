@@ -68,6 +68,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('commands.yml');
 
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
             $loader->load('console_listener.yml');
@@ -103,6 +104,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $monologConfig['handlers']['main']['path'] = sprintf('%s/%s', $container->getParameter('kernel.logs_dir'), $container->getParameter('kernel.environment'));
         $monologConfig['handlers']['main']['level'] = 'debug';
         $container->prependExtensionConfig('monolog', $monologConfig);
+
+        $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
+        $container->prependExtensionConfig('twig', $twigConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);

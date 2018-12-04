@@ -17,6 +17,8 @@ interface PageInterface extends HasNodeInterface
      * @param Request            $request   The Request
      * @param RenderContext      $context   The Render context
      *
+     * @deprecated Using the service method is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Implement SlugActionInterface and use the getControllerAction method to provide custom logic instead.
+     *
      * @return void|RedirectResponse
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context);

@@ -56,6 +56,13 @@ abstract class FormSubmissionField
     protected $sequence;
 
     /**
+     * The internal name of the form pagepart attached to this.
+     *
+     * @ORM\Column(name="internal_name", type="string", nullable=true)
+     */
+    protected $internalName;
+
+    /**
      * Get id
      *
      * @return int
@@ -173,6 +180,38 @@ abstract class FormSubmissionField
         $this->sequence = $sequence;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormSubmission()
+    {
+        return $this->formSubmission;
+    }
+
+    /**
+     * @param mixed $formSubmission
+     */
+    public function setFormSubmission($formSubmission)
+    {
+        $this->formSubmission = $formSubmission;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInternalName()
+    {
+        return $this->internalName;
+    }
+
+    /**
+     * @param mixed $internalName
+     */
+    public function setInternalName($internalName)
+    {
+        $this->internalName = $internalName;
     }
 
     /**

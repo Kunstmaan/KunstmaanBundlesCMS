@@ -5,7 +5,7 @@ namespace {{ namespace }}\Controller;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\BikeAdminListConfigurator;
@@ -42,8 +42,7 @@ class BikeAdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle_name|lower }}_admin_bike_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="{{ bundle_name|lower }}_admin_bike_add", methods={"GET", "POST"})
      * @return array
      */
     public function addAction(Request $request)
@@ -56,8 +55,7 @@ class BikeAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_edit", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -71,8 +69,7 @@ class BikeAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_delete", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -82,8 +79,7 @@ class BikeAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle_name|lower }}_admin_bike_export")
-     * @Method({"GET", "POST"})
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle_name|lower }}_admin_bike_export", methods={"GET", "POST"})
      * @return array
      */
     public function exportAction(Request $request, $_format)
@@ -96,8 +92,7 @@ class BikeAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_move_up")
-     * @Method({"GET"})
+     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_move_up", methods={"GET"})
      *
      * @return array
      */
@@ -111,8 +106,7 @@ class BikeAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_move_down")
-     * @Method({"GET"})
+     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_move_down", methods={"GET"})
      *
      * @return array
      */

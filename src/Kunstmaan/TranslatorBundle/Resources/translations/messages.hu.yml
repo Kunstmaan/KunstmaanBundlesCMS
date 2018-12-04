@@ -14,15 +14,18 @@ settings:
     edit: Szerkesztése
     refresh_live: Azonnali frissítés
     import_translations_forced: Kényszerített import
-    import_translations: Import
-    actions: Actions
-    export_translations: Export to CSV
+    import_translations: Importálás
+    import_file: Importálás táblázatból
+    actions: Műveletek
+    export_translations: Exportálás CSV fáljba
     not_live_warning: "A fordítás nem azonnali idejű!"
     choose_language: "Válassz egy nyelvet"
     succesful_added: "Sikeresen hozzá lett adva."
     succesful_edited: "Sikeres szerkesztés"
 kuma_translator:
   form:
+    upload_file_choose: Kérjük, válassz ki egy fájlt a feltöltéshez
+    force_checkbox: A fordítások felülírása
     text_with_locale:
       locale:
         label: Nyelv
@@ -47,8 +50,14 @@ kuma_translator:
     header:
       domain: Névtér
       keyword: Kulcsszó
+      status: Status
     filter:
       domain: Névtér
       keyword: Kulcsszó
       text: Szöveg
       locale: Nyelv
+      status: Status
+toolbar:
+  translations:
+    title: Fordítások
+    count: Mennyiség

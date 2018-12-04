@@ -4,7 +4,7 @@ namespace Kunstmaan\ConfigBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -48,11 +48,6 @@ class ConfigController
     private $configuration;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var FormFactoryInterface
      */
     private $formFactory;
@@ -72,15 +67,23 @@ class ConfigController
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         array $configuration,
-        ContainerInterface $container,
-        FormFactoryInterface $formFactory
+        /* ContainerInterface $container, */
+        /* FormFactoryInterface */ $formFactory
     ) {
         $this->router = $router;
         $this->templating = $templating;
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->configuration = $configuration;
-        $this->container = $container;
+
+        if (func_num_args() > 6) {
+            @trigger_error(sprintf('Passing the "container" as the sixth argument in "%s" is deprecated in KunstmaanConfigBundle 5.1 and will be removed in KunstmaanConfigBundle 6.0. Remove the "container" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->formFactory = func_get_arg(6);
+
+            return;
+        }
+
         $this->formFactory = $formFactory;
     }
 

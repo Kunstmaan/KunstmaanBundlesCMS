@@ -4,7 +4,7 @@ subaction:
 action:
   saveasdraft: "Mentés piszkozatként"
   recopyfromlanguage: "Másik nyelvről másolás"
-  exportpagetemplate: "Export pagetemplate"
+  exportpagetemplate: "A pagetemplate exportálása"
   publish: "Publikálás"
   unpublish: "Publikálás visszavonása"
   preview: "Előnézet"
@@ -71,8 +71,8 @@ kuma_node:
     edit:
       flash:
         success: Az oldal módosítva.
-        locked: The page is currently being edited by %users%
-        locked_success: An automatic backup has been created because the page is being edited by another user
+        locked: Ezt az oldalt jelenleg %user% szerkeszti.
+        locked_success: Automatikus biztonsági mentés létrehozva, mert jelenleg egy másik felhasználó szerkeszti az oldalt.
     new_page:
       title:
         default: Új oldal
@@ -89,7 +89,7 @@ kuma_node:
         online: Online
       online: (Online)
       offline: (Offline)
-      additional_title: This list contains all the pages, chronologically ordered by updated date.
+      additional_title: A list az összes oldalt krónológikus sorrendben tartalmazza, a módosítási időpont alapján.
   tab:
     properties:
       title: Tulajdonságok
@@ -168,4 +168,4 @@ kuma_node:
         cancel: Mégse
     export_pagetemplate:
       button:
-        title: Export pagetemplate
+        title: A pagetemplate exportálása

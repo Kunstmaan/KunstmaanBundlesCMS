@@ -278,11 +278,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set returningUsers
+     * @param int $returningUsers
      *
-     * @param string $returningUsers
-     *
-     * @return AnalyticsOverview
+     * @return $this
      */
     public function setReturningUsers($returningUsers)
     {
@@ -292,9 +290,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get returningUsers
-     *
-     * @return string
+     * @return int
      */
     public function getReturningUsers()
     {

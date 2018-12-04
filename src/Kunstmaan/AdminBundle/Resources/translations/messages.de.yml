@@ -6,7 +6,7 @@ pages:
   pagenottranslated: Diese Seite ist nicht übersetzt
   copyfrom: Aus anderer Sprache kopieren
   createemptypage: Als leere Seite erstellen
-  movingconfirmation: You are moving "%title%" to "%target%", are you sure?
+  movingconfirmation: Sie verschieben "%title%" nach "%target%". Sind Sie sicher?
 modules:
   title: Module
 settings:
@@ -22,6 +22,17 @@ settings:
     uptodate: ist aktuell
     toupdate: kann aktualisiert werden auf
     unknown: unbekannte Version
+  exceptions:
+    title: Ausnahmen
+    code: Code
+    url: URL
+    urlReferer: URL Referrer
+    createdAt: Erstellt am
+    isResolved: Behoben
+    events: Events
+    resolved: Behoben
+    unresolved: Nicht behoben
+    resolve_all: Alle beheben
 tools:
   title: Helfer
   clear_frontend_cache: Frontend Cache löschen
@@ -29,7 +40,7 @@ tools:
   clear_all_caches: Alle Caches löschen
   shutdown: Herunterfahren
 search:
-  title: Search
+  title: Suche
 form:
   cancel: Abrechen
   delete: Löschen
@@ -58,56 +69,66 @@ form:
   versions: Versionen
   button:
     dropdown:
-      more: More
+      more: Mehr
     filter:
-      clear: Clear
+      clear: Zurücksetzen
       filter: Filter
 omnext:
-  home: Home
+  home: Startseite
   title: Willkommen!
   welcome: Willkommen.
   information: <strong>Information.</strong> Keine neuen Benachrichtigungen vorhanden.
 permissions:
-  you_made_changes: You have made changes to the permissions on this page.
-  apply_recursively: Apply these changes recursively on all child pages
-  review_changes: Review your changes
-  changes: Permission changes
-  permissions_added: 'The following permissions will be <strong>added</strong>:'
-  permissions_removed: 'The following permissions will be <strong>removed</strong>:'
-  role_name: Role name
+  you_made_changes: Sie haben Änderungen an den Berechtigungen dieser Seite vorgenommen.
+  apply_recursively: Änderungen rekursiv für alle Unterseiten übernehmen
+  review_changes: Änderungen überprüfen
+  changes: Berechtigungs-Änderungen
+  permissions_added: 'Die folgende Berechtigung wird <strong>hinzugefügt</strong>:'
+  permissions_removed: 'Die folgende Berechtigung wird <strong>entfernt</strong>:'
+  role_name: Rollenname
 errors:
   oauth:
-    invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
+    invalid: Anmelden über Google OAuth nicht möglich. Möglicherweise ist die Domain nicht erlaubt.
 kuma_admin:
   flash_type:
-    success: Success
-    warning: Warning
-    error: Error
-    info: Info
-    danger: Danger
+    success: Erfolg
+    warning: Warnung
+    error: Fehler
+    info: Information
+    danger: Achtung
   dashboard:
     configuration:
       title:
-        label: Title
+        label: Titel
       content:
-        label: Content (raw html)
+        label: Inhalt (pures HTML)
   edit:
     flash:
-      success: The welcome page has been edited!
+      success: Die Willkommens-Seite wurde bearbeitet!
   password_check:
     flash:
-      error: Your password has not yet been changed
+      error: Das Passwort wurde noch nicht geändert
   ga_ajax_controller:
     flash:
-      success: Succesfully saved!
+      success: Erfolgreich gespeichert!
   media:
     flash:
-      'deleted_success.%medianame%': Entry '%medianame%' has been deleted!
-      drop_success: File was uploaded successfuly!
-      drop_unrecognized: Could not recognize what you dropped!
+      'deleted_success.%medianame%': Eintrag "%medianame%" wurde gelöscht!
+      drop_success: Datei wurde erfolgreich hochgeladen!
+      drop_unrecognized: Es konnte nicht erkannt werden, was Sie abgelegt haben!
   login:
-    forgot_password: Forgot my password
-    invalid_credentials: Wrong password or email
+    forgot_password: Passwort vergessen
+    invalid_credentials: Falsches Passwort oder falsche E-Mail Adresse
 kuma_js:
   auto_collapse:
-    more_button_label: More
+    more_button_label: Mehr
+toolbar:
+  bundle_version:
+    unknown: Unbekannt
+    uptodate: Aktuell
+    toupdate: Nicht aktuell
+    version: Bundle-Version
+    status: Bundle-Status
+  exception:
+    title: Ausnahmen
+    message: "Ausnahme <strong>%X</strong> ausgelöst von <strong>%Y%</strong> Event(s)"

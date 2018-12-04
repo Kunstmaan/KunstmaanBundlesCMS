@@ -5,21 +5,35 @@
         <div class="page-header">
             <h1>{{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}</h1>
             <small><strong>date</strong>: {{ formsubmission.created|date }} / <strong>language</strong>: {{ formsubmission.lang }} / <strong>ip</strong>: {{ formsubmission.ipAddress }}</small>
-            {% block extra_actions_header %}{% endblock %}
+            {% block extra_actions_header %}
+                {% if adminlist.canDelete(formsubmission) %}
+                    <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                        <div class="btn-group">
+                            <a class="btn btn--raise-on-hover btn-danger" href="#" data-toggle="modal" data-target="#sure-modal-{{ formsubmission.id }}">
+                                {{ 'action.delete' | trans }}
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
         </div>
     {% endif %}
 {% endblock %}
 
 {% block content %}
-            {% for field in formsubmission.fields %}
-                    <p><strong>{{ field.label }}</strong></p>
-                    <p>
-                        {% if (field.submissionTemplate is defined) %}
-                            {% include field.submissionTemplate with {'resource' : field, 'host' : ''} %}
-                        {% else %}
-                            {{ field }}
-                        {% endif %}
-                    </p>
-            {% endfor %}
+        {% for field in formsubmission.fields %}
+                <p><strong>{{ field.label }}</strong></p>
+                <p>
+                    {% if (field.submissionTemplate is defined) %}
+                        {% include field.submissionTemplate with {'resource' : field, 'host' : ''} %}
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                </p>
+        {% endfor %}
 
+    {% if adminlist.canDelete(formsubmission) %}
+        {% set item = formsubmission %}
+        {% include '@KunstmaanAdminList/AdminListTwigExtension/sure-modal.html.twig' %}
+    {% endif %}
 {% endblock %}

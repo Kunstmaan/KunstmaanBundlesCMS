@@ -83,7 +83,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         MenuItem $parent = null,
         Request $request = null
     ) {
-        if (is_null($parent)) {
+        if (null === $parent) {
             $menuItem = new TopMenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes')
@@ -103,7 +103,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             );
             $activeNodeIds = $this->getActiveNodeIds($request);
 
-            if ('KunstmaanNodeBundle_nodes' == $parent->getRoute() && isset($treeNodes[0])) {
+            if (isset($treeNodes[0]) && 'KunstmaanNodeBundle_nodes' === $parent->getRoute()) {
                 $this->processNodes(
                     $menu,
                     $children,
@@ -111,8 +111,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                     $parent,
                     $activeNodeIds
                 );
-            } elseif ('KunstmaanNodeBundle_nodes_edit' == $parent->getRoute()) {
-                $parentRouteParams = $parent->getRouteparams();
+            } elseif ('KunstmaanNodeBundle_nodes_edit' === $parent->getRoute()) {
+                $parentRouteParams = $parent->getRouteParams();
                 $parent_id = $parentRouteParams['id'];
                 if (array_key_exists($parent_id, $treeNodes)) {
                     $this->processNodes(
@@ -143,9 +143,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         AclNativeHelper $aclNativeHelper,
         $includeHiddenFromNav
     ) {
-        if (is_null($this->treeNodes)) {
+        if (null === $this->treeNodes) {
             $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
-            $this->treeNodes = array();
+            $this->treeNodes = [];
 
             $rootNode = $this->domainConfiguration->getRootNode();
 
@@ -183,20 +183,20 @@ class PageMenuAdaptor implements MenuAdaptorInterface
      */
     private function getActiveNodeIds($request)
     {
-        if (is_null($this->activeNodeIds)) {
+        if (null === $this->activeNodeIds) {
             if (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes_edit') === 0) {
                 $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
                 $currentNode = $repo->findOneById($request->attributes->get('id'));
                 $parentNodes = $repo->getAllParents($currentNode);
-                $this->activeNodeIds = array();
+                $this->activeNodeIds = [];
                 foreach ($parentNodes as $parentNode) {
                     $this->activeNodeIds[] = $parentNode->getId();
                 }
             }
         }
 
-        return is_null($this->activeNodeIds) ? array() : $this->activeNodeIds;
+        return is_null($this->activeNodeIds) ? [] : $this->activeNodeIds;
     }
 
     /**
@@ -221,8 +221,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
 
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes_edit')
-                ->setRouteparams(array('id' => $child['id']))
-                ->setUniqueId('node-' . $child['id'])
+                ->setRouteParams(['id' => $child['id']])
+                ->setUniqueId('node-'.$child['id'])
                 ->setLabel($child['title'])
                 ->setParent($parent)
                 ->setOffline(!$child['online'] && !$this->pagesConfiguration->isStructureNode($refName))
@@ -239,7 +239,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                     ]
                 );
 
-            if (in_array($child['id'], $activeNodeIds)) {
+            if (\in_array($child['id'], $activeNodeIds, false)) {
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;

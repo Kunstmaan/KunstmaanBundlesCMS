@@ -22,6 +22,17 @@ settings:
     uptodate: está actualizado
     toupdate: puede actualizarse a
     unknown: información de la versión desconocida
+  exceptions:
+    title: Exceptions
+    code: Code
+    url: URL
+    urlReferer: URL Referer
+    createdAt: Created at
+    isResolved: Is resolved
+    events: Events
+    resolved: Resolved
+    unresolved: Unresolved
+    resolve_all: Resolve all
 tools:
   title: Herramientas
   clear_frontend_cache: Borrar caché frontend
@@ -111,3 +122,13 @@ kuma_admin:
 kuma_js:
   auto_collapse:
     more_button_label: More
+toolbar:
+  bundle_version:
+    unknown: Unknown
+    uptodate: Up-to-date
+    toupdate: Outdated
+    version: Bundle version
+    status: Bundle status
+  exception:
+    title: Exceptions
+    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

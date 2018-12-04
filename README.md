@@ -21,7 +21,7 @@ Want to talk to fellow contributors? There's always people eager to chat in our 
 
 ### Browser support
 
-We support at least the 2 last versions of Chrome / Firefox / Safari and IE9 or up. We also support the most current mobile browsers.
+We support at least the 2 last versions of Chrome / Firefox / Safari / Edge and IE11. We also support the most current mobile browsers.
 
 Enjoy!
 

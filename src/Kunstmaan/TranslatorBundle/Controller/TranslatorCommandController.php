@@ -5,7 +5,7 @@ namespace Kunstmaan\TranslatorBundle\Controller;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

@@ -22,13 +22,17 @@ settings:
     uptodate: is up-to-date
     toupdate: kan worden geüpdated naar
     unknown: versiegegevens onbekend
-toolbar:
-  bundle_version:
-    unknown: Onbekend
-    uptodate: Up-to-date
-    toupdate: Verouderd
-    version: Bundle versie
-    status: Bundle status
+  exceptions:
+    title: Exceptions
+    code: Code
+    url: URL
+    urlReferer: URL Referer
+    createdAt: Created at
+    isResolved: Is resolved
+    events: Events
+    resolved: Resolved
+    unresolved: Unresolved
+    resolve_all: Resolve all
 tools:
   title: Hulpmiddelen
   clear_frontend_cache: Frontend cache legen
@@ -43,7 +47,7 @@ form:
   deletesure: Weet u zeker dat u dit wilt verwijderen?
   edit: Bewerken
   add: Toevoegen
-  'add.%subject%': 'Toevoegen van nieuwe %subject%'
+  'add.%subject%': 'Voeg nieuwe %subject% toe'
   save: Opslaan
   publish: Publiceren
   unpublish: Publicatie ongedaan maken
@@ -118,3 +122,13 @@ kuma_admin:
 kuma_js:
   auto_collapse:
     more_button_label: Meer
+toolbar:
+  bundle_version:
+    unknown: Onbekend
+    uptodate: Up-to-date
+    toupdate: Verouderd
+    version: Bundle versie
+    status: Bundle status
+  exception:
+    title: Exceptions
+    message: "<strong>%X%</strong> exception(s) veroorzaakt door <strong>%Y%</strong> events"

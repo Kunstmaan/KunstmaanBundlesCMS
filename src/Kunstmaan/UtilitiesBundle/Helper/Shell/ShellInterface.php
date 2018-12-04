@@ -8,11 +8,12 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
 interface ShellInterface
 {
     /**
-     * @param string $command The command
+     * @param string $command  The command
+     * @param int    $priority The priority
      *
-     * @return int
+     * @return string
      */
-    public function runInBackground($command);
+    public function runInBackground($command, $priority = 0);
 
     /**
      * @param int $pid

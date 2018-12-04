@@ -46,12 +46,9 @@ class KunstmaanMultiDomainExtension extends Extension
 
         /*
          * We override the default domain configuration service here. You can use a custom one by
-         * setting kunstmaan_multi_domain.domain_configuration.class to your own implementation.
+         * setting registering the class as a service and override the "kunstmaan_admin.domain_configuration" service alias.
          */
-        $container->setParameter(
-            'kunstmaan_admin.domain_configuration.class',
-            $container->getParameter('kunstmaan_multi_domain.domain_configuration.class')
-        );
+        $container->setAlias('kunstmaan_admin.domain_configuration', 'kunstmaan_multi_domain.domain_configuration')->setPublic(true);
     }
 
     /**

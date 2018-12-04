@@ -1,9 +1,5 @@
 # Installation
 
-> For the sake of clarity we will perform this installation in a preconfigured Vagrant box built with [PuPHPet](https://puphpet.com). More info in [this chapter about the PuPHPet development environment](development-environment.md). If you have a development environment, just adjust to match your specifics.
->
-> This chapter assumes you have started the box (`vagrant up`), ssh'ed into it (`vagrant ssh`) and have navigated to the `/var/www` folder (`cd /var/www`). If there is a folder there called `myprojectname` you should delete it by running: `rm -Rf myprojectname`
-
 ## Downloading and configuring the base CMS
 
 We will get started by downloading the Kunstmaan Bundles Standard Edition to get the CMS and all it's dependencies.
@@ -115,7 +111,9 @@ Execute the following command:
 bin/console assets:install --symlink
 ```
 
-At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/en/admin) should greet you with the following screens.
+If you have done all the aforementioned staps successfuly. You should be able to
+browse to the website on the environment of your choice, and be greeted with the
+following screens.
 
 ![Demo Site Admin](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/demositeadmin.png)
 
@@ -146,6 +144,4 @@ npm install
 npm run build
 ```
 
-At this point browsing to [http://kunstmaan.cms](http://kunstmaan.cms) should show you the website with minimalistic styling.
-=======
->>>>>>> 4.0
+At this point browsing to the website on the environment of your choice should show you the website with minimalistic styling.

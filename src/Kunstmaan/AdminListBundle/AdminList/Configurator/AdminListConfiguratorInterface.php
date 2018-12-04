@@ -73,7 +73,7 @@ interface AdminListConfiguratorInterface
     /**
      * Get the url to export the listed items
      *
-     * @return string
+     * @return array
      */
     public function getExportUrl();
 

@@ -16,7 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class URLChooserType extends AbstractType
 {
     const INTERNAL = 'internal';
+
     const EXTERNAL = 'external';
+
     const EMAIL = 'email';
 
     /**
@@ -33,27 +35,31 @@ class URLChooserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $choices = [
-            'pagepart.link.internal' => URLChooserType::INTERNAL,
-            'pagepart.link.external' => URLChooserType::EXTERNAL,
-            'pagepart.link.email' => URLChooserType::EMAIL,
+            'pagepart.link.internal' => self::INTERNAL,
+            'pagepart.link.external' => self::EXTERNAL,
+            'pagepart.link.email' => self::EMAIL,
         ];
 
         if ($types = $options['link_types']) {
             foreach ($choices as $key => $choice) {
-                if (!in_array($choice, $types)) {
+                if (!\in_array($choice, $types, false)) {
                     unset($choices[$key]);
                 }
             }
         }
 
-        $builder->add('link_type', ChoiceType::class, array(
-            'required' => true,
-            'mapped' => false,
-            'attr' => array(
-                'class' => 'js-change-link-type',
-            ),
-            'choices' => $choices,
-        ));
+        $builder->add(
+            'link_type',
+            ChoiceType::class,
+            [
+                'required' => true,
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'js-change-link-type',
+                ],
+                'choices' => $choices,
+            ]
+        );
 
         $builder->get('link_type')->addEventSubscriber(new URLChooserLinkTypeSubscriber());
 
@@ -68,11 +74,13 @@ class URLChooserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => null,
-            'link_types' => [],
-            'error_bubbling' => false,
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => null,
+                'link_types' => [],
+                'error_bubbling' => false,
+            ]
+        );
     }
 
     /**
