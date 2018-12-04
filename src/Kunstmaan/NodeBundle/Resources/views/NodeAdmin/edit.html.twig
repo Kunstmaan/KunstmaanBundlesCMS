@@ -18,7 +18,7 @@
                     |raw
                 }}
             {% endif %}
-            <a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}" class="btn btn-warning btn--raise-on-hover alert__action">
+            <a href="{{ path('KunstmaanNodeBundle_nodes_unschedulepublish', { 'id': node.id}) }}" class="btn btn-warning btn--raise-on-hover alert__action">
                 {{ 'kuma_node.status.button.schedulle_cancel'|trans() }}
             </a>
         </div>
