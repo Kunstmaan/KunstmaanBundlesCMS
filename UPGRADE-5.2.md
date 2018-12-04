@@ -7,3 +7,11 @@ General
  * We don't depend on the `symfony/symfony` package anymore, instead the individual `symfony/*` packages are added as dependencies.
    If your code depends on other symfony packages than the ones we require, add them to your project `composer.json`.
  * The `symfony/monolog-bundle` package was removed as it was no dependency of the kunstmaan cms. If you use this in your project, add the `"symfony/monolog-bundle": "~2.8|~3.0"` constraint to your project `composer.json`.
+
+AdminBundle
+-------
+
+* We've removed the `RoleInterface` on the `Kunstmaan\AdminBundle\Entity\Group` entity if you run your code on symfony 4. 
+  The interface was deprecated and removed in symfony 4. If you used this interface to check the `Group` entity change it to
+  the `FOS\UserBundle\Model\GroupInterface`. The `Group` entity won't change if you run on symfony 3.4 but it's adviced to make 
+  this change already.
