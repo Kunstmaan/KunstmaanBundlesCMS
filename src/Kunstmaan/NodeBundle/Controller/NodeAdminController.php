@@ -34,8 +34,7 @@ use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -154,9 +153,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/copyfromotherlanguage",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage"
+     *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage",
+     *      methods={"GET"}
      * )
-     * @Method("GET")
      *
      * @param Request $request
      * @param int     $id      The node id
@@ -206,9 +205,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/recopyfromotherlanguage",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage"
+     *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage",
+     *      methods={"POST"}
      * )
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id      The node id
@@ -257,9 +256,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/createemptypage",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_createemptypage"
+     *      name="KunstmaanNodeBundle_nodes_createemptypage",
+     *      methods={"GET"}
      * )
-     * @Method("GET")
      *
      * @param Request $request
      * @param int     $id
@@ -299,8 +298,7 @@ class NodeAdminController extends Controller
     /**
      * @Route("/{id}/publish", requirements={"id" =
      *                         "\d+"},
-     *                         name="KunstmaanNodeBundle_nodes_publish")
-     * @Method({"GET", "POST"})
+     *                         name="KunstmaanNodeBundle_nodes_publish", methods={"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id
@@ -326,9 +324,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/unpublish",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_unpublish"
+     *      name="KunstmaanNodeBundle_nodes_unpublish",
+     *      methods={"GET", "POST"}
      * )
-     * @Method({"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id
@@ -354,9 +352,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/unschedulepublish",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_unschedule_publish"
+     *      name="KunstmaanNodeBundle_nodes_unschedule_publish",
+     *      methods={"GET", "POST"}
      * )
-     * @Method({"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id
@@ -387,9 +385,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/delete",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_delete"
+     *      name="KunstmaanNodeBundle_nodes_delete",
+     *      methods={"POST"}
      * )
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id
@@ -452,9 +450,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/duplicate",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_duplicate"
+     *      name="KunstmaanNodeBundle_nodes_duplicate",
+     *      methods={"POST"}
      * )
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id
@@ -526,9 +524,9 @@ class NodeAdminController extends Controller
      *      "/{id}/revert",
      *      requirements={"id" = "\d+"},
      *      defaults={"subaction" = "public"},
-     *      name="KunstmaanNodeBundle_nodes_revert"
+     *      name="KunstmaanNodeBundle_nodes_revert",
+     *      methods={"GET"}
      * )
-     * @Method("GET")
      *
      * @param Request $request
      * @param int     $id      The node id
@@ -611,9 +609,9 @@ class NodeAdminController extends Controller
      * @Route(
      *      "/{id}/add",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_add"
+     *      name="KunstmaanNodeBundle_nodes_add",
+     *      methods={"POST"}
      * )
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id
@@ -678,8 +676,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage")
-     * @Method("POST")
+     * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage", methods={"POST"})
      *
      * @return RedirectResponse
      *
@@ -728,8 +725,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/reorder", name="KunstmaanNodeBundle_nodes_reorder")
-     * @Method("POST")
+     * @Route("/reorder", name="KunstmaanNodeBundle_nodes_reorder", methods={"POST"})
      *
      * @param Request $request
      *
@@ -799,10 +795,10 @@ class NodeAdminController extends Controller
      *      "/{id}/{subaction}",
      *      requirements={"id" = "\d+"},
      *      defaults={"subaction" = "public"},
-     *      name="KunstmaanNodeBundle_nodes_edit"
+     *      name="KunstmaanNodeBundle_nodes_edit",
+     *      methods={"GET", "POST"}
      * )
      * @Template("@KunstmaanNode/NodeAdmin/edit.html.twig")
-     * @Method({"GET", "POST"})
      *
      * @param Request $request
      * @param int     $id        The node id

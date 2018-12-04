@@ -8,8 +8,7 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -293,8 +292,7 @@ class MediaController extends Controller
      * @param Request $request
      * @param int     $folderId
      *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload")
-     * @Method({"GET", "POST"})
+     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload", methods={"GET", "POST"})
      *
      * @return JsonResponse
      */
@@ -337,8 +335,7 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
-     * @Method({"GET", "POST"})
+     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create", methods={"GET", "POST"})
      * @Template("@KunstmaanMedia/Media/create.html.twig")
      *
      * @return array|RedirectResponse
@@ -423,8 +420,7 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
-     * @Method({"POST"})
+     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create", methods={"POST"})
      *
      * @return array|RedirectResponse
      */
@@ -454,8 +450,7 @@ class MediaController extends Controller
     /**
      * @param Request $request
      *
-     * @Route("move/", name="KunstmaanMediaBundle_media_move")
-     * @Method({"POST"})
+     * @Route("move/", name="KunstmaanMediaBundle_media_move", methods={"POST"})
      *
      * @return string
      */

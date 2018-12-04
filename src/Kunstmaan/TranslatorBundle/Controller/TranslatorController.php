@@ -11,8 +11,7 @@ use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -72,8 +71,7 @@ class TranslatorController extends AdminListController
      *
      * @throws \Doctrine\ORM\OptimisticLockException
      *
-     * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add", methods={"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      */
     public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
@@ -129,8 +127,7 @@ class TranslatorController extends AdminListController
     /**
      * The edit action
      *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit", methods={"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:editTranslation.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -199,8 +196,7 @@ class TranslatorController extends AdminListController
     }
 
     /**
-     * @Route("upload", name="KunstmaanTranslatorBundle_settings_translations_upload")
-     * @Method({"POST", "GET"})
+     * @Route("upload", name="KunstmaanTranslatorBundle_settings_translations_upload", methods={"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      *
      * @param Request $request
@@ -237,8 +233,6 @@ class TranslatorController extends AdminListController
      * @param $keyword
      *
      * @return RedirectResponse
-     *
-     * @Method({"GET"})
      */
     public function editSearchAction($domain, $locale, $keyword)
     {
@@ -268,8 +262,7 @@ class TranslatorController extends AdminListController
      *
      * @throws NotFoundHttpException
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete", methods={"GET", "POST"})
      */
     public function deleteAction(Request $request, $id)
     {
@@ -311,8 +304,7 @@ class TranslatorController extends AdminListController
      *
      * @return JsonResponse|Response
      *
-     * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit")
-     * @Method({"POST"})
+     * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit", methods={"POST"})
      */
     public function inlineEditAction(Request $request)
     {

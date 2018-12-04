@@ -188,6 +188,9 @@ services:
             - "@kunstmaan_node.helper.url"
         public: true
 
+    # Add service alias to use controller as a service with the symfony core route annotation
+    Kunstmaan\NodeBundle\Controller\UrlReplaceController: '@kunstmaan_node.url_replace.controller'
+
     kunstmaan_node.helper.node:
         class: Kunstmaan\NodeBundle\Helper\NodeHelper
         arguments:

@@ -3,14 +3,12 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Kunstmaan\NodeBundle\Helper\URLHelper;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UrlReplaceController
- *
- * @Route(service="kunstmaan_node.url_replace.controller")
  */
 class UrlReplaceController
 {

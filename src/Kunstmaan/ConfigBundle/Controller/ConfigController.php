@@ -4,7 +4,7 @@ namespace Kunstmaan\ConfigBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
