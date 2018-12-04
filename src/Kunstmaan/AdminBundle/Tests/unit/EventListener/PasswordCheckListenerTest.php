@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -25,7 +25,7 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $token = $this->createMock(UsernamePasswordToken::class);
         $user = $user = $this->createMock(User::class);
-        $router = $this->createMock(Router::class);
+        $router = $this->createMock(RouterInterface::class);
         $session = $this->createMock(Session::class);
         $flash = $this->createMock(FlashBag::class);
         $trans = $this->createMock(Translator::class);
