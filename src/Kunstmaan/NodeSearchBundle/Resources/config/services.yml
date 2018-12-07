@@ -23,6 +23,8 @@ services:
             - [ setTokenStorage, ['@security.token_storage']]
             - [ setDomainConfiguration, ['@kunstmaan_admin.domain_configuration']]
             - [ setEntityManager, ['@doctrine.orm.entity_manager']]
+        tags:
+            - { name: kunstmaan_node_search.node_searcher }
 
     kunstmaan_node_search.service.indexable_pageparts:
         class: Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService
@@ -48,4 +50,8 @@ services:
 
     kunstmaan_node_search.search.service:
         class: "%kunstmaan_node_search.search_service.class%"
-        arguments: ['@service_container', '@request_stack']
+        arguments:
+            - '@service_container'
+            - '@request_stack'
+            - 10
+            - ~ #Will be replace by the NodeSearcherCompilerPass
