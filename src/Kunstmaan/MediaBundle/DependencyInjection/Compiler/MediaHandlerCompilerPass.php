@@ -35,8 +35,8 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
         }
 
         // Inject the tagged resolvers into our cache manager override
-        if ($container->hasDefinition('kunstmaan_media.imagine.cache.manager')) {
-            $manager = $container->getDefinition('kunstmaan_media.imagine.cache.manager');
+        if ($container->hasDefinition('Kunstmaan\MediaBundle\Helper\Imagine\CacheManager')) {
+            $manager = $container->getDefinition('Kunstmaan\MediaBundle\Helper\Imagine\CacheManager');
 
             foreach ($container->findTaggedServiceIds('liip_imagine.cache.resolver') as $id => $tag) {
                 $manager->addMethodCall('addResolver', [$tag[0]['resolver'], new Reference($id)]);
