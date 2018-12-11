@@ -40,16 +40,23 @@ class SearchService
     protected $defaultPerPage;
 
     /**
+     * @var array
+     */
+    private $searchers;
+
+    /**
      * @param ContainerInterface $container
      * @param RequestStack       $requestStack
      * @param int                $defaultPerPage
+     * @param array              $searchers
      */
-    public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10)
+    public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10, array $searchers = [])
     {
         $this->container = $container;
         $this->requestStack = $requestStack;
         $this->defaultPerPage = $defaultPerPage;
         $this->renderContext = new RenderContext();
+        $this->searchers = $searchers;
     }
 
     /**
@@ -119,7 +126,20 @@ class SearchService
         $entity = $request->attributes->get('_entity');
 
         $pageNumber = $this->getRequestedPage($request);
-        $searcher = $this->container->get($entity->getSearcher());
+
+        $searcher = $this->searchers[$entity->getSearcher()] ?? null;
+        if (null === $searcher) {
+            @trigger_error(
+                sprintf(
+                    'Getting the node searcher "%s" from the container is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Tag your searcher service with the "kunstmaan_node_search.node_searcher" tag to add a searcher.',
+                    $entity->getSearcher()
+                ),
+                E_USER_DEPRECATED
+            );
+
+            $searcher = $this->container->get($entity->getSearcher());
+        }
+
         $this->applySearchParams($searcher, $request, $this->renderContext);
 
         $adapter = new SearcherRequestAdapter($searcher);
