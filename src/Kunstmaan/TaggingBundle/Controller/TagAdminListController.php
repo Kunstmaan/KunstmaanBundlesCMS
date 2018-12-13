@@ -72,7 +72,7 @@ class TagAdminListController extends AdminListController
 
     /**
      * @Route("/autocomplete.{_format}", name="kunstmaantaggingbundle_admin_tag_autocomplete", defaults={"_format" = "json"})
-     * @Template()
+     * @Template("@KunstmaanTagging/Tags/autocomplete.json.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

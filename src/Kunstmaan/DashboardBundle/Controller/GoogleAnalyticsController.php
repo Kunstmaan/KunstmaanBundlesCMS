@@ -16,7 +16,7 @@ class GoogleAnalyticsController extends Controller
      * The index action will render the main screen the users see when they log in in to the admin
      *
      * @Route("/", name="KunstmaanDashboardBundle_widget_googleanalytics")
-     * @Template()
+     * @Template("@KunstmaanDashboard/GoogleAnalytics/widget.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
