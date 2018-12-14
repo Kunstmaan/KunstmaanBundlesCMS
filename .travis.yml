@@ -12,6 +12,7 @@ matrix:
     - php: 7.1
     - php: 7.2
       env: COVERAGE=true CODECEPTION_FLAGS="--coverage --coverage-xml"
+    - php: 7.3
 
 before_install:
   - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
@@ -22,6 +23,7 @@ before_install:
   - nvm install
   - npm install
   - export SYMFONY_DEPRECATIONS_HELPER=weak
+  - if [ $(phpenv version-name) = "7.3" ]; then composer remove --dev friendsofphp/php-cs-fixer --no-update; fi; # Temp remove php-cs-fixer as they don't support php 7.3 yet
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
