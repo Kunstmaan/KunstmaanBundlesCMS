@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('admin_locale')
             ->fixXmlConfig('menu_item')
             ->children()
+                ->scalarNode('website_title')->defaultNull()->end()
                 ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
                 ->scalarNode('admin_prefix')->defaultValue('admin')->end()

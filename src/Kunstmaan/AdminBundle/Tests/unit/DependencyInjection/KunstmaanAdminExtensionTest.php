@@ -21,8 +21,6 @@ class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
 
     public function testCorrectParametersHaveBeenSet()
     {
-        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
-        $this->container->setParameter('kernel.environment', 'staging');
         $this->load([
             'dashboard_route' => true,
             'admin_password' => 'omgchangethis',
@@ -44,5 +42,43 @@ class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_id');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_secret');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.hosted_domains');
+    }
+
+    public function testWebsiteTitleWithParameterSet()
+    {
+        $this->setParameter('websitetitle', 'Mywebsite');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', 'Mywebsite');
+    }
+
+    public function testWebsiteTitleWithParameterAndConfigSet()
+    {
+        $this->setParameter('websitetitle', 'Mywebsite');
+
+        $this->load(['website_title' => 'My real website']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', 'My real website');
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     */
+    public function testLegacyParameterSecretParameter()
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', '');
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        // Some parameters required for the admin extension
+        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
+        $this->container->setParameter('kernel.environment', 'staging');
     }
 }

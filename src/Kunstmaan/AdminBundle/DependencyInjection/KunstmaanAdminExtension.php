@@ -77,6 +77,15 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (0 !== count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
+
+        $websiteTitle = $container->hasParameter('websitetitle') ? $container->getParameter('websitetitle') : '';
+        if (null === $config['website_title']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+        } else {
+            $websiteTitle = $config['website_title'];
+        }
+
+        $container->setParameter('kunstmaan_admin.website_title', $websiteTitle);
     }
 
     public function prepend(ContainerBuilder $container)
