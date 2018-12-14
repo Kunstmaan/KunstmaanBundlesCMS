@@ -4,20 +4,18 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-
 matrix:
   fast_finish: true
-  allow_failures: ~
+  include:
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+      env: COVERAGE=true CODECEPTION_FLAGS="--coverage --coverage-xml"
 
 before_install:
-  - cp /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
-  - phpenv config-rm xdebug.ini || true
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;
+  - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+  - echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer selfupdate
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --no-update; fi
   - wget https://scrutinizer-ci.com/ocular.phar
@@ -27,16 +25,9 @@ before_install:
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
-before_script:
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
-  - phpenv config-add ~/xdebug.ini || true
-
-script: ./vendor/codeception/codeception/codecept run --coverage --coverage-xml
+script: ./vendor/codeception/codeception/codecept run $CODECEPTION_FLAGS
 
 after_script:
-    - phpenv config-rm xdebug.ini || true
     - php ocular.phar code-coverage:upload --format=php-clover _output/coverage.xml
     - npm run build -- --continueAfterTestError=true
     - npm run buildGroundControlSkeleton
