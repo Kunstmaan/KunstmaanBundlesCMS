@@ -24,6 +24,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testConfigGeneratesAsExpected()
     {
         $array = [
+            'website_title' => null,
             'admin_password' => 'l3tM31n!',
             'admin_locales' => [],
             'session_security' => [
