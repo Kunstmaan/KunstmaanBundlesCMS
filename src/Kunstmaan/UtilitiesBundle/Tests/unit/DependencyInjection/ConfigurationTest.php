@@ -23,7 +23,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = ['cipher' => ['secret' => '%kernel.secret%']];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
     }
