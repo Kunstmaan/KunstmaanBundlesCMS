@@ -82,7 +82,6 @@ NodeBundle
  * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
  * The `service` method of `Kunstmaan\NodeBundle\Entity\PageInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Controller\SlugActionInterface`
    and use the `getControllerAction` method to specify a controller action with your custom page logic instead. 
- * Added the ability to split up an entity into multiple tabs. See ```Kunstmaan\NodeBundle\entity-tabs.md```
  * Button to export page template is now disabled by default. You can enable it by setting the `enable_export_page_template` value to true inside the `kunstmaan_node` configuration.
  * Injecting the `TemplateEngine` as the first argument in the `RenderContextListener` is deprecated and will be removed in 6.0. Remove the `TemplateEngine` as the first service argument.
 

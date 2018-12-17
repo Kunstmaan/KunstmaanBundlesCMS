@@ -21,3 +21,8 @@ NodeSearchBundle
 
 * Depending on the service container to retrieve searchers is deprecated and will be removed in 6.0. Tag your custom node
   searchers with the "kunstmaan_node_search.node_searcher" tag, to have them available for the NodeSearchBundle.
+
+NodeBundle
+----------
+
+ * Added the ability to split up an entity into multiple tabs. See [docs/bundles/node-bundle/entity-tabs.md](docs/bundles/node-bundle/entity-tabs.md)
