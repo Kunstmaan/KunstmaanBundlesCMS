@@ -7,6 +7,7 @@ node_modules/
 npm-debug.log
 *~
 *test.db
+**/Tests/_support/_generated
 **/Tests/_output
 **/Tests/unit/app/cache
 **/Tests/unit/app/logs
@@ -15,3 +16,4 @@ npm-debug.log
 .vscode
 src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/dist
 .idea
+.php_cs.cache

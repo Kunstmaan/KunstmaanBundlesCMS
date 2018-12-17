@@ -29,6 +29,7 @@ ArticleBundle
 
  * Passing the `request_stack` service as the third argument in `Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension` is deprecated and will be removed in 6.0.
  * The `getAdminListConfigurator` and `createAdminListConfigurator` method in the `AbstractArticleEntityAdminListController` class will change from `public` to `protected` visibility in 6.0.
+ * Instantiating the `AbstractAuthor`, `AbstractCategory`, `AbstractTag` entities without extending is deprecated and these classes will be made abstract in 6.0. Extend your implementation from this class instead.
 
 ConfigBundle
 ------------
