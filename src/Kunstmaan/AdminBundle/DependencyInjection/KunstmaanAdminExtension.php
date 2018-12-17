@@ -87,13 +87,15 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->prependExtensionConfig('knp_menu', $knpMenuConfig);
 
         $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
+        $fosUserConfig['from_email']['address'] = 'kunstmaancms@myproject.dev';
+        $fosUserConfig['from_email']['sender_name'] = 'KunstmaanCMS';
         $fosUserConfig['firewall_name'] = 'main';
         $fosUserConfig['user_class'] = 'Kunstmaan\AdminBundle\Entity\User';
         $fosUserConfig['group']['group_class'] = 'Kunstmaan\AdminBundle\Entity\Group';
         $fosUserConfig['resetting']['token_ttl'] = 86400;
         // Use this node only if you don't want the global email address for the resetting email
-        $fosUserConfig['resetting']['email']['from_email']['address'] = 'admin@kunstmaan.be';
-        $fosUserConfig['resetting']['email']['from_email']['sender_name'] = 'admin';
+        $fosUserConfig['resetting']['email']['from_email']['address'] = 'kunstmaancms@myproject.dev';
+        $fosUserConfig['resetting']['email']['from_email']['sender_name'] = 'KunstmaanCMS';
         $fosUserConfig['resetting']['email']['template'] = 'FOSUserBundle:Resetting:email.txt.twig';
         $fosUserConfig['resetting']['form']['type'] = ResettingFormType::class;
         $fosUserConfig['resetting']['form']['name'] = 'fos_user_resetting_form';
