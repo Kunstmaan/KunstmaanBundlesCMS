@@ -87,8 +87,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->prependExtensionConfig('knp_menu', $knpMenuConfig);
 
         $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
-        $fosUserConfig['from_email']['address'] = 'admin@kunstmaan.be';
-        $fosUserConfig['from_email']['sender_name'] = 'admin';
+        $fosUserConfig['from_email']['address'] = 'kunstmaancms@myproject.dev';
+        $fosUserConfig['from_email']['sender_name'] = 'KunstmaanCMS';
         $fosUserConfig['firewall_name'] = 'main';
         $fosUserConfig['user_class'] = 'Kunstmaan\AdminBundle\Entity\User';
         $fosUserConfig['group']['group_class'] = 'Kunstmaan\AdminBundle\Entity\Group';
