@@ -58,6 +58,15 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
+     * @param Request $request
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        return ($request->attributes->get('_route') == 'KunstmaanAdminBundle_oauth_signin' || $request->request->has('_google_id_token'));
+    }
+
+    /**
      * Returns a response that directs the user to authenticate.
      *
      * This is called when an anonymous request accesses a resource that
@@ -82,8 +91,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Get the authentication credentials from the request and return them
-     * as any type (e.g. an associate array). If you return null, authentication
-     * will be skipped.
+     * as any type (e.g. an associate array).
      *
      * Whatever value you return here will be passed to getUser() and checkCredentials()
      *
@@ -100,19 +108,15 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      *
      * @param Request $request
      *
-     * @return mixed|null
+     * @return array
      */
     public function getCredentials(Request $request)
     {
-        if ($request->attributes->get('_route') != 'KunstmaanAdminBundle_oauth_signin' || !$request->request->has('_google_id_token')) {
-            return null;
-        }
-
         $token = $request->request->get('_google_id_token');
 
-        return array(
+        return [
             'token' => $token,
-        );
+        ];
     }
 
     /**
