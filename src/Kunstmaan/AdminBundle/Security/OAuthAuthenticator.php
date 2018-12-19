@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -22,7 +22,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     /** @var RouterInterface */
     private $router;
 
-    /** @var Session */
+    /** @var SessionInterface */
     private $session;
 
     /** @var TranslatorInterface */
@@ -41,13 +41,13 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * OAuthAuthenticator constructor.
      *
      * @param RouterInterface           $router
-     * @param Session                   $session
+     * @param SessionInterface          $session
      * @param TranslatorInterface       $translator
      * @param OAuthUserCreatorInterface $oAuthUserCreator
      * @param $clientId
      * @param $clientSecret
      */
-    public function __construct(RouterInterface $router, Session $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret)
+    public function __construct(RouterInterface $router, SessionInterface $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret)
     {
         $this->router = $router;
         $this->session = $session;
@@ -63,7 +63,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return ($request->attributes->get('_route') == 'KunstmaanAdminBundle_oauth_signin' || $request->request->has('_google_id_token'));
+        return $request->attributes->get('_route') == 'KunstmaanAdminBundle_oauth_signin' || $request->request->has('_google_id_token');
     }
 
     /**
@@ -82,7 +82,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * @param Request                 $request       The request that resulted in an AuthenticationException
      * @param AuthenticationException $authException The exception that started the authentication process
      *
-     * @return Response
+     * @return RedirectResponse
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
@@ -186,7 +186,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * @param Request                 $request
      * @param AuthenticationException $exception
      *
-     * @return Response|null
+     * @return RedirectResponse
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
@@ -208,7 +208,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * @param TokenInterface $token
      * @param string         $providerKey The provider (i.e. firewall) key
      *
-     * @return Response|null
+     * @return RedirectResponse
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
