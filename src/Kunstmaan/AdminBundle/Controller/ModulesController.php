@@ -13,7 +13,7 @@ class ModulesController extends Controller
 {
     /**
      * @Route("/", name="KunstmaanAdminBundle_modules")
-     * @Template()
+     * @Template("@KunstmaanAdmin/Modules/index.html.twig")
      *
      * @return array
      */

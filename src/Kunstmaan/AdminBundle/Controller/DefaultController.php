@@ -21,7 +21,7 @@ class DefaultController extends Controller
      * The index action will render the main screen the users see when they log in in to the admin
      *
      * @Route("/", name="KunstmaanAdminBundle_homepage")
-     * @Template()
+     * @Template("@KunstmaanAdmin/Default/index.html.twig")
      *
      * @return array
      */

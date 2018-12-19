@@ -157,7 +157,7 @@ class ToolbarListener implements EventSubscriberInterface
         // Only enable toolbar when we can find an authenticated user in the session from the kunstmaan_admin.admin_firewall_name config value.
         $authenticated = false;
         /* @var PostAuthenticationGuardToken $token */
-        if ($session->has(sprintf('_security_%s', $this->adminFirewallName))) {
+        if ($session->isStarted() && $session->has(sprintf('_security_%s', $this->adminFirewallName))) {
             $token = unserialize($session->get(sprintf('_security_%s', $this->adminFirewallName)));
             $authenticated = $token->isAuthenticated();
         }

@@ -4,34 +4,36 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
-php:
-  - 7.1
-  - 7.2
-
 matrix:
   fast_finish: true
-  allow_failures: ~
+  include:
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+      env: COVERAGE=true CODECEPTION_FLAGS="--coverage --coverage-xml"
+    - php: 7.3
 
 before_install:
-  - cp /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/xdebug.ini
-  - phpenv config-rm xdebug.ini || true
-  - echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini;
+  - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+  - echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer selfupdate
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --no-update; fi
   - wget https://scrutinizer-ci.com/ocular.phar
   - nvm install
   - npm install
   - export SYMFONY_DEPRECATIONS_HELPER=weak
+  # Remove any twig syntax from the groundcontrol package.json
+  - sed -i -e 's/{% if demosite %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
+  - sed -i -e 's/{% endif %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
+  - sed -i -e 's/"name".*/"name":"demo",/g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
+  - if [ $(phpenv version-name) = "7.3" ]; then composer remove --dev friendsofphp/php-cs-fixer --no-update; fi; # Temp remove php-cs-fixer as they don't support php 7.3 yet
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
-before_script:
-  - phpenv config-add ~/xdebug.ini || true
-
-script: ./vendor/codeception/codeception/codecept run --coverage --coverage-xml
+script: ./vendor/codeception/codeception/codecept run $CODECEPTION_FLAGS
 
 after_script:
-    - phpenv config-rm xdebug.ini || true
     - php ocular.phar code-coverage:upload --format=php-clover _output/coverage.xml
     - npm run build -- --continueAfterTestError=true
     - npm run buildGroundControlSkeleton
