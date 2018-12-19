@@ -28,7 +28,7 @@ services:
     kunstmaan_page_part.page_template_configuration_parser:
         class: '%kunstmaan_pagepart.page_template_configuration_parser.class%'
         public: false
-        arguments: [ '@kernel', '%kunstmaan_page_part.page_templates_presets%' ]
+        arguments: [ '@kernel', '%kunstmaan_page_part.page_templates_presets%', '%kunstmaan_page_part_page_templates_dir%' ]
 
 
     kunstmaan_page_part.page_template.page_template_configuration_service:

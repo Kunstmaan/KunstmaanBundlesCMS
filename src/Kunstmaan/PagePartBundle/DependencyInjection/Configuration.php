@@ -22,8 +22,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $root = $treeBuilder->root('kunstmaan_page_part');
         $root->children()
-            ->booleanNode('extended_pagepart_chooser')
-                ->defaultFalse()
+            ->booleanNode('extended_pagepart_chooser')->defaultFalse()->end()
+            ->scalarNode('page_templates_dir')->defaultValue('%kernel.project_dir%/config/pagetemplates/')->end()
             ->end();
 
         /** @var ArrayNodeDefinition $pageparts */

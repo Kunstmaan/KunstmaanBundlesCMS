@@ -26,3 +26,8 @@ NodeBundle
 ----------
 
  * Added the ability to split up an entity into multiple tabs. See [docs/bundles/node-bundle/entity-tabs.md](docs/bundles/node-bundle/entity-tabs.md)
+
+PagePartBundle
+--------------
+
+ * Added the `page_templates_dir` configuration option with a default value of `config/pagetemplates/` be set/used with symfony 4.

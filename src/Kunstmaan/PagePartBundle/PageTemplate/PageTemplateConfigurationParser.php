@@ -18,10 +18,11 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
      * @param KernelInterface $kernel
      * @param array           $presets
      */
-    public function __construct(KernelInterface $kernel, array $presets = [])
+    public function __construct(KernelInterface $kernel, array $presets = [], $pageTemplateDir = null)
     {
         $this->kernel = $kernel;
         $this->presets = $presets;
+        $this->pageTemplateDir = $pageTemplateDir;
     }
 
     /**
@@ -117,12 +118,18 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
             return $this->presets[$name];
         }
 
-        if (false === strpos($name, ':')) {
-            throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
+        // if we use the old notation (sf3)
+        if (strpos($name, ':')) {
+            list($namespace, $name) = explode(':', $name, 2);
+            $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
+        } elseif (null !== $this->pageTemplateDir) {
+            $path = $this->pageTemplateDir .$name.'.yaml';
         }
 
-        list($namespace, $name) = explode(':', $name, 2);
-        $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
+        if (!isset($path) || !\file_exists($path)) {
+            throw new \Exception(sprintf('Malformed page template configuration for name "%s".', $name));
+        }
+
         $rawData = Yaml::parse(file_get_contents($path));
 
         return $rawData;
