@@ -27,7 +27,7 @@ services:
         arguments:
             - '@kunstmaan_translator.service.importer.importer'
             - '@kunstmaan_translator.service.translator.translator'
-            - '%requiredlocales%'
+            - '%kuma_translator.managed_locales%'
         tags:
             - { name: console.command }
 
