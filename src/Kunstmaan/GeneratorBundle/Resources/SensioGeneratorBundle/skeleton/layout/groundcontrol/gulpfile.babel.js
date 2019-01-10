@@ -79,7 +79,7 @@ const buildCmsAssets = gulp.series(() => gulp.src('vendor/kunstmaan/bundles-cms/
     .pipe(chug({
         args: [
             '--rootPath',
-            '../../../../../../../web/assets/',
+            '../../../../../../../{% if isV4 %}public{% else %}web{% endif %}/assets/',
         ],
         tasks: ['buildOptimized'],
     })));
