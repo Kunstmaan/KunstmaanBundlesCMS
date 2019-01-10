@@ -26,7 +26,8 @@
         "kunstmaan/media-pagepart-bundle": "^5.9|^6.0",
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
-        "kunstmaan/sensio-generator-bundle": "^3.2"
+        "kunstmaan/sensio-generator-bundle": "^3.2",
+        "symfony/maker-bundle": "^1.11"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",

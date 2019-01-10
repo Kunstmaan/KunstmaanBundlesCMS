@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Config
+
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+@import "general/colors",
+        "general/sizes";
+
+@import "general/typography/fonts",
+        "general/typography/bodycopy",
+        "general/typography/headings";
+
+
+/* Vendors
+   ========================================================================== */
+@import "vendors/bootstrap-vars";
+@import "vendors/bootstrap-imports";

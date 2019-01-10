@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   Extra Stylesheet for admin
+   ========================================================================== */
+
+/* Config (necessary only)
+   ========================================================================== */
+@import "config/general/colors";
+@import "config/general/typography/fonts";
+@import "config/general/typography/bodycopy";
+@import "config/general/sizes";
+@import "config/general/paths";
+
+/* Vendors - only vars!
+   ========================================================================== */
+@import "config/vendors/bootstrap-vars";
+
+/* General
+   ========================================================================== */
+@import "general/typography/iconfont";
+
+/* Helpers
+   ========================================================================== */
+@import "helpers/helpers";
+
+
+/* Use these styling only in the pagepart previews
+   ========================================================================== */
+.page-template__region .admin-region,
+.pp__view .pp__view__block:first-child {
+
+    /* General
+       ========================================================================== */
+    @import "general/typography/bodycopy";
+
+    /* Blocks
+       ========================================================================== */
+    @import "components/blocks/img";
+    @import "components/blocks/hr";
+    @import "components/blocks/lists";
+    @import "components/blocks/links";
+    @import "components/blocks/buttons";
+    @import "components/blocks/tables";
+
+    /* Pageparts
+       ========================================================================== */
+    @import "components/pageparts/button-pp";
+    @import "components/pageparts/download-pp";
+    @import "components/pageparts/header-pp";
+    @import "components/pageparts/image-pp";
+    @import "components/pageparts/introtext-pp";
+    @import "components/pageparts/link-pp";
+    @import "components/pageparts/text-pp";
+    @import "components/pageparts/totop-pp";
+    @import "components/pageparts/video-pp";
+}

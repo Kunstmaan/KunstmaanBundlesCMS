@@ -1,0 +1,39 @@
+{% spaceless %}<!DOCTYPE html>
+{% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
+<!--[if lte IE 9]> <html class="no-js lt-ie9" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="{{ htmlLocale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {{ websitetitle | trans }}{% block title %}{% endblock %}
+    </title>
+
+    {# Favicons #}
+    {% include 'layout/_favicons.html.twig' %}
+
+    {# Webfonts #}
+    {% include 'layout/_webfonts.html.twig' %}
+
+    {# CSS #}
+    {% include 'layout/_css.html.twig' %}
+</head>
+
+<body class="{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
+
+    {# Google Tagmanager #}
+    {% include 'layout/_googletagmanager.html.twig' %}
+
+    {# Outdated browser message #}
+    {% include 'layout/_outdatedbrowser.html.twig' %}
+
+    {# Content #}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
+{% endspaceless %}

@@ -1,0 +1,6 @@
+kunstmaan_page_part:
+    pageparts:
+        main:
+            name: "Main"
+            context: "main"
+            types: []

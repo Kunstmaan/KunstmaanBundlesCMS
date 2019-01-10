@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Body Copy
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+* {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+html {
+    font-size: $font-size--base;
+}
+
+body {
+    color: $text-color;
+    font-family: $font-family--base;
+    font-size: $font-size--default;
+    line-height: $line-height--base;
+}
+
+p {
+    margin: 16px 0;
+
+    @media (min-width: $screen-md-min) {
+        margin: 24px 0;
+    }
+}
+
+p,
+.pp--text {
+    + h1,
+    + h2,
+    + h3,
+    + h4,
+    + h5,
+    + h6 {
+        margin-top: 48px;
+    }
+}
+
+
+/* General Modifiers
+   ========================================================================== */
+.text--upper {
+    text-transform: uppercase;
+}
+
+.text--center {
+    text-align: center;
+}
+
+.text--right {
+    text-align: right;
+}
+
+
+/* Intro text
+   ========================================================================== */
+.text--intro {
+    font-size: $font-size--big;
+    line-height: 1.3;
+}
+
+
+/**
+* @doc docs/bodycopy.md
+* @section
+* @sectionof Typography
+*/

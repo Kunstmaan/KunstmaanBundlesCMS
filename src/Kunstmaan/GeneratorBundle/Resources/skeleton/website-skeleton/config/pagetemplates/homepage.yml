@@ -1,0 +1,8 @@
+kunstmaan_page_part:
+    pagetemplates:
+        homepage:
+            name: "Home page"
+            rows:
+                - regions:
+                    - { name: "main", span: 12 }
+            template: "pages\\home_page\\pagetemplate.html.twig"

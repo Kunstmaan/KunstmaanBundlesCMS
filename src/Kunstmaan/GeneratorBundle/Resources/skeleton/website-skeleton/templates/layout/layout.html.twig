@@ -1,0 +1,81 @@
+{% spaceless %}<!DOCTYPE html>
+{% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
+<!--[if lte IE 9]> <html class="no-js lt-ie9" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="{{ htmlLocale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+    {% set node = null %}
+    {% if nodetranslation is defined %}
+        {% set node = nodetranslation.node %}
+    {% endif %}
+    {% set nodemenu = get_node_menu(app.request.locale, node) %}
+    {% block title %}
+        {% if page is defined and nodemenu.getActiveForDepth(2) is not null %}
+            {{ get_title_for(page) ~ ' - ' ~ websitetitle|trans }}
+        {% else %}
+            {{ websitetitle | trans }}
+            {% if page is defined %}
+                {% set seo = get_seo_for(page) %}
+                {% if seo is defined and seo.metaTitle is not empty %} - {{ seo.metaTitle }}{% endif %}
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+    </title>
+
+    {% if page is defined %}
+        {{ render_seo_metadata_for(page) }}
+    {% endif %}
+
+    {# Favicons #}
+    {% include 'layout/_favicons.html.twig' %}
+
+    {# Webfonts #}
+    {% include 'layout/_webfonts.html.twig' %}
+
+    {# CSS #}
+    {% include 'layout/_css.html.twig' %}
+</head>
+{% endspaceless %}
+
+<body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
+    {# Google Tagmanager #}
+    {% include 'layout/_googletagmanager.html.twig' %}
+
+    {# Outdated browser message #}
+    {% include 'layout/_outdatedbrowser.html.twig' %}
+
+    {# Header #}
+    {% block header %}
+        {% include 'layout/_header.html.twig' %}
+    {% endblock %}
+
+    {# Breadcrumbs #}
+    {% block breadcrumbs %}
+        {% include 'layout/_breadcrumbs.html.twig' %}
+    {% endblock %}
+
+    {# Content #}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {# Footer #}
+    {% block footer %}
+        {% include 'layout/_footer.html.twig' %}
+    {% endblock %}
+
+    {# Cookieconsent #}
+    {% block cookieconsent %}
+        {% include 'layout/_cookieconsent.html.twig' %}
+    {% endblock %}
+
+    {# JS Footer #}
+    {% block jsBundle %}
+        {% include 'layout/_js_footer.html.twig' %}
+    {% endblock %}
+</body>
+</html>
