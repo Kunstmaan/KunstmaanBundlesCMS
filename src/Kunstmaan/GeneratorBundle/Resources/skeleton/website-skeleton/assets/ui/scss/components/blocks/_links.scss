@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+/* Shared
+   ========================================================================== */
+a {
+    color: $link-color;
+    text-decoration: underline;
+
+    transition: color .3s ease;
+
+    &:hover,
+    &:focus {
+        color: $link-color--hover;
+        text-decoration: none;
+    }
+}
+
+
+/**
+ * @doc docs/links.md
+ * @section
+ * @sectionof Blocks
+ */

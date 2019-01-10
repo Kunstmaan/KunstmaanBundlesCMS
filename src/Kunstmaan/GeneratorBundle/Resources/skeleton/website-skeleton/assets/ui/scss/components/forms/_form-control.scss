@@ -1,0 +1,62 @@
+/* ==========================================================================
+   Forms - Form control
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.form-control {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    min-height: 45px;
+    padding: 0 1em;
+
+    border: 1px solid $grey;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+
+/* Input
+   ========================================================================== */
+.form-control--input {}
+
+
+/* Textarea
+   ========================================================================== */
+.form-control--textarea {
+    max-width: none;
+    padding: 10px;
+}
+
+
+/* Select
+   ========================================================================== */
+.form-control--select {
+}
+
+
+/**
+ * @section Form control
+ * @sectionof Forms
+ */
+
+/**
+ * @doc docs/input-text.md
+ * @section
+ * @sectionof Forms.Form control
+ */
+
+/**
+ * @doc docs/input-textarea.md
+ * @section
+ * @sectionof Forms.Form control
+ */
+
+/**
+ * @doc docs/input-select.md
+ * @section
+ * @sectionof Forms.Form control
+ */

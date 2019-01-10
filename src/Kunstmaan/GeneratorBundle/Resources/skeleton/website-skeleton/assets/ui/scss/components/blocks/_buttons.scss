@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Blocks - Buttons
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    padding: .7em 1.5em;
+    margin: 0;
+
+    background: none;
+
+    border: 1px solid $text-color;
+
+    -webkit-appearance: none;
+
+    color: $text-color;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+
+    transition: background .3s ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: $text-color;
+        text-decoration: none;
+    }
+
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+
+    &[disabled],
+    fieldset[disabled] & {
+        opacity: .65;
+
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+
+/* Types
+   ========================================================================== */
+// Primary
+.btn--primary {
+}
+
+// Secondary
+.btn--secondary {
+}
+
+
+/**
+ * @section Buttons
+ * @sectionof Blocks
+ */
+
+/**
+ * @doc docs/buttons.md
+ * @section
+ * @sectionof Blocks.Buttons
+ */
+
+/**
+ * @doc docs/buttons-types.md
+ * @section
+ * @sectionof Blocks.Buttons
+ */
+
+/**
+ * @doc docs/buttons-sizes.md
+ * @section
+ * @sectionof Blocks.Buttons
+ */

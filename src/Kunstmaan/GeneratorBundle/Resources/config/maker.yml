@@ -1,0 +1,7 @@
+services:
+    Kunstmaan\GeneratorBundle\Maker\MakeWebsiteSkeleton:
+        arguments:
+            - '@maker.doctrine_helper'
+        tags:
+            - { name: maker.command }
+

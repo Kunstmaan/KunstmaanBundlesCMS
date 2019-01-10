@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Cookie consent
+   ========================================================================== */
+
+.cookie-bar {
+    position: fixed;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    z-index: 500;
+
+    display: none;
+    width: 100%;
+    padding: 20px;
+
+    background: rgba($brand-primary--dark, .95);
+
+    border: 1px solid rgba($brand-primary--dark, .95);
+
+    color: $white;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: left;
+
+    animation-name: cookieSlide;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-duration: .8s;
+
+    .cookie-bar__policy {
+        color: $white;
+        text-decoration: underline;
+    }
+
+    .cookie-bar__btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        padding: 10px 15px;
+        margin: 10px 0 0;
+
+        background: $white;
+
+        border-radius: 0;
+        border: none;
+
+        color: rgba($brand-primary--dark, .95);
+        font-size: 1em;
+    }
+
+    p {
+        max-width: 60%;
+        padding: 0;
+        margin: 0;
+
+        color: $white;
+        font-size: 1em;
+        text-align: left;
+
+        a {
+            color: $white;
+        }
+    }
+
+    @media (min-width: $screen-sm-min) {
+        bottom: 10px;
+        left: 10px;
+
+        max-width: 560px;
+
+        p {
+            max-width: 370px;
+        }
+    }
+
+    @media (min-width: $screen-md-min) {
+        bottom: 10px;
+        left: 10px;
+
+        max-width: 350px;
+
+        p {
+            max-width: 210px;
+        }
+    }
+}
+
+.cookie-bar--visible {
+    display: block;
+}
+
+@keyframes cookieSlide {
+    0% {
+        transform: translate3d(0, 60px, 0);
+
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+
+        opacity: 1;
+    }
+}
+
+/**
+* @doc docs/cookie-consent.md
+* @section
+* @sectionof Structures
+*/

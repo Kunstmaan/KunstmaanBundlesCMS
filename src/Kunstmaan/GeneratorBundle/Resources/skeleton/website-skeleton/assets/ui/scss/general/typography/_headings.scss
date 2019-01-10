@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+
+/* Shared
+   ========================================================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 20px 0 8px;
+
+    font-family: $font-family--headings;
+    line-height: 1.2;
+
+    + p,
+    + .text-pp p {
+        margin-top: 0;
+    }
+}
+
+
+/* Specific
+   ========================================================================== */
+h1 {
+    font-size: 32px;
+    font-weight: 300;
+
+    @media (min-width: $screen-md-min) {
+        font-size: 48px;
+    }
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 300;
+
+    @media (min-width: $screen-md-min) {
+        font-size: 45px;
+    }
+}
+
+h3 {
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+h2,
+h3,
+h4 {
+    margin: 25px 0;
+}
+
+h5,
+h6 {
+    margin: 22px 0;
+
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+
+/**
+* @doc docs/headings.md
+* @section
+* @sectionof Typography
+*/

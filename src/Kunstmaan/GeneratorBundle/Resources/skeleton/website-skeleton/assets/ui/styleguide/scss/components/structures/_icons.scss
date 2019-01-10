@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Structures - Icons
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.sg-icon-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sg-icon {
+    display: inline-block;
+    flex: 0 1 auto;
+    width: auto;
+    margin: 10px 20px 10px 0;
+
+    border-radius: 4px;
+
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .35), 0 3px 2px 0 rgba(0, 0, 0, .18);
+}
+
+/* Color
+   ========================================================================== */
+.sg-icon__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+
+    border-bottom: 1px solid $grey;
+
+    text-align: center;
+    vertical-align: middle;
+
+    img {
+        display: block;
+        margin: 20px;
+        max-height: 80%;
+    }
+}
+
+/* Description
+   ========================================================================== */
+.sg-icon__description {
+    padding: 10px;
+
+    background: rgba($grey--light, .5);
+
+    border-radius: 0 0 4px 4px;
+
+    color: $red;
+    font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', 'monospace';
+    font-size: 12px;
+    text-align: center;
+
+    white-space: nowrap;
+}
