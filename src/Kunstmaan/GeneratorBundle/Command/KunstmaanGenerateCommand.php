@@ -342,7 +342,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $counter = 1;
 
         // Get the available sections from disc
-        $dir = $bundle->getPath().'/Resources/config/pageparts/';
+        $dir = Kernel::VERSION_ID >= 40000 ? $this->getContainer()->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/' : $bundle->getPath() . '/Resources/config/pageparts/';
         if (file_exists($dir) && is_dir($dir)) {
             $finder = new Finder();
             $finder->files()->in($dir)->depth('== 0');
@@ -382,6 +382,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         try {
             $data = Yaml::parse(file_get_contents($dir.$file));
+
+            if (array_key_exists('kunstmaan_page_part', $data)) {
+                //Get rid of the bundle config lines
+                $data = array_values(array_values(array_values($data)[0])[0])[0];
+            }
+
             $info = array(
                 'name' => $data['name'],
                 'context' => $data['context'],
