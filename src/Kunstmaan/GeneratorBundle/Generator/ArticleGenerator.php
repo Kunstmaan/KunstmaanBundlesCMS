@@ -68,6 +68,7 @@ class ArticleGenerator extends KunstmaanGenerator
             'uses_author' => $usesAuthor,
             'uses_category' => $usesCategories,
             'uses_tag' => $usesTags,
+            'isV4' => $this->isSymfony4(),
         );
 
         $this->generateEntities($parameters);
@@ -91,6 +92,10 @@ class ArticleGenerator extends KunstmaanGenerator
      */
     public function generateServices(array $parameters)
     {
+        if ($this->isSymfony4()) {
+            return;
+        }
+
         $dirPath = sprintf('%s/Resources/config', $this->bundle->getPath());
         $skeletonDir = sprintf('%s/Resources/config', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
@@ -142,6 +147,10 @@ class ArticleGenerator extends KunstmaanGenerator
      */
     public function generateRouting(array $parameters, $multilanguage)
     {
+        if ($this->isSymfony4()) {
+            return;
+        }
+
         $dirPath = sprintf('%s/Resources/config', $this->bundle->getPath());
         $skeletonDir = sprintf('%s/Resources/config', $this->skeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
@@ -181,7 +190,7 @@ class ArticleGenerator extends KunstmaanGenerator
     {
         $relPath = '/Resources/views/Pages/%sOverviewPage/';
         $sourceDir = $this->skeletonDir . sprintf($relPath, '');
-        $targetDir = $this->bundle->getPath() . sprintf($relPath, $this->entity);
+        $targetDir = $this->getTemplateDir($this->bundle) . sprintf('/Pages/%sOverviewPage/', $this->entity);
         $twigParameters = $parameters;
         $twigParameters['bundleWithHomePage'] = $bundleWithHomePage;
 
@@ -200,14 +209,14 @@ class ArticleGenerator extends KunstmaanGenerator
 
         $relPath = '/Resources/views/Pages/%sPage/';
         $sourceDir = $this->skeletonDir . sprintf($relPath, '');
-        $targetDir = $this->bundle->getPath() . sprintf($relPath, $this->entity);
+        $targetDir = $this->getTemplateDir($this->bundle) . sprintf('/Pages/%sPage/', $this->entity);
 
         $this->renderSingleFile($sourceDir, $targetDir, 'pagetemplate.html.twig', $twigParameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'view.html.twig', $twigParameters);
 
         $relPath = '/Resources/views/AdminList/%sPageAdminList/';
         $sourceDir = $this->skeletonDir . sprintf($relPath, '');
-        $targetDir = $this->bundle->getPath() . sprintf($relPath, $this->entity);
+        $targetDir = $this->getTemplateDir($this->bundle) . sprintf('/AdminList/%sPageAdminList/', $this->entity);
 
         $this->renderSingleFile($sourceDir, $targetDir, 'list.html.twig', $twigParameters);
 
@@ -252,16 +261,18 @@ class ArticleGenerator extends KunstmaanGenerator
      */
     public function generatePageTemplateConfigs(array $parameters)
     {
-        $relPath = '/Resources/config/pagetemplates/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
+        $basePath = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') : $this->bundle->getPath();
+        $relPath = $this->isSymfony4() ? '/config/kunstmaancms/pagetemplates/' : '/Resources/config/pagetemplates/';
+        $sourceDir = $this->skeletonDir.'/Resources/config/pagetemplates/';
+        $targetDir = $basePath.$relPath;
 
         $this->renderSingleFile($sourceDir, $targetDir, 'page.yml', $parameters, false, strtolower($this->entity) . 'page.yml');
         $this->renderSingleFile($sourceDir, $targetDir, 'overviewpage.yml', $parameters, false, strtolower($this->entity) . 'overviewpage.yml');
 
-        $relPath = '/Resources/config/pageparts/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
+        $basePath = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') : $this->bundle->getPath();
+        $relPath = $this->isSymfony4() ? '/config/kunstmaancms/pageparts/' : '/Resources/config/pageparts/';
+        $sourceDir = $this->skeletonDir.'/Resources/config/pageparts/';
+        $targetDir = $basePath.$relPath;
 
         $this->renderSingleFile($sourceDir, $targetDir, 'main.yml', $parameters, false, strtolower($this->entity) . 'main.yml');
 
