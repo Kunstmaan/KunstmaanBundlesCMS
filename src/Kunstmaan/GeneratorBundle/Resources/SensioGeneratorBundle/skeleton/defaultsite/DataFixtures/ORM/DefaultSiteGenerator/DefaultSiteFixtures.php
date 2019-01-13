@@ -14,6 +14,7 @@ use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Kernel;
 {% if demosite %}
 use {{ namespace }}\Entity\Bike;
 {% endif %}
@@ -142,7 +143,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	    $pageparts = array();
 
 	    $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-	    $imgDir = dirname(__FILE__).'/../../../Resources/ui/img/demosite/';
+        $basePath = Kernel::VERSION_ID >= 40000 ? '/../../../../assets/' : '/../../../Resources/';
+        $imgDir = dirname(__FILE__). $basePath . 'ui/img/demosite/';
 
 	    $headerMedia = $this->mediaCreator->createFile($imgDir.'stocks/homepage__header.jpg', $folder->getId());
 	    $pageparts['header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
@@ -317,7 +319,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	$contentPage->setTitle('Our bikes');
 
 	$folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-	$imgDir = dirname(__FILE__).'/../../../Resources/ui/img/demosite/';
+    $basePath = Kernel::VERSION_ID >= 40000 ? '/../../../../assets/' : '/../../../Resources/';
+    $imgDir = dirname(__FILE__).$basePath.'ui/img/demosite/';
 	$menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock1.jpg', $folder->getId());
 
 	$translations = array();
@@ -927,7 +930,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Add images to database
         $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
-	$publicDir = dirname(__FILE__).'/../../../Resources/ui/';
+    $basePath = Kernel::VERSION_ID >= 40000 ? '/../../../../assets/' : '/../../../Resources/';
+    $publicDir = dirname(__FILE__). $basePath . 'ui/';
 	$this->mediaCreator->createFile($publicDir.'img/general/logo-kunstmaan.svg', $imageFolder->getId());
 	{% if demosite %}
 	$this->mediaCreator->createFile($publicDir.'img/demosite/logo-thecrew.svg', $imageFolder->getId());
@@ -950,8 +954,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createVideoFile($name, $code, $folder)
     {
         // Hack for media bundle issue
-        $dir = dirname($this->container->get('kernel')->getRootDir());
-        chdir($dir . '/web');
+        $dir = $this->container->get('kernel')->getProjectDir();
+        $publicDir = Kernel::VERSION_ID >= 40000 ? '/public' : '/web';
+        chdir($dir . $publicDir);
         $media = new Media();
         $media->setFolder($folder);
         $media->setName($name);

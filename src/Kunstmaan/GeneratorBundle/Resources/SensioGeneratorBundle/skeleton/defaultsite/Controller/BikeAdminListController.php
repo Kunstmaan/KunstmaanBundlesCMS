@@ -10,6 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\BikeAdminListConfigurator;
 
+{% if isV4 %}
+
+/**
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/bike", requirements={"_locale"="%requiredlocales%"})
+ */
+{% endif %}
 class BikeAdminListController extends AdminListController
 {
     /**
