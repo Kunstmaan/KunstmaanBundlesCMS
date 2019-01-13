@@ -5,6 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
@@ -20,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
@@ -230,6 +232,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      */
     protected function askForBundleName($objectName, $namespace = null, $questionMoreBundles = "\nIn which bundle do you want to create the %s", $questionOneBundle = "The %s will be created for the <comment>%s</comment> bundle.\n")
     {
+        if (Kernel::VERSION_ID >= 40000) {
+            return new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
+        }
+
         $ownBundles = $this->getOwnBundles();
         if (count($ownBundles) <= 0) {
             $this->assistant->writeError("Looks like you don't have created any bundles for your project...", true);

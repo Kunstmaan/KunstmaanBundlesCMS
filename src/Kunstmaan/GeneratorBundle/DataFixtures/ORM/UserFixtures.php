@@ -39,8 +39,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
-        $tokenGenerator = $this->container->get('fos_user.util.token_generator');
-        $password = substr($tokenGenerator->generateToken(), 0, 8);
+        $password = substr(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='), 0, 8);
 
         $user1 = $this->createUser(
             $manager,
