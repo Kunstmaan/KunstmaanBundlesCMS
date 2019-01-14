@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -65,6 +66,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
         $container->setParameter('kunstmaan_admin.toolbar_firewall_names', !empty($config['provider_keys']) ? $config['provider_keys'] : $config['toolbar_firewall_names']);
         $container->setParameter('kunstmaan_admin.admin_firewall_name', $config['admin_firewall_name']);
+
+        $container->registerForAutoconfiguration(MenuAdaptorInterface::class)
+            ->addTag('kunstmaan_admin.menu.adaptor');
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
