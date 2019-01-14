@@ -59,6 +59,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * @param Request $request
+     *
      * @return bool
      */
     public function supports(Request $request)

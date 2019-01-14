@@ -14,55 +14,55 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class EntityTabListener
 {
-	/**
-	 * @var Request
-	 */
-	private $request;
+    /**
+     * @var Request
+     */
+    private $request;
 
-	/**
-	 * @var FormFactoryInterface
-	 */
-	private $formFactory;
+    /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
 
-	public function __construct(RequestStack $requestStack, FormFactoryInterface $formFactory)
-	{
-		$this->request = $requestStack->getCurrentRequest();
-		$this->formFactory = $formFactory;
-	}
+    public function __construct(RequestStack $requestStack, FormFactoryInterface $formFactory)
+    {
+        $this->request = $requestStack->getCurrentRequest();
+        $this->formFactory = $formFactory;
+    }
 
-	public function addTabs(TabPane $tabPane, PageTabInterface $page)
-	{
-		foreach($page->getTabs() as $pageTab) {
-			$formWidget = new FormWidget();
-			$formWidget->addType($pageTab->getInternalName(), $pageTab->getFormTypeClass(), $page);
-			$tabPane->addTab(new Tab($pageTab->getTabTitle(), $formWidget), $pageTab->getPosition());
-		}
-	}
+    public function addTabs(TabPane $tabPane, PageTabInterface $page)
+    {
+        foreach ($page->getTabs() as $pageTab) {
+            $formWidget = new FormWidget();
+            $formWidget->addType($pageTab->getInternalName(), $pageTab->getFormTypeClass(), $page);
+            $tabPane->addTab(new Tab($pageTab->getTabTitle(), $formWidget), $pageTab->getPosition());
+        }
+    }
 
-	/**
-	 * @param AdaptSimpleFormEvent $event
-	 */
-	public function adaptForm(AdaptSimpleFormEvent $event)
-	{
-		$entity = $event->getData();
-		$tabPane = $event->getTabPane();
+    /**
+     * @param AdaptSimpleFormEvent $event
+     */
+    public function adaptForm(AdaptSimpleFormEvent $event)
+    {
+        $entity = $event->getData();
+        $tabPane = $event->getTabPane();
 
-		if ($entity instanceof HasNodeInterface) {
-			return;
-		}
+        if ($entity instanceof HasNodeInterface) {
+            return;
+        }
 
-		if($entity instanceof PageTabInterface === false) {
-			return;
-		}
+        if ($entity instanceof PageTabInterface === false) {
+            return;
+        }
 
-		if($tabPane instanceof TabPane === false) {
-			$tabPane = new TabPane('id', $this->request, $this->formFactory);
-		}
+        if ($tabPane instanceof TabPane === false) {
+            $tabPane = new TabPane('id', $this->request, $this->formFactory);
+        }
 
-		$this->addTabs($tabPane, $entity);
+        $this->addTabs($tabPane, $entity);
 
-		$tabPane->buildForm();
+        $tabPane->buildForm();
 
-		$event->setTabPane($tabPane);
-	}
+        $event->setTabPane($tabPane);
+    }
 }

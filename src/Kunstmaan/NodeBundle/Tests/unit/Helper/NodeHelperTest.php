@@ -55,7 +55,7 @@ class TestPage extends AbstractPage implements HasNodeInterface, PageTabInterfac
     public function getTabs()
     {
         return [
-            (new PageTab('tab1_name', 'tab1_title', TestType::class))
+            (new PageTab('tab1_name', 'tab1_title', TestType::class)),
         ];
     }
 }
@@ -716,7 +716,8 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         return [$testPage, $nodeTranslationNewPage, $nodeNewPage];
     }
 
-    public function testPageShouldHaveTab() {
+    public function testPageShouldHaveTab()
+    {
         $request = new Request();
         $request->request = new ParameterBag();
 
@@ -735,7 +736,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $tabs = $adaptFormEvent->getTabPane()->getTabs();
         $title = null;
 
-        if(isset($tabs[0])) {
+        if (isset($tabs[0])) {
             $title = $tabs[0]->getTitle();
         }
 
