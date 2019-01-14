@@ -38,7 +38,6 @@
     }
 
     input:checked ~ label {
-
         &:before {
             background: $brand-primary;
             box-shadow: inset 0 0 0 4px $white;
@@ -57,9 +56,7 @@
    ========================================================================== */
 .radio {
 {% if demosite %}
-
     label {
-
         &:before {
             border-radius: 100%;
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
@@ -45,7 +46,7 @@ class TranslationFlagCommand extends ContainerAwareCommand
         $this
             ->setName('kuma:translator:flag')
             ->setDescription('Reset translation flags')
-            ->addOption('reset',    'r',    InputOption::VALUE_NONE,        'Reset all flags to null in stash')
+            ->addOption('reset', 'r', InputOption::VALUE_NONE, 'Reset all flags to null in stash')
         ;
     }
 
@@ -55,7 +56,6 @@ class TranslationFlagCommand extends ContainerAwareCommand
             $this->resetAllTranslationFlags();
             $output->writeln('<info>All translation and translation domain flags are reset.</info>');
         }
-
     }
 
     /**

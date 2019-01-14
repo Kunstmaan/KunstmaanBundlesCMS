@@ -1,5 +1,5 @@
 <?php
-namespace TaggingBundle;
+namespace Kunstmaan\TaggingBundle\Tests;
 
 /**
  * Inherited Methods

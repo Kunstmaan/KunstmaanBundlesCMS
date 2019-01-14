@@ -5,7 +5,6 @@ namespace Kunstmaan\NodeSearchBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
-
 use Kunstmaan\NodeSearchBundle\Form\NodeSearchAdminType;
 use Kunstmaan\NodeSearchBundle\Helper\FormWidgets\SearchFormWidget;
 

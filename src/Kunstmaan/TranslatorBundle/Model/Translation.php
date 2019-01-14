@@ -11,6 +11,7 @@ class Translation
      * The translation domain
      *
      * @Assert\NotBlank()
+     *
      * @var string
      */
     protected $domain;
@@ -19,6 +20,7 @@ class Translation
      * The translation keyword
      *
      * @Assert\NotBlank()
+     *
      * @var string
      */
     protected $keyword;
@@ -28,9 +30,6 @@ class Translation
      */
     protected $texts;
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->texts = new ArrayCollection();
@@ -46,6 +45,7 @@ class Translation
 
     /**
      * @param string $domain
+     *
      * @return Translation
      */
     public function setDomain($domain)
@@ -65,6 +65,7 @@ class Translation
 
     /**
      * @param string $keyword
+     *
      * @return Translation
      */
     public function setKeyword($keyword)
@@ -84,6 +85,7 @@ class Translation
 
     /**
      * @param ArrayCollection $texts
+     *
      * @return Translation
      */
     public function setTexts($texts)
@@ -94,9 +96,10 @@ class Translation
     }
 
     /**
-     * @param string $locale
-     * @param string $text
+     * @param string   $locale
+     * @param string   $text
      * @param int|null $id
+     *
      * @return Translation
      */
     public function addText($locale, $text, $id = null)

@@ -8,8 +8,7 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MediaController extends Controller
 {
-
     /**
      * @param Request $request
      * @param int     $mediaId
@@ -184,7 +182,6 @@ class MediaController extends Controller
         // Remove old temp files
         if ($cleanupTargetDir) {
             if (!\is_dir($targetDir) || !$dir = \opendir($targetDir)) {
-
                 return $this->returnJsonError('100', 'Failed to open temp directory.');
             }
 
@@ -193,7 +190,6 @@ class MediaController extends Controller
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
-
                     continue;
                 }
 
@@ -201,7 +197,6 @@ class MediaController extends Controller
                 if (\preg_match('/\.part$/', $file) && (\filemtime($tmpFilePath) < \time() - $maxFileAge)) {
                     $success = @\unlink($tmpFilePath);
                     if ($success !== true) {
-
                         return $this->returnJsonError('106', 'Could not remove temp file: '.$filePath);
                     }
                 }
@@ -211,12 +206,10 @@ class MediaController extends Controller
 
         // Open temp file
         if (!$out = @\fopen("{$filePath}.part", $chunks ? 'ab' : 'wb')) {
-
             return $this->returnJsonError('102', 'Failed to open output stream.');
         }
 
         if (0 !== $request->files->count()) {
-
             $_file = $request->files->get('file');
             if ($_file->getError() > 0 || !\is_uploaded_file($_file->getRealPath())) {
                 return $this->returnJsonError('103', 'Failed to move uploaded file.');
@@ -224,12 +217,10 @@ class MediaController extends Controller
 
             // Read binary input stream and append it to temp file
             if (!$input = @\fopen($_file->getRealPath(), 'rb')) {
-
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         } else {
             if (!$input = @\fopen('php://input', 'rb')) {
-
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         }
@@ -247,7 +238,6 @@ class MediaController extends Controller
             \rename("{$filePath}.part", $filePath);
         }
 
-
         $em = $this->getDoctrine()->getManager();
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
@@ -264,10 +254,8 @@ class MediaController extends Controller
 
         $success = \unlink($filePath);
         if ($success !== true) {
-
             return $this->returnJsonError('105', 'Could not remove temp file: '.$filePath);
         }
-
 
         // Send headers making sure that the file is not cached (as it happens for example on iOS devices)
         $response = new JsonResponse(
@@ -288,7 +276,6 @@ class MediaController extends Controller
 
     private function returnJsonError($code, $message)
     {
-
         return new JsonResponse(
             [
                 'jsonrpc' => '2.0',
@@ -305,8 +292,7 @@ class MediaController extends Controller
      * @param Request $request
      * @param int     $folderId
      *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload")
-     * @Method({"GET", "POST"})
+     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload", methods={"GET", "POST"})
      *
      * @return JsonResponse
      */
@@ -349,8 +335,7 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
-     * @Method({"GET", "POST"})
+     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create", methods={"GET", "POST"})
      * @Template("@KunstmaanMedia/Media/create.html.twig")
      *
      * @return array|RedirectResponse
@@ -435,8 +420,7 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
-     * @Method({"POST"})
+     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create", methods={"POST"})
      *
      * @return array|RedirectResponse
      */
@@ -466,8 +450,7 @@ class MediaController extends Controller
     /**
      * @param Request $request
      *
-     * @Route("move/", name="KunstmaanMediaBundle_media_move")
-     * @Method({"POST"})
+     * @Route("move/", name="KunstmaanMediaBundle_media_move", methods={"POST"})
      *
      * @return string
      */
@@ -500,6 +483,7 @@ class MediaController extends Controller
      * @param Request $request
      *
      * @return JsonResponse|Response
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function bulkMoveAction(Request $request)

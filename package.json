@@ -7,7 +7,8 @@
     "test": "gulp test",
     "build": "gulp buildOptimized",
     "testAndBuild": "gulp testAndBuildOptimized",
-    "buildGroundControlSkeleton": "gulp buildGroundControlSkeleton"
+    "buildGroundControlSkeleton": "gulp buildGroundControlSkeleton",
+    "postinstall": "git clone -b full/4.5.3 --single-branch https://github.com/ckeditor/ckeditor-releases.git node_modules/ckeditor"
   },
   "author": "Kunstmaan",
   "license": "ISC",
@@ -53,7 +54,6 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap-sass": "^3.3.7",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
-    "ckeditor": "4.5.6",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "fuse.js": "^3.1.0",
     "jstree": "^3.3.3",

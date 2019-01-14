@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\AdminPanel;
 
-interface AdminPanelAdaptorInterface 
+interface AdminPanelAdaptorInterface
 {
     /**
      * @return AdminPanelActionInterface[]

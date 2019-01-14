@@ -22,7 +22,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
     private $useElasticSearchVersion6;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -56,7 +56,19 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
     {
         $hosts = [];
         if ($container->hasParameter('kunstmaan_search.hostname') && $container->hasParameter('kunstmaan_search.port')) {
-            $hosts[] = $container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('kunstmaan_search.port');
+            $host = $container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('kunstmaan_search.port');
+
+            if ($container->hasParameter('kunstmaan_search.username') && $container->hasParameter('kunstmaan_search.password') &&
+                null !== $container->getParameter('kunstmaan_search.username') && null !== $container->getParameter('kunstmaan_search.password')) {
+                $host = sprintf(
+                    '%s:%s@%s',
+                    $container->getParameter('kunstmaan_search.username'),
+                    $container->getParameter('kunstmaan_search.password'),
+                    $host
+                );
+            }
+
+            $hosts[] = $host;
         }
 
         $this->useElasticSearchVersion6 = ElasticSearchUtil::useVersion6($hosts);
@@ -94,7 +106,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'view_roles' => [
                         'type' => 'keyword',
                     ],
-                ]
+                ],
             ];
         } else {
             $mapping = [
@@ -102,62 +114,62 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'root_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'node_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'nodetranslation_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'nodeversion_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'title' => [
                         'type' => 'string',
-                        'include_in_all' => true
+                        'include_in_all' => true,
                     ],
                     'slug' => [
                         'type' => 'string',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'type' => [
                         'type' => 'string',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'page_class' => [
                         'type' => 'string',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'content' => [
                         'type' => 'string',
-                        'include_in_all' => true
+                        'include_in_all' => true,
                     ],
                     'created' => [
                         'type' => 'date',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'updated' => [
                         'type' => 'date',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'view_roles' => [
                         'type' => 'string',
                         'include_in_all' => true,
                         'index' => 'not_analyzed',
                     ],
-                ]
+                ],
             ];
         }
 

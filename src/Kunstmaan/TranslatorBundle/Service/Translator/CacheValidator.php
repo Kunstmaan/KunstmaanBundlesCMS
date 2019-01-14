@@ -11,6 +11,7 @@ class CacheValidator
 {
     /**
      * Where to store cache files
+     *
      * @var string
      */
     private $cacheDir;
@@ -19,7 +20,8 @@ class CacheValidator
 
     /**
      * Checks the caching files of they are even with the stasher content
-     * @return boolean
+     *
+     * @return bool
      */
     public function isCacheFresh()
     {
@@ -35,6 +37,7 @@ class CacheValidator
 
     /**
      * Get the last updated or inserted from all database translations
+     *
      * @return DateTime last createdAt or updateAt date from the translations stash
      */
     public function getLastTranslationChangeDate()
@@ -44,6 +47,7 @@ class CacheValidator
 
     /**
      * Retrieve a Datetime of the oldest cache file made
+     *
      * @return DateTime mtime of oldest cache file
      */
     public function getOldestCachefileDate()

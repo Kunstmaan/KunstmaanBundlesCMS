@@ -28,7 +28,7 @@
                     <div id="publish-later">
                         <!-- Date -->
                         <div class="form-group">
-                            <div class="js-datepicker input-group" data-default-date="true">
+                            <div class="js-datepicker input-group" data-min-date="today" data-default-date="true">
                                 <input id="pub_date" type="text" name="pub_date" class="form-control">
                                 <span class="input-group-addon input-group-addon--has-action">
                     <i class="fa fa-calendar-o"></i>
@@ -38,7 +38,7 @@
 
                         <!-- Time -->
                         <div class="form-group">
-                            <div class="js-datepicker input-group" data-format="HH:mm" data-default-date="true" data-stepping="{{ publish_later_stepping }}">
+                            <div class="js-datepicker input-group" data-min-date="today" data-format="HH:mm" data-default-date="true" data-stepping="{{ publish_later_stepping }}">
                                 <input id="pub_tmpckr" type="text" name="pub_time" class="form-control">
                                 <span class="input-group-addon input-group-addon--has-action">
                     <i class="fa fa-clock-o"></i>

@@ -36,15 +36,15 @@ class AclNativeHelper
     /**
      * Constructor.
      *
-     * @param EntityManager            $em The entity manager
-     * @param TokenStorageInterface    $tokenStorage The security context
-     * @param RoleHierarchyInterface   $rh The role hierarchies
+     * @param EntityManager          $em           The entity manager
+     * @param TokenStorageInterface  $tokenStorage The security context
+     * @param RoleHierarchyInterface $rh           The role hierarchies
      */
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
     {
-        $this->em              = $em;
-        $this->tokenStorage    = $tokenStorage;
-        $this->roleHierarchy   = $rh;
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
+        $this->roleHierarchy = $rh;
     }
 
     /**
@@ -60,13 +60,13 @@ class AclNativeHelper
         $aclConnection = $this->em->getConnection();
 
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
-        $rootEntity     = $permissionDef->getEntity();
-        $linkAlias      = $permissionDef->getAlias();
+        $rootEntity = $permissionDef->getEntity();
+        $linkAlias = $permissionDef->getAlias();
         // Only tables with a single ID PK are currently supported
-        $linkField      = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
+        $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
 
         $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
-        $query      = $queryBuilder;
+        $query = $queryBuilder;
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
@@ -76,10 +76,10 @@ class AclNativeHelper
         $mask = $builder->get();
 
         /* @var $token TokenInterface */
-        $token     = $this->tokenStorage->getToken();
+        $token = $this->tokenStorage->getToken();
         $userRoles = array();
         if (!is_null($token)) {
-            $user      = $token->getUser();
+            $user = $token->getUser();
             $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
         }
 
@@ -93,7 +93,7 @@ class AclNativeHelper
                 $uR[] = '"' . $role->getRole() . '"';
             }
         }
-        $uR       = array_unique($uR);
+        $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', (array) $uR);
 
         if (is_object($user)) {

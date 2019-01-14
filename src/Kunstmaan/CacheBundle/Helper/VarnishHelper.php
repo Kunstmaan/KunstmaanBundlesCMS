@@ -3,8 +3,6 @@
 namespace Kunstmaan\CacheBundle\Helper;
 
 use FOS\HttpCache\CacheInvalidator;
-use FOS\HttpCache\Exception\InvalidArgumentException;
-use FOS\HttpCache\ProxyClient\Varnish;
 use FOS\HttpCacheBundle\CacheManager;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 

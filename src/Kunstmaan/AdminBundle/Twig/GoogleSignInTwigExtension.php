@@ -2,16 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Environment;
 use Twig_Extension;
 
 /**
  * Class GoogleSignInTwigExtension
- * @package Kunstmaan\AdminBundle\Twig
  */
 class GoogleSignInTwigExtension extends Twig_Extension
 {
     private $enabled;
+
     private $clientId;
 
     public function __construct($enabled, $clientId)
@@ -45,5 +44,4 @@ class GoogleSignInTwigExtension extends Twig_Extension
     {
         return $this->clientId;
     }
-
 }

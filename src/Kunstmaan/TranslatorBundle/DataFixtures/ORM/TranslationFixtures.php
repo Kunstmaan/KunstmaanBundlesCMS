@@ -27,14 +27,14 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         $this->repo = $manager->getRepository('Kunstmaan\TranslatorBundle\Entity\Translation');
 
-        $helloWorld = new Model;
+        $helloWorld = new Model();
         $helloWorld->setKeyword('heading.hello_world');
         $helloWorld->setDomain('messages');
 
         $translations = array(
             'en' => 'Hello World!',
             'fr' => 'Bonjour tout le monde',
-            'nl' => 'Hallo wereld!'
+            'nl' => 'Hallo wereld!',
         );
 
         $needForFlush = false;
@@ -79,5 +79,4 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         return 1;
     }
-
 }

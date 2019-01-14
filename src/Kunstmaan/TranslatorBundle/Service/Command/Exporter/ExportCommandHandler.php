@@ -30,9 +30,9 @@ class ExportCommandHandler extends AbstractCommandHandler
      * Get all translations per domain and sort on file.
      * A File has a domain locale, an extensions, with keywords and a ArrayCollection with translations.
      *
-     * @param  ExportCommand $exportCommand
+     * @param ExportCommand $exportCommand
      *
-     * @return int           total number of files imported
+     * @return int total number of files imported
      */
     public function executeExportCommand(ExportCommand $exportCommand)
     {
@@ -53,13 +53,14 @@ class ExportCommandHandler extends AbstractCommandHandler
         /** @var CSVFileExporter $exporter */
         $exporter = $this->exporter->getExporterByExtension($exportCommand->getFormat());
         $exporter->setLocales($this->determineLocalesToImport($exportCommand));
+
         return $exporter->export($translations);
     }
 
     /**
      * Convert an exportCommand into an array of translations
      *
-     * @param  ExportCommand $exportCommand
+     * @param ExportCommand $exportCommand
      *
      * @return array an array of translations
      */
@@ -81,7 +82,7 @@ class ExportCommandHandler extends AbstractCommandHandler
     /**
      * Convert an exportCommand into an array of ExportFiles
      *
-     * @param  ExportCommand $exportCommand
+     * @param ExportCommand $exportCommand
      *
      * @return ArrayCollection an array of ExportFiles (without filecontent filled in)
      */
@@ -92,14 +93,14 @@ class ExportCommandHandler extends AbstractCommandHandler
 
         $translations = $this->translationRepository->getTranslationsByLocalesAndDomains($locales, $domains);
 
-        $translationFiles = new ArrayCollection;
+        $translationFiles = new ArrayCollection();
 
         /** @var Translation $translation */
         foreach ($translations as $translation) {
             $exportFileKey = $translation->getDomain() . '.' . $translation->getLocale() . '.' . $exportCommand->getFormat();
 
             if (!$translationFiles->containsKey($exportFileKey)) {
-                $exportFile = new ExportFile;
+                $exportFile = new ExportFile();
                 $exportFile->setExtension($exportCommand->getFormat());
                 $exportFile->setDomain($translation->getDomain());
                 $exportFile->setLocale($translation->getLocale());
@@ -107,7 +108,6 @@ class ExportCommandHandler extends AbstractCommandHandler
             }
 
             $translationFiles->get($exportFileKey)->addTranslation($translation);
-
         }
 
         return $translationFiles;
@@ -129,9 +129,9 @@ class ExportCommandHandler extends AbstractCommandHandler
      * Returns an array with all languages that needs to be imported (from the given ExportCommand)
      * If non is given, all managed locales will be used (defined in config)
      *
-     * @param  ExportCommand $exportCommand
+     * @param ExportCommand $exportCommand
      *
-     * @return array         all locales to import by the given ExportCommand
+     * @return array all locales to import by the given ExportCommand
      */
     public function determineLocalesToImport(ExportCommand $exportCommand)
     {

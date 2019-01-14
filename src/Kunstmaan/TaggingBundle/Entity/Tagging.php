@@ -4,7 +4,6 @@ namespace Kunstmaan\TaggingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
-
 use DoctrineExtensions\Taggable\Entity\Tagging as BaseTagging;
 
 /**
@@ -13,7 +12,6 @@ use DoctrineExtensions\Taggable\Entity\Tagging as BaseTagging;
  */
 class Tagging extends BaseTagging
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -166,5 +164,4 @@ class Tagging extends BaseTagging
     {
         return $this->updatedAt;
     }
-
 }

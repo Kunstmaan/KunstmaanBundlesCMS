@@ -8,7 +8,7 @@ namespace Kunstmaan\SearchBundle\Helper;
 interface IndexableInterface
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function isIndexable();
 }

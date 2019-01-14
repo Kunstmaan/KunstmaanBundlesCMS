@@ -55,7 +55,7 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
             ->setName('kuma:media:clean-deleted-media')
             ->setDescription('Throw away all files from the file system that have been deleted in the database')
             ->setHelp(
-                "The <info>kuma:media:clean-deleted-media</info> command can be used to clean up your file system after having deleted Media items using the backend."
+                'The <info>kuma:media:clean-deleted-media</info> command can be used to clean up your file system after having deleted Media items using the backend.'
             )
             ->addOption(
                 'force',
@@ -84,6 +84,7 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
         $output->writeln('<info>Removing all Media from the file system that have their status set to deleted in the database.</info>');
 
         $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAllDeleted();
+
         try {
             $this->em->beginTransaction();
             foreach ($medias as $media) {

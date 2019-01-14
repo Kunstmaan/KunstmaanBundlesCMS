@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeSearchBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -36,7 +37,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
             // unfortunately we have to keep a state to see what has changed
             $this->entityChangeSet = [
                 'nodeTranslationId' => $args->getObject()->getId(),
-                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject())
+                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject()),
             ];
         }
     }
@@ -117,7 +118,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
         $lang = $nodeTranslation->getLang();
         foreach ($nodeTranslation->getNode()->getParents() as $node) {
             $nodeNT = $node->getNodeTranslation($lang, true);
-            if ($nodeNT && !$nodeNT->isOnline()) {
+            if ($nodeNT && !$nodeNT->isOnline() && !$nodeNT instanceof StructureNode) {
                 return true;
             }
         }

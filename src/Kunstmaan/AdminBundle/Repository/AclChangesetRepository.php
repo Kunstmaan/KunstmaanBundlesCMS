@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 
 /**
@@ -11,7 +10,6 @@ use Kunstmaan\AdminBundle\Entity\AclChangeset;
  */
 class AclChangesetRepository extends EntityRepository
 {
-
     /**
      * Find a changeset with status RUNNING
      *
@@ -60,5 +58,4 @@ class AclChangesetRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult() != 0;
     }
-
 }

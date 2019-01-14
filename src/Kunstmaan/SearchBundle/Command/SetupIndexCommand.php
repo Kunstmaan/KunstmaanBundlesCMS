@@ -50,7 +50,7 @@ class SetupIndexCommand extends ContainerAwareCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int  null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -60,11 +60,10 @@ class SetupIndexCommand extends ContainerAwareCommand
         }
 
         /**
-         * @var string                       $alias
+         * @var string
          * @var SearchConfigurationInterface $searchConfiguration
          */
         foreach ($this->configurationChain->getConfigurations() as $alias => $searchConfiguration) {
-
             $languagesNotAnalyzed = $searchConfiguration->getLanguagesNotAnalyzed();
             if (count($languagesNotAnalyzed) > 0) {
                 $question = new ChoiceQuestion(
@@ -72,7 +71,7 @@ class SetupIndexCommand extends ContainerAwareCommand
                     ['No', 'Yes']
                 );
                 $question->setErrorMessage('Answer %s is invalid.');
-                if ( $helper->ask($input, $output, $question) === 'No' ) {
+                if ($helper->ask($input, $output, $question) === 'No') {
                     return;
                 }
             }

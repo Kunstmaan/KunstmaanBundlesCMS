@@ -1,5 +1,5 @@
 <?php
-namespace ConfigBundle;
+namespace Kunstmaan\ConfigBundle\Tests;
 
 /**
  * Inherited Methods

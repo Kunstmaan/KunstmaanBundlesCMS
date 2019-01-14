@@ -17,12 +17,12 @@ class EntityVersionLockService
     private $objectManager;
 
     /**
-     * @var integer
+     * @var int
      */
     private $threshold;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $lockEnabled;
 
@@ -35,6 +35,7 @@ class EntityVersionLockService
 
     /**
      * @param LockableEntityInterface $entity
+     *
      * @return bool
      */
     public function isEntityBelowThreshold(LockableEntityInterface $entity)
@@ -45,16 +46,18 @@ class EntityVersionLockService
         if ($this->lockEnabled && $lockable->getId() !== null) {
             $now = new \DateTime();
             $thresholdDate = clone $lockable->getUpdated();
-            $thresholdDate->add(new \DateInterval("PT".$this->threshold."S"));
+            $thresholdDate->add(new \DateInterval('PT'.$this->threshold.'S'));
 
             return $thresholdDate > $now;
         }
+
         return false;
     }
 
     /**
-     * @param User $user
+     * @param User                    $user
      * @param LockableEntityInterface $entity
+     *
      * @return bool
      */
     public function isEntityLocked(User $user, LockableEntityInterface $entity)
@@ -66,7 +69,7 @@ class EntityVersionLockService
             $this->removeExpiredLocks($lockable);
             $locks = $this->getEntityVersionLocksByLockableEntity($lockable, $user);
 
-            if($locks === null || !count($locks)) {
+            if ($locks === null || !count($locks)) {
                 $this->createEntityVersionLock($user, $lockable);
 
                 $lockable->setUpdated(new \DateTime());
@@ -74,15 +77,17 @@ class EntityVersionLockService
 
                 return false;
             }
+
             return true;
         }
+
         return false;
     }
 
     /**
      * When editing the entity, create a new entity translation lock.
      *
-     * @param User $user
+     * @param User           $user
      * @param LockableEntity $entity
      */
     protected function createEntityVersionLock(User $user, LockableEntity $entity)
@@ -90,9 +95,9 @@ class EntityVersionLockService
         /** @var EntityVersionLock $lock */
         $lock = $this->objectManager->getRepository('KunstmaanAdminListBundle:EntityVersionLock')->findOneBy([
             'owner' => $user->getUsername(),
-            'lockableEntity' => $entity
+            'lockableEntity' => $entity,
         ]);
-        if (! $lock) {
+        if (!$lock) {
             $lock = new EntityVersionLock();
         }
         $lock->setOwner($user->getUsername());
@@ -104,7 +109,8 @@ class EntityVersionLockService
 
     /**
      * @param LockableEntityInterface $entity
-     * @param User $userToExclude
+     * @param User                    $userToExclude
+     *
      * @return array
      */
     public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, User $userToExclude = null)
@@ -116,6 +122,7 @@ class EntityVersionLockService
             $this->getEntityVersionLocksByLockableEntity($lockable, $userToExclude),
             function ($return, EntityVersionLock $item) {
                 $return[] = $item->getOwner();
+
                 return $return;
             },
             []
@@ -137,13 +144,15 @@ class EntityVersionLockService
      * When editing an entity, check if there is a lock for this entity.
      *
      * @param LockableEntity $entity
-     * @param User $userToExclude
+     * @param User           $userToExclude
+     *
      * @return EntityVersionLock[]
      */
     protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, User $userToExclude = null)
     {
         /** @var EntityVersionLockRepository $objectRepository */
         $objectRepository = $this->objectManager->getRepository('KunstmaanAdminListBundle:EntityVersionLock');
+
         return $objectRepository->getLocksForLockableEntity($entity, $this->threshold, $userToExclude);
     }
 
@@ -176,7 +185,7 @@ class EntityVersionLockService
     }
 
     /**
-     * @param integer $threshold
+     * @param int $threshold
      */
     public function setThreshold($threshold)
     {
@@ -184,7 +193,7 @@ class EntityVersionLockService
     }
 
     /**
-     * @param boolean lockEnabled
+     * @param bool lockEnabled
      */
     public function setLockEnabled($lockEnabled)
     {

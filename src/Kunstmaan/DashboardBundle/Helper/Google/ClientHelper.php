@@ -15,9 +15,9 @@ class ClientHelper
     private $client;
 
     /**
-     * @param Client $client
+     * @param Client          $client
      * @param RouterInterface $router
-     * @param string $routeName
+     * @param string          $routeName
      */
     public function __construct(Client $client, RouterInterface $router, $routeName)
     {

@@ -14,7 +14,7 @@ final class ElasticSearchUtil
     private static $esClientInfo;
 
     /**
-     * @var array $hosts
+     * @var array
      *
      * @return bool
      */
@@ -30,14 +30,14 @@ final class ElasticSearchUtil
             $versionParts = explode('.', $info['version']['number']);
             $majorVersion = $versionParts[0];
 
-            return ($majorVersion > 2);
+            return $majorVersion > 2;
         }
 
         return false;
     }
 
     /**
-     * @var array $hosts
+     * @var array
      *
      * @return array
      */

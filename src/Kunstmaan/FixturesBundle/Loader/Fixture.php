@@ -5,12 +5,19 @@ namespace Kunstmaan\FixturesBundle\Loader;
 class Fixture
 {
     private $name;
+
     private $class;
+
     private $spec;
+
     private $entity;
+
     private $additionalEntities;
+
     private $properties;
+
     private $parameters;
+
     private $translations;
 
     public function __construct($name, $class, $specs)
@@ -44,11 +51,13 @@ class Fixture
 
     /**
      * @param mixed $name
+     *
      * @return Fixture
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -62,11 +71,13 @@ class Fixture
 
     /**
      * @param mixed $class
+     *
      * @return Fixture
      */
     public function setClass($class)
     {
         $this->class = $class;
+
         return $this;
     }
 
@@ -85,11 +96,13 @@ class Fixture
 
     /**
      * @param mixed $properties
+     *
      * @return Fixture
      */
     public function setProperties($properties)
     {
         $this->properties = $properties;
+
         return $this;
     }
 
@@ -103,11 +116,13 @@ class Fixture
 
     /**
      * @param mixed $parameters
+     *
      * @return Fixture
      */
     public function setParameters($parameters)
     {
         $this->parameters = $parameters;
+
         return $this;
     }
 
@@ -121,11 +136,13 @@ class Fixture
 
     /**
      * @param mixed $translations
+     *
      * @return Fixture
      */
     public function setTranslations($translations)
     {
         $this->translations = $translations;
+
         return $this;
     }
 
@@ -139,11 +156,13 @@ class Fixture
 
     /**
      * @param array $additionalEntities
+     *
      * @return Fixture
      */
     public function setAdditionalEntities($additionalEntities)
     {
         $this->additionalEntities = $additionalEntities;
+
         return $this;
     }
 
@@ -162,11 +181,13 @@ class Fixture
 
     /**
      * @param mixed $entity
+     *
      * @return Fixture
      */
     public function setEntity($entity)
     {
         $this->entity = $entity;
+
         return $this;
     }
 
@@ -180,11 +201,13 @@ class Fixture
 
     /**
      * @param mixed $spec
+     *
      * @return Fixture
      */
     public function setSpec($spec)
     {
         $this->spec = $spec;
+
         return $this;
     }
 }

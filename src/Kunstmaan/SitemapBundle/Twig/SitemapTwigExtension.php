@@ -16,7 +16,6 @@ class SitemapTwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('hide_from_sitemap', array($this, 'isHiddenFromSitemap')),
             new \Twig_SimpleFunction('hide_children_from_sitemap', array($this, 'isHiddenChildrenFromSitemap')),
-
         );
     }
 
@@ -56,4 +55,3 @@ class SitemapTwigExtension extends \Twig_Extension
         return false;
     }
 }
-

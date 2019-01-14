@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\File\File;
  * This is especially useful in migrations or places where you want to automate the uploading of media.
  *
  * Class MediaCreatorService
- * @package Kunstmaan\MediaBundle\Helper\Services
  */
 class MediaCreatorService
 {
@@ -47,7 +46,7 @@ class MediaCreatorService
 
     /**
      * @param $filePath string  The full filepath of the asset you want to upload. The filetype will be automatically detected.
-     * @param $folderId integer For now you still have to manually pass the correct folder ID.
+     * @param $folderId integer For now you still have to manually pass the correct folder ID
      *
      * @return Media
      */

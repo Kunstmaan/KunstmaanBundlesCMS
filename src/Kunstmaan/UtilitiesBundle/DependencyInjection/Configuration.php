@@ -13,12 +13,23 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_utilities');
+        $rootNode = $treeBuilder->root('kunstmaan_utilities');
+
+        $rootNode
+            ->children()
+                ->arrayNode('cipher')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('secret')->defaultValue('%kernel.secret%')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

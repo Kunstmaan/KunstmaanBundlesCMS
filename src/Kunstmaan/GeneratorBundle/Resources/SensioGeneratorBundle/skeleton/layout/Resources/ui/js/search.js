@@ -1,29 +1,14 @@
-const search = (function() {
+export default function init() {
+    $('.js-searchbox-content').on('click', (e) => {
+        e.stopPropagation();
+        $(e.currentTarget).closest('.js-searchbox-form').addClass('searchbox-form--active');
+    });
 
-    var init, initSearch;
+    $(document).on('click', () => {
+        $('.js-searchbox-form').removeClass('searchbox-form--active');
+    });
 
-    init = function() {
-        initSearch();
-    };
-
-    initSearch = function() {
-        $('.js-searchbox-content').on('click', function(e) {
-            e.stopPropagation();
-            $(this).closest('.js-searchbox-form').addClass('searchbox-form--active');
-        });
-
-        $(document).on('click', function() {
-            $('.js-searchbox-form').removeClass('searchbox-form--active');
-        });
-
-        $('.js-searchbox-back').on('click', function() {
-            $(this).closest('.js-searchbox-form').removeClass('searchbox-form--active');
-        });
-    };
-
-    return {
-        init: init
-    };
-}());
-
-module.exports = search;
+    $('.js-searchbox-back').on('click', (e) => {
+        $(e.currentTarget).closest('.js-searchbox-form').removeClass('searchbox-form--active');
+    });
+}

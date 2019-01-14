@@ -29,9 +29,9 @@ class MenuService
     private $menuEntityClass;
 
     /**
-     * @param array $menuNames
+     * @param array                        $menuNames
      * @param DomainConfigurationInterface $domainConfiguration
-     * @param EntityManager $em
+     * @param EntityManager                $em
      */
     public function __construct(array $menuNames, DomainConfigurationInterface $domainConfiguration, EntityManager $em, $menuEntityClass)
     {

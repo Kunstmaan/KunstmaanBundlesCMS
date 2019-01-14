@@ -1,5 +1,5 @@
 <?php
-namespace MediaPagePartBundle;
+namespace Kunstmaan\MediaPagePartBundle\Tests;
 
 /**
  * Inherited Methods

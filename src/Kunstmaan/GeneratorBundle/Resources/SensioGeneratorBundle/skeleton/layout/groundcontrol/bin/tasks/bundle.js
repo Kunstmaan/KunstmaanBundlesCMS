@@ -5,7 +5,11 @@ import webpack from 'webpack';
  * via gulp. Gulp will probably be easier at first, since you have to configure
  * multiple watches for the other src files as well.
  */
-export default function createBundleTask({config = undefined, watch = false, logStats = false}) {
+export default function createBundleTask({
+    config = undefined,
+    watch = false,
+    logStats = false,
+}) {
     const compiler = webpack(config);
 
     return function bundle(done) {
@@ -14,7 +18,7 @@ export default function createBundleTask({config = undefined, watch = false, log
         } else {
             compiler.run(handleWebpackResult);
         }
-        
+
         function handleWebpackResult(err, stats) {
             if (err) {
                 console.error(err.stack || err);

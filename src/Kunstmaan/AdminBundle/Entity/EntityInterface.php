@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-interface EntityInterface 
+interface EntityInterface
 {
     /**
      * Get id

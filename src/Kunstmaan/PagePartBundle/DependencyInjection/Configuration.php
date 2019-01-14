@@ -15,7 +15,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         /** @var ArrayNodeDefinition $pageparts */
-        $pageparts = $root->children()->arrayNode('pageparts')->prototype('array');
+        $pageparts = $root->children()->arrayNode('pageparts')->useAttributeAsKey('index')->prototype('array');
         $pageparts->children()->scalarNode('name')->isRequired();
         $pageparts->children()->scalarNode('context')->isRequired();
         $pageparts->children()->scalarNode('extends');
@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
         // *************************************************************************************************************
 
         /** @var ArrayNodeDefinition $pagetemplates */
-        $pagetemplates = $root->children()->arrayNode('pagetemplates')->defaultValue([])->prototype('array');
+        $pagetemplates = $root->children()->arrayNode('pagetemplates')->useAttributeAsKey('index')->defaultValue([])->prototype('array');
 
         $pagetemplates->children()->scalarNode('template')->isRequired();
         $pagetemplates->children()->scalarNode('name')->isRequired();
@@ -61,11 +61,16 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('span')->defaultValue(12)->end()
                 ->scalarNode('template')->end()
                 ->variableNode('rows')
-                    ->validate()->ifTrue(function($element) { return !is_array($element); })->thenInvalid('The rows element must be an array.')->end()
-                    ->validate()->always(function($children) {array_walk($children, array($this, 'evaluateRows'));return $children;})->end()
+                    ->validate()->ifTrue(function ($element) {
+                        return !is_array($element);
+                    })->thenInvalid('The rows element must be an array.')->end()
+                    ->validate()->always(function ($children) {
+                        array_walk($children, array($this, 'evaluateRows'));
+
+                        return $children;
+                    })->end()
                 ->end()
             ->end();
-
 
         return $treeBuilder;
     }
@@ -80,13 +85,18 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $definition = $treeBuilder->root($name);
         $this->buildRowNode($definition);
+
         return $definition->getNode(true);
     }
 
     protected function buildRowNode(NodeDefinition $node)
     {
         return $node
-                ->validate()->always(function($children) { array_walk($children, array($this, 'evaluateRegions'));return $children;})
+                ->validate()->always(function ($children) {
+                    array_walk($children, array($this, 'evaluateRegions'));
+
+                    return $children;
+                })
             ->end();
     }
 
@@ -100,6 +110,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $definition = $treeBuilder->root($name);
         $this->buildRegionNode($definition);
+
         return $definition->getNode(true);
     }
 
@@ -110,8 +121,14 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('name')->isRequired()->end()
                 ->scalarNode('span')->defaultValue(12)->end()
                 ->variableNode('rows')
-                    ->validate()->ifTrue(function($element) { return !is_array($element); })->thenInvalid('The rows element must be an array.')->end()
-                    ->validate()->always(function($children) {array_walk($children, array($this, 'evaluateRows'));return $children;})->end()
+                    ->validate()->ifTrue(function ($element) {
+                        return !is_array($element);
+                    })->thenInvalid('The rows element must be an array.')->end()
+                    ->validate()->always(function ($children) {
+                        array_walk($children, array($this, 'evaluateRows'));
+
+                        return $children;
+                    })->end()
                 ->end()
             ->end();
     }

@@ -6,8 +6,6 @@ namespace Kunstmaan\AdminBundle\FlashMessages;
  * Class FlashTypes
  *
  * Enabled flash types.
- *
- * @package Kunstmaan\AdminBundle\FlashMessages
  */
 class FlashTypes
 {

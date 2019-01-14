@@ -9,13 +9,13 @@ services:
         tags:
             - { name: console.command }
 
-    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsSegmentsListCommand:
-        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_dashboard.helper.google.analytics.service']
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsConfigsListCommand:
+        arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: console.command }
 
-    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsConfigsListCommand:
-        arguments: ['@doctrine.orm.entity_manager']
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand:
+        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_dashboard.helper.google.analytics.service']
         tags:
             - { name: console.command }
 
@@ -25,6 +25,11 @@ services:
             - { name: console.command }
 
     Kunstmaan\DashboardBundle\Command\GoogleAnalyticsOverviewsGenerateCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsOverviewsListCommand:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: console.command }

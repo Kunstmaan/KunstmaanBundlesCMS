@@ -1,5 +1,5 @@
 <?php
-namespace SearchBundle;
+namespace Kunstmaan\SearchBundle\Tests;
 
 /**
  * Inherited Methods

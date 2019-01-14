@@ -1,5 +1,5 @@
 <?php
-namespace MenuBundle;
+namespace Kunstmaan\MenuBundle\Tests;
 
 /**
  * Inherited Methods

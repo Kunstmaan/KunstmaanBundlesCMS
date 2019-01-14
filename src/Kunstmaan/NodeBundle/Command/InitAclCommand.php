@@ -67,7 +67,7 @@ class InitAclCommand extends ContainerAwareCommand
 
         $this->setName('kuma:init:acl')
             ->setDescription('Basic initialization of ACL for projects')
-            ->setHelp("The <info>kuma:init:acl</info> will create basic ACL entries for the nodes of the current project");
+            ->setHelp('The <info>kuma:init:acl</info> will create basic ACL entries for the nodes of the current project');
     }
 
     /**
@@ -85,8 +85,9 @@ class InitAclCommand extends ContainerAwareCommand
         $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAll();
         $count = 0;
         foreach ($nodes as $node) {
-            $count++;
+            ++$count;
             $objectIdentity = $this->oidStrategy->getObjectIdentity($node);
+
             try {
                 $this->aclProvider->deleteAcl($objectIdentity);
             } catch (AclNotFoundException $e) {
@@ -109,5 +110,4 @@ class InitAclCommand extends ContainerAwareCommand
         }
         $output->writeln("{$count} nodes processed.");
     }
-
 }

@@ -37,7 +37,6 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
             $serviceIds = array_merge($loaderRefs, ['request_stack' => new Reference('request_stack')]);
             $serviceLocator = ServiceLocatorTagPass::register($container, $serviceIds);
 
-
             $container->getDefinition('kunstmaan_translator.service.translator.translator')
                 ->replaceArgument(0, $serviceLocator)
                 ->replaceArgument(3, $loaders);

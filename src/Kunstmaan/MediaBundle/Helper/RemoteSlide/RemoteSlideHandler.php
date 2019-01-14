@@ -11,7 +11,6 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
  */
 class RemoteSlideHandler extends AbstractMediaHandler
 {
-
     /**
      * @var string
      */
@@ -96,6 +95,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                 } catch (\ErrorException $e) {
                     // Silent exception - should not bubble up since failure to create a thumbnail is not a fatal error
                 }
+
                 break;
         }
     }
@@ -115,11 +115,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMedia(Media $media)
     {
-
     }
 
     /**
@@ -133,9 +132,9 @@ class RemoteSlideHandler extends AbstractMediaHandler
             'slide' => array(
                 'path' => 'KunstmaanMediaBundle_folder_slidecreate',
                 'params' => array(
-                    'folderId' => $params['folderId']
-                )
-            )
+                    'folderId' => $params['folderId'],
+                ),
+            ),
         );
     }
 
@@ -161,9 +160,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     $json = json_decode(
                         file_get_contents('https://www.slideshare.net/api/oembed/2?url=' . $data . '&format=json')
                     );
-                    $slide->setCode($json->{"slideshow_id"});
+                    $slide->setCode($json->{'slideshow_id'});
                     $result = $slide->getMedia();
                     $result->setName('SlideShare ' . $data);
+
                     break;
             }
         }
@@ -172,7 +172,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -180,7 +180,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media The media entity
+     * @param Media  $media    The media entity
      * @param string $basepath The base path
      *
      * @return string
@@ -200,8 +200,8 @@ class RemoteSlideHandler extends AbstractMediaHandler
         return array(
             RemoteSlideHandler::TYPE => array(
                 'type' => RemoteSlideHandler::TYPE,
-                'name' => 'media.slide.add'
-            )
+                'name' => 'media.slide.add',
+            ),
         );
     }
 }

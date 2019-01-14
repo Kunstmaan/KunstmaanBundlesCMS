@@ -5,7 +5,6 @@ namespace Kunstmaan\LeadGenerationBundle\Form;
 use Kunstmaan\LeadGenerationBundle\Form\Popup\AbstractPopupAdminType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,7 +22,7 @@ class NewsletterSubscriptionType extends AbstractPopupAdminType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

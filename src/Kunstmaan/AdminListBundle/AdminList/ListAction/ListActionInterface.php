@@ -26,5 +26,4 @@ interface ListActionInterface
      * @return string
      */
     public function getTemplate();
-
 }

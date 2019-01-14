@@ -21,6 +21,7 @@ class Translator extends SymfonyTranslator
 
     /**
      * Resource Cacher
+     *
      * @var Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
      */
     private $resourceCacher;
@@ -76,7 +77,7 @@ class Translator extends SymfonyTranslator
     /**
      * Add resources from the stash and cache them
      *
-     * @param boolean $cacheResources cache resources after retrieving them from the stasher
+     * @param bool $cacheResources cache resources after retrieving them from the stasher
      */
     public function addResourcesFromDatabaseAndCacheThem($cacheResources = true)
     {
@@ -87,7 +88,7 @@ class Translator extends SymfonyTranslator
             if ($cacheResources === true) {
                 $this->resourceCacher->cacheResources($resources);
             }
-        } catch (\Exception $ex){
+        } catch (\Exception $ex) {
             // don't load if the database doesn't work
         }
     }
@@ -111,7 +112,6 @@ class Translator extends SymfonyTranslator
      */
     protected function loadCatalogue($locale)
     {
-
         if ($this->options['debug'] === true) {
             $this->options['cache_dir'] = null; // disable caching for debug
         }
@@ -142,7 +142,6 @@ class Translator extends SymfonyTranslator
      */
     public function profileTranslation($id, $parameters, $domain, $locale, $trans)
     {
-
         if (!$this->request || $this->profilerEnabled === false) {
             return;
         }
@@ -151,7 +150,7 @@ class Translator extends SymfonyTranslator
             $locale = $this->request->get('_locale');
         }
 
-        $translation = new Translation;
+        $translation = new Translation();
         $translation->setKeyword($id);
         $translation->setDomain($domain);
         $translation->setLocale($locale);
@@ -160,13 +159,12 @@ class Translator extends SymfonyTranslator
         $translationCollection = $this->request->request->get('usedTranslations');
 
         if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
-            $translationCollection = new ArrayCollection;
+            $translationCollection = new ArrayCollection();
         }
 
         $translationCollection->set($domain . $id . $locale, $translation);
 
         $this->request->request->set('usedTranslations', $translationCollection);
-
     }
 
     public function getTranslationRepository()
@@ -183,6 +181,4 @@ class Translator extends SymfonyTranslator
     {
         $this->resourceCacher = $resourceCacher;
     }
-
-
 }

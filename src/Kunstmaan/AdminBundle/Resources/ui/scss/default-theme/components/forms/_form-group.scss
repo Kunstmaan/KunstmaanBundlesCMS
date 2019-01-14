@@ -16,6 +16,19 @@
     max-width: none;
 }
 
+.form-group--datetime {
+    @media (min-width: $screen-sm-min) {
+
+        > .form-group--date {
+            width: 180px;
+        }
+
+        > .form-group--time {
+            width: 130px;
+        }
+    }
+}
+
 
 /* Select 2 Fix
    ========================================================================== */

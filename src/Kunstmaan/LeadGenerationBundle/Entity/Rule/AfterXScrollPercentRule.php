@@ -57,7 +57,7 @@ class AfterXScrollPercentRule extends AbstractRule
     public function getJsProperties()
     {
         return array(
-            'percentage' => $this->getPercentage()
+            'percentage' => $this->getPercentage(),
         );
     }
 

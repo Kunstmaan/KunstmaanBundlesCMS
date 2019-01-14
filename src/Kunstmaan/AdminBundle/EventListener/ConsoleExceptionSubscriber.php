@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Symfony\Component\Console\ConsoleEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ConsoleExceptionSubscriber.
@@ -17,6 +17,7 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * ConsoleExceptionListener constructor.
+     *
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -30,7 +31,7 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ConsoleEvents::ERROR => 'onConsoleError'
+            ConsoleEvents::ERROR => 'onConsoleError',
         ];
     }
 
@@ -42,7 +43,9 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
         $command = $event->getCommand();
         $error = $event->getError();
 
-        $this->logCommandError($command, $error);
+        if (null !== $command) {
+            $this->logCommandError($command, $error);
+        }
     }
 
     /**

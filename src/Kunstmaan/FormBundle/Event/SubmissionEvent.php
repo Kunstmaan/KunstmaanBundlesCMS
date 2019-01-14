@@ -20,7 +20,7 @@ class SubmissionEvent extends Event
 
     /**
      * @param FormSubmission $submission
-     * @param AbstractPage $page
+     * @param AbstractPage   $page
      */
     public function __construct(FormSubmission $submission, AbstractPage $page)
     {

@@ -11,7 +11,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  */
 class AnalyticsConfig extends AbstractEntity
 {
-
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
      */
@@ -65,7 +64,7 @@ class AnalyticsConfig extends AbstractEntity
     private $lastUpdate = null;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="disable_goals", type="boolean")
      */
@@ -75,6 +74,7 @@ class AnalyticsConfig extends AbstractEntity
      * Set overviews
      *
      * @param array $overviews
+     *
      * @return AnalyticsDailyOverviews
      */
     public function setOverviews($overviews)
@@ -98,6 +98,7 @@ class AnalyticsConfig extends AbstractEntity
      * Set segments
      *
      * @param array $segments
+     *
      * @return AnalyticsDailysegments
      */
     public function setSegments($segments)
@@ -264,7 +265,7 @@ class AnalyticsConfig extends AbstractEntity
     /**
      * Get disableGoals
      *
-     * @return boolean
+     * @return bool
      */
     public function getDisableGoals()
     {
@@ -274,7 +275,7 @@ class AnalyticsConfig extends AbstractEntity
     /**
      * Set disableGoals
      *
-     * @param boolean $disableGoals
+     * @param bool $disableGoals
      *
      * @return $this
      */

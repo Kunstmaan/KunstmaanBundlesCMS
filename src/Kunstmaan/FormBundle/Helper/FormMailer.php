@@ -29,9 +29,9 @@ class FormMailer implements FormMailerInterface
      */
     public function __construct(Swift_Mailer $mailer, TwigEngine $templating, ContainerInterface $container)
     {
-        $this->mailer     = $mailer;
+        $this->mailer = $mailer;
         $this->templating = $templating;
-        $this->container  = $container;
+        $this->container = $container;
     }
 
     /**
@@ -54,12 +54,11 @@ class FormMailer implements FormMailerInterface
                     'KunstmaanFormBundle:Mailer:mail.html.twig',
                     array(
                         'submission' => $submission,
-                        'host'       => $request->getScheme() . '://' . $request->getHttpHost()
+                        'host' => $request->getScheme() . '://' . $request->getHttpHost(),
                     )
                 ),
                 'text/html'
             );
-
         $this->mailer->send($message);
     }
 }

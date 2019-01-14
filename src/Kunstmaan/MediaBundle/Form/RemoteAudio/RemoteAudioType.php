@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class RemoteAudioType extends AbstractRemoteType
 {
-
     /**
      * Builds the form.
      *
@@ -34,10 +33,10 @@ class RemoteAudioType extends AbstractRemoteType
                 'type',
                 ChoiceType::class,
                 array(
-                    'label'       => 'media.form.remote_audio.type.label',
-                    'choices'     => array('soundcloud' => 'soundcloud'),
+                    'label' => 'media.form.remote_audio.type.label',
+                    'choices' => array('soundcloud' => 'soundcloud'),
                     'constraints' => array(new NotBlank()),
-                    'required'    => true
+                    'required' => true,
                 )
             );
     }
@@ -55,7 +54,7 @@ class RemoteAudioType extends AbstractRemoteType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {

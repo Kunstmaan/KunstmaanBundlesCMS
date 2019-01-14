@@ -1,6 +1,9 @@
 services:
     Kunstmaan\TranslatorBundle\Command\ImportTranslationsCommand:
-        arguments: ['@kunstmaan_translator.service.importer.command_handler']
+        arguments:
+            - '@kunstmaan_translator.service.importer.command_handler'
+            - '%kuma_translator.default_bundle%'
+            - '%kuma_translator.bundles%'
         tags:
             - { name: console.command }
 
@@ -27,7 +30,7 @@ services:
         arguments:
             - '@kunstmaan_translator.service.importer.importer'
             - '@kunstmaan_translator.service.translator.translator'
-            - '%requiredlocales%'
+            - '%kuma_translator.managed_locales%'
         tags:
             - { name: console.command }
 
