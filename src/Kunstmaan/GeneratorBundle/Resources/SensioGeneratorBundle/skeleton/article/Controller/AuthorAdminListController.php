@@ -10,10 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\{{ entity_class }}AuthorAdminListConfigurator;
+{% if isV4 %}
 
 /**
- * The AdminList controller for the {{ entity_class }}Author
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/author", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorAdminListController
 {
     /**

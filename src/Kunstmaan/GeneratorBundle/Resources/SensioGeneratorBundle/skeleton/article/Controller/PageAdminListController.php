@@ -10,10 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
+{% if isV4 %}
 
 /**
- * The AdminList controller for the {{ entity_class }}Page
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/page", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdminListController
 {
     /**

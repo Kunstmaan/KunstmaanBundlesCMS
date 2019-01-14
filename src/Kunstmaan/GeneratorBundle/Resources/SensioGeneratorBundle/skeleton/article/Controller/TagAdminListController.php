@@ -9,10 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+{% if isV4 %}
 
 /**
- * The admin list controller for Tag
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/tag", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminListController
 {
     /**
