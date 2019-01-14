@@ -5,13 +5,11 @@ namespace Kunstmaan\NodeSearchBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
- * To learn more see {@link
- * http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
+ * To learn more see {@link * http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
 class Configuration implements ConfigurationInterface
 {
@@ -20,9 +18,9 @@ class Configuration implements ConfigurationInterface
      */
     private $useElasticSearchVersion6;
 
-
     /**
      * Configuration constructor.
+     *
      * @param bool $useElasticSearchVersion6
      */
     public function __construct($useElasticSearchVersion6)
@@ -31,12 +29,12 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root('kunstmaan_node_search');
+        $rootNode = $treeBuilder->root('kunstmaan_node_search');
 
         $rootNode->children()->booleanNode('enable_update_listener')->defaultTrue();
         $rootNode->children()->booleanNode('use_match_query_for_title')->defaultFalse();
@@ -64,13 +62,13 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('index')
                 ->beforeNormalization()
                 ->ifNotInArray(['true', 'false', true, false])
-                ->thenInvalid("index must be one of: true, false");
+                ->thenInvalid('index must be one of: true, false');
         } else {
             $properties->children()
                 ->scalarNode('index')
                 ->beforeNormalization()
                 ->ifNotInArray(['analyzed', 'not_analyzed', 'no'])
-                ->thenInvalid("index must be one of: analyzed, not_analyzed, no");
+                ->thenInvalid('index must be one of: analyzed, not_analyzed, no');
             $properties->children()->booleanNode('include_in_all');
         }
 
@@ -82,7 +80,7 @@ class Configuration implements ConfigurationInterface
         $properties->children()->scalarNode('index_analyzer');
         $properties->children()->scalarNode('copy_to');
         $properties->children()->scalarNode('term_vector')->beforeNormalization()->ifNotInArray(['yes', 'no', 'with_positions', 'with_offsets', 'with_positions_offsets'])
-            ->thenInvalid("term_vector must be one of: yes, no, with_positions, with_offsets, with_positions_offsets");
+            ->thenInvalid('term_vector must be one of: yes, no, with_positions, with_offsets, with_positions_offsets');
 
         $rootNode
             ->children()

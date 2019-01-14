@@ -21,7 +21,7 @@ trait URLValidator
 
         return count($matches) > 0;
     }
-    
+
     /**
      * Check if given text is an internal media link.
      */

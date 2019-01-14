@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Populator;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\FixturesBundle\Populator\Methods\MethodInterface;
 
@@ -25,9 +24,9 @@ class Populator
                 if ($populator->canSet($entity, $property, $value)) {
                     if ($value instanceof \Kunstmaan\FixturesBundle\Loader\Fixture) {
                         $populator->set($entity, $property, $value->getEntity());
-                    } elseif(is_array($value)) {
-                        foreach($value as &$item) {
-                            if($item instanceof \Kunstmaan\FixturesBundle\Loader\Fixture) {
+                    } elseif (is_array($value)) {
+                        foreach ($value as &$item) {
+                            if ($item instanceof \Kunstmaan\FixturesBundle\Loader\Fixture) {
                                 $item = $item->getEntity();
                             }
                         }
@@ -35,6 +34,7 @@ class Populator
                     } else {
                         $populator->set($entity, $property, $value);
                     }
+
                     break;
                 }
             }

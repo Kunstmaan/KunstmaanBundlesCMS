@@ -43,9 +43,9 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      */
     public function generate(BundleInterface $bundle, $entity, $prefix, array $sections, $behatTest)
     {
-        $this->bundle   = $bundle;
-        $this->entity   = $entity;
-        $this->prefix   = $prefix;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
         $this->sections = $sections;
 
         $this->generatePagePartEntity();
@@ -65,14 +65,15 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generatePagePartEntity()
     {
         $params = array(
-            'bundle'         => $this->bundle->getName(),
-            'namespace'      => $this->bundle->getNamespace(),
-            'pagepart'       => $this->entity,
-            'pagepartname'   => str_replace('PagePart', '', $this->entity),
-            'adminType'      => '\\' . $this->bundle->getNamespace(
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'pagepart' => $this->entity,
+            'pagepartname' => str_replace('PagePart', '', $this->entity),
+            'adminType' => '\\' . $this->bundle->getNamespace(
                 ) . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
-            'prefix'         => $this->prefix
+            'prefix' => $this->prefix,
+            'isV4' => $this->isSymfony4(),
         );
 
         $this->renderSingleFile(
@@ -92,11 +93,11 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generateFormType()
     {
         $params = array(
-            'bundle'       => $this->bundle->getName(),
-            'namespace'    => $this->bundle->getNamespace(),
-            'pagepart'     => $this->entity,
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'pagepart' => $this->entity,
             'pagepartname' => str_replace('PagePart', '', $this->entity),
-            'adminType'    => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType'
+            'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
         );
 
         $this->renderSingleFile(
@@ -123,8 +124,16 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
 
         $this->renderSingleFile(
             $this->skeletonDir . '/Resources/views/PageParts/' . $this->entity . '/',
-            $this->bundle->getPath() . '/Resources/views/PageParts/' . $this->entity . '/',
+            $this->getTemplateDir($this->bundle) . '/PageParts/' . $this->entity . '/',
             'view.html.twig',
+            $params,
+            true
+        );
+
+        $this->renderSingleFile(
+            $this->skeletonDir . '/Resources/views/PageParts/' . $this->entity . '/',
+            $this->getTemplateDir($this->bundle) . '/PageParts/' . $this->entity . '/',
+            'admin-view.html.twig',
             $params,
             true
         );
@@ -138,9 +147,13 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generateSectionConfig()
     {
         if (count($this->sections) > 0) {
-            $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
+            $dir = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/' : $this->bundle->getPath() . '/Resources/config/pageparts/';
             foreach ($this->sections as $section) {
-                $data = Yaml::parse(file_get_contents($dir . $section));
+                $data = $originalData = Yaml::parse(file_get_contents($dir . $section));
+                if (array_key_exists('kunstmaan_page_part', $data)) {
+                    $data['types'] = $originalData['kunstmaan_page_part']['pageparts'][substr($section, 0, -4)]['types'];
+                }
+
                 if (!array_key_exists('types', $data)) {
                     $data['types'] = array();
                 }
@@ -154,12 +167,18 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
 
                 if (!$found) {
                     $data['types'][] = array(
-                        'name'  => str_replace('PagePart', '', $this->entity),
-                        'class' => $class
+                        'name' => str_replace('PagePart', '', $this->entity),
+                        'class' => $class,
                     );
                 }
 
-                $ymlData = Yaml::dump($data);
+                if (array_key_exists('kunstmaan_page_part', $originalData)) {
+                    $originalData['kunstmaan_page_part']['pageparts'][substr($section, 0, -4)]['types'] = $data['types'];
+                    $data = $originalData;
+                }
+
+                //Sf4 structure of the config file is nested deeper, increase the level when values are inlined
+                $ymlData = Yaml::dump($data, $this->isSymfony4() ? 5 : 2);
                 file_put_contents($dir . $section, $ymlData);
             }
 

@@ -5,8 +5,7 @@ namespace Kunstmaan\TaggingBundle\Controller;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,9 +38,9 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add", methods={"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
+     *
      * @return array
      */
     public function addAction(Request $request)
@@ -50,8 +49,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_edit", methods={"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      */
     public function editAction(Request $request, $id)
@@ -60,8 +58,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_delete", methods={"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      */
     public function deleteAction(Request $request, $id)
@@ -71,7 +68,7 @@ class TagAdminListController extends AdminListController
 
     /**
      * @Route("/autocomplete.{_format}", name="kunstmaantaggingbundle_admin_tag_autocomplete", defaults={"_format" = "json"})
-     * @Template()
+     * @Template("@KunstmaanTagging/Tags/autocomplete.json.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

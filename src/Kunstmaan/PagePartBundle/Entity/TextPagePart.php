@@ -13,7 +13,6 @@ use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
  */
 class TextPagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -44,7 +43,7 @@ class TextPagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "TextPagePart " . $this->getContent();
+        return 'TextPagePart ' . $this->getContent();
     }
 
     /**
@@ -52,7 +51,7 @@ class TextPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:TextPagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:TextPagePart:view.html.twig';
     }
 
     /**

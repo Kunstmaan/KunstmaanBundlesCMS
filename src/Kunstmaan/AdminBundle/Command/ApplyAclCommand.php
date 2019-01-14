@@ -4,8 +4,6 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +18,6 @@ use Kunstmaan\AdminBundle\Service\AclManager;
  */
 class ApplyAclCommand extends ContainerAwareCommand
 {
-
     /**
      * @var EntityManager
      */
@@ -60,7 +57,7 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         $this->setName('kuma:acl:apply')
              ->setDescription('Apply ACL changeset.')
-             ->setHelp("The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.");
+             ->setHelp('The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.');
     }
 
     /**
@@ -88,11 +85,11 @@ class ApplyAclCommand extends ContainerAwareCommand
             return;
         }
 
-       $this->aclManager->applyAclChangesets();
+        $this->aclManager->applyAclChangesets();
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function isRunning()
     {
@@ -111,5 +108,4 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         return false;
     }
-
 }

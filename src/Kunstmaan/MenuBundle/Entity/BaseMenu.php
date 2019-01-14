@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class BaseMenu
- * @package Kunstmaan\MenuBundle\Entity
  *
  * @ORM\MappedSuperclass()
  */

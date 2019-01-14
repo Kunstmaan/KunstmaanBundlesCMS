@@ -150,7 +150,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:SingleLineTextPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:SingleLineTextPagePart:view.html.twig';
     }
 
     /**
@@ -189,9 +189,9 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
             StringFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);

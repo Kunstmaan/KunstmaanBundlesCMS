@@ -33,7 +33,7 @@ class PageTemplateConfiguration extends AbstractEntity
     /**
      * Get pageId
      *
-     * @return integer
+     * @return int
      */
     public function getPageId()
     {
@@ -41,7 +41,7 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return PageTemplateConfiguration
      */

@@ -2,8 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -12,10 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class ModulesController extends Controller
 {
-
     /**
      * @Route("/", name="KunstmaanAdminBundle_modules")
-     * @Template()
+     * @Template("@KunstmaanAdmin/Modules/index.html.twig")
      *
      * @return array
      */
@@ -23,5 +21,4 @@ class ModulesController extends Controller
     {
         return array();
     }
-
 }

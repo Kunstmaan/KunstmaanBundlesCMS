@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\Repository;
 
-use Doctrine\ORM\Cache\Lock;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 
@@ -11,9 +10,8 @@ use Kunstmaan\AdminListBundle\Entity\LockableEntity;
  */
 class LockableEntityRepository extends EntityRepository
 {
-
     /**
-     * @param integer $id
+     * @param int    $id
      * @param string $class
      *
      * @return LockableEntity
@@ -23,7 +21,7 @@ class LockableEntityRepository extends EntityRepository
         /** @var LockableEntity $lockable */
         $lockable = $this->findOneBy(['entityId' => $id, 'entityClass' => $class]);
 
-        if($lockable === null) {
+        if ($lockable === null) {
             $lockable = new LockableEntity();
             $lockable->setEntityClass($class);
             $lockable->setEntityId($id);

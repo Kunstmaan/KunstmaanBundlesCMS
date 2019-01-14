@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Provider;
 
-
 use Doctrine\ORM\EntityManager;
 
 class NodeTranslation

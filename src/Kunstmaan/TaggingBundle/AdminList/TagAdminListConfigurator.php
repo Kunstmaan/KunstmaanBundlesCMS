@@ -3,7 +3,6 @@
 namespace Kunstmaan\TaggingBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
@@ -11,7 +10,6 @@ use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
@@ -59,5 +57,4 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     {
         return 'Tag';
     }
-
 }

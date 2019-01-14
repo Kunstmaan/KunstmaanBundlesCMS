@@ -9,5 +9,4 @@ use Kunstmaan\VotingBundle\Event\AbstractVoteEvent;
  */
 class FacebookSendEvent extends AbstractVoteEvent
 {
-
 }

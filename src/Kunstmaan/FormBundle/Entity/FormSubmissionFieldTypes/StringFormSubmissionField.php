@@ -14,7 +14,6 @@ use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
  */
 class StringFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="sfsf_value", type="string")
      */
@@ -39,7 +38,7 @@ class StringFormSubmissionField extends FormSubmissionField
     {
         $value = $this->getValue();
 
-        return !empty($value) ? $value : "";
+        return !empty($value) ? $value : '';
     }
 
     /**

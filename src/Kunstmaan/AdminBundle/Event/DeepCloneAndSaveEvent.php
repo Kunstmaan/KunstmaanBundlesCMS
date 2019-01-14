@@ -9,7 +9,6 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class DeepCloneAndSaveEvent extends Event
 {
-
     /**
      * @var mixed
      */
@@ -69,5 +68,4 @@ class DeepCloneAndSaveEvent extends Event
     {
         return $this->entity;
     }
-
 }

@@ -19,11 +19,17 @@ use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 class PageBuilder implements BuilderInterface
 {
     private $manager;
+
     private $userRepo;
+
     private $nodeRepo;
+
     private $nodeTranslationRepo;
+
     private $aclPermissionCreatorService;
+
     private $populator;
+
     private $slugifier;
 
     /**
@@ -248,6 +254,7 @@ class PageBuilder implements BuilderInterface
     /**
      * @param string $parentPageClass
      * @param string $childPageClass
+     *
      * @return bool
      */
     private function canHaveChild($parentPageClass, $childPageClass)

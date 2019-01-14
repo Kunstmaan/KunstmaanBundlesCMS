@@ -103,6 +103,7 @@ class Parser
         }
 
         $fixtures[$value] = $fixture;
+
         return $fixtures;
     }
 

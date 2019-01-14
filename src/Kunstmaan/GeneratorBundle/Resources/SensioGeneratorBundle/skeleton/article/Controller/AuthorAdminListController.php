@@ -6,14 +6,16 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticleAuthorAdminListController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\{{ entity_class }}AuthorAdminListConfigurator;
+{% if isV4 %}
 
 /**
- * The AdminList controller for the {{ entity_class }}Author
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/author", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorAdminListController
 {
     /**
@@ -37,8 +39,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_add", methods={"GET", "POST"})
      * @return array
      */
     public function addAction(Request $request)
@@ -51,8 +52,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_edit", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -66,8 +66,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_delete", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -81,8 +80,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @param $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_export")
-     * @Method({"GET", "POST"})
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author_export", methods={"GET", "POST"})
      *
      * @return array
      */

@@ -9,7 +9,6 @@ use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -95,6 +94,7 @@ interface AdminListConfiguratorInterface
     public function canEdit($item);
 
     public function canView($item);
+
     /**
      * Configure if it's possible to delete the given $item
      *

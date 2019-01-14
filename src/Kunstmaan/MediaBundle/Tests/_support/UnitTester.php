@@ -1,5 +1,5 @@
 <?php
-namespace MediaBundle;
+namespace Kunstmaan\MediaBundle\Tests;
 
 /**
  * Inherited Methods

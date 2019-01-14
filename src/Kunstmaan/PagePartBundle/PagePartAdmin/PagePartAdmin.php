@@ -73,7 +73,7 @@ class PagePartAdmin
     public function __construct(PagePartAdminConfiguratorInterface $configurator, EntityManagerInterface $em, HasPagePartsInterface $page, $context = null, ContainerInterface $container = null)
     {
         if (!($page instanceof EntityInterface)) {
-            throw new \InvalidArgumentException("Page must be an instance of EntityInterface.");
+            throw new \InvalidArgumentException('Page must be an instance of EntityInterface.');
         }
 
         $this->configurator = $configurator;
@@ -127,6 +127,7 @@ class PagePartAdmin
                 ) {
                     $this->pageParts[$pagePartRef->getId()] = $pagePart;
                     unset($pageParts[$key]);
+
                     break;
                 }
             }
@@ -150,7 +151,7 @@ class PagePartAdmin
         $subPagePartsToDelete = array();
         foreach (array_keys($request->request->all()) as $key) {
             // Example value: delete_pagepartadmin_74_tags_3
-            if (preg_match("/^delete_pagepartadmin_(\\d+)_(\\w+)_(\\d+)$/i", $key, $matches)) {
+            if (preg_match('/^delete_pagepartadmin_(\\d+)_(\\w+)_(\\d+)$/i', $key, $matches)) {
                 $subPagePartsToDelete[$matches[1]][] = array('name' => $matches[2], 'id' => $matches[3]);
             }
         }
@@ -210,8 +211,9 @@ class PagePartAdmin
                     $this->pageParts[$sequence] = $this->newPageParts[$sequence];
                 } elseif (array_key_exists($sequence, $tempPageparts)) {
                     $this->pageParts[$sequence] = $tempPageparts[$sequence];
-                } else
+                } else {
                     $this->pageParts[$sequence] = $this->getPagePart($sequence, array_search($sequence, $sequences) + 1);
+                }
             }
 
             unset($tempPageparts);
@@ -256,7 +258,7 @@ class PagePartAdmin
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
         $sequences = $request->get($this->context.'_sequence', []);
         $sequencescount = count($sequences);
-        for ($i = 0; $i < $sequencescount; $i++) {
+        for ($i = 0; $i < $sequencescount; ++$i) {
             $pagePartRefId = $sequences[$i];
 
             if (array_key_exists($pagePartRefId, $this->newPageParts)) {
@@ -265,7 +267,6 @@ class PagePartAdmin
                 $this->em->flush($pagePart);
 
                 $ppRefRepo->addPagePart($this->page, $pagePart, ($i + 1), $this->context, false);
-
             } elseif (array_key_exists($pagePartRefId, $this->pagePartRefs)) {
                 $pagePartRef = $this->pagePartRefs[$pagePartRefId];
                 if ($pagePartRef instanceof PagePartRef && $pagePartRef->getSequencenumber() != ($i + 1)) {
@@ -359,7 +360,7 @@ class PagePartAdmin
             }
         }
 
-        return "no name";
+        return 'no name';
     }
 
     /**
@@ -385,5 +386,4 @@ class PagePartAdmin
     {
         return get_class($pagepart);
     }
-
 }

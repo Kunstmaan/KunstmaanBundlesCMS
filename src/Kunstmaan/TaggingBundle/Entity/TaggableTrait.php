@@ -15,6 +15,7 @@ trait TaggableTrait
      * @var Collection
      */
     private $tags;
+
     /**
      * @var \Closure
      */

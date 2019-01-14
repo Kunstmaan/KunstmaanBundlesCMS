@@ -72,6 +72,8 @@ kuma_form:
         label: Regulärer Ausdruck
       errormessage_regex:
         label: Fehlermeldung Regulärer Ausdruck
+    form_page_part:
+      internal_name: Internal name
     submit_button_page_part:
       label:
         label: Beschriftung

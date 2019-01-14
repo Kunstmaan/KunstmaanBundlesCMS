@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\PageTemplate;
 
 /**
@@ -6,7 +7,6 @@ namespace Kunstmaan\PagePartBundle\PageTemplate;
  */
 class Row
 {
-
     /**
      * @var Region[]
      */

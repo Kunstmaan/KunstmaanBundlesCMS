@@ -1,8 +1,13 @@
-name: "Main"
-context: "main"
+{% if isV4 %}
+kunstmaan_page_part:
+    pageparts:
+        main:
+{% endif %}
+{% if isV4 %}            {%endif%}name: "Main"
+{% if isV4 %}            {%endif%}context: "main"
 {% if demosite %}
-types:
-    - { name: "BikesList", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\BikesListPagePart" }
+{% if isV4 %}            {%endif%}types:
+{% if isV4 %}            {%endif%}    - { name: "BikesList", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\BikesListPagePart" }
 {% else %}
-types: []
+{% if isV4 %}            {%endif%}types: []
 {% endif %}

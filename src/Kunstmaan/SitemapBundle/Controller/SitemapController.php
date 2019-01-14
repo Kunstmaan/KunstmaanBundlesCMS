@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SitemapBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ class SitemapController extends Controller
 
         return array(
             'nodemenu' => $nodeMenu,
-            'locale'   => $locale,
+            'locale' => $locale,
         );
     }
 
@@ -58,7 +58,7 @@ class SitemapController extends Controller
 
         return array(
             'locales' => $locales,
-            'host'    => $request->getSchemeAndHttpHost()
+            'host' => $request->getSchemeAndHttpHost(),
         );
     }
 }

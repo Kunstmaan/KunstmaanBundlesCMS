@@ -28,7 +28,6 @@ class AnalyticsSegmentRepository extends EntityRepository
             ->where('s.id = :id')
             ->setParameter('id', $id);
 
-
         $results = $qb->getQuery()->getResult();
         if ($results) {
             $em->remove($results[0]);
@@ -40,17 +39,17 @@ class AnalyticsSegmentRepository extends EntityRepository
      * Initialise a segment by adding new overviews if they don't exist yet
      *
      * @param AnalyticsSegment $segment
-     * @param int $configId
+     * @param int              $configId
      */
-    public function initSegment($segment, $configId = false) {
+    public function initSegment($segment, $configId = false)
+    {
         if (!count($segment->getOverviews()->toArray())) {
             if ($configId) {
-                $config =$this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+                $config = $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
             } else {
-                $config =$this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+                $config = $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
             }
             $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config, $segment);
         }
     }
-
 }

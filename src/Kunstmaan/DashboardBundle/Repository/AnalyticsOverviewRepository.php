@@ -17,7 +17,7 @@ class AnalyticsOverviewRepository extends EntityRepository
     public function getDefaultOverviews($config = false)
     {
         $em = $this->getEntityManager();
-        $dql = "SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL";
+        $dql = 'SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL';
         if ($config) {
             $dql .= " AND o.config = $config";
         }
@@ -30,7 +30,7 @@ class AnalyticsOverviewRepository extends EntityRepository
     /**
      * Add overviews for a config and optionally a segment
      *
-     * @param AnalyticsConfig $config
+     * @param AnalyticsConfig  $config
      * @param AnalyticsSegment $segment
      */
     public function addOverviews(&$config, &$segment = null)

@@ -1,5 +1,5 @@
 <?php
-namespace VotingBundle;
+namespace Kunstmaan\VotingBundle\Tests;
 
 /**
  * Inherited Methods

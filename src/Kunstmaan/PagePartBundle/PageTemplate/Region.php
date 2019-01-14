@@ -127,7 +127,6 @@ class Region
         return $this;
     }
 
-
     /**
      * @return Row[]
      */
@@ -147,6 +146,4 @@ class Region
 
         return $this;
     }
-
-
 }

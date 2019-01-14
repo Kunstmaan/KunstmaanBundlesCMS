@@ -51,8 +51,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $domainConfiguration;
 
     /**
-     * @param EntityManagerInterface       $em              The entity manager
-     * @param AclNativeHelper              $aclNativeHelper The acl helper
+     * @param EntityManagerInterface       $em                  The entity manager
+     * @param AclNativeHelper              $aclNativeHelper     The acl helper
      * @param PagesConfiguration           $pagesConfiguration
      * @param DomainConfigurationInterface $domainConfiguration
      */
@@ -196,7 +196,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
         }
 
-        return (is_null($this->activeNodeIds) ? [] : $this->activeNodeIds);
+        return is_null($this->activeNodeIds) ? [] : $this->activeNodeIds;
     }
 
     /**

@@ -3,7 +3,7 @@ services:
         class: Kunstmaan\SeoBundle\Twig\SeoTwigExtension
         arguments: ['@doctrine.orm.entity_manager']
         calls:
-            - [setWebsiteTitle, ['%websitetitle%']]
+            - [setWebsiteTitle, ['%kunstmaan_admin.website_title%']]
         tags:
             - { name: twig.extension }
 

@@ -12,13 +12,13 @@ import cookieConsent from './cookieConsent';
 import videolink from './videolink';
 
 {% if demosite %}
-$(function() {
+$(() => {
     cbToggle.init();
     cbScrollToTop.init();
     cbSidebarToggle.init();
 
-    search.init();
-    demoMsg.init();
+    search();
+    demoMsg();
     cookieConsent();
     videolink();
 });

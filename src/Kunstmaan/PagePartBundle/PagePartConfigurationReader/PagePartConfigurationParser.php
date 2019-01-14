@@ -28,14 +28,14 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         $this->presets = $presets;
     }
 
-
     /**
      * This will read the $name file and parse it to the PageTemplate
      *
-     * @param string $name
+     * @param string                               $name
      * @param PagePartAdminConfiguratorInterface[] $existing
      *
      * @return PagePartAdminConfiguratorInterface
+     *
      * @throws \Exception
      */
     public function parse($name, array $existing = [])
@@ -52,13 +52,12 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         }
 
         if (array_key_exists('extends', $value)) {
-
             $namespace = '';
             if (false !== strpos($name, ':')) {
                 $namespace = substr($name, 0, strpos($name, ':') + 1);
             }
 
-            foreach ((array)$value['extends'] as $extend) {
+            foreach ((array) $value['extends'] as $extend) {
                 if (false === strpos($extend, ':')) {
                     $extend = $namespace . $extend;
                 }
@@ -73,12 +72,13 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
 
         $types = [];
         foreach ($value['types'] as $type) {
-            if ("" === (string)$type['class']) {
+            if ('' === (string) $type['class']) {
                 unset($types[$type['name']]);
+
                 continue;
             }
 
-            $types[$type['name']] = ['name' => $type['name'], 'class' => $type['class'], 'preview' => array_key_exists('preview', $type) ? $type['preview'] : ""];
+            $types[$type['name']] = ['name' => $type['name'], 'class' => $type['class'], 'preview' => array_key_exists('preview', $type) ? $type['preview'] : ''];
             if (isset($type['pagelimit'])) {
                 $types[$type['name']]['pagelimit'] = $type['pagelimit'];
             }
@@ -93,7 +93,6 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         if (isset($value['widget_template'])) {
             $result->setWidgetTemplate($value['widget_template']);
         }
-
 
         array_pop($this->stack);
 
@@ -112,11 +111,10 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
                 $name));
         }
 
-        list ($namespace, $name) = $nameParts;
+        list($namespace, $name) = $nameParts;
         $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pageparts/' . $name . '.yml');
         $value = Yaml::parse(file_get_contents($path));
 
         return $value;
-
     }
 }

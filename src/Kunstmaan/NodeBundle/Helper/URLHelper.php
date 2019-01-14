@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Validation\URLValidator;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -47,9 +46,9 @@ class URLHelper
     private $domainConfiguration;
 
     /**
-     * @param EntityManager $em
-     * @param RouterInterface $router
-     * @param LoggerInterface $logger
+     * @param EntityManager                $em
+     * @param RouterInterface              $router
+     * @param LoggerInterface              $logger
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(EntityManager $em, RouterInterface $router, LoggerInterface $logger, DomainConfigurationInterface $domainConfiguration)
@@ -64,6 +63,7 @@ class URLHelper
      * Replace a given text, according to the node translation id and the multidomain site id.
      *
      * @param $text
+     *
      * @return mixed
      */
     public function replaceUrl($text)
@@ -144,12 +144,13 @@ class URLHelper
      * Get a map of all node translations. Only called once for caching.
      *
      * @return array|null
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getNodeTranslationMap()
     {
         if (is_null($this->nodeTranslationMap)) {
-            $sql = "SELECT id, url, lang FROM kuma_node_translations";
+            $sql = 'SELECT id, url, lang FROM kuma_node_translations';
             $stmt = $this->em->getConnection()->prepare($sql);
             $stmt->execute();
             $this->nodeTranslationMap = $stmt->fetchAll();
@@ -162,12 +163,13 @@ class URLHelper
      * Get a map of all media items. Only called once for caching.
      *
      * @return array|null
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getMediaMap()
     {
         if (is_null($this->mediaMap)) {
-            $sql = "SELECT id, url FROM kuma_media";
+            $sql = 'SELECT id, url FROM kuma_media';
             $stmt = $this->em->getConnection()->prepare($sql);
             $stmt->execute();
             $this->mediaMap = $stmt->fetchAll();

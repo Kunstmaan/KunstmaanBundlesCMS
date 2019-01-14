@@ -42,8 +42,8 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl)
     {
-        $this->bundle   = $bundle;
-        $this->rootDir  = $rootDir;
+        $this->bundle = $bundle;
+        $this->rootDir = $rootDir;
         $this->demosite = $demosite;
         $this->browserSyncUrl = $browserSyncUrl;
 
@@ -62,7 +62,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $this->skeletonDir . '/groundcontrol/bin/',
             $this->rootDir . '/groundcontrol/',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl),
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl, 'isV4' => $this->isSymfony4()),
             true
         );
         $this->renderSingleFile(
@@ -104,7 +104,7 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             'gulpfile.babel.js',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'isV4' => $this->isSymfony4()),
             true
         );
         $this->renderSingleFile(
@@ -123,95 +123,89 @@ class LayoutGenerator extends KunstmaanGenerator
     private function generateAssets()
     {
         $sourceDir = $this->skeletonDir;
-        $targetDir = $this->bundle->getPath();
 
         $relPath = '/Resources/ui/';
-        $this->copyFiles($sourceDir . $relPath, $targetDir . $relPath, true);
+        $this->copyFiles($sourceDir . $relPath, $this->getAssetsDir($this->bundle) . '/ui', true);
         $this->renderFiles(
             $sourceDir . $relPath . '/js/',
-            $targetDir . $relPath . '/js/',
+            $this->getAssetsDir($this->bundle) . '/ui/js/',
             array('bundle' => $this->bundle, 'demosite' => $this->demosite),
             true
         );
         $this->renderFiles(
             $sourceDir . $relPath . '/scss/',
-            $targetDir . $relPath . '/scss/',
+            $this->getAssetsDir($this->bundle) . '/ui/scss/',
             array('bundle' => $this->bundle, 'demosite' => $this->demosite),
             true
         );
 
         if (!$this->demosite) {
-
             // Files
-            $this->removeDirectory($targetDir . $relPath . '/files/');
-
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/files/');
 
             // Images
-            $this->removeDirectory($targetDir . $relPath . '/fonts/');
-
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/fonts/');
 
             // JS
-            $this->removeFile($targetDir . $relPath . '/js/search.js');
-            $this->removeFile($targetDir . $relPath . '/js/demoMsg.js');
-
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/js/search.js');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/js/demoMsg.js');
 
             // Images
-            $this->removeDirectory($targetDir . $relPath . '/img/demosite/');
-            $this->removeDirectory($targetDir . $relPath . '/img/buttons/');
-            $this->removeDirectory($targetDir . $relPath . '/img/dummy/');
-            $this->removeDirectory($targetDir . $relPath . '/img/backgrounds/');
-
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/img/demosite/');
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/img/buttons/');
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/img/dummy/');
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/img/backgrounds/');
 
             // SCSS
             // SCSS - Blocks
-            $this->removeFile($targetDir . $relPath . '/scss/components/blocks/_img-icon.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/blocks/_img-icon.scss');
 
             // SCSS - Forms
-            $this->removeFile($targetDir . $relPath . '/scss/components/forms/_form-widget.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/forms/_form-widget.scss');
 
             // SCSS - Structures
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_splash.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/splash.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_submenu.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/submenu.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_blog-item.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/blog-item.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/blog-item-summary.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_search-results.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/search-results.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_breadcrumb-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/breadcrumb.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_header-visual.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/header-visual.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_newsletter.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/newsletter.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_pagination.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/pagination.md');
-            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_demosite-msg.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_splash.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/splash.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_submenu.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/submenu.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_blog-item.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/blog-item.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/blog-item-summary.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_search-results.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/search-results.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_breadcrumb-nav.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/breadcrumb.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_header-visual.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/header-visual.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_newsletter.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/newsletter.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_pagination.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/docs/pagination.md');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/structures/_demosite-msg.scss');
 
             // SCSS - Header
-            $this->removeFile($targetDir . $relPath . '/scss/components/header/_main-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/header/_site-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/header/_language-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/header/_contact-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/header/_search-form.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/header/_main-nav.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/header/_site-nav.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/header/_language-nav.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/header/_contact-nav.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/header/_search-form.scss');
 
             // SCSS - Footer
-            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_social-footer.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/footer/_social-footer.scss');
 
             // SCSS - Pageparts
-            $this->removeFile($targetDir . $relPath . '/scss/components/pageparts/_service-pp.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/components/pageparts/_service-pp.scss');
 
             // SCSS - Config
-            $this->removeFile($targetDir . $relPath . '/scss/config/vendors/_cargobay-imports.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/config/vendors/_cargobay-vars.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/config/vendors/_cargobay-imports.scss');
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/scss/config/vendors/_cargobay-vars.scss');
 
             // SCSS - Mixins
-            $this->removeDirectory($targetDir . $relPath . '/scss/helpers/mixins/');
+            $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/scss/helpers/mixins/');
         }
 
         $relPath = '/Resources/admin/';
-        $this->copyFiles($sourceDir . $relPath, $targetDir . $relPath, true);
+        $this->copyFiles($sourceDir . $relPath, $this->getAssetsDir($this->bundle) . '/admin', true);
 
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
@@ -221,20 +215,18 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     private function generateTemplate()
     {
-        $targetDir = $this->bundle->getPath();
-
         $relPath = '/Resources/views/';
         $this->renderFiles(
             $this->skeletonDir . $relPath,
-            $this->bundle->getPath() . $relPath,
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'shortBundleName' => $this->shortBundleName),
+            $this->getTemplateDir($this->bundle),
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'shortBundleName' => $this->shortBundleName, 'isV4' => $this->isSymfony4()),
             true
         );
 
         if (!$this->demosite) {
             // Layout
-            $this->removeFile($targetDir . $relPath . '/Layout/_mobile-nav.html.twig');
-            $this->removeFile($targetDir . $relPath . '/Layout/_demositemessage.html.twig');
+            $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_mobile-nav.html.twig');
+            $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_demositemessage.html.twig');
         }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');

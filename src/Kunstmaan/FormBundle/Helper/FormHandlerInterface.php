@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Helper;
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface FormHandlerInterface
 {
-
     /**
      * @param FormPageInterface $page    The form page
      * @param Request           $request The request
@@ -21,5 +19,4 @@ interface FormHandlerInterface
      * @return RedirectResponse|void|null
      */
     public function handleForm(FormPageInterface $page, Request $request, RenderContext $context);
-
 }

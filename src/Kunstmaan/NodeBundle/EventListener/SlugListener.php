@@ -8,7 +8,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -45,6 +44,7 @@ class SlugListener
 
     /**
      * @param FilterControllerEvent $event
+     *
      * @throws \Exception
      */
     public function onKernelController(FilterControllerEvent $event)

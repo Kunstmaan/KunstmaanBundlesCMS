@@ -6,24 +6,22 @@ const OPTIONS = {
         alias: 'logStats',
         describe: 'Should stats from bundling be logged?',
         default: false,
-        type: 'boolean'
+        type: 'boolean',
     },
     continueAfterTestError: {
         describe: 'Should the (watch) process continue after a lint/jest error or not?',
         default: false,
-        type: 'boolean'
+        type: 'boolean',
     },
     speedupLocalDevelopment: {
         alias: 'speedupLocalDev',
         describe: 'Should local dev be speeded up, but at cost of slightly different setup vs. the prod build?',
         default: false,
-        type: 'boolean'
-    }
+        type: 'boolean',
+    },
 };
 
-const argv = yargs
-    .options(OPTIONS)
-    .argv;
+const { argv } = yargs.options(OPTIONS);
 
 console.log(getCurrentArgumentsInfo(argv, OPTIONS));
 
@@ -36,11 +34,12 @@ function getCurrentArgumentsInfo(currentArgs, options) {
         .keys(options)
         .reduce(
             (resultInfo, optionKey) => `${resultInfo}- ${getArgumentInfo(optionKey)}`,
-            initialResultInfo
+            initialResultInfo,
         );
 
     function getArgumentInfo(optionKey) {
         const option = options[optionKey];
+        // eslint-disable-next-line max-len
         return `${chalk.bold.green(optionKey)}${getAliasInfo(option)} | ${option.describe} : ${chalk.bold.red(currentArgs[optionKey])}\n`;
     }
 

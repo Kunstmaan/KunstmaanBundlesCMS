@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface FormWidgetInterface
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
      */
@@ -57,5 +57,4 @@ interface FormWidgetInterface
      * @return array
      */
     public function getExtraParams(Request $request);
-
 }

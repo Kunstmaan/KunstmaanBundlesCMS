@@ -4,8 +4,6 @@ namespace Kunstmaan\UserManagementBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 
-use Symfony\Component\Form\AbstractType;
-
 /**
  * Abstract admin list configurator used by the Group, Log, Role and User configurators
  */

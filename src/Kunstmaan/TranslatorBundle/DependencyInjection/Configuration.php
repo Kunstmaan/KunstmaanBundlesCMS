@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
 
                 ->scalarNode('cache_dir')
                     ->cannotBeEmpty()
-                    ->defaultValue("%kernel.cache_dir%/translations")
+                    ->defaultValue('%kernel.cache_dir%/translations')
                 ->end()
 
                 ->booleanNode('debug')

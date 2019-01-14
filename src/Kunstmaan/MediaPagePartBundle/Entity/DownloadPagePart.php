@@ -3,7 +3,6 @@
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
@@ -16,7 +15,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
  */
 class DownloadPagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
@@ -56,7 +54,7 @@ class DownloadPagePart extends AbstractPagePart
             return $this->getMedia()->getUrl();
         }
 
-        return "";
+        return '';
     }
 
     /**
@@ -64,7 +62,7 @@ class DownloadPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig";
+        return 'KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig';
     }
 
     /**

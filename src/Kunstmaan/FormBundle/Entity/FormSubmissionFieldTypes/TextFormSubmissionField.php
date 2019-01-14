@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 
 /**
@@ -15,7 +14,6 @@ use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
  */
 class TextFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="tfsf_value", type="text")
      */
@@ -64,7 +62,6 @@ class TextFormSubmissionField extends FormSubmissionField
     {
         $value = $this->getValue();
 
-        return !empty($value) ? $value : "";
+        return !empty($value) ? $value : '';
     }
-
 }

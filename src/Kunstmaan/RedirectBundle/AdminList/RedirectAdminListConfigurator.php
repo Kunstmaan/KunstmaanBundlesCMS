@@ -17,8 +17,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     private $domainConfiguration;
 
     /**
-     * @param EntityManager $em The entity manager
-     * @param AclHelper $aclHelper The acl helper
+     * @param EntityManager                $em                  The entity manager
+     * @param AclHelper                    $aclHelper           The acl helper
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null, DomainConfigurationInterface $domainConfiguration)
