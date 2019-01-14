@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Class BaseMenuItem
- * @package Kunstmaan\MenuBundle\Entity
  *
  * @ORM\MappedSuperclass()
  */
@@ -34,6 +33,7 @@ abstract class BaseMenuItem extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MenuBundle\Entity\Menu", inversedBy="items")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      * @Assert\NotNull()
+     * @Gedmo\TreeRoot(identifierMethod="getMenu")
      */
     protected $menu;
 
@@ -68,14 +68,14 @@ abstract class BaseMenuItem extends AbstractEntity
     protected $url;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="new_window", type="boolean", nullable=true)
      */
     protected $newWindow;
 
     /**
-     * @var integer
+     * @var int
      *
      * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer")
@@ -83,7 +83,7 @@ abstract class BaseMenuItem extends AbstractEntity
     protected $lft;
 
     /**
-     * @var integer
+     * @var int
      *
      * @Gedmo\TreeLevel
      * @ORM\Column(name="lvl", type="integer")
@@ -91,7 +91,7 @@ abstract class BaseMenuItem extends AbstractEntity
     protected $lvl;
 
     /**
-     * @var integer
+     * @var int
      *
      * @Gedmo\TreeRight
      * @ORM\Column(name="rgt", type="integer")
@@ -199,7 +199,7 @@ abstract class BaseMenuItem extends AbstractEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isNewWindow()
     {
@@ -207,7 +207,7 @@ abstract class BaseMenuItem extends AbstractEntity
     }
 
     /**
-     * @param boolean $newWindow
+     * @param bool $newWindow
      *
      * @return MenuItem
      */

@@ -6,7 +6,7 @@ media:
   media:
     no: Még nincs fájl ebben a könyvtárban.
     dnd:
-      tip: "Tip:"
+      tip: "Típus:"
       tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
       alert:
         title: Érkezik!
@@ -58,16 +58,16 @@ media:
       success:
         text: A `%folder%` mappa üres!
     bulk_move:
-      action: Bulk move media
-      action_short: Bulk move
+      action: Tömeges média áthelyezés
+      action_short: Tömeges áthelyezés
       modal:
-        title: Bulk move media
-        text: Select to which folder you want to move the selected media.
-        save: "Move.."
+        title: Tömeges média áthelyezés
+        text: Válassza ki a mappát, ahová szeretné a kiválasztott file-t áthelyezni.
+        save: "Mozgatás..."
         form:
-          name: Parent folder
+          name: Szülő-mappa
       success:
-        text: Media has been moved successfully!
+        text: Média sikeresen áthelyezve!
     sub:
       no: Még nincsenek almappák
     delete:
@@ -169,5 +169,5 @@ media:
       type:
         label: Típus
   flash:
-    created: Media %medianame% has been created!
-    not_created: Media not created! %mediaerrors%
+    created: A %medianame% file sikeresen létrehozva!
+    not_created: A file nem lett létrehozva! %mediaerrors%

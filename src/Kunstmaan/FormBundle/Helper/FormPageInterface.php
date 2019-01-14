@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Helper;
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -11,7 +10,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 interface FormPageInterface
 {
-
     /**
      * Get the email address of the sender of the administrative email
      *

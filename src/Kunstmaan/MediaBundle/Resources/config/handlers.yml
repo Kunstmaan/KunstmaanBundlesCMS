@@ -47,3 +47,4 @@ services:
             - [ setSlugifier, ['@kunstmaan_utilities.slugifier']]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
+        public: true

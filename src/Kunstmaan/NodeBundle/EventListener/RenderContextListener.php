@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +24,19 @@ class RenderContextListener
      * @param EngineInterface        $templating
      * @param EntityManagerInterface $em
      */
-    public function __construct(EngineInterface $templating, EntityManagerInterface $em)
+    public function __construct(/* EngineInterface|EntityManagerInterface */ $em, EntityManagerInterface $emOld = null)
     {
-        $this->templating = $templating;
-        $this->em         = $em;
+        if ($em instanceof EngineInterface) {
+            // NEXT_MAJOR Also remove the symfony/templating dependency as it is unused after the removal of the templating parameter.
+            @trigger_error(sprintf('Passing a templating engine as the first argument of "%s" is deprecated since KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Remove the template engine service argument.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->templating = $em;
+            $this->em = $emOld;
+
+            return;
+        }
+
+        $this->em = $em;
     }
 
     /**
@@ -47,11 +55,11 @@ class RenderContextListener
             return;
         }
 
-        $nodeTranslation    = $request->attributes->get('_nodeTranslation');
+        $nodeTranslation = $request->attributes->get('_nodeTranslation');
         if ($nodeTranslation) {
-            $entity     = $request->attributes->get('_entity');
-            $url        = $request->attributes->get('url');
-            $nodeMenu   = $request->attributes->get('_nodeMenu');
+            $entity = $request->attributes->get('_entity');
+            $url = $request->attributes->get('url');
+            $nodeMenu = $request->attributes->get('_nodeMenu');
             $parameters = $request->attributes->get('_renderContext');
 
             if ($request->get('preview') === true) {
@@ -66,10 +74,10 @@ class RenderContextListener
 
             $renderContext = array(
                 'nodetranslation' => $nodeTranslation,
-                'slug'            => $url,
-                'page'            => $entity,
-                'resource'        => $entity,
-                'nodemenu'        => $nodeMenu,
+                'slug' => $url,
+                'page' => $entity,
+                'resource' => $entity,
+                'nodemenu' => $nodeMenu,
             );
 
             if (is_array($parameters) || $parameters instanceof \ArrayObject) {

@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class LoginListener
 {
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     private $logger;
 
@@ -26,12 +26,12 @@ class LoginListener
     /**
      * Constructor
      *
-     * @param Logger         $logger         The logger
-     * @param VersionChecker $versionChecker The version checker
+     * @param LoggerInterface $logger         The logger
+     * @param VersionChecker  $versionChecker The version checker
      */
-    public function __construct(Logger $logger, VersionChecker $versionChecker)
+    public function __construct(LoggerInterface $logger, VersionChecker $versionChecker)
     {
-        $this->logger         = $logger;
+        $this->logger = $logger;
         $this->versionChecker = $versionChecker;
     }
 
@@ -46,7 +46,7 @@ class LoginListener
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            $this->logger->addInfo($user . ' successfully logged in to the cms');
+            $this->logger->info($user . ' successfully logged in to the cms');
             $this->versionChecker->periodicallyCheck();
         }
     }

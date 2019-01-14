@@ -27,7 +27,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
         return array(
             $this->getLanguageChooserAction(),
             $this->getChangePasswordAction(),
-            $this->getLogoutAction()
+            $this->getLogoutAction(),
         );
     }
 
@@ -47,8 +47,8 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
 
         return new AdminPanelAction(
             array(
-                'path' => 'KunstmaanAdminBundle_user_change_password',
-                'params' => array('id' => $user->getId())
+                'path' => 'KunstmaanUserManagementBundle_settings_users_edit',
+                'params' => array('id' => $user->getId()),
             ),
             ucfirst($user->getUsername()),
             'user'

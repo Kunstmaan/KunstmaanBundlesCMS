@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
@@ -33,6 +34,7 @@ class PagePartTwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
             new \Twig_SimpleFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
+            new \Twig_SimpleFunction('has_page_parts', [$this, 'hasPageParts']),
         );
     }
 
@@ -45,14 +47,14 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderPageParts(\Twig_Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
+    public function renderPageParts(\Twig_Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = array())
     {
-        $template = $env->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate('KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig');
         /* @var $entityRepository PagePartRefRepository */
         $pageparts = $this->getPageParts($page, $contextName);
         $newTwigContext = array_merge($parameters, array(
             'pageparts' => $pageparts,
-            'page' => $page
+            'page' => $page,
         ));
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 
@@ -65,12 +67,23 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(HasPagePartsInterface $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = 'main')
     {
-        /**@var $entityRepository PagePartRefRepository */
+        /** @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $context);
 
         return $pageparts;
+    }
+
+    /**
+     * @param HasPagePartsInterface $page
+     * @param string                $context
+     *
+     * @return bool
+     */
+    public function hasPageParts(HasPagePartsInterface $page, $context = 'main')
+    {
+        return $this->em->getRepository(PagePartRef::class)->hasPageParts($page, $context);
     }
 }

@@ -14,9 +14,13 @@ use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 
 class NodeAdminPublisher
 {
@@ -46,11 +50,11 @@ class NodeAdminPublisher
     private $cloneHelper;
 
     /**
-     * @param EntityManager                  $em                    The entity manager
-     * @param TokenStorageInterface          $tokenStorage          The security token storage
-     * @param AuthorizationCheckerInterface  $authorizationChecker  The security authorization checker
-     * @param EventDispatcherInterface       $eventDispatcher       The Event dispatcher
-     * @param CloneHelper                    $cloneHelper           The clone helper
+     * @param EntityManager                 $em                   The entity manager
+     * @param TokenStorageInterface         $tokenStorage         The security token storage
+     * @param AuthorizationCheckerInterface $authorizationChecker The security authorization checker
+     * @param EventDispatcherInterface      $eventDispatcher      The Event dispatcher
+     * @param CloneHelper                   $cloneHelper          The clone helper
      */
     public function __construct(
         EntityManager $em,
@@ -59,11 +63,11 @@ class NodeAdminPublisher
         EventDispatcherInterface $eventDispatcher,
         CloneHelper $cloneHelper
     ) {
-        $this->em                   = $em;
-        $this->tokenStorage         = $tokenStorage;
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
-        $this->eventDispatcher      = $eventDispatcher;
-        $this->cloneHelper          = $cloneHelper;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->cloneHelper = $cloneHelper;
     }
 
     /**
@@ -76,7 +80,7 @@ class NodeAdminPublisher
      */
     public function publish(NodeTranslation $nodeTranslation, $user = null)
     {
-        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH,$nodeTranslation->getNode())) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH, $nodeTranslation->getNode())) {
             throw new AccessDeniedException();
         }
 
@@ -90,7 +94,7 @@ class NodeAdminPublisher
         if (!is_null($nodeVersion)) {
             $page = $nodeVersion->getRef($this->em);
             /** @var $nodeVersion NodeVersion */
-            $nodeVersion     = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, $user);
+            $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, $user);
             $nodeTranslation = $nodeVersion->getNodeTranslation();
         } else {
             $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -134,7 +138,7 @@ class NodeAdminPublisher
         //remove existing first
         $this->unSchedulePublish($nodeTranslation);
 
-        $user                        = $this->tokenStorage->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()->getUser();
         $queuedNodeTranslationAction = new QueuedNodeTranslationAction();
         $queuedNodeTranslationAction
             ->setNodeTranslation($nodeTranslation)
@@ -152,13 +156,13 @@ class NodeAdminPublisher
      */
     public function unPublish(NodeTranslation $nodeTranslation)
     {
-        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_UNPUBLISH,$nodeTranslation->getNode())) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $nodeTranslation->getNode())) {
             throw new AccessDeniedException();
         }
 
-        $node        = $nodeTranslation->getNode();
+        $node = $nodeTranslation->getNode();
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page        = $nodeVersion->getRef($this->em);
+        $page = $nodeVersion->getRef($this->em);
 
         $this->eventDispatcher->dispatch(
             Events::PRE_UNPUBLISH,
@@ -192,7 +196,7 @@ class NodeAdminPublisher
 
         //remove existing first
         $this->unSchedulePublish($nodeTranslation);
-        $user                        = $this->tokenStorage->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()->getUser();
         $queuedNodeTranslationAction = new QueuedNodeTranslationAction();
         $queuedNodeTranslationAction
             ->setNodeTranslation($nodeTranslation)
@@ -234,7 +238,7 @@ class NodeAdminPublisher
         NodeVersion $nodeVersion,
         BaseUser $user
     ) {
-        $newPublicPage  = $this->cloneHelper->deepCloneAndSave($page);
+        $newPublicPage = $this->cloneHelper->deepCloneAndSave($page);
         $newNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor(
             $newPublicPage,
             $nodeTranslation,
@@ -262,5 +266,57 @@ class NodeAdminPublisher
         );
 
         return $newNodeVersion;
+    }
+
+    /**
+     * @param Request         $request
+     * @param NodeTranslation $nodeTranslation
+     */
+    public function chooseHowToPublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    {
+        /** @var Session $session */
+        $session = $request->getSession();
+
+        if ($request->request->has('publish_later') && $request->get('pub_date')) {
+            $date = new \DateTime(
+                $request->get('pub_date') . ' ' . $request->get('pub_time')
+            );
+            $this->publishLater($nodeTranslation, $date);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.publish.flash.success_scheduled')
+            );
+        } else {
+            $this->publish($nodeTranslation);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.publish.flash.success_published')
+            );
+        }
+    }
+
+    /**
+     * @param Request         $request
+     * @param NodeTranslation $nodeTranslation
+     */
+    public function chooseHowToUnpublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    {
+        /** @var Session $session */
+        $session = $request->getSession();
+
+        if ($request->request->has('unpublish_later') && $request->get('unpub_date')) {
+            $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
+            $this->unPublishLater($nodeTranslation, $date);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.unpublish.flash.success_scheduled')
+            );
+        } else {
+            $this->unPublish($nodeTranslation);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
+            );
+        }
     }
 }

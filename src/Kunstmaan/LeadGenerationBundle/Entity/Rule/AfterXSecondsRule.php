@@ -54,7 +54,7 @@ class AfterXSecondsRule extends AbstractRule
     public function getJsProperties()
     {
         return array(
-            'seconds' => $this->getSeconds()
+            'seconds' => $this->getSeconds(),
         );
     }
 

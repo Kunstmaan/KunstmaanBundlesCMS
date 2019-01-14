@@ -35,7 +35,7 @@ class RedirectAdminType extends AbstractType
                 'choices' => $domains,
                 'required' => true,
                 'expanded' => false,
-                'multiple' => false
+                'multiple' => false,
             ]);
         } else {
             $host = $options['domainConfiguration']->getHost();
@@ -71,7 +71,7 @@ class RedirectAdminType extends AbstractType
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {

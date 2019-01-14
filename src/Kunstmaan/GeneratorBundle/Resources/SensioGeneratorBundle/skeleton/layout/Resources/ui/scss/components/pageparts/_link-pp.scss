@@ -33,7 +33,7 @@
 /* Icon
    ========================================================================== */
 .link-pp__icon {
-    @extend .icon--arrow-right;
+    @extend %icon--arrow-right;
 
     display: inline-block;
     margin-left: 9px;
@@ -41,7 +41,7 @@
     font-size: 9px;
 
     &:before {
-        @include iconfont-reset;
+        @include iconfont-reset();
     }
 }
 {% endif %}

@@ -11,7 +11,6 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
  */
 class RemoteVideoHandler extends AbstractMediaHandler
 {
-
     /**
      * @var string
      */
@@ -20,6 +19,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      * @var string
      */
     const TYPE = 'video';
+
     /**
      * @var array
      */
@@ -27,6 +27,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
 
     /**
      * Constructor. Takes the configuration of the RemoveVideoHandler
+     *
      * @param array $configuration
      */
     public function __construct($priority, $configuration = array())
@@ -118,15 +119,17 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     } else {
                         $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
                     }
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
+
                 break;
             case 'vimeo':
                 try {
                     $xml = simplexml_load_file('https://vimeo.com/api/v2/video/' . $code . '.xml');
-                    $video->setThumbnailUrl((string)$xml->video->thumbnail_large);
+                    $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
                 } catch (\Exception $e) {
-
                 }
+
                 break;
             case 'dailymotion':
                 try {
@@ -140,8 +143,8 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     }
                     $video->setThumbnailUrl($thumbnailUrl);
                 } catch (\Exception $e) {
-
                 }
+
                 break;
         }
     }
@@ -152,7 +155,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      * @param string $str string
      * @param string $sub substring
      *
-     * @return boolean
+     * @return bool
      */
     private function endsWith($str, $sub)
     {
@@ -174,12 +177,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMedia(Media $media)
     {
-
-
     }
 
     /**
@@ -193,9 +194,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
             'video' => array(
                 'path' => 'KunstmaanMediaBundle_folder_videocreate',
                 'params' => array(
-                    'folderId' => $params['folderId']
-                )
-            )
+                    'folderId' => $params['folderId'],
+                ),
+            ),
         );
     }
 
@@ -221,6 +222,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setCode($code);
                     $result = $video->getMedia();
                     $result->setName('Youtube ' . $code);
+
                     break;
 
                 case 'www.youtube.com':
@@ -233,6 +235,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setCode($code);
                     $result = $video->getMedia();
                     $result->setName('Youtube ' . $code);
+
                     break;
                 case 'www.vimeo.com':
                 case 'vimeo.com':
@@ -243,6 +246,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setCode($code);
                     $result = $video->getMedia();
                     $result->setName('Vimeo ' . $code);
+
                     break;
                 case 'www.dailymotion.com':
                 case 'dailymotion.com':
@@ -253,6 +257,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setCode($code);
                     $result = $video->getMedia();
                     $result->setName('Dailymotion ' . $code);
+
                     break;
             }
         }
@@ -261,7 +266,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -269,7 +274,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media The media entity
+     * @param Media  $media    The media entity
      * @param string $basepath The base path
      *
      * @return string
@@ -289,8 +294,8 @@ class RemoteVideoHandler extends AbstractMediaHandler
         return array(
             RemoteVideoHandler::TYPE => array(
                 'type' => RemoteVideoHandler::TYPE,
-                'name' => 'media.video.add'
-            )
+                'name' => 'media.video.add',
+            ),
         );
     }
 }

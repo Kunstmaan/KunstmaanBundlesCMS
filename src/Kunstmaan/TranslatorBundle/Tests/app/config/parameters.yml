@@ -1,5 +1,0 @@
-parameters:
-    debug_toolbar: false
-    secret: secret
-    multilanguage: false
-    defaultlocale: 'nl'

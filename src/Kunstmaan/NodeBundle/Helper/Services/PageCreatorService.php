@@ -32,7 +32,6 @@ class PageCreatorService
      */
     protected $userEntityClass;
 
-
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
@@ -54,7 +53,7 @@ class PageCreatorService
      * The ContainerAwareInterface has been removed so the container won't be injected automatically.
      * This function is just there for code that calls it manually.
      *
-     * @param ContainerInterface $container A ContainerInterface instance.
+     * @param ContainerInterface $container a ContainerInterface instance
      *
      * @api
      */
@@ -66,32 +65,31 @@ class PageCreatorService
     }
 
     /**
-     * @param HasNodeInterface $pageTypeInstance The page.
+     * @param HasNodeInterface $pageTypeInstance the page
      * @param array            $translations     Containing arrays. Sample:
-     * [
-     *  [   "language" => "nl",
-     *      "callback" => function($page, $translation) {
-     *          $translation->setTitle('NL titel');
-     *      }
-     *  ],
-     *  [   "language" => "fr",
-     *      "callback" => function($page, $translation) {
-     *          $translation->setTitle('FR titel');
-     *      }
-     *  ]
-     * ]
-     * Perhaps it's cleaner when you create one array and append another array for each language.
-     *
+     *                                           [
+     *                                           [   "language" => "nl",
+     *                                           "callback" => function($page, $translation) {
+     *                                           $translation->setTitle('NL titel');
+     *                                           }
+     *                                           ],
+     *                                           [   "language" => "fr",
+     *                                           "callback" => function($page, $translation) {
+     *                                           $translation->setTitle('FR titel');
+     *                                           }
+     *                                           ]
+     *                                           ]
+     *                                           Perhaps it's cleaner when you create one array and append another array for each language.
      * @param array            $options          Possible options:
-     *      parent: type node, nodetransation or page.
-     *      page_internal_name: string. name the page will have in the database.
-     *      set_online: bool. if true the page will be set as online after creation.
-     *      hidden_from_nav: bool. if true the page will not be show in the navigation
-     *      creator: username
+     *                                           parent: type node, nodetransation or page.
+     *                                           page_internal_name: string. name the page will have in the database.
+     *                                           set_online: bool. if true the page will be set as online after creation.
+     *                                           hidden_from_nav: bool. if true the page will not be show in the navigation
+     *                                           creator: username
      *
      * Automatically calls the ACL + sets the slugs to empty when the page is an Abstract node.
      *
-     * @return Node The new node for the page.
+     * @return Node the new node for the page
      *
      * @throws \InvalidArgumentException
      */
@@ -111,7 +109,7 @@ class PageCreatorService
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         /** @var $userRepo UserRepository */
         $userRepo = $em->getRepository($this->userEntityClass);
-        /** @var $seoRepo SeoRepository */
+        /* @var $seoRepo SeoRepository */
         try {
             $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
         } catch (ORMException $e) {
@@ -119,7 +117,7 @@ class PageCreatorService
         }
 
         $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
-        $creator     = $userRepo->findOneBy(array('username' => $pagecreator));
+        $creator = $userRepo->findOneBy(array('username' => $pagecreator));
 
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
@@ -129,7 +127,7 @@ class PageCreatorService
 
         // We need to get the language of the first translation so we can create the rootnode.
         // This will also create a translationnode for that language attached to the rootnode.
-        $first    = true;
+        $first = true;
         $rootNode = null;
 
         /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo*/
@@ -208,5 +206,4 @@ class PageCreatorService
 
         return $rootNode;
     }
-
 }

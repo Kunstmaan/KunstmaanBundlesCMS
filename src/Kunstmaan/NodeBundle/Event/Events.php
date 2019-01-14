@@ -7,7 +7,6 @@ namespace Kunstmaan\NodeBundle\Event;
  */
 class Events
 {
-
     /**
      * The addNode event occurs for a given node, after it's being created.
      *

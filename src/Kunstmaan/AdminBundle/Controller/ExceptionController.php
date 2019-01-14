@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\AdminList\ExceptionAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,7 +14,7 @@ class ExceptionController extends AdminListController
 {
     private function getAdminListConfigurator()
     {
-        if ( !isset($this->configurator) ) {
+        if (!isset($this->configurator)) {
             $this->configurator = new ExceptionAdminListConfigurator($this->getEntityManager());
         }
 
@@ -55,7 +55,7 @@ class ExceptionController extends AdminListController
     /**
      * @Route("/toggle_resolve/{id}", name="kunstmaanadminbundle_admin_exception_toggle_resolve")
      *
-     * @param Request $request
+     * @param Request   $request
      * @param Exception $model
      *
      * @return RedirectResponse
@@ -71,7 +71,7 @@ class ExceptionController extends AdminListController
 
         $this->getAdminListConfigurator();
 
-        $model->setResolved( !$model->isResolved() );
+        $model->setResolved(!$model->isResolved());
 
         $em->persist($model);
         $em->flush();

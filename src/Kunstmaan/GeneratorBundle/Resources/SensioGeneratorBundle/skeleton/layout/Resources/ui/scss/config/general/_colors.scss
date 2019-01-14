@@ -63,7 +63,7 @@ $link-color--hover:     darken($link-color, 15%);
  */
 
 {% if demosite %}
-{% raw %}
+{% verbatim %}
 /**
  * @section Greyscale
  * @sectionof Colors
@@ -85,9 +85,9 @@ $link-color--hover:     darken($link-color, 15%);
 * @color {#053046} Brand primary dark - [Colors.Brand colors]
 * @color {#FF4600} Brand danger - [Colors.Brand colors]
 */
-{% endraw %}
+{% endverbatim %}
 {% else %}
-{% raw %}
+{% verbatim %}
 /**
  * @section Greyscale
  * @sectionof Colors
@@ -104,6 +104,4 @@ $link-color--hover:     darken($link-color, 15%);
 * @color {#053046} Brand primary dark - [Colors.Brand colors]
 * @color {#FF4600} Brand danger - [Colors.Brand colors]
 */
-{% endraw %}
-{% endif %}
-
+{% endverbatim %}{% endif %}

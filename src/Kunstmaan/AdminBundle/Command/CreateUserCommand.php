@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\GroupManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
@@ -14,6 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
  * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
@@ -34,6 +34,9 @@ class CreateUserCommand extends ContainerAwareCommand
 
     /** @var string */
     private $defaultLocale;
+
+    /** @var array */
+    protected $groups = [];
 
     public function __construct(/* EntityManagerInterface */ $em = null, GroupManagerInterface $groupManager = null, $userClassname = null, $defaultLocale = null)
     {
@@ -68,7 +71,7 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:user:create</info> command creates a user:
 
   <info>php bin/console kuma:user:create matthieu --group=Users</info>
@@ -93,10 +96,15 @@ EOT
             );
     }
 
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->groups = $this->getGroups();
+    }
+
     /**
      * Executes the current command.
      *
-     * @param InputInterface $input The input
+     * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
      *
      * @return int
@@ -118,7 +126,7 @@ EOT
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
 
-        if (null !== $locale) {
+        if (null === $locale) {
             $locale = $this->defaultLocale;
         }
         $command = $this->getApplication()->find('fos:user:create');
@@ -138,23 +146,28 @@ EOT
         $user = $this->em->getRepository($this->userClassname)->findOneBy(array('username' => $username));
 
         // Attach groups
-        $groupNames = explode(',', $groupOption);
-        /** @var Group[] $groups */
-        $groups = $this->groupManager->findGroups();
-        $groupOutput = '';
+        $groupOutput = [];
 
-        foreach ($groupNames as $groupName) {
+        foreach (explode(',', $groupOption) as $groupId) {
+            if ((int) $groupId === 0) {
+                foreach ($this->groups as $value) {
+                    if ($groupId === $value->getName()) {
+                        $group = $value;
 
-            if ((int)$groupName !== 0) {
-                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
-                $groupOutput .= $groups[$groupName]->getName() . ', ';
+                        break;
+                    }
+                }
             } else {
-                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
-                $groupOutput .= $groupName . ', ';
+                $group = $this->groups[$groupId];
             }
 
-            if ($group instanceof Group) {
+            if (isset($group) && $group instanceof Group) {
+                $groupOutput[] = $group->getName();
                 $user->getGroups()->add($group);
+            } else {
+                throw new \RuntimeException(
+                    'The selected group(s) can\'t be found.'
+                );
             }
         }
 
@@ -166,26 +179,21 @@ EOT
         $this->em->persist($user);
         $this->em->flush();
 
-        // Remove trailing comma
-        $groupOutput = substr($groupOutput, 0, -2);
-
-        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), $groupOutput));
+        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
     }
 
     /**
      * Interacts with the user.
      *
-     * @param InputInterface $input The input
+     * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
      *
      * @throws \InvalidArgumentException
-     *
-     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         if (!$input->getArgument('username')) {
-            $question = New Question('Please choose a username:');
+            $question = new Question('Please choose a username:');
             $question->setValidator(function ($username) {
                 if (null === $username) {
                     throw new \InvalidArgumentException('Username can not be empty');
@@ -202,7 +210,7 @@ EOT
         }
 
         if (!$input->getArgument('email')) {
-            $question = New Question('Please choose an email:');
+            $question = new Question('Please choose an email:');
             $question->setValidator(function ($email) {
                 if (null === $email) {
                     throw new \InvalidArgumentException('Email can not be empty');
@@ -219,8 +227,7 @@ EOT
         }
 
         if (!$input->getArgument('password')) {
-
-            $question = New Question('Please choose a password:');
+            $question = new Question('Please choose a password:');
             $question->setHidden(true);
             $question->setHiddenFallback(false);
             $question->setValidator(function ($password) {
@@ -248,22 +255,31 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
-        $groups = $this->groupManager->findGroups();
-
         if (!$input->getOption('group')) {
             $question = new ChoiceQuestion(
                 'Please enter the group(s) the user should be a member of (multiple possible, separated by comma):',
-                $groups,
+                $this->groups,
                 ''
             );
             $question->setMultiselect(true);
-            $question->setValidator(function ($groups) {
-                if ($groups === '') {
+            $question->setValidator(function ($groupsInput) {
+                if (!$this->groups) {
+                    throw new \RuntimeException('No user group(s) could be found');
+                }
+
+                // Validate that the chosen group options exist in the available groups
+                $groupNames = array_unique(explode(',', $groupsInput));
+                if (count(array_intersect_key(array_flip($groupNames), $this->groups)) !== count($groupNames)) {
+                    throw new InvalidArgumentException('You have chosen non existing group(s)');
+                }
+
+                if ($groupsInput === '') {
                     throw new \RuntimeException(
                         'Group(s) must be of type integer and can not be empty'
                     );
                 }
-                return $groups;
+
+                return $groupsInput;
             });
 
             // Group has to be imploded because $input->setOption expects a string
@@ -271,5 +287,18 @@ EOT
 
             $input->setOption('group', $groups);
         }
+    }
+
+    private function getGroups()
+    {
+        $groups = $this->groupManager->findGroups();
+
+        // reindexing the array, using the db id as the key
+        $newGroups = [];
+        foreach ($groups as $group) {
+            $newGroups[$group->getId()] = $group;
+        }
+
+        return $newGroups;
     }
 }

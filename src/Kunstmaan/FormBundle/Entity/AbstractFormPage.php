@@ -5,15 +5,11 @@ namespace Kunstmaan\FormBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
-
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -167,7 +163,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
         return $router->generate('_slug', array(
             'url' => $context['slug'],
             '_locale' => $nodeTranslation->getLang(),
-            'thanks' => true
+            'thanks' => true,
         ));
     }
 
@@ -186,7 +182,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      */
     public function getFormElementsContext()
     {
-        return "main";
+        return 'main';
     }
 
     /**
@@ -196,5 +192,4 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     {
         return 'KunstmaanFormBundle:AbstractFormPage:service';
     }
-
 }

@@ -2,7 +2,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.app = (function($, window, undefined) {
 
-    var init, appScroll,
+    var init, appScroll, initModules,
         $mainActions = $('#page-main-actions-top');
 
 
@@ -21,12 +21,11 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.sortableTable.init();
         kunstmaanbundles.checkIfEdited.init();
         kunstmaanbundles.preventDoubleClick.init();
-        kunstmaanbundles.datepicker.init();
         kunstmaanbundles.autoCollapseButtons.init();
         kunstmaanbundles.autoCollapseTabs.init();
-        kunstmaanbundles.richEditor.init();
         kunstmaanbundles.ajaxModal.init();
-        kunstmaanbundles.advancedSelect.init();
+
+        initModules();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();
@@ -36,9 +35,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.mediaChooser.init();
         kunstmaanbundles.iconChooser.init();
         kunstmaanbundles.bulkActions.init();
-        kunstmaanbundles.nestedForm.init();
         kunstmaanbundles.appLoading.init();
-        kunstmaanbundles.tooltip.init();
         kunstmaanbundles.colorpicker.init();
         kunstmaanbundles.charactersLeft.init();
         kunstmaanbundles.rangeslider.init();
@@ -47,6 +44,20 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.appEntityVersionLock.init();
     };
 
+    initModules = function() {
+        // Init new rich editors
+        kunstmaanbundles.richEditor.init();
+        // Init new nested forms
+        kunstmaanbundles.nestedForm.init();
+        // Init new selects.
+        kunstmaanbundles.advancedSelect.init();
+        // Init new tooltips
+        kunstmaanbundles.tooltip.init();
+        // Init new colorpickers
+        kunstmaanbundles.colorpicker.init();
+        // Init new datepickers
+        kunstmaanbundles.datepicker.reInit();
+    };
 
     // On Scroll
     appScroll = function() {
@@ -83,7 +94,8 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
 
     return {
-        init: init
+        init: init,
+        initModules: initModules
     };
 
 })(jQuery, window);

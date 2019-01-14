@@ -33,7 +33,6 @@ class MultiDomainTwigExtension extends \Twig_Extension
 
     /**
      * @param $key
-     * @return null
      */
     public function getExtraData($key)
     {

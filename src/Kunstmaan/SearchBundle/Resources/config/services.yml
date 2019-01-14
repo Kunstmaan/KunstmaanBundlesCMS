@@ -1,6 +1,8 @@
 parameters:
     kunstmaan_search.hostname: 'localhost'
     kunstmaan_search.port: 9200
+    kunstmaan_search.username: null
+    kunstmaan_search.password: null
     kunstmaan_search.search_provider: 'Elastica'
     kunstmaan_search.search_configuration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
     kunstmaan_search.search_provider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
@@ -29,7 +31,7 @@ services:
     kunstmaan_search.search_provider.elastica:
         class: '%kunstmaan_search.search_provider.elastica.class%'
         calls:
-            - [ addNode, ['%kunstmaan_search.hostname%', '%kunstmaan_search.port%'] ]
+            - [ addNode, ['%kunstmaan_search.hostname%', '%kunstmaan_search.port%', '%kunstmaan_search.username%', '%kunstmaan_search.password%'] ]
         tags:
             - { name: kunstmaan_search.search_provider, alias: Elastica }
 

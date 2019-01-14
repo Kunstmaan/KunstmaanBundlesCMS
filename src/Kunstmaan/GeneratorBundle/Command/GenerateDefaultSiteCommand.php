@@ -33,7 +33,7 @@ class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
     protected function configure()
     {
         $this
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
 
 <info>php bin/console kuma:generate:default-site --namespace=Namespace/NamedBundle</info>
@@ -74,12 +74,12 @@ EOT
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('layout', $bundleNamespace);
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
-        /**
+        /*
          * If we need to generate a full site, or only the basic structure
          */
         $this->demosite = $this->assistant->getOption('demosite');
@@ -89,11 +89,11 @@ EOT
         // First we generate the layout if it is not yet generated
         $command = $this->getApplication()->find('kuma:generate:layout');
         $arguments = array(
-            'command'      => 'kuma:generate:layout',
-            '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-            '--demosite'   => $this->demosite,
+            'command' => 'kuma:generate:layout',
+            '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
+            '--demosite' => $this->demosite,
             '--browsersync' => $browserSyncUrl,
-            '--subcommand' => true
+            '--subcommand' => true,
         );
         $input = new ArrayInput($arguments);
         $command->run($input, $this->assistant->getOutput());
@@ -104,11 +104,11 @@ EOT
         // Generate the default pageparts
         $command = $this->getApplication()->find('kuma:generate:default-pageparts');
         $arguments = array(
-            'command'      => 'kuma:generate:default-pageparts',
-            '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-            '--prefix'     => $this->prefix,
-            '--contexts'   => 'main',
-            '--quiet'      => true
+            'command' => 'kuma:generate:default-pageparts',
+            '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
+            '--prefix' => $this->prefix,
+            '--contexts' => 'main',
+            '--quiet' => true,
         );
         $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
         $input = new ArrayInput($arguments);
@@ -120,14 +120,14 @@ EOT
             $command = $this->getApplication()->find('kuma:generate:article');
             $pages = $this->assistant->getOptionOrDefault('articleoverviewpageparent', null);
             $arguments = array(
-                'command'           => 'kuma:generate:article',
-                '--namespace'       => str_replace('\\', '/', $this->bundle->getNamespace()),
-                '--prefix'          => $this->prefix,
-                '--entity'          => 'Blog',
-                '--with-author'     => true,
-                '--with-category'   => true,
-                '--with-tag'        => true,
-                '--dummydata'       => true,
+                'command' => 'kuma:generate:article',
+                '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
+                '--prefix' => $this->prefix,
+                '--entity' => 'Blog',
+                '--with-author' => true,
+                '--with-category' => true,
+                '--with-tag' => true,
+                '--dummydata' => true,
                 '--articleoverviewpageparent' => $pages,
             );
             $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_NORMAL);

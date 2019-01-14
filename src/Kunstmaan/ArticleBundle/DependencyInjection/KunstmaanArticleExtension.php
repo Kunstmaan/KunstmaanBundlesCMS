@@ -15,7 +15,7 @@ use Symfony\Component\Config\FileLocator;
 class KunstmaanArticleExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

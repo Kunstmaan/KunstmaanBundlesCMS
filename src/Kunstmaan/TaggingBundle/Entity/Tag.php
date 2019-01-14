@@ -7,7 +7,6 @@ use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -17,7 +16,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Tag extends BaseTag implements Translatable
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -166,5 +164,4 @@ class Tag extends BaseTag implements Translatable
     {
         return $this->getName();
     }
-
 }

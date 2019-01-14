@@ -47,7 +47,7 @@ class VersionChecker
      * Constructor
      *
      * @param ContainerInterface $container
-     * @param Cache $cache
+     * @param Cache              $cache
      */
     public function __construct(ContainerInterface $container, Cache $cache)
     {
@@ -70,6 +70,8 @@ class VersionChecker
     }
 
     /**
+     * Check if we recently did a version check, if not do one now.
+     *
      * @throws ParseException
      */
     public function periodicallyCheck()
@@ -85,7 +87,10 @@ class VersionChecker
     }
 
     /**
-     * @return bool|mixed|void
+     * Get the version details via webservice.
+     *
+     * @return mixed a list of bundles if available
+     *
      * @throws ParseException
      */
     public function check()
@@ -104,7 +109,7 @@ class VersionChecker
             'host' => $host,
             'installed' => $installed,
             'bundles' => $bundles,
-            'project' => $title
+            'project' => $title,
         ));
 
         try {
@@ -165,6 +170,7 @@ class VersionChecker
      * Returns a list of composer packages.
      *
      * @return array
+     *
      * @throws ParseException
      */
     protected function getPackages()
@@ -198,6 +204,7 @@ class VersionChecker
      * Parse the composer.lock file to get the currently used versions of the kunstmaan bundles.
      *
      * @return array
+     *
      * @throws ParseException
      */
     protected function parseComposer()
@@ -208,7 +215,7 @@ class VersionChecker
                 $bundles[] = array(
                     'name' => $package['name'],
                     'version' => $package['version'],
-                    'reference' => $package['source']['reference']
+                    'reference' => $package['source']['reference'],
                 );
             }
         }

@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ChoicePagePartAdminType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options

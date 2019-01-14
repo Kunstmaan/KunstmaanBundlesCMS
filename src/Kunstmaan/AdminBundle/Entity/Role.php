@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Role extends BaseRole
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")

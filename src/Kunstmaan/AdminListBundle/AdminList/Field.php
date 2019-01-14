@@ -9,7 +9,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 class Field
 {
-
     /**
      * @var string
      */
@@ -36,11 +35,11 @@ class Field
     private $alias;
 
     /**
-     * @param string $name The name
-     * @param string $header The header
-     * @param bool $sort Sort or not
-     * @param string $template The template
-     * @param FieldAlias $alias The alias
+     * @param string     $name     The name
+     * @param string     $header   The header
+     * @param bool       $sort     Sort or not
+     * @param string     $template The template
+     * @param FieldAlias $alias    The alias
      */
     public function __construct($name, $header, $sort = false, $template = null, FieldAlias $alias = null)
     {

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\ArticleBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -15,8 +14,8 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     /**
-     * @param EntityManagerInterface $em         The entity manager
-     * @param AclHelper     $aclHelper  The ACL helper
+     * @param EntityManagerInterface $em        The entity manager
+     * @param AclHelper              $aclHelper The ACL helper
      */
     public function __construct(EntityManagerInterface $em, AclHelper $aclHelper)
     {
@@ -30,7 +29,7 @@ class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminLi
      */
     public function getBundleName()
     {
-        return "KunstmaanArticleBundle";
+        return 'KunstmaanArticleBundle';
     }
 
     /**
@@ -40,7 +39,7 @@ class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminLi
      */
     public function getEntityName()
     {
-        return "AbstractArticleTag";
+        return 'AbstractArticleTag';
     }
 
     /**
@@ -58,7 +57,6 @@ class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         $this->addField('name', 'article.tag.list.header.name', true);
     }
-
 
     /**
      * @param QueryBuilder $queryBuilder

@@ -5,8 +5,6 @@ namespace Kunstmaan\AdminBundle\Twig;
 use Twig_Environment;
 use Twig_Extension;
 
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
-
 /**
  * Extension to render blocks of twig templates
  */
@@ -20,7 +18,7 @@ class ToolbarTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('block_render', array($this, 'renderBlock'), array('needs_environment' => true, 'is_safe' => array('html')))
+            new \Twig_SimpleFunction('block_render', array($this, 'renderBlock'), array('needs_environment' => true, 'is_safe' => array('html'))),
         );
     }
 
@@ -29,6 +27,7 @@ class ToolbarTwigExtension extends Twig_Extension
      * @param $template
      * @param $block
      * @param $context
+     *
      * @return string
      */
     public function renderBlock(Twig_Environment $env, $template, $block, $context)
@@ -46,5 +45,4 @@ class ToolbarTwigExtension extends Twig_Extension
     {
         return 'toolbar_twig_extension';
     }
-
 }

@@ -46,7 +46,7 @@ class GenerateEntityCommand extends KunstmaanGenerateCommand
             ->setDescription('Generates a new Doctrine entity inside a bundle')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('with-repository', null, InputOption::VALUE_NONE, 'Whether to generate the entity repository or not (y/n)')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:entity</info> task generates a new entity inside a bundle:
 
 <info>php app/console kuma:generate:entity</info>
@@ -97,7 +97,7 @@ EOT
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the entity:',
             '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>'
+            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
         ));
     }
 
@@ -108,17 +108,17 @@ EOT
     {
         $this->assistant->writeLine(array("This command helps you to generate a new entity.\n"));
 
-        /**
+        /*
          * Ask for which bundle we need to create the pagepart
          */
         $this->bundle = $this->askForBundleName('entity');
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
-        /**
+        /*
          * Ask the name of the pagepart
          */
         $this->assistant->writeLine(array(
@@ -132,7 +132,7 @@ EOT
             'Entity name',
             function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
-                if ($generator->isReservedKeyword($name)){
+                if ($generator->isReservedKeyword($name)) {
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                 }
 
@@ -150,7 +150,7 @@ EOT
         );
         $this->entityName = $name;
 
-        /**
+        /*
          * Ask which fields need to be present
          */
         $this->assistant->writeLine(array("\nInstead of starting with a blank entity, you can add some fields now.\n"));
@@ -160,20 +160,23 @@ EOT
                 case 'image':
                     return $this->getEntityFields($this->bundle, $this->entityName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
                         $fieldInfo['extra'], true, $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes']);
+
                     break;
 
                 case 'media':
                     return $this->getEntityFields($this->bundle, $this->entityName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
                         $fieldInfo['extra'], true, null, null, null, null, $fieldInfo['mimeTypes']);
+
                     break;
 
                 default:
                     return $this->getEntityFields($this->bundle, $this->entityName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
+
                     break;
             }
         }, $fields);
 
-        /**
+        /*
          * Ask if a repository class needs to be generated
          */
         $this->withRepository = $this->askForWithRepository();
@@ -186,10 +189,10 @@ EOT
     {
         $withRepositoryOption = $this->assistant->getOption('with-repository');
         if ($withRepositoryOption != 'y' && $withRepositoryOption != 'n') {
-            /** @var  $question */
+            /** @var $question */
             $withRepositoryOption = $this->assistant->askConfirmation("\nDo you want to generate a repository class for the entity ? (y/n)\n", '', '?', false);
         }
+
         return $withRepositoryOption == 'y';
     }
-
 }

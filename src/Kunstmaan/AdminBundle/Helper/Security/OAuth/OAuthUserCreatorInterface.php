@@ -19,6 +19,6 @@ interface OAuthUserCreatorInterface
      * @param string googleId
      *
      * @return mixed AbstractUser Implementation
-    */
+     */
     public function getOrCreateUser($email, $googleId);
 }

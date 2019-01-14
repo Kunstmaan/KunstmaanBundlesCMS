@@ -49,7 +49,7 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     public function renderWidget(\Twig_Environment $env, $locales, $route, array $parameters = array())
     {
         $template = $env->loadTemplate(
-            "KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig"
+            'KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig'
         );
 
         return $template->render(
@@ -57,7 +57,7 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
                 $parameters,
                 array(
                     'locales' => $locales,
-                    'route' => $route
+                    'route' => $route,
                 )
             )
         );

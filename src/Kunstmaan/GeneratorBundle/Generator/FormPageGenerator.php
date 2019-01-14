@@ -3,7 +3,6 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -47,21 +46,26 @@ class FormPageGenerator extends KunstmaanGenerator
     private $parentPages;
 
     /**
+     * @var bool
+     */
+    private $generateFormPageParts;
+
+    /**
      * @var string
      */
     protected $skeletonDir;
 
-
     /**
      * Generate the formpage.
      *
-     * @param BundleInterface $bundle      The bundle
-     * @param string          $entity      The entity name
-     * @param string          $prefix      The database prefix
-     * @param array           $fields      The fields
-     * @param string          $template    The page template
-     * @param array           $sections    The page sections
-     * @param array           $parentPages The parent pages
+     * @param BundleInterface $bundle                The bundle
+     * @param string          $entity                The entity name
+     * @param string          $prefix                The database prefix
+     * @param array           $fields                The fields
+     * @param string          $template              The page template
+     * @param array           $sections              The page sections
+     * @param array           $parentPages           The parent pages
+     * @param bool            $generateFormPageParts Boolean to check if form pageparts need to be generated
      *
      * @throws \RuntimeException
      */
@@ -72,16 +76,18 @@ class FormPageGenerator extends KunstmaanGenerator
         array $fields,
         $template,
         array $sections,
-        array $parentPages
+        array $parentPages,
+        $generateFormPageParts
     ) {
-        $this->bundle      = $bundle;
-        $this->entity      = $entity;
-        $this->prefix      = $prefix;
-        $this->fields      = $fields;
-        $this->template    = $template;
-        $this->sections    = $sections;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
+        $this->fields = $fields;
+        $this->template = $template;
+        $this->sections = $sections;
         $this->parentPages = $parentPages;
         $this->skeletonDir = __DIR__.'/../Resources/SensioGeneratorBundle/skeleton/formpage';
+        $this->generateFormPageParts = $generateFormPageParts;
 
         $this->generatePageEntity();
         $this->generatePageFormType();
@@ -106,7 +112,7 @@ class FormPageGenerator extends KunstmaanGenerator
         );
 
         // Add implements HasPageTemplateInterface
-        $search     = 'extends \Kunstmaan\FormBundle\Entity\AbstractFormPage';
+        $search = 'extends \Kunstmaan\FormBundle\Entity\AbstractFormPage';
         $entityCode = str_replace(
             $search,
             $search . ' implements \Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface',
@@ -114,13 +120,13 @@ class FormPageGenerator extends KunstmaanGenerator
         );
 
         // Add extra configuration to the generated entity (for templates, etc)
-        $params    = array(
-            'bundle'    => $this->bundle->getName(),
-            'page'      => $this->entity,
-            'template'  => $this->template,
-            'sections'  => $this->sections,
+        $params = array(
+            'bundle' => $this->bundle->getName(),
+            'page' => $this->entity,
+            'template' => $this->template,
+            'sections' => $this->sections,
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\Pages\\' . $this->entity . 'AdminType',
-            'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity
+            'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity,
         );
 
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);
@@ -132,8 +138,8 @@ class FormPageGenerator extends KunstmaanGenerator
             $extraCode
         );
 
-        $pos        = strrpos($entityCode, '}');
-        $trimmed    = substr($entityCode, 0, $pos);
+        $pos = strrpos($entityCode, '}');
+        $trimmed = substr($entityCode, 0, $pos);
         $entityCode = $trimmed . $extraCode . "\n}";
 
         // Write class to filesystem
@@ -178,7 +184,7 @@ class FormPageGenerator extends KunstmaanGenerator
         $dirPath = $this->bundle->getPath();
         $this->filesystem->copy($this->skeletonDir . '/Resources/views/Pages/FormPage/view.html.twig', $dirPath . '/Resources/views/Pages/'.$this->entity.'/view.html.twig', true);
         $this->filesystem->copy($this->skeletonDir . '/Resources/views/Pages/FormPage/pagetemplate.html.twig', $dirPath . '/Resources/views/Pages/'.$this->entity.'/pagetemplate.html.twig', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $this->bundle->getName(), $dirPath . '/Resources/views/Pages/'.$this->entity.'/pagetemplate.html.twig');
+        GeneratorUtils::replace('~~~BUNDLE~~~', $this->bundle->getName(), $dirPath . '/Resources/views/Pages/'.$this->entity.'/pagetemplate.html.twig');
 
         GeneratorUtils::prepend("{% extends '" . $this->bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/'.$this->entity.'/view.html.twig');
     }
@@ -189,14 +195,16 @@ class FormPageGenerator extends KunstmaanGenerator
     private function copyTemplateConfig()
     {
         $dirPath = $this->bundle->getPath();
-        $pagepartFile = $dirPath . '/Resources/config/pageparts/'.$this->template.'.yml';
-        $this->filesystem->copy($this->skeletonDir .'/Resources/config/pageparts/formpage.yml', $pagepartFile, false);
-        GeneratorUtils::replace("~~~ENTITY~~~", $this->entity, $pagepartFile);
+        $pagepartFile = $dirPath.'/Resources/config/pageparts/'.$this->template.'.yml';
+        $namespace = $this->generateFormPageParts ? $this->bundle->getNamespace() : 'Kunstmaan\FormBundle';
+        $this->filesystem->copy($this->skeletonDir.'/Resources/config/pageparts/formpage.yml', $pagepartFile, false);
+        GeneratorUtils::replace('~~~ENTITY~~~', $this->entity, $pagepartFile);
+        GeneratorUtils::replace('~~~FORM_BUNDLE~~~', $namespace, $pagepartFile);
 
-        $pagetemplateFile = $dirPath . '/Resources/config/pagetemplates/'.$this->template.'.yml';
-        $this->filesystem->copy($this->skeletonDir .'/Resources/config/pagetemplates/formpage.yml', $pagetemplateFile, false);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $this->bundle->getName(), $pagetemplateFile);
-        GeneratorUtils::replace("~~~ENTITY~~~", $this->entity, $pagetemplateFile);
+        $pagetemplateFile = $dirPath.'/Resources/config/pagetemplates/'.$this->template.'.yml';
+        $this->filesystem->copy($this->skeletonDir.'/Resources/config/pagetemplates/formpage.yml', $pagetemplateFile, false);
+        GeneratorUtils::replace('~~~BUNDLE~~~', $this->bundle->getName(), $pagetemplateFile);
+        GeneratorUtils::replace('~~~ENTITY~~~', $this->entity, $pagetemplateFile);
     }
 
     /**
@@ -208,8 +216,8 @@ class FormPageGenerator extends KunstmaanGenerator
         $phpCode .= "                'name' => '" . $this->entity . "',\n";
         $phpCode .= "                'class'=> '" .
             $this->bundle->getNamespace() .
-            "\\Entity\\Pages\\" . $this->entity . "'\n";
-        $phpCode .= "            ),";
+            '\\Entity\\Pages\\' . $this->entity . "'\n";
+        $phpCode .= '            ),';
 
         // When there is a BehatTestPage, we should also allow the new page as sub page
         $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';

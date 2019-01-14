@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanAdminListExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -34,13 +34,12 @@ class KunstmaanAdminListExtension extends Extension implements PrependExtensionI
 
     public function prepend(ContainerBuilder $container)
     {
-
         $parameterName = 'datePicker_startDate';
 
         $config = array();
         $config['globals'][$parameterName] = '01/01/1970';
 
-        if($container->hasParameter($parameterName)) {
+        if ($container->hasParameter($parameterName)) {
             $config['globals'][$parameterName] = $container->getParameter($parameterName);
         }
 

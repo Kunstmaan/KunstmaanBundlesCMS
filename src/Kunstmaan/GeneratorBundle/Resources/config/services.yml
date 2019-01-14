@@ -1,0 +1,20 @@
+services:
+    Kunstmaan\GeneratorBundle\Command\GenerateEntityCommand:
+        tags:
+          - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateLayoutCommand:
+        tags:
+          - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateDefaultSiteCommand:
+        tags:
+          - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateDefaultPagePartsCommand:
+        tags:
+          - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateArticleCommand:
+        tags:
+          - { name: console.command }

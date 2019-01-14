@@ -22,7 +22,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class SlugController extends Controller
 {
-
     /**
      * Handle the page requests
      *
@@ -38,7 +37,7 @@ class SlugController extends Controller
     public function slugAction(Request $request, $url = null, $preview = false)
     {
         /* @var EntityManager $em */
-        $em     = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
 
         /* @var NodeTranslation $nodeTranslation */
@@ -55,7 +54,7 @@ class SlugController extends Controller
             $em,
             $nodeTranslation
         );
-        $node   = $nodeTranslation->getNode();
+        $node = $nodeTranslation->getNode();
 
         $securityEvent = new SlugSecurityEvent();
         $securityEvent
@@ -76,14 +75,14 @@ class SlugController extends Controller
         $renderContext = new RenderContext(
             array(
                 'nodetranslation' => $nodeTranslation,
-                'slug'            => $url,
-                'page'            => $entity,
-                'resource'        => $entity,
-                'nodemenu'        => $nodeMenu,
+                'slug' => $url,
+                'page' => $entity,
+                'resource' => $entity,
+                'nodemenu' => $nodeMenu,
             )
         );
         if (method_exists($entity, 'getDefaultView')) {
-            /** @noinspection PhpUndefinedMethodInspection */
+            /* @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($entity->getDefaultView());
         }
         $preEvent = new SlugEvent(null, $renderContext);
@@ -96,7 +95,7 @@ class SlugController extends Controller
         $postEvent = new SlugEvent($response, $renderContext);
         $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
 
-        $response      = $postEvent->getResponse();
+        $response = $postEvent->getResponse();
         $renderContext = $postEvent->getRenderContext();
 
         if ($response instanceof Response) {
@@ -105,7 +104,7 @@ class SlugController extends Controller
 
         $view = $renderContext->getView();
         if (empty($view)) {
-            throw $this->createNotFoundException('No page found for slug ' . $url);
+            throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', get_class($entity)));
         }
 
         $template = new Template(array());
@@ -118,7 +117,7 @@ class SlugController extends Controller
 
     /**
      * @param Request                $request
-     * @param boolean                $preview
+     * @param bool                   $preview
      * @param EntityManagerInterface $em
      * @param NodeTranslation        $nodeTranslation
      *

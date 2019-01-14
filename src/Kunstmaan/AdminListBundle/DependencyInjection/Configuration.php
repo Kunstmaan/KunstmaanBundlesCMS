@@ -13,14 +13,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $root = $treeBuilder->root('kunstmaan_k_admin_list');
 
-        /** @var ArrayNodeDefinition $pages */
+        /* @var ArrayNodeDefinition $pages */
         $root
             ->children()
                 ->arrayNode('lock')

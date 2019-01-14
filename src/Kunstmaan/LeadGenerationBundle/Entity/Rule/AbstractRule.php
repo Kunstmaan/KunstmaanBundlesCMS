@@ -29,7 +29,7 @@ abstract class AbstractRule
     protected $popup;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -46,6 +46,7 @@ abstract class AbstractRule
 
     /**
      * @param AbstractPopup $popup
+     *
      * @return AbstractRule
      */
     public function setPopup(AbstractPopup $popup)

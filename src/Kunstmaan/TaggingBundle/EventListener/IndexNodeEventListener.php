@@ -6,7 +6,6 @@ use DoctrineExtensions\Taggable\Taggable;
 
 class IndexNodeEventListener
 {
-
     public function onIndexNode($event)
     {
         $page = $event->getPage();
@@ -18,5 +17,4 @@ class IndexNodeEventListener
             $event->doc['tags'] = $tags;
         }
     }
-
 }

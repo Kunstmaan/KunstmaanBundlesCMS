@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateSearchPageCommand extends GenerateDoctrineCommand
 {
-
     /**
      * @see Command
      */
@@ -26,11 +25,11 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
                 array(
                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the SearchPage in'),
                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
-                    new InputOption('createpage', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database with a search page')
+                    new InputOption('createpage', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database with a search page'),
                 )
             )
             ->setDescription('Generates a SearchPage based on KunstmaanNodeSearchBundle')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:searchpage</info> command generates a SearchPage using the KunstmaanNodeSearchBundle and KunstmaanSearchBundle
 
 <info>php bin/console kuma:generate:searchpage --namespace=Namespace/NamedBundle</info>
@@ -72,13 +71,13 @@ EOT
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
-        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $prefix, $rootDir, $createPage, $output);
 
         $output->writeln(array(
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>')
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', )
         );
 
         if ($createPage) {

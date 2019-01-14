@@ -4,12 +4,10 @@ namespace Kunstmaan\TaggingBundle\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TaggingBundle\Entity\TagManager;
-
 use Symfony\Component\Form\DataTransformerInterface;
 
 class TagsTransformer implements DataTransformerInterface
 {
-
     protected $tagManager;
 
     public function __construct(TagManager $tagManager)
@@ -87,7 +85,7 @@ class TagsTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        $result =  new ArrayCollection();
+        $result = new ArrayCollection();
         $manager = $this->tagManager;
 
         foreach ($value as $tagId) {

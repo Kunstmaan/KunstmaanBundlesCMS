@@ -11,7 +11,6 @@ class AbstractFormPageController extends Controller
 {
     /**
      * @param Request $request
-     * @return null
      */
     public function serviceAction(Request $request)
     {
@@ -19,9 +18,9 @@ class AbstractFormPageController extends Controller
         $entity = $request->attributes->get('_entity');
         $context = array(
             'nodetranslation' => $request->attributes->get('_nodeTranslation'),
-            'slug'            => $request->attributes->get('url'),
-            'page'            => $entity,
-            'resource'        => $entity,
+            'slug' => $request->attributes->get('url'),
+            'page' => $entity,
+            'resource' => $entity,
         );
 
         if (!empty($thanksParam)) {

@@ -1,5 +1,5 @@
 <?php
-namespace SearchBundle\Helper;
+namespace Kunstmaan\SearchBundle\Tests\Helper;
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I

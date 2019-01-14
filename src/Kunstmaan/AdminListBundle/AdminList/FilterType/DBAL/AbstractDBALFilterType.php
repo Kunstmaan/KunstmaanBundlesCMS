@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-
 use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
 
 /**
@@ -12,7 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
 abstract class AbstractDBALFilterType extends AbstractFilterType
 {
     /**
-     * @var QueryBuilder $queryBuilder
+     * @var QueryBuilder
      */
     protected $queryBuilder;
 

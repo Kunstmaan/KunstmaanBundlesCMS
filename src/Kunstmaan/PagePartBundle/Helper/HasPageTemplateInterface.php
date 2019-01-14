@@ -9,10 +9,8 @@ use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateInterface;
  */
 interface HasPageTemplateInterface extends HasPagePartsInterface
 {
-
     /**
      * @return PageTemplateInterface[]
      */
     public function getPageTemplates();
-
 }

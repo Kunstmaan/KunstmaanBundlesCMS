@@ -10,13 +10,12 @@ use Doctrine\ORM\Query\SqlWalker;
  */
 class AclWalker extends SqlWalker
 {
-
     /**
      * Walks down a FromClause AST node, thereby generating the appropriate SQL.
      *
      * @param string $fromClause
      *
-     * @return string The SQL.
+     * @return string the SQL
      */
     public function walkFromClause($fromClause)
     {
@@ -32,5 +31,4 @@ tempAclView;
 
         return $sql . ' ' . $tempAclView;
     }
-
 }

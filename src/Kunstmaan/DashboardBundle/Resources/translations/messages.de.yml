@@ -19,37 +19,37 @@ dashboard:
       avg_session_duration: Durchschn. Sitzungsdauer
     setup:
       goals:
-        disable: Disable goals
+        disable: Ziele deaktivieren
       title: Google Analytics dashboard widget einrichten
-      content: "To learn how to setup the Google Analytics widget, please refer to"
+      content: "Um mehr Informationen zur Einrichtung des Google Analytics Widgets zu erhalten, besuchen Sie"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
-      docs: the documentation
-      redirect: "This is your redirect URI:"
-      refresh: "Once everything is set up, refresh this page."
-      connect: Connect your Google Account
-      confirm: Connect now
+      docs: die Dokumentation
+      redirect: "Dies ist die Umleitungs-URI:"
+      refresh: "Aktualisieren Sie diese Seite sobald Sie mit der Einrichtung fertig sind."
+      connect: Google-Account verbinden
+      confirm: Jetzt verbinden
       profile:
-        title: Select a profile
-        select: Select a profile..
-        content: Select a profile for the selected website
+        title: Profil auswählen
+        select: Profil auswählen...
+        content: Profil für die ausgewählte Website auswählen
       property:
-        title: Select a website to track
-        select: Select a website..
-        content: Select a domain registered in your Google Analytics account.
+        title: Websites auswählen, die überwacht werden soll
+        select: Website auswählen...
+        content: Domain auswählen, die in Ihrem Google Analytics Account hinterlegt ist.
       account:
-        title: Select an account
-        select: Select an account..
+        title: Benutzerkonto auswählen
+        select: Benutzerkonto auswählen...
       link: Dashboard einrichten
       back: Zum Dashboard
       segment:
-        add: Add segment
-        info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
-        here: here
-        own: Own segments
-        builtin: Built-in segments
-      segments: Segment setup
-      accounts: Account setup
+        add: Segment hinzufügen
+        info: 'Um eigene Segmente zu erstellen, nutzen Sie die Segment IDs (und kombineren diese) oder schreiben Sie eigene Queries. Google stellt voreingestellte Segment IDs zur Verfügung (unten aufgelistet). Sie können eigene Segmente mit dem Google Segment Builder-Tool in Google Analytics erstellen. Zum Öffnen der Dokumentation dazu klicken Sie'
+        here: hier
+        own: Eigene Segmente
+        builtin: Integrierte Segmente
+      segments: Segment einrichten
+      accounts: Konto einrichten
     reset:
-      property: Change Google Analytics link
+      property: Google Analytics-Link ändern
     last_update: "Letzte Aktualisierung:"
     unavailable: Keine Daten verfügbar, bitte Aktualisieren Button klicken.

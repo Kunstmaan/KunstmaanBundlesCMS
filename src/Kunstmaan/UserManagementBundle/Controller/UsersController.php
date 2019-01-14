@@ -13,8 +13,7 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +50,7 @@ class UsersController extends BaseSettingsController
         $configurator = new $configuratorClassName($em);
 
         /* @var AdminList $adminList */
-        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createList($configurator);
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
         return array(
@@ -74,9 +73,8 @@ class UsersController extends BaseSettingsController
     /**
      * Add a user
      *
-     * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add", methods={"GET", "POST"})
+     * @Template("@KunstmaanUserManagement/Users/add.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -114,7 +112,7 @@ class UsersController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->container->get('translator')->trans('kuma_user.users.add.flash.success.%username%', [
-                        '%username%' => $user->getUsername()
+                        '%username%' => $user->getUsername(),
                     ])
                 );
 
@@ -132,11 +130,11 @@ class UsersController extends BaseSettingsController
      *
      * @param int $id
      *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit", methods={"GET", "POST"})
+     * @Template("@KunstmaanUserManagement/Users/edit.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function editAction(Request $request, $id)
@@ -177,7 +175,6 @@ class UsersController extends BaseSettingsController
         $form = $this->createForm($formFqn, $user, $options);
 
         if ($request->isMethod('POST')) {
-
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
@@ -193,7 +190,7 @@ class UsersController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->container->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
-                        '%username%' => $user->getUsername()
+                        '%username%' => $user->getUsername(),
                     ])
                 );
 
@@ -222,12 +219,12 @@ class UsersController extends BaseSettingsController
      * Delete a user
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"GET", "POST"})
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function deleteAction(Request $request, $id)
@@ -248,7 +245,7 @@ class UsersController extends BaseSettingsController
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->container->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
-                    '%username%' => $user->getUsername()
+                    '%username%' => $user->getUsername(),
                 ])
             );
         }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 
@@ -12,7 +13,6 @@ use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
  */
 class RawHTMLPagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -43,7 +43,7 @@ class RawHTMLPagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "RawHTMLPagePart " . htmlentities($this->getContent());
+        return 'RawHTMLPagePart ' . htmlentities($this->getContent());
     }
 
     /**
@@ -51,7 +51,7 @@ class RawHTMLPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig';
     }
 
     /**

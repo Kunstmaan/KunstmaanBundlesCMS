@@ -2,9 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Transformer;
 
-use Liip\ImagineBundle\Imagine\Data\Transformer\TransformerInterface;
-
-interface PreviewTransformerInterface extends TransformerInterface
+interface PreviewTransformerInterface
 {
     /**
      * Return the path of the preview file.
@@ -14,4 +12,13 @@ interface PreviewTransformerInterface extends TransformerInterface
      * @return string
      */
     public function getPreviewFilename($absolutePath);
+
+    /**
+     * Apply the transformer on the absolute path and return an altered version of it.
+     *
+     * @param string $absolutePath
+     *
+     * @return string
+     */
+    public function apply($absolutePath);
 }

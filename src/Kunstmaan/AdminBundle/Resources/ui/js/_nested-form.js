@@ -170,7 +170,10 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
         showOrHideActions($form);
 
-        // Reinit all modules
+        // Reinit required modules.
+        kunstmaanbundles.app.initModules();
+
+        // Reinit all modules provied by data attribute.
         kunstmaanbundles.pagepartEditor.reInit($newItem);
 
         // Init Ajax Modals

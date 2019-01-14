@@ -1,12 +1,4 @@
-namespace: FormBundle
-suites:
-    unit:
-        path: .
-        actor: UnitTester
-        modules:
-            enabled:
-                # add more modules here
-                - Asserts
+namespace: Kunstmaan\FormBundle\Tests
 settings:
     shuffle: true
     lint: true
@@ -14,6 +6,6 @@ paths:
     tests: Tests
     output: Tests/_output
     support: Tests/_support
-    data: Tests
+    data: Tests/_data
 coverage:
     enabled: true

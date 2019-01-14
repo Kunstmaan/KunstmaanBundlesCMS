@@ -92,7 +92,7 @@ class NodeMenuItem
             return $nodeTranslation->getTitle();
         }
 
-        return "Untranslated";
+        return 'Untranslated';
     }
 
     /**
@@ -109,7 +109,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return string|NULL
+     * @return string|null
      */
     public function getSlugPart()
     {
@@ -143,7 +143,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return NodeMenuItem|NULL
+     * @return NodeMenuItem|null
      */
     public function getParent()
     {
@@ -166,7 +166,7 @@ class NodeMenuItem
     /**
      * @param string $class
      *
-     * @return NodeMenuItem|NULL
+     * @return NodeMenuItem|null
      */
     public function getParentOfClass($class)
     {
@@ -252,6 +252,7 @@ class NodeMenuItem
 
     /**
      * Get the first child of class, this is not using the getChildrenOfClass method for performance reasons
+     *
      * @param string $class
      *
      * @return NodeMenuItem

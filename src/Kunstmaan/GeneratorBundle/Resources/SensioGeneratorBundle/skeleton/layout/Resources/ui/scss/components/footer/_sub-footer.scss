@@ -5,7 +5,7 @@
 /* Inner
    ========================================================================== */
 .sub-footer__inner {
-    @include clearfix;
+    @include clearfix();
 
     padding: 1em 0;
 {% if demosite %}

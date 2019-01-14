@@ -14,14 +14,14 @@ abstract class AbstractArticleOverviewPageRepository extends EntityRepository
      */
     public function findActiveOverviewPages()
     {
-	$qb = $this->createQueryBuilder('a')
-	    ->innerJoin('KunstmaanNodeBundle:NodeVersion', 'v', 'WITH', 'a.id = v.refId')
-	    ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
-	    ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
-	    ->where('n.deleted = 0')
-	    ->andWhere('v.refEntityName = :refname')
-	    ->setParameter('refname', $this->getEntityName());
+        $qb = $this->createQueryBuilder('a')
+        ->innerJoin('KunstmaanNodeBundle:NodeVersion', 'v', 'WITH', 'a.id = v.refId')
+        ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
+        ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
+        ->where('n.deleted = 0')
+        ->andWhere('v.refEntityName = :refname')
+        ->setParameter('refname', $this->getEntityName());
 
-	return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 }

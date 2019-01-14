@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -8,10 +9,32 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @final since 5.1
+ * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
+ */
 class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
 {
     /** @var EntityManagerInterface $em */
     private $em;
+
+    /**
+     * @param EntityManagerInterface|null $em
+     */
+    public function __construct(/* EntityManagerInterface */ $em = null)
+    {
+        parent::__construct();
+
+        if (!$em instanceof EntityManagerInterface) {
+            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
+
+            $this->setName(null === $em ? 'kuma:dashboard:widget:googleanalytics:overviews:generate' : $em);
+
+            return;
+        }
+
+        $this->em = $em;
+    }
 
     protected function configure()
     {
@@ -35,22 +58,23 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
     }
 
     /**
-     * Inits instance variables for global usage.
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
      */
-    private function init()
-    {
-        $this->em = $this->getContainer()->get('doctrine')->getManager();
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->init();
+        if (null === $this->em) {
+            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        }
 
         // get params
-        $configId  = false;
+        $configId = false;
         $segmentId = false;
+
         try {
-            $configId  = $input->getOption('config');
+            $configId = $input->getOption('config');
             $segmentId = $input->getOption('segment');
         } catch (\Exception $e) {
         }
@@ -70,9 +94,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
         } catch (\InvalidArgumentException $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
         }
-
     }
-
 
     /**
      * Get all overviews of a segment
@@ -87,7 +109,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
     {
         /** @var AnalyticsSegmentRepository $segmentRepository */
         $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $segment           = $segmentRepository->find($segmentId);
+        $segment = $segmentRepository->find($segmentId);
 
         if (!$segment) {
             throw new \InvalidArgumentException('Unknown segment ID');
@@ -108,8 +130,8 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      */
     private function generateOverviewsOfConfig($configId)
     {
-        $configRepository   = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $segmentRepository  = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
         // get specified config
         $config = $configRepository->find($configId);
@@ -137,10 +159,10 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      */
     private function generateAllOverviews()
     {
-        $configRepository   = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-        $segmentRepository  = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $configs            = $configRepository->findAll();
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $configs = $configRepository->findAll();
 
         foreach ($configs as $config) {
             // add overviews if none exist yet

@@ -169,10 +169,3 @@ kuma_node:
     export_pagetemplate:
       button:
         title: Exporteer pagina template
-
-
-# Toolbar
-toolbar:
-    node:
-        edit: Bewerken
-        title: Titel

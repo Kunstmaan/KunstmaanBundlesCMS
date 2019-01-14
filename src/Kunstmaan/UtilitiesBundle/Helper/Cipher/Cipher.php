@@ -12,7 +12,7 @@ use InvalidArgumentException;
 class Cipher implements CipherInterface
 {
     /**
-     * @var string $secret
+     * @var string
      */
     private $secret;
 
@@ -37,6 +37,7 @@ class Cipher implements CipherInterface
      * @param bool   $raw_binary
      *
      * @return string
+     *
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
     public function encrypt($value, $raw_binary = false)
@@ -51,6 +52,7 @@ class Cipher implements CipherInterface
      * @param bool   $raw_binary
      *
      * @return string
+     *
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
@@ -63,7 +65,6 @@ class Cipher implements CipherInterface
      * @param string $inputFile
      * @param string $outputFile
      *
-     * @return void
      * @throws \Defuse\Crypto\Exception\IOException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
@@ -76,7 +77,6 @@ class Cipher implements CipherInterface
      * @param string $inputFile
      * @param string $outputFile
      *
-     * @return void
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      * @throws \Defuse\Crypto\Exception\IOException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
@@ -85,5 +85,4 @@ class Cipher implements CipherInterface
     {
         File::decryptFileWithPassword($inputFile, $outputFile, $this->secret);
     }
-
 }

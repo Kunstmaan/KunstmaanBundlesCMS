@@ -18,5 +18,5 @@ abstract class AbstractArticlePageRepository extends EntityRepository
      *
      * @return array
      */
-    public abstract function getArticles($lang = null, $offset = 0, $limit = 10);
+    abstract public function getArticles($lang = null, $offset = 0, $limit = 10);
 }

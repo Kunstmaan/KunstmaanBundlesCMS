@@ -5,8 +5,7 @@ namespace Kunstmaan\LeadGenerationBundle\Controller;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\RulesAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class RulesAdminListController extends AdminListController
@@ -41,8 +40,7 @@ class RulesAdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/{popup}/add", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_add")
-     * @Method({"GET", "POST"})
+     * @Route("/{popup}/add", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_add", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -58,8 +56,7 @@ class RulesAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{popup}/rules/{id}/edit", requirements={"popup" = "\d+", "rule" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{popup}/rules/{id}/edit", requirements={"popup" = "\d+", "rule" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -73,8 +70,7 @@ class RulesAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{popup}/rules/{id}/delete", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{popup}/rules/{id}/delete", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete", methods={"GET", "POST"})
      *
      * @return array
      */

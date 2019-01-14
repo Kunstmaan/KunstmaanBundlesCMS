@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use DateTime;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 
@@ -77,7 +75,7 @@ class FormSubmission implements EntityInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -211,7 +209,6 @@ class FormSubmission implements EntityInterface
      */
     public function __toString()
     {
-        return "FormSubmission";
+        return 'FormSubmission';
     }
-
 }

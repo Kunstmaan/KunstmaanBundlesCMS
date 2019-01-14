@@ -10,15 +10,13 @@ use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-
 
 /**
  * The controller which will handle everything related with form pages and form submissions
@@ -36,7 +34,7 @@ class FormSubmissionsController extends Controller
     public function indexAction(Request $request)
     {
         /* @var EntityManager $em */
-        $em        = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
         /* @var AdminList $adminList */
@@ -55,15 +53,14 @@ class FormSubmissionsController extends Controller
      * @param int $nodeTranslationId
      *
      * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"},
-     *                                     name="KunstmaanFormBundle_formsubmissions_list")
-     * @Method({"GET", "POST"})
-     * @Template()
+     *                                     name="KunstmaanFormBundle_formsubmissions_list", methods={"GET", "POST"})
+     * @Template("@KunstmaanForm/FormSubmissions/list.html.twig")
      *
      * @return array
      */
     public function listAction(Request $request, $nodeTranslationId)
     {
-        $em              = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
 
         /** @var AdminList $adminList */
@@ -83,9 +80,8 @@ class FormSubmissionsController extends Controller
      * @param int $submissionId      The submission id
      *
      * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" =
-     *                                                    "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
-     * @Method({"GET", "POST"})
-     * @Template()
+     *                                                    "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit", methods={"GET", "POST"})
+     * @Template("@KunstmaanForm/FormSubmissions/edit.html.twig")
      *
      * @return array
      */
@@ -99,7 +95,7 @@ class FormSubmissionsController extends Controller
 
         /** @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
-            new FormSubmissionAdminListConfigurator($em, $nodeTranslation,$deletableFormsubmission),
+            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $deletableFormsubmission),
             $em
         );
         $adminList->bindRequest($request);
@@ -117,8 +113,7 @@ class FormSubmissionsController extends Controller
      * @param int $nodeTranslationId
      *
      * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" =
-     *                                                 "csv|xlsx|ods"}, name="KunstmaanFormBundle_formsubmissions_export")
-     * @Method({"GET"})
+     *                                                 "csv|xlsx|ods"}, name="KunstmaanFormBundle_formsubmissions_export", methods={"GET"})
      *
      * @return Response
      */
@@ -127,11 +122,11 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $translator      = $this->get('translator');
+        $translator = $this->get('translator');
 
         /** @var ExportList $exportList */
         $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
-        $exportList   = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
+        $exportList = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
 
         return $this->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
     }
@@ -140,10 +135,9 @@ class FormSubmissionsController extends Controller
      * @Route(
      *      "/{id}/delete",
      *      requirements={"id" = "\d+"},
-     *      name="KunstmaanFormBundle_formsubmissions_delete"
+     *      name="KunstmaanFormBundle_formsubmissions_delete",
+     *      methods={"POST"}
      * )
-     * @Template()
-     * @Method("POST")
      *
      * @param Request $request
      * @param int     $id

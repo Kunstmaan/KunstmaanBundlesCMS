@@ -11,7 +11,6 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
  */
 class RemoteAudioHandler extends AbstractMediaHandler
 {
-
     /**
      * @var string
      */
@@ -104,11 +103,11 @@ class RemoteAudioHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $audio = new RemoteAudioHelper($media);
-        $code  = $audio->getCode();
+        $code = $audio->getCode();
         //update thumbnail
         switch ($audio->getType()) {
             case 'soundcloud':
-                $scData     = json_decode(
+                $scData = json_decode(
                     file_get_contents(
                         'http://api.soundcloud.com/tracks/' . $code . '.json?client_id=' . $this->getSoundcloudApiKey()
                     )
@@ -116,6 +115,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
                 $artworkUrl = $scData->artwork_url;
                 $artworkUrl = str_replace('large.jpg', 't500x500.jpg', $artworkUrl);
                 $audio->setThumbnailUrl($artworkUrl);
+
                 break;
         }
     }
@@ -135,14 +135,14 @@ class RemoteAudioHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMedia(Media $media)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createNew($data)
     {
@@ -150,7 +150,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -178,8 +178,8 @@ class RemoteAudioHandler extends AbstractMediaHandler
         return array(
             RemoteAudioHandler::TYPE => array(
                 'type' => RemoteAudioHandler::TYPE,
-                'name' => 'media.audio.add'
-            )
+                'name' => 'media.audio.add',
+            ),
         );
     }
 }

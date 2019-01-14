@@ -2,13 +2,13 @@
 kuma_lead_generation:
   newsletter_popup:
     button:
-      close: Close
+      close: Schließen
       subscribe: Subscribe
-      no_thanks: No Thanks!
+      no_thanks: Nein, danke!
     label:
-      email: E-mail
+      email: E-Mail
     message:
-      thanks: Thanks!
+      thanks: Danke!
   on_exit_intent:
     sensitivity:
       label: Sensitivity
@@ -35,11 +35,11 @@ kuma_lead_generation:
         label: Seconds
     locale_black_list:
       locale:
-        label: Locale
+        label: Sprache
         info_text: Defines the locale that should be blacklisted
     locale_white_list:
       locale:
-        label: Locale
+        label: Sprache
         info_text: Defines the locale that should be whitelisted
     max_x_time:
       times:

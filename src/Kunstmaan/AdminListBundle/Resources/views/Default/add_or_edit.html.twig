@@ -42,12 +42,15 @@
                             {% if itemAction.template is not null %}
                                 {% include itemAction.template with {'itemAction': itemAction} %}
                             {% else %}
-                                <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
-                                    {% if itemAction.getIconFor(entity) is not null %}
-                                        <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
-                                    {% endif %}
-                                    {{ itemAction.getLabelFor(entity) }}
-                                </a>
+                                {% set url = itemAction.getUrlFor(entity) %}
+                                {% if url %}
+                                    <a class="btn btn-default btn--raise-on-hover" href="{{ path(url["path"], url[("params")] ) }}">
+                                        {% if itemAction.getIconFor(entity) is not null %}
+                                            <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
+                                        {% endif %}
+                                        {{ itemAction.getLabelFor(entity) }}
+                                    </a>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}

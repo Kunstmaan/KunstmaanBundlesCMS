@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
@@ -10,7 +11,6 @@ use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
  */
 abstract class AbstractPagePart extends AbstractEntity implements PagePartInterface
 {
-
     /**
      * In most cases, the backend view will not differ from the default one.
      * Also, this implementation guarantees backwards compatibility.

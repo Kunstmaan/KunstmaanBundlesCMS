@@ -175,23 +175,23 @@ class Media extends AbstractEntity
         }
 
         if ($size < 1024) {
-            return $size . "b";
+            return $size . 'b';
         } else {
             $help = $size / 1024;
             if ($help < 1024) {
-                return round($help, 1) . "kb";
+                return round($help, 1) . 'kb';
             } else {
-                return round(($help / 1024), 1) . "mb";
+                return round(($help / 1024), 1) . 'mb';
             }
         }
     }
-    
+
     /**
      * @return int
      */
-    public function getFileSizeBytes() 
+    public function getFileSizeBytes()
     {
-    	return $this->filesize;
+        return $this->filesize;
     }
 
     /**
@@ -310,7 +310,7 @@ class Media extends AbstractEntity
     public function getContentTypeShort()
     {
         $contentType = $this->contentType;
-        $array       = explode("/", $contentType);
+        $array = explode('/', $contentType);
         $contentType = end($array);
 
         return $contentType;
@@ -565,7 +565,7 @@ class Media extends AbstractEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isRemovedFromFileSystem()
     {
@@ -573,7 +573,7 @@ class Media extends AbstractEntity
     }
 
     /**
-     * @param boolean $removedFromFileSystem
+     * @param bool $removedFromFileSystem
      */
     public function setRemovedFromFileSystem($removedFromFileSystem)
     {

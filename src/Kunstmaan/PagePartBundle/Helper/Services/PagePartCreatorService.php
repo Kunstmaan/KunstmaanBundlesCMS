@@ -20,8 +20,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  * A class to facilitate the adding of PageParts to existing pages.
  *
  * NOTE: There is a similar implementation for adding pages. See the NodeBundle for more on this.
- *
- * @package Kunstmaan\PagePartBundle\Helper\Services
  */
 class PagePartCreatorService
 {
@@ -71,21 +69,21 @@ class PagePartCreatorService
     /**
      * Add a single pagepart to an existing page for a specific language, in an optional position.
      *
-     * @param mixed(Node|string) $nodeOrInternalName
-     *      A Node instance or the internal name.
-     *      When the internal name is passed we'll get the node instance.
-     *      Based on the language we'll locate the correct Page instance.
-     * @param PagePartInterface $pagePart
-     *      A completely configured pagepart for this language.
-     * @param string $language
-     *      The languagecode. nl|fr|en|.. . Just one.
-     * @param string $context
-     *      Where you want the pagepart to be.
+     * @param mixed(Node|string)  $nodeOrInternalName
+     *                                                A Node instance or the internal name.
+     *                                                When the internal name is passed we'll get the node instance.
+     *                                                Based on the language we'll locate the correct Page instance.
+     * @param pagePartInterface   $pagePart
+     *                                                A completely configured pagepart for this language
+     * @param string              $language
+     *                                                The languagecode. nl|fr|en|.. . Just one.
+     * @param string              $context
+     *                                                Where you want the pagepart to be
      * @param mixed(integer\NULL) $position
-     *      Leave null if you want to append at the end.
-     *      Otherwise set a position you would like and it'll inject the pagepart in that position.
-     *      It won't override pageparts but it will rather inject itself in that position and
-     *      push the other pageparts down.
+     *                                                Leave null if you want to append at the end.
+     *                                                Otherwise set a position you would like and it'll inject the pagepart in that position.
+     *                                                It won't override pageparts but it will rather inject itself in that position and
+     *                                                push the other pageparts down.
      */
     public function addPagePartToPage($nodeOrInternalName, PagePartInterface $pagePart, $language, $context = 'main', $position = null)
     {
@@ -112,9 +110,9 @@ class PagePartCreatorService
      * A helper function to more easily append multiple pageparts in different manners.
      *
      * @param mixed(Node|string) $nodeOrInternalName
-     *      The node that you'd like to append the pageparts to. It's also possible to provide an internalname.
-     * @param array $structure
-     *      The structure array is something like this:
+     *                                               The node that you'd like to append the pageparts to. It's also possible to provide an internalname.
+     * @param array              $structure
+     *                                               The structure array is something like this:
      *
      *      array('main' => array(
      *          function() { return new DummyPagePart('A') }, function() { return new DummyPagePart('B') }
@@ -129,7 +127,7 @@ class PagePartCreatorService
      *
      *      Or optionally you can use the results of the getCreatorArgumentsForPagePartAndProperties function instead of an anonymous function.
      * @param string $language
-     *      The language of the translation you want to append to.
+     *                         The language of the translation you want to append to
      *
      * @throws \LogicException
      */
@@ -168,8 +166,8 @@ class PagePartCreatorService
 
     /**
      * @param mixed(Node|string) $nodeOrInternalName
-     * @param string $language
-     * @param string $templateName
+     * @param string             $language
+     * @param string             $templateName
      */
     public function setPageTemplate($nodeOrInternalName, $language, $templateName)
     {
@@ -202,15 +200,15 @@ class PagePartCreatorService
      *
      * It'll return an anonymous function which instantiates the pagepart.
      *
-     * @param string $pagePartClassName The full class name of the pagepart you want to instantiate.
-     * @param array $setters An array of setternames and their values. array('setName' => 'Kim', 'isDeveloper' => true)
+     * @param string $pagePartClassName the full class name of the pagepart you want to instantiate
+     * @param array  $setters           An array of setternames and their values. array('setName' => 'Kim', 'isDeveloper' => true)
      *
-     * @return callable The function that will instantiate a pagepart.
+     * @return callable the function that will instantiate a pagepart
      */
     public function getCreatorArgumentsForPagePartAndProperties($pagePartClassName, array $setters = null)
     {
-        return function() use ($pagePartClassName, $setters) {
-            $pp = new $pagePartClassName;
+        return function () use ($pagePartClassName, $setters) {
+            $pp = new $pagePartClassName();
 
             if (!is_null($setters)) {
                 foreach ($setters as $setter => $value) {
