@@ -5,14 +5,8 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
-use Kunstmaan\NodeBundle\EventListener\NodeTabListener;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\Request;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 

@@ -12,43 +12,43 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class NodeListener
 {
-	/**
-	 * AuthorizationCheckerInterface
-	 */
-	private $authorizationChecker;
+    /**
+     * AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
 
-	/**
-	 * @var PermissionAdmin
-	 */
-	protected $permissionAdmin;
+    /**
+     * @var PermissionAdmin
+     */
+    protected $permissionAdmin;
 
-	/**
-	 * @var PermissionMapInterface
-	 */
-	protected $permissionMap;
+    /**
+     * @var PermissionMapInterface
+     */
+    protected $permissionMap;
 
-	/**
-	 * @param AuthorizationCheckerInterface $authorizationChecker The security context
-	 * @param PermissionAdmin               $permissionAdmin      The permission admin
-	 * @param PermissionMapInterface        $permissionMap        The permission map
-	 */
-	public function __construct(AuthorizationCheckerInterface $authorizationChecker, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
-	{
-		$this->authorizationChecker = $authorizationChecker;
-		$this->permissionAdmin = $permissionAdmin;
-		$this->permissionMap = $permissionMap;
-	}
+    /**
+     * @param AuthorizationCheckerInterface $authorizationChecker The security context
+     * @param PermissionAdmin               $permissionAdmin      The permission admin
+     * @param PermissionMapInterface        $permissionMap        The permission map
+     */
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->permissionAdmin = $permissionAdmin;
+        $this->permissionMap = $permissionMap;
+    }
 
-	/**
-	 * @param AdaptFormEvent $event
-	 */
-	public function adaptForm(AdaptFormEvent $event)
-	{
-		if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
-			if ($this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {
-				$tabPane = $event->getTabPane();
-				$tabPane->addTab(new Tab('kuma_node.tab.permissions.title', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
-			}
-		}
-	}
+    /**
+     * @param AdaptFormEvent $event
+     */
+    public function adaptForm(AdaptFormEvent $event)
+    {
+        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
+            if ($this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {
+                $tabPane = $event->getTabPane();
+                $tabPane->addTab(new Tab('kuma_node.tab.permissions.title', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
+            }
+        }
+    }
 }
