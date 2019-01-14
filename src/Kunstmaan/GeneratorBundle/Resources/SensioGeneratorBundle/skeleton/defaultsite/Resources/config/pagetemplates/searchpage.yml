@@ -1,3 +1,8 @@
-name: "Search page"
-rows: []
-template: "{{ bundle.name }}::Pages\\SearchPage\\pagetemplate.html.twig"
+{% if isV4 %}
+kunstmaan_page_part:
+    pagetemplates:
+        searchpage:
+{%endif%}
+{% if isV4 %}            {%endif%}name: "Search page"
+{% if isV4 %}            {%endif%}rows: []
+{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\SearchPage\\pagetemplate.html.twig"

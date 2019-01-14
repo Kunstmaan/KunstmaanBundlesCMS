@@ -53,6 +53,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             'prefix' => $this->prefix,
             'demosite' => $this->demosite,
             'multilanguage' => $this->isMultiLangEnvironment(),
+            'isV4' => $this->isSymfony4(),
         );
 
         $this->generateControllers($parameters);
@@ -203,6 +204,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
             $this->renderSingleFile($sourceDir, $targetDir, 'AdminMenuAdaptor.php', $parameters);
 
+            if ($this->isSymfony4()) {
+                return;
+            }
+
             $file = $this->bundle->getPath().'/Resources/config/services.yml';
             if (!is_file($file)) {
                 $ymlData = 'services:';
@@ -247,9 +252,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generatePagepartConfigs(array $parameters)
     {
-        $relPath = '/Resources/config/pageparts/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
+        $basePath = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') : $this->bundle->getPath();
+        $relPath = $this->isSymfony4() ? '/config/kunstmaancms/pageparts' : '/Resources/config/pageparts/';
+        $sourceDir = $this->skeletonDir.'/Resources/config/pageparts/';
+        $targetDir = $basePath.$relPath;
 
         $this->renderSingleFile($sourceDir, $targetDir, 'main.yml', $parameters);
 
@@ -273,9 +279,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generatePagetemplateConfigs(array $parameters)
     {
-        $relPath = '/Resources/config/pagetemplates/';
-        $sourceDir = $this->skeletonDir . $relPath;
-        $targetDir = $this->bundle->getPath() . $relPath;
+        $basePath = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') : $this->bundle->getPath();
+        $relPath = $this->isSymfony4() ? '/config/kunstmaancms/pagetemplates/' : '/Resources/config/pagetemplates/';
+        $sourceDir = $this->skeletonDir.'/Resources/config/pagetemplates/';
+        $targetDir = $basePath.$relPath;
 
         $this->renderSingleFile($sourceDir, $targetDir, 'homepage.yml', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'contentpage.yml', $parameters);
@@ -295,6 +302,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateConfig()
     {
+        if ($this->isSymfony4()) {
+            return;
+        }
+
         $configFile = $this->rootDir.'/app/config/config.yml';
         $config = file_get_contents($configFile);
 
@@ -313,6 +324,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateRouting(array $parameters)
     {
+        if ($this->isSymfony4()) {
+            return;
+        }
+
         $relPath = '/Resources/config/';
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;
@@ -331,7 +346,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     {
         $relPath = '/Resources/views/Layout/';
         $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
+        $targetDir = $this->getTemplateDir($this->bundle) . '/Layout/';
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'submenu.html.twig', $parameters);
@@ -341,57 +356,57 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $relPath = '/Resources/views/Pages/HomePage/';
         $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
+        $targetDir = $this->getTemplateDir($this->bundle) . '/Pages/HomePage/';
 
         $this->renderSingleFile($sourceDir, $targetDir, 'pagetemplate.html.twig', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'view.html.twig', $parameters);
 
         $relPath = '/Resources/views/Pages/ContentPage/';
-        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+        $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/Pages/ContentPage/', $parameters, true);
 
         if ($this->demosite) {
             $relPath = '/Resources/views/Pages/FormPage/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/Pages/FormPage/', $parameters, true);
 
             $relPath = '/Resources/views/Pages/SearchPage/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/Pages/SearchPage/', $parameters, true);
         }
 
         // Pageparts
 
         if ($this->demosite) {
             $relPath = '/Resources/views/PageParts/PageBannerPagePart/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/PageParts/PageBannerPagePart/', $parameters, true);
 
             $relPath = '/Resources/views/PageParts/ServicePagePart/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/PageParts/ServicePagePart/', $parameters, true);
 
             $relPath = '/Resources/views/PageParts/UspPagePart/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/PageParts/UspPagePart/', $parameters, true);
 
             $relPath = '/Resources/views/PageParts/BikesListPagePart/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/PageParts/BikesListPagePart/', $parameters, true);
         }
 
         // Error templates
         $relPath = '/Resources/views/Error/';
-        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+        $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/Error/', $parameters, true);
 
         $sourcePath = '/app/TwigBundle/';
-        $targetPath = $this->rootDir.'/app/Resources/TwigBundle/';
-        $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
+        $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/TwigBundle' : $this->rootDir . '/app/Resources/TwigBundle/';
+        $this->renderFiles($this->skeletonDir . $sourcePath, $targetPath, $parameters, true);
 
         // Bundle overwrites
 
         if ($this->demosite) {
             $sourcePath = '/app/KunstmaanSitemapBundle/';
-            $targetPath = $this->rootDir.'/app/Resources/KunstmaanSitemapBundle/';
+            $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/KunstmaanSitemapBundle' : $this->rootDir . '/app/Resources/KunstmaanSitemapBundle/';
 
-            $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
+            $this->renderFiles($this->skeletonDir . $sourcePath, $targetPath, $parameters, true);
 
             $sourcePath = '/app/KunstmaanFormBundle/';
-            $targetPath = $this->rootDir.'/app/Resources/KunstmaanFormBundle/';
-            $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
+            $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/KunstmaanFormBundle' : $this->rootDir . '/app/Resources/KunstmaanFormBundle/';
+            $this->renderFiles($this->skeletonDir . $sourcePath, $targetPath, $parameters, true);
         }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
@@ -407,6 +422,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $relPath = '/Twig/';
         if ($this->demosite) {
             $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'BikesTwigExtension.php', $parameters, true);
+        }
+
+        if ($this->isSymfony4()) {
+            return;
         }
 
         $relPath = '/Resources/config/';
