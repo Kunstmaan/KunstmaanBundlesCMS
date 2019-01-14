@@ -73,7 +73,7 @@ class URLHelper
         }
 
         if ($this->isInternalLink($text)) {
-            preg_match_all("/\[(([a-z_A-Z]+):)?NT([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
+            preg_match_all("/\[(([a-z_A-Z\.]+):)?NT([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
 
             if (count($matches) > 0) {
                 $map = $this->getNodeTranslationMap();
