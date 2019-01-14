@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         /** @var ArrayNodeDefinition $pageparts */
-        $pageparts = $root->children()->arrayNode('pageparts')->prototype('array');
+        $pageparts = $root->children()->arrayNode('pageparts')->useAttributeAsKey('index')->prototype('array');
         $pageparts->children()->scalarNode('name')->isRequired();
         $pageparts->children()->scalarNode('context')->isRequired();
         $pageparts->children()->scalarNode('extends');
@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
         // *************************************************************************************************************
 
         /** @var ArrayNodeDefinition $pagetemplates */
-        $pagetemplates = $root->children()->arrayNode('pagetemplates')->defaultValue([])->prototype('array');
+        $pagetemplates = $root->children()->arrayNode('pagetemplates')->useAttributeAsKey('index')->defaultValue([])->prototype('array');
 
         $pagetemplates->children()->scalarNode('template')->isRequired();
         $pagetemplates->children()->scalarNode('name')->isRequired();

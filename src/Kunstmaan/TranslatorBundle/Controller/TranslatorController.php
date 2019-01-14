@@ -212,7 +212,7 @@ class TranslatorController extends AdminListController
         if (Request::METHOD_POST === $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $locales = explode('|', $this->container->getParameter('requiredlocales'));
+                $locales = $this->getParameter('kuma_translator.managed_locales');
                 $data = $form->getData();
                 $file = $data['file'];
                 $force = $data['force'];
