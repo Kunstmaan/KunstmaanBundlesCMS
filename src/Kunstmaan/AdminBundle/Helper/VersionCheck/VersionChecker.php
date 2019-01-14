@@ -103,7 +103,7 @@ class VersionChecker
         $console = realpath($this->container->get('kernel')->getRootDir().'/../bin/console');
         $installed = filectime($console);
         $bundles = $this->parseComposer();
-        $title = $this->container->getParameter('websitetitle');
+        $title = $this->container->getParameter('kunstmaan_admin.website_title');
 
         $jsonData = json_encode(array(
             'host' => $host,
