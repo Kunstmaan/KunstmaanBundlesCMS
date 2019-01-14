@@ -125,5 +125,4 @@ interface DomainConfigurationInterface
      * @return mixed
      */
     public function getHostBaseUrl($host = null);
-
 }

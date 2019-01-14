@@ -50,11 +50,13 @@ kuma_translator:
     header:
       domain: Névtér
       keyword: Kulcsszó
+      status: Status
     filter:
       domain: Névtér
       keyword: Kulcsszó
       text: Szöveg
       locale: Nyelv
+      status: Status
 toolbar:
   translations:
     title: Fordítások

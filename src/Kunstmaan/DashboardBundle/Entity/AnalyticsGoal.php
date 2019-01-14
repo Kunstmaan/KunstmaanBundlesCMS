@@ -20,7 +20,7 @@ class AnalyticsGoal extends AbstractEntity
     private $overview;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="position", type="integer")
      */
@@ -34,7 +34,7 @@ class AnalyticsGoal extends AbstractEntity
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="visits", type="integer")
      */
@@ -50,7 +50,7 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Get overview
      *
-     * @return integer
+     * @return int
      */
     public function getOverview()
     {
@@ -60,7 +60,7 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Set overview
      *
-     * @param integer $overview
+     * @param int $overview
      *
      * @return $this
      */
@@ -74,7 +74,8 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Set position
      *
-     * @param integer $position
+     * @param int $position
+     *
      * @return AnalyticsGoal
      */
     public function setPosition($position)
@@ -87,7 +88,7 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Get position
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -98,6 +99,7 @@ class AnalyticsGoal extends AbstractEntity
      * Set name
      *
      * @param string $name
+     *
      * @return AnalyticsGoal
      */
     public function setName($name)
@@ -120,7 +122,8 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Set visits
      *
-     * @param integer $visits
+     * @param int $visits
+     *
      * @return AnalyticsGoal
      */
     public function setVisits($visits)
@@ -133,7 +136,7 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Get visits
      *
-     * @return integer
+     * @return int
      */
     public function getVisits()
     {
@@ -144,6 +147,7 @@ class AnalyticsGoal extends AbstractEntity
      * Set chartData
      *
      * @param string $chartData
+     *
      * @return AnalyticsGoal
      */
     public function setChartData($chartData)

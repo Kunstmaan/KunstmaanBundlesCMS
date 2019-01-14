@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractRedirectController extends Controller
@@ -16,7 +16,7 @@ abstract class AbstractRedirectController extends Controller
         $thePopup = $this->getDoctrine()->getRepository('KunstmaanLeadGenerationBundle:Popup\AbstractPopup')->find($popup);
 
         return $this->render($this->getIndexTemplate(), array(
-            'popup' => $thePopup
+            'popup' => $thePopup,
         ));
     }
 

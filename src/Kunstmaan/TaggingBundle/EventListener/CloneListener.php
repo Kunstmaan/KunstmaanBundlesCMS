@@ -11,7 +11,6 @@ use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
  */
 class CloneListener
 {
-
     protected $em;
 
     public function __construct(EntityManager $em)
@@ -31,5 +30,4 @@ class CloneListener
             $this->em->getRepository('KunstmaanTaggingBundle:Tag')->copyTags($originalEntity, $targetEntity);
         }
     }
-
 }

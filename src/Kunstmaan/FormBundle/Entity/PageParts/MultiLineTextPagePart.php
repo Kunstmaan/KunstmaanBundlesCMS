@@ -102,7 +102,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:MultiLineTextPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:MultiLineTextPagePart:view.html.twig';
     }
 
     /**
@@ -190,9 +190,9 @@ class MultiLineTextPagePart extends AbstractFormPagePart
             'formwidget_' . $this->getUniqueId(),
             TextFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);

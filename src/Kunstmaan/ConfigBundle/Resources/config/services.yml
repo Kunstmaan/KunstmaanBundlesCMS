@@ -26,3 +26,4 @@ services:
       - "@doctrine.orm.entity_manager"
       - "%kunstmaan_config%"
       - "@form.factory"
+    public: true

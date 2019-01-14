@@ -7,8 +7,6 @@ use Symfony\Component\Translation\DataCollectorTranslator as BaseDataCollectorTr
 
 /**
  * Class DataCollectorTranslator
- *
- * @package Kunstmaan\TranslatorBundle\Toolbar
  */
 class DataCollectorTranslator extends BaseDataCollectorTranslator
 {

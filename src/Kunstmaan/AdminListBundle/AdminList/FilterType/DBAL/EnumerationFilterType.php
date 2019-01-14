@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EnumerationFilterType extends AbstractDBALFilterType
 {
     private $comparator;
+
     private $value;
 
     /**
@@ -20,7 +21,7 @@ class EnumerationFilterType extends AbstractDBALFilterType
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $this->comparator = $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
-        $this->value      = $data['value']      = $request->query->get('filter_value_' . $uniqueId);
+        $this->value = $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }
 
     /**
@@ -34,10 +35,12 @@ class EnumerationFilterType extends AbstractDBALFilterType
                 case 'in':
                     $this->queryBuilder->andWhere($this->getAlias() . $this->columnName . ' IN (:var_' . $uniqueId . ')');
                     $this->queryBuilder->setParameter('var_' . $uniqueId, $data['value'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+
                     break;
                 case 'notin':
                     $this->queryBuilder->andWhere($this->getAlias() . $this->columnName . ' NOT IN (:var_' . $uniqueId . ')');
                     $this->queryBuilder->setParameter('var_' . $uniqueId, $data['value'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+
                     break;
             }
         }

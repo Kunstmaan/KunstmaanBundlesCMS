@@ -1,14 +1,12 @@
-import webpack from 'webpack';
-
-function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = false}) {
+function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes = false }) {
     if (optimize || !transpileOnlyForLastChromes) {
         return {
             babelrc: false,
             presets: [
                 require.resolve('babel-preset-env', {
-                    modules: false
-                })
-            ]
+                    modules: false,
+                }),
+            ],
         };
     }
 
@@ -17,36 +15,35 @@ function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = 
         presets: [
             require.resolve('babel-preset-env', {
                 targets: {
-                    browsers: ['last 2 Chrome versions']
+                    browsers: ['last 2 Chrome versions'],
                 },
-                debug: true
-            })
+                debug: true,
+            }),
         ],
-        cacheDirectory: true
+        cacheDirectory: true,
     };
 }
 
-export default function config(speedupLocalDevelopment, optimize = false) {
+export default function defaultConfig(speedupLocalDevelopment, optimize = false) {
     const config = {
+        mode: optimize ? 'production' : 'development',
         devtool: optimize ? 'source-map' : 'cheap-module-source-map',
         module: {
             rules: [
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
-                    loader: 'babel-loader',
-                    query: getBabelLoaderOptions({
-                        transpileOnlyForLastChromes: speedupLocalDevelopment
-                    })
-                }
-            ]
+                    use: {
+                        loader: 'babel-loader',
+                        options: getBabelLoaderOptions({
+                            transpileOnlyForLastChromes: speedupLocalDevelopment,
+                        }),
+                    },
+                },
+            ],
         },
-        plugins: []
+        plugins: [],
     };
 
-    if (optimize) {
-        config.plugins.push(new webpack.optimize.UglifyJsPlugin({mangle: true, sourceMap: true}));
-    }
-
     return config;
-};
+}

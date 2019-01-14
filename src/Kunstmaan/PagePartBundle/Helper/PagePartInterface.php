@@ -35,7 +35,7 @@ interface PagePartInterface extends EntityInterface
     /**
      * Returns the default backend form type for the page part.
      *
-     * @return string Fully qualified class name of a form.
+     * @return string fully qualified class name of a form
      */
     public function getDefaultAdminType();
 }

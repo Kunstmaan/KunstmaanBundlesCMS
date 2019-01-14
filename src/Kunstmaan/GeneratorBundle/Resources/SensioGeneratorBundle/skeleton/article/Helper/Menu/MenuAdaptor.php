@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Helper\Menu;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
@@ -18,7 +18,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
     /**
      * @param EntityManager $em The entity manager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
 	    $this->em = $em;
     }

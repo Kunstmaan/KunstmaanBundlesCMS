@@ -217,7 +217,10 @@
                                             <i class="fa fa-file-o media-thumbnail__icon"></i>
                                         {% endif %}
                                         <figcaption class="media-thumbnail__caption">
-                                            {{ media.name }}
+                                            {{ media.name }}<br>
+                                            {% if media.metadata.original_width is not empty and media.metadata.original_height is not empty %}
+                                                {{ media.metadata.original_width }}px x {{ media.metadata.original_height }}px
+                                            {% endif %}
                                         </figcaption>
                                     </figure>
                                     <span class="media-thumbnail__helper">

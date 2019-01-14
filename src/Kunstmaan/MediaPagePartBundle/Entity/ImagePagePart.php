@@ -1,8 +1,8 @@
 <?php
 
 namespace Kunstmaan\MediaPagePartBundle\Entity;
-use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
@@ -15,7 +15,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
  */
 class ImagePagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -142,7 +141,7 @@ class ImagePagePart extends AbstractPagePart
             return $this->getMedia()->getUrl();
         }
 
-        return "";
+        return '';
     }
 
     /**
@@ -150,7 +149,7 @@ class ImagePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig";
+        return 'KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig';
     }
 
     /**

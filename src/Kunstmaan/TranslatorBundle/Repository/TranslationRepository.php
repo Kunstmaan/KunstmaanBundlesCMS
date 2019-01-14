@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\TranslatorBundle\Repository;
 
+use DateTime;
+use Exception;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
 use Kunstmaan\TranslatorBundle\Model\TextWithLocale;
 
 /**
@@ -25,6 +28,34 @@ class TranslationRepository extends AbstractTranslatorRepository
             ->getArrayResult();
     }
 
+    /**
+     * Get an array of all non disabled translations
+     *
+     * @param string $locale
+     * @param string $domain
+     *
+     * @return array
+     */
+    public function findAllNotDisabled($locale, $domain = null)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select('t')
+            ->where('t.locale = :locale')
+            ->andWhere('t.status != :statusstring')
+            ->setParameter('statusstring', Translation::STATUS_DISABLED)
+            ->setParameter('locale', $locale);
+        if (!\is_null($domain) && !empty($domain)) {
+            $qb->andWhere('t.domain = :tdomain')
+                ->setParameter('tdomain', $domain);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return DateTime|null
+     */
     public function getLastChangedTranslationDate()
     {
         $em = $this->getEntityManager();
@@ -59,16 +90,24 @@ EOQ;
         return null;
     }
 
+    /**
+     * @return mixed
+     */
     public function resetAllFlags()
     {
         return $this->createQueryBuilder('t')
             ->update('KunstmaanTranslatorBundle:Translation', 't')
-            ->set('t.flag', "NULL")
+            ->set('t.flag', 'NULL')
             ->getQuery()
             ->execute();
-
     }
 
+    /**
+     * @param $locales
+     * @param $domains
+     *
+     * @return mixed
+     */
     public function getTranslationsByLocalesAndDomains($locales, $domains)
     {
         $em = $this->getEntityManager();
@@ -76,6 +115,8 @@ EOQ;
         $qb
             ->select('t')
             ->from('KunstmaanTranslatorBundle:Translation', 't')
+            ->andWhere('t.status != :statusstring')
+            ->setParameter('statusstring', Translation::STATUS_DISABLED)
             ->orderBy('t.domain', 'ASC')
             ->addOrderBy('t.keyword', 'ASC');
 
@@ -94,6 +135,11 @@ EOQ;
         return $result;
     }
 
+    /**
+     * @param null $entity
+     *
+     * @return mixed
+     */
     public function flush($entity = null)
     {
         if ($entity !== null) {
@@ -103,12 +149,22 @@ EOQ;
         return $this->getEntityManager()->flush();
     }
 
+    /**
+     * @param $entity
+     *
+     * @return mixed
+     */
     public function persist($entity)
     {
         return $this->getEntityManager()->persist($entity);
     }
 
-    public function isUnique(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel)
+    /**
+     * @param TranslationModel $translationModel
+     *
+     * @return bool
+     */
+    public function isUnique(TranslationModel $translationModel)
     {
         $qb = $this->createQueryBuilder('t');
         $count = $qb->select('COUNT(t.id)')
@@ -122,14 +178,18 @@ EOQ;
         return $count == 0;
     }
 
-    public function createTranslations(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel)
+    /**
+     * @param TranslationModel $translationModel
+     */
+    public function createTranslations(TranslationModel $translationModel)
     {
         $this->getEntityManager()->beginTransaction();
+
         try {
             // Fetch new translation ID
             $translationId = $this->getUniqueTranslationId();
-            /**
-             * @var TextWithLocale $textWithLocale
+            /*
+             * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
                 $text = $textWithLocale->getText();
@@ -147,17 +207,22 @@ EOQ;
                 $this->getEntityManager()->persist($translation);
             }
             $this->getEntityManager()->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->getEntityManager()->rollback();
         }
     }
 
-    public function updateTranslations(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel, $translationId)
+    /**
+     * @param TranslationModel $translationModel
+     * @param                  $translationId
+     */
+    public function updateTranslations(TranslationModel $translationModel, $translationId)
     {
         $this->getEntityManager()->beginTransaction();
+
         try {
-            /**
-             * @var TextWithLocale $textWithLocale
+            /*
+             * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
                 if ($textWithLocale->getId()) {
@@ -182,7 +247,7 @@ EOQ;
                 }
             }
             $this->getEntityManager()->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->getEntityManager()->rollback();
         }
     }
@@ -204,6 +269,9 @@ EOQ;
             ->execute();
     }
 
+    /**
+     * @return int
+     */
     public function getUniqueTranslationId()
     {
         $qb = $this->createQueryBuilder('t');
@@ -215,5 +283,27 @@ EOQ;
         }
 
         return $newId;
+    }
+
+    /**
+     * @param DateTime $date
+     * @param string   $domain
+     *
+     * @return mixed
+     */
+    public function findDeprecatedTranslationsBeforeDate(DateTime $date, $domain)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $result = $qb->select('t')
+            ->where('t.status = :status')
+            ->andWhere('t.domain = :domain')
+            ->andWhere('t.updatedAt < :date')
+            ->setParameter('status', Translation::STATUS_DEPRECATED)
+            ->setParameter('domain', $domain)
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult();
+
+        return $result;
     }
 }

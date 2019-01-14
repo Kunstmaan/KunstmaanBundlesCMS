@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Loader;
 
-
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -47,7 +46,7 @@ abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterfac
             $builder->addProvider($provider);
         }
 
-        /**
+        /*
          * because of faker's magic calls we'll want to add this as last provider
          */
         $builder->addProvider(Factory::create($locale));
@@ -59,6 +58,7 @@ abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterfac
      * Parse specs and initiate fixtures
      *
      * @param $data
+     *
      * @return array|mixed
      */
     private function initFixtures($data)

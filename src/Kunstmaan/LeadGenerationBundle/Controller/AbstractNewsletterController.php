@@ -5,7 +5,7 @@ namespace Kunstmaan\LeadGenerationBundle\Controller;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 use Kunstmaan\LeadGenerationBundle\Form\NewsletterSubscriptionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,13 +24,12 @@ abstract class AbstractNewsletterController extends Controller
 
         return $this->render($this->getIndexTemplate(), array(
             'popup' => $thePopup,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("/{popup}/subscribe", name="popup_newsletter_subscribe", requirements={"popup": "\d+"})
-     * @Method("POST")
+     * @Route("/{popup}/subscribe", name="popup_newsletter_subscribe", requirements={"popup": "\d+"}, methods={"POST"})
      * @Template()
      */
     public function subscribeAction(Request $request, $popup)
@@ -50,12 +49,13 @@ abstract class AbstractNewsletterController extends Controller
 
         return $this->render($this->getFormTemplate(), array(
             'popup' => $thePopup,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
     /**
      * @param AbstractPopup $popup
+     *
      * @return \Symfony\Component\Form\Form
      */
     protected function createSubscriptionForm(AbstractPopup $popup)
@@ -65,7 +65,7 @@ abstract class AbstractNewsletterController extends Controller
             'action' => $this->generateUrl('popup_newsletter_subscribe', array('popup' => $popup->getId())),
         ));
         $form->add('submit', SubmitType::class, array(
-            'attr' => array('class' => $popup->getHtmlId() . '--submit')
+            'attr' => array('class' => $popup->getHtmlId() . '--submit'),
         ));
 
         return $form;
@@ -92,8 +92,8 @@ abstract class AbstractNewsletterController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param array $data
+     * @param Request       $request
+     * @param array         $data
      * @param AbstractPopup $popup
      */
     protected function handleSubscription(Request $request, $data, AbstractPopup $popup)

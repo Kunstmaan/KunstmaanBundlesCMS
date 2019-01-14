@@ -61,8 +61,8 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_EDIT),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'params' => $params,
         );
     }
 
@@ -79,8 +79,8 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_DELETE),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'params' => $params,
         );
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter          = new DoctrineDBALAdapter(
+            $adapter = new DoctrineDBALAdapter(
                 $this->getQueryBuilder(),
                 $this->getCountField(),
                 $this->getUseDistinctCount()
@@ -108,7 +108,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function adaptQueryBuilder(
         QueryBuilder $queryBuilder,
-        /** @noinspection PhpUnusedParameterInspection */
+        /* @noinspection PhpUnusedParameterInspection */
         array $params = array()
     ) {
         $queryBuilder->where('1=1');
@@ -137,7 +137,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function getIterator()
     {
-        /** @var Statement $statement*/
+        /** @var Statement $statement */
         $statement = $this->getQueryBuilder()->execute();
 
         return $statement;
@@ -149,7 +149,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getQueryBuilder()
     {
         if (is_null($this->queryBuilder)) {
-
             $this->queryBuilder = new QueryBuilder($this->connection);
             $this->adaptQueryBuilder($this->queryBuilder);
 

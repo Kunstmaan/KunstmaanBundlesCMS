@@ -16,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MediaType extends AbstractType
 {
-
     /**
      * @var MediaManager
      */
@@ -33,7 +32,7 @@ class MediaType extends AbstractType
      */
     public function __construct($mediaManager, $objectManager)
     {
-        $this->mediaManager  = $mediaManager;
+        $this->mediaManager = $mediaManager;
         $this->objectManager = $objectManager;
     }
 
@@ -69,15 +68,15 @@ class MediaType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'compound'                => false,
-                'chooser'                 => 'KunstmaanMediaBundle_chooser',
-                'mediatype'               => null,
+                'compound' => false,
+                'chooser' => 'KunstmaanMediaBundle_chooser',
+                'mediatype' => null,
                 'current_value_container' => new CurrentValueContainer(),
             )
         );
@@ -98,8 +97,8 @@ class MediaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['chooser']      = $form->getConfig()->getAttribute('chooser');
-        $view->vars['mediatype']    = $form->getConfig()->getAttribute('mediatype');
+        $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
+        $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
     }
 }

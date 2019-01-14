@@ -9,7 +9,6 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
  */
 class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
-
     /**
      * Build filters for admin list
      */
@@ -35,5 +34,4 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     {
         return 'Role';
     }
-
 }

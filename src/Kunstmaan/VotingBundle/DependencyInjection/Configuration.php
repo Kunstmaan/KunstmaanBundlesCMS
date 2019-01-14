@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -31,7 +31,9 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('default_value')
                                 ->defaultValue(1)
                                 ->validate()
-                                    ->ifTrue(function($v){ return !is_numeric($v); })
+                                    ->ifTrue(function ($v) {
+                                        return !is_numeric($v);
+                                    })
                                     ->thenInvalid('Invalid action default value, should be a number.')
                                 ->end()
                             ->end()

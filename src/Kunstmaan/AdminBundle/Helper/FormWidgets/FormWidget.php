@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
@@ -78,7 +77,6 @@ class FormWidget implements FormWidgetInterface
      */
     public function bindRequest(Request $request)
     {
-
     }
 
     /**
@@ -155,10 +153,10 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param string       $name
-     * @param string       $type
-     * @param null         $data
-     * @param array        $options
+     * @param string $name
+     * @param string $type
+     * @param null   $data
+     * @param array  $options
      *
      * @return FormWidget
      */

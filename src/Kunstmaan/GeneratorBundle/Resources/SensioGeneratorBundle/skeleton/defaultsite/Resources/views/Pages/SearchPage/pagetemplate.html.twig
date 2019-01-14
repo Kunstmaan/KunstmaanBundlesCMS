@@ -57,7 +57,7 @@
                                 {{ searchresult['_source']['content'] | truncate(300) | escape('html') }}
                             {% endif %}
                         </p>
-                        <nav role="navigation" class="breadcrumb">
+                        <nav class="breadcrumb">
                             {% if searchresult['_source']['ancestors'] is defined %}
                                 {% for node_id in searchresult['_source']['ancestors']|reverse %}
                                     {% set nt = get_node_trans_by_node_id(node_id, app.request.locale) %}

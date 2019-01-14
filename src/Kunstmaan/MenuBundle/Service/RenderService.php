@@ -24,6 +24,7 @@ class RenderService
      * @param \Twig_Environment $environment
      * @param $node
      * @param array $options
+     *
      * @return string
      */
     public function renderMenuItemTemplate(\Twig_Environment $environment, $node, $options = array())
@@ -59,7 +60,7 @@ class RenderService
             'url' => $url,
             'options' => $options,
             'title' => $title,
-            'active' => $active
+            'active' => $active,
         ));
     }
 }

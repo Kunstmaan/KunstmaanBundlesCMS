@@ -8,7 +8,7 @@ class Node
 {
     /**
      * @param string $fixtureId
-     * @param array $fixtures
+     * @param array  $fixtures
      *
      * @return \Kunstmaan\NodeBundle\Entity\Node|null
      */

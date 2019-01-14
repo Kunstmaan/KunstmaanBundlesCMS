@@ -13,7 +13,6 @@ use Kunstmaan\MediaBundle\Entity\Folder;
  */
 class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
-
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -22,7 +21,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $gal = new Folder();
-        $gal->setRel('media');
+        $gal->setRel(Folder::TYPE_MEDIA);
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
         $manager->persist($gal);
@@ -43,7 +42,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('image');
+        $subgal->setRel(Folder::TYPE_IMAGE);
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -64,7 +63,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('files');
+        $subgal->setRel(Folder::TYPE_FILES);
         $subgal->setName('Files');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -85,7 +84,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('slideshow');
+        $subgal->setRel(Folder::TYPE_SLIDESHOW);
         $subgal->setName('Slides');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -106,7 +105,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('video');
+        $subgal->setRel(Folder::TYPE_VIDEO);
         $subgal->setName('Videos');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);

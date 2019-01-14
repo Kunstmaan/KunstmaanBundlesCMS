@@ -26,12 +26,13 @@ class MappingListener
 
     /**
      * Called when class meta data is fetched.
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {
         $classMetadata = $eventArgs->getClassMetadata();
-        $entityName = (string)$classMetadata->getName();
+        $entityName = (string) $classMetadata->getName();
 
         // We dynamically set the user class that was configured in the configuration
         if ($entityName == 'Kunstmaan\AdminBundle\Entity\AclChangeset') {
@@ -42,7 +43,7 @@ class MappingListener
                     'name' => 'user_id',
                     'referencedColumnName' => 'id',
                     'unique' => false,
-                    'nullable' => true
+                    'nullable' => true,
                 )),
             );
             $classMetadata->mapManyToOne($mapping);
@@ -59,17 +60,17 @@ class MappingListener
                         'name' => 'user_id',
                         'unique' => false,
                         'nullable' => true,
-                        'referencedColumnName' => 'id'
+                        'referencedColumnName' => 'id',
                     )),
                     'inverseJoinColumns' => array(array(
                         'name' => 'group_id',
                         'unique' => false,
                         'nullable' => true,
-                        'referencedColumnName' => 'id'
-                    ))
+                        'referencedColumnName' => 'id',
+                    )),
                 ),
                 'targetEntity' => 'Kunstmaan\AdminBundle\Entity\Group',
-                'sourceEntity' => $this->className
+                'sourceEntity' => $this->className,
             );
             $classMetadata->mapManyToMany($mapping);
         }

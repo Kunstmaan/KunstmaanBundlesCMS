@@ -13,12 +13,12 @@ class ExportException extends \RuntimeException
     /**
      * Construct Exception.
      *
-     * @param string             $message  Message
-     * @param mixed              $data
-     * @param int                $code
-     * @param \Throwable         $previous
+     * @param string     $message  Message
+     * @param mixed      $data
+     * @param int        $code
+     * @param \Throwable $previous
      */
-    public function __construct($message = "", $data, $code = 0, \Throwable $previous = null)
+    public function __construct($message = '', $data, $code = 0, \Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->data = $data;

@@ -1,6 +1,5 @@
 <?php
-namespace AdminListBundle;
-
+namespace Kunstmaan\AdminListBundle\Tests;
 /**
  * Inherited Methods
  * @method void wantToTest($text)

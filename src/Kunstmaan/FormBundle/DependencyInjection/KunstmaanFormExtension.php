@@ -16,15 +16,14 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanFormExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('kunstmaan_form.deletable_formsubmissions' , $config['deletable_formsubmissions']);
+        $container->setParameter('kunstmaan_form.deletable_formsubmissions', $config['deletable_formsubmissions']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -32,12 +31,12 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
 
     public function prepend(ContainerBuilder $container)
     {
-        if(!$container->hasParameter('form_submission_rootdir')) {
+        if (!$container->hasParameter('form_submission_rootdir')) {
             $container->setParameter('form_submission_rootdir',
                 sprintf('%s/../web/uploads/formsubmissions', $container->getParameter('kernel.root_dir')));
         }
 
-        if(!$container->hasParameter('form_submission_webdir')) {
+        if (!$container->hasParameter('form_submission_webdir')) {
             $container->setParameter('form_submission_webdir', '/uploads/formsubmissions/');
         }
 

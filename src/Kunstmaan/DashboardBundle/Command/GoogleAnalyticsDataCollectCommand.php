@@ -1,7 +1,7 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
@@ -11,10 +11,16 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 
+/**
+ * @final since 5.1
+ * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
+ */
 class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $em */
+    /** @var EntityManagerInterface $em */
     private $em;
 
     /** @var OutputInterface $output */
@@ -22,6 +28,29 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
     /** @var int $errors */
     private $errors = 0;
+
+    /** @var ServiceHelper */
+    private $serviceHelper;
+
+    /**
+     * @param EntityManagerInterface|null $em
+     * @param ServiceHelper               $serviceHelper
+     */
+    public function __construct(/* EntityManagerInterface */ $em = null, ServiceHelper $serviceHelper = null)
+    {
+        parent::__construct();
+
+        if (!$em instanceof EntityManagerInterface) {
+            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
+
+            $this->setName(null === $em ? 'kuma:dashboard:widget:googleanalytics:data:collect' : $em);
+
+            return;
+        }
+
+        $this->em = $em;
+        $this->serviceHelper = $serviceHelper;
+    }
 
     /**
      * Configures the current command.
@@ -55,26 +84,28 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * Inits instance variables for global usage.
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      *
-     * @param OutputInterface $output The output
+     * @return int|null|void
      */
-    private function init($output)
-    {
-        $this->output = $output;
-        $this->serviceHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.service');
-        $this->em = $this->getContainer()->get('doctrine')->getManager();
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // init
-        $this->init($output);
+        if (null === $this->em) {
+            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        }
+
+        if (null === $this->serviceHelper) {
+            $this->serviceHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.service');
+        }
+
+        $this->output = $output;
 
         // check if token is set
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
         if (!$configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
+
             return;
         }
 
@@ -82,21 +113,23 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $configId = false;
         $segmentId = false;
         $overviewId = false;
+
         try {
-            $configId  = $input->getOption('config');
+            $configId = $input->getOption('config');
             $segmentId = $input->getOption('segment');
             $overviewId = $input->getOption('overview');
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         // get the overviews
         try {
-            $overviews = array();
+            $overviews = [];
 
             if ($overviewId) {
                 $overviews[] = $this->getSingleOverview($overviewId);
-            } else if ($segmentId) {
+            } elseif ($segmentId) {
                 $overviews = $this->getOverviewsOfSegment($segmentId);
-            } else if ($configId) {
+            } elseif ($configId) {
                 $overviews = $this->getOverviewsOfConfig($configId);
             } else {
                 $overviews = $this->getAllOverviews();
@@ -110,12 +143,13 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
         }
-
     }
 
     /**
      * get a single overview
+     *
      * @param int $overviewId
+     *
      * @return AnalyticsOverview
      */
     private function getSingleOverview($overviewId)
@@ -133,7 +167,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
     /**
      * get all overviews of a segment
+     *
      * @param int $segmentId
+     *
      * @return array
      */
     private function getOverviewsOfSegment($segmentId)
@@ -155,7 +191,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
     /**
      * get all overviews of a config
+     *
      * @param int $configId
+     *
      * @return array
      */
     private function getOverviewsOfConfig($configId)
@@ -232,7 +270,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         // get data per overview
         foreach ($overviews as $overview) {
             $configHelper->init($overview->getConfig()->getId());
-            /** @var AnalyticsOverview $overview */
+            /* @var AnalyticsOverview $overview */
             $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
 
             try {
@@ -252,7 +290,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                     $this->reset($overview);
                     $this->output->writeln("\t" . 'No visitors');
                 }
-            // persist entity back to DB
+                // persist entity back to DB
                 $this->output->writeln("\t" . 'Persisting..');
                 $this->em->persist($overview);
                 $this->em->flush($overview);
@@ -266,7 +304,6 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             }
         }
     }
-
 
     /**
      * Reset the data for the overview

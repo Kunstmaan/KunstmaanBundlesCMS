@@ -14,7 +14,7 @@ class ClassLookup
      *
      * @param mixed $object
      *
-     * @return string the name of the class and if the given $object isn't a vaid Object false will be returned.
+     * @return string the name of the class and if the given $object isn't a vaid Object false will be returned
      */
     public static function getClass($object)
     {

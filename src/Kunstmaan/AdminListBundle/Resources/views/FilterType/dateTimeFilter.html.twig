@@ -9,20 +9,36 @@
     </select>
 </div>
 
-<div class="form-group">
-    <input
-        type="text"
-        class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}"
-        name="{{ nameprefix }}value{{ namesuffix }}[date]"
-        {% if data.value['date'] is defined %}value="{{ data.value['date'] }}"{% endif %}
-    >
-</div>
+<div class="form-group form-group--datetime">
+    <div class="form-group form-group--date js-datepicker ">
+        <div class='input-group date' id='datetimepicker1'>
+            <input
+                type="text"
+                class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}"
+                name="{{ nameprefix }}value{{ namesuffix }}"
+                data-date-format="DD/MM/YYYY"
+                {% if data.value['date'] is defined %} value="{{ data.value['date'] }}"{% endif %}
+                {% if datePicker_startDate is defined %} data-startDate="{{ datePicker_startDate }}"{% endif %}
+            >
+            <span class="input-group-addon">
+                <span class="fa fa-calendar-o"></span>
+            </span>
+        </div>
+    </div>
 
-<div class="form-group">
-    <input
-        type="text"
-        class="form-control form_timepicker{{ nameprefix }}{{ namesuffix }}"
-        name="{{ nameprefix }}value{{ namesuffix }}[time]"
-        {% if data.value['time'] is defined %}value="{{ data.value['time'] }}"{% endif %}
-    >
+    <div class="form-group form-group--time js-datepicker">
+        <div class='input-group date' id='datetimepicker2'>
+            <input
+                type="text"
+                class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}"
+                name="{{ nameprefix }}value{{ namesuffix }}"
+                data-date-format="HH:mm"
+                {% if data.value['time'] is defined %} value="{{ data.value['time'] }}"{% endif %}
+                {% if datePicker_startDate is defined %} data-startDate="{{ datePicker_startDate }}"{% endif %}
+            >
+            <span class="input-group-addon">
+                <span class="fa fa-clock-o"></span>
+            </span>
+        </div>
+    </div>
 </div>

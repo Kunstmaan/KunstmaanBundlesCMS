@@ -26,8 +26,8 @@ class BundleGenerator extends Generator
 
         $basename = substr($bundle, 0, -6);
         $parameters = array(
-            'namespace'       => $namespace,
-            'bundle'          => $bundle,
+            'namespace' => $namespace,
+            'bundle' => $bundle,
             'bundle_basename' => $basename,
             'extension_alias' => Container::underscore($basename),
         );

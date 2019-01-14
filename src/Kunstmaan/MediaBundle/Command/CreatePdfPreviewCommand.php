@@ -4,7 +4,8 @@ namespace Kunstmaan\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use \ImagickException;
+use ImagickException;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +30,7 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
     /**
      * @var string
      */
-    private $rootDir;
+    private $webRoot;
 
     /**
      * @var bool
@@ -40,7 +41,7 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
      * @param EntityManagerInterface|null $em
      * @param PdfTransformer|null         $mediaManager
      */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* PdfTransformer */ $pdfTransformer = null, $rootDir = null, $enablePdfPreview = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* PdfTransformer */ $pdfTransformer = null, $webRoot = null, $enablePdfPreview = null)
     {
         parent::__construct();
 
@@ -54,7 +55,7 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
 
         $this->em = $em;
         $this->pdfTransformer = $pdfTransformer;
-        $this->rootDir = $rootDir;
+        $this->webRoot = $webRoot;
         $this->enablePdfPreview = $enablePdfPreview;
     }
 
@@ -66,21 +67,20 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
             ->setName('kuma:media:create-pdf-previews')
             ->setDescription('Create preview images for PDFs that have already been uploaded')
             ->setHelp(
-                "The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded."
+                'The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded.'
             );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null ===  $this->em) {
+        if (null === $this->em) {
             $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $this->pdfTransformer = $this->getContainer()->get('kunstmaan_media.pdf_transformer');
-            $this->rootDir = $this->getContainer()->get('kernel')->getRootDir();
+            $this->webRoot = $this->getContainer()->getParameter('kunstmaan_media.web_root');
             $this->enablePdfPreview = $this->getContainer()->getParameter('kunstmaan_media.enable_pdf_preview');
         }
 
         $output->writeln('Creating PDF preview images...');
-        $webPath = realpath($this->rootDir . '/../web') . DIRECTORY_SEPARATOR;
 
         /**
          * @var EntityManager
@@ -90,12 +90,9 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         );
         /** @var Media $media */
         foreach ($medias as $media) {
-            try
-            {
-                $this->pdfTransformer->apply($webPath . $media->getUrl());
-            }
-            catch(ImagickException $e)
-            {
+            try {
+                $this->pdfTransformer->apply($this->webRoot . $media->getUrl());
+            } catch (ImagickException $e) {
                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
             }
         }

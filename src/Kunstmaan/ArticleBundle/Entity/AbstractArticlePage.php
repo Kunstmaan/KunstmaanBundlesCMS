@@ -7,7 +7,6 @@ use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticlePagePagePartAdminConfigurator;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Symfony\Component\Form\AbstractType;
 
 abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsInterface
 {
@@ -29,6 +28,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
 
     /**
      * Return the date of this article
+     *
      * @param \DateTime $date
      */
     public function setDate($date)
@@ -38,6 +38,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
 
     /**
      * Set the date of the article
+     *
      * @return \DateTime
      */
     public function getDate()
@@ -47,6 +48,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
 
     /**
      * Set the summary of this article
+     *
      * @param $summary
      */
     public function setSummary($summary)

@@ -25,7 +25,7 @@ class CipherCommand extends ContainerAwareCommand
         0 => 'Encrypt text',
         1 => 'Decrypt text',
         2 => 'Encrypt file',
-        3 => 'Decrypt file'
+        3 => 'Decrypt file',
     ];
 
     /**
@@ -67,8 +67,7 @@ class CipherCommand extends ContainerAwareCommand
         $question->setErrorMessage('Method %s is invalid.');
         $method = $helper->ask($input, $output, $question);
         $method = array_search($method, self::$methods, true);
-        switch($method)
-        {
+        switch ($method) {
             case 0:
             case 1:
                 $question = new Question('Please enter the text: ');
@@ -76,19 +75,21 @@ class CipherCommand extends ContainerAwareCommand
                     if (trim($value) === '') {
                         throw new \Exception('The text cannot be empty');
                     }
+
                     return $value;
                 });
                 $question->setMaxAttempts(3);
                 $text = $helper->ask($input, $output, $question);
                 $text = $method === 0 ? $this->cipher->encrypt($text) : $this->cipher->decrypt($text);
                 $output->writeln(sprintf('Result: %s', $text));
+
                 break;
             case 2:
             case 3:
             $fs = new Filesystem();
 
             $question = new Question('Please enter the input file path: ');
-                $question->setValidator(function ($value) use($fs){
+                $question->setValidator(function ($value) use ($fs) {
                     if (trim($value) === '') {
                         throw new \Exception('The input file path cannot be empty');
                     }
@@ -100,13 +101,14 @@ class CipherCommand extends ContainerAwareCommand
                     if (is_dir($value)) {
                         throw new \Exception('The input file cannot be a dir');
                     }
+
                     return $value;
                 });
                 $question->setMaxAttempts(3);
                 $inputFilePath = $helper->ask($input, $output, $question);
 
                 $question = new Question('Please enter the output file path: ');
-                $question->setValidator(function ($value){
+                $question->setValidator(function ($value) {
                     if (trim($value) === '') {
                         throw new \Exception('The output file path cannot be empty');
                     }
@@ -114,12 +116,13 @@ class CipherCommand extends ContainerAwareCommand
                     if (is_dir($value)) {
                         throw new \Exception('The output file path cannot be a dir');
                     }
+
                     return $value;
                 });
                 $question->setMaxAttempts(3);
                 $outputFilePath = $helper->ask($input, $output, $question);
 
-                if($method === 2) {
+                if ($method === 2) {
                     $this->cipher->encryptFile($inputFilePath, $outputFilePath);
                 } else {
                     if (false === $fs->exists($outputFilePath)) {
@@ -129,8 +132,8 @@ class CipherCommand extends ContainerAwareCommand
                 }
 
                 $output->writeln(sprintf('Check "%s" to see result', $outputFilePath));
+
                 break;
         }
     }
-
 }

@@ -34,8 +34,8 @@ class Search implements SearchProviderInterface
     public function __construct(SearchProviderChainInterface $searchProviderChain, $indexNamePrefix, $activeProvider)
     {
         $this->searchProviderChain = $searchProviderChain;
-        $this->indexNamePrefix     = $indexNamePrefix;
-        $this->activeProvider      = $activeProvider;
+        $this->indexNamePrefix = $indexNamePrefix;
+        $this->activeProvider = $activeProvider;
     }
 
     /**
@@ -49,7 +49,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createIndex($indexName)
     {
@@ -57,7 +57,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIndex($indexName)
     {
@@ -65,7 +65,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getClient()
     {
@@ -73,7 +73,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
@@ -88,7 +88,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addDocument($uid, $document, $indexType, $indexName)
     {
@@ -103,7 +103,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addDocuments($documents, $indexName = '', $indexType = '')
     {
@@ -113,7 +113,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteDocument($indexName, $indexType, $uid)
     {
@@ -123,7 +123,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
@@ -133,7 +133,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteIndex($indexName)
     {
@@ -143,7 +143,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {

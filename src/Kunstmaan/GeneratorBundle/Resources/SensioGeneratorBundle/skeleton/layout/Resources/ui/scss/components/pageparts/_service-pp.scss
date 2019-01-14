@@ -14,7 +14,6 @@
 /* Alignment
    ========================================================================== */
 .service-pp--left {
-
     .service-pp__image {
 
         @media (min-width: $screen-sm-min) {
@@ -23,7 +22,6 @@
     }
 
     .service-pp__text {
-
         @media (min-width: $screen-sm-min) {
             float: right;
         }
@@ -31,16 +29,13 @@
 }
 
 .service-pp--right {
-
     .service-pp__image {
-
         @media (min-width: $screen-sm-min) {
             right: 0;
         }
     }
 
     .service-pp__text {
-
         @media (min-width: $screen-sm-min) {
             float: left;
         }

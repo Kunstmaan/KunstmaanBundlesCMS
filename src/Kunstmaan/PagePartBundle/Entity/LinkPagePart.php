@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 
@@ -12,7 +13,6 @@ use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
  */
 class LinkPagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -49,7 +49,7 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getOpenInNewWindow()
     {
@@ -57,7 +57,7 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * @param boolean $openInNewWindow
+     * @param bool $openInNewWindow
      *
      * @return LinkPagePart
      */
@@ -93,7 +93,7 @@ class LinkPagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "LinkPagePart";
+        return 'LinkPagePart';
     }
 
     /**
@@ -101,7 +101,7 @@ class LinkPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:LinkPagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:LinkPagePart:view.html.twig';
     }
 
     /**
