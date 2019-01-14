@@ -100,7 +100,7 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new LayoutGenerator($filesystem, $registry, '/layout', $this->assistant);
+        return new LayoutGenerator($filesystem, $registry, '/layout', $this->assistant, $this->getContainer());
     }
 
     /**
