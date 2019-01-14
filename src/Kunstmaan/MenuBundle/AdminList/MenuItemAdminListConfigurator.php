@@ -82,7 +82,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function getValue($item, $columnName)
     {
         if ($columnName == 'title') {
-           return $item->getDisplayTitle();
+            return $item->getDisplayTitle();
         } elseif ($columnName == 'online') {
             return $item;
         } elseif ($columnName == 'type') {

@@ -49,5 +49,4 @@ abstract class AbstractEntity implements EntityInterface
     {
         return (string) $this->getId();
     }
-
 }

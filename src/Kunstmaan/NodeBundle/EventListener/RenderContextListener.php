@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,11 +55,11 @@ class RenderContextListener
             return;
         }
 
-        $nodeTranslation    = $request->attributes->get('_nodeTranslation');
+        $nodeTranslation = $request->attributes->get('_nodeTranslation');
         if ($nodeTranslation) {
-            $entity     = $request->attributes->get('_entity');
-            $url        = $request->attributes->get('url');
-            $nodeMenu   = $request->attributes->get('_nodeMenu');
+            $entity = $request->attributes->get('_entity');
+            $url = $request->attributes->get('url');
+            $nodeMenu = $request->attributes->get('_nodeMenu');
             $parameters = $request->attributes->get('_renderContext');
 
             if ($request->get('preview') === true) {
@@ -75,10 +74,10 @@ class RenderContextListener
 
             $renderContext = array(
                 'nodetranslation' => $nodeTranslation,
-                'slug'            => $url,
-                'page'            => $entity,
-                'resource'        => $entity,
-                'nodemenu'        => $nodeMenu,
+                'slug' => $url,
+                'page' => $entity,
+                'resource' => $entity,
+                'nodemenu' => $nodeMenu,
             );
 
             if (is_array($parameters) || $parameters instanceof \ArrayObject) {

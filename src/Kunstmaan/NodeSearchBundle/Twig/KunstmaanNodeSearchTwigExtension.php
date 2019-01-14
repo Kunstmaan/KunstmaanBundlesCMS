@@ -75,14 +75,13 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
         HasPagePartsInterface $page,
         $contextName = 'main',
         array $parameters = array()
-    )
-    {
+    ) {
         $template = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,
             array(
-                'pageparts' => $pageparts
+                'pageparts' => $pageparts,
             )
         );
         $newTwigContext = array_merge($newTwigContext, $twigContext);

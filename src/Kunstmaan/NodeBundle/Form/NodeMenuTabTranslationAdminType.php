@@ -22,17 +22,17 @@ class NodeMenuTabTranslationAdminType extends AbstractType
                 'label' => 'kuma_node.form.menu_tab_translation.slug.label',
                 'required' => false,
                 'constraints' => array(
-                    new Regex("/^[a-zA-Z0-9\-_\/]+$/")
-                )
+                    new Regex("/^[a-zA-Z0-9\-_\/]+$/"),
+                ),
             ));
         }
         $builder->add('weight', ChoiceType::class, array(
             'label' => 'kuma_node.form.menu_tab_translation.weight.label',
-            'choices'     => array_combine(range(-50, 50), range(-50, 50)),
+            'choices' => array_combine(range(-50, 50), range(-50, 50)),
             'placeholder' => false,
-            'required'    => false,
-            'attr'        => array('title' => 'kuma_node.form.menu_tab_translation.weight.title'),
-            'choice_translation_domain' => false
+            'required' => false,
+            'attr' => array('title' => 'kuma_node.form.menu_tab_translation.weight.title'),
+            'choice_translation_domain' => false,
         ));
     }
 

@@ -3,7 +3,6 @@
 namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -26,7 +25,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PageTemplateWidget extends FormWidget
 {
-
     /**
      * @var EntityManagerInterface
      */
@@ -68,13 +66,13 @@ class PageTemplateWidget extends FormWidget
     protected $pageTemplateConfiguration;
 
     /**
-     * @param HasPageTemplateInterface $page
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param PagePartAdminFactory $pagePartAdminFactory
+     * @param HasPageTemplateInterface                 $page
+     * @param Request                                  $request
+     * @param EntityManagerInterface                   $em
+     * @param PagePartAdminFactory                     $pagePartAdminFactory
      * @param PageTemplateConfigurationReaderInterface $templateReader
-     * @param PagePartConfigurationReaderInterface $pagePartReader
-     * @param PageTemplateConfigurationService $pageTemplateConfigurationService
+     * @param PagePartConfigurationReaderInterface     $pagePartReader
+     * @param PageTemplateConfigurationService         $pageTemplateConfigurationService
      */
     public function __construct(
         HasPageTemplateInterface $page,
@@ -84,8 +82,7 @@ class PageTemplateWidget extends FormWidget
         PageTemplateConfigurationReaderInterface $templateReader,
         PagePartConfigurationReaderInterface $pagePartReader,
         PageTemplateConfigurationService $pageTemplateConfigurationService
-    )
-    {
+    ) {
         parent::__construct();
 
         $this->page = $page;
@@ -175,7 +172,7 @@ class PageTemplateWidget extends FormWidget
      */
     public function bindRequest(Request $request)
     {
-        $configurationname = $request->get("pagetemplate_template");
+        $configurationname = $request->get('pagetemplate_template');
         $this->pageTemplateConfiguration->setPageTemplate($configurationname);
         foreach ($this->widgets as $widget) {
             $widget->bindRequest($request);
@@ -240,5 +237,4 @@ class PageTemplateWidget extends FormWidget
     {
         return [];
     }
-
 }

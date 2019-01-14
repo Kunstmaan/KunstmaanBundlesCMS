@@ -14,6 +14,8 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
@@ -29,31 +31,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 abstract class AdminListController extends Controller
 {
     /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     */
-    protected function get($id)
-    {
-        @trigger_error('Getting services directly from the container is deprecated in KunstmaanAdminListBundle 5.1 and will be removed in KunstmaanAdminListBundle 6.0. Register your controllers as services and inject the necessary dependencies.', E_USER_DEPRECATED);
-
-        return parent::get($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     */
-    protected function getParameter($name)
-    {
-        @trigger_error('Getting parameters directly from the container is deprecated in KunstmaanAdminListBundle 5.1 and will be removed in KunstmaanAdminListBundle 6.0. Register your controllers as services and inject the necessary parameters.', E_USER_DEPRECATED);
-
-        return parent::getParameter($name);
-    }
-
-
-    /**
      * You can override this method to return the correct entity manager when using multiple databases ...
      *
      * @return \Doctrine\Common\Persistence\ObjectManager|object
@@ -67,7 +44,7 @@ abstract class AdminListController extends Controller
      * Shows the list of entities
      *
      * @param AbstractAdminListConfigurator $configurator
-     * @param null|Request $request
+     * @param null|Request                  $request
      *
      * @return Response
      */
@@ -75,7 +52,7 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         /* @var AdminList $adminList */
-        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator, $em);
         $adminList->bindRequest($request);
 
         $this->buildSortableFieldActions($configurator);
@@ -92,8 +69,8 @@ abstract class AdminListController extends Controller
      * Export a list of Entities
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string $_format The format to export to
-     * @param null|Request $request
+     * @param string                        $_format      The format to export to
+     * @param null|Request                  $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -108,18 +85,18 @@ abstract class AdminListController extends Controller
         $em = $this->getEntityManager();
 
         /* @var AdminList $adminList */
-        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator, $em);
         $adminList->bindRequest($request);
 
-        return $this->container->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
+        return $this->container->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($adminList, $_format);
     }
 
     /**
      * Creates and processes the form to add a new Entity
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string $type The type to add
-     * @param null|Request $request
+     * @param string                        $type         The type to add
+     * @param null|Request                  $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -197,7 +174,7 @@ abstract class AdminListController extends Controller
         $params = [
             'form' => $form->createView(),
             'adminlistconfigurator' => $configurator,
-            'entityVersionLockCheck' => false
+            'entityVersionLockCheck' => false,
         ];
 
         if ($tabPane) {
@@ -213,8 +190,8 @@ abstract class AdminListController extends Controller
      * Creates and processes the edit form for an Entity using its ID
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string $entityId The id of the entity that will be edited
-     * @param null|Request $request
+     * @param string                        $entityId     The id of the entity that will be edited
+     * @param null|Request                  $request
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
@@ -228,7 +205,7 @@ abstract class AdminListController extends Controller
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
 
         if ($helper === null) {
-            throw new NotFoundHttpException("Entity not found.");
+            throw new NotFoundHttpException('Entity not found.');
         }
 
         if (!$configurator->canEdit($helper)) {
@@ -241,7 +218,7 @@ abstract class AdminListController extends Controller
                 $indexUrl = $configurator->getIndexUrl();
                 // Don't redirect to listing when coming from ajax request, needed for url chooser.
                 if (!$request->isXmlHttpRequest()) {
-                    /** @var EntityVersionLockService $entityVersionLockService*/
+                    /** @var EntityVersionLockService $entityVersionLockService */
                     $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
                     $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
@@ -250,6 +227,7 @@ abstract class AdminListController extends Controller
                         FlashTypes::WARNING,
                         $message
                     );
+
                     return new RedirectResponse(
                         $this->generateUrl(
                             $indexUrl['path'],
@@ -269,7 +247,6 @@ abstract class AdminListController extends Controller
         $form = $this->createForm($formType, $helper, $event->getOptions());
 
         if ($request->isMethod('POST')) {
-
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
@@ -343,7 +320,7 @@ abstract class AdminListController extends Controller
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {
-            throw new NotFoundHttpException("Entity not found.");
+            throw new NotFoundHttpException('Entity not found.');
         }
 
         if (!$configurator->canView($helper)) {
@@ -357,7 +334,6 @@ abstract class AdminListController extends Controller
             $fields[$value] = $accessor->getValue($helper, $value);
         }
 
-
         return new Response(
             $this->renderView(
                 $configurator->getViewTemplate(),
@@ -370,8 +346,8 @@ abstract class AdminListController extends Controller
      * Delete the Entity using its ID
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param integer $entityId The id to delete
-     * @param null|Request $request
+     * @param int                           $entityId     The id to delete
+     * @param null|Request                  $request
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
@@ -384,7 +360,7 @@ abstract class AdminListController extends Controller
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {
-            throw new NotFoundHttpException("Entity not found.");
+            throw new NotFoundHttpException('Entity not found.');
         }
         if (!$configurator->canDelete($helper)) {
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
@@ -430,11 +406,14 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
-        $repo = $em->getRepository($configurator->getRepositoryName());
+
+        $repositoryName = $this->getAdminListRepositoryName($configurator);
+
+        $repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
-        $setter = "set".ucfirst($sortableField);
-        $getter = "get".ucfirst($sortableField);
+        $setter = 'set'.ucfirst($sortableField);
+        $getter = 'get'.ucfirst($sortableField);
 
         $nextItem = $repo->createQueryBuilder('i')
             ->where('i.'.$sortableField.' < :weight')
@@ -463,11 +442,14 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
-        $repo = $em->getRepository($configurator->getRepositoryName());
+
+        $repositoryName = $this->getAdminListRepositoryName($configurator);
+
+        $repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
-        $setter = "set".ucfirst($sortableField);
-        $getter = "get".ucfirst($sortableField);
+        $setter = 'set'.ucfirst($sortableField);
+        $getter = 'get'.ucfirst($sortableField);
 
         $nextItem = $repo->createQueryBuilder('i')
             ->where('i.'.$sortableField.' > :weight')
@@ -499,11 +481,12 @@ abstract class AdminListController extends Controller
             ->getQuery()
             ->getSingleScalarResult();
 
-        return (int)$maxWeight;
+        return (int) $maxWeight;
     }
 
     /**
      * @param LockableEntityInterface $entity
+     *
      * @return bool
      */
     protected function isLockableEntityLocked(LockableEntityInterface $entity)
@@ -525,12 +508,13 @@ abstract class AdminListController extends Controller
      *
      * @return mixed
      */
-    protected function setSortWeightOnNewItem(AbstractAdminListConfigurator $configurator, $item) {
+    protected function setSortWeightOnNewItem(AbstractAdminListConfigurator $configurator, $item)
+    {
         if ($configurator instanceof SortableInterface) {
             $repo = $this->getEntityManager()->getRepository($configurator->getRepositoryName());
             $sort = $configurator->getSortableField();
             $weight = $this->getMaxSortableField($repo, $sort);
-            $setter = "set".ucfirst($sort);
+            $setter = 'set'.ucfirst($sort);
             $item->$setter($weight + 1);
         }
 
@@ -561,5 +545,23 @@ abstract class AdminListController extends Controller
             $action = new SimpleItemAction($route, 'arrow-down', 'kuma_admin_list.action.move_down');
             $configurator->addItemAction($action);
         }
+    }
+
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     *
+     * @return string
+     */
+    protected function getAdminListRepositoryName(AbstractAdminListConfigurator $configurator)
+    {
+        $em = $this->getEntityManager();
+        $className = $em->getClassMetadata($configurator->getRepositoryName())->getName();
+
+        $implements = class_implements($className);
+        if (isset($implements[HasNodeInterface::class])) {
+            return NodeTranslation::class;
+        }
+
+        return $configurator->getRepositoryName();
     }
 }

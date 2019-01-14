@@ -5,8 +5,7 @@ namespace Kunstmaan\RedirectBundle\Controller;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,8 +41,8 @@ class RedirectAdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add", name="kunstmaanredirectbundle_admin_redirect_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="kunstmaanredirectbundle_admin_redirect_add", methods={"GET", "POST"})
+     *
      * @return Response
      */
     public function addAction(Request $request)
@@ -56,8 +55,7 @@ class RedirectAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="kunstmaanredirectbundle_admin_redirect_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="kunstmaanredirectbundle_admin_redirect_edit", methods={"GET", "POST"})
      *
      * @return Response
      */
@@ -71,8 +69,7 @@ class RedirectAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanredirectbundle_admin_redirect_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanredirectbundle_admin_redirect_delete", methods={"GET", "POST"})
      *
      * @return Response
      */
@@ -86,8 +83,8 @@ class RedirectAdminListController extends AdminListController
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="kunstmaanredirectbundle_admin_redirect_export")
-     * @Method({"GET", "POST"})
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="kunstmaanredirectbundle_admin_redirect_export", methods={"GET", "POST"})
+     *
      * @return Response
      */
     public function exportAction(Request $request, $_format)

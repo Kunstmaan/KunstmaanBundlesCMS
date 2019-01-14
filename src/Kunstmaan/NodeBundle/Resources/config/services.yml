@@ -131,6 +131,7 @@ services:
             - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
             - [ setACLPermissionCreatorService, [ '@kunstmaan_node.acl_permission_creator_service' ] ]
             - [ setUserEntityClass, [ '%fos_user.model.user.class%' ] ]
+        public: true
 
     kunstmaan_node.acl_permission_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService
@@ -187,6 +188,9 @@ services:
         arguments:
             - "@kunstmaan_node.helper.url"
         public: true
+
+    # Add service alias to use controller as a service with the symfony core route annotation
+    Kunstmaan\NodeBundle\Controller\UrlReplaceController: '@kunstmaan_node.url_replace.controller'
 
     kunstmaan_node.helper.node:
         class: Kunstmaan\NodeBundle\Helper\NodeHelper

@@ -25,11 +25,11 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $group1 = $this->createGroup($manager, 'Administrators', array(
             $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
-            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE)
+            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
         ));
 
         $group2 = $this->createGroup($manager, 'Guests', array(
-            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE)
+            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE),
         ));
 
         $group3 = $this->createGroup($manager, 'Super administrators', array(
@@ -40,9 +40,9 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
 
-        $this->addReference(self::REFERENCE_ADMINS_GROUP,       $group1);
-        $this->addReference(self::REFERENCE_GUESTS_GROUP,       $group2);
-        $this->addReference(self::REFERENCE_SUPERADMINS_GROUP,  $group3);
+        $this->addReference(self::REFERENCE_ADMINS_GROUP, $group1);
+        $this->addReference(self::REFERENCE_GUESTS_GROUP, $group2);
+        $this->addReference(self::REFERENCE_SUPERADMINS_GROUP, $group3);
     }
 
     /**
@@ -74,5 +74,4 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         return 2;
     }
-
 }

@@ -24,8 +24,6 @@ class BulkMoveMediaType extends AbstractType
      * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -40,7 +38,7 @@ class BulkMoveMediaType extends AbstractType
                     'required' => true,
                     'query_builder' => function (FolderRepository $er) {
                         return $er->selectFolderQueryBuilder();
-                    }
+                    },
                 ]
             )
             ->add(

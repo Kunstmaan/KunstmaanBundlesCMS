@@ -1,5 +1,5 @@
 <?php
-namespace TranslatorBundle;
+namespace Kunstmaan\TranslatorBundle\Tests;
 
 /**
  * Inherited Methods

@@ -18,9 +18,8 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class NodeVersion extends AbstractEntity
 {
-
-    const DRAFT_VERSION     = 'draft';
-    const PUBLIC_VERSION    = 'public';
+    const DRAFT_VERSION = 'draft';
+    const PUBLIC_VERSION = 'public';
 
     /**
      * @var NodeTranslation
@@ -134,7 +133,6 @@ class NodeVersion extends AbstractEntity
     {
         return self::PUBLIC_VERSION === $this->type;
     }
-
 
     /**
      * Set type
@@ -270,9 +268,6 @@ class NodeVersion extends AbstractEntity
         return $this->refEntityName;
     }
 
-    /**
-     * @return null
-     */
     public function getDefaultAdminType()
     {
         return null;
@@ -320,5 +315,4 @@ class NodeVersion extends AbstractEntity
     {
         return $this->origin;
     }
-
 }

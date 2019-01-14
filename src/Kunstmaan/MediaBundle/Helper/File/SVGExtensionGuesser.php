@@ -2,14 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Helper\File;
 
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 
 /**
  * SVGMimeTypeGuesser
- *
- * @package Kunstmaan\MediaBundle\Helper\File
  */
 class SVGExtensionGuesser implements ExtensionGuesserInterface
 {
@@ -18,10 +14,10 @@ class SVGExtensionGuesser implements ExtensionGuesserInterface
      */
     public function guess($mimeType)
     {
-       if($mimeType === 'image/svg+xml') {
-           return 'svg';
-       }
-        
+        if ($mimeType === 'image/svg+xml') {
+            return 'svg';
+        }
+
         return null;
     }
 }

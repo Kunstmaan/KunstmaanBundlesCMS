@@ -31,7 +31,7 @@ class LoginListener
      */
     public function __construct(LoggerInterface $logger, VersionChecker $versionChecker)
     {
-        $this->logger         = $logger;
+        $this->logger = $logger;
         $this->versionChecker = $versionChecker;
     }
 

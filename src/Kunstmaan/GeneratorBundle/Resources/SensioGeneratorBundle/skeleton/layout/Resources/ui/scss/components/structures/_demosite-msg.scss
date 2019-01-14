@@ -14,13 +14,11 @@
     &:hover,
     &:focus,
     &:active {
-
         .demosite-msg {
             background: lighten($brand-primary, 5%);
         }
 
         .demosite-msg__btn {
-
             &:after {
                 border-color: lighten($brand-primary, 5%) transparent transparent transparent;
             }
@@ -100,4 +98,3 @@
         color: $white;
     }
 }
-

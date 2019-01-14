@@ -64,7 +64,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
 
         $this->setName('kuma:nodes:cron')
             ->setDescription('Do everything that needs to be run in a cron job.')
-            ->setHelp("The <info>kuma:nodes:cron</info> will loop over all queued node translation action entries and update the nodetranslations if needed.");
+            ->setHelp('The <info>kuma:nodes:cron</info> will loop over all queued node translation action entries and update the nodetranslations if needed.');
     }
 
     /**
@@ -95,11 +95,13 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
                     switch ($action) {
                         case QueuedNodeTranslationAction::ACTION_PUBLISH:
                             $this->nodePublisher->publish($nodeTranslation, $user);
-                            $output->writeln("Published the page " . $nodeTranslation->getTitle());
+                            $output->writeln('Published the page ' . $nodeTranslation->getTitle());
+
                             break;
                         case QueuedNodeTranslationAction::ACTION_UNPUBLISH:
                             $this->nodePublisher->unPublish($nodeTranslation);
-                            $output->writeln("Unpublished the page " . $nodeTranslation->getTitle());
+                            $output->writeln('Unpublished the page ' . $nodeTranslation->getTitle());
+
                             break;
                         default:
                             $output->writeln("Don't understand the action " . $action);

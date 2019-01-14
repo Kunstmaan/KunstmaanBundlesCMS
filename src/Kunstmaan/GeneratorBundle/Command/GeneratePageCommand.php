@@ -52,7 +52,7 @@ class GeneratePageCommand extends KunstmaanGenerateCommand
     protected function configure()
     {
         $this->setDescription('Generates a new page')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:page</info> command generates a new page and its configuration.
 
 <info>php bin/console kuma:generate:page</info>
@@ -83,12 +83,12 @@ EOT
 
         if (count($this->parentPages) == 0) {
             $this->assistant->writeLine(array(
-                "To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:",
-                "<comment>    array(</comment>",
+                'To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:',
+                '<comment>    array(</comment>',
                 "<comment>        'name' => '".$this->pageName."',</comment>",
-                "<comment>        'class'=> '".$this->bundle->getNamespace()."\\Entity\\Pages\\".$this->pageName."'</comment>",
-                "<comment>    ),</comment>",
-                ""
+                "<comment>        'class'=> '".$this->bundle->getNamespace().'\\Entity\\Pages\\'.$this->pageName."'</comment>",
+                '<comment>    ),</comment>',
+                '',
             ));
         }
 
@@ -96,7 +96,7 @@ EOT
             'Make sure you update your database first before you use the page:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
-            ''
+            '',
         ));
     }
 
@@ -111,17 +111,17 @@ EOT
 
         $this->assistant->writeLine(array("This command helps you to generate a new page.\n"));
 
-        /**
+        /*
          * Ask for which bundle we need to create the pagepart
          */
         $this->bundle = $this->askForBundleName('page');
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
-        /**
+        /*
          * Ask the name of the pagepart
          */
         $this->assistant->writeLine(array(
@@ -136,7 +136,7 @@ EOT
             'Page name',
             function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
-                if ($generator->isReservedKeyword($name)){
+                if ($generator->isReservedKeyword($name)) {
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                 }
 
@@ -160,7 +160,7 @@ EOT
         );
         $this->pageName = $name;
 
-        /**
+        /*
          * Ask which fields need to be present
          */
         $this->assistant->writeLine(array("\nInstead of starting with a blank page, you can add some fields now.\n"));
@@ -197,7 +197,7 @@ EOT
         $templateConfig = $templateConfigs[$templateId];
         $this->template = $templateConfig['file'];
 
-        /**
+        /*
          * Ask for which sections pagepart configuration the end user wants to use for the different sections
          */
         $this->assistant->writeLine(array("\nThe select page template consists of these contexts: " . implode(', ', $templateConfig['contexts'])));
@@ -215,7 +215,9 @@ EOT
          * Ask the parent pages
          */
         $parentPages = $this->getAvailablePages($this->bundle);
-        $pagesSelect = array_map(function ($item) { return $item['name']; }, $parentPages);
+        $pagesSelect = array_map(function ($item) {
+            return $item['name'];
+        }, $parentPages);
         if (count($pagesSelect) > 0) {
             $this->assistant->writeLine('');
             $parentPageIds = $this->assistant->askSelect('Which existing page(s) can have the new page as sub-page (multiple possible, separated by comma)', $pagesSelect, null, true);

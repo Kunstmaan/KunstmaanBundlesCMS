@@ -163,14 +163,14 @@ class NodeRepository extends NestedTreeRepository
      */
     public function getNodeForSlug(Node $parentNode, $slug)
     {
-        $slugParts = explode("/", $slug);
-        $result    = null;
+        $slugParts = explode('/', $slug);
+        $result = null;
         foreach ($slugParts as $slugPart) {
             if ($parentNode) {
                 if ($r = $this->findOneBy(
                     array(
-                        'slug'          => $slugPart,
-                        'parent.parent' => $parentNode->getId()
+                        'slug' => $slugPart,
+                        'parent.parent' => $parentNode->getId(),
                     )
                 )
                 ) {
@@ -202,14 +202,14 @@ class NodeRepository extends NestedTreeRepository
         BaseUser $owner,
         $internalName = null
     ) {
-        $em   = $this->getEntityManager();
+        $em = $this->getEntityManager();
         $node = new Node();
         $node->setRef($hasNode);
         if (!$hasNode->getId() > 0) {
             throw new \InvalidArgumentException(
-                "the entity of class ".
+                'the entity of class '.
                 $node->getRefEntityName(
-                )." has no id, maybe you forgot to flush first"
+                ).' has no id, maybe you forgot to flush first'
             );
         }
         $node->setDeleted(false);
@@ -221,8 +221,8 @@ class NodeRepository extends NestedTreeRepository
                 'KunstmaanNodeBundle:NodeVersion'
             )->findOneBy(
                 array(
-                    'refId'         => $parent->getId(),
-                    'refEntityName' => ClassLookup::getClass($parent)
+                    'refId' => $parent->getId(),
+                    'refEntityName' => ClassLookup::getClass($parent),
                 )
             );
             if ($parentNodeVersion) {
@@ -271,10 +271,10 @@ class NodeRepository extends NestedTreeRepository
         $includeHiddenFromNav = false,
         Node $rootNode = null
     ) {
-        $connection           = $this->_em->getConnection();
-        $qb                   = $connection->createQueryBuilder();
+        $connection = $this->_em->getConnection();
+        $qb = $connection->createQueryBuilder();
         $databasePlatformName = $connection->getDatabasePlatform()->getName();
-        $createIfStatement    = function (
+        $createIfStatement = function (
             $expression,
             $trueValue,
             $falseValue
@@ -282,6 +282,7 @@ class NodeRepository extends NestedTreeRepository
             switch ($databasePlatformName) {
                 case 'sqlite':
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
+
                     break;
 
                 default:
@@ -299,7 +300,6 @@ n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
 n.hidden_from_nav AS hidden,
 n.ref_entity_name AS ref_entity_name
 SQL;
-
 
         $qb->select($sql)
             ->from('kuma_nodes', 'n')
@@ -532,6 +532,7 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n.refEntityName')
+            ->where('n.deleted = 0')
             ->distinct(true);
 
         return $qb->getQuery()->getArrayResult();

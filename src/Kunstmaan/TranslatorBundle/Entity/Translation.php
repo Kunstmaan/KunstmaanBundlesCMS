@@ -25,7 +25,7 @@ class Translation
     const FLAG_UPDATED = 'updated';
     const STATUS_DEPRECATED = 'deprecated';
     const STATUS_DISABLED = 'disabled';
-    const STATUS_ENABLED =  'enabled';
+    const STATUS_ENABLED = 'enabled';
 
     /**
      * @ORM\Id
@@ -57,8 +57,8 @@ class Translation
     protected $locale;
 
     /**
-     * @var string $status
-     * The translations deprecation date
+     * @var string
+     *             The translations deprecation date
      *
      * @ORM\column(type="string", length=10, options={"default" : "enabled"})
      */
@@ -131,7 +131,6 @@ class Translation
         if ($this->flag === null) {
             $this->flag = self::FLAG_UPDATED;
         }
-
     }
 
     /**
@@ -144,6 +143,7 @@ class Translation
 
     /**
      * @param string $id
+     *
      * @return Translation
      */
     public function setId($id)
@@ -163,6 +163,7 @@ class Translation
 
     /**
      * @param string $keyword
+     *
      * @return Translation
      */
     public function setKeyword($keyword)
@@ -182,6 +183,7 @@ class Translation
 
     /**
      * @param string $locale
+     *
      * @return Translation
      */
     public function setLocale($locale)
@@ -201,6 +203,7 @@ class Translation
 
     /**
      * @param string $file
+     *
      * @return Translation
      */
     public function setFile($file)
@@ -220,6 +223,7 @@ class Translation
 
     /**
      * @param string $text
+     *
      * @return Translation
      */
     public function setText($text)
@@ -239,6 +243,7 @@ class Translation
 
     /**
      * @param string $domain
+     *
      * @return Translation
      */
     public function setDomain($domain)
@@ -258,6 +263,7 @@ class Translation
 
     /**
      * @param \DateTime $createdAt
+     *
      * @return Translation
      */
     public function setCreatedAt(DateTime $createdAt)
@@ -277,6 +283,7 @@ class Translation
 
     /**
      * @param DateTime $updatedAt
+     *
      * @return Translation
      */
     public function setUpdatedAt(DateTime $updatedAt)
@@ -296,6 +303,7 @@ class Translation
 
     /**
      * @param string $flag
+     *
      * @return Translation
      */
     public function setFlag($flag)
@@ -307,6 +315,7 @@ class Translation
 
     /**
      * @param string $translationId
+     *
      * @return Translation
      */
     public function setTranslationId($translationId)
@@ -334,16 +343,18 @@ class Translation
 
     /**
      * @param string $status
+     *
      * @return Translation
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisabled()
     {
@@ -351,7 +362,7 @@ class Translation
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeprecated()
     {
@@ -359,7 +370,7 @@ class Translation
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return TranslationModel
      */
@@ -369,6 +380,7 @@ class Translation
         $translationModel->setKeyword($this->getKeyword());
         $translationModel->setDomain($this->getDomain());
         $translationModel->addText($this->getLocale(), $this->getText(), $id);
+
         return $translationModel;
     }
 }

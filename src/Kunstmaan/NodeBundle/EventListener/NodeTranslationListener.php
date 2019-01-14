@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 /**
  * Class NodeTranslationListener
  * Listens to doctrine postFlush event and updates the urls if the entities are nodetranslations
- *
- * @package Kunstmaan\NodeBundle\EventListener
  */
 class NodeTranslationListener
 {
@@ -158,7 +156,7 @@ class NodeTranslationListener
                     if ($entity !== false) {
                         $em->persist($entity);
                         $em->getUnitOfWork()->recomputeSingleEntityChangeSet($class, $entity);
-    
+
                         $this->updateNodeChildren($entity, $em, $class);
                     }
                 }
@@ -202,7 +200,7 @@ class NodeTranslationListener
      * @param NodeTranslation        $nodeTranslation The node translation
      * @param EntityManagerInterface $em              The entity manager
      *
-     * @return NodeTranslation|bool Returns the node when all is well because it has to be saved.
+     * @return NodeTranslation|bool returns the node when all is well because it has to be saved
      */
     private function updateUrl(NodeTranslation $nodeTranslation, EntityManagerInterface $em)
     {
@@ -239,10 +237,10 @@ class NodeTranslationListener
      * if a node's URL is prepended with the language or not. For now both
      * scenarios are possible so we check for all languages.
      *
-     * @param NodeTranslation        $translation  Reference to the NodeTranslation.
-     *                                             This is modified in place.
-     * @param EntityManagerInterface $em           The entity manager
-     * @param array                  $flashes      The flash messages array
+     * @param NodeTranslation        $translation Reference to the NodeTranslation.
+     *                                            This is modified in place.
+     * @param EntityManagerInterface $em          The entity manager
+     * @param array                  $flashes     The flash messages array
      *
      * @return bool
      */
@@ -344,11 +342,11 @@ class NodeTranslationListener
      * If the string does not end in a number we'll add the append and then add
      * the first number.
      *
-     * @param string $string The string we want to increment.
-     * @param string $append The part we want to append before we start adding
-     *                       a number.
+     * @param string $string the string we want to increment
+     * @param string $append the part we want to append before we start adding
+     *                       a number
      *
-     * @return string Incremented string.
+     * @return string incremented string
      */
     private function incrementString($string, $append = '-v')
     {

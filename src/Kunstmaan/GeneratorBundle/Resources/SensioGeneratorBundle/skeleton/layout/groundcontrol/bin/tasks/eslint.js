@@ -6,7 +6,10 @@ import gulpif from 'gulp-if';
 
 const ESLINT_CACHE = 'eslint';
 
-export default function createEslintTask({src = undefined, failAfterError = true}) {
+export default function createEslintTask({
+    src = undefined,
+    failAfterError = true,
+}) {
     return function eslint() {
         return gulp.src(src)
             .pipe(cache(ESLINT_CACHE))

@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminListBundle\Repository\LockableEntityRepository")
@@ -37,7 +36,7 @@ class LockableEntity extends AbstractEntity
     protected $entityClass;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="bigint", name="entity_id")
      */
@@ -103,7 +102,7 @@ class LockableEntity extends AbstractEntity
     /**
      * Get entityClass.
      *
-     * @return string.
+     * @return string
      */
     public function getEntityClass()
     {
@@ -125,7 +124,7 @@ class LockableEntity extends AbstractEntity
     /**
      * Get entityId.
      *
-     * @return integer.
+     * @return int
      */
     public function getEntityId()
     {
@@ -146,4 +145,3 @@ class LockableEntity extends AbstractEntity
         return $this;
     }
 }
-

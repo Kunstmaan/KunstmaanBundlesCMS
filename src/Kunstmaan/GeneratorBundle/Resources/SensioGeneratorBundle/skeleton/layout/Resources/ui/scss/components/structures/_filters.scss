@@ -37,20 +37,21 @@
         display: inline-block;
         padding: 5px 10px;
 
+        border: 1px solid $grey;
+
         color: $grey;
         line-height: 1;
 
-        border: 1px solid $grey;
-
         &:hover {
-            color: $blue;
             border-color: $blue;
+
+            color: $blue;
         }
     }
 }
 
 .blog__tagcat--active a {
-    color: $black;
-
     border-color: $black;
+
+    color: $black;
 }

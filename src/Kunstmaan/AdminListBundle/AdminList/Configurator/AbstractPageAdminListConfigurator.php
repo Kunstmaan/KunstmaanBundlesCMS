@@ -22,7 +22,7 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     private $em;
 
     /**
-     * @var string $locale
+     * @var string
      */
     private $locale;
 
@@ -82,12 +82,11 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         return [
             'path' => 'KunstmaanNodeBundle_nodes_edit',
             'params' => ['id' => $item['node_id']],
-
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDeleteUrlFor($item)
     {

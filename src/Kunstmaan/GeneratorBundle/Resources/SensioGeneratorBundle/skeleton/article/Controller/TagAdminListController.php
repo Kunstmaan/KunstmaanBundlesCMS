@@ -4,15 +4,17 @@ namespace {{ namespace }}\Controller;
 
 use {{ namespace }}\AdminList\{{ entity_class }}TagAdminListConfigurator;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticleTagAdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+{% if isV4 %}
 
 /**
- * The admin list controller for Tag
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/tag", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminListController
 {
     /**
@@ -29,8 +31,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_add", methods={"GET", "POST"})
      * @return array
      */
     public function addAction(Request $request)
@@ -43,8 +44,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_edit", methods={"GET", "POST"})
      *
      * @return Response
      */
@@ -58,8 +58,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_view")
-     * @Method({"GET"})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_view", methods={"GET"})
      *
      * @return Response
      */
@@ -73,8 +72,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_delete", methods={"GET", "POST"})
      *
      * @return Response
      */
@@ -88,8 +86,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_export")
-     * @Method({"GET", "POST"})
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_export", methods={"GET", "POST"})
      * @return array
      */
     public function exportAction(Request $request, $_format)
@@ -102,8 +99,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
      *
      * @param int $id
      *
-     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_move_up")
-     * @Method({"GET"})
+     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_move_up", methods={"GET"})
      *
      * @return Response
      */
@@ -117,8 +113,7 @@ class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminLi
      *
      * @param int $id
      *
-     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_move_down")
-     * @Method({"GET"})
+     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}tag_move_down", methods={"GET"})
      *
      * @return array
      */

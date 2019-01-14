@@ -7,17 +7,17 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
  */
 class UrlSafeCipher extends Cipher
 {
-
     /**
      * Encrypt the given value so that it's unreadable and that it can be used in an url.
      *
      * @param string $value
+     * @param bool   $raw_binary
      *
-     * @param bool $raw_binary
      * @return string
+     *
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encrypt($value, $raw_binary=false)
+    public function encrypt($value, $raw_binary = false)
     {
         return bin2hex(parent::encrypt($value, $raw_binary));
     }
@@ -26,13 +26,14 @@ class UrlSafeCipher extends Cipher
      * Decrypt the given value so that it's readable again.
      *
      * @param string $value
+     * @param bool   $raw_binary
      *
-     * @param bool $raw_binary
      * @return string
+     *
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function decrypt($value, $raw_binary=false)
+    public function decrypt($value, $raw_binary = false)
     {
         return parent::decrypt($this->hex2bin($value), $raw_binary);
     }
@@ -41,7 +42,7 @@ class UrlSafeCipher extends Cipher
      * Decodes a hexadecimal encoded binary string.
      * PHP version >= 5.4 has a function for this by default.
      *
-     * @param String $hexString
+     * @param string $hexString
      *
      * @return string
      */
@@ -50,8 +51,8 @@ class UrlSafeCipher extends Cipher
         $pos = 0;
         $result = '';
         while ($pos < strlen($hexString)) {
-            if (strpos(" \t\n\r", $hexString{$pos}) !== false) {
-                $pos++;
+            if (strpos(" \t\n\r", $hexString[$pos]) !== false) {
+                ++$pos;
             } else {
                 $code = hexdec(substr($hexString, $pos, 2));
                 $pos += 2;
@@ -61,5 +62,4 @@ class UrlSafeCipher extends Cipher
 
         return $result;
     }
-
 }

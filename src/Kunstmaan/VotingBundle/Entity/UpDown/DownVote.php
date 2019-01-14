@@ -13,5 +13,4 @@ use Kunstmaan\VotingBundle\Entity\AbstractVote;
  */
 class DownVote extends AbstractVote
 {
-
 }

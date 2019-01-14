@@ -4,35 +4,12 @@
     "browser": true,
     "es6": true
   },
-  "parserOptions": {
-    "sourceType": "module"
-  },
-  "extends": "airbnb-base",
+  "extends": ["./node_modules/@kunstmaan/eslint-config/index.js"],
   "rules": {
-    "arrow-parens": ["error", "always"],
-    "comma-dangle": ["error", "never"],
-    "default-case": "off",
-    "indent": ["error", 4, { "SwitchCase": 1 }],
-    "max-len": ["error", 120, {"ignoreComments": true, "ignoreTemplateLiterals": true}],
-    "no-console": 0,
-    "no-new": "off",
-    "no-use-before-define": ["error", {"functions": false, "classes": true}],
-    "no-trailing-spaces": ["error", {"skipBlankLines": true}],
-    "linebreak-style": ["error", "unix"],
-    "object-curly-spacing": ["error", "never"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
-    "space-before-blocks": ["error", "always"],
-    "space-before-function-paren": ["error", "never"],
-    "no-param-reassign": ["error", { "props": false }],
-    "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["gulpfile.babel.js"]}]
-  },
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["gulpfile.babel.js", "./groundcontrol/**/*.js"]}]
+  }{% if demosite %},
   "globals": {
-{% if demosite %}
     "jQuery": true,
     "$": true,
-{% endif %}
-    "module": true
-  }
+  }{% endif %}
 }

@@ -3,9 +3,7 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Gedmo\Sluggable\Util\Urlizer;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,7 +11,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -25,7 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class FileFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * The file name
      *
@@ -52,7 +48,8 @@ class FileFormSubmissionField extends FormSubmissionField
      * Non-persistent storage of upload file
      *
      * @Assert\File(maxSize="6000000")
-     * @var $file UploadedFile
+     *
+     * @var UploadedFile
      */
     public $file;
 
@@ -63,7 +60,11 @@ class FileFormSubmissionField extends FormSubmissionField
      */
     public function __toString()
     {
-        return !empty($this->fileName) ? $this->fileName : "";
+        if (!empty($this->url)) {
+            return $this->url;
+        }
+
+        return !empty($this->fileName) ? $this->fileName : '';
     }
 
     /**
@@ -218,7 +219,7 @@ class FileFormSubmissionField extends FormSubmissionField
      */
     public function getSubmissionTemplate()
     {
-        return "KunstmaanFormBundle:FileUploadPagePart:submission.html.twig";
+        return 'KunstmaanFormBundle:FileUploadPagePart:submission.html.twig';
     }
 
     /**
@@ -230,5 +231,4 @@ class FileFormSubmissionField extends FormSubmissionField
     {
         return FileFormSubmissionType::class;
     }
-
 }

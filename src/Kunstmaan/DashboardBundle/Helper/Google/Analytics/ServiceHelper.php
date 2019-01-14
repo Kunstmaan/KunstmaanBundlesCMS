@@ -1,12 +1,12 @@
 <?php
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
+
 use Google_AnalyticsService;
 use Kunstmaan\DashboardBundle\Helper\Google\ClientHelper;
 
 class ServiceHelper
 {
-
     /** @var Google_AnalyticsService $service */
     private $service;
 
@@ -18,7 +18,8 @@ class ServiceHelper
      *
      * @param ClientHelper $clientHelper
      */
-    public function __construct(ClientHelper $clientHelper) {
+    public function __construct(ClientHelper $clientHelper)
+    {
         $this->clientHelper = $clientHelper;
         $this->service = new Google_AnalyticsService($clientHelper->getClient());
     }
@@ -34,9 +35,8 @@ class ServiceHelper
     /**
      * @return ClientHelper $clientHelper
      */
-    public function getClientHelper() {
+    public function getClientHelper()
+    {
         return $this->clientHelper;
     }
-
-
 }

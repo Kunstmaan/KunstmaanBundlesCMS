@@ -5,7 +5,7 @@ namespace Kunstmaan\CacheBundle\Controller;
 use Kunstmaan\CacheBundle\Form\Varnish\BanType;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,7 +22,6 @@ class VarnishController extends Controller
      *
      * @Route("/settings/varnish", name="kunstmaancachebundle_varnish_settings_ban")
      * @Template("KunstmaanCacheBundle:Varnish:ban.html.twig")
-     *
      *
      * @param Request $request
      *

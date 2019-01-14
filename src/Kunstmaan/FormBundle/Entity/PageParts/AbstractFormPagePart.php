@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
-
     /**
      * The label
      *
@@ -64,7 +62,6 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
      */
     public function getAdminView()
     {
-        return "KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig";
+        return 'KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig';
     }
-
 }

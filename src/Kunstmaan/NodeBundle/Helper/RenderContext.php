@@ -7,9 +7,8 @@ namespace Kunstmaan\NodeBundle\Helper;
  */
 class RenderContext extends \ArrayObject
 {
-
     /**
-     * @var string $view
+     * @var string
      */
     private $view;
 

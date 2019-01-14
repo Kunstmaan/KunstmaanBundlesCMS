@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanUserManagementExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

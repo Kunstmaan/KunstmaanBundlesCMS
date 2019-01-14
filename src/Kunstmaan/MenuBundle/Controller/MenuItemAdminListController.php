@@ -8,8 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\MenuBundle\Entity\BaseMenu;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,8 +22,9 @@ class MenuItemAdminListController extends AdminListController
 
     /**
      * @param Request $request
-     * @param int $menuid
-     * @param int $entityId
+     * @param int     $menuid
+     * @param int     $entityId
+     *
      * @return AbstractAdminListConfigurator
      */
     public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
@@ -49,8 +49,10 @@ class MenuItemAdminListController extends AdminListController
 
     /**
      * The index action
+     *
      * @param Request $request
-     * @param int $menuid
+     * @param int     $menuid
+     *
      * @return Response
      *
      * @Route("/{menuid}/items", name="kunstmaanmenubundle_admin_menuitem")
@@ -98,8 +100,8 @@ class MenuItemAdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/{menuid}/items/add", name="kunstmaanmenubundle_admin_menuitem_add")
-     * @Method({"GET", "POST"})
+     * @Route("/{menuid}/items/add", name="kunstmaanmenubundle_admin_menuitem_add", methods={"GET", "POST"})
+     *
      * @return array
      */
     public function addAction(Request $request, $menuid)
@@ -112,8 +114,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("{menuid}/items/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaanmenubundle_admin_menuitem_edit")
-     * @Method({"GET", "POST"})
+     * @Route("{menuid}/items/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaanmenubundle_admin_menuitem_edit", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -127,8 +128,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("{menuid}/items/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanmenubundle_admin_menuitem_delete")
-     * @Method({"GET", "POST"})
+     * @Route("{menuid}/items/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanmenubundle_admin_menuitem_delete", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -140,8 +140,8 @@ class MenuItemAdminListController extends AdminListController
     /**
      * Move an item up in the list.
      *
-     * @Route("{menuid}/items/{item}/move-up", name="kunstmaanmenubundle_admin_menuitem_move_up")
-     * @Method({"GET"})
+     * @Route("{menuid}/items/{item}/move-up", name="kunstmaanmenubundle_admin_menuitem_move_up", methods={"GET"})
+     *
      * @return RedirectResponse
      */
     public function moveUpAction(Request $request, $menuid, $item)
@@ -162,8 +162,8 @@ class MenuItemAdminListController extends AdminListController
     /**
      * Move an item down in the list.
      *
-     * @Route("{menuid}/items/{item}/move-down", name="kunstmaanmenubundle_admin_menuitem_move_down")
-     * @Method({"GET"})
+     * @Route("{menuid}/items/{item}/move-down", name="kunstmaanmenubundle_admin_menuitem_move_down", methods={"GET"})
+     *
      * @return RedirectResponse
      */
     public function moveDownAction(Request $request, $menuid, $item)

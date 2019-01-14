@@ -19,7 +19,7 @@ function videolink() {
 
             // Append the iframe to the video container
             video.parentNode.querySelector('.videolink__video-link')
-            .classList.add('videolink__video-link--hidden');
+                .classList.add('videolink__video-link--hidden');
             videoContainer.appendChild(template);
         }, false);
     });
@@ -65,6 +65,7 @@ function createTemplate(provider, id) {
 
 function setVideoPlaceholder(provider, id, element) {
     if (provider === 'youtube') {
+        // eslint-disable-next-line no-param-reassign
         element.src = `//img.youtube.com/vi/${id}/maxresdefault.jpg`;
     } else {
         const request = new XMLHttpRequest();
@@ -90,6 +91,7 @@ function setVideoPlaceholder(provider, id, element) {
                     imgUrl = response.thumbnail_720_url;
                 }
 
+                // eslint-disable-next-line no-param-reassign
                 element.src = imgUrl;
             }
         };

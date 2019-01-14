@@ -10,11 +10,6 @@ services:
         class: '%kunstmaan_media.pdf_transformer.class%'
         arguments: ['@kunstmaan_media.imagick']
 
-    kunstmaan_media.command.createpdfpreview:
-        class: Kunstmaan\MediaBundle\Command\CreatePdfPreviewCommand
-        calls:
-            - [setContainer, ['@service_container'] ]
-
     kunstmaan_media.media_handlers.pdf:
         class: '%kunstmaan_media.media_handler.pdf.class%'
         parent: kunstmaan_media.media_handlers.file
@@ -30,7 +25,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_media.pdf_transformer'
-            - '%kernel.root_dir%'
+            - '%kunstmaan_media.web_root%'
             - '%kunstmaan_media.enable_pdf_preview%'
         tags:
             - { name: console.command }

@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
-
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -16,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AdaptFormEvent extends Event
 {
-
     /**
      * @var TabPane
      */
@@ -109,5 +107,4 @@ class AdaptFormEvent extends Event
     {
         return $this->request;
     }
-
 }

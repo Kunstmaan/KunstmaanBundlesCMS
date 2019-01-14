@@ -7,7 +7,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurat
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class MenuAdminListController extends AdminListController

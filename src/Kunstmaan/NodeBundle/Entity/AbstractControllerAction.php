@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractControllerAction extends AbstractEntity implements HasNodeInterface
 {
-
     /**
      * @var string
      *
@@ -85,5 +83,4 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     {
         return ControllerActionAdminType::class;
     }
-
 }

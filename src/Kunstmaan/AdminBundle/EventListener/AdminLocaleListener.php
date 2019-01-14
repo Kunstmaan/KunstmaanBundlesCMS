@@ -5,10 +5,8 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\TranslatorInterface;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 
@@ -47,15 +45,15 @@ class AdminLocaleListener implements EventSubscriberInterface
      * @param TranslatorInterface   $translator
      * @param string                $defaultAdminLocale
      * @param AdminRouteHelper      $adminRouteHelper
-     * @param string                $providerKey          Firewall name to check against
+     * @param string                $providerKey        Firewall name to check against
      */
     public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
     {
-        $this->translator         = $translator;
-        $this->tokenStorage       = $tokenStorage;
+        $this->translator = $translator;
+        $this->tokenStorage = $tokenStorage;
         $this->defaultAdminLocale = $defaultAdminLocale;
-        $this->providerKey        = $providerKey;
-        $this->adminRouteHelper   = $adminRouteHelper;
+        $this->providerKey = $providerKey;
+        $this->adminRouteHelper = $adminRouteHelper;
     }
 
     /**
@@ -93,7 +91,7 @@ class AdminLocaleListener implements EventSubscriberInterface
     /**
      * getSubscribedEvents
      */
-    static public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return array(
             // Must be registered before the default Locale listener

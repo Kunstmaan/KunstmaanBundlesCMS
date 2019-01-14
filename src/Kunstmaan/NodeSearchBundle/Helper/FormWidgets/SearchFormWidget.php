@@ -23,7 +23,7 @@ class SearchFormWidget extends FormWidget
      */
     public function __construct(Node $node, EntityManager $em)
     {
-        $this->node       = $node;
+        $this->node = $node;
         $this->nodeSearch = $em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findOneByNode($this->node);
     }
 
@@ -33,7 +33,7 @@ class SearchFormWidget extends FormWidget
     public function buildForm(FormBuilderInterface $builder)
     {
         parent::buildForm($builder);
-        $data                = $builder->getData();
+        $data = $builder->getData();
         $data['node_search'] = $this->nodeSearch;
         $builder->setData($data);
     }
@@ -43,7 +43,7 @@ class SearchFormWidget extends FormWidget
      */
     public function bindRequest(Request $request)
     {
-        $form                      = $request->request->get('form');
+        $form = $request->request->get('form');
         $this->data['node_search'] = $form['node_search']['boost'];
     }
 

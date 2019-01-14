@@ -1,0 +1,5 @@
+actor: UnitTester
+modules:
+  enabled:
+  - Asserts
+  - Kunstmaan\MediaPagePartBundle\Tests\Helper\Unit
