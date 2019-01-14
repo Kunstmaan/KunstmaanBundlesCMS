@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class that contains all common generator logic.
@@ -470,5 +471,37 @@ class KunstmaanGenerator extends Generator
     protected function getRepositoryGenerator()
     {
         return new EntityRepositoryGenerator();
+    }
+
+    /**
+     * @internal
+     */
+    protected function getTemplateDir(BundleInterface $bundle)
+    {
+        if ($this->isSymfony4()) {
+            return $this->container->getParameter('kernel.project_dir') . '/templates';
+        }
+
+        return $bundle->getPath() . '/Resources/views';
+    }
+
+    /**
+     * @internal
+     */
+    protected function getAssetsDir(BundleInterface $bundle)
+    {
+        if ($this->isSymfony4()) {
+            return $this->container->getParameter('kernel.project_dir') . '/assets';
+        }
+
+        return $bundle->getPath() . '/Resources';
+    }
+
+    /**
+     * @internal
+     */
+    protected function isSymfony4()
+    {
+        return Kernel::VERSION_ID >= 40000;
     }
 }

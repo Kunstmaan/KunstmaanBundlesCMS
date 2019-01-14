@@ -57,6 +57,7 @@ services:
     kunstmaan_media.media_creator_service:
         class: '%kunstmaan_media.media_creator_service.class%'
         arguments: ['@service_container']
+        public: true
 
     kunstmaan_media.repository.folder:
         class:            Kunstmaan\MediaBundle\Repository\FolderRepository
