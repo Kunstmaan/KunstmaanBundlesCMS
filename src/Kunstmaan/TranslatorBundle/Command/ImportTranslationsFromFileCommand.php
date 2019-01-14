@@ -38,7 +38,7 @@ final class ImportTranslationsFromFileCommand extends Command
         parent::__construct();
         $this->importer = $importer;
         $this->translator = $translator;
-        $this->locales = explode('|', $locales);
+        $this->locales = $locales;
     }
 
     /**

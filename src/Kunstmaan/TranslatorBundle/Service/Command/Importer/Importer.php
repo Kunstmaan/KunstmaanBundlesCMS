@@ -74,8 +74,8 @@ class Importer
         }
 
         $headers = ['domain', 'keyword'];
+        $locales = array_map('strtolower', $locales);
         $requiredHeaders = array_merge($headers, $locales);
-        $requiredHeaders = array_map('strtolower', $requiredHeaders);
 
         try {
             $reader = ReaderFactory::create($format);
