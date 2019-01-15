@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.1.1 / 2019-01-15
+
+* [NodeBundle] Fixed url chooser for multidomain [#2224](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2224) ([@deZinc](https://github.com/deZinc)) 
+* [AllBundles] Improve travis test suite [#2204](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2204) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Add php 7.3 to travis build [#2203](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2203) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Ignore generated files from codeception [#2198](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2198) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Provide fos/user-bundle default values for from_email config [#2196](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2196) ([@acrobat](https://github.com/acrobat)) 
+* [DashboardBundle] Set correct template path for widget action [#2195](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2195) ([@acrobat](https://github.com/acrobat)) 
+* [ArticleBundle] Improve deprecation messages and add missing line in upgrade doc [#2189](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2189) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix php 5.6 incompatibilty with the ChangeableLimitTrait [#2183](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2183) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Catch InvalidArgumentException in MediaTokenTransformer [#2182](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2182) ([@SpadXIII](https://github.com/SpadXIII)) 
+
+
 ## 5.1.0 / 2018-11-29
 
 * [GeneratorBundle] update FE buildtools [#2179](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2179) ([@dbeerten](https://github.com/dbeerten))
@@ -135,6 +148,14 @@
 * [AdminBundle] - Fix MultiDomainAdminTwigExtension::switchedHostIsCurr… [#1715](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1715) ([@delboy1978uk](https://github.com/delboy1978uk))
 * [AdminListBundle] Set default list template in constructor instead of hard coded getter [#1642](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1642) ([@delboy1978uk](https://github.com/delboy1978uk))
 * [TranslatorBundle] Allow importing translations from an external xlsx, ods, csv file. [#1585](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1585) ([@Numkil](https://github.com/Numkil))
+
+## 5.0.13 / 2019-01-15
+
+* [PagePartBundle] Keep yaml array keys when merging multiple configs [#2219](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2219) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fixed broken composer.json [#2213](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2213) ([@Devolicious](https://github.com/Devolicious)) 
+* [AllBundles] Add php-cs-fixer cache to gitignore [#2202](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2202) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Only use session in toolbar listener if it was started before [#2190](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2190) ([@acrobat](https://github.com/acrobat)) 
+
 
 ## 5.0.12 / 2018-11-29
 
