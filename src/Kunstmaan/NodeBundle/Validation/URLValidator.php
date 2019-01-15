@@ -17,7 +17,7 @@ trait URLValidator
      */
     public function isInternalLink($link)
     {
-        preg_match_all("/\[(([a-z_A-Z]+):)?NT([0-9]+)\]/", $link, $matches, PREG_SET_ORDER);
+        preg_match_all("/\[(([a-z_A-Z\.]+):)?NT([0-9]+)\]/", $link, $matches, PREG_SET_ORDER);
 
         return count($matches) > 0;
     }
