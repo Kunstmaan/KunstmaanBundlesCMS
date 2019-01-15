@@ -96,6 +96,7 @@ class PagePartGenerator extends KunstmaanGenerator
             'bundle' => $this->bundle->getName(),
             'pagepart' => $this->entity,
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
+            'isV4' => $this->isSymfony4(),
         );
         $extraCode = $this->render('/Entity/PageParts/ExtraFunctions.php', $params);
 
@@ -125,7 +126,7 @@ class PagePartGenerator extends KunstmaanGenerator
      */
     private function generateResourceTemplate()
     {
-        $savePath = $this->bundle->getPath() . '/Resources/views/PageParts/' . $this->entity . '/view.html.twig';
+        $savePath = $this->getTemplateDir($this->bundle) . '/PageParts/'.$this->entity.'/view.html.twig';
 
         $params = array(
             'pagepart' => strtolower(
@@ -144,18 +145,40 @@ class PagePartGenerator extends KunstmaanGenerator
     private function generateSectionConfig()
     {
         if (count($this->sections) > 0) {
-            $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
+            if ($this->isSymfony4()) {
+                $dir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
+            } else {
+                $dir = $this->bundle->getPath().'/Resources/config/pageparts/';
+            }
+
             foreach ($this->sections as $section) {
                 $data = Yaml::parse(file_get_contents($dir . $section));
+
+                // grab the sf4 style data if needed
+                if (array_key_exists('kunstmaan_page_part', $data) && array_key_exists('pageparts', $data['kunstmaan_page_part'])) {
+                    $pagePartKey = array_keys($data['kunstmaan_page_part']['pageparts'])[0];
+                    $data = $data['kunstmaan_page_part']['pageparts'][$pagePartKey];
+                }
+
                 if (!array_key_exists('types', $data)) {
                     $data['types'] = array();
                 }
+
                 $data['types'][] = array(
                     'name' => str_replace('PagePart', '', $this->entity),
                     'class' => $this->bundle->getNamespace() . '\\Entity\\PageParts\\' . $this->entity,
                 );
 
-                $ymlData = Yaml::dump($data);
+                // restore the sf4 style data
+                if (isset($pagePartKey)) {
+                    $data = [
+                        'kunstmaan_page_part' => [
+                            'pageparts' => [$pagePartKey => $data],
+                        ],
+                    ];
+                }
+
+                $ymlData = Yaml::dump($data, 5);
                 file_put_contents($dir . $section, $ymlData);
             }
 

@@ -16,5 +16,9 @@ services:
           - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateArticleCommand:
-        tags:
-          - { name: console.command }
+      tags:
+        - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GeneratePagePartCommand:
+      tags:
+        - { name: console.command }
