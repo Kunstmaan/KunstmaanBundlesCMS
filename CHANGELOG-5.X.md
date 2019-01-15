@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.1.1 / 2019-01-15
+
+* [NodeBundle] Fixed url chooser for multidomain [#2224](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2224) ([@deZinc](https://github.com/deZinc)) 
+* [AllBundles] Improve travis test suite [#2204](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2204) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Add php 7.3 to travis build [#2203](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2203) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Ignore generated files from codeception [#2198](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2198) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Provide fos/user-bundle default values for from_email config [#2196](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2196) ([@acrobat](https://github.com/acrobat)) 
+* [DashboardBundle] Set correct template path for widget action [#2195](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2195) ([@acrobat](https://github.com/acrobat)) 
+* [ArticleBundle] Improve deprecation messages and add missing line in upgrade doc [#2189](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2189) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix php 5.6 incompatibilty with the ChangeableLimitTrait [#2183](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2183) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Catch InvalidArgumentException in MediaTokenTransformer [#2182](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2182) ([@SpadXIII](https://github.com/SpadXIII)) 
+
+
 ## 5.1.0 / 2018-11-29
 
 * [GeneratorBundle] update FE buildtools [#2179](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2179) ([@dbeerten](https://github.com/dbeerten))
