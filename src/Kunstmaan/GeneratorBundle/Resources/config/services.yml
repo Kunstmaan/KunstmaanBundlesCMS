@@ -22,3 +22,7 @@ services:
     Kunstmaan\GeneratorBundle\Command\GeneratePagePartCommand:
       tags:
         - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GeneratePageCommand:
+      tags:
+        - { name: console.command }
