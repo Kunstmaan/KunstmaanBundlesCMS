@@ -136,6 +136,14 @@
 * [AdminListBundle] Set default list template in constructor instead of hard coded getter [#1642](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1642) ([@delboy1978uk](https://github.com/delboy1978uk))
 * [TranslatorBundle] Allow importing translations from an external xlsx, ods, csv file. [#1585](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1585) ([@Numkil](https://github.com/Numkil))
 
+## 5.0.13 / 2019-01-15
+
+* [PagePartBundle] Keep yaml array keys when merging multiple configs [#2219](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2219) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fixed broken composer.json [#2213](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2213) ([@Devolicious](https://github.com/Devolicious)) 
+* [AllBundles] Add php-cs-fixer cache to gitignore [#2202](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2202) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Only use session in toolbar listener if it was started before [#2190](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2190) ([@acrobat](https://github.com/acrobat)) 
+
+
 ## 5.0.12 / 2018-11-29
 
 * [AllBundles] Changes for upcoming travis-ci infra migration [#2180](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2180) ([@acrobat](https://github.com/acrobat))
