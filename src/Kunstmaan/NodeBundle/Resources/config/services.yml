@@ -27,7 +27,7 @@ services:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.acl.native.helper', '@kunstmaan_node.pages_configuration', '@kunstmaan_admin.domain_configuration']
         tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor', priority: 250 }
 
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType

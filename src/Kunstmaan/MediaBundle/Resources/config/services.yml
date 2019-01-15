@@ -68,7 +68,7 @@ services:
         class: '%kunstmaan_media.menu.adaptor.class%'
         arguments: ['@kunstmaan_media.repository.folder']
         tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor', priority: 150  }
 
     kunstmaan_media.folder_manager:
         class: '%kunstmaan_media.folder_manager.class%'
