@@ -218,7 +218,12 @@ class KunstmaanGenerator extends Generator
     protected function installDefaultPageTemplates($bundle)
     {
         // Configuration templates
-        $dirPath = sprintf('%s/Resources/config/pagetemplates/', $bundle->getPath());
+        if ($this->isSymfony4()) {
+            $dirPath = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pagetemplates/';
+        } else {
+            $dirPath = sprintf('%s/Resources/config/pagetemplates/', $bundle->getPath());
+        }
+
         $skeletonDir = sprintf('%s/Resources/config/pagetemplates/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         // Only copy templates over when the folder does not exist yet...
@@ -236,7 +241,8 @@ class KunstmaanGenerator extends Generator
         }
 
         // Twig templates
-        $dirPath = sprintf('%s/Resources/views/Pages/Common/', $bundle->getPath());
+        $dirPath = $this->getTemplateDir($bundle) . '/Pages/Common/';
+
         $skeletonDir = sprintf('%s/Resources/views/Pages/Common/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         if (!$this->filesystem->exists($dirPath)) {
@@ -253,9 +259,15 @@ class KunstmaanGenerator extends Generator
         }
 
         $contents = file_get_contents($dirPath . 'view.html.twig');
+
+        $twigFile = $this->isSymfony4() ?
+            $twigFile = "{% extends 'Layout/layout.html.twig' %}\n" :
+            $twigFile = "{% extends '".$bundle->getName().":Layout:layout.html.twig' %}\n"
+        ;
+
         if (strpos($contents, '{% extends ') === false) {
             GeneratorUtils::prepend(
-                "{% extends '" . $bundle->getName() . ":Layout:layout.html.twig' %}\n",
+                $twigFile,
                 $dirPath . 'view.html.twig'
             );
         }
@@ -269,7 +281,12 @@ class KunstmaanGenerator extends Generator
     protected function installDefaultPagePartConfiguration($bundle)
     {
         // Pagepart configuration
-        $dirPath = sprintf('%s/Resources/config/pageparts/', $bundle->getPath());
+        if ($this->isSymfony4()) {
+            $dirPath = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
+        } else {
+            $dirPath = sprintf('%s/Resources/config/pageparts/', $bundle->getPath());
+        }
+
         $skeletonDir = sprintf('%s/Resources/config/pageparts/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         // Only copy when folder does not exist yet

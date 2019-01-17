@@ -23,7 +23,7 @@
     {
         return [
 {% for section in sections %}
-            '{{ bundle }}:{{ section }}',
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ section }}',
 {% endfor %}
         ];
     }
@@ -33,9 +33,7 @@
      */
     public function getPageTemplates()
     {
-        return [
-            '{{ bundle }}:{{ template }}',
-        ];
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ template }}'];
     }
 
     /**
@@ -45,5 +43,5 @@
      */
     public function getDefaultView()
     {
-        return '{{ bundle }}:Pages:Common/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/Common/view.html.twig';
     }

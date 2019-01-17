@@ -105,18 +105,18 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      */
     protected function getOwnBundles()
     {
-        $bundles = array();
+        $bundles = [];
         $counter = 1;
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir').'/').'/src/';
         $finder = new Finder();
         $finder->in($dir)->name('*Bundle.php');
 
         foreach ($finder as $file) {
-            $bundles[$counter++] = array(
+            $bundles[$counter++] = [
                 'name' => basename($file->getFilename(), '.php'),
                 'namespace' => $file->getRelativePath(),
                 'dir' => $file->getPath(),
-            );
+            ];
         }
 
         return $bundles;
@@ -151,12 +151,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $prefix = $this->assistant->getOptionOrDefault('prefix', null);
 
         if (is_null($text)) {
-            $text = array(
+            $text = [
                 'You can add a prefix to the table names of the generated entities for example: '.
                 '<comment>projectname_bundlename_</comment>',
                 'Enter an underscore \'_\' if you don\'t want a prefix.',
                 '',
-            );
+            ];
         }
 
         while (is_null($prefix)) {
@@ -230,8 +230,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @return BundleInterface
      */
-    protected function askForBundleName($objectName, $namespace = null, $questionMoreBundles = "\nIn which bundle do you want to create the %s", $questionOneBundle = "The %s will be created for the <comment>%s</comment> bundle.\n")
-    {
+    protected function askForBundleName(
+        $objectName,
+        $namespace = null,
+        $questionMoreBundles = "\nIn which bundle do you want to create the %s",
+        $questionOneBundle = "The %s will be created for the <comment>%s</comment> bundle.\n"
+    ) {
         if (Kernel::VERSION_ID >= 40000) {
             return new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
         }
@@ -263,7 +267,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         if (empty($bundleName)) {
             // If we only have 1 bundle, we don't need to ask
             if (count($ownBundles) > 1) {
-                $bundleSelect = array();
+                $bundleSelect = [];
                 foreach ($ownBundles as $key => $bundleInfo) {
                     $bundleSelect[$key] = $bundleInfo['name'];
                 }
@@ -277,7 +281,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             } else {
                 $bundleName = $ownBundles[1]['name'];
                 $this->assistant->writeLine(
-                    array(sprintf($questionOneBundle, $objectName, $bundleName))
+                    [sprintf($questionOneBundle, $objectName, $bundleName)]
                 );
             }
         }
@@ -303,14 +307,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         BundleInterface $bundle,
         $multiple = false,
         $context = null,
-        $defaultSections = array()
+        $defaultSections = []
     ) {
         $allSections = $this->getAvailableSections($bundle, $context, $defaultSections);
-        $sections = array();
+        $sections = [];
 
         // If there are more options to choose from, we ask the end user
         if (count($allSections) > 0) {
-            $sectionSelect = array();
+            $sectionSelect = [];
             foreach ($allSections as $key => $sectionInfo) {
                 $sectionSelect[$key] = $sectionInfo['name'].' ('.$sectionInfo['file'].')';
             }
@@ -342,13 +346,16 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @return array
      */
-    protected function getAvailableSections(BundleInterface $bundle, $context = null, $defaultSections = array())
+    protected function getAvailableSections(BundleInterface $bundle, $context = null, $defaultSections = [])
     {
-        $configs = array();
+        $configs = [];
         $counter = 1;
 
         // Get the available sections from disc
-        $dir = Kernel::VERSION_ID >= 40000 ? $this->getContainer()->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/' : $bundle->getPath() . '/Resources/config/pageparts/';
+        $dir = Kernel::VERSION_ID >= 40000 ?
+            $this->getContainer()->getParameter('kernel.project_dir').'/config/kunstmaancms/pageparts/' :
+            $bundle->getPath().'/Resources/config/pageparts/'
+        ;
         if (file_exists($dir) && is_dir($dir)) {
             $finder = new Finder();
             $finder->files()->in($dir)->depth('== 0');
@@ -394,12 +401,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $data = array_values(array_values(array_values($data)[0])[0])[0];
             }
 
-            $info = array(
+            $info = [
                 'name' => $data['name'],
                 'context' => $data['context'],
                 'file' => $file,
                 //'file_clean' => substr($file, 0, strlen($file)-4)
-            );
+            ];
         } catch (ParseException $e) {
         }
 
@@ -414,7 +421,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @return array
      */
-    protected function askEntityFields(BundleInterface $bundle, array $reservedFields = array('id'))
+    protected function askEntityFields(BundleInterface $bundle, array $reservedFields = ['id'])
     {
         $this->assistant->writeLine('<info>Available field types:</info> ');
         $typeSelect = $this->getTypes(true);
@@ -422,7 +429,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $this->assistant->writeLine(sprintf('<comment>- %s</comment>', $type));
         }
 
-        $fields = array();
+        $fields = [];
         $typeStrings = $this->getTypes();
         $mediaTypeSelect = $this->getMediaTypes();
         $generator = $this->getGenerator();
@@ -439,7 +446,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         throw new \InvalidArgumentException(sprintf(
                             'Field "%s" is already defined in the parent class',
                             $name
-                        ));
+                        )
+                        );
                     }
 
                     // The fields cannot exist already
@@ -469,7 +477,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $typeId = $this->assistant->askSelect('Field type', $typeSelect);
 
             // If single -or multipe entity reference in chosen, we need to ask for the entity name
-            if (in_array($typeStrings[$typeId], array('single_ref', 'multi_ref'))) {
+            if (in_array($typeStrings[$typeId], ['single_ref', 'multi_ref'])) {
                 $bundleName = $bundle->getName();
                 $question = "Reference entity name (eg. $bundleName:FaqItem, $bundleName:Blog/Comment)";
                 $name = $this->assistant->askAndValidate(
@@ -506,7 +514,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         return $name;
                     },
                     null,
-                    array($bundleName)
+                    [$bundleName]
                 );
 
                 $extra = $name;
@@ -527,11 +535,13 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
             if ($typeStrings[$typeId] == 'image' || $typeStrings[$typeId] == 'media') {
                 // Ask the allowed mimetypes for the media ojbect
-                $mimeTypes = $this->assistant->ask('Do you want to limit the possible file types? Then specify a comma-seperated list of types (example: image/png,image/svg+xml), otherwise press ENTER', null);
+                $mimeTypes = $this->assistant->ask('Do you want to limit the possible file types? Then specify a comma-seperated list of types (example: image/png,image/svg+xml), otherwise press ENTER',
+                    null
+                );
                 if (isset($mimeTypes)) {
                     $mimeTypes = explode(',', $mimeTypes);
                 }
-                $data = array(
+                $data = [
                     'name' => $fieldName,
                     'type' => $typeStrings[$typeId],
                     'extra' => $extra,
@@ -540,11 +550,15 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'maxHeight' => null,
                     'minWidth' => null,
                     'maxWidth' => null,
-                );
+                ];
 
                 if ($extra == 'image') {
                     $minHeight = $maxHeight = $minWidth = $maxWidth = null;
-                    if ($this->assistant->askConfirmation('Do you want to add validation of the dimensions of the media object? (y/n)', 'n', '?', false)) {
+                    if ($this->assistant->askConfirmation('Do you want to add validation of the dimensions of the media object? (y/n)',
+                        'n',
+                        '?',
+                        false
+                    )) {
                         // Ask the minimum height allowed for the image
                         $lengthValidation = function ($length) {
                             if ((is_numeric($length) && $length < 0) || (!is_numeric($length) && !empty($length))) {
@@ -554,23 +568,47 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                             }
                         };
 
-                        $minHeight = $this->assistant->askAndValidate('What is the minimum height for the media object? (in pixels)', $lengthValidation);
+                        $minHeight = $this->assistant->askAndValidate('What is the minimum height for the media object? (in pixels)',
+                            $lengthValidation
+                        );
 
                         // Ask the maximum height allowed for the image
-                        $maxHeight = $this->assistant->askAndValidate('What is the maximum height for the media object? (in pixels)', $lengthValidation);
+                        $maxHeight = $this->assistant->askAndValidate('What is the maximum height for the media object? (in pixels)',
+                            $lengthValidation
+                        );
 
                         // Ask the minimum width allowed for the image
-                        $minWidth = $this->assistant->askAndValidate('What is the minimum width for the media object? (in pixels)', $lengthValidation);
+                        $minWidth = $this->assistant->askAndValidate('What is the minimum width for the media object? (in pixels)',
+                            $lengthValidation
+                        );
 
                         //Ask the maximum width allowed for the image
-                        $maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)', $lengthValidation);
+                        $maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)',
+                            $lengthValidation
+                        );
                     }
-                    $data = array('name' => $fieldName, 'type' => 'image', 'extra' => $extra,
-                        'minHeight' => $minHeight, 'maxHeight' => $maxHeight, 'minWidth' => $minWidth, 'maxWidth' => $maxWidth, 'mimeTypes' => $mimeTypes, );
+                    $data = [
+                        'name' => $fieldName,
+                        'type' => 'image',
+                        'extra' => $extra,
+                        'minHeight' => $minHeight,
+                        'maxHeight' => $maxHeight,
+                        'minWidth' => $minWidth,
+                        'maxWidth' => $maxWidth,
+                        'mimeTypes' => $mimeTypes,
+                    ];
                 }
             } else {
-                $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra,
-                    'minHeight' => null, 'maxHeight' => null, 'minWidth' => null, 'maxWidth' => null, 'mimeTypes' => null, );
+                $data = [
+                    'name' => $fieldName,
+                    'type' => $typeStrings[$typeId],
+                    'extra' => $extra,
+                    'minHeight' => null,
+                    'maxHeight' => null,
+                    'minWidth' => null,
+                    'maxWidth' => null,
+                    'mimeTypes' => null,
+                ];
             }
 
             $fields[$fieldName] = $data;
@@ -590,7 +628,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $counter = 1;
 
-        $types = array();
+        $types = [];
         $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
         $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
         $types[$counter++] = $niceNames ? 'Wysiwyg' : 'wysiwyg';
@@ -618,7 +656,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $counter = 1;
 
-        $types = array();
+        $types = [];
         $types[$counter++] = 'None';
         $types[$counter++] = 'File';
         $types[$counter++] = 'Image';
@@ -659,55 +697,55 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $maxWidth = null,
         $mimeTypes = null
     ) {
-        $fields = array();
+        $fields = [];
         switch ($type) {
             case 'single_line':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'string',
                     'length' => '255',
                     'formType' => TextType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'multi_line':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'text',
                     'formType' => TextareaType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'wysiwyg':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'text',
                     'formType' => WysiwygType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'link':
-                foreach (array('url', 'text') as $subField) {
-                    $fields[$type][$subField] = array(
+                foreach (['url', 'text'] as $subField) {
+                    $fields[$type][$subField] = [
                         'fieldName' => lcfirst(Container::camelize($name.'_'.$subField)),
                         'type' => 'string',
                         'formType' => $subField == 'url' ? URLChooserType::class : TextType::class,
                         'nullable' => $allNullable,
-                    );
+                    ];
                 }
-                $fields[$type]['new_window'] = array(
+                $fields[$type]['new_window'] = [
                     'fieldName' => lcfirst(Container::camelize($name.'_new_window')),
                     'type' => 'boolean',
                     'nullable' => true,
                     'formType' => CheckboxType::class,
-                );
+                ];
 
                 break;
             case 'image':
-                $fields[$type]['image'] = array(
+                $fields[$type]['image'] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'image',
                     'formType' => MediaType::class,
@@ -718,50 +756,50 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'maxWidth' => $maxWidth,
                     'mimeTypes' => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
-                    'joinColumn' => array(
+                    'joinColumn' => [
                         'name' => str_replace('.', '_', Container::underscore($name.'_id')),
                         'referencedColumnName' => 'id',
-                    ),
+                    ],
                     'nullable' => $allNullable,
-                );
-                $fields[$type]['alt_text'] = array(
+                ];
+                $fields[$type]['alt_text'] = [
                     'fieldName' => lcfirst(Container::camelize($name.'_alt_text')),
                     'type' => 'text',
                     'nullable' => true,
                     'formType' => TextType::class,
-                );
+                ];
 
                 break;
             case 'media':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'media',
                     'formType' => MediaType::class,
                     'mediaType' => $extra,
                     'mimeTypes' => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
-                    'joinColumn' => array(
+                    'joinColumn' => [
                         'name' => str_replace('.', '_', Container::underscore($name.'_id')),
                         'referencedColumnName' => 'id',
-                    ),
+                    ],
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'single_ref':
                 $em = $this->getContainer()->get('doctrine')->getManager();
                 $entityName = $em->getClassMetadata($extra)->getName();
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'entity',
                     'formType' => EntityType::class,
                     'targetEntity' => $entityName,
-                    'joinColumn' => array(
+                    'joinColumn' => [
                         'name' => str_replace('.', '_', Container::underscore($name.'_id')),
                         'referencedColumnName' => 'id',
-                    ),
+                    ],
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'multi_ref':
@@ -773,69 +811,69 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         $parts[count($parts) - 1]
                     )
                 );
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'entity',
                     'formType' => EntityType::class,
                     'targetEntity' => $entityName,
-                    'joinTable' => array(
+                    'joinTable' => [
                         'name' => $joinTableName,
-                        'joinColumns' => array(
-                            array(
+                        'joinColumns' => [
+                            [
                                 'name' => strtolower(Container::underscore($objectName)).'_id',
                                 'referencedColumnName' => 'id',
-                            ),
-                        ),
-                        'inverseJoinColumns' => array(
-                            array(
+                            ],
+                        ],
+                        'inverseJoinColumns' => [
+                            [
                                 'name' => strtolower(
                                         Container::underscore($parts[count($parts) - 1])
                                     ).'_id',
                                 'referencedColumnName' => 'id',
                                 'unique' => true,
-                            ),
-                        ),
-                    ),
+                            ],
+                        ],
+                    ],
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'boolean':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'boolean',
                     'formType' => CheckboxType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'integer':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'integer',
                     'formType' => IntegerType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'decimal':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'decimal',
                     'precision' => 10,
                     'scale' => 2,
                     'formType' => NumberType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
             case 'datetime':
-                $fields[$type][] = array(
+                $fields[$type][] = [
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'datetime',
                     'formType' => DateTimeType::class,
                     'nullable' => $allNullable,
-                );
+                ];
 
                 break;
         }
@@ -852,11 +890,16 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      */
     protected function getAvailableTemplates(BundleInterface $bundle)
     {
-        $configs = array();
+        $configs = [];
         $counter = 1;
 
         // Get the available sections from disc
-        $dir = $bundle->getPath().'/Resources/config/pagetemplates/';
+        if (Kernel::VERSION_ID >= 40000) {
+            $dir = $this->getContainer()->getParameter('kernel.project_dir').'/config/kunstmaancms/pagetemplates/';
+        } else {
+            $dir = $bundle->getPath().'/Resources/config/pagetemplates/';
+        }
+
         if (file_exists($dir) && is_dir($dir)) {
             $finder = new Finder();
             $finder->files()->in($dir)->depth('== 0');
@@ -885,18 +928,24 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         try {
             $data = Yaml::parse(file_get_contents($dir.$file));
+
+            if (array_key_exists('kunstmaan_page_part', $data)) {
+                //Get rid of the bundle config lines
+                $data = array_values(array_values(array_values($data)[0])[0])[0];
+            }
+
             // Parse contexts
-            $contexts = array();
+            $contexts = [];
             foreach ($data['rows'] as $row) {
                 foreach ($row['regions'] as $region) {
                     $contexts[] = $region['name'];
                 }
             }
-            $info = array(
+            $info = [
                 'name' => $data['name'],
                 'contexts' => $contexts,
                 'file' => $file,
-            );
+            ];
         } catch (ParseException $e) {
         }
 
@@ -912,7 +961,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      */
     protected function getAvailablePages(BundleInterface $bundle)
     {
-        $pages = array();
+        $pages = [];
         $counter = 1;
 
         // Get the available pages from disc
@@ -921,10 +970,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $finder = new Finder();
             $finder->files()->in($dir)->depth('== 0');
             foreach ($finder as $file) {
-                $pages[$counter++] = array(
+                $pages[$counter++] = [
                     'name' => substr($file->getFileName(), 0, strlen($file->getFileName()) - 4),
                     'path' => $file->getPathName(),
-                );
+                ];
             }
         }
 

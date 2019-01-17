@@ -84,10 +84,10 @@ EOT
         if (count($this->parentPages) == 0) {
             $this->assistant->writeLine(array(
                 'To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:',
-                '<comment>    array(</comment>',
+                '<comment>    [</comment>',
                 "<comment>        'name' => '".$this->pageName."',</comment>",
                 "<comment>        'class'=> '".$this->bundle->getNamespace().'\\Entity\\Pages\\'.$this->pageName."'</comment>",
-                '<comment>    ),</comment>',
+                '<comment>    ],</comment>',
                 '',
             ));
         }
@@ -237,7 +237,7 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new PageGenerator($filesystem, $registry, '/page', $this->assistant);
+        return new PageGenerator($filesystem, $registry, '/page', $this->assistant, $this->getContainer());
     }
 
     /**
