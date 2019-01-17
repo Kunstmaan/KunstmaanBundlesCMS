@@ -223,8 +223,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * created by the user, we don't ask anything and just use that bundle. If the user provided
      * a namespace as input option, we try to get that bundle first.
      *
-     * @param string      $objectName           The thing we are going to create (pagepart, bundle, layout, ...)
-     * @param string|null $namespace            The namespace provided as input option
+     * @param string      $objectName          The thing we are going to create (pagepart, bundle, layout, ...)
+     * @param string|null $namespace           The namespace provided as input option
      * @param string      $questionMoreBundles
      * @param string      $questionOneBundle
      *
