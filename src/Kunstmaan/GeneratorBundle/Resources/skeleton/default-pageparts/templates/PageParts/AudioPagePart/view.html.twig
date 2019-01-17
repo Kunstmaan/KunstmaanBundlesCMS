@@ -1,0 +1,3 @@
+{% if resource.media is defined and resource.media != "" %}
+    {% include 'KunstmaanMediaBundle:Media\\RemoteAudio:preview.html.twig' with {'media': resource.media} %}
+{% endif %}

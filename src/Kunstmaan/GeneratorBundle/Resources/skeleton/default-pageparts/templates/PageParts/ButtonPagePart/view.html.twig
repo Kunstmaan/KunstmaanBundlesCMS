@@ -1,0 +1,12 @@
+{# Build classnames for buttons based on twbs#}
+{% macro getClasses(resource) %}
+btn btn--{{ resource.type }} {% if resource.size != 'default' %}btn--{{ resource.size }}{% endif %} btn--{{ resource.position }}
+{% endmacro %}
+
+{% import _self as css %}
+
+<p class="btn-pp btn-pp--{{ resource.position }}">
+    <a href="{{ resource.linkUrl | replace_url }}" class="{{ css.getClasses(resource) }}"{% if resource.linkNewWindow %} target="_blank" rel="noopener"{% endif %}>
+        {{ resource.linkText|default(resource.linkUrl|replace_url) }}
+    </a>
+</p>

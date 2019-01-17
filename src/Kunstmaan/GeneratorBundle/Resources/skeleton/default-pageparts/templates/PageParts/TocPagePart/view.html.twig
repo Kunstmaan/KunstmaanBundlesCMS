@@ -1,0 +1,19 @@
+{% set tocContent = "" %}
+
+{% if page is defined %}
+    {% for pagepart in getpageparts(page, 'main') %}
+        {% if 'HeaderPagePart' in pagepart.getDefaultView %}
+            {% if pagepart.niv is defined and pagepart.niv == 2 %}
+                {% set tocContent = tocContent ~ '<li><a href=\"#' ~ pagepart.getTitle|slugify ~ '\">' ~ pagepart.getTitle ~ '</a></li>' %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if tocContent %}
+        <div class="toc-pp">
+            <ul>
+                {{ tocContent|raw }}
+            </ul>
+        </div>
+    {% endif %}
+{% endif %}
