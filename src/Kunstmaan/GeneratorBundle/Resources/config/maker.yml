@@ -1,7 +1,13 @@
 services:
     Kunstmaan\GeneratorBundle\Maker\MakeWebsiteSkeleton:
         arguments:
-            - '@maker.doctrine_helper'
+            - '%kernel.project_dir%'
+        tags:
+            - { name: maker.command }
+
+    Kunstmaan\GeneratorBundle\Maker\MakeDefaultPageparts:
+        arguments:
+            - '%kernel.project_dir%'
         tags:
             - { name: maker.command }
 

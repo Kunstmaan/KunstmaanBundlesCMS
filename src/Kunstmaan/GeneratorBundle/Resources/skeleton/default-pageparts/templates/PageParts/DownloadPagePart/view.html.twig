@@ -1,0 +1,11 @@
+{% if resource.media is not empty and app.request is defined %}
+    {% set name = resource.media.name %}
+    {% if name is empty %}
+        {% set name = "Download"|trans %}
+    {% endif %}
+
+    <p class="download-pp">
+        <a href="{{ app.request.schemeandhttphost ~ app.request.basePath ~ asset(resource.media.url) }}" target="_blank" class="download">{{ name }}</a>
+        <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span>
+    </p>
+{% endif %}

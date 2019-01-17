@@ -1,0 +1,63 @@
+{% import _self as buildImage %}
+
+{% macro setFilters(image, altText, type) %}
+
+    {% set imgUrl = '' %}
+
+    {% if type in ['svg', 'gif'] %}
+        {% set imgUrl = absolute_url(asset(image)) %}
+        <img class="video-pp__link__img" src="{{ imgUrl }}"{% if altText %} alt="{{ altText }}"{% endif %} />
+    {% else %}
+        {% set imgUrl_huge =    asset(image | imagine_filter('image_huge_' ~ type)) %}
+        {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type)) %}
+        {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type)) %}
+        {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
+        {% set srcSet = imgUrl_small ~ ' 400w,' ~ imgUrl_medium ~ ' 600w,' ~ imgUrl_big ~ ' 1200w,' ~ imgUrl_huge ~ ' 2400w'%}
+
+        <img class="video-pp__link__img" srcset="{{ srcSet }}"{% if altText %} sizes="100vw" alt="{{ altText }}"{% endif %}/>
+        <noscript>
+            <img class="video-pp__link__img" src="{{ imgUrl_big }}"{% if altText %} alt="{{ altText }}"{% endif %} />
+        </noscript>
+    {% endif %}
+{% endmacro %}
+
+
+{% if resource.video is defined and resource.video %}
+    <div class="video-pp">
+        {% set videoImage = asset('frontend/img/general/video-pp--default.svg') %}
+        {% set imageType = 'jpg' %}
+        {% if resource.thumbnail is not empty %}
+            {% set videoImage = asset(resource.thumbnail.url|imagine_filter('optim')) %}
+            {% set imageType = resource.thumbnail.originalFilename|lower|split('.')|last %}
+        {% endif %}
+
+        {% set handler = mediamanager.getHandler(resource.video) %}
+        {% set helper = handler.getFormHelper(resource.video) %}
+
+        {% if helper.type == 'youtube' %}
+            {% set videoEmbedUrl = "//www.youtube.com/embed/" ~ helper.code %}
+        {% elseif helper.type == 'vimeo' %}
+            {% set videoEmbedUrl = "//player.vimeo.com/video/" ~ helper.code %}
+        {% elseif helper.type == 'dailymotion' %}
+            {% set videoEmbedUrl = "//www.dailymotion.com/embed/video/" ~ helper.code %}
+        {% endif %}
+
+        <div class="videolink">
+            <a href="{{ videoEmbedUrl }}" target="_blank" rel="noopener" class="js-videolink-play-link videolink__video-link" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
+                <i class="videolink__video-link__icon icon icon--play"></i>
+                {% if resource.thumbnail is not empty %}
+                    {{ buildImage.setFilters(resource.thumbnail.url, resource.caption, imageType) }}
+                {% else %}
+                    <img class="video-pp__link__img" src="{{ 'http://i.ytimg.com/vi/' ~ helper.code ~ '/maxresdefault.jpg' }}" alt="">
+                {% endif %}
+            </a>
+            <div class="js-videolink-container videolink__video-container"></div>
+        </div>
+
+        {% if resource.caption %}
+            <div class="video-pp__caption">
+                <p class="video-pp__caption__text">{{ resource.caption }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
