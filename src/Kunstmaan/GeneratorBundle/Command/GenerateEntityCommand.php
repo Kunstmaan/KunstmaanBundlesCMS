@@ -49,16 +49,16 @@ class GenerateEntityCommand extends KunstmaanGenerateCommand
             ->setHelp(<<<'EOT'
 The <info>kuma:generate:entity</info> task generates a new entity inside a bundle:
 
-<info>php app/console kuma:generate:entity</info>
+<info>php bin/console kuma:generate:entity</info>
 
 The command can also generate the corresponding entity repository class with the
 <comment>--with-repository</comment> option:
 
-<info>php app/console kuma:generate:entity --with-repository</info>
+<info>php bin/console kuma:generate:entity --with-repository</info>
 
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
-<info>php app/console kuma:generate:entity --prefix=demo_</info>
+<info>php bin/console kuma:generate:entity --prefix=demo_</info>
 EOT
             );
     }
@@ -96,8 +96,8 @@ EOT
         $this->assistant->writeSection('Entity successfully created', 'bg=green;fg=black');
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the entity:',
-            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+            '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
         ));
     }
 
