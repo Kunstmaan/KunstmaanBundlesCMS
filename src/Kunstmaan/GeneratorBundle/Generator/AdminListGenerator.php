@@ -5,7 +5,8 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates all classes for an admin list
@@ -33,7 +34,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle          $bundle    The bundle
+     * @param BundleInterface $bundle    The bundle
      * @param string          $entity    The entity name
      * @param ClassMetadata   $metadata  The meta data
      * @param OutputInterface $output
@@ -41,7 +42,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      *
      * @internal param bool $generateAdminType True if we need to specify the admin type
      */
-    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, OutputInterface $output, $sortField)
+    public function generate(BundleInterface $bundle, $entity, ClassMetadata $metadata, OutputInterface $output, $sortField)
     {
         $parts = explode('\\', $entity);
         $entityName = array_pop($parts);
@@ -81,15 +82,15 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle        $bundle            The bundle
-     * @param string        $entityName        The entity name
-     * @param ClassMetadata $metadata          The meta data
-     * @param bool          $generateAdminType True if we need to specify the admin type
-     * @param string        $sortField         The name of the sort field
+     * @param BundleInterface $bundle            The bundle
+     * @param string          $entityName        The entity name
+     * @param ClassMetadata   $metadata          The meta data
+     * @param bool            $generateAdminType True if we need to specify the admin type
+     * @param string          $sortField         The name of the sort field
      *
      * @throws \RuntimeException
      */
-    public function generateConfiguration(Bundle $bundle, $entityName, ClassMetadata $metadata, $generateAdminType, $sortField)
+    public function generateConfiguration(BundleInterface $bundle, $entityName, ClassMetadata $metadata, $generateAdminType, $sortField)
     {
         $className = sprintf('%sAdminListConfigurator', $entityName);
         $dirPath = sprintf('%s/AdminList', $bundle->getPath());
@@ -120,13 +121,13 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle $bundle     The bundle
-     * @param string $entityName The entity name
-     * @param string $sortField  The name of the sort field
+     * @param BundleInterface $bundle     The bundle
+     * @param string          $entityName The entity name
+     * @param string          $sortField  The name of the sort field
      *
      * @throws \RuntimeException
      */
-    public function generateController(Bundle $bundle, $entityName, $sortField)
+    public function generateController(BundleInterface $bundle, $entityName, $sortField)
     {
         $className = sprintf('%sAdminListController', $entityName);
         $dirPath = sprintf('%s/Controller', $bundle->getPath());
@@ -156,18 +157,19 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
                 'entity_class' => $entityName,
                 'export_extensions' => $extensions,
                 'sortField' => $sortField,
+                'isV4' => Kernel::VERSION_ID >= 40000,
             )
         );
     }
 
     /**
-     * @param Bundle        $bundle     The bundle
-     * @param string        $entityName The entity name
-     * @param ClassMetadata $metadata   The meta data
+     * @param BundleInterface $bundle     The bundle
+     * @param string          $entityName The entity name
+     * @param ClassMetadata   $metadata   The meta data
      *
      * @throws \RuntimeException
      */
-    public function generateAdminType(Bundle $bundle, $entityName, ClassMetadata $metadata)
+    public function generateAdminType(BundleInterface $bundle, $entityName, ClassMetadata $metadata)
     {
         $className = sprintf('%sAdminType', $entityName);
         $dirPath = sprintf('%s/Form', $bundle->getPath());
