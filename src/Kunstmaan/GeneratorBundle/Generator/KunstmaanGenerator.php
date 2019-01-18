@@ -122,10 +122,16 @@ class KunstmaanGenerator extends Generator
 
         $class = new ClassMetadataInfo($entityClass, new UnderscoreNamingStrategy());
         if ($withRepository) {
-            $entityClass = preg_replace('/\\\\Entity\\\\/', '\\Repository\\', $entityClass, 1);
-            $class->customRepositoryClassName = $entityClass.'Repository';
-            $path = $this->isSymfony4() ? $bundle->getPath() : $bundle->getPath().str_repeat('/..', substr_count(get_class($bundle), '\\'));
-            $this->writeEntityRepositoryClass($class->customRepositoryClassName, $path);
+            if ($this->isSymfony4()) {
+                $repositoryClass = preg_replace('/\\\\Entity\\\\/', '\\Repository\\', $entityClass, 1) . 'Repository';
+                $class->customRepositoryClassName = $repositoryClass;
+                $this->getSymfony4RepositoryGenerator()->writeEntityRepositoryClass($entityClass, $repositoryClass, $bundle->getPath());
+            } else {
+                $entityClass = preg_replace('/\\\\Entity\\\\/', '\\Repository\\', $entityClass, 1);
+                $class->customRepositoryClassName = $entityClass.'Repository';
+                $path = $bundle->getPath().str_repeat('/..', substr_count(get_class($bundle), '\\'));
+                $this->getRepositoryGenerator()->writeEntityRepositoryClass($class->customRepositoryClassName, $path);
+            }
         }
 
         foreach ($fields as $fieldSet) {
@@ -491,6 +497,14 @@ class KunstmaanGenerator extends Generator
     }
 
     /**
+     * @return \Kunstmaan\GeneratorBundle\Generator\Symfony4EntityRepositoryGenerator
+     */
+    protected function getSymfony4RepositoryGenerator()
+    {
+        return new \Kunstmaan\GeneratorBundle\Generator\Symfony4EntityRepositoryGenerator();
+    }
+
+    /**
      * @internal
      */
     protected function getTemplateDir(BundleInterface $bundle)
@@ -520,29 +534,5 @@ class KunstmaanGenerator extends Generator
     protected function isSymfony4()
     {
         return Kernel::VERSION_ID >= 40000;
-    }
-
-    private function writeEntityRepositoryClass($fullClassName, $outputDirectory)
-    {
-        $code = $this->getRepositoryGenerator()->generateEntityRepositoryClass($fullClassName);
-
-        $path = $outputDirectory . DIRECTORY_SEPARATOR . str_replace('\\', \DIRECTORY_SEPARATOR, $fullClassName) . '.php';
-
-        if ($this->isSymfony4()) {
-            $classParts = explode('\\', $fullClassName);
-            $className = end($classParts);
-            $path = $outputDirectory . DIRECTORY_SEPARATOR . 'Repository' . DIRECTORY_SEPARATOR . $className . '.php';
-        }
-
-        $dir = dirname($path);
-
-        if (!is_dir($dir)) {
-            mkdir($dir, 0775, true);
-        }
-
-        if (!file_exists($path)) {
-            file_put_contents($path, $code);
-            chmod($path, 0664);
-        }
     }
 }
