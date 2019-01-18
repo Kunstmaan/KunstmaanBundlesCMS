@@ -5,7 +5,8 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a SearchPage using KunstmaanSearchBundle and
@@ -24,24 +25,30 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     private $skeletonDir;
 
     /**
+     * @var string
+     */
+    private $rootDir;
+
+    /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
      */
-    public function __construct(Filesystem $filesystem, $skeletonDir)
+    public function __construct(Filesystem $filesystem, $skeletonDir, $rootDir = null)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
+        $this->rootDir = $rootDir;
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
+     * @param BundleInterface $bundle     The bundle
      * @param string          $prefix     The prefix
      * @param string          $rootDir    The root directory
      * @param string          $createPage Create data fixtures or not
      * @param OutputInterface $output
      */
     public function generate(
-        Bundle $bundle,
+        BundleInterface $bundle,
         $prefix,
         $rootDir,
         $createPage,
@@ -51,6 +58,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
             'namespace' => $bundle->getNamespace(),
             'bundle' => $bundle,
             'prefix' => GeneratorUtils::cleanPrefix($prefix),
+            'isV4' => Kernel::VERSION_ID >= 40000,
         );
 
         $this->generateEntities($bundle, $parameters, $output);
@@ -61,43 +69,41 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
+     * @param BundleInterface $bundle     The bundle
      * @param array           $parameters The template parameters
      * @param string          $rootDir    The root directory
      * @param OutputInterface $output
      */
     public function generateTemplates(
-        Bundle $bundle,
+        BundleInterface $bundle,
         array $parameters,
         $rootDir,
         OutputInterface $output
     ) {
-        $dirPath = $bundle->getPath();
+        $dirPath = Kernel::VERSION_ID >= 40000 ? $this->rootDir . '/templates' : $bundle->getPath() . '/Resources/views';
         $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
 
         $this->filesystem->copy(
             __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $fullSkeletonDir . '/Pages/SearchPage/view.html.twig',
-            $dirPath . '/Resources/views/Pages/SearchPage/view.html.twig',
+            $dirPath . '/Pages/SearchPage/view.html.twig',
             true
         );
-        GeneratorUtils::prepend(
-            "{% extends '" . $bundle->getName(
-            ) . ":Page:layout.html.twig' %}\n",
-            $dirPath . '/Resources/views/Pages/SearchPage/view.html.twig'
-        );
+
+        $twigFile = Kernel::VERSION_ID >= 40000 ? "{% extends 'Page/layout.html.twig' %}\n" : "{% extends '".$bundle->getName().":Page:layout.html.twig' %}\n";
+        GeneratorUtils::prepend($twigFile, $dirPath . '/Pages/SearchPage/view.html.twig');
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
+     * @param BundleInterface $bundle     The bundle
      * @param array           $parameters The template parameters
      * @param OutputInterface $output
      *
      * @throws \RuntimeException
      */
     public function generateEntities(
-        Bundle $bundle,
+        BundleInterface $bundle,
         array $parameters,
         OutputInterface $output
     ) {
@@ -125,14 +131,14 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
+     * @param BundleInterface $bundle     The bundle
      * @param array           $parameters The template parameters
      * @param OutputInterface $output
      *
      * @throws \RuntimeException
      */
     public function generateFixtures(
-        Bundle $bundle,
+        BundleInterface $bundle,
         array $parameters,
         OutputInterface $output
     ) {
