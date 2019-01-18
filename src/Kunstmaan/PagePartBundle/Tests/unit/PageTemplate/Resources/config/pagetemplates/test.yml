@@ -1,0 +1,5 @@
+name: "Test page"
+rows:
+  - regions:
+      - { name: "main", span: 12 }
+template: "Pages\\ContentPage\\pagetemplate.html.twig"

@@ -39,7 +39,6 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
 
         $result = new PageTemplate();
         $result->setName($rawData['name']);
-
         $rows = [];
         foreach ($rawData['rows'] as $rawRow) {
             $regions = [];
@@ -117,14 +116,19 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
             return $this->presets[$name];
         }
 
-        if (false === strpos($name, ':')) {
-            throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
+        // if we use the old flow (sf3), the raw data can be stored in it's own yml file
+        if (strpos($name, ':')) {
+            $nameParts = explode(':', $name, 2);
+            if (2 !== count($nameParts)) {
+                throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
+            }
+            list($namespace, $name) = $nameParts;
+            $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
+            $rawData = Yaml::parse(file_get_contents($path));
+
+            return $rawData;
         }
 
-        list($namespace, $name) = explode(':', $name, 2);
-        $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
-        $rawData = Yaml::parse(file_get_contents($path));
-
-        return $rawData;
+        throw new \Exception(sprintf('Non existing template "%s".', $name));
     }
 }

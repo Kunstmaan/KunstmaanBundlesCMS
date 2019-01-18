@@ -99,22 +99,33 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         return $result;
     }
 
-    private function getValue($name)
+    /**
+     * @param string $name
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    private function getValue(string $name)
     {
         if (isset($this->presets[$name])) {
             return $this->presets[$name];
         }
 
-        $nameParts = explode(':', $name);
-        if (2 !== count($nameParts)) {
-            throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").',
-                $name));
+        // if we use the old flow (sf3), the value can be stored in it's own yml file
+        if (strpos($name, ':')) {
+            $nameParts = explode(':', $name);
+            if (2 !== count($nameParts)) {
+                throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").',
+                    $name));
+            }
+            list($namespace, $name) = $nameParts;
+            $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pageparts/' . $name . '.yml');
+            $value = Yaml::parse(file_get_contents($path));
+
+            return $value;
         }
 
-        list($namespace, $name) = $nameParts;
-        $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pageparts/' . $name . '.yml');
-        $value = Yaml::parse(file_get_contents($path));
-
-        return $value;
+        throw new \Exception(sprintf('Non existing pageparts preset "%s".', $name));
     }
 }
