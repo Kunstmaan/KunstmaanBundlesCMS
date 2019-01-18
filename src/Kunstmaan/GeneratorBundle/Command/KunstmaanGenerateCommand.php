@@ -479,27 +479,32 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             // If single -or multipe entity reference in chosen, we need to ask for the entity name
             if (in_array($typeStrings[$typeId], ['single_ref', 'multi_ref'])) {
                 $bundleName = $bundle->getName();
-                $question = "Reference entity name (eg. $bundleName:FaqItem, $bundleName:Blog/Comment)";
+                $egName = $this->isSymfony4() ? 'App\Entity\FaqItem' : "$bundleName:FaqItem, $bundleName:Blog/Comment";
+                $question = sprintf('Reference entity name (eg. %s)', $egName);
                 $name = $this->assistant->askAndValidate(
                     $question,
                     function ($name) use ($generator, $container) {
-                        /**
+                        /*
                          * Replace slash to backslash. Eg: CmsBundle:Blog/Comment --> CmsBundle:Blog\Comment
                          *
                          * @see \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory::getMetadataFor()
                          * @see \Doctrine\ORM\Mapping\ClassMetadataFactory::getFqcnFromAlias()
                          */
-                        $name = strtr($name, '/', '\\');
+                        if (!$this->isSymfony4()) {
+                            $name = strtr($name, '/', '\\');
 
-                        $parts = explode(':', $name);
+                            $parts = explode(':', $name);
 
-                        // Should contain colon
-                        if (count($parts) != 2) {
-                            throw new \InvalidArgumentException(sprintf('"%s" is an invalid entity name', $name));
+                            // Should contain colon
+                            if (count($parts) != 2) {
+                                throw new \InvalidArgumentException(sprintf('"%s" is an invalid entity name', $name));
+                            }
+                        } else {
+                            $parts = explode('\\', $name);
                         }
 
                         // Check reserved words
-                        if ($generator->isReservedKeyword($parts[1])) {
+                        if ($generator->isReservedKeyword(end($parts))) {
                             throw new \InvalidArgumentException(sprintf('"%s" contains a reserved word', $name));
                         }
 
@@ -995,5 +1000,13 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         // Make sure behat is configured and the PagePartContext and BehatTestPage exits
         return file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage);
+    }
+
+    /**
+     * @internal
+     */
+    protected function isSymfony4()
+    {
+        return Kernel::VERSION_ID >= 40000;
     }
 }
