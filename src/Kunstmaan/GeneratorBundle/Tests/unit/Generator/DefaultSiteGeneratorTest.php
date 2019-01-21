@@ -5,6 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Kernel;
 
 class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,8 +20,7 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->any())
             ->method('getParameter')
-            ->with('multilanguage')
-            ->will($this->returnValue(true))
+            ->will($this->returnValueMap([['multilanguage', true], ['kernel.project_dir', $path]]))
         ;
         $container
             ->expects($this->any())
@@ -32,10 +32,11 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
         $generator->generate($bundle, '', __DIR__ . '/../../_data', false);
 
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error.html.twig');
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error404.html.twig');
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error500.html.twig');
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error503.html.twig');
+        $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/' : 'app/resources/';
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error404.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error500.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error503.html.twig');
     }
 
     protected function getBundle($path)
