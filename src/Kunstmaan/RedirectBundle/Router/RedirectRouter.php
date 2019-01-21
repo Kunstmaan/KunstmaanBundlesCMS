@@ -117,18 +117,16 @@ class RedirectRouter implements RouterInterface
         foreach ($redirects as $redirect) {
             // Check for wildcard routing and adjust as required
             if ($this->isWildcardRedirect($redirect)) {
-                $this->calculateWildcardDestination($redirect);
+                $route = $this->createWildcardRoute($redirect);
+            } else {
+                $route = $this->createRoute($redirect);
             }
 
             // Only add the route when the domain matches or the domain is empty
             if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
                 $this->routeCollection->add(
                     '_redirect_route_' . $redirect->getId(),
-                    new Route($redirect->getOrigin(), array(
-                        '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                        'path' => $redirect->getTarget(),
-                        'permanent' => $redirect->isPermanent(),
-                    ))
+                    $route
                 );
             }
         }
@@ -159,21 +157,42 @@ class RedirectRouter implements RouterInterface
 
     /**
      * @param Redirect $redirect
+     *
+     * @return Route
      */
-    private function calculateWildcardDestination(Redirect $redirect)
+    private function createRoute(Redirect $redirect)
+    {
+        return new Route(
+            $redirect->getOrigin(), array(
+                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                    'path' => $redirect->getTarget(),
+                    'permanent' => $redirect->isPermanent(),
+                ));
+    }
+
+    /**
+     * @param Redirect $redirect
+     *
+     * @return Route
+     */
+    private function createWildcardRoute(Redirect $redirect)
     {
         $origin = $redirect->getOrigin();
         $target = $redirect->getTarget();
         $url = $this->context->getPathInfo();
 
-        $redirect->setOrigin($url);
-
         $origin = substr($origin, 0, -1);
         $target = substr($target, 0, -1);
-        $url = str_replace($origin, $target, $url);
+        $pathInfo = str_replace($origin, $target, $url);
 
-        $this->context->setPathInfo($url);
-        $redirect->setTarget($url);
+        $this->context->setPathInfo($pathInfo);
+
+        return new Route(
+            $url, array(
+                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                    'path' => $url,
+                    'permanent' => $redirect->isPermanent(),
+                ));
     }
 
     /**
