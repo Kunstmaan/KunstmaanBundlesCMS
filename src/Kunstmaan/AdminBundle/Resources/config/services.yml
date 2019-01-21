@@ -331,3 +331,11 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:exception.html.twig', id: kuma_exception }
+
+    Kunstmaan\AdminBundle\Twig\AdminBundleTwigExtension:
+        arguments:
+            - '%kunstmaan_admin.website_title%'
+            - '%defaultlocale%'
+            - '%requiredlocales%'
+        tags:
+            - { name: twig.extension }
