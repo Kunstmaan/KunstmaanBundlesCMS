@@ -14,6 +14,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RedirectRouter implements RouterInterface
 {
+    // Wildcard path placeholder
+    private const WILDCARD_PATH = 'wildcard';
+
+    // Character used as wildcard in Redirect.origin
+    private const WILDCARD_CHAR = '*';
+
     /** @var RequestContext */
     private $context;
 
@@ -65,7 +71,7 @@ class RedirectRouter implements RouterInterface
      *
      * @api
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         throw new RouteNotFoundException('You cannot generate a url from a redirect');
     }
@@ -88,9 +94,8 @@ class RedirectRouter implements RouterInterface
     public function match($pathinfo)
     {
         $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
-        $result = $urlMatcher->match($pathinfo);
 
-        return $result;
+        return $urlMatcher->match($pathinfo);
     }
 
     /**
@@ -100,82 +105,12 @@ class RedirectRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
-        if (is_null($this->routeCollection)) {
+        if (null === $this->routeCollection) {
             $this->routeCollection = new RouteCollection();
             $this->initRoutes();
         }
 
         return $this->routeCollection;
-    }
-
-    private function initRoutes()
-    {
-        $redirects = $this->redirectRepository->findAll();
-        $domain = $this->domainConfiguration->getHost();
-
-        /** @var Redirect $redirect */
-        foreach ($redirects as $redirect) {
-            // Check for wildcard routing and adjust as required
-            if ($this->isWildcardRedirect($redirect)) {
-                $this->calculateWildcardDestination($redirect);
-            }
-
-            // Only add the route when the domain matches or the domain is empty
-            if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
-                $needsUtf8 = (preg_match('/[\x80-\xFF]/', $redirect->getTarget()));
-
-                $this->routeCollection->add(
-                    '_redirect_route_' . $redirect->getId(),
-                    new Route($redirect->getOrigin(), [
-                        '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                        'path' => $redirect->getTarget(),
-                        'permanent' => $redirect->isPermanent(),
-                    ], [], ['utf8' => $needsUtf8])
-                );
-            }
-        }
-    }
-
-    /**
-     * @param Redirect $redirect
-     *
-     * @return bool
-     */
-    private function isWildcardRedirect(Redirect $redirect)
-    {
-        $origin = $redirect->getOrigin();
-        $matchSegment = substr($origin, 0, -1);
-        if (substr($origin, -2) == '/*') {
-            return $this->isPathInfoWildcardMatch($matchSegment);
-        }
-
-        return false;
-    }
-
-    private function isPathInfoWildcardMatch($matchSegment)
-    {
-        $path = $this->context->getPathInfo();
-
-        return strstr($path, $matchSegment);
-    }
-
-    /**
-     * @param Redirect $redirect
-     */
-    private function calculateWildcardDestination(Redirect $redirect)
-    {
-        $origin = $redirect->getOrigin();
-        $target = $redirect->getTarget();
-        $url = $this->context->getPathInfo();
-
-        $redirect->setOrigin($url);
-
-        $origin = substr($origin, 0, -1);
-        $target = substr($target, 0, -1);
-        $url = str_replace($origin, $target, $url);
-
-        $this->context->setPathInfo($url);
-        $redirect->setTarget($url);
     }
 
     /**
@@ -197,8 +132,70 @@ class RedirectRouter implements RouterInterface
      *
      * @api
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
+    }
+
+    private function initRoutes(): void
+    {
+        $redirects = $this->redirectRepository->findBy([], ['origin' => 'DESC']);
+
+        $domain = $this->domainConfiguration->getHost();
+
+        /** @var Redirect $redirect */
+        foreach ($redirects as $redirect) {
+            if ($redirect->getDomain() !== $domain && '' !== (string) $redirect->getDomain()) {
+                continue;
+            }
+
+            $this->routeCollection->add(
+                '_redirect_route_' . $redirect->getId(),
+                $this->createRedirectRoute($redirect)
+            );
+        }
+    }
+
+    /**
+     * @param Redirect $redirect
+     *
+     * @return Route
+     */
+    private function createRedirectRoute(Redirect $redirect): Route
+    {
+        $origin = $redirect->getOrigin();
+        $hasWildcard = mb_substr_count($origin, self::WILDCARD_CHAR) === 1;
+
+        if ($hasWildcard) {
+            $origin = str_replace(self::WILDCARD_CHAR, $this->generatePath(self::WILDCARD_PATH), $origin);
+        }
+
+        $route = new Route($origin, [
+            '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+            'path' => $redirect->getTarget(),
+            'permanent' => $redirect->isPermanent(),
+        ]);
+
+        if ('' !== (string) $redirect->getDomain()) {
+            $route->setHost($redirect->getDomain());
+        }
+
+        if ($hasWildcard) {
+            $route->setRequirement(self::WILDCARD_PATH, '.*');
+        }
+
+        $route->setOption('utf8', preg_match('/[\x80-\xFF]/', $redirect->getTarget()));
+
+        return $route;
+    }
+
+    /**
+     * @param string $wildcard
+     *
+     * @return string
+     */
+    private function generatePath($wildcard): string
+    {
+        return sprintf('{%s}', $wildcard);
     }
 }
