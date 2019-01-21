@@ -1,7 +1,9 @@
 <?php
 
+{% if not isV4 %}
 namespace {{ namespace }}\Features\Context;
 
+{% endif %}
 use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;

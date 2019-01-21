@@ -1,7 +1,9 @@
 <?php
 
+{% if not isV4 %}
 namespace {{ namespace }}\Features\Context;
 
+{% endif %}
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Exception\ElementNotFoundException;

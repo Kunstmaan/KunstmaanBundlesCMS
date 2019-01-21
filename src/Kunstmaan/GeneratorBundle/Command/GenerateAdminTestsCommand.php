@@ -4,11 +4,13 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * GenerateAdminTestsCommand
@@ -45,15 +47,18 @@ EOT
         $questionHelper = $this->getQuestionHelper();
         $questionHelper->writeSection($output, 'Admin Tests Generation');
 
-        GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
+        $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
+        if (Kernel::VERSION_ID < 40000) {
+            GeneratorUtils::ensureOptionsProvided($input, ['namespace']);
 
-        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-        $bundle = strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
+            $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
+            $bundle = strtr($namespace, ['\\Bundle\\' => '', '\\' => '']);
 
-        $bundle = $this
-            ->getApplication()
-            ->getKernel()
-            ->getBundle($bundle);
+            $bundle = $this
+                ->getApplication()
+                ->getKernel()
+                ->getBundle($bundle);
+        }
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $output);
@@ -64,6 +69,10 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        if (Kernel::VERSION_ID >= 40000) {
+            return;
+        }
+
         $questionHelper = $this->getQuestionHelper();
         $questionHelper->writeSection($output, 'Welcome to the Kunstmaan default site generator');
 
