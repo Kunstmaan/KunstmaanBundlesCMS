@@ -41,12 +41,12 @@ class GenerateFormPageCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $sections;
+    private $sections = [];
 
     /**
      * @var array
      */
-    private $parentPages;
+    private $parentPages = [];
 
     /**
      * @var bool
@@ -224,6 +224,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new FormPageGenerator($filesystem, $registry, '/page', $this->assistant);
+        return new FormPageGenerator($filesystem, $registry, '/page', $this->assistant, $this->getContainer());
     }
 }

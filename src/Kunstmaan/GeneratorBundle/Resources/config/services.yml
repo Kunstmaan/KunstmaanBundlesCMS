@@ -26,3 +26,11 @@ services:
     Kunstmaan\GeneratorBundle\Command\GeneratePageCommand:
       tags:
         - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateFormPageCommand:
+      tags:
+        - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateFormPagePartsCommand:
+      tags:
+        - { name: console.command }

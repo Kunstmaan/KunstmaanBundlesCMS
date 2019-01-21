@@ -127,6 +127,7 @@ class FormPageGenerator extends KunstmaanGenerator
             'sections' => $this->sections,
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\Pages\\' . $this->entity . 'AdminType',
             'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity,
+            'isV4' => $this->isSymfony4(),
         );
 
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);
@@ -212,12 +213,12 @@ class FormPageGenerator extends KunstmaanGenerator
      */
     private function updateParentPages()
     {
-        $phpCode = "            array(\n";
+        $phpCode = "            [\n";
         $phpCode .= "                'name' => '" . $this->entity . "',\n";
         $phpCode .= "                'class'=> '" .
             $this->bundle->getNamespace() .
             '\\Entity\\Pages\\' . $this->entity . "'\n";
-        $phpCode .= '            ),';
+        $phpCode .= '            ],'."\n        ";
 
         // When there is a BehatTestPage, we should also allow the new page as sub page
         $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
@@ -228,8 +229,8 @@ class FormPageGenerator extends KunstmaanGenerator
         foreach ($this->parentPages as $file) {
             $data = file_get_contents($file);
             $data = preg_replace(
-                '/(function\s*getPossibleChildTypes\s*\(\)\s*\{\s*return\s*array\s*\()/',
-                "$1\n$phpCode",
+                '/(function\s*getPossibleChildTypes\s*\(\)\s*\{\s*)(return\s*\[|return\s*array\()/',
+                "$1$2\n$phpCode",
                 $data
             );
             file_put_contents($file, $data);
