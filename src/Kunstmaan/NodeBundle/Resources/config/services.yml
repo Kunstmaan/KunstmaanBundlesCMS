@@ -60,6 +60,7 @@ services:
     kunstmaan_node.admin_node.node_version_lock_helper:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper
         arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        public: true
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
