@@ -282,7 +282,7 @@ EOT
         $authorOption = $this->assistant->getOption('with-author');
         if ($authorOption != 'y' && $authorOption != 'n') {
             /** @var $question */
-            $authorOption = $this->assistant->askConfirmation("\nDo you want to authors ? (y/n)\n", 'y', '?', true);
+            $authorOption = $this->assistant->askConfirmation("\nDo you want to use authors ? (y/n)\n", 'y', '?', true);
         }
 
         return $authorOption == 'y';
