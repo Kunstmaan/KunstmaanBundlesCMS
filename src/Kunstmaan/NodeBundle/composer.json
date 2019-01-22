@@ -14,7 +14,9 @@
     ],
     "require": {
         "php": "^7.1",
+        "gedmo/doctrine-extensions": "^2.4.34",
         "kunstmaan/adminlist-bundle": "~5.2"
+
     },
     "minimum-stability": "dev",
     "autoload": {
