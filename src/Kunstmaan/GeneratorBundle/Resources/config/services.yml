@@ -34,3 +34,8 @@ services:
     Kunstmaan\GeneratorBundle\Command\GenerateFormPagePartsCommand:
       tags:
         - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateSearchPageCommand:
+      tags:
+        - { name: console.command }
+
