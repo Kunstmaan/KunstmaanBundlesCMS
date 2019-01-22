@@ -65,14 +65,14 @@
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~2.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
-        "sensio/generator-bundle": "~3.0",
         "twig/twig": "^1.36|^2.6",
         "twig/extensions": "~1.0",
         "egulias/email-validator": "^1.2.8|^2.0",
         "box/spout": "^2.5",
         "ruflin/elastica": "^5.1|^6.0",
         "behat/transliterator": "~1.2",
-        "defuse/php-encryption": "v2.1.0"
+        "defuse/php-encryption": "v2.1.0",
+        "kunstmaan/sensio-generator-bundle": "^3.2"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",
