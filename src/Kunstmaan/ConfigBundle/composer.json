@@ -1,0 +1,28 @@
+{
+    "name": "kunstmaan/config-bundle",
+    "type": "symfony-bundle",
+    "description": "The Kunstmaan Config bundle supplies your project with custom configuration entities that can be managed from within KunstmaanCMS",
+    "keywords": ["kunstmaan", "cms", "admin", "config"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanConfigBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "kunstmaan/admin-bundle": "~5.2"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "Kunstmaan\\ConfigBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.2-dev"
+        }
+    }
+}
