@@ -14,11 +14,9 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/symfony": "~2.8",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/utilities-bundle": "~3.2",
-        "kunstmaan/node-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/utilities-bundle": "~5.2",
+        "kunstmaan/node-bundle": "~5.2"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -26,7 +24,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

@@ -14,18 +14,14 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/symfony": "^2.8",
-        "gedmo/doctrine-extensions": "2.3.*",
-        "doctrine/doctrine-fixtures-bundle": "~2.2.0",
-        "stof/doctrine-extensions-bundle": "1.1.*@dev",
-        "liip/imagine-bundle": "v1.4.3",
-        "imagine/imagine": "v0.5.0",
+        "gedmo/doctrine-extensions": "^2.4.34",
+        "stof/doctrine-extensions-bundle": "~1.1",
+        "liip/imagine-bundle": "^2.0",
+        "imagine/imagine": "~0.6",
         "knplabs/knp-gaufrette-bundle": "~0.1",
-        "sensio/framework-extra-bundle": ">=2.3.0,<4.0.0",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/adminlist-bundle": "~3.2",
-        "kunstmaan/utilities-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/adminlist-bundle": "~5.2",
+        "kunstmaan/utilities-bundle": "~3.2"
     },
     "suggest": {
         "ext-imagick": "to support PDF preview images"
@@ -36,7 +32,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }
