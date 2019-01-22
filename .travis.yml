@@ -7,6 +7,10 @@ cache:
 matrix:
   fast_finish: true
   include:
+    # Test LTS versions. This makes sure we do not use Symfony packages with version greater than 3. Read more at https://github.com/symfony/lts
+    - php: 7.3
+      env: DEPENDENCIES="symfony/lts:^3"
+
     - php: 7.1
     - php: 7.2
       env: COVERAGE=true CODECEPTION_FLAGS="--coverage --coverage-xml"
@@ -26,8 +30,10 @@ before_install:
   - sed -i -e 's/{% endif %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
   - sed -i -e 's/"name".*/"name":"demo",/g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
   - if [ $(phpenv version-name) = "7.3" ]; then composer remove --dev friendsofphp/php-cs-fixer --no-update; fi; # Temp remove php-cs-fixer as they don't support php 7.3 yet
+  - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
-install: composer update --prefer-dist $COMPOSER_FLAGS
+install:
+  - composer update --prefer-dist $COMPOSER_FLAGS
 
 script: ./vendor/codeception/codeception/codecept run $CODECEPTION_FLAGS
 

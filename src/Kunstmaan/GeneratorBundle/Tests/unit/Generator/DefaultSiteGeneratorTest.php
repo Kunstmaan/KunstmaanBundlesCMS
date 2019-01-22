@@ -33,7 +33,7 @@ class DefaultSiteGeneratorTest extends TestCase
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
         $generator->generate($bundle, '', __DIR__ . '/../../_data', false);
 
-        $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/' : 'app/resources/';
+        $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/' : 'app/Resources/';
         unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error.html.twig');
         unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error404.html.twig');
         unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error500.html.twig');
