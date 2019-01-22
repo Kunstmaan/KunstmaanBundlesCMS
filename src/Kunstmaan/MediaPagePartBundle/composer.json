@@ -15,17 +15,20 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.1",
-        "symfony/symfony": "~2.8",
-        "kunstmaan/pagepart-bundle": "~3.2",
-        "kunstmaan/media-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "kunstmaan/pagepart-bundle": "~5.2",
+        "kunstmaan/media-bundle": "~5.2"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
+        "codeception/codeception": "^2.4"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\MediaPagePartBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }
