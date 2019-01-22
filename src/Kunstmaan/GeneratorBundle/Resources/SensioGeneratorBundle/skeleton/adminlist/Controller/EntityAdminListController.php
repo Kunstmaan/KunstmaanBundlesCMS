@@ -2,16 +2,19 @@
 
 namespace {{ namespace }}\Controller;
 
+use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
+
+{% if isV4 %}
 
 /**
- * The admin list controller for {{ entity_class }}
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}AdminListController extends AdminListController
 {
     /**
@@ -106,8 +109,8 @@ class {{ entity_class }}AdminListController extends AdminListController
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
-
 {% if sortField %}
+
     /**
      * The move up action
      *
@@ -136,5 +139,4 @@ class {{ entity_class }}AdminListController extends AdminListController
     return parent::doMoveDownAction($this->getAdminListConfigurator(), $id, $request);
     }
 {% endif %}
-
 }

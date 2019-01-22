@@ -3,16 +3,18 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
+use Kunstmaan\GeneratorBundle\Helper\EntityValidator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a KunstmaanAdminList
@@ -68,18 +70,30 @@ EOT
 
         GeneratorUtils::ensureOptionsProvided($input, array('entity'));
 
-        $entity = Validators::validateEntityName($input->getOption('entity'));
-        list($bundle, $entity) = $this->parseShortcutNotation($entity);
+        $entity = EntityValidator::validate($input->getOption('entity'));
+        if (Kernel::VERSION_ID < 40000) {
+            list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
-        $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle) . '\\' . $entity;
-        $metadata = $this->getEntityMetadata($entityClass);
-        $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
+            $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle) . '\\' . $entity;
+            $metadata = $this->getEntityMetadata($entityClass)[0];
+            $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
+        } else {
+            $entityClass = $entity;
+            $em = $this->getContainer()->get('doctrine')->getManager();
+
+            $metadata = $em->getClassMetadata($entityClass);
+            $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
+        }
 
         $questionHelper->writeSection($output, 'AdminList Generation');
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->setQuestion($questionHelper);
-        $generator->generate($bundle, $entityClass, $metadata[0], $output, $input->getOption('sortfield'));
+        $generator->generate($bundle, $entityClass, $metadata, $output, $input->getOption('sortfield'));
+
+        if (Kernel::VERSION_ID >= 40000) {
+            return;
+        }
 
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -102,7 +116,7 @@ EOT
         $entity = null;
 
         try {
-            $entity = $input->getOption('entity') ? Validators::validateEntityName($input->getOption('entity')) : null;
+            $entity = $input->getOption('entity') ? EntityValidator::validate($input->getOption('entity')) : null;
         } catch (\Exception $error) {
             $output->writeln(
                 $questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error')
@@ -121,7 +135,7 @@ EOT
             );
 
             $question = new Question($questionHelper->getQuestion('The entity shortcut name', $entity), $entity);
-            $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
+            $question->setValidator(['\Kunstmaan\GeneratorBundle\Helper\EntityValidator', 'validate']);
             $entity = $questionHelper->ask($input, $output, $question);
             $input->setOption('entity', $entity);
 

@@ -39,3 +39,6 @@ services:
       tags:
         - { name: console.command }
 
+    Kunstmaan\GeneratorBundle\Command\GenerateAdminListCommand:
+      tags:
+        - { name: console.command }
