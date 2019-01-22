@@ -53,7 +53,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->getInitializedPermissionAdmin();
 
-        $role = $this->createMock('Symfony\Component\Security\Core\Role\RoleInterface');
+        $role = $this->createMock('Symfony\Component\Security\Core\Role\Role');
         $role->expects($this->once())
             ->method('getRole')
             ->will($this->returnValue('ROLE_TEST'));
