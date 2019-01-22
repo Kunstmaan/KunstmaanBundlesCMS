@@ -42,3 +42,8 @@ services:
     Kunstmaan\GeneratorBundle\Command\GenerateAdminListCommand:
       tags:
         - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateAdminTestsCommand:
+      tags:
+        - { name: console.command }
+
