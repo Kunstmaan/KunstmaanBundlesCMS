@@ -1,0 +1,34 @@
+{
+    "name": "kunstmaan/cache-bundle",
+    "type": "symfony-bundle",
+    "description": "The Kunstmaan Cache bundle supplies your project with the ability to ban certain pages from Varnish from within KunstmaanCMS",
+    "keywords": ["kunstmaan", "cms", "admin", "varnish"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanCacheBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "https://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/node-bundle": "~5.2"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
+        "codeception/codeception": "^2.4"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "Kunstmaan\\ConfigBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.2-dev"
+        }
+    }
+}
