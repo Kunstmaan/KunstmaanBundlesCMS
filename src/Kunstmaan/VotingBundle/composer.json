@@ -15,16 +15,32 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.1",
-        "symfony/symfony": "~2.3",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/doctrine-fixtures-bundle": "~2.2.0"
+        "doctrine/orm": "^2.5",
+        "sensio/framework-extra-bundle": "^5.1",
+        "symfony/config": "^3.4|^4.0",
+        "symfony/dependency-injection": "^3.4|^4.0",
+        "symfony/event-dispatcher": "^3.4|^4.0",
+        "symfony/framework-bundle": "^3.4|^4.0",
+        "symfony/http-foundation": "^3.4|^4.0",
+        "symfony/http-kernel": "^3.4|^4.0",
+        "symfony/routing": "^3.4|^4.0"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "~3.0",
+        "phpunit/phpunit": "^5.7",
+        "codeception/codeception": "^2.4",
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\VotingBundle\\": "" }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }
