@@ -18,32 +18,25 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^5.6|^7.0",
-        "symfony/config": "^3.4",
-        "symfony/dependency-injection": "^3.4",
-        "symfony/form": "^3.4",
-        "symfony/http-foundation": "^3.4",
-        "symfony/http-kernel": "^3.4",
-        "symfony/security": "^3.4",
-        "symfony/finder": "^3.4",
-        "symfony/translation": "^3.4",
-        "symfony/validator": "^3.4",
-        "symfony/options-resolver": "^3.4",
-        "symfony/framework-bundle": "^3.4",
-        "symfony/security-bundle": "^3.4",
-        "symfony/twig-bundle": "^3.4",
-        "doctrine/orm": "^2.5",
-        "doctrine/doctrine-bundle": "~1.9"
+      "php": "^7.1",
+      "kunstmaan/adminlist-bundle": "^5.2",
+      "kunstmaan/article-bundle": "^5.2",
+      "box/spout": "^2.5",
+      "doctrine/doctrine-bundle": "^1.6",
+      "doctrine/doctrine-fixtures-bundle": "~2.2",
+      "doctrine/doctrine-migrations-bundle": "^1.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7",
-        "nelmio/alice": "~1.6",
-        "doctrine/doctrine-fixtures-bundle": "~2.2.0",
-        "matthiasnoback/symfony-config-test": "^2.2"
+      "kunstmaan/tagging-bundle": "^5.2",
+      "symfony/phpunit-bridge": "~3.0",
+      "phpunit/phpunit": "^5.7",
+      "codeception/codeception": "^2.4",
+      "matthiasnoback/symfony-config-test": "2.2.0",
+      "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
+      "nelmio/alice": "^2.1.4"
     },
-    "suggest": {
-        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready",
-        "kunstmaan/adminlist-bundle": "^5.0 - to be put into require-dev when ready"
+    "config": {
+      "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -52,7 +45,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }
