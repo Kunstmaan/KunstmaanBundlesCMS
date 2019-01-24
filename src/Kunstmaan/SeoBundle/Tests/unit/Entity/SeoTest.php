@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\SeoBundle\Tests\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use PHPUnit_Framework_TestCase;
 
@@ -137,33 +134,5 @@ class SeoTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('NASA PR dept', $this->object->getOgArticlePublisher());
         $this->assertEquals('Mars', $this->object->getOgArticleSection());
         $this->assertEquals('delboy1978uk', $this->object->getOgArticleAuthor());
-    }
-
-    public function testGetSetRef()
-    {
-        $ref = new Redirect();
-        $ref->setId(666);
-
-        $this->object->setRef($ref);
-
-        $em = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $repo = $this->getMockBuilder(EntityRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $repo->expects($this->any())
-            ->method('find')
-            ->will($this->returnValue($ref));
-
-        $em->expects($this->any())
-            ->method('getRepository')
-            ->will($this->returnValue($repo));
-
-        $this->assertInstanceOf(Redirect::class, $this->object->getRef($em));
-        $this->assertEquals('666', $this->object->getRefId());
-        $this->assertEquals(Redirect::class, $this->object->getRefEntityName());
     }
 }
