@@ -1,35 +1,49 @@
 {
-  "name": "kunstmaan/fixtures-bundle",
-  "type": "symfony-bundle",
-  "description": "With this bundle you'll be able to create fixtures through yaml files in an easy way",
-  "keywords": [
-    "kunstmaan",
-    "fixtures",
-    "yaml"
-  ],
-  "homepage": "https://github.com/Kunstmaan/FixturesBundle",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Kunstmaan Team",
-      "homepage": "http://www.kunstmaan.be/",
-      "email": "support@kunstmaan.be"
+    "name": "kunstmaan/fixtures-bundle",
+    "type": "symfony-bundle",
+    "description": "With this bundle you'll be able to create fixtures through yaml files in an easy way",
+    "keywords": [
+        "kunstmaan",
+        "fixtures",
+        "yaml"
+    ],
+    "homepage": "https://github.com/Kunstmaan/FixturesBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.1",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-fixtures-bundle": "~2.2",
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/media-bundle": "~5.2",
+        "kunstmaan/menu-bundle": "~5.2",
+        "kunstmaan/node-bundle": "~5.2",
+        "kunstmaan/pagepart-bundle": "~5.2",
+        "kunstmaan/utilities-bundle": "~5.2"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.4",
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
+        "phpunit/phpunit": "^5.7",
+        "symfony/phpunit-bridge": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kunstmaan\\FixturesBundle\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.2-dev"
+        }
     }
-  ],
-  "minimum-stability": "dev",
-  "require": {
-    "php": "^7.1",
-    "symfony/symfony": "~2.3",
-    "doctrine/orm": "^2.2.3",
-    "doctrine/doctrine-bundle": "~1.2",
-    "doctrine/doctrine-fixtures-bundle": "~2.2.0"
-  },
-  "autoload": {
-    "psr-4": { "Kunstmaan\\FixturesBundle\\": "" }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0-dev"
-    }
-  }
 }
