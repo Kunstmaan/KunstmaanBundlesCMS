@@ -29,17 +29,15 @@ class InstallCommand extends Command
      */
     private $commandSteps = 0;
 
-    /**
-     * @var ContainerInterface
-     */
-    private $containter;
+    /** @var string */
+    private $rootDir;
 
     /**
-     * @param ContainerInterface $container Container
+     * @param string $rootDir
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(string $rootDir)
     {
-        $this->container = $container;
+        $this->rootDir = $rootDir;
 
         parent::__construct();
     }
@@ -89,7 +87,7 @@ class InstallCommand extends Command
         $input->setOption('demosite', $demositeOption);
         $input->setOption('bundle-name',  strtr($namespace, ['\\Bundle\\' => '', '\\' => '']));
 
-        $dir = $input->getOption('dir') ?: dirname($this->container->getParameter('kernel.root_dir')) . '/src';
+        $dir = $input->getOption('dir') ?: dirname($this->rootDir) . '/src';
         $input->setOption('dir', $dir);
 
         $output->writeln('<info>Installation start</info>');
@@ -98,9 +96,9 @@ class InstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $demositeOptions = ['--namespace' => $input->getOption('namespace')];
-        $demositeOptions = $input->getOption('demosite') === 'Yes'
-            ? ['--demosite' => true]
-            : [];
+        if($input->getOption('demosite') === 'Yes') {
+           $demositeOptions['--demosite'] = true;
+        }
 
         $this
             ->executeCommand($output,'kuma:generate:bundle', [
