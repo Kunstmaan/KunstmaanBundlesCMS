@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TaggingBundle\Tests\DependencyInjection;
+namespace Kunstmaan\TranslatorBundle\Tests\DependencyInjection;
 
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
 use PHPUnit_Framework_TestCase;
@@ -48,8 +48,8 @@ class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
     private function getContainer()
     {
         $container = new ContainerBuilder();
-        $container->setParameter('kernel.root_dir', 'src/Kunstmaan/ArticleBundle');
-        $container->setParameter('kernel.bundles', array(new \Kunstmaan\ArticleBundle\KunstmaanArticleBundle()));
+        $container->setParameter('kernel.root_dir', 'src/Kunstmaan/TranslatorBundle');
+        $container->setParameter('kernel.bundles', array(new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle()));
         $container->setParameter('kernel.debug', true);
         $container->setParameter('defaultlocale', 'en');
 
