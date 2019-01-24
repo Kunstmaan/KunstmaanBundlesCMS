@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\TaggingBundle\Tests\DependencyInjection;
+namespace Kunstmaan\TranslatorBundle\Tests\DependencyInjection;
 
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
+class KunstmaanTranslatorExtensionTest extends TestCase
 {
     /**
      * @var KunstmaanTranslatorExtension
