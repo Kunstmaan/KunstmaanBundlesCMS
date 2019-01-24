@@ -14,13 +14,14 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/symfony": "~2.8",
-        "symfony-cmf/routing-bundle": "dev-master",
-        "symfony-cmf/routing": "~1.4",
-        "kunstmaan/adminlist-bundle": "~3.2",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/node-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "kunstmaan/adminlist-bundle": "~5.2"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.4",
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
+        "phpunit/phpunit": "^5.7",
+        "symfony/phpunit-bridge": "~3.0"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -28,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }
