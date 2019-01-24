@@ -4,12 +4,12 @@ namespace Kunstmaan\TranslationBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Class TranslationTest
  */
-class TranslationTest extends TestCase
+class TranslationTest extends PHPUnit_Framework_TestCase
 {
     public function testGetSet()
     {
