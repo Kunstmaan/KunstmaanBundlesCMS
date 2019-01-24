@@ -21,7 +21,7 @@
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "kunstmaan/admin-bundle": "~5.2",
         "kunstmaan/adminlist-bundle": "~5.2",
-        "kunstmaan/utilities-bundle": "~3.2"
+        "kunstmaan/utilities-bundle": "~5.2"
     },
     "suggest": {
         "ext-imagick": "to support PDF preview images"
