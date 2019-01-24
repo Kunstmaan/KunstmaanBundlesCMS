@@ -20,8 +20,7 @@
     "require": {
       "php": "^7.1",
       "kunstmaan/adminlist-bundle": "^5.2",
-      "kunstmaan/article-bundle": "^5.2",
-      "box/spout": "^2.5",
+      "box/spout": "^2.5"
     },
     "require-dev": {
       "doctrine/doctrine-fixtures-bundle": "~2.2",

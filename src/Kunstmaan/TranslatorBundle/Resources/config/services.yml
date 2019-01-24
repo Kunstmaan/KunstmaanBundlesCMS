@@ -101,6 +101,7 @@ services:
             - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
             - [setResourceCacher, ['@kunstmaan_translator.service.translator.resource_cacher']]
 
+    # TODO: needs to be refactored, should not need to be public
     kunstmaan_translator.service.migrations.migrations:
         class: 'Kunstmaan\TranslatorBundle\Service\Migrations\MigrationsService'
         calls:
