@@ -2,12 +2,7 @@
     "name": "kunstmaan/tagging-bundle",
     "type": "symfony-bundle",
     "description": "Uses FabienPennequin/DoctrineExtensions-Taggable to add tagging to the Kunstmaan bundles",
-    "keywords": [
-        "kunstmaan",
-        "cms",
-        "tag",
-        "tagging"
-    ],
+    "keywords": [ "kunstmaan", "cms", "tag", "tagging"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanTaggingBundle",
     "license": "MIT",
     "authors": [
@@ -19,34 +14,26 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/config": "^3.4",
-        "symfony/dependency-injection": "^3.4",
-        "symfony/form": "^3.4",
-        "symfony/http-foundation": "^3.4",
-        "symfony/http-kernel": "^3.4",
-        "symfony/security": "^3.4",
-        "symfony/doctrine-bridge": "^3.4",
-        "symfony/options-resolver": "^3.4",
-        "fpn/doctrine-extensions-taggable": "0.9.0",
+        "fpn/doctrine-extensions-taggable": "~0.9",
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/adminlist-bundle": "~5.2",
+        "kunstmaan/node-bundle": "~5.2",
+        "kunstmaan/pagepart-bundle": "~5.2"
     },
     "require-dev": {
-        "matthiasnoback/symfony-config-test": "^2.2"
-    },
-    "suggest": {
-        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready",
-        "kunstmaan/adminlist-bundle": "^5.0 - to be put into require-dev when ready",
-        "kunstmaan/media-bundle": "^5.0 - to be put into require-dev when ready",
-        "kunstmaan/node-bundle": "^5.0 - to be put into require-dev when ready"
+        "codeception/codeception": "^2.4",
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
+        "phpunit/phpunit": "^5.7",
+        "symfony/phpunit-bridge": "~3.0"
     },
     "autoload": {
-        "psr-4": {
-            "Kunstmaan\\TaggingBundle\\": ""
-        }
+        "psr-4": { "Kunstmaan\\TaggingBundle\\": "" }
     },
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "5.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }
