@@ -164,7 +164,10 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
             // Apply sorting
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
-                if (!strpos($orderBy, '.')) {
+                if ($this->getEntityManager()->getClassMetadata($this->getRepositoryName())->hasAssociation($this->orderBy)) {
+                    $queryBuilder->leftJoin('b.' . $orderBy, 'A' . $orderBy);
+                    $orderBy = 'A' . $orderBy . '.id';
+                } elseif (!strpos($orderBy, '.')) {
                     $orderBy = 'b.' . $orderBy;
                 }
                 $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));

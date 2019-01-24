@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\Configurator;
 
 use ArrayIterator;
+use Codeception\Stub;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\ORM\AbstractQuery;
@@ -110,6 +112,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $fakeConfig->expects($this->any())->method('getDefaultQueryHints')->willReturn($fakeConfig);
         $fakeConfig->expects($this->any())->method('isSecondLevelCacheEnabled')->willReturn($fakeConfig);
         $fakeConfig->expects($this->any())->method('getSecondLevelCacheConfiguration')->willReturn($cacheConfig);
+        $fakeClassMetaData = Stub::makeEmpty(ClassMetadata::class, ['hasAssociation' => false]);
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->any())->method('setParameters')->willReturn($qb);
         $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
@@ -117,6 +120,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $em->expects($this->any())->method('getRepository')->willReturn($em);
         $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
         $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
+        $em->expects($this->any())->method('getClassMetadata')->willReturn($fakeClassMetaData);
         $query = new Query($em);
         $qb->expects($this->any())->method('getQuery')->willReturn($query);
         $query = $config->getQuery();
@@ -172,6 +176,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $platform = $this->createMock(MySQL57Platform::class);
         $platform->expects($this->any())->method('getSQLResultCasing')->willReturn('string');
 
+        $fakeClassMetaData = Stub::makeEmpty(ClassMetadata::class, ['hasAssociation' => false]);
         $connection = $this->createMock(Connection::class);
         $connection->expects($this->any())->method('getDatabasePlatform')->willReturn($platform);
 
@@ -183,6 +188,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
         $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
         $em->expects($this->any())->method('getConnection')->willReturn($connection);
+        $em->expects($this->any())->method('getClassMetadata')->willReturn($fakeClassMetaData);
         $qb->expects($this->any())->method('getQuery')->willReturn(new Query($em));
 
         $pager = $config->getPagerfanta();
@@ -224,6 +230,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
 
     /**
      * @throws \ReflectionException
+     * @throws \Exception
      */
     public function testGetQueryWithAclEnabled()
     {
@@ -237,12 +244,14 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $fakeConfig->expects($this->any())->method('isSecondLevelCacheEnabled')->willReturn($fakeConfig);
         $fakeConfig->expects($this->any())->method('getSecondLevelCacheConfiguration')->willReturn($cacheConfig);
         $qb = $this->createMock(QueryBuilder::class);
+        $fakeClassMetaData = Stub::makeEmpty(ClassMetadata::class, ['hasAssociation' => false]);
         $qb->expects($this->any())->method('setParameters')->willReturn($qb);
         $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
         $em->expects($this->any())->method('createQuery')->willReturn($qb);
         $em->expects($this->any())->method('getRepository')->willReturn($em);
         $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
         $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
+        $em->expects($this->any())->method('getClassMetadata')->willReturn($fakeClassMetaData);
 
         $query = new Query($em);
         $aclHelper = $this->createMock(AclHelper::class);
