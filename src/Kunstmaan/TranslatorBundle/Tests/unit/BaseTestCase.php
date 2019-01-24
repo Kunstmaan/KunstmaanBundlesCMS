@@ -51,7 +51,7 @@ abstract class BaseTestCase extends TestCase
         $em = $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
         $loader = new NativeLoader();
         $objects = $loader->loadFile($fixtures)->getObjects();
-        foreach($objects as $object) {
+        foreach ($objects as $object) {
             $em->persist($object);
         }
         $em->flush();
