@@ -3,10 +3,10 @@
 namespace Kunstmaan\TranslatorBundle\Tests\DependencyInjection;
 
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanTranslatorExtensionTest extends TestCase
+class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var KunstmaanTranslatorExtension

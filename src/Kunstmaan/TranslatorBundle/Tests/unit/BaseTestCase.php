@@ -3,15 +3,11 @@
 namespace Kunstmaan\TranslatorBundle\Tests\unit;
 
 use AppKernel;
-use Nelmio\Alice\Fixtures;
-use Nelmio\Alice\Loader\NativeLoader;
-use Nelmio\Alice\Persister\Doctrine;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 include __DIR__ . '/app/AppKernel.php';
 
-abstract class BaseTestCase extends TestCase
+abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ContainerInterface
@@ -47,14 +43,11 @@ abstract class BaseTestCase extends TestCase
         $tool->createSchema($meta);
 
         // insert fixtures
-        $fixtures = __DIR__ . '/files/fixtures.yml';
+        $fixtures = array(__DIR__ . '/files/fixtures.yml');
         $em = $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
-        $loader = new NativeLoader();
-        $objects = $loader->loadFile($fixtures)->getObjects();
-        foreach ($objects as $object) {
-            $em->persist($object);
-        }
-        $em->flush();
+        $objects = \Nelmio\Alice\Fixtures::load($fixtures, $em);
+        $persister = new \Nelmio\Alice\Persister\Doctrine($em);
+        $persister->persist($objects);
     }
 
     public function getContainer()
