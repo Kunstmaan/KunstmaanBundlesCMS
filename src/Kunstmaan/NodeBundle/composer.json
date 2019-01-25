@@ -15,7 +15,9 @@
     "require": {
         "php": "^7.1",
         "gedmo/doctrine-extensions": "^2.4.34",
-        "kunstmaan/adminlist-bundle": "~5.2"
+        "kunstmaan/adminlist-bundle": "~5.2",
+        "stof/doctrine-extensions-bundle": "~1.1",
+        "symfony-cmf/routing-bundle": "~2.0"
     },
     "minimum-stability": "dev",
     "autoload": {

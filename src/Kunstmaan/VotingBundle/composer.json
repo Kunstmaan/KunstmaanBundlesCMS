@@ -16,7 +16,10 @@
     "require": {
         "php": "^7.1",
         "doctrine/orm": "^2.5",
-        "sensio/framework-extra-bundle": "^5.1",
+        "doctrine/dbal": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "sensio/framework-extra-bundle": "^5.0",
         "symfony/config": "^3.4|^4.0",
         "symfony/dependency-injection": "^3.4|^4.0",
         "symfony/event-dispatcher": "^3.4|^4.0",

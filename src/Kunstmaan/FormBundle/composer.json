@@ -15,13 +15,13 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.1",
-        "ddeboer/data-import-bundle": "~0.1",
         "gedmo/doctrine-extensions": "^2.4.34",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "kunstmaan/adminlist-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/admin-bundle": "~5.2",
-        "kunstmaan/pagepart-bundle": "~5.2"
+        "kunstmaan/pagepart-bundle": "~5.2",
+        "stof/doctrine-extensions-bundle": "~1.1"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\FormBundle\\": "" }
