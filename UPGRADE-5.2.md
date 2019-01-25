@@ -15,6 +15,10 @@ AdminBundle
   The interface was deprecated and removed in symfony 4. If you used this interface to check the `Group` entity change it to
   the `FOS\UserBundle\Model\GroupInterface`. The `Group` entity won't change if you run on symfony 3.4 but it's adviced to make 
   this change already.
+ * Setting the `multilanguage` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.multi_language` config instead.
+ * Setting the `requiredlocales` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.required_locales` config instead.
+ * Setting the `defaultlocale` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.default_locale` config instead.
+ * Setting the `websitetitle` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.website_title` config instead.
 
 NodeSearchBundle
 ----------------

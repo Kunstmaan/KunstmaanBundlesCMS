@@ -124,11 +124,11 @@ class DomainConfigurationTest extends TestCase
 
     private function getSingleLanguageDomainConfiguration()
     {
-        $map = array(
-            array('multilanguage', false),
-            array('defaultlocale', 'en'),
-            array('requiredlocales', 'en'),
-        );
+        $map = [
+            ['kunstmaan_admin.multi_language', false],
+            ['kunstmaan_admin.default_locale', 'en'],
+            ['kunstmaan_admin.required_locales', 'en'],
+        ];
 
         $object = new DomainConfiguration($this->getContainer($map));
 
@@ -137,11 +137,11 @@ class DomainConfigurationTest extends TestCase
 
     private function getMultiLanguageDomainConfiguration()
     {
-        $map = array(
-            array('multilanguage', true),
-            array('defaultlocale', 'nl'),
-            array('requiredlocales', 'nl|fr|en'),
-        );
+        $map = [
+            ['kunstmaan_admin.multi_language', true],
+            ['kunstmaan_admin.default_locale', 'nl'],
+            ['kunstmaan_admin.required_locales', 'nl|fr|en'],
+        ];
 
         $object = new DomainConfiguration($this->getContainer($map));
 

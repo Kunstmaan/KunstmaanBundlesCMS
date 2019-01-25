@@ -226,7 +226,7 @@ services:
 
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
-        arguments: ['@request_stack', '%multilanguage%', '%defaultlocale%', '%requiredlocales%']
+        arguments: ['@request_stack', '%kunstmaan_admin.multi_language%', '%kunstmaan_admin.default_locale%', '%kunstmaan_admin.required_locales%']
         public: true
 
     kunstmaan_admin.oauth_authenticator:

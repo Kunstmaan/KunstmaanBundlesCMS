@@ -25,6 +25,9 @@ class ConfigurationTest extends TestCase
     {
         $array = [
             'website_title' => null,
+            'multi_language' => null,
+            'required_locales' => null,
+            'default_locale' => null,
             'admin_password' => 'l3tM31n!',
             'admin_locales' => [],
             'session_security' => [
