@@ -28,7 +28,8 @@
         "symfony/twig-bundle": "^3.4|^4.0",
         "symfony/yaml": "^3.4|^4.0",
         "doctrine/orm": "^2.5",
-        "behat/transliterator": "~1.2"
+        "behat/transliterator": "~1.2",
+        "twig/twig": "^1.36|^2.6"
     },
     "suggest": {
         "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
