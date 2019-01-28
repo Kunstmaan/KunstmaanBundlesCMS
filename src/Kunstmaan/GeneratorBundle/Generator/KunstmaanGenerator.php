@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\Tools\EntityGenerator;
@@ -142,7 +143,7 @@ class KunstmaanGenerator extends Generator
         }
         $class->setPrimaryTable(
             array(
-                'name' => strtolower($dbPrefix . strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name))) . 's',
+                'name' => strtolower($dbPrefix) . Inflector::tableize(Inflector::pluralize($name)),
             )
         );
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);
