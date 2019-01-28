@@ -6,7 +6,7 @@ use {{ pagepart_class_full }};
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LinePagePartAdminType extends AbstractType
+class DividerPagePartAdminType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {

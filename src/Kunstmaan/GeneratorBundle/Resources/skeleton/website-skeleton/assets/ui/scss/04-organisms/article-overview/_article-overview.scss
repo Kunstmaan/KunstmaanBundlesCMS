@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Article overview
+   ========================================================================== */
+
+.article-overview {
+    @include snip-flex-grid($gutter: 30px, $cols: 3);
+
+    .article--featured {
+        flex-basis: 100%;
+    }
+
+    @supports (grid-template-columns: auto) {
+        @media (min-width: $break-sm) {
+            display: grid;
+            grid-gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (min-width: $break-md) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .article--featured {
+            display: flex;
+
+            @media (min-width: $break-sm) {
+                grid-column: 1 / span 2;
+            }
+
+            @media (min-width: $break-md) {
+                grid-column: 1 / span 3;
+            }
+        }
+
+        .article {
+            margin: 0;
+        }
+    }
+}
+
+/**
+ * @doc docs/article-overview.md
+ * @section Article overview
+ * @sectionof Organisms
+ */

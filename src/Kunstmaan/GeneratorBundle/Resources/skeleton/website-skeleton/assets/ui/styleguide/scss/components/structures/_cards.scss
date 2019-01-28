@@ -4,7 +4,7 @@
 
 /* General
    ========================================================================== */
-.sg-card {
+.kds-card {
     position: relative;
 
     margin: 0 0 15px;
@@ -19,15 +19,20 @@
     }
 }
 
-.sg-card__anchor {
+.kds-card__anchor {
     position: relative;
 
     padding: 30px 0 10px;
+
+    > h3,
+    > h4 {
+        margin: 0;
+    }
 }
 
 /* Title
    ========================================================================== */
-.sg-card__heading {
+.kds-card__heading {
     padding: 10px 15px;
     margin: 0;
 
@@ -50,7 +55,7 @@
 
 /* Body
    ========================================================================== */
-.sg-card__body {
+.kds-card__body {
 
     @media (min-width: $screen-sm-min) {
         display: flex;
@@ -60,14 +65,14 @@
     &--full-width {
         display: block;
 
-        .sg-card__example,
-        .sg-card__description {
+        .kds-card__example,
+        .kds-card__description {
             width: 100%;
         }
     }
 }
 
-.sg-card__example {
+.kds-card__example {
     flex: 1 1 auto;
     padding: 15px;
     //max-width: 1190px;
@@ -94,7 +99,7 @@
     }
 }
 
-.sg-card__description {
+.kds-card__description {
     flex: 1 1 auto;
 
     font-size: 14px;
@@ -144,10 +149,10 @@
     }
 }
 
-.sg-card__description__inner {
+.kds-card__description__inner {
     padding: 15px;
 
-    > p:first-child + .sg-title {
+    > p:first-child + .kds-title {
         margin-top: 0;
     }
 
@@ -162,17 +167,17 @@
 
 /* Toggle
    ========================================================================== */
-.sg-card__footer {
+.kds-card__footer {
     background: lighten($grey--light, 2.5);
 
     border-radius: 0 0 4px 4px;
 }
 
-.sg-card__footer__toggle {
+.kds-card__footer__toggle {
     line-height: 1;
 }
 
-.sg-card__footer__toggle__button {
+.kds-card__footer__toggle__button {
     position: relative;
 
     display: inline-block;
@@ -222,7 +227,7 @@
     }
 }
 
-.sg-card__footer__toggle__content {
+.kds-card__footer__toggle__content {
     position: relative;
 
     display: block;
@@ -231,6 +236,6 @@
 
 /* Markup
    ========================================================================== */
-.sg-card__footer__toggle__content__code-snippet {
+.kds-card__footer__toggle__content__code-snippet {
     position: relative;
 }

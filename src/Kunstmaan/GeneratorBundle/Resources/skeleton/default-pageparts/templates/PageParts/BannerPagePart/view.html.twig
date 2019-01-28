@@ -1,2 +1,24 @@
-<div class="banner-pp">
+<div class="banner-pp banner">
+    {% if resource.backgroundImage and resource.backgroundImage.url %}
+        <figure class="banner__bg lazy-load-img-wrapper js-lazy-load-img-wrapper">
+            <img src="{{ asset(resource.backgroundImage.url | imagine_filter('banner_low')) }}" class="banner__bg__img lazy-load-img" data-src="{{ asset(resource.backgroundImage.url | imagine_filter('banner')) }}">
+        </figure>
+    {% endif %}
+    <section class="banner__content">
+        {% if resource.image and resource.image.url %}
+            <figure class="lazy-load-img-wrapper js-lazy-load-img-wrapper">
+                <img class="js-lazy-load-img" src="{{ resource.image.url | imagine_filter('banner_img_low') }}" alt="{% if resource.text is defined %}{{ resource.text | striptags }}{% endif %}" data-src="{{ resource.image.url | imagine_filter('banner_img') }}">
+            </figure>
+        {% endif %}
+        {% if resource.text is defined %}
+        <div class="banner__text">
+            {{ resource.text|replace_url | raw }}
+        </div>
+        {% endif %}
+        {% if resource.buttonLink is defined %}
+            <a class="btn btn--secondary btn--md" href="{{ resource.buttonLink | replace_url }}" {% if resource.openInNewWindow %} target="_blank" {% endif %}>
+                {{ resource.buttonText }}
+            </a>
+        {% endif %}
+    </section>
 </div>

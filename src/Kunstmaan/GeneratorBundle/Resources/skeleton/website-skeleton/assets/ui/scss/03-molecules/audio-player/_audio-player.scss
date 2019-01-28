@@ -1,0 +1,111 @@
+/* ==========================================================================
+   molecules: Audio player
+   ========================================================================== */
+
+.audio-player {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 530px;
+}
+
+.audio-player__source {
+    display: none;
+}
+
+.audio-player__toggle-play {
+    flex: 0 0 auto;
+
+    .audio-player__toggle-play__pause {
+        display: none;
+    }
+
+    .audio-player__toggle-play__play {
+        display: block;
+    }
+
+    .audio-player--playing & {
+        .audio-player__toggle-play__pause {
+            display: block;
+        }
+
+        .audio-player__toggle-play__play {
+            display: none;
+        }
+    }
+}
+
+.audio-player__data {
+    flex: 1 1 auto;
+
+    padding: 0 3px 0 $spacing-mobile-sm;
+
+    @media (min-width: $break-md) {
+        padding: 0 $spacing-mobile-sm 0 $spacing-desktop-sm;
+    }
+}
+
+.audio-player__progress[value] {
+    display: block;
+    width: 100%;
+    height: 6px;
+    margin-top: $spacing-mobile-xs;
+
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    border: none;
+
+    color: $color-primary;
+
+    cursor: ew-resize;
+
+    &::-webkit-progress-bar {
+        background: $color-greyscale-light;
+    }
+
+    &::-webkit-progress-value {
+        background: $color-primary;
+    }
+
+    &::-moz-progress-bar {
+        background: $color-primary;
+    }
+}
+
+.audio-player__playback {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-mobile-sm;
+
+    font-family: $font-family-primary;
+    font-size: 12px;
+    font-weight: $font-weight-normal;
+    color: $color-greyscale-grey;
+}
+
+.audio-player__restart {
+    flex: 0 0 auto;
+    padding: 0;
+
+    background: none;
+
+    border: none;
+
+    svg {
+        width: 25px;
+        height: 25px;
+
+        fill: $color-greyscale-grey;
+    }
+}
+
+/**
+ * @doc docs/audio-player.md
+ * @section Audio player
+ * @sectionof Molecules
+ */

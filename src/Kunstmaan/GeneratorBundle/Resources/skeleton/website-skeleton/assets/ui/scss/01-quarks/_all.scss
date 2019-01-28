@@ -1,0 +1,135 @@
+/* ==========================================================================
+   Quarks
+
+   This file is exclusively intended for aggregating helper functions
+   Never add styles directly to this file
+   ========================================================================== */
+
+@import 'colors/colors';
+
+@import 'layout/spacings';
+
+@import 'shadows/shadows';
+
+@import 'typography/fonts';
+
+/**
+ * @section Quarks
+ * @page Index
+ */
+
+/**
+ * @section Typography
+ * @sectionof Quarks
+ */
+
+/**
+ * @section Fonts
+ * @sectionof Quarks.Typography
+ *
+ * @font {Arial, Helvetica, sans-serif} Brand primary - [Quarks.Typography.Fonts]
+ * @font {Georgia, "Times New Roman", Times, serif} Brand secondary - [Quarks.Typography.Fonts]
+ */
+
+/**
+ * @section Font weights
+ * @sectionof Quarks.Typography
+ *
+ * @fontWeight {300} light (default) - [Quarks.Typography.Font weights]
+ * @fontWeight {400} normal (default) - [Quarks.Typography.Font weights]
+ * @fontWeight {500} medium (default) - [Quarks.Typography.Font weights]
+ * @fontWeight {700} bold (default) - [Quarks.Typography.Font weights]
+ */
+
+/**
+ * @section Font sizes
+ * @sectionof Quarks.Typography
+ *
+ * @fontSize {18px} Content desktop (default) - [Quarks.Typography.Font sizes]
+ * @fontSize {14px} Content desktop (small) - [Quarks.Typography.Font sizes]
+ * @fontSize {15px} Content mobile (default) - [Quarks.Typography.Font sizes]
+ * @fontSize {13px} Content mobile (small) - [Quarks.Typography.Font sizes]
+ */
+
+
+/**
+ * @section Colors
+ * @sectionof Quarks
+ */
+
+/**
+ * @section Greyscale
+ * @sectionof Quarks.Colors
+ *
+ * @color {#000000} Black - [Quarks.Colors.Greyscale]
+ * @color {#3A3F44} Greyscale dark-grey - [Quarks.Colors.Greyscale]
+ * @color {#8A9093} Greyscale grey - [Quarks.Colors.Greyscale]
+ * @color {#C1C7CC} Greyscale light-grey - [Quarks.Colors.Greyscale]
+ * @color {#E4DFD9} Greyscale Light - [Quarks.Colors.Greyscale]
+ * @color {#F4F4F4} Greyscale off-white - [Quarks.Colors.Greyscale]
+ * @color {#FFFFFF} White - [Quarks.Colors.Greyscale]
+ */
+
+/**
+ * @section Functional
+ * @sectionof Quarks.Colors
+ *
+ * @color {#1CAED8} Link - [Quarks.Colors.Functional]
+ * @color {#9ACC04} Success - [Quarks.Colors.Functional]
+ * @color {#FF7200} Warning - [Quarks.Colors.Functional]
+ * @color {#FF0020} Danger - [Quarks.Colors.Functional]
+ * @color {#3A3F44} Disabled - [Quarks.Colors.Functional]
+ * @color {#171A2F} Text - [Quarks.Colors.Functional]
+ */
+
+/**
+ * @section Brand colors
+ * @sectionof Quarks.Colors
+ *
+ * @color {#FF4A85} Brand Primary 1 - [Quarks.Colors.Brand colors]
+ * @color {#1CAED8} Brand Primary 2 - [Quarks.Colors.Brand colors]
+ * @color {#FFD900} Brand Primary 3 - [Quarks.Colors.Brand colors]
+ * @color {#9ACC04} Brand Primary 4 - [Quarks.Colors.Brand colors]
+ * @color {#F9D2DC} Brand Secondary 1 - [Quarks.Colors.Brand colors]
+ * @color {#82C6D9} Brand Secondary 2 - [Quarks.Colors.Brand colors]
+ * @color {#FFEC80} Brand Secondary 3 - [Quarks.Colors.Brand colors]
+ * @color {#CDED6E} Brand Secondary 4 - [Quarks.Colors.Brand colors]
+ */
+
+/**
+ * @section Shadows
+ * @sectionof Quarks
+ *
+ * @shadow {2px 2px 8px 0 rgba(12, 0, 51, .1)} sm - [Quarks.Shadows]
+ * @shadow {0 8px 16px 0 rgba(12, 0, 51, .1)} md - [Quarks.Shadows]
+ * @shadow {0 24px 32px 0 rgba(12, 0, 51, .1)} lg - [Quarks.Shadows]
+ */
+
+/**
+ * @section Spacings
+ * @sectionof Quarks
+ */
+
+/**
+ * @section Desktop
+ * @sectionof Quarks.Spacings
+ *
+ * @spacing {24px} xs - [Quarks.Spacings.Desktop]
+ * @spacing {40px} sm - [Quarks.Spacings.Desktop]
+ * @spacing {80px} md - [Quarks.Spacings.Desktop]
+ * @spacing {120px} lg - [Quarks.Spacings.Desktop]
+ * @spacing {180px} xl - [Quarks.Spacings.Desktop]
+ * @spacing {240px} xxl - [Quarks.Spacings.Desktop]
+ */
+
+/**
+ * @section Mobile
+ * @sectionof Quarks.Spacings
+ *
+ * @spacing {16px} xs - [Quarks.Spacings.Mobile]
+ * @spacing {24px} sm - [Quarks.Spacings.Mobile]
+ * @spacing {40px} md - [Quarks.Spacings.Mobile]
+ * @spacing {64px} lg - [Quarks.Spacings.Mobile]
+ * @spacing {80px} xl - [Quarks.Spacings.Mobile]
+ * @spacing {120px} xxl - [Quarks.Spacings.Mobile]
+ */

@@ -4,7 +4,7 @@
 
 /* Box model
    ========================================================================== */
-// Defined in frontend scss which is also included in the styleguide
+// Defined in corona scss which is also included in the styleguide
 
 
 /* Html & body
@@ -17,5 +17,13 @@ html.sg-styleguide {
         overflow-x: hidden;
 
         background-color: $white;
+
+        @media (min-width: $screen-sm-min) {
+            background-position: bottom 1.5rem right 1.5rem;
+        }
+    }
+
+    .kds-margin-sm {
+        margin: 1rem 0;
     }
 }

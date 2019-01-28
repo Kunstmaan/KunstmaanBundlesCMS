@@ -10,7 +10,10 @@
 }
 
 .section__title {
-    margin-bottom: 20px;
+    margin-top: 0;
+    padding-bottom: 10px;
+
+    border-bottom: 2px solid $grey;
 
     color: $black;
     font-family: $primary-font;

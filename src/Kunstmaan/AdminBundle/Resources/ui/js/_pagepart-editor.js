@@ -66,7 +66,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
         }
 
         var $targetContainer = $select.closest('.js-pp-container'),
-            requestUrl = $select.data('url');
+            requestUrl = $select.data('url'),
+            spacerPagePart = $select.data('spacer-pp');
 
         // Get necessary data
         var pageClassName = $targetContainer.data('pageclassname'),
@@ -96,6 +97,47 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 } else {
                     elem = $select.closest('.js-sortable-item').after(data);
                 }
+
+                // Create a temporary node of the new PP
+                var $temp = $('<div>');
+                $temp.append(data);
+
+                // Check if some javascript needs to be reinitialised for this PP
+                reInit($temp);
+
+                // Remove Loading
+                kunstmaanbundles.appLoading.removeLoading();
+
+                // Enable leave-page modal
+                kunstmaanbundles.checkIfEdited.edited();
+
+                // Reinit custom selects
+                kunstmaanbundles.advancedSelect.init();
+
+                // Reset ajax-modals
+                kunstmaanbundles.ajaxModal.resetAjaxModals();
+
+                executeEvent('add');
+            }
+        });
+
+        // Set Loading
+        kunstmaanbundles.appLoading.addLoading();
+
+        // Ajax Request
+        $.ajax({
+            url: requestUrl,
+            data: {
+                'pageclassname': pageClassName,
+                'pageid': pageId,
+                'context': context,
+                'type': spacerPagePart
+            },
+            async: true,
+            success: function (data) {
+                // Add PP
+                //TODO: append item to the last added pp block
+                var elem = $select.closest('.js-sortable-item').after(data);
 
                 // Create a temporary node of the new PP
                 var $temp = $('<div>');

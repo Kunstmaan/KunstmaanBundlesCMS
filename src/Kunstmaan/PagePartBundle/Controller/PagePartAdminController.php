@@ -93,6 +93,7 @@ final class PagePartAdminController extends AbstractController
             'page' => $pagePartAdmin->getPage(),
             'editmode' => true,
             'extended' => $extended,
+            'spacer_pp' => 'App\\Entity\\PageParts\\SpacerPagePart', //TODO: make configurable?
         ]);
     }
 }

@@ -48,15 +48,8 @@ class MapPagePart extends AbstractPagePart implements DeepCloneInterface
     }
 
     /**
-     * @param ArrayCollection $items
+     * @return Collection|MapItem[]
      */
-    public function setItems($items)
-    {
-        foreach ($items as $item) {
-            $this->addItem($item);
-        }
-    }
-
     public function getItems(): Collection
     {
         return $this->items;
@@ -64,14 +57,21 @@ class MapPagePart extends AbstractPagePart implements DeepCloneInterface
 
     public function addItem(MapItem $item)
     {
-        $item->setMapPagePart($this);
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setMapPagePart($this);
+        }
 
-        $this->items->add($item);
+        return $this;
     }
 
     public function removeItem(MapItem $item)
     {
-        $this->items->removeElement($item);
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+        }
+
+        return $this;
     }
 
     public function getDefaultView(): string
@@ -85,7 +85,7 @@ class MapPagePart extends AbstractPagePart implements DeepCloneInterface
     }
 
     /**
-     * When cloning this entity, also clone all entities in the item ArrayCollection
+     * When cloning this entity, also clone all entities in the item ArrayCollection.
      */
     public function deepClone(): void
     {

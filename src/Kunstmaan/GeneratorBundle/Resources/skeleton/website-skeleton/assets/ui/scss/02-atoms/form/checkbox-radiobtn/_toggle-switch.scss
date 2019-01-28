@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Forms - Radio button
+   ========================================================================== */
+
+.toggle-switch {
+    position: relative;
+
+    margin: $spacing-mobile-sm 0;
+}
+
+.form-control--switch {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+
+    cursor: pointer;
+
+    + label {
+        .toggle-switch__label--on {
+            display: none;
+        }
+
+        .toggle-switch__label--off {
+            display: block;
+        }
+    }
+
+    &:checked + label {
+        .toggle-switch__label--on {
+            display: block;
+        }
+
+        .toggle-switch__label--off {
+            display: none;
+        }
+
+        &:after {
+            transform: translate3d(16px, -50%, 0) rotate3d(0, 0, 1, 360deg);
+
+            background-color: $color-success;
+            background-image: url('#{$icons}/svg/check.svg');
+        }
+    }
+
+    .toggle-switch--inline & {
+        + label {
+            .toggle-switch__label--on,
+            .toggle-switch__label--off {
+                display: inline-block;
+            }
+
+            .toggle-switch__label--on {
+                opacity: 0;
+            }
+
+            .toggle-switch__label--off {
+                opacity: 1;
+            }
+        }
+
+        &:checked + label {
+            .toggle-switch__label--on,
+            .toggle-switch__label--off {
+                display: inline-block;
+            }
+
+            .toggle-switch__label--on {
+                opacity: 1;
+            }
+
+            .toggle-switch__label--off {
+                opacity: 0;
+            }
+
+            &:after {
+                transform: translate3d(49px, -50%, 0) rotate3d(0, 0, 1, 360deg);
+            }
+        }
+    }
+}
+
+.toggle-switch__label {
+    position: relative;
+
+    padding-left: 50px;
+    margin: 0;
+
+    cursor: pointer;
+
+    &:before,
+    &:after {
+        content: '';
+
+        position: absolute;
+    }
+
+    &:before {
+        top: 50%;
+        left: 0;
+
+        display: block;
+        width: 34px;
+        height: 14px;
+
+        transform: translate3d(0, -50%, 0);
+
+        background: $color-greyscale-white;
+
+        border-radius: 7px;
+        border: 1px solid $color-greyscale-light;
+    }
+
+    &:after {
+        @include shadow($size: sm);
+
+        position: absolute;
+
+        top: 50%;
+        left: -1px;
+
+        width: 20px;
+        height: 20px;
+        transform: translate3d(0, -50%, 0) rotate3d(0, 0, 1, 0);
+
+        background-position: center;
+        background-color: $color-greyscale-lightest;
+        background-image: url('#{$icons}/svg/close.svg');
+        background-size: 60%;
+        background-repeat: no-repeat;
+
+        border-radius: 50%;
+
+        transition: transform .3s ease-in-out, color .3s ease-in-out;
+    }
+
+    .toggle-switch--inline & {
+        display: flex;
+        justify-content: space-between;
+        width: 80px;
+        padding: 4px 15px;
+
+        background: $color-greyscale-white;
+
+        border-radius: 100px;
+        border: 1px solid $color-greyscale-light;
+
+        font-family: $font-family-primary;
+        font-size: $font-size-desktop-small;
+
+        &:before {
+            content: none;
+        }
+
+        &:after {
+            width: 33px;
+            height: 33px;
+        }
+    }
+}
+

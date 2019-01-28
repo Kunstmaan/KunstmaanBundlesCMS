@@ -1,0 +1,153 @@
+/* ==========================================================================
+   molecules: Articles
+   ========================================================================== */
+
+.article {
+    @include shadow($size: sm);
+
+    transition: box-shadow .2s ease-in-out;
+
+    &:hover {
+        @include shadow($size: lg);
+    }
+
+    &--featured {
+        position: relative;
+
+        min-height: 625px;
+
+        @media (min-width: $break-md) {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+
+.article__author {
+    display: flex;
+    align-items: center;
+}
+
+.article__image {
+    position: relative;
+
+    min-height: 250px;
+    @supports (object-fit: cover) {
+        min-height: auto;
+    }
+
+    overflow: hidden;
+
+    img {
+        @include snip-object-fit($x: center);
+    }
+
+    .article--featured & {
+        @media (min-width: $break-md) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: $z-base;
+
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.article__content {
+    padding: $spacing-mobile-xs;
+
+    @media (min-width: $break-md) {
+        padding: $spacing-desktop-xs;
+    }
+
+    .article--featured & {
+        position: relative;
+        z-index: $z-base + 1;
+
+        @media (min-width: $break-md) {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            width: 100%;
+            max-width: 500px;
+            padding: $spacing-desktop-md;
+
+            background: rgba($color-greyscale-white, .8);
+        }
+    }
+}
+
+.article__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.article__title {
+    margin: $spacing-mobile-sm 0 $spacing-mobile-xs 0;
+
+    @media (min-width: $break-md) {
+        margin: $spacing-desktop-sm 0 $spacing-desktop-xs 0;
+    }
+
+    .article--featured & {
+        margin-top: 0;
+
+        @media (min-width: $break-md) {
+            font-size: 35px;
+        }
+    }
+}
+
+.article__author__img {
+    margin-right: 8px;
+
+    .article--featured & {
+        @media (min-width: $break-md) {
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+.article__author__name,
+.article__date {
+    color: $color-greyscale-grey;
+
+    font-family: $font-family-primary;
+    font-weight: $font-weight-light;
+    font-size: 15px;
+}
+
+.article__text {
+    margin-bottom: 10px;
+
+    .article--featured & {
+        line-height: 1.6;
+        font-family: $font-family-secondary;
+        font-weight: $font-weight-light;
+    }
+}
+
+.article__read-more-wrapper {
+    margin-bottom: 0;
+}
+
+/**
+ * @section Articles
+ * @sectionof Molecules
+ */
+
+/**
+ * @doc docs/default.md
+ * @section Default
+ * @sectionof Molecules.Articles
+ */
+
+/**
+ * @doc docs/featured.md
+ * @section Featured
+ * @sectionof Molecules.Articles
+ */

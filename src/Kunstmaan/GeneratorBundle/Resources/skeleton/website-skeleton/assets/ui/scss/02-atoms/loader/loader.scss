@@ -1,0 +1,71 @@
+.loader {
+    position: relative;
+
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    animation: spin 1s linear infinite;
+
+    text-align: left;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-inside {
+    position: absolute;
+
+    width: 100%;
+    height: 50%;
+
+    margin-top: 50%;
+
+    background: linear-gradient(90deg, rgb(220, 220, 220), rgb(150, 150, 150));
+
+    &:before,
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &:before {
+        width: 100%;
+        height: 100%;
+
+        margin-top: -50%;
+
+        background: linear-gradient(90deg, rgb(50, 50, 50), rgb(160, 160, 160));
+    }
+
+    &:after {
+        width: 80%;
+        height: 160%;
+
+        margin-top: -40%;
+        margin-left: 10%;
+
+        /* TO DO: set background color to background color of the parent element */
+        background: rgb(255, 255, 255);
+
+        border-radius: 50%;
+    }
+}
+
+/*
+ * @doc docs/loader.md
+ * @section Loader
+ * @sectionof Atoms
+ */

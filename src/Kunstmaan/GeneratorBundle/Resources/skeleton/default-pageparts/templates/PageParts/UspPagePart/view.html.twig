@@ -1,21 +1,31 @@
 {% if resource.items|length > 0 %}
-    <div class="row">
-        {% for uspItem in resource.items %}
-            <div class="col-sm-4 col--padded usp-pp text--center">
-                <figure class="img-icon">
-                    {% if uspItem.icon is not null %}
-                        <img src="{{ uspItem.icon.url }}" alt="{{ uspItem.title }}" class="img-icon__img">
-                    {% endif %}
-                </figure>
-                <h5>
-                    {{ uspItem.title }}
-                </h5>
-                {% if uspItem.description %}
-                    <p>
-                        {{ uspItem.description }}
-                    </p>
-                {% endif %}
+    <div class="usps-pp">
+        <div class="container container--full-width">
+            <h3 class="text--center usp__main-title">{{ resource.title }}</h3>
+            <div class="usp__usps">
+                {% for uspItem in resource.items %}
+                    <article class="usp">
+                        <figure class="usp__image lazy-load-img-wrapper js-lazy-load-img-wrapper">
+                            {% if uspItem.icon is not null %}
+                                <img class="js-lazy-load-img" src="{{ asset(uspItem.icon.url | imagine_filter('usp_low')) }}" data-src="{{ asset(uspItem.icon.url | imagine_filter('usp')) }}" alt="{{ uspItem.title }}">
+                            {% endif %}
+                        </figure>
+                        <h4 class="usp__title">
+                            {{ uspItem.title }}
+                        </h4>
+                        {% if uspItem.description %}
+                            <p class="usp__content">
+                                {{ uspItem.description }}
+                            </p>
+                        {% endif %}
+                        {% if uspItem.linkUrl and uspItem.linkText %}
+                            <a class="btn btn--primary btn--md" href="{{ uspItem.linkUrl | replace_url }}" {% if uspItem.linkNewWindow %} target="_blank" {% endif %}>
+                                {{ uspItem.linkText }}
+                            </a>
+                        {% endif %}
+                    </article>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endif %}

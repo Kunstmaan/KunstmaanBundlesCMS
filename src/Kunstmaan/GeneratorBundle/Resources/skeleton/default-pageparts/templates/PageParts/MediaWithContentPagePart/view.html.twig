@@ -1,1 +1,27 @@
-<div class="media-with-content-pp"></div>
+<div class="mediawithcontent-pp">
+    <div class="container container--full-width">
+        <section class="editorial media-object{% if resource.imagePosition != "left" %}--reversed{% endif %}">
+            {% if resource.image is not null %}
+                <figure class="editorial__media media-object__media lazy-load-img-wrapper js-lazy-load-img-wrapper">
+                    <img class="js-lazy-load-img" src="{{ asset(resource.image.url | imagine_filter('media_with_content_low')) }}" alt="{{ resource.imageAltText }}" data-src="{{ asset(resource.image.url | imagine_filter('media_with_content')) }}">
+                </figure>
+            {% endif %}
+            <div class="editorial__body media-object__body">
+                <h4>
+                    {{ resource.title }}
+                </h4>
+                {% if resource.text is defined %}
+                    {{ resource.text|replace_url|raw }}
+                {% endif %}
+
+                {% if resource.linkText %}
+                    <p>
+                        <a class="btn btn--primary btn--md" href="{{ resource.linkUrl | replace_url }}" {% if resource.linkNewWindow %} target="_blank" {% endif %}>
+                            <span class="btn__content">{{ resource.linkText }}</span>
+                        </a>
+                    </p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</div>

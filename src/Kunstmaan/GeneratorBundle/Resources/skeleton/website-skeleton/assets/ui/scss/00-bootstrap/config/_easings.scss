@@ -1,0 +1,12 @@
+/* ==========================================================================
+   Easings
+
+   This file is exclusively intended for setting up and accessing variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+$ease-out-quart: cubic-bezier(.165, .84, .44, 1);
+$ease-out-back: cubic-bezier(.175, .885, .32, 1.275);
+$ease-in-out-back: cubic-bezier(.68, -.55, .265, 1.55);
+
+$ease-default: $ease-out-quart;

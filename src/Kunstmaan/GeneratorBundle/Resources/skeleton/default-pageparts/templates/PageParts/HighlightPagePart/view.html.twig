@@ -1,4 +1,21 @@
 <div class="highlight-pp">
-    <h2>{{ resource.title }}</h2>
-    <p>{{ resource.text }}</p>
+    <div class="container container--full-width">
+        <div class="highlight-box">
+            {% if resource.title is defined %}
+                <h3 class="text--inverted">
+                    {{ resource.title | title }}
+                </h3>
+            {%  endif %}
+            {% if resource.text is defined %}
+                <div class="highlight-box__body text--inverted">
+                    {{ resource.text |replace_url| raw }}
+                </div>
+            {%  endif %}
+            {% if resource.linkText is defined %}
+                <p class="highlight-box__body text--inverted">
+                    <a href="{{ resource.linkUrl | replace_url }} {% if resource.linkNewWindow %}target='_blank'{% endif %}">{{ resource.linkText }}</a>
+                </p>
+            {%  endif %}
+        </div>
+    </div>
 </div>

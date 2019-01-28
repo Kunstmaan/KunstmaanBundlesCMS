@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Icon font
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+//.icon {
+//    /* use !important to prevent issues with browser extensions that change fonts */
+//    font-family: 'icomoon' !important;
+//    speak: none;
+//    font-style: normal;
+//    font-weight: normal;
+//    font-variant: normal;
+//    text-transform: none;
+//    line-height: 1;
+//
+//    /* Better Font Rendering =========== */
+//    -webkit-font-smoothing: antialiased;
+//    -moz-osx-font-smoothing: grayscale;
+//}
+//
+//$icons: (
+//        cross        "\e90c",
+//        arrow-left   "\e909",
+//        arrow-right  "\e90a",
+//        arrow-up     "\e90b",
+//        arrow-down   "\e900",
+//        calendar     "\e901",
+//        download     "\e902",
+//        email        "\e903",
+//        facebook     "\e904",
+//        instagram    "\e905",
+//        snapchat     "\e906",
+//        trash        "\e907",
+//        twitter      "\e908"
+//);
+//
+//@each $icon in $icons {
+//    .icon--#{nth($icon, 1)}:before {
+//        content: nth($icon, 2);
+//    }
+//}

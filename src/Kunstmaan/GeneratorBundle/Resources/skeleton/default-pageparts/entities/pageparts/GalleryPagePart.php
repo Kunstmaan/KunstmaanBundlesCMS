@@ -28,16 +28,6 @@ class GalleryPagePart extends AbstractPagePart implements DeepCloneInterface
         $this->rows = new ArrayCollection();
     }
 
-    /**
-     * @param ArrayCollection $rows
-     */
-    public function setItems($rows)
-    {
-        foreach ($rows as $row) {
-            $this->addRow($row);
-        }
-    }
-
     public function getRows(): Collection
     {
         return $this->rows;
@@ -45,14 +35,21 @@ class GalleryPagePart extends AbstractPagePart implements DeepCloneInterface
 
     public function addRow(GalleryRow $row)
     {
-        $row->setGalleryPagePart($this);
+        if (!$this->rows->contains($row)) {
+            $this->rows->add($row);
+            $row->setGalleryPagePart($this);
+        }
 
-        $this->rows->add($row);
+        return $this;
     }
 
     public function removeRow(GalleryRow $row)
     {
-        $this->rows->removeElement($row);
+        if ($this->rows->contains($row)) {
+            $this->rows->removeElement($row);
+        }
+
+        return $this;
     }
 
     public function getDefaultView(): string
@@ -66,14 +63,17 @@ class GalleryPagePart extends AbstractPagePart implements DeepCloneInterface
     }
 
     /**
-     * When cloning this entity, also clone all entities in the item ArrayCollection
+     * When cloning this entity, also clone all entities in the item ArrayCollection.
      */
     public function deepClone(): void
     {
+        /** @var Collection|GalleryRow[] $rows */
         $rows = $this->getRows();
         $this->rows = new ArrayCollection();
         foreach ($rows as $row) {
             $cloneRow = clone $row;
+            $cloneRow->deepClone();
+
             $this->addRow($cloneRow);
         }
     }

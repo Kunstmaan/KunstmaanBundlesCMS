@@ -28,8 +28,78 @@ liip_imagine:
             format: png
             filters:
                 strip: ~
-
-        # ImagePagePart srcset JPG filters
+        image_huge_jpg_low:
+            quality: 1
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [2400,null], mode: outbound, allow_upscale: false }
+        image_big_jpg_low:
+            quality: 1
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [1200,null], mode: outbound, allow_upscale: false }
+        image_medium_jpg_low:
+            quality: 1
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        image_small_jpg_low:
+            quality: 1
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
+        image_huge_jpeg_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [2400,null], mode: outbound, allow_upscale: false }
+        image_big_jpeg_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [1200,null], mode: outbound, allow_upscale: false }
+        image_medium_jpeg_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        image_small_jpeg_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
+        image_huge_png_low:
+            quality: 1
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [2400,null], mode: outbound, allow_upscale: false }
+        image_big_png_low:
+            quality: 1
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [1200,null], mode: outbound, allow_upscale: false }
+        image_medium_png_low:
+            quality: 1
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        image_small_png_low:
+            quality: 1
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
         image_huge_jpg:
             quality: 95
             format: jpg
@@ -54,8 +124,6 @@ liip_imagine:
             filters:
                 strip: ~
                 thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
-
-        # ImagePagePart srcset PNG filters
         image_huge_png:
             quality: 95
             format: png
@@ -80,3 +148,107 @@ liip_imagine:
             filters:
                 strip: ~
                 thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
+        hero_low:
+            quality: 1
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [1440,null], mode: outbound, allow_upscale: false }
+        hero:
+            quality: 95
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [1440,null], mode: outbound, allow_upscale: false }
+        banner_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [900,null], mode: outbound, allow_upscale: false }
+        banner:
+            quality: 95
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [900,null], mode: outbound, allow_upscale: false }
+        banner_img_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [360,null], mode: outbound, allow_upscale: false }
+        banner_img:
+            quality: 95
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [360,null], mode: outbound, allow_upscale: false }
+        image_gallery_full_low:
+            quality: 1
+            filters:
+                strip: ~
+                thumbnail: { size: [1440,null], mode: outbound, allow_upscale: false }
+        image_gallery_half_low:
+            quality: 1
+            filters:
+                strip: ~
+                thumbnail: { size: [700,null], mode: outbound, allow_upscale: false }
+        image_gallery_third_low:
+            quality: 1
+            filters:
+                strip: ~
+                thumbnail: { size: [440,null], mode: outbound, allow_upscale: false }
+        image_gallery_full:
+            quality: 95
+            filters:
+                strip: ~
+                thumbnail: { size: [1440,null], mode: outbound, allow_upscale: false }
+        image_gallery_half:
+            quality: 95
+            filters:
+                strip: ~
+                thumbnail: { size: [700,null], mode: outbound, allow_upscale: false }
+        image_gallery_third:
+            quality: 95
+            filters:
+                strip: ~
+                thumbnail: { size: [440,null], mode: outbound, allow_upscale: false }
+        media_with_content_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                upscale: { min: [720,500] }
+                thumbnail: { size: [720,500], mode: outbound }
+        media_with_content:
+            quality: 95
+            format: jpeg
+            filters:
+                strip: ~
+                upscale: { min: [720,500] }
+                thumbnail: { size: [720,500], mode: outbound }
+        usp_low:
+            quality: 1
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        usp:
+            quality: 95
+            format: jpeg
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        video_link_low:
+            quality: 1
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [1440,null], mode: outbound, allow_upscale: false }
+        video_link:
+            quality: 95
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [1440,null], mode: outbound, allow_upscale: false }

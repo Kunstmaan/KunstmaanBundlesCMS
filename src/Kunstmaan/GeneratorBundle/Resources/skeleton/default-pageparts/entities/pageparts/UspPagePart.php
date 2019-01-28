@@ -46,30 +46,30 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
     }
 
     /**
-     * @param ArrayCollection $items
+     * @return Collection|UspItem[]
      */
-    public function setItems($items)
-    {
-        foreach ($items as $item) {
-            $this->addItem($item);
-        }
-    }
-
     public function getItems(): Collection
     {
         return $this->items;
     }
 
-    public function addItem(UspItem $item)
+    public function addItem(UspItem $item): UspPagePart
     {
-        $item->setUspPagePart($this);
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setUspPagePart($this);
+        }
 
-        $this->items->add($item);
+        return $this;
     }
 
-    public function removeItem(UspItem $item)
+    public function removeItem(UspItem $item): UspPagePart
     {
-        $this->items->removeElement($item);
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+        }
+
+        return $this;
     }
 
     public function getDefaultView(): string
@@ -83,7 +83,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
     }
 
     /**
-     * When cloning this entity, also clone all entities in the item ArrayCollection
+     * When cloning this entity, also clone all entities in the item ArrayCollection.
      */
     public function deepClone(): void
     {

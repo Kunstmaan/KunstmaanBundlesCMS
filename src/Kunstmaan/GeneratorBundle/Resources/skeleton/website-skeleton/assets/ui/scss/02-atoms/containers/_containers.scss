@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Containers
+   ========================================================================== */
+
+.container {
+    width: 100%;
+    padding: 0 $spacing-mobile-sm;
+    margin: 0 auto;
+
+    .container {
+        padding: 0;
+    }
+
+    @media (min-width: $break-md) {
+        max-width: 790px;
+
+        padding: 0 $spacing-desktop-sm;
+
+        &--full-width {
+            max-width: 1200px;
+        }
+
+        &--fluid {
+            max-width: none;
+        }
+    }
+
+    @media (min-width: $break-xl) {
+        padding: 0;
+    }
+}
+

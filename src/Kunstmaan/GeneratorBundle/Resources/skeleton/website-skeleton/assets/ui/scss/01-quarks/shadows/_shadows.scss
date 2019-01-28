@@ -1,0 +1,44 @@
+/* ==========================================================================
+   shadows
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Config - shadow access
+   ========================================================================== */
+
+@mixin shadow($size) {
+    box-shadow:
+        deep-get($key: h-offset, $level: $size, $map: $shadow-config)
+        deep-get($key: v-offset, $level: $size, $map: $shadow-config)
+        deep-get($key: blur, $level: $size, $map: $shadow-config)
+        deep-get($key: spread, $level: $size, $map: $shadow-config)
+        deep-get($key: color, $level: $size, $map: $shadow-config);
+}
+
+$shadow-color: rgba(12, 0, 51, .1);
+
+$shadow-config: (
+    sm: (
+        h-offset: 2px,
+        v-offset: 2px,
+        blur: 8px,
+        spread: 0,
+        color: $shadow-color
+    ),
+    md: (
+        h-offset: 0,
+        v-offset: 8px,
+        blur: 16px,
+        spread: 0,
+        color: $shadow-color
+    ),
+    lg: (
+        h-offset: 0,
+        v-offset: 24px,
+        blur: 32px,
+        spread: 0,
+        color: $shadow-color
+    )
+);

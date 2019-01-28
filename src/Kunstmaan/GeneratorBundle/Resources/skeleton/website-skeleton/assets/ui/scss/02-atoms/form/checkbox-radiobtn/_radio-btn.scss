@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Forms - Radio button
+   ========================================================================== */
+
+.radio {
+    display: block;
+
+    input[type="radio"] {
+        @extend %radio-checkbox-base;
+
+        + label {
+            &:before {
+                content: '';
+
+                position: absolute;
+                top: 50%;
+                left: 6px;
+                z-index: $z-middle;
+
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                margin: -8px 0 0 0;
+
+                transform: scale(0);
+
+                background: $color-primary-desat;
+
+                border-radius: 50%;
+
+                transition: transform .2s ease-in-out;
+            }
+
+            &:after {
+                content: ' ';
+
+                position: absolute;
+                top: 50%;
+                left: 0;
+                z-index: $z-base;
+
+                width: 28px;
+                height: 28px;
+
+                transform: translateY(-50%);
+
+                border: 1px solid $color-greyscale-light;
+                border-radius: 50%;
+            }
+        }
+
+        &:checked + label {
+            &:before {
+                transform: scale(1);
+            }
+        }
+    }
+
+    @media (min-width: $break-sm) {
+        display: inline-block;
+    }
+
+    + .radio {
+        margin-top: $spacing-mobile-sm;
+
+        @media (min-width: $break-sm) {
+            margin-top: 0;
+            margin-left: $spacing-desktop-sm;
+        }
+    }
+}

@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Forms - Radio buttons and checkboxes config
+   ========================================================================== */
+
+%radio-checkbox-base {
+    float: left;
+
+    opacity: 0;
+
+    cursor: pointer;
+
+    + label {
+        position: relative;
+
+        display: block;
+        padding: 5px 0 5px 40px;
+        margin: 0;
+
+        color: $color-text;
+        font-size: 15px;
+        font-weight: $font-weight-medium;
+
+        cursor: pointer;
+
+        &:after {
+            background: $color-greyscale-white;
+        }
+
+        &::selection {
+            background: none;
+        }
+
+        @media (min-width: $break-sm) {
+            font-size: 18px;
+        }
+    }
+
+    &:disabled + label {
+        cursor: default;
+        pointer-events: none;
+    }
+}

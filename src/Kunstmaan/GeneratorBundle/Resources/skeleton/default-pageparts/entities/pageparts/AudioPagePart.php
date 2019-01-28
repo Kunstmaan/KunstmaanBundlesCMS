@@ -5,6 +5,7 @@ namespace {{ namespace }}\Entity\PageParts;
 use {{ admin_type_full }};
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Validator\Constraints as MediaAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,6 +18,7 @@ class AudioPagePart extends AbstractPagePart
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * @Assert\NotNull()
+     * @MediaAssert\Media(mimeTypes={"audio/aac", "audio/mpeg"}, mimeTypesMessage="pageparts.audio.invalid_file")
      */
     private $media;
 

@@ -1,11 +1,14 @@
+import TerserPlugin from 'terser-webpack-plugin';
+
 function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes = false }) {
     if (optimize || !transpileOnlyForLastChromes) {
         return {
             babelrc: false,
             presets: [
-                require.resolve('babel-preset-env', {
-                    modules: false,
-                }),
+                ['@babel/preset-env', {
+                    useBuiltIns: 'usage',
+                    modules: false
+                }]
             ],
         };
     }
@@ -13,15 +16,28 @@ function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes =
     return {
         babelrc: false,
         presets: [
-            require.resolve('babel-preset-env', {
+            ['@babel/preset-env', {
+                useBuiltIns: 'usage',
                 targets: {
-                    browsers: ['last 2 Chrome versions'],
-                },
-                debug: true,
-            }),
+                    browsers: ['last 2 Chrome versions']
+                }
+            }]
         ],
         cacheDirectory: true,
     };
+}
+
+function shouldOptimize({optimize = false}) {
+    if (optimize) {
+        return {
+            minimizer: [new TerserPlugin({
+                terserOptions: {
+                    mangle: true,
+                    sourceMap: true
+                }
+            })],
+        }
+    }
 }
 
 export default function defaultConfig(speedupLocalDevelopment, optimize = false) {
@@ -42,6 +58,7 @@ export default function defaultConfig(speedupLocalDevelopment, optimize = false)
                 },
             ],
         },
+        optimization: shouldOptimize({optimize: optimize}),
         plugins: [],
     };
 

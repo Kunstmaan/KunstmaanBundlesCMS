@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Editorial
+   ========================================================================== */
+
+.editorial {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.editorial__media {
+    max-width: 400px;
+}
+
+.editorial__body {
+}
+
+.editorial__cta {
+    margin-top: $spacing-mobile-xs;
+}
+
+/**
+ * @doc docs/editorial.md
+ * @section Editorial
+ * @sectionof Molecules
+ */

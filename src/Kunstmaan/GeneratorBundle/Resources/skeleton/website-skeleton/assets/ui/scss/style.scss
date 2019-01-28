@@ -7,22 +7,8 @@
    Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
-/* Config
-   ========================================================================== */
-@import "config/config";
-
-/* Helpers
-   ========================================================================== */
-@import "helpers/helpers";
-
-/* General
-   ========================================================================== */
-@import "general/general";
-
-/* Pages
-   ========================================================================== */
-@import "components/components";
-
-/* Pages
-   ========================================================================== */
-@import "pages/pages";
+@import "00-bootstrap/all";
+@import "01-quarks/all";
+@import "02-atoms/all";
+@import "03-molecules/all";
+@import "04-organisms/all";
