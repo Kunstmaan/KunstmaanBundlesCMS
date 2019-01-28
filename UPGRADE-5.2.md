@@ -26,3 +26,11 @@ NodeBundle
 ----------
 
  * Added the ability to split up an entity into multiple tabs. See [docs/bundles/node-bundle/entity-tabs.md](docs/bundles/node-bundle/entity-tabs.md)
+
+SearchBundle
+------------
+
+ * Not providing a value for the `kunstmaan_search.connection.host` config while setting the `kunstmaan_search.hostname` parameter is deprecated, this config value will replace the `kunstmaan_search.hostname` parameter in KunstmaanDashboardBundle 6.0.
+ * Not providing a value for the `kunstmaan_search.connection.port` config while setting the `kunstmaan_search.port` parameter is deprecated, this config value will replace the `kunstmaan_search.port` parameter in KunstmaanDashboardBundle 6.0.
+ * Not providing a value for the `kunstmaan_search.connection.username` config while setting the `kunstmaan_search.username` parameter is deprecated, this config value will replace the `kunstmaan_search.username` parameter in KunstmaanDashboardBundle 6.0.
+ * Not providing a value for the `kunstmaan_search.connection.password` config while setting the `kunstmaan_search.password` parameter is deprecated, this config value will replace the `kunstmaan_search.password` parameter in KunstmaanDashboardBundle 6.0.
