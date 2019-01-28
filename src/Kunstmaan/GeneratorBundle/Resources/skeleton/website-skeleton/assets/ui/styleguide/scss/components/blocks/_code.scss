@@ -6,7 +6,7 @@
    ========================================================================== */
 .sg-styleguide {
 
-    code:not(.sg-code) {
+    code:not(.kds-code) {
         padding: 1px 3px;
 
         background: $grey--light;
@@ -24,7 +24,7 @@
     pre {
         background: $primary-color--dark;
 
-        code:not(.sg-code) {
+        code:not(.kds-code) {
         }
     }
 }

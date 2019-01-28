@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
+
+$tab-border: 1px solid $color-greyscale-black;
+$tab-border-none: 1px solid transparent;
+$tab-border-light: 1px solid $color-greyscale-grey;
+
+.tabs {}
+
+.tabs__header {
+    padding: 0 $spacing-mobile-sm;
+
+    @media (min-width: $break-md) {
+        position: relative;
+
+        display: flex;
+    }
+}
+
+.tabs__switch {
+    padding: $spacing-mobile-sm;
+
+    background: $color-greyscale-lightest;
+
+    border: none;
+
+    font-family: $font-family-primary;
+    font-size: 16px;
+    color: $color-greyscale-black;
+
+    user-select: none;
+    cursor: pointer;
+
+    &--active {
+        background: $color-greyscale-white;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    @media (min-width: $break-md) {
+        flex: 1 1 auto;
+    }
+}
+
+.tabs__content-holder {
+    padding-top: $spacing-mobile-lg;
+
+    @media (min-width: $break-md) {
+        padding-top: $spacing-desktop-lg;
+    }
+}
+
+/**
+ * @doc docs/tabs.md
+ * @section Tabs
+ * @sectionof Molecules
+ */

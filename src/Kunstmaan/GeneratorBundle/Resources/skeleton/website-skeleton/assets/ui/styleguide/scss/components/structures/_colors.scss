@@ -4,10 +4,10 @@
 
 /* General
    ========================================================================== */
-.sg-color {
+.kds-color {
     display: inline-block;
     width: calc((100% - 60px) / 3);
-    max-width: 140px;
+    max-width: 240px;
     margin: 10px;
 
     border-radius: 4px;
@@ -15,18 +15,9 @@
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, .35), 0 3px 2px 0 rgba(0, 0, 0, .18);
 }
 
-
-/* Wrapper
-   ========================================================================== */
-.sg-color__wrapper {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-
 /* Color
    ========================================================================== */
-.sg-color__color {
+.kds-color__color {
     display: block;
     height: 100px;
 
@@ -38,7 +29,7 @@
     text-align: center;
 }
 
-.sg-color__color__text {
+.kds-color__color__text {
     position: relative;
     top: 50%;
 
@@ -47,11 +38,11 @@
 
 /* Description
    ========================================================================== */
-.sg-color__description {
+.kds-color__description {
     padding: 0 8px 8px;
 }
 
-.sg-color__description__title {
+.kds-color__description__title {
     margin-top: 10px;
 
     color: $black;
@@ -60,7 +51,7 @@
     font-weight: bold;
 }
 
-.sg-color__description__value {
+.kds-color__description__value {
     margin-bottom: 5px;
 
     color: $grey--dark;

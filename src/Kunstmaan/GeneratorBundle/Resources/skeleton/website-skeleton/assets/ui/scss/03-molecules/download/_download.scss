@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Download
+   ========================================================================== */
+
+.download {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 790px;
+
+    padding: $spacing-mobile-xs;
+
+    background-color: $color-greyscale-lightest;
+
+    @media (min-width: $break-sm) {
+        flex-direction: row;
+    }
+}
+
+.download__icon {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+    margin-right: $spacing-mobile-xs;
+
+    fill: $color-primary;
+
+    @media (min-width: $break-xs) {
+        display: block;
+    }
+
+    @media (min-width: $break-sm) {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.download__info {
+    display: flex;
+    margin-bottom: $spacing-mobile-xs;
+
+    @media (min-width: $break-sm) {
+        margin-bottom: 0;
+    }
+}
+
+.download__info__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.download__info__name {
+    margin: 0;
+
+    font-size: $font-size-mobile-small;
+    font-family: font-family(null, primary);
+    font-weight: $font-weight-normal;
+
+    @media (min-width: $break-sm) {
+        font-size: $font-size-desktop-small;
+    }
+}
+
+/**
+ * @doc docs/download.md
+ * @section Download
+ * @sectionof Molecules
+ */

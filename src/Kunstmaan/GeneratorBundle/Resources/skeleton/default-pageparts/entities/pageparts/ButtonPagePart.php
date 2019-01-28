@@ -49,15 +49,12 @@ class ButtonPagePart extends AbstractPagePart
 
     public const TYPE_PRIMARY = 'primary';
     public const TYPE_SECONDARY = 'secondary';
-    public const TYPE_TERTIARY = 'tertiary';
-    public const TYPE_QUATERNARY = 'quaternary';
+    public const TYPE_EYECATCHER = 'eye-catcher';
     public const TYPE_LINK = 'link';
 
-    public const SIZE_EXTRA_LARGE = 'xl';
     public const SIZE_LARGE = 'lg';
-    public const SIZE_DEFAULT = 'default';
+    public const SIZE_DEFAULT = 'md';
     public const SIZE_SMALL = 'sm';
-    public const SIZE_EXTRA_SMALL = 'xs';
 
     public const POSITION_LEFT = 'left';
     public const POSITION_CENTER = 'center';
@@ -70,19 +67,18 @@ class ButtonPagePart extends AbstractPagePart
     public static $types = [
         self::TYPE_PRIMARY,
         self::TYPE_SECONDARY,
-        self::TYPE_TERTIARY,
-        self::TYPE_QUATERNARY,
+        self::TYPE_EYECATCHER,
         self::TYPE_LINK,
     ];
 
     /**
      * @var array Supported sizes
      */
-    public static $sizes = [
+    public static $sizes = array(
         self::SIZE_LARGE,
         self::SIZE_DEFAULT,
         self::SIZE_SMALL,
-    ];
+    );
 
     /**
      * @var array Supported positions

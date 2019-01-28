@@ -1,0 +1,9 @@
+.kds-font {
+    & + .kds-font {
+        margin-top: 20px;
+    }
+}
+
+.kds-font__description__title {
+    margin-bottom: 10px;
+}

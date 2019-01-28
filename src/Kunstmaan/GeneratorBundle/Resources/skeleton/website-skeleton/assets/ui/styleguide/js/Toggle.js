@@ -1,12 +1,11 @@
-import {TweenLite, Power4} from 'gsap/TweenLite';
+import TweenLite from 'gsap/TweenLite';
 import 'gsap/CSSPlugin';
 
 export default class Toggle {
-
     constructor() {
         const CLASSES = {
             trigger: 'js-sg-toggle-trigger',
-            content: 'js-sg-toggle-content'
+            content: 'js-sg-toggle-content',
         };
         const defaultDuration = 0.3; // in seconds
 
@@ -21,7 +20,7 @@ export default class Toggle {
                 const targetContent = target.querySelectorAll(`.${CLASSES.content}`)[0];
                 const currentTargetIsOpen = el.getAttribute('aria-expanded') === 'true';
 
-                currentTargetIsOpen ? this.hideContent(el, target, targetContent, true) : this.showContent(el, target, targetContent, true);
+                currentTargetIsOpen ? this.hideContent(el, target, targetContent, false) : this.showContent(el, target, targetContent, false);
             });
 
             // Check if hide/show on load
@@ -39,30 +38,24 @@ export default class Toggle {
         this.defaultDuration = defaultDuration;
     }
 
-    hideContent(trigger, target, targetContent, smoothAnimation, animationDuration) {
+    hideContent(trigger, target, targetContent, smoothAnimation) {
         trigger.setAttribute('aria-expanded', false);
 
         if (smoothAnimation) {
-            TweenLite.to(targetContent, animationDuration || this.defaultDuration, {
+            TweenLite.to(targetContent, this.defaultDuration, {
                 height: 0,
-                ease: Power4.easeOut
             });
         } else {
             targetContent.style.height = 0;
         }
     }
 
-    showContent(trigger, target, targetContent, smoothAnimation, animationDuration) {
+    showContent(trigger, target, targetContent, smoothAnimation) {
         trigger.setAttribute('aria-expanded', true);
 
         if (smoothAnimation) {
-            TweenLite.set(targetContent, {
+            TweenLite.to(targetContent, this.defaultDuration, {
                 height: 'auto',
-                ease: Power4.easeOut
-            });
-            TweenLite.from(targetContent, animationDuration || this.defaultDuration, {
-                height: 0,
-                ease: Power4.easeOut
             });
         } else {
             targetContent.style.height = 'auto';

@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Spacings
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Application
+   ========================================================================== */
+
+$spacing-desktop-xs: 24px;
+$spacing-desktop-sm: 40px;
+$spacing-desktop-md: 80px;
+$spacing-desktop-lg: 120px;
+$spacing-desktop-xl: 180px;
+$spacing-desktop-xxl: 240px;
+
+$spacing-mobile-xs: 16px;
+$spacing-mobile-sm: 24px;
+$spacing-mobile-md: 40px;
+$spacing-mobile-lg: 64px;
+$spacing-mobile-xl: 80px;
+$spacing-mobile-xxl: 120px;
+
+
+/* Expose variables
+   ========================================================================== */
+
+:root {
+    --spacing-desktop-xs: $spacing-desktop-xs;
+    --spacing-desktop-sm: $spacing-desktop-sm;
+    --spacing-desktop-md: $spacing-desktop-md;
+    --spacing-desktop-lg: $spacing-desktop-lg;
+    --spacing-desktop-lg: $spacing-desktop-lg;
+    --spacing-desktop-xxl: $spacing-desktop-xxl;
+    --spacing-mobile-xs: $spacing-mobile-xs;
+    --spacing-mobile-sm: $spacing-mobile-sm;
+    --spacing-mobile-md: $spacing-mobile-md;
+    --spacing-mobile-lg: $spacing-mobile-lg;
+    --spacing-mobile-xl: $spacing-mobile-xl;
+    --spacing-mobile-xxl: $spacing-mobile-xxl;
+}

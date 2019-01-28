@@ -1,1 +1,45 @@
-<div class="gallery-pp"></div>
+{% import _self as gallery %}
+
+{% macro buildImage(siblings, mediaItem) %}
+    {% import 'macros/_image-url.html.twig' as macros %}
+    {% set filterSize = 'full' %}
+    {% if siblings > 0 and siblings < 2 %}
+        {% set filterSize = 'half' %}
+    {% elseif siblings > 0 and siblings == 2 %}
+        {% set filterSize = 'third' %}
+    {% endif %}
+    {% set filterNameLow = 'image_gallery_' ~ filterSize ~ '_low' %}
+    {% set filterName = 'image_gallery_' ~ filterSize %}
+
+    {% set width = ''%}
+    {% if mediaItem.media.metadata['original_width'] is defined and mediaItem.media.metadata['original_width'] %}
+        {% set width = mediaItem.media.metadata['original_width'] %}
+    {% endif %}
+    {% set height = ''%}
+    {% if mediaItem.media.metadata['original_height'] is defined and mediaItem.media.metadata['original_height'] %}
+        {% set height = mediaItem.media.metadata['original_height'] %}
+    {% endif %}
+
+    <figure class="image-gallery__item lazy-load-img-wrapper js-lazy-load-img-wrapper">
+        <a class="js-image-gallery-link image-gallery__item__link" href="{{ macros.getImageUrl(mediaItem.media, 'image_big_jpeg') }}" data-title="{{ mediaItem.caption|replace_url | raw }}" {% if width %}data-width="{{ width }}"{% endif %} {% if height %}data-height="{{ height }}"{% endif %}>
+            <img src="{{ macros.getImageUrl(mediaItem.media, filterNameLow) }}" alt="{{ mediaItem.altText }}" class="image-gallery__image js-lazy-load-img" data-src="{{ macros.getImageUrl(mediaItem.media, filterName) }}">
+        </a>
+    </figure>
+{% endmacro %}
+
+
+<div class="gallery-pp">
+    <div class="container container--full-width">
+        <div class="image-gallery js-image-gallery">
+
+        {% for row in resource.rows %}
+            <div class="image-gallery__row">
+                {% set siblings = row.mediaItems | length %}
+                {% for mediaItem in row.mediaItems %}
+                    {{ gallery.buildImage(siblings - 1, mediaItem) }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>

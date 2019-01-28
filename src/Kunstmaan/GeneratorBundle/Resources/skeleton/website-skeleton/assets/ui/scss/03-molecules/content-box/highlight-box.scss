@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Highlight-box
+   ========================================================================== */
+
+.highlight-box {
+    padding: $spacing-mobile-xs;
+
+    background-color: $color-greyscale-dark;
+}
+
+.highlight-box__body {
+    margin-top: $spacing-mobile-xs;
+}
+
+/**
+ * @doc docs/highlight-box.md
+ * @section Highlight content box
+ * @sectionof Molecules
+ */

@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Modals
+   ========================================================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $z-hide;
+
+    width: 100vw;
+    height: 100vh;
+    padding: $spacing-desktop-md;
+
+    opacity: 0;
+
+    background: $color-greyscale-white;
+
+    transition: opacity .3s ease-in-out;
+
+    &--active {
+        z-index: $z-show;
+
+        opacity: 1;
+    }
+}
+
+
+/**
+ * @doc docs/modals.md
+ * @section Modals
+ * @sectionof Molecules
+ */

@@ -11,9 +11,11 @@
 
     {% if tocContent %}
         <div class="toc-pp">
-            <ul>
-                {{ tocContent|raw }}
-            </ul>
+            <div class="container container--full-width">
+                <ul>
+                    {{ tocContent|raw }}
+                </ul>
+            </div>
         </div>
     {% endif %}
 {% endif %}

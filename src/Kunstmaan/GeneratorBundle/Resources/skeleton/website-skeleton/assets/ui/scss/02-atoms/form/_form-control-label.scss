@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Forms - Form control Label
+   ========================================================================== */
+
+@import "config";
+
+.form-control-label {
+    display: block;
+    margin: 0 0 $spacing-mobile-xs 0;
+
+    color: $color-text;
+    font-family: $font-family-primary;
+    font-size: 18px;
+}

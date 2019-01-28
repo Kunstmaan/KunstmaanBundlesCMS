@@ -1,0 +1,34 @@
+/* ==========================================================================
+   Quote
+   ========================================================================== */
+
+.quote {
+    padding: $spacing-mobile-xs;
+}
+
+.quote__title {
+    padding-left: 30px;
+
+    color: $color-greyscale-dark;
+
+    &:before {
+        content: '"';
+
+        position: absolute;
+
+        transform: translateX(-2rem) translateY(1rem);
+
+        font-size: 4rem;
+        line-height: 1rem;
+    }
+}
+
+.quote__body {
+    margin-top: $spacing-mobile-xs;
+}
+
+/**
+ * @doc docs/quote.md
+ * @section Quote content box
+ * @sectionof Molecules
+ */

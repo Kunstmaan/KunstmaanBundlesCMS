@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Atoms - tags
+   ========================================================================== */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: - $spacing-mobile-sm;
+
+    list-style: none;
+}
+
+.tags__item {
+    position: relative;
+
+    margin: $spacing-mobile-sm;
+
+    &:before {
+        @include paragraphStyles($color: $color-greyscale-dark, $size: 12px, $size-mobile: 11px);
+
+        content: '-';
+
+        position: absolute;
+        top: 50%;
+        left: - $spacing-mobile-sm;
+
+        transform: translateY(-50%);
+
+        color: $color-greyscale-grey;
+    }
+
+    &:first-child {
+        &:before {
+            display: none;
+        }
+    }
+}
+
+.tags__item__link {
+    @include paragraphStyles($color: $color-greyscale-dark, $size: 12px, $size-mobile: 11px);
+    color: $color-greyscale-grey;
+}

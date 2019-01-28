@@ -1,7 +1,6 @@
 {% import _self as buildImage %}
 
-{% macro setFilters(image, altText, type) %}
-
+{% macro setFilters(image, altText, type, originalWidth) %}
     {% set imgUrl = '' %}
 
     {% if type in ['svg', 'gif'] %}
@@ -12,9 +11,16 @@
         {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type)) %}
         {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type)) %}
         {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
-        {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
+`
+        {% set imgUrl_huge_low =    asset(image | imagine_filter('image_huge_' ~ type ~ 'low')) %}
+        {% set imgUrl_big_low =     asset(image | imagine_filter('image_big_' ~ type ~ 'low')) %}
+        {% set imgUrl_medium_low =  asset(image | imagine_filter('image_medium_' ~ type ~ 'low')) %}
+        {% set imgUrl_small_low =   asset(image | imagine_filter('image_small_' ~ type ~ 'low')) %}
 
-        <img srcset="{{ srcSet }}"{% if altText %} sizes="100vw" alt="{{ altText }}"{% endif %}/>
+        {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
+        {% set srcSetLow =  imgUrl_small_low ~ ' 400w, ' ~ imgUrl_medium_low ~ ' 600w, ' ~ imgUrl_big_low ~ ' 1200w, ' ~ imgUrl_huge_low ~ ' 2400w' %}
+
+        <img class="js-lazy-load-img" src="{{ imgUrl_big_low }}" srcset="{{ srcSetLow }}" data-src="{{ imgUrl_big }}" data-srcset="{{ srcSet }}" sizes="(min-width: 1130px) 1130px, 100vw"{% if altText %} alt="{{ altText }}"{% endif %} width="{{ originalWidth }}"/>
         <noscript>
             <img src="{{ imgUrl_big }}"{% if altText %} alt="{{ altText }}"{% endif %} />
         </noscript>
@@ -22,24 +28,29 @@
 {% endmacro %}
 
 {% if resource.media is not empty %}
+    {% set image %}
+        {% set imageType = resource.media.originalFilename|lower|split('.')|last %}
+        {{ buildImage.setFilters(resource.media.url, resource.altText, imageType, resource.media.metadata.original_width) }}
+    {% endset %}
+
     {% if app.request %}
-        <figure class="image-pp">
-            {% set imageType = resource.media.originalFilename|lower|split('.')|last %}
-
-            {% if resource.link is defined and resource.link != '' %}
-            <a href="{{ resource.link | replace_url }}" {% if resource.openinnewwindow %}target="_blank" rel="noopener"{% endif %}>
-                {% endif %}
-
-                {{ buildImage.setFilters(resource.media.url, resource.altText, imageType) }}
-
-                {% if resource.link is defined and resource.link != '' %}
-            </a>
-            {% endif %}
-            {% if resource.caption %}
-                <figcaption>
-                    <p>{{ resource.caption }}</p>
-                </figcaption>
-            {% endif %}
-        </figure>
+        <div class="image-pp{% if resource.width != 'natural' %} image-pp--stretch{% endif %}{% if resource.width != 'full_width' %} container container--full-width{% endif %}">
+            <div class="image-pp__wrapper image-pp__wrapper--{{ resource.alignment }}">
+                <figure class="lazy-load-img-wrapper js-lazy-load-img-wrapper">
+                    {% if resource.link is defined and resource.link != '' %}
+                        <a href="{{ resource.link | replace_url }}" {% if resource.openinnewwindow %}target="_blank" rel="noopener"{% endif %}>
+                            {{ image }}
+                        </a>
+                    {% else %}
+                        {{ image }}
+                    {% endif %}
+                    {% if resource.caption %}
+                        <figcaption>
+                            <div class="image-pp__caption{% if resource.width == 'full_width' %} image-pp__caption--padded{% endif %}">{{ resource.caption |replace_url | raw }}</div>
+                        </figcaption>
+                    {% endif %}
+                </figure>
+            </div>
+        </div>
     {% endif %}
 {% endif %}

@@ -1,0 +1,52 @@
+/* ==========================================================================
+   Breadcrumbs
+   ========================================================================== */
+
+.breadcrumbs {
+    display: block;
+    margin: 0;
+}
+
+.breadcrumbs__item {
+    display: inline-block;
+    padding-right: 5px;
+
+    color: $color-text;
+    text-decoration: none;
+    font-size: $font-size-mobile;
+    font-family: $font-family-primary;
+
+    + .breadcrumbs__item {
+        &:before {
+            content: '/';
+
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+
+    @media (min-width: $break-sm) {
+        font-size: $font-size-desktop;
+    }
+}
+
+.breadcrumbs__item__icon {
+    display: inline-block;
+
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+
+    fill: $color-text;
+
+    @media (min-width: $break-sm) {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/**
+ * @doc docs/breadcrumbs.md
+ * @section Breadcrumbs
+ * @sectionof Molecules
+ */

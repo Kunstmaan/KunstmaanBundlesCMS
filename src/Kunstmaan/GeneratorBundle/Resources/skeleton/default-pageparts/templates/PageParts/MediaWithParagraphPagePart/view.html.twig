@@ -1,1 +1,14 @@
-<div class="media-with-paragraph-pp"></div>
+<div class="mediawithparagraph-pp">
+    <div class="container container--full-width">
+        <section class="editorial media-object{% if resource.imagePosition != "left" %}--reversed{% endif %}">
+            <figure class="editorial__media media-object__media lazy-load-img-wrapper js-lazy-load-img-wrapper">
+                {% if resource.image is not null %}
+                    <img class="js-lazy-load-img" src="{{ asset(resource.image.url | imagine_filter('media_with_content_low')) }}" alt="{{ resource.imageAltText }}" data-src="{{ asset(resource.image.url | imagine_filter('media_with_content')) }}">
+                {% endif %}
+            </figure>
+            <div class="editorial__body media-object__body">
+                {{ resource.text|replace_url|raw }}
+            </div>
+        </section>
+    </div>
+</div>

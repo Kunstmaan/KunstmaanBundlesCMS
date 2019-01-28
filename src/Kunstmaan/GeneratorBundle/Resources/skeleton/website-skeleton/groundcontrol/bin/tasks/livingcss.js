@@ -67,6 +67,81 @@ export default function createStyleguideTask({
                             }
                         }
                     },
+                    spacing() {
+                        const matches = (this.tag.description).match(/\[(.*?)\]/);
+
+                        if (matches) {
+                            const section = this.sections[matches[1]];
+
+                            if (section) {
+                                section.spacings = section.spacings || [];
+                                section.spacings.push({
+                                    name: this.tag.name,
+                                    size: this.tag.type
+                                });
+                            }
+                        }
+                    },
+                    font() {
+                        const matches = (this.tag.description).match(/\[(.*?)\]/);
+
+                        if (matches) {
+                            const section = this.sections[matches[1]];
+
+                            if (section) {
+                                section.fonts = section.fonts || [];
+                                section.fonts.push({
+                                    name: this.tag.name,
+                                    stack: this.tag.type
+                                });
+                            }
+                        }
+                    },
+                    fontWeight() {
+                        const matches = (this.tag.description).match(/\[(.*?)\]/);
+
+                        if (matches) {
+                            const section = this.sections[matches[1]];
+
+                            if (section) {
+                                section.fontWeights = section.fontWeights || [];
+                                section.fontWeights.push({
+                                    name: this.tag.name,
+                                    size: this.tag.type
+                                });
+                            }
+                        }
+                    },
+                    fontSize() {
+                        const matches = (this.tag.description).match(/\[(.*?)\]/);
+
+                        if (matches) {
+                            const section = this.sections[matches[1]];
+
+                            if (section) {
+                                section.fontSizes = section.fontSizes || [];
+                                section.fontSizes.push({
+                                    name: this.tag.name,
+                                    size: this.tag.type
+                                });
+                            }
+                        }
+                    },
+                    shadow() {
+                        const matches = (this.tag.description).match(/\[(.*?)\]/);
+
+                        if (matches) {
+                            const section = this.sections[matches[1]];
+
+                            if (section) {
+                                section.shadows = section.shadows || [];
+                                section.shadows.push({
+                                    name: this.tag.name,
+                                    value: this.tag.type
+                                });
+                            }
+                        }
+                    }
                 },
             }))
             .pipe(gulp.dest(dest));

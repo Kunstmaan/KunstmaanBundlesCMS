@@ -34,7 +34,10 @@ export const clean = createCleanTask({
 });
 
 export const copy = gulp.parallel(
-    createCopyTask({src: ['./assets/ui/fonts/**'], dest: './public/frontend/fonts'})
+    createCopyTask({src: ['./assets/ui/fonts/**'], dest: './public/frontend/fonts'}),
+    createCopyTask({src: ['./assets/ui/icons/**'], dest: './public/frontend/icons'}),
+    createCopyTask({ src: ['./assets/ui/styleguide/assets/**'], dest: './public/frontend/styleguide/assets' }),
+    createCopyTask({ src: ['./assets/ui/styleguide/html/**'], dest: './public/frontend/styleguide/html' }),
 );
 
 export const cssLocal = createCssLocalTask({
@@ -71,6 +74,8 @@ export const server = createServerTask({
         files: [
             'public/frontend/css/*.css',
             'public/frontend/js/*.js',
+            'public/frontend/icons/**/*',
+            'public/frontend/fonts/**/*',
             'public/frontend/img/**/*',
             'public/frontend/styleguide/*.html',
         ],
@@ -97,10 +102,11 @@ export const generateStyleguide = createStyleguideTask({
     sortOrder: [
         {
             Index: [
-                'Colors',
-                'Typography',
-                'Blocks',
-                'Pageparts',
+                'Quarks',
+                'Atoms',
+                'Molecules',
+                'Organisms',
+                'Life forms'
             ],
         },
     ],

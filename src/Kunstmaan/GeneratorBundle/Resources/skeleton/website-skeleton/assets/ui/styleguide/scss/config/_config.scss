@@ -7,8 +7,10 @@
 
 /* General
    ========================================================================== */
-@import "general/colors",
-        "general/sizes";
+@import "general/paths",
+        "general/colors",
+        "general/sizes",
+        "general/z-index";
 
 @import "general/typography/fonts",
         "general/typography/bodycopy",
@@ -17,5 +19,6 @@
 
 /* Vendors
    ========================================================================== */
-@import "vendors/bootstrap-vars";
-@import "vendors/bootstrap-imports";
+
+@import "vendors/prism-imports";
+

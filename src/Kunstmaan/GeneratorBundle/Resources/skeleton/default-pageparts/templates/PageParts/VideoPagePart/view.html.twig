@@ -1,62 +1,49 @@
-{% import _self as buildImage %}
-
-{% macro setFilters(image, altText, type) %}
-
-    {% set imgUrl = '' %}
-
-    {% if type in ['svg', 'gif'] %}
-        {% set imgUrl = absolute_url(asset(image)) %}
-        <img class="video-pp__link__img" src="{{ imgUrl }}"{% if altText %} alt="{{ altText }}"{% endif %} />
-    {% else %}
-        {% set imgUrl_huge =    asset(image | imagine_filter('image_huge_' ~ type)) %}
-        {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type)) %}
-        {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type)) %}
-        {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
-        {% set srcSet = imgUrl_small ~ ' 400w,' ~ imgUrl_medium ~ ' 600w,' ~ imgUrl_big ~ ' 1200w,' ~ imgUrl_huge ~ ' 2400w'%}
-
-        <img class="video-pp__link__img" srcset="{{ srcSet }}"{% if altText %} sizes="100vw" alt="{{ altText }}"{% endif %}/>
-        <noscript>
-            <img class="video-pp__link__img" src="{{ imgUrl_big }}"{% if altText %} alt="{{ altText }}"{% endif %} />
-        </noscript>
-    {% endif %}
-{% endmacro %}
-
+{% import 'macros/_image-url.html.twig' as macros %}
 
 {% if resource.video is defined and resource.video %}
     <div class="video-pp">
-        {% set videoImage = asset('frontend/img/general/video-pp--default.svg') %}
-        {% set imageType = 'jpg' %}
-        {% if resource.thumbnail is not empty %}
-            {% set videoImage = asset(resource.thumbnail.url|imagine_filter('optim')) %}
-            {% set imageType = resource.thumbnail.originalFilename|lower|split('.')|last %}
-        {% endif %}
+        <div class="container {% if resource.width == 'container' %}container--full-width{% else %} container--fluid{% endif %}">
+            {% set handler = mediamanager.getHandler(resource.video) %}
+            {% set helper = handler.getFormHelper(resource.video) %}
+            {% set videoImage = asset('frontend/img/general/video-pp--default.svg') %}
+            {% set videoImageLow = asset('frontend/img/general/video-pp--default.svg') %}
+            {% if resource.thumbnail is not empty %}
+                {% set videoImage = macros.getImageUrl(resource.thumbnail, 'video_link') %}
+                {% set videoImageLow = macros.getImageUrl(resource.thumbnail, 'video_link_low') %}
+            {% elseif helper.type == 'youtube' %}
+                {% set videoImage = 'https://img.youtube.com/vi/' ~ helper.code ~ '/0.jpg' %}
+                {% set videoImageLow = 'https://img.youtube.com/vi/' ~ helper.code ~ '/1.jpg' %}
+            {% endif %}
 
-        {% set handler = mediamanager.getHandler(resource.video) %}
-        {% set helper = handler.getFormHelper(resource.video) %}
+            {% if helper.type == 'youtube' %}
+                {% set videoEmbedUrl = "//www.youtube.com/embed/" ~ helper.code %}
+            {% elseif helper.type == 'vimeo' %}
+                {% set videoEmbedUrl = "//player.vimeo.com/video/" ~ helper.code %}
+            {% elseif helper.type == 'dailymotion' %}
+                {% set videoEmbedUrl = "//www.dailymotion.com/embed/video/" ~ helper.code %}
+            {% endif %}
 
-        {% if helper.type == 'youtube' %}
-            {% set videoEmbedUrl = "//www.youtube.com/embed/" ~ helper.code %}
-        {% elseif helper.type == 'vimeo' %}
-            {% set videoEmbedUrl = "//player.vimeo.com/video/" ~ helper.code %}
-        {% elseif helper.type == 'dailymotion' %}
-            {% set videoEmbedUrl = "//www.dailymotion.com/embed/video/" ~ helper.code %}
-        {% endif %}
-
-        <div class="videolink">
-            <a href="{{ videoEmbedUrl }}" target="_blank" rel="noopener" class="js-videolink-play-link videolink__video-link" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
-                <i class="videolink__video-link__icon icon icon--play"></i>
-                {% if resource.thumbnail is not empty %}
-                    {{ buildImage.setFilters(resource.thumbnail.url, resource.caption, imageType) }}
-                {% else %}
-                    <img class="video-pp__link__img" src="{{ 'http://i.ytimg.com/vi/' ~ helper.code ~ '/maxresdefault.jpg' }}" alt="">
-                {% endif %}
-            </a>
-            <div class="js-videolink-container videolink__video-container"></div>
+            <div class="videolink">
+                <a href="{{ videoEmbedUrl }}" target="_blank" rel="noopener" class="js-videolink videolink__link lazy-load-img-wrapper js-lazy-load-img-wrapper" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
+                    <img class="video-pp__link__image videolink__image js-lazy-load-img" src="{{ videoImageLow }}" data-src="{{ videoImage }}" />
+                    <svg class="videolink__icon" width="85px" height="85px" viewBox="0 0 85 85" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g>
+                                <path d="M42.5,0 C65.9701493,0 85,19.0219697 85,42.5 C85,65.9780303 65.9701493,85 42.5,85 C19.0298507,85 0,65.9780303 0,42.5 C0,19.0219697 19.0298507,0 42.5,0 Z" fill="#000000" opacity="0.35"></path>
+                                <path d="M42.5,1.5 C19.8555127,1.5 1.5,19.8531616 1.5,42.5 C1.5,65.1468384 19.8555127,83.5 42.5,83.5 C65.1444873,83.5 83.5,65.1468384 83.5,42.5 C83.5,19.8531616 65.1444873,1.5 42.5,1.5 Z" stroke="#FFFFFF" stroke-width="3"></path>
+                                <path d="M63.157174,38.7714006 L35.6564076,22.513135 C33.4219704,21.1927857 30,22.4740714 30,25.7397874 L30,58.2485059 C30,61.178275 33.1797761,62.9439492 35.6564076,61.4751583 L63.157174,45.2247054 C65.6103674,43.7793527 65.6181801,40.2167534 63.157174,38.7714006 Z" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+                <div class="js-videolink-container videolink__video-container"></div>
+            </div>
         </div>
-
         {% if resource.caption %}
-            <div class="video-pp__caption">
-                <p class="video-pp__caption__text">{{ resource.caption }}</p>
+            <div class="container {% if resource.width == 'container' %}container--full-width{% else %} container--fluid{% endif %}">
+                <div class="video-pp__caption">
+                    <p class="video-pp__caption__text">{{ resource.caption }}</p>
+                </div>
             </div>
         {% endif %}
     </div>

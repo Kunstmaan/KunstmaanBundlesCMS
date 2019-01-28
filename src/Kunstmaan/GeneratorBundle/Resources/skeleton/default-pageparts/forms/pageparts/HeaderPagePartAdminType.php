@@ -26,6 +26,11 @@ class HeaderPagePartAdminType extends AbstractType
                 'label' => 'pagepart.header.title',
                 'required' => true,
             ])
+            ->add('alignment', ChoiceType::class, [
+                'label' => 'pagepart.header.alignment',
+                'choices' => {{ pagepart_class }}::ALIGNMENT,
+                'required' => true,
+            ])
         ;
     }
 

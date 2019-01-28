@@ -245,14 +245,12 @@
 /* Navigation
    ========================================================================== */
 .sg-header__nav__list {
+    padding: 0;
     margin: 0 0 20px;
 
     text-align: right;
 
-    ul, & {
-        padding: 0;
-        list-style: none;
-    }
+    list-style: none;
 
     @media (max-width: $screen-sm-max) {
         ul {

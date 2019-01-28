@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Fonts
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Definition
+   ========================================================================== */
+
+$default-sans:    Arial, Helvetica, sans-serif;
+$default-serif:   Georgia, "Times New Roman", Times, serif;
+
+/* Application
+   ========================================================================== */
+
+$font-family-primary: $default-sans;
+$font-family-secondary: $default-serif;
+
+$font-size-desktop: 18px;
+$font-size-desktop-small: 14px;
+$font-size-mobile: 15px;
+$font-size-mobile-small: 13px;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+
+/* Expose variables
+   ========================================================================== */
+
+:root {
+    --font-family-primary: $font-family-primary;
+    --font-family-secondary: $font-family-secondary;
+    --font-size-desktop: $font-size-desktop;
+    --font-size-desktop-small: $font-size-desktop-small;
+    --font-size-mobile: $font-size-mobile;
+    --font-size-mobile-small: $font-size-mobile-small;
+    --font-weight-light: $font-weight-light;
+    --font-weight-normal: $font-weight-normal;
+    --font-weight-medium: $font-weight-medium;
+    --font-weight-bold: $font-weight-bold;
+}
