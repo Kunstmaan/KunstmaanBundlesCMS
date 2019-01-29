@@ -18,11 +18,25 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_dashboard');
+        $rootNode = $treeBuilder->root('kunstmaan_dashboard');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('google_analytics')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('api')->info('More info at https://kunstmaanbundlescms.readthedocs.io/en/latest/cookbook/google-analytics-dashboard/')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('client_id')->defaultNull()->end()
+                                ->scalarNode('client_secret')->defaultNull()->end()
+                                ->scalarNode('dev_key')->defaultNull()->end()
+                                ->scalarNode('app_name')->defaultNull()->end() // NEXT_MAJOR: Set default value to "Kuma Analytics Dashboard"
+                            ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

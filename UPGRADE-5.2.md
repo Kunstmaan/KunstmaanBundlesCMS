@@ -16,6 +16,14 @@ AdminBundle
   the `FOS\UserBundle\Model\GroupInterface`. The `Group` entity won't change if you run on symfony 3.4 but it's adviced to make 
   this change already.
 
+DashboardBundle
+---------------
+
+ * Not providing a value for the `kunstmaan_dashboard.google_analytics.api.client_secret` config while setting the `google.api.client_secret` parameter is deprecated, this config value will replace the `google.api.client_secret` parameter in KunstmaanDashboardBundle 6.0.
+ * Not providing a value for the `kunstmaan_dashboard.google_analytics.api.client_id` config while setting the `google.api.client_id` parameter is deprecated, this config value will replace the `google.api.client_id` parameter in KunstmaanDashboardBundle 6.0.
+ * Not providing a value for the `kunstmaan_dashboard.google_analytics.api.app_name` config while setting the `google.api.app_name` parameter is deprecated, this config value will replace the `google.api.app_name` parameter in KunstmaanDashboardBundle 6.0.
+ * Not providing a value for the `kunstmaan_dashboard.google_analytics.api.dev_key` config while setting the `google.api.dev_key` parameter is deprecated, this config value will replace the `google.api.dev_key` parameter in KunstmaanDashboardBundle 6.0.
+
 NodeSearchBundle
 ----------------
 
