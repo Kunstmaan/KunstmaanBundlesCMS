@@ -20,12 +20,14 @@ use Symfony\Component\HttpKernel\Kernel;
 /**
  * App Test Kernel for functional tests.
  *
- * @link https://github.com/symfony/symfony/blob/25f9ec6a541a6820888721d63e09f94e02628a21/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/app/AppKernel.php
+ * @see https://github.com/symfony/symfony/blob/25f9ec6a541a6820888721d63e09f94e02628a21/src/Symfony/Bundle/FrameworkBundle/Tests/Functional/app/AppKernel.php
  */
 class AppKernel extends Kernel
 {
     private $varDir;
+
     private $testCase;
+
     private $rootConfig;
 
     public function __construct($varDir, $testCase, $rootConfig, $environment, $debug)

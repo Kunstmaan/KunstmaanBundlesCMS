@@ -3,7 +3,6 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
-use function MongoDB\BSON\toJSON;
 use Symfony\Component\Finder\Finder;
 
 class ImporterTest extends WebTestCase
@@ -19,7 +18,7 @@ class ImporterTest extends WebTestCase
         static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
         $container = static::$kernel->getContainer();
         static::loadFixtures($container);
-        
+
         $this->translationRepository = $container->get('kunstmaan_translator.repository.translation');
         $this->importer = $container->get('kunstmaan_translator.service.importer.importer');
         $this->rootDir = $container->getParameter('kernel.root_dir');

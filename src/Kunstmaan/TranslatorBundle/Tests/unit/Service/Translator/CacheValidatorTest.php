@@ -17,8 +17,8 @@ class CacheValidatorTest extends Unit
         $date = new \DateTimeImmutable();
         $yesterday = $date->modify('-1 day');
 
-        $translationRepository = $this->makeEmpty(TranslationRepository::class,[
-            'getLastChangedTranslationDate' => $yesterday
+        $translationRepository = $this->makeEmpty(TranslationRepository::class, [
+            'getLastChangedTranslationDate' => $yesterday,
         ]);
 
         $this->cacheValidator = new CacheValidator();
@@ -65,7 +65,7 @@ class CacheValidatorTest extends Unit
     public function deleteDummyCachedFile()
     {
         $file = sprintf('%s/catalogue.test.php', $this->cacheDir);
-        if (file_exists($file)){
+        if (file_exists($file)) {
             unlink($file);
         }
     }
