@@ -22,9 +22,4 @@ class LoaderTest extends WebTestCase
         $this->assertEquals($messages['validation.ok'], 'Everything ok');
         $this->assertEquals($catalogue->getLocale(), 'en');
     }
-
-    public function tearDown()
-    {
-        self::ensureKernelShutdown();
-    }
 }

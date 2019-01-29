@@ -3,16 +3,19 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Exporter;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Kunstmaan\TranslatorBundle\Tests\Unit\WebTestCase;
 
-class ExportCommandHandlerTest extends BaseTestCase
+class ExportCommandHandlerTest extends WebTestCase
 {
     private $exportCommandHandler;
 
     public function setUp()
     {
-        parent::setUp();
-        $this->exportCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.exporter.command_handler');
+        static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
+        $container = static::$kernel->getContainer();
+        static::loadFixtures($container);
+
+        $this->exportCommandHandler = $container->get('kunstmaan_translator.service.exporter.command_handler');
     }
 
     public function testGetExportFiles()

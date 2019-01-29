@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Kunstmaan\TranslatorBundle\Tests\Unit\App;
+namespace Kunstmaan\TranslatorBundle\Tests\App;
 
 use Psr\Log\NullLogger;
 use Symfony\Component\Config\Loader\LoaderInterface;

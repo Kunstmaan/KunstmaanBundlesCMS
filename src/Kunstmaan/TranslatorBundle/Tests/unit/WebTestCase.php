@@ -38,7 +38,7 @@ class WebTestCase extends BaseWebTestCase
     {
         require_once __DIR__.'/app/AppKernel.php';
 
-        return 'Kunstmaan\TranslatorBundle\Tests\Unit\App\AppKernel';
+        return 'Kunstmaan\TranslatorBundle\Tests\App\AppKernel';
     }
 
     protected static function createKernel(array $options = [])
