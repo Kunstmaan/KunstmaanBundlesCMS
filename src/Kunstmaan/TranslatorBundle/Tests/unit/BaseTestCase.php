@@ -11,6 +11,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 include __DIR__ . '/app/AppKernel.php';
 
+/**
+ * Class BaseTestCase
+ *
+ * @deprecated
+ */
 abstract class BaseTestCase extends TestCase
 {
     /**
