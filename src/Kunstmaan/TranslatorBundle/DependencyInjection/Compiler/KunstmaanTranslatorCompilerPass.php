@@ -11,9 +11,10 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $loaderRefs = array();
-        $loaderAliases = array();
-        $exporterRefs = array();
+        $loaderRefs = [];
+        $loaderAliases = [];
+        $exporterRefs = [];
+        $loaders = [];
 
         foreach ($container->findTaggedServiceIds('translation.loader', true) as $id => $attributes) {
             $loaderRefs[$id] = new Reference($id);
