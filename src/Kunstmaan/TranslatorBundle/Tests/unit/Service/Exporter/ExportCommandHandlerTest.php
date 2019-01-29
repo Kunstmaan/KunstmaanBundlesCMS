@@ -3,7 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Exporter;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
-use Kunstmaan\TranslatorBundle\Tests\Unit\WebTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
 class ExportCommandHandlerTest extends WebTestCase
 {

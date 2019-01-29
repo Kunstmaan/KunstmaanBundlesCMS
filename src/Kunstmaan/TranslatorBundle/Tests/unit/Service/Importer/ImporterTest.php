@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
-use Kunstmaan\TranslatorBundle\Tests\Unit\WebTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 use function MongoDB\BSON\toJSON;
 use Symfony\Component\Finder\Finder;
 

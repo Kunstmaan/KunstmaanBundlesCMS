@@ -3,7 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
-use Kunstmaan\TranslatorBundle\Tests\Unit\WebTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
 class ImportCommandHandlerTest extends WebTestCase
 {

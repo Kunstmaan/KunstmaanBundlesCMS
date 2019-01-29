@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Translator;
 
-use Kunstmaan\TranslatorBundle\Tests\Unit\WebTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
 class LoaderTest extends WebTestCase
 {

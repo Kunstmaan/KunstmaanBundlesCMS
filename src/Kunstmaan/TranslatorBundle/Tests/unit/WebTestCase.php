@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\TranslatorBundle\Tests\Unit;
+namespace Kunstmaan\TranslatorBundle\Tests\unit;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -38,7 +38,7 @@ class WebTestCase extends BaseWebTestCase
     {
         require_once __DIR__.'/app/AppKernel.php';
 
-        return 'Kunstmaan\TranslatorBundle\Tests\App\AppKernel';
+        return 'Kunstmaan\TranslatorBundle\Tests\app\AppKernel';
     }
 
     protected static function createKernel(array $options = [])
