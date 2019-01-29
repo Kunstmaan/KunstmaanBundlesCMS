@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class TranslatorCommandController extends Controller
 {
     /**
-     * @Route("/clear-cache", name="KunstmaanTranslatorBundle_clear_cache")
+     * @Route("/clear-cache", name="KunstmaanTranslatorBundle_command_clear_cache")
      */
     public function clearCacheAction()
     {
