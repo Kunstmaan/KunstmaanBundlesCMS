@@ -25,6 +25,7 @@ class ConfigurationTest extends TestCase
                 'username' => null,
                 'password' => null,
             ],
+            'index_prefix' => null,
             'analyzer_languages' => [],
         ];
 

@@ -15,7 +15,7 @@ parameters:
 services:
     kunstmaan_search.search:
         class: '%kunstmaan_search.search.class%'
-        arguments: ['@kunstmaan_search.search_provider_chain', '%searchindexprefix%', '%kunstmaan_search.search_provider%']
+        arguments: ['@kunstmaan_search.search_provider_chain', '%kunstmaan_search.index_prefix%', '%kunstmaan_search.search_provider%']
 
     kunstmaan_search.search.factory.analysis:
         class: '%kunstmaan_search.search.factory.analysis.class%'

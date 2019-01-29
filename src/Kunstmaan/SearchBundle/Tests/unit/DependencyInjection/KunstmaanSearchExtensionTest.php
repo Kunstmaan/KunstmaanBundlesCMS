@@ -144,4 +144,33 @@ class KunstmaanSearchExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter('kunstmaan_search.password', 'other_password');
     }
+
+    public function testIndexPrefixWithNoConfig()
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_search.index_prefix', null);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Not providing a value for the "kunstmaan_search.index_prefix" config while setting the "searchindexprefix" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "searchindexprefix" parameter in KunstmaanDashboardBundle 6.0.
+     */
+    public function testIndexPrefixWithParameterSet()
+    {
+        $this->setParameter('searchindexprefix', 'prefix');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_search.index_prefix', 'prefix');
+    }
+
+    public function testIndexPrefixWithParameterAndConfigSet()
+    {
+        $this->setParameter('searchindexprefix', 'prefix');
+
+        $this->load(['index_prefix' => 'other_prefix']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_search.index_prefix', 'other_prefix');
+    }
 }
