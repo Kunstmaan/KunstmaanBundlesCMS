@@ -1,8 +1,10 @@
 <?php
-namespace Kunstmaan\TranslatorBundle\Tests\unit;
+namespace Kunstmaan\TranslatorBundle\Tests\Unit;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Nelmio\Alice\Loader\NativeLoader;
 
 class WebTestCase extends BaseWebTestCase
 {
@@ -36,7 +38,7 @@ class WebTestCase extends BaseWebTestCase
     {
         require_once __DIR__.'/app/AppKernel.php';
 
-        return 'Symfony\Bundle\FrameworkBundle\Tests\Functional\app\AppKernel';
+        return 'Kunstmaan\TranslatorBundle\Tests\Unit\App\AppKernel';
     }
 
     protected static function createKernel(array $options = [])
@@ -59,5 +61,23 @@ class WebTestCase extends BaseWebTestCase
     protected static function getVarDir()
     {
         return 'FB'.substr(strrchr(\get_called_class(), '\\'), 1);
+    }
+
+    protected static function loadFixtures(ContainerInterface $container)
+    {
+        $em = $container->get('doctrine.orm.default_entity_manager');
+        $meta = $em->getMetadataFactory()->getAllMetadata();
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool->dropSchema($meta);
+        $tool->createSchema($meta);
+
+        // insert fixtures
+        $fixtures = __DIR__.'/files/fixtures.yml';
+        $loader = new NativeLoader();
+        $objects = $loader->loadFile($fixtures)->getObjects();
+        foreach ($objects as $object) {
+            $em->persist($object);
+        }
+        $em->flush();
     }
 }

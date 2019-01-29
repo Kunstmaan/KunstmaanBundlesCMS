@@ -10,4 +10,5 @@ return [
     new \Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
     new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
     new \Symfony\Bundle\AclBundle\AclBundle(),
+    new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
 ];

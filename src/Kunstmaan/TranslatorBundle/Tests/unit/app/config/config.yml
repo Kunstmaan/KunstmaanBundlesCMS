@@ -27,6 +27,21 @@ kunstmaan_translator:
     managed_locales: ['nl','en','de']
     cache_dir: "%kernel.cache_dir%/translations"
 
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     "%kernel.cache_dir%/test.db"
+    orm:
+        default_entity_manager:   default
+        entity_managers:
+            default:
+                connection:       default
+                mappings:
+                    KunstmaanTranslatorBundle: ~
+
 fos_user:
     firewall_name: main
     user_class: Kunstmaan\AdminBundle\Entity\User

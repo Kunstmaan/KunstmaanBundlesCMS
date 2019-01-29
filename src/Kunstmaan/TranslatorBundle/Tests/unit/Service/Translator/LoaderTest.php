@@ -1,15 +1,18 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
+namespace Kunstmaan\TranslatorBundle\Tests\Service\Translator;
 
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Kunstmaan\TranslatorBundle\Tests\Unit\WebTestCase;
 
-class LoaderTest extends BaseTestCase
+class LoaderTest extends WebTestCase
 {
     public function setUp()
     {
-        parent::setUp();
-        $this->loader = $this->getContainer()->get('kunstmaan_translator.service.translator.loader');
+        static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
+        $container = static::$kernel->getContainer();
+        static::loadFixtures($container);
+
+        $this->loader = $container->get('kunstmaan_translator.service.translator.loader');
     }
 
     public function testLoad()
@@ -18,5 +21,10 @@ class LoaderTest extends BaseTestCase
         $messages = $catalogue->all('validation');
         $this->assertEquals($messages['validation.ok'], 'Everything ok');
         $this->assertEquals($catalogue->getLocale(), 'en');
+    }
+
+    public function tearDown()
+    {
+        self::ensureKernelShutdown();
     }
 }
