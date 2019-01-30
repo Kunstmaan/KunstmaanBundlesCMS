@@ -21,7 +21,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Pagerfanta;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Kunstmaan\LeadGenerationBundle\Tests\unit\Entity\Popup\Popup;
 
@@ -60,7 +60,7 @@ class ORM extends AbstractDoctrineORMAdminListConfigurator implements SortableIn
     }
 }
 
-class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
+class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 {
     /** @var ORM $config */
     private $config;

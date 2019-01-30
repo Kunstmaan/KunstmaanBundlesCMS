@@ -15,7 +15,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Pagerfanta;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 class DBAL extends AbstractDoctrineDBALAdminListConfigurator implements SortableInterface
@@ -53,7 +53,7 @@ class DBAL extends AbstractDoctrineDBALAdminListConfigurator implements Sortable
     }
 }
 
-class AbstractDoctrineDBALAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
+class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
 {
     /** @var DBAL $config */
     private $config;

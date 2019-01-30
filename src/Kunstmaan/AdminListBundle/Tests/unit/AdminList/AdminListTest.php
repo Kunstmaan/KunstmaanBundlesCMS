@@ -12,7 +12,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\Tests\unit\Model\ConcreteConfigurator;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -36,7 +36,7 @@ class PublicObject extends PrivateObject
 /**
  * Class AdminListTest
  */
-class AdminListTest extends PHPUnit_Framework_TestCase
+class AdminListTest extends TestCase
 {
     public function testStuff()
     {

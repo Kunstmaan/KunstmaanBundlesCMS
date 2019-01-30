@@ -7,11 +7,12 @@ use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Kunstmaan\AdminListBundle\Tests\unit\Model\TestLockableEntityInterfaceImplementation;
+use PHPUnit\Framework\TestCase;
 
 /**
  * class EntityVersionLockServiceTest
  */
-class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
+class EntityVersionLockServiceTest extends TestCase
 {
     protected static $TEST_CLASS = 'Kunstmaan\\AdminListBundle\\Tests\\unit\\Model\\TestLockableEntityInterfaceImplementation';
 
