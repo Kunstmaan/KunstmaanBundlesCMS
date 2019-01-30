@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Creators;
 
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Creators\ACLPermissionCreator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 /**
  * Class ACLPermissionCreatorTest
  */
-class ACLPermissionCreatorTest extends PHPUnit_Framework_TestCase
+class ACLPermissionCreatorTest extends TestCase
 {
     public function testInitByExample()
     {

@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\FormWidgets\Tabs;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class TabPaneTest
  */
-class TabPaneTest extends PHPUnit_Framework_TestCase
+class TabPaneTest extends TestCase
 {
     /**
      * @throws \ReflectionException

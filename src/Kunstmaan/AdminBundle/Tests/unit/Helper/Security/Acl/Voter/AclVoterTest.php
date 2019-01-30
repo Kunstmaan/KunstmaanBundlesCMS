@@ -4,12 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Voter\AclVoter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityRetrievalStrategyInterface;
 
-class AclVoterTest extends PHPUnit_Framework_TestCase
+class AclVoterTest extends TestCase
 {
     public function testCanConstruct()
     {

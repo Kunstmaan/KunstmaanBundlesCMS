@@ -3,14 +3,14 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\RangeType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class RangeTypeTest
  */
-class RangeTypeTest extends PHPUnit_Framework_TestCase
+class RangeTypeTest extends TestCase
 {
     public function testMethods()
     {

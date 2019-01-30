@@ -4,12 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\AdminPanel;
 
 use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AdminPanelActionTest
  */
-class AdminPanelTest extends PHPUnit_Framework_TestCase
+class AdminPanelTest extends TestCase
 {
     public function testAdminPanel()
     {

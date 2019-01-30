@@ -10,7 +10,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use Kunstmaan\TranslatorBundle\Service\Translator\Translator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +30,7 @@ class FakeClient extends Client
     }
 }
 
-class VersionCheckTest extends PHPUnit_Framework_TestCase
+class VersionCheckTest extends TestCase
 {
     /**
      * @var VersionChecker

@@ -3,13 +3,13 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\GroupType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class GroupTypeTest
  */
-class GroupTypeTest extends PHPUnit_Framework_TestCase
+class GroupTypeTest extends TestCase
 {
     public function testMethods()
     {

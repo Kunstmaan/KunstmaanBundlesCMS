@@ -3,14 +3,14 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\ColorType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ColorTypeTest
  */
-class ColorTypeTest extends PHPUnit_Framework_TestCase
+class ColorTypeTest extends TestCase
 {
     public function testMethods()
     {

@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\EventListener;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\AdminLocaleListener;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class AdminLocaleListenerTest extends PHPUnit_Framework_TestCase
+class AdminLocaleListenerTest extends TestCase
 {
     public function testListener()
     {

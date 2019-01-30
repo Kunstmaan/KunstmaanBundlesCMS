@@ -3,13 +3,13 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\RoleType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class RoleTypeTest
  */
-class RoleTypeTest extends PHPUnit_Framework_TestCase
+class RoleTypeTest extends TestCase
 {
     public function testMethods()
     {

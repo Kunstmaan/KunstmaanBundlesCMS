@@ -6,9 +6,9 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\EventListener\MappingListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class MappingListenerTest extends PHPUnit_Framework_TestCase
+class MappingListenerTest extends TestCase
 {
     public function testListener()
     {

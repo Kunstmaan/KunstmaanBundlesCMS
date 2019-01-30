@@ -9,10 +9,10 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinderInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
+class OAuthUserCreatorTest extends TestCase
 {
     /**
      * @var OAuthUserCreator

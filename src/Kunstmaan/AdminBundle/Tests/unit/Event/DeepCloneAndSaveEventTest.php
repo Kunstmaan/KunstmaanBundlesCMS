@@ -4,13 +4,13 @@ namespace Kunstmaan\AdminBundle\Tests\Event;
 
 use DateTime;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * Class DeepCloneAndSaveEventTest
  */
-class DeepCloneAndSaveEventTest extends PHPUnit_Framework_TestCase
+class DeepCloneAndSaveEventTest extends TestCase
 {
     public function testGetSet()
     {

@@ -60,11 +60,11 @@
         "kunstmaan/media-bundle": "^5.2",
         "kunstmaan/menu-bundle": "^5.2",
         "kunstmaan/translator-bundle": "^5.2",
-        "codeception/codeception": "^2.4",
-        "matthiasnoback/symfony-config-test": "2.2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
-        "phpunit/phpunit": "^5.7",
-        "symfony/phpunit-bridge": "~3.0"
+        "symfony/phpunit-bridge": "~3.0",
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "phpunit/phpunit": "^7.5"
     },
     "minimum-stability": "dev",
     "autoload": {
