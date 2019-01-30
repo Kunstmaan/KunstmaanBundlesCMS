@@ -322,7 +322,7 @@ class AclHelperTest extends TestCase
 
     public function testGetAllowedEntityIdsNoEntity()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
 
         $this->object->getAllowedEntityIds(new PermissionDefinition(array('view')));
     }
