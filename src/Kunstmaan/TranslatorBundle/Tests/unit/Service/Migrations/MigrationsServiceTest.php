@@ -15,7 +15,7 @@ class MigrationsServiceTest extends WebTestCase
         $container = static::$kernel->getContainer();
         static::loadFixtures($container);
 
-        /** @var MigrationsService migrationsService */
+        /* @var MigrationsService migrationsService */
         $this->migrationsService = $container->get('kunstmaan_translator.service.migrations.migrations');
     }
 

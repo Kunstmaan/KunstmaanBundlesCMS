@@ -9,7 +9,6 @@ use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Model\Export\ExportFile;
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Kunstmaan\TranslatorBundle\Service\Command\Exporter\ExportCommandHandler;
-//use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
 class ExportCommandHandlerTest extends Unit
 {
@@ -33,7 +32,6 @@ class ExportCommandHandlerTest extends Unit
 
         $this->exportCommandHandler = new ExportCommandHandler();
         $this->exportCommandHandler->setTranslationRepository($translationRepository);
-
     }
 
     public function testGetExportFiles()

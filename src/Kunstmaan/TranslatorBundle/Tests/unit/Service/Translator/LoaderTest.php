@@ -28,7 +28,7 @@ class LoaderTest extends Unit
            'findBy' => [$translation],
         ]);
 
-        /** @var Loader loader */
+        /* @var Loader loader */
         $this->loader = new Loader();
         $this->loader->setTranslationRepository($translationRepository);
     }
