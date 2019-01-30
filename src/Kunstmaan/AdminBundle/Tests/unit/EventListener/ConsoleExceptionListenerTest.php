@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Command\ApplyAclCommand;
 use Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener;
 use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 use Symfony\Component\HttpKernel\Kernel;
 
