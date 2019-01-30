@@ -17,7 +17,7 @@ class ConsoleExceptionListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testListener()
     {
-        if (Kernel::VERSION_ID >= 4000) {
+        if (Kernel::VERSION_ID >= 40000) {
             static::markTestSkipped('Skipping legacy test');
         }
 
