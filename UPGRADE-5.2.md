@@ -16,6 +16,11 @@ AdminBundle
   the `FOS\UserBundle\Model\GroupInterface`. The `Group` entity won't change if you run on symfony 3.4 but it's adviced to make 
   this change already.
 
+MediaBundle
+-----------
+
+ * Not providing a value for the `kunstmaan_media.aviary_api_key` config while setting the `aviary_api_key` parameter is deprecated, this config value will replace the `aviary_api_key` parameter in KunstmaanMediaBundle 6.0.
+
 NodeSearchBundle
 ----------------
 

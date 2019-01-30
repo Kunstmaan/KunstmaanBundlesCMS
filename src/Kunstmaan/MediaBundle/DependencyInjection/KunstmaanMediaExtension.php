@@ -32,7 +32,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter(
             'twig.form.resources',
             array_merge(
-                $container->getParameter('twig.form.resources'),
+                $container->hasParameter('twig.form.resources') ? $container->getParameter('twig.form.resources') : [],
                 array('KunstmaanMediaBundle:Form:formWidgets.html.twig')
             )
         );
@@ -60,6 +60,8 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setAlias('liip_imagine.cache.resolver.prototype.web_path', 'Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver');
         $container->setAlias('liip_imagine.cache.manager', 'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager')->setPublic(true);
         $container->setAlias('liip_imagine.filter.loader.background', 'kunstmaan_media.imagine.filter.loader.background')->setPublic(true);
+
+        $this->addAvairyApiKeyParameter($container, $config);
     }
 
     public function prepend(ContainerBuilder $container)
@@ -87,5 +89,19 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
     public function getAlias()
     {
         return 'kunstmaan_media';
+    }
+
+    private function addAvairyApiKeyParameter(ContainerBuilder $container, array $config)
+    {
+        $aviaryApiKey = $container->hasParameter('aviary_api_key') ? $container->getParameter('aviary_api_key') : null;
+        if (null === $config['aviary_api_key'] && null !== $aviaryApiKey) {
+            @trigger_error('Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanDashboardBundle 6.0.', E_USER_DEPRECATED);
+        }
+
+        if (null !== $config['aviary_api_key']) {
+            $aviaryApiKey = $config['aviary_api_key'];
+        }
+
+        $container->setParameter('kunstmaan_media.aviary_api_key', $aviaryApiKey);
     }
 }

@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('soundcloud_api_key')->defaultValue('YOUR_CLIENT_ID')->end()
+                ->scalarNode('aviary_api_key')->defaultNull()->end()
                 ->arrayNode('remote_video')
                     ->addDefaultsIfNotSet()
                     ->children()
