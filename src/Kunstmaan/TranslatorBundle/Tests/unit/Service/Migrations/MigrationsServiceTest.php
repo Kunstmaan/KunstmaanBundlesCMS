@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Migrations;
 
+use Kunstmaan\TranslatorBundle\Service\Migrations\MigrationsService;
 use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
 class MigrationsServiceTest extends WebTestCase
@@ -14,6 +15,7 @@ class MigrationsServiceTest extends WebTestCase
         $container = static::$kernel->getContainer();
         static::loadFixtures($container);
 
+        /** @var MigrationsService migrationsService */
         $this->migrationsService = $container->get('kunstmaan_translator.service.migrations.migrations');
     }
 
