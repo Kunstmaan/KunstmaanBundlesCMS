@@ -3,13 +3,13 @@
 namespace Kunstmaan\SitemapBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SitemapBundle\DependencyInjection\KunstmaanSitemapExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanSiteMapExtensionTest
  */
-class KunstmaanSiteMapExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanSiteMapExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
