@@ -4,11 +4,10 @@ namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SeoBundle\DependencyInjection\KunstmaanSeoExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class KunstmaanSeoExtensionTest
- */
 class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
 {
     /**
@@ -19,11 +18,33 @@ class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
         return [new KunstmaanSeoExtension()];
     }
 
-    public function testCorrectParametersHaveBeenSet()
+    public function testSeoRequestCacheMethodCall()
     {
-        $this->container->setParameter('empty_extension', true);
-        $this->load();
+        $this->setDefinition('kunstmaan_seo.twig.extension', new Definition());
+        $this->setDefinition('cache.app', new Definition());
 
-        $this->assertContainerBuilderHasParameter('empty_extension', true);
+        $this->load(['request_cache' => 'cache.app']);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'kunstmaan_seo.twig.extension',
+            'setRequestCache',
+            [
+                new Reference('cache.app'),
+            ]
+        );
+    }
+
+    public function testSeoRequestCacheMethodCallWithNullValue()
+    {
+        $this->setDefinition('kunstmaan_seo.twig.extension', new Definition());
+        $this->setDefinition('cache.app', new Definition());
+
+        $this->load(['request_cache' => null]);
+
+        $this->compile();
+
+        $this->assertFalse($this->container->getDefinition('kunstmaan_seo.twig.extension')->hasMethodCall('setRequestCache'));
     }
 }

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\SeoBundle\Entity\Seo;
+use Psr\Cache\CacheItemPoolInterface;
 use Twig_Extension;
 
 /**
@@ -32,6 +33,11 @@ class SeoTwigExtension extends Twig_Extension
      * @var array
      */
     private $seoCache = [];
+
+    /**
+     * @var CacheItemPoolInterface
+     */
+    private $requestCache;
 
     /**
      * @param EntityManager $em
@@ -230,16 +236,47 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * @param $src
      *
-     * @return array|null
+     * @return array
      */
     public function getImageDimensions($src)
     {
-        try {
-            list($width, $height) = getimagesize($src);
-        } catch (\Exception $e) {
-            return null;
-        }
+        list($width, $height) = $this->getImageSize($src);
 
-        return array('width' => $width, 'height' => $height);
+        return ['width' => $width, 'height' => $height];
+    }
+
+    public function setRequestCache(CacheItemPoolInterface $cacheService)
+    {
+        $this->requestCache = $cacheService;
+    }
+
+    /**
+     * @return CacheItemPoolInterface
+     */
+    public function getRequestCache()
+    {
+        return $this->requestCache;
+    }
+
+    private function getImageSize($src)
+    {
+        try {
+            $cache = $this->getRequestCache();
+            if (null === $cache) {
+                return getimagesize($src);
+            }
+
+            $cachedImageSizes = $cache->getItem(md5($src));
+            if (!$cachedImageSizes->isHit()) {
+                $sizes = getimagesize($src);
+
+                $cachedImageSizes->set($sizes);
+                $cache->save($cachedImageSizes);
+            }
+
+            return $cachedImageSizes->get();
+        } catch (\Exception $e) {
+            return [null, null];
+        }
     }
 }

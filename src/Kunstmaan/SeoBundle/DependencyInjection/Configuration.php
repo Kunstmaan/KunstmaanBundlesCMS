@@ -18,11 +18,16 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_seo');
+        $root = $treeBuilder->root('kunstmaan_seo');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $root
+            ->children()
+                ->scalarNode('request_cache')
+                    ->defaultValue('cache.app')
+                    ->info('Provide a psr-6 cache service to cache all external http calls for seo images.')
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

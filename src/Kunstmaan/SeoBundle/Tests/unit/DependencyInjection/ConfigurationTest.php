@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = ['request_cache' => 'app.cache'];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
     }
