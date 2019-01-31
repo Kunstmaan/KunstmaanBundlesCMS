@@ -4,12 +4,13 @@ namespace Kunstmaan\FormBundle\Tests\Helper;
 
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Helper\FormMailer;
+use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class FormMailerTest extends \PHPUnit_Framework_TestCase
+class FormMailerTest extends TestCase
 {
     public function testSendContactMail()
     {

@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for EmailPagePart
  */
-class EmailPagePartTest extends \PHPUnit_Framework_TestCase
+class EmailPagePartTest extends TestCase
 {
     /**
      * @var EmailPagePart

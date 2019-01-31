@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for FileUploadPagePart
  */
-class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
+class FileUploadPagePartTest extends TestCase
 {
     /**
      * @var FileUploadPagePart

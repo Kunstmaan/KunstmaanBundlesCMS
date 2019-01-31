@@ -12,6 +12,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Translator;
 
 class FakeFormSubmission extends FormSubmission
@@ -25,7 +26,7 @@ class FakeFormSubmission extends FormSubmission
 /**
  * This test tests the FormPageAdminListConfigurator
  */
-class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCase
+class FormSubmissionExportListConfiguratorTest extends TestCase
 {
     /**
      * @var FormSubmissionExportListConfigurator

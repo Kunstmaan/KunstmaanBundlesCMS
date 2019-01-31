@@ -10,11 +10,12 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This test tests the FormPageAdminListConfigurator
  */
-class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
+class FormPageAdminListConfiguratorTest extends TestCase
 {
     const PERMISSION_VIEW = 'view';
 

@@ -4,11 +4,12 @@ namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for StringFormSubmissionField
  */
-class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
+class StringFormSubmissionFieldTest extends TestCase
 {
     /**
      * @var StringFormSubmissionField

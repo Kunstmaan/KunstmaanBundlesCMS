@@ -4,11 +4,12 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for SubmitButtonPagePart
  */
-class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
+class SubmitButtonPagePartTest extends TestCase
 {
     /**
      * @var SubmitButtonPagePart
