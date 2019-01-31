@@ -4,13 +4,13 @@ namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class ConfigurationTest
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
