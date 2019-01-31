@@ -17,11 +17,16 @@
         "gedmo/doctrine-extensions": "^2.4.34",
         "stof/doctrine-extensions-bundle": "~1.1",
         "liip/imagine-bundle": "^2.0",
-        "imagine/imagine": "~0.6",
+        "imagine/imagine": "~0.6",g
         "knplabs/knp-gaufrette-bundle": "~0.1",
-        "kunstmaan/admin-bundle": "~5.2",
-        "kunstmaan/adminlist-bundle": "~5.2",
-        "kunstmaan/utilities-bundle": "~5.2"
+        "kunstmaan/adminlist-bundle": "~5.2"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
     },
     "suggest": {
         "ext-imagick": "to support PDF preview images"
