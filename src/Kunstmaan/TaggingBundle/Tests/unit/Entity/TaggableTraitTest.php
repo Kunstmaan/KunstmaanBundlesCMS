@@ -5,7 +5,7 @@ namespace Kunstmaan\TaggingBundle\Tests\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TaggingBundle\Entity\Taggable;
 use Kunstmaan\TaggingBundle\Entity\TaggableTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 class Random implements Taggable
 {
@@ -32,7 +32,7 @@ class Random implements Taggable
 /**
  * Class TaggableTraitTest
  */
-class TaggableTraitTest extends PHPUnit_Framework_TestCase
+class TaggableTraitTest extends TestCase
 {
     public function testGetters()
     {

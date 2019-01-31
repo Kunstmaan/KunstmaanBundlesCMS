@@ -20,7 +20,7 @@ use Kunstmaan\TaggingBundle\Entity\Tag;
 use Kunstmaan\TaggingBundle\Entity\Taggable;
 use Kunstmaan\TaggingBundle\Entity\TaggableTrait;
 use Kunstmaan\TaggingBundle\Entity\TagManager;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 class Query extends AbstractQuery
 {
@@ -83,7 +83,7 @@ class Lazy implements LazyLoadingTaggableInterface
 /**
  * Class TagManagerTest
  */
-class TagManagerTest extends PHPUnit_Framework_TestCase
+class TagManagerTest extends TestCase
 {
     /** @var TagManager $object */
     private $object;
