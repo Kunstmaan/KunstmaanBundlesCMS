@@ -4,10 +4,11 @@ namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Kernel;
 
-class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
+class DefaultSiteGeneratorTest extends TestCase
 {
     public function testGenerator()
     {
