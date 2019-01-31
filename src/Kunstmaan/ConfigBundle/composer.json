@@ -16,6 +16,13 @@
         "php": "^7.1",
         "kunstmaan/admin-bundle": "~5.2"
     },
+    "require-dev": {
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "nelmio/alice": "^3.5",
+        "phpunit/phpunit": "^7.5"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": { "Kunstmaan\\ConfigBundle\\": "" }
