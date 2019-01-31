@@ -4,12 +4,12 @@ namespace Kunstmaan\VotingBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractVoteTest
  */
-class AbstractVoteTest extends PHPUnit_Framework_TestCase
+class AbstractVoteTest extends TestCase
 {
     public function testGetters()
     {

@@ -4,13 +4,14 @@ namespace Kunstmaan\VotingBundle\Tests\EventListener\Security;
 
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Test Max Number by Ip event listener
  */
-class MaxNumberByIpEventListenerTest extends \PHPUnit_Framework_TestCase
+class MaxNumberByIpEventListenerTest extends TestCase
 {
     /**
      * @param $returnNull

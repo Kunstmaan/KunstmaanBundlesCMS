@@ -3,14 +3,14 @@
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LinkedInShareEventTest
  */
-class LinkedInShareEventTest extends PHPUnit_Framework_TestCase
+class LinkedInShareEventTest extends TestCase
 {
     public function testGetSet()
     {
