@@ -29,11 +29,10 @@
         "kunstmaan/utilities-bundle": "~5.2"
     },
     "require-dev": {
-        "codeception/codeception": "^2.4",
-        "matthiasnoback/symfony-config-test": "2.2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
-        "phpunit/phpunit": "^5.7",
-        "symfony/phpunit-bridge": "~3.0"
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-4": {
