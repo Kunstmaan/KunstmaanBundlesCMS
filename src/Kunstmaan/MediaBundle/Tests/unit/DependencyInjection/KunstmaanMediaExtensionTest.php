@@ -3,13 +3,13 @@
 namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaBundle\DependencyInjection\KunstmaanMediaExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanMediaExtensionTest
  */
-class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
