@@ -11,7 +11,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 class Configurator extends AbstractArticlePageAdminListConfigurator
@@ -37,7 +37,7 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
 /**
  * Class AbstractArticlePageAdminListConfiguratorTest
  */
-class AbstractArticlePageAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
+class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 {
     /**
      * @var AbstractArticlePageAdminListConfigurator

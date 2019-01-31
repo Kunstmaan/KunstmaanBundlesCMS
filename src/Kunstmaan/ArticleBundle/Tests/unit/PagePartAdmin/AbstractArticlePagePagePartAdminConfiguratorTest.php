@@ -3,12 +3,12 @@
 namespace Kunstmaan\ArticleBundle\Tests\Form;
 
 use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticlePagePagePartAdminConfigurator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractArticlePagePagePartAdminConfiguratorTest
  */
-class AbstractArticlePagePagePartAdminConfiguratorTest extends PHPUnit_Framework_TestCase
+class AbstractArticlePagePagePartAdminConfiguratorTest extends TestCase
 {
     public function testGettersAndSetters()
     {
