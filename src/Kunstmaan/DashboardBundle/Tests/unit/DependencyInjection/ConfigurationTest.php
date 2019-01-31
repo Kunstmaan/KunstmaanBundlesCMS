@@ -4,12 +4,12 @@ namespace Kunstmaan\DashboardBundle\Tests\DependencyInjection;
 
 use Kunstmaan\DashboardBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigurationTest
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
