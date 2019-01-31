@@ -19,7 +19,6 @@
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "kunstmaan/adminlist-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",
-        "kunstmaan/admin-bundle": "~5.2",
         "kunstmaan/pagepart-bundle": "~5.2",
         "stof/doctrine-extensions-bundle": "~1.1"
     },
