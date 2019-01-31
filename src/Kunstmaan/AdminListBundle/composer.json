@@ -22,7 +22,11 @@
         "matthiasnoback/symfony-config-test": "2.2.0",
         "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
         "phpunit/phpunit": "^5.7",
-        "symfony/phpunit-bridge": "~3.0"
+        "symfony/phpunit-bridge": "~3.0",
+        "kunstmaan/form-bundle": "^5.2",
+        "kunstmaan/lead-generation-bundle": "^5.2",
+        "kunstmaan/menu-bundle": "^5.2",
+        "kunstmaan/translator-bundle": "^5.2"
     },
     "minimum-stability": "dev",
     "autoload": {
