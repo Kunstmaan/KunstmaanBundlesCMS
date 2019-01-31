@@ -28,6 +28,7 @@
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^3.1",
         "nelmio/alice": "^3.5",
+        "symfony/phpunit-bridge": "^4.2" ,
         "phpunit/phpunit": "^7.5"
     },
     "config": {
