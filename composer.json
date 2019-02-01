@@ -75,21 +75,14 @@
         "kunstmaan/sensio-generator-bundle": "^3.2"
     },
     "require-dev": {
-        "behat/behat": "3.1.0rc1",
-        "behat/symfony2-extension": "~2.1.1",
-        "behat/mink": "dev-master",
-        "behat/mink-browserkit-driver": "dev-master",
-        "behat/mink-selenium2-driver": "dev-master",
-        "behat/mink-goutte-driver": "dev-master",
-        "behat/mink-sahi-driver": "dev-master",
-        "symfony/phpunit-bridge": "~3.0",
-        "phpunit/phpunit": "^5.7",
         "fzaninotto/faker": "~1.6",
-        "nelmio/alice": "^2.1.4",
-        "matthiasnoback/symfony-config-test": "2.2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
         "ekino/newrelic-bundle": "^1.4",
-        "codeception/codeception": "^2.4",
+        "nelmio/alice": "^3.5",
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5",
         "friendsofphp/php-cs-fixer": "^2.13"
     },
     "replace": {
