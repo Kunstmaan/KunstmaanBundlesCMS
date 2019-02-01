@@ -3,9 +3,9 @@
 namespace Kunstmaan\MultiDomainBundle\Tests\Helper\AdminPanel;
 
 use Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class SitesAdminPanelAdaptorTest extends PHPUnit_Framework_TestCase
+class SitesAdminPanelAdaptorTest extends TestCase
 {
     /**
      * @var SitesAdminPanelAdaptor
