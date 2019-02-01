@@ -5,9 +5,9 @@ namespace Kunstmaan\MenuBundle\Tests\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\MenuBundle\Entity\BaseMenu;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class BaseMenuTest extends PHPUnit_Framework_TestCase
+class BaseMenuTest extends TestCase
 {
     public function testGetSet()
     {
