@@ -3,9 +3,10 @@
 namespace Kunstmaan\SearchBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SearchBundle\DependencyInjection\KunstmaanSearchExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanSearchExtensionTest extends \PHPUnit_Framework_TestCase
+class KunstmaanSearchExtensionTest extends TestCase
 {
     /**
      * @var KunstmaanSearchExtension
