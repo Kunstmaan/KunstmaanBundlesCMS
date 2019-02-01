@@ -2,16 +2,21 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Migrations;
 
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Kunstmaan\TranslatorBundle\Service\Migrations\MigrationsService;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
-class MigrationsServiceTest extends BaseTestCase
+class MigrationsServiceTest extends WebTestCase
 {
     private $migrationsService;
 
     public function setUp()
     {
-        parent::setUp();
-        $this->migrationsService = $this->getContainer()->get('kunstmaan_translator.service.migrations.migrations');
+        static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
+        $container = static::$kernel->getContainer();
+        static::loadFixtures($container);
+
+        /* @var MigrationsService migrationsService */
+        $this->migrationsService = $container->get('kunstmaan_translator.service.migrations.migrations');
     }
 
     /**

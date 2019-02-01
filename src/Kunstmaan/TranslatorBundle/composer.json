@@ -18,19 +18,21 @@
     ],
     "minimum-stability": "dev",
     "require": {
-      "php": "^7.1",
-      "kunstmaan/adminlist-bundle": "^5.2",
-      "box/spout": "^2.5"
+        "php": "^7.1",
+        "kunstmaan/adminlist-bundle": "^5.2",
+        "doctrine/migrations": "^1.8",
+        "box/spout": "^2.5"
     },
     "require-dev": {
-      "codeception/codeception": "^2.4",
-      "matthiasnoback/symfony-config-test": "2.2.0",
-      "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
-      "phpunit/phpunit": "^5.7",
-      "symfony/phpunit-bridge": "~3.0"
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "nelmio/alice": "^3.5",
+        "symfony/phpunit-bridge": "^4.2" ,
+        "phpunit/phpunit": "^7.5"
     },
     "config": {
-      "sort-packages": true
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {

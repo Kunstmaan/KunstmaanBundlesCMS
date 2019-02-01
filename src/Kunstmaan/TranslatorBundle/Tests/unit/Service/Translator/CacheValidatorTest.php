@@ -2,70 +2,70 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Codeception\Test\Unit;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
+use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 
-class CacheValidatorTest extends BaseTestCase
+class CacheValidatorTest extends Unit
 {
     private $cacheValidator;
 
-    private $languages;
+    private $cacheDir = __DIR__.'/../../app/cache';
 
-    private $cacheDir;
-
-    public function setUp()
+    public function _before()
     {
-        parent::setUp();
-        $this->cacheValidator = $this->getContainer()->get('kunstmaan_translator.service.translator.cache_validator');
+        $date = new \DateTimeImmutable();
+        $yesterday = $date->modify('-1 day');
 
-        $this->languages = array('nl', 'fr', 'de', 'es');
-        $this->cacheDir = sprintf('%s/translations/', $this->getContainer()->getParameter('kernel.cache_dir'));
+        $translationRepository = $this->makeEmpty(TranslationRepository::class, [
+            'getLastChangedTranslationDate' => $yesterday,
+        ]);
+
+        $this->cacheValidator = new CacheValidator();
+        $this->cacheValidator->setTranslationRepository($translationRepository);
+
+        $this->cacheDir = sprintf('%s/translations/', $this->cacheDir);
         if (!is_dir($this->cacheDir)) {
             mkdir($this->cacheDir, 0777, true);
         }
+
+        $this->cacheValidator->setCacheDir($this->cacheDir);
     }
 
-    /**
-     * @group cacher
-     */
-    public function testNoGetOldestCachefileDate()
+    public function _after()
     {
-        $data = $this->cacheValidator->getOldestCachefileDate();
-        $this->assertNull($data);
+        $this->deleteDummyCachedFile();
     }
 
     /**
      * @group cacher
      */
-    public function testGetOldestCachefileDate()
-    {
-        $this->createDummyTranslationFiles();
-        $date = $this->cacheValidator->getOldestCachefileDate();
-        $this->deleteDummyTranslationFiles();
-        $this->assertInstanceOf('\DateTime', $date);
-    }
-
-    /**
-     * @group cacher
-     */
-    public function testisCacheFresh()
+    public function testIsCacheFreshWithNoCache()
     {
         // cache is always fresh, because there is none
         $fresh = $this->cacheValidator->isCacheFresh();
         $this->assertTrue($fresh);
     }
 
-    public function createDummyTranslationFiles()
+    /**
+     * @group cacher
+     */
+    public function testIsCacheFreshWithExistingCache()
     {
-        foreach ($this->languages as $language) {
-            $command = sprintf('touch %s/catalogue.%s.php', $this->cacheDir, $language);
-            exec($command);
-        }
+        $this->createDummyCachedFile();
+        $fresh = $this->cacheValidator->isCacheFresh();
+        $this->assertTrue($fresh);
     }
 
-    public function deleteDummyTranslationFiles()
+    public function createDummyCachedFile()
     {
-        foreach ($this->languages as $language) {
-            $file = sprintf('%s/catalogue.%s.php', $this->cacheDir, $language);
+        touch(sprintf('%s/catalogue.test.php', $this->cacheDir));
+    }
+
+    public function deleteDummyCachedFile()
+    {
+        $file = sprintf('%s/catalogue.test.php', $this->cacheDir);
+        if (file_exists($file)) {
             unlink($file);
         }
     }

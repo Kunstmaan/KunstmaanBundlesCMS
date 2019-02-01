@@ -1,6 +1,5 @@
 namespace: Kunstmaan\TranslatorBundle\Tests
 settings:
-    shuffle: true
     lint: true
 paths:
     tests: Tests

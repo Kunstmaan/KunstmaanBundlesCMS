@@ -3,16 +3,19 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
-class ImportCommandHandlerTest extends BaseTestCase
+class ImportCommandHandlerTest extends WebTestCase
 {
     private $importCommandHandler;
 
     public function setUp()
     {
-        parent::setUp();
-        $this->importCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler');
+        static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
+        $container = static::$kernel->getContainer();
+        static::loadFixtures($container);
+
+        $this->importCommandHandler = $container->get('kunstmaan_translator.service.importer.command_handler');
     }
 
     /**
