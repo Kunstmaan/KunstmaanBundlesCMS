@@ -3,8 +3,9 @@
 namespace Kunstmaan\SearchBundle\Tests\DependencyInjection\Configuration;
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
+use PHPUnit\Framework\TestCase;
 
-class SearchConfigurationChainTest extends \PHPUnit_Framework_TestCase
+class SearchConfigurationChainTest extends TestCase
 {
     public function testAddAndGetConfiguration()
     {
