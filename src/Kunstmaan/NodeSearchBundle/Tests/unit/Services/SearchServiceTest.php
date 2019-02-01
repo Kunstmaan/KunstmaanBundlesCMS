@@ -6,13 +6,14 @@ use Elastica\Query;
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
 use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Kunstmaan\NodeSearchBundle\Services\SearchService;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class SearchServiceTest extends \PHPUnit_Framework_TestCase
+class SearchServiceTest extends TestCase
 {
     /**
      * @group legacy
