@@ -18,11 +18,11 @@
         "kunstmaan/adminlist-bundle": "^5.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "~3.0",
-        "phpunit/phpunit": "^5.7",
-        "codeception/codeception": "^2.4",
-        "matthiasnoback/symfony-config-test": "2.2.0",
-        "matthiasnoback/symfony-dependency-injection-test": "1.2.0"
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\UserManagementBundle\\": "" }

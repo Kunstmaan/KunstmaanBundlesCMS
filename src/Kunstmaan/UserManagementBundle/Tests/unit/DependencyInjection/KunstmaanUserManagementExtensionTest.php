@@ -3,13 +3,13 @@
 namespace Kunstmaan\UserManagementBundle\Tests\DependencyInjection;
 
 use Kunstmaan\UserManagementBundle\DependencyInjection\KunstmaanUserManagementExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanUserManagementExtensionTest
  */
-class KunstmaanUserManagementExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanUserManagementExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
