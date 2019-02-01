@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for MultiLineTextPagePart
  */
-class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
+class MultiLineTextPagePartTest extends TestCase
 {
     /**
      * @var MultiLineTextPagePart

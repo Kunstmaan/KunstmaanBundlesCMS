@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for ChoicePagePart
  */
-class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
+class ChoicePagePartTest extends TestCase
 {
     /**
      * @var ChoicePagePart

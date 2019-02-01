@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for ChoicePagePart
  */
-class CheckboxPagePartTest extends \PHPUnit_Framework_TestCase
+class CheckboxPagePartTest extends TestCase
 {
     /**
      * @var CheckboxPagePart

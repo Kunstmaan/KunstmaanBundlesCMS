@@ -12,11 +12,12 @@ use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This test tests the FormPageAdminListConfigurator
  */
-class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
+class FormSubmissionAdminListConfiguratorTest extends TestCase
 {
     /**
      * @var FormSubmissionAdminListConfigurator

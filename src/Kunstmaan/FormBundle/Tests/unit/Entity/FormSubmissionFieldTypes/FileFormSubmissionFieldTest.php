@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Tests for FileFormSubmissionField
  */
-class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
+class FileFormSubmissionFieldTest extends TestCase
 {
     /**
      * @var FileFormSubmissionField

@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for SingleLineTextPagePart
  */
-class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
+class SingleLineTextPagePartTest extends TestCase
 {
     /**
      * @var SingleLineTextPagePart

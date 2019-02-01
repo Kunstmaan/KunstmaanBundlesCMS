@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\FormBundle\Tests\DependencyInjection;
 
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 /**
  * Class KunstmaanFormExtensionTest
  */
-class KunstmaanFormExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
