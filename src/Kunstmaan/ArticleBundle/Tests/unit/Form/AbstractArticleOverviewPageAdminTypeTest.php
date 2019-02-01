@@ -4,14 +4,14 @@ namespace Kunstmaan\ArticleBundle\Tests\Form;
 
 use Kunstmaan\ArticleBundle\Form\AbstractArticleOverviewPageAdminType;
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class AbstractArticleOverviewPageAdminTypeTest
  */
-class AbstractArticleOverviewPageAdminTypeTest extends PHPUnit_Framework_TestCase
+class AbstractArticleOverviewPageAdminTypeTest extends TestCase
 {
     /**
      * @var AbstractArticlePageAdminType
