@@ -12,12 +12,12 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class CloneListenerTest
  */
-class CloneListenerTest extends PHPUnit_Framework_TestCase
+class CloneListenerTest extends TestCase
 {
     /**
      * @var \Doctrine\ORM\EntityManager|\PHPUnit_Framework_MockObject_MockObject

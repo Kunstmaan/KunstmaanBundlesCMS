@@ -3,12 +3,12 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ToTopPagePartTest
  */
-class ToTopPagePartTest extends PHPUnit_Framework_TestCase
+class ToTopPagePartTest extends TestCase
 {
     /**
      * @var ToTopPagePart

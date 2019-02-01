@@ -3,12 +3,12 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RawHTMLPagePartTest
  */
-class RawHTMLPagePartTest extends PHPUnit_Framework_TestCase
+class RawHTMLPagePartTest extends TestCase
 {
     /**
      * @var RawHTMLPagePart

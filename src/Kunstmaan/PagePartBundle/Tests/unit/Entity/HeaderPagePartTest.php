@@ -3,14 +3,14 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Class HeaderPagePartTest
  */
-class HeaderPagePartTest extends PHPUnit_Framework_TestCase
+class HeaderPagePartTest extends TestCase
 {
     /**
      * @var HeaderPagePart
