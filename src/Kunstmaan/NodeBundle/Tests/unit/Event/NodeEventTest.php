@@ -8,13 +8,13 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class NodeEventTest
  */
-class NodeEventTest extends PHPUnit_Framework_TestCase
+class NodeEventTest extends TestCase
 {
     public function testGetSet()
     {

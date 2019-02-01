@@ -8,12 +8,12 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigureActionMenuEventTest
  */
-class CopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
+class CopyPageTranslationNodeEventTest extends TestCase
 {
     public function testGetSet()
     {

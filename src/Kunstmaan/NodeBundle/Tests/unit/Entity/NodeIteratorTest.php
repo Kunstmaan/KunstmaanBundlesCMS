@@ -5,12 +5,12 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeIterator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class NodeIteratorTest
  */
-class NodeIteratorTest extends PHPUnit_Framework_TestCase
+class NodeIteratorTest extends TestCase
 {
     public function testNodeIterator()
     {

@@ -27,6 +27,7 @@ use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\NodeBundle\ValueObject\PageTab;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -87,7 +88,7 @@ class TestType extends AbstractType
     }
 }
 
-class NodeHelperTest extends \PHPUnit_Framework_TestCase
+class NodeHelperTest extends TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|EntityManagerInterface $em */
     private $em;

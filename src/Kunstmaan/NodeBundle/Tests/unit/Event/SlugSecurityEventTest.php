@@ -7,13 +7,13 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SlugSecurityEventTest
  */
-class SlugSecurityEventTest extends PHPUnit_Framework_TestCase
+class SlugSecurityEventTest extends TestCase
 {
     public function testGetSet()
     {

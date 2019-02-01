@@ -5,12 +5,12 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use DateTime;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersionLock;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class NodeVersionLockTest
  */
-class NodeVersionLockTest extends PHPUnit_Framework_TestCase
+class NodeVersionLockTest extends TestCase
 {
     public function testGetSet()
     {

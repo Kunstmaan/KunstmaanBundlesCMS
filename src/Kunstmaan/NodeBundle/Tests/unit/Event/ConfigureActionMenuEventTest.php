@@ -6,12 +6,12 @@ use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigureActionMenuEventTest
  */
-class ConfigureActionMenuEventTest extends PHPUnit_Framework_TestCase
+class ConfigureActionMenuEventTest extends TestCase
 {
     public function testGetSet()
     {

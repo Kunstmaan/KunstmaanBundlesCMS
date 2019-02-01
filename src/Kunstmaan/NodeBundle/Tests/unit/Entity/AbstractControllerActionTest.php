@@ -6,7 +6,7 @@ use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractControllerAction;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 class Action extends AbstractControllerAction
 {
@@ -21,7 +21,7 @@ class Action extends AbstractControllerAction
     }
 }
 
-class AbstractControllerActionTest extends PHPUnit_Framework_TestCase
+class AbstractControllerActionTest extends TestCase
 {
     public function testGetSet()
     {

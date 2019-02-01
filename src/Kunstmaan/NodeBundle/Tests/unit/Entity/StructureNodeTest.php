@@ -8,7 +8,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,7 +31,7 @@ class TestNode extends AbstractPage
 /**
  * Class StructureNodeTest
  */
-class StructureNodeTest extends PHPUnit_Framework_TestCase
+class StructureNodeTest extends TestCase
 {
     public function testIsStructureNode()
     {
