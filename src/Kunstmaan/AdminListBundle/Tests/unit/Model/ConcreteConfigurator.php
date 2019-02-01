@@ -6,6 +6,9 @@ use ArrayIterator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * Class ConcreteConfigurator
+ */
 class ConcreteConfigurator extends AbstractAdminListConfigurator
 {
     /**
