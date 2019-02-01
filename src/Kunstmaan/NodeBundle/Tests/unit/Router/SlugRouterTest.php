@@ -58,7 +58,7 @@ class SlugRouterTest extends TestCase
 
     public function testMatchWithoutNodeTranslation()
     {
-        $this->setExpectedException(ResourceNotFoundException::class);
+        $this->expectException(ResourceNotFoundException::class);
         $request = $this->getRequest();
         $container = $this->getContainer($request);
         $object = new SlugRouter($container);
