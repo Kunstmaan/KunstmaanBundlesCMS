@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\FormBundle;
 
+use Kunstmaan\FormBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -9,4 +11,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class KunstmaanFormBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new DeprecateClassParametersPass());
+    }
 }
