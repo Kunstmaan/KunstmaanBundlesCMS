@@ -6,9 +6,9 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Model\UserManager;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\PasswordResettingListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PasswordResettingListenerTest extends PHPUnit_Framework_TestCase
+class PasswordResettingListenerTest extends TestCase
 {
     public function testListener()
     {

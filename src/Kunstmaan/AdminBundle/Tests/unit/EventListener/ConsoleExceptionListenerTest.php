@@ -5,12 +5,12 @@ namespace Kunstmaan\AdminBundle\Tests\EventListener;
 use Exception;
 use Kunstmaan\AdminBundle\Command\ApplyAclCommand;
 use Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 use Symfony\Component\HttpKernel\Kernel;
 
-class ConsoleExceptionListenerTest extends PHPUnit_Framework_TestCase
+class ConsoleExceptionListenerTest extends TestCase
 {
     /**
      * @group legacy

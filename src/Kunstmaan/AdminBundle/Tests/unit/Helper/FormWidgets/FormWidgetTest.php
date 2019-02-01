@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Form\ColorType;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Tests\unit\Helper\FormWidgets\FakeView;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class FormWidgetTest
  */
-class FormWidgetTest extends PHPUnit_Framework_TestCase
+class FormWidgetTest extends TestCase
 {
     public function testWidget()
     {

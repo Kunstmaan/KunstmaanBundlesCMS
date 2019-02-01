@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormView;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class TabTest
  */
-class TabTest extends PHPUnit_Framework_TestCase
+class TabTest extends TestCase
 {
     /**
      * @throws \ReflectionException

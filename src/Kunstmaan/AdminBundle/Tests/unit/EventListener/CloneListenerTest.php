@@ -6,9 +6,9 @@ use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\EventListener\CloneListener;
 use Kunstmaan\MediaBundle\Entity\Media;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class CloneListenerTest extends PHPUnit_Framework_TestCase
+class CloneListenerTest extends TestCase
 {
     public function testListener()
     {

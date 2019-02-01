@@ -3,12 +3,12 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\MediaTokenTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class MediaTokenTransformerTest
  */
-class MediaTokenTransformerTest extends PHPUnit_Framework_TestCase
+class MediaTokenTransformerTest extends TestCase
 {
     public function testMethods()
     {

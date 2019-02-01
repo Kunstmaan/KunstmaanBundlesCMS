@@ -13,6 +13,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class PermissionAdminTest extends \PHPUnit_Framework_TestCase
+class PermissionAdminTest extends TestCase
 {
     /**
      * @var PermissionAdmin

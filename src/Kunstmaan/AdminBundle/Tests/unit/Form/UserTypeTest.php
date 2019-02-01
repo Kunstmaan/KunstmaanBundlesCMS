@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\UserType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class UserTypeTest
  */
-class UserTypeTest extends PHPUnit_Framework_TestCase
+class UserTypeTest extends TestCase
 {
     public function testMethods()
     {

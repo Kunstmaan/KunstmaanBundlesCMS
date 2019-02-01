@@ -3,11 +3,11 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class DomainConfigurationTest extends PHPUnit_Framework_TestCase
+class DomainConfigurationTest extends TestCase
 {
     /**
      * @var DomainConfiguration

@@ -4,11 +4,11 @@ namespace Kunstmaan\AdminBundle\Tests;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Kunstmaan\AdminBundle\KunstmaanAdminBundle;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanAdminBundleTest extends PHPUnit_Framework_TestCase
+class KunstmaanAdminBundleTest extends TestCase
 {
     public function testBundle()
     {

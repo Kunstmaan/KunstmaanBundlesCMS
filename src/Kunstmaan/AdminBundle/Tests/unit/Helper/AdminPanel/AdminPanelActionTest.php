@@ -3,12 +3,12 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper\AdminPanel;
 
 use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelAction;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AdminPanelActionTest
  */
-class AdminPanelActionTest extends PHPUnit_Framework_TestCase
+class AdminPanelActionTest extends TestCase
 {
     public function testGetSetRole()
     {

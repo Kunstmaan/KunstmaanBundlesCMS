@@ -3,13 +3,13 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class DashboardConfigurationTypeTest
  */
-class DashboardConfigurationTypeTest extends PHPUnit_Framework_TestCase
+class DashboardConfigurationTypeTest extends TestCase
 {
     public function testMethods()
     {

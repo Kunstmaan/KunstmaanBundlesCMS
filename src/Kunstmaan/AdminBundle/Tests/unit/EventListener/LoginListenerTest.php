@@ -5,12 +5,12 @@ namespace Kunstmaan\AdminBundle\Tests\EventListener;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\LoginListener;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
-class LoginListenerTest extends PHPUnit_Framework_TestCase
+class LoginListenerTest extends TestCase
 {
     public function testListener()
     {

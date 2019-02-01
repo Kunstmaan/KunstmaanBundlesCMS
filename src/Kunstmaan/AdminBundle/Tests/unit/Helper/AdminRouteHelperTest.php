@@ -3,11 +3,12 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class AdminRouteHelperTest extends \PHPUnit_Framework_TestCase
+class AdminRouteHelperTest extends TestCase
 {
     protected static $ADMIN_KEY = 'admin';
 

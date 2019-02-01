@@ -4,11 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PermissionMapTest
  */
-class PermissionMapTest extends \PHPUnit_Framework_TestCase
+class PermissionMapTest extends TestCase
 {
     public function testGetMasksReturnsNullWhenNotSupportedMask()
     {
