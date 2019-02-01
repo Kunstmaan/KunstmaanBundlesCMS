@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerP
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AdminPanelCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\ConsoleCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
@@ -30,6 +31,8 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new DataCollectorPass());
         $container->addCompilerPass(new DomainConfigurationPass());
         $container->addCompilerPass(new ConsoleCompilerPass());
+
+        $container->addCompilerPass(new DeprecateClassParametersPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
     }
