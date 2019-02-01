@@ -34,7 +34,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(true)));
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true));
         $listener->onPostPersist($nodeEvent);
     }
 
@@ -66,7 +66,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)));
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false));
         $listener->onPostPersist($nodeEvent);
     }
 
@@ -90,7 +90,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)));
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false));
         $listener->onPostPersist($nodeEvent);
     }
 
@@ -114,8 +114,17 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(true)));
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true));
         $listener->onPostPersist($nodeEvent);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing the container as the first argument of "Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener" is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Inject the "kunstmaan_node_search.search_configuration.node" service instead.
+     */
+    public function testContainerDeprecation()
+    {
+        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)));
     }
 
     private function getContainer($searchConfigMock)
