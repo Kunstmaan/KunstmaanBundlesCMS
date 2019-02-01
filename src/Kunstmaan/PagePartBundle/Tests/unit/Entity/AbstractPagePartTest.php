@@ -3,7 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 class PagePart extends AbstractPagePart
 {
@@ -19,7 +19,7 @@ class PagePart extends AbstractPagePart
 /**
  * Class AbstractPagePartTest
  */
-class AbstractPagePartTest extends PHPUnit_Framework_TestCase
+class AbstractPagePartTest extends TestCase
 {
     public function testGetViews()
     {

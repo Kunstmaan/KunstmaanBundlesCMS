@@ -3,12 +3,12 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class LinkPagePartTest
  */
-class LinkPagePartTest extends PHPUnit_Framework_TestCase
+class LinkPagePartTest extends TestCase
 {
     /**
      * @var LinkPagePart

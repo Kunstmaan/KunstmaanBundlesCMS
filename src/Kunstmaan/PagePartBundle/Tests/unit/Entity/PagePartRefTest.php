@@ -6,12 +6,12 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PagePartRefTest
  */
-class PagePartRefTest extends PHPUnit_Framework_TestCase
+class PagePartRefTest extends TestCase
 {
     public function testGetSet()
     {

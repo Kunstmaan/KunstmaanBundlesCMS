@@ -8,12 +8,12 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class LinkPagePartTest
  */
-class PageTemplateConfigurationTest extends PHPUnit_Framework_TestCase
+class PageTemplateConfigurationTest extends TestCase
 {
     public function testGetSet()
     {
