@@ -4,12 +4,12 @@ namespace Kunstmaan\SeoBundle\Tests\Entity;
 
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class TwigExtensionTests
  */
-class TwigExtensionTests extends PHPUnit_Framework_TestCase
+class TwigExtensionTests extends TestCase
 {
     protected $emMock;
 
