@@ -3,13 +3,13 @@
 namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
 use Kunstmaan\RedirectBundle\DependencyInjection\KunstmaanRedirectExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanRedirectExtensionTest
  */
-class KunstmaanRedirectExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanRedirectExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
