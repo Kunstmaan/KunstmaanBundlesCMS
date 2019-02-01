@@ -8,12 +8,12 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RecopyPageTranslationNodeEventTest
  */
-class RecopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
+class RecopyPageTranslationNodeEventTest extends TestCase
 {
     public function testGetSet()
     {
