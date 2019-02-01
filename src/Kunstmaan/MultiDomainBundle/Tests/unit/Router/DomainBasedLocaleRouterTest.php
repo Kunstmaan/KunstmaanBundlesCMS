@@ -4,14 +4,14 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Router;
 
 use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
+class DomainBasedLocaleRouterTest extends TestCase
 {
     public function testGenerate()
     {

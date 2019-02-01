@@ -3,11 +3,11 @@
 namespace Kunstmaan\MultiDomainBundle\Tests\EventListener;
 
 use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
+class HostOverrideListenerTest extends TestCase
 {
     /**
      * @var HostOverrideListener

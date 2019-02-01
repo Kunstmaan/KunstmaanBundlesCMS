@@ -4,13 +4,13 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
-class HostOverrideCleanupHandlerTest extends PHPUnit_Framework_TestCase
+class HostOverrideCleanupHandlerTest extends TestCase
 {
     /**
      * @var HostOverrideCleanupHandler

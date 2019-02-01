@@ -4,13 +4,13 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
-class DomainConfigurationTest extends PHPUnit_Framework_TestCase
+class DomainConfigurationTest extends TestCase
 {
     /**
      * @var Node
