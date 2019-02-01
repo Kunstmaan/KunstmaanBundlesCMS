@@ -3,14 +3,14 @@
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UpVoteEventTest
  */
-class UpVoteEventTest extends PHPUnit_Framework_TestCase
+class UpVoteEventTest extends TestCase
 {
     public function testGetSet()
     {

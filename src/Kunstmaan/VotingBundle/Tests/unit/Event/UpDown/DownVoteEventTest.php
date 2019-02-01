@@ -3,14 +3,14 @@
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DownVoteEventTest
  */
-class DownVoteEventTest extends PHPUnit_Framework_TestCase
+class DownVoteEventTest extends TestCase
 {
     public function testGetSet()
     {

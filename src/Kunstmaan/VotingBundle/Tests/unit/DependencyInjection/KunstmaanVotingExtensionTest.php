@@ -3,9 +3,10 @@
 namespace Kunstmaan\VotingBundle\Tests\DependencyInjection;
 
 use Kunstmaan\VotingBundle\DependencyInjection\KunstmaanVotingExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
+class KunstmaanVotingExtensionTest extends TestCase
 {
     /**
      * @var KunstmaanVotingExtension

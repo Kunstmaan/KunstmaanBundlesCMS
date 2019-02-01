@@ -3,12 +3,12 @@
 namespace Kunstmaan\VotingBundle\Tests\Services;
 
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Unit test for repository resolver
  */
-class RepositoryResolverTest extends PHPUnit_Framework_TestCase
+class RepositoryResolverTest extends TestCase
 {
     /**
      * @dataProvider dataRepositoryEvent
