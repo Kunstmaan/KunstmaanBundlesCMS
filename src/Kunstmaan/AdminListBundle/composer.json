@@ -17,6 +17,17 @@
         "kunstmaan/admin-bundle": "~5.2",
         "box/spout": "^2.5"
     },
+    "require-dev": {
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "phpunit/phpunit": "^7.5",
+        "symfony/phpunit-bridge": "^4.2",
+        "kunstmaan/form-bundle": "^5.2",
+        "kunstmaan/lead-generation-bundle": "^5.2",
+        "kunstmaan/menu-bundle": "^5.2",
+        "kunstmaan/translator-bundle": "^5.2"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": { "Kunstmaan\\AdminListBundle\\": "" }

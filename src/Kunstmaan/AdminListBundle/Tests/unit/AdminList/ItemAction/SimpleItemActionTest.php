@@ -3,12 +3,13 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\ItemAction;
 
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * Class SimpleItemActionTest
  */
-class SimpleItemActionTest extends \PHPUnit_Framework_TestCase
+class SimpleItemActionTest extends TestCase
 {
     public function test__construct()
     {

@@ -6,12 +6,12 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Statement;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
 use LogicException;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AdminListTest
  */
-class DoctrineDBALAdapterTest extends PHPUnit_Framework_TestCase
+class DoctrineDBALAdapterTest extends TestCase
 {
     /**
      * @var DoctrineDBALAdapter
