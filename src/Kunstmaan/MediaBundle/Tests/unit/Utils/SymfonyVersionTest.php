@@ -3,12 +3,13 @@
 namespace Kunstmaan\MediaBundle\Tests\Utils;
 
 use Kunstmaan\MediaBundle\Utils\SymfonyVersion;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @covers \Kunstmaan\MediaBundle\Utils\SymfonyVersion
  */
-class SymfonyVersionTest extends \PHPUnit_Framework_TestCase
+class SymfonyVersionTest extends TestCase
 {
     public function testGetRootWebPath()
     {

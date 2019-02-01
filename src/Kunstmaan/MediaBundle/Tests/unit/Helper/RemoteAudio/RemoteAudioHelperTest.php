@@ -5,8 +5,9 @@ namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteAudio;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
 use Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHelper;
+use PHPUnit\Framework\TestCase;
 
-class RemoteAudioHelperTest extends \PHPUnit_Framework_TestCase
+class RemoteAudioHelperTest extends TestCase
 {
     /**
      * @var Media

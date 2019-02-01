@@ -3,8 +3,9 @@
 namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
+use PHPUnit\Framework\TestCase;
 
-class RemoteVideoHandlerTest extends \PHPUnit_Framework_TestCase
+class RemoteVideoHandlerTest extends TestCase
 {
     /**
      * @param $url
