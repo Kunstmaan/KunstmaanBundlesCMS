@@ -4,12 +4,12 @@ namespace Kunstmaan\RedirectBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RedirectAdminTypeTest
  */
-class RedirectAdminTypeTest extends PHPUnit_Framework_TestCase
+class RedirectAdminTypeTest extends TestCase
 {
     /**
      * @var RedirectAdminType

@@ -5,14 +5,13 @@ namespace Kunstmaan\RedirectBundle\Tests\Router;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Router\RedirectRouter;
-use PHPUnit_Framework_TestCase;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RequestContext;
 
 /**
  * Class RedirectRouterTest
  */
-class RedirectRouterTest extends PHPUnit_Framework_TestCase
+class RedirectRouterTest extends TestCase
 {
     /**
      * @var RedirectRouter
@@ -113,12 +112,17 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, $collection->count());
     }
 
+    /**
+     * @expectedException \Symfony\Component\Routing\Exception\RouteNotFoundException
+     */
     public function testGenerate()
     {
-        $this->setExpectedException(RouteNotFoundException::class);
         $this->firstObject->generate('test');
     }
 
+    /**
+     * @expectedException \Symfony\Component\Routing\Exception\ResourceNotFoundException
+     */
     public function testMatch()
     {
         $redirect = $this->firstObject->match('/test1');
@@ -154,10 +158,8 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
             $redirect
         );
 
-        $this->setExpectedException('Symfony\Component\Routing\Exception\ResourceNotFoundException');
         $this->firstObject->match('/testnotfound');
 
-        $this->setExpectedException('Symfony\Component\Routing\Exception\ResourceNotFoundException');
         $this->firstObject->match('/test4');
 
         $redirect = $this->secondObject->match('/test4');

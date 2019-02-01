@@ -6,12 +6,12 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RedirectAdminListConfiguratorTest
  */
-class RedirectAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
+class RedirectAdminListConfiguratorTest extends TestCase
 {
     /**
      * @var EntityManager
