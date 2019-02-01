@@ -8,8 +8,9 @@ use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
 use Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener;
+use PHPUnit\Framework\TestCase;
 
-class NodeIndexUpdateEventListenerTest extends \PHPUnit_Framework_TestCase
+class NodeIndexUpdateEventListenerTest extends TestCase
 {
     public function testUpdateOfChildPageWithStructuredNodeParent()
     {

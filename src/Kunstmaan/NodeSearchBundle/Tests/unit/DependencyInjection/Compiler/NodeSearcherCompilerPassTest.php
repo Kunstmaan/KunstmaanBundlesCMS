@@ -3,10 +3,11 @@
 namespace Kunstmaan\NodeSearchBundle\Tests\unit\DependencyInjection\Compiler;
 
 use Kunstmaan\NodeSearchBundle\DependencyInjection\Compiler\NodeSearcherCompilerPass;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class NodeSearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
+class NodeSearcherCompilerPassTest extends TestCase
 {
     public function testTaggerSearchers()
     {

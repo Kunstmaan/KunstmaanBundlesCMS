@@ -5,12 +5,12 @@ namespace Kunstmaan\NodeBundle\Tests\Event;
 use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class IndexNodeEventTest
  */
-class IndexNodeEventTest extends PHPUnit_Framework_TestCase
+class IndexNodeEventTest extends TestCase
 {
     public function testGetSet()
     {

@@ -3,12 +3,12 @@
 namespace Kunstmaan\NodeSearchBundle\Tests\Entity;
 
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractSearchPageTest
  */
-class AbstractSearchPageTest extends PHPUnit_Framework_TestCase
+class AbstractSearchPageTest extends TestCase
 {
     public function testGetters()
     {
