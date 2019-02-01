@@ -3,11 +3,12 @@
 namespace Tests\Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
 use Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher;
+use PHPUnit\Framework\TestCase;
 
 /**
  * CipherTest
  */
-class CipherTest extends \PHPUnit_Framework_TestCase
+class CipherTest extends TestCase
 {
     const SECRET = 'secret';
     const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';

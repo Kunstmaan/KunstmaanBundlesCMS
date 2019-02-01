@@ -3,11 +3,12 @@
 namespace Tests\Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use PHPUnit\Framework\TestCase;
 
 /**
  * SlugifierTest
  */
-class SlugifierTest extends \PHPUnit_Framework_TestCase
+class SlugifierTest extends TestCase
 {
     /**
      * @var Slugifier

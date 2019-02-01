@@ -3,12 +3,13 @@
 namespace Tests\Kunstmaan\UtilitiesBundle\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\UrlTransactionNamingStrategy;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UrlTransactionNamingStrategyTest
  */
-class UrlTransactionNamingStrategyTest extends \PHPUnit_Framework_TestCase
+class UrlTransactionNamingStrategyTest extends TestCase
 {
     public function testGetTransactionName()
     {

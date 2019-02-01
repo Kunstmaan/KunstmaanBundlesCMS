@@ -31,6 +31,14 @@
         "behat/transliterator": "~1.2",
         "twig/twig": "^1.36|^2.6"
     },
+    "require-dev": {
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5",
+        "ekino/newrelic-bundle": "^1.4"
+    },
     "suggest": {
         "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
     },
