@@ -19,15 +19,21 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('kunstmaan_page_part');
-        $root->children()
+        $treeBuilder = new TreeBuilder('kunstmaan_page_part');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_page_part');
+        }
+
+        $rootNode->children()
             ->booleanNode('extended_pagepart_chooser')
                 ->defaultFalse()
             ->end();
 
         /** @var ArrayNodeDefinition $pageparts */
-        $pageparts = $root->children()->arrayNode('pageparts')->useAttributeAsKey('index')->prototype('array');
+        $pageparts = $rootNode->children()->arrayNode('pageparts')->useAttributeAsKey('index')->prototype('array');
         $pageparts->children()->scalarNode('name')->isRequired();
         $pageparts->children()->scalarNode('context')->isRequired();
         $pageparts->children()->scalarNode('extends');
@@ -43,7 +49,7 @@ class Configuration implements ConfigurationInterface
         // *************************************************************************************************************
 
         /** @var ArrayNodeDefinition $pagetemplates */
-        $pagetemplates = $root->children()->arrayNode('pagetemplates')->useAttributeAsKey('index')->defaultValue([])->prototype('array');
+        $pagetemplates = $rootNode->children()->arrayNode('pagetemplates')->useAttributeAsKey('index')->defaultValue([])->prototype('array');
 
         $pagetemplates->children()->scalarNode('template')->isRequired();
         $pagetemplates->children()->scalarNode('name')->isRequired();
