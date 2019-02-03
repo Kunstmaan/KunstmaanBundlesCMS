@@ -10,6 +10,15 @@ use PHPUnit_Framework_TestCase;
  */
 class AbstractAuthorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @group legacy
+     * @expectedDeprecation Instantiating the "Kunstmaan\ArticleBundle\Entity\AbstractAuthor" class is deprecated in KunstmaanArticleBundle 5.1 and will be made abstract in KunstmaanArticleBundle 6.0. Extend your implementation from this class instead.
+     */
+    public function testInstantiatingClassDeprecation()
+    {
+        new AbstractAuthor();
+    }
+
     public function testGettersAndSetters()
     {
         $entity = new AbstractAuthor();
