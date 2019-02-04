@@ -23,9 +23,9 @@ class DomainConfigurationTest extends TestCase
     public function setUp()
     {
         $map = array(
-            array('multilanguage', true),
-            array('defaultlocale', 'nl'),
-            array('requiredlocales', 'nl|fr|en'),
+            array('kunstmaan_admin.multi_language', true),
+            array('kunstmaan_admin.default_locale', 'nl'),
+            array('kunstmaan_admin.required_locales', 'nl|fr|en'),
         );
 
         $this->object = new DomainConfiguration($this->getContainer($map));

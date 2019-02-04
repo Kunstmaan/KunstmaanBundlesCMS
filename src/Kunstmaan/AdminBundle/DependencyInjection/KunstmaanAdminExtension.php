@@ -82,14 +82,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
 
-        $websiteTitle = $container->hasParameter('websitetitle') ? $container->getParameter('websitetitle') : '';
-        if (null === $config['website_title']) {
-            @trigger_error('Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
-        } else {
-            $websiteTitle = $config['website_title'];
-        }
-
-        $container->setParameter('kunstmaan_admin.website_title', $websiteTitle);
+        $this->addWebsiteTitleParameter($container, $config);
+        $this->addMultiLanguageParameter($container, $config);
+        $this->addRequiredLocalesParameter($container, $config);
+        $this->addDefaultLocaleParameter($container, $config);
     }
 
     public function prepend(ContainerBuilder $container)
@@ -171,5 +167,54 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $urlSlice = preg_quote($urlSlice);
 
         return $urlSlice;
+    }
+
+    private function addWebsiteTitleParameter(ContainerBuilder $container, array $config)
+    {
+        $websiteTitle = $config['website_title'];
+        if (null === $config['website_title']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $websiteTitle = $container->hasParameter('websitetitle') ? $container->getParameter('websitetitle') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.website_title', $websiteTitle);
+    }
+
+    private function addMultiLanguageParameter(ContainerBuilder $container, array $config)
+    {
+        $multilanguage = $config['multi_language'];
+        if (null === $multilanguage) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.multi_language" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $multilanguage = $container->hasParameter('multilanguage') ? $container->getParameter('multilanguage') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.multi_language', $multilanguage);
+    }
+
+    private function addRequiredLocalesParameter(ContainerBuilder $container, array $config)
+    {
+        $requiredLocales = $config['required_locales'];
+        if (null === $config['required_locales']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.required_locales" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $requiredLocales = $container->hasParameter('requiredlocales') ? $container->getParameter('requiredlocales') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.required_locales', $requiredLocales);
+        $container->setParameter('requiredlocales', $requiredLocales); //Keep old parameter for to keep BC with routing config
+    }
+
+    private function addDefaultLocaleParameter(ContainerBuilder $container, array $config)
+    {
+        $defaultLocale = $config['default_locale'];
+        if (null === $config['default_locale']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.default_locale" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $defaultLocale = $container->hasParameter('defaultlocale') ? $container->getParameter('defaultlocale') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.default_locale', $defaultLocale);
     }
 }

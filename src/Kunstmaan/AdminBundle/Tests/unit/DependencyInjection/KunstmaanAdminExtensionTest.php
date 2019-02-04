@@ -62,15 +62,87 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', 'My real website');
     }
 
+    public function testMultiLanguageWithParameterSet()
+    {
+        $this->setParameter('multilanguage', true);
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', true);
+    }
+
+    public function testMultiLanguageWithParameterAndConfigSet()
+    {
+        $this->setParameter('multilanguage', false);
+
+        $this->load(['multi_language' => true]);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', true);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testMultiLanguageScalarParameter()
+    {
+        $this->setParameter('multilanguage', true);
+
+        $this->load(['multi_language' => 'randomvalue']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', true);
+    }
+
+    public function testRequiredLocalesWithParameterSet()
+    {
+        $this->setParameter('requiredlocales', 'nl|en');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.required_locales', 'nl|en');
+    }
+
+    public function testRequiredLocalesWithParameterAndConfigSet()
+    {
+        $this->setParameter('requiredlocales', 'nl|en');
+
+        $this->load(['required_locales' => 'nl|en|fr']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.required_locales', 'nl|en|fr');
+    }
+
+    public function testDefaultLocaleWithParameterSet()
+    {
+        $this->setParameter('defaultlocale', 'en');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', 'en');
+    }
+
+    public function testDefaultLocaleWithParameterAndConfigSet()
+    {
+        $this->setParameter('defaultlocale', 'en');
+
+        $this->load(['default_locale' => 'nl']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', 'nl');
+    }
+
     /**
      * @group legacy
      * @expectedDeprecation Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.multi_language" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.required_locales" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.default_locale" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
      */
-    public function testLegacyParameterSecretParameter()
+    public function testLegacyParameters()
     {
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', '');
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', '');
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.required_locales', '');
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', '');
     }
 
     protected function setUp()

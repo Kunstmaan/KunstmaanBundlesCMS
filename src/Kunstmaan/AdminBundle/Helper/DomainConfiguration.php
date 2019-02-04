@@ -36,16 +36,9 @@ class DomainConfiguration implements DomainConfigurationInterface
             @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
 
             $this->container = $requestStack;
-            $this->multiLanguage = $this->container->getParameter(
-                'multilanguage'
-            );
-            $this->defaultLocale = $this->container->getParameter(
-                'defaultlocale'
-            );
-            $this->requiredLocales = explode(
-                '|',
-                $this->container->getParameter('requiredlocales')
-            );
+            $this->multiLanguage = $this->container->getParameter('kunstmaan_admin.multi_language');
+            $this->defaultLocale = $this->container->getParameter('kunstmaan_admin.default_locale');
+            $this->requiredLocales = explode('|', $this->container->getParameter('kunstmaan_admin.required_locales'));
             $this->requestStack = $this->container->get('request_stack');
 
             return;

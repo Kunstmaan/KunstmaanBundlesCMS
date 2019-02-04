@@ -422,9 +422,9 @@ class DomainConfigurationTest extends TestCase
         );
 
         $map = array(
-            array('multilanguage', false),
-            array('defaultlocale', 'en'),
-            array('requiredlocales', 'en'),
+            array('kunstmaan_admin.multi_language', false),
+            array('kunstmaan_admin.default_locale', 'en'),
+            array('kunstmaan_admin.required_locales', 'en'),
             array('kunstmaan_multi_domain.hosts', $hostMap),
         );
 

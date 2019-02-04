@@ -65,8 +65,8 @@ class KunstmaanTranslatorExtension extends Extension
 
         $translator->addMethodCall('setFallbackLocales', [['en']]);
 
-        if ($container->hasParameter('defaultlocale')) {
-            $translator->addMethodCall('setFallbackLocales', [[$container->getParameter('defaultlocale')]]);
+        if ($container->hasParameter('kunstmaan_admin.default_locale')) {
+            $translator->addMethodCall('setFallbackLocales', [[$container->getParameter('kunstmaan_admin.default_locale')]]);
         }
     }
 
