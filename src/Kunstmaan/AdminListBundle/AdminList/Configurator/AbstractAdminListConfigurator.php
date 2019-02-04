@@ -227,6 +227,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         );
     }
 
+    /**
+     * Get the view url for the given $item
+     *
+     * @param object|array $item
+     *
+     * @return array
+     */
     public function getViewUrlFor($item)
     {
         if (is_object($item)) {
@@ -234,13 +241,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         } else {
             $id = $item['id'];
         }
-        $params = array('id' => $id);
+        $params = ['id' => $id];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => $this->getPathByConvention($this::SUFFIX_VIEW),
             'params' => $params,
-        );
+        ];
     }
 
     /**
