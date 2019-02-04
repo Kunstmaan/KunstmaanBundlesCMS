@@ -32,6 +32,8 @@ class KunstmaanSearchExtension extends Extension
         $loader->load('services.yml');
 
         $this->loadConnectionParameters($container, $config);
+
+        $this->addSearchIndexPrefixParameter($container, $config);
     }
 
     public function getDefaultAnalyzerLanguages()
@@ -101,5 +103,19 @@ class KunstmaanSearchExtension extends Extension
         }
 
         $container->setParameter('kunstmaan_search.password', $searchPassword);
+    }
+
+    private function addSearchIndexPrefixParameter(ContainerBuilder $container, array $config)
+    {
+        $indexPrefix = $container->hasParameter('searchindexprefix') ? $container->getParameter('searchindexprefix') : null;
+        if (null === $config['index_prefix'] && null !== $indexPrefix) {
+            @trigger_error('Not providing a value for the "kunstmaan_search.index_prefix" config while setting the "searchindexprefix" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "searchindexprefix" parameter in KunstmaanDashboardBundle 6.0.', E_USER_DEPRECATED);
+        }
+
+        if (null !== $config['index_prefix']) {
+            $indexPrefix = $config['index_prefix'];
+        }
+
+        $container->setParameter('kunstmaan_search.index_prefix', $indexPrefix);
     }
 }

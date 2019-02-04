@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('password')->defaultNull()->end()
                     ->end()
                 ->end()
+                ->scalarNode('index_prefix')->defaultNull()->end()
                 ->arrayNode('analyzer_languages')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
