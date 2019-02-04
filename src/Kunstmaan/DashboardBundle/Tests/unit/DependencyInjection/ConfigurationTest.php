@@ -23,7 +23,16 @@ class ConfigurationTest extends TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = [
+            'google_analytics' => [
+                'api' => [
+                    'client_id' => null,
+                    'client_secret' => null,
+                    'dev_key' => null,
+                    'app_name' => null,
+                ],
+            ],
+        ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
     }

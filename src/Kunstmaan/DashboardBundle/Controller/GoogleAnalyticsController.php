@@ -29,7 +29,7 @@ class GoogleAnalyticsController extends Controller
 
         // if token not set
         if (!$configHelper->tokenIsSet()) {
-            if ($this->getParameter('google.api.client_id') != '' && $this->getParameter('google.api.client_secret') != '' && $this->getParameter('google.api.dev_key') != '') {
+            if ($this->getParameter('kunstmaan_dashboard.google_analytics.api.client_id') != '' && $this->getParameter('kunstmaan_dashboard.google_analytics.api.client_secret') != '' && $this->getParameter('kunstmaan_dashboard.google_analytics.api.dev_key') != '') {
                 $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
             }
 
