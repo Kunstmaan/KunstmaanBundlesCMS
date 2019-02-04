@@ -4,7 +4,6 @@ parameters:
     kunstmaan_media.media_handler.remote_audio.class: 'Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler'
     kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
     kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
-    aviary_api_key: null
     kunstmaan_media.media_path: '/uploads/media/'
 
 services:
@@ -28,7 +27,7 @@ services:
 
     kunstmaan_media.media_handlers.image:
         class: '%kunstmaan_media.media_handler.image.class%'
-        arguments: [1, '@kunstmaan_media.mimetype_guesser.factory', '@kunstmaan_media.extension_guesser.factory', '%aviary_api_key%']
+        arguments: [1, '@kunstmaan_media.mimetype_guesser.factory', '@kunstmaan_media.extension_guesser.factory', '%kunstmaan_media.aviary_api_key%']
         calls:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
             - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]

@@ -26,6 +26,7 @@ class ConfigurationTest extends TestCase
     {
         $array = [
             'soundcloud_api_key' => 'thisismykey',
+            'aviary_api_key' => 'apikey',
             'remote_video' => [
                 'vimeo' => false,
                 'youtube' => true,
