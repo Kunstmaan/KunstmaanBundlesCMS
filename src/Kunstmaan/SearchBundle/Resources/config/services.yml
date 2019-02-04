@@ -19,6 +19,7 @@ services:
 
     kunstmaan_search.search.factory.analysis:
         class: '%kunstmaan_search.search.factory.analysis.class%'
+        public: true
 
     # Providers
     kunstmaan_search.search_provider_chain:
