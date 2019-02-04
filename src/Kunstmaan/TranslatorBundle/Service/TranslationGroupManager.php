@@ -4,6 +4,7 @@ namespace Kunstmaan\TranslatorBundle\Service;
 
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 
 /**
  * TranslationGroupManager
@@ -11,39 +12,18 @@ use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
  */
 class TranslationGroupManager
 {
+    /** @var TranslationRepository */
     private $translationRepository;
 
-    /**
-     * Get an empty TranslationGroup with the given keyword and domain
-     */
-    public function create($keyword, $domain)
+    /** @var array */
+    private $dbCopy;
+
+    /** @var int */
+    private $maxId = 1;
+
+    public function __construct(TranslationRepository $translationRepository)
     {
-        $translationGroup = $this->newGroupInstance();
-        $translationGroup->setKeyword($keyword);
-        $translationGroup->setDomain($domain);
-        $translationGroup->setId($this->translationRepository->getUniqueTranslationId());
-
-        return $translationGroup;
-    }
-
-    /**
-     * Create new TranslationGroup instance (with the given locales of any are set)
-     *
-     * @param array $locales
-     *
-     * @return TranslationGroup
-     */
-    public function newGroupInstance($locales = array())
-    {
-        $translationGroup = new TranslationGroup();
-
-        foreach ($locales as $locale) {
-            $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation();
-            $translation->setlocale($locale);
-            $translationGroup->addTranslation($translation);
-        }
-
-        return $translationGroup;
+        $this->translationRepository = $translationRepository;
     }
 
     /**
@@ -51,12 +31,6 @@ class TranslationGroupManager
      */
     public function addTranslation(TranslationGroup $translationGroup, $locale, $text, $filename)
     {
-        $translation = null;
-
-        if ($translationGroup->hasTranslation($locale)) {
-            return null;
-        }
-
         $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation();
         $translation->setLocale($locale);
         $translation->setText($text);
@@ -68,9 +42,7 @@ class TranslationGroupManager
         $translation->setTranslationId($translationGroup->getId());
 
         $this->translationRepository->persist($translation);
-        $this->translationRepository->flush($translation);
-
-        return $translation;
+        $this->dbCopy[] = $translation;
     }
 
     public function updateTranslation(TranslationGroup $translationGroup, $locale, $text, $filename)
@@ -80,9 +52,19 @@ class TranslationGroupManager
         $translation->setFile($filename);
 
         $this->translationRepository->persist($translation);
-        $this->translationRepository->flush($translation);
+    }
 
-        return;
+    public function pullDBInMemory()
+    {
+        $this->dbCopy = $this->translationRepository->findAll();
+        $this->maxId = $this->translationRepository->getUniqueTranslationId();
+    }
+
+    public function flushAndClearDBFromMemory()
+    {
+        $this->translationRepository->flush();
+        unset($this->dbCopy);
+        $this->maxId = 1;
     }
 
     /**
@@ -90,12 +72,13 @@ class TranslationGroupManager
      */
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
     {
-        $translations = $this->translationRepository->findBy(array('keyword' => $keyword, 'domain' => $domain));
+        $translations = $this->findTranslations($keyword, $domain);
         $translationGroup = new TranslationGroup();
         $translationGroup->setDomain($domain);
         $translationGroup->setKeyword($keyword);
         if (empty($translations)) {
-            $translationGroup->setId($this->translationRepository->getUniqueTranslationId());
+            $translationGroup->setId($this->maxId);
+            ++$this->maxId;
         } else {
             $translationGroup->setId($translations[0]->getTranslationId());
         }
@@ -104,13 +87,17 @@ class TranslationGroupManager
         return $translationGroup;
     }
 
-    public function getTranslationGroupsByDomain($domain)
+    private function findTranslations($keyword, $domain)
     {
-        return array();
-    }
+        $result = [];
 
-    public function setTranslationRepository($translationRepository)
-    {
-        $this->translationRepository = $translationRepository;
+        /** @var \Kunstmaan\TranslatorBundle\Entity\Translation $translation */
+        foreach ($this->dbCopy as $translation) {
+            if ($translation->getKeyword() === $keyword && $translation->getDomain() === $domain) {
+                $result[] = $translation;
+            }
+        }
+
+        return $result;
     }
 }

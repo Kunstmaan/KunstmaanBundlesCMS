@@ -5,7 +5,6 @@ namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\ODS\Sheet;
 use Box\Spout\Reader\ReaderFactory;
-use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,9 +22,16 @@ class Importer
      */
     private $translationGroupManager;
 
+    public function __construct(TranslationGroupManager $translationGroupManager)
+    {
+        $this->translationGroupManager = $translationGroupManager;
+    }
+
     public function import(\Symfony\Component\Finder\SplFileInfo $file, $force = false)
     {
-        $this->validateLoaders($this->loaders);
+        if (!is_array($this->loaders) || count($this->loaders) <= 0) {
+            throw new \Exception('No translation file loaders tagged.');
+        }
 
         $filename = $file->getFilename();
         list($domain, $locale, $extension) = explode('.', $filename);
@@ -38,11 +44,15 @@ class Importer
         $messageCatalogue = $loader->load($file->getPathname(), $locale, $domain);
         $importedTranslations = 0;
 
+        $this->translationGroupManager->pullDBInMemory();
+
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
             if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
                 ++$importedTranslations;
             }
         }
+
+        $this->translationGroupManager->flushAndClearDBFromMemory();
 
         return $importedTranslations;
     }
@@ -60,9 +70,11 @@ class Importer
      */
     public function importFromSpreadsheet(string $file, array $locales, $force = false)
     {
-        $filePath = realpath(dirname($file)) . DIRECTORY_SEPARATOR;
+        $filePath = realpath(dirname($file)).DIRECTORY_SEPARATOR;
         $fileName = basename($file);
-        $file = $filePath . $fileName;
+        $file = $filePath.$fileName;
+
+        $this->translationGroupManager->pullDBInMemory();
 
         if (!file_exists($file)) {
             throw new LogicException(sprintf('Can not find file in %s', $file));
@@ -116,6 +128,8 @@ class Importer
         }
         $reader->close();
 
+        $this->translationGroupManager->flushAndClearDBFromMemory();
+
         return $importedTranslations;
     }
 
@@ -137,42 +151,19 @@ class Importer
 
         $translationGroup = $this->translationGroupManager->getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
-        if (!($translationGroup instanceof TranslationGroup)) {
-            $translationGroup = $this->translationGroupManager->create($keyword, $domain);
+        if (!$translationGroup->hasTranslation($locale)) {
+            $this->translationGroupManager->addTranslation($translationGroup, $locale, $text, $filename);
+
+            return true;
         }
 
-        $translation = $this->translationGroupManager->addTranslation($translationGroup, $locale, $text, $filename);
-
-        if (null === $translation && false === $force) {
-            return false;
-        }
-
-        if (true === $force && null === $translation) {
+        if (true === $force) {
             $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
 
             return true;
         }
 
-        return true;
-    }
-
-    /**
-     * Validate the loaders
-     *
-     * @param array $loaders
-     *
-     * @throws \Exception If no loaders are defined
-     */
-    public function validateLoaders($loaders = [])
-    {
-        if (!is_array($loaders) || count($loaders) <= 0) {
-            throw new \Exception('No translation file loaders tagged.');
-        }
-    }
-
-    public function setLoaders(array $loaders)
-    {
-        $this->loaders = $loaders;
+        return false;
     }
 
     /**
@@ -184,10 +175,5 @@ class Importer
     public function addLoader($format, LoaderInterface $loader)
     {
         $this->loaders[$format] = $loader;
-    }
-
-    public function setTranslationGroupManager(TranslationGroupManager $translationGroupManager)
-    {
-        $this->translationGroupManager = $translationGroupManager;
     }
 }

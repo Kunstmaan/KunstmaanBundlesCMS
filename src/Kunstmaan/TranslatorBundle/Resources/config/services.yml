@@ -53,14 +53,14 @@ services:
 
     kunstmaan_translator.service.importer.importer:
         class: 'Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer'
-        calls:
-            - [setTranslationGroupManager, ['@kunstmaan_translator.service.group_manager']] # default, maken via config var
+        arguments:
+            - '@kunstmaan_translator.service.group_manager'
         public: true
 
     kunstmaan_translator.service.group_manager:
         class: 'Kunstmaan\TranslatorBundle\Service\TranslationGroupManager'
-        calls:
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
+        arguments:
+            - '@kunstmaan_translator.repository.translation'
 
     # TODO: needs to be refactored, should not need to be public
     kunstmaan_translator.service.translator.loader:
