@@ -52,3 +52,9 @@ SearchBundle
  * Not providing a value for the `kunstmaan_search.connection.username` config while setting the `kunstmaan_search.username` parameter is deprecated, this config value will replace the `kunstmaan_search.username` parameter in KunstmaanDashboardBundle 6.0.
  * Not providing a value for the `kunstmaan_search.connection.password` config while setting the `kunstmaan_search.password` parameter is deprecated, this config value will replace the `kunstmaan_search.password` parameter in KunstmaanDashboardBundle 6.0.
  * Not providing a value for the `kunstmaan_search.index_prefix` config while setting the `searchindexprefix` parameter is deprecated, this config value will replace the `searchindexprefix` parameter in KunstmaanDashboardBundle 6.0.
+
+TranslatorBundle
+----------------
+
+* `Kunstmaan\TranslatorBundle\Service\Command\DiffCommand`is deprecated since KunstmaanTranslatorBundle 5.2 and will be removed in 6.0.
+* `Kunstmaan\TranslatorBundle\Command\MigrationsDiffCommand`is deprecated since KunstmaanTranslatorBundle 5.2 and will be removed in 6.0.
