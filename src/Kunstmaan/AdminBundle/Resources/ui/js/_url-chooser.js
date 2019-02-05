@@ -159,7 +159,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
             if (itemThumbPath === "") {
                 var $parent = $previewTitle.parent();
-                $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
+                $parent.prepend('<i class="fa fa-file media-thumbnail__icon"></i>');
             }
             else {
                 $previewImg.attr('src', itemThumbPath);

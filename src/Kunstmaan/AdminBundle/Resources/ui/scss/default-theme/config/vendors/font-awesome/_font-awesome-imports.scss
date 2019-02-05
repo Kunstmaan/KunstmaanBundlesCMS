@@ -5,15 +5,7 @@
    Never add styles directly to this file
    ========================================================================== */
 
-@import "../../../../../vendor_bower/fontawesome/scss/variables";
-@import "../../../../../vendor_bower/fontawesome/scss/mixins";
-@import "../../../../../vendor_bower/fontawesome/scss/path";
-@import "../../../../../vendor_bower/fontawesome/scss/core";
-@import "../../../../../vendor_bower/fontawesome/scss/larger";
-@import "../../../../../vendor_bower/fontawesome/scss/fixed-width";
-@import "../../../../../vendor_bower/fontawesome/scss/list";
-@import "../../../../../vendor_bower/fontawesome/scss/bordered-pulled";
-@import "../../../../../vendor_bower/fontawesome/scss/animated";
-@import "../../../../../vendor_bower/fontawesome/scss/rotated-flipped";
-@import "../../../../../vendor_bower/fontawesome/scss/stacked";
-@import "../../../../../vendor_bower/fontawesome/scss/icons";
+@import "../../../../../../../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "../../../../../../../../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+@import "../../../../../../../../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../../../../../../../../../node_modules/@fortawesome/fontawesome-free/scss/v4-shims";

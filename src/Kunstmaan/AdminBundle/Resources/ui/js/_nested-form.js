@@ -9,7 +9,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
 
     var newButtonHtml = '<button type="button" class="js-nested-form__add-btn btn btn-primary btn--raise-on-hover nested-form__add-btn">%label%</button>';
-    var delButtonHtml = '<button type="button" class="js-nested-form__del-btn btn--raise-on-hover nested-form__item__header__actions__action nested-form__item__header__actions__action--del"><i class="fa fa-trash-o"></i></button>';
+    var delButtonHtml = '<button type="button" class="js-nested-form__del-btn btn--raise-on-hover nested-form__item__header__actions__action nested-form__item__header__actions__action--del"><i class="fa fa-trash"></i></button>';
 
 
     init = reInit = function() {
@@ -102,7 +102,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
     // Add "New" button
     addNewBtn = function($form) {
-        var newBtnLabel =  $form.data('add-button-label');   
+        var newBtnLabel =  $form.data('add-button-label');
         var html = newButtonHtml.replace('%label%', newBtnLabel === undefined ? 'Add' : newBtnLabel);
         var $newBtn = $(html);
 

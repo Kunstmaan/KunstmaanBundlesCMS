@@ -22,7 +22,7 @@ translatorBundle.tasks.cssOptimized = createCssOptimizedTask({src: translatorBun
 
 translatorBundle.tasks.scripts = createScriptsTask({
     src: [
-        translatorBundle.config.srcPath + 'vendor_bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
+        './node_modules/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
         translatorBundle.config.srcPath + 'js/_inline-edit.js',
         translatorBundle.config.srcPath + 'js/app.js'
     ],
