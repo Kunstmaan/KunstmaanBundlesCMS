@@ -27,7 +27,6 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('driver')
                             ->defaultValue('elastic_search')
-                            ->isRequired()
                             ->validate()
                                 ->ifNotInArray(['elastic_search'])
                                 ->thenInvalid('Invalid search driver %s')
