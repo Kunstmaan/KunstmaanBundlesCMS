@@ -335,7 +335,7 @@ services:
     Kunstmaan\AdminBundle\Twig\AdminBundleTwigExtension:
         arguments:
             - '%kunstmaan_admin.website_title%'
-            - '%defaultlocale%'
-            - '%requiredlocales%'
+            - '%kunstmaan_admin.default_locale%'
+            - '%kunstmaan_admin.required_locales%'
         tags:
             - { name: twig.extension }
