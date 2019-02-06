@@ -78,6 +78,15 @@ interface AdminListConfiguratorInterface
     public function getExportUrl();
 
     /**
+     * Get the view url for the given $item
+     *
+     * @param object|array $item
+     *
+     * @return array
+     */
+    public function getViewUrlFor($item);
+
+    /**
      * @param object $entity
      *
      * @throws InvalidArgumentException

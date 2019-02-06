@@ -13,8 +13,6 @@ use Pagerfanta\Pagerfanta;
 
 /**
  * Class AdminListTest
- *
- * @todo add the getViewUrlFor test after fixing the issue that this function currently does not exist in the AdminListConfiguratorInterface
  */
 class AdminListTest extends Unit
 {
@@ -42,6 +40,7 @@ class AdminListTest extends Unit
             'getDeleteUrlFor' => [],
             'getAddUrlFor' => [],
             'getExportUrl' => [],
+            'getViewUrlFor' => [],
             'getValue' => 'test',
             'getStringValue' => 'stringtest',
             'getOrderBy' => 'name',
@@ -153,6 +152,12 @@ class AdminListTest extends Unit
     public function testGetExportUrl()
     {
         $this->assertTrue(is_array($this->adminList->getExportUrl()));
+    }
+
+    public function testGetViewUrl()
+    {
+        $item = new \stdClass();
+        $this->assertTrue(is_array($this->adminList->getViewUrlFor($item)));
     }
 
     public function testGetValue()
