@@ -4,11 +4,9 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\DBAL\Statement;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
 use Pagerfanta\Pagerfanta;
-use Traversable;
 
 /**
  * An abstract admin list configurator that can be used with dbal query builder
@@ -69,7 +67,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /**
      * Get the delete url for the given $item
      *
-     * @param object $item
+     * @param array $item
      *
      * @return array
      */
@@ -123,7 +121,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * @return array|mixed|Traversable
+     * @return array|mixed|\Traversable
      */
     public function getItems()
     {
@@ -131,13 +129,12 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * Return an iterator for all items that matches the current filtering
+     * Return an iterable statement or int for all items that matches the current filtering
      *
-     * @return \Iterator
+     * @return \Traversable|int
      */
     public function getIterator()
     {
-        /** @var Statement $statement */
         $statement = $this->getQueryBuilder()->execute();
 
         return $statement;
