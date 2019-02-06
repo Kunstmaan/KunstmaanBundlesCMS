@@ -20,6 +20,7 @@ services:
             - '@kunstmaan_admin.domain_configuration'
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_menu.entity.menu.class%'
+        public: true
 
     kunstmaan_menu.menu.render_service:
         class: '%kunstmaan_menu.menu.render_service.class%'
