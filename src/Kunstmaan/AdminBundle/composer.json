@@ -23,6 +23,7 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/utilities-bundle": "~5.2",
+        "kunstmaan/translator-bundle": "^5.2",
         "symfony/acl-bundle": "^1.0",
         "symfony/config": "^3.4|^4.0",
         "symfony/console": "^3.4|^4.0",
@@ -59,7 +60,6 @@
     "require-dev": {
         "kunstmaan/media-bundle": "^5.2",
         "kunstmaan/menu-bundle": "^5.2",
-        "kunstmaan/translator-bundle": "^5.2",
         "symfony/phpunit-bridge": "^4.2",
         "codeception/codeception": "^2.5",
         "matthiasnoback/symfony-config-test": "^4.0",
