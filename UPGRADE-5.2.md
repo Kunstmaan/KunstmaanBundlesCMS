@@ -36,8 +36,9 @@ DashboardBundle
 NodeSearchBundle
 ----------------
 
-* Depending on the service container to retrieve searchers is deprecated and will be removed in 6.0. Tag your custom node
-  searchers with the "kunstmaan_node_search.node_searcher" tag, to have them available for the NodeSearchBundle.
+ * Depending on the service container to retrieve searchers is deprecated and will be removed in 6.0. Tag your custom node
+   searchers with the "kunstmaan_node_search.node_searcher" tag, to have them available for the NodeSearchBundle.
+ * Passing the container as the first argument of `\Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener` is deprecated and will be removed in 6.0. Inject the `kunstmaan_node_search.search_configuration.node` service instead.
 
 NodeBundle
 ----------

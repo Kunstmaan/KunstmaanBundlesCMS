@@ -44,7 +44,6 @@ services:
         calls:
             - [ setAclProvider, ['@security.acl.provider']]
             - [ setIndexablePagePartsService, ['@kunstmaan_node_search.service.indexable_pageparts']]
-        public: true
         tags:
             - { name: kunstmaan_search.search_configuration, alias: Node }
 
