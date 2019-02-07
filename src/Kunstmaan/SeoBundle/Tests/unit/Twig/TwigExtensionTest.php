@@ -5,11 +5,13 @@ namespace Kunstmaan\SeoBundle\Tests\Entity;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 use PHPUnit\Framework\TestCase;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Class TwigExtensionTests
  */
-class TwigExtensionTests extends TestCase
+class TwigExtensionTest extends TestCase
 {
     protected $emMock;
 
@@ -62,6 +64,60 @@ class TwigExtensionTests extends TestCase
         $this->assertEquals($name, $result);
     }
 
+    public function testGetImageDimensionsWithValidFile()
+    {
+        $extension = new SeoTwigExtension($this->emMock);
+
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
+
+        $this->assertSame(['width' => 150, 'height' => 150], $dimensions);
+    }
+
+    public function testGetImageDimensionsWithInvalidFile()
+    {
+        $extension = new SeoTwigExtension($this->emMock);
+
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/unkown.png');
+
+        $this->assertSame(['width' => null, 'height' => null], $dimensions);
+    }
+
+    public function testGetImageDimensionsWithCacheServiceAndCachedCall()
+    {
+        $cacheMock = $this->createMock(CacheItemPoolInterface::class);
+        $cacheItemMock = $this->createMock(CacheItemInterface::class);
+        $cacheItemMock->expects($this->once())->method('isHit')->willReturn(true);
+        $cacheItemMock->expects($this->once())->method('get')->willReturn([151, 151]);
+
+        $cacheMock->expects($this->once())->method('getItem')->withAnyParameters()->willReturn($cacheItemMock);
+
+        $extension = new SeoTwigExtension($this->emMock);
+        $extension->setRequestCache($cacheMock);
+
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
+
+        $this->assertSame(['width' => 151, 'height' => 151], $dimensions);
+    }
+
+    public function testGetImageDimensionsWithCacheServiceAndNonCachedCall()
+    {
+        $cacheMock = $this->createMock(CacheItemPoolInterface::class);
+        $cacheItemMock = $this->createMock(CacheItemInterface::class);
+        $cacheItemMock->expects($this->once())->method('isHit')->willReturn(false);
+        $cacheItemMock->expects($this->once())->method('set')->withAnyParameters();
+        $cacheItemMock->expects($this->once())->method('get')->willReturn([150, 150]);
+
+        $cacheMock->expects($this->once())->method('getItem')->withAnyParameters()->willReturn($cacheItemMock);
+        $cacheMock->expects($this->once())->method('save')->with($cacheItemMock);
+
+        $extension = new SeoTwigExtension($this->emMock);
+        $extension->setRequestCache($cacheMock);
+
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
+
+        $this->assertSame(['width' => 150, 'height' => 150], $dimensions);
+    }
+
     /**
      * @param string $name
      */
@@ -78,7 +134,7 @@ class TwigExtensionTests extends TestCase
     {
         $this->ensureSeoRepoMock();
         $this->seoRepoMock->expects($this->once())
-            ->method('findFor')
+            ->method('findOrCreateFor')
             ->will($this->returnValue(null));
 
         $this->wireUpSeoRepo();
@@ -117,7 +173,7 @@ class TwigExtensionTests extends TestCase
         $seoMock->setMetaTitle($title);
 
         $this->seoRepoMock->expects($this->once())
-            ->method('findFor')
+            ->method('findOrCreateFor')
             ->will($this->returnValue($seoMock));
 
         $this->wireUpSeoRepo();
