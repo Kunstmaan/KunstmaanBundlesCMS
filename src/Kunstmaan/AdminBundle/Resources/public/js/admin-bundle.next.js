@@ -1,2 +1,1316 @@
-!function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};t.m=e,t.c=r,t.i=function(e){return e},t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=5)}([function(e,t,r){"use strict";r.d(t,"a",function(){return n}),r.d(t,"c",function(){return o}),r.d(t,"b",function(){return i});var n={PP_CHOOSER:".js-pp-chooser",PP_SEARCH_FIELD:".js-pp-search",PP_SEARCH_ITEM:".js-pp-search-item",PP_SEARCH_RESET:".js-pp-search__reset"},o={PP_SEARCH_ITEM_HIDDEN:"pp-search-item--hidden"},i={PP_TYPES:"data-pp-types",PP_NAME:"data-pp-name"}},function(e,t,r){"use strict";function n(e){if(Array.isArray(e)){for(var t=0,r=Array(e.length);t<e.length;t++)r[t]=e[t];return r}return Array.from(e)}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var i=r(0),a=r(2),s=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),c=function(){function e(){o(this,e)}return s(e,null,[{key:"init",value:function(){[].concat(n((arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.document).querySelectorAll(i.a.PP_CHOOSER))).forEach(function(e){r.i(a.a)(e)})}}]),e}();t.a=c},function(e,t,r){"use strict";function n(e){if(Array.isArray(e)){for(var t=0,r=Array(e.length);t<e.length;t++)r[t]=e[t];return r}return Array.from(e)}function o(e){function t(){if(v.value.trim().length>0){var e=d.search(v.value);r.i(f.a)(u,e)}else r.i(l.a)(u)}function o(){v.value="",r.i(l.a)(u)}var a=JSON.parse(e.getAttribute(h.b.PP_TYPES)),c=i(a),u=[].concat(n(e.querySelectorAll(h.a.PP_SEARCH_ITEM))),d=s(c),v=e.querySelector(h.a.PP_SEARCH_FIELD);v.addEventListener("keyup",t),e.querySelector(h.a.PP_SEARCH_RESET).addEventListener("click",o)}function i(e){return e.map(function(e){return{name:e.name,className:a(e.class)}})}function a(e){var t=e,r=t.lastIndexOf("\\");return-1!==r&&(t=t.substring(r+1)),t.replace("PagePart","")}function s(e){return new u.a(e,{keys:[{name:"name",weight:.7},{name:"className",weight:.3}],id:"name",threshold:.4,shouldSort:!0})}t.a=o;var c=r(6),u=r.n(c),h=r(0),l=r(3),f=r(4)},function(e,t,r){"use strict";function n(e){e.forEach(function(e){e.classList.remove(o.c.PP_SEARCH_ITEM_HIDDEN)})}t.a=n;var o=r(0)},function(e,t,r){"use strict";function n(e,t){e.forEach(function(e){var r=e.getAttribute(o.b.PP_NAME);t.includes(r)?e.classList.remove(o.c.PP_SEARCH_ITEM_HIDDEN):e.classList.add(o.c.PP_SEARCH_ITEM_HIDDEN)})}t.a=n;var o=r(0)},function(e,t,r){"use strict";function n(){o.a.init()}Object.defineProperty(t,"__esModule",{value:!0});var o=r(1);"loading"!==document.readyState?n():document.addEventListener("DOMContentLoaded",function(){n()})},function(e,t,r){!function(t,r){e.exports=r()}(0,function(){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var r={};return t.m=e,t.c=r,t.i=function(e){return e},t.d=function(e,r,n){t.o(e,r)||Object.defineProperty(e,r,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(r,"a",r),r},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=8)}([function(e,t,r){"use strict";e.exports=function(e){return Array.isArray?Array.isArray(e):"[object Array]"===Object.prototype.toString.call(e)}},function(e,t,r){"use strict";function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var o=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),i=r(5),a=r(7),s=r(4),c=function(){function e(t,r){var o=r.location,i=void 0===o?0:o,a=r.distance,c=void 0===a?100:a,u=r.threshold,h=void 0===u?.6:u,l=r.maxPatternLength,f=void 0===l?32:l,d=r.isCaseSensitive,v=void 0!==d&&d,p=r.tokenSeparator,g=void 0===p?/ +/g:p,y=r.findAllMatches,m=void 0!==y&&y,S=r.minMatchCharLength,_=void 0===S?1:S;n(this,e),this.options={location:i,distance:c,threshold:h,maxPatternLength:f,isCaseSensitive:v,tokenSeparator:g,findAllMatches:m,minMatchCharLength:_},this.pattern=this.options.isCaseSensitive?t:t.toLowerCase(),this.pattern.length<=f&&(this.patternAlphabet=s(this.pattern))}return o(e,[{key:"search",value:function(e){if(this.options.isCaseSensitive||(e=e.toLowerCase()),this.pattern===e)return{isMatch:!0,score:0,matchedIndices:[[0,e.length-1]]};var t=this.options,r=t.maxPatternLength,n=t.tokenSeparator;if(this.pattern.length>r)return i(e,this.pattern,n);var o=this.options,s=o.location,c=o.distance,u=o.threshold,h=o.findAllMatches,l=o.minMatchCharLength;return a(e,this.pattern,this.patternAlphabet,{location:s,distance:c,threshold:u,findAllMatches:h,minMatchCharLength:l})}}]),e}();e.exports=c},function(e,t,r){"use strict";var n=r(0),o=function e(t,r,o){if(r){var i=r.indexOf("."),a=r,s=null;-1!==i&&(a=r.slice(0,i),s=r.slice(i+1));var c=t[a];if(null!==c&&void 0!==c)if(s||"string"!=typeof c&&"number"!=typeof c)if(n(c))for(var u=0,h=c.length;u<h;u+=1)e(c[u],s,o);else s&&e(c,s,o);else o.push(c.toString())}else o.push(t);return o};e.exports=function(e,t){return o(e,t,[])}},function(e,t,r){"use strict";e.exports=function(){for(var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1,r=[],n=-1,o=-1,i=0,a=e.length;i<a;i+=1){var s=e[i];s&&-1===n?n=i:s||-1===n||(o=i-1,o-n+1>=t&&r.push([n,o]),n=-1)}return e[i-1]&&i-n>=t&&r.push([n,i-1]),r}},function(e,t,r){"use strict";e.exports=function(e){for(var t={},r=e.length,n=0;n<r;n+=1)t[e.charAt(n)]=0;for(var o=0;o<r;o+=1)t[e.charAt(o)]|=1<<r-o-1;return t}},function(e,t,r){"use strict";var n=/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;e.exports=function(e,t){var r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:/ +/g,o=new RegExp(t.replace(n,"\\$&").replace(r,"|")),i=e.match(o),a=!!i,s=[];if(a)for(var c=0,u=i.length;c<u;c+=1){var h=i[c];s.push([e.indexOf(h),h.length-1])}return{score:a?.5:1,isMatch:a,matchedIndices:s}}},function(e,t,r){"use strict";e.exports=function(e,t){var r=t.errors,n=void 0===r?0:r,o=t.currentLocation,i=void 0===o?0:o,a=t.expectedLocation,s=void 0===a?0:a,c=t.distance,u=void 0===c?100:c,h=n/e.length,l=Math.abs(s-i);return u?h+l/u:l?1:h}},function(e,t,r){"use strict";var n=r(6),o=r(3);e.exports=function(e,t,r,i){for(var a=i.location,s=void 0===a?0:a,c=i.distance,u=void 0===c?100:c,h=i.threshold,l=void 0===h?.6:h,f=i.findAllMatches,d=void 0!==f&&f,v=i.minMatchCharLength,p=void 0===v?1:v,g=s,y=e.length,m=l,S=e.indexOf(t,g),_=t.length,k=[],x=0;x<y;x+=1)k[x]=0;if(-1!==S){var P=n(t,{errors:0,currentLocation:S,expectedLocation:g,distance:u});if(m=Math.min(P,m),-1!==(S=e.lastIndexOf(t,g+_))){var M=n(t,{errors:0,currentLocation:S,expectedLocation:g,distance:u});m=Math.min(M,m)}}S=-1;for(var A=[],b=1,E=_+y,L=1<<_-1,w=0;w<_;w+=1){for(var C=0,I=E;C<I;){n(t,{errors:w,currentLocation:g+I,expectedLocation:g,distance:u})<=m?C=I:E=I,I=Math.floor((E-C)/2+C)}E=I;var O=Math.max(1,g-I+1),T=d?y:Math.min(g+I,y)+_,H=Array(T+2);H[T+1]=(1<<w)-1;for(var R=T;R>=O;R-=1){var j=R-1,D=r[e.charAt(j)];if(D&&(k[j]=1),H[R]=(H[R+1]<<1|1)&D,0!==w&&(H[R]|=(A[R+1]|A[R])<<1|1|A[R+1]),H[R]&L&&(b=n(t,{errors:w,currentLocation:j,expectedLocation:g,distance:u}))<=m){if(m=b,(S=j)<=g)break;O=Math.max(1,2*g-S)}}if(n(t,{errors:w+1,currentLocation:g,expectedLocation:g,distance:u})>m)break;A=H}return{isMatch:S>=0,score:0===b?.001:b,matchedIndices:o(k,p)}}},function(e,t,r){"use strict";function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var o=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),i=r(1),a=r(2),s=r(0),c=function(){function e(t,r){var o=r.location,i=void 0===o?0:o,s=r.distance,c=void 0===s?100:s,u=r.threshold,h=void 0===u?.6:u,l=r.maxPatternLength,f=void 0===l?32:l,d=r.caseSensitive,v=void 0!==d&&d,p=r.tokenSeparator,g=void 0===p?/ +/g:p,y=r.findAllMatches,m=void 0!==y&&y,S=r.minMatchCharLength,_=void 0===S?1:S,k=r.id,x=void 0===k?null:k,P=r.keys,M=void 0===P?[]:P,A=r.shouldSort,b=void 0===A||A,E=r.getFn,L=void 0===E?a:E,w=r.sortFn,C=void 0===w?function(e,t){return e.score-t.score}:w,I=r.tokenize,O=void 0!==I&&I,T=r.matchAllTokens,H=void 0!==T&&T,R=r.includeMatches,j=void 0!==R&&R,D=r.includeScore,F=void 0!==D&&D,N=r.verbose,z=void 0!==N&&N;n(this,e),this.options={location:i,distance:c,threshold:h,maxPatternLength:f,isCaseSensitive:v,tokenSeparator:g,findAllMatches:m,minMatchCharLength:_,id:x,keys:M,includeMatches:j,includeScore:F,shouldSort:b,getFn:L,sortFn:C,verbose:z,tokenize:O,matchAllTokens:H},this.setCollection(t)}return o(e,[{key:"setCollection",value:function(e){return this.list=e,e}},{key:"search",value:function(e){this._log('---------\nSearch pattern: "'+e+'"');var t=this._prepareSearchers(e),r=t.tokenSearchers,n=t.fullSearcher,o=this._search(r,n),i=o.weights,a=o.results;return this._computeScore(i,a),this.options.shouldSort&&this._sort(a),this._format(a)}},{key:"_prepareSearchers",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",t=[];if(this.options.tokenize)for(var r=e.split(this.options.tokenSeparator),n=0,o=r.length;n<o;n+=1)t.push(new i(r[n],this.options));return{tokenSearchers:t,fullSearcher:new i(e,this.options)}}},{key:"_search",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],t=arguments[1],r=this.list,n={},o=[];if("string"==typeof r[0]){for(var i=0,a=r.length;i<a;i+=1)this._analyze({key:"",value:r[i],record:i,index:i},{resultMap:n,results:o,tokenSearchers:e,fullSearcher:t});return{weights:null,results:o}}for(var s={},c=0,u=r.length;c<u;c+=1)for(var h=r[c],l=0,f=this.options.keys.length;l<f;l+=1){var d=this.options.keys[l];if("string"!=typeof d){if(s[d.name]={weight:1-d.weight||1},d.weight<=0||d.weight>1)throw new Error("Key weight has to be > 0 and <= 1");d=d.name}else s[d]={weight:1};this._analyze({key:d,value:this.options.getFn(h,d),record:h,index:c},{resultMap:n,results:o,tokenSearchers:e,fullSearcher:t})}return{weights:s,results:o}}},{key:"_analyze",value:function(e,t){var r=e.key,n=e.arrayIndex,o=void 0===n?-1:n,i=e.value,a=e.record,c=e.index,u=t.tokenSearchers,h=void 0===u?[]:u,l=t.fullSearcher,f=void 0===l?[]:l,d=t.resultMap,v=void 0===d?{}:d,p=t.results,g=void 0===p?[]:p;if(void 0!==i&&null!==i){var y=!1,m=-1,S=0;if("string"==typeof i){this._log("\nKey: "+(""===r?"-":r));var _=f.search(i);if(this._log('Full text: "'+i+'", score: '+_.score),this.options.tokenize){for(var k=i.split(this.options.tokenSeparator),x=[],P=0;P<h.length;P+=1){var M=h[P];this._log('\nPattern: "'+M.pattern+'"');for(var A=!1,b=0;b<k.length;b+=1){var E=k[b],L=M.search(E),w={};L.isMatch?(w[E]=L.score,y=!0,A=!0,x.push(L.score)):(w[E]=1,this.options.matchAllTokens||x.push(1)),this._log('Token: "'+E+'", score: '+w[E])}A&&(S+=1)}m=x[0];for(var C=x.length,I=1;I<C;I+=1)m+=x[I];m/=C,this._log("Token score average:",m)}var O=_.score;m>-1&&(O=(O+m)/2),this._log("Score average:",O);var T=!this.options.tokenize||!this.options.matchAllTokens||S>=h.length;if(this._log("\nCheck Matches: "+T),(y||_.isMatch)&&T){var H=v[c];H?H.output.push({key:r,arrayIndex:o,value:i,score:O,matchedIndices:_.matchedIndices}):(v[c]={item:a,output:[{key:r,arrayIndex:o,value:i,score:O,matchedIndices:_.matchedIndices}]},g.push(v[c]))}}else if(s(i))for(var R=0,j=i.length;R<j;R+=1)this._analyze({key:r,arrayIndex:R,value:i[R],record:a,index:c},{resultMap:v,results:g,tokenSearchers:h,fullSearcher:f})}}},{key:"_computeScore",value:function(e,t){this._log("\n\nComputing score:\n");for(var r=0,n=t.length;r<n;r+=1){for(var o=t[r].output,i=o.length,a=1,s=1,c=0;c<i;c+=1){var u=e?e[o[c].key].weight:1,h=1===u?o[c].score:o[c].score||.001,l=h*u;1!==u?s=Math.min(s,l):(o[c].nScore=l,a*=l)}t[r].score=1===s?a:s,this._log(t[r])}}},{key:"_sort",value:function(e){this._log("\n\nSorting...."),e.sort(this.options.sortFn)}},{key:"_format",value:function(e){var t=[];this.options.verbose&&this._log("\n\nOutput:\n\n",JSON.stringify(e));var r=[];this.options.includeMatches&&r.push(function(e,t){var r=e.output;t.matches=[];for(var n=0,o=r.length;n<o;n+=1){var i=r[n];if(0!==i.matchedIndices.length){var a={indices:i.matchedIndices,value:i.value};i.key&&(a.key=i.key),i.hasOwnProperty("arrayIndex")&&i.arrayIndex>-1&&(a.arrayIndex=i.arrayIndex),t.matches.push(a)}}}),this.options.includeScore&&r.push(function(e,t){t.score=e.score});for(var n=0,o=e.length;n<o;n+=1){var i=e[n];if(this.options.id&&(i.item=this.options.getFn(i.item,this.options.id)[0]),r.length){for(var a={item:i.item},s=0,c=r.length;s<c;s+=1)r[s](i,a);t.push(a)}else t.push(i.item)}return t}},{key:"_log",value:function(){if(this.options.verbose){var e;(e=console).log.apply(e,arguments)}}}]),e}();e.exports=c}])})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SELECTORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return CLASSES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ATTRIBUTES; });
+var SELECTORS = {
+    PP_CHOOSER: '.js-pp-chooser',
+    PP_SEARCH_FIELD: '.js-pp-search',
+    PP_SEARCH_ITEM: '.js-pp-search-item',
+    PP_SEARCH_RESET: '.js-pp-search__reset'
+};
+
+var CLASSES = {
+    PP_SEARCH_ITEM_HIDDEN: 'pp-search-item--hidden'
+};
+
+var ATTRIBUTES = {
+    PP_TYPES: 'data-pp-types',
+    PP_NAME: 'data-pp-name'
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pagepart_search_initSearch__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+var PagePartChooser = function () {
+    function PagePartChooser() {
+        _classCallCheck(this, PagePartChooser);
+    }
+
+    _createClass(PagePartChooser, null, [{
+        key: 'init',
+        value: function init() {
+            var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.document;
+
+            var pagePartChoosers = [].concat(_toConsumableArray(container.querySelectorAll(__WEBPACK_IMPORTED_MODULE_0__config__["a" /* SELECTORS */].PP_CHOOSER)));
+
+            pagePartChoosers.forEach(function (pagePartChooser) {
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__pagepart_search_initSearch__["a" /* initSearch */])(pagePartChooser);
+            });
+        }
+    }]);
+
+    return PagePartChooser;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (PagePartChooser);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = initSearch;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fuse_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fuse_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fuse_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__resetSearch__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__updateSearch__ = __webpack_require__(4);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
+
+
+
+
+function initSearch(ppChooser) {
+    var ppTypes = JSON.parse(ppChooser.getAttribute(__WEBPACK_IMPORTED_MODULE_1__config__["b" /* ATTRIBUTES */].PP_TYPES));
+
+    var ppTypesSearchData = makePagePartDataSearchable(ppTypes);
+
+    var ppList = [].concat(_toConsumableArray(ppChooser.querySelectorAll(__WEBPACK_IMPORTED_MODULE_1__config__["a" /* SELECTORS */].PP_SEARCH_ITEM)));
+    var fuse = initFuse(ppTypesSearchData);
+
+    var searchField = ppChooser.querySelector(__WEBPACK_IMPORTED_MODULE_1__config__["a" /* SELECTORS */].PP_SEARCH_FIELD);
+    searchField.addEventListener('keyup', searchHandler);
+
+    var searchResetButton = ppChooser.querySelector(__WEBPACK_IMPORTED_MODULE_1__config__["a" /* SELECTORS */].PP_SEARCH_RESET);
+    searchResetButton.addEventListener('click', resetHandler);
+
+    function searchHandler() {
+        if (searchField.value.trim().length > 0) {
+            var searchResults = fuse.search(searchField.value);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__updateSearch__["a" /* updateSearch */])(ppList, searchResults);
+        } else {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__resetSearch__["a" /* resetSearch */])(ppList);
+        }
+    }
+
+    function resetHandler() {
+        searchField.value = '';
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__resetSearch__["a" /* resetSearch */])(ppList);
+    }
+}
+
+function makePagePartDataSearchable(ppTypes) {
+    return ppTypes.map(function (_ref) {
+        var name = _ref.name,
+            className = _ref.class;
+        return {
+            name: name,
+            className: extractClassNameFromNamespace(className)
+        };
+    });
+}
+
+function extractClassNameFromNamespace(ppClass) {
+    var className = ppClass;
+
+    var lastBackSlashIndex = className.lastIndexOf('\\');
+    if (lastBackSlashIndex !== -1) {
+        className = className.substring(lastBackSlashIndex + 1);
+    }
+
+    return className.replace('PagePart', '');
+}
+
+function initFuse(ppSearchData) {
+    return new __WEBPACK_IMPORTED_MODULE_0_fuse_js___default.a(ppSearchData, {
+        keys: [{
+            name: 'name',
+            weight: 0.7
+        }, {
+            name: 'className',
+            weight: 0.3 // The internal name is less important
+        }],
+        id: 'name',
+        threshold: 0.4,
+        shouldSort: true
+    });
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = resetSearch;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(0);
+
+
+function resetSearch(searchItems) {
+    searchItems.forEach(function (item) {
+        item.classList.remove(__WEBPACK_IMPORTED_MODULE_0__config__["c" /* CLASSES */].PP_SEARCH_ITEM_HIDDEN);
+    });
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = updateSearch;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(0);
+
+
+function updateSearch(searchItems, searchResults) {
+    searchItems.forEach(function (item) {
+        var ppName = item.getAttribute(__WEBPACK_IMPORTED_MODULE_0__config__["b" /* ATTRIBUTES */].PP_NAME);
+
+        if (searchResults.includes(ppName)) {
+            item.classList.remove(__WEBPACK_IMPORTED_MODULE_0__config__["c" /* CLASSES */].PP_SEARCH_ITEM_HIDDEN);
+        } else {
+            item.classList.add(__WEBPACK_IMPORTED_MODULE_0__config__["c" /* CLASSES */].PP_SEARCH_ITEM_HIDDEN);
+        }
+    });
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PagePartChooser__ = __webpack_require__(1);
+
+
+function init() {
+    __WEBPACK_IMPORTED_MODULE_0__PagePartChooser__["a" /* default */].init();
+}
+
+// This script is loaded dynamically, so it could be that DOMContentLoaded was already fired when this script is executed
+if (document.readyState !== 'loading') {
+    init();
+} else {
+    document.addEventListener('DOMContentLoaded', function () {
+        init();
+    });
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * Fuse.js v3.4.1 - Lightweight fuzzy-search (http://fusejs.io)
+ * 
+ * Copyright (c) 2012-2017 Kirollos Risk (http://kiro.me)
+ * All Rights Reserved. Apache Software License 2.0
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("Fuse", [], factory);
+	else if(typeof exports === 'object')
+		exports["Fuse"] = factory();
+	else
+		root["Fuse"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/bitap/bitap_matched_indices.js":
+/*!********************************************!*\
+  !*** ./src/bitap/bitap_matched_indices.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = (matchmask = [], minMatchCharLength = 1) => {
+  let matchedIndices = [];
+  let start = -1;
+  let end = -1;
+  let i = 0;
+
+  for (let len = matchmask.length; i < len; i += 1) {
+    let match = matchmask[i];
+
+    if (match && start === -1) {
+      start = i;
+    } else if (!match && start !== -1) {
+      end = i - 1;
+
+      if (end - start + 1 >= minMatchCharLength) {
+        matchedIndices.push([start, end]);
+      }
+
+      start = -1;
+    }
+  } // (i-1 - start) + 1 => i - start
+
+
+  if (matchmask[i - 1] && i - start >= minMatchCharLength) {
+    matchedIndices.push([start, i - 1]);
+  }
+
+  return matchedIndices;
+};
+
+/***/ }),
+
+/***/ "./src/bitap/bitap_pattern_alphabet.js":
+/*!*********************************************!*\
+  !*** ./src/bitap/bitap_pattern_alphabet.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = pattern => {
+  let mask = {};
+  let len = pattern.length;
+
+  for (let i = 0; i < len; i += 1) {
+    mask[pattern.charAt(i)] = 0;
+  }
+
+  for (let i = 0; i < len; i += 1) {
+    mask[pattern.charAt(i)] |= 1 << len - i - 1;
+  }
+
+  return mask;
+};
+
+/***/ }),
+
+/***/ "./src/bitap/bitap_regex_search.js":
+/*!*****************************************!*\
+  !*** ./src/bitap/bitap_regex_search.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const SPECIAL_CHARS_REGEX = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;
+
+module.exports = (text, pattern, tokenSeparator = / +/g) => {
+  let regex = new RegExp(pattern.replace(SPECIAL_CHARS_REGEX, '\\$&').replace(tokenSeparator, '|'));
+  let matches = text.match(regex);
+  let isMatch = !!matches;
+  let matchedIndices = [];
+
+  if (isMatch) {
+    for (let i = 0, matchesLen = matches.length; i < matchesLen; i += 1) {
+      let match = matches[i];
+      matchedIndices.push([text.indexOf(match), match.length - 1]);
+    }
+  }
+
+  return {
+    // TODO: revisit this score
+    score: isMatch ? 0.5 : 1,
+    isMatch,
+    matchedIndices
+  };
+};
+
+/***/ }),
+
+/***/ "./src/bitap/bitap_score.js":
+/*!**********************************!*\
+  !*** ./src/bitap/bitap_score.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = (pattern, {
+  errors = 0,
+  currentLocation = 0,
+  expectedLocation = 0,
+  distance = 100
+}) => {
+  const accuracy = errors / pattern.length;
+  const proximity = Math.abs(expectedLocation - currentLocation);
+
+  if (!distance) {
+    // Dodge divide by zero error.
+    return proximity ? 1.0 : accuracy;
+  }
+
+  return accuracy + proximity / distance;
+};
+
+/***/ }),
+
+/***/ "./src/bitap/bitap_search.js":
+/*!***********************************!*\
+  !*** ./src/bitap/bitap_search.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const bitapScore = __webpack_require__(/*! ./bitap_score */ "./src/bitap/bitap_score.js");
+
+const matchedIndices = __webpack_require__(/*! ./bitap_matched_indices */ "./src/bitap/bitap_matched_indices.js");
+
+module.exports = (text, pattern, patternAlphabet, {
+  location = 0,
+  distance = 100,
+  threshold = 0.6,
+  findAllMatches = false,
+  minMatchCharLength = 1
+}) => {
+  const expectedLocation = location; // Set starting location at beginning text and initialize the alphabet.
+
+  const textLen = text.length; // Highest score beyond which we give up.
+
+  let currentThreshold = threshold; // Is there a nearby exact match? (speedup)
+
+  let bestLocation = text.indexOf(pattern, expectedLocation);
+  const patternLen = pattern.length; // a mask of the matches
+
+  const matchMask = [];
+
+  for (let i = 0; i < textLen; i += 1) {
+    matchMask[i] = 0;
+  }
+
+  if (bestLocation !== -1) {
+    let score = bitapScore(pattern, {
+      errors: 0,
+      currentLocation: bestLocation,
+      expectedLocation,
+      distance
+    });
+    currentThreshold = Math.min(score, currentThreshold); // What about in the other direction? (speed up)
+
+    bestLocation = text.lastIndexOf(pattern, expectedLocation + patternLen);
+
+    if (bestLocation !== -1) {
+      let score = bitapScore(pattern, {
+        errors: 0,
+        currentLocation: bestLocation,
+        expectedLocation,
+        distance
+      });
+      currentThreshold = Math.min(score, currentThreshold);
+    }
+  } // Reset the best location
+
+
+  bestLocation = -1;
+  let lastBitArr = [];
+  let finalScore = 1;
+  let binMax = patternLen + textLen;
+  const mask = 1 << patternLen - 1;
+
+  for (let i = 0; i < patternLen; i += 1) {
+    // Scan for the best match; each iteration allows for one more error.
+    // Run a binary search to determine how far from the match location we can stray
+    // at this error level.
+    let binMin = 0;
+    let binMid = binMax;
+
+    while (binMin < binMid) {
+      const score = bitapScore(pattern, {
+        errors: i,
+        currentLocation: expectedLocation + binMid,
+        expectedLocation,
+        distance
+      });
+
+      if (score <= currentThreshold) {
+        binMin = binMid;
+      } else {
+        binMax = binMid;
+      }
+
+      binMid = Math.floor((binMax - binMin) / 2 + binMin);
+    } // Use the result from this iteration as the maximum for the next.
+
+
+    binMax = binMid;
+    let start = Math.max(1, expectedLocation - binMid + 1);
+    let finish = findAllMatches ? textLen : Math.min(expectedLocation + binMid, textLen) + patternLen; // Initialize the bit array
+
+    let bitArr = Array(finish + 2);
+    bitArr[finish + 1] = (1 << i) - 1;
+
+    for (let j = finish; j >= start; j -= 1) {
+      let currentLocation = j - 1;
+      let charMatch = patternAlphabet[text.charAt(currentLocation)];
+
+      if (charMatch) {
+        matchMask[currentLocation] = 1;
+      } // First pass: exact match
+
+
+      bitArr[j] = (bitArr[j + 1] << 1 | 1) & charMatch; // Subsequent passes: fuzzy match
+
+      if (i !== 0) {
+        bitArr[j] |= (lastBitArr[j + 1] | lastBitArr[j]) << 1 | 1 | lastBitArr[j + 1];
+      }
+
+      if (bitArr[j] & mask) {
+        finalScore = bitapScore(pattern, {
+          errors: i,
+          currentLocation,
+          expectedLocation,
+          distance
+        }); // This match will almost certainly be better than any existing match.
+        // But check anyway.
+
+        if (finalScore <= currentThreshold) {
+          // Indeed it is
+          currentThreshold = finalScore;
+          bestLocation = currentLocation; // Already passed `loc`, downhill from here on in.
+
+          if (bestLocation <= expectedLocation) {
+            break;
+          } // When passing `bestLocation`, don't exceed our current distance from `expectedLocation`.
+
+
+          start = Math.max(1, 2 * expectedLocation - bestLocation);
+        }
+      }
+    } // No hope for a (better) match at greater error levels.
+
+
+    const score = bitapScore(pattern, {
+      errors: i + 1,
+      currentLocation: expectedLocation,
+      expectedLocation,
+      distance
+    }); // console.log('score', score, finalScore)
+
+    if (score > currentThreshold) {
+      break;
+    }
+
+    lastBitArr = bitArr;
+  } // console.log('FINAL SCORE', finalScore)
+  // Count exact matches (those with a score of 0) to be "almost" exact
+
+
+  return {
+    isMatch: bestLocation >= 0,
+    score: finalScore === 0 ? 0.001 : finalScore,
+    matchedIndices: matchedIndices(matchMask, minMatchCharLength)
+  };
+};
+
+/***/ }),
+
+/***/ "./src/bitap/index.js":
+/*!****************************!*\
+  !*** ./src/bitap/index.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const bitapRegexSearch = __webpack_require__(/*! ./bitap_regex_search */ "./src/bitap/bitap_regex_search.js");
+
+const bitapSearch = __webpack_require__(/*! ./bitap_search */ "./src/bitap/bitap_search.js");
+
+const patternAlphabet = __webpack_require__(/*! ./bitap_pattern_alphabet */ "./src/bitap/bitap_pattern_alphabet.js");
+
+class Bitap {
+  constructor(pattern, {
+    // Approximately where in the text is the pattern expected to be found?
+    location = 0,
+    // Determines how close the match must be to the fuzzy location (specified above).
+    // An exact letter match which is 'distance' characters away from the fuzzy location
+    // would score as a complete mismatch. A distance of '0' requires the match be at
+    // the exact location specified, a threshold of '1000' would require a perfect match
+    // to be within 800 characters of the fuzzy location to be found using a 0.8 threshold.
+    distance = 100,
+    // At what point does the match algorithm give up. A threshold of '0.0' requires a perfect match
+    // (of both letters and location), a threshold of '1.0' would match anything.
+    threshold = 0.6,
+    // Machine word size
+    maxPatternLength = 32,
+    // Indicates whether comparisons should be case sensitive.
+    isCaseSensitive = false,
+    // Regex used to separate words when searching. Only applicable when `tokenize` is `true`.
+    tokenSeparator = / +/g,
+    // When true, the algorithm continues searching to the end of the input even if a perfect
+    // match is found before the end of the same input.
+    findAllMatches = false,
+    // Minimum number of characters that must be matched before a result is considered a match
+    minMatchCharLength = 1
+  }) {
+    this.options = {
+      location,
+      distance,
+      threshold,
+      maxPatternLength,
+      isCaseSensitive,
+      tokenSeparator,
+      findAllMatches,
+      minMatchCharLength
+    };
+    this.pattern = this.options.isCaseSensitive ? pattern : pattern.toLowerCase();
+
+    if (this.pattern.length <= maxPatternLength) {
+      this.patternAlphabet = patternAlphabet(this.pattern);
+    }
+  }
+
+  search(text) {
+    if (!this.options.isCaseSensitive) {
+      text = text.toLowerCase();
+    } // Exact match
+
+
+    if (this.pattern === text) {
+      return {
+        isMatch: true,
+        score: 0,
+        matchedIndices: [[0, text.length - 1]]
+      };
+    } // When pattern length is greater than the machine word length, just do a a regex comparison
+
+
+    const {
+      maxPatternLength,
+      tokenSeparator
+    } = this.options;
+
+    if (this.pattern.length > maxPatternLength) {
+      return bitapRegexSearch(text, this.pattern, tokenSeparator);
+    } // Otherwise, use Bitap algorithm
+
+
+    const {
+      location,
+      distance,
+      threshold,
+      findAllMatches,
+      minMatchCharLength
+    } = this.options;
+    return bitapSearch(text, this.pattern, this.patternAlphabet, {
+      location,
+      distance,
+      threshold,
+      findAllMatches,
+      minMatchCharLength
+    });
+  }
+
+} // let x = new Bitap("od mn war", {})
+// let result = x.search("Old Man's War")
+// console.log(result)
+
+
+module.exports = Bitap;
+
+/***/ }),
+
+/***/ "./src/helpers/deep_value.js":
+/*!***********************************!*\
+  !*** ./src/helpers/deep_value.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const isArray = __webpack_require__(/*! ./is_array */ "./src/helpers/is_array.js");
+
+const deepValue = (obj, path, list) => {
+  if (!path) {
+    // If there's no path left, we've gotten to the object we care about.
+    list.push(obj);
+  } else {
+    const dotIndex = path.indexOf('.');
+    let firstSegment = path;
+    let remaining = null;
+
+    if (dotIndex !== -1) {
+      firstSegment = path.slice(0, dotIndex);
+      remaining = path.slice(dotIndex + 1);
+    }
+
+    const value = obj[firstSegment];
+
+    if (value !== null && value !== undefined) {
+      if (!remaining && (typeof value === 'string' || typeof value === 'number')) {
+        list.push(value.toString());
+      } else if (isArray(value)) {
+        // Search each item in the array.
+        for (let i = 0, len = value.length; i < len; i += 1) {
+          deepValue(value[i], remaining, list);
+        }
+      } else if (remaining) {
+        // An object. Recurse further.
+        deepValue(value, remaining, list);
+      }
+    }
+  }
+
+  return list;
+};
+
+module.exports = (obj, path) => {
+  return deepValue(obj, path, []);
+};
+
+/***/ }),
+
+/***/ "./src/helpers/is_array.js":
+/*!*********************************!*\
+  !*** ./src/helpers/is_array.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = obj => !Array.isArray ? Object.prototype.toString.call(obj) === '[object Array]' : Array.isArray(obj);
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Bitap = __webpack_require__(/*! ./bitap */ "./src/bitap/index.js");
+
+const deepValue = __webpack_require__(/*! ./helpers/deep_value */ "./src/helpers/deep_value.js");
+
+const isArray = __webpack_require__(/*! ./helpers/is_array */ "./src/helpers/is_array.js");
+
+class Fuse {
+  constructor(list, {
+    // Approximately where in the text is the pattern expected to be found?
+    location = 0,
+    // Determines how close the match must be to the fuzzy location (specified above).
+    // An exact letter match which is 'distance' characters away from the fuzzy location
+    // would score as a complete mismatch. A distance of '0' requires the match be at
+    // the exact location specified, a threshold of '1000' would require a perfect match
+    // to be within 800 characters of the fuzzy location to be found using a 0.8 threshold.
+    distance = 100,
+    // At what point does the match algorithm give up. A threshold of '0.0' requires a perfect match
+    // (of both letters and location), a threshold of '1.0' would match anything.
+    threshold = 0.6,
+    // Machine word size
+    maxPatternLength = 32,
+    // Indicates whether comparisons should be case sensitive.
+    caseSensitive = false,
+    // Regex used to separate words when searching. Only applicable when `tokenize` is `true`.
+    tokenSeparator = / +/g,
+    // When true, the algorithm continues searching to the end of the input even if a perfect
+    // match is found before the end of the same input.
+    findAllMatches = false,
+    // Minimum number of characters that must be matched before a result is considered a match
+    minMatchCharLength = 1,
+    // The name of the identifier property. If specified, the returned result will be a list
+    // of the items' dentifiers, otherwise it will be a list of the items.
+    id = null,
+    // List of properties that will be searched. This also supports nested properties.
+    keys = [],
+    // Whether to sort the result list, by score
+    shouldSort = true,
+    // The get function to use when fetching an object's properties.
+    // The default will search nested paths *ie foo.bar.baz*
+    getFn = deepValue,
+    // Default sort function
+    sortFn = (a, b) => a.score - b.score,
+    // When true, the search algorithm will search individual words **and** the full string,
+    // computing the final score as a function of both. Note that when `tokenize` is `true`,
+    // the `threshold`, `distance`, and `location` are inconsequential for individual tokens.
+    tokenize = false,
+    // When true, the result set will only include records that match all tokens. Will only work
+    // if `tokenize` is also true.
+    matchAllTokens = false,
+    includeMatches = false,
+    includeScore = false,
+    // Will print to the console. Useful for debugging.
+    verbose = false
+  }) {
+    this.options = {
+      location,
+      distance,
+      threshold,
+      maxPatternLength,
+      isCaseSensitive: caseSensitive,
+      tokenSeparator,
+      findAllMatches,
+      minMatchCharLength,
+      id,
+      keys,
+      includeMatches,
+      includeScore,
+      shouldSort,
+      getFn,
+      sortFn,
+      verbose,
+      tokenize,
+      matchAllTokens
+    };
+    this.setCollection(list);
+  }
+
+  setCollection(list) {
+    this.list = list;
+    return list;
+  }
+
+  search(pattern, opts = {
+    limit: false
+  }) {
+    this._log(`---------\nSearch pattern: "${pattern}"`);
+
+    const {
+      tokenSearchers,
+      fullSearcher
+    } = this._prepareSearchers(pattern);
+
+    let {
+      weights,
+      results
+    } = this._search(tokenSearchers, fullSearcher);
+
+    this._computeScore(weights, results);
+
+    if (this.options.shouldSort) {
+      this._sort(results);
+    }
+
+    if (opts.limit && typeof opts.limit === 'number') {
+      results = results.slice(0, opts.limit);
+    }
+
+    return this._format(results);
+  }
+
+  _prepareSearchers(pattern = '') {
+    const tokenSearchers = [];
+
+    if (this.options.tokenize) {
+      // Tokenize on the separator
+      const tokens = pattern.split(this.options.tokenSeparator);
+
+      for (let i = 0, len = tokens.length; i < len; i += 1) {
+        tokenSearchers.push(new Bitap(tokens[i], this.options));
+      }
+    }
+
+    let fullSearcher = new Bitap(pattern, this.options);
+    return {
+      tokenSearchers,
+      fullSearcher
+    };
+  }
+
+  _search(tokenSearchers = [], fullSearcher) {
+    const list = this.list;
+    const resultMap = {};
+    const results = []; // Check the first item in the list, if it's a string, then we assume
+    // that every item in the list is also a string, and thus it's a flattened array.
+
+    if (typeof list[0] === 'string') {
+      // Iterate over every item
+      for (let i = 0, len = list.length; i < len; i += 1) {
+        this._analyze({
+          key: '',
+          value: list[i],
+          record: i,
+          index: i
+        }, {
+          resultMap,
+          results,
+          tokenSearchers,
+          fullSearcher
+        });
+      }
+
+      return {
+        weights: null,
+        results
+      };
+    } // Otherwise, the first item is an Object (hopefully), and thus the searching
+    // is done on the values of the keys of each item.
+
+
+    const weights = {};
+
+    for (let i = 0, len = list.length; i < len; i += 1) {
+      let item = list[i]; // Iterate over every key
+
+      for (let j = 0, keysLen = this.options.keys.length; j < keysLen; j += 1) {
+        let key = this.options.keys[j];
+
+        if (typeof key !== 'string') {
+          weights[key.name] = {
+            weight: 1 - key.weight || 1
+          };
+
+          if (key.weight <= 0 || key.weight > 1) {
+            throw new Error('Key weight has to be > 0 and <= 1');
+          }
+
+          key = key.name;
+        } else {
+          weights[key] = {
+            weight: 1
+          };
+        }
+
+        this._analyze({
+          key,
+          value: this.options.getFn(item, key),
+          record: item,
+          index: i
+        }, {
+          resultMap,
+          results,
+          tokenSearchers,
+          fullSearcher
+        });
+      }
+    }
+
+    return {
+      weights,
+      results
+    };
+  }
+
+  _analyze({
+    key,
+    arrayIndex = -1,
+    value,
+    record,
+    index
+  }, {
+    tokenSearchers = [],
+    fullSearcher = [],
+    resultMap = {},
+    results = []
+  }) {
+    // Check if the texvaluet can be searched
+    if (value === undefined || value === null) {
+      return;
+    }
+
+    let exists = false;
+    let averageScore = -1;
+    let numTextMatches = 0;
+
+    if (typeof value === 'string') {
+      this._log(`\nKey: ${key === '' ? '-' : key}`);
+
+      let mainSearchResult = fullSearcher.search(value);
+
+      this._log(`Full text: "${value}", score: ${mainSearchResult.score}`);
+
+      if (this.options.tokenize) {
+        let words = value.split(this.options.tokenSeparator);
+        let scores = [];
+
+        for (let i = 0; i < tokenSearchers.length; i += 1) {
+          let tokenSearcher = tokenSearchers[i];
+
+          this._log(`\nPattern: "${tokenSearcher.pattern}"`); // let tokenScores = []
+
+
+          let hasMatchInText = false;
+
+          for (let j = 0; j < words.length; j += 1) {
+            let word = words[j];
+            let tokenSearchResult = tokenSearcher.search(word);
+            let obj = {};
+
+            if (tokenSearchResult.isMatch) {
+              obj[word] = tokenSearchResult.score;
+              exists = true;
+              hasMatchInText = true;
+              scores.push(tokenSearchResult.score);
+            } else {
+              obj[word] = 1;
+
+              if (!this.options.matchAllTokens) {
+                scores.push(1);
+              }
+            }
+
+            this._log(`Token: "${word}", score: ${obj[word]}`); // tokenScores.push(obj)
+
+          }
+
+          if (hasMatchInText) {
+            numTextMatches += 1;
+          }
+        }
+
+        averageScore = scores[0];
+        let scoresLen = scores.length;
+
+        for (let i = 1; i < scoresLen; i += 1) {
+          averageScore += scores[i];
+        }
+
+        averageScore = averageScore / scoresLen;
+
+        this._log('Token score average:', averageScore);
+      }
+
+      let finalScore = mainSearchResult.score;
+
+      if (averageScore > -1) {
+        finalScore = (finalScore + averageScore) / 2;
+      }
+
+      this._log('Score average:', finalScore);
+
+      let checkTextMatches = this.options.tokenize && this.options.matchAllTokens ? numTextMatches >= tokenSearchers.length : true;
+
+      this._log(`\nCheck Matches: ${checkTextMatches}`); // If a match is found, add the item to <rawResults>, including its score
+
+
+      if ((exists || mainSearchResult.isMatch) && checkTextMatches) {
+        // Check if the item already exists in our results
+        let existingResult = resultMap[index];
+
+        if (existingResult) {
+          // Use the lowest score
+          // existingResult.score, bitapResult.score
+          existingResult.output.push({
+            key,
+            arrayIndex,
+            value,
+            score: finalScore,
+            matchedIndices: mainSearchResult.matchedIndices
+          });
+        } else {
+          // Add it to the raw result list
+          resultMap[index] = {
+            item: record,
+            output: [{
+              key,
+              arrayIndex,
+              value,
+              score: finalScore,
+              matchedIndices: mainSearchResult.matchedIndices
+            }]
+          };
+          results.push(resultMap[index]);
+        }
+      }
+    } else if (isArray(value)) {
+      for (let i = 0, len = value.length; i < len; i += 1) {
+        this._analyze({
+          key,
+          arrayIndex: i,
+          value: value[i],
+          record,
+          index
+        }, {
+          resultMap,
+          results,
+          tokenSearchers,
+          fullSearcher
+        });
+      }
+    }
+  }
+
+  _computeScore(weights, results) {
+    this._log('\n\nComputing score:\n');
+
+    for (let i = 0, len = results.length; i < len; i += 1) {
+      const output = results[i].output;
+      const scoreLen = output.length;
+      let currScore = 1;
+      let bestScore = 1;
+
+      for (let j = 0; j < scoreLen; j += 1) {
+        let weight = weights ? weights[output[j].key].weight : 1;
+        let score = weight === 1 ? output[j].score : output[j].score || 0.001;
+        let nScore = score * weight;
+
+        if (weight !== 1) {
+          bestScore = Math.min(bestScore, nScore);
+        } else {
+          output[j].nScore = nScore;
+          currScore *= nScore;
+        }
+      }
+
+      results[i].score = bestScore === 1 ? currScore : bestScore;
+
+      this._log(results[i]);
+    }
+  }
+
+  _sort(results) {
+    this._log('\n\nSorting....');
+
+    results.sort(this.options.sortFn);
+  }
+
+  _format(results) {
+    const finalOutput = [];
+
+    if (this.options.verbose) {
+      let cache = [];
+
+      this._log('\n\nOutput:\n\n', JSON.stringify(results, function (key, value) {
+        if (typeof value === 'object' && value !== null) {
+          if (cache.indexOf(value) !== -1) {
+            // Circular reference found, discard key
+            return;
+          } // Store value in our collection
+
+
+          cache.push(value);
+        }
+
+        return value;
+      }));
+
+      cache = null;
+    }
+
+    let transformers = [];
+
+    if (this.options.includeMatches) {
+      transformers.push((result, data) => {
+        const output = result.output;
+        data.matches = [];
+
+        for (let i = 0, len = output.length; i < len; i += 1) {
+          let item = output[i];
+
+          if (item.matchedIndices.length === 0) {
+            continue;
+          }
+
+          let obj = {
+            indices: item.matchedIndices,
+            value: item.value
+          };
+
+          if (item.key) {
+            obj.key = item.key;
+          }
+
+          if (item.hasOwnProperty('arrayIndex') && item.arrayIndex > -1) {
+            obj.arrayIndex = item.arrayIndex;
+          }
+
+          data.matches.push(obj);
+        }
+      });
+    }
+
+    if (this.options.includeScore) {
+      transformers.push((result, data) => {
+        data.score = result.score;
+      });
+    }
+
+    for (let i = 0, len = results.length; i < len; i += 1) {
+      const result = results[i];
+
+      if (this.options.id) {
+        result.item = this.options.getFn(result.item, this.options.id)[0];
+      }
+
+      if (!transformers.length) {
+        finalOutput.push(result.item);
+        continue;
+      }
+
+      const data = {
+        item: result.item
+      };
+
+      for (let j = 0, len = transformers.length; j < len; j += 1) {
+        transformers[j](result, data);
+      }
+
+      finalOutput.push(data);
+    }
+
+    return finalOutput;
+  }
+
+  _log() {
+    if (this.options.verbose) {
+      console.log(...arguments);
+    }
+  }
+
+}
+
+module.exports = Fuse;
+
+/***/ })
+
+/******/ });
+});
+
+/***/ })
+/******/ ]);
 //# sourceMappingURL=admin-bundle.next.js.map
