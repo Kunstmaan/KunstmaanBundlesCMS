@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.1.2 / 2019-02-08
+
+* [AdminBundle] fix error state for select2 & wysiwyg fields [#2352](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2352) ([@dbeerten](https://github.com/dbeerten)) 
+* [ArticleBundle] Fixed missing sprintf with classname in deprecation message [#2334](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2334) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Remove php 7.3 check as php-cs-fixer supports it now [#2278](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2278) ([@acrobat](https://github.com/acrobat)) 
+* [Admin][Cache][Config][Generator][Pagepart] fix some routes that didn't use the configurable admin prefix [#2266](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2266) ([@Numkil](https://github.com/Numkil)) 
+
+
 ## 5.1.1 / 2019-01-15
 
 * [NodeBundle] Fixed url chooser for multidomain [#2224](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2224) ([@deZinc](https://github.com/deZinc)) 
@@ -148,6 +156,12 @@
 * [AdminBundle] - Fix MultiDomainAdminTwigExtension::switchedHostIsCurr… [#1715](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1715) ([@delboy1978uk](https://github.com/delboy1978uk))
 * [AdminListBundle] Set default list template in constructor instead of hard coded getter [#1642](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1642) ([@delboy1978uk](https://github.com/delboy1978uk))
 * [TranslatorBundle] Allow importing translations from an external xlsx, ods, csv file. [#1585](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1585) ([@Numkil](https://github.com/Numkil))
+
+## 5.0.14 / 2019-02-08
+
+* [AdminBundle] Revert PR #2049 changes [#2283](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2283) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix incorrect plural of certain table names [#2277](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2277) ([@acrobat](https://github.com/acrobat)) 
+
 
 ## 5.0.13 / 2019-01-15
 

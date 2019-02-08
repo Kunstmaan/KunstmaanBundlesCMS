@@ -2,6 +2,6 @@
 {{ bundle.getName()|lower }}_{{ entity_class|lower }}{{ type|lower }}_admin_list:
     resource: '@{{ bundle.getName() }}/Controller/{{ entity_class }}{{ type }}AdminListController.php'
     type:     annotation
-    prefix:   /{_locale}/admin/{{ entity_class|lower }}{{ type|lower }}/
+    prefix:   /{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}{{ type|lower }}/
     requirements:
          _locale: "%requiredlocales%"

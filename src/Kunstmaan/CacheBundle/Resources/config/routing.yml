@@ -2,4 +2,4 @@
 kunstmaancachebundle_varnish:
     resource: "@KunstmaanCacheBundle/Controller/VarnishController.php"
     type:     annotation
-    prefix:   /admin
+    prefix:   /%kunstmaan_admin.admin_prefix%
