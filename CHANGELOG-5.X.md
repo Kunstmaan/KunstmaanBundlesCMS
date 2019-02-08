@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.14 / 2019-02-08
+
+* [AdminBundle] Revert PR #2049 changes [#2283](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2283) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix incorrect plural of certain table names [#2277](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2277) ([@acrobat](https://github.com/acrobat)) 
+
+
 ## 5.0.13 / 2019-01-15
 
 * [PagePartBundle] Keep yaml array keys when merging multiple configs [#2219](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2219) ([@acrobat](https://github.com/acrobat)) 
