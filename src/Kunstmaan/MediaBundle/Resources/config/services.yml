@@ -160,3 +160,9 @@ services:
             - '@liip_imagine.cache.signer'
             - '@event_dispatcher'
             - '%liip_imagine.cache.resolver.default%'
+
+    Gedmo\Tree\TreeListener:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
