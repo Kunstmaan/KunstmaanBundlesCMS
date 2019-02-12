@@ -442,8 +442,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     private function isMultiLangEnvironment()
     {
         // use the multilanguage parameter, if it exists
-        if ($this->container->hasParameter('multilanguage')) {
-            return $this->container->getParameter('multilanguage');
+        if ($this->container->hasParameter('kunstmaan_admin.multi_language')) {
+            return $this->container->getParameter('kunstmaan_admin.multi_language');
         }
 
         // This is a pretty silly implementation.

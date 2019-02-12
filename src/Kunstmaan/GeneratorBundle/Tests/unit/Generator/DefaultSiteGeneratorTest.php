@@ -26,7 +26,7 @@ class DefaultSiteGeneratorTest extends TestCase
         $container
             ->expects($this->any())
             ->method('hasParameter')
-            ->with('multilanguage')
+            ->with('kunstmaan_admin.multi_language')
             ->will($this->returnValue(true))
         ;
 
