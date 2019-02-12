@@ -2,210 +2,170 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
+use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor;
-use Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor;
-use Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-use Kunstmaan\MenuBundle\Entity\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem as MenuItemHelper;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Class MenuBuilderTest
+ */
 class MenuBuilderTest extends TestCase
 {
-    /**
-     * @var MenuBuilder
-     */
-    protected $object;
-
     /**
      * @var ContainerInterface (mock)
      */
     protected $container;
 
-    /**
-     * @var AuthorizationCheckerInterface (mock)
-     */
-    protected $authCheck;
-
-    /**
-     * @var RequestStack (mock)
-     */
-    protected $stack;
-
     protected function setUp()
     {
-        $storage = $this->createMock(TokenStorageInterface::class);
-        $authCheck = $this->createMock(AuthorizationCheckerInterface::class);
-        $authCheck->tokenStorage = $storage;
-        $this->authCheck = $authCheck;
         $container = $this->createMock(ContainerInterface::class);
+        $this->container = $container;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param array|null         $methods
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|MenuBuilder
+     */
+    public function setUpMenuBuilderMock(ContainerInterface $container, ?array $methods)
+    {
+        $menuBuilderMock = $this->getMockBuilder(MenuBuilder::class)
+            ->setConstructorArgs([$container])
+            ->setMethods($methods)
+            ->getMock()
+        ;
+
+        return $menuBuilderMock;
+    }
+
+    public function testGetChildrenAndTopChildren()
+    {
         $stack = $this->createMock(RequestStack::class);
-        $this->stack = $stack;
 
-        $container->expects($this->any())->method('getParameter')->willReturn(true);
-        $container->expects($this->any())->method('get')->will($this->onConsecutiveCalls(
-            $stack, $stack, $authCheck
-        ));
+        $this->container->expects($this->any())->method('get')->willReturn($stack);
 
-        $this->container = $container;
-        $this->object = new MenuBuilder($container);
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
+
+        /** @var MenuAdaptorInterface $menuAdaptorInterfaceMock */
+        $menuAdaptorInterfaceMock = $this->createMock(MenuAdaptorInterface::class);
+        $menuAdaptorInterfaceMock
+            ->expects($this->exactly(2))
+            ->method('adaptChildren')
+        ;
+
+        $menuBuilderMock->addAdaptMenu($menuAdaptorInterfaceMock);
+
+        $menuItemMock = $this->createMock(MenuItem::class);
+        $this->assertIsArray($menuBuilderMock->getChildren($menuItemMock));
+        $this->assertIsArray($menuBuilderMock->getChildren());
     }
 
-    /**
-     * @throws \ReflectionException
-     */
-    public function testGetCurrent()
+    public function testGetCurrentAndBreadCrumb()
     {
-        $this->stack->expects($this->atLeastOnce())
-            ->method('getCurrentRequest')
-            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings']));
-        $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
-        $this->object->addAdaptMenu($adapter);
-        $current = $this->object->getCurrent();
-        $this->assertInstanceOf(TopMenuItem::class, $current);
+        $menuItemMock = $this->createMock(MenuItem::class);
+        $menuItemMock
+            ->expects($this->any())
+            ->method('getActive')
+            ->willReturn(true)
+        ;
 
-        $mirror = new ReflectionClass(MenuBuilder::class);
-        $property = $mirror->getProperty('currentCache');
-        $property->setAccessible(true);
-        $property->setValue($this->object, new MenuItem());
-        $current = $this->object->getCurrent();
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock
+            ->expects($this->any())
+            ->method('getChildren')
+            ->will($this->onConsecutiveCalls([$menuItemMock], []))
+        ;
+
+        $current = $menuBuilderMock->getCurrent();
         $this->assertInstanceOf(MenuItem::class, $current);
+        $this->assertContainsOnlyInstancesOf(MenuItem::class, $menuBuilderMock->getBreadCrumb());
     }
 
-    public function testGetBreadcrumbs()
+    public function testGetLowestTopChildWithCurrentTopMenuItem()
     {
-        $this->stack->expects($this->atLeastOnce())
-        ->method('getCurrentRequest')
-        ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings']));
-        $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
-        $this->object->addAdaptMenu($adapter);
-        $crumb = $this->object->getBreadCrumb();
-        $this->assertTrue(is_array($crumb));
-        $this->assertCount(1, $crumb);
-        $this->assertInstanceOf(TopMenuItem::class, $crumb[0]);
+        $menuItemMock = $this->createMock(TopMenuItem::class);
+        $menuItemMock
+            ->expects($this->any())
+            ->method('getActive')
+            ->willReturn(true)
+        ;
+
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock
+            ->expects($this->any())
+            ->method('getChildren')
+            ->will($this->onConsecutiveCalls([$menuItemMock], []))
+        ;
+
+        $this->assertInstanceOf(TopMenuItem::class, $menuBuilderMock->getLowestTopChild());
     }
 
-    public function testGetLowestTopChild()
+    public function testGetLowestTopChildWithMenuItem()
     {
-        $this->stack->expects($this->atLeastOnce())
-            ->method('getCurrentRequest')
-            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings']));
-        $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
-        $this->object->addAdaptMenu($adapter);
-        $lowest = $this->object->getLowestTopChild();
-        $this->assertInstanceOf(TopMenuItem::class, $lowest);
+        $menuItemMock = $this->createMock(MenuItem::class);
+        $menuItemMock
+            ->expects($this->any())
+            ->method('getActive')
+            ->willReturn(true)
+        ;
+        $menuItemMock
+            ->expects($this->once())
+            ->method('getParent')
+            ->willReturn($this->createMock(TopMenuItem::class))
+        ;
+
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock
+            ->expects($this->any())
+            ->method('getChildren')
+            ->will($this->onConsecutiveCalls([$menuItemMock], []))
+        ;
+
+        $this->assertInstanceOf(TopMenuItem::class, $menuBuilderMock->getLowestTopChild());
     }
 
-    /**
-     * @throws \ReflectionException
-     */
-    public function testGetLowestTopChildNonTop()
+    public function testGetLowestTopChildWithCurrentNull()
     {
-        $parent = new MenuItem();
-        $child = new MenuItem();
-        $child->setParent($parent);
+        $menuItemMock = $this->createMock(TopMenuItem::class);
+        $menuItemMock
+            ->expects($this->any())
+            ->method('getActive')
+            ->willReturn(false)
+        ;
 
-        $mirror = new ReflectionClass(MenuBuilder::class);
-        $property = $mirror->getProperty('currentCache');
-        $property->setAccessible(true);
-        $property->setValue($this->object, $child);
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock
+            ->expects($this->any())
+            ->method('getChildren')
+            ->will($this->onConsecutiveCalls([$menuItemMock], []))
+        ;
 
-        $lowest = $this->object->getLowestTopChild();
-        $this->assertNull($lowest);
+        $this->assertNull($menuBuilderMock->getLowestTopChild());
     }
 
-    /**
-     * @throws \ReflectionException
-     */
-    public function testAdaptChildren()
+    public function testGetTopChildren()
     {
-        $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
+        $stack = $this->createMock(RequestStack::class);
 
-        $parent = $this->createMock(MenuItemHelper::class);
-        $parent->expects($this->exactly(2))->method('getRoute')->willReturn('KunstmaanAdminBundle_settings');
+        $this->container->expects($this->any())->method('get')->willReturn($stack);
 
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->any())->method('getParameter')->willReturn(true);
-        $container->expects($this->any())->method('get')->willReturn($this->authCheck);
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
 
-        $this->container = $container;
-        $this->object = new MenuBuilder($container);
+        /** @var MenuAdaptorInterface $menuAdaptorInterfaceMock */
+        $menuAdaptorInterfaceMock = $this->createMock(MenuAdaptorInterface::class);
+        $menuAdaptorInterfaceMock
+            ->expects($this->once())
+            ->method('adaptChildren')
+        ;
 
-        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
-        $array = [];
-        $adapter->adaptChildren($this->object, $array, $parent, new Request([], [], ['_route' => 'KunstmaanAdminBundle_settings_bundle_version']));
-    }
+        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
+        $menuBuilderMock->addAdaptMenu($menuAdaptorInterfaceMock);
 
-    public function testModulesMenuAdaptor()
-    {
-        $this->stack->expects($this->atLeastOnce())
-            ->method('getCurrentRequest')
-            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_modules']));
-
-        $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new ModulesMenuAdaptor();
-        $this->object->addAdaptMenu($adapter);
-        $current = $this->object->getCurrent();
-        $this->assertInstanceOf(TopMenuItem::class, $current);
-    }
-
-    /**
-     * @throws \ReflectionException
-     */
-    public function testSimpleMenuAdaptor()
-    {
-        $this->stack->expects($this->atLeastOnce())
-            ->method('getCurrentRequest')
-            ->willReturn(new Request([], [], ['_route' => 'KunstmaanAdminBundle_modules']));
-
-        $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SimpleMenuAdaptor($this->authCheck, [[
-            'label' => 'label',
-            'parent' => null,
-            'role' => 'ADMIN',
-            'route' => 'KunstmaanAdminBundle_modules',
-            'params' => ['x' => 'y'],
-        ]]);
-        $this->object->addAdaptMenu($adapter);
-
-        $mirror = new ReflectionClass(MenuBuilder::class);
-        $property = $mirror->getProperty('topMenuItems');
-        $property->setAccessible(true);
-
-        $helper = new MenuItemHelper($this->object);
-        $helper->setActive(true);
-        $property->setValue($this->object, [$helper]);
-
-        $current = $this->object->getCurrent();
-        $this->assertInstanceOf(TopMenuItem::class, $current);
-
-        $mirror = new ReflectionClass(SimpleMenuAdaptor::class);
-        $method = $mirror->getMethod('parentMatches');
-        $method->setAccessible(true);
-        $bool = $method->invoke($adapter, null, ['parent' => null]);
-        $this->assertTrue($bool);
-
-        $authCheck = $this->createMock(AuthorizationCheckerInterface::class);
-        $authCheck->expects($this->any())->method('isGranted')->willReturn(false);
-        $adapter = new SimpleMenuAdaptor($authCheck, [[
-            'label' => 'label',
-            'parent' => null,
-            'role' => 'ADMIN',
-            'route' => 'KunstmaanAdminBundle_modules',
-            'params' => ['x' => 'y'],
-        ]]);
-        $array = [];
-        $adapter->adaptChildren($this->object, $array, null, new Request());
-        $this->assertEmpty($array);
+        $this->assertIsArray($menuBuilderMock->getTopChildren());
     }
 }
