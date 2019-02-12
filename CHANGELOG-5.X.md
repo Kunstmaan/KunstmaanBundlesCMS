@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.2.1 / 2019-02-12
+
+* [AllBundles] Added missing items in upgrade doc for 5.2 [#2356](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2356) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle][MediaBundle] Configure bundle dependencies by default [#2354](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2354) ([@acrobat](https://github.com/acrobat)) 
+* [CacheBundle] Fixed incorrect composer autoload namespace [#2353](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2353) ([@acrobat](https://github.com/acrobat)) 
+
+
 ## 5.2.0 / 2019-02-08
 
 * [MenuBundle] Mark menu service as public [#2342](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2342) ([@acrobat](https://github.com/acrobat)) 
