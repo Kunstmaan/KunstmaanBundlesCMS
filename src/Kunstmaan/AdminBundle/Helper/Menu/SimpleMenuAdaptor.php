@@ -54,7 +54,7 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
                 ->setUniqueId($item['route'])
                 ->setParent($parent);
 
-            if ($request && stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+            if ($request && null !== $parent && stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
                 $parent->setActive(true);
             }
