@@ -62,6 +62,6 @@ abstract class {{ pagepart }} extends AbstractPagePart implements FormAdaptorInt
      */
     public function getAdminView()
     {
-        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}/admin-view.html.twig';
+        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}admin-view.html.twig';
     }
 }

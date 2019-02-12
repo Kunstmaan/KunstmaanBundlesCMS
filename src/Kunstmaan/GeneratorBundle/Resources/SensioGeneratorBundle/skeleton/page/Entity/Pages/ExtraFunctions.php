@@ -43,5 +43,5 @@
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/Common/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/Common{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }

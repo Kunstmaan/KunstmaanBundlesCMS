@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.2.2 / 2019-02-12
+
+* [MediaBundle][SearchBundle] Provide default config for bundles to work on sf4 [#2365](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2365) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fixed not supported template naming for SF34 [#2363](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2363) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminBundle] added SimpleMenuAdaptorTest [#2361](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2361) ([@deZinc](https://github.com/deZinc)) 
+* [GeneratorBundle] Use new multi language parameter as the check is broken on empty install [#2359](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2359) ([@acrobat](https://github.com/acrobat)) 
+* [PagePartBundle] Make sure column names are independent of the doctrine naming strategy [#2358](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2358) ([@acrobat](https://github.com/acrobat)) 
+
+
 ## 5.2.1 / 2019-02-12
 
 * [AllBundles] Added missing items in upgrade doc for 5.2 [#2356](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2356) ([@acrobat](https://github.com/acrobat)) 

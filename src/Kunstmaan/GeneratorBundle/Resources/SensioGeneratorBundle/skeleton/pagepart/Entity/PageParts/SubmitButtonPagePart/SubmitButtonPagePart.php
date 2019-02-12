@@ -62,7 +62,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}/view.html.twig';
+        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**
@@ -72,7 +72,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getAdminView()
     {
-        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}/admin-view.html.twig';
+        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}admin-view.html.twig';
     }
 
     /**
