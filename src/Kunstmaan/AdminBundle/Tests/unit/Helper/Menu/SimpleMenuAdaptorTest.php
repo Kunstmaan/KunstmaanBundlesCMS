@@ -31,6 +31,7 @@ class SimpleMenuAdaptorTest extends TestCase
     {
         $simpleMenuAdaptorMock = $this->getMockBuilder(SimpleMenuAdaptor::class)
             ->setConstructorArgs([$this->authorizationCheckerInterface, $this->menuItems])
+            ->setMethods(null)
             ->getMock()
         ;
 
@@ -72,7 +73,7 @@ class SimpleMenuAdaptorTest extends TestCase
             ->method('isGranted')
             ->will($this->onConsecutiveCalls(false, true))
         ;
-        $simpleMenuAdaptorMock = new SimpleMenuAdaptor($this->authorizationCheckerInterface, $this->menuItems);
+        $simpleMenuAdaptorMock = $this->setUpSimpleMenuAdaptorMock();
         $simpleMenuAdaptorMock->adaptChildren($menuBuilderMock, $children, $parent, $request);
 
         $this->assertCount(1, $children);
