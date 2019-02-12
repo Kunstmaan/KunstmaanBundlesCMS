@@ -23,7 +23,8 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     /**
      * Constructor
      *
-     * @param AuthorizationCheckerInterface $container
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param bool                          $isEnabledVersionChecker
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, $isEnabledVersionChecker)
     {
@@ -53,24 +54,22 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
-        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
-            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-                if ($this->isEnabledVersionChecker) {
-                    $menuItem = new MenuItem($menu);
-                    $menuItem
-                        ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
-                        ->setLabel('settings.version.bundle')
-                        ->setUniqueId('bundle_versions')
-                        ->setParent($parent);
-                    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                        $menuItem->setActive(true);
-                    }
-                    $children[] = $menuItem;
-                }
-            }
         }
 
         if (!is_null($parent) && 'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN') && $this->isEnabledVersionChecker) {
+                $menuItem = new MenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
+                    ->setLabel('settings.version.bundle')
+                    ->setUniqueId('bundle_versions')
+                    ->setParent($parent);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
+                }
+                $children[] = $menuItem;
+            }
+
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanadminbundle_admin_exception')
