@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Tests\Validator\Constraints;
+namespace Kunstmaan\AdminBundle\Tests\Validator\Constraints;
 
 use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictions;
 use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictionsValidator;
