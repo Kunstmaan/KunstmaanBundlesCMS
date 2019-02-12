@@ -125,6 +125,6 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/ContentPage/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/ContentPage:view.html.twig';
     }
 }

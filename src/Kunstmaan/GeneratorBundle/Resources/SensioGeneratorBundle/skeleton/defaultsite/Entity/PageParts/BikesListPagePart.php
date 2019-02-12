@@ -19,7 +19,7 @@ class BikesListPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/BikesListPagePart/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/BikesListPagePart:view.html.twig';
     }
 
     /**

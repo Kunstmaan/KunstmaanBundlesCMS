@@ -53,7 +53,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}OverviewPage/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}OverviewPage:view.html.twig';
     }
 
     /**

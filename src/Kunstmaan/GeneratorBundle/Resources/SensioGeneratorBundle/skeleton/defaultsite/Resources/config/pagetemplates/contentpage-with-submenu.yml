@@ -7,5 +7,5 @@ kunstmaan_page_part:
 {% if isV4 %}            {%endif%}rows:
 {% if isV4 %}            {%endif%}    - regions:
 {% if isV4 %}            {%endif%}        - { name: "main", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "submenu", span: 12, template: "{% if not isV4 %}{{ bundle.name }}:{% endif %}Layout/submenu.html.twig" }
+{% if isV4 %}            {%endif%}        - { name: "submenu", span: 12, template: "{% if not isV4 %}{{ bundle.name }}:{% endif %}Layout:submenu.html.twig" }
 {% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\ContentPage\\pagetemplate.html.twig"
