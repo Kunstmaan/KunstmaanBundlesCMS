@@ -2,229 +2,190 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
-use Doctrine\Common\Cache\Cache;
-use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
-use Kunstmaan\TranslatorBundle\Service\Translator\Translator;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
+use Doctrine\Common\Cache\Cache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Kernel;
-
-class FakeClient extends Client
-{
-    /**
-     * @return \Psr\Http\Message\ResponseInterface|void
-     *
-     * @throws Exception
-     */
-    public function post()
-    {
-        throw new Exception('bang!');
-    }
-}
+use Symfony\Component\Translation\Translator;
 
 class VersionCheckTest extends TestCase
 {
-    /**
-     * @var VersionChecker
-     */
-    protected $object;
+    /** @var ContainerInterface (mock) */
+    private $container;
 
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @var Cache
-     */
-    protected $cache;
+    /** @var Cache (mock) */
+    private $cache;
 
     public function setUp()
     {
+        /* @var ContainerInterface $container */
         $this->container = $this->createMock(ContainerInterface::class);
-        $this->container->expects($this->any())->method('getParameter')->will($this->onConsecutiveCalls('https://nasa.gov', 123, true));
+
+        /* @var Cache $cache */
         $this->cache = $this->createMock(Cache::class);
-        $this->object = new VersionChecker($this->container, $this->cache);
     }
 
     /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
+     * @param array|null $methods
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|VersionChecker
      */
-    public function testVersionChecker()
+    public function setUpVersionCheckerMock(?array $methods)
     {
-        $currentPath = getcwd();
-        if (strpos($currentPath, 'src') !== false) {
-            $currentPath = strstr($currentPath, 'src', true);
+        $versionCheckerMock = $this->getMockBuilder(VersionChecker::class)
+            ->setConstructorArgs([$this->container, $this->cache])
+            ->setMethods($methods)
+            ->getMock()
+        ;
+
+        return $versionCheckerMock;
+    }
+
+    public function testIsEnabled()
+    {
+        $this->container
+            ->expects($this->exactly(3))
+            ->method('getParameter')
+            ->will($this->onConsecutiveCalls('url', 300, true))
+        ;
+
+        $versionCheckerMock = $this->setUpVersionCheckerMock(null);
+        $this->assertIsBool($versionCheckerMock->isEnabled());
+    }
+
+    public function testPeriodicallyCheck()
+    {
+        $this->container
+            ->expects($this->exactly(3))
+            ->method('getParameter')
+            ->will($this->onConsecutiveCalls('url', 300, true))
+        ;
+
+        $this->cache
+            ->expects($this->once())
+            ->method('fetch')
+            ->willReturn([])
+        ;
+        $versionCheckerMock = $this->setUpVersionCheckerMock(null);
+        $versionCheckerMock->periodicallyCheck();
+    }
+
+    public function testCheckWithInvalidResponse()
+    {
+        $this->container
+            ->expects($this->exactly(4))
+            ->method('getParameter')
+            ->will($this->onConsecutiveCalls('url', 300, true, 'title'))
+        ;
+
+        $requestMock = $this->createMock(Request::class);
+
+        $stackMock = $this->createMock(RequestStack::class);
+        $stackMock
+            ->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($requestMock)
+        ;
+        $kernelMock = $this->createMock(Kernel::class);
+
+        $this->container
+            ->expects($this->exactly(2))
+            ->method('get')
+            ->will($this->onConsecutiveCalls($stackMock, $kernelMock))
+        ;
+
+        $versionCheckerMock = $this->setUpVersionCheckerMock(['parseComposer']);
+        $versionCheckerMock
+            ->expects($this->once())
+            ->method('parseComposer')
+            ->willReturn(['name' => 'box/spout'])
+        ;
+        $this->assertFalse($versionCheckerMock->check());
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testCheck(string $lockPath, string $expectedType, string $expected)
+    {
+        if ('exception' === $expectedType) {
+            $this->expectException(ParseException::class);
+            $this->expectExceptionMessage($expected);
         }
-        $path = realpath($currentPath.'/src');
-        $trans = $this->createMock(Translator::class);
-        $kernel = $this->createMock(Kernel::class);
-        $request = $this->createMock(Request::class);
-        $stack = $this->createMock(RequestStack::class);
-        $trans->expects($this->any())->method('trans')->willReturn('algo en una differente idioma');
-        $stack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
-        $kernel->expects($this->exactly(2))->method('getRootDir')->willReturn($path);
-        $request->expects($this->once())->method('getHttpHost')->willReturn('https://nasa.gov');
-        $this->cache->expects($this->once())->method('fetch')->willReturn('not_an_array');
-        $this->container->expects($this->any())->method('get')->will(
-            $this->onConsecutiveCalls($stack, $kernel, $trans, $kernel)
-        );
 
-        $object = $this->object;
-        $this->assertTrue($object->isEnabled());
-        $object->periodicallyCheck();
-    }
+        $this->container
+            ->expects($this->any())
+            ->method('getParameter')
+            ->will($this->onConsecutiveCalls('url', 300, true, 'title'))
+        ;
 
-    /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
-     */
-    public function testPeriodicCheckReturnsNothingWhenDisabled()
-    {
-        $this->container = $this->createMock(ContainerInterface::class);
-        $this->container->expects($this->any())->method('getParameter')->will($this->onConsecutiveCalls('https://nasa.gov', 123, false, false));
-        $this->cache = $this->createMock(Cache::class);
-        $this->object = new VersionChecker($this->container, $this->cache);
-        $this->cache->expects($this->never())->method('fetch');
-        $this->object->periodicallyCheck();
-        $this->object->check();
-    }
+        $requestMock = $this->createMock(Request::class);
 
-    /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
-     */
-    public function testCheckReturnsFalseOnException()
-    {
-        $this->container = $this->createMock(ContainerInterface::class);
-        $this->container->expects($this->any())->method('getParameter')->will($this->onConsecutiveCalls('https://nasa.gov', 123, true, true));
-        $this->cache = $this->createMock(Cache::class);
-        $this->object = new VersionChecker($this->container, $this->cache);
-        $this->cache->expects($this->never())->method('fetch');
-        $currentPath = getcwd();
-        if (strpos($currentPath, 'src') !== false) {
-            $currentPath = strstr($currentPath, 'src', true);
-        }
-        $path = realpath($currentPath.'/src');
-        $client = new FakeClient();
-        $this->object->setClient($client);
-        $trans = $this->createMock(Translator::class);
-        $kernel = $this->createMock(Kernel::class);
-        $request = $this->createMock(Request::class);
-        $stack = $this->createMock(RequestStack::class);
-        $trans->expects($this->any())->method('trans')->willReturn('algo en una differente idioma');
-        $stack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
-        $kernel->expects($this->exactly(2))->method('getRootDir')->willReturn($path);
-        $this->container->expects($this->any())->method('get')->will(
-            $this->onConsecutiveCalls($stack, $kernel, $trans, $kernel)
-        );
-        $this->assertFalse($this->object->check());
-    }
+        $stackMock = $this->createMock(RequestStack::class);
+        $stackMock
+            ->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($requestMock)
+        ;
 
-    /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
-     */
-    public function testGetData()
-    {
-        $mock = new MockHandler([new Response(200, ['Content-Type: application/json'], '{"fake": "data"}')]);
+        $translatorMock = $this->createMock(Translator::class);
+        $translatorMock
+            ->expects($this->any())
+            ->method('trans')
+            ->willReturn('translated')
+        ;
+
+        $kernelMock = $this->createMock(Kernel::class);
+
+        $this->container
+            ->expects($this->exactly(3))
+            ->method('get')
+            ->will($this->onConsecutiveCalls($stackMock, $kernelMock, $translatorMock))
+        ;
+
+        $mock = new MockHandler([
+            new Response(200, ['X-Foo' => 'Bar'], \json_encode(['foo' => 'bar'])),
+        ]);
+
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
-        $this->object->setClient($client);
-        $this->cache->expects($this->once())->method('fetch')->willReturn('not_an_array');
-        $this->cache->expects($this->once())->method('save')->willReturn(true);
-        $currentPath = getcwd();
-        if (strpos($currentPath, 'src') !== false) {
-            $currentPath = strstr($currentPath, 'src', true);
+
+        $versionCheckerMock = $this->setUpVersionCheckerMock(['getClient', 'getLockPath']);
+        $versionCheckerMock
+            ->expects($this->any())
+            ->method('getClient')
+            ->willReturn($client)
+        ;
+        $versionCheckerMock
+            ->expects($this->once())
+            ->method('getLockPath')
+            ->willReturn($lockPath)
+        ;
+
+        if ('instanceOf' === $expectedType) {
+            $this->assertInstanceOf($expected, $versionCheckerMock->check());
+        } else {
+            $versionCheckerMock->check();
         }
-        $path = realpath($currentPath.'/src');
-        $trans = $this->createMock(Translator::class);
-        $kernel = $this->createMock(Kernel::class);
-        $request = $this->createMock(Request::class);
-        $stack = $this->createMock(RequestStack::class);
-        $trans->expects($this->any())->method('trans')->willReturn('algo en una differente idioma');
-        $stack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
-        $kernel->expects($this->exactly(2))->method('getRootDir')->willReturn($path);
-        $this->container->expects($this->any())->method('get')->will(
-            $this->onConsecutiveCalls($stack, $kernel, $trans, $kernel)
-        );
-        $this->object->periodicallyCheck();
     }
 
-    /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
-     * @throws \ReflectionException
-     */
-    public function testCheckGetPackagesThrowsException()
+    public function provider()
     {
-        $this->expectException(Exception::class);
-        $trans = $this->createMock(Translator::class);
-        $kernel = $this->createMock(Kernel::class);
-        $trans->expects($this->any())->method('trans')->willReturn('algo en una differente idioma');
-        $this->container->expects($this->any())->method('get')->will(
-            $this->onConsecutiveCalls($trans, $kernel)
-        );
+        $baseDir = __DIR__ . '/testdata';
 
-        $mirror = new ReflectionClass(VersionChecker::class);
-        $method = $mirror->getMethod('getPackages');
-        $method->setAccessible(true);
-        $method->invoke($this->object);
-    }
-
-    /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
-     * @throws \ReflectionException
-     */
-    public function testCheckGetPackagesThrowsExceptionWhenNoPackagesInLock()
-    {
-        $currentPath = getcwd();
-        if (strpos($currentPath, 'src') !== false) {
-            $currentPath = strstr($currentPath, 'src', true);
-        }
-        $path = realpath($currentPath.'/src/Kunstmaan/AdminBundle/Tests/Helper/VersionCheck');
-        $this->expectException(Exception::class);
-        $trans = $this->createMock(Translator::class);
-        $kernel = $this->createMock(Kernel::class);
-        $trans->expects($this->any())->method('trans')->willReturn('algo en una differente idioma');
-        $kernel->expects($this->once())->method('getRootDir')->willReturn($path);
-        $this->container->expects($this->any())->method('get')->will(
-            $this->onConsecutiveCalls($trans, $kernel)
-        );
-
-        $mirror = new ReflectionClass(VersionChecker::class);
-        $method = $mirror->getMethod('getPackages');
-        $method->setAccessible(true);
-        $method->invoke($this->object);
-    }
-
-    /**
-     * @throws \Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException
-     * @throws \ReflectionException
-     */
-    public function testCheckGetPackagesThrowsExceptionWithBadJson()
-    {
-        $currentPath = getcwd();
-        if (strpos($currentPath, 'src') !== false) {
-            $currentPath = strstr($currentPath, 'src', true);
-        }
-        $path = realpath($currentPath.'/src/Kunstmaan/AdminBundle/Tests/Helper');
-        $this->expectException(Exception::class);
-        $trans = $this->createMock(Translator::class);
-        $kernel = $this->createMock(Kernel::class);
-        $trans->expects($this->any())->method('trans')->willReturn('algo en una differente idioma');
-        $kernel->expects($this->once())->method('getRootDir')->willReturn($path);
-        $this->container->expects($this->any())->method('get')->will(
-            $this->onConsecutiveCalls($trans, $kernel)
-        );
-
-        $mirror = new ReflectionClass(VersionChecker::class);
-        $method = $mirror->getMethod('getPackages');
-        $method->setAccessible(true);
-        $method->invoke($this->object);
+        return [
+            'composer.lock ok' => [$baseDir.'/composer_ok.lock', 'instanceOf', \stdClass::class],
+            'composer.lock broken' => [$baseDir.'/composer_broken.lock', 'exception', 'translated (#4)'],
+            'composer.lock bundleless' => [$baseDir.'/composer_bundleless.lock', 'exception', 'translated'],
+            'composer.lock not found' => [$baseDir.'/composer_not_there.lock', 'exception', 'translated'],
+        ];
     }
 }

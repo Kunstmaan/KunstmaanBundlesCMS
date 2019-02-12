@@ -1,0 +1,125 @@
+{
+  "packages": [
+    {
+      "name": "kunstmaan/adminlist-bundle",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Kunstmaan/KunstmaanAdminListBundle.git",
+        "reference": "3c41a81883af0ddeab34f3ad2ae825f772f55714"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/Kunstmaan/KunstmaanAdminListBundle/zipball/3c41a81883af0ddeab34f3ad2ae825f772f55714",
+        "reference": "3c41a81883af0ddeab34f3ad2ae825f772f55714",
+        "shasum": ""
+      },
+      "require": {
+        "box/spout": "^2.5",
+        "kunstmaan/admin-bundle": "~5.2",
+        "php": "^7.1"
+      },
+      "require-dev": {
+        "codeception/codeception": "^2.5",
+        "kunstmaan/form-bundle": "^5.2",
+        "kunstmaan/lead-generation-bundle": "^5.2",
+        "kunstmaan/menu-bundle": "^5.2",
+        "kunstmaan/translator-bundle": "^5.2",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "phpunit/phpunit": "^7.5",
+        "symfony/phpunit-bridge": "^4.2"
+      },
+      "type": "symfony-bundle",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "5.2-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Kunstmaan\\AdminListBundle\\": ""
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Kunstmaan Team",
+          "email": "support@kunstmaan.be",
+          "homepage": "http://www.kunstmaan.be/"
+        }
+      ],
+      "description": "Every website contains several lists of content ranging from articles on a blog, to drop down values. The KunstlaanAdminListBundles takes CRUD a step further by supplying filtering, exports to csv and editing capabilities to these content entities.",
+      "homepage": "https://github.com/Kunstmaan/KunstmaanAdminListBundle",
+      "keywords": [
+        "cms",
+        "crud",
+        "kunstmaan"
+      ],
+      "time": "2019-02-04T11:29:21+00:00"
+    },
+    {
+      "name": "kunstmaan/node-bundle",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Kunstmaan/KunstmaanNodeBundle.git",
+        "reference": "73f04959ce2ef046e6a4f27853d79c3c00423779"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/Kunstmaan/KunstmaanNodeBundle/zipball/73f04959ce2ef046e6a4f27853d79c3c00423779",
+        "reference": "73f04959ce2ef046e6a4f27853d79c3c00423779",
+        "shasum": ""
+      },
+      "require": {
+        "gedmo/doctrine-extensions": "^2.4.34",
+        "kunstmaan/adminlist-bundle": "~5.2",
+        "php": "^7.1",
+        "stof/doctrine-extensions-bundle": "~1.1",
+        "symfony-cmf/routing-bundle": "~2.0"
+      },
+      "require-dev": {
+        "codeception/codeception": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "phpunit/phpunit": "^7.5",
+        "symfony/phpunit-bridge": "^4.2"
+      },
+      "type": "symfony-bundle",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "5.2-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Kunstmaan\\NodeBundle\\": ""
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Kunstmaan Team",
+          "email": "support@kunstmaan.be",
+          "homepage": "http://www.kunstmaan.be/"
+        }
+      ],
+      "description": "All websites need pages(we call them nodes) but you probably don't want to spend too much time building them. Plus they should look pretty and contain the right content and that takes time. We make sure you have to spend less time managing your pages but still offer you flexibility so you can focus on more important tasks and don't have to worry about it.",
+      "homepage": "https://github.com/Kunstmaan/KunstmaanNodeBundle",
+      "keywords": [
+        "admin",
+        "cms",
+        "kunstmaan",
+        "tree"
+      ],
+      "time": "2019-02-01T11:10:10+00:00"
+    }
+  ]
+}
