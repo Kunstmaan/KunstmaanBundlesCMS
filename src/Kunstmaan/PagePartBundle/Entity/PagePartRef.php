@@ -22,12 +22,12 @@ class PagePartRef
     protected $id;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(name="pageId", type="bigint")
      */
     protected $pageId;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="pageEntityname", type="string")
      */
     protected $pageEntityname;
 
