@@ -2,270 +2,254 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\Configurator;
 
-use ArrayIterator;
-use Codeception\Stub;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\Cache\CacheConfiguration;
-use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-use Kunstmaan\LeadGenerationBundle\Tests\unit\Entity\Popup\Popup;
-
-class ORM extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
-{
-    /**
-     * @return mixed
-     */
-    public function getBundleName()
-    {
-        return 'SomeBundle';
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEntityName()
-    {
-        return 'SomeEntity';
-    }
-
-    /**
-     * @return mixed
-     */
-    public function buildFields()
-    {
-        return true;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSortableField()
-    {
-        return 'sortfield';
-    }
-}
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 {
-    /** @var ORM $config */
-    private $config;
+    /** @var EntityManagerInterface */
+    private $emMock;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject $em */
-    private $em;
+    /** @var AclHelper */
+    private $aclHelperMock;
 
-    /**
-     * @throws \ReflectionException
-     */
     public function setUp()
     {
-        $em = $this->createMock(EntityManager::class);
-        $this->em = $em;
-        $this->config = new ORM($em);
+        $queryMock = $this->createMock(AbstractQuery::class);
+        $queryMock
+            ->expects($this->any())
+            ->method('iterate')
+            ->willReturn($this->createMock(\Iterator::class))
+        ;
 
-        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
-        $property = $mirror->getProperty('orderBy');
-        $property->setAccessible(true);
-        $property->setValue($this->config, 'somefield');
+        $this->emMock = $this->createMock(EntityManagerInterface::class);
+        $this->aclHelperMock = $this->createMock(AclHelper::class);
+        $this->aclHelperMock
+            ->expects($this->any())
+            ->method('apply')
+            ->willReturn($queryMock)
+        ;
+
+        $queryBuilderMock = $this->createMock(QueryBuilder::class);
+        $queryBuilderMock
+            ->expects($this->any())
+            ->method('getQuery')
+            ->willReturn($queryMock)
+        ;
+
+        $entityRepositoryMock = $this->createMock(EntityRepository::class);
+        $entityRepositoryMock
+            ->expects($this->any())
+            ->method('createQueryBuilder')
+            ->willReturn($queryBuilderMock)
+        ;
+
+        $this->emMock
+            ->expects($this->any())
+            ->method('getRepository')
+            ->with('Bundle:MyEntity')
+            ->willReturn($entityRepositoryMock)
+        ;
+        $this->emMock
+            ->expects($this->any())
+            ->method('getClassMetadata')
+            ->willReturn($this->createMock(ClassMetadata::class))
+        ;
     }
 
-    public function testGetSetEntityManager()
+    public function testGetEditUrl()
     {
-        $config = $this->config;
-        $em = $this->createMock(EntityManager::class);
-        $config->setEntityManager($em);
-        $this->assertInstanceOf(EntityManager::class, $config->getEntityManager());
+        $abstractMock = $this->setUpAbstractMock();
+
+        $item = new class() {
+            public function getId()
+            {
+                return 747;
+            }
+        };
+
+        $editUrl = $abstractMock->getEditUrlFor($item);
+        $this->assertIsArray($editUrl);
+        $this->assertArrayHasKey('path', $editUrl);
+        $this->assertArrayHasKey('params', $editUrl);
+        $this->assertEquals('bundle_admin_myentity_'.AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertContains(747, $editUrl['params']);
     }
 
-    public function testGetSetPermissionDefinition()
+    public function testGetDeleteUrl()
     {
-        $config = $this->config;
-        $this->assertNull($config->getPermissionDefinition());
-        $config->setPermissionDefinition(new PermissionDefinition(['something']));
-        $this->assertInstanceOf(PermissionDefinition::class, $config->getPermissionDefinition());
+        $abstractMock = $this->setUpAbstractMock();
+
+        $item = new class() {
+            public function getId()
+            {
+                return 747;
+            }
+        };
+
+        $editUrl = $abstractMock->getDeleteUrlFor($item);
+        $this->assertIsArray($editUrl);
+        $this->assertArrayHasKey('path', $editUrl);
+        $this->assertArrayHasKey('params', $editUrl);
+        $this->assertEquals('bundle_admin_myentity_'.AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertContains(747, $editUrl['params']);
     }
 
-    public function testGetQuery()
-    {
-        $config = $this->config;
-        $em = $this->em;
-        $filterBuilder = $this->createMock(FilterBuilder::class);
-        $filterBuilder->expects($this->once())->method('getCurrentFilters')->willReturn([new Filter('whatever', ['type' => new StringFilterType('whatever')], uniqid())]);
-        $config->setFilterBuilder($filterBuilder);
-        $cacheConfig = $this->createMock(CacheConfiguration::class);
-        $cacheConfig->expects($this->any())->method('getCacheLogger')->willReturn('whatever');
-        $fakeConfig = $this->createMock(Configuration::class);
-        $fakeConfig->expects($this->any())->method('getDefaultQueryHints')->willReturn($fakeConfig);
-        $fakeConfig->expects($this->any())->method('isSecondLevelCacheEnabled')->willReturn($fakeConfig);
-        $fakeConfig->expects($this->any())->method('getSecondLevelCacheConfiguration')->willReturn($cacheConfig);
-        $fakeClassMetaData = Stub::makeEmpty(ClassMetadata::class, ['hasAssociation' => false]);
-        $qb = $this->createMock(QueryBuilder::class);
-        $qb->expects($this->any())->method('setParameters')->willReturn($qb);
-        $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
-        $em->expects($this->any())->method('createQuery')->willReturn($qb);
-        $em->expects($this->any())->method('getRepository')->willReturn($em);
-        $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
-        $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
-        $em->expects($this->any())->method('getClassMetadata')->willReturn($fakeClassMetaData);
-        $query = new Query($em);
-        $qb->expects($this->any())->method('getQuery')->willReturn($query);
-        $query = $config->getQuery();
-        $this->assertInstanceOf(Query::class, $query);
-    }
-
-    public function testEditUrlFor()
-    {
-        $config = $this->config;
-        $item = new Popup();
-        $item->setId(666);
-        $url = $config->getEditUrlFor($item);
-        $this->assertCount(2, $url);
-        $this->assertArrayHasKey('path', $url);
-        $this->assertArrayHasKey('params', $url);
-        $this->assertArrayHasKey('id', $url['params']);
-        $this->assertEquals('somebundle_admin_someentity_edit', $url['path']);
-        $this->assertCount(1, $url['params']);
-        $this->assertEquals(666, $url['params']['id']);
-    }
-
-    public function testDeleteUrlFor()
-    {
-        $config = $this->config;
-        $item = new Popup();
-        $item->setId(666);
-        $url = $config->getDeleteUrlFor($item);
-        $this->assertCount(2, $url);
-        $this->assertArrayHasKey('path', $url);
-        $this->assertArrayHasKey('params', $url);
-        $this->assertArrayHasKey('id', $url['params']);
-        $this->assertEquals('somebundle_admin_someentity_delete', $url['path']);
-        $this->assertCount(1, $url['params']);
-        $this->assertEquals(666, $url['params']['id']);
-    }
-
-    /**
-     * @throws \ReflectionException
-     */
     public function testGetPagerFanta()
     {
-        $config = $this->config;
-        $em = $this->em;
+        $abstractMock = $this->setUpAbstractMock();
 
-        $cacheConfig = $this->createMock(CacheConfiguration::class);
-        $cacheConfig->expects($this->any())->method('getCacheLogger')->willReturn('whatever');
-
-        $fakeConfig = $this->createMock(Configuration::class);
-        $fakeConfig->expects($this->any())->method('getDefaultQueryHints')->willReturn(['doctrine_paginator.distinct' => 'blah']);
-        $fakeConfig->expects($this->any())->method('isSecondLevelCacheEnabled')->willReturn($fakeConfig);
-        $fakeConfig->expects($this->any())->method('getSecondLevelCacheConfiguration')->willReturn($cacheConfig);
-
-        $platform = $this->createMock(MySQL57Platform::class);
-        $platform->expects($this->any())->method('getSQLResultCasing')->willReturn('string');
-
-        $fakeClassMetaData = Stub::makeEmpty(ClassMetadata::class, ['hasAssociation' => false]);
-        $connection = $this->createMock(Connection::class);
-        $connection->expects($this->any())->method('getDatabasePlatform')->willReturn($platform);
-
-        $qb = $this->createMock(QueryBuilder::class);
-        $qb->expects($this->any())->method('setParameters')->willReturn($qb);
-        $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
-        $em->expects($this->any())->method('createQuery')->willReturn($qb);
-        $em->expects($this->any())->method('getRepository')->willReturn($em);
-        $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
-        $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
-        $em->expects($this->any())->method('getConnection')->willReturn($connection);
-        $em->expects($this->any())->method('getClassMetadata')->willReturn($fakeClassMetaData);
-        $qb->expects($this->any())->method('getQuery')->willReturn(new Query($em));
-
-        $pager = $config->getPagerfanta();
-        $this->assertInstanceOf(Pagerfanta::class, $pager);
-
-        $pager = $this->createMock(Pagerfanta::class);
-        $pager->expects($this->once())->method('getNbResults')->willReturn(5);
-        $pager->expects($this->once())->method('getCurrentPageResults')->willReturn([1, 2, 3, 4, 5]);
-
-        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
-        $property = $mirror->getProperty('pagerfanta');
-        $property->setAccessible(true);
-        $property->setValue($config, $pager);
-
-        $count = $config->getCount();
-        $this->assertEquals(5, $count);
-
-        $items = $config->getItems();
-        $this->assertCount(5, $items);
+        $this->assertInstanceOf(Pagerfanta::class, $abstractMock->getPagerfanta());
     }
 
-    /**
-     * @throws \ReflectionException
-     */
-    public function testGetIterator()
+    public function testGetQueryDefault()
     {
-        $config = $this->config;
-        $query = $this->createMock(AbstractQuery::class);
-        $query->expects($this->once())->method('iterate')->willReturn(new ArrayIterator());
+        $abstractMock = $this->setUpAbstractMock();
 
-        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
-        $property = $mirror->getProperty('query');
-        $property->setAccessible(true);
-        $property->setValue($config, $query);
+        // default
+        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
 
-        $it = $config->getIterator();
-        $this->assertInstanceOf(ArrayIterator::class, $it);
+        // no longer null, direct return
+        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
+
+        // check the iterator in one go
+        $this->assertInstanceOf(\Iterator::class, $abstractMock->getIterator());
     }
 
-    /**
-     * @throws \ReflectionException
-     * @throws \Exception
-     */
-    public function testGetQueryWithAclEnabled()
+    public function testGetQueryWithFilter()
     {
-        $config = $this->config;
-        $em = $this->em;
+        $abstractORMFilterTypeMock = $this->createMock(AbstractORMFilterType::class);
 
-        $cacheConfig = $this->createMock(CacheConfiguration::class);
-        $cacheConfig->expects($this->any())->method('getCacheLogger')->willReturn('whatever');
-        $fakeConfig = $this->createMock(Configuration::class);
-        $fakeConfig->expects($this->any())->method('getDefaultQueryHints')->willReturn($fakeConfig);
-        $fakeConfig->expects($this->any())->method('isSecondLevelCacheEnabled')->willReturn($fakeConfig);
-        $fakeConfig->expects($this->any())->method('getSecondLevelCacheConfiguration')->willReturn($cacheConfig);
-        $qb = $this->createMock(QueryBuilder::class);
-        $fakeClassMetaData = Stub::makeEmpty(ClassMetadata::class, ['hasAssociation' => false]);
-        $qb->expects($this->any())->method('setParameters')->willReturn($qb);
-        $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
-        $em->expects($this->any())->method('createQuery')->willReturn($qb);
-        $em->expects($this->any())->method('getRepository')->willReturn($em);
-        $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
-        $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
-        $em->expects($this->any())->method('getClassMetadata')->willReturn($fakeClassMetaData);
+        $filterBuilderMock = $this->createMock(FilterBuilder::class);
+        $filterBuilderMock
+            ->expects($this->any())
+            ->method('getCurrentFilters')
+            ->willReturn([
+                new Filter('foo', ['type' => $abstractORMFilterTypeMock, 'options' => []], 'uid'),
+            ])
+        ;
 
-        $query = new Query($em);
-        $aclHelper = $this->createMock(AclHelper::class);
-        $aclHelper->expects($this->once())->method('apply')->willReturn($query);
-        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
-        $property = $mirror->getProperty('aclHelper');
-        $property->setAccessible(true);
-        $property->setValue($config, $aclHelper);
-        $property = $mirror->getProperty('permissionDef');
-        $property->setAccessible(true);
-        $property->setValue($config, new PermissionDefinition(['admin']));
+        /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
+        $abstractMock = $this->setUpAbstractMock(['getFilterBuilder']);
+        $abstractMock
+            ->expects($this->any())
+            ->method('getFilterBuilder')
+            ->willReturn($filterBuilderMock)
+        ;
 
-        $qb->expects($this->any())->method('getQuery')->willReturn($query);
-        $query = $config->getQuery();
-        $this->assertInstanceOf(Query::class, $query);
+        $abstractMock->addFilter('foo');
+        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
+    }
+
+    public function testGetQueryWithOrderBy()
+    {
+        /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
+        $abstractMock = $this->setUpAbstractMock(['getFilterBuilder']);
+
+        $filterBuilderMock = $this->createMock(FilterBuilder::class);
+        $filterBuilderMock
+            ->expects($this->once())
+            ->method('bindRequest')
+        ;
+        $filterBuilderMock
+            ->expects($this->any())
+            ->method('getCurrentFilters')
+            ->willReturn([])
+        ;
+
+        $abstractMock
+            ->expects($this->exactly(2))
+            ->method('getFilterBuilder')
+            ->willReturn($filterBuilderMock)
+        ;
+
+        $requestMock = $this->getMockBuilder(Request::class)
+            ->setConstructorArgs([['page' => 1], [], ['_route' => 'testroute']])
+            ->setMethods(['getSession'])
+            ->getMock()
+        ;
+
+        $sessionMock = $this->createMock(Session::class);
+        $sessionMock
+            ->expects($this->once())
+            ->method('has')
+            ->willReturn(true)
+        ;
+        $sessionMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('listconfig_testroute')
+            ->willReturn(['page' => 1, 'orderBy' => 'foo', 'orderDirection' => 'up'])
+        ;
+
+        $requestMock
+            ->expects($this->exactly(2))
+            ->method('getSession')
+            ->willReturn($sessionMock)
+        ;
+
+        $abstractMock->bindRequest($requestMock);
+        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
+    }
+
+    public function testGetQueryWithPermissionDefAndAcl()
+    {
+        $abstractMock = $this->setUpAbstractMock();
+
+        /** @var PermissionDefinition $permissionDefinitionMock */
+        $permissionDefinitionMock = $this->createMock(PermissionDefinition::class);
+        $this->assertInstanceOf(AbstractDoctrineORMAdminListConfigurator::class, $abstractMock->setPermissionDefinition($permissionDefinitionMock));
+        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
+    }
+
+    public function testSetGetPermissionDefinition()
+    {
+        $abstractMock = $this->setUpAbstractMock();
+
+        /** @var PermissionDefinition $permissionDefinitionMock */
+        $permissionDefinitionMock = $this->createMock(PermissionDefinition::class);
+        $this->assertInstanceOf(AbstractDoctrineORMAdminListConfigurator::class, $abstractMock->setPermissionDefinition($permissionDefinitionMock));
+        $this->assertInstanceOf(PermissionDefinition::class, $abstractMock->getPermissionDefinition());
+    }
+
+    public function testSetGetEntityManager()
+    {
+        $abstractMock = $this->setUpAbstractMock();
+
+        /** @var EntityManagerInterface $emMock */
+        $emMock = $this->createMock(EntityManagerInterface::class);
+        $this->assertInstanceOf(AbstractDoctrineORMAdminListConfigurator::class, $abstractMock->setEntityManager($emMock));
+        $this->assertInstanceOf(EntityManagerInterface::class, $abstractMock->getEntityManager());
+    }
+
+    public function setUpAbstractMock(array $methods = [])
+    {
+        /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
+        $abstractMock = $this->getMockForAbstractClass(AbstractDoctrineORMAdminListConfigurator::class, [$this->emMock], '', true, true, true, $methods);
+        $abstractMock
+            ->expects($this->any())
+            ->method('getBundleName')
+            ->willReturn('Bundle')
+        ;
+        $abstractMock
+            ->expects($this->any())
+            ->method('getEntityName')
+            ->willReturn('MyEntity')
+        ;
+
+        return $abstractMock;
     }
 }
