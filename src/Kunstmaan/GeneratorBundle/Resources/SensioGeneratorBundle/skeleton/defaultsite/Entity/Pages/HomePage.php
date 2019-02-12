@@ -81,7 +81,7 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/HomePage:view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/HomePage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**
