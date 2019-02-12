@@ -79,6 +79,35 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
+        $defaultLocale = $container->hasParameter('kunstmaan_admin.default_locale') ? $container->getParameter('kunstmaan_admin.default_locale') : 'en';
+        $stofDoctrineExtensionsConfig = [
+            'default_locale' => $defaultLocale,
+            'translation_fallback' => true,
+            'orm' => [
+                'default' => [
+                    'translatable' => true,
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('stof_doctrine_extensions', $stofDoctrineExtensionsConfig);
+
+        $doctrineGedmoEntityConfig = [
+            'orm' => [
+                'mappings' => [
+                    'gedmo_translatable' => [
+                        'type' => 'annotation',
+                        'prefix' => 'Gedmo\Translatable\Entity',
+                        'dir' => '%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
+                        'alias' => 'GedmoTranslatable',
+                        'is_bundle' => false,
+                    ],
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('doctrine', $doctrineGedmoEntityConfig);
+
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }
