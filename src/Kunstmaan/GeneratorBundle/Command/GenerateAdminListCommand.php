@@ -126,7 +126,7 @@ EOT
         if (Kernel::VERSION_ID < 40000) {
             $message = 'You must use the shortcut notation like <comment>AcmeBlogBundle:Post</comment>.';
         } else {
-            $message = 'You must use the FQN like <comment>\App\Entity\Post</comment>.';
+            $message = 'You must use the FQCN like <comment>\App\Entity\Post</comment>.';
         }
 
         if (is_null($entity)) {
