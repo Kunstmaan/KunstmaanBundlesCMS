@@ -143,7 +143,7 @@ EOT
             if (Kernel::VERSION_ID < 40000) {
                 $message = 'The entity shortcut name';
             } else {
-                $message = 'The entity FQN';
+                $message = 'The entity FQCN';
             }
 
             $question = new Question($questionHelper->getQuestion($message, $entity), $entity);
