@@ -28,7 +28,6 @@ class AdminListTest extends Unit
             'getExportFields' => ['c', 'd'],
             'getCount' => '666',
             'getItems' => ['item'],
-            'getIterator' => $this->makeEmpty(\Iterator::class),
             'getSortFields' => ['e', 'f'],
             'canEdit' => true,
             'canAdd' => true,
@@ -85,11 +84,6 @@ class AdminListTest extends Unit
     public function testGetItems()
     {
         $this->assertContains('item', $this->adminList->getItems());
-    }
-
-    public function getIterator()
-    {
-        $this->assertInstanceOf(\Iterator::class, $this->adminList->getIterator());
     }
 
     public function testHasSort()
