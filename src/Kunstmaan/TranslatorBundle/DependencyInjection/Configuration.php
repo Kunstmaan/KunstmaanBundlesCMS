@@ -25,8 +25,8 @@ class Configuration implements ConfigurationInterface
             $rootNode = $treeBuilder->root('kuma_translator');
         }
 
-        $availableStorageEngines = array('orm');
-        $defaultFileFormats = array('yml', 'xliff');
+        $availableStorageEngines = ['orm'];
+        $defaultFileFormats = ['yml', 'yaml', 'xliff'];
 
         $rootNode
             ->children()
