@@ -123,18 +123,30 @@ EOT
             );
         }
 
+        if (Kernel::VERSION_ID < 40000) {
+            $message = 'You must use the shortcut notation like <comment>AcmeBlogBundle:Post</comment>.';
+        } else {
+            $message = 'You must use the FQCN like <comment>\App\Entity\Post</comment>.';
+        }
+
         if (is_null($entity)) {
             $output->writeln(
                 array(
                     '',
                     'This command helps you to generate an admin list for your entity.',
                     '',
-                    'You must use the shortcut notation like <comment>AcmeBlogBundle:Post</comment>.',
+                    $message,
                     '',
                 )
             );
 
-            $question = new Question($questionHelper->getQuestion('The entity shortcut name', $entity), $entity);
+            if (Kernel::VERSION_ID < 40000) {
+                $message = 'The entity shortcut name';
+            } else {
+                $message = 'The entity FQCN';
+            }
+
+            $question = new Question($questionHelper->getQuestion($message, $entity), $entity);
             $question->setValidator(['\Kunstmaan\GeneratorBundle\Helper\EntityValidator', 'validate']);
             $entity = $questionHelper->ask($input, $output, $question);
             $input->setOption('entity', $entity);
