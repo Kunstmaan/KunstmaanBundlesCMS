@@ -38,11 +38,11 @@
         <!-- PP - actions -->
         <div class="pp__actions">
             <button type="button" class="btn--raise-on-hover pp__actions__action pp__actions__action--del" data-keyboard="true" data-toggle="modal" title="{{ 'pagepart.buttons.delete'|trans }}" data-target="#delete-pagepart-modal-{{ id }}">
-                <i class="fa fa-trash-o"></i>
+                <i class="fa fa-trash"></i>
             </button>
             {% if editable %}
                 <button type="button" class="js-edit-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--edit" title="{{ 'pagepart.buttons.edit'|trans }}" data-target-id="{{ id }}">
-                    <i class="fa fa-pencil-square-o"></i>
+                    <i class="fa fa-edit"></i>
                 </button>
             {% endif %}
             <button type="button" class="js-move-up-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--up" title="{{ 'pagepart.buttons.move_up'|trans }}" data-target-id="{{ id }}">

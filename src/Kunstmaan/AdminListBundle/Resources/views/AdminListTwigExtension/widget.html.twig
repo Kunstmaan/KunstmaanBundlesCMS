@@ -91,13 +91,13 @@
                     {% endif %}
                     {% if adminlist.canEdit(item) %}
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="{{ 'kuma_admin_list.action.edit' | trans }}">
-                            <i class="fa fa-pencil-square-o"></i>
+                            <i class="fa fa-edit"></i>
                         </a>
                     {% endif %}
 
                     {% if adminlist.canDelete(item) %}
                         <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="{{ 'kuma_admin_list.action.delete' | trans }}">
-                            <i class="fa fa-trash-o"></i>
+                            <i class="fa fa-trash"></i>
                         </a>
                     {% endif %}
 

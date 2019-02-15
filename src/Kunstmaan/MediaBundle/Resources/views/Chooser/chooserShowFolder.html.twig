@@ -114,7 +114,7 @@
     <div class="page-sub-actions page-sub-actions--has-buttons">
         <div class="btn-group">
             <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'thumb-view'})) }}" class="btn btn-default btn--raise-on-hover{% if not app.session.get('media-list-view') %} active{% endif %}">
-                <i class="fa fa-picture-o btn__icon"></i>
+                <i class="fa fa-image btn__icon"></i>
             </a>
             <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'list-view'})) }}" class="btn btn-default btn--raise-on-hover{% if app.session.get('media-list-view') %} active{% endif %}">
                 <i class="fa fa-list btn__icon"></i>
@@ -214,7 +214,7 @@
                                         {% if imageurl %}
                                             <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
                                         {% else %}
-                                            <i class="fa fa-file-o media-thumbnail__icon"></i>
+                                            <i class="fa fa-file media-thumbnail__icon"></i>
                                         {% endif %}
                                         <figcaption class="media-thumbnail__caption">
                                             {{ media.name }}<br>
