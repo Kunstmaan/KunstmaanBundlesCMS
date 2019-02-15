@@ -1,8 +1,0 @@
-{
-  "name": "KunstmaanCMSMediaBundle",
-  "version": "1.0.0",
-  "dependencies": {
-      "plupload": "~2.1",
-      "picturefill": "~3.0.1"
-  }
-}
