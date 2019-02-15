@@ -2,7 +2,7 @@
    Icon symlinks
    ========================================================================== */
 
-   .fa-file-csv {
+.fa-file-csv {
     @extend .fa-file-code;
 }
 
@@ -22,4 +22,12 @@
 
 .glyphicon-remove {
     @extend .fa-times;
+}
+
+/* Set font weights for -o types (since FA5)
+   ========================================================================== */
+.fa-file,
+.fa-folder,
+.fa-copy {
+    font-weight: 400;
 }

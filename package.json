@@ -57,7 +57,6 @@
     "bootstrap-sass": "^3.3.7",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
-    "font-awesome": "^4.7.0",
     "fuse.js": "^3.1.0",
     "jquery": "^3.3.1",
     "jquery.typewatch": "^3.0.0",
