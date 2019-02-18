@@ -619,7 +619,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         if (is_bool($result)) {
             return $result ? 'true' : 'false';
         }
-        if ($result instanceof \DateTime) {
+        if ($result instanceof \DateTimeInterface) {
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof PersistentCollection) {
