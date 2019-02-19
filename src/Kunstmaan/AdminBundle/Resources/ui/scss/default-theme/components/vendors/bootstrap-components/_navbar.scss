@@ -1,7 +1,113 @@
 /* ==========================================================================
    Bootstrap navbar adjustments
    ========================================================================== */
-
-.navbar, .navbar-inverse {
+.navbar,
+.navbar-inverse {
     border-bottom: 0;
+}
+
+
+/*
+  Don't use fixed breakpoint to show collapsed fixed-top navbar:
+  'collapsed'-class is set by Javascript, if there isn't enough space to show
+  everything on one line.
+*/
+.navbar-fixed-top {
+    &.collapsed {
+        .navbar-header {
+            float: none;
+
+            margin-left: -($grid-gutter-width / 2);
+            margin-right: -($grid-gutter-width / 2);
+        }
+
+        .navbar-toggle {
+            display: block;
+        }
+
+        .navbar-brand {
+            margin-left: 0;
+        }
+
+        .navbar-collapse {
+            display: none !important;
+            padding-left: $navbar-padding-horizontal;
+            padding-right: $navbar-padding-horizontal;
+            margin-left: -($grid-gutter-width / 2);
+            margin-right: -($grid-gutter-width / 2);
+            overflow-x: visible !important;
+
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
+
+            border: 1px solid darken($navbar-inverse-bg, 7%);
+
+            &.in {
+                display: block !important;
+                overflow-y: auto !important;
+            }
+
+            &.collapsing {
+                position: relative;
+
+                display: block !important;
+                height: 0;
+                overflow: hidden !important;
+            }
+        }
+
+        .navbar-nav {
+            float: none !important;
+
+            margin: #{$navbar-padding-vertical / 2} -$navbar-padding-horizontal;
+
+            > li {
+                float: none;
+
+                > a {
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+            }
+
+            .open {
+                .dropdown-menu {
+                    float: none;
+
+                    position: static;
+
+                    width: auto;
+                    margin-top: 0;
+
+                    background-color: transparent;
+                    box-shadow: none;
+
+                    border: 0;
+
+                    > li > a,
+                    .dropdown-header {
+                        padding: 5px 15px 5px 25px;
+                    }
+
+                    > li > a {
+                        color: $navbar-inverse-link-color;
+                        line-height: $line-height-computed;
+
+                        &:hover,
+                        &:focus {
+                            background-color: $navbar-inverse-link-hover-bg;
+                            background-image: none;
+
+                            color: $navbar-inverse-link-hover-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &:not(.collapsed) {
+        .nav > li:first-child > a {
+            padding-left: 2.4rem;
+        }
+    }
 }
