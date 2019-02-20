@@ -21,6 +21,7 @@ AdminBundle
  * Setting the `requiredlocales` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.required_locales` config instead.
  * Setting the `defaultlocale` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.default_locale` config instead.
  * Setting the `websitetitle` directly is deprecated and support for this parameter will be removed in 6.0. Provide the `kunstmaan_admin.website_title` config instead.
+ * We moved the Javascript to the head section of the pages with a `defer` attribute. Custom added Javascript might be broken if it depends on jQuery as it might be executed before our scripts (including jQuery) are loaded. In that case, make sure to load your scripts with a defer attribute or wait for the `DOMContentLoaded`-event for inline scripts.
 
 MediaBundle
 -----------

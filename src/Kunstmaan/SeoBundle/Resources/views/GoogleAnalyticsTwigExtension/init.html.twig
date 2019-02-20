@@ -1,6 +1,6 @@
 <script>
 
-    jQuery(function() {
+    document.addEventListener('DOMContentLoaded', () => {
         {% if not app.debug %}
         googleAnalyticsApi.init(false);
         {% else %}
