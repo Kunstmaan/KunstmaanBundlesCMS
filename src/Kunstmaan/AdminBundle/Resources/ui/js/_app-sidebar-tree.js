@@ -133,10 +133,13 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                     'icon': 'fa fa-home'
                 },
                 'default': {
-                    'icon' : 'fa fa-file-o'
+                    'icon': 'fa fa-file-o'
                 },
                 'offline': {
                     'icon': 'fa fa-chain-broken'
+                },
+                'hidden-from-nav': {
+                    'icon': 'fa fa-eye-slash'
                 },
                 'folder': {
                     'icon': 'fa fa-folder-o'

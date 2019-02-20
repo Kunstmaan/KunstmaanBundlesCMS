@@ -74,6 +74,16 @@ class MenuItemTest extends TestCase
         $this->assertTrue($this->object->getOffline());
     }
 
+    public function testGetSetHiddenFromNav()
+    {
+        $this->object->setHiddenFromNav(true);
+        $this->assertTrue($this->object->isHiddenFromNav());
+        $this->object->setHiddenFromNav(false);
+        $this->assertFalse($this->object->isHiddenFromNav());
+        $this->object->setHiddenFromNav(true);
+        $this->assertTrue($this->object->isHiddenFromNav());
+    }
+
     public function testGetSetFolder()
     {
         $this->object->setFolder(true);
@@ -97,7 +107,7 @@ class MenuItemTest extends TestCase
 
     public function testGetSetRoute()
     {
-        $params = array('id' => 5);
+        $params = ['id' => 5];
         $this->object->setRoute('ARoute', $params);
 
         $this->assertEquals('ARoute', $this->object->getRoute());
@@ -106,7 +116,7 @@ class MenuItemTest extends TestCase
 
     public function testGetSetRouteParams()
     {
-        $params = array('id' => 1);
+        $params = ['id' => 1];
         $this->object->setRouteParams($params);
         $this->assertEquals($params, $this->object->getRouteParams());
     }
@@ -117,7 +127,7 @@ class MenuItemTest extends TestCase
         $child1->setAppearInNavigation(true);
         $child2 = new MenuItem($this->object->getMenu());
         $child2->setAppearInNavigation(true);
-        $children = array($child1, $child2);
+        $children = [$child1, $child2];
 
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
@@ -139,7 +149,7 @@ class MenuItemTest extends TestCase
         $child1->setAppearInNavigation(true);
         $child2 = new MenuItem($this->object->getMenu());
         $child2->setAppearInNavigation(false);
-        $children = array($child1, $child2);
+        $children = [$child1, $child2];
 
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
@@ -152,14 +162,14 @@ class MenuItemTest extends TestCase
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getNavigationChildren();
         $this->assertEquals(1, count($result));
-        $this->assertEquals(array($child1), $result);
+        $this->assertEquals([$child1], $result);
     }
 
     public function testGetTopChildren()
     {
         $child1 = new MenuItem($this->object->getMenu());
         $child2 = new TopMenuItem($this->object->getMenu());
-        $children = array($child1, $child2);
+        $children = [$child1, $child2];
 
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
@@ -172,12 +182,12 @@ class MenuItemTest extends TestCase
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getTopChildren();
         $this->assertEquals(1, count($result));
-        $this->assertEquals(array($child2), $result);
+        $this->assertEquals([$child2], $result);
     }
 
     public function testAddGetAttributes()
     {
-        $attributes = array('attribute1' => 1, 'attribute2' => 2);
+        $attributes = ['attribute1' => 1, 'attribute2' => 2];
         $this->object->addAttributes($attributes);
         $this->assertEquals($attributes, $this->object->getAttributes());
     }

@@ -11,8 +11,8 @@ use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * WidgetsController
@@ -200,14 +200,25 @@ class WidgetsController extends Controller
         foreach ($rootNodes as $rootNode) {
             if ($nodeTranslation = $rootNode->getNodeTranslation($locale, true)) {
                 if ($isMultiDomain && !$switched) {
-                    $slug = sprintf('[%s:%s]', $switchedHost['id'], 'NT' . $nodeTranslation->getId());
+                    $slug = sprintf('[%s:%s]', $switchedHost['id'], 'NT'.$nodeTranslation->getId());
                 } else {
-                    $slug = sprintf('[%s]', 'NT' . $nodeTranslation->getId());
+                    $slug = sprintf('[%s]', 'NT'.$nodeTranslation->getId());
+                }
+
+                switch (true) {
+                    case !$nodeTranslation->isOnline():
+                        $type = 'offline';
+                        break;
+                    case $rootNode->isHiddenFromNav():
+                        $type = 'hidden-from-nav';
+                        break;
+                    default:
+                        $type = 'default';
                 }
 
                 $root = [
                     'id' => $rootNode->getId(),
-                    'type' => $nodeTranslation->isOnline() ? 'default' : 'offline',
+                    'type' => $type,
                     'text' => $nodeTranslation->getTitle(),
                     'li_attr' => ['class' => 'js-url-chooser-link-select', 'data-slug' => $slug, 'data-id' => $rootNode->getId()],
                 ];
