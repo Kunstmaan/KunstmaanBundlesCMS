@@ -266,7 +266,7 @@
 
 
 {% block time_widget %}
-    <div class="form--double-widget__col">
+    <div class="form--double-widget__col {% if widget is defined %}form--widget-{{ widget }}{% endif %}">
         {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
         {% set type = 'text' %}
         <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>

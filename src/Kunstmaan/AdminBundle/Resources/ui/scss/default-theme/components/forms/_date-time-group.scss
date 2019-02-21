@@ -22,3 +22,18 @@
    .form--double-widget__col {
        position: relative;
    }
+
+  .form--widget-choice {
+      select {
+          width: auto;
+          display: inline-block;
+      }
+
+      select:first-child {
+          margin-right: 8px;
+      }
+
+      select:last-child {
+          margin-left: 8px;
+      }
+  }
