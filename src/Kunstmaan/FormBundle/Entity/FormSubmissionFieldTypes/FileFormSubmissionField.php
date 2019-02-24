@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
+use Behat\Transliterator\Transliterator;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Sluggable\Util\Urlizer;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -135,7 +135,7 @@ class FileFormSubmissionField extends FormSubmissionField
         $newExtension = !empty($mimeTypeExtension) ? $mimeTypeExtension : $fileExtension;
 
         $baseName = !empty($fileExtension) ? basename($this->file->getClientOriginalName(), $fileExtension) : $this->file->getClientOriginalName();
-        $safeBaseName = Urlizer::urlize($baseName);
+        $safeBaseName = Transliterator::urlize($baseName);
 
         return $safeBaseName . (!empty($newExtension) ? '.' . $newExtension : '');
     }
