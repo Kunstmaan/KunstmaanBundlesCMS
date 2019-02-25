@@ -212,7 +212,7 @@ EOT
     {
         $this->assistant->writeSection('Article classes generation');
 
-        $this->createGenerator()->generate($this->bundle, $this->entity, $this->prefix, $this->getContainer()->getParameter('multilanguage'), $this->usesAuthor, $this->usesCategories, $this->usesTags, $this->bundleWithHomePage, $this->dummydata);
+        $this->createGenerator()->generate($this->bundle, $this->entity, $this->prefix, $this->getContainer()->getParameter('kunstmaan_admin.multi_language'), $this->usesAuthor, $this->usesCategories, $this->usesTags, $this->bundleWithHomePage, $this->dummydata);
 
         $this->assistant->writeSection('Article classes successfully created', 'bg=green;fg=black');
         $this->assistant->writeLine(array(
