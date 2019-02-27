@@ -20,7 +20,7 @@ class SubmissionEvent extends Event
     protected $page;
 
     /**
-     * @param FormSubmission $submission
+     * @param FormSubmission    $submission
      * @param FormPageInterface $page
      */
     public function __construct(FormSubmission $submission, FormPageInterface $page)

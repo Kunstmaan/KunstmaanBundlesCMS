@@ -2,10 +2,8 @@
 
 namespace Kunstmaan\FormBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\FormBundle\Event\SubmissionEvent;
 use Kunstmaan\FormBundle\Helper\FormMailerInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * An event listener for sending an email after the form submission is completed
