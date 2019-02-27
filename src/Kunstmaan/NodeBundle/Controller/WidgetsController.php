@@ -31,7 +31,7 @@ class WidgetsController extends Controller
     {
         $params = $this->getTemplateParameters($request);
         $params['cke'] = true;
-        $params['multilanguage'] = $this->getParameter('multilanguage');
+        $params['multilanguage'] = $this->getParameter('kunstmaan_admin.multi_language');
 
         return $params;
     }
@@ -50,7 +50,7 @@ class WidgetsController extends Controller
     {
         $params = $this->getTemplateParameters($request);
         $params['cke'] = false;
-        $params['multilanguage'] = $this->getParameter('multilanguage');
+        $params['multilanguage'] = $this->getParameter('kunstmaan_admin.multi_language');
 
         return $params;
     }
