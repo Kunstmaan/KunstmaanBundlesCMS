@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Widgets
+   ========================================================================== */
+
+/* Date Widget
+   ========================================================================== */
+.date-widget {
+    > div {
+        display: flex;
+        align-items: center;
+
+        .form-control {
+            flex: 1 1 auto;
+            margin-left: 8px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:nth-child(1),
+            &:nth-child(2) {
+                flex-basis: 30%;
+            }
+
+            &:nth-child(3) {
+                flex-basis: 40%;
+            }
+        }
+    }
+}
+
+/* Time Widget
+   ========================================================================== */
+.time-widget {
+    > div {
+        &:not(.js-datepicker) {
+            display: flex;
+            align-items: center;
+
+            .form-control {
+                flex: 1 1 50%;
+
+                &:first-child {
+                    margin-right: 8px;
+                }
+
+                &:last-child {
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+}

@@ -2,23 +2,17 @@
    Date time group
    ========================================================================== */
 
-   .date-time-group {
-       @extend %clearfix;
+.date-time-group {
+    > div {
+        display: flex;
 
-       #form_main_date,
-       > div {
-           @extend %clearfix;
-       }
-       .form--double-widget__col {
-           width: calc(50% - 10px);
-           float: left;
+        > .date-widget {
+            flex: 1 1 60%;
+        }
 
-           &:last-child {
-               margin-left: 20px;
-           }
-       }
-   }
-
-   .form--double-widget__col {
-       position: relative;
-   }
+        > .time-widget {
+            flex: 1 1 40%;
+            margin-left: 24px;
+        }
+    }
+}

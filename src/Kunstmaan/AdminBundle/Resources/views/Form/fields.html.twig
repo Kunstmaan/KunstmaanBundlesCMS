@@ -255,23 +255,31 @@
 
 
 {% block date_widget %}
-    <div class="form--double-widget__col">
+    <div class="date-widget">
         {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-        <div class="js-datepicker" data-format="DD/MM/YYYY" data-reinit-js='["datepicker"]'>
+        {% if widget is defined and widget == 'single_text' %}
+            <div class="js-datepicker" data-format="DD/MM/YYYY" data-reinit-js='["datepicker"]'>
+                {{ block('base_date_widget') }}
+            </div>
+        {% else %}
             {{ block('base_date_widget') }}
-        </div>
+        {% endif %}
     </div>
 
 {% endblock date_widget %}
 
 
 {% block time_widget %}
-    <div class="form--double-widget__col">
+    <div class="time-widget">
         {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
         {% set type = 'text' %}
-        <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>
+        {% if widget is defined and widget == 'single_text' %}
+            <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>
+                {{ block('base_time_widget') }}
+            </div>
+        {% else %}
             {{ block('base_time_widget') }}
-        </div>
+        {% endif %}
     </div>
 {% endblock time_widget %}
 
