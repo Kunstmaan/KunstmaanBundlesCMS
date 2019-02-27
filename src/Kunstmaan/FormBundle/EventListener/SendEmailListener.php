@@ -8,7 +8,7 @@ use Kunstmaan\FormBundle\Helper\FormMailerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * An event listener send formsubmissions to the subscriber
+ * An event listener for sending an email after the form submission is completed
  */
 class SendEmailListener
 {
