@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Event;
 
 use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Kunstmaan\FormBundle\Helper\FormPageInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -22,7 +23,7 @@ class SubmissionEvent extends Event
      * @param FormSubmission $submission
      * @param AbstractPage   $page
      */
-    public function __construct(FormSubmission $submission, AbstractPage $page)
+    public function __construct(FormSubmission $submission, FormPageInterface $page)
     {
         $this->submission = $submission;
         $this->page = $page;
@@ -37,7 +38,7 @@ class SubmissionEvent extends Event
     }
 
     /**
-     * @return AbstractPage
+     * @return FormPageInterface
      */
     public function getPage()
     {
