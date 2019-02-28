@@ -1,4 +1,4 @@
-    /**
+/**
      * Returns the default backend form type for this page.
      *
      * @return string
@@ -21,10 +21,11 @@
      */
     public function getPagePartAdminConfigurations()
     {
+        
         return [
-{% for section in sections %}
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ section }}',
-{% endfor %}
+            {% for section in sections %}
+                '{% if not isV4 %}{{ bundle }}:{%endif%}{{ section }}',
+            {% endfor %}
         ];
     }
 
@@ -33,7 +34,7 @@
      */
     public function getPageTemplates()
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ template }}'];
+        return ['{% if not isV4 %}{{ bundle }}:{%endif%}{{ template }}'];
     }
 
     /**
@@ -43,5 +44,5 @@
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/Common{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return '{% if not isV4 %}{{ bundle }}:{%endif%}Pages/Common{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
