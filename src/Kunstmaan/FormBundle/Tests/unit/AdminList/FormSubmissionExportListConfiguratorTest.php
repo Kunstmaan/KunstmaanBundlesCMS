@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
-use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
@@ -92,24 +91,22 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
             ->method('getQuery')
             ->willReturn($query);
 
-        $configuration = Stub::make(Configuration::class, [
-            'getQuoteStrategy' => null,
-        ]);
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null,
-            'findBy' => null,
-            'findOneBy' => null,
-        ]);
-        /** @var \Doctrine\ORM\EntityManager $emMock */
-        $emMock = Stub::make(EntityManager::class, [
-            'getRepository' => $repository,
-            'getClassMetaData' => (object) ['name' => 'aClass'],
-            'getConfiguration' => $configuration,
-            'clear' => null,
-            'createQueryBuilder' => $queryBuilder,
-            'persist' => null,
-            'flush' => null,
-        ]);
+        $configuration = $this->createMock(Configuration::class);
+        $configuration->method('getQuoteStrategy')->willReturn(null);
+
+        $repository = $this->createMock(EntityRepository::class);
+        $repository->method('find')->willReturn(null);
+        $repository->method('findBy')->willReturn(null);
+        $repository->method('findOneBy')->willReturn(null);
+
+        $emMock = $this->createMock(EntityManager::class);
+        $emMock->method('getRepository')->willReturn($repository);
+        $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
+        $emMock->method('getConfiguration')->willReturn($configuration);
+        $emMock->method('clear')->willReturn(null);
+        $emMock->method('createQueryBuilder')->willReturn($queryBuilder);
+        $emMock->method('persist')->willReturn(null);
+        $emMock->method('flush')->willReturn(null);
 
         return $emMock;
     }

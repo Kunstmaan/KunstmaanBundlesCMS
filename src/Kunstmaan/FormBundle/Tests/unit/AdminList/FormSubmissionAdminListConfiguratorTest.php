@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
-use Codeception\Stub;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -43,24 +42,20 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
      */
     protected function getMockedEntityManager()
     {
-        $configuration = Stub::make(Configuration::class, [
-            'getQuoteStrategy' => null,
-        ]);
+        $configuration = $this->createMock(Configuration::class);
+        $configuration->method('getQuoteStrategy')->willReturn(null);
 
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null,
-            'findBy' => null,
-            'findOneBy' => null,
-        ]);
+        $repository = $this->createMock(EntityRepository::class);
+        $repository->method('find')->willReturn(null);
+        $repository->method('findBy')->willReturn(null);
+        $repository->method('findOneBy')->willReturn(null);
 
-        /** @var \Doctrine\ORM\EntityManager $emMock */
-        $emMock = Stub::make(EntityManager::class, [
-            'getRepository' => $repository,
-            'getConfiguration' => $configuration,
-            'getClassMetaData' => (object) ['name' => 'aClass'],
-            'persist' => null,
-            'flush' => null,
-        ]);
+        $emMock = $this->createMock(EntityManager::class);
+        $emMock->method('getRepository')->willReturn($repository);
+        $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
+        $emMock->method('getConfiguration')->willReturn($configuration);
+        $emMock->method('persist')->willReturn(null);
+        $emMock->method('flush')->willReturn(null);
 
         return $emMock;
     }
@@ -89,7 +84,9 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
 
     public function testFixedGetters()
     {
-        $item = Stub::makeEmpty(AbstractPage::class, ['getId' => 123]);
+        $item = $this->createMock(AbstractPage::class);
+        $item->method('getId')->willReturn(123);
+
         $this->assertEquals('', $this->object->getAddUrlFor([]));
         $this->assertEquals('KunstmaanFormBundle', $this->object->getBundleName());
         $this->assertEquals('FormSubmission', $this->object->getEntityName());
@@ -119,7 +116,9 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
 
     public function testBuildItemActions()
     {
-        $item = Stub::makeEmpty(AbstractPage::class, ['getId' => 123]);
+        $item = $this->createMock(AbstractPage::class);
+        $item->method('getId')->willReturn(123);
+
         $this->object->buildItemActions();
         $actions = $this->object->getItemActions();
         $this->assertCount(1, $actions);

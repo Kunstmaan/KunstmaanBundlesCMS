@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\Event;
 
-use Codeception\Stub;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Event\SubmissionEvent;
@@ -16,9 +15,8 @@ class SubmissionEventTest extends TestCase
     public function testEvent()
     {
         $submission = new FormSubmission();
-        $page = Stub::makeEmpty(AbstractFormPage::class, [
-            'getId' => 2,
-        ]);
+        $page = $this->createMock(AbstractFormPage::class);
+        $page->method('getId')->willReturn(2);
 
         $submission->setId(1);
 
