@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
@@ -59,8 +58,7 @@ class StructureNodeTest extends TestCase
 
     public function testGetSetParent()
     {
-        /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class);
+        $entity = $this->createMock(HasNodeInterface::class);
         $node = new TestStructureNode();
         $node->setParent($entity);
         $this->assertInstanceOf(get_class($entity), $node->getParent());

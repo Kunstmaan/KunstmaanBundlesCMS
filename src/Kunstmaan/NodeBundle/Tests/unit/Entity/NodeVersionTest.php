@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -64,10 +63,8 @@ class NodeVersionTest extends TestCase
 
     public function testGetSetRef()
     {
-        /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class, [
-            'getId' => 1,
-        ]);
+        $entity = $this->createMock(HasNodeInterface::class);
+        $entity->method('getId')->willReturn(1);
 
         $em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
