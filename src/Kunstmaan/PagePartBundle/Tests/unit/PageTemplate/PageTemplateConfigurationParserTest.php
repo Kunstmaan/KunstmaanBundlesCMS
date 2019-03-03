@@ -2,16 +2,16 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
-use Codeception\Test\Unit;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationParser;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class PageTemplateConfigurationParserTest extends Unit
+class PageTemplateConfigurationParserTest extends TestCase
 {
     public function testParseSf4Flow()
     {
-        $kernel = $this->makeEmpty(KernelInterface::class);
+        $kernel = $this->createMock(KernelInterface::class);
         $pageTemplateConfigurationParser = new PageTemplateConfigurationParser($kernel, [
             'contentpage' => [
                 'name' => 'Content page',
@@ -29,9 +29,8 @@ class PageTemplateConfigurationParserTest extends Unit
 
     public function testParseSf3Flow()
     {
-        $kernel = $this->makeEmpty(KernelInterface::class, [
-            'locateResource' => __DIR__ . '/Resources/config/pagetemplates/test.yml',
-        ]);
+        $kernel = $this->createMock(KernelInterface::class);
+        $kernel->method('locateResource')->willReturn(__DIR__ . '/Resources/config/pagetemplates/test.yml');
 
         $pageTemplateConfigurationParser = new PageTemplateConfigurationParser($kernel, []);
 

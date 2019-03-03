@@ -2,16 +2,16 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
-use Codeception\Test\Unit;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class PagePartConfigurationParserTest extends Unit
+class PagePartConfigurationParserTest extends TestCase
 {
     public function testParseSf4Flow()
     {
-        $kernel = $this->makeEmpty(KernelInterface::class);
+        $kernel = $this->createMock(KernelInterface::class);
         $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, [
             'main' => [
                 'name' => 'Main content',
@@ -31,9 +31,8 @@ class PagePartConfigurationParserTest extends Unit
 
     public function testParseSf3Flow()
     {
-        $kernel = $this->makeEmpty(KernelInterface::class, [
-            'locateResource' => __DIR__ . '/Resources/config/pageparts/main.yml',
-        ]);
+        $kernel = $this->createMock(KernelInterface::class);
+        $kernel->method('locateResource')->willReturn(__DIR__ . '/Resources/config/pageparts/main.yml');
 
         $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, []);
 
@@ -44,7 +43,7 @@ class PagePartConfigurationParserTest extends Unit
 
     public function testPresetExtendsBundle()
     {
-        $kernel = $this->makeEmpty(KernelInterface::class);
+        $kernel = $this->createMock(KernelInterface::class);
         $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, [
             'foo' => [
                 'name' => 'Foo content',
@@ -76,7 +75,7 @@ class PagePartConfigurationParserTest extends Unit
      */
     public function testCircularReferenceIsDetected()
     {
-        $kernel = $this->makeEmpty(KernelInterface::class);
+        $kernel = $this->createMock(KernelInterface::class);
 
         $parser = new PagePartConfigurationParser($kernel, [
             'foo' => [
