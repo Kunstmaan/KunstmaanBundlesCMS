@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -90,7 +91,13 @@ class KunstmaanTranslatorExtension extends Extension
 
             $dirs[] = dirname($r->getFilename()).'/Resources/translations';
         }
-        $overridePath = $container->getParameter('kernel.root_dir').'/Resources/%s/translations';
+
+        if (Kernel::VERSION_ID < 4000) {
+            $overridePath = $container->getParameter('kernel.root_dir').'/Resources/%s/translations';
+        } else {
+            $overridePath = $container->getParameter('kernel.project_dir').'/translations';
+        }
+
         foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {
             $reflection = new \ReflectionClass($class);
             if (is_dir($dir = dirname($reflection->getFilename()).'/Resources/translations')) {
@@ -100,7 +107,14 @@ class KunstmaanTranslatorExtension extends Extension
                 $dirs[] = $dir;
             }
         }
-        if (is_dir($dir = $container->getParameter('kernel.root_dir').'/Resources/translations')) {
+
+        if (Kernel::VERSION_ID < 4000) {
+            $dir = $container->getParameter('kernel.root_dir').'/Resources/translations';
+        } else {
+            $dir = $container->getParameter('kernel.project_dir').'/translations';
+        }
+
+        if (is_dir($dir)) {
             $dirs[] = $dir;
         }
 

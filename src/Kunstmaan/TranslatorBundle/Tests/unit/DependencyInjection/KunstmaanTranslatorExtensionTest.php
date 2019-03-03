@@ -49,6 +49,7 @@ class KunstmaanTranslatorExtensionTest extends TestCase
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.root_dir', 'src/Kunstmaan/TranslatorBundle');
+        $container->setParameter('kernel.project_dir', 'src/Kunstmaan/TranslatorBundle');
         $container->setParameter('kernel.bundles', array(new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle()));
         $container->setParameter('kernel.debug', true);
         $container->setParameter('kunstmaan_admin.default_locale', 'en');
