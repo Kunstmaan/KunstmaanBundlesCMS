@@ -107,11 +107,6 @@ class AclNativeHelperTest extends TestCase
         $this->object = new AclNativeHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
-    public function testConstructor()
-    {
-        new AclNativeHelper($this->em, $this->tokenStorage, $this->rh);
-    }
-
     public function testApply()
     {
         $queryBuilder = new QueryBuilder($this->conn);

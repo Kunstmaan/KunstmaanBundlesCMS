@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Tests\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\Node;
 use PHPUnit\Framework\TestCase;
@@ -69,7 +70,7 @@ class FormSubmissionTest extends TestCase
     public function testGetFields()
     {
         $object = $this->object;
-        $object->getFields();
+        $this->assertInstanceOf(ArrayCollection::class, $object->getFields());
     }
 
     public function testToString()

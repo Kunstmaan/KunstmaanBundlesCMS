@@ -24,7 +24,7 @@ class AbstractFormPagePartTest extends TestCase
     public function testGetUniqueId()
     {
         $object = $this->object;
-        $object->getUniqueId();
+        $this->assertSame(str_replace('\\', '', get_class($object)), $object->getUniqueId());
     }
 
     public function testSetGetLabel()

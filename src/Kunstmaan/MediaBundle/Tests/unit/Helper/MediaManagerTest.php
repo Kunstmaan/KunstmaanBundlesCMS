@@ -67,7 +67,7 @@ class MediaManagerTest extends TestCase
     {
         $media = new Media();
         $this->defaultHandler
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('prepareMedia')
             ->with($this->equalTo($media));
         $this->object->prepareMedia($media);

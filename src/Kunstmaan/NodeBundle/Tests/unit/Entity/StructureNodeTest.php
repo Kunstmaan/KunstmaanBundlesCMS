@@ -9,6 +9,7 @@ use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestStructureNode extends StructureNode
@@ -16,6 +17,11 @@ class TestStructureNode extends StructureNode
     public function getPossibleChildTypes()
     {
         return [];
+    }
+
+    public function service(ContainerInterface $container, Request $request, RenderContext $context)
+    {
+        $context['test'] = 'test';
     }
 }
 
@@ -70,10 +76,16 @@ class StructureNodeTest extends TestCase
         $this->assertEquals(PageAdminType::class, $node->getDefaultAdminType());
     }
 
+    /**
+     * @group legacy
+     */
     public function testService()
     {
-        // this method does nothing - is it required?
+        $renderContext = new RenderContext();
+
         $node = new TestStructureNode();
-        $node->service(new Container(), new Request(), new RenderContext());
+        $node->service(new Container(), new Request(), $renderContext);
+
+        $this->assertArrayHasKey('test', $renderContext->getArrayCopy());
     }
 }

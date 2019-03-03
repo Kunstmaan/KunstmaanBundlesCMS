@@ -19,12 +19,12 @@ class DefaultSiteGeneratorTest extends TestCase
         $bundle = $this->getBundle($path);
         $container = $this->createMock('Symfony\Component\DependencyInjection\Container');
         $container
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getParameter')
             ->will($this->returnValueMap([['multilanguage', true], ['kernel.project_dir', $path]]))
         ;
         $container
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('hasParameter')
             ->with('kunstmaan_admin.multi_language')
             ->will($this->returnValue(true))
