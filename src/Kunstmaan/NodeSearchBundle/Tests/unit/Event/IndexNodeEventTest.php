@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use PHPUnit\Framework\TestCase;
@@ -14,8 +13,7 @@ class IndexNodeEventTest extends TestCase
 {
     public function testGetSet()
     {
-        /** @var HasNodeInterface $page */
-        $page = Stub::makeEmpty(HasNodeInterface::class);
+        $page = $this->createMock(HasNodeInterface::class);
 
         $event = new IndexNodeEvent($page, ['test' => 'value']);
 
