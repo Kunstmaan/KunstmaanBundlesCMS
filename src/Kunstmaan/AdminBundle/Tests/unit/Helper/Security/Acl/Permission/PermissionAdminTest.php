@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
-use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -387,8 +386,11 @@ class PermissionAdminTest extends TestCase
     public function testApplyAclChangesetReturnsNull()
     {
         $object = $this->getInitializedPermissionAdmin();
-        /** @var AbstractEntity $entity */
-        $entity = Stub::makeEmpty(AbstractEntity::class, ['getId' => 666, 'setId' => null, '__toString' => '666']);
+        $entity = $this->createMock(AbstractEntity::class);
+        $entity->method('getId')->willReturn(666);
+        $entity->method('setId')->willReturn(null);
+        $entity->method('__toString')->willReturn('666');
+
         $this->assertNull($object->applyAclChangeset($entity, [], true));
     }
 
