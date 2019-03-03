@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
-use Codeception\Test\Unit;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
@@ -10,48 +9,49 @@ use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Pagerfanta\Pagerfanta;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AdminListTest
  */
-class AdminListTest extends Unit
+class AdminListTest extends TestCase
 {
     /** @var AdminList */
     protected $adminList;
 
-    public function _before()
+    public function setUp()
     {
         /** @var AdminListConfiguratorInterface */
-        $configurator = $this->makeEmpty(AdminListConfiguratorInterface::class, [
-            'getFilterBuilder' => new FilterBuilder(),
-            'getFields' => ['a', 'b'],
-            'getExportFields' => ['c', 'd'],
-            'getCount' => '666',
-            'getItems' => ['item'],
-            'getSortFields' => ['e', 'f'],
-            'canEdit' => true,
-            'canAdd' => true,
-            'canView' => true,
-            'canDelete' => true,
-            'canExport' => true,
-            'getIndexUrl' => [],
-            'getEditUrlFor' => [],
-            'getDeleteUrlFor' => [],
-            'getAddUrlFor' => [],
-            'getExportUrl' => [],
-            'getViewUrlFor' => [],
-            'getValue' => 'test',
-            'getStringValue' => 'stringtest',
-            'getOrderBy' => 'name',
-            'getOrderDirection' => 'up',
-            'getItemActions' => [$this->makeEmpty(ItemActionInterface::class)],
-            'hasItemActions' => true,
-            'getListActions' => [$this->makeEmpty(ListActionInterface::class)],
-            'hasListActions' => true,
-            'getBulkActions' => [$this->makeEmpty(BulkActionInterface::class)],
-            'hasBulkActions' => true,
-            'getPagerfanta' => $this->makeEmpty(Pagerfanta::class),
-        ]);
+        $configurator = $this->createMock(AdminListConfiguratorInterface::class);
+
+        $configurator->method('getFilterBuilder')->willReturn(new FilterBuilder());
+        $configurator->method('getFields')->willReturn(['a', 'b']);
+        $configurator->method('getExportFields')->willReturn(['c', 'd']);
+        $configurator->method('getCount')->willReturn('666');
+        $configurator->method('getItems')->willReturn(['item']);
+        $configurator->method('getSortFields')->willReturn(['e', 'f']);
+        $configurator->method('canEdit')->willReturn(true);
+        $configurator->method('canAdd')->willReturn(true);
+        $configurator->method('canView')->willReturn(true);
+        $configurator->method('canDelete')->willReturn(true);
+        $configurator->method('canExport')->willReturn(true);
+        $configurator->method('getIndexUrl')->willReturn([]);
+        $configurator->method('getEditUrlFor')->willReturn([]);
+        $configurator->method('getDeleteUrlFor')->willReturn([]);
+        $configurator->method('getAddUrlFor')->willReturn([]);
+        $configurator->method('getExportUrl')->willReturn([]);
+        $configurator->method('getViewUrlFor')->willReturn([]);
+        $configurator->method('getValue')->willReturn('test');
+        $configurator->method('getStringValue')->willReturn('stringtest');
+        $configurator->method('getOrderBy')->willReturn('name');
+        $configurator->method('getOrderDirection')->willReturn('up');
+        $configurator->method('getItemActions')->willReturn([$this->createMock(ItemActionInterface::class)]);
+        $configurator->method('hasItemActions')->willReturn(true);
+        $configurator->method('getListActions')->willReturn([$this->createMock(ListActionInterface::class)]);
+        $configurator->method('hasListActions')->willReturn(true);
+        $configurator->method('getBulkActions')->willReturn([$this->createMock(BulkActionInterface::class)]);
+        $configurator->method('hasBulkActions')->willReturn(true);
+        $configurator->method('getPagerfanta')->willReturn($this->createMock(Pagerfanta::class));
 
         $this->adminList = new AdminList($configurator);
     }
