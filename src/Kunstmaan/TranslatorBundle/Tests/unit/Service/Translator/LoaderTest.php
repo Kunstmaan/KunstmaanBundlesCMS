@@ -2,19 +2,19 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Translator;
 
-use Codeception\Test\Unit;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Kunstmaan\TranslatorBundle\Service\Translator\Loader;
+use PHPUnit\Framework\TestCase;
 
-class LoaderTest extends Unit
+class LoaderTest extends TestCase
 {
     const TEST_DATA_DOMAIN = 'validation';
     const TEST_DATA_LOCALE = 'en';
     const TEST_DATA_KEYWORD = 'validation.ok';
     const TEST_DATA_TEXT = 'Everything ok';
 
-    public function _before()
+    public function setUp()
     {
         $translation = new Translation();
         $translation
@@ -24,9 +24,8 @@ class LoaderTest extends Unit
             ->setText(self::TEST_DATA_TEXT)
         ;
 
-        $translationRepository = $this->makeEmpty(TranslationRepository::class, [
-           'findBy' => [$translation],
-        ]);
+        $translationRepository = $this->createMock(TranslationRepository::class);
+        $translationRepository->method('findBy')->willReturn([$translation]);
 
         /* @var Loader loader */
         $this->loader = new Loader();
