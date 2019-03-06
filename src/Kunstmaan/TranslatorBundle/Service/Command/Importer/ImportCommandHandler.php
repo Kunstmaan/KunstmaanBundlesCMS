@@ -36,7 +36,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     public function executeImportCommand(ImportCommand $importCommand)
     {
-        if ($importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null) {
+        if ($importCommand->getGlobals() || $importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null) {
             return $this->importGlobalTranslationFiles($importCommand);
         }
 
