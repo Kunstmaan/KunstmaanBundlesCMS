@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\Event;
 
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Symfony\Component\EventDispatcher\Event;
 
 class SubmissionEvent extends Event
@@ -15,7 +14,7 @@ class SubmissionEvent extends Event
     protected $submission;
 
     /**
-     * @var AbstractPage
+     * @var FormPageInterface
      */
     protected $page;
 
