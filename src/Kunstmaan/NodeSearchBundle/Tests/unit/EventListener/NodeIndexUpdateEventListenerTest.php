@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeSearchBundle\Tests\EventListener;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
@@ -14,8 +16,11 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 {
     public function testUpdateOfChildPageWithStructuredNodeParent()
     {
-        $parentNodeTranslation = $this->createMock(StructureNode::class);
-        $parentNodeTranslation->method('isOnline')->willReturn(false);
+        $parentPage = $this->createMock(StructureNode::class);
+
+        $parentNodeTranslation = $this->createMock(NodeTranslation::class);
+        $parentNodeTranslation->method('getRef')->willReturn($parentPage);
+        $parentNodeTranslation->method('isOnline')->willReturn(true);
 
         $parentNode = $this->createMock(Node::class);
         $parentNode->method('getNodeTranslation')->willReturn($parentNodeTranslation);
@@ -34,17 +39,23 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true));
+        $em = $this->createMock(EntityManager::class);
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true), $em);
         $listener->onPostPersist($nodeEvent);
     }
 
     public function testUpdateOfChildPageWithStructuredNodeParentAndOfflineParent()
     {
-        $parentNodeTranslation = $this->createMock(StructureNode::class);
-        $parentNodeTranslation->method('isOnline')->willReturn(false);
+        $parentPage = $this->createMock(StructureNode::class);
 
+        $parentNodeTranslation = $this->createMock(NodeTranslation::class);
+        $parentNodeTranslation->method('getRef')->willReturn($parentPage);
+        $parentNodeTranslation->method('isOnline')->willReturn(true);
+
+        $parentPageNotStructured = $this->createMock(AbstractPage::class);
         $parentNodeTranslation2 = $this->createMock(NodeTranslation::class);
         $parentNodeTranslation2->method('isOnline')->willReturn(false);
+        $parentNodeTranslation->method('getRef')->willReturn($parentPageNotStructured);
 
         $parentNode1 = $this->createMock(Node::class);
         $parentNode1->method('getNodeTranslation')->willReturn($parentNodeTranslation);
@@ -66,14 +77,17 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false));
+        $em = $this->createMock(EntityManager::class);
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false), $em);
         $listener->onPostPersist($nodeEvent);
     }
 
     public function testUpdateOfChildPageWithOfflineParent()
     {
+        $parentPage = $this->createMock(AbstractPage::class);
         $parentNodeTranslation = $this->createMock(NodeTranslation::class);
         $parentNodeTranslation->method('isOnline')->willReturn(false);
+        $parentNodeTranslation->method('getRef')->willReturn($parentPage);
 
         $parentNode = $this->createMock(Node::class);
         $parentNode->method('getNodeTranslation')->willReturn($parentNodeTranslation);
@@ -90,14 +104,17 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false));
+        $em = $this->createMock(EntityManager::class);
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false), $em);
         $listener->onPostPersist($nodeEvent);
     }
 
     public function testUpdateOfChildPageWithOnlineParent()
     {
+        $parentPage = $this->createMock(AbstractPage::class);
         $parentNodeTranslation = $this->createMock(NodeTranslation::class);
         $parentNodeTranslation->method('isOnline')->willReturn(true);
+        $parentNodeTranslation->method('getRef')->willReturn($parentPage);
 
         $parentNode = $this->createMock(Node::class);
         $parentNode->method('getNodeTranslation')->willReturn($parentNodeTranslation);
@@ -114,7 +131,8 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true));
+        $em = $this->createMock(EntityManager::class);
+        $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true), $em);
         $listener->onPostPersist($nodeEvent);
     }
 
@@ -124,7 +142,8 @@ class NodeIndexUpdateEventListenerTest extends TestCase
      */
     public function testContainerDeprecation()
     {
-        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)));
+        $em = $this->createMock(EntityManager::class);
+        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)), $em);
     }
 
     private function getContainer($searchConfigMock)
