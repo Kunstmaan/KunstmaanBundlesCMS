@@ -30,9 +30,11 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     private $entityChangeSet;
 
     public function __construct(/* NodePagesConfiguration */
-        $nodePagesConfiguration, /* EntityManagerInterface */
-        $em = null)
-    {
+        $nodePagesConfiguration,
+        /* EntityManagerInterface */
+        $em = null
+    ) {
+
         if ($nodePagesConfiguration instanceof ContainerInterface) {
             @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Inject the "%s" service instead.', __CLASS__, 'kunstmaan_node_search.search_configuration.node'), E_USER_DEPRECATED);
 
