@@ -1,5 +1,17 @@
 # Changelog
 
+## 5.2.3 / 2019-03-10
+
+* [AdminBundle] alignment of date, time & datetime widgets [#2389](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2389) ([@dbeerten](https://github.com/dbeerten)) 
+* [NodeBundle] fixed multilanguage parameter in WidgetController [#2387](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2387) ([@deZinc](https://github.com/deZinc)) 
+* [TranslatorBundle] Fixed --globals flag for kuma:translator:import command [#2386](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2386) ([@jazzzpor](https://github.com/jazzzpor)) 
+* [GeneratorBundle] fixed multilanguage parameter in article generator [#2385](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2385) ([@deZinc](https://github.com/deZinc)) 
+* [AllBundles] Fix correct symfony/security packages [#2383](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2383) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fixed Page(part) generating [#2382](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2382) ([@jeroenjans](https://github.com/jeroenjans)) 
+* [AdminBundle] fix multiple 'new' url-choosers [#2376](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2376) ([@dbeerten](https://github.com/dbeerten)) 
+* [NodeBundle] Fix incorrect routing config for controller-as-service [#2369](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2369) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] fixed sf4 translations issue [#2367](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2367) ([@deZinc](https://github.com/deZinc)) 
+
 ## 5.2.2 / 2019-02-12
 
 * [MediaBundle][SearchBundle] Provide default config for bundles to work on sf4 [#2365](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2365) ([@acrobat](https://github.com/acrobat)) 
