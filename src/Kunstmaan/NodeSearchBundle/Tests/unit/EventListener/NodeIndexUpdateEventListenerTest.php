@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
 use Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener;
@@ -14,9 +14,9 @@ use PHPUnit\Framework\TestCase;
 
 class NodeIndexUpdateEventListenerTest extends TestCase
 {
-    public function testUpdateOfChildPageWithStructuredNodeParent()
+    public function testUpdateOfChildPageWithStructuredPageParent()
     {
-        $parentPage = $this->createMock(StructureNode::class);
+        $parentPage = $this->createMock(AbstractStructurePage::class);
 
         $parentNodeTranslation = $this->createMock(NodeTranslation::class);
         $parentNodeTranslation->method('getRef')->willReturn($parentPage);
@@ -44,9 +44,9 @@ class NodeIndexUpdateEventListenerTest extends TestCase
         $listener->onPostPersist($nodeEvent);
     }
 
-    public function testUpdateOfChildPageWithStructuredNodeParentAndOfflineParent()
+    public function testUpdateOfChildPageWithStructuredPageParentAndOfflineParent()
     {
-        $parentPage = $this->createMock(StructureNode::class);
+        $parentPage = $this->createMock(AbstractStructurePage::class);
 
         $parentNodeTranslation = $this->createMock(NodeTranslation::class);
         $parentNodeTranslation->method('getRef')->willReturn($parentPage);

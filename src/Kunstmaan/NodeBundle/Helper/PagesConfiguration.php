@@ -109,6 +109,25 @@ class PagesConfiguration
      *
      * @return mixed
      */
+    public function isStructurePage($refName)
+    {
+        return $this->getValue(
+            $refName,
+            'structure_node',
+            function ($page) {
+                /* @noinspection PhpDeprecationInspection */
+                return $page instanceof HasNodeInterface && $page->isStructurePage();
+            }
+        );
+    }
+
+    /**
+     * @param string $refName
+     *
+     * @deprecated Using the isStructureNode method is deprecated in KunstmaanNodeBundle 5.2 and will be removed in KunstmaanNodeBundle 6.0. use isStructurePage.
+     *
+     * @return mixed
+     */
     public function isStructureNode($refName)
     {
         return $this->getValue(
@@ -116,7 +135,7 @@ class PagesConfiguration
             'structure_node',
             function ($page) {
                 /* @noinspection PhpDeprecationInspection */
-                return $page instanceof HasNodeInterface && $page->isStructureNode();
+                return $page instanceof HasNodeInterface && $page->isStructurePage();
             }
         );
     }

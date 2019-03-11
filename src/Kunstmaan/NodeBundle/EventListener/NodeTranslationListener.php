@@ -103,8 +103,8 @@ class NodeTranslationListener
     {
         $publicNode = $nodeTranslation->getRef($em);
 
-        // Do nothing for StructureNode objects, skip.
-        if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode()) {
+        // Do nothing for StructurePage objects, skip.
+        if ($publicNode instanceof HasNodeInterface && $publicNode->isStructurePage()) {
             return;
         }
 
@@ -146,8 +146,8 @@ class NodeTranslationListener
                     /** @var Node $publicNode */
                     $publicNode = $entity->getPublicNodeVersion()->getRef($em);
 
-                    // Do nothing for StructureNode objects, skip.
-                    if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode()) {
+                    // Do nothing for StructurePage objects, skip.
+                    if ($publicNode instanceof HasNodeInterface && $publicNode->isStructurePage()) {
                         continue;
                     }
 
@@ -219,7 +219,7 @@ class NodeTranslationListener
 
     /**
      * A function that checks the URL and sees if it's unique.
-     * It's allowed to be the same when the node is a StructureNode.
+     * It's allowed to be the same when the node is a StructurePage.
      * When a node is deleted it needs to be ignored in the check.
      * Offline nodes need to be included as well.
      *
@@ -255,10 +255,10 @@ class NodeTranslationListener
             return false;
         }
 
-        $isStructureNode = $page->isStructureNode();
+        $isStructurePage = $page->isStructurePage();
 
-        // If it's a StructureNode the slug and url should be empty.
-        if ($isStructureNode) {
+        // If it's a StructurePage the slug and url should be empty.
+        if ($isStructurePage) {
             $translation->setSlug('');
             $translation->setUrl($translation->getFullSlug());
 
@@ -305,7 +305,7 @@ class NodeTranslationListener
 
         /** @var NodeTranslation $trans */
         foreach ($translations as $trans) {
-            if (!$this->pagesConfiguration->isStructureNode($trans->getPublicNodeVersion()->getRefEntityName())) {
+            if (!$this->pagesConfiguration->isStructurePage($trans->getPublicNodeVersion()->getRefEntityName())) {
                 $translationsWithSameUrl[] = $trans;
             }
         }

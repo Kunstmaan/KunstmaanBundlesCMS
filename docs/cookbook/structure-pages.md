@@ -11,13 +11,13 @@ They do not have a representation in the frontend side of your project.
 namespace MyProject\WebsiteBundle\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 
 /**
  * @ORM\Table(name="myproject_structure_pages")
  * @ORM\Entity
  */
-class StructurePage extends StructureNode
+class StructurePage extends AbstractStructurePage
 {
     /**
      * @return array

@@ -501,7 +501,7 @@ class NodeAdminController extends Controller
         );
 
         $nodeTranslation = $nodeNewPage->getNodeTranslation($this->locale, true);
-        if ($newPage->isStructureNode()) {
+        if ($newPage->isStructurePage()) {
             $nodeTranslation->setSlug('');
             $this->em->persist($nodeTranslation);
         }
@@ -649,7 +649,7 @@ class NodeAdminController extends Controller
                 ->getMaxChildrenWeight($parentNode, $this->locale) + 1;
         $nodeTranslation->setWeight($weight);
 
-        if ($newPage->isStructureNode()) {
+        if ($newPage->isStructurePage()) {
             $nodeTranslation->setSlug('');
         }
 
@@ -663,7 +663,10 @@ class NodeAdminController extends Controller
         $this->get('event_dispatcher')->dispatch(
             Events::ADD_NODE,
             new NodeEvent(
-                $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
+                $nodeNewPage,
+                $nodeTranslation,
+                $nodeVersion,
+                $newPage
             )
         );
 
@@ -712,7 +715,10 @@ class NodeAdminController extends Controller
         $this->get('event_dispatcher')->dispatch(
             Events::ADD_NODE,
             new NodeEvent(
-                $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
+                $nodeNewPage,
+                $nodeTranslation,
+                $nodeVersion,
+                $newPage
             )
         );
 
@@ -885,11 +891,11 @@ class NodeAdminController extends Controller
             }
             $page = $nodeVersion->getRef($this->em);
         }
-        $isStructureNode = $page->isStructureNode();
+        $isStructurePage = $page->isStructurePage();
 
         $menubuilder = $this->get('kunstmaan_node.actions_menu_builder');
         $menubuilder->setActiveNodeVersion($nodeVersion);
-        $menubuilder->setEditableNode(!$isStructureNode);
+        $menubuilder->setEditableNode(!$isStructurePage);
 
         // Building the form
         $propertiesWidget = new FormWidget();
@@ -903,9 +909,9 @@ class NodeAdminController extends Controller
             'menunodetranslation',
             NodeMenuTabTranslationAdminType::class,
             $nodeTranslation,
-            ['slugable' => !$isStructureNode]
+            ['slugable' => !$isStructurePage]
         );
-        $menuWidget->addType('menunode', NodeMenuTabAdminType::class, $node, ['available_in_nav' => !$isStructureNode]);
+        $menuWidget->addType('menunode', NodeMenuTabAdminType::class, $node, ['available_in_nav' => !$isStructurePage]);
         $tabPane->addTab(new Tab('kuma_node.tab.menu.title', $menuWidget));
 
         $this->get('event_dispatcher')->dispatch(
@@ -933,7 +939,7 @@ class NodeAdminController extends Controller
                 );
 
                 $nodeTranslation->setTitle($page->getTitle());
-                if ($isStructureNode) {
+                if ($isStructurePage) {
                     $nodeTranslation->setSlug('');
                 }
                 $nodeVersion->setUpdated(new DateTime());

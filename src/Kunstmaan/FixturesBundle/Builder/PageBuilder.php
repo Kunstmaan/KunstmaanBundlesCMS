@@ -9,7 +9,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
@@ -94,7 +94,7 @@ class PageBuilder implements BuilderInterface
 
             // Create the translationNode.
             $translationNode = $this->createTranslationNode($rootNode, $language, $page);
-            if (!$page instanceof StructureNode) {
+            if (!$page instanceof AbstractStructurePage) {
                 $translationNode->setOnline(isset($fixtureParams['set_online']) ? $fixtureParams['set_online'] : true);
             }
 
@@ -213,7 +213,7 @@ class PageBuilder implements BuilderInterface
 
     private function ensureUniqueUrl(NodeTranslation $translation, HasNodeInterface $page)
     {
-        if ($page instanceof StructureNode) {
+        if ($page instanceof AbstractStructurePage) {
             $translation->setSlug('');
             $translation->setUrl($translation->getFullSlug());
 

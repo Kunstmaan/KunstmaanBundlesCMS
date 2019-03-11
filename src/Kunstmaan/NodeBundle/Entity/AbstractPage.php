@@ -137,6 +137,16 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
      *
      * {@inheritdoc}
      */
+    public function isStructurePage()
+    {
+        return false;
+    }
+
+    /**
+     * By default this will return false. Pages will always be pages until some class says otherwise.
+     *
+     * @deprecated Using the isStructureNode method is deprecated in KunstmaanNodeBundle 5.2 and will be removed in KunstmaanNodeBundle 6.0. use isStructurePage.
+     */
     public function isStructureNode()
     {
         return false;

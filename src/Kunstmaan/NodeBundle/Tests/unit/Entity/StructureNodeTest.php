@@ -5,14 +5,14 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
-class TestStructureNode extends StructureNode
+class TestAbstractStructurePage extends AbstractStructurePage
 {
     public function getPossibleChildTypes()
     {
@@ -29,53 +29,53 @@ class TestNode extends AbstractPage
 }
 
 /**
- * Class StructureNodeTest
+ * Class AbstractStructurePageTest
  */
-class StructureNodeTest extends TestCase
+class AbstractStructurePageTest extends TestCase
 {
-    public function testIsStructureNode()
+    public function testIsAbstractStructurePage()
     {
-        $structureNode = new TestStructureNode();
-        $this->assertTrue($structureNode->isStructureNode());
+        $structurePage = new TestAbstractStructurePage();
+        $this->assertTrue($structurePage->isStructurePage());
 
         $node = new TestNode();
-        $this->assertFalse($node->isStructureNode());
+        $this->assertFalse($node->isStructurePage());
     }
 
     public function testIsOnline()
     {
-        $structureNode = new TestStructureNode();
-        $this->assertFalse($structureNode->isOnline());
+        $structurePage = new TestAbstractStructurePage();
+        $this->assertFalse($structurePage->isOnline());
     }
 
     public function testGetSetPageTitle()
     {
-        $node = new TestStructureNode();
-        $node->setTitle('The Title');
-        $this->assertEquals('The Title', $node->getPageTitle());
-        $this->assertEquals('The Title', $node->getTitle());
-        $this->assertEquals('The Title', $node->__toString());
+        $page = new TestAbstractStructurePage();
+        $page->setTitle('The Title');
+        $this->assertEquals('The Title', $page->getPageTitle());
+        $this->assertEquals('The Title', $page->getTitle());
+        $this->assertEquals('The Title', $page->__toString());
     }
 
     public function testGetSetParent()
     {
         /** @var HasNodeInterface $entity */
         $entity = Stub::makeEmpty(HasNodeInterface::class);
-        $node = new TestStructureNode();
-        $node->setParent($entity);
-        $this->assertInstanceOf(get_class($entity), $node->getParent());
+        $page = new TestAbstractStructurePage();
+        $page->setParent($entity);
+        $this->assertInstanceOf(get_class($entity), $page->getParent());
     }
 
     public function testGetDefaultAdminType()
     {
-        $node = new TestStructureNode();
-        $this->assertEquals(PageAdminType::class, $node->getDefaultAdminType());
+        $page = new TestAbstractStructurePage();
+        $this->assertEquals(PageAdminType::class, $page->getDefaultAdminType());
     }
 
     public function testService()
     {
         // this method does nothing - is it required?
-        $node = new TestStructureNode();
-        $node->service(new Container(), new Request(), new RenderContext());
+        $page = new TestAbstractStructurePage();
+        $page->service(new Container(), new Request(), new RenderContext());
     }
 }

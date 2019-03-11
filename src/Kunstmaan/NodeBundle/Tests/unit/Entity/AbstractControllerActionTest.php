@@ -15,7 +15,7 @@ class Action extends AbstractControllerAction
         return [];
     }
 
-    public function isStructureNode()
+    public function isStructurePage()
     {
         return false;
     }

@@ -7,7 +7,7 @@ use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -65,7 +65,8 @@ class NodeTwigExtension extends Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction(
-                'get_node_for', array($this, 'getNodeFor')
+                'get_node_for',
+                array($this, 'getNodeFor')
             ),
             new \Twig_SimpleFunction(
                 'get_node_translation_for',
@@ -94,6 +95,10 @@ class NodeTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction(
                 'is_structure_node',
                 array($this, 'isStructureNode')
+            ),
+            new \Twig_SimpleFunction(
+                'is_structure_page',
+                array($this, 'isStructurePage')
             ),
             new \Twig_SimpleFunction(
                 'file_exists',
@@ -229,9 +234,17 @@ class NodeTwigExtension extends Twig_Extension
         return $this->nodeMenu;
     }
 
+    /**
+     * @deprecated Using the isStructureNode method is deprecated in KunstmaanNodeBundle 5.2 and will be removed in KunstmaanNodeBundle 6.0. use isStructurePage.
+     */
     public function isStructureNode($page)
     {
-        return $page instanceof StructureNode;
+        return $page instanceof AbstractStructurePage;
+    }
+
+    public function isStructurePage($page)
+    {
+        return $page instanceof AbstractStructurePage;
     }
 
     public function fileExists($filename)

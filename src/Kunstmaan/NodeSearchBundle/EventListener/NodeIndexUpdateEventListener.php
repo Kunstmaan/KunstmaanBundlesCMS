@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,12 +29,8 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     /** @var array */
     private $entityChangeSet;
 
-    public function __construct(/* NodePagesConfiguration */
-        $nodePagesConfiguration,
-        /* EntityManagerInterface */
-        $em = null
-    ) {
-
+    public function __construct(/* NodePagesConfiguration */ $nodePagesConfiguration, /* EntityManagerInterface */ $em = null)
+    {
         if ($nodePagesConfiguration instanceof ContainerInterface) {
             @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Inject the "%s" service instead.', __CLASS__, 'kunstmaan_node_search.search_configuration.node'), E_USER_DEPRECATED);
 
@@ -153,6 +149,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -162,8 +159,8 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
                 continue;
             }
             $parentRef = $parentNodeTranslation->getRef($em);
-            // Continue looping unless we find an offline page that is not a StructureNode
-            if ($parentRef instanceof StructureNode || $parentNodeTranslation->isOnline()) {
+            // Continue looping unless we find an offline page that is not a AbstractStructurePage
+            if ($parentRef instanceof AbstractStructurePage || $parentNodeTranslation->isOnline()) {
                 continue;
             }
 

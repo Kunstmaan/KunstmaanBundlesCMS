@@ -274,7 +274,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         $refPage = $this->getNodeRefPage($publicNodeVersion);
-        if ($refPage->isStructureNode()) {
+        if ($refPage->isStructurePage()) {
             return true;
         }
 
@@ -722,8 +722,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             /* @var AuditableEntryInterface $ace */
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
-                if (
-                    $securityIdentity instanceof RoleSecurityIdentity &&
+                if ($securityIdentity instanceof RoleSecurityIdentity &&
                     ($ace->getMask() & MaskBuilder::MASK_VIEW != 0)
                 ) {
                     $roles[] = $securityIdentity->getRole();

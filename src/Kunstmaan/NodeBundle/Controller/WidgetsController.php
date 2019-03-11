@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\AbstractStructurePage;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -159,22 +159,22 @@ class WidgetsController extends Controller
     }
 
     /**
-     * Determine if current node is a structure node.
+     * Determine if current node is a structure page.
      *
      * @param string $refEntityName
      *
      * @return bool
      */
-    protected function isStructureNode($refEntityName)
+    protected function isStructurePage($refEntityName)
     {
-        $structureNode = false;
+        $structurePage = false;
         if (class_exists($refEntityName)) {
             $page = new $refEntityName();
-            $structureNode = ($page instanceof StructureNode);
+            $structurePage = ($page instanceof AbstractStructurePage);
             unset($page);
         }
 
-        return $structureNode;
+        return $structurePage;
     }
 
     /**

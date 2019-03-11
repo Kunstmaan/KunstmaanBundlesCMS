@@ -3,24 +3,14 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 /**
- * A StructureNode will always be offline and its nodes will never have a slug.
+ * @deprecated Using the StructureNode class is deprecated in KunstmaanNodeBundle 5.2 and will be removed in KunstmaanNodeBundle 6.0. use AbstractStructurePage.
  */
-abstract class StructureNode extends AbstractPage
+abstract class StructureNode extends StructurePage
 {
-    /**
-     * A StructureNode will always be offline.
-     *
-     * @return bool
-     */
-    public function isOnline()
-    {
-        return false;
-    }
-
     /**
      * By default this is true..
      *
-     * {@inheritdoc}
+     * @deprecated Using the isStructureNode method is deprecated in KunstmaanNodeBundle 5.2 and will be removed in KunstmaanNodeBundle 6.0. use isStructurePage.
      */
     public function isStructureNode()
     {

@@ -32,7 +32,7 @@ class NodeTabListener
             return;
         }
 
-        if ($page->isStructureNode() === true) {
+        if ($page->isStructurePage() === true) {
             return;
         }
 

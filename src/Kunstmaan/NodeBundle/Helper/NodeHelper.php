@@ -147,7 +147,7 @@ class NodeHelper
      * @param NodeTranslation  $nodeTranslation
      * @param NodeVersion      $nodeVersion
      * @param HasNodeInterface $page
-     * @param bool             $isStructureNode
+     * @param bool             $isStructurePage
      * @param TabPane          $tabPane
      *
      * @return NodeTranslation
@@ -157,7 +157,7 @@ class NodeHelper
         NodeTranslation $nodeTranslation,
         NodeVersion $nodeVersion,
         HasNodeInterface $page,
-        $isStructureNode,
+        $isStructurePage,
         TabPane $tabPane = null
     ) {
         $this->eventDispatcher->dispatch(
@@ -166,7 +166,7 @@ class NodeHelper
         );
 
         $nodeTranslation->setTitle($page->getTitle());
-        if ($isStructureNode) {
+        if ($isStructurePage) {
             $nodeTranslation->setSlug('');
         }
 
@@ -202,8 +202,8 @@ class NodeHelper
         $refEntityType,
         $pageTitle,
         $locale,
-        Node $parentNode = null)
-    {
+        Node $parentNode = null
+    ) {
         $user = $this->getAdminUser();
 
         $newPage = $this->createNewPage($refEntityType, $pageTitle);
@@ -219,13 +219,13 @@ class NodeHelper
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
         if (null !== $parentNode) {
             $weight = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getMaxChildrenWeight(
-                    $parentNode,
-                    $locale
-                ) + 1;
+                $parentNode,
+                $locale
+            ) + 1;
             $nodeTranslation->setWeight($weight);
         }
 
-        if ($newPage->isStructureNode()) {
+        if ($newPage->isStructurePage()) {
             $nodeTranslation->setSlug('');
         }
 
@@ -237,7 +237,10 @@ class NodeHelper
         $this->eventDispatcher->dispatch(
             Events::ADD_NODE,
             new NodeEvent(
-                $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
+                $nodeNewPage,
+                $nodeTranslation,
+                $nodeVersion,
+                $newPage
             )
         );
 
@@ -354,7 +357,7 @@ class NodeHelper
         $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($targetPage, $locale, $user);
 
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
-        if ($targetPage->isStructureNode()) {
+        if ($targetPage->isStructurePage()) {
             $nodeTranslation->setSlug('');
             $this->em->persist($nodeTranslation);
         }

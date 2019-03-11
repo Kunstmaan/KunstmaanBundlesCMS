@@ -51,5 +51,5 @@ interface HasNodeInterface extends EntityInterface
      *
      * @return bool
      */
-    public function isStructureNode();
+    public function isStructurePage();
 }

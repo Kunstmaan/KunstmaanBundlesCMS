@@ -34,7 +34,7 @@ class NodeListener
      */
     public function adaptForm(AdaptFormEvent $event)
     {
-        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
+        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructurePage()) {
             /* @var Seo $seo */
             $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
 
