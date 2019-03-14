@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.1",
-        "gedmo/doctrine-extensions": "^2.4.34",
+        "behat/transliterator": "~1.2",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "kunstmaan/adminlist-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",
