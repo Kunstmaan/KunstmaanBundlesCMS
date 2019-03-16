@@ -1,8 +1,0 @@
-namespace: Kunstmaan\TranslatorBundle\Tests
-settings:
-    lint: true
-paths:
-    tests: Tests
-    output: Tests/_output
-    support: Tests/_support
-    data: Tests/_data
