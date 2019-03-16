@@ -29,11 +29,12 @@ class TranslationFileExplorer
      *
      * @return \Symfony\Component\Finder\Finder
      */
-    public function find($path, array $locales)
+    public function find($path, array $locales, $translationDirectory = null)
     {
         $finder = new Finder();
+        $translationDirectory = $translationDirectory ?? $this->defaultTranslationFolder;
 
-        $exploreDir = $path . '/' . $this->defaultTranslationFolder;
+        $exploreDir = $path . '/' . $translationDirectory;
 
         if (is_dir($exploreDir)) {
             $finder->files()

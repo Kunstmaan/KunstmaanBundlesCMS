@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.4 / 2019-03-16
+
+* [GeneratorBundle] Fix typo in table name of article generator [#2399](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2399) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Added missing monolog dependency [#2398](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2398) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] Fix translations import on sf4 applications [#2397](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2397) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.2.3 / 2019-03-10
 
 * [AdminBundle] alignment of date, time & datetime widgets [#2389](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2389) ([@dbeerten](https://github.com/dbeerten)) 

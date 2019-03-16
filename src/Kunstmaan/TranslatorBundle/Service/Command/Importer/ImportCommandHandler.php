@@ -7,6 +7,7 @@ use Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler;
 use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
 use Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Parses an ImportCommand
@@ -52,8 +53,10 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     private function importGlobalTranslationFiles(ImportCommand $importCommand)
     {
+        $baseDir = Kernel::VERSION_ID >= 40000 ? $this->kernel->getProjectDir() : $this->kernel->getRootDir();
+        $translationsDir = Kernel::VERSION_ID >= 40000 ? 'translations' : null;
         $locales = $this->determineLocalesToImport($importCommand);
-        $finder = $this->translationFileExplorer->find($this->kernel->getRootDir(), $locales);
+        $finder = $this->translationFileExplorer->find($baseDir, $locales, $translationsDir);
 
         return $this->importTranslationFiles($finder, $importCommand->getForce());
     }
@@ -70,10 +73,20 @@ class ImportCommandHandler extends AbstractCommandHandler
         $importBundle = strtolower($importCommand->getDefaultBundle());
 
         if ($importBundle == 'all') {
-            return $this->importAllBundlesTranslationFiles($importCommand);
+            $importCount = $this->importAllBundlesTranslationFiles($importCommand);
+
+            if (Kernel::VERSION_ID >= 40000) {
+                $importCount += $this->importSf4TranslationFiles($importCommand);
+            }
+
+            return $importCount;
         } elseif ($importBundle == 'custom') {
             return $this->importCustomBundlesTranslationFiles($importCommand);
         } else {
+            if (Kernel::VERSION_ID >= 40000) {
+                return $this->importSf4TranslationFiles($importCommand);
+            }
+
             return $this->importOwnBundlesTranslationFiles($importCommand);
         }
     }
@@ -245,5 +258,16 @@ class ImportCommandHandler extends AbstractCommandHandler
     public function setImporter($importer)
     {
         $this->importer = $importer;
+    }
+
+    private function importSf4TranslationFiles($importCommand)
+    {
+        $finder = $this->translationFileExplorer->find($this->kernel->getProjectDir(), $this->determineLocalesToImport($importCommand), 'translations');
+
+        if ($finder === null) {
+            return 0;
+        }
+
+        return $this->importTranslationFiles($finder, $importCommand->getForce());
     }
 }
