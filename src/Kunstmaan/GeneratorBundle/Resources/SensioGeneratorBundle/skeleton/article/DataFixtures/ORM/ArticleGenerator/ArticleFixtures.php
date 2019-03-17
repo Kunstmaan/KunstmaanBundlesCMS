@@ -33,8 +33,8 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
      */
     public function load(ObjectManager $manager)
 {
-    if ($this->container->getParameter('multilanguage')) {
-        $languages = explode('|', $this->container->getParameter('requiredlocales'));
+    if ($this->container->getParameter('kunstmaan_admin.multi_language')) {
+        $languages = explode('|', $this->container->getParameter('kunstmaan_admin.required_locales'));
     }
     if (!is_array($languages) || count($languages) < 1) {
         $languages = array('en');
