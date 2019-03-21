@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
-use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Knp\Menu\Integration\Symfony\RoutingExtension;
@@ -55,18 +54,16 @@ class ActionsMenuBuilderTest extends TestCase
      */
     protected function getMockedEntityManager()
     {
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null,
-            'findBy' => null,
-            'findOneBy' => null,
-        ]);
-        /** @var \Doctrine\ORM\EntityManager $emMock */
-        $emMock = Stub::make(EntityManager::class, [
-            'getRepository' => $repository,
-            'getClassMetaData' => (object) ['name' => 'aClass'],
-            'persist' => null,
-            'flush' => null,
-        ]);
+        $repository = $this->createMock(EntityRepository::class);
+        $repository->method('find')->willReturn(null);
+        $repository->method('findBy')->willReturn(null);
+        $repository->method('findOneBy')->willReturn(null);
+
+        $emMock = $this->createMock(EntityManager::class);
+        $emMock->method('getRepository')->willReturn($repository);
+        $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
+        $emMock->method('persist')->willReturn(null);
+        $emMock->method('flush')->willReturn(null);
 
         return $emMock;
     }

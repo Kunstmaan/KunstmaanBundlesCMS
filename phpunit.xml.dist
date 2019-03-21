@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.5/phpunit.xsd"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="intl.default_locale" value="en" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="memory_limit" value="-1" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Kunstmaan CMS Test Suite">
+            <directory>./src/Kunstmaan/*/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <groups>
+        <exclude>
+            <group>migrations</group>
+            <group>importer</group>
+        </exclude>
+    </groups>
+
+    <filter>
+        <whitelist>
+            <directory>./src/Kunstmaan/</directory>
+            <exclude>
+                <directory>./vendor</directory>
+                <directory>./src/Kunstmaan/*/Resources</directory>
+                <directory>./src/Kunstmaan/*/vendor</directory>
+                <directory>./src/Kunstmaan/*/Twig</directory>
+                <directory>./src/Kunstmaan/*/Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+</phpunit>

@@ -1,9 +1,0 @@
-namespace: Kunstmaan\UserManagementBundle\Tests
-settings:
-    shuffle: true
-    lint: true
-paths:
-    tests: Tests
-    output: Tests/_output
-    support: Tests/_support
-    data: Tests/_data

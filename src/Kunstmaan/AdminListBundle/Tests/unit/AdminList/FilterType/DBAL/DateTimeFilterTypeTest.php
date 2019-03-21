@@ -4,11 +4,10 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\DBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType;
-use Codeception\Test\Unit;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
-class DateTimeFilterTypeTest extends Unit
+class DateTimeFilterTypeTest extends BaseDbalFilterTest
 {
     /**
      * @var \UnitTester
@@ -19,6 +18,11 @@ class DateTimeFilterTypeTest extends Unit
      * @var DateTimeFilterType
      */
     protected $object;
+
+    protected function setUp()
+    {
+        $this->object = new DateTimeFilterType('datetime', 'e');
+    }
 
     /**
      * @return array
@@ -58,7 +62,7 @@ class DateTimeFilterTypeTest extends Unit
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
     {
-        $qb = $this->tester->getDBALQueryBuilder();
+        $qb = $this->getQueryBuilder();
         $qb->select('*')
             ->from('entity', 'e');
         $this->object->setQueryBuilder($qb);
@@ -74,15 +78,6 @@ class DateTimeFilterTypeTest extends Unit
             'KunstmaanAdminListBundle:FilterType:dateTimeFilter.html.twig',
             $this->object->getTemplate()
         );
-    }
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function _before()
-    {
-        $this->object = new DateTimeFilterType('datetime', 'e');
     }
 
     /**

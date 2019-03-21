@@ -2,24 +2,23 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
-use Codeception\Test\Unit;
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
+use PHPUnit\Framework\TestCase;
 
-class CacheValidatorTest extends Unit
+class CacheValidatorTest extends TestCase
 {
     private $cacheValidator;
 
     private $cacheDir = __DIR__.'/../../app/cache';
 
-    public function _before()
+    public function setUp()
     {
         $date = new \DateTimeImmutable();
         $yesterday = $date->modify('-1 day');
 
-        $translationRepository = $this->makeEmpty(TranslationRepository::class, [
-            'getLastChangedTranslationDate' => $yesterday,
-        ]);
+        $translationRepository = $this->createMock(TranslationRepository::class);
+        $translationRepository->method('getLastChangedTranslationDate')->willReturn($yesterday);
 
         $this->cacheValidator = new CacheValidator();
         $this->cacheValidator->setTranslationRepository($translationRepository);
@@ -32,7 +31,7 @@ class CacheValidatorTest extends Unit
         $this->cacheValidator->setCacheDir($this->cacheDir);
     }
 
-    public function _after()
+    public function tearDown()
     {
         $this->deleteDummyCachedFile();
     }

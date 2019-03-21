@@ -2,41 +2,22 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\DBAL;
 
-use Codeception\Test\Unit;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\BooleanFilterType;
-use Kunstmaan\AdminListBundle\Tests\UnitTester;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BooleanFilterTypeTest
  */
-class BooleanFilterTypeTest extends Unit
+class BooleanFilterTypeTest extends BaseDbalFilterTest
 {
-    /**
-     * @var UnitTester
-     */
-    protected $tester;
-
     /**
      * @var BooleanFilterType
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function _before()
+    protected function setUp()
     {
         $this->object = new BooleanFilterType('boolean', 'e');
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 
     public function testBindRequest()
@@ -57,7 +38,7 @@ class BooleanFilterTypeTest extends Unit
      */
     public function testApply($value)
     {
-        $qb = $this->tester->getDBALQueryBuilder();
+        $qb = $this->getQueryBuilder();
         $qb->select('*')
            ->from('entity', 'e');
         $this->object->setQueryBuilder($qb);

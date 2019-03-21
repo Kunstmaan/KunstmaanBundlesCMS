@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
@@ -34,7 +33,7 @@ class PageTemplateConfigurationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $testNode = Stub::makeEmpty(AbstractPage::class);
+        $testNode = $this->createMock(AbstractPage::class);
 
         $repo->expects($this->any())
             ->method('find')

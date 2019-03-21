@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -24,8 +23,7 @@ class NodeEventTest extends TestCase
         $nodeTranslation = $this->createMock(NodeTranslation::class);
         /** @var NodeVersion $nodeVersion */
         $nodeVersion = $this->createMock(NodeVersion::class);
-        /** @var HasNodeInterface $page */
-        $page = Stub::makeEmpty(HasNodeInterface::class);
+        $page = $this->createMock(HasNodeInterface::class);
 
         $event = new NodeEvent($node, $nodeTranslation, $nodeVersion, $page);
 

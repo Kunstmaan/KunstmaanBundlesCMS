@@ -2,29 +2,26 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
-use Codeception\Test\Unit;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ExportList;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ExportListTest
  */
-class ExportListTest extends Unit
+class ExportListTest extends TestCase
 {
     /** @var ExportList */
     protected $exportList;
 
-    public function _before()
+    public function setUp()
     {
         /** @var AdminListConfiguratorInterface */
-        $configurator = $this->makeEmpty(ExportListConfiguratorInterface::class,
-            [
-                'getExportFields' => ['c', 'd'],
-                'getIterator' => $this->makeEmpty(\Iterator::class),
-                'getStringValue' => 'stringtest',
-            ]
-        );
+        $configurator = $this->createMock(ExportListConfiguratorInterface::class);
+        $configurator->method('getExportFields')->willReturn(['c', 'd']);
+        $configurator->method('getIterator')->willReturn($this->createMock(\Iterator::class));
+        $configurator->method('getStringValue')->willReturn('stringtest');
 
         $this->exportList = new ExportList($configurator);
     }

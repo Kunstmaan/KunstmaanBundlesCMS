@@ -4,17 +4,22 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+env:
+  global:
+    - PHPUNIT_FLAGS="-v"
+
 matrix:
   fast_finish: true
   include:
     # Test LTS versions. This makes sure we do not use Symfony packages with version greater than 3. Read more at https://github.com/symfony/lts
     - php: 7.3
-      env: DEPENDENCIES="symfony/lts:^3"
+      env: DEPENDENCIES="symfony/lts:^3" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
     - php: 7.1
     - php: 7.2
-      env: COVERAGE=true CODECEPTION_FLAGS="--coverage --coverage-xml"
+      env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.clover"
     - php: 7.3
+      env: SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
 before_install:
   - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
@@ -35,10 +40,10 @@ before_install:
 install:
   - composer update --prefer-dist $COMPOSER_FLAGS
 
-script: ./vendor/codeception/codeception/codecept run $CODECEPTION_FLAGS
+script: ./vendor/bin/phpunit $PHPUNIT_FLAGS
 
 after_script:
-    - php ocular.phar code-coverage:upload --format=php-clover _output/coverage.xml
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
     - npm run build -- --continueAfterTestError=true
     - npm run buildGroundControlSkeleton
 

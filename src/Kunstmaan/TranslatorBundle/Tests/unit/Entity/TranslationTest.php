@@ -2,16 +2,15 @@
 
 namespace Kunstmaan\TranslationBundle\Tests\Entity;
 
-use Codeception\Test\Unit;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\TextWithLocale;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class TranslationTest
  */
-class TranslationTest extends Unit
+class TranslationTest extends TestCase
 {
     const TEST_DATA_ID = 666;
     const TEST_DATA_FILE = 'messages.en.yml';
@@ -21,14 +20,14 @@ class TranslationTest extends Unit
 
     protected $object;
 
-    public function _before()
+    public function setUp()
     {
         $this->object = new Translation();
 
         $this->object
             ->setId(self::TEST_DATA_ID)
-            ->setCreatedAt(new DateTime())
-            ->setUpdatedAt(new DateTime())
+            ->setCreatedAt(new \DateTime())
+            ->setUpdatedAt(new \DateTime())
             ->setFile(self::TEST_DATA_FILE)
             ->setKeyword(self::TEST_DATA_KEYWORD)
             ->setDomain(self::TEST_DATA_DOMAIN)
@@ -41,8 +40,8 @@ class TranslationTest extends Unit
     public function testGetSet()
     {
         $this->assertEquals(self::TEST_DATA_ID, $this->object->getId());
-        $this->assertInstanceOf(DateTime::class, $this->object->getCreatedAt());
-        $this->assertInstanceOf(DateTime::class, $this->object->getUpdatedAt());
+        $this->assertInstanceOf(\DateTime::class, $this->object->getCreatedAt());
+        $this->assertInstanceOf(\DateTime::class, $this->object->getUpdatedAt());
         $this->assertEquals(self::TEST_DATA_FILE, $this->object->getFile());
         $this->assertEquals(Translation::FLAG_UPDATED, $this->object->getFlag());
 

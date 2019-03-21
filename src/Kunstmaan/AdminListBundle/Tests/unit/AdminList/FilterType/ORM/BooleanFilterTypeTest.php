@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
-use Codeception\Test\Unit;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\Tests\unit\AdminList\FilterType\ORM\BaseOrmFilterTest;
 use Kunstmaan\AdminListBundle\Tests\UnitTester;
 use Symfony\Component\HttpFoundation\Request;
 
-class BooleanFilterTypeTest extends Unit
+class BooleanFilterTypeTest extends BaseOrmFilterTest
 {
     /**
      * @var UnitTester
@@ -19,11 +19,7 @@ class BooleanFilterTypeTest extends Unit
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function _before()
+    protected function setUp()
     {
         $this->object = new BooleanFilterType('boolean', 'b');
     }
@@ -46,7 +42,7 @@ class BooleanFilterTypeTest extends Unit
      */
     public function testApply($value)
     {
-        $qb = $this->tester->getORMQueryBuilder();
+        $qb = $this->getQueryBuilder();
         $qb->select('b')
             ->from('Entity', 'b');
         $this->object->setQueryBuilder($qb);

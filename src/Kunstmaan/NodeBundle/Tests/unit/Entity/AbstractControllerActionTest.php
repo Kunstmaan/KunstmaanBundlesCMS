@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractControllerAction;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
@@ -29,7 +28,7 @@ class AbstractControllerActionTest extends TestCase
         $action->setId(5);
         $action->setTitle('Global Economic Meltdown - The Movie');
         /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class);
+        $entity = $this->createMock(HasNodeInterface::class);
         $action->setParent($entity);
 
         $this->assertEquals(5, $action->getId());

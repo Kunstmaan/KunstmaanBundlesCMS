@@ -1,6 +1,0 @@
-include:
-  - src/Kunstmaan/*Bundle
-paths:
-  output: _output
-settings:
-  colors: false

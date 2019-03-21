@@ -2,13 +2,11 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 class NodeTest extends TestCase
 {
@@ -136,8 +134,7 @@ class NodeTest extends TestCase
 
     public function testSetRefAndGetRefEntityName()
     {
-        /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class);
+        $entity = $this->createMock(HasNodeInterface::class);
         $this->object->setRef($entity);
         $this->assertEquals(get_class($entity), $this->object->getRefEntityName());
     }
@@ -155,8 +152,7 @@ class NodeTest extends TestCase
 
     public function testToString()
     {
-        /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class);
+        $entity = $this->createMock(HasNodeInterface::class);
         $this->object->setId(1);
         $this->object->setRef($entity);
 
@@ -165,7 +161,7 @@ class NodeTest extends TestCase
 
     public function testGetSetLeftRightLevel()
     {
-        $mirror = new ReflectionClass(Node::class);
+        $mirror = new \ReflectionClass(Node::class);
         $property = $mirror->getProperty('lft');
         $property->setAccessible(true);
         $property->setValue($this->object, 11);

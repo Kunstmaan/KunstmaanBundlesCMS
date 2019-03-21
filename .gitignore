@@ -7,8 +7,6 @@ node_modules/
 npm-debug.log
 *~
 *test.db
-**/Tests/_support/_generated
-**/Tests/_output
 **/Tests/unit/app/cache
 **/Tests/unit/app/logs
 **/Tests/unit/app2/cache
