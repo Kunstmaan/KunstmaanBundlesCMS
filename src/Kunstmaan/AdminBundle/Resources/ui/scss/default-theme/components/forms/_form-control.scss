@@ -14,7 +14,6 @@
 }
 
 
-
 /* Icon in control
    ========================================================================== */
 .form-group--icon-in-control {
@@ -42,33 +41,41 @@ input[type=file].form-control {
 
 /* counter
    ========================================================================== */
-.form-control__character-counter {
-    padding: .5rem 0 0 0;
-    display: inline-block;
+.input-group-counter {
+    position: relative;
 
-    line-height: 1;
-    color: $gray;
-
-    &--warning {
-        color: $warning;
+    > select ~ .form-control__character-counter {
+        display: none;
     }
 
     .input-group > & {
-        position: absolute;
-        left: 100%;
-        top: 50%;
-
-        padding: .5rem;
-        transform: translate3d(0, -50%, 0);
+        display: table-cell;
     }
 
-    @media (min-width: $screen-sm) {
-        position: absolute;
-        left: 40rem;
-        top: calc(50% + 1rem);
+    > .form-control {
+        padding-right: 30px;
+    }
+}
 
-        padding: .5rem;
-        transform: translate3d(0, -50%, 0);
+.form-control__character-counter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+
+    display: inline-block;
+    padding: .6em;
+
+    color: rgba($gray, .7);
+    font-size: 90%;
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: baseline;
+
+    pointer-events: none;
+
+    &.form-control__character-counter--warning {
+        color: $warning;
     }
 }
 
@@ -87,7 +94,7 @@ input[type=file].form-control {
 }
 
 /* Range slider
-   ===========================================================================*/
+   =========================================================================== */
 
 input[type=range] {
     display: inline-block;

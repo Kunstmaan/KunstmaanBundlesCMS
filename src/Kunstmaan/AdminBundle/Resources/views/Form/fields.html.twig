@@ -50,9 +50,6 @@
     {% set type = type|default('text') %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} {% if attr['maxlength'] is defined %}data-reinit-js='["charactersLeft"]' data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
-    {% if attr['maxlength'] is defined %}
-        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
-    {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -67,11 +64,7 @@
     {% if 'js-rich-editor' in attr.class %}
         {% set reInitMethods = reInitMethods|merge(['"richEditor"']) %}
     {% endif %}
-
     <textarea {{ block('widget_attributes') }} {% if reInitMethods|length > 0 %}data-reinit-js="[{{ reInitMethods|join(',') }}]"{% endif %} rows="5" {% if attr['maxlength'] is defined %} data-target="#counter-for-{{ form.vars.id }}" {% endif %}>{{ value }}</textarea>
-    {% if attr['maxlength'] is defined %}
-        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
-    {% endif %}
 {% endspaceless %}
 {% endblock textarea_widget %}
 
@@ -113,9 +106,8 @@
             {% set label = name|humanize %}
         {% endif %}
 
-
         <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-	    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+        <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
             {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-icon">*</span>{% endif %}
         </label>
     </div>
@@ -221,18 +213,28 @@
                 {% endfor %}
             </div>
         {% else %}
-            {% if attr['info_text'] is defined %}
-                {# Info text #}
-                <div class="input-group" data-reinit-js='["tooltip"]'>
-                    {{ form_widget(form) }}
-                    <span class="input-group-addon">
-                        <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text']|trans }}" id="{{ id }}_info_text">?</strong>
-                    </span>
-                </div>
-            {% else %}
-                {# Default #}
+            {% set widget %}
                 {{ form_widget(form) }}
+            {% endset %}
+            {% if attr['maxlength'] is defined %}
+                {% set widget %}
+                    <div class="input-group-counter">
+                        {{ widget }}
+                        <span id="counter-for-{{ form.vars.id }}" class="js-max-length-counter form-control__character-counter"></span>
+                    </div>
+                {% endset %}
             {% endif %}
+            {% if attr['info_text'] is defined %}
+                {% set widget %}
+                    <div class="input-group" data-reinit-js='["tooltip"]'>
+                        {{ widget }}
+                        <span class="input-group-addon">
+                            <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text']|trans }}" id="{{ id }}_info_text">?</strong>
+                        </span>
+                    </div>
+                {% endset %}
+            {% endif %}
+            {{ widget }}
         {% endif %}
 
         {% if attr['title'] is defined %}{% endif %}
@@ -241,8 +243,6 @@
     </div>
 {% endspaceless %}
 {% endblock form_row %}
-
-
 
 
 {# Misc #}
