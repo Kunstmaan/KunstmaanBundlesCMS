@@ -55,6 +55,11 @@ class MenuItem
     /**
      * @var bool
      */
+    private $hiddenFromNav = false;
+
+    /**
+     * @var bool
+     */
     private $folder = false;
 
     /**
@@ -371,6 +376,24 @@ class MenuItem
     public function setOffline($offline)
     {
         $this->offline = $offline;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHiddenFromNav()
+    {
+        return $this->hiddenFromNav;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setHiddenFromNav($hiddenFromNav)
+    {
+        $this->hiddenFromNav = $hiddenFromNav;
 
         return $this;
     }

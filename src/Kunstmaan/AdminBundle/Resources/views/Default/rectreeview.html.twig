@@ -5,6 +5,8 @@
         data-jstree='{"type":"folder"}'
     {% elseif menuitem.offline %}
         data-jstree='{"type":"offline"}'
+    {% elseif menuitem.hiddenFromNav %}
+        data-jstree='{"type":"hidden-from-nav"}'
     {% endif %}
     {% if menuitem.attributes.page is defined %}
         {% if menuitem.attributes.page.icon is defined %}
