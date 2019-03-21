@@ -277,6 +277,29 @@ kunstmaanbundles.richEditor = (function (window, undefined) {
             }
         });
 
+        CKEDITOR.on('instanceReady', function (e) {
+            var editor = e.editor;
+
+            if (editor.element.hasAttribute('maxlength') && !(editor.config).hasOwnProperty('wordcount')) {
+                var maxLength = editor.element.getAttribute('maxlength');
+                var newConfig = editor.config;
+
+                newConfig.extraPlugins = 'wordcount';
+                newConfig.wordcount = {
+                    showParagraphs: false,
+                    showWordCount: false,
+                    showCharCount: true,
+                    countSpacesAsChars: true,
+                    countHTML: false,
+                    maxCharCount: parseInt(maxLength, 10),
+                };
+
+                CKEDITOR.instances[editor.name].destroy();
+                CKEDITOR.replace(editor.name, newConfig);
+            }
+        });
+
+
         $el.addClass('js-rich-editor--enabled');
 
         // Behat tests
