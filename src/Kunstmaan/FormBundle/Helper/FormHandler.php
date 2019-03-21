@@ -82,14 +82,6 @@ class FormHandler implements FormHandlerInterface
                 $event = new SubmissionEvent($formSubmission, $page);
                 $this->container->get('event_dispatcher')->dispatch(FormEvents::ADD_SUBMISSION, $event);
 
-                $from = $page->getFromEmail();
-                $to = $page->getToEmail();
-                $subject = $page->getSubject();
-                if (!empty($from) && !empty($to) && !empty($subject)) {
-                    $mailer = $this->container->get('kunstmaan_form.form_mailer');
-                    $mailer->sendContactMail($formSubmission, $from, $to, $subject);
-                }
-
                 return new RedirectResponse($page->generateThankYouUrl($router, $context));
             }
         }
