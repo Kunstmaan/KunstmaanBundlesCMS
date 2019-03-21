@@ -37,12 +37,24 @@
             bodyClass: 'CKEditor',
             filebrowserWindowWidth: 970,
             filebrowserImageWindowWidth: 970,
-
             filebrowserImageUploadUrl: '',
             toolbar: [
                 { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'RemoveFormat'] }
             ]
-        }
+        },
+        'raw-html': {
+            skin: 'bootstrapck',
+            startupFocus: true,
+            allowedContent: true,
+            removeFormatAttributes: '',
+            bodyClass: 'CKEditor',
+            extraPlugins: 'codemirror',
+            removePlugins: 'elementspath',
+            height: 300,
+            toolbar: [
+                { name: 'document', items: ['Source', 'autoFormat', 'CommentSelectedRange', 'UncommentSelectedRange', 'AutoComplete' ] }
+            ],
+        },
     };
 </script>
 
