@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Debug\Exception\ContextErrorException;
@@ -20,7 +21,7 @@ use Symfony\Component\Debug\Exception\ContextErrorException;
 /**
  * Kunstmaan installer
  */
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
     /**
      * @var int
@@ -48,10 +49,11 @@ class InstallCommand extends Command
             ->setDefinition(
                 new InputDefinition(
                     [
-                        new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the bundle to create'),
-                        new InputOption('demosite', '', InputOption::VALUE_REQUIRED, 'Do you want create "demosite"'),
-                        new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
-                        new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),
+                        new InputOption('demosite', '', InputOption::VALUE_REQUIRED, 'Do you want to create a "demosite"'),
+                        new InputOption('create-tests', '', InputOption::VALUE_REQUIRED, 'Do you want to create tests for you pages/pageparts'),
+                        new InputOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle to create (only for SF3)'),
+                        new InputOption('dir', '', InputOption::VALUE_OPTIONAL, 'The directory where to create the bundle (only for SF3)'),
+                        new InputOption('bundle-name', '', InputOption::VALUE_OPTIONAL, 'The optional bundle name (only for SF3)'),
                     ]
                 )
             );
@@ -65,53 +67,75 @@ class InstallCommand extends Command
         $outputStyle->writeln('<info>Installing KunstmaanCms...</info>');
         $outputStyle->writeln($this->getKunstmaanLogo());
 
-        $question = new Question(
-            $questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')),
-            $input->getOption('namespace')
-        );
-        $question->setValidator([Validators::class, 'validateBundleNamespace']);
-        $namespace = $questionHelper->ask($input, $output, $question);
-        $input->setOption('namespace', $namespace);
+        // Only ask namespace for Symfony 3
+        if (Kernel::VERSION_ID < 40000) {
+            $question = new Question(
+                $questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')),
+                $input->getOption('namespace')
+            );
+            $question->setValidator([Validators::class, 'validateBundleNamespace']);
+            $namespace = $questionHelper->ask($input, $output, $question);
+            $input->setOption('namespace', $namespace);
+            $input->setOption('bundle-name', strtr($namespace, ['\\Bundle\\' => '', '\\' => '']));
+
+            $dir = $input->getOption('dir') ?: dirname($this->rootDir) . '/src';
+            $input->setOption('dir', $dir);
+        }
 
         $question = new ChoiceQuestion(
-            'Do you want create "demosite"',
-            ['No', 'Yes'],
+            'Do you want to create a "demosite"',
+            ['No (default)', 'Yes'],
             0
         );
         $question->setErrorMessage('Option "%s" is invalid.');
-        $demositeOption = $questionHelper->ask($input, $output, $question);
+        $demoSiteOption = $questionHelper->ask($input, $output, $question);
+        $input->setOption('demosite', $demoSiteOption);
 
-        $input->setOption('demosite', $demositeOption);
-        $input->setOption('bundle-name', strtr($namespace, ['\\Bundle\\' => '', '\\' => '']));
-
-        $dir = $input->getOption('dir') ?: dirname($this->rootDir) . '/src';
-        $input->setOption('dir', $dir);
+        $question = new ChoiceQuestion(
+            'Do you want to create tests for you pages/pageparts?',
+            ['No (default)', 'Yes'],
+            0
+        );
+        $question->setErrorMessage('Option "%s" is invalid.');
+        $createTests = $questionHelper->ask($input, $output, $question);
+        $input->setOption('create-tests', $createTests);
 
         $output->writeln('<info>Installation start</info>');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $demositeOptions = ['--namespace' => $input->getOption('namespace')];
+        $defaultSiteOptions = [];
         if ($input->getOption('demosite') === 'Yes') {
-            $demositeOptions['--demosite'] = true;
+            $defaultSiteOptions['--demosite'] = true;
         }
 
-        $this
-            ->executeCommand($output, 'kuma:generate:bundle', [
+        if (Kernel::VERSION_ID < 40000) {
+            $defaultSiteOptions = ['--namespace' => $input->getOption('namespace')];
+
+            $this->executeCommand($output, 'kuma:generate:bundle', [
                 '--namespace' => $input->getOption('namespace'),
                 '--dir' => $input->getOption('dir'),
                 '--bundle-name' => $input->getOption('bundle-name'),
-            ])
-            ->executeCommand($output, 'kuma:generate:default-site', $demositeOptions)
+            ]);
+        }
+
+        $this
+            ->executeCommand($output, 'kuma:generate:default-site', $defaultSiteOptions)
             ->executeCommand($output, 'doctrine:database:create')
             ->executeCommand($output, 'doctrine:schema:drop', ['--force' => true])
             ->executeCommand($output, 'doctrine:schema:create')
             ->executeCommand($output, 'doctrine:fixtures:load')
-            ->executeCommand($output, 'kuma:generate:admin-tests', [
-                '--namespace' => $input->getOption('namespace'),
-            ])
         ;
+
+        if ($input->getOption('create-tests') === 'Yes') {
+            $adminTestOptions = [];
+            if (Kernel::VERSION_ID < 40000) {
+                $adminTestOptions = ['--namespace' => $input->getOption('namespace')];
+            }
+
+            $this->executeCommand($output, 'kuma:generate:admin-tests', $adminTestOptions);
+        }
     }
 
     protected function executeCommand(OutputInterface $output, $command, array $options = [])
@@ -119,7 +143,6 @@ class InstallCommand extends Command
         $options = array_merge(
             [
                 '--no-debug' => true,
-                '--no-interaction' => true,
             ],
             $options
         );
@@ -128,8 +151,8 @@ class InstallCommand extends Command
 
         try {
             $updateInput = new ArrayInput($options);
-            $updateInput->setInteractive(false);
-            $this->getApplication()->find($command)->run($updateInput, new NullOutput());
+            $updateInput->setInteractive(true);
+            $this->getApplication()->find($command)->run($updateInput, $output);
             $output->writeln(sprintf('<info>Step %d: "%s" - [OK]</info>', $this->commandSteps, $command));
         } catch (RuntimeException $exception) {
             $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED]</error>', $this->commandSteps, $command));
