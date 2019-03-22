@@ -6,7 +6,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -29,14 +28,14 @@ final class InstallCommand extends Command
     private $commandSteps = 0;
 
     /** @var string */
-    private $rootDir;
+    private $projectDir;
 
     /**
      * @param string $rootDir
      */
-    public function __construct(string $rootDir)
+    public function __construct(string $projectDir)
     {
-        $this->rootDir = $rootDir;
+        $this->projectDir = $projectDir;
 
         parent::__construct();
     }
@@ -78,7 +77,7 @@ final class InstallCommand extends Command
             $input->setOption('namespace', $namespace);
             $input->setOption('bundle-name', strtr($namespace, ['\\Bundle\\' => '', '\\' => '']));
 
-            $dir = $input->getOption('dir') ?: dirname($this->rootDir) . '/src';
+            $dir = $input->getOption('dir') ?: $this->projectDir . '/src';
             $input->setOption('dir', $dir);
         }
 
