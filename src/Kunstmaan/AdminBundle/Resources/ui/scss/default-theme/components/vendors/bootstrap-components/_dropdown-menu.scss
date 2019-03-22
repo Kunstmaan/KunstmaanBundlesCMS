@@ -2,6 +2,15 @@
    Bootstrap dropdown menu adjustments
    ========================================================================== */
 
+.dropdown-menu {
+    > li {
+        > a {
+            .btn__icon {
+                margin-right: 5px;
+            }
+        }
+    }
+}
 
 .dropdown-menu__item--has-submenu {
     position: relative;

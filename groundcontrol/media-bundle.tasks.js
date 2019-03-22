@@ -16,8 +16,8 @@ export const mediaBundle = {
 
 mediaBundle.tasks.scripts = createScriptsTask({
     src: [
-        mediaBundle.config.srcPath + 'vendor_bower/plupload/js/plupload.full.min.js',
-        mediaBundle.config.srcPath + 'vendor_bower/picturefill/dist/picturefill.min.js',
+        './node_modules/plupload/js/plupload.full.min.js',
+        './node_modules/picturefill/dist/picturefill.min.js',
         mediaBundle.config.srcPath + 'js/_bulk-upload.js',
         mediaBundle.config.srcPath + 'js/_bulk-move.js',
         mediaBundle.config.srcPath + 'js/_dnd-upload.js',

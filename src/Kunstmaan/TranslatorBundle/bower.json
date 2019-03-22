@@ -1,7 +1,0 @@
-{
-  "name": "KunstmaanCMSTranslatorBundle",
-  "version": "1.0.0",
-  "dependencies": {
-    "x-editable": "~1.5"
-  }
-}

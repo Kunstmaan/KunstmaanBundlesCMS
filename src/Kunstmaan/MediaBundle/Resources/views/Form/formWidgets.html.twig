@@ -18,7 +18,7 @@
 
             <!-- Icon Chooser choose button -->
             <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn js-icon-chooser__choose" data-toggle="modal" data-target="#{{ id }}_iconChooserModal" data-link="{{ path('KunstmaanMediaBundle_icon_font_chooser', {'loader': loader, 'loader_data': loader_data }) }}">
-                <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
+                <i class="fa fa-image btn__icon media-chooser__choose-btn__icon"></i>
                 {{ 'media.widget.choose' | trans }}
             </button>
         </div>
@@ -86,14 +86,14 @@
             </figure>
 
             <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
-                <i class="fa fa-trash-o"></i>
+                <i class="fa fa-trash"></i>
             </button>
         </div>
 
 
         <!-- Select Button -->
         <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype}) }}">
-            <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
+            <i class="fa fa-image btn__icon media-chooser__choose-btn__icon"></i>
             {{ 'media.widget.choose' | trans }}
         </button>
     </div>
