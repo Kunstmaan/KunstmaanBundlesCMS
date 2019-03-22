@@ -67,11 +67,11 @@ class FormPageAdminListConfiguratorTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $queryBuilder->expects($this->any())
+        $queryBuilder->expects($this->once())
             ->method('innerJoin')
             ->will($this->returnSelf());
 
-        $queryBuilder->expects($this->any())
+        $queryBuilder->expects($this->once())
             ->method('andWhere')
             ->will($this->returnSelf());
 

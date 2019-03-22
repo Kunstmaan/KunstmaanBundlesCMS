@@ -66,15 +66,15 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $queryBuilder->expects($this->any())
+        $queryBuilder->expects($this->once())
             ->method('innerJoin')
             ->will($this->returnSelf());
 
-        $queryBuilder->expects($this->any())
+        $queryBuilder->expects($this->atLeastOnce())
             ->method('andWhere')
             ->will($this->returnSelf());
 
-        $queryBuilder->expects($this->any())
+        $queryBuilder->expects($this->atLeastOnce())
             ->method('setParameter')
             ->will($this->returnSelf());
 

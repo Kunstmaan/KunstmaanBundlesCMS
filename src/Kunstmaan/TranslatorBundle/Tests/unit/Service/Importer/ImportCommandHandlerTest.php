@@ -4,6 +4,7 @@ namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
+use Symfony\Component\HttpKernel\Kernel;
 
 class ImportCommandHandlerTest extends WebTestCase
 {
@@ -30,7 +31,7 @@ class ImportCommandHandlerTest extends WebTestCase
             ->setGlobals(true)
             ->setDefaultBundle(false);
 
-        $this->importCommandHandler->executeImportCommand($importCommand);
+        $this->assertEquals(7, $this->importCommandHandler->executeImportCommand($importCommand));
     }
 
     public function testdetermineLocalesToImport()
@@ -70,12 +71,15 @@ class ImportCommandHandlerTest extends WebTestCase
         $this->assertEquals($expectedArray, $locales);
     }
 
-    public function testImportGlobalTranslationFiles()
-    {
-    }
-
+    /**
+     * @group legacy
+     */
     public function testImportBundleTranslationFiles()
     {
+        if (Kernel::VERSION_ID >= 40000) {
+            $this->markTestSkipped('Skip symfony 3 test');
+        }
+
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
@@ -83,6 +87,22 @@ class ImportCommandHandlerTest extends WebTestCase
             ->setGlobals(true)
             ->setDefaultBundle('own');
 
-        $this->importCommandHandler->importBundleTranslationFiles($importCommand);
+        $this->assertEquals(0, $this->importCommandHandler->importBundleTranslationFiles($importCommand));
+    }
+
+    public function testImportSf4TranslationFiles()
+    {
+        if (Kernel::VERSION_ID < 40000) {
+            $this->markTestSkipped('Skip symfony 4 test');
+        }
+
+        $importCommand = new ImportCommand();
+        $importCommand
+            ->setForce(false)
+            ->setLocales(false)
+            ->setGlobals(true)
+            ->setDefaultBundle('own');
+
+        $this->assertEquals(7, $this->importCommandHandler->importBundleTranslationFiles($importCommand));
     }
 }

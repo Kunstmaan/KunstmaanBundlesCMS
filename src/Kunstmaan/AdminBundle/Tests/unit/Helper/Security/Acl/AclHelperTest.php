@@ -146,11 +146,6 @@ class AclHelperTest extends TestCase
         $this->object = new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
-    public function testConstructor()
-    {
-        new AclHelper($this->em, $this->tokenStorage, $this->rh);
-    }
-
     public function testApply()
     {
         /* @var $queryBuilder QueryBuilder */

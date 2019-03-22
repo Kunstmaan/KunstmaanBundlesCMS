@@ -6,10 +6,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\HttpFoundation\Request;
 
 class Plain extends FormSubmissionField
 {
@@ -61,30 +57,6 @@ class FormSubmissionFieldTest extends TestCase
         $label = 'Some label';
         $object->setSequence($label);
         $this->assertEquals($label, $object->getSequence());
-    }
-
-    public function testOnValidPost()
-    {
-        $object = $this->object;
-        $form = $this->getMockBuilder(Form::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $builder = $this->getMockBuilder(FormBuilder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request = new Request();
-
-        $container = $this->getMockBuilder(Container::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $container->expects($this->any())
-            ->method('getParameter')
-            ->will($this->returnValue('whatever'));
-
-        $object->onValidPost($form, $builder, $request, $container);
     }
 
     public function testSetGetSubmission()

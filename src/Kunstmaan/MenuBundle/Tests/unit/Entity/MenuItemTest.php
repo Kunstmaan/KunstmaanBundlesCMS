@@ -117,18 +117,22 @@ class MenuItemTest extends TestCase
 
     public function testValidateEntity()
     {
+        $nodeTranslation = $this->createMock(NodeTranslation::class);
         $item = new MenuItem();
         $item->setType(MenuItem::TYPE_PAGE_LINK);
+        $item->setNodeTranslation($nodeTranslation);
+        $item->setTitle('Title');
+        $item->setUrl('Url');
 
         $violationBuilder = $this->getMockBuilder(ConstraintViolationBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $violationBuilder->expects($this->any())
+        $violationBuilder->expects($this->never())
             ->method('atPath')
             ->will($this->returnValue($violationBuilder));
 
-        $violationBuilder->expects($this->any())
+        $violationBuilder->expects($this->never())
             ->method('addViolation')
             ->will($this->returnValue(true));
 
@@ -136,7 +140,7 @@ class MenuItemTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $context->expects($this->any())
+        $context->expects($this->never())
         ->method('buildViolation')
         ->will($this->returnValue($violationBuilder));
 

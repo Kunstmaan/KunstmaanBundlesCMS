@@ -56,12 +56,6 @@ class PdfHandlerTest extends TestCase
         $this->assertFalse($this->object->canHandle(new \stdClass()));
     }
 
-    public function testSaveMedia()
-    {
-        $media = new Media();
-        $this->object->saveMedia($media);
-    }
-
     public function testGetImageUrl()
     {
         $this->pdfTransformer
