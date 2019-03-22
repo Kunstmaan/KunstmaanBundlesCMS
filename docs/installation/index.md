@@ -39,6 +39,14 @@ At this point refreshing the page for your repository on GitHub will show you yo
 
 > Please note that the [.gitignore](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/.gitignore#L4) file of the KunstmaanBundlesStandardEdition prevents committing your parameters.yml file into git. Depending on your needs, you could change this by removing that line from yout .gitignore file.
 
+## Fast installation
+
+```
+bin/console kuma:install
+```
+
+Use above command to install kuma site or follow below steps.
+
 ## Generating a bundle
 
 First, you should generate a bundle for your website specific code.
