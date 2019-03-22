@@ -1,3 +1,4 @@
+import 'picturefill';
 {% if demosite %}
 import velocity from 'velocity-animate'; // eslint-disable-line
 
