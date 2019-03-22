@@ -62,6 +62,6 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
             $error->getLine(),
             $command->getName()
         );
-        $this->logger->error($message, ['error' => $error]);
+        $this->logger->critical($message, ['error' => $error]);
     }
 }

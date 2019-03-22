@@ -21,7 +21,7 @@ class ConsoleExceptionSubscriberTest extends Unit
         }
 
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects($this->once())->method('error')->willReturn(true);
+        $logger->expects($this->once())->method('critical')->willReturn(true);
         $subscriber = new ConsoleExceptionSubscriber($logger);
 
         $command = new ApplyAclCommand();
