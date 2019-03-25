@@ -47,3 +47,4 @@ services:
     kunstmaan_dashboard.helper.google.analytics.query:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@kunstmaan_dashboard.helper.google.analytics.config']
+        public: true
