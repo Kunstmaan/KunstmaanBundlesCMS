@@ -4,7 +4,7 @@ parameters:
 services:
     kunstmaan_node_search.node_index_update.listener:
         class: '%kunstmaan_node_search.node_index_update.listener.class%'
-        arguments: ['@kunstmaan_node_search.search_configuration.node']
+        arguments: ['@kunstmaan_node_search.search_configuration.node', '@doctrine.orm.default_entity_manager']
         tags:
             - { name: doctrine.event_listener, event: preUpdate,   method: preUpdate }
             - { name: kernel.event_listener, event: kunstmaan_node.postPublish,   method: onPostPublish }
