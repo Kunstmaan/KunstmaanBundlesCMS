@@ -42,7 +42,7 @@ class CSVFileExporter implements FileExporterInterface
 
                 if (isset($translation[$locale])) {
                     $item = $translation[$locale];
-                    $row[] = utf8_decode($item->getText());
+                    $row[] = $item->getText();
                 } else {
                     $row[] = '';
                 }
