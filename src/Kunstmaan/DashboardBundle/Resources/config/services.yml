@@ -35,6 +35,7 @@ services:
     kunstmaan_dashboard.helper.google.analytics.service:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.client']
+        public: true
 
     # config helper
     kunstmaan_dashboard.helper.google.analytics.config:
@@ -46,3 +47,4 @@ services:
     kunstmaan_dashboard.helper.google.analytics.query:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@kunstmaan_dashboard.helper.google.analytics.config']
+        public: true
