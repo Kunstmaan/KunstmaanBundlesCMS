@@ -747,7 +747,7 @@ class NodeAdminController extends Controller
             $nodes[] = $node;
         }
 
-        $weight = 0;
+        $weight = 1;
         foreach ($nodes as $node) {
             $newParentId = isset($changeParents[$node->getId()]) ? $changeParents[$node->getId()] : null;
             if ($newParentId) {
