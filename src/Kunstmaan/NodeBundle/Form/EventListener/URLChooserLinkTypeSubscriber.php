@@ -7,6 +7,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * Class URLChooserLinkTypeSubscriber
@@ -34,6 +36,7 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
         // Suppress validation
         $event->stopPropagation();
 
+        $constraints = [];
         $attributes['class'] = 'js-change-urlchooser';
 
         $form = $event->getForm()->getParent();
@@ -49,6 +52,11 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
                     break;
                 case URLChooserType::EXTERNAL:
                     $attributes['placeholder'] = 'https://';
+                    $constraints[] = new Url();
+
+                    break;
+                case URLChooserType::EMAIL:
+                    $constraints[] = new Email();
 
                     break;
             }
@@ -57,6 +65,8 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
                 'label' => 'URL',
                 'required' => true,
                 'attr' => $attributes,
+                'constraints' => $constraints,
+                'error_bubbling' => true,
             ));
         }
     }
