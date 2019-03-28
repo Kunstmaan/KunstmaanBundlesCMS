@@ -49,6 +49,7 @@
                                     </li>
                                 {% endfor %}
                             </ul>
+                            <input type="hidden" name="{{ linkType.vars.full_name }}" value="{{ linkType.vars.data }}" id="{{ linkType.vars.id }}" class="form-control">
                         </div>
                     {% endif %}
                     <div id="{{ linkUrl.id }}-widget" class="input-group urlchooser-widget {% if form.link_type is defined %}urlchooser__link-url{% endif %}">
