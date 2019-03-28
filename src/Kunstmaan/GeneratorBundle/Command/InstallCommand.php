@@ -106,7 +106,6 @@ final class InstallCommand extends GeneratorCommand
             $input->setOption('dir', $dir);
         }
 
-
         $demoSiteOption = $this->assistant->askConfirmation('Do you want to create a "demosite"? (y/n)', 'n');
         $input->setOption('demosite', $demoSiteOption);
 
