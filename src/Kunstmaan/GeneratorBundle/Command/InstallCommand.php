@@ -53,6 +53,7 @@ final class InstallCommand extends GeneratorCommand
             ->setDefinition(
                 new InputDefinition(
                     [
+                        new InputOption('db-installed', '', InputOption::VALUE_NONE, 'Acknowledge that you have setup your database"'),
                         new InputOption('demosite', '', InputOption::VALUE_REQUIRED, 'Do you want to create a "demosite"'),
                         new InputOption('create-tests', '', InputOption::VALUE_REQUIRED, 'Do you want to create tests for you pages/pageparts'),
                         new InputOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle to create (only for SF3)'),
@@ -84,7 +85,7 @@ final class InstallCommand extends GeneratorCommand
         $outputStyle->writeln('<info>Installing KunstmaanCms...</info>');
         $outputStyle->writeln($this->getKunstmaanLogo());
 
-        if (Kernel::VERSION_ID >= 40000) {
+        if (Kernel::VERSION_ID >= 40000 && null === $input->getOption('db-installed')) {
             $this->shouldStop = !$this->assistant->askConfirmation('We need access to your database. Are the database credentials setup properly? (y/n)', 'y');
             if ($this->shouldStop) {
                 return;
@@ -92,7 +93,7 @@ final class InstallCommand extends GeneratorCommand
         }
 
         // Only ask namespace for Symfony 3
-        if (Kernel::VERSION_ID < 40000) {
+        if (Kernel::VERSION_ID < 40000 && null === $input->getOption('namespace')) {
             $question = new Question(
                 $questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')),
                 $input->getOption('namespace')
@@ -106,11 +107,15 @@ final class InstallCommand extends GeneratorCommand
             $input->setOption('dir', $dir);
         }
 
-        $demoSiteOption = $this->assistant->askConfirmation('Do you want to create a "demosite"? (y/n)', 'n');
-        $input->setOption('demosite', $demoSiteOption);
+        if (null === $input->getOption('demosite')) {
+            $demoSiteOption = $this->assistant->askConfirmation('Do you want to create a "demosite"? (y/n)', 'n');
+            $input->setOption('demosite', $demoSiteOption === true ? 'Yes' : 'No');
+        }
 
-        $createTests = $this->assistant->askConfirmation('Do you want to create tests for you pages/pageparts? (y/n)', 'n');
-        $input->setOption('create-tests', $createTests);
+        if (null === $input->getOption('create-tests')) {
+            $createTests = $this->assistant->askConfirmation('Do you want to create tests for you pages/pageparts? (y/n)', 'n', '?', false);
+            $input->setOption('create-tests', $createTests === true ? 'Yes' : 'No');
+        }
 
         $output->writeln('<info>Installation start</info>');
     }
