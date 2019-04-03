@@ -11,10 +11,11 @@ class ConfigGenerator extends KunstmaanGenerator
      * Generate all config files.
      *
      * @param string $projectDir
-     * @param bool   $overwriteSecurity
-     * @param bool   $overwriteLiipImagine
+     * @param bool $overwriteSecurity
+     * @param bool $overwriteLiipImagine
+     * @param bool $overwriteFosHttpCache
      */
-    public function generate(string $projectDir, bool $overwriteSecurity, bool $overwriteLiipImagine)
+    public function generate(string $projectDir, bool $overwriteSecurity, bool $overwriteLiipImagine, bool $overwriteFosHttpCache)
     {
         $this->renderSingleFile(
             $this->skeletonDir,
@@ -31,6 +32,14 @@ class ConfigGenerator extends KunstmaanGenerator
             [],
             true,
             $overwriteLiipImagine ? 'liip_imagine.yaml' : 'liip_imagine.yaml.example'
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir,
+            $projectDir . '/config/packages/prod/',
+            'fos_http_cache.yaml',
+            [],
+            true,
+            $overwriteFosHttpCache ? 'fos_http_cache.yaml' : 'fos_http_cache.yaml.example'
         );
     }
 }

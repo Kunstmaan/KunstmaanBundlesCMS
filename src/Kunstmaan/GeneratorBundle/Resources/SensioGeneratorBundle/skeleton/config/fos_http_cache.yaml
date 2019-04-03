@@ -1,0 +1,32 @@
+fos_http_cache:
+    cache_control:
+        rules:
+            # match admin area
+            -   match:
+                    path: ^\/([^/]+\/)?admin
+                headers:
+                    cache_control:
+                        public: false
+                        max_age: 0
+                        s_maxage: 0
+                    last_modified: "-1 hour"
+
+            # match esi requests
+            -   match:
+                    path: ^/_fragment
+                headers:
+                    cache_control:
+                        public: false
+                        max_age: 0
+                        s_maxage: 0
+                    last_modified: "-1 hour"
+
+            # match everything to set defaults
+            -   match:
+                    path: ^/
+                headers:
+                    cache_control:
+                        public: true
+                        max_age: 360
+                        s_maxage: 360
+                    vary: [Cookie, Accept-Encoding, Accept-Language]

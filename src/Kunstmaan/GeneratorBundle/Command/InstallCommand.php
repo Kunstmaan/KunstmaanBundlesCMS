@@ -143,8 +143,11 @@ final class InstallCommand extends GeneratorCommand
             ]);
         }
 
+        if (Kernel::VERSION_ID >= 40000) {
+            $this->executeCommand($output, 'kuma:generate:config');
+        }
+
         $this
-            ->executeCommand($output, 'kuma:generate:config')
             ->executeCommand($output, 'kuma:generate:default-site', $defaultSiteOptions)
             ->executeCommand($output, 'doctrine:database:create')
             ->executeCommand($output, 'doctrine:schema:drop', ['--force' => true])
