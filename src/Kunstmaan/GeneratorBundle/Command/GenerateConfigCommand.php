@@ -20,7 +20,7 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     private $overwriteFosHttpCache;
 
     /**
-     * @param string $rootDir
+     * @param string $projectDir
      */
     public function __construct(string $projectDir)
     {
