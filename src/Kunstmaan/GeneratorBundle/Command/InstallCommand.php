@@ -85,7 +85,7 @@ final class InstallCommand extends GeneratorCommand
         $outputStyle->writeln('<info>Installing KunstmaanCms...</info>');
         $outputStyle->writeln($this->getKunstmaanLogo());
 
-        if (Kernel::VERSION_ID >= 40000 && null === $input->getOption('db-installed')) {
+        if (Kernel::VERSION_ID >= 40000 && true !== $input->getOption('db-installed')) {
             $this->shouldStop = !$this->assistant->askConfirmation('We need access to your database. Are the database credentials setup properly? (y/n)', 'y');
             if ($this->shouldStop) {
                 return;
