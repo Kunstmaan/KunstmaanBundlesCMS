@@ -100,7 +100,7 @@ class VersionChecker
         }
 
         $host = $this->container->get('request_stack')->getCurrentRequest()->getHttpHost();
-        $console = realpath($this->container->get('kernel')->getRootDir().'/../bin/console');
+        $console = realpath($this->container->get('kernel')->getProjectDir().'/bin/console');
         $installed = filectime($console);
         $bundles = $this->parseComposer();
         $title = $this->container->getParameter('kunstmaan_admin.website_title');
@@ -160,8 +160,7 @@ class VersionChecker
     protected function getLockPath()
     {
         $kernel = $this->container->get('kernel');
-        $dir = $kernel->getRootDir();
-        $rootPath = dirname($dir);
+        $rootPath = $kernel->getProjectDir();
 
         return $rootPath.'/composer.lock';
     }

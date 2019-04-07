@@ -126,7 +126,7 @@ class ImportCommandHandler extends AbstractCommandHandler
     private function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
     {
         $imported = 0;
-        $srcDir = dirname($this->kernel->getRootDir()) . '/src';
+        $srcDir = $this->kernel->getProjectDir() . '/src';
 
         foreach ($this->kernel->getBundles() as $name => $bundle) {
             if (strpos($bundle->getPath(), $srcDir) !== false) {
