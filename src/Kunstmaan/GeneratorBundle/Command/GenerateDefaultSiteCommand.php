@@ -98,7 +98,7 @@ EOT
         $input = new ArrayInput($arguments);
         $command->run($input, $this->assistant->getOutput());
 
-        $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
+        $rootDir = $this->getApplication()->getKernel()->getProjectDir().'/';
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
 
         // Generate the default pageparts

@@ -61,7 +61,7 @@ EOT
             $this->assistant->writeSection('Layout generation');
         }
 
-        $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
+        $rootDir = $this->getApplication()->getKernel()->getProjectDir().'/';
         $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'), $this->browserSyncUrl);
 
         if (!$this->isSubCommand()) {

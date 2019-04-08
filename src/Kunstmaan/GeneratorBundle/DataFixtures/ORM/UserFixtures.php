@@ -61,7 +61,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         ));
 
         if (Kernel::VERSION_ID < 40000) {
-            $file = $this->container->get('kernel')->getRootDir() . '/config/config.yml';
+            $file = $this->container->get('kernel')->getProjectDir() . '/app/config/config.yml';
             $contents = file_get_contents($file);
             $contents = str_replace('-adminpwd-', $password, $contents);
             file_put_contents($file, $contents);

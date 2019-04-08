@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Command;
 
+use Symfony\Component\HttpKernel\Kernel;
+
 abstract class AbstractCommandHandler
 {
     /**
@@ -14,7 +16,7 @@ abstract class AbstractCommandHandler
     /**
      * Kernel
      *
-     * @var AppKernel
+     * @var Kernel
      */
     protected $kernel;
 
