@@ -119,7 +119,7 @@ Because at the beginning of the installer we said that we would like to install 
 
 ![install finished](../images/install_finished.png)
 
-Now the install is finished you should be able to browse to the website on the environment of your choice, and be greeted with the following screens. 
+Now the install is finished you should be able to browse to the admin section of the website (ie: https://127.0.0.1/en/admin) on the environment of your choice, and be greeted with the following screens. 
 
 ![install finished](../images/kunstmaancms.png)
 
