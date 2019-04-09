@@ -143,7 +143,7 @@ npm run build
 
 ![npm run build](../images/buildui.png)
 
-Once that has finished and you browse to the website on the environment of your choice should show you the website with minimalistic/demo styling.
+Once that has finished and you browse to the website on the environment of your choice it should show you the website with minimalistic/demo styling.
 
 ![demosite](../images/demosite.png)
 
