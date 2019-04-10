@@ -11,7 +11,7 @@ The first step to create your new KunstmaanCMS project is the following:
 composer create-project kunstmaan/cms-skeleton myprojectname
 ```
  
-![composer skeleton](../images/composer-skeleton.png)
+![composer create-project kunstmaan/cms-skeleton myprojectname](../images/composer-skeleton.png)
 
 At the end of the composer install you will see that Symfony Flex will configure our recipes.
  
@@ -22,7 +22,7 @@ At this stage we recommend to add all these files into version control. What ver
 
 Create a new repository (in most cases a private one). Don't add any files from the GitHub interface to start with.
 
-![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/github.png)
+![initialize git repository](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/github.png)
 
 Then execute these commands in your project directory to initialise the git repository, in this example `~/Development/myprojectname/`
 
@@ -119,7 +119,8 @@ Because at the beginning of the installer we said that we would like to install 
 
 ![install finished](../images/install_finished.png)
 
-Now the install is finished you should be able to browse to the admin section of the website (ie: https://127.0.0.1/en/admin) on the environment of your choice, and be greeted with the following screens. 
+Now the install is finished you should be able to browse to the admin section of the website (ie: https://127.0.0.1/en/admin) on the environment of your choice, and be greeted with the following screens.
+> In this example we used the default provided symfony webserver `bin/console server:start`
 
 ![install finished](../images/kunstmaancms.png)
 
