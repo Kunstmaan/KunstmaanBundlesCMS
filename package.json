@@ -54,7 +54,7 @@
     "@fortawesome/fontawesome-free": "^5.5.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap-colorpicker": "^3.0.3",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap-sass": "^3.4.1",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "fuse.js": "^3.1.0",

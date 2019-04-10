@@ -5,8 +5,8 @@ namespace Kunstmaan\FormBundle\Helper;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * The form mailer
@@ -16,7 +16,7 @@ class FormMailer implements FormMailerInterface
     /** @var \Swift_Mailer */
     private $mailer;
 
-    /** @var \Symfony\Bundle\TwigBundle\TwigEngine */
+    /** @var EngineInterface */
     private $templating;
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
@@ -24,10 +24,10 @@ class FormMailer implements FormMailerInterface
 
     /**
      * @param Swift_Mailer       $mailer     The mailer service
-     * @param TwigEngine         $templating The templating service
+     * @param EngineInterface    $templating The templating service
      * @param ContainerInterface $container  The container
      */
-    public function __construct(Swift_Mailer $mailer, TwigEngine $templating, ContainerInterface $container)
+    public function __construct(Swift_Mailer $mailer, EngineInterface $templating, ContainerInterface $container)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
@@ -52,10 +52,10 @@ class FormMailer implements FormMailerInterface
             ->setBody(
                 $this->templating->render(
                     'KunstmaanFormBundle:Mailer:mail.html.twig',
-                    array(
+                    [
                         'submission' => $submission,
-                        'host' => $request->getScheme() . '://' . $request->getHttpHost(),
-                    )
+                        'host' => $request->getScheme().'://'.$request->getHttpHost(),
+                    ]
                 ),
                 'text/html'
             );

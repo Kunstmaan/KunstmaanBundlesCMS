@@ -95,7 +95,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $knpMenuConfig['default_renderer'] = 'twig'; // The renderer to use, list is also available by default
         $container->prependExtensionConfig('knp_menu', $knpMenuConfig);
 
-        $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
+        $fosUserOriginalConfig = $container->getExtensionConfig('fos_user');
+        if (!isset($fosUserOriginalConfig[0]['db_driver'])) {
+            $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
+        }
         $fosUserConfig['from_email']['address'] = 'kunstmaancms@myproject.dev';
         $fosUserConfig['from_email']['sender_name'] = 'KunstmaanCMS';
         $fosUserConfig['firewall_name'] = 'main';
