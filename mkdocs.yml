@@ -15,7 +15,8 @@ pages:
     - "Installation":
         - Intro: installation/index.md
         - System requirements: installation/system-requirements.md
-        - Development environment: installation/development-environment.md
+        - Demo environment: installation/demo-environment.md
+        - "Standard Edition (deprecated)": installation/standard-edition.md
     - "Content management":
         - Intro: content-management/index.md
         - Creating a pagePart: content-management/creating-a-page-part.md
