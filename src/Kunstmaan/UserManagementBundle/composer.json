@@ -18,7 +18,6 @@
         "kunstmaan/adminlist-bundle": "^5.2"
     },
     "require-dev": {
-        "codeception/codeception": "^2.5",
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^3.1",
         "symfony/phpunit-bridge": "^4.2",
