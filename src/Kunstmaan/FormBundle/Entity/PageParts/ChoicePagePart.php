@@ -89,27 +89,20 @@ class ChoicePagePart extends AbstractFormPagePart
         $choices = array_map('trim', $choices);
 
         $cfsf = new ChoiceFormSubmissionField();
-        $cfsf->setFieldName('field_' . $this->getUniqueId());
+        $cfsf->setFieldName('field_'.$this->getUniqueId());
         $cfsf->setLabel($this->getLabel());
         $cfsf->setChoices($choices);
         $cfsf->setRequired($this->required);
         $cfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $cfsf;
-        $constraints = array();
-        if ($this->getRequired()) {
-            $options = array();
-            if (!empty($this->errorMessageRequired)) {
-                $options['message'] = $this->errorMessageRequired;
-            }
-            $constraints[] = new NotBlank($options);
-        }
+        $data['formwidget_'.$this->getUniqueId()] = $cfsf;
+        $constraints = $this->getConstraints();
 
         $formBuilder->add(
-            'formwidget_' . $this->getUniqueId(),
+            'formwidget_'.$this->getUniqueId(),
             ChoiceFormSubmissionType::class,
-            array(
+            [
                 'label' => $this->getLabel(),
                 'required' => $this->getRequired(),
                 'expanded' => $this->getExpanded(),
@@ -117,11 +110,25 @@ class ChoicePagePart extends AbstractFormPagePart
                 'choices' => $choices,
                 'placeholder' => $this->getEmptyValue(),
                 'constraints' => $constraints,
-            )
+            ]
         );
         $formBuilder->setData($data);
 
         $fields->append($cfsf);
+    }
+
+    public function getConstraints()
+    {
+        $constraints = [];
+        if ($this->getRequired()) {
+            $options = [];
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
+        }
+
+        return $constraints;
     }
 
     /**

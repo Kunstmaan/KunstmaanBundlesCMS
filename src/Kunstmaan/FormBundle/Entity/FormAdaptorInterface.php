@@ -19,6 +19,9 @@ interface FormAdaptorInterface
      */
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence);
 
+    /** @return array */
+    public function getConstraints();
+
     /**
      * Returns a unique id
      *

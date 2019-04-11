@@ -134,14 +134,7 @@ class {{ pagepart }} extends AbstractFormPagePart
 
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $bfsf;
-        $constraints = array();
-        if ($this->getRequired()) {
-            $options = array();
-            if (!empty($this->errorMessageRequired)) {
-                $options['message'] = $this->errorMessageRequired;
-            }
-            $constraints[] = new NotBlank($options);
-        }
+        $constraints = $this->getConstraints();
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
             BooleanFormSubmissionType::class,
             array(
@@ -153,6 +146,20 @@ class {{ pagepart }} extends AbstractFormPagePart
         $formBuilder->setData($data);
 
         $fields->append($bfsf);
+    }
+
+    public function getConstraints()
+    {
+        $constraints = [];
+        if ($this->getRequired()) {
+            $options = [];
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
+        }
+
+        return $constraints;
     }
 
     /**

@@ -170,6 +170,22 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $sfsf;
 
+        $constraints = $this->getConstraints();
+        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+            StringFormSubmissionType::class,
+            array(
+                'label' => $this->getLabel(),
+                'constraints' => $constraints,
+                'required' => $this->getRequired(),
+            )
+        );
+        $formBuilder->setData($data);
+
+        $fields->append($sfsf);
+    }
+
+    public function getConstraints()
+    {
         $constraints = array();
         if ($this->getRequired()) {
             $options = array();
@@ -186,17 +202,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
             $constraints[] = new Regex($options);
         }
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            StringFormSubmissionType::class,
-            array(
-                'label' => $this->getLabel(),
-                'constraints' => $constraints,
-                'required' => $this->getRequired(),
-            )
-        );
-        $formBuilder->setData($data);
-
-        $fields->append($sfsf);
+        return $constraints;
     }
 
     /**

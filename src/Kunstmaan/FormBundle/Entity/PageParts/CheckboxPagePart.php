@@ -100,31 +100,38 @@ class CheckboxPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $bfsf = new BooleanFormSubmissionField();
-        $bfsf->setFieldName('field_' . $this->getUniqueId());
+        $bfsf->setFieldName('field_'.$this->getUniqueId());
         $bfsf->setLabel($this->getLabel());
         $bfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $bfsf;
-        $constraints = array();
+        $data['formwidget_'.$this->getUniqueId()] = $bfsf;
+        $constraints = $this->getConstraints();
+        $formBuilder->add('formwidget_'.$this->getUniqueId(),
+            BooleanFormSubmissionType::class,
+            [
+                'label' => $this->getLabel(),
+                'constraints' => $constraints,
+                'required' => $this->getRequired(),
+            ]
+        );
+        $formBuilder->setData($data);
+
+        $fields->append($bfsf);
+    }
+
+    public function getConstraints()
+    {
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
             $constraints[] = new NotBlank($options);
         }
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            BooleanFormSubmissionType::class,
-            array(
-                'label' => $this->getLabel(),
-                'constraints' => $constraints,
-                'required' => $this->getRequired(),
-            )
-        );
-        $formBuilder->setData($data);
 
-        $fields->append($bfsf);
+        return $constraints;
     }
 
     /**

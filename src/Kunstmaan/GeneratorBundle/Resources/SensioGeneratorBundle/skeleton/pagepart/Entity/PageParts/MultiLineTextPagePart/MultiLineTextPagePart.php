@@ -198,21 +198,7 @@ class {{ pagepart }} extends AbstractFormPagePart
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $mfsf;
 
-        $constraints = array();
-        if ($this->getRequired()) {
-            $options = array();
-            if (!empty($this->errorMessageRequired)) {
-                $options['message'] = $this->errorMessageRequired;
-            }
-            $constraints[] = new NotBlank($options);
-        }
-        if ($this->getRegex()) {
-            $options = array('pattern' => $this->getRegex());
-            if (!empty($this->errorMessageRegex)) {
-                $options['message'] = $this->errorMessageRegex;
-            }
-            $constraints[] = new Regex($options);
-        }
+        $constraints = $this->getConstraints();
 
         $formBuilder->add(
             'formwidget_' . $this->getUniqueId(),
@@ -226,6 +212,27 @@ class {{ pagepart }} extends AbstractFormPagePart
         $formBuilder->setData($data);
 
         $fields->append($mfsf);
+    }
+
+    public function getConstraints()
+    {
+        $constraints = [];
+        if ($this->getRequired()) {
+            $options = [];
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
+        }
+        if ($this->getRegex()) {
+            $options = ['pattern' => $this->getRegex()];
+            if (!empty($this->errorMessageRegex)) {
+                $options['message'] = $this->errorMessageRegex;
+            }
+            $constraints[] = new Regex($options);
+        }
+
+        return $constraints;
     }
 
     /**

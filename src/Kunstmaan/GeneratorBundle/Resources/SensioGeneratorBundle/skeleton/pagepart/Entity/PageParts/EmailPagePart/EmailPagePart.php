@@ -167,19 +167,7 @@ class {{ pagepart }} extends AbstractFormPagePart
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $efsf;
 
-        $constraints = array();
-        if ($this->getRequired()) {
-            $options = array();
-            if (!empty($this->errorMessageRequired)) {
-                $options['message'] = $this->errorMessageRequired;
-            }
-            $constraints[] = new NotBlank($options);
-        }
-        $options = array();
-        if (!empty($this->errorMessageInvalid)) {
-            $options['message'] = $this->getErrorMessageInvalid();
-        }
-        $constraints[] = new Email($options);
+        $constraints = $this->getConstraints();
 
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
             EmailFormSubmissionType::class,
@@ -192,6 +180,25 @@ class {{ pagepart }} extends AbstractFormPagePart
         $formBuilder->setData($data);
 
         $fields->append($efsf);
+    }
+
+    public function getConstraints()
+    {
+        $constraints = [];
+        if ($this->getRequired()) {
+            $options = [];
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
+        }
+        $options = [];
+        if (!empty($this->errorMessageInvalid)) {
+            $options['message'] = $this->getErrorMessageInvalid();
+        }
+        $constraints[] = new Email($options);
+
+        return $constraints;
     }
 
     /**
