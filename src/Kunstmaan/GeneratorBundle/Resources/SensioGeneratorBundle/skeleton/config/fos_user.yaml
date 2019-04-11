@@ -1,0 +1,8 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Kunstmaan\AdminBundle\Entity\User
+    # Change this section to your liking
+    from_email:
+        address: 'kunstmaancms@myproject.dev'
+        sender_name: 'KunstmaanCMS'
