@@ -23,6 +23,19 @@ services:
             - { name: 'doctrine.event_listener', event: 'prePersist', method: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate', method: 'preUpdate' }
 
+    kunstmaan_node.node_tabs.listener:
+        class: Kunstmaan\NodeBundle\EventListener\NodeTabListener
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_node.adaptForm, method: adaptForm }
+
+    kunstmaan_node.entity_tabs.listener:
+        class: Kunstmaan\NodeBundle\EventListener\EntityTabListener
+        arguments:
+            - '@request_stack'
+            - '@form.factory'
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_admin.adaptSimpleForm, method: adaptForm }
+
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.acl.native.helper', '@kunstmaan_node.pages_configuration', '@kunstmaan_admin.domain_configuration']
