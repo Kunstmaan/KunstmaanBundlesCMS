@@ -117,7 +117,12 @@ class PageCreatorService
         }
 
         $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
-        $creator = $userRepo->findOneBy(array('username' => $pagecreator));
+
+        if ($pagecreator instanceof $this->userEntityClass) {
+            $creator = $pagecreator;
+        } else {
+            $creator = $userRepo->findOneBy(array('username' => $pagecreator));
+        }
 
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
