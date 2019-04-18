@@ -73,6 +73,7 @@ Next we will enter the `Kunstmaan config generator`. It will ask you if you want
 * Security: `config/packages/security.yaml`
 * Liip Imagine: `config/packages/liip_imagine.yaml`
 * Fos Http Cache: `config/packages/prod/fos_http_cache.yaml`
+* Fos User: `config/packages/fos_user.yaml`
 
 We suggest that you overwrite it during a new installation, but if you are upgrading you also can choose not to overwrite and then it wil generate a `package-name.yaml.example` file. You can then do a manual comparison of the existing file and the newly created example and make the necessary changes. For now, we just stick with the defaults. 
 
