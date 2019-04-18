@@ -1,1 +1,27 @@
+{% include "@KunstmaanAdmin/Default/_ckeditor_configs.html.twig" %}
+
+<script>
+    CKEDITOR_BASEPATH = '/bundles/kunstmaanadmin/default-theme/ckeditor/';
+    MORE_BUTTON_LABEL = '{{ 'kuma_js.auto_collapse.more_button_label' | trans | e('js') }}';
+
+    if (!('fetch' in window &&
+            'Promise' in window &&
+            'assign' in Object &&
+            'keys' in Object
+        )) {
+        const scriptEl = document.createElement('script');
+        scriptEl.src = '{{ asset('bundles/kunstmaanadmin/js/admin-bundle-polyfills.js') }}';
+        scriptEl.async = false;
+        document.head.appendChild(scriptEl);
+    }
+</script>
+
+<script defer src="{{ asset('bundles/kunstmaanadmin/js/admin-bundle.min.js') }}"></script>
+<script defer src="{{ asset('bundles/kunstmaanadmin/js/admin-bundle.next.js') }}"></script>
+
+{%- set jsPath = 'frontend/js/admin-bundle-extra.js' %}
+{% if file_exists(jsPath) %}
+    <script defer src="{{ asset('/' ~ jsPath) }}"></script>
+{% endif %}
+
 {% include "@KunstmaanAdmin/Default/_js_header_extra.html.twig" %}
