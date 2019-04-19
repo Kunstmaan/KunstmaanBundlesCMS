@@ -372,7 +372,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @param string     $name     The field name
      * @param string     $header   The header title
-     * @param string     $sort     Sortable column or not
+     * @param bool       $sort     Sortable column or not
      * @param string     $template The template
      * @param FieldAlias $alias    The alias
      *

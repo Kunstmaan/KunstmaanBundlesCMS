@@ -90,7 +90,7 @@ class AdminTestsGenerator extends Generator
 
         // Render the Context files to replace the namespace etc.
         if ($handle = opendir($skeletonDir . '/Context')) {
-            $targetPath = Kernel::VERSION_ID ? $dirPath . '/bootstrap/' : $dirPath . '/Context/';
+            $targetPath = Kernel::VERSION_ID >= 40000 ? $dirPath . '/bootstrap/' : $dirPath . '/Context/';
             while (false !== ($entry = readdir($handle))) {
                 // Check to make sure we skip hidden folders
                 // And we render the files ending in .php
