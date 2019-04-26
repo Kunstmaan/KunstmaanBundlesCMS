@@ -165,7 +165,7 @@ class {{ pagepart }} extends AbstractFormPagePart
         $efsf->setInternalName($this->getInternalName());
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $efsf;
+        $data['formwidget_' . $this->getUniqueId()] = $efsf->__toString();
 
         $constraints = array();
         if ($this->getRequired()) {

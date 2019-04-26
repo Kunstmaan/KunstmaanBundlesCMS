@@ -137,7 +137,7 @@ class EmailPagePart extends AbstractFormPagePart
         $efsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $efsf;
+        $data['formwidget_' . $this->getUniqueId()] = $efsf->__toString();
 
         $constraints = array();
         if ($this->getRequired()) {
@@ -153,7 +153,8 @@ class EmailPagePart extends AbstractFormPagePart
         }
         $constraints[] = new Email($options);
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+        $formBuilder->add(
+            'formwidget_' . $this->getUniqueId(),
             EmailFormSubmissionType::class,
             array(
                 'label' => $this->getLabel(),
