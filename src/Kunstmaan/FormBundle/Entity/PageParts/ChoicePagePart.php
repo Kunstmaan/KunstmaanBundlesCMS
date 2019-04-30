@@ -80,8 +80,8 @@ class ChoicePagePart extends AbstractFormPagePart
      * Modify the form with the fields of the current page part
      *
      * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
-     * @param int                  $sequence    The sequence of the form field
+     * @param ArrayObject $fields The fields
+     * @param int $sequence The sequence of the form field
      */
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
@@ -89,17 +89,17 @@ class ChoicePagePart extends AbstractFormPagePart
         $choices = array_map('trim', $choices);
 
         $cfsf = new ChoiceFormSubmissionField();
-        $cfsf->setFieldName('field_' . $this->getUniqueId());
+        $cfsf->setFieldName('field_'.$this->getUniqueId());
         $cfsf->setLabel($this->getLabel());
         $cfsf->setChoices($choices);
         $cfsf->setRequired($this->required);
         $cfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $cfsf;
-        $constraints = array();
+        $data['formwidget_'.$this->getUniqueId()] = $cfsf;
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
@@ -107,17 +107,17 @@ class ChoicePagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_' . $this->getUniqueId(),
+            'formwidget_'.$this->getUniqueId(),
             ChoiceFormSubmissionType::class,
-            array(
+            [
                 'label' => $this->getLabel(),
                 'required' => $this->getRequired(),
                 'expanded' => $this->getExpanded(),
                 'multiple' => $this->getMultiple(),
                 'choices' => $choices,
                 'placeholder' => $this->getEmptyValue(),
-                'constraints' => $constraints,
-            )
+                'value_constraints' => $constraints,
+            ]
         );
         $formBuilder->setData($data);
 

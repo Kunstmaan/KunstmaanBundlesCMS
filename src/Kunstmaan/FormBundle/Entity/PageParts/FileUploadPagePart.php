@@ -37,22 +37,22 @@ class FileUploadPagePart extends AbstractFormPagePart
      * Modify the form with the fields of the current page part
      *
      * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
-     * @param int                  $sequence    The sequence of the form field
+     * @param ArrayObject $fields The fields
+     * @param int $sequence The sequence of the form field
      */
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $ffsf = new FileFormSubmissionField();
-        $ffsf->setFieldName('field_' . $this->getUniqueId());
+        $ffsf->setFieldName('field_'.$this->getUniqueId());
         $ffsf->setLabel($this->getLabel());
         $ffsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $ffsf;
+        $data['formwidget_'.$this->getUniqueId()] = $ffsf;
 
-        $constraints = array();
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
@@ -60,13 +60,13 @@ class FileUploadPagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_' . $this->getUniqueId(),
+            'formwidget_'.$this->getUniqueId(),
             FileFormSubmissionType::class,
-            array(
+            [
                 'label' => $this->getLabel(),
-                'constraints' => $constraints,
+                'value_constraints' => $constraints,
                 'required' => $this->getRequired(),
-            )
+            ]
         );
         $formBuilder->setData($data);
 
