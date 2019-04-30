@@ -157,8 +157,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * Modify the form with the fields of the current page part
      *
      * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject $fields The fields
-     * @param int $sequence The sequence of the form field
+     * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {

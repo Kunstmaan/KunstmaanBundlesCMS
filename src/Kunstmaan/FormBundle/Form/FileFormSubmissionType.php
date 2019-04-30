@@ -14,7 +14,7 @@ class FileFormSubmissionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options An array with options
+     * @param array                $options An array with options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
