@@ -34,4 +34,4 @@ filter:
   notequals: is niet gelijk aan
   startswith: begint met
   endswith: eindigt met
-  empty: Is leeg
+  empty: is leeg
