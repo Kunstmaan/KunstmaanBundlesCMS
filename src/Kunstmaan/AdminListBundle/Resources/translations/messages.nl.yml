@@ -34,3 +34,4 @@ filter:
   notequals: is niet gelijk aan
   startswith: begint met
   endswith: eindigt met
+  empty: is leeg
