@@ -218,7 +218,7 @@ class {{ pagepart }} extends AbstractFormPagePart
             StringFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
-                'constraints' => $constraints,
+                'value_constraints' => $constraints,
                 'required'    => $this->getRequired()
             )
         );

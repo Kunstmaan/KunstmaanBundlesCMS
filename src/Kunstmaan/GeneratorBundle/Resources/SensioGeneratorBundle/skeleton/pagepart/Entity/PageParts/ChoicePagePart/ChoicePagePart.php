@@ -123,7 +123,7 @@ class {{ pagepart }} extends AbstractFormPagePart
                 'multiple'    => $this->getMultiple(),
                 'choices'     => $choices,
                 'placeholder' => $this->getEmptyValue(),
-                'constraints' => $constraints,
+                'value_constraints' => $constraints,
             )
         );
         $formBuilder->setData($data);

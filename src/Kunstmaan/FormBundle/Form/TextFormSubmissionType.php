@@ -18,20 +18,30 @@ class TextFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
-        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function ($v) {
-            return isset($v);
-        });
-        $fieldOptions['attr'] = array('rows' => '6');
+        if (isset($options['value_constraints']) && !empty($options['value_constraints'])) {
+            $options['constraints'] = $options['value_constraints'];
+        }
+
+        $keys = array_fill_keys(['label', 'required', 'constraints'], null);
+        $fieldOptions = array_filter(
+            array_replace($keys, array_intersect_key($options, $keys)),
+            function ($v) {
+                return isset($v);
+            }
+        );
+        $fieldOptions['attr'] = ['rows' => '6'];
 
         $builder->add('value', TextareaType::class, $fieldOptions);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField',
+                'value_constraints' => [],
+            ]
+        );
     }
 
     /**
