@@ -34,3 +34,4 @@ filter:
   notequals: not equals
   startswith: starts with
   endswith: ends with
+  empty: is empty
