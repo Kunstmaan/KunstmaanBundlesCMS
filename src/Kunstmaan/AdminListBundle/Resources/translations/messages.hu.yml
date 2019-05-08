@@ -34,3 +34,4 @@ filter:
   notequals: nem egyenlő
   startswith: ezzel kezdődik
   endswith: ezzel végződik
+  empty: is empty
