@@ -34,3 +34,4 @@ filter:
   notequals: różne
   startswith: zaczyna się od
   endswith: kończy się na
+  empty: is empty
