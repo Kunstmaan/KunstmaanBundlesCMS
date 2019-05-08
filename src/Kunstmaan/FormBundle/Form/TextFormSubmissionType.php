@@ -18,7 +18,7 @@ class TextFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (isset($options['value_constraints'])) {
+        if (isset($options['value_constraints']) && !empty($options['value_constraints'])) {
             $options['constraints'] = $options['value_constraints'];
         }
 
