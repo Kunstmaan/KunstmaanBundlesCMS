@@ -18,19 +18,29 @@ class FileFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
-        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function ($v) {
-            return isset($v);
-        });
+        if (isset($options['value_constraints']) && !empty($options['value_constraints'])) {
+            $options['constraints'] = $options['value_constraints'];
+        }
+
+        $keys = array_fill_keys(['label', 'required', 'constraints'], null);
+        $fieldOptions = array_filter(
+            array_replace($keys, array_intersect_key($options, $keys)),
+            function ($v) {
+                return isset($v);
+            }
+        );
 
         $builder->add('file', FileType::class, $fieldOptions);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField',
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField',
+                'value_constraints' => [],
+            ]
+        );
     }
 
     /**

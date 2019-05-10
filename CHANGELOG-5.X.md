@@ -1,5 +1,27 @@
 # Changelog
 
+## 5.2.5 / 2019-05-10
+
+* [FormBundle][GeneratorBundle] Fix constraints on form pageparts  [#2436](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2436) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminListbundle] Bugfix/wrong param in docblock [#2433](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2433) ([@SpadXIII](https://github.com/SpadXIII)) 
+* [GeneratorBundle] fix admin test generator [#2432](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2432) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminBundle] fix timepicker of publish & unpublish modals [#2431](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2431) ([@dbeerten](https://github.com/dbeerten)) 
+* [NodeBundle] Register services that enable the node bundle entity tabs [#2430](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2430) ([@SpadXIII](https://github.com/SpadXIII)) 
+* [AdminBundle] Fix FOSUserBundle config prepend [#2425](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2425) ([@Devolicious](https://github.com/Devolicious)) 
+* [FormBundle] In newer versions of symfony the @templating service is replaced by the delegatingengine by default [#2422](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2422) ([@Numkil](https://github.com/Numkil)) 
+* [NodeBundle] Remove old/incorrect doc about lock command [#2420](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2420) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Import commands.yml to register command in sf4 [#2415](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2415) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Fix for missing validation of url/email link chooser [#2413](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2413) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Start page reorder weight at 1 instead of 0 [#2411](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2411) ([@acrobat](https://github.com/acrobat)) 
+* [DashboardBundle] Mark google analytics helper service as public [#2410](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2410) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] Export fails to print non standard characters correctly. [#2409](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2409) ([@Numkil](https://github.com/Numkil)) 
+* [AdminBundle] Log console errors as critical instead of error [#2408](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2408) ([@Devolicious](https://github.com/Devolicious)) 
+* [GeneratorBundle] fix image-pp & add srcset polyfill for IE11 [#2406](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2406) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminBundle] Better position/styling for characters left indicator [#2404](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2404) ([@dbeerten](https://github.com/dbeerten)) 
+* [GeneratorBundle] Fix old optional parameter usages [#2402](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2402) ([@acrobat](https://github.com/acrobat)) 
+* [NodeSearchBundle] fix #2380 childs of structurenodes never get indexed and tests [#2395](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2395) ([@Numkil](https://github.com/Numkil)) 
+* [AdminBundle] dynamic breakpoint for top navbar in admin area [#2375](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2375) ([@dbeerten](https://github.com/dbeerten))
+
 ## 5.2.4 / 2019-03-16
 
 * [GeneratorBundle] Fix typo in table name of article generator [#2399](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2399) ([@acrobat](https://github.com/acrobat)) 
