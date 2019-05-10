@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for ChoicePagePart
  */
-class CheckboxPagePartTest extends \PHPUnit_Framework_TestCase
+class CheckboxPagePartTest extends TestCase
 {
     /**
      * @var CheckboxPagePart
@@ -26,14 +27,12 @@ class CheckboxPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new CheckboxPagePart();
     }
 
-
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
         $this->assertTrue(is_string($stringValue));
     }
-
 
     public function testAdaptForm()
     {
@@ -57,14 +56,12 @@ class CheckboxPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(count($fields) > 0);
     }
 
-
     public function testGetDefaultAdminType()
     {
         $adminType = $this->object->getDefaultAdminType();
         $this->assertNotNull($adminType);
         $this->assertEquals(CheckboxPagePartAdminType::class, $adminType);
     }
-
 
     public function testErrorMessage()
     {
@@ -73,6 +70,4 @@ class CheckboxPagePartTest extends \PHPUnit_Framework_TestCase
         $object->setErrorMessageRequired($msg);
         $this->assertEquals($msg, $object->getErrorMessageRequired());
     }
-
-
 }

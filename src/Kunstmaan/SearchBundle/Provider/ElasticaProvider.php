@@ -21,8 +21,7 @@ class ElasticaProvider implements SearchProviderInterface
     {
         if (!$this->client instanceof Client) {
             $this->client = new Client(
-                array( 'connections' =>
-                    $this->nodes
+                array('connections' => $this->nodes,
                 )
             );
         }
@@ -46,7 +45,6 @@ class ElasticaProvider implements SearchProviderInterface
     public function createIndex($indexName)
     {
         return new Index($this->getClient(), $indexName);
-
     }
 
     /**
@@ -124,7 +122,7 @@ class ElasticaProvider implements SearchProviderInterface
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
         $index = $this->getIndex($indexName);
-        $type  = $index->getType($indexType);
+        $type = $index->getType($indexType);
 
         return $this->getClient()->deleteIds($ids, $index, $type);
     }
@@ -145,8 +143,8 @@ class ElasticaProvider implements SearchProviderInterface
     }
 
     /**
-     * @param string $host
-     * @param int $port
+     * @param string      $host
+     * @param int         $port
      * @param string|null $username
      * @param string|null $password
      */

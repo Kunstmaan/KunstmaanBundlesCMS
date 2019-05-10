@@ -2,19 +2,17 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class LinkPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Tests\Entity
  */
-class PageTemplateConfigurationTest extends PHPUnit_Framework_TestCase
+class PageTemplateConfigurationTest extends TestCase
 {
     public function testGetSet()
     {
@@ -35,7 +33,7 @@ class PageTemplateConfigurationTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $testNode = Stub::makeEmpty(AbstractPage::class);
+        $testNode = $this->createMock(AbstractPage::class);
 
         $repo->expects($this->any())
             ->method('find')

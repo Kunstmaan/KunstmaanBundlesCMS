@@ -9,6 +9,7 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Fixture for creating the admin and guest user
@@ -39,8 +40,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
-        $tokenGenerator = $this->container->get('fos_user.util.token_generator');
-        $password = substr($tokenGenerator->generateToken(), 0, 8);
+        $password = substr(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='), 0, 8);
 
         $user1 = $this->createUser(
             $manager,
@@ -60,10 +60,12 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             "<comment>  > User 'admin' created with password '$password'</comment>",
         ));
 
-        $file = $this->container->get('kernel')->getRootDir().'/config/config.yml';
-        $contents = file_get_contents($file);
-        $contents = str_replace('-adminpwd-', $password, $contents);
-        file_put_contents($file, $contents);
+        if (Kernel::VERSION_ID < 40000) {
+            $file = $this->container->get('kernel')->getProjectDir() . '/app/config/config.yml';
+            $contents = file_get_contents($file);
+            $contents = str_replace('-adminpwd-', $password, $contents);
+            file_put_contents($file, $contents);
+        }
 
         $this->setReference(self::REFERENCE_ADMIN_USER, $user1);
     }
@@ -71,15 +73,15 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
     /**
      * Create a user
      *
-     * @param ObjectManager $manager The object manager
+     * @param ObjectManager $manager  The object manager
      * @param string        $username The username
      * @param string        $password The plain password
-     * @param string        $email The email of the user
-     * @param string        $locale The locale (language) of the user
-     * @param array         $roles The roles the user has
-     * @param array         $groups The groups the user belongs to
-     * @param bool          $enabled Enable login for the user
-     * @param bool          $changed Disable password changed for the user
+     * @param string        $email    The email of the user
+     * @param string        $locale   The locale (language) of the user
+     * @param array         $roles    The roles the user has
+     * @param array         $groups   The groups the user belongs to
+     * @param bool          $enabled  Enable login for the user
+     * @param bool          $changed  Disable password changed for the user
      *
      * @return User
      */
@@ -111,7 +113,6 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         return $user;
     }
 
-
     /**
      * Get the order of this fixture
      *
@@ -121,5 +122,4 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
     {
         return 3;
     }
-
 }

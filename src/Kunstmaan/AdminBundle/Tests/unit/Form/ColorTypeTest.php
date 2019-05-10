@@ -3,15 +3,14 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\ColorType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ColorTypeTest
- * @package Tests\Kunstmaan\AdminBundle\Form
  */
-class ColorTypeTest extends PHPUnit_Framework_TestCase
+class ColorTypeTest extends TestCase
 {
     public function testMethods()
     {
@@ -20,7 +19,7 @@ class ColorTypeTest extends PHPUnit_Framework_TestCase
         $resolver->expects($this->once())
             ->method('setDefaults')
             ->willReturn(true);
-        /** @var OptionsResolver $resolver */
+        /* @var OptionsResolver $resolver */
         $colorType->configureOptions($resolver);
         $this->assertEquals(TextType::class, $colorType->getParent());
         $this->assertEquals('color', $colorType->getBlockPrefix());

@@ -17,16 +17,15 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class AclChangeset extends AbstractEntity
 {
-
     /**
      * This changeset still needs to be applied
      */
-    const STATUS_NEW      = 0;
+    const STATUS_NEW = 0;
 
     /**
      * This changeset is currently being applied
      */
-    const STATUS_RUNNING  = 1;
+    const STATUS_RUNNING = 1;
 
     /**
      * This changeset is applied
@@ -36,7 +35,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Something went wrong while applying the changeset
      */
-    const STATUS_FAILED   = 3;
+    const STATUS_FAILED = 3;
 
     /**
      * @ORM\Column(type="bigint", name="ref_id")
@@ -83,7 +82,7 @@ class AclChangeset extends AbstractEntity
      */
     public function __construct()
     {
-        $this->status       = self::STATUS_NEW;
+        $this->status = self::STATUS_NEW;
         $this->lastModified = $this->created = new DateTime('now');
     }
 
@@ -294,5 +293,4 @@ class AclChangeset extends AbstractEntity
     {
         return $this->user;
     }
-
 }

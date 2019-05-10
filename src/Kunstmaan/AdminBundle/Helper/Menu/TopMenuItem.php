@@ -8,12 +8,12 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
 class TopMenuItem extends MenuItem
 {
     /**
-     * @var boolean
+     * @var bool
      */
     private $appearInSidebar = false;
 
     /**
-     * @param boolean $appearInSidebar
+     * @param bool $appearInSidebar
      *
      * @return TopMenuItem
      */
@@ -25,7 +25,7 @@ class TopMenuItem extends MenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getAppearInSidebar()
     {

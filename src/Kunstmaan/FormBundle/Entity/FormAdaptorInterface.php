@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use ArrayObject;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -11,7 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 interface FormAdaptorInterface
 {
-
     /**
      * Modify the given FormBuilderInterface
      *
@@ -27,5 +25,4 @@ interface FormAdaptorInterface
      * @return string
      */
     public function getUniqueId();
-
 }

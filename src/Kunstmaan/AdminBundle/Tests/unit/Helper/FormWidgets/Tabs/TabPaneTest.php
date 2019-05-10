@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\FormWidgets\Tabs;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory;
@@ -14,9 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TabPaneTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs
  */
-class TabPaneTest extends PHPUnit_Framework_TestCase
+class TabPaneTest extends TestCase
 {
     /**
      * @throws \ReflectionException
@@ -33,14 +32,13 @@ class TabPaneTest extends PHPUnit_Framework_TestCase
         $tab2 = clone $tab;
 
         $request->expects($this->exactly(2))->method('get')->willReturn($tab);
-        $tab->expects($this->any())->method('getExtraParams')->willReturn([1,2,3,4,5]);
+        $tab->expects($this->any())->method('getExtraParams')->willReturn([1, 2, 3, 4, 5]);
         $tab->expects($this->any())->method('getTitle')->willReturn('Pass!');
         $form->expects($this->any())->method('createView')->willReturn($view);
         $form->expects($this->any())->method('isValid')->willReturn(true);
         $builder->expects($this->once())->method('getForm')->willReturn($form);
         $factory->expects($this->once())->method('createBuilder')->willReturn($builder);
         $em = $this->createMock(EntityManager::class);
-
 
         $tabPane = new TabPane('Title', $request, $factory);
 
@@ -66,7 +64,6 @@ class TabPaneTest extends PHPUnit_Framework_TestCase
         $tabPane->addTab($tab2, 0);
         $tabPane->removeTabByPosition(0);
         $this->assertCount(1, $tabPane->getTabs());
-
 
         $request->request->expects($this->exactly(2))->method('get')->willReturn($tab);
         new TabPane('Title', $request, $factory);

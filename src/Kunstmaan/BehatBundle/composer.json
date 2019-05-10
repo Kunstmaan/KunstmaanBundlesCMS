@@ -13,17 +13,21 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.3",
-        "behat/behat": "~2.5.0",
-        "behat/mink": "*",
-        "behat/symfony2-extension": "*",
-        "behat/mink-extension": "*",
-        "behat/mink-browserkit-driver": "*",
-        "behat/mink-selenium2-driver": "*",
-        "behat/mink-goutte-driver": "*",
-        "behat/mink-sahi-driver": "*",
-        "phpunit/phpunit": "~3.7"
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "symfony/http-kernel": "^3.4|^4.0",
+        "behat/behat": "3.1.0rc1",
+        "behat/symfony2-extension": "~2.1.1",
+        "behat/mink": "dev-master",
+        "behat/mink-browserkit-driver": "dev-master",
+        "behat/mink-selenium2-driver": "dev-master",
+        "behat/mink-goutte-driver": "dev-master",
+        "behat/mink-sahi-driver": "dev-master",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\BehatBundle\\": "" }
@@ -31,7 +35,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

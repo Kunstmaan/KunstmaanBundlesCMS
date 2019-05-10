@@ -56,15 +56,15 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
     {
 {% if demosite %}
 	    return array(
-		'{{ bundle.getName() }}:header',
-		'{{ bundle.getName() }}:section1',
-		'{{ bundle.getName() }}:section2',
-		'{{ bundle.getName() }}:section3',
-		'{{ bundle.getName() }}:section4',
-		'{{ bundle.getName() }}:section5'
+		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}header',
+		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section1',
+		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section2',
+		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section3',
+		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section4',
+		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section5'
 	    );
 {% else %}
-	    return array('{{ bundle.getName() }}:main');
+	    return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main');
 {% endif %}
     }
 
@@ -73,7 +73,7 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
      */
     public function getPageTemplates()
     {
-    	return array('{{ bundle.getName() }}:homepage');
+    	return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}homepage');
     }
 
     /**
@@ -81,7 +81,7 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:Pages\HomePage:view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/HomePage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**

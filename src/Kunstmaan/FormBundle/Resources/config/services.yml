@@ -1,6 +1,7 @@
 parameters:
   kunstmaan_form.form_mailer.class: 'Kunstmaan\FormBundle\Helper\FormMailer'
   kunstmaan_form.form_handler.class: 'Kunstmaan\FormBundle\Helper\FormHandler'
+  kunstmaan_form.sendemail_listener.class: 'Kunstmaan\FormBundle\EventListener\SendEmailListener'
 
 services:
     kunstmaan_form.menu.adaptor.forms:
@@ -11,13 +12,21 @@ services:
     kunstmaan_form.form_mailer:
         class: '%kunstmaan_form.form_mailer.class%'
         arguments: ['@mailer', '@templating', '@service_container']
+        public: true
 
     kunstmaan_form.form_handler:
         class: "%kunstmaan_form.form_handler.class%"
         arguments: ['@service_container']
+        public: true
 
     kunstmaan_form.configure_sub_actions_menu_listener:
         class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
         arguments: ['@doctrine.orm.entity_manager', '@router']
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
+
+    kunstmaan_form.send_email_listener:
+        class: "%kunstmaan_form.sendemail_listener.class%"
+        arguments: ['@kunstmaan_form.form_mailer']
+        tags:
+            - { name: 'kernel.event_listener', event: 'kunstmaan_form.add_submission', method: 'onSubmission' }

@@ -13,15 +13,20 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('kunstmaan_k_admin_list');
+        $treeBuilder = new TreeBuilder('kunstmaan_k_admin_list');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_k_admin_list');
+        }
 
-        /** @var ArrayNodeDefinition $pages */
-        $root
+        /* @var ArrayNodeDefinition $pages */
+        $rootNode
             ->children()
                 ->arrayNode('lock')
                     ->addDefaultsIfNotSet()

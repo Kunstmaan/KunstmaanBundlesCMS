@@ -3,13 +3,13 @@
 namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaBundle\DependencyInjection\KunstmaanMediaExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanMediaExtensionTest
  */
-class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -19,13 +19,10 @@ class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanMediaExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
-        $this->container->setParameter('twig.form.resources', []);
         $this->load(['enable_pdf_preview' => true]);
 
-        $this->assertContainerBuilderHasParameter('twig.form.resources');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.soundcloud_api_key', 'YOUR_CLIENT_ID');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.remote_video');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.enable_pdf_preview', true);
@@ -47,11 +44,37 @@ class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_handler.remote_audio.class', 'Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_handler.image.class', 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_handler.file.class', 'Kunstmaan\MediaBundle\Helper\File\FileHandler');
-        $this->assertContainerBuilderHasParameter('aviary_api_key', null);
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.aviary_api_key', null);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_path', '/uploads/media/');
         $this->assertContainerBuilderHasParameter('liip_imagine.filter.loader.background.class', 'Kunstmaan\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
-        $this->assertContainerBuilderHasParameter('liip_imagine.cache.manager.class', 'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager');
-        $this->assertContainerBuilderHasParameter('liip_imagine.cache.resolver.web_path.class', 'Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver');
-        $this->assertContainerBuilderHasParameter('liip_imagine.controller.class', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController');
+    }
+
+    public function testAviaryApiKeyWithNoConfig()
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.aviary_api_key', null);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanDashboardBundle 6.0.
+     */
+    public function testAviaryApiKeyWithParameterSet()
+    {
+        $this->setParameter('aviary_api_key', 'api_key');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.aviary_api_key', 'api_key');
+    }
+
+    public function testAviaryApiKeyWithParameterAndConfigSet()
+    {
+        $this->setParameter('aviary_api_key', 'api_key');
+
+        $this->load(['aviary_api_key' => 'other_api_key']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.aviary_api_key', 'other_api_key');
     }
 }

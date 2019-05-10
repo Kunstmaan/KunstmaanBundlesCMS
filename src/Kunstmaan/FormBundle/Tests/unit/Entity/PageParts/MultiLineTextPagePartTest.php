@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for MultiLineTextPagePart
  */
-class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
+class MultiLineTextPagePartTest extends TestCase
 {
     /**
      * @var MultiLineTextPagePart
@@ -23,14 +24,13 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new MultiLineTextPagePart;
+        $this->object = new MultiLineTextPagePart();
     }
-
 
     public function testSetGetRegex()
     {
         $object = $this->object;
-        $regex = ".*example.*";
+        $regex = '.*example.*';
         $object->setRegex($regex);
         $this->assertEquals($regex, $object->getRegex());
     }
@@ -38,7 +38,7 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     public function testSetGetErrorMessageRegex()
     {
         $object = $this->object;
-        $message = "Some example error message";
+        $message = 'Some example error message';
         $object->setErrorMessageRegex($message);
         $this->assertEquals($message, $object->getErrorMessageRegex());
     }
@@ -54,7 +54,7 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->object;
         $object->setRequired(true);
-        $object->setRegex(".*example.*");
+        $object->setRegex('.*example.*');
 
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()

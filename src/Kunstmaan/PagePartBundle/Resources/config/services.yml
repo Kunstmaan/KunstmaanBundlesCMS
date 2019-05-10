@@ -73,6 +73,7 @@ services:
         class: 'Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService'
         calls:
             - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
+        public: true
 
     kunstmaan_pageparts.edit_node.listener:
         class: 'Kunstmaan\PagePartBundle\EventListener\NodeListener'

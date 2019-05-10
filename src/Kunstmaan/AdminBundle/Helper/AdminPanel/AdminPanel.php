@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\AdminPanel;
 
-class AdminPanel 
+class AdminPanel
 {
     /**
      * @var AdminPanelAdaptorInterface[]

@@ -12,13 +12,13 @@
                     <div class="blog-filter__top__section blog-filter__top__section--filters">
                         <h4>{{ 'article_overview_page.filter'|trans }}</h4>
                     </div>
-                    <% if uses_tag %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_filter-tag.html.twig' with {'tags': tagContext.tags} %}<% endif %>
-                    <% if uses_category %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_filter-category.html.twig' with {'categories': categoryContext.categories} %}<% endif %>
+                    <% if uses_tag %>{% include '<% if not isV4 %><%= bundle.name %>:<% endif %>Pages/<%= entity_class %>OverviewPage<% if not isV4 %>:<% else %>/<% endif %>_filter-tag.html.twig' with {'tags': tagContext.tags} %}<% endif %>
+                    <% if uses_category %>{% include '<% if not isV4 %><%= bundle.name %>:<% endif %>Pages/<%= entity_class %>OverviewPage<% if not isV4 %>:<% else %>/<% endif %>_filter-category.html.twig' with {'categories': categoryContext.categories} %}<% endif %>
                 </div>
 
                 <% if uses_tag or uses_category %><div class="blog-filter__filters"><% endif %>
-                    <% if uses_tag %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_list-tag.html.twig' with {'tagContext': tagContext} %}<% endif %>
-                    <% if uses_category %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_list-category.html.twig' with {'categoryContext': categoryContext} %}<% endif %>
+                    <% if uses_tag %>{% include '<% if not isV4 %><%= bundle.name %>:<% endif %>Pages/<%= entity_class %>OverviewPage<% if not isV4 %>:<% else %>/<% endif %>_list-tag.html.twig' with {'tagContext': tagContext} %}<% endif %>
+                    <% if uses_category %>{% include '<% if not isV4 %><%= bundle.name %>:<% endif %>Pages/<%= entity_class %>OverviewPage<% if not isV4 %>:<% else %>/<% endif %>_list-category.html.twig' with {'categoryContext': categoryContext} %}<% endif %>
                 <% if uses_tag or uses_category %></div><% endif %>
             </div>
         </div>

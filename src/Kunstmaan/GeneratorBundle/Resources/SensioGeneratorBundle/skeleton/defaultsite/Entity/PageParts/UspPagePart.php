@@ -74,7 +74,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:PageParts:UspPagePart/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/UspPagePart{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**

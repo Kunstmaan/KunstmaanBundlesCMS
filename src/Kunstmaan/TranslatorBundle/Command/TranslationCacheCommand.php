@@ -51,14 +51,13 @@ class TranslationCacheCommand extends ContainerAwareCommand
         $this
         ->setName('kuma:translator:cache')
         ->setDescription('Request cache status and flush cache')
-        ->addOption('flush',        'f',    InputOption::VALUE_NONE,        'Flush translation cache (if any)')
-        ->addOption('status',      null,    InputOption::VALUE_NONE,    'Request cache status')
+        ->addOption('flush', 'f', InputOption::VALUE_NONE, 'Flush translation cache (if any)')
+        ->addOption('status', null, InputOption::VALUE_NONE, 'Request cache status')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         if ($input->getOption('flush')) {
             return $this->flushTranslationCache($input, $output);
         } elseif ($input->getOption('status')) {

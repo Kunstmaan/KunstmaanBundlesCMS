@@ -4,13 +4,12 @@ namespace Kunstmaan\SeoBundle\Tests\Entity;
 
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RobotsTest
- * @package Tests\Kunstmaan\SeoBundle\Entity
  */
-class RobotsTest extends PHPUnit_Framework_TestCase
+class RobotsTest extends TestCase
 {
     /**
      * @var Robots

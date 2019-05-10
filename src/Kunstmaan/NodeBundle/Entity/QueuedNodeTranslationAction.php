@@ -15,7 +15,7 @@ use Kunstmaan\AdminBundle\Entity\BaseUser;
  */
 class QueuedNodeTranslationAction extends AbstractEntity
 {
-    const ACTION_PUBLISH   = 'publish';
+    const ACTION_PUBLISH = 'publish';
     const ACTION_UNPUBLISH = 'unpublish';
 
     /**
@@ -51,6 +51,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * Set nodeTranslation
      *
      * @param NodeTranslation $nodeTranslation
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation)
@@ -84,6 +85,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * Set action
      *
      * @param string $action
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setAction($action)
@@ -97,6 +99,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * Set user
      *
      * @param BaseUser $user
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setUser(BaseUser $user)
@@ -120,6 +123,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * Set date
      *
      * @param \DateTime $date
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setDate(\DateTime $date)
@@ -138,5 +142,4 @@ class QueuedNodeTranslationAction extends AbstractEntity
     {
         return $this->date;
     }
-
 }

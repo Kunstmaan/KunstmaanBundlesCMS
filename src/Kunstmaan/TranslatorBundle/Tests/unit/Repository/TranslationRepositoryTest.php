@@ -1,18 +1,22 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 
-class TranslationRepositoryTest extends BaseTestCase
+class TranslationRepositoryTest extends WebTestCase
 {
     /** @var TranslationRepository */
     private $translationRepository;
 
     public function setUp()
     {
-        parent::setUp();
-        $this->translationRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation');
+        static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
+        $container = static::$kernel->getContainer();
+        static::loadFixtures($container);
+
+        $this->translationRepository = $container->get('kunstmaan_translator.repository.translation');
     }
 
     /**

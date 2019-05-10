@@ -20,13 +20,28 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kunstmaan_admin');
+        $treeBuilder = new TreeBuilder('kunstmaan_admin');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_admin');
+        }
 
         $rootNode
             ->fixXmlConfig('admin_locale')
             ->fixXmlConfig('menu_item')
             ->children()
+                ->scalarNode('website_title')->defaultNull()->end()
+                ->scalarNode('multi_language') //NEXT_MAJOR: change type to booleanNode and make required or provide default value
+                    ->defaultNull()
+                    ->beforeNormalization()->ifString()->then(function ($v) {
+                        // Workaroud to allow detecting if value is not provided. Can be removed when type is switched to booleanNode
+                        return (bool) $v;
+                    })->end()
+                ->end()
+                ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
+                ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
                 ->scalarNode('admin_prefix')->defaultValue('admin')->end()

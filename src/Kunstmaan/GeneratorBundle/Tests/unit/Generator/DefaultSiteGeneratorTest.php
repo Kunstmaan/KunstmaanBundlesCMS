@@ -1,15 +1,15 @@
 <?php
 
-
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Kernel;
 
-class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
+class DefaultSiteGeneratorTest extends TestCase
 {
-
     public function testGenerator()
     {
         $filesystem = new Filesystem();
@@ -19,25 +19,25 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $bundle = $this->getBundle($path);
         $container = $this->createMock('Symfony\Component\DependencyInjection\Container');
         $container
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getParameter')
-            ->with('multilanguage')
-            ->will($this->returnValue(true))
+            ->will($this->returnValueMap([['multilanguage', true], ['kernel.project_dir', $path]]))
         ;
         $container
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('hasParameter')
-            ->with('multilanguage')
+            ->with('kunstmaan_admin.multi_language')
             ->will($this->returnValue(true))
         ;
 
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
         $generator->generate($bundle, '', __DIR__ . '/../../_data', false);
 
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error.html.twig');
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error404.html.twig');
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error500.html.twig');
-        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error503.html.twig');
+        $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/' : 'app/Resources/';
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error404.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error500.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'TwigBundle/views/Exception/error503.html.twig');
     }
 
     protected function getBundle($path)

@@ -2,10 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,14 +16,15 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     private $authorizationChecker;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $isEnabledVersionChecker;
 
     /**
      * Constructor
      *
-     * @param AuthorizationCheckerInterface $container
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param bool                          $isEnabledVersionChecker
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, $isEnabledVersionChecker)
     {
@@ -57,24 +54,22 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
-        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
-            if ( $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN') ) {
-                if ( $this->isEnabledVersionChecker ) {
-                    $menuItem = new MenuItem($menu);
-                    $menuItem
-                        ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
-                        ->setLabel('settings.version.bundle')
-                        ->setUniqueId('bundle_versions')
-                        ->setParent($parent);
-                    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                        $menuItem->setActive(true);
-                    }
-                    $children[] = $menuItem;
-                }
-            }
         }
 
-        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        if (!is_null($parent) && 'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN') && $this->isEnabledVersionChecker) {
+                $menuItem = new MenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
+                    ->setLabel('settings.version.bundle')
+                    ->setUniqueId('bundle_versions')
+                    ->setParent($parent);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
+                }
+                $children[] = $menuItem;
+            }
+
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanadminbundle_admin_exception')
@@ -87,6 +82,5 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         }
-
     }
 }

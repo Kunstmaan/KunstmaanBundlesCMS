@@ -13,6 +13,7 @@ class IndexNodeEvent extends Event
      * @var array
      */
     public $doc;
+
     /**
      * @var HasNodeInterface
      */
@@ -31,5 +32,4 @@ class IndexNodeEvent extends Event
     {
         return $this->page;
     }
-
 }

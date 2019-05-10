@@ -25,13 +25,12 @@ class UrlReplaceTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('replace_url', array($this, 'replaceUrl'))
+            new \Twig_SimpleFilter('replace_url', array($this, 'replaceUrl')),
         );
     }
 
     public function replaceUrl($text)
     {
-
         return $this->urlHelper->replaceUrl($text);
     }
 }

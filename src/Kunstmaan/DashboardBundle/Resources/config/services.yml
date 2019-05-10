@@ -3,7 +3,6 @@ parameters:
     kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
     kunstmaan_dashboard.googleclient.class: 'Google_Client'
     kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\GoogleClientHelper'
-    google.api.app_name: 'Kuma Analytics Dashboard'
 
 services:
     kunstmaan_dashboard.manager.widgets:
@@ -20,10 +19,10 @@ services:
     kunstmaan_dashboard.googleclient:
         class: '%kunstmaan_dashboard.googleclient.class%'
         calls:
-          - [ 'setApplicationName', [ '%google.api.app_name%' ] ]
-          - [ 'setClientId', [ '%google.api.client_id%' ] ]
-          - [ 'setClientSecret', [ '%google.api.client_secret%' ] ]
-          - [ 'setDeveloperKey', [ '%google.api.dev_key%' ] ]
+          - [ 'setApplicationName', [ '%kunstmaan_dashboard.google_analytics.api.app_name%' ] ]
+          - [ 'setClientId', [ '%kunstmaan_dashboard.google_analytics.api.client_id%' ] ]
+          - [ 'setClientSecret', [ '%kunstmaan_dashboard.google_analytics.api.client_secret%' ] ]
+          - [ 'setDeveloperKey', [ '%kunstmaan_dashboard.google_analytics.api.dev_key%' ] ]
           - [ 'setScopes', [ 'https://www.googleapis.com/auth/analytics.readonly' ] ]
           - [ 'setUseObjects', [ true ] ]
 
@@ -36,6 +35,7 @@ services:
     kunstmaan_dashboard.helper.google.analytics.service:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.client']
+        public: true
 
     # config helper
     kunstmaan_dashboard.helper.google.analytics.config:
@@ -47,3 +47,4 @@ services:
     kunstmaan_dashboard.helper.google.analytics.query:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@kunstmaan_dashboard.helper.google.analytics.config']
+        public: true

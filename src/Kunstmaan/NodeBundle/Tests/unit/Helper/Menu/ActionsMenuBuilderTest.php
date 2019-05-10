@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
-use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Knp\Menu\Integration\Symfony\RoutingExtension;
@@ -12,12 +11,12 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
+class ActionsMenuBuilderTest extends TestCase
 {
     /**
      * @var ActionsMenuBuilder
@@ -55,18 +54,16 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
      */
     protected function getMockedEntityManager()
     {
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null,
-            'findBy' => null,
-            'findOneBy' => null,
-        ]);
-        /** @var \Doctrine\ORM\EntityManager $emMock */
-        $emMock = Stub::make(EntityManager::class, [
-            'getRepository' => $repository,
-            'getClassMetaData' => (object)['name' => 'aClass'],
-            'persist' => null,
-            'flush' => null
-        ]);
+        $repository = $this->createMock(EntityRepository::class);
+        $repository->method('find')->willReturn(null);
+        $repository->method('findBy')->willReturn(null);
+        $repository->method('findOneBy')->willReturn(null);
+
+        $emMock = $this->createMock(EntityManager::class);
+        $emMock->method('getRepository')->willReturn($repository);
+        $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
+        $emMock->method('persist')->willReturn(null);
+        $emMock->method('flush')->willReturn(null);
 
         return $emMock;
     }
@@ -80,7 +77,6 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
-
 
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
@@ -108,8 +104,7 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
 
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
             $this->assertNotNull($menu->getChild('action.delete'));
-        }
-        else {
+        } else {
             $this->assertNull($menu->getChild('action.delete'));
         }
 
@@ -122,11 +117,10 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $nodeTranslation->setNode(new Node());
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
-
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
@@ -137,8 +131,7 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.unpublish'));
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
             $this->assertNotNull($menu->getChild('action.delete'));
-        }
-        else {
+        } else {
             $this->assertNull($menu->getChild('action.delete'));
         }
 
@@ -152,8 +145,7 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.unpublish'));
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
             $this->assertNotNull($menu->getChild('action.delete'));
-        }
-        else {
+        } else {
             $this->assertNull($menu->getChild('action.delete'));
         }
 
@@ -166,13 +158,12 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $nodeTranslation->setNode(new Node());
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
         $this->builder->setEditableNode(false);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
         $nodeTranslation->setOnline(false);
-
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save')); // We want to save.
@@ -195,7 +186,6 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
 
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-
         $menu = $this->builder->createTopActionsMenu();
         $this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
         $this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
@@ -212,7 +202,7 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
     {
         $nodeTranslation = new NodeTranslation();
         $node = new Node();
-        $node->setParent(new Node);
+        $node->setParent(new Node());
         $nodeTranslation->setNode($node);
 
         $nodeVersion = new NodeVersion();
@@ -220,7 +210,6 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
-
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.delete'));
@@ -237,7 +226,7 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $node->addNodeTranslation($nodeTranslation);
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
@@ -248,7 +237,7 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         $node->addNodeTranslation($nodeTranslation);
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);

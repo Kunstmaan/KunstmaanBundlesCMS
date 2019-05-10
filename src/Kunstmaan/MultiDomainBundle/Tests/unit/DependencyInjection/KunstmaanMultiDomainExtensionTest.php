@@ -3,13 +3,13 @@
 namespace Kunstmaan\MultiDomainBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MultiDomainBundle\DependencyInjection\KunstmaanMultiDomainExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanMultiDomainExtensionTest
  */
-class KunstmaanMultiDomainExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanMultiDomainExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -19,10 +19,8 @@ class KunstmaanMultiDomainExtensionTest extends AbstractPrependableExtensionTest
         return [new KunstmaanMultiDomainExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
-
         $this->load([
             'hosts' => [
                 [

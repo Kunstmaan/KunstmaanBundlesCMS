@@ -35,7 +35,11 @@ class MediaTokenTransformer implements DataTransformerInterface
             }
         );
 
-        return $crawler->html();
+        try {
+            return $crawler->html();
+        } catch (\InvalidArgumentException $exception) {
+            return $content;
+        }
     }
 
     /**
@@ -67,17 +71,21 @@ class MediaTokenTransformer implements DataTransformerInterface
             }
         );
 
-        $html = $crawler->filter('body')->html();
+        try {
+            $html = $crawler->filter('body')->html();
 
-        // URL-decode square brackets in img and a tags
-        $html = preg_replace_callback(
-            '/<(img|a)\s+[^>]*>/',
-            function($matches) {
-                return str_replace(['%5B', '%5D'], ['[', ']'], $matches[0]);
-            },
-            $html
-        );
+            // URL-decode square brackets in img and a tags
+            $html = preg_replace_callback(
+                '/<(img|a)\s+[^>]*>/',
+                function ($matches) {
+                    return str_replace(['%5B', '%5D'], ['[', ']'], $matches[0]);
+                },
+                $html
+            );
 
-        return $html;
+            return $html;
+        } catch (\InvalidArgumentException $exception) {
+            return $content;
+        }
     }
 }

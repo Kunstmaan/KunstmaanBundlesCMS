@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
-use Codeception\Stub;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -17,12 +16,13 @@ use FOS\UserBundle\Model\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
-class AclHelperTest extends \PHPUnit_Framework_TestCase
+class AclHelperTest extends TestCase
 {
     /**
      * @var EntityManager
@@ -81,7 +81,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($platform));
 
         /* @var $stmt Statement */
-        $stmt = Stub::makeEmpty(Statement::class);
+        $stmt = $this->createMock(Statement::class);
 
         $conn->expects($this->any())
             ->method('executeQuery')
@@ -144,11 +144,6 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->object = new AclHelper($this->em, $this->tokenStorage, $this->rh);
-    }
-
-    public function testConstructor()
-    {
-        new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
     public function testApply()
@@ -293,7 +288,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
 
         $rows = array(
             array('id' => 1),
-            array('id' => 9)
+            array('id' => 9),
         );
 
         $hydrator->expects($this->once())
@@ -321,7 +316,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAllowedEntityIdsNoEntity()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
 
         $this->object->getAllowedEntityIds(new PermissionDefinition(array('view')));
     }

@@ -2,7 +2,11 @@
     "name": "kunstmaan/search-bundle",
     "type": "symfony-bundle",
     "description": "The KunstmaanSearchBundle works with ElasticSearch and supports different search providers. The bundle currently supports Elastica as a provider. Add your own objects to index using a tagged service which implements the SearchConfigurationInterface",
-    "keywords": ["kunstmaan", "search", "elasticsearch"],
+    "keywords": [
+        "kunstmaan",
+        "search",
+        "elasticsearch"
+    ],
     "homepage": "https://github.com/Kunstmaan/KunstmaanSearchBundle",
     "license": "MIT",
     "authors": [
@@ -14,16 +18,32 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "ruflin/elastica": "~3.2"
+        "php": "^7.1",
+        "ruflin/elastica": "^5.1|^6.0",
+        "symfony/config": "^3.4|^4.0",
+        "symfony/console": "^3.4|^4.0",
+        "symfony/dependency-injection": "^3.4|^4.0",
+        "symfony/framework-bundle": "^3.4|^4.0",
+        "symfony/http-kernel": "^3.4|^4.0",
+        "symfony/yaml": "^3.4|^4.0"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
+    },
+    "suggest": {
+        "kunstmaan/search-bundle": "^5.2"
     },
     "autoload": {
-        "psr-4": { "Kunstmaan\\SearchBundle\\": "" }
+        "psr-4": {
+            "Kunstmaan\\SearchBundle\\": ""
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

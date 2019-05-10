@@ -30,13 +30,30 @@ class MediaHandlerCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'kunstmaan_media.media_manager',
             'addHandler',
-            [ new Reference('kunstmaan_media.media_manager')]
+            [new Reference('kunstmaan_media.media_manager')]
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'kunstmaan_media.icon_font_manager',
             'addLoader',
-            [ new Reference('kunstmaan_media.icon_font_manager'), 'kunstmaan_media.icon_font_manager']
+            [new Reference('kunstmaan_media.icon_font_manager'), 'kunstmaan_media.icon_font_manager']
+        );
+    }
+
+    public function testLiipImageTaggedResolvers()
+    {
+        $this->setDefinition('Kunstmaan\MediaBundle\Helper\Imagine\CacheManager', new Definition());
+
+        $testResolver = new Definition();
+        $testResolver->addTag('liip_imagine.cache.resolver', ['resolver' => 'test']);
+        $this->setDefinition('test_resolver', $testResolver);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager',
+            'addResolver',
+            ['test', new Reference('test_resolver')]
         );
     }
 }

@@ -4,12 +4,12 @@ namespace Kunstmaan\UtilitiesBundle\Tests\DependencyInjection;
 
 use Kunstmaan\UtilitiesBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigurationTest
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
@@ -23,7 +23,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = ['cipher' => ['secret' => '%kernel.secret%']];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
     }

@@ -4,13 +4,13 @@ namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class ConfigurationTest
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
@@ -26,6 +26,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     {
         $array = [
             'soundcloud_api_key' => 'thisismykey',
+            'aviary_api_key' => 'apikey',
             'remote_video' => [
                 'vimeo' => false,
                 'youtube' => true,
@@ -33,7 +34,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             ],
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
-            'web_root' => '%kernel.project_dir%/web'
+            'web_root' => '%kernel.project_dir%/web',
         ];
 
         if (Kernel::VERSION_ID >= 40000) {

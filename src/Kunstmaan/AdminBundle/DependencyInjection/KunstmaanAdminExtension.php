@@ -4,8 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
-
-use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -13,7 +12,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -33,7 +31,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     public function load(array $configs, ContainerBuilder $container)
     {
         $container->setParameter('version_checker.url', 'https://bundles.kunstmaan.be/version-check');
-        $container->setParameter('version_checker.timeframe', 60*60*24);
+        $container->setParameter('version_checker.timeframe', 60 * 60 * 24);
         $container->setParameter('version_checker.enabled', true);
 
         $configuration = new Configuration();
@@ -60,14 +58,17 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
         $container->setParameter('kunstmaan_admin.google_signin.hosted_domains', $config['google_signin']['hosted_domains']);
 
-        $container->setParameter('kunstmaan_admin.password_restrictions.min_digits' , $config['password_restrictions']['min_digits']);
-        $container->setParameter('kunstmaan_admin.password_restrictions.min_uppercase' , $config['password_restrictions']['min_uppercase']);
-        $container->setParameter('kunstmaan_admin.password_restrictions.min_special_characters' , $config['password_restrictions']['min_special_characters']);
-        $container->setParameter('kunstmaan_admin.password_restrictions.min_length' , $config['password_restrictions']['min_length']);
-        $container->setParameter('kunstmaan_admin.password_restrictions.max_length' , $config['password_restrictions']['max_length']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_digits', $config['password_restrictions']['min_digits']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_uppercase', $config['password_restrictions']['min_uppercase']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_special_characters', $config['password_restrictions']['min_special_characters']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_length', $config['password_restrictions']['min_length']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.max_length', $config['password_restrictions']['max_length']);
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
         $container->setParameter('kunstmaan_admin.toolbar_firewall_names', !empty($config['provider_keys']) ? $config['provider_keys'] : $config['toolbar_firewall_names']);
         $container->setParameter('kunstmaan_admin.admin_firewall_name', $config['admin_firewall_name']);
+
+        $container->registerForAutoconfiguration(MenuAdaptorInterface::class)
+            ->addTag('kunstmaan_admin.menu.adaptor');
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -80,43 +81,56 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (0 !== count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
+
+        $this->addWebsiteTitleParameter($container, $config);
+        $this->addMultiLanguageParameter($container, $config);
+        $this->addRequiredLocalesParameter($container, $config);
+        $this->addDefaultLocaleParameter($container, $config);
     }
 
     public function prepend(ContainerBuilder $container)
     {
-        $knpMenuConfig['twig']              = true; // set to false to disable the Twig extension and the TwigRenderer
-        $knpMenuConfig['templating']        = false; // if true, enables the helper for PHP templates
-        $knpMenuConfig['default_renderer']  = 'twig'; // The renderer to use, list is also available by default
+        $knpMenuConfig['twig'] = true; // set to false to disable the Twig extension and the TwigRenderer
+        $knpMenuConfig['templating'] = false; // if true, enables the helper for PHP templates
+        $knpMenuConfig['default_renderer'] = 'twig'; // The renderer to use, list is also available by default
         $container->prependExtensionConfig('knp_menu', $knpMenuConfig);
 
-        $fosUserConfig['db_driver']                     = 'orm'; // other valid values are 'mongodb', 'couchdb'
-        $fosUserConfig['firewall_name']                 = 'main';
-        $fosUserConfig['user_class']                    = 'Kunstmaan\AdminBundle\Entity\User';
-        $fosUserConfig['group']['group_class']          = 'Kunstmaan\AdminBundle\Entity\Group';
-        $fosUserConfig['resetting']['token_ttl']        = 86400;
+        $fosUserOriginalConfig = $container->getExtensionConfig('fos_user');
+        if (!isset($fosUserOriginalConfig[0]['db_driver'])) {
+            $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
+        }
+        $fosUserConfig['from_email']['address'] = 'kunstmaancms@myproject.dev';
+        $fosUserConfig['from_email']['sender_name'] = 'KunstmaanCMS';
+        $fosUserConfig['firewall_name'] = 'main';
+        $fosUserConfig['user_class'] = 'Kunstmaan\AdminBundle\Entity\User';
+        $fosUserConfig['group']['group_class'] = 'Kunstmaan\AdminBundle\Entity\Group';
+        $fosUserConfig['resetting']['token_ttl'] = 86400;
         // Use this node only if you don't want the global email address for the resetting email
-        $fosUserConfig['resetting']['email']['from_email']['address']        = 'admin@kunstmaan.be';
-        $fosUserConfig['resetting']['email']['from_email']['sender_name']    = 'admin';
-        $fosUserConfig['resetting']['email']['template']    = 'FOSUserBundle:Resetting:email.txt.twig';
-        $fosUserConfig['resetting']['form']['type']                 = ResettingFormType::class;
-        $fosUserConfig['resetting']['form']['name']                 = 'fos_user_resetting_form';
-        $fosUserConfig['resetting']['form']['validation_groups']    = ['ResetPassword'];
+        $fosUserConfig['resetting']['email']['from_email']['address'] = 'kunstmaancms@myproject.dev';
+        $fosUserConfig['resetting']['email']['from_email']['sender_name'] = 'KunstmaanCMS';
+        $fosUserConfig['resetting']['email']['template'] = 'FOSUserBundle:Resetting:email.txt.twig';
+        $fosUserConfig['resetting']['form']['type'] = ResettingFormType::class;
+        $fosUserConfig['resetting']['form']['name'] = 'fos_user_resetting_form';
+        $fosUserConfig['resetting']['form']['validation_groups'] = ['ResetPassword'];
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
-        $monologConfig['handlers']['main']['type']  = 'rotating_file';
-        $monologConfig['handlers']['main']['path']  = sprintf('%s/%s', $container->getParameter('kernel.logs_dir'), $container->getParameter('kernel.environment'));
+        $monologConfig['handlers']['main']['type'] = 'rotating_file';
+        $monologConfig['handlers']['main']['path'] = sprintf('%s/%s', $container->getParameter('kernel.logs_dir'), $container->getParameter('kernel.environment'));
         $monologConfig['handlers']['main']['level'] = 'debug';
         $container->prependExtensionConfig('monolog', $monologConfig);
 
         $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 
+        $frameworkConfig['templating']['engines'] = ['twig'];
+        $container->prependExtensionConfig('framework', $frameworkConfig);
+
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getNamespace()
     {
@@ -124,7 +138,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getXsdValidationBasePath()
     {
@@ -135,7 +149,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     {
         $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [
             new Reference('security.authorization_checker'),
-            $menuItems
+            $menuItems,
         ]);
         $definition->addTag('kunstmaan_admin.menu.adaptor');
 
@@ -159,5 +173,54 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $urlSlice = preg_quote($urlSlice);
 
         return $urlSlice;
+    }
+
+    private function addWebsiteTitleParameter(ContainerBuilder $container, array $config)
+    {
+        $websiteTitle = $config['website_title'];
+        if (null === $config['website_title']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $websiteTitle = $container->hasParameter('websitetitle') ? $container->getParameter('websitetitle') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.website_title', $websiteTitle);
+    }
+
+    private function addMultiLanguageParameter(ContainerBuilder $container, array $config)
+    {
+        $multilanguage = $config['multi_language'];
+        if (null === $multilanguage) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.multi_language" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $multilanguage = $container->hasParameter('multilanguage') ? $container->getParameter('multilanguage') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.multi_language', $multilanguage);
+    }
+
+    private function addRequiredLocalesParameter(ContainerBuilder $container, array $config)
+    {
+        $requiredLocales = $config['required_locales'];
+        if (null === $config['required_locales']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.required_locales" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $requiredLocales = $container->hasParameter('requiredlocales') ? $container->getParameter('requiredlocales') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.required_locales', $requiredLocales);
+        $container->setParameter('requiredlocales', $requiredLocales); //Keep old parameter for to keep BC with routing config
+    }
+
+    private function addDefaultLocaleParameter(ContainerBuilder $container, array $config)
+    {
+        $defaultLocale = $config['default_locale'];
+        if (null === $config['default_locale']) {
+            @trigger_error('Not providing a value for the "kunstmaan_admin.default_locale" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            $defaultLocale = $container->hasParameter('defaultlocale') ? $container->getParameter('defaultlocale') : '';
+        }
+
+        $container->setParameter('kunstmaan_admin.default_locale', $defaultLocale);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Twig;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 class BikesTwigExtension extends \Twig_Extension
@@ -17,7 +17,7 @@ class BikesTwigExtension extends \Twig_Extension
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
 	$this->em = $em;
     }

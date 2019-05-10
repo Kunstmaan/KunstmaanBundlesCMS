@@ -4,11 +4,12 @@ namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for EmailFormSubmissionField
  */
-class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
+class EmailFormSubmissionFieldTest extends TestCase
 {
     /**
      * @var EmailFormSubmissionField
@@ -21,7 +22,7 @@ class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new EmailFormSubmissionField;
+        $this->object = new EmailFormSubmissionField();
     }
 
     public function testSetGetValue()

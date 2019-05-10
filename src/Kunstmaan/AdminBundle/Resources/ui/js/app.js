@@ -24,6 +24,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.autoCollapseButtons.init();
         kunstmaanbundles.autoCollapseTabs.init();
         kunstmaanbundles.ajaxModal.init();
+        kunstmaanbundles.topNav.init();
 
         initModules();
 

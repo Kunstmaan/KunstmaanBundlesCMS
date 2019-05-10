@@ -3,13 +3,13 @@
 namespace Kunstmaan\AdminListBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminListBundle\DependencyInjection\KunstmaanAdminListExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanAdminExtensionTest
  */
-class KunstmaanAdminListExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanAdminListExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -18,7 +18,6 @@ class KunstmaanAdminListExtensionTest extends AbstractPrependableExtensionTestCa
     {
         return [new KunstmaanAdminListExtension()];
     }
-
 
     public function testCorrectParametersHaveBeenSet()
     {

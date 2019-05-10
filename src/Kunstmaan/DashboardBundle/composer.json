@@ -13,10 +13,15 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.6",
-        "doctrine/orm": "^2.2.3",
-        "alchemy/google-plus-api-client": "~0.6.5"
+        "php": "^7.1",
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/google-api-custom": "~1.0"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -24,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

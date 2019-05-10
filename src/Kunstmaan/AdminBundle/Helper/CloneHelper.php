@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class CloneHelper
 {
-
     /**
      * @var EntityManager
      */
@@ -50,5 +49,4 @@ class CloneHelper
 
         return $clonedEntity;
     }
-
 }

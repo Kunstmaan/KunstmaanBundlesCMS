@@ -10,6 +10,9 @@ use RuntimeException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * @deprecated This class is deprecated in KunstmaanConfigBundle 5.3 and will be removed in KunstmaanConfigBundle 6.0. The entity validation is moved to the bundle configuration instead.
+ */
 class KunstmaanConfigConfigurationPass implements CompilerPassInterface
 {
     /**

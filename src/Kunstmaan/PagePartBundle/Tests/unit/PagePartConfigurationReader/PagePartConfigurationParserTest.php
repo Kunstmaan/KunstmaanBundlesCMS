@@ -2,50 +2,72 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser;
-use Kunstmaan\PagePartBundle\Tests\unit\PagePartConfigurationReader\LocatingKernelStub;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-class PagePartConfigurationParserTest extends PHPUnit_Framework_TestCase
+class PagePartConfigurationParserTest extends TestCase
 {
-    public function testParserKnowsAboutPresets()
+    public function testParseSf4Flow()
     {
-        $parser = new PagePartConfigurationParser(new LocatingKernelStub(), [
-            'foo' => [
-                'name' => 'Foo preset',
+        $kernel = $this->createMock(KernelInterface::class);
+        $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, [
+            'main' => [
+                'name' => 'Main content',
                 'context' => 'main',
-
-            ]
+                'types' => [
+                    ['name' => 'FooBar', 'class' => 'Foo\BarPagePart'],
+                    ['name' => 'Foo', 'class' => 'FooPagePart'],
+                    ['name' => 'Bar', 'class' => 'BarPagePart'],
+                ],
+            ],
         ]);
 
-        $value = $parser->parse('foo');
-
-        $this->assertSame('Foo preset', $value->getName());
+        $result = $pagePartConfigurationParser->parse('main');
+        $this->assertInstanceOf(PagePartAdminConfiguratorInterface::class, $result);
+        $this->assertEquals('Main content', $result->getName());
     }
 
-    public function testExtendsWithinBundleWorks()
+    public function testParseSf3Flow()
     {
-        $parser = new PagePartConfigurationParser(new LocatingKernelStub);
+        $kernel = $this->createMock(KernelInterface::class);
+        $kernel->method('locateResource')->willReturn(__DIR__ . '/Resources/config/pageparts/main.yml');
 
-        $value = $parser->parse('Bundle:main-extended');
+        $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, []);
 
-        $this->assertCount(3, $value->getPossiblePagePartTypes());
-
+        $result = $pagePartConfigurationParser->parse('MyWebsiteBundle:main');
+        $this->assertInstanceOf(PagePartAdminConfiguratorInterface::class, $result);
+        $this->assertEquals('Main content', $result->getName());
     }
 
     public function testPresetExtendsBundle()
     {
-        $parser = new PagePartConfigurationParser(new LocatingKernelStub, [
+        $kernel = $this->createMock(KernelInterface::class);
+        $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, [
             'foo' => [
-                'name' => 'Foo preset',
+                'name' => 'Foo content',
+                'context' => 'foo',
+                'extends' => 'main',
+                'types' => [
+                    ['name' => 'FooBar', 'class' => 'Foo\BarPagePart'],
+                    ['name' => 'Foo', 'class' => 'FooPagePart'],
+                    ['name' => 'Bar', 'class' => 'BarPagePart'],
+                ],
+            ],
+            'main' => [
+                'name' => 'Main content',
                 'context' => 'main',
-                'extends' => 'Bundle:main'
-            ]
-        ]);
+                'types' => [
+                    ['name' => 'Header', 'class' => 'HeaderPagePart'],
+                ],
+            ],
+        ]
+        );
 
-        $value = $parser->parse('foo');
+        $value = $pagePartConfigurationParser->parse('foo');
 
-        $this->assertCount(3, $value->getPossiblePagePartTypes());
+        $this->assertCount(4, $value->getPossiblePagePartTypes());
     }
 
     /**
@@ -53,7 +75,9 @@ class PagePartConfigurationParserTest extends PHPUnit_Framework_TestCase
      */
     public function testCircularReferenceIsDetected()
     {
-        $parser = new PagePartConfigurationParser(new LocatingKernelStub, [
+        $kernel = $this->createMock(KernelInterface::class);
+
+        $parser = new PagePartConfigurationParser($kernel, [
             'foo' => [
                 'name' => 'Foo preset',
                 'extends' => 'bar',
@@ -65,7 +89,7 @@ class PagePartConfigurationParserTest extends PHPUnit_Framework_TestCase
             'baz' => [
                 'name' => 'Baz preset',
                 'extends' => 'foo',
-            ]
+            ],
         ]);
 
         $parser->parse('foo');

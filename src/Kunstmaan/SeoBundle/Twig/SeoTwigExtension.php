@@ -4,13 +4,9 @@ namespace Kunstmaan\SeoBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-
 use Kunstmaan\SeoBundle\Entity\Seo;
-
-use Twig_Environment;
-
+use Psr\Cache\CacheItemPoolInterface;
 use Twig_Extension;
 
 /**
@@ -18,7 +14,6 @@ use Twig_Extension;
  */
 class SeoTwigExtension extends Twig_Extension
 {
-
     /**
      * @var EntityManager
      */
@@ -26,6 +21,7 @@ class SeoTwigExtension extends Twig_Extension
 
     /**
      * Website title defined in your parameters
+     *
      * @var string
      */
     private $websiteTitle;
@@ -33,9 +29,15 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * Saves querying the db multiple times, if you happen to use any of the defined
      * functions more than once in your templates
+     *
      * @var array
      */
     private $seoCache = [];
+
+    /**
+     * @var CacheItemPoolInterface
+     */
+    private $requestCache;
 
     /**
      * @param EntityManager $em
@@ -68,6 +70,7 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @param string $url
      * @param string $host
+     *
      * @return string
      */
     public function getAbsoluteUrl($url, $host = null)
@@ -108,7 +111,7 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * The first value that is not null or empty will be returned.
      *
-     * @param AbstractPage $entity The entity for which you want the page title.
+     * @param AbstractPage $entity the entity for which you want the page title
      *
      * @return string The page title. Will look in the SEO meta first, then the NodeTranslation, then the page.
      */
@@ -125,7 +128,7 @@ class SeoTwigExtension extends Twig_Extension
 
     /**
      * @param AbstractPage $entity
-     * @param null|string  $default If given we'll return this text if no SEO title was found.
+     * @param null|string  $default if given we'll return this text if no SEO title was found
      *
      * @return string
      */
@@ -203,10 +206,8 @@ class SeoTwigExtension extends Twig_Extension
             }
         }
 
-
         return null;
     }
-
 
     /**
      * Gets the Website title defined in your parameters.
@@ -235,16 +236,47 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * @param $src
      *
-     * @return array|null
+     * @return array
      */
     public function getImageDimensions($src)
     {
-        try {
-            list($width, $height) = getimagesize($src);
-        } catch (\Exception $e) {
-            return null;
-        }
+        list($width, $height) = $this->getImageSize($src);
 
-        return array('width' => $width, 'height' => $height);
+        return ['width' => $width, 'height' => $height];
+    }
+
+    public function setRequestCache(CacheItemPoolInterface $cacheService)
+    {
+        $this->requestCache = $cacheService;
+    }
+
+    /**
+     * @return CacheItemPoolInterface
+     */
+    public function getRequestCache()
+    {
+        return $this->requestCache;
+    }
+
+    private function getImageSize($src)
+    {
+        try {
+            $cache = $this->getRequestCache();
+            if (null === $cache) {
+                return getimagesize($src);
+            }
+
+            $cachedImageSizes = $cache->getItem(md5($src));
+            if (!$cachedImageSizes->isHit()) {
+                $sizes = getimagesize($src);
+
+                $cachedImageSizes->set($sizes);
+                $cache->save($cachedImageSizes);
+            }
+
+            return $cachedImageSizes->get();
+        } catch (\Exception $e) {
+            return [null, null];
+        }
     }
 }

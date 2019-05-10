@@ -6,13 +6,12 @@ use DateTime;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class NodeVersionLockTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
-class QueuedNodeTranslationActionTest extends PHPUnit_Framework_TestCase
+class QueuedNodeTranslationActionTest extends TestCase
 {
     public function testGetSet()
     {

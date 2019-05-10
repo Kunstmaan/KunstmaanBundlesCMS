@@ -4,13 +4,12 @@ namespace Kunstmaan\VotingBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractVoteTest
- * @package Tests\Kunstmaan\TaggingBundle\Entity
  */
-class AbstractVoteTest extends PHPUnit_Framework_TestCase
+class AbstractVoteTest extends TestCase
 {
     public function testGetters()
     {
@@ -35,6 +34,5 @@ class AbstractVoteTest extends PHPUnit_Framework_TestCase
         $object->prePersist();
         $this->assertInstanceOf(DateTime::class, $object->getTimestamp());
         $this->assertEquals(FacebookLike::DEFAULT_VALUE, $object->getValue());
-
     }
 }

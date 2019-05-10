@@ -4,12 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
  * Class KunstmaanAdminExtensionTest
  */
-class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -19,11 +19,8 @@ class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanAdminExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
-        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
-        $this->container->setParameter('kernel.environment', 'staging');
         $this->load([
             'dashboard_route' => true,
             'admin_password' => 'omgchangethis',
@@ -45,5 +42,115 @@ class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_id');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_secret');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.hosted_domains');
+    }
+
+    public function testWebsiteTitleWithParameterSet()
+    {
+        $this->setParameter('websitetitle', 'Mywebsite');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', 'Mywebsite');
+    }
+
+    public function testWebsiteTitleWithParameterAndConfigSet()
+    {
+        $this->setParameter('websitetitle', 'Mywebsite');
+
+        $this->load(['website_title' => 'My real website']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', 'My real website');
+    }
+
+    public function testMultiLanguageWithParameterSet()
+    {
+        $this->setParameter('multilanguage', true);
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', true);
+    }
+
+    public function testMultiLanguageWithParameterAndConfigSet()
+    {
+        $this->setParameter('multilanguage', false);
+
+        $this->load(['multi_language' => true]);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', true);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testMultiLanguageScalarParameter()
+    {
+        $this->setParameter('multilanguage', true);
+
+        $this->load(['multi_language' => 'randomvalue']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', true);
+    }
+
+    public function testRequiredLocalesWithParameterSet()
+    {
+        $this->setParameter('requiredlocales', 'nl|en');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.required_locales', 'nl|en');
+    }
+
+    public function testRequiredLocalesWithParameterAndConfigSet()
+    {
+        $this->setParameter('requiredlocales', 'nl|en');
+
+        $this->load(['required_locales' => 'nl|en|fr']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.required_locales', 'nl|en|fr');
+    }
+
+    public function testDefaultLocaleWithParameterSet()
+    {
+        $this->setParameter('defaultlocale', 'en');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', 'en');
+    }
+
+    public function testDefaultLocaleWithParameterAndConfigSet()
+    {
+        $this->setParameter('defaultlocale', 'en');
+
+        $this->load(['default_locale' => 'nl']);
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', 'nl');
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.multi_language" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.required_locales" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_admin.default_locale" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.
+     */
+    public function testLegacyParameters()
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.website_title', '');
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.multi_language', '');
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.required_locales', '');
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', '');
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        // Some parameters required for the admin extension
+        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
+        $this->container->setParameter('kernel.environment', 'staging');
     }
 }

@@ -20,5 +20,4 @@ interface HiddenFromSitemapInterface
      * @return bool
      */
     public function isChildrenHiddenFromSitemap();
-
 }

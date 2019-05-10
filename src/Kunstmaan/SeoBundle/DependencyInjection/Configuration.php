@@ -13,16 +13,26 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_seo');
+        $treeBuilder = new TreeBuilder('kunstmaan_seo');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_seo');
+        }
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('request_cache')
+                    ->defaultValue('cache.app')
+                    ->info('Provide a psr-6 cache service to cache all external http calls for seo images.')
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

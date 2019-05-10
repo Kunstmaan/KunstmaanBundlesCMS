@@ -3,13 +3,12 @@
 namespace Kunstmaan\SiteMapBundle\Tests\Entity;
 
 use Kunstmaan\SitemapBundle\Entity\SitemapPage;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RobotsTest
- * @package Tests\Kunstmaan\SeoBundle\Entity
  */
-class SiteMapPageTest extends PHPUnit_Framework_TestCase
+class SiteMapPageTest extends TestCase
 {
     public function testGetters()
     {

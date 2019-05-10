@@ -18,12 +18,15 @@
         <option value="endswith" {% if data.comparator is defined and data.comparator == "endswith" %} selected="selected" {% endif %} >
             {{ 'filter.endswith' | trans }}
         </option>
+        <option value="empty" {% if data.comparator is defined and data.comparator == "empty" %} selected="selected" {% endif %} >
+            {{ 'filter.empty' | trans }}
+        </option>
     </select>
 </div>
 
 <div class="form-group">
     <input
-        type="text"
+        type="{% if data.comparator is not defined or data.comparator != "empty" %}text{% else %}hidden{% endif %}"
         name="{{ nameprefix }}value{{ namesuffix }}"
         {% if data.value is defined %}value="{{ data.value }}"{% endif %}
         class="form-control"

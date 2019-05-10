@@ -4,11 +4,12 @@ namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for StringFormSubmissionField
  */
-class BooleanFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
+class BooleanFormSubmissionFieldTest extends TestCase
 {
     public function testSetGetValue()
     {
@@ -20,7 +21,5 @@ class BooleanFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $object->setValue(false);
         $this->assertFalse($object->getValue());
         $this->assertEquals('false', $object->__toString());
-
     }
-
 }

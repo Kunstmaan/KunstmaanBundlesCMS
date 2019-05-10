@@ -2,17 +2,19 @@
 
 namespace {{ namespace }}\Controller;
 
+use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
+
+{% if isV4 %}
 
 /**
- * The admin list controller for {{ entity_class }}
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}", requirements={"_locale"="%requiredlocales%"})
  */
+{% endif %}
 class {{ entity_class }}AdminListController extends AdminListController
 {
     /**
@@ -45,8 +47,7 @@ class {{ entity_class }}AdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_add", methods={"GET", "POST"})
      * @return array
      */
     public function addAction(Request $request)
@@ -59,8 +60,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_edit", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -74,8 +74,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
-     * @Method({"GET"})
+     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view", methods={"GET"})
      *
      * @return array
      */
@@ -89,8 +88,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_delete", methods={"GET", "POST"})
      *
      * @return array
      */
@@ -104,23 +102,21 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "{{ export_extensions }}"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_export")
-     * @Method({"GET", "POST"})
+     * @Route("/export.{_format}", requirements={"_format" = "{{ export_extensions }}"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_export", methods={"GET", "POST"})
      * @return array
      */
     public function exportAction(Request $request, $_format)
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
-
 {% if sortField %}
+
     /**
      * The move up action
      *
      * @param int $id
      *
-     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_move_up")
-     * @Method({"GET"})
+     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_move_up", methods={"GET"})
      *
      * @return array
      */
@@ -134,8 +130,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_move_down")
-     * @Method({"GET"})
+     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_move_down", methods={"GET"})
      *
      * @return array
      */
@@ -144,5 +139,4 @@ class {{ entity_class }}AdminListController extends AdminListController
     return parent::doMoveDownAction($this->getAdminListConfigurator(), $id, $request);
     }
 {% endif %}
-
 }

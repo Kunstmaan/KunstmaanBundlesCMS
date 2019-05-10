@@ -13,17 +13,18 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "sensio/framework-extra-bundle": ">=2.3.4,<4.0.0",
-        "white-october/pagerfanta-bundle": "1.0.*",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/utilities-bundle": "~3.2",
-        "phpoffice/phpexcel": "1.8.*",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "php": "^7.1",
+        "kunstmaan/admin-bundle": "~5.2",
+        "box/spout": "^2.5"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "~2.2.0"
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "phpunit/phpunit": "^7.5",
+        "symfony/phpunit-bridge": "^4.2",
+        "kunstmaan/form-bundle": "^5.2",
+        "kunstmaan/menu-bundle": "^5.2",
+        "kunstmaan/translator-bundle": "^5.2"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -31,7 +32,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

@@ -4,19 +4,16 @@ namespace Kunstmaan\AdminListBundle\Tests\Event;
 
 use DateTime;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AdminListEventTest
- * @package Tests\Kunstmaan\AdminListBundle\Event
  */
-class AdminListEventTest extends PHPUnit_Framework_TestCase
+class AdminListEventTest extends TestCase
 {
-
-
     public function testGetSet()
     {
         $date = new DateTime();
@@ -34,5 +31,4 @@ class AdminListEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Response::class, $event->getResponse());
         $this->assertTrue($event->isPropagationStopped());
     }
-
 }

@@ -27,12 +27,6 @@ kunstmaan_translator:
     managed_locales: ['nl','en','de']
     cache_dir: "%kernel.cache_dir%/translations"
 
-monolog:
-    handlers:
-        main:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
 doctrine:
     dbal:
         default_connection: default

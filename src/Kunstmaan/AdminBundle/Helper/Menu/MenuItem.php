@@ -43,17 +43,22 @@ class MenuItem
     private $routeParams = array();
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $active = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $offline = false;
 
     /**
-     * @var boolean
+     * @var bool
+     */
+    private $hiddenFromNav = false;
+
+    /**
+     * @var bool
      */
     private $folder = false;
 
@@ -68,7 +73,7 @@ class MenuItem
     private $attributes = array();
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $appearInNavigation = true;
 
@@ -209,7 +214,7 @@ class MenuItem
      */
     public function setRoute($route, array $params = array())
     {
-        $this->route       = $route;
+        $this->route = $route;
         $this->routeParams = $params;
 
         return $this;
@@ -274,7 +279,7 @@ class MenuItem
      */
     public function getNavigationChildren()
     {
-        $result   = array();
+        $result = array();
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child->getAppearInNavigation()) {
@@ -292,7 +297,7 @@ class MenuItem
      */
     public function getTopChildren()
     {
-        $result   = array();
+        $result = array();
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child instanceof TopMenuItem) {
@@ -371,6 +376,24 @@ class MenuItem
     public function setOffline($offline)
     {
         $this->offline = $offline;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHiddenFromNav()
+    {
+        return $this->hiddenFromNav;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setHiddenFromNav($hiddenFromNav)
+    {
+        $this->hiddenFromNav = $hiddenFromNav;
 
         return $this;
     }

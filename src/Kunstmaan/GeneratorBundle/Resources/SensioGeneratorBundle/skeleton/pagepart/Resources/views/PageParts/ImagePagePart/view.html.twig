@@ -1,6 +1,6 @@
 {% import _self as buildImage %}
 
-{% macro setFilters(image, altText, type) %}
+{% macro setFilters(image, altText, type, originalWidth) %}
 
     {% set imgUrl = '' %}
 
@@ -14,12 +14,21 @@
         {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
         {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
 
-        <img srcset="{{ srcSet }}"{% if altText %} sizes="100vw" alt="{{ altText }}"{% endif %}/>
+        {#
+            if the container has a max-width, for example 1130px, use:
+            sizes="(min-width: 1130px) 1130px, 100vw"
+        #}
+        <img srcset="{{ srcSet }}" sizes="100vw"{% if altText %} alt="{{ altText }}"{% endif %} width="{{ originalWidth }}"/>
         <noscript>
             <img src="{{ imgUrl_big }}"{% if altText %} alt="{{ altText }}"{% endif %} />
         </noscript>
     {% endif %}
 {% endmacro %}
+
+{% set image %}
+    {% set imageType = resource.media.originalFilename|lower|split('.')|last %}
+    {{ buildImage.setFilters(resource.media.url, resource.altText, imageType, resource.media.metadata.original_width) }}
+{% endset %}
 
 {% if resource.media is not empty %}
     {% if app.request %}
@@ -27,14 +36,13 @@
             {% set imageType = resource.media.originalFilename|lower|split('.')|last %}
 
             {% if resource.link is defined and resource.link != '' %}
-            <a href="{{ resource.link | replace_url }}" {% if resource.openinnewwindow %}target="_blank" rel="noopener"{% endif %}>
-                {% endif %}
-
-                {{ buildImage.setFilters(resource.media.url, resource.altText, imageType) }}
-
-                {% if resource.link is defined and resource.link != '' %}
-            </a>
+                <a href="{{ resource.link | replace_url }}" {% if resource.openinnewwindow %}target="_blank" rel="noopener"{% endif %}>
+                    {{ image }}
+                </a>
+            {% else %}
+                {{ image }}
             {% endif %}
+
             {% if resource.caption %}
                 <figcaption>
                     <p>{{ resource.caption }}</p>

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\SearchBundle;
 
+use Kunstmaan\SearchBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Kunstmaan\SearchBundle\DependencyInjection\Compiler\SearchConfigurationCompilerPass;
 use Kunstmaan\SearchBundle\DependencyInjection\Compiler\SearchProviderCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,5 +19,6 @@ class KunstmaanSearchBundle extends Bundle
 
         $container->addCompilerPass(new SearchConfigurationCompilerPass());
         $container->addCompilerPass(new SearchProviderCompilerPass());
+        $container->addCompilerPass(new DeprecateClassParametersPass());
     }
 }

@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestStructureNode extends StructureNode
@@ -17,6 +17,11 @@ class TestStructureNode extends StructureNode
     public function getPossibleChildTypes()
     {
         return [];
+    }
+
+    public function service(ContainerInterface $container, Request $request, RenderContext $context)
+    {
+        $context['test'] = 'test';
     }
 }
 
@@ -30,9 +35,8 @@ class TestNode extends AbstractPage
 
 /**
  * Class StructureNodeTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
-class StructureNodeTest extends PHPUnit_Framework_TestCase
+class StructureNodeTest extends TestCase
 {
     public function testIsStructureNode()
     {
@@ -60,8 +64,7 @@ class StructureNodeTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetParent()
     {
-        /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class);
+        $entity = $this->createMock(HasNodeInterface::class);
         $node = new TestStructureNode();
         $node->setParent($entity);
         $this->assertInstanceOf(get_class($entity), $node->getParent());
@@ -73,12 +76,16 @@ class StructureNodeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(PageAdminType::class, $node->getDefaultAdminType());
     }
 
+    /**
+     * @group legacy
+     */
     public function testService()
     {
-        // this method does nothing - is it required?
+        $renderContext = new RenderContext();
+
         $node = new TestStructureNode();
-        $node->service(new Container(), new Request(), new RenderContext());
+        $node->service(new Container(), new Request(), $renderContext);
+
+        $this->assertArrayHasKey('test', $renderContext->getArrayCopy());
     }
-
-
 }

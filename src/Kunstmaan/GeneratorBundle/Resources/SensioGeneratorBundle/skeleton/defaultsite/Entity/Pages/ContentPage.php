@@ -109,7 +109,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{{ bundle.getName() }}:main');
+        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main');
     }
 
     /**
@@ -117,7 +117,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
+        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}contentpage'{% if demosite %}, '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}contentpage{% if isV4 %}_{% else %}-{% endif %}with{% if isV4 %}_{% else %}-{% endif %}submenu'{% endif %});
     }
 
     /**
@@ -125,6 +125,6 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:Pages\ContentPage:view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/ContentPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 }

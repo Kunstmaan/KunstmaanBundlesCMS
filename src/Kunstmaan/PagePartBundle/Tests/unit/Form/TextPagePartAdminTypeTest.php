@@ -4,10 +4,10 @@ namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
 use Kunstmaan\PagePartBundle\Tests\unit\Form\PagePartAdminTypeTestCase;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class TextPagePartAdminTypeTest
- * @package Tests\Kunstmaan\PagePartBundle\Form
  */
 class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
 {
@@ -24,14 +24,16 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
 
     public function testBuildForm()
     {
-        $this->object->buildForm($this->builder, array());
-        $this->builder->get('content');
+        $builder = $this->createMock(FormBuilderInterface::class);
+        $builder->expects($this->once())->method('add');
+
+        $this->object->buildForm($builder, array());
     }
 
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
     }
 }

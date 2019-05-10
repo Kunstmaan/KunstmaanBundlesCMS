@@ -3,7 +3,7 @@
 {# Language nav #}
 {% set langs = get_locales() %}
 {% if langs|length > 0 %}
-    <nav role="navigation" class="language-nav">
+    <nav class="language-nav">
         <span class="language-nav__item language-nav__item--current">
             {{ app.request.locale }}
         </span>

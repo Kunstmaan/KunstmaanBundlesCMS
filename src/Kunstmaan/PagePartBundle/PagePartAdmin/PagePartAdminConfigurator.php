@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 /**
@@ -6,7 +7,6 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
  */
 class PagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
 {
-
     /**
      * @var string
      */
@@ -16,7 +16,6 @@ class PagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
      * @var string
      */
     protected $internalName;
-
 
     /**
      * @var string

@@ -21,8 +21,8 @@ class RobotsType extends AbstractType
         $builder->add('robotsTxt', TextareaType::class, array(
             'label' => 'robots.txt',
             'attr' => array(
-                'rows' => 15
-            )
+                'rows' => 15,
+            ),
         ));
     }
 

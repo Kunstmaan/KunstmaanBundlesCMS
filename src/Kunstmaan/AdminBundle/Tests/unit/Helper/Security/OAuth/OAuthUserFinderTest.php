@@ -7,17 +7,17 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinder;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class OAuthUserFinderTest extends PHPUnit_Framework_TestCase
+class OAuthUserFinderTest extends TestCase
 {
     /**
-     * @var OAuthUserFinder $object
+     * @var OAuthUserFinder
      */
     private $object;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em;
 

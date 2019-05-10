@@ -27,7 +27,7 @@ class GenerateFormPagePartsCommand extends KunstmaanGenerateCommand
     {
         $this->setDescription('Generates default form pageparts')
             ->setHelp(
-                <<<EOT
+                <<<'EOT'
 The <info>kuma:generate:form-pageparts</info> command generates the default form pageparts and adds the pageparts configuration.
 
 <info>php bin/console kuma:generate:form-pageparts</info>
@@ -95,7 +95,7 @@ EOT
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('pagepart', $bundleNamespace);
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());

@@ -1,0 +1,39 @@
+{
+  "name": "kunstmaan/multidomain-bundle",
+  "type": "symfony-bundle",
+  "description": "This bundle makes it possible to manage multiple websites from within KunstmaanCMS.",
+  "keywords": [
+    "kunstmaan",
+    "navigation",
+    "subsites",
+    "multidomain"
+  ],
+  "homepage": "https://github.com/Kunstmaan/KunstmaanMultiDomainBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kunstmaan Team",
+      "homepage": "http://www.kunstmaan.be/",
+      "email": "support@kunstmaan.be"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.1",
+    "kunstmaan/adminlist-bundle": "~5.2"
+  },
+  "require-dev": {
+    "matthiasnoback/symfony-config-test": "^4.0",
+    "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+    "symfony/phpunit-bridge": "^4.2",
+    "phpunit/phpunit": "^7.5"
+  },
+  "autoload": {
+    "psr-4": { "Kunstmaan\\MultiDomainBundle\\": "" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "5.2-dev"
+    }
+  }
+}

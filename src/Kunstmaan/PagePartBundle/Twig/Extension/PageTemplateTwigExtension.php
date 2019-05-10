@@ -10,7 +10,6 @@ use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
  */
 class PageTemplateTwigExtension extends \Twig_Extension
 {
-
     /**
      * @var PageTemplateConfigurationService
      */
@@ -88,5 +87,4 @@ class PageTemplateTwigExtension extends \Twig_Extension
     {
         return 'pagetemplate_twig_extension';
     }
-
 }

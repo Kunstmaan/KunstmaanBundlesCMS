@@ -5,18 +5,18 @@ namespace Kunstmaan\AdminBundle\Tests\EventListener;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\PasswordCheckListener;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\Translator;
 
-class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
+class PasswordCheckListenerTest extends TestCase
 {
     public function testListener()
     {
@@ -25,7 +25,7 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $token = $this->createMock(UsernamePasswordToken::class);
         $user = $user = $this->createMock(User::class);
-        $router = $this->createMock(Router::class);
+        $router = $this->createMock(RouterInterface::class);
         $session = $this->createMock(Session::class);
         $flash = $this->createMock(FlashBag::class);
         $trans = $this->createMock(Translator::class);
@@ -44,7 +44,7 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $adminRouteHelper->method('isAdminRoute')->will($this->returnValueMap([
             ['/en/admin/', true],
             ['/en/random', false],
-            ['/en/admin/preview/', false]
+            ['/en/admin/preview/', false],
         ]));
 
         $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);

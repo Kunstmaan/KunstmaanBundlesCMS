@@ -9,7 +9,6 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
  */
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
-
     private $usesExtendedPagePartChooser = false;
 
     /**
@@ -36,9 +35,9 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
      * @param \Twig_Environment $env
-     * @param PagePartAdmin     $ppAdmin    The pagepart admin to render
-     * @param Form              $form       The form
-     * @param array             $parameters Additional variables passed to the template
+     * @param PagePartAdmin     $ppAdmin      The pagepart admin to render
+     * @param Form              $form         The form
+     * @param array             $parameters   Additional variables passed to the template
      * @param string            $templateName
      *
      * @return string The html markup
@@ -62,7 +61,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     /**
      * Get usesExtendedPagePartChooser.
      *
-     * @return usesExtendedPagePartChooser.
+     * @return usesExtendedPagePartChooser
      */
     public function getUsesExtendedPagePartChooser()
     {
@@ -72,7 +71,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     /**
      * Set usesExtendedPagePartChooser.
      *
-     * @param usesExtendedPagePartChooser the value to set.
+     * @param usesExtendedPagePartChooser the value to set
      */
     public function setUsesExtendedPagePartChooser($usesExtendedPagePartChooser)
     {

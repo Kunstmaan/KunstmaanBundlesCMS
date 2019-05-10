@@ -3,34 +3,33 @@
 namespace Tests\Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
-
+use PHPUnit\Framework\TestCase;
 
 /**
  * SlugifierTest
  */
-class SlugifierTest extends \PHPUnit_Framework_TestCase
+class SlugifierTest extends TestCase
 {
-
     /**
      * @var Slugifier
      */
     private $slugifier;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setUp()
     {
-       $this->slugifier = new Slugifier();
+        $this->slugifier = new Slugifier();
     }
+
     /**
-     * @param string $text    The text to slugify
-     * @param string $result  The slug it should generate
+     * @param string $text   The text to slugify
+     * @param string $result The slug it should generate
      *
      * @dataProvider getSlugifyData
      */
-    public function testSlugify($text,  $result)
+    public function testSlugify($text, $result)
     {
         $this->assertEquals($result, $this->slugifier->slugify($text));
     }
@@ -49,12 +48,12 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
             ['à partir d\'aujourd\'hui', 'a-partir-daujourdhui'],
             ['CaPs ShOulD be LoweRCasEd', 'caps-should-be-lowercased'],
             ['áàäåéèëíìïóòöúùüñßæ', 'aaaaeeeiiiooouuunssae'],
-            ['polish-ążśźęćńół', 'polish-azszecnol']
+            ['polish-ążśźęćńół', 'polish-azszecnol'],
         ];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function tearDown()
     {

@@ -1,0 +1,17 @@
+preset: symfony
+risky: false
+
+disabled:
+    - yoda_style
+    - concat_without_spaces
+    - phpdoc_summary
+    - const_separation
+
+finder:
+    exclude:
+        - 'src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle'
+    not-path:
+        - "Tests/_support"
+        - "TranslatorBundle/Tests/app2"
+        - "TranslatorBundle/Tests/app"
+        - "vendor_bower"

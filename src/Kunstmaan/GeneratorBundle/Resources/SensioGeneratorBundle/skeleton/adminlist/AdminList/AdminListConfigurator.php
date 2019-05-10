@@ -4,18 +4,18 @@ namespace {{ namespace }}\AdminList;
 
 use Doctrine\ORM\EntityManager;
 
+use {{ namespace }}\Form\{{ entity_class }}AdminType;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 {% if generate_admin_type %}
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 {% endif %}
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
-use {{ namespace }}\Form\{{ entity_class }}AdminType;
 
 /**
  * The admin list configurator for {{ entity_class }}
  */
-class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator {% if sortField %}implements SortableInterface {% endif %}
+class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator{% if sortField %} implements SortableInterface {% endif %}
 {
     /**
      * @param EntityManager $em        The entity manager
@@ -68,8 +68,8 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         return '{{ entity_class }}';
     }
-
 {% if sortField %}
+
     /**
      * Get sortable field name
      *
@@ -80,5 +80,4 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
         return "{{ sortField }}";
     }
 {% endif %}
-
 }

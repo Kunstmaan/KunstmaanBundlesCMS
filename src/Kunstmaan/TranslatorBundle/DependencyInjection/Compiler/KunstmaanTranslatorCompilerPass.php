@@ -11,9 +11,10 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $loaderRefs = array();
-        $loaderAliases = array();
-        $exporterRefs = array();
+        $loaderRefs = [];
+        $loaderAliases = [];
+        $exporterRefs = [];
+        $loaders = [];
 
         foreach ($container->findTaggedServiceIds('translation.loader', true) as $id => $attributes) {
             $loaderRefs[$id] = new Reference($id);
@@ -36,7 +37,6 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
             //Create custom ServiceLocator to inject in the translator
             $serviceIds = array_merge($loaderRefs, ['request_stack' => new Reference('request_stack')]);
             $serviceLocator = ServiceLocatorTagPass::register($container, $serviceIds);
-
 
             $container->getDefinition('kunstmaan_translator.service.translator.translator')
                 ->replaceArgument(0, $serviceLocator)

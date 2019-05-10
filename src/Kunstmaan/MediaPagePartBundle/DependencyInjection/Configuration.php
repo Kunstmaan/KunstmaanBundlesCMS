@@ -13,12 +13,17 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_media_page_part');
+        $treeBuilder = new TreeBuilder('kunstmaan_media_page_part');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_media_page_part');
+        }
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

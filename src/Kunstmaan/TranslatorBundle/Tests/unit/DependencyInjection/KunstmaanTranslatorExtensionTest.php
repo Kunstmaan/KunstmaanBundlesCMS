@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\TaggingBundle\Tests\DependencyInjection;
+namespace Kunstmaan\TranslatorBundle\Tests\DependencyInjection;
 
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
+class KunstmaanTranslatorExtensionTest extends TestCase
 {
     /**
      * @var KunstmaanTranslatorExtension
@@ -23,7 +23,7 @@ class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
     public function testEnabledByDefault()
     {
         $container = $this->getContainer();
-        $this->extension->load(array( 'kuma_translator' => array('managed_locales' => array('nl'))), $container);
+        $this->extension->load(array('kuma_translator' => array('managed_locales' => array('nl'))), $container);
         $this->assertTrue($container->getParameter('kuma_translator.enabled'));
     }
 
@@ -47,11 +47,12 @@ class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
      */
     private function getContainer()
     {
-        $container = new ContainerBuilder;
-        $container->setParameter('kernel.root_dir', 'src/Kunstmaan/ArticleBundle');
-        $container->setParameter('kernel.bundles', array(new \Kunstmaan\ArticleBundle\KunstmaanArticleBundle()));
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.root_dir', 'src/Kunstmaan/TranslatorBundle');
+        $container->setParameter('kernel.project_dir', 'src/Kunstmaan/TranslatorBundle');
+        $container->setParameter('kernel.bundles', array(new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle()));
         $container->setParameter('kernel.debug', true);
-        $container->setParameter('defaultlocale', 'en');
+        $container->setParameter('kunstmaan_admin.default_locale', 'en');
 
         return $container;
     }

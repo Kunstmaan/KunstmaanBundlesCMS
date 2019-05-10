@@ -3,15 +3,14 @@
 namespace Kunstmaan\RedirectBundle\Tests\Entity;
 
 use Kunstmaan\RedirectBundle\Entity\Redirect;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilder;
 
 /**
  * Class RedirectTest
- * @package Tests\Kunstmaan\RedirectBundle\Entity
  */
-class RedirectTest extends PHPUnit_Framework_TestCase
+class RedirectTest extends TestCase
 {
     /**
      * @var Redirect
@@ -24,7 +23,7 @@ class RedirectTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Redirect;
+        $this->object = new Redirect();
     }
 
     public function testGetSetDomain()

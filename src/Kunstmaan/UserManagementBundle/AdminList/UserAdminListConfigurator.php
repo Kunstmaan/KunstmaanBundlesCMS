@@ -36,6 +36,7 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      * Override path convention (because settings is a virtual admin subtree)
      *
      * @param string $suffix
+     *
      * @return string
      */
     public function getPathByConvention($suffix = null)

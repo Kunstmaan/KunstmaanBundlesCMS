@@ -17,6 +17,7 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
 
     /**
      * @param array $data
+     *
      * @throws MissingOptionsException
      * @throws InvalidOptionsException
      */

@@ -3,13 +3,12 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class LinePagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
-class LinePagePartTest extends PHPUnit_Framework_TestCase
+class LinePagePartTest extends TestCase
 {
     /**
      * @var LinePagePart

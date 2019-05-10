@@ -13,12 +13,17 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kunstmaan_voting');
+        $treeBuilder = new TreeBuilder('kunstmaan_voting');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_voting');
+        }
 
         $rootNode
             ->children()
@@ -31,7 +36,9 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('default_value')
                                 ->defaultValue(1)
                                 ->validate()
-                                    ->ifTrue(function($v){ return !is_numeric($v); })
+                                    ->ifTrue(function ($v) {
+                                        return !is_numeric($v);
+                                    })
                                     ->thenInvalid('Invalid action default value, should be a number.')
                                 ->end()
                             ->end()

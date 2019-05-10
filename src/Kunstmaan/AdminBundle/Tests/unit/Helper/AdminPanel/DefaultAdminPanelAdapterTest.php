@@ -5,15 +5,14 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\AdminPanel;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelAction;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class DefaultAdminPanelAdapterTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\AdminPanel
  */
-class DefaultAdminPanelAdapterTest extends PHPUnit_Framework_TestCase
+class DefaultAdminPanelAdapterTest extends TestCase
 {
     public function testAdminPanelAdapter()
     {

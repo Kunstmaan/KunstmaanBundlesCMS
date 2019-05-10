@@ -31,13 +31,13 @@ services:
     kunstmaan_admin.menu.adaptor.modules:
         class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
         tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor', priority: 200 }
 
     kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
         arguments: ['@security.authorization_checker', "%version_checker.enabled%"]
         tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor', priority: 100 }
 
     kunstmaan_admin.login.listener:
         class: '%kunstmaan_admin.login.listener.class%'
@@ -226,7 +226,7 @@ services:
 
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
-        arguments: ['@request_stack', '%multilanguage%', '%defaultlocale%', '%requiredlocales%']
+        arguments: ['@request_stack', '%kunstmaan_admin.multi_language%', '%kunstmaan_admin.default_locale%', '%kunstmaan_admin.required_locales%']
         public: true
 
     kunstmaan_admin.oauth_authenticator:
@@ -331,3 +331,11 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:exception.html.twig', id: kuma_exception }
+
+    Kunstmaan\AdminBundle\Twig\AdminBundleTwigExtension:
+        arguments:
+            - '%kunstmaan_admin.website_title%'
+            - '%kunstmaan_admin.default_locale%'
+            - '%kunstmaan_admin.required_locales%'
+        tags:
+            - { name: twig.extension }

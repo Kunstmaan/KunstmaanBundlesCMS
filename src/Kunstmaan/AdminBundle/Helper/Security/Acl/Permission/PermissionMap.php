@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Acl\Permission\MaskBuilderInterface;
 use Symfony\Component\Security\Acl\Permission\MaskBuilderRetrievalInterface;
 
@@ -11,22 +10,21 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilderRetrievalInterface;
  */
 class PermissionMap implements PermissionMapInterface, MaskBuilderRetrievalInterface
 {
-
-    const PERMISSION_VIEW       = 'VIEW';
-    const PERMISSION_EDIT       = 'EDIT';
-    const PERMISSION_DELETE     = 'DELETE';
-    const PERMISSION_PUBLISH    = 'PUBLISH';
-    const PERMISSION_UNPUBLISH  = 'UNPUBLISH';
+    const PERMISSION_VIEW = 'VIEW';
+    const PERMISSION_EDIT = 'EDIT';
+    const PERMISSION_DELETE = 'DELETE';
+    const PERMISSION_PUBLISH = 'PUBLISH';
+    const PERMISSION_UNPUBLISH = 'UNPUBLISH';
 
     private $map = array(
-        self::PERMISSION_VIEW    => array(
+        self::PERMISSION_VIEW => array(
             MaskBuilder::MASK_VIEW,
         ),
 
-        self::PERMISSION_EDIT    => array(
+        self::PERMISSION_EDIT => array(
             MaskBuilder::MASK_EDIT,
         ),
-        self::PERMISSION_DELETE  => array(
+        self::PERMISSION_DELETE => array(
             MaskBuilder::MASK_DELETE,
         ),
 

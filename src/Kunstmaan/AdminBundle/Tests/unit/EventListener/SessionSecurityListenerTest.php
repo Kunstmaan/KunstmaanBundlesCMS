@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\EventListener;
 
 use Kunstmaan\AdminBundle\EventListener\SessionSecurityListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class SessionSecurityListenerTest extends PHPUnit_Framework_TestCase
+class SessionSecurityListenerTest extends TestCase
 {
     public function testOnKernelRequest()
     {
@@ -41,7 +41,6 @@ class SessionSecurityListenerTest extends PHPUnit_Framework_TestCase
         $listener->onKernelRequest($event);
     }
 
-
     public function testOnKernelResponse()
     {
         $logger = $this->createMock(LoggerInterface::class);
@@ -67,7 +66,6 @@ class SessionSecurityListenerTest extends PHPUnit_Framework_TestCase
         $event = $this->createMock(FilterResponseEvent::class);
         $listener->onKernelResponse($event);
     }
-
 
     public function testInvalidateSessionWithNoIpSet()
     {

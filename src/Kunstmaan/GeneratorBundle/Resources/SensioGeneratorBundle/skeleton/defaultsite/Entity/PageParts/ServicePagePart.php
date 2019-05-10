@@ -244,7 +244,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:PageParts:ServicePagePart/view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/ServicePagePart{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**

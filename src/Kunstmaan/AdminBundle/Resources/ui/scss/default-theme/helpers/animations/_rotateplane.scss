@@ -2,16 +2,16 @@
    Animations - Rotate Plane
    ========================================================================== */
 
-@include keyframes(rotateplane) {
+@keyframes rotatePlane {
     0% {
-        @include transform(perspective(120px));
+        transform: perspective(120px);
     }
 
     50% {
-        @include transform(perspective(120px) rotateY(180deg));
+        transform: perspective(120px) rotateY(180deg);
     }
 
     100% {
-        @include transform(perspective(120px) rotateY(180deg) rotateX(180deg));
+        transform: perspective(120px) rotateY(180deg) rotateX(180deg);
     }
 }

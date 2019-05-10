@@ -5,12 +5,13 @@ namespace Kunstmaan\FormBundle\Tests\Tests\Entity\PageParts;
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for EmailPagePart
  */
-class EmailPagePartTest extends \PHPUnit_Framework_TestCase
+class EmailPagePartTest extends TestCase
 {
     /**
      * @var EmailPagePart
@@ -23,9 +24,8 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new EmailPagePart;
+        $this->object = new EmailPagePart();
     }
-
 
     public function testSetErrorMessageRequired()
     {
@@ -33,11 +33,10 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $object->setErrorMessageRequired('');
         $this->assertEquals('', $object->getErrorMessageRequired());
 
-        $message = "Some example required message";
+        $message = 'Some example required message';
         $object->setErrorMessageRequired($message);
         $this->assertEquals($message, $object->getErrorMessageRequired());
     }
-
 
     public function testSetErrorMessageInvalid()
     {
@@ -45,11 +44,10 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $object->setErrorMessageInvalid('');
         $this->assertEquals('', $object->getErrorMessageInvalid());
 
-        $message = "Some example invalid message";
+        $message = 'Some example invalid message';
         $object->setErrorMessageInvalid($message);
         $this->assertEquals($message, $object->getErrorMessageInvalid());
     }
-
 
     public function testGetDefaultView()
     {
@@ -57,7 +55,6 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($stringValue);
         $this->assertTrue(is_string($stringValue));
     }
-
 
     public function testAdaptForm()
     {
@@ -81,7 +78,6 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }
-
 
     public function testGetDefaultAdminType()
     {

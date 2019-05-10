@@ -10,17 +10,17 @@ use InvalidArgumentException;
 class PermissionDefinition
 {
     /**
-     * @var string $entity
+     * @var string
      */
     private $entity = null;
 
     /**
-     * @var string $alias
+     * @var string
      */
     private $alias = null;
 
     /**
-     * @var array $permissions
+     * @var array
      */
     private $permissions = array();
 
@@ -37,7 +37,7 @@ class PermissionDefinition
     {
         $this->setPermissions($permissions);
         $this->entity = $entity;
-        $this->alias  = $alias;
+        $this->alias = $alias;
     }
 
     /**
@@ -90,7 +90,7 @@ class PermissionDefinition
     public function setPermissions(array $permissions)
     {
         if (!is_array($permissions) || empty($permissions)) {
-            throw new InvalidArgumentException("You have to provide at least one permission!");
+            throw new InvalidArgumentException('You have to provide at least one permission!');
         }
         $this->permissions = $permissions;
     }
@@ -104,5 +104,4 @@ class PermissionDefinition
     {
         return $this->permissions;
     }
-
 }

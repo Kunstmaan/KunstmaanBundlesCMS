@@ -3,14 +3,13 @@
 namespace Kunstmaan\ArticleBundle\Tests\Form;
 
 use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class AbstractAuthorAdminTypeTest
- * @package Tests\Kunstmaan\ArticleBundle\Entity
  */
-class AbstractAuthorAdminTypeTest extends PHPUnit_Framework_TestCase
+class AbstractAuthorAdminTypeTest extends TestCase
 {
     public function testGettersAndSetters()
     {

@@ -39,6 +39,10 @@ kunstmaanbundles.filter = (function($, window, undefined) {
             $('body').on('change', '.js-filter-select:not(#add-first-filter)', function() {
                 updateOptions($(this));
             });
+
+            $('body').on('change', '.js-filter-options select', function(event) {
+                toggleHiddenInputField($(event.target));
+            });
         }
     };
 
@@ -150,6 +154,19 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         });
 
         kunstmaanbundles.datepicker.init();
+    };
+
+
+
+    toggleHiddenInputField = function(el) {
+        var $el = $(el);
+        $el.parents('.js-filter-line').find('.js-filter-options').find('input:not(.js-unique-filter-id)').each(function() {
+            if($el.val() === "empty") {
+                $(this).addClass('hidden');
+            } else {
+                $(this).removeClass('hidden');
+            }
+        });
     };
 
 

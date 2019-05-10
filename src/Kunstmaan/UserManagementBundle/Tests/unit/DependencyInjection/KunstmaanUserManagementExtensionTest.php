@@ -3,13 +3,13 @@
 namespace Kunstmaan\UserManagementBundle\Tests\DependencyInjection;
 
 use Kunstmaan\UserManagementBundle\DependencyInjection\KunstmaanUserManagementExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanUserManagementExtensionTest
  */
-class KunstmaanUserManagementExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanUserManagementExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -19,12 +19,11 @@ class KunstmaanUserManagementExtensionTest extends AbstractPrependableExtensionT
         return [new KunstmaanUserManagementExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('empty_extension', true);
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('empty_extension', true );
+        $this->assertContainerBuilderHasParameter('empty_extension', true);
     }
 }

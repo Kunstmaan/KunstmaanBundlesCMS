@@ -12,7 +12,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class PageTemplateConfigurationRepository extends EntityRepository
 {
-
     /**
      * @param HasPageTemplateInterface $page
      *
@@ -22,5 +21,4 @@ class PageTemplateConfigurationRepository extends EntityRepository
     {
         return $this->findOneBy(array('pageId' => $page->getId(), 'pageEntityName' => ClassLookup::getClass($page)));
     }
-
 }

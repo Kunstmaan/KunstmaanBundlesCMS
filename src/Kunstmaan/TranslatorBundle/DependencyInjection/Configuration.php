@@ -13,15 +13,20 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kuma_translator');
+        $treeBuilder = new TreeBuilder('kuma_translator');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kuma_translator');
+        }
 
-        $availableStorageEngines = array('orm');
-        $defaultFileFormats = array('yml', 'xliff');
+        $availableStorageEngines = ['orm'];
+        $defaultFileFormats = ['yml', 'yaml', 'xliff'];
 
         $rootNode
             ->children()
@@ -41,7 +46,7 @@ class Configuration implements ConfigurationInterface
 
                 ->scalarNode('cache_dir')
                     ->cannotBeEmpty()
-                    ->defaultValue("%kernel.cache_dir%/translations")
+                    ->defaultValue('%kernel.cache_dir%/translations')
                 ->end()
 
                 ->booleanNode('debug')

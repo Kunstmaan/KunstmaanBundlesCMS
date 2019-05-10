@@ -4,11 +4,12 @@ namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for ChoiceFormSubmissionField
  */
-class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
+class ChoiceFormSubmissionFieldTest extends TestCase
 {
     /**
      * @var ChoiceFormSubmissionField
@@ -21,7 +22,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoiceFormSubmissionField;
+        $this->object = new ChoiceFormSubmissionField();
     }
 
     public function testGetDefaultAdminType()

@@ -3,15 +3,14 @@
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FacebookLikeEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
-class FacebookLikeEventTest extends PHPUnit_Framework_TestCase
+class FacebookLikeEventTest extends TestCase
 {
     public function testGetSet()
     {

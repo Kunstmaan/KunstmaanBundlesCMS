@@ -26,7 +26,7 @@ class MenuCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             'kunstmaan_admin.menubuilder',
             'addAdaptMenu',
-            [ new Reference('kunstmaan_admin.menubuilder'), 0]
+            [new Reference('kunstmaan_admin.menubuilder'), 0]
         );
     }
 }

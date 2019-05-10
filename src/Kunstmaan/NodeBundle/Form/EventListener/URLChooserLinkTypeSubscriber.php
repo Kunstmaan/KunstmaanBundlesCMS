@@ -3,17 +3,15 @@
 namespace Kunstmaan\NodeBundle\Form\EventListener;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
-use Kunstmaan\NodeBundle\Validation\URLValidator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * Class URLChooserLinkTypeSubscriber
- *
- * @package Kunstmaan\NodeBundle\Form\EventListener
  */
 class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
 {
@@ -38,6 +36,7 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
         // Suppress validation
         $event->stopPropagation();
 
+        $constraints = [];
         $attributes['class'] = 'js-change-urlchooser';
 
         $form = $event->getForm()->getParent();
@@ -49,18 +48,26 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
             switch ($linkType) {
                 case URLChooserType::INTERNAL:
                     $attributes['choose_url'] = true;
+
                     break;
                 case URLChooserType::EXTERNAL:
                     $attributes['placeholder'] = 'https://';
+                    $constraints[] = new Url();
+
+                    break;
+                case URLChooserType::EMAIL:
+                    $constraints[] = new Email();
+
                     break;
             }
 
             $form->add('link_url', TextType::class, array(
                 'label' => 'URL',
                 'required' => true,
-                'attr' => $attributes
+                'attr' => $attributes,
+                'constraints' => $constraints,
+                'error_bubbling' => true,
             ));
         }
     }
-
 }

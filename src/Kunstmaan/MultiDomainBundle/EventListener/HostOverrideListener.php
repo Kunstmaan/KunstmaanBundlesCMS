@@ -37,7 +37,7 @@ class HostOverrideListener
      * @param Session                      $session
      * @param TranslatorInterface          $translator
      * @param DomainConfigurationInterface $domainConfiguration
-     * @param AdminRouteHelper $adminRouteHelper
+     * @param AdminRouteHelper             $adminRouteHelper
      */
     public function __construct(
         Session $session,
@@ -45,10 +45,10 @@ class HostOverrideListener
         DomainConfigurationInterface $domainConfiguration,
         AdminRouteHelper $adminRouteHelper
     ) {
-        $this->session             = $session;
-        $this->translator          = $translator;
+        $this->session = $session;
+        $this->translator = $translator;
         $this->domainConfiguration = $domainConfiguration;
-        $this->adminRouteHelper    = $adminRouteHelper;
+        $this->adminRouteHelper = $adminRouteHelper;
     }
 
     /**

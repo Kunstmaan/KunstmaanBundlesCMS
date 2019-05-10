@@ -27,7 +27,7 @@ class ProviderCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addProvider',
-            [ new Reference($svcId), 'someAlias']
+            [new Reference($svcId), 'someAlias']
         );
     }
 }

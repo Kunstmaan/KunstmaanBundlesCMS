@@ -3,14 +3,13 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class DashboardConfigurationTypeTest
- * @package Tests\Kunstmaan\AdminBundle\Form
  */
-class DashboardConfigurationTypeTest extends PHPUnit_Framework_TestCase
+class DashboardConfigurationTypeTest extends TestCase
 {
     public function testMethods()
     {
@@ -22,7 +21,7 @@ class DashboardConfigurationTypeTest extends PHPUnit_Framework_TestCase
             ->method('add')
             ->willReturn(true);
 
-        /** @var FormBuilder $builder */
+        /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
         $this->assertEquals('dashboardconfiguration', $type->getBlockPrefix());

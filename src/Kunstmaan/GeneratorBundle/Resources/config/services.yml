@@ -1,0 +1,58 @@
+services:
+    Kunstmaan\GeneratorBundle\Command\GenerateEntityCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateLayoutCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateDefaultSiteCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateDefaultPagePartsCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateArticleCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GeneratePagePartCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GeneratePageCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateFormPageCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateFormPagePartsCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateSearchPageCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateAdminListCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateAdminTestsCommand:
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\InstallCommand:
+        arguments: ['%kernel.project_dir%']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\Command\GenerateConfigCommand:
+        arguments: ['%kernel.project_dir%']
+        tags:
+            - { name: console.command }

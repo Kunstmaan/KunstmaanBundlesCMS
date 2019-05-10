@@ -14,17 +14,17 @@ class AdminRouteHelper
     protected static $ADMIN_MATCH_REGEX = '/^\/(app_[a-zA-Z]+\.php\/)?([a-zA-Z_-]{2,5}\/)?%s\/(.*)/';
 
     /**
-     * @var string $adminKey
+     * @var string
      */
     protected $adminKey;
 
     /**
-     * @var RequestStack $requestStack
+     * @var RequestStack
      */
     protected $requestStack;
 
     /**
-     * @param string $adminKey
+     * @param string       $adminKey
      * @param RequestStack $requestStack
      */
     public function __construct($adminKey, RequestStack $requestStack)
@@ -59,7 +59,7 @@ class AdminRouteHelper
     /**
      * Checks the current request if it's route is equal to SlugRouter::$SLUG_PREVIEW
      *
-     * @return boolean
+     * @return bool
      */
     protected function matchesPreviewRoute()
     {

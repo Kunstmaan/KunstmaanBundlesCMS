@@ -4,11 +4,12 @@ namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for TextFormSubmissionField
  */
-class TextFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
+class TextFormSubmissionFieldTest extends TestCase
 {
     /**
      * @var TextFormSubmissionField
@@ -21,7 +22,7 @@ class TextFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new TextFormSubmissionField;
+        $this->object = new TextFormSubmissionField();
     }
 
     /**

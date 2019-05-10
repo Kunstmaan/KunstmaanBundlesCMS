@@ -2,23 +2,18 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
-use PHPUnit_Framework_TestCase;
-use Kunstmaan\NodeBundle\Tests\Entity\TestEntity;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class RecopyPageTranslationNodeEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
-class RecopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
+class RecopyPageTranslationNodeEventTest extends TestCase
 {
-
-
     public function testGetSet()
     {
         /** @var Node $node */
@@ -28,8 +23,7 @@ class RecopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
         /** @var NodeVersion $nodeVersion */
         $nodeVersion = $this->createMock(NodeVersion::class);
 
-        /** @var HasNodeInterface $page */
-        $page = Stub::makeEmpty(HasNodeInterface::class);
+        $page = $this->createMock(HasNodeInterface::class);
 
         $event = new RecopyPageTranslationNodeEvent($node, $nodeTranslation, $nodeVersion, $page, $nodeTranslation, $nodeVersion, $page, 'nl');
 
@@ -48,5 +42,4 @@ class RecopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
     }
-
 }

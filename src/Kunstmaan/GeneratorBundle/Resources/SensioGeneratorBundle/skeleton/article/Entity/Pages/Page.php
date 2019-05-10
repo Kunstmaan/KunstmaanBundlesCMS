@@ -50,7 +50,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{{ bundle.getName() }}:{{ entity_class|lower }}main');
+        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main');
     }
 
     /**
@@ -58,12 +58,12 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
+        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page');
     }
 
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}Page{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**

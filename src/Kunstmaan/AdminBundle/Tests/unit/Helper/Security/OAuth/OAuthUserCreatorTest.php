@@ -9,23 +9,23 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinderInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
+class OAuthUserCreatorTest extends TestCase
 {
     /**
-     * @var OAuthUserCreator $object
+     * @var OAuthUserCreator
      */
     private $object;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @var OAuthUserFinderInterface $finder
+     * @var OAuthUserFinderInterface
      */
     private $finder;
 
@@ -117,5 +117,4 @@ class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
         $levels = $method->invoke($object, 'fake@mail.com');
         $this->assertNull($levels);
     }
-
 }

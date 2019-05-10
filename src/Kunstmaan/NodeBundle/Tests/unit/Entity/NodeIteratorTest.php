@@ -5,13 +5,12 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeIterator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class NodeIteratorTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
-class NodeIteratorTest extends PHPUnit_Framework_TestCase
+class NodeIteratorTest extends TestCase
 {
     public function testNodeIterator()
     {
@@ -27,7 +26,7 @@ class NodeIteratorTest extends PHPUnit_Framework_TestCase
         $node1->setChildren(new ArrayCollection([$node4]));
 
         $collection = new ArrayCollection([
-            $node1, $node2, $node3
+            $node1, $node2, $node3,
         ]);
 
         $iterator = new NodeIterator($collection);
@@ -46,7 +45,6 @@ class NodeIteratorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($iterator->valid());
         $this->assertFalse($iterator->hasChildren());
         $iterator->next();
-
 
         $this->assertFalse($iterator->valid());
         $iterator->rewind();

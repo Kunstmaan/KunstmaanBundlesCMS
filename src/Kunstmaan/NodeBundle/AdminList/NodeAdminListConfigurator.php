@@ -42,17 +42,17 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     protected $showAddHomepage;
 
     /**
-     * @var AuthorizationCheckerInterface $authorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     protected $authorizationChecker;
 
     /**
-     * @param EntityManager                $em                  The entity
-     *                                                          manager
-     * @param AclHelper                    $aclHelper           The ACL helper
-     * @param string                       $locale              The current
-     *                                                          locale
-     * @param string                       $permission          The permission
+     * @param EntityManager $em         The entity
+     *                                  manager
+     * @param AclHelper     $aclHelper  The ACL helper
+     * @param string        $locale     The current
+     *                                  locale
+     * @param string        $permission The permission
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker)
     {
@@ -94,14 +94,14 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         }
 
         $addHomepageRoute = array(
-            'path'       => '',
+            'path' => '',
             'attributes' => array(
-                'class'         => 'btn btn-default btn--raise-on-hover',
-                'data-target'   => '#add-homepage-modal',
+                'class' => 'btn btn-default btn--raise-on-hover',
+                'data-target' => '#add-homepage-modal',
                 'data-keyboard' => 'true',
-                'data-toggle'   => 'modal',
-                'type'          => 'button',
-            )
+                'data-toggle' => 'modal',
+                'type' => 'button',
+            ),
         );
 
         $this->addListAction(
@@ -149,8 +149,8 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $node = $item->getNode();
 
         return array(
-            'path'   => 'KunstmaanNodeBundle_nodes_edit',
-            'params' => array('id' => $node->getId())
+            'path' => 'KunstmaanNodeBundle_nodes_edit',
+            'params' => array('id' => $node->getId()),
         );
     }
 

@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanNodeExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -42,6 +42,7 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $container->setParameter('kunstmaan_node.lock_enabled', $config['lock']['enabled']);
 
         $loader->load('services.yml');
+        $loader->load('commands.yml');
     }
 
     public function prepend(ContainerBuilder $container)

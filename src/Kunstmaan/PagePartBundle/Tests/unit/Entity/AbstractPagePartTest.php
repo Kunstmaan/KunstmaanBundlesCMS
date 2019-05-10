@@ -3,7 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 class PagePart extends AbstractPagePart
 {
@@ -14,14 +14,12 @@ class PagePart extends AbstractPagePart
     public function getDefaultAdminType()
     {
     }
-
 }
 
 /**
  * Class AbstractPagePartTest
- * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
-class AbstractPagePartTest extends PHPUnit_Framework_TestCase
+class AbstractPagePartTest extends TestCase
 {
     public function testGetViews()
     {

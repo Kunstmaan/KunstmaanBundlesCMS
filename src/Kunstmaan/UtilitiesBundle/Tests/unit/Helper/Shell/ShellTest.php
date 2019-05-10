@@ -3,12 +3,12 @@
 namespace Tests\Kunstmaan\UtilitiesBundle\Helper\Shell;
 
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ShellTest
- * @package Tests\Kunstmaan\UtilitiesBundle\Helper\Cipher
  */
-class ShellTest extends \PHPUnit_Framework_TestCase
+class ShellTest extends TestCase
 {
     public function testShellFunctionality()
     {

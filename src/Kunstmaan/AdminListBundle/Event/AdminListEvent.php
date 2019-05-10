@@ -31,8 +31,9 @@ class AdminListEvent extends Event
 
     /**
      * AdminListEvent constructor.
-     * @param object $entity
-     * @param Request $request
+     *
+     * @param object             $entity
+     * @param Request            $request
      * @param FormInterface|null $form
      */
     public function __construct($entity, Request $request, FormInterface $form = null)

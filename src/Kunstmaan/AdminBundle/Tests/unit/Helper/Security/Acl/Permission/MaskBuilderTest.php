@@ -4,12 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
 use Exception;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * MaskBuilderTest
  */
-class MaskBuilderTest extends PHPUnit_Framework_TestCase
+class MaskBuilderTest extends TestCase
 {
     /**
      * @param mixed $invalidMask
@@ -90,7 +90,7 @@ class MaskBuilderTest extends PHPUnit_Framework_TestCase
 
     public function testGetPattern()
     {
-        $builder = new MaskBuilder;
+        $builder = new MaskBuilder();
         $this->assertEquals(MaskBuilder::ALL_OFF, $builder->getPattern());
 
         $builder->add('view');
@@ -173,5 +173,4 @@ class MaskBuilderTest extends PHPUnit_Framework_TestCase
 
         $builder->has(null);
     }
-
 }

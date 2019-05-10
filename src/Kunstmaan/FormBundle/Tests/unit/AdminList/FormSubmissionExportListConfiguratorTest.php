@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
-use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
@@ -12,8 +11,8 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Translator;
-use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 
 class FakeFormSubmission extends FormSubmission
 {
@@ -26,7 +25,7 @@ class FakeFormSubmission extends FormSubmission
 /**
  * This test tests the FormPageAdminListConfigurator
  */
-class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCase
+class FormSubmissionExportListConfiguratorTest extends TestCase
 {
     /**
      * @var FormSubmissionExportListConfigurator
@@ -66,7 +65,6 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             $field,
         ]));
 
-
         $submissions = [
             [$sub],
             [new FormSubmission()],
@@ -81,7 +79,7 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->willReturn($submissions);
 
         $methods = [
-            'select', 'from', 'innerJoin', 'andWhere', 'setParameter', 'addOrderBy'
+            'select', 'from', 'innerJoin', 'andWhere', 'setParameter', 'addOrderBy',
         ];
         foreach ($methods as $method) {
             $queryBuilder->expects($this->any())
@@ -93,24 +91,22 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->method('getQuery')
             ->willReturn($query);
 
-        $configuration = Stub::make(Configuration::class, [
-            'getQuoteStrategy' => null
-        ]);
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null,
-            'findBy' => null,
-            'findOneBy' => null,
-        ]);
-        /** @var \Doctrine\ORM\EntityManager $emMock */
-        $emMock = Stub::make(EntityManager::class, [
-            'getRepository' => $repository,
-            'getClassMetaData' => (object)['name' => 'aClass'],
-            'getConfiguration' => $configuration,
-            'clear' => null,
-            'createQueryBuilder' => $queryBuilder,
-            'persist' => null,
-            'flush' => null
-        ]);
+        $configuration = $this->createMock(Configuration::class);
+        $configuration->method('getQuoteStrategy')->willReturn(null);
+
+        $repository = $this->createMock(EntityRepository::class);
+        $repository->method('find')->willReturn(null);
+        $repository->method('findBy')->willReturn(null);
+        $repository->method('findOneBy')->willReturn(null);
+
+        $emMock = $this->createMock(EntityManager::class);
+        $emMock->method('getRepository')->willReturn($repository);
+        $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
+        $emMock->method('getConfiguration')->willReturn($configuration);
+        $emMock->method('clear')->willReturn(null);
+        $emMock->method('createQueryBuilder')->willReturn($queryBuilder);
+        $emMock->method('persist')->willReturn(null);
+        $emMock->method('flush')->willReturn(null);
 
         return $emMock;
     }
@@ -140,6 +136,5 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
         $first = $first[0];
         $this->assertArrayHasKey('check', $first);
         $this->assertEquals('true', $first['check']);
-
     }
 }

@@ -3,16 +3,15 @@
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Form\UserType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class UserTypeTest
- * @package Tests\Kunstmaan\AdminBundle\Form
  */
-class UserTypeTest extends PHPUnit_Framework_TestCase
+class UserTypeTest extends TestCase
 {
     public function testMethods()
     {
@@ -26,7 +25,7 @@ class UserTypeTest extends PHPUnit_Framework_TestCase
             ->method('addAllowedValues')
             ->willReturn(true);
 
-        /** @var OptionsResolver $resolver */
+        /* @var OptionsResolver $resolver */
         $type->configureOptions($resolver);
         $type->setCanEditAllFields(true);
         $this->assertEquals(FormType::class, $type->getParent());
@@ -38,7 +37,7 @@ class UserTypeTest extends PHPUnit_Framework_TestCase
             ->method('add')
             ->willReturn($builder);
 
-        /** @var FormBuilder $builder */
+        /* @var FormBuilder $builder */
         $type->buildForm($builder, [
             'langs' => [
                 'en', 'nl', 'es', 'de', 'fr',

@@ -46,16 +46,16 @@ class AclHelper
     /**
      * Constructor.
      *
-     * @param EntityManager            $em The entity manager
-     * @param TokenStorageInterface    $tokenStorage The security token storage
-     * @param RoleHierarchyInterface   $rh The role hierarchies
+     * @param EntityManager          $em           The entity manager
+     * @param TokenStorageInterface  $tokenStorage The security token storage
+     * @param RoleHierarchyInterface $rh           The role hierarchies
      */
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
     {
-        $this->em              = $em;
-        $this->tokenStorage    = $tokenStorage;
-        $this->quoteStrategy   = $em->getConfiguration()->getQuoteStrategy();
-        $this->roleHierarchy   = $rh;
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
+        $this->quoteStrategy = $em->getConfiguration()->getQuoteStrategy();
+        $this->roleHierarchy = $rh;
     }
 
     /**
@@ -68,7 +68,7 @@ class AclHelper
     protected function cloneQuery(Query $query)
     {
         $aclAppliedQuery = clone $query;
-        $params          = $query->getParameters();
+        $params = $query->getParameters();
         /* @var $param Parameter */
         foreach ($params as $param) {
             $aclAppliedQuery->setParameter($param->getName(), $param->getValue(), $param->getType());
@@ -103,18 +103,18 @@ class AclHelper
         $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclWalker');
 
         $rootEntity = $permissionDef->getEntity();
-        $rootAlias  = $permissionDef->getAlias();
+        $rootAlias = $permissionDef->getAlias();
         // If either alias or entity was not specified - use default from QueryBuilder
         if (empty($rootEntity) || empty($rootAlias)) {
             $rootEntities = $queryBuilder->getRootEntities();
-            $rootAliases  = $queryBuilder->getRootAliases();
-            $rootEntity   = $rootEntities[0];
-            $rootAlias    = $rootAliases[0];
+            $rootAliases = $queryBuilder->getRootAliases();
+            $rootEntity = $rootEntities[0];
+            $rootAlias = $rootAliases[0];
         }
         $query->setHint('acl.root.entity', $rootEntity);
         $query->setHint('acl.extra.query', $this->getPermittedAclIdsSQLForUser($query));
 
-        $classMeta           = $this->em->getClassMetadata($rootEntity);
+        $classMeta = $this->em->getClassMetadata($rootEntity);
         $entityRootTableName = $this->quoteStrategy->getTableName(
             $classMeta,
             $this->em->getConnection()->getDatabasePlatform()
@@ -137,17 +137,17 @@ class AclHelper
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
-        $aclConnection  = $this->em->getConnection();
+        $aclConnection = $this->em->getConnection();
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
-        $mask           = $query->getHint('acl.mask');
-        $rootEntity     = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
+        $mask = $query->getHint('acl.mask');
+        $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         /* @var $token TokenInterface */
-        $token     = $this->tokenStorage->getToken();
+        $token = $this->tokenStorage->getToken();
         $userRoles = array();
         $user = null;
         if (!is_null($token)) {
-            $user      = $token->getUser();
+            $user = $token->getUser();
             $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
         }
 
@@ -161,7 +161,7 @@ class AclHelper
                 $uR[] = '"' . $role->getRole() . '"';
             }
         }
-        $uR       = array_unique($uR);
+        $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (is_object($user)) {
@@ -203,7 +203,7 @@ SELECTQUERY;
     {
         $rootEntity = $permissionDef->getEntity();
         if (empty($rootEntity)) {
-            throw new InvalidArgumentException("You have to provide an entity class name!");
+            throw new InvalidArgumentException('You have to provide an entity class name!');
         }
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
@@ -223,7 +223,7 @@ SELECTQUERY;
         $transform = function ($item) {
             return $item['id'];
         };
-        $result    = array_map($transform, $nativeQuery->getScalarResult());
+        $result = array_map($transform, $nativeQuery->getScalarResult());
 
         return $result;
     }

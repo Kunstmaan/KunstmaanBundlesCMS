@@ -28,7 +28,7 @@ class PopulatorCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'addPopulator',
-            [ new Reference($svcId), 'someAlias']
+            [new Reference($svcId), 'someAlias']
         );
     }
 }

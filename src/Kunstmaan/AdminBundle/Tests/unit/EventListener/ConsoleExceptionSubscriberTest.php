@@ -2,16 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Tests\EventListener;
 
-use Exception;
-use Codeception\Test\Unit;
 use Kunstmaan\AdminBundle\Command\ApplyAclCommand;
 use Kunstmaan\AdminBundle\EventListener\ConsoleExceptionSubscriber;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConsoleExceptionSubscriberTest extends Unit
+class ConsoleExceptionSubscriberTest extends TestCase
 {
     public function testListener()
     {
@@ -21,11 +20,11 @@ class ConsoleExceptionSubscriberTest extends Unit
         }
 
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects($this->once())->method('error')->willReturn(true);
+        $logger->expects($this->once())->method('critical')->willReturn(true);
         $subscriber = new ConsoleExceptionSubscriber($logger);
 
         $command = new ApplyAclCommand();
-        $exception = new Exception();
+        $exception = new \Exception();
 
         $input = $this->createMock(InputInterface::class);
         $output = $this->createMock(OutputInterface::class);

@@ -12,25 +12,25 @@
     </title>
 
     {# Favicons #}
-    {% include '<%= bundle.getName() %>:Layout:_favicons.html.twig' %}
+    {% include '<% if not isV4 %><%= bundle.getName() %>:<% endif %>Layout<% if not isV4 %>:<% else %>/<% endif %>_favicons.html.twig' %}
 
     {# Webfonts #}
-    {% include '<%= bundle.getName() %>:Layout:_webfonts.html.twig' %}
+    {% include '<% if not isV4 %><%= bundle.getName() %>:<% endif %>Layout<% if not isV4 %>:<% else %>/<% endif %>_webfonts.html.twig' %}
 
     {# CSS #}
-    {% include '<%= bundle.getName() %>:Layout:_css.html.twig' %}
+    {% include '<% if not isV4 %><%= bundle.getName() %>:<% endif %>Layout<% if not isV4 %>:<% else %>/<% endif %>_css.html.twig' %}
 </head>
 
 <body class="{% block extra_body_classes %}<% if demosite %>emulate-pulldown<% endif %>{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
 
     {# Google Tagmanager #}
-    {% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
+    {% include '<% if not isV4 %><%= bundle.getName() %>:<% endif %>Layout<% if not isV4 %>:<% else %>/<% endif %>_googletagmanager.html.twig' %}
 
     {# Outdated browser message #}
-    {% include '<%= bundle.getName() %>:Layout:_outdatedbrowser.html.twig' %}
+    {% include '<% if not isV4 %><%= bundle.getName() %>:<% endif %>Layout<% if not isV4 %>:<% else %>/<% endif %>_outdatedbrowser.html.twig' %}
 
     {# Content #}
-    <main role="main">
+    <main>
         {% block content %}{% endblock %}
     </main>
 

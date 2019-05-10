@@ -13,6 +13,7 @@ services:
 
     kunstmaan_utilities.slugifier:
         class: '%kunstmaan_utilities.slugifier.class%'
+        public: true
 
     kunstmaan_utilities.twig.extension:
         class: Kunstmaan\UtilitiesBundle\Twig\UtilitiesTwigExtension

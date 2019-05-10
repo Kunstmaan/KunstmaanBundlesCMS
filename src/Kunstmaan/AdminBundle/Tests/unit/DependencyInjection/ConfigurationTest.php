@@ -4,12 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigurationTest
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
@@ -24,6 +24,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testConfigGeneratesAsExpected()
     {
         $array = [
+            'website_title' => null,
+            'multi_language' => null,
+            'required_locales' => null,
+            'default_locale' => null,
             'admin_password' => 'l3tM31n!',
             'admin_locales' => [],
             'session_security' => [
@@ -51,7 +55,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                 'min_special_characters' => 2,
                 'min_length' => 16,
                 'max_length' => 26,
-            ]
+            ],
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

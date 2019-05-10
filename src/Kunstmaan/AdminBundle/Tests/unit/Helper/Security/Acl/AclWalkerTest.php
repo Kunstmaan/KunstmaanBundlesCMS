@@ -17,13 +17,13 @@ use Doctrine\ORM\Query\AST\RangeVariableDeclaration;
 use Doctrine\ORM\Query\ParserResult;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclWalker;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class AclWalkerTest extends PHPUnit_Framework_TestCase
+class AclWalkerTest extends TestCase
 {
     public function testWalker()
     {
-        $range = new RangeVariableDeclaration('someschema', 's' );
+        $range = new RangeVariableDeclaration('someschema', 's');
         $expr = new PathExpression('int', 'id');
         $indexBy = new IndexBy($expr);
         $from = new FromClause([new IdentificationVariableDeclaration($range, $indexBy, [])]);

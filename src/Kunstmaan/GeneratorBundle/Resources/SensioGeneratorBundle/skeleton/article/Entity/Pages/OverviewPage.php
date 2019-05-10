@@ -27,7 +27,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{{ bundle.getName() }}:{{ entity_class|lower }}main');
+        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main');
     }
 
     /**
@@ -35,7 +35,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:{{ entity_class|lower }}overviewpage');
+        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage');
     }
 
     /**
@@ -53,7 +53,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:Pages/{{ entity_class }}OverviewPage:view.html.twig';
+        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}OverviewPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     /**
@@ -80,6 +80,10 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getControllerAction()
     {
+        {% if isV4 %}
+        return 'App\Controller\{{ entity_class }}ArticleController::serviceAction';
+        {% else %}
         return '{{ bundle.getName() }}:{{ entity_class }}Article:service';
+        {% endif %}
     }
 }

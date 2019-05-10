@@ -51,8 +51,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $domainConfiguration;
 
     /**
-     * @param EntityManagerInterface       $em              The entity manager
-     * @param AclNativeHelper              $aclNativeHelper The acl helper
+     * @param EntityManagerInterface       $em                  The entity manager
+     * @param AclNativeHelper              $aclNativeHelper     The acl helper
      * @param PagesConfiguration           $pagesConfiguration
      * @param DomainConfigurationInterface $domainConfiguration
      */
@@ -196,7 +196,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
         }
 
-        return (is_null($this->activeNodeIds) ? [] : $this->activeNodeIds);
+        return is_null($this->activeNodeIds) ? [] : $this->activeNodeIds;
     }
 
     /**
@@ -226,6 +226,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 ->setLabel($child['title'])
                 ->setParent($parent)
                 ->setOffline(!$child['online'] && !$this->pagesConfiguration->isStructureNode($refName))
+                ->setHiddenFromNav($child['hidden'])
                 ->setFolder($this->pagesConfiguration->isStructureNode($refName))
                 ->setRole('page')
                 ->setWeight($child['weight'])
@@ -234,7 +235,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                         'page' => [
                             'class' => $refName,
                             'children' => $this->pagesConfiguration->getPossibleChildTypes($refName),
-                            'icon' => $this->pagesConfiguration->getIcon($refName),
+                            'icon' => $this->pagesConfiguration->getIcon($refName) ?? $this->pagesConfiguration->isHomePage($refName) ? 'fa fa-home' : null,
                         ],
                     ]
                 );

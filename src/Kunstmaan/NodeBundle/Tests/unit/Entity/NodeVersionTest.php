@@ -2,19 +2,17 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class NodeVersionTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
-class NodeVersionTest extends PHPUnit_Framework_TestCase
+class NodeVersionTest extends TestCase
 {
     /**
      * @var NodeVersion
@@ -65,10 +63,8 @@ class NodeVersionTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetRef()
     {
-        /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class, [
-            'getId' => 1
-        ]);
+        $entity = $this->createMock(HasNodeInterface::class);
+        $entity->method('getId')->willReturn(1);
 
         $em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()

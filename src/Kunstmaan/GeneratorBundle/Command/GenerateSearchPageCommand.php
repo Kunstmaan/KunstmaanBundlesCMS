@@ -4,18 +4,19 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\SearchPageGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a SearchPage based on the KunstmaanNodeSearchBundle
  */
 class GenerateSearchPageCommand extends GenerateDoctrineCommand
 {
-
     /**
      * @see Command
      */
@@ -24,13 +25,13 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
         $this
             ->setDefinition(
                 array(
-                    new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the SearchPage in'),
+                    new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the SearchPage in. This option is deprecated when using this bundle with symfony 4.'),
                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
-                    new InputOption('createpage', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database with a search page')
+                    new InputOption('createpage', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database with a search page'),
                 )
             )
             ->setDescription('Generates a SearchPage based on KunstmaanNodeSearchBundle')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:searchpage</info> command generates a SearchPage using the KunstmaanNodeSearchBundle and KunstmaanSearchBundle
 
 <info>php bin/console kuma:generate:searchpage --namespace=Namespace/NamedBundle</info>
@@ -58,27 +59,31 @@ EOT
         $questionHelper = $this->getQuestionHelper();
         $questionHelper->writeSection($output, 'Search Page Generation');
 
-        GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
-
-        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-        $bundle = strtr($namespace, array('\\' => ''));
-
         $prefix = $input->getOption('prefix');
         $createPage = $input->getOption('createpage');
-        $bundle = $this
-            ->getApplication()
-            ->getKernel()
-            ->getBundle($bundle);
+        if (Kernel::VERSION_ID < 40000) {
+            GeneratorUtils::ensureOptionsProvided($input, ['namespace']);
+
+            $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
+            $bundle = strtr($namespace, ['\\' => '']);
+
+            $bundle = $this
+                ->getApplication()
+                ->getKernel()
+                ->getBundle($bundle);
+        } else {
+            $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
+        }
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
-        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $prefix, $rootDir, $createPage, $output);
 
         $output->writeln(array(
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>')
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', )
         );
 
         if ($createPage) {
@@ -95,6 +100,12 @@ EOT
 
         $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
 
+        if (Kernel::VERSION_ID >= 40000) {
+            $inputAssistant->askForPrefix();
+
+            return;
+        }
+
         $inputAssistant->askForNamespace(array(
             '',
             'This command helps you to generate a SearchPage.',
@@ -108,6 +119,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new SearchPageGenerator($this->getContainer()->get('filesystem'), '/searchpage');
+        return new SearchPageGenerator($this->getContainer()->get('filesystem'), '/searchpage', $this->getContainer()->getParameter('kernel.project_dir'));
     }
 }

@@ -1,8 +1,4 @@
 parameters:
-    kunstmaan_search.hostname: 'localhost'
-    kunstmaan_search.port: 9200
-    kunstmaan_search.username: null
-    kunstmaan_search.password: null
     kunstmaan_search.search_provider: 'Elastica'
     kunstmaan_search.search_configuration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
     kunstmaan_search.search_provider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
@@ -19,10 +15,11 @@ parameters:
 services:
     kunstmaan_search.search:
         class: '%kunstmaan_search.search.class%'
-        arguments: ['@kunstmaan_search.search_provider_chain', '%searchindexprefix%', '%kunstmaan_search.search_provider%']
+        arguments: ['@kunstmaan_search.search_provider_chain', '%kunstmaan_search.index_prefix%', '%kunstmaan_search.search_provider%']
 
     kunstmaan_search.search.factory.analysis:
         class: '%kunstmaan_search.search.factory.analysis.class%'
+        public: true
 
     # Providers
     kunstmaan_search.search_provider_chain:
@@ -65,3 +62,7 @@ services:
             - [setContainer, ['@service_container'] ]
         tags:
             - { name: console.command }
+
+    Twig\Extensions\TextExtension:
+        tags:
+            - { name: twig.extension }

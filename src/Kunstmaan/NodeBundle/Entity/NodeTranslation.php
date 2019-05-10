@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class NodeTranslation extends AbstractEntity
 {
-
     /**
      * @var Node
      *
@@ -245,7 +244,7 @@ class NodeTranslation extends AbstractEntity
      */
     public function getSlugPart()
     {
-        $slug       = "";
+        $slug = '';
         $parentNode = $this->getNode()->getParent();
         if ($parentNode !== null) {
             $nodeTranslation = $parentNode->getNodeTranslation($this->lang, true);
@@ -253,7 +252,7 @@ class NodeTranslation extends AbstractEntity
             if ($nodeTranslation !== null) {
                 $parentSlug = $nodeTranslation->getSlugPart();
                 if (!empty($parentSlug)) {
-                    $slug = rtrim($parentSlug, "/") . "/";
+                    $slug = rtrim($parentSlug, '/') . '/';
                 }
             }
         }
@@ -327,14 +326,14 @@ class NodeTranslation extends AbstractEntity
      */
     public function getNodeVersion($type)
     {
-        if($type == 'public') {
+        if ($type == 'public') {
             return $this->publicNodeVersion;
         }
 
         $nodeVersions = $this->getNodeVersions();
 
         $max = count($nodeVersions);
-        for ($i = $max-1; $i >= 0; $i--) {
+        for ($i = $max - 1; $i >= 0; --$i) {
             /* @var NodeVersion $nodeVersion */
             $nodeVersion = $nodeVersions[$i];
 
@@ -358,7 +357,7 @@ class NodeTranslation extends AbstractEntity
         $this->nodeVersions[] = $nodeVersion;
         $nodeVersion->setNodeTranslation($this);
 
-        if($nodeVersion->getType() == 'public') {
+        if ($nodeVersion->getType() == 'public') {
             $this->publicNodeVersion = $nodeVersion;
         }
 
@@ -379,7 +378,7 @@ class NodeTranslation extends AbstractEntity
      *
      * @return object|null
      */
-    public function getRef(EntityManager $em, $type = "public")
+    public function getRef(EntityManager $em, $type = 'public')
     {
         $nodeVersion = $this->getNodeVersion($type);
         if ($nodeVersion) {

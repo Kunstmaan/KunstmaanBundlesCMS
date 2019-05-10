@@ -7,16 +7,17 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Tests\DoctrineExtensions\Taggable\Fixtures\Article;
 
-class Repo extends AbstractArticleOverviewPageRepository {}
+class Repo extends AbstractArticleOverviewPageRepository
+{
+}
 
 /**
  * Class AbstractArticleOverviewPageRepositoryTest
- * @package Tests\Kunstmaan\ArticleBundle\Repository
  */
-class AbstractArticleOverviewPageRepositoryTest extends PHPUnit_Framework_TestCase
+class AbstractArticleOverviewPageRepositoryTest extends TestCase
 {
     public function testFindActiveOverviewPages()
     {

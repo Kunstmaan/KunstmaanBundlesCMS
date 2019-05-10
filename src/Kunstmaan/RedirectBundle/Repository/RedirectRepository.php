@@ -12,5 +12,4 @@ use Doctrine\ORM\EntityRepository;
  */
 class RedirectRepository extends EntityRepository
 {
-
 }

@@ -4,12 +4,12 @@ namespace Kunstmaan\SeoBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SeoBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigurationTest
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
@@ -23,7 +23,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = ['request_cache' => 'app.cache'];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
     }

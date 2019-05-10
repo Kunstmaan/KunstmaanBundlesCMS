@@ -12,20 +12,26 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "kunstmaan/adminlist-bundle": "~3.2",
-        "kunstmaan/admin-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
-    },
     "minimum-stability": "dev",
+    "require": {
+        "php": "^7.1",
+        "kunstmaan/adminlist-bundle": "^5.2"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
+    },
     "autoload": {
         "psr-4": { "Kunstmaan\\UserManagementBundle\\": "" }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

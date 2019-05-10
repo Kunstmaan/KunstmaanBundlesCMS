@@ -18,7 +18,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      */
     public function getPossibleChildTypes()
     {
-        return array ();
+        return array();
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      */
     public function getDefaultView()
     {
-        return "KunstmaanArticleBundle:AbstractArticleOverviewPage:view.html.twig";
+        return 'KunstmaanArticleBundle:AbstractArticleOverviewPage:view.html.twig';
     }
 
     public function getControllerAction()

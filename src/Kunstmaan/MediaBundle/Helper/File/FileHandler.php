@@ -58,8 +58,9 @@ class FileHandler extends AbstractMediaHandler
 
     /**
      * Constructor
-     * @param int $priority
-     * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
+     *
+     * @param int                              $priority
+     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
      * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
      */
     public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
@@ -107,7 +108,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getName()
     {
-        return "File Handler";
+        return 'File Handler';
     }
 
     /**
@@ -208,16 +209,15 @@ class FileHandler extends AbstractMediaHandler
     {
         $adapter = $this->fileSystem->getAdapter();
 
-        # Remove the file from filesystem
+        // Remove the file from filesystem
         $fileKey = $this->getFilePath($media);
-        if($adapter->exists($fileKey)) {
+        if ($adapter->exists($fileKey)) {
             $adapter->delete($fileKey);
         }
 
-        # Remove the files containing folder if there's nothing left
+        // Remove the files containing folder if there's nothing left
         $folderPath = $this->getFileFolderPath($media);
-        if($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
-
+        if ($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
             $allMyKeys = $adapter->keys();
             $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
 
@@ -230,7 +230,7 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function updateMedia(Media $media)
     {
@@ -269,7 +269,6 @@ class FileHandler extends AbstractMediaHandler
     {
         if ($data instanceof File) {
             /** @var $data File */
-
             $media = new Media();
             if (method_exists($data, 'getClientOriginalName')) {
                 $media->setOriginalFilename($data->getClientOriginalName());
@@ -288,7 +287,7 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getShowTemplate(Media $media)
     {
@@ -303,27 +302,26 @@ class FileHandler extends AbstractMediaHandler
         return array(
             FileHandler::TYPE => array(
                 'type' => FileHandler::TYPE,
-                'name' => 'media.file.add'
-            )
+                'name' => 'media.file.add',
+            ),
         );
     }
 
     /**
-     *
-     *
      * @param Media $media
+     *
      * @return string
      */
     private function getFilePath(Media $media)
     {
-        $filename  = $media->getOriginalFilename();
-        $filename  = str_replace(array('/', '\\', '%'), '', $filename);
+        $filename = $media->getOriginalFilename();
+        $filename = str_replace(array('/', '\\', '%'), '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.implode('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
         }
 
-        $parts    = pathinfo($filename);
+        $parts = pathinfo($filename);
         $filename = $this->slugifier->slugify($parts['filename']);
         if (array_key_exists('extension', $parts)) {
             $filename .= '.'.strtolower($parts['extension']);

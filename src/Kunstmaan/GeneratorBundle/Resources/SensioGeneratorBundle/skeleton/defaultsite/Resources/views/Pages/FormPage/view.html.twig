@@ -1,4 +1,4 @@
-{% extends '<%= bundle.name %>:Page:layout.html.twig' %}
+{% extends '<% if not isV4 %><%= bundle.name %>:<% endif %>Page<% if not isV4 %>:<% else %>/<% endif %>layout.html.twig' %}
 
 {% block content %}
     {{ render_pagetemplate(page) }}

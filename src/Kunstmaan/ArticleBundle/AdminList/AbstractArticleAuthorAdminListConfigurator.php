@@ -23,9 +23,9 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
     protected $permission;
 
     /**
-     * @param EntityManager $em         The entity manager
-     * @param AclHelper     $aclHelper  The ACL helper
-     * @param string        $locale     The current locale
+     * @param EntityManager $em        The entity manager
+     * @param AclHelper     $aclHelper The ACL helper
+     * @param string        $locale    The current locale
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper, $locale)
     {
@@ -40,7 +40,7 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function getBundleName()
     {
-        return "KunstmaanArticleBundle";
+        return 'KunstmaanArticleBundle';
     }
 
     /**
@@ -50,7 +50,7 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function getEntityName()
     {
-        return "AbstractArticleAuthor";
+        return 'AbstractArticleAuthor';
     }
 
     /**
@@ -70,5 +70,4 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
         $this->addField('name', 'article.author.list.header.name', true);
         $this->addField('link', 'article.author.list.header.link', true);
     }
-
 }

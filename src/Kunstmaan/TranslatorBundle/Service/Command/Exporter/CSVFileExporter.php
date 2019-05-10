@@ -34,7 +34,7 @@ class CSVFileExporter implements FileExporterInterface
             $firstTranslation = \array_shift($values);
             $row = [$key, $firstTranslation->getDomain()];
 
-            /** @var Translation $item */
+            /* @var Translation $item */
             foreach ($this->locales as $locale) {
                 $locale = preg_replace_callback('/\_([a-z]+)/', function ($match) {
                     return '_' . strtoupper($match[1]);
@@ -42,7 +42,7 @@ class CSVFileExporter implements FileExporterInterface
 
                 if (isset($translation[$locale])) {
                     $item = $translation[$locale];
-                    $row[] = utf8_decode($item->getText());
+                    $row[] = $item->getText();
                 } else {
                     $row[] = '';
                 }

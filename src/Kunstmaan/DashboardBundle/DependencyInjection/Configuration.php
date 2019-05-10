@@ -13,16 +13,35 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_dashboard');
+        $treeBuilder = new TreeBuilder('kunstmaan_dashboard');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kunstmaan_dashboard');
+        }
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('google_analytics')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('api')->info('More info at https://kunstmaanbundlescms.readthedocs.io/en/latest/cookbook/google-analytics-dashboard/')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('client_id')->defaultNull()->end()
+                                ->scalarNode('client_secret')->defaultNull()->end()
+                                ->scalarNode('dev_key')->defaultNull()->end()
+                                ->scalarNode('app_name')->defaultNull()->end() // NEXT_MAJOR: Set default value to "Kuma Analytics Dashboard"
+                            ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

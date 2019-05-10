@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ControllerActionAdminType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -40,5 +39,4 @@ class ControllerActionAdminType extends AbstractType
     {
         return 'controller_action';
     }
-
 }

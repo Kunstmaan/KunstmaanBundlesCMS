@@ -6,16 +6,13 @@ use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigureActionMenuEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
-class ConfigureActionMenuEventTest extends PHPUnit_Framework_TestCase
+class ConfigureActionMenuEventTest extends TestCase
 {
-
-
     public function testGetSet()
     {
         $factory = new MenuFactory();
@@ -29,5 +26,4 @@ class ConfigureActionMenuEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MenuItem::class, $event->getMenu());
         $this->assertInstanceOf(NodeVersion::class, $event->getActiveNodeVersion());
     }
-
 }

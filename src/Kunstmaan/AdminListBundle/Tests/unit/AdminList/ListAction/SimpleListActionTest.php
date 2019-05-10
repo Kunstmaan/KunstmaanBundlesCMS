@@ -1,14 +1,14 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\ListAction;
 
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ListActionTest
- * @package Tests\Kunstmaan\AdminListBundle\AdminList\ItemAction
  */
-class SimpleListActionTest extends PHPUnit_Framework_TestCase
+class SimpleListActionTest extends TestCase
 {
     public function test__construct()
     {

@@ -1,20 +1,27 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
-use Kunstmaan\TranslatorBundle\Tests\unit\BaseTestCase;
+use Kunstmaan\TranslatorBundle\Tests\unit\WebTestCase;
 use Symfony\Component\Finder\Finder;
 
-class ImporterTest extends BaseTestCase
+class ImporterTest extends WebTestCase
 {
+    private $rootDir;
 
     private $importer;
+
     private $translationRepository;
 
     public function setUp()
     {
-        parent::setUp();
-        $this->importer = $this->getContainer()->get('kunstmaan_translator.service.importer.importer');
-        $this->translationRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation');
+        static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
+        $container = static::$kernel->getContainer();
+        static::loadFixtures($container);
+
+        $this->translationRepository = $container->get('kunstmaan_translator.repository.translation');
+        $this->importer = $container->get('kunstmaan_translator.service.importer.importer');
+        $this->rootDir = $container->getParameter('kernel.root_dir');
     }
 
     /**
@@ -58,22 +65,22 @@ class ImporterTest extends BaseTestCase
 
     public function getNewDomainTestFinder()
     {
-        $finder = new Finder;
+        $finder = new Finder();
 
         $finder->files()
                 ->name('newdomain.de.yml')
-                ->in($this->getContainer()->getParameter('kernel.root_dir').'/Resources/translations/');
+                ->in($this->rootDir.'/Resources/translations/');
 
         return $finder;
     }
 
-     public function getExistingDomainTestFinder()
+    public function getExistingDomainTestFinder()
     {
-        $finder = new Finder;
+        $finder = new Finder();
 
         $finder->files()
                 ->name('messages.en.yml')
-                ->in($this->getContainer()->getParameter('kernel.root_dir').'/Resources/translations/');
+                ->in($this->rootDir.'/Resources/translations/');
 
         return $finder;
     }

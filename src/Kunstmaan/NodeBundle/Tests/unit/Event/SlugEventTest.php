@@ -4,14 +4,13 @@ namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SlugEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
-class SlugEventTest extends PHPUnit_Framework_TestCase
+class SlugEventTest extends TestCase
 {
     public function testGetSet()
     {

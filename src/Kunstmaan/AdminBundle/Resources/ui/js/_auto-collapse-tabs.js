@@ -68,11 +68,11 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
 
         if (tabsHeight >= singleTabHeight) {
 
-            while (tabsHeight > singleTabHeight && children.size() > 0) {
+            while (tabsHeight > singleTabHeight && children.length > 0) {
                 $btnMore.show(); // show immediately when first tab is added to dropdown
 
                 // move tab to dropdown
-                $(children[children.size()-1]).prependTo($dropdown);
+                $(children[children.length - 1]).prependTo($dropdown);
 
                 // recalculate
                 tabsHeight = $tabs.innerHeight();
@@ -82,7 +82,7 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
         } else {
             dropdownItems = $dropdown.children('li');
 
-            while (tabsHeight < singleTabHeight && dropdownItems.size() > 0) {
+            while (tabsHeight < singleTabHeight && dropdownItems.length > 0) {
                 $(dropdownItems[0]).insertBefore($tabs.children('li:last-child'));
 
                 // recalculate
@@ -97,14 +97,14 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
 
         // hide the more button if dropdown is empty
         dropdownItems = $dropdown.children('li');
-        if (dropdownItems.size() <= 0) {
+        if (dropdownItems.length <= 0) {
             $btnMore.hide();
 
         } else {
             $btnMore.show();
 
             // check if active element is in dropdown
-            if ($dropdown.children('li.active').size() > 0) {
+            if ($dropdown.children('li.active').length > 0) {
                 $btnMore.addClass('active');
             } else {
                 $btnMore.removeClass('active');

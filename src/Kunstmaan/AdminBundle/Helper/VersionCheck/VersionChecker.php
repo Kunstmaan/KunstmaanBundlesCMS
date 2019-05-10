@@ -47,7 +47,7 @@ class VersionChecker
      * Constructor
      *
      * @param ContainerInterface $container
-     * @param Cache $cache
+     * @param Cache              $cache
      */
     public function __construct(ContainerInterface $container, Cache $cache)
     {
@@ -70,6 +70,8 @@ class VersionChecker
     }
 
     /**
+     * Check if we recently did a version check, if not do one now.
+     *
      * @throws ParseException
      */
     public function periodicallyCheck()
@@ -85,7 +87,10 @@ class VersionChecker
     }
 
     /**
-     * @return bool|mixed|void
+     * Get the version details via webservice.
+     *
+     * @return mixed a list of bundles if available
+     *
      * @throws ParseException
      */
     public function check()
@@ -95,16 +100,16 @@ class VersionChecker
         }
 
         $host = $this->container->get('request_stack')->getCurrentRequest()->getHttpHost();
-        $console = realpath($this->container->get('kernel')->getRootDir().'/../bin/console');
+        $console = realpath($this->container->get('kernel')->getProjectDir().'/bin/console');
         $installed = filectime($console);
         $bundles = $this->parseComposer();
-        $title = $this->container->getParameter('websitetitle');
+        $title = $this->container->getParameter('kunstmaan_admin.website_title');
 
         $jsonData = json_encode(array(
             'host' => $host,
             'installed' => $installed,
             'bundles' => $bundles,
-            'project' => $title
+            'project' => $title,
         ));
 
         try {
@@ -155,8 +160,7 @@ class VersionChecker
     protected function getLockPath()
     {
         $kernel = $this->container->get('kernel');
-        $dir = $kernel->getRootDir();
-        $rootPath = dirname($dir);
+        $rootPath = $kernel->getProjectDir();
 
         return $rootPath.'/composer.lock';
     }
@@ -165,6 +169,7 @@ class VersionChecker
      * Returns a list of composer packages.
      *
      * @return array
+     *
      * @throws ParseException
      */
     protected function getPackages()
@@ -198,6 +203,7 @@ class VersionChecker
      * Parse the composer.lock file to get the currently used versions of the kunstmaan bundles.
      *
      * @return array
+     *
      * @throws ParseException
      */
     protected function parseComposer()
@@ -208,7 +214,7 @@ class VersionChecker
                 $bundles[] = array(
                     'name' => $package['name'],
                     'version' => $package['version'],
-                    'reference' => $package['source']['reference']
+                    'reference' => $package['source']['reference'],
                 );
             }
         }

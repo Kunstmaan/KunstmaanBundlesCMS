@@ -3,13 +3,13 @@
 namespace Kunstmaan\SitemapBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SitemapBundle\DependencyInjection\KunstmaanSitemapExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanSiteMapExtensionTest
  */
-class KunstmaanSiteMapExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanSiteMapExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -19,12 +19,11 @@ class KunstmaanSiteMapExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanSitemapExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('empty_extension', true);
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('empty_extension', true );
+        $this->assertContainerBuilderHasParameter('empty_extension', true);
     }
 }

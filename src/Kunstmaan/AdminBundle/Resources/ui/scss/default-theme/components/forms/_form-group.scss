@@ -12,8 +12,21 @@
     max-width: 40rem;
 }
 
-.form-group--no-max-width {
+.form-group--no-max-width, .form-group--no-max-width textarea {
     max-width: none;
+}
+
+.form-group--datetime {
+    @media (min-width: $screen-sm-min) {
+
+        > .form-group--date {
+            width: 180px;
+        }
+
+        > .form-group--time {
+            width: 130px;
+        }
+    }
 }
 
 
@@ -24,5 +37,25 @@
 
     .select2-container {
         width: 100% !important;
+    }
+}
+
+
+/* Errors
+   ========================================================================== */
+.form-group.has-error {
+
+    > .select2 {
+
+        .select2-selection {
+            border-color: $state-danger-text;
+        }
+    }
+
+    > .cke {
+
+        .cke_contents {
+            border-color: $state-danger-text;
+        }
     }
 }

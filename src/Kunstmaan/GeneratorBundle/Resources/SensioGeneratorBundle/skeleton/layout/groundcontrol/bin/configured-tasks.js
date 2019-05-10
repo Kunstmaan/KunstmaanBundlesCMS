@@ -16,38 +16,38 @@ import webpackConfigAdminExtra from './config/webpack.config.admin-extra';
 import webpackConfigStyleguide from './config/webpack.config.styleguide';
 
 export const images = createImagesTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/img/**',
-    dest: './web/frontend/img'
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/img/**',
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/img'
 });
 
 export const eslint = createEslintTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/*.js',
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/**/*.js',
     failAfterError: !consoleArguments.continueAfterTestError,
 });
 
 export const stylelint = createStylelintTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss',
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss',
 });
 
 export const clean = createCleanTask({
-    target: ['./web/frontend'],
+    target: ['./{% if isV4 %}public{% else %}web{% endif %}/frontend'],
 });
 
 export const copy = gulp.parallel(
 {% if demosite %}
-    createCopyTask({src: ['./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/files/**'], dest: './web/frontend/files'}),
+    createCopyTask({src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/files/**'], dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/files'}),
 {% endif %}
-    createCopyTask({src: ['./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/fonts/**'], dest: './web/frontend/fonts'})
+    createCopyTask({src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/fonts/**'], dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/fonts'})
 );
 
 export const cssLocal = createCssLocalTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/style.scss',
-    dest: './web/frontend/css',
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/style.scss',
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/css',
 });
 
 export const cssOptimized = createCssOptimizedTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/*.scss',
-    dest: './web/frontend/css',
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/*.scss',
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/css',
 });
 
 export const bundleLocal = createBundleTask({
@@ -72,10 +72,10 @@ export const server = createServerTask({
         ui: false,
         ghostMode: false,
         files: [
-            'web/frontend/css/*.css',
-            'web/frontend/js/*.js',
-            'web/frontend/img/**/*',
-            'web/frontend/styleguide/*.html',
+            '{% if isV4 %}public{% else %}web{% endif %}/frontend/css/*.css',
+            '{% if isV4 %}public{% else %}web{% endif %}/frontend/js/*.js',
+            '{% if isV4 %}public{% else %}web{% endif %}/frontend/img/**/*',
+            '{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide/*.html',
         ],
         open: false,
         reloadOnRestart: true,
@@ -93,10 +93,10 @@ export const server = createServerTask({
 });
 
 export const generateStyleguide = createStyleguideTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss',
-    dest: './web/frontend/styleguide',
-    template: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/templates/layout.hbs',
-    partials: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/templates/partials/*.hbs',
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss',
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide',
+    template: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/templates/layout.hbs',
+    partials: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/templates/partials/*.hbs',
     sortOrder: [
         {
             Index: [
@@ -111,12 +111,12 @@ export const generateStyleguide = createStyleguideTask({
 
 export const copyStyleguide = createCopyTask({
     src: ['./node_modules/prismjs/themes/prism-okaidia.css'],
-    dest: './web/frontend/styleguide/css',
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide/css',
 });
 
 export const cssStyleguideOptimized = createCssOptimizedTask({
-    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/*.scss',
-    dest: './web/frontend/styleguide/css',
+    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/scss/*.scss',
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide/css',
 });
 
 export const bundleStyleguideOptimized = createBundleTask({
@@ -124,21 +124,21 @@ export const bundleStyleguideOptimized = createBundleTask({
 });
 
 export function buildOnChange(done) {
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/!(*.spec).js', bundleLocal);
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/admin/js/**/!(*.spec).js', bundleAdminExtraLocal);
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', cssLocal);
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/img/**', images);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/**/!(*.spec).js', bundleLocal);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/admin/js/**/!(*.spec).js', bundleAdminExtraLocal);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss', cssLocal);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/img/**', images);
     done();
 }
 
 export function testOnChange(done) {
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/*.js', eslint);
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', stylelint);
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', cssLocal);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/**/*.js', eslint);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss', stylelint);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss', cssLocal);
     gulp.watch([
-        './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.md',
-        './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/**/*.hbs',
+        './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.md',
+        './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/**/*.hbs',
     ], generateStyleguide);
-    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/**/*.scss', cssStyleguideOptimized);
+    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/scss/**/*.scss', cssStyleguideOptimized);
     done();
 }

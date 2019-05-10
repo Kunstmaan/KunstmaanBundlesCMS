@@ -14,20 +14,24 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "gedmo/doctrine-extensions": "2.3.*",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/media-bundle": "~3.2",
-        "kunstmaan/utilities-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "php": "^7.1",
+        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/media-bundle": "~5.2",
+        "kunstmaan/node-bundle": "~5.2",
+        "kunstmaan/utilities-bundle": "~5.2"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+        "symfony/phpunit-bridge": "^4.2",
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\SeoBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.2-dev"
         }
     }
 }

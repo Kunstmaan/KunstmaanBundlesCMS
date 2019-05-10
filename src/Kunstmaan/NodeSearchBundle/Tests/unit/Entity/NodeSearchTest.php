@@ -4,13 +4,12 @@ namespace Kunstmaan\NodeSearchBundle\Tests\Entity;
 
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class NodeSearchTest
- * @package Tests\Kunstmaan\NodeSearchBundle\Entity
  */
-class NodeSearchTest extends PHPUnit_Framework_TestCase
+class NodeSearchTest extends TestCase
 {
     public function testGetters()
     {

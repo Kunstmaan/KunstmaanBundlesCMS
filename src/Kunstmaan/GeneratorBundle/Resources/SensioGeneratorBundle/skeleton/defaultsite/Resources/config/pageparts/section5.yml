@@ -1,3 +1,8 @@
-name: "Section 5"
-context: "section5"
-extends: "main"
+{% if isV4 %}
+kunstmaan_page_part:
+    pageparts:
+        section5:
+{% endif %}
+{% if isV4 %}            {%endif%}name: "Section 5"
+{% if isV4 %}            {%endif%}context: "section5"
+{% if isV4 %}            {%endif%}extends: "main"

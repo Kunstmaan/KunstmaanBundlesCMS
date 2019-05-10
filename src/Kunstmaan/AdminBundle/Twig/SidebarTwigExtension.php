@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
 class SidebarTwigExtension extends \Twig_Extension
 {
-
     /**
      * Get Twig functions defined in this extension.
      *
@@ -27,7 +26,6 @@ class SidebarTwigExtension extends \Twig_Extension
      */
     public function hideSidebarInNodeEditAdmin($node)
     {
-        return ($node instanceof HideSidebarInNodeEditInterface);
+        return $node instanceof HideSidebarInNodeEditInterface;
     }
-
 }

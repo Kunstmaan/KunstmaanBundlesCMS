@@ -13,13 +13,12 @@ use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
  */
 class TocPagePart extends AbstractPagePart
 {
-
     /**
      * @return string
      */
     public function __toString()
     {
-        return "TocPagePart";
+        return 'TocPagePart';
     }
 
     /**
@@ -27,7 +26,7 @@ class TocPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:TocPagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:TocPagePart:view.html.twig';
     }
 
     /**

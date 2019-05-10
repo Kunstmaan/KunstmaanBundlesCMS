@@ -2,7 +2,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.urlChooser = (function (window, undefined) {
 
-    var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser;
+    var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser, endsWith;
 
     var itemUrl, itemId, itemTitle, itemThumbPath, replacedUrl, $body = $('body');
 
@@ -159,7 +159,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
             if (itemThumbPath === "") {
                 var $parent = $previewTitle.parent();
-                $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
+                $parent.prepend('<i class="fa fa-file media-thumbnail__icon"></i>');
             }
             else {
                 $previewImg.attr('src', itemThumbPath);
@@ -200,19 +200,27 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
                 $.each($form.serializeArray(), function (i, field) {
                     // Only submit required values.
-                    if (field.name.indexOf('link_type') != -1 || field.name.indexOf('link_url') != -1) {
-                        if (field.name.indexOf($urlChooserName) != -1 && field.name.indexOf('link_url') == -1) {
+                    if (field.name.indexOf('link_type') !== -1 || field.name.indexOf('link_url') !== -1) {
+                        if (field.name.indexOf($urlChooserName) !== -1 && field.name.indexOf('link_url') === -1) {
                             values[field.name] = field.value;
                         }
                     }
                     else {
                         // Main sequence can not be submitted.
-                        if (field.name.indexOf('sequence') == -1) {
-                            values[field.name] = field.value;
+                        if (field.name.indexOf('sequence') === -1) {
+                            // handle array values
+                            if (endsWith(field.name, '[]')) {
+                                if (typeof values[field.name] === 'undefined' || typeof values[field.name] === 'string') {
+                                    values[field.name] = [field.value];
+                                } else {
+                                    values[field.name].push(field.value);
+                                }
+                            } else {
+                                values[field.name] = field.value;
+                            }
                         }
                     }
                 });
-
 
                 // Add the selected li value.
                 values[$(this).data('name')] = $(this).data('value');
@@ -229,6 +237,14 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                 });
             }
         );
+    };
+
+    /* Polyfill String.prototype.endsWith() for IE */
+    endsWith = function(string, search, this_len) {
+        if (this_len === undefined || this_len > string.length) {
+            this_len = string.length;
+        }
+        return string.substring(this_len - search.length, this_len) === search;
     };
 
     return {

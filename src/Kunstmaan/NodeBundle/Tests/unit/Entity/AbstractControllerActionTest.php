@@ -2,11 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractControllerAction;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 class Action extends AbstractControllerAction
 {
@@ -19,10 +18,9 @@ class Action extends AbstractControllerAction
     {
         return false;
     }
-
 }
 
-class AbstractControllerActionTest extends PHPUnit_Framework_TestCase
+class AbstractControllerActionTest extends TestCase
 {
     public function testGetSet()
     {
@@ -30,7 +28,7 @@ class AbstractControllerActionTest extends PHPUnit_Framework_TestCase
         $action->setId(5);
         $action->setTitle('Global Economic Meltdown - The Movie');
         /** @var HasNodeInterface $entity */
-        $entity = Stub::makeEmpty(HasNodeInterface::class);
+        $entity = $this->createMock(HasNodeInterface::class);
         $action->setParent($entity);
 
         $this->assertEquals(5, $action->getId());

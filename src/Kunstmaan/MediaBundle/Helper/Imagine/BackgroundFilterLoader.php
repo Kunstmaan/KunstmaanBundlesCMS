@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Imagine;
 
-use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 
 /**
  * This class can be removed when https://github.com/liip/LiipImagineBundle/issues/640 is fixed.

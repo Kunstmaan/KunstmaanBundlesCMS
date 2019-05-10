@@ -5,13 +5,12 @@ namespace Kunstmaan\ArticleBundle\Tests\AdminList;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractArticleAuthorAdminListConfiguratorTest
- * @package Tests\Kunstmaan\AdminListBundle\AdminList
  */
-class AbstractArticleAuthorAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
+class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
 {
     /**
      * @var AbstractArticleAuthorAdminListConfigurator

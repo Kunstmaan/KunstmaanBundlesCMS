@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
-use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -13,6 +12,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,12 +29,11 @@ use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Kunstmaan\AdminBundle\Tests\Entity\TestEntity;
 
-class PermissionAdminTest extends \PHPUnit_Framework_TestCase
+class PermissionAdminTest extends TestCase
 {
     /**
-     * @var PermissionAdmin $object
+     * @var PermissionAdmin
      */
     protected $object;
 
@@ -54,7 +53,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->getInitializedPermissionAdmin();
 
-        $role = $this->createMock('Symfony\Component\Security\Core\Role\RoleInterface');
+        $role = $this->createMock('Symfony\Component\Security\Core\Role\Role');
         $role->expects($this->once())
             ->method('getRole')
             ->will($this->returnValue('ROLE_TEST'));
@@ -309,7 +308,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $token->expects($this->once())->method('getUser')->willReturn(new User());
         $request = $this->createMock(Request::class);
         $request->request = $this->createMock(Request::class);
-        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' =>  ['VIEW']]], true));
+        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' => ['VIEW']]], true));
 
         $mirror = new ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('tokenStorage');
@@ -387,8 +386,11 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     public function testApplyAclChangesetReturnsNull()
     {
         $object = $this->getInitializedPermissionAdmin();
-        /** @var AbstractEntity $entity */
-        $entity = Stub::makeEmpty(AbstractEntity::class, ['getId' => 666, 'setId' => null, '__toString' => '666']);
+        $entity = $this->createMock(AbstractEntity::class);
+        $entity->method('getId')->willReturn(666);
+        $entity->method('setId')->willReturn(null);
+        $entity->method('__toString')->willReturn('666');
+
         $this->assertNull($object->applyAclChangeset($entity, [], true));
     }
 

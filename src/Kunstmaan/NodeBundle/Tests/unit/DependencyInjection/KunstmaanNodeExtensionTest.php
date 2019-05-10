@@ -3,13 +3,13 @@
 namespace Kunstmaan\NodeBundle\Tests\DependencyInjection;
 
 use Kunstmaan\NodeBundle\DependencyInjection\KunstmaanNodeExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanNodeExtensionTest
  */
-class KunstmaanNodeExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanNodeExtensionTest extends AbstractExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -18,7 +18,6 @@ class KunstmaanNodeExtensionTest extends AbstractPrependableExtensionTestCase
     {
         return [new KunstmaanNodeExtension()];
     }
-
 
     public function testCorrectParametersHaveBeenSet()
     {

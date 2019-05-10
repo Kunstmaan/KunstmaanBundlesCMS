@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
-
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,16 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AbstractArticleOverviewPageController
- * @package Kunstmaan\ArticleBundle\Controller
  */
-class AbstractArticleOverviewPageController extends Controller{
-
+class AbstractArticleOverviewPageController extends Controller
+{
     /**
      * @param Request $request
      */
     public function serviceAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
         $entity = $request->attributes->get('_entity');
         $repository = $entity->getArticleRepository($em);
@@ -36,6 +33,6 @@ class AbstractArticleOverviewPageController extends Controller{
         $pagerfanta->setCurrentPage($pagenumber);
         $context['pagerfanta'] = $pagerfanta;
 
-        $request->attributes->set('_renderContext',$context);
+        $request->attributes->set('_renderContext', $context);
     }
 }

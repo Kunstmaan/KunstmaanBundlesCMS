@@ -4,13 +4,12 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class TopMenuItemTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\Menu
  */
-class TopMenuItemTest extends PHPUnit_Framework_TestCase
+class TopMenuItemTest extends TestCase
 {
     public function testGetSetRole()
     {

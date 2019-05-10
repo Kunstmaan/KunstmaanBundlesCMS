@@ -8,7 +8,6 @@ use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Custom UrlMatcher which holds a copy of all the routes, this is needed for the DynamicRouting
- *
  */
 class DynamicUrlMatcher extends UrlMatcher
 {
@@ -42,5 +41,4 @@ class DynamicUrlMatcher extends UrlMatcher
 
         return false;
     }
-
 }
