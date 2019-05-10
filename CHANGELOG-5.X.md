@@ -1,5 +1,45 @@
 # Changelog
 
+## 5.3.0 / 2019-05-10
+
+* [AllBundles] New Crowdin translations [#2437](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2437) ([@KunstmaanLabs](https://github.com/KunstmaanLabs)) 
+* [AdminListBundle] [TranslatorBundle] Option to filter on empty fields in StringFilterType. [#2434](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2434) ([@Numkil](https://github.com/Numkil)) 
+* [NodeBundle] Allow entity as creator [#2429](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2429) ([@JZuidema](https://github.com/JZuidema)) 
+* [GeneratorBundle] Added fos user config to generator [#2427](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2427) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminBundle] update Bootstrap v3.3 -> v3.4 [#2424](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2424) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminBundle] fix typo in filename of wordcount [#2423](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2423) ([@dbeerten](https://github.com/dbeerten)) 
+* [AllBundles] Replace deprecated getRootDir calls [#2421](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2421) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundle] Separate bundle phpunit config and cleanup old files [#2419](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2419) ([@acrobat](https://github.com/acrobat)) 
+* [Documentation] KunstmaanCMS Installer documentation [#2418](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2418) ([@Devolicious](https://github.com/Devolicious)) 
+* [GeneratorBundle] Fix null check [#2417](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2417) ([@Devolicious](https://github.com/Devolicious)) 
+* [GeneratorBundle] Added config generator + improved install command [#2414](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2414) ([@Devolicious](https://github.com/Devolicious)) 
+* [AllBundles] Added link script for development [#2412](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2412) ([@Devolicious](https://github.com/Devolicious)) 
+* [AllBundles] Fix risky tests [#2407](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2407) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Add character count on CKEditor [#2405](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2405) ([@dbeerten](https://github.com/dbeerten)) 
+* [ConfigBundle] Fixed and replaced not working validation in ConfigCompilerPass [#2403](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2403) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Move test suite back to phpunit setup [#2394](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2394) ([@acrobat](https://github.com/acrobat)) 
+* [FormBundle] New Crowdin translations [#2393](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2393) ([@KunstmaanLabs](https://github.com/KunstmaanLabs)) 
+* [FormBundle] Moved FormMailer dependency to separate listener [#2391](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2391) ([@devigner](https://github.com/devigner)) 
+* [MediaBundle] Add image width and height to media module as done in PP media chooser [#2388](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2388) ([@jordanmoon](https://github.com/jordanmoon)) 
+* [FormBundle] Replace Gemdo urlizer class with behat transliterator [#2384](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2384) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] add editor for raw-html pagepart [#2379](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2379) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminBundle][NodeBundle] Add indicator in TreeView that shows if page is visible [#2377](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2377) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] fixed adminlist generator messages [#2366](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2366) ([@deZinc](https://github.com/deZinc)) 
+* [AdminBundle] added SettingsMenuAdaptorTest [#2364](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2364) ([@deZinc](https://github.com/deZinc)) 
+* [GeneratorBundle] Use nvm use instead of nvm install in buildUI.sh file generator [#2362](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2362) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] added ModulesMenuAdaptorTest [#2360](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2360) ([@deZinc](https://github.com/deZinc)) 
+* [AdminListBundle] Fix getStringValue to allow displaying \DateTimeImmutable objects [#2355](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2355) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] refactored the VersionCheckTest [#2351](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2351) ([@deZinc](https://github.com/deZinc)) 
+* [AdminBundle] refactored the MenuBuilderTest [#2349](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2349) ([@deZinc](https://github.com/deZinc)) 
+* [AdminBundle] refactored the CloneListenerTest [#2348](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2348) ([@deZinc](https://github.com/deZinc)) 
+* [AdminListBundle] Refactored exportlist test [#2347](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2347) ([@deZinc](https://github.com/deZinc)) 
+* [AdminListBundle] refactored the AbstractDoctrineDBALAdminListConfigu… [#2346](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2346) ([@deZinc](https://github.com/deZinc)) 
+* [AdminListBundle] refactored the AbstractDoctrineORMAdminListConfigur… [#2345](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2345) ([@deZinc](https://github.com/deZinc)) 
+* [AdminListBundle] refactored the AbstractAdminListConfiguratorTest [#2344](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2344) ([@deZinc](https://github.com/deZinc)) 
+* [AdminBundle] remove bower dependencies | update fontawesome [#2343](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2343) ([@FVKVN](https://github.com/FVKVN)) 
+* [GeneratorBundle] Kuma install command [#1836](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1836) ([@cv65kr](https://github.com/cv65kr)) 
+
+
 ## 5.2.5 / 2019-05-10
 
 * [FormBundle][GeneratorBundle] Fix constraints on form pageparts  [#2436](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2436) ([@Devolicious](https://github.com/Devolicious)) 
