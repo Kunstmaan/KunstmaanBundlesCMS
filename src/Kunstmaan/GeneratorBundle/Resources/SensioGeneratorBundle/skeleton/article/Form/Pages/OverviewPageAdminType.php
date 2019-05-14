@@ -17,9 +17,9 @@ class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPag
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
 	        'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage'
-        ));
+        ]);
     }
 
     /**

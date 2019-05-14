@@ -5,14 +5,12 @@ namespace {{ namespace }}\Controller;
 use {{ namespace }}\AdminList\{{ entity_class }}CategoryAdminListConfigurator;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticleCategoryAdminListController;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 {% if isV4 %}
 
 /**
- * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/category", requirements={"_locale"="%requiredlocales%"})
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-category", requirements={"_locale"="%requiredlocales%"})
  */
 {% endif %}
 class {{ entity_class }}CategoryAdminListController extends AbstractArticleCategoryAdminListController

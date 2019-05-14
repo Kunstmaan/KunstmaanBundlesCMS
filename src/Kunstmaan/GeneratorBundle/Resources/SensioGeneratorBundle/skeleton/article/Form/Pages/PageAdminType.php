@@ -33,9 +33,9 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
 	        'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}Page'
-        ));
+        ]);
     }
 
 

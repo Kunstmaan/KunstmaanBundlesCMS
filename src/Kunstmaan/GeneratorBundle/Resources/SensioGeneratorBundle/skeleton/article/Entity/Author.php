@@ -4,7 +4,6 @@ namespace {{ namespace }}\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractAuthor;
-use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\{{ entity_class }}AuthorAdminType;
 
 /**

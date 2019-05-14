@@ -1,17 +1,15 @@
 <?php
 namespace {{ namespace }}\Controller;
 
-use Gedmo\Tree\RepositoryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Exception\OutOfRangeCurrentPageException;
 use Pagerfanta\Pagerfanta;
 
-class {{ entity_class }}ArticleController extends Controller
+class {{ entity_class }}ArticleController extends AbstractController
 {
-
     public function serviceAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -36,7 +34,7 @@ class {{ entity_class }}ArticleController extends Controller
             $repo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
             $nt = $repo->getNodeTranslationByLanguageAndInternalName($request->getLocale(), '{{ entity_class|lower }}');
             $url = $nt ? $nt->getUrl() : '';
-            $url = $this->get('router')->generate('_slug', array('url' => $url, '_locale' => $request->getLocale()));
+            $url = $this->generateUrl('_slug', array('url' => $url, '_locale' => $request->getLocale()));
 
             return new RedirectResponse($url);
         }

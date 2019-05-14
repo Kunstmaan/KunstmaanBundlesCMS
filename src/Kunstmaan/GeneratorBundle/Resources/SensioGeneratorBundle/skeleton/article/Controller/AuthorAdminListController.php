@@ -5,15 +5,13 @@ namespace {{ namespace }}\Controller;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticleAuthorAdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\{{ entity_class }}AuthorAdminListConfigurator;
 {% if isV4 %}
 
 /**
- * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/author", requirements={"_locale"="%requiredlocales%"})
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-author", requirements={"_locale"="%requiredlocales%"})
  */
 {% endif %}
 class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorAdminListController
