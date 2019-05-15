@@ -13,6 +13,8 @@ AdminBundle
   If you use this script handler, remove it from your composer.json scripts section.
 * We don't enable the templating component by default anymore. If you use the templating component or the `@templating` service, activate it by enabling the `framework.templating` config in your project.
 * The `\Kunstmaan\AdminBundle\FlashMessages\FlashTypes::ERROR` constant is deprecated and will be removed in 6.0. Use `\Kunstmaan\AdminBundle\FlashMessages\FlashTypes::DANGER` instead.
+* Passing the container as the first argument of "Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder" is deprecated in 5.4 and will be removed in 6.0. Inject the "request_stack" service instead.
+* Passing the container as the first argument of "Kunstmaan\AdminBundle\Helper\UserProcessor" is deprecated in 5.4 and will be removed in 6.0. Inject the "security.token_storage" service instead.
 
 AdminListBundle
 ---------------

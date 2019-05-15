@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * The MenuBuilder will build the top menu and the side menu of the admin interface
@@ -35,14 +36,24 @@ class MenuBuilder
      */
     private $currentCache = null;
 
+    /** @var RequestStack */
+    private $requestStack;
+
     /**
-     * Constructor
-     *
-     * @param ContainerInterface $container The container
+     * @param ContainerInterface|RequestStack $requestStack
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/* RequestStack */ $requestStack)
     {
-        $this->container = $container;
+        if ($requestStack instanceof ContainerInterface) {
+            @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. Inject the "request_stack" service instead.', __CLASS__), E_USER_DEPRECATED);
+
+            $this->container = $requestStack;
+            $this->requestStack = $this->container->get('request_stack');
+
+            return;
+        }
+
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -130,7 +141,7 @@ class MenuBuilder
     {
         if (\is_null($this->topMenuItems)) {
             /* @var $request Request */
-            $request = $this->container->get('request_stack')->getCurrentRequest();
+            $request = $this->requestStack->getCurrentRequest();
             $this->topMenuItems = array();
             foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
@@ -153,7 +164,7 @@ class MenuBuilder
             return $this->getTopChildren();
         }
         /* @var $request Request */
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
         $result = array();
         foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
