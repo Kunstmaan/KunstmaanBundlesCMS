@@ -4,11 +4,14 @@ namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * PagePartTwigExtension
  */
-class PageTemplateTwigExtension extends \Twig_Extension
+class PageTemplateTwigExtension extends AbstractExtension
 {
     /**
      * @var PageTemplateConfigurationService
@@ -26,21 +29,21 @@ class PageTemplateTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_pagetemplate', [$this, 'renderPageTemplate'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
-            new \Twig_SimpleFunction('getpagetemplate', [$this, 'getPageTemplate']),
-            new \Twig_SimpleFunction('render_pagetemplate_configuration', [$this, 'renderPageTemplateConfiguration'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
+            new TwigFunction('render_pagetemplate', [$this, 'renderPageTemplate'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
+            new TwigFunction('getpagetemplate', [$this, 'getPageTemplate']),
+            new TwigFunction('render_pagetemplate_configuration', [$this, 'renderPageTemplateConfiguration'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
         );
     }
 
     /**
-     * @param \Twig_Environment        $env
+     * @param Environment              $env
      * @param array                    $twigContext
      * @param HasPageTemplateInterface $page
      * @param array                    $parameters
      *
      * @return string
      */
-    public function renderPageTemplate(\Twig_Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
+    public function renderPageTemplate(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
     {
         $pageTemplates = $this->templateConfiguration->getPageTemplates($page);
 
@@ -62,14 +65,14 @@ class PageTemplateTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment        $env
+     * @param Environment              $env
      * @param array                    $twigContext
      * @param HasPageTemplateInterface $page
      * @param array                    $parameters
      *
      * @return string
      */
-    public function renderPageTemplateConfiguration(\Twig_Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
+    public function renderPageTemplateConfiguration(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
     {
         $pageTemplates = $this->templateConfiguration->getPageTemplates($page);
 

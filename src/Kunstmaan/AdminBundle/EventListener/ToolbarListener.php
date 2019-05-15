@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
+use Twig\Environment;
 
 class ToolbarListener implements EventSubscriberInterface
 {
@@ -23,7 +24,7 @@ class ToolbarListener implements EventSubscriberInterface
     const ENABLED = 2;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
@@ -75,7 +76,7 @@ class ToolbarListener implements EventSubscriberInterface
     /**
      * ToolbarListener constructor.
      *
-     * @param \Twig_Environment     $twig
+     * @param Environment           $twig
      * @param UrlGeneratorInterface $urlGenerator
      * @param DataCollector         $dataCollector
      * @param AuthorizationChecker  $authorizationChecker
@@ -87,7 +88,7 @@ class ToolbarListener implements EventSubscriberInterface
      * @param string                $adminFirewallName
      */
     public function __construct(
-        \Twig_Environment $twig,
+        Environment $twig,
         UrlGeneratorInterface $urlGenerator,
         DataCollector $dataCollector,
         AuthorizationChecker $authorizationChecker,

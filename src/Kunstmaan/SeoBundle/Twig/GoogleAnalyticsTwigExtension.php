@@ -5,13 +5,16 @@ namespace Kunstmaan\SeoBundle\Twig;
 use Kunstmaan\SeoBundle\Helper\Order;
 use Kunstmaan\SeoBundle\Helper\OrderConverter;
 use Kunstmaan\SeoBundle\Helper\OrderPreparer;
-use Twig_Environment;
-use Twig_Extension;
+use Twig\Environment;
+use Twig\Error\Error;
+use Twig\Error\RuntimeError;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Twig extensions for Google Analytics
  */
-class GoogleAnalyticsTwigExtension extends Twig_Extension
+class GoogleAnalyticsTwigExtension extends AbstractExtension
 {
     protected $accountVarName = 'account_id';
 
@@ -31,12 +34,12 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'google_analytics_initialize',
                 array($this, 'renderInitialize'),
                 array('is_safe' => array('html'), 'needs_environment' => true)
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'google_analytics_track_order',
                 array($this, 'renderECommerceTracking'),
                 array('is_safe' => array('html'), 'needs_environment' => true)
@@ -73,14 +76,14 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      *
      * If the options are not set it'll try and load the account ID from your parameters (google.analytics.account_id)
      *
-     * @param \Twig_Environment $environment
-     * @param array|null        $options     Example: {account_id: 'UA-XXXXX-Y'}
+     * @param Environment $environment
+     * @param array|null  $options     Example: {account_id: 'UA-XXXXX-Y'}
      *
      * @return string the HTML rendered
      *
-     * @throws \Twig_Error_Runtime when the Google Analytics ID is nowhere to be found
+     * @throws Error when the Google Analytics ID is nowhere to be found
      */
-    public function renderInitialize(\Twig_Environment $environment, $options = null)
+    public function renderInitialize(Environment $environment, $options = null)
     {
         if (\is_null($options)) {
             $options = array();
@@ -94,9 +97,7 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         $options = array_merge($defaults, $options);
 
         if (!$this->isOptionSet($options, $this->accountVarName)) {
-            throw new \Twig_Error_Runtime(
-                "The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'."
-            );
+            throw new RuntimeError("The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'.");
         }
 
         $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:init.html.twig');
@@ -105,12 +106,12 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param Twig_Environment $environment
-     * @param Order            $order
+     * @param Environment $environment
+     * @param Order       $order
      *
      * @return string the HTML rendered
      */
-    public function renderECommerceTracking(\Twig_Environment $environment, Order $order)
+    public function renderECommerceTracking(Environment $environment, Order $order)
     {
         $order = $this->orderPreparer->prepare($order);
         $options = $this->orderConverter->convert($order);

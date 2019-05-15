@@ -4,18 +4,20 @@ namespace {{ namespace }}\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class BikesTwigExtension extends \Twig_Extension
+class BikesTwigExtension extends AbstractExtension
 {
     /**
-     * @var EntityManager $em
+     * @var EntityManagerInterface $em
      */
     private $em;
 
     /**
      * Constructor
      *
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
     {
@@ -30,8 +32,8 @@ class BikesTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
 	return array(
-        new \Twig_SimpleFunction('get_bikes', array($this, 'getBikes')),
-        new \Twig_SimpleFunction('get_submenu_items', array($this, 'getSubmenuItems')),
+        new TwigFunction('get_bikes', array($this, 'getBikes')),
+        new TwigFunction('get_submenu_items', array($this, 'getSubmenuItems')),
 	);
     }
 

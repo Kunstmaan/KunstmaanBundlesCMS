@@ -3,8 +3,10 @@
 namespace Kunstmaan\MultiDomainBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MultiDomainTwigExtension extends \Twig_Extension
+class MultiDomainTwigExtension extends AbstractExtension
 {
     /**
      * @var DomainConfigurationInterface
@@ -24,10 +26,10 @@ class MultiDomainTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_multi_domain_hosts', array($this, 'getMultiDomainHosts')),
-            new \Twig_SimpleFunction('get_current_host', array($this, 'getCurrentHost')),
-            new \Twig_SimpleFunction('get_extra_data', array($this, 'getExtraData')),
-            new \Twig_SimpleFunction('get_current_full_host', array($this, 'getCurrentFullHost')),
+            new TwigFunction('get_multi_domain_hosts', array($this, 'getMultiDomainHosts')),
+            new TwigFunction('get_current_host', array($this, 'getCurrentHost')),
+            new TwigFunction('get_extra_data', array($this, 'getExtraData')),
+            new TwigFunction('get_current_full_host', array($this, 'getCurrentFullHost')),
         );
     }
 

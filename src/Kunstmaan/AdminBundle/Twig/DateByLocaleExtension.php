@@ -3,11 +3,13 @@
 namespace Kunstmaan\AdminBundle\Twig;
 
 use IntlDateFormatter as DateFormatter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * DateByLocaleExtension
  */
-class DateByLocaleExtension extends \Twig_Extension
+class DateByLocaleExtension extends AbstractExtension
 {
     /**
      * Get Twig filters defined in this extension.
@@ -17,7 +19,7 @@ class DateByLocaleExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
+            new TwigFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
         );
     }
 
