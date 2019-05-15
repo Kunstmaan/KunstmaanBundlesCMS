@@ -10,6 +10,7 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AdminListTest
@@ -29,7 +30,7 @@ class AdminListTest extends TestCase
         $configurator->method('getExportFields')->willReturn(['c', 'd']);
         $configurator->method('getCount')->willReturn('666');
         $configurator->method('getItems')->willReturn(['item']);
-        $configurator->method('getSortFields')->willReturn(['e', 'f']);
+        $configurator->method('getSortFields')->willReturn(['e']);
         $configurator->method('canEdit')->willReturn(true);
         $configurator->method('canAdd')->willReturn(true);
         $configurator->method('canView')->willReturn(true);
@@ -54,6 +55,18 @@ class AdminListTest extends TestCase
         $configurator->method('getPagerfanta')->willReturn($this->createMock(Pagerfanta::class));
 
         $this->adminList = new AdminList($configurator);
+    }
+
+    public function testConstructor()
+    {
+        $configurator = $this->createMock(AdminListConfiguratorInterface::class);
+
+        $configurator->expects($this->once())->method('buildFilters');
+        $configurator->expects($this->once())->method('buildFields');
+        $configurator->expects($this->once())->method('buildItemActions');
+        $configurator->expects($this->once())->method('buildListActions');
+
+        new AdminList($configurator);
     }
 
     public function testGetConfigurator()
@@ -88,8 +101,19 @@ class AdminListTest extends TestCase
 
     public function testHasSort()
     {
-        $this->assertEquals(2, $this->adminList->hasSort());
+        $this->assertTrue($this->adminList->hasSort());
         $this->assertTrue($this->adminList->hasSort('e'));
+        $this->assertFalse($this->adminList->hasSort('x'));
+    }
+
+    public function testHasSortWithoutColumns()
+    {
+        $configurator = $this->createMock(AdminListConfiguratorInterface::class);
+        $configurator->method('getSortFields')->willReturn([]);
+
+        $adminList = new AdminList($configurator);
+
+        $this->assertFalse($adminList->hasSort());
     }
 
     public function testCanEdit()
@@ -215,5 +239,15 @@ class AdminListTest extends TestCase
     public function testGetPagerfanta()
     {
         $this->assertInstanceOf(Pagerfanta::class, $this->adminList->getPagerfanta());
+    }
+
+    public function testBindRequest()
+    {
+        $configurator = $this->createMock(AdminListConfiguratorInterface::class);
+
+        $configurator->expects($this->once())->method('bindRequest');
+        $adminList = new AdminList($configurator);
+
+        $adminList->bindRequest(new Request());
     }
 }

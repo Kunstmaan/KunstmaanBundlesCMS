@@ -26,6 +26,17 @@ class ExportListTest extends TestCase
         $this->exportList = new ExportList($configurator);
     }
 
+    public function testConstructor()
+    {
+        $configurator = $this->createMock(ExportListConfiguratorInterface::class);
+
+        $configurator->expects($this->once())->method('buildFilters');
+        $configurator->expects($this->once())->method('buildExportFields');
+        $configurator->expects($this->once())->method('buildIterator');
+
+        new ExportList($configurator);
+    }
+
     public function testGetExportColumns()
     {
         $this->assertContains('c', $this->exportList->getExportColumns());

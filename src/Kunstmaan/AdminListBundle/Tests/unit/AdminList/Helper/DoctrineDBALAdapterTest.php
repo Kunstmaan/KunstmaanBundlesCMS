@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Statement;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,67 +13,82 @@ use PHPUnit\Framework\TestCase;
 class DoctrineDBALAdapterTest extends TestCase
 {
     /**
-     * @var DoctrineDBALAdapter
+     * @expectedException \LogicException
+     * @expectedExceptionMessage The $countField must contain a table alias in the string.
      */
-    private $adapter;
-
-    /**
-     * @var QueryBuilder
-     */
-    private $qb;
-
-    public function setUp()
+    public function testConstructorWithIncorrectCountField()
     {
-        $statement = $this->createMock(Statement::class);
-        $statement->expects($this->any())->method('fetchAll')->willReturn([1, 2, 3]);
-        $statement->expects($this->any())->method('fetchColumn')->willReturn([1, 2, 3]);
         $qb = $this->createMock(QueryBuilder::class);
-        $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
-        $qb->expects($this->any())->method('setFirstResult')->willReturn($qb);
-        $qb->expects($this->any())->method('select')->willReturn($qb);
-        $qb->expects($this->any())->method('orderBy')->willReturn($qb);
-        $qb->expects($this->any())->method('execute')->willReturn($statement);
-        $this->qb = $qb;
+        new DoctrineDBALAdapter($qb, 'somefield');
     }
 
     public function testGetQueryBuilder()
     {
-        $this->qb->expects($this->any())->method('getType')->willReturn(QueryBuilder::SELECT);
-        $this->adapter = new DoctrineDBALAdapter($this->qb, 'table.somefield');
-        $this->assertInstanceOf(QueryBuilder::class, $this->adapter->getQueryBuilder());
-    }
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
 
-    public function testConstructorThrowsException()
-    {
-        $this->expectException(LogicException::class);
-        $this->adapter = new DoctrineDBALAdapter($this->qb, 'somefield');
+        $this->assertInstanceOf(QueryBuilder::class, $adapter->getQueryBuilder());
     }
 
     /**
-     * @throws \ReflectionException
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Only SELECT queries can be paginated.
      */
     public function testConstructorThrowsAnotherException()
     {
-        $this->qb->expects($this->any())->method('getType')->willReturn(QueryBuilder::DELETE);
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::DELETE);
 
-        $this->expectException(LogicException::class);
-
-        $this->adapter = new DoctrineDBALAdapter($this->qb, 'table.somefield');
+        new DoctrineDBALAdapter($qb, 'table.somefield');
     }
 
     public function testGetSlice()
     {
-        $this->qb->expects($this->any())->method('getType')->willReturn(QueryBuilder::SELECT);
-        $this->adapter = new DoctrineDBALAdapter($this->qb, 'table.somefield');
-        $result = $this->adapter->getSlice(0, 3);
-        $this->assertCount(3, $result);
+        $length = 3;
+
+        $statement = $this->createMock(Statement::class);
+        $statement->expects($this->once())->method('fetchAll')->willReturn([1, 2, 3]);
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
+        $qb->expects($this->once())->method('setFirstResult')->willReturn($qb);
+        $qb->expects($this->once())->method('setMaxResults')->with($length)->willReturn($qb);
+        $qb->expects($this->once())->method('execute')->willReturn($statement);
+
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
+        $result = $adapter->getSlice(0, $length);
+        $this->assertCount($length, $result);
     }
 
     public function testNbResults()
     {
-        $this->qb->expects($this->any())->method('getType')->willReturn(QueryBuilder::SELECT);
-        $this->adapter = new DoctrineDBALAdapter($this->qb, 'table.somefield');
-        $result = $this->adapter->getNbResults();
+        $statement = $this->createMock(Statement::class);
+        $statement->expects($this->once())->method('fetchColumn')->with(0)->willReturn([1, 2, 3]);
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
+        $qb->expects($this->once())->method('select')->willReturn($qb);
+        $qb->expects($this->once())->method('orderBy')->willReturn($qb);
+        $qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
+        $qb->expects($this->once())->method('execute')->willReturn($statement);
+
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
+        $result = $adapter->getNbResults();
         $this->assertCount(3, $result);
+    }
+
+    public function testNbResultsWithZeroResults()
+    {
+        $statement = $this->createMock(Statement::class);
+        $statement->expects($this->once())->method('fetchColumn')->with(0)->willReturn(null);
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
+        $qb->expects($this->once())->method('select')->willReturn($qb);
+        $qb->expects($this->once())->method('orderBy')->willReturn($qb);
+        $qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
+        $qb->expects($this->once())->method('execute')->willReturn($statement);
+
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
+        $result = $adapter->getNbResults();
+        $this->assertSame(0, $result);
     }
 }
