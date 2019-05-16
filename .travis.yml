@@ -4,6 +4,11 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+addons:
+  apt:
+    packages:
+      - ghostscript
+
 env:
   global:
     - PHPUNIT_FLAGS="-v"
@@ -22,6 +27,7 @@ matrix:
       env: SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
 before_install:
+  - yes | pecl install imagick
   - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
   - echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer selfupdate
