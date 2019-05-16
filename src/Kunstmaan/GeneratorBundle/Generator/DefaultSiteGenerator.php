@@ -392,20 +392,20 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $relPath = '/Resources/views/Error/';
         $this->renderFiles($this->skeletonDir.$relPath, $this->getTemplateDir($this->bundle) . '/Error/', $parameters, true);
 
-        $sourcePath = '/app/TwigBundle/';
-        $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/TwigBundle' : $this->rootDir . '/app/Resources/TwigBundle/';
+        $sourcePath = '/app/TwigBundle/views';
+        $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/TwigBundle' : $this->rootDir . '/app/Resources/TwigBundle/views';
         $this->renderFiles($this->skeletonDir . $sourcePath, $targetPath, $parameters, true);
 
         // Bundle overwrites
 
         if ($this->demosite) {
-            $sourcePath = '/app/KunstmaanSitemapBundle/';
-            $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/KunstmaanSitemapBundle' : $this->rootDir . '/app/Resources/KunstmaanSitemapBundle/';
+            $sourcePath = '/app/KunstmaanSitemapBundle/views';
+            $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/KunstmaanSitemapBundle' : $this->rootDir . '/app/Resources/KunstmaanSitemapBundle/views';
 
             $this->renderFiles($this->skeletonDir . $sourcePath, $targetPath, $parameters, true);
 
-            $sourcePath = '/app/KunstmaanFormBundle/';
-            $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/KunstmaanFormBundle' : $this->rootDir . '/app/Resources/KunstmaanFormBundle/';
+            $sourcePath = '/app/KunstmaanFormBundle/views';
+            $targetPath = $this->isSymfony4() ? $this->rootDir . '/templates/bundles/KunstmaanFormBundle' : $this->rootDir . '/app/Resources/KunstmaanFormBundle/views';
             $this->renderFiles($this->skeletonDir . $sourcePath, $targetPath, $parameters, true);
         }
 
