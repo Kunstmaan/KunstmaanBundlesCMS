@@ -684,7 +684,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         // Remove Styles and Scripts
-        $crawler = new Crawler($text);
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($text);
         $crawler->filter('style, script')->each(function (Crawler $crawler) {
             foreach ($crawler as $node) {
                 $node->parentNode->removeChild($node);
