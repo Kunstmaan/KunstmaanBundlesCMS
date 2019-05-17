@@ -22,7 +22,7 @@ dashboard:
         disable: Doelen uitschakelen
       title: Instellen van uw Google Analytics-dashboard-widget
       content: "Om te leren hoe de Google Analytics widget werkt, verwijzen we u door naar"
-      docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
+      docs_url: "https://kunstmaanbundlescms.readthedocs.io/en/stable/cookbook/google-analytics-dashboard/"
       docs: de documentatie
       redirect: "Dit is uw redirect URI:"
       refresh: "Zodra alles is ingesteld, vernieuw deze pagina."
