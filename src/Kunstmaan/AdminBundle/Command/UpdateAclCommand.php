@@ -28,7 +28,7 @@ class UpdateAclCommand extends ContainerAwareCommand
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var  */
+    /** @var array */
     private $roles;
 
     public function __construct(/*AclManager*/ $aclManager = null, EntityManagerInterface $em = null, PermissionMapInterface $permissionMap = null, array $roles = null)
