@@ -40,7 +40,6 @@ before_install:
   - sed -i -e 's/{% if demosite %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
   - sed -i -e 's/{% endif %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
   - sed -i -e 's/"name".*/"name":"demo",/g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
-  - if [ $(phpenv version-name) = "7.3" ]; then composer remove --dev friendsofphp/php-cs-fixer --no-update; fi; # Temp remove php-cs-fixer as they don't support php 7.3 yet
   - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
 install:
