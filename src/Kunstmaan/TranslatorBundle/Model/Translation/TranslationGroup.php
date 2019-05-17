@@ -31,6 +31,7 @@ class TranslationGroup
     /**
      * The domain name of this group
      *
+     * @var string
      **/
     private $domain;
 

@@ -1,4 +1,4 @@
-php_version: 5.6
+php_version: 7.1
 
 # Configure the failure conditions for your commit status.
 # If at least one of these conditions is verified, the commit status is displayed as failed.
@@ -45,12 +45,11 @@ commit_failure_conditions:
     # - "pr.violations > 150"
 
 # Configure the directories excluded from the analysis. By default,
-# this setting excldues directories commonly used to store tests
+# this setting excluded directories commonly used to store tests
 # and third-party libraries.
 global_exclude_dirs:
     - vendor
     - vendors
-    - vendor_bower
     - test
     - tests
     - Tests
@@ -60,6 +59,7 @@ global_exclude_dirs:
     - DataFixtures
     - var
     - skeleton
+    - src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle
 
 # Configure patterns used by SensioLabsInsight to exclude specific
 # files and directories.

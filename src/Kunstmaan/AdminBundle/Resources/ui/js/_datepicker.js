@@ -67,8 +67,13 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
         if (format.indexOf('HH:mm') === -1) {
             // Drop time if not necessary
-            minDate = minDate.clone().startOf('day'); // clone() because otherwise .startOf() mutates the original moment object
-            defaultDate = defaultDate.clone().startOf('day');
+            if (minDate) {
+                minDate = minDate.clone().startOf('day'); // clone() because otherwise .startOf() mutates the original moment object
+            }
+
+            if (defaultDate) {
+                defaultDate = defaultDate.clone().startOf('day');
+            }
         }
 
         $input.datetimepicker({
