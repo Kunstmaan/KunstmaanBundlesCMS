@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.3.1 / 2019-05-20
+
+* [DashboardBundle] Update incorrect documentation url [#2460](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2460) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Install imagick extension/ghostscript to skip less unit tests [#2459](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2459) ([@acrobat](https://github.com/acrobat)) 
+* [NodeSearchBundle] Correctly index page with utf8 characters [#2458](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2458) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix error in media pp twig view for new pp's [#2457](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2457) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix default generator twig override paths [#2456](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2456) ([@acrobat](https://github.com/acrobat)) 
+* [RedirectBundle] Re-add utf8 route fix [#2454](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2454) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix sensiolabs insight config to make the run start again [#2451](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2451) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundle] Code style fixes [#2450](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2450) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] fix JS error in datepicker [#2446](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2446) ([@dbeerten](https://github.com/dbeerten)) 
+* [NodeBundle][NodeSearchBundle] Fix code style issues [#2445](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2445) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Added missing translation keys [#2443](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2443) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Clean up replace section and add missing packages [#2442](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2442) ([@acrobat](https://github.com/acrobat)) 
+* [FormBundle] Missing symfony/css-selector dependency [#2441](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2441) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.0 / 2019-05-10
 
 * [AllBundles] New Crowdin translations [#2437](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2437) ([@KunstmaanLabs](https://github.com/KunstmaanLabs)) 
