@@ -208,9 +208,11 @@ class WidgetsController extends Controller
                 switch (true) {
                     case !$nodeTranslation->isOnline():
                         $type = 'offline';
+
                         break;
                     case $rootNode->isHiddenFromNav():
                         $type = 'hidden-from-nav';
+
                         break;
                     default:
                         $type = 'default';

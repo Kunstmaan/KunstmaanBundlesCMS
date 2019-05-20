@@ -151,6 +151,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
                     return true;
                 }
             }
+
             return false;
         }
 
