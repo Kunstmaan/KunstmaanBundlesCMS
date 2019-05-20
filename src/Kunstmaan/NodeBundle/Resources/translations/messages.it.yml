@@ -47,6 +47,9 @@ kuma_node:
     online_public.raw: Online / Public version
     offline.raw: Offline
     "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
+  error:
+    title: 'Error'
+    validation: 'The form has not been saved because there are validation errors'
   admin:
     publish:
       flash:
