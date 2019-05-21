@@ -18,7 +18,7 @@ class ClassLookup
      */
     public static function getClass($object)
     {
-        return ($object instanceof Proxy) ? get_parent_class($object) : get_class($object);
+        return ($object instanceof Proxy) ? get_parent_class($object) : \get_class($object);
     }
 
     /**
@@ -30,7 +30,7 @@ class ClassLookup
      */
     public static function getClassName($reference)
     {
-        $reference = is_string($reference) ? $reference : ClassLookup::getClass($reference);
+        $reference = \is_string($reference) ? $reference : self::getClass($reference);
         $className = explode('\\', $reference);
 
         return array_pop($className);
