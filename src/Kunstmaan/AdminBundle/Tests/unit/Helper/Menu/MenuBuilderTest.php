@@ -154,8 +154,6 @@ class MenuBuilderTest extends TestCase
 
         $this->container->expects($this->any())->method('get')->willReturn($stack);
 
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
-
         /** @var MenuAdaptorInterface $menuAdaptorInterfaceMock */
         $menuAdaptorInterfaceMock = $this->createMock(MenuAdaptorInterface::class);
         $menuAdaptorInterfaceMock

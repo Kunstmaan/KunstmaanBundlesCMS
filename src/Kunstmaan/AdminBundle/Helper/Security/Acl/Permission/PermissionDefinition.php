@@ -89,7 +89,7 @@ class PermissionDefinition
      */
     public function setPermissions(array $permissions)
     {
-        if (!is_array($permissions) || empty($permissions)) {
+        if (!\is_array($permissions) || empty($permissions)) {
             throw new InvalidArgumentException('You have to provide at least one permission!');
         }
         $this->permissions = $permissions;

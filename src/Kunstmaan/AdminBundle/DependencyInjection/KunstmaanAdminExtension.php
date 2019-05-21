@@ -37,10 +37,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (array_key_exists('dashboard_route', $config)) {
+        if (\array_key_exists('dashboard_route', $config)) {
             $container->setParameter('kunstmaan_admin.dashboard_route', $config['dashboard_route']);
         }
-        if (array_key_exists('admin_password', $config)) {
+        if (\array_key_exists('admin_password', $config)) {
             $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
         }
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
@@ -78,7 +78,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $loader->load('console_listener.yml');
         }
 
-        if (0 !== count($config['menu_items'])) {
+        if (0 !== \count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
 
@@ -121,7 +121,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $monologConfig['handlers']['main']['level'] = 'debug';
         $container->prependExtensionConfig('monolog', $monologConfig);
 
-        $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
+        $twigConfig['paths'][] = ['value' => \dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 
         // NEXT_MAJOR: Remove templating dependency

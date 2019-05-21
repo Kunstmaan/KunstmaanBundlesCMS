@@ -269,7 +269,7 @@ EOT
 
                 // Validate that the chosen group options exist in the available groups
                 $groupNames = array_unique(explode(',', $groupsInput));
-                if (count(array_intersect_key(array_flip($groupNames), $this->groups)) !== count($groupNames)) {
+                if (\count(array_intersect_key(array_flip($groupNames), $this->groups)) !== \count($groupNames)) {
                     throw new InvalidArgumentException('You have chosen non existing group(s)');
                 }
 

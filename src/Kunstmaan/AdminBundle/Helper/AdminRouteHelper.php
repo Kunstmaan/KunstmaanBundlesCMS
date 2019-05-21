@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Helper;
 
 use Kunstmaan\NodeBundle\Router\SlugRouter;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -49,7 +48,7 @@ class AdminRouteHelper
         preg_match(sprintf(self::$ADMIN_MATCH_REGEX, $this->adminKey), $url, $matches);
 
         // Check if path is part of admin area
-        if (count($matches) === 0) {
+        if (\count($matches) === 0) {
             return false;
         }
 

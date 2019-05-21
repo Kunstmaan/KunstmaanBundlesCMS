@@ -18,7 +18,7 @@ class UserRepository extends EntityRepository
      */
     public function getUsersByRole($role)
     {
-        if (is_array($role)) {
+        if (\is_array($role)) {
             $roles = $role;
         } else {
             $roles = array($role);

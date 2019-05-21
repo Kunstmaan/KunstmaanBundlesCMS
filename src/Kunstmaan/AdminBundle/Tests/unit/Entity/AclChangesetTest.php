@@ -61,7 +61,7 @@ class AclChangesetTest extends TestCase
 
         $this->object->setRef($entity);
         $this->assertEquals(1, $this->object->getRefId());
-        $this->assertEquals(get_class($entity), $this->object->getRefEntityName());
+        $this->assertEquals(\get_class($entity), $this->object->getRefEntityName());
     }
 
     public function testSetAndGetStatus()

@@ -57,7 +57,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     public function getHost()
     {
         $request = $this->getMasterRequest();
-        $host = is_null($request) ? '' : $request->getHost();
+        $host = \is_null($request) ? '' : $request->getHost();
 
         return $host;
     }

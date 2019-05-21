@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminBundle\Toolbar;
 use Doctrine\Common\Cache\Cache;
 use Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
-use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +20,7 @@ class BundleVersionDataCollector extends AbstractDataCollector
     {
         $this->versionChecker = $versionChecker;
 
-        if (func_num_args() > 2) {
+        if (\func_num_args() > 2) {
             @trigger_error(sprintf('Passing the "logger" service as the second argument in "%s" is deprecated in KunstmaanAdminBundle 5.1 and will be removed in KunstmaanAdminBundle 6.0. Remove the "logger" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
 
             $this->cache = func_get_arg(2);

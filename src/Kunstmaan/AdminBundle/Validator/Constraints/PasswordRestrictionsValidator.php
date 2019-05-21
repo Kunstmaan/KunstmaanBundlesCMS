@@ -96,7 +96,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
      */
     private function validateMinLength($value)
     {
-        if (strlen($value) < $this->minLength) {
+        if (\strlen($value) < $this->minLength) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MIN_LENGTH)
                 ->setParameter('{{ min_length }}', $this->minLength)
                 ->setCode(PasswordRestrictions::INVALID_MIN_LENGTH_ERROR)
@@ -109,7 +109,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
      */
     private function validateMaxLength($value)
     {
-        if (strlen($value) > $this->maxLength) {
+        if (\strlen($value) > $this->maxLength) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MAX_LENGTH)
                 ->setParameter('{{ max_length }}', $this->maxLength)
                 ->setCode(PasswordRestrictions::INVALID_MAX_LENGTH_ERROR)

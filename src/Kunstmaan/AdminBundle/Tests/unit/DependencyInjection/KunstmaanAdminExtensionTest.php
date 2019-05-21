@@ -37,7 +37,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         ]);
 
         $this->assertContainerBuilderHasParameter('version_checker.url', 'https://bundles.kunstmaan.be/version-check');
-        $this->assertContainerBuilderHasParameter('version_checker.timeframe', (60 * 60 * 24));
+        $this->assertContainerBuilderHasParameter('version_checker.timeframe', 60 * 60 * 24);
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_locales');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_admin_locale');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.session_security.ip_check');

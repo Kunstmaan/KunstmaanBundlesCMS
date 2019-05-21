@@ -56,7 +56,7 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
     {
         $message = sprintf(
             '%s: %s (uncaught error) at %s line %s while running console command `%s`',
-            get_class($error),
+            \get_class($error),
             $error->getMessage(),
             $error->getFile(),
             $error->getLine(),
