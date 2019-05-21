@@ -13,17 +13,17 @@ class Filter
     /**
      * @var string
      */
-    protected $columnName = null;
+    protected $columnName;
 
     /**
      * @var array
      */
-    protected $filterDefinition = null;
+    protected $filterDefinition;
 
     /**
      * @var string
      */
-    protected $uniqueId = null;
+    protected $uniqueId;
 
     /**
      * @var array

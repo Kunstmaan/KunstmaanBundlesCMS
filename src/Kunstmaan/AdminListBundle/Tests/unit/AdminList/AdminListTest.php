@@ -100,8 +100,7 @@ class AdminListTest extends TestCase
 
     public function testCanAdd()
     {
-        $item = new \stdClass();
-        $this->assertTrue($this->adminList->canAdd($item));
+        $this->assertTrue($this->adminList->canAdd());
     }
 
     public function testCanView()
@@ -123,35 +122,35 @@ class AdminListTest extends TestCase
 
     public function testGetIndexUrl()
     {
-        $this->assertTrue(is_array($this->adminList->getIndexUrl()));
+        $this->assertTrue(\is_array($this->adminList->getIndexUrl()));
     }
 
     public function testGetEditUrlFor()
     {
         $item = new \stdClass();
-        $this->assertTrue(is_array($this->adminList->getEditUrlFor($item)));
+        $this->assertTrue(\is_array($this->adminList->getEditUrlFor($item)));
     }
 
     public function testGetDeleteUrlFor()
     {
         $item = new \stdClass();
-        $this->assertTrue(is_array($this->adminList->getDeleteUrlFor($item)));
+        $this->assertTrue(\is_array($this->adminList->getDeleteUrlFor($item)));
     }
 
     public function testGetAddUrlFor()
     {
-        $this->assertTrue(is_array($this->adminList->getAddUrlFor([])));
+        $this->assertTrue(\is_array($this->adminList->getAddUrlFor([])));
     }
 
     public function testGetExportUrl()
     {
-        $this->assertTrue(is_array($this->adminList->getExportUrl()));
+        $this->assertTrue(\is_array($this->adminList->getExportUrl()));
     }
 
     public function testGetViewUrl()
     {
         $item = new \stdClass();
-        $this->assertTrue(is_array($this->adminList->getViewUrlFor($item)));
+        $this->assertTrue(\is_array($this->adminList->getViewUrlFor($item)));
     }
 
     public function testGetValue()
@@ -179,7 +178,7 @@ class AdminListTest extends TestCase
     public function testGetItemActions()
     {
         $itemActions = $this->adminList->getItemActions();
-        $this->assertTrue(is_array($itemActions));
+        $this->assertTrue(\is_array($itemActions));
         $this->assertInstanceOf(ItemActionInterface::class, current($itemActions));
     }
 
@@ -196,14 +195,14 @@ class AdminListTest extends TestCase
     public function testGetListActions()
     {
         $listActions = $this->adminList->getListActions();
-        $this->assertTrue(is_array($listActions));
+        $this->assertTrue(\is_array($listActions));
         $this->assertInstanceOf(ListActionInterface::class, current($listActions));
     }
 
     public function testGetBulkActions()
     {
         $bulkActions = $this->adminList->getBulkActions();
-        $this->assertTrue(is_array($bulkActions));
+        $this->assertTrue(\is_array($bulkActions));
         $this->assertInstanceOf(BulkActionInterface::class, current($bulkActions));
     }
 

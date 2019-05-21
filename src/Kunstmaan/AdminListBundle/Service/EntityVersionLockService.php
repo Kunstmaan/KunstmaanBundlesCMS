@@ -69,7 +69,7 @@ class EntityVersionLockService
             $this->removeExpiredLocks($lockable);
             $locks = $this->getEntityVersionLocksByLockableEntity($lockable, $user);
 
-            if ($locks === null || !count($locks)) {
+            if ($locks === null || !\count($locks)) {
                 $this->createEntityVersionLock($user, $lockable);
 
                 $lockable->setUpdated(new \DateTime());
@@ -166,7 +166,7 @@ class EntityVersionLockService
     protected function getLockableEntity(LockableEntityInterface $entity, $create = true)
     {
         /** @var LockableEntity $lockable */
-        $lockable = $this->objectManager->getRepository('KunstmaanAdminListBundle:LockableEntity')->getOrCreate($entity->getId(), get_class($entity));
+        $lockable = $this->objectManager->getRepository('KunstmaanAdminListBundle:LockableEntity')->getOrCreate($entity->getId(), \get_class($entity));
 
         if ($create === true && $lockable->getId() === null) {
             $this->objectManager->persist($lockable);

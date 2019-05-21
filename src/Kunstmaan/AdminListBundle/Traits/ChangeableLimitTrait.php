@@ -37,7 +37,7 @@ trait ChangeableLimitTrait
 
         // Allow alphanumeric, _ & . in order by parameter!
         $this->orderBy = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
-        $this->orderDirection = $request->query->getAlpha('orderDirection', '');
+        $this->orderDirection = $request->query->getAlpha('orderDirection');
 
         // there is a session and the filter param is not set
         if ($session->has($adminListName) && !$query->has('filter')) {

@@ -73,7 +73,7 @@ class DoctrineDBALAdapter implements AdapterInterface
             ->setMaxResults(1)
             ->execute();
 
-        return ($results = $statement->fetchColumn(0)) ? $results : 0;
+        return ($results = $statement->fetchColumn()) ? $results : 0;
     }
 
     /**

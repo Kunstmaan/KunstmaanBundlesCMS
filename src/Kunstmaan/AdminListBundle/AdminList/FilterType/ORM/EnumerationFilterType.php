@@ -26,7 +26,7 @@ class EnumerationFilterType extends AbstractORMFilterType
      */
     public function apply(array $data, $uniqueId)
     {
-        if (isset($data['value']) && isset($data['comparator'])) {
+        if (isset($data['value'], $data['comparator'])) {
             switch ($data['comparator']) {
                 case 'in':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->in($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
