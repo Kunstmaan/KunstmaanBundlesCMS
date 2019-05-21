@@ -38,7 +38,7 @@ class FolderManagerTest extends TestCase
         $this->repository
             ->expects($this->any())
             ->method('getParentIds')
-            ->will($this->returnValue(array(1, 2)));
+            ->willReturn([1, 2]);
 
         $folder1 = new Folder();
         $folder1->setId(1);
@@ -51,7 +51,7 @@ class FolderManagerTest extends TestCase
         $this->repository
             ->expects($this->any())
             ->method('getPath')
-            ->will($this->returnValue(array($folder1, $folder2)));
+            ->willReturn(array($folder1, $folder2));
 
         $rootFolder = new Folder();
         $rootFolder->setId(1);
@@ -60,7 +60,7 @@ class FolderManagerTest extends TestCase
             ->expects($this->any())
             ->method('getFolder')
             ->with($this->equalTo(1))
-            ->will($this->returnValue($rootFolder));
+            ->willReturn($rootFolder);
 
         $this->folder = new Folder();
         $this->folder->setId(3);
@@ -74,7 +74,7 @@ class FolderManagerTest extends TestCase
             ->expects($this->once())
             ->method('childrenHierarchy')
             ->with($this->equalTo($this->folder))
-            ->will($this->returnValue(array()));
+            ->willReturn(array());
 
         $this->object->getFolderHierarchy($this->folder);
     }

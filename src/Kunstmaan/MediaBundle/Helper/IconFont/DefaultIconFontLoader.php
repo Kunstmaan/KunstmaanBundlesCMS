@@ -23,7 +23,7 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
      */
     public function setData(array $data)
     {
-        if (!array_key_exists('css', $data)) {
+        if (!\array_key_exists('css', $data)) {
             throw new MissingOptionsException('Missing required loader_data option: "css"');
         }
 
