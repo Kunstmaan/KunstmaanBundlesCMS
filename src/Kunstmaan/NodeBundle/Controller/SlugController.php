@@ -54,6 +54,11 @@ class SlugController extends Controller
             $em,
             $nodeTranslation
         );
+
+        if (!$entity) {
+            throw $this->createNotFoundException('No page entity found for slug ' . $url);
+        }
+
         $node = $nodeTranslation->getNode();
 
         $securityEvent = new SlugSecurityEvent();
