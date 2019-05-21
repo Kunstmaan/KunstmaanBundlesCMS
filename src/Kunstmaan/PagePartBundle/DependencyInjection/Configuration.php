@@ -68,7 +68,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('template')->end()
                 ->variableNode('rows')
                     ->validate()->ifTrue(function ($element) {
-                        return !is_array($element);
+                        return !\is_array($element);
                     })->thenInvalid('The rows element must be an array.')->end()
                     ->validate()->always(function ($children) {
                         array_walk($children, array($this, 'evaluateRows'));
@@ -128,7 +128,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('span')->defaultValue(12)->end()
                 ->variableNode('rows')
                     ->validate()->ifTrue(function ($element) {
-                        return !is_array($element);
+                        return !\is_array($element);
                     })->thenInvalid('The rows element must be an array.')->end()
                     ->validate()->always(function ($children) {
                         array_walk($children, array($this, 'evaluateRows'));

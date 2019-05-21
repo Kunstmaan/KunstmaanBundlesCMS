@@ -30,12 +30,12 @@ class PageTemplateConfigurationReader implements PageTemplateConfigurationReader
     {
         $pageTemplates = [];
         foreach ($page->getPageTemplates() as $pageTemplate) {
-            if (is_string($pageTemplate)) {
+            if (\is_string($pageTemplate)) {
                 $pt = $this->parser->parse($pageTemplate);
             } elseif ($pageTemplate instanceof PageTemplateInterface) {
                 $pt = $pageTemplate;
             } else {
-                throw new \Exception("don't know how to handle the pageTemplate " . get_class($pageTemplate));
+                throw new \Exception("don't know how to handle the pageTemplate " . \get_class($pageTemplate));
             }
 
             $pageTemplates[$pt->getName()] = $pt;

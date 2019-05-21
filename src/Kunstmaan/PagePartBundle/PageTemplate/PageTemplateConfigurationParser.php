@@ -119,14 +119,13 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
         // if we use the old flow (sf3), the raw data can be stored in it's own yml file
         if (strpos($name, ':')) {
             $nameParts = explode(':', $name, 2);
-            if (2 !== count($nameParts)) {
+            if (2 !== \count($nameParts)) {
                 throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
             }
             list($namespace, $name) = $nameParts;
             $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
-            $rawData = Yaml::parse(file_get_contents($path));
 
-            return $rawData;
+            return Yaml::parse(file_get_contents($path));
         }
 
         throw new \Exception(sprintf('Non existing template "%s".', $name));

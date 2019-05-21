@@ -95,9 +95,9 @@ class PagePartCreatorService
         $page = $translation->getRef($this->em);
 
         // Find latest position.
-        if (is_null($position)) {
+        if (\is_null($position)) {
             $pageParts = $this->pagePartRepo->getPagePartRefs($page, $context);
-            $position = count($pageParts) + 1;
+            $position = \count($pageParts) + 1;
         }
 
         $this->em->persist($pagePart);
@@ -141,10 +141,10 @@ class PagePartCreatorService
             $instantiatedPageParts[$context] = array();
 
             foreach ($pageParts as $pagePartOrFunction) {
-                if (is_callable($pagePartOrFunction)) {
+                if (\is_callable($pagePartOrFunction)) {
                     $pagePartOrFunction = $pagePartOrFunction();
 
-                    if (!isset($pagePartOrFunction) || (is_null($pagePartOrFunction))) {
+                    if (!isset($pagePartOrFunction) || is_null($pagePartOrFunction)) {
                         throw new \LogicException('A function returned nothing for a pagepart. Make sure you return your instantiated pageparts in your anonymous functions.');
                     }
                 }
@@ -210,9 +210,9 @@ class PagePartCreatorService
         return function () use ($pagePartClassName, $setters) {
             $pp = new $pagePartClassName();
 
-            if (!is_null($setters)) {
+            if (!\is_null($setters)) {
                 foreach ($setters as $setter => $value) {
-                    call_user_func(array($pp, $setter), $value);
+                    \call_user_func(array($pp, $setter), $value);
                 }
             }
 
@@ -227,7 +227,7 @@ class PagePartCreatorService
      */
     private function getNode($nodeOrInternalName)
     {
-        if (is_string($nodeOrInternalName)) {
+        if (\is_string($nodeOrInternalName)) {
             return $this->nodeRepo->findOneBy(array('internalName' => $nodeOrInternalName));
         }
 
