@@ -33,7 +33,7 @@ class AbstractControllerActionTest extends TestCase
 
         $this->assertEquals(5, $action->getId());
         $this->assertEquals('Global Economic Meltdown - The Movie', $action->getTitle());
-        $this->assertInstanceOf(get_class($entity), $action->getParent());
+        $this->assertInstanceOf(\get_class($entity), $action->getParent());
         $this->assertEquals(ControllerActionAdminType::class, $action->getDefaultAdminType());
     }
 }

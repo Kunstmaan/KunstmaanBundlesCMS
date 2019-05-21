@@ -46,10 +46,10 @@ class SimpleTreeView
      */
     public function getChildren($parentId)
     {
-        if (array_key_exists($parentId, $this->items)) {
+        if (\array_key_exists($parentId, $this->items)) {
             return $this->items[$parentId];
-        } else {
-            return array();
         }
+
+        return [];
     }
 }

@@ -89,7 +89,7 @@ class NodeRepository extends NestedTreeRepository
             }
         }
 
-        if (is_null($parentId)) {
+        if (\is_null($parentId)) {
             $qb->andWhere('b.parent is NULL');
         } elseif ($parentId !== false) {
             $qb->andWhere('b.parent = :parent')
@@ -123,10 +123,10 @@ class NodeRepository extends NestedTreeRepository
         )->getNodeVersionFor(
             $hasNode
         );
-        if (!is_null($nodeVersion)) {
+        if (!\is_null($nodeVersion)) {
             /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $nodeVersion->getNodeTranslation();
-            if (!is_null($nodeTranslation)) {
+            if (!\is_null($nodeTranslation)) {
                 return $nodeTranslation->getNode();
             }
         }
@@ -176,10 +176,8 @@ class NodeRepository extends NestedTreeRepository
                 ) {
                     $result = $r;
                 }
-            } else {
-                if ($r = $this->findOneBy(array('slug' => $slugPart))) {
-                    $result = $r;
-                }
+            } elseif ($r = $this->findOneBy(['slug' => $slugPart])) {
+                $result = $r;
             }
         }
 
@@ -324,7 +322,7 @@ SQL;
             $qb->andWhere('n.hidden_from_nav <> 0');
         }
 
-        if (!is_null($rootNode)) {
+        if (!\is_null($rootNode)) {
             $qb->andWhere('n.lft >= :left')
                 ->andWhere('n.rgt <= :right');
         }
@@ -336,7 +334,7 @@ SQL;
 
         $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
         $stmt->bindValue(':lang', $lang);
-        if (!is_null($rootNode)) {
+        if (!\is_null($rootNode)) {
             $stmt->bindValue(':left', $rootNode->getLeft());
             $stmt->bindValue(':right', $rootNode->getRight());
         }
@@ -355,7 +353,7 @@ SQL;
      */
     public function getAllParents(Node $node = null, $lang = null)
     {
-        if (is_null($node)) {
+        if (\is_null($node)) {
             return array();
         }
 
@@ -399,7 +397,7 @@ SQL;
      */
     public function getRootNodeFor(Node $node = null, $lang = null)
     {
-        if (is_null($node)) {
+        if (\is_null($node)) {
             return null;
         }
 
@@ -449,9 +447,7 @@ SQL;
             ->where('b.deleted = 0')
             ->andWhere('b.parent IS NULL');
 
-        $result = $qb->getQuery()->getResult();
-
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -491,7 +487,7 @@ SQL;
             $qb->andWhere('t.online = true');
         }
 
-        if (is_null($parentId)) {
+        if (\is_null($parentId)) {
             $qb->andWhere('n.parent is NULL');
         } elseif ($parentId === false) {
             // Do nothing

@@ -195,11 +195,7 @@ class Node extends AbstractEntity implements GedmoNode
     {
         return $this->nodeTranslations
             ->filter(function (NodeTranslation $entry) use ($includeOffline) {
-                if ($includeOffline || $entry->isOnline()) {
-                    return true;
-                }
-
-                return false;
+                return $includeOffline || $entry->isOnline();
             }
             );
     }

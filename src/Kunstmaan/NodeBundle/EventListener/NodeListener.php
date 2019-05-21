@@ -44,11 +44,9 @@ class NodeListener
      */
     public function adaptForm(AdaptFormEvent $event)
     {
-        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
-            if ($this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {
-                $tabPane = $event->getTabPane();
-                $tabPane->addTab(new Tab('kuma_node.tab.permissions.title', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
-            }
+        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode() && $this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {
+            $tabPane = $event->getTabPane();
+            $tabPane->addTab(new Tab('kuma_node.tab.permissions.title', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
         }
     }
 }
