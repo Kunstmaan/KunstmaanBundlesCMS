@@ -78,7 +78,7 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
         $contextName = 'main',
         array $parameters = array()
     ) {
-        $template = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
+        $template = $env->load('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,

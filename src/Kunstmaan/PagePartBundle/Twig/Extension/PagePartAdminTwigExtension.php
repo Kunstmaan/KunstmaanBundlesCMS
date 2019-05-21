@@ -51,7 +51,7 @@ class PagePartAdminTwigExtension extends AbstractExtension
             $templateName = '@KunstmaanPagePart/PagePartAdminTwigExtension/widget.html.twig';
         }
 
-        $template = $env->loadTemplate($templateName);
+        $template = $env->load($templateName);
 
         return $template->render(array_merge($parameters, [
             'pagepartadmin' => $ppAdmin,
