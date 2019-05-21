@@ -51,15 +51,15 @@ abstract class AbstractCommandHandler
 
     public function parseCommaSeperatedValuesToArray($values)
     {
-        if (!is_array($values) && strpos($values, ',') === false && mb_strlen(trim($values)) == 2) {
+        if (!\is_array($values) && strpos($values, ',') === false && mb_strlen(trim($values)) == 2) {
             return array(strtolower(trim($values)));
         }
 
-        if (!is_array($values)) {
+        if (!\is_array($values)) {
             $values = explode(',', $values);
         }
 
-        if (count($values) >= 1) {
+        if (\count($values) >= 1) {
             return array_map(function ($value) {
                 return strtolower(trim($value));
             }, $values);

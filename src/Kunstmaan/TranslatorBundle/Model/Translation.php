@@ -108,7 +108,7 @@ class Translation
         $textWithLocale
             ->setLocale($locale)
             ->setText($text);
-        if (!is_null($id)) {
+        if (!\is_null($id)) {
             $textWithLocale->setId($id);
         }
         $this->texts->add($textWithLocale);

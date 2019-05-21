@@ -132,7 +132,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      */
     public function getQueryBuilder()
     {
-        if (is_null($this->queryBuilder)) {
+        if (\is_null($this->queryBuilder)) {
             $this->queryBuilder = new QueryBuilder($this->connection);
             $this->queryBuilder
                 ->select('DISTINCT b.translation_id AS id, b.keyword, b.domain, b.status')
@@ -198,7 +198,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             }
 
             // Apply text filter
-            if (!is_null($textValue) && !is_null($textComparator)) {
+            if (!\is_null($textValue) && !\is_null($textComparator)) {
                 $orX = $this->queryBuilder->expr()->orX();
 
                 foreach ($this->locales as $key => $locale) {

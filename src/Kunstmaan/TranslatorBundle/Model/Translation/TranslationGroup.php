@@ -42,7 +42,7 @@ class TranslationGroup
 
     public function hasTranslation($locale)
     {
-        if (count($this->translations) <= 0) {
+        if (\count($this->translations) <= 0) {
             return false;
         }
 
@@ -55,7 +55,7 @@ class TranslationGroup
 
     public function getTranslationByLocale($locale)
     {
-        if (count($this->translations) <= 0) {
+        if (\count($this->translations) <= 0) {
             return null;
         }
 
@@ -72,7 +72,7 @@ class TranslationGroup
     {
         $translation = $this->getTranslationByLocale($locale);
 
-        return is_null($translation) ? null : $translation->getText();
+        return \is_null($translation) ? null : $translation->getText();
     }
 
     public function addTranslation(Translation $translation)

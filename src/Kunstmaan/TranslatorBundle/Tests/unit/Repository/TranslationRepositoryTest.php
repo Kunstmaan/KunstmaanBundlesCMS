@@ -46,7 +46,7 @@ class TranslationRepositoryTest extends WebTestCase
     {
         $result = $this->translationRepository->getTranslationsByLocalesAndDomains(array('nl'), array('messages'));
         $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
-        $this->assertGreaterThan(0, count($result));
+        $this->assertGreaterThan(0, \count($result));
     }
 
     /**
@@ -56,7 +56,7 @@ class TranslationRepositoryTest extends WebTestCase
     {
         $result = $this->translationRepository->findAllNotDisabled('nl');
         $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
-        $this->assertGreaterThan(0, count($result));
+        $this->assertGreaterThan(0, \count($result));
     }
 
     /**
@@ -66,6 +66,6 @@ class TranslationRepositoryTest extends WebTestCase
     {
         $result = $this->translationRepository->findDeprecatedTranslationsBeforeDate(new \DateTime('+5 minutes'), 'messages');
         $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
-        $this->assertGreaterThan(0, count($result));
+        $this->assertGreaterThan(0, \count($result));
     }
 }

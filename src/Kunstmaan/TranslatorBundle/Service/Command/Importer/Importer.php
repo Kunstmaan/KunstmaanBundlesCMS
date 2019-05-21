@@ -29,7 +29,7 @@ class Importer
 
     public function import(\Symfony\Component\Finder\SplFileInfo $file, $force = false)
     {
-        if (!is_array($this->loaders) || count($this->loaders) <= 0) {
+        if (!\is_array($this->loaders) || \count($this->loaders) <= 0) {
             throw new \Exception('No translation file loaders tagged.');
         }
 
@@ -70,7 +70,7 @@ class Importer
      */
     public function importFromSpreadsheet(string $file, array $locales, $force = false)
     {
-        $filePath = realpath(dirname($file)).DIRECTORY_SEPARATOR;
+        $filePath = realpath(\dirname($file)).DIRECTORY_SEPARATOR;
         $fileName = basename($file);
         $file = $filePath.$fileName;
 
@@ -145,7 +145,7 @@ class Importer
      */
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
-        if (strlen($keyword) > 255) {
+        if (\strlen($keyword) > 255) {
             return false;
         }
 

@@ -12,7 +12,6 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $loaderRefs = [];
-        $loaderAliases = [];
         $exporterRefs = [];
         $loaders = [];
 

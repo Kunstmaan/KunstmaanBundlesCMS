@@ -6,7 +6,6 @@ use DateTime;
 use Exception;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
-use Kunstmaan\TranslatorBundle\Model\TextWithLocale;
 
 /**
  * Translator Repository class
@@ -77,13 +76,13 @@ WHERE
     HAVING MAX(compare) IS NOT NULL
     ORDER BY newestDate DESC
 EOQ;
-        $table = $em->getClassMetaData('KunstmaanTranslatorBundle:Translation')->getTableName();
+        $table = $em->getClassMetadata('KunstmaanTranslatorBundle:Translation')->getTableName();
 
         $stmt = $em->getConnection()->prepare(sprintf($sql, $table, $table));
         $stmt->execute();
         $result = $stmt->fetch();
 
-        if (is_array($result) && count($result) > 0) {
+        if (\is_array($result) && \count($result) > 0) {
             return new \DateTime($result['newestDate']);
         }
 
@@ -120,19 +119,17 @@ EOQ;
             ->orderBy('t.domain', 'ASC')
             ->addOrderBy('t.keyword', 'ASC');
 
-        if (count($locales) > 0) {
+        if (\count($locales) > 0) {
             $qb->andWhere($qb->expr()->in('t.locale', $locales));
         }
 
-        if (count($domains) > 0) {
+        if (\count($domains) > 0) {
             $qb->andWhere($qb->expr()->in('t.domain', $domains));
         }
 
-        $result = $qb
+        return $qb
             ->getQuery()
             ->getResult();
-
-        return $result;
     }
 
     /**
@@ -278,7 +275,7 @@ EOQ;
         $newId = $qb->select('MAX(t.translationId)+1')
             ->getQuery()
             ->getSingleScalarResult();
-        if (is_null($newId)) {
+        if (\is_null($newId)) {
             $newId = 1;
         }
 

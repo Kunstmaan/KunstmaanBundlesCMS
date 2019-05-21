@@ -55,7 +55,6 @@ class Translator extends SymfonyTranslator
      */
     public function warmUp($cacheDir)
     {
-        return;
     }
 
     /**
