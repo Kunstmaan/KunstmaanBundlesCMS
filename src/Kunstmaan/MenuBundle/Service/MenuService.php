@@ -4,7 +4,6 @@ namespace Kunstmaan\MenuBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Kunstmaan\MenuBundle\Entity\Menu;
 
 class MenuService
 {
@@ -56,7 +55,7 @@ class MenuService
         $menuObjects = $this->em->getRepository($this->menuEntityClass)->findAll();
 
         foreach ($menuObjects as $menu) {
-            if (array_key_exists($menu->getName(), $required)) {
+            if (\array_key_exists($menu->getName(), $required)) {
                 $index = array_search($menu->getLocale(), $required[$menu->getName()]);
                 if ($index !== false) {
                     unset($required[$menu->getName()][$index]);
