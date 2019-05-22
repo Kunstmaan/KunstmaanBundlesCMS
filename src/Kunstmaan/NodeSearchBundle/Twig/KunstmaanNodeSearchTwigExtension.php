@@ -55,9 +55,8 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
         $parentNode = $node->getParent();
         $nodeTranslation = $parentNode->getNodeTranslation($locale);
-        $parentPage = $nodeTranslation->getRef($this->em);
 
-        return $parentPage;
+        return $nodeTranslation->getRef($this->em);
     }
 
     /**

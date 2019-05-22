@@ -107,14 +107,14 @@ class NodeSearcher extends AbstractElasticaSearcher
 
         $this->applySecurityFilter($elasticaQueryBool);
 
-        if (!is_null($type)) {
+        if (!\is_null($type)) {
             $elasticaQueryType = new Term();
             $elasticaQueryType->setTerm('type', $type);
             $elasticaQueryBool->addMust($elasticaQueryType);
         }
 
         $rootNode = $this->domainConfiguration->getRootNode();
-        if (!is_null($rootNode)) {
+        if (!\is_null($rootNode)) {
             $elasticaQueryRoot = new Term();
             $elasticaQueryRoot->setTerm('root_id', $rootNode->getId());
             $elasticaQueryBool->addMust($elasticaQueryRoot);
@@ -161,7 +161,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     protected function getCurrentUserRoles()
     {
         $roles = array();
-        if (!is_null($this->tokenStorage)) {
+        if (!\is_null($this->tokenStorage)) {
             $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof BaseUser) {
                 $roles = $user->getRoles();
@@ -169,7 +169,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         // Anonymous access should always be available for both anonymous & logged in users
-        if (!in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles)) {
+        if (!\in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles)) {
             $roles[] = 'IS_AUTHENTICATED_ANONYMOUSLY';
         }
 
