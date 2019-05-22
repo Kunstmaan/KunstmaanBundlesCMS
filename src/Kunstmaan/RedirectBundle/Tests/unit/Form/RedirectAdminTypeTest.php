@@ -35,13 +35,13 @@ class RedirectAdminTypeTest extends TestCase
     {
         $multiDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
-        $multiDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(true));
-        $multiDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array('domain.com', 'domain.be')));
+        $multiDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->willReturn(true);
+        $multiDomainConfiguration->expects($this->any())->method('getHosts')->willReturn(['domain.com', 'domain.be']);
 
         $singleDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
-        $singleDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(false));
-        $singleDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array()));
+        $singleDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->willReturn(false);
+        $singleDomainConfiguration->expects($this->any())->method('getHosts')->willReturn(array());
 
         $this->multiDomainConfiguration = $multiDomainConfiguration;
         $this->singleDomainConfiguration = $singleDomainConfiguration;

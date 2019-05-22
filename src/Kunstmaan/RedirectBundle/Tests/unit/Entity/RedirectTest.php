@@ -61,11 +61,11 @@ class RedirectTest extends TestCase
 
         $violationBuilder->expects($this->once())
             ->method('atPath')
-            ->will($this->returnValue($violationBuilder));
+            ->willReturn($violationBuilder);
 
         $violationBuilder->expects($this->once())
             ->method('addViolation')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $context = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
@@ -73,7 +73,7 @@ class RedirectTest extends TestCase
 
         $context->expects($this->once())
             ->method('buildViolation')
-            ->will($this->returnValue($violationBuilder));
+            ->willReturn($violationBuilder);
 
         $this->object->setOrigin('riches');
         $this->object->setTarget('riches');
@@ -88,11 +88,11 @@ class RedirectTest extends TestCase
 
         $violationBuilder->expects($this->never())
             ->method('atPath')
-            ->will($this->returnValue($violationBuilder));
+            ->willReturn($violationBuilder);
 
         $violationBuilder->expects($this->never())
             ->method('addViolation')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $context = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
@@ -100,7 +100,7 @@ class RedirectTest extends TestCase
 
         $context->expects($this->never())
             ->method('buildViolation')
-            ->will($this->returnValue($violationBuilder));
+            ->willReturn($violationBuilder);
 
         $this->object->setOrigin('rags');
         $this->object->setTarget('riches');
