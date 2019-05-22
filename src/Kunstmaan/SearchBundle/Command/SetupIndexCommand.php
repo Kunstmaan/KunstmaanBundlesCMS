@@ -65,7 +65,7 @@ class SetupIndexCommand extends ContainerAwareCommand
          */
         foreach ($this->configurationChain->getConfigurations() as $alias => $searchConfiguration) {
             $languagesNotAnalyzed = $searchConfiguration->getLanguagesNotAnalyzed();
-            if (count($languagesNotAnalyzed) > 0) {
+            if (\count($languagesNotAnalyzed) > 0) {
                 $question = new ChoiceQuestion(
                     sprintf('Languages analyzer is not available for: %s. Do you want continue?', implode(', ', $languagesNotAnalyzed)),
                     ['No', 'Yes']
