@@ -23,7 +23,7 @@ class OnExitIntentRuleTest extends TestCase
         $this->assertEquals(OnExitIntentRule::class, $rule->getFullClassname());
         $this->assertEquals('OnExitIntentRule', $rule->getClassname());
         $this->assertEquals(OnExitIntentAdminType::class, $rule->getAdminType());
-        $this->assertTrue(is_array($rule->getJsProperties()));
+        $this->assertInternalType('array', $rule->getJsProperties());
         $this->assertNull($rule->getService());
         $this->assertNull($rule->getId());
     }

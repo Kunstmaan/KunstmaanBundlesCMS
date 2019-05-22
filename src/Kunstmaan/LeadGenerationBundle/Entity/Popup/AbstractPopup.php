@@ -159,7 +159,7 @@ abstract class AbstractPopup implements EntityInterface
      */
     public function getRuleCount()
     {
-        return count($this->rules);
+        return \count($this->rules);
     }
 
     /**
@@ -167,7 +167,7 @@ abstract class AbstractPopup implements EntityInterface
      */
     public function getFullClassname()
     {
-        return get_class($this);
+        return \get_class($this);
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class AbstractPopup implements EntityInterface
      */
     public function getClassname()
     {
-        return basename(str_replace('\\', '/', get_class($this)));
+        return basename(str_replace('\\', '/', \get_class($this)));
     }
 
     /**

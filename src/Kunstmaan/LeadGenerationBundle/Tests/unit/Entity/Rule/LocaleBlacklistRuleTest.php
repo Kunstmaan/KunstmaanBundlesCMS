@@ -21,6 +21,6 @@ class LocaleBlacklistRuleTest extends TestCase
         $this->assertEquals(LocaleBlackListAdminType::class, $rule->getAdminType());
         $this->assertEquals('kunstmaan_lead_generation.rule.service.localeruleservice', $rule->getService());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
-        $this->assertTrue(is_array($rule->getJsProperties()));
+        $this->assertInternalType('array', $rule->getJsProperties());
     }
 }
