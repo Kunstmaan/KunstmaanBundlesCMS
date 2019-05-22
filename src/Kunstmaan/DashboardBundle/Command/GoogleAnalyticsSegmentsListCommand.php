@@ -65,16 +65,14 @@ class GoogleAnalyticsSegmentsListCommand extends ContainerAwareCommand
         $configId = $input->getOption('config');
 
         try {
-            $segments = [];
-
             if ($configId) {
                 $segments = $this->getSegmentsOfConfig($configId);
             } else {
                 $segments = $this->getAllSegments();
             }
 
-            if (count($segments)) {
-                $result = "\t".'<fg=green>' . count($segments) . '</fg=green> segments found:';
+            if (\count($segments)) {
+                $result = "\t".'<fg=green>' . \count($segments) . '</fg=green> segments found:';
                 $output->writeln($result);
                 foreach ($segments as $segment) {
                     $result = "\t".'(id: <fg=cyan>' .$segment->getId() . '</fg=cyan>)';

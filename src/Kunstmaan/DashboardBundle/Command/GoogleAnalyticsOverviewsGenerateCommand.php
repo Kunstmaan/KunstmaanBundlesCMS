@@ -82,12 +82,10 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
         try {
             if ($segmentId) {
                 $this->generateOverviewsOfSegment($segmentId);
+            } elseif ($configId) {
+                $this->generateOverviewsOfConfig($configId);
             } else {
-                if ($configId) {
-                    $this->generateOverviewsOfConfig($configId);
-                } else {
-                    $this->generateAllOverviews();
-                }
+                $this->generateAllOverviews();
             }
 
             $output->writeln('<fg=green>Overviews succesfully generated</fg=green>');
@@ -141,7 +139,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
         }
 
         // create default overviews for this config if none exist yet
-        if (!count($config->getOverviews())) {
+        if (!\count($config->getOverviews())) {
             $overviewRepository->addOverviews($config);
         }
 
@@ -166,7 +164,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
 
         foreach ($configs as $config) {
             // add overviews if none exist yet
-            if (!count($configRepository->findDefaultOverviews($config))) {
+            if (!\count($configRepository->findDefaultOverviews($config))) {
                 $overviewRepository->addOverviews($config);
             }
 

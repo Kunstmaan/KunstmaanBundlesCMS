@@ -21,7 +21,7 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper
         $rows = $this->executeQuery($overview, $metrics);
 
         // new sessions
-        $newUsers = is_array($rows) && isset($rows[0][0]) ? $rows[0][0] : 0;
+        $newUsers = \is_array($rows) && isset($rows[0][0]) ? $rows[0][0] : 0;
         $overview->setNewUsers($newUsers);
     }
 }

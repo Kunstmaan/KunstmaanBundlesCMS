@@ -27,11 +27,13 @@ class AnalyticsConfigRepository extends EntityRepository
         // if no configs exist, create a new one
         if (!$result && $createNew) {
             return $this->createConfig();
-        } elseif ($result) {
-            return $result[0];
-        } else {
-            return false;
         }
+
+        if ($result) {
+            return $result[0];
+        }
+
+        return false;
     }
 
     /**

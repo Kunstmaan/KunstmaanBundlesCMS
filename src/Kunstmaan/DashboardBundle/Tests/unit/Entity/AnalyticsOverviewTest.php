@@ -45,10 +45,10 @@ class AnalyticsOverviewTest extends TestCase
         $this->assertEquals(14, $entity->getSegment());
         $this->assertEquals(15, $entity->getReturningUsers());
         $this->assertEquals(1.23, $entity->getNewUsers());
-        $this->assertTrue(is_array($entity->getChartData()));
-        $this->assertTrue(is_array($entity->getGoals()));
+        $this->assertInternalType('array', $entity->getChartData());
+        $this->assertInternalType('array', $entity->getGoals());
         $this->assertEquals(188, $entity->getReturningUsersPercentage());
         $this->assertEquals(15.0, $entity->getNewUsersPercentage());
-        $this->assertTrue(is_array($entity->getActiveGoals()));
+        $this->assertInternalType('array', $entity->getActiveGoals());
     }
 }

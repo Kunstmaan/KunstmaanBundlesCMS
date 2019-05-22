@@ -23,8 +23,8 @@ class AnalyticsConfigTest extends TestCase
         $entity->setDisableGoals(true);
 
         $this->assertEquals(666, $entity->getId());
-        $this->assertTrue(is_array($entity->getOverviews()));
-        $this->assertTrue(is_array($entity->getSegments()));
+        $this->assertInternalType('array', $entity->getOverviews());
+        $this->assertInternalType('array', $entity->getSegments());
         $this->assertEquals('Donald Trump', $entity->getName());
         $this->assertEquals('blahblah', $entity->getToken());
         $this->assertEquals('blahblah2', $entity->getPropertyId());
