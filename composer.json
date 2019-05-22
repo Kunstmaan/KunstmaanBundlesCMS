@@ -23,6 +23,7 @@
         "symfony/dependency-injection": "^3.4|^4.0",
         "symfony/dom-crawler": "^3.4|^4.0",
         "symfony/event-dispatcher": "^3.4|^4.0",
+        "symfony/expression-language": "^3.4|^4.0",
         "symfony/filesystem": "^3.4|^4.0",
         "symfony/finder": "^3.4|^4.0",
         "symfony/framework-bundle": "^3.4|^4.0",
