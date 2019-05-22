@@ -107,7 +107,7 @@ class KunstmaanMultiDomainExtension extends Extension
     {
         $localesExtra = array();
         foreach ($localeSettings as $key => $localeMapping) {
-            $localesExtra[$localeMapping['uri_locale']] = array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : array();
+            $localesExtra[$localeMapping['uri_locale']] = \array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : array();
         }
 
         return $localesExtra;
