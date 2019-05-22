@@ -39,9 +39,9 @@ class BooleanFormSubmissionField extends FormSubmissionField
         $value = $this->getValue();
         if (empty($value)) {
             return 'false';
-        } else {
-            return 'true';
         }
+
+        return 'true';
     }
 
     /**

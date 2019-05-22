@@ -47,7 +47,7 @@ class SingleLineTextPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
     }
 
     public function testAdaptForm()
@@ -62,14 +62,14 @@ class SingleLineTextPagePartTest extends TestCase
 
         $formBuilder->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue(array()));
+            ->willReturn([]);
 
         $fields = new ArrayObject();
 
         $object->setErrorMessageRequired('required');
         $object->setErrorMessageRegex('regex');
-        $this->assertTrue(count($fields) == 0);
-        /* @var $formBuilder FormBuilderInterface */
+        $this->assertEquals(count($fields), 0);
+        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
         $this->assertTrue($object->getRequired());
