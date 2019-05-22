@@ -28,14 +28,14 @@ class MaxNumberByIpEventListenerTest extends TestCase
 
             $mockedRepository->expects($this->any())
              ->method('countByReferenceAndByIp')
-             ->will($this->returnValue($voteNumber));
+             ->willReturn($voteNumber);
         }
 
         $mockedResolver = $this->createMock('Kunstmaan\VotingBundle\Services\RepositoryResolver'); //, array('getRepositoryForEvent'), array(), 'MockedResolver', false);
 
         $mockedResolver->expects($this->any())
              ->method('getRepositoryForEvent')
-             ->will($this->returnValue($mockedRepository));
+             ->willReturn($mockedRepository);
 
         /* @var \Kunstmaan\VotingBundle\Services\RepositoryResolver $mockedResolver */
         return $mockedResolver;
@@ -79,6 +79,7 @@ class MaxNumberByIpEventListenerTest extends TestCase
         $listener = new MaxNumberByIpEventListener($resolver, $maxNumber);
 
         $this->assertNull($listener->onVote($event));
+        $this->assertSame($stopPropagation, $event->isPropagationStopped());
     }
 
     /**

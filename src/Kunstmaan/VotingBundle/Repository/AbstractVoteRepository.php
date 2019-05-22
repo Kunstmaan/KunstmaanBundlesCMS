@@ -66,7 +66,7 @@ class AbstractVoteRepository extends EntityRepository
     }
 
     /**
-     * @param $reference The reference to filter the votes by
+     * @param string $reference The reference to filter the votes by
      *
      * @return mixed Returns the sum of the values of the votes
      */
