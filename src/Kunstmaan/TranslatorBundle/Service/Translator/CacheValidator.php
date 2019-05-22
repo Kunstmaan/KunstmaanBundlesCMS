@@ -62,11 +62,13 @@ class CacheValidator
             ->sortByModifiedTime()
             ->in($this->cacheDir);
 
-        foreach ($finder as $file) {
-            $date = new \DateTime();
-            $date->setTimestamp($file->getMTime());
+        if ($finder->count() > 0) {
+            // Get first result (=oldest cache file)
+            $iterator = $finder->getIterator();
+            $iterator->rewind();
+            $file = $iterator->current();
 
-            return $date;
+            return (new \DateTime())->setTimestamp($file->getMTime());
         }
 
         return null;
