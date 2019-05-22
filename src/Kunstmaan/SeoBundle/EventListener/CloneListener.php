@@ -44,7 +44,7 @@ class CloneListener
             /* @var Seo $seo */
             $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findFor($originalEntity);
 
-            if (!is_null($seo)) {
+            if (!\is_null($seo)) {
                 /* @var Seo $clonedSeo */
                 $clonedSeo = $this->cloneHelper->deepCloneAndSave($seo);
                 $clonedSeo->setRef($event->getClonedEntity());

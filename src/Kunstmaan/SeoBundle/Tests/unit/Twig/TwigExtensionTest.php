@@ -25,8 +25,7 @@ class TwigExtensionTest extends TestCase
      */
     protected function setUp()
     {
-        $this->emMock = $this->createMock('\Doctrine\ORM\EntityManager',
-            array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
+        $this->emMock = $this->createMock('\Doctrine\ORM\EntityManager');
     }
 
     /**
@@ -124,7 +123,7 @@ class TwigExtensionTest extends TestCase
     protected function entityWithName($name)
     {
         $this->entityMock = $this->createMock('Kunstmaan\NodeBundle\Entity\AbstractPage');
-        $this->entityMock->expects($this->once())->method('getTitle')->will($this->returnValue($name));
+        $this->entityMock->expects($this->once())->method('getTitle')->willReturn($name);
     }
 
     /**
@@ -135,7 +134,7 @@ class TwigExtensionTest extends TestCase
         $this->ensureSeoRepoMock();
         $this->seoRepoMock->expects($this->once())
             ->method('findOrCreateFor')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->wireUpSeoRepo();
     }
@@ -145,8 +144,8 @@ class TwigExtensionTest extends TestCase
      */
     protected function ensureSeoRepoMock()
     {
-        if (is_null($this->seoRepoMock)) {
-            $this->seoRepoMock = $this->createMock('Kunstmaan\SeoBundle\Repository\SeoRepository', array(), array(), '', false);
+        if (\is_null($this->seoRepoMock)) {
+            $this->seoRepoMock = $this->createMock('Kunstmaan\SeoBundle\Repository\SeoRepository');
         }
     }
 
@@ -158,7 +157,7 @@ class TwigExtensionTest extends TestCase
         $this->emMock->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo('KunstmaanSeoBundle:Seo'))
-            ->will($this->returnValue($this->seoRepoMock));
+            ->willReturn($this->seoRepoMock);
     }
 
     /**
@@ -174,7 +173,7 @@ class TwigExtensionTest extends TestCase
 
         $this->seoRepoMock->expects($this->once())
             ->method('findOrCreateFor')
-            ->will($this->returnValue($seoMock));
+            ->willReturn($seoMock);
 
         $this->wireUpSeoRepo();
     }
