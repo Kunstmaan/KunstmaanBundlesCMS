@@ -5,7 +5,6 @@ namespace Kunstmaan\ConfigBundle\Tests\DependencyInjection\Compiler;
 use Kunstmaan\ConfigBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 
 class DeprecateClassParametersPassTest extends AbstractCompilerPassTestCase
 {
