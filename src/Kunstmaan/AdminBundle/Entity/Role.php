@@ -50,16 +50,6 @@ class Role extends BaseRole
     }
 
     /**
-     * Return the string representation of the role entity.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->role;
-    }
-
-    /**
      * Get id
      *
      * @return int
@@ -81,5 +71,15 @@ class Role extends BaseRole
         $this->role = $role;
 
         return $this;
+    }
+
+    /**
+     * Return the string representation of the role entity.
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string) $this->role;
     }
 }
