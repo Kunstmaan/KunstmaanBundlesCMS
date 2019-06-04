@@ -2,7 +2,7 @@ parameters:
     kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand
     kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
     kunstmaan_dashboard.googleclient.class: 'Google_Client'
-    kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\GoogleClientHelper'
+    kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\Google\ClientHelper'
 
 services:
     kunstmaan_dashboard.manager.widgets:
@@ -30,6 +30,7 @@ services:
     kunstmaan_dashboard.helper.google.client:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\ClientHelper'
         arguments: ['@kunstmaan_dashboard.googleclient', '@router', 'KunstmaanDashboardBundle_setToken']
+        public: true
 
     # service helper
     kunstmaan_dashboard.helper.google.analytics.service:
