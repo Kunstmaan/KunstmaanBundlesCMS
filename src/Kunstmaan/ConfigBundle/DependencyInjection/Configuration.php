@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
                                 }
 
                                 // Check if entity implements the ConfigurationInterface.
-                                if (!in_array(KunstmaanConfigurationInterface::class, class_implements($entity))) {
+                                if (!\in_array(KunstmaanConfigurationInterface::class, class_implements($entity))) {
                                     throw new \RuntimeException(sprintf('The entity class "%s" needs to implement the %s', $entity, KunstmaanConfigurationInterface::class));
                                 }
                             }

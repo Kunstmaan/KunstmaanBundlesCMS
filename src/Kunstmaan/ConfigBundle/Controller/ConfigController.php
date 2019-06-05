@@ -73,7 +73,7 @@ class ConfigController
         $this->em = $em;
         $this->configuration = $configuration;
 
-        if (func_num_args() > 6) {
+        if (\func_num_args() > 6) {
             @trigger_error(sprintf('Passing the "container" as the sixth argument in "%s" is deprecated in KunstmaanConfigBundle 5.1 and will be removed in KunstmaanConfigBundle 6.0. Remove the "container" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
 
             $this->formFactory = func_get_arg(6);
@@ -98,7 +98,7 @@ class ConfigController
          * @var AbstractConfig
          */
         $entity = $this->getConfigEntityByInternalName($internalName);
-        $entityClass = get_class($entity);
+        $entityClass = \get_class($entity);
 
         // Check if current user has permission for the site config.
         foreach ($entity->getRoles() as $role) {

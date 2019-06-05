@@ -56,7 +56,7 @@ class ConfigTwigExtension extends Twig_Extension
      */
     public function getConfigByInternalName($internalName)
     {
-        if (in_array($internalName, $this->configs)) {
+        if (\in_array($internalName, $this->configs)) {
             return $this->configs[$internalName];
         }
 
