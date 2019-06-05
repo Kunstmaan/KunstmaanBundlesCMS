@@ -1,3 +1,6 @@
+parameters:
+    kunstmaan_fixtures.user.class: Kunstmaan\AdminBundle\Entity\User
+
 services:
     kunstmaan_fixtures.builder.builder:
         class: Kunstmaan\FixturesBundle\Builder\BuildingSupervisor
@@ -14,6 +17,7 @@ services:
             - '@kunstmaan_fixtures.populator.populator'
             - '@kunstmaan_utilities.slugifier'
             - '@kunstmaan_node.pages_configuration'
+            - '%kunstmaan_fixtures.user.class%'
         tags:
             - { name: kunstmaan_fixtures.builder, alias: PageBuilder }
 
