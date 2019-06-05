@@ -4,6 +4,7 @@ services:
         arguments:
             - '@kunstmaan_fixtures.parser.parser'
             - '@kunstmaan_fixtures.populator.populator'
+        public: true
 
     kunstmaan_fixtures.builder.page:
         class: Kunstmaan\FixturesBundle\Builder\PageBuilder
@@ -40,6 +41,7 @@ services:
 
     kunstmaan_fixtures.parser.parser:
         class: Kunstmaan\FixturesBundle\Parser\Parser
+        public: true
 
     kunstmaan_fixtures.parser.property.method:
         class: Kunstmaan\FixturesBundle\Parser\Property\Method
@@ -63,6 +65,7 @@ services:
 
     kunstmaan_fixtures.populator.populator:
         class: Kunstmaan\FixturesBundle\Populator\Populator
+        public: true
 
     kunstmaan_fixtures.populator.method.property:
         class: Kunstmaan\FixturesBundle\Populator\Methods\Property
