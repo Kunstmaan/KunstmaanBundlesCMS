@@ -51,5 +51,9 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
         if ($container->hasDefinition('kunstmaan_translator.service.exporter.exporter')) {
             $container->getDefinition('kunstmaan_translator.service.exporter.exporter')->addMethodCall('setExporters', array($exporterRefs));
         }
+
+        if ($container->has('translator.data_collector')) {
+            $container->setAlias('translator.data_collector', 'kunstmaan_translator.datacollector');
+        }
     }
 }
