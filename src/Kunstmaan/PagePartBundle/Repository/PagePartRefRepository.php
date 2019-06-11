@@ -95,12 +95,14 @@ class PagePartRefRepository extends EntityRepository
 
         // Order the pageparts
         usort($pageparts, function (EntityInterface $a, EntityInterface $b) use ($order) {
-            $aPosition = $order[get_class($a) . $a->getId()];
-            $bPosition = $order[get_class($b) . $b->getId()];
+            $aPosition = $order[\get_class($a) . $a->getId()];
+            $bPosition = $order[\get_class($b) . $b->getId()];
 
             if ($aPosition < $bPosition) {
                 return -1;
-            } elseif ($aPosition > $bPosition) {
+            }
+
+            if ($aPosition > $bPosition) {
                 return 1;
             }
 

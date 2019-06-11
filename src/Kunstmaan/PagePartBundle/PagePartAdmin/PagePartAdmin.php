@@ -83,12 +83,10 @@ class PagePartAdmin
 
         if ($context) {
             $this->context = $context;
+        } elseif ($this->configurator->getContext()) {
+            $this->context = $this->configurator->getContext();
         } else {
-            if ($this->configurator->getContext()) {
-                $this->context = $this->configurator->getContext();
-            } else {
-                $this->context = 'main';
-            }
+            $this->context = 'main';
         }
 
         $this->initializePageParts();
@@ -164,17 +162,16 @@ class PagePartAdmin
                 $this->em->remove($pagePart);
                 $this->em->remove($pagePartRef);
 
-                unset($this->pageParts[$pagePartRef->getId()]);
-                unset($this->pagePartRefs[$pagePartRef->getId()]);
+                unset($this->pageParts[$pagePartRef->getId()], $this->pagePartRefs[$pagePartRef->getId()]);
                 $doFlush = true;
             }
 
             // Remove sub-entities from pageparts
-            if (array_key_exists($pagePartRef->getId(), $subPagePartsToDelete)) {
+            if (\array_key_exists($pagePartRef->getId(), $subPagePartsToDelete)) {
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
                 foreach ($subPagePartsToDelete[$pagePartRef->getId()] as $deleteInfo) {
                     /** @var EntityInterface[] $objects */
-                    $objects = call_user_func(array($pagePart, 'get'.ucfirst($deleteInfo['name'])));
+                    $objects = \call_user_func(array($pagePart, 'get'.ucfirst($deleteInfo['name'])));
 
                     foreach ($objects as $object) {
                         if ($object->getId() == $deleteInfo['id']) {
@@ -194,7 +191,7 @@ class PagePartAdmin
         $this->newPageParts = array();
         $newRefIds = $request->get($this->context.'_new');
 
-        if (is_array($newRefIds)) {
+        if (\is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
                 $type = $request->get($this->context.'_type_'.$newId);
                 $this->newPageParts[$newId] = new $type();
@@ -203,13 +200,13 @@ class PagePartAdmin
 
         // Sort pageparts again
         $sequences = $request->get($this->context.'_sequence');
-        if (!is_null($sequences)) {
+        if (!\is_null($sequences)) {
             $tempPageparts = $this->pageParts;
             $this->pageParts = array();
             foreach ($sequences as $sequence) {
-                if (array_key_exists($sequence, $this->newPageParts)) {
+                if (\array_key_exists($sequence, $this->newPageParts)) {
                     $this->pageParts[$sequence] = $this->newPageParts[$sequence];
-                } elseif (array_key_exists($sequence, $tempPageparts)) {
+                } elseif (\array_key_exists($sequence, $tempPageparts)) {
                     $this->pageParts[$sequence] = $tempPageparts[$sequence];
                 } else {
                     $this->pageParts[$sequence] = $this->getPagePart($sequence, array_search($sequence, $sequences) + 1);
@@ -257,17 +254,17 @@ class PagePartAdmin
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
         $sequences = $request->get($this->context.'_sequence', []);
-        $sequencescount = count($sequences);
+        $sequencescount = \count($sequences);
         for ($i = 0; $i < $sequencescount; ++$i) {
             $pagePartRefId = $sequences[$i];
 
-            if (array_key_exists($pagePartRefId, $this->newPageParts)) {
+            if (\array_key_exists($pagePartRefId, $this->newPageParts)) {
                 $pagePart = $this->newPageParts[$pagePartRefId];
                 $this->em->persist($pagePart);
                 $this->em->flush($pagePart);
 
-                $ppRefRepo->addPagePart($this->page, $pagePart, ($i + 1), $this->context, false);
-            } elseif (array_key_exists($pagePartRefId, $this->pagePartRefs)) {
+                $ppRefRepo->addPagePart($this->page, $pagePart, $i + 1, $this->context, false);
+            } elseif (\array_key_exists($pagePartRefId, $this->pagePartRefs)) {
                 $pagePartRef = $this->pagePartRefs[$pagePartRefId];
                 if ($pagePartRef instanceof PagePartRef && $pagePartRef->getSequencenumber() != ($i + 1)) {
                     $pagePartRef->setSequencenumber($i + 1);
@@ -309,7 +306,7 @@ class PagePartAdmin
         // to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
         if (!empty($possiblePPTypes)) {
             foreach ($possiblePPTypes as $possibleTypeData) {
-                if (array_key_exists('pagelimit', $possibleTypeData)) {
+                if (\array_key_exists('pagelimit', $possibleTypeData)) {
                     $pageLimit = $possibleTypeData['pagelimit'];
                     /** @var PagePartRefRepository $entityRepository */
                     $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
@@ -384,6 +381,6 @@ class PagePartAdmin
      */
     public function getClassName($pagepart)
     {
-        return get_class($pagepart);
+        return \get_class($pagepart);
     }
 }

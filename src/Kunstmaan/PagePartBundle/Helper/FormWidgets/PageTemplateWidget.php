@@ -106,7 +106,7 @@ class PageTemplateWidget extends FormWidget
      */
     private function processRegion($region)
     {
-        if (count($region->getChildren())) {
+        if (\count($region->getChildren())) {
             foreach ($region->getChildren() as $child) {
                 $this->processRegion($child);
             }
@@ -221,7 +221,7 @@ class PageTemplateWidget extends FormWidget
      */
     public function getFormWidget($name)
     {
-        if (array_key_exists($name, $this->widgets)) {
+        if (\array_key_exists($name, $this->widgets)) {
             return $this->widgets[$name];
         }
 
