@@ -284,14 +284,14 @@ abstract class BaseMenuItem extends AbstractEntity
     public function getDisplayTitle()
     {
         if ($this->getType() == self::TYPE_PAGE_LINK) {
-            if (!is_null($this->getTitle())) {
+            if (!\is_null($this->getTitle())) {
                 return $this->getTitle();
-            } else {
-                return $this->getNodeTranslation()->getTitle();
             }
-        } else {
-            return $this->getTitle();
+
+            return $this->getNodeTranslation()->getTitle();
         }
+
+        return $this->getTitle();
     }
 
     /**
@@ -301,9 +301,9 @@ abstract class BaseMenuItem extends AbstractEntity
     {
         if ($this->getType() == self::TYPE_PAGE_LINK) {
             return $this->getNodeTranslation()->getUrl();
-        } else {
-            return $this->getUrl();
         }
+
+        return $this->getUrl();
     }
 
     /**
@@ -313,7 +313,9 @@ abstract class BaseMenuItem extends AbstractEntity
     {
         if ($this->getType() == self::TYPE_URL_LINK) {
             return true;
-        } elseif ($this->getNodeTranslation()->isOnline() && !$this->getNodeTranslation()->getNode()->isDeleted()) {
+        }
+
+        if ($this->getNodeTranslation()->isOnline() && !$this->getNodeTranslation()->getNode()->isDeleted()) {
             return true;
         }
 
@@ -332,12 +334,12 @@ abstract class BaseMenuItem extends AbstractEntity
               ->atPath('nodeTranslation')
               ->addViolation();
         } elseif ($this->getType() == self::TYPE_URL_LINK) {
-            if (strlen($this->getTitle()) == 0) {
+            if ($this->getTitle() === '') {
                 $context->buildViolation('Please set the link title')
                   ->atPath('title')
                   ->addViolation();
             }
-            if (strlen($this->getUrl()) == 0) {
+            if ($this->getUrl() === '') {
                 $context->buildViolation('Please set the link URL')
                   ->atPath('url')
                   ->addViolation();
