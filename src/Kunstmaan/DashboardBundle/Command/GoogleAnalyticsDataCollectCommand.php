@@ -209,7 +209,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         }
 
         // create default overviews for this config if none exist yet
-        if (!count($config->getOverviews())) {
+        if (!\count($config->getOverviews())) {
             $overviewRepository->addOverviews($config);
         }
 
@@ -237,7 +237,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
         foreach ($configs as $config) {
             // add overviews if none exist yet
-            if (count($config->getOverviews()) == 0) {
+            if (\count($config->getOverviews()) == 0) {
                 $overviewRepository->addOverviews($config);
             }
 
@@ -293,14 +293,14 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                 // persist entity back to DB
                 $this->output->writeln("\t" . 'Persisting..');
                 $this->em->persist($overview);
-                $this->em->flush($overview);
+                $this->em->flush();
 
                 $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
             } catch (\Google_ServiceException $e) {
                 $error = explode(')', $e->getMessage());
                 $error = $error[1];
                 $this->output->writeln("\t" . '<fg=red>Invalid segment: </fg=red>' .$error);
-                $this->errors += 1;
+                ++$this->errors;
             }
         }
     }

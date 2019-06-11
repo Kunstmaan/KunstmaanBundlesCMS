@@ -43,7 +43,7 @@ class AnalyticsSegmentRepository extends EntityRepository
      */
     public function initSegment($segment, $configId = false)
     {
-        if (!count($segment->getOverviews()->toArray())) {
+        if (!\count($segment->getOverviews()->toArray())) {
             if ($configId) {
                 $config = $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
             } else {

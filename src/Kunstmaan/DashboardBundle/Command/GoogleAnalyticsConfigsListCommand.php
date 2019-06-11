@@ -57,8 +57,8 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
 
         $configs = $this->getconfigs();
 
-        if (count($configs)) {
-            $result = "\t".'<fg=green>' . count($configs) . '</fg=green> configs found:';
+        if (\count($configs)) {
+            $result = "\t".'<fg=green>' . \count($configs) . '</fg=green> configs found:';
             $output->writeln($result);
             foreach ($configs as $config) {
                 $result = "\t".'(id: <fg=cyan>' .$config->getId() . '</fg=cyan>)';
