@@ -99,7 +99,7 @@ class PopupTwigExtension extends \Twig_Extension
     public function getRuleProperties(AbstractRule $rule)
     {
         $properties = array();
-        if (!is_null($rule->getService())) {
+        if (!\is_null($rule->getService())) {
             $service = $this->container->get($rule->getService());
             if ($service instanceof RuleServiceInterface) {
                 $properties = $service->getJsProperties($rule);
