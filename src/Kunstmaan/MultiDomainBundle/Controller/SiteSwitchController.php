@@ -28,7 +28,7 @@ class SiteSwitchController extends Controller
         $domainConfiguration = $this->get('kunstmaan_admin.domain_configuration');
         $host = $request->query->get('host');
         $hosts = $domainConfiguration->getFullHostConfig();
-        if (!array_key_exists($host, $hosts)) {
+        if (!\array_key_exists($host, $hosts)) {
             throw $this->createNotFoundException('Invalid host specified');
         }
 

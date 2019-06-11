@@ -111,7 +111,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $container
             ->method('get')
-            ->will($this->returnValueMap($serviceMap));
+            ->willReturnMap($serviceMap);
         /** @var Container $container */
         $object = new DomainBasedLocaleRouter($container);
 
@@ -164,7 +164,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $container
             ->method('get')
-            ->will($this->returnValueMap($serviceMap));
+            ->willReturnMap($serviceMap);
         /** @var Container $container */
         $object = new DomainBasedLocaleRouter($container);
         $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
@@ -194,7 +194,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $container
             ->method('get')
-            ->will($this->returnValueMap($serviceMap));
+            ->willReturnMap($serviceMap);
 
         /* @var Container $container */
         return $container;
@@ -238,9 +238,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
     private function getRequest($url = 'http://multilangdomain.tld/')
     {
-        $request = Request::create($url);
-
-        return $request;
+        return Request::create($url);
     }
 
     private function getEntityManager($nodeTranslation = null)
