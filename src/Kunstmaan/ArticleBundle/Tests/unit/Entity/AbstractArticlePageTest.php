@@ -31,7 +31,7 @@ class AbstractArticlePageTest extends TestCase
         $this->assertEquals('NASA', $entity->getTitle());
         $this->assertInstanceOf(DateTime::class, $entity->getDate());
         $this->assertEquals(AbstractArticlePageAdminType::class, $entity->getAdminType());
-        $this->assertTrue(is_array($entity->getPossibleChildTypes()));
-        $this->assertTrue(is_array($entity->getPagePartAdminConfigurations()));
+        $this->assertInternalType('array', $entity->getPossibleChildTypes());
+        $this->assertInternalType('array', $entity->getPagePartAdminConfigurations());
     }
 }

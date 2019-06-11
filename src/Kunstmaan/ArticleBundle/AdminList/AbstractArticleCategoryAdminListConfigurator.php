@@ -75,7 +75,7 @@ class AbstractArticleCategoryAdminListConfigurator extends AbstractDoctrineORMAd
     {
         $query = parent::getQuery();
 
-        if (!is_null($query)) {
+        if (!\is_null($query)) {
             $query->setHint(
                 \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
                 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'

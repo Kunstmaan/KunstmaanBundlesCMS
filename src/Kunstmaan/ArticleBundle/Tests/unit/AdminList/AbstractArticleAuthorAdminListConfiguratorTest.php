@@ -30,7 +30,7 @@ class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
 
         $acl = $this->createMock(AclHelper::class);
 
-        $this->object = new AbstractArticleAuthorAdminListConfigurator($em, $acl, 'nl', 'admin');
+        $this->object = new AbstractArticleAuthorAdminListConfigurator($em, $acl, 'nl');
     }
 
     public function testGetters()

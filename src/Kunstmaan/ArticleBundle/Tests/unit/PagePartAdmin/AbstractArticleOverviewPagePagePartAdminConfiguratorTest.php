@@ -18,7 +18,7 @@ class AbstractArticleOverviewPagePagePartAdminConfiguratorTest extends TestCase
         $this->assertEquals('main', $entity->getContext());
         $this->assertEquals('', $entity->getWidgetTemplate());
         $types = $entity->getPossiblePagePartTypes();
-        $this->assertTrue(is_array($types));
+        $this->assertInternalType('array', $types);
         foreach ($types as $type) {
             $this->assertArrayHasKey('name', $type);
             $this->assertArrayHasKey('class', $type);
