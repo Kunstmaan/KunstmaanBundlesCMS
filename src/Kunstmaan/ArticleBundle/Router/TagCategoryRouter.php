@@ -13,7 +13,7 @@ class TagCategoryRouter extends SlugRouter
      */
     public function getRouteCollection()
     {
-        if (!is_null($this->routeCollection)) {
+        if (!\is_null($this->routeCollection)) {
             return $this->routeCollection;
         }
         $this->routeCollection = new RouteCollection();
