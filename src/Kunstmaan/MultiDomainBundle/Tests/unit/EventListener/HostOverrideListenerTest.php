@@ -165,7 +165,7 @@ class HostOverrideListenerTest extends TestCase
         $adminRouteHelper
             ->expects($this->any())
             ->method('isAdminRoute')
-            ->will($this->returnValueMap($adminRouteReturnValueMap));
+            ->willReturnMap($adminRouteReturnValueMap);
 
         $listener = new HostOverrideListener($session, $translator, $domainConfiguration, $adminRouteHelper);
 
@@ -191,9 +191,7 @@ class HostOverrideListenerTest extends TestCase
 
     private function getResponse()
     {
-        $response = $this->createMock('Symfony\Component\HttpFoundation\Response');
-
-        return $response;
+        return $this->createMock('Symfony\Component\HttpFoundation\Response');
     }
 
     private function getRedirectResponse()
@@ -215,22 +213,16 @@ class HostOverrideListenerTest extends TestCase
 
     private function getAdminRequest()
     {
-        $request = Request::create('http://domain.tld/nl/admin/some-admin-uri');
-
-        return $request;
+        return Request::create('http://domain.tld/nl/admin/some-admin-uri');
     }
 
     private function getAdminPreviewRequest()
     {
-        $request = Request::create('http://domain.tld/nl/admin/preview/some-uri');
-
-        return $request;
+        return Request::create('http://domain.tld/nl/admin/preview/some-uri');
     }
 
     private function getFrontendRequest()
     {
-        $request = Request::create('http://domain.tld/nl/some-uri');
-
-        return $request;
+        return Request::create('http://domain.tld/nl/some-uri');
     }
 }

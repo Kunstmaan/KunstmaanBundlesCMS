@@ -16,7 +16,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @var Node
      */
-    protected $rootNode = null;
+    protected $rootNode;
 
     /**
      * @var array
@@ -173,7 +173,7 @@ class DomainConfiguration extends BaseDomainConfiguration
             return parent::getRootNode();
         }
 
-        if (is_null($this->rootNode)) {
+        if (\is_null($this->rootNode)) {
             $host = $this->getRealHost($host);
 
             $internalName = $this->hosts[$host]['root'];
@@ -219,7 +219,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        return !is_null($request) &&
+        return !\is_null($request) &&
         $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
         $request->hasPreviousSession() &&
         $request->getSession()->has(self::OVERRIDE_HOST);
@@ -232,7 +232,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        return !is_null($request) &&
+        return !\is_null($request) &&
         $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
         $request->hasPreviousSession() &&
         $request->getSession()->has(self::SWITCH_HOST);
