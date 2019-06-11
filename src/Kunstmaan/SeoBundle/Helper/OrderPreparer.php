@@ -23,10 +23,10 @@ class OrderPreparer
      */
     public function prepare(Order $order)
     {
-        /** @var $orderItems OrderItem[] */
+        /** @var OrderItem[] $orderItems */
         $orderItems = $order->orderItems;
 
-        /** @var $newOrderItems OrderItem[] */
+        /** @var OrderItem[] $newOrderItems */
         $newOrderItems = array();
 
         foreach ($orderItems as $item) {

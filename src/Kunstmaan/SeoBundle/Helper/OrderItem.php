@@ -13,7 +13,7 @@ class OrderItem
     protected $sku;
 
     /**
-     * @param $sku string
+     * @param string $sku
      *
      * @return $this
      */
@@ -63,7 +63,7 @@ class OrderItem
     protected $categoryOrVariation = '';
 
     /**
-     * @param $catOrVar string
+     * @param string $catOrVar
      *
      * @return $this
      */

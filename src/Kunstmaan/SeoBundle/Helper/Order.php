@@ -19,7 +19,7 @@ class Order
     protected $transactionID;
 
     /**
-     * @param $id number The ID
+     * @param int $id number The ID
      *
      * @return $this
      */
@@ -44,7 +44,7 @@ class Order
     protected $storeName = '';
 
     /**
-     * @param $name string The name of the store
+     * @param string $name The name of the store
      *
      * @return $this
      */
@@ -114,7 +114,7 @@ class Order
     protected $city = '';
 
     /**
-     * @param $city string
+     * @param string $city
      *
      * @return $this
      */
@@ -139,7 +139,7 @@ class Order
     protected $stateOrProvince = '';
 
     /**
-     * @param $stateOrProvince string
+     * @param string $stateOrProvince
      *
      * @return $this
      */
@@ -164,7 +164,7 @@ class Order
     protected $country = '';
 
     /**
-     * @param $country string
+     * @param string $country
      *
      * @return $this
      */
@@ -192,7 +192,7 @@ class Order
      */
     private function accumulatePropertyOnOrderItems($property)
     {
-        if (count($this->orderItems) == 0) {
+        if (\count($this->orderItems) == 0) {
             return '';
         }
 
