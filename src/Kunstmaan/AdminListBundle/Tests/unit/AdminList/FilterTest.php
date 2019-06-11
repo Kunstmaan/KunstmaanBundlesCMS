@@ -49,7 +49,7 @@ class FilterTest extends TestCase
     public function testGetOptions()
     {
         $options = $this->object->getOptions();
-        $this->assertTrue(is_array($options));
+        $this->assertTrue(\is_array($options));
         $this->assertArrayHasKey('x', $options);
     }
 

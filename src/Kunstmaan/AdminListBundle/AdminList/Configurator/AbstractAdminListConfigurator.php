@@ -56,7 +56,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var AbstractType
      */
-    private $type = null;
+    private $type;
 
     /**
      * @var array
@@ -91,7 +91,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var FilterBuilder
      */
-    private $filterBuilder = null;
+    private $filterBuilder;
 
     /**
      * @var int
@@ -236,7 +236,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getViewUrlFor($item)
     {
-        if (is_object($item)) {
+        if (\is_object($item)) {
             $id = $item->getid();
         } else {
             $id = $item['id'];
@@ -284,7 +284,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
         throw new InvalidArgumentException(
             'You need to implement the getAdminType method in '.
-            get_class($this).' or '.get_class($entity)
+            \get_class($this).' or '. \get_class($entity)
         );
     }
 
@@ -457,9 +457,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         if (empty($this->exportFields)) {
             return $this->fields;
-        } else {
-            return $this->exportFields;
         }
+
+        return $this->exportFields;
     }
 
     /**
@@ -588,12 +588,12 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getValue($item, $columnName)
     {
-        if (is_array($item)) {
+        if (\is_array($item)) {
             if (isset($item[$columnName])) {
                 return $item[$columnName];
-            } else {
-                return '';
             }
+
+            return '';
         }
 
         $accessor = PropertyAccess::createPropertyAccessor();
@@ -616,31 +616,31 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function getStringValue($item, $columnName)
     {
         $result = $this->getValue($item, $columnName);
-        if (is_bool($result)) {
+        if (\is_bool($result)) {
             return $result ? 'true' : 'false';
         }
         if ($result instanceof \DateTimeInterface) {
             return $result->format('Y-m-d H:i:s');
-        } else {
-            if ($result instanceof PersistentCollection) {
-                $results = [];
-                /* @var Object $entry */
-                foreach ($result as $entry) {
-                    $results[] = $entry->getName();
-                }
-                if (empty($results)) {
-                    return '';
-                }
-
-                return implode(', ', $results);
-            } else {
-                if (is_array($result)) {
-                    return implode(', ', $result);
-                } else {
-                    return $result;
-                }
-            }
         }
+
+        if ($result instanceof PersistentCollection) {
+            $results = [];
+            /* @var Object $entry */
+            foreach ($result as $entry) {
+                $results[] = $entry->getName();
+            }
+            if (empty($results)) {
+                return '';
+            }
+
+            return implode(', ', $results);
+        }
+
+        if (is_array($result)) {
+            return implode(', ', $result);
+        }
+
+        return $result;
     }
 
     /**
@@ -740,7 +740,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getFilterBuilder()
     {
-        if (is_null($this->filterBuilder)) {
+        if (\is_null($this->filterBuilder)) {
             $this->filterBuilder = new FilterBuilder();
         }
 
@@ -774,7 +774,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $this->page = $request->query->getInt('page', 1);
         // Allow alphanumeric, _ & . in order by parameter!
         $this->orderBy = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
-        $this->orderDirection = $request->query->getAlpha('orderDirection', '');
+        $this->orderDirection = $request->query->getAlpha('orderDirection');
 
         // there is a session and the filter param is not set
         if ($session->has($adminListName) && !$query->has('filter')) {

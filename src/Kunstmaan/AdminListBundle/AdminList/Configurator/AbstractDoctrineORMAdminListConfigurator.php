@@ -27,22 +27,22 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * @var Query
      */
-    private $query = null;
+    private $query;
 
     /**
      * @var Pagerfanta
      */
-    private $pagerfanta = null;
+    private $pagerfanta;
 
     /**
      * @var PermissionDefinition
      */
-    private $permissionDef = null;
+    private $permissionDef;
 
     /**
      * @var AclHelper
      */
-    protected $aclHelper = null;
+    protected $aclHelper;
 
     /**
      * AbstractDoctrineORMAdminListConfigurator constructor.
@@ -97,7 +97,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function getPagerfanta()
     {
-        if (is_null($this->pagerfanta)) {
+        if (\is_null($this->pagerfanta)) {
             $adapter = new DoctrineORMAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setNormalizeOutOfRangePages(true);
@@ -147,7 +147,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function getQuery()
     {
-        if (is_null($this->query)) {
+        if (\is_null($this->query)) {
             $queryBuilder = $this->getQueryBuilder();
             $this->adaptQueryBuilder($queryBuilder);
 
@@ -177,7 +177,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
             $this->finishQueryBuilder($queryBuilder);
 
             // Apply ACL restrictions (if applicable)
-            if (!is_null($this->permissionDef) && !is_null($this->aclHelper)) {
+            if (!\is_null($this->permissionDef) && !\is_null($this->aclHelper)) {
                 $this->query = $this->aclHelper->apply($queryBuilder, $this->permissionDef);
             } else {
                 $this->query = $queryBuilder->getQuery();
