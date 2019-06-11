@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
@@ -480,7 +479,7 @@ class NodeAdminController extends Controller
 
         //set the title
         $title = $request->get('title');
-        if (is_string($title) && !empty($title)) {
+        if (\is_string($title) && !empty($title)) {
             $newPage->setTitle($title);
         } else {
             $newPage->setTitle('New page');
@@ -555,7 +554,7 @@ class NodeAdminController extends Controller
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $nodeVersionRepo->find($version);
 
-        if (is_null($nodeVersion)) {
+        if (\is_null($nodeVersion)) {
             throw new InvalidArgumentException('Version does not exist');
         }
 
@@ -835,7 +834,7 @@ class NodeAdminController extends Controller
         $page = null;
         $draft = ($subaction == 'draft');
         $saveAsDraft = $request->get('saveasdraft');
-        if ((!$draft && !empty($saveAsDraft)) || ($draft && is_null($draftNodeVersion))) {
+        if ((!$draft && !empty($saveAsDraft)) || ($draft && \is_null($draftNodeVersion))) {
             // Create a new draft version
             $draft = true;
             $subaction = 'draft';
@@ -866,7 +865,7 @@ class NodeAdminController extends Controller
                 );
                 if ($thresholdDate >= $updatedDate || $nodeVersionIsLocked) {
                     $page = $nodeVersion->getRef($this->em);
-                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
+                    if ($nodeVersion === $nodeTranslation->getPublicNodeVersion()) {
                         $this->nodePublisher
                             ->createPublicVersion(
                                 $page,
@@ -955,17 +954,15 @@ class NodeAdminController extends Controller
                         FlashTypes::SUCCESS,
                         $this->get('translator')->trans('kuma_node.admin.edit.flash.locked_success')
                     );
+                } elseif ($request->request->has('publishing') || $request->request->has('publish_later')) {
+                    $this->nodePublisher->chooseHowToPublish($request, $nodeTranslation, $this->translator);
+                } elseif ($request->request->has('unpublishing') || $request->request->has('unpublish_later')) {
+                    $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
                 } else {
-                    if ($request->request->has('publishing') || $request->request->has('publish_later')) {
-                        $this->nodePublisher->chooseHowToPublish($request, $nodeTranslation, $this->translator);
-                    } elseif ($request->request->has('unpublishing') || $request->request->has('unpublish_later')) {
-                        $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
-                    } else {
-                        $this->addFlash(
-                            FlashTypes::SUCCESS,
-                            $this->get('translator')->trans('kuma_node.admin.edit.flash.success')
-                        );
-                    }
+                    $this->addFlash(
+                        FlashTypes::SUCCESS,
+                        $this->get('translator')->trans('kuma_node.admin.edit.flash.success')
+                    );
                 }
 
                 $params = [
@@ -1200,7 +1197,7 @@ class NodeAdminController extends Controller
         $newPage = new $type();
 
         $title = $request->get('title');
-        if (is_string($title) && !empty($title)) {
+        if (\is_string($title) && !empty($title)) {
             $newPage->setTitle($title);
         } else {
             $newPage->setTitle($this->get('translator')->trans('kuma_node.admin.new_page.title.default'));

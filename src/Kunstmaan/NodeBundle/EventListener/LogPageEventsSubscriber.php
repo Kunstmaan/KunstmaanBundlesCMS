@@ -26,7 +26,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     /**
      * @var UserInterface
      */
-    private $user = null;
+    private $user;
 
     /**
      * @param Logger                $logger       The logger
@@ -79,7 +79,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
      */
     private function getUser()
     {
-        if (is_null($this->user)) {
+        if (\is_null($this->user)) {
             $this->user = $this->tokenStorage->getToken()->getUser();
         }
 

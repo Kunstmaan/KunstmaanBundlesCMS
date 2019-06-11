@@ -57,7 +57,7 @@ class NodeVersionRepository extends EntityRepository
         $nodeVersion->setRef($hasNode);
         $nodeVersion->setOrigin($origin);
 
-        if (!is_null($created)) {
+        if (!\is_null($created)) {
             $nodeVersion->setCreated($created);
         }
 

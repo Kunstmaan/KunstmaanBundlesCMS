@@ -256,7 +256,7 @@ class NodeTranslation extends AbstractEntity
                 }
             }
         }
-        $slug = $slug . $this->getSlug();
+        $slug .= $this->getSlug();
 
         return $slug;
     }
@@ -332,7 +332,7 @@ class NodeTranslation extends AbstractEntity
 
         $nodeVersions = $this->getNodeVersions();
 
-        $max = count($nodeVersions);
+        $max = \count($nodeVersions);
         for ($i = $max - 1; $i >= 0; --$i) {
             /* @var NodeVersion $nodeVersion */
             $nodeVersion = $nodeVersions[$i];

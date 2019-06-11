@@ -140,7 +140,7 @@ class NodeTranslationTest extends TestCase
     private function getNodeWithTranslation($lang, $title, $slug, $nodeId = null)
     {
         $node = new Node();
-        if (!is_null($nodeId)) {
+        if (!\is_null($nodeId)) {
             $node->setId($nodeId);
         }
         $nodeTranslation = new NodeTranslation();
@@ -190,11 +190,11 @@ class NodeTranslationTest extends TestCase
 
         $repo->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($entity));
+            ->willReturn($entity);
 
         $em->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $this->assertNull($this->object->getRef($em));
 

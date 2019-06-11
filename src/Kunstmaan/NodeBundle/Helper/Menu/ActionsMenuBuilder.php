@@ -61,7 +61,7 @@ class ActionsMenuBuilder
     /**
      * @var bool
      */
-    private $enableExportPageTemplate = true;
+    private $enableExportPageTemplate;
 
     /**
      * @param FactoryInterface              $factory                  The factory

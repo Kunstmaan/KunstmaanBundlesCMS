@@ -42,7 +42,7 @@ class ActionsMenuBuilderTest extends TestCase
         $authorizationChecker = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $authorizationChecker->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->builder = new ActionsMenuBuilder($factory, $em, $router, $dispatcher, $authorizationChecker, new PagesConfiguration([]));
     }
@@ -102,7 +102,7 @@ class ActionsMenuBuilderTest extends TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.save'));
 
-        if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
+        if (null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty()) {
             $this->assertNotNull($menu->getChild('action.delete'));
         } else {
             $this->assertNull($menu->getChild('action.delete'));
@@ -129,7 +129,7 @@ class ActionsMenuBuilderTest extends TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
-        if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
+        if (null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty()) {
             $this->assertNotNull($menu->getChild('action.delete'));
         } else {
             $this->assertNull($menu->getChild('action.delete'));
@@ -143,7 +143,7 @@ class ActionsMenuBuilderTest extends TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.unpublish'));
-        if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
+        if (null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty()) {
             $this->assertNotNull($menu->getChild('action.delete'));
         } else {
             $this->assertNull($menu->getChild('action.delete'));

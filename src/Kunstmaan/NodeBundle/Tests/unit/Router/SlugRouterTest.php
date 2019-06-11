@@ -76,7 +76,7 @@ class SlugRouterTest extends TestCase
 
         $container
             ->method('get')
-            ->will($this->returnValueMap($serviceMap));
+            ->willReturnMap($serviceMap);
 
         return $container;
     }
@@ -118,9 +118,7 @@ class SlugRouterTest extends TestCase
 
     private function getRequest($url = 'http://domain.tld/')
     {
-        $request = Request::create($url);
-
-        return $request;
+        return Request::create($url);
     }
 
     private function getEntityManager($nodeTranslation = null)

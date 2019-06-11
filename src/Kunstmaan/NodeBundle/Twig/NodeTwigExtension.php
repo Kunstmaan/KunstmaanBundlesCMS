@@ -252,7 +252,7 @@ class NodeTwigExtension extends Twig_Extension
         $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
             ->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
 
-        if (!is_null($translation)) {
+        if (!\is_null($translation)) {
             $url = $translation->getUrl();
         }
 
