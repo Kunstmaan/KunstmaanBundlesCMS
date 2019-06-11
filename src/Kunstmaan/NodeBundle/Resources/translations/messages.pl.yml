@@ -172,3 +172,7 @@ kuma_node:
     export_pagetemplate:
       button:
         title: Eksportuj szablon strony
+toolbar:
+  node:
+    title: 'Page title'
+    edit: 'Edit page'
