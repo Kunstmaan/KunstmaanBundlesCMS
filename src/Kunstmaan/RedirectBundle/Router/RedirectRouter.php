@@ -18,7 +18,7 @@ class RedirectRouter implements RouterInterface
     private $context;
 
     /** @var RouteCollection */
-    private $routeCollection = null;
+    private $routeCollection;
 
     /** @var ObjectRepository */
     private $redirectRepository;
@@ -88,9 +88,8 @@ class RedirectRouter implements RouterInterface
     public function match($pathinfo)
     {
         $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
-        $result = $urlMatcher->match($pathinfo);
 
-        return $result;
+        return $urlMatcher->match($pathinfo);
     }
 
     /**
@@ -100,7 +99,7 @@ class RedirectRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
-        if (is_null($this->routeCollection)) {
+        if (\is_null($this->routeCollection)) {
             $this->routeCollection = new RouteCollection();
             $this->initRoutes();
         }

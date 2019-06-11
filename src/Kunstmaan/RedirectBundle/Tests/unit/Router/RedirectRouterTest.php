@@ -37,14 +37,14 @@ class RedirectRouterTest extends TestCase
     {
         $firstDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
-        $firstDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('sub.domain.com'));
+        $firstDomainConfiguration->expects($this->any())->method('getHost')->willReturn('sub.domain.com');
 
         $secondDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
-        $secondDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('other.domain.com'));
+        $secondDomainConfiguration->expects($this->any())->method('getHost')->willReturn('other.domain.com');
 
         $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
-        $this->repository->expects($this->any())->method('findAll')->will($this->returnValue($this->getRedirects()));
+        $this->repository->expects($this->any())->method('findAll')->willReturn($this->getRedirects());
 
         $this->firstObject = new RedirectRouter($this->repository, $firstDomainConfiguration);
         $this->secondObject = new RedirectRouter($this->repository, $secondDomainConfiguration);

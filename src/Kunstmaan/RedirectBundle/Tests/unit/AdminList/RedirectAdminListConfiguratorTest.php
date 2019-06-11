@@ -45,7 +45,7 @@ class RedirectAdminListConfiguratorTest extends TestCase
     {
         $this->object->buildFields();
         $fields = $this->object->getFields();
-        $this->assertEquals(4, count($fields));
+        $this->assertCount(4, $fields);
         $fieldNames = array_map(
             function (Field $field) {
                 return $field->getName();
