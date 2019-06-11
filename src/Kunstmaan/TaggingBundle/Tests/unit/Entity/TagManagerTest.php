@@ -104,7 +104,7 @@ class TagManagerTest extends TestCase
 
         $expr->expects($this->any())
             ->method('eq')
-            ->will($this->returnValue($comparison));
+            ->willReturn($comparison);
 
         $query = $this->getMockBuilder(Query::class)
             ->disableOriginalConstructor()
@@ -116,39 +116,39 @@ class TagManagerTest extends TestCase
 
         $builder->expects($this->any())
             ->method('select')
-            ->will($this->returnValue($builder));
+            ->willReturn($builder);
 
         $builder->expects($this->any())
             ->method('from')
-            ->will($this->returnValue($builder));
+            ->willReturn($builder);
 
         $builder->expects($this->any())
             ->method('where')
-            ->will($this->returnValue($builder));
+            ->willReturn($builder);
 
         $builder->expects($this->any())
             ->method('expr')
-            ->will($this->returnValue($expr));
+            ->willReturn($expr);
 
         $builder->expects($this->any())
             ->method('getQuery')
-            ->will($this->returnValue($query));
+            ->willReturn($query);
 
         $builder->expects($this->any())
             ->method('innerJoin')
-            ->will($this->returnValue($builder));
+            ->willReturn($builder);
 
         $builder->expects($this->any())
             ->method('setParameter')
-            ->will($this->returnValue($builder));
+            ->willReturn($builder);
 
         $query->expects($this->any())
             ->method('getOneOrNullResult')
-            ->will($this->returnValue(new Tag()));
+            ->willReturn(new Tag());
 
         $query->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
@@ -160,19 +160,19 @@ class TagManagerTest extends TestCase
 
         $repo->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($tag));
+            ->willReturn($tag);
 
         $repo->expects($this->any())
         ->method('findAll')
-        ->will($this->returnValue(new ArrayCollection()));
+        ->willReturn(new ArrayCollection());
 
         $em->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $em->expects($this->any())
             ->method('createQueryBuilder')
-            ->will($this->returnValue($builder));
+            ->willReturn($builder);
 
         $this->object = new TagManager($em);
 
@@ -211,11 +211,11 @@ class TagManagerTest extends TestCase
 
         $connection->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue(new MySqlPlatform()));
+            ->willReturn(new MySqlPlatform());
 
         $this->em->expects($this->any())
             ->method('getConnection')
-            ->will($this->returnValue($connection));
+            ->willReturn($connection);
 
         $query = $this->getMockBuilder(Query::class)
             ->disableOriginalConstructor()
@@ -223,19 +223,19 @@ class TagManagerTest extends TestCase
 
         $query->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue(new ArrayCollection()));
+            ->willReturn(new ArrayCollection());
 
         $this->em->expects($this->any())
             ->method('createNativeQuery')
-            ->will($this->returnValue($query));
+            ->willReturn($query);
 
         $this->em->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue($meta));
+            ->willReturn($meta);
 
         $this->em->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue($meta));
+            ->willReturn($meta);
 
         $this->object = new TagManager($this->em);
 
@@ -261,11 +261,11 @@ class TagManagerTest extends TestCase
 
         $connection->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue(new MySqlPlatform()));
+            ->willReturn(new MySqlPlatform());
 
         $this->em->expects($this->any())
             ->method('getConnection')
-            ->will($this->returnValue($connection));
+            ->willReturn($connection);
 
         $query = $this->getMockBuilder(Query::class)
             ->disableOriginalConstructor()
@@ -273,19 +273,19 @@ class TagManagerTest extends TestCase
 
         $query->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue(new ArrayCollection()));
+            ->willReturn(new ArrayCollection());
 
         $this->em->expects($this->any())
             ->method('createNativeQuery')
-            ->will($this->returnValue($query));
+            ->willReturn($query);
 
         $this->em->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue($meta));
+            ->willReturn($meta);
 
         $this->em->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue($meta));
+            ->willReturn($meta);
 
         $item = new FakePage();
         $results = $this->object->findRelatedItems($item, Random::class, 'en');
@@ -300,15 +300,15 @@ class TagManagerTest extends TestCase
 
         $config->expects($this->any())
             ->method('getCustomHydrationMode')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $config->expects($this->any())
             ->method('addCustomHydrationMode')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->em->expects($this->any())
             ->method('getConfiguration')
-            ->will($this->returnValue($config));
+            ->willReturn($config);
 
         $resource = new FakePage();
         $this->assertNull($this->object->loadTagging($resource));
@@ -322,15 +322,15 @@ class TagManagerTest extends TestCase
 
         $config->expects($this->any())
             ->method('getCustomHydrationMode')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $config->expects($this->any())
             ->method('addCustomHydrationMode')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->em->expects($this->any())
             ->method('getConfiguration')
-            ->will($this->returnValue($config));
+            ->willReturn($config);
 
         $resource = new Lazy();
         $this->assertNull($this->object->loadTagging($resource));
