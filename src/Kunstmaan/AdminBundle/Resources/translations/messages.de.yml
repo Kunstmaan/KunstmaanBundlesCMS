@@ -127,8 +127,11 @@ toolbar:
     unknown: Unbekannt
     uptodate: Aktuell
     toupdate: Nicht aktuell
-    version: Bundle-Version
-    status: Bundle-Status
+    version: Cms version
+    status: Status
+    error: Error while fetching version information.
   exception:
+    info:
+      exceptions: Exceptions
+      events: Events
     title: Ausnahmen
-    message: "Ausnahme <strong>%X</strong> ausgelöst von <strong>%Y%</strong> Event(s)"
