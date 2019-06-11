@@ -81,14 +81,14 @@ class SeoTwigExtension extends Twig_Extension
         if (!$validUrl === false) {
             // The url is valid
             return $url;
-        } else {
-            // Prepend with $host if $url starts with "/"
-            if ($url[0] == '/') {
-                return $url = $host.$url;
-            }
-
-            return false;
         }
+
+        // Prepend with $host if $url starts with "/"
+        if (strpos($url, '/') === 0) {
+            return $url = $host.$url;
+        }
+
+        return false;
     }
 
     /**
@@ -98,9 +98,9 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getSeoFor(AbstractPage $entity)
     {
-        $key = md5(get_class($entity).$entity->getId());
+        $key = md5(\get_class($entity).$entity->getId());
 
-        if (!array_key_exists($key, $this->seoCache)) {
+        if (!\array_key_exists($key, $this->seoCache)) {
             $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
             $this->seoCache[$key] = $seo;
         }
@@ -134,7 +134,7 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getTitleForPageOrDefault(AbstractPage $entity = null, $default = null)
     {
-        if (is_null($entity)) {
+        if (\is_null($entity)) {
             return $default;
         }
 
@@ -179,7 +179,7 @@ class SeoTwigExtension extends Twig_Extension
     protected function getPreferredValue(array $values)
     {
         foreach ($values as $v) {
-            if (!is_null($v) && !empty($v)) {
+            if (!\is_null($v) && !empty($v)) {
                 return $v;
             }
         }
@@ -194,12 +194,12 @@ class SeoTwigExtension extends Twig_Extension
      */
     private function getSeoTitle(AbstractPage $entity = null)
     {
-        if (is_null($entity)) {
+        if (\is_null($entity)) {
             return null;
         }
 
         $seo = $this->getSeoFor($entity);
-        if (!is_null($seo)) {
+        if (!\is_null($seo)) {
             $title = $seo->getMetaTitle();
             if (!empty($title)) {
                 return str_replace('%websitetitle%', $this->getWebsiteTitle(), $title);
