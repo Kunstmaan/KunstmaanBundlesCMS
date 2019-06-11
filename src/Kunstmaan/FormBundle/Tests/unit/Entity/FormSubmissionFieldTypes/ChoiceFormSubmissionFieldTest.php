@@ -34,7 +34,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
         $object = $this->object;
         $object->setChoices(['delboy1978uk' => 123456789]);
         $object->setValue('delboy1978uk');

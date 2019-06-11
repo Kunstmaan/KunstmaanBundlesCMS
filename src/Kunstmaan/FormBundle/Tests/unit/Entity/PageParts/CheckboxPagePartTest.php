@@ -31,7 +31,7 @@ class CheckboxPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
     }
 
     public function testAdaptForm()
@@ -45,13 +45,13 @@ class CheckboxPagePartTest extends TestCase
 
         $formBuilder->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue(array()));
+            ->willReturn([]);
 
         $fields = new ArrayObject();
 
-        $this->assertTrue(count($fields) == 0);
+        $this->assertEquals(count($fields), 0);
         $object->setErrorMessageRequired('omg sort it out');
-        /* @var $formBuilder FormBuilderInterface */
+        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }

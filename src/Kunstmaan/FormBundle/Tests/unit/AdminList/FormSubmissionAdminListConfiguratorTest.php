@@ -78,7 +78,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
             ->method('setParameter')
             ->will($this->returnSelf());
 
-        /* @var $queryBuilder QueryBuilder */
+        /* @var QueryBuilder $queryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder);
     }
 

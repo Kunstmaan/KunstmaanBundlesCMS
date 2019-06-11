@@ -39,8 +39,7 @@ class FormSubmissionsController extends Controller
 
         /* @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
-            new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW),
-            $em
+            new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW)
         );
         $adminList->bindRequest($request);
 
@@ -65,8 +64,7 @@ class FormSubmissionsController extends Controller
 
         /** @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
-            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $this->getParameter('kunstmaan_form.deletable_formsubmissions')),
-            $em
+            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $this->getParameter('kunstmaan_form.deletable_formsubmissions'))
         );
         $adminList->bindRequest($request);
 
@@ -95,8 +93,7 @@ class FormSubmissionsController extends Controller
 
         /** @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
-            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $deletableFormsubmission),
-            $em
+            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $deletableFormsubmission)
         );
         $adminList->bindRequest($request);
 
@@ -183,8 +180,6 @@ class FormSubmissionsController extends Controller
             );
         }
 
-        $response = new RedirectResponse($url);
-
-        return $response;
+        return new RedirectResponse($url);
     }
 }

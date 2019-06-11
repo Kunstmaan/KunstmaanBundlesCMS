@@ -66,7 +66,7 @@ class AbstractFormPageTest extends TestCase
     {
         $stringValue = $this->object->getFormElementsContext();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
     }
 
     public function testGetControllerAction()
@@ -85,7 +85,7 @@ class AbstractFormPageTest extends TestCase
 
         $router->expects($this->any())
             ->method('generate')
-            ->will($this->returnValue('https://nasa.gov'));
+            ->willReturn('https://nasa.gov');
 
         $context = new RenderContext();
         $trans = new NodeTranslation();
