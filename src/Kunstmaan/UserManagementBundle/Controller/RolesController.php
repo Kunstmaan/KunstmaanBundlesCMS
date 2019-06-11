@@ -58,7 +58,7 @@ class RolesController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $role = new Role('');
         $form = $this->createForm(RoleType::class, $role);
@@ -101,7 +101,7 @@ class RolesController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
@@ -145,11 +145,11 @@ class RolesController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
-        if (!is_null($role)) {
+        if (!\is_null($role)) {
             $em->remove($role);
             $em->flush();
 

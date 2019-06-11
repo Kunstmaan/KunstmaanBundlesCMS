@@ -33,9 +33,11 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (is_null($parent)) {
+        if (\is_null($parent)) {
             return;
-        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        }
+
+        if ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                 $menuItem = new MenuItem($menu);
                 $menuItem
@@ -74,90 +76,82 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                 }
                 $children[] = $menuItem;
             }
-        } else {
-            if ('KunstmaanUserManagementBundle_settings_users' == $parent->getRoute()) {
-                if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-                    $menuItem = new MenuItem($menu);
-                    $menuItem
-                        ->setRoute('KunstmaanUserManagementBundle_settings_users_add')
-                        ->setUniqueId('Add user')
-                        ->setLabel('Add user')
-                        ->setParent($parent)
-                        ->setAppearInNavigation(false);
-                    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                        $menuItem->setActive(true);
-                    }
-                    $children[] = $menuItem;
-
-                    $menuItem = new MenuItem($menu);
-                    $menuItem
-                        ->setRoute('KunstmaanUserManagementBundle_settings_users_edit')
-                        ->setUniqueId('Edit user')
-                        ->setLabel('Edit user')
-                        ->setParent($parent)
-                        ->setAppearInNavigation(false);
-                    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                        $menuItem->setActive(true);
-                    }
-                    $children[] = $menuItem;
+        } elseif ('KunstmaanUserManagementBundle_settings_users' == $parent->getRoute()) {
+            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+                $menuItem = new MenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanUserManagementBundle_settings_users_add')
+                    ->setUniqueId('Add user')
+                    ->setLabel('Add user')
+                    ->setParent($parent)
+                    ->setAppearInNavigation(false);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
                 }
-            } else {
-                if ('KunstmaanUserManagementBundle_settings_groups' == $parent->getRoute()) {
-                    if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-                        $menuItem = new MenuItem($menu);
-                        $menuItem
-                            ->setRoute('KunstmaanUserManagementBundle_settings_groups_add')
-                            ->setUniqueId('Add group')
-                            ->setLabel('Add group')
-                            ->setParent($parent)
-                            ->setAppearInNavigation(false);
-                        if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                            $menuItem->setActive(true);
-                        }
-                        $children[] = $menuItem;
+                $children[] = $menuItem;
 
-                        $menuItem = new MenuItem($menu);
-                        $menuItem
-                            ->setRoute('KunstmaanUserManagementBundle_settings_groups_edit')
-                            ->setUniqueId('Edit group')
-                            ->setLabel('Edit group')
-                            ->setParent($parent)
-                            ->setAppearInNavigation(false);
-                        if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                            $menuItem->setActive(true);
-                        }
-                        $children[] = $menuItem;
-                    }
-                } else {
-                    if ('KunstmaanUserManagementBundle_settings_roles' == $parent->getRoute()) {
-                        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-                            $menuItem = new MenuItem($menu);
-                            $menuItem
-                                ->setRoute('KunstmaanUserManagementBundle_settings_roles_add')
-                                ->setUniqueId('Add role')
-                                ->setLabel('Add role')
-                                ->setParent($parent)
-                                ->setAppearInNavigation(false);
-                            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                                $menuItem->setActive(true);
-                            }
-                            $children[] = $menuItem;
-
-                            $menuItem = new MenuItem($menu);
-                            $menuItem
-                                ->setRoute('KunstmaanUserManagementBundle_settings_roles_edit')
-                                ->setUniqueId('Edit role')
-                                ->setLabel('Edit role')
-                                ->setParent($parent)
-                                ->setAppearInNavigation(false);
-                            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                                $menuItem->setActive(true);
-                            }
-                            $children[] = $menuItem;
-                        }
-                    }
+                $menuItem = new MenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanUserManagementBundle_settings_users_edit')
+                    ->setUniqueId('Edit user')
+                    ->setLabel('Edit user')
+                    ->setParent($parent)
+                    ->setAppearInNavigation(false);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
                 }
+                $children[] = $menuItem;
             }
+        } elseif ('KunstmaanUserManagementBundle_settings_groups' == $parent->getRoute()) {
+            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+                $menuItem = new MenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanUserManagementBundle_settings_groups_add')
+                    ->setUniqueId('Add group')
+                    ->setLabel('Add group')
+                    ->setParent($parent)
+                    ->setAppearInNavigation(false);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
+                }
+                $children[] = $menuItem;
+
+                $menuItem = new MenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanUserManagementBundle_settings_groups_edit')
+                    ->setUniqueId('Edit group')
+                    ->setLabel('Edit group')
+                    ->setParent($parent)
+                    ->setAppearInNavigation(false);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
+                }
+                $children[] = $menuItem;
+            }
+        } elseif (('KunstmaanUserManagementBundle_settings_roles' == $parent->getRoute()) && $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            $menuItem = new MenuItem($menu);
+            $menuItem
+                ->setRoute('KunstmaanUserManagementBundle_settings_roles_add')
+                ->setUniqueId('Add role')
+                ->setLabel('Add role')
+                ->setParent($parent)
+                ->setAppearInNavigation(false);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+            }
+            $children[] = $menuItem;
+
+            $menuItem = new MenuItem($menu);
+            $menuItem
+                ->setRoute('KunstmaanUserManagementBundle_settings_roles_edit')
+                ->setUniqueId('Edit role')
+                ->setLabel('Edit role')
+                ->setParent($parent)
+                ->setAppearInNavigation(false);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+            }
+            $children[] = $menuItem;
         }
     }
 }
