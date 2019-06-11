@@ -4,6 +4,13 @@ namespace Kunstmaan\LeadGenerationBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXScrollPercentRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\MaxXTimesRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\RecurringEveryXTimeRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlWhitelistRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule;
 
 class PopupManager
 {
@@ -32,7 +39,7 @@ class PopupManager
      */
     public function getPopups()
     {
-        if (is_null($this->popups)) {
+        if (\is_null($this->popups)) {
             $this->popups = $this->em->getRepository('KunstmaanLeadGenerationBundle:Popup\AbstractPopup')->findAll();
         }
 
@@ -63,18 +70,18 @@ class PopupManager
      */
     public function getAvailableRules(AbstractPopup $popup)
     {
-        if (!is_null($popup->getAvailableRules())) {
+        if (!\is_null($popup->getAvailableRules())) {
             return $popup->getAvailableRules();
-        } else {
-            return array(
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXScrollPercentRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\MaxXTimesRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\RecurringEveryXTimeRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlWhitelistRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule',
-            );
         }
+
+        return array(
+            AfterXSecondsRule::class,
+            AfterXScrollPercentRule::class,
+            MaxXTimesRule::class,
+            RecurringEveryXTimeRule::class,
+            UrlBlacklistRule::class,
+            UrlWhitelistRule::class,
+            OnExitIntentRule::class,
+        );
     }
 }

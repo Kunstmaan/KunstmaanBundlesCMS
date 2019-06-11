@@ -61,7 +61,7 @@ abstract class AbstractRule
      */
     public function getFullClassname()
     {
-        return get_class($this);
+        return \get_class($this);
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class AbstractRule
      */
     public function getClassname()
     {
-        return basename(str_replace('\\', '/', get_class($this)));
+        return basename(str_replace('\\', '/', \get_class($this)));
     }
 
     /**
