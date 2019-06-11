@@ -143,8 +143,11 @@ toolbar:
         unknown: Unknown
         uptodate: Up-to-date
         toupdate: Outdated
-        version: Bundle version
-        status: Bundle status
+        version: Cms version
+        status: Status
+        error: Error while fetching version information.
     exception:
+        info:
+            exceptions: Exceptions
+            events: Events
         title: Exceptions
-        message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

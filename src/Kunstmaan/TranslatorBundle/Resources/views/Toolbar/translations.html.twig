@@ -6,18 +6,19 @@
     {% if data is defined %}
         {% set icon %}
             {{ include('@KunstmaanTranslator/Toolbar/Icon/translation.svg') }}
-            <span class="sf-toolbar-value">{{ 'toolbar.translations.title' | trans }}</span>
-            <span class="sf-toolbar-label">{{ data.translations | length }}</span>
+            <span class="sf-toolbar-value">{{ data.translations | length }}</span>
+            <span class="sf-toolbar-label">{{ 'toolbar.translations.title' | trans }}</span>
         {% endset %}
 
         {% set text %}
             {% for translation in data.translations %}
                 <div class="sf-toolbar-info-piece">
-                    <b>
+                    <b>{{ translation.id }}</b>
+                    <span>
                         <a href="{{ translation.route }}" style="text-decoration: none !important;">
-                            {{ translation.message }}
+                            {{ translation.message|length > 40 ? translation.message|slice(0, 40) ~ '...' : translation.message  }}
                         </a>
-                    </b>
+                    </span>
                 </div>
             {% endfor %}
         {% endset %}
