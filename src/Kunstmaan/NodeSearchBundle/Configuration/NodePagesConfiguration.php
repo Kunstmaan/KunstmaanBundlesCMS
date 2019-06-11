@@ -149,7 +149,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
                 $locale = strtolower($locale);
             }
 
-            if (false === array_key_exists($locale, $this->analyzerLanguages)) {
+            if (false === \array_key_exists($locale, $this->analyzerLanguages)) {
                 $notAnalyzed[] = $locale;
             }
         }
@@ -176,7 +176,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             // Build new index
             $index = $this->searchProvider->createIndex($this->indexName . '_' . $locale);
 
-            if (array_key_exists($locale, $this->analyzerLanguages)) {
+            if (\array_key_exists($locale, $this->analyzerLanguages)) {
                 $localeAnalysis = clone $analysis;
                 $language = $this->analyzerLanguages[$locale]['analyzer'];
 
@@ -236,10 +236,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     public function createNodeDocuments(Node $node, $lang)
     {
         $nodeTranslation = $node->getNodeTranslation($lang, true);
-        if ($nodeTranslation) {
-            if ($this->indexNodeTranslation($nodeTranslation)) {
-                $this->indexChildren($node, $lang);
-            }
+        if ($nodeTranslation && $this->indexNodeTranslation($nodeTranslation)) {
+            $this->indexChildren($node, $lang);
         }
     }
 
@@ -269,7 +267,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     {
         // Retrieve the public NodeVersion
         $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
-        if (is_null($publicNodeVersion)) {
+        if (\is_null($publicNodeVersion)) {
             return false;
         }
 
@@ -459,7 +457,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addPermissions(Node $node, &$doc)
     {
-        if (!is_null($this->aclProvider)) {
+        if (!\is_null($this->aclProvider)) {
             $roles = $this->getAclPermissions($node);
         } else {
             // Fallback when no ACL available / assume everything is accessible...
@@ -520,7 +518,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
                     'Indexing page "%s" / lang : %s / type : %s / id : %d / node id : %d',
                     $page->getTitle(),
                     $nodeTranslation->getLang(),
-                    get_class($page),
+                    \get_class($page),
                     $page->getId(),
                     $nodeTranslation->getNode()->getId()
                 )

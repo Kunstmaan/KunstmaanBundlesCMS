@@ -99,9 +99,8 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
         $search = new Search($this->search->getClient());
         $search->addIndex($index);
         $search->addType($index->getType($this->indexType));
-        $result = $search->search($this->query);
 
-        return $result;
+        return $search->search($this->query);
     }
 
     /**
@@ -112,11 +111,11 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setPagination($offset, $size)
     {
-        if (is_int($offset)) {
+        if (\is_int($offset)) {
             $this->query->setFrom($offset);
         }
 
-        if (is_int($size)) {
+        if (\is_int($size)) {
             $this->query->setSize($size);
         }
 

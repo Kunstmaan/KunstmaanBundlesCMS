@@ -143,7 +143,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
     public function testContainerDeprecation()
     {
         $em = $this->createMock(EntityManager::class);
-        $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)), $em);
+        new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)), $em);
     }
 
     private function getContainer($searchConfigMock)

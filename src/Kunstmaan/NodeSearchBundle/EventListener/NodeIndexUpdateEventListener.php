@@ -4,7 +4,6 @@ namespace Kunstmaan\NodeSearchBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
@@ -82,7 +81,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     public function onPostPersist(NodeEvent $event)
     {
         $reIndexChildren = (
-            !is_null($this->entityChangeSet)
+            !\is_null($this->entityChangeSet)
             && $this->entityChangeSet['nodeTranslationId'] == $event->getNodeTranslation()->getId()
             && isset($this->entityChangeSet['changeSet']['url'])
         );
