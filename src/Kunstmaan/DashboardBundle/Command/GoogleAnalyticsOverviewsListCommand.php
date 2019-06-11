@@ -73,8 +73,6 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
         $segmentId = $input->getOption('segment');
 
         try {
-            $overviews = [];
-
             if ($segmentId) {
                 $overviews = $this->getOverviewsOfSegment($segmentId);
             } elseif ($configId) {
@@ -83,8 +81,8 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
                 $overviews = $this->getAllOverviews();
             }
 
-            if (count($overviews)) {
-                $result = "\t".'<fg=green>' . count($overviews) . '</fg=green> overviews found:';
+            if (\count($overviews)) {
+                $result = "\t".'<fg=green>' . \count($overviews) . '</fg=green> overviews found:';
                 $output->writeln($result);
                 foreach ($overviews as $overview) {
                     $result = "\t".'(id: <fg=cyan>' .$overview->getId() . '</fg=cyan>)';

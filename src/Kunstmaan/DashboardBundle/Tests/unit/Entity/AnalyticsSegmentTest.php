@@ -18,6 +18,6 @@ class AnalyticsSegmentTest extends TestCase
         $this->assertEquals('Donald Trump', $entity->getName());
         $this->assertEquals('query', $entity->getQuery());
         $this->assertEquals(5, $entity->getConfig());
-        $this->assertTrue(is_array($entity->getoverviews()));
+        $this->assertInternalType('array', $entity->getoverviews());
     }
 }

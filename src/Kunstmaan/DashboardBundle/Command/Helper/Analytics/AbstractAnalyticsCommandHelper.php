@@ -43,7 +43,7 @@ abstract class AbstractAnalyticsCommandHelper
      *
      * @return array
      */
-    protected function getTimestamps(AnalyticsOverview &$overview)
+    protected function getTimestamps(AnalyticsOverview $overview)
     {
         // if yearoverview set the begin time to the first day of this year
         $profileStartDate = explode('T', $this->configHelper->getActiveProfile()['created'])[0];

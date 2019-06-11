@@ -19,7 +19,7 @@ class DashboardController extends Controller
      *
      * @return array
      */
-    public function indexAction(Request $request, $segmentId = null)
+    public function indexAction(Request $request)
     {
         /** @var WidgetManager $widgetManager */
         $widgetManager = $this->get('kunstmaan_dashboard.manager.widgets');
