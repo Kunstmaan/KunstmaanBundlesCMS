@@ -78,7 +78,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function canHandle($object)
     {
         if (
-            (is_string($object)) ||
+            (\is_string($object)) ||
             ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)
         ) {
             return true;
@@ -159,7 +159,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     private function endsWith($str, $sub)
     {
-        return substr($str, strlen($str) - strlen($sub)) === $sub;
+        return substr($str, \strlen($str) - \strlen($sub)) === $sub;
     }
 
     /**
@@ -208,8 +208,8 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function createNew($data)
     {
         $result = null;
-        if (is_string($data)) {
-            if (strpos($data, 'http') !== 0) {
+        if (\is_string($data)) {
+            if (strncmp($data, 'http', 4) !== 0) {
                 $data = 'http://' . $data;
             }
             $parsedUrl = parse_url($data);

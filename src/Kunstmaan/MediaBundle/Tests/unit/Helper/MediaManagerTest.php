@@ -25,15 +25,15 @@ class MediaManagerTest extends TestCase
         $this->defaultHandler
             ->expects($this->any())
             ->method('canHandle')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $this->defaultHandler
             ->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue('DefaultHandler'));
+            ->willReturn('DefaultHandler');
         $this->defaultHandler
             ->expects($this->any())
             ->method('getType')
-            ->will($this->returnValue('any/type'));
+            ->willReturn('any/type');
         $this->object = new MediaManager();
         $this->object->setDefaultHandler($this->defaultHandler);
     }
@@ -172,7 +172,7 @@ class MediaManagerTest extends TestCase
             ->expects($this->once())
             ->method('createNew')
             ->with($this->equalTo($data))
-            ->will($this->returnValue(false));
+            ->willReturn(false);
         $this->object->addHandler($handler1);
 
         $handler2 = $this->getCustomHandler(null, 'CustomHandler2');
@@ -180,7 +180,7 @@ class MediaManagerTest extends TestCase
             ->expects($this->once())
             ->method('createNew')
             ->with($this->equalTo($data))
-            ->will($this->returnValue($media));
+            ->willReturn($media);
         $this->object->addHandler($handler2);
 
         $this->assertEquals($media, $this->object->createNew($data));
@@ -196,7 +196,7 @@ class MediaManagerTest extends TestCase
         $handler
             ->expects($this->once())
             ->method('getAddFolderActions')
-            ->will($this->returnValue($actions));
+            ->willReturn($actions);
         $this->object->addHandler($handler);
         $this->assertEquals($actions, $this->object->getFolderAddActions());
     }
@@ -216,17 +216,17 @@ class MediaManagerTest extends TestCase
         $handler
             ->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue($name));
+            ->willReturn($name);
         $handler
             ->expects($this->any())
             ->method('getType')
-            ->will($this->returnValue('custom/type'));
-        if (!is_null($media)) {
+            ->willReturn('custom/type');
+        if (!\is_null($media)) {
             $handler
                 ->expects($this->any())
                 ->method('canHandle')
                 ->with($this->equalTo($media))
-                ->will($this->returnValue(true));
+                ->willReturn(true);
         }
 
         return $handler;

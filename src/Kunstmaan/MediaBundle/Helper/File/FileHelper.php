@@ -127,7 +127,7 @@ class FileHelper
     public function setFile(File $file)
     {
         $this->file = $file;
-        if (strlen($file->getPathname()) > 0) {
+        if (\strlen($file->getPathname()) > 0) {
             $this->media->setContent($file);
             $this->media->setContentType($file->getMimeType());
             $this->media->setUrl(

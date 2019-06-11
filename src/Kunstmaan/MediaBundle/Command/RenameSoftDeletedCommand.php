@@ -85,7 +85,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
                 if ($media->isDeleted() && $media->getLocation() === 'local' && $handler instanceof FileHandler) {
                     $oldFileUrl = $media->getUrl();
                     $newFileName = ($original ? $media->getOriginalFilename() : uniqid() . '.' . pathinfo($oldFileUrl, PATHINFO_EXTENSION));
-                    $newFileUrl = dirname($oldFileUrl) . '/' . $newFileName;
+                    $newFileUrl = \dirname($oldFileUrl) . '/' . $newFileName;
                     $fileRenameQueue[] = array($oldFileUrl, $newFileUrl, $handler);
                     $media->setUrl($newFileUrl);
                     $this->em->persist($media);

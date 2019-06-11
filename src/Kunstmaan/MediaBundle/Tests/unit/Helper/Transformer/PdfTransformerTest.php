@@ -55,13 +55,13 @@ class PdfTransformerTest extends TestCase
 
         $pdf = $this->filesDir . '/sample.pdf';
         $this->filesystem->copy($pdf, $pdfFilename);
-        $this->assertTrue(file_exists($pdfFilename));
+        $this->assertFileExists($pdfFilename);
 
         $transformer = new PdfTransformer(new \Imagick());
         $absolutePath = $transformer->apply($pdfFilename);
 
         $this->assertEquals($jpgFilename, $absolutePath);
-        $this->assertTrue(file_exists($jpgFilename));
+        $this->assertFileExists($jpgFilename);
         $this->assertNotEmpty(file_get_contents($jpgFilename));
     }
 
@@ -72,7 +72,7 @@ class PdfTransformerTest extends TestCase
 
         $pdf = $this->filesDir . '/sample.pdf';
         $this->filesystem->copy($pdf, $pdfFilename);
-        $this->assertTrue(file_exists($pdfFilename));
+        $this->assertFileExists($pdfFilename);
 
         $this->filesystem->touch($jpgFilename);
 
