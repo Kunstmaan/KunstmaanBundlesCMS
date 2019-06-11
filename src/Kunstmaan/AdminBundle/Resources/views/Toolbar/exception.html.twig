@@ -5,14 +5,25 @@
 
     {% if data is defined %}
         {% set icon %}
-            <span class="sf-toolbar-value">{{ 'toolbar.exception.title' | trans }}</span>
+            {{ include('@KunstmaanAdmin/Toolbar/Icon/exception.svg') }}
+            <span class="sf-toolbar-value">{{ data['cp_all'] }}</span>
+            <span class="sf-toolbar-info-piece-additional-detail">
+                <span class="sf-toolbar-label">{{ 'toolbar.exception.title' | trans }}</span>
+            </span>
         {% endset %}
 
         {% set text %}
-            <div class="sf-toolbar-info-piece">
-                <span>
-                    {{ 'toolbar.exception.message' | trans({'%X%': data['cp_all'], '%Y%': data['cp_sum']}) | raw }}
-                </span>
+            <div class="sf-toolbar-info-group">
+                <div class="sf-toolbar-info-piece">
+                    <div class="sf-toolbar-info-piece">
+                        <b> {{ 'toolbar.exception.info.exceptions'|trans }}</b>
+                        <span class="sf-toolbar-status">{{ data['cp_all'] }}</span>
+                    </div>
+                    <div class="sf-toolbar-info-piece">
+                        <b> {{ 'toolbar.exception.info.events'|trans }}</b>
+                        <span class="sf-toolbar-status">{{ data['cp_sum'] }} </span>
+                    </div>
+                </div>
             </div>
         {% endset %}
 
