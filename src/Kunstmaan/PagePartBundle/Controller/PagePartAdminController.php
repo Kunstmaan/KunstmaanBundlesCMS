@@ -50,7 +50,7 @@ class PagePartAdminController extends Controller
             }
         }
 
-        if (is_null($pagePartAdminConfigurator)) {
+        if (\is_null($pagePartAdminConfigurator)) {
             throw new \RuntimeException(sprintf('No page part admin configurator found for context "%s".', $context));
         }
 

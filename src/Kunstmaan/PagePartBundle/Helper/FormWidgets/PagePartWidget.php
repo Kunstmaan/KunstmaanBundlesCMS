@@ -63,7 +63,7 @@ class PagePartWidget extends FormWidget
         $this->request = $request;
         $this->pagePartAdminConfigurator = $pagePartAdminConfigurator;
 
-        $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page, null);
+        $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page);
         $this->setTemplate('KunstmaanPagePartBundle:FormWidgets\PagePartWidget:widget.html.twig');
     }
 
@@ -108,8 +108,8 @@ class PagePartWidget extends FormWidget
         $errors = parent::getFormErrors($formView);
 
         $formHelper = $this->getFormHelper();
-
-        if (isset($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()])) {
+        $key = 'pagepartadmin_' . $this->pagePartAdmin->getContext();
+        if (isset($formView[$key])) {
             $errors = array_merge($errors, $formHelper->getRecursiveErrorMessages($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
         }
 

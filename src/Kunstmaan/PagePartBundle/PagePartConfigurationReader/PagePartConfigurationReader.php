@@ -35,13 +35,13 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
         foreach ($page->getPagePartAdminConfigurations() as $value) {
             if ($value instanceof PagePartAdminConfiguratorInterface) {
                 $pagePartAdminConfigurators[] = $value;
-            } elseif (is_string($value) && isset($this->configurators[$value])) {
+            } elseif (\is_string($value) && isset($this->configurators[$value])) {
                 $pagePartAdminConfigurators[] = $this->configurators[$value];
-            } elseif (is_string($value)) {
+            } elseif (\is_string($value)) {
                 $this->configurators[$value] = $this->parser->parse($value, $this->configurators);
                 $pagePartAdminConfigurators[] = $this->configurators[$value];
             } else {
-                throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . get_class($value));
+                throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . \get_class($value));
             }
         }
 
@@ -62,7 +62,7 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
         $pagePartAdminConfigurators = $this->getPagePartAdminConfigurators($page);
         foreach ($pagePartAdminConfigurators as $pagePartAdminConfigurator) {
             $context = $pagePartAdminConfigurator->getContext();
-            if (!in_array($context, $result)) {
+            if (!\in_array($context, $result)) {
                 $result[] = $context;
             }
         }

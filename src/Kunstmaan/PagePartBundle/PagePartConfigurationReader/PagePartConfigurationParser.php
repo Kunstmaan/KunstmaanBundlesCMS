@@ -40,18 +40,18 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
      */
     public function parse($name, array $existing = [])
     {
-        if (in_array($name, $this->stack)) {
+        if (\in_array($name, $this->stack)) {
             throw new \RuntimeException(sprintf('Recursion detected when parsing %s -> %s', implode(' -> ', $this->stack), $name));
         }
         $this->stack[] = $name;
 
         $value = $this->getValue($name);
 
-        if (!array_key_exists('types', $value)) {
+        if (!\array_key_exists('types', $value)) {
             $value['types'] = [];
         }
 
-        if (array_key_exists('extends', $value)) {
+        if (\array_key_exists('extends', $value)) {
             $namespace = '';
             if (false !== strpos($name, ':')) {
                 $namespace = substr($name, 0, strpos($name, ':') + 1);
@@ -78,7 +78,7 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
                 continue;
             }
 
-            $types[$type['name']] = ['name' => $type['name'], 'class' => $type['class'], 'preview' => array_key_exists('preview', $type) ? $type['preview'] : ''];
+            $types[$type['name']] = ['name' => $type['name'], 'class' => $type['class'], 'preview' => \array_key_exists('preview', $type) ? $type['preview'] : ''];
             if (isset($type['pagelimit'])) {
                 $types[$type['name']]['pagelimit'] = $type['pagelimit'];
             }
@@ -115,15 +115,14 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         // if we use the old flow (sf3), the value can be stored in it's own yml file
         if (strpos($name, ':')) {
             $nameParts = explode(':', $name);
-            if (2 !== count($nameParts)) {
+            if (2 !== \count($nameParts)) {
                 throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").',
                     $name));
             }
             list($namespace, $name) = $nameParts;
             $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pageparts/' . $name . '.yml');
-            $value = Yaml::parse(file_get_contents($path));
 
-            return $value;
+            return Yaml::parse(file_get_contents($path));
         }
 
         throw new \Exception(sprintf('Non existing pageparts preset "%s".', $name));

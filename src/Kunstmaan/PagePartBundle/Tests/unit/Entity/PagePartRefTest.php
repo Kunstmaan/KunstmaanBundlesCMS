@@ -37,11 +37,11 @@ class PagePartRefTest extends TestCase
 
         $repo->expects($this->any())
             ->method('find')
-            ->will($this->returnValue(new PagePart()));
+            ->willReturn(new PagePart());
 
         $em->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $this->assertEquals(1, $part->getId());
         $this->assertEquals(2, $part->getPageId());
