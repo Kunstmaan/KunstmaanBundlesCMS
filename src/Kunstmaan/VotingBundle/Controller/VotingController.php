@@ -26,8 +26,6 @@ class VotingController extends Controller
         $reference = $request->get('reference');
         $value = $request->get('value');
         $this->get('event_dispatcher')->dispatch(Events::VOTE_UP, new UpVoteEvent($request, $reference, $value));
-
-        return;
     }
 
     /**
@@ -41,8 +39,6 @@ class VotingController extends Controller
         $reference = $request->get('reference');
         $value = $request->get('value');
         $this->get('event_dispatcher')->dispatch(Events::VOTE_DOWN, new DownVoteEvent($request, $reference, $value));
-
-        return;
     }
 
     /**
