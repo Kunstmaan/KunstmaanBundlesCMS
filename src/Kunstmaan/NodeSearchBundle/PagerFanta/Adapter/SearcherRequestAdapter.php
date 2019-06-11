@@ -94,7 +94,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     protected function processResponse(ResultSet $result = null)
     {
         $this->hits = array();
-        if (is_null($result)) {
+        if (\is_null($result)) {
             return null;
         }
         $this->collectHits($result);
@@ -139,7 +139,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
      */
     private function getResponse()
     {
-        if (is_null($this->response)) {
+        if (\is_null($this->response)) {
             $this->response = $this->searcher->search();
         }
 
