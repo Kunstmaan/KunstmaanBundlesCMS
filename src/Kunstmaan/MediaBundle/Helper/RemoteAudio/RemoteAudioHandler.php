@@ -72,7 +72,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
     public function canHandle($object)
     {
         if (
-            (is_string($object)) ||
+            (\is_string($object)) ||
             ($object instanceof Media && $object->getContentType() == RemoteAudioHandler::CONTENT_TYPE)
         ) {
             return true;

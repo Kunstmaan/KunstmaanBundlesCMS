@@ -15,7 +15,7 @@ class IconFontManager
     /**
      * @var IconFontLoaderInterface
      */
-    protected $defaultLoader = null;
+    protected $defaultLoader;
 
     /**
      * @param IconFontLoaderInterface $loader

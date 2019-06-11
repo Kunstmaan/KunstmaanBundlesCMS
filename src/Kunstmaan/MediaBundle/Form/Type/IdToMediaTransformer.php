@@ -47,7 +47,7 @@ class IdToMediaTransformer implements DataTransformerInterface
         if (empty($entity)) {
             return '';
         }
-        if (!is_object($entity)) {
+        if (!\is_object($entity)) {
             throw new UnexpectedTypeException($entity, 'object');
         }
         if ($entity instanceof Collection) {

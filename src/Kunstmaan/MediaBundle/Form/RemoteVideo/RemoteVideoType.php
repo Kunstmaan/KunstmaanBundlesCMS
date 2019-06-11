@@ -41,7 +41,7 @@ class RemoteVideoType extends AbstractRemoteType
     protected function getRemoteVideoChoices($configuration)
     {
         $choices = array();
-        if (count($configuration)) {
+        if (\count($configuration)) {
             foreach ($configuration as $config => $enabled) {
                 if (!$enabled) {
                     continue;

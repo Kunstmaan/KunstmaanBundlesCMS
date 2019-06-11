@@ -32,17 +32,17 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @var Filesystem
      */
-    public $fileSystem = null;
+    public $fileSystem;
 
     /**
      * @var MimeTypeGuesserInterface
      */
-    public $mimeTypeGuesser = null;
+    public $mimeTypeGuesser;
 
     /**
      * @var ExtensionGuesserInterface
      */
-    public $extensionGuesser = null;
+    public $extensionGuesser;
 
     /**
      * Files with a blacklisted extension will be converted to txt
@@ -184,7 +184,7 @@ class FileHandler extends AbstractMediaHandler
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
 
-            if (!array_key_exists('extension', $pathInfo)) {
+            if (!\array_key_exists('extension', $pathInfo)) {
                 $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
             }
 
@@ -221,7 +221,7 @@ class FileHandler extends AbstractMediaHandler
             $allMyKeys = $adapter->keys();
             $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
 
-            if (count($everythingfromdir) === 1) {
+            if (\count($everythingfromdir) === 1) {
                 $adapter->delete($folderPath);
             }
         }
@@ -323,7 +323,7 @@ class FileHandler extends AbstractMediaHandler
 
         $parts = pathinfo($filename);
         $filename = $this->slugifier->slugify($parts['filename']);
-        if (array_key_exists('extension', $parts)) {
+        if (\array_key_exists('extension', $parts)) {
             $filename .= '.'.strtolower($parts['extension']);
         }
 

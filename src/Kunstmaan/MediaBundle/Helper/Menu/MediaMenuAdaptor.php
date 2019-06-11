@@ -38,7 +38,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (is_null($parent)) {
+        if (\is_null($parent)) {
             // Add menu item for root gallery
             $rootFolders = $this->repo->getRootNodes();
             $currentId = $request->get('folderId');
@@ -59,9 +59,9 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                     ->setParent(null)
                     ->setRole($rootFolder->getRel());
 
-                if (!is_null($currentFolder)) {
+                if (!\is_null($currentFolder)) {
                     $parentIds = $this->repo->getParentIds($currentFolder);
-                    if (in_array($rootFolder->getId(), $parentIds)) {
+                    if (\in_array($rootFolder->getId(), $parentIds)) {
                         $menuItem->setActive(true);
                     }
                 }
