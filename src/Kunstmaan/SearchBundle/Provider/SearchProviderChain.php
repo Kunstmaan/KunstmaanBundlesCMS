@@ -35,7 +35,7 @@ class SearchProviderChain implements SearchProviderChainInterface
      */
     public function getProvider($alias)
     {
-        if (array_key_exists($alias, $this->providers)) {
+        if (\array_key_exists($alias, $this->providers)) {
             return $this->providers[$alias];
         }
 
