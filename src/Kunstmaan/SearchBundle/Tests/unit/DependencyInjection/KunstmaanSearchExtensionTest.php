@@ -24,8 +24,8 @@ class KunstmaanSearchExtensionTest extends AbstractExtensionTestCase
 
         $analyzers = $this->container->getParameter('analyzer_languages');
 
-        $this->assertTrue(is_array($analyzers));
-        $this->assertTrue(array_key_exists('ar', $analyzers));
+        $this->assertInternalType('array', $analyzers);
+        $this->assertTrue(\array_key_exists('ar', $analyzers));
         $this->assertEquals('arabic', $analyzers['ar']['analyzer']);
     }
 
