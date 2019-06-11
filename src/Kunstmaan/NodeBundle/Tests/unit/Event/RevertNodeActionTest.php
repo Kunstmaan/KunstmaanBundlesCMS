@@ -30,9 +30,9 @@ class RevertNodeActionTest extends TestCase
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
-        $this->assertInstanceOf(get_class($page), $event->getPage());
+        $this->assertInstanceOf(\get_class($page), $event->getPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginNodeVersion());
-        $this->assertInstanceOf(get_class($page), $event->getOriginPage());
+        $this->assertInstanceOf(\get_class($page), $event->getOriginPage());
 
         $event->setNode($node);
         $event->setNodeTranslation($nodeTranslation);
@@ -44,10 +44,10 @@ class RevertNodeActionTest extends TestCase
 
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
-        $this->assertInstanceOf(get_class($page), $event->getPage());
+        $this->assertInstanceOf(\get_class($page), $event->getPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
         $this->assertInstanceOf(Response::class, $event->getResponse());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginNodeVersion());
-        $this->assertInstanceOf(get_class($page), $event->getOriginPage());
+        $this->assertInstanceOf(\get_class($page), $event->getOriginPage());
     }
 }

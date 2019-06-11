@@ -95,11 +95,11 @@ class PageCreatorService
      */
     public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = array())
     {
-        if (is_null($options)) {
+        if (\is_null($options)) {
             $options = array();
         }
 
-        if (is_null($translations) || (count($translations) == 0)) {
+        if (\is_null($translations) || (\count($translations) == 0)) {
             throw new \InvalidArgumentException('There has to be at least 1 translation in the translations array');
         }
 
@@ -107,16 +107,16 @@ class PageCreatorService
 
         /** @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
-        /** @var $userRepo UserRepository */
+        /** @var UserRepository $userRepo */
         $userRepo = $em->getRepository($this->userEntityClass);
-        /* @var $seoRepo SeoRepository */
+        /* @var SeoRepository $seoRepo */
         try {
             $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
         } catch (ORMException $e) {
             $seoRepo = null;
         }
 
-        $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
+        $pagecreator = \array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
 
         if ($pagecreator instanceof $this->userEntityClass) {
             $creator = $pagecreator;
@@ -153,11 +153,11 @@ class PageCreatorService
                 // This returns the rootnode.
                 $rootNode = $nodeRepo->createNodeFor($pageTypeInstance, $language, $creator, $pageInternalName);
 
-                if (array_key_exists('hidden_from_nav', $options)) {
+                if (\array_key_exists('hidden_from_nav', $options)) {
                     $rootNode->setHiddenFromNav($options['hidden_from_nav']);
                 }
 
-                if (!is_null($parent)) {
+                if (!\is_null($parent)) {
                     if ($parent instanceof HasPagePartsInterface) {
                         $parent = $nodeRepo->getNodeFor($parent);
                     }
@@ -182,7 +182,7 @@ class PageCreatorService
             // Make SEO.
             $seo = null;
 
-            if (!is_null($seoRepo)) {
+            if (!\is_null($seoRepo)) {
                 $seo = $seoRepo->findOrCreateFor($pageTypeInstance);
             }
 
@@ -197,7 +197,7 @@ class PageCreatorService
 
             $translationNode->setOnline($setOnline);
 
-            if (!is_null($seo)) {
+            if (!\is_null($seo)) {
                 $em->persist($seo);
                 $em->flush($seo);
             }

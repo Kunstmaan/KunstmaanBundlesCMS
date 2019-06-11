@@ -30,7 +30,7 @@ class NodeMenuItem
     /**
      * @var NodeMenuItem[]
      */
-    private $children = null;
+    private $children;
 
     /**
      * @var NodeMenuItem
@@ -207,7 +207,7 @@ class NodeMenuItem
      */
     public function getChildren($includeHiddenFromNav = true)
     {
-        if (is_null($this->children)) {
+        if (\is_null($this->children)) {
             $children = $this->menu->getChildren($this->node, true);
             /* @var NodeMenuItem $child */
             foreach ($children as $child) {
@@ -216,15 +216,13 @@ class NodeMenuItem
             $this->children = $children;
         }
 
-        $children = array_filter($this->children, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
+        return array_filter($this->children, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
             if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
                 return false;
             }
 
             return true;
         });
-
-        return $children;
     }
 
     /**

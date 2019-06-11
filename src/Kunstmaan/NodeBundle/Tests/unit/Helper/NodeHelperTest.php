@@ -21,7 +21,6 @@ use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\EventListener\NodeTabListener;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
-use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
@@ -56,7 +55,7 @@ class TestPage extends AbstractPage implements HasNodeInterface, PageTabInterfac
     public function getTabs()
     {
         return [
-            (new PageTab('tab1_name', 'tab1_title', TestType::class)),
+            new PageTab('tab1_name', 'tab1_title', TestType::class),
         ];
     }
 }
@@ -107,9 +106,6 @@ class NodeHelperTest extends TestCase
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|TokenStorageInterface */
     private $tokenStorage;
-
-    /** @var \PHPUnit_Framework_MockObject_MockObject|NodeVersionLockHelper */
-    private $nodeVersionLockHelper;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|CloneHelper */
     private $cloneHelper;
@@ -173,7 +169,7 @@ class NodeHelperTest extends TestCase
          * @var TestPage
          * @var NodeTranslation $nodeTranslationChildPage
          */
-        list($page, $nodeTranslationChildPage, $nodeChildPage) = $this->createNodeEntities($title);
+        list(, $nodeTranslationChildPage, $nodeChildPage) = $this->createNodeEntities($title);
 
         $expectedTestPageCreateNodeFor = new TestPage();
         $expectedTestPageCreateNodeFor->setTitle($title);
@@ -283,7 +279,7 @@ class NodeHelperTest extends TestCase
             ->willReturn($page);
         $nodeVersion
             ->method('getUpdated')
-            ->willReturn((new \DateTime('-1 hour')));
+            ->willReturn(new \DateTime('-1 hour'));
 
         $nodeTranslation = new NodeTranslation();
         $nodeTranslation->setLang($this->locale);
@@ -322,7 +318,7 @@ class NodeHelperTest extends TestCase
             ->willReturn($page);
         $nodeVersion
             ->method('getUpdated')
-            ->willReturn((new \DateTime('-1 hour')));
+            ->willReturn(new \DateTime('-1 hour'));
 
         $nodeTranslation = new NodeTranslation();
         $nodeTranslation->setLang($this->locale);
@@ -488,14 +484,14 @@ class NodeHelperTest extends TestCase
     {
         $targetPage = new TestPage();
 
-        list(, $nodeTranslationHomePage, $nodeHomePage) = $this->createNodeEntities('Homepage');
+        list(, , $nodeHomePage) = $this->createNodeEntities('Homepage');
 
         /**
          * @var TestPage
          * @var NodeTranslation $sourceNodeTranslation
          * @var Node            $node
          */
-        list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
+        list($sourcePage, , $node) = $this->createNodeEntities();
         $node->setParent($nodeHomePage);
 
         $this->cloneHelper

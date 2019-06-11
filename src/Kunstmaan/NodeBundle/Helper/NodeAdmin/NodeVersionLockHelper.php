@@ -48,7 +48,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
             $this->createNodeVersionLock($user, $nodeTranslation, $isPublicNodeVersion); // refresh lock
             $locks = $this->getNodeVersionLocksByNodeTranslation($nodeTranslation, $isPublicNodeVersion, $user);
 
-            return count($locks) ? true : false;
+            return \count($locks) ? true : false;
         }
 
         return false;

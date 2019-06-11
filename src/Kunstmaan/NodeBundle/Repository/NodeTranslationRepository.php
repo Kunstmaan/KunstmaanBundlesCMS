@@ -186,7 +186,7 @@ class NodeTranslationRepository extends EntityRepository
             ->getRepository('KunstmaanNodeBundle:NodeVersion')
             ->getNodeVersionFor($hasNode);
 
-        if (!is_null($nodeVersion)) {
+        if (!\is_null($nodeVersion)) {
             return $nodeVersion->getNodeTranslation();
         }
 
@@ -311,7 +311,7 @@ class NodeTranslationRepository extends EntityRepository
             $qb->setParameter('url', $urlSlug);
         }
 
-        if (!is_null($toExclude)) {
+        if (!\is_null($toExclude)) {
             $qb->andWhere('NOT b.id = :exclude_id')
                 ->setParameter('exclude_id', $toExclude->getId());
         }
@@ -504,9 +504,8 @@ class NodeTranslationRepository extends EntityRepository
             );
         $query->setParameter('lang', $locale);
         $query->setParameter('url', $urlSlug);
-        $translation = $query->getOneOrNullResult();
 
-        return $translation;
+        return $query->getOneOrNullResult();
     }
 
     /**
@@ -533,9 +532,9 @@ class NodeTranslationRepository extends EntityRepository
                     $parentNodeTranslation,
                     $language
                 );
-            } else {
-                return false;
             }
+
+            return false;
         }
 
         return true;
@@ -594,7 +593,7 @@ class NodeTranslationRepository extends EntityRepository
     public function getParentNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $parent = $nodeTranslation->getNode()->getParent();
-        if (is_null($parent)) {
+        if (\is_null($parent)) {
             return null;
         }
 

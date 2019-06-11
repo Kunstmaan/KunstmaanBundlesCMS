@@ -37,7 +37,7 @@ class NodeMenu
     /**
      * @var Node
      */
-    private $currentNode = null;
+    private $currentNode;
 
     /**
      * @var string
@@ -57,12 +57,12 @@ class NodeMenu
     /**
      * @var NodeMenuItem[]
      */
-    private $topNodeMenuItems = null;
+    private $topNodeMenuItems;
 
     /**
      * @var NodeMenuItem[]
      */
-    private $breadCrumb = null;
+    private $breadCrumb;
 
     /**
      * @var Node[]
@@ -87,12 +87,12 @@ class NodeMenu
     /**
      * @var NodeMenuItem
      */
-    private $rootNodeMenuItem = null;
+    private $rootNodeMenuItem;
 
     /**
      * @var DomainConfigurationInterface
      */
-    private $domainConfiguration = null;
+    private $domainConfiguration;
 
     /**
      * @param EntityManagerInterface       $em                  The entity manager
@@ -211,20 +211,18 @@ class NodeMenu
     public function getTopNodes()
     {
         $this->init();
-        if (!is_array($this->topNodeMenuItems)) {
+        if (!\is_array($this->topNodeMenuItems)) {
             $this->topNodeMenuItems = array();
 
             // To be backwards compatible we need to create the top node MenuItems
-            if (array_key_exists(0, $this->childNodes)) {
+            if (\array_key_exists(0, $this->childNodes)) {
                 $topNodeMenuItems = $this->getTopNodeMenuItems();
 
                 $includeHiddenFromNav = $this->includeHiddenFromNav;
                 $this->topNodeMenuItems = array_filter(
                     $topNodeMenuItems,
                     function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
-                        if ($entry->getNode()->isHiddenFromNav(
-                            ) && !$includeHiddenFromNav
-                        ) {
+                        if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
                             return false;
                         }
 
@@ -243,7 +241,7 @@ class NodeMenu
     public function getBreadCrumb()
     {
         $this->init();
-        if (!is_array($this->breadCrumb)) {
+        if (!\is_array($this->breadCrumb)) {
             $this->breadCrumb = array();
 
             /* @var NodeRepository $repo */
@@ -258,7 +256,7 @@ class NodeMenu
                     $this->locale,
                     $this->includeOffline
                 );
-                if (!is_null($nodeTranslation)) {
+                if (!\is_null($nodeTranslation)) {
                     $nodeMenuItem = new NodeMenuItem(
                         $parentNode,
                         $nodeTranslation,
@@ -281,8 +279,8 @@ class NodeMenu
     {
         $this->init();
         $breadCrumb = $this->getBreadCrumb();
-        if (count($breadCrumb) > 0) {
-            return $breadCrumb[count($breadCrumb) - 1];
+        if (\count($breadCrumb) > 0) {
+            return $breadCrumb[\count($breadCrumb) - 1];
         }
 
         return null;
@@ -296,7 +294,7 @@ class NodeMenu
     public function getActiveForDepth($depth)
     {
         $breadCrumb = $this->getBreadCrumb();
-        if (count($breadCrumb) >= $depth) {
+        if (\count($breadCrumb) >= $depth) {
             return $breadCrumb[$depth - 1];
         }
 
@@ -314,7 +312,7 @@ class NodeMenu
         $this->init();
         $children = array();
 
-        if (array_key_exists($node->getId(), $this->childNodes)) {
+        if (\array_key_exists($node->getId(), $this->childNodes)) {
             $nodes = $this->childNodes[$node->getId()];
             /* @var Node $childNode */
             foreach ($nodes as $childNode) {
@@ -322,7 +320,7 @@ class NodeMenu
                     $this->locale,
                     $this->includeOffline
                 );
-                if (!is_null($nodeTranslation)) {
+                if (!\is_null($nodeTranslation)) {
                     $children[] = new NodeMenuItem(
                         $childNode,
                         $nodeTranslation,
@@ -335,9 +333,7 @@ class NodeMenu
             $children = array_filter(
                 $children,
                 function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
-                    if ($entry->getNode()->isHiddenFromNav(
-                        ) && !$includeHiddenFromNav
-                    ) {
+                    if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
                         return false;
                     }
 
@@ -410,7 +406,7 @@ class NodeMenu
             $siblings = $this->getChildren($parent, $includeHiddenFromNav);
 
             foreach ($siblings as $index => $child) {
-                if ($child->getNode() === $node && (($index + 1) < count(
+                if ($child->getNode() === $node && (($index + 1) < \count(
                             $siblings
                         ))
                 ) {
@@ -430,7 +426,7 @@ class NodeMenu
     public function getParent(Node $node)
     {
         $this->init();
-        if ($node->getParent() && array_key_exists(
+        if ($node->getParent() && \array_key_exists(
                 $node->getParent()->getId(),
                 $this->allNodes
             )
@@ -471,11 +467,11 @@ class NodeMenu
         $this->init();
         $resultNode = null;
 
-        if (is_null($includeOffline)) {
+        if (\is_null($includeOffline)) {
             $includeOffline = $this->includeOffline;
         }
 
-        if (array_key_exists($internalName, $this->nodesByInternalName)) {
+        if (\array_key_exists($internalName, $this->nodesByInternalName)) {
             $nodes = $this->nodesByInternalName[$internalName];
             $nodes = array_filter(
                 $nodes,
@@ -488,7 +484,7 @@ class NodeMenu
                 }
             );
 
-            if (!is_null($parent)) {
+            if (!\is_null($parent)) {
                 /** @var Node $parentNode */
                 if ($parent instanceof NodeTranslation) {
                     $parentNode = $parent->getNode();
@@ -512,11 +508,11 @@ class NodeMenu
                 }
 
                 // Look for a node that has an ancestor with the same parent id
-                if (is_null($resultNode)) {
+                if (\is_null($resultNode)) {
                     /* @var Node $n */
                     foreach ($nodes as $node) {
                         $tempNode = $node;
-                        while (is_null($resultNode) && !is_null(
+                        while (\is_null($resultNode) && !\is_null(
                                 $tempNode->getParent()
                             )) {
                             $tempParent = $tempNode->getParent();
@@ -529,10 +525,8 @@ class NodeMenu
                         }
                     }
                 }
-            } else {
-                if (count($nodes) > 0) {
-                    $resultNode = $nodes[0];
-                }
+            } elseif (\count($nodes) > 0) {
+                $resultNode = $nodes[0];
             }
         }
 
@@ -541,7 +535,7 @@ class NodeMenu
                 $this->locale,
                 $includeOffline
             );
-            if (!is_null($nodeTranslation)) {
+            if (!\is_null($nodeTranslation)) {
                 return new NodeMenuItem(
                     $resultNode,
                     $nodeTranslation,
@@ -559,9 +553,9 @@ class NodeMenu
      */
     public function getRootNodeMenuItem()
     {
-        if (is_null($this->rootNodeMenuItem)) {
+        if (\is_null($this->rootNodeMenuItem)) {
             $rootNode = $this->domainConfiguration->getRootNode();
-            if (!is_null($rootNode)) {
+            if (!\is_null($rootNode)) {
                 $nodeTranslation = $rootNode->getNodeTranslation(
                     $this->locale,
                     $this->includeOffline
@@ -684,7 +678,7 @@ class NodeMenu
                 $this->locale,
                 $this->includeOffline
             );
-            if (!is_null($nodeTranslation)) {
+            if (!\is_null($nodeTranslation)) {
                 $topNodeMenuItems[] = new NodeMenuItem(
                     $topNode,
                     $nodeTranslation,

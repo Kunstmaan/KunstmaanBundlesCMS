@@ -33,12 +33,12 @@ class URLHelper
     /**
      * @var array|null
      */
-    private $nodeTranslationMap = null;
+    private $nodeTranslationMap;
 
     /**
      * @var array|null
      */
-    private $mediaMap = null;
+    private $mediaMap;
 
     /**
      * @var DomainConfigurationInterface
@@ -75,7 +75,7 @@ class URLHelper
         if ($this->isInternalLink($text)) {
             preg_match_all("/\[(([a-z_A-Z\.]+):)?NT([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
 
-            if (count($matches) > 0) {
+            if (\count($matches) > 0) {
                 $map = $this->getNodeTranslationMap();
                 foreach ($matches as $match) {
                     $nodeTranslationFound = false;
@@ -116,7 +116,7 @@ class URLHelper
         if ($this->isInternalMediaLink($text)) {
             preg_match_all("/\[(([a-z_A-Z]+):)?M([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
 
-            if (count($matches) > 0) {
+            if (\count($matches) > 0) {
                 $map = $this->getMediaMap();
                 foreach ($matches as $match) {
                     $mediaFound = false;
@@ -149,7 +149,7 @@ class URLHelper
      */
     private function getNodeTranslationMap()
     {
-        if (is_null($this->nodeTranslationMap)) {
+        if (\is_null($this->nodeTranslationMap)) {
             $sql = 'SELECT id, url, lang FROM kuma_node_translations';
             $stmt = $this->em->getConnection()->prepare($sql);
             $stmt->execute();
@@ -168,7 +168,7 @@ class URLHelper
      */
     private function getMediaMap()
     {
-        if (is_null($this->mediaMap)) {
+        if (\is_null($this->mediaMap)) {
             $sql = 'SELECT id, url FROM kuma_media';
             $stmt = $this->em->getConnection()->prepare($sql);
             $stmt->execute();

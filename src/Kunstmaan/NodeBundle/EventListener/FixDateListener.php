@@ -20,7 +20,7 @@ class FixDateListener
         $response = $event->getResponse();
         if ($response) {
             $date = $response->getDate();
-            if (empty($date)) {
+            if (null === $date) {
                 $response->setDate(new \DateTime());
             }
         }

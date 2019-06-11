@@ -37,7 +37,7 @@ class NodeEvent extends Event
     /**
      * @var Response
      */
-    private $response = null;
+    private $response;
 
     /**
      * @param Node             $node            The node

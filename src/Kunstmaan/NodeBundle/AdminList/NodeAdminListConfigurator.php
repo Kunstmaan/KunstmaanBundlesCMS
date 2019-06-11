@@ -252,7 +252,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         }
 
         $rootNode = $this->domainConfiguration->getRootNode();
-        if (!is_null($rootNode)) {
+        if (!\is_null($rootNode)) {
             $queryBuilder->andWhere('n.lft >= :left')
                 ->andWhere('n.rgt <= :right')
                 ->setParameter('left', $rootNode->getLeft())

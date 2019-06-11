@@ -29,7 +29,7 @@ class RecopyPageTranslationNodeEventTest extends TestCase
 
         $this->assertEquals('nl', $event->getOriginalLanguage());
         $this->assertInstanceOf(NodeTranslation::class, $event->getOriginalNodeTranslation());
-        $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
+        $this->assertInstanceOf(\get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
 
         $event->setOriginalLanguage('nl');
@@ -39,7 +39,7 @@ class RecopyPageTranslationNodeEventTest extends TestCase
 
         $this->assertEquals('nl', $event->getOriginalLanguage());
         $this->assertInstanceOf(NodeTranslation::class, $event->getOriginalNodeTranslation());
-        $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
+        $this->assertInstanceOf(\get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
     }
 }

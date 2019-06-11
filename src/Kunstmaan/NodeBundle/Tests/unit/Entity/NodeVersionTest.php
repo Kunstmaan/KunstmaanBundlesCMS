@@ -76,16 +76,16 @@ class NodeVersionTest extends TestCase
 
         $repo->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($entity));
+            ->willReturn($entity);
 
         $em->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $this->object->setRef($entity);
         $this->assertEquals(1, $this->object->getRefId());
-        $this->assertEquals(get_class($entity), $this->object->getRefEntityName());
-        $this->assertInstanceOf(get_class($entity), $this->object->getRef($em));
+        $this->assertEquals(\get_class($entity), $this->object->getRefEntityName());
+        $this->assertInstanceOf(\get_class($entity), $this->object->getRef($em));
     }
 
     public function testGetDefaultAdminType()
