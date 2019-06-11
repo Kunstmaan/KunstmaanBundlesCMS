@@ -50,9 +50,8 @@ abstract class AdminListController extends Controller
      */
     protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
     {
-        $em = $this->getEntityManager();
         /* @var AdminList $adminList */
-        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator, $em);
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
         $this->buildSortableFieldActions($configurator);
@@ -82,10 +81,8 @@ abstract class AdminListController extends Controller
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
-        $em = $this->getEntityManager();
-
         /* @var AdminList $adminList */
-        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator, $em);
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator);
         $adminList->bindRequest($request);
 
         return $this->container->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($adminList, $_format);
@@ -110,8 +107,7 @@ abstract class AdminListController extends Controller
 
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
-        $entityName = null;
-        $entityName = (isset($type)) ? $type : $configurator->getRepositoryName();
+        $entityName = isset($type) ? $type : $configurator->getRepositoryName();
 
         $classMetaData = $em->getClassMetadata($entityName);
         // Creates a new instance of the mapped class, without invoking the constructor.
@@ -212,29 +208,27 @@ abstract class AdminListController extends Controller
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
-        if ($helper instanceof LockableEntityInterface) {
-            // This entity is locked
-            if ($this->isLockableEntityLocked($helper)) {
-                $indexUrl = $configurator->getIndexUrl();
-                // Don't redirect to listing when coming from ajax request, needed for url chooser.
-                if (!$request->isXmlHttpRequest()) {
-                    /** @var EntityVersionLockService $entityVersionLockService */
-                    $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+        // This entity is locked
+        if (($helper instanceof LockableEntityInterface) && $this->isLockableEntityLocked($helper)) {
+            $indexUrl = $configurator->getIndexUrl();
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if (!$request->isXmlHttpRequest()) {
+                /** @var EntityVersionLockService $entityVersionLockService */
+                $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
-                    $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
-                    $message = $this->container->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
-                    $this->addFlash(
-                        FlashTypes::WARNING,
-                        $message
-                    );
+                $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
+                $message = $this->container->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                $this->addFlash(
+                    FlashTypes::WARNING,
+                    $message
+                );
 
-                    return new RedirectResponse(
-                        $this->generateUrl(
-                            $indexUrl['path'],
-                            isset($indexUrl['params']) ? $indexUrl['params'] : array()
-                        )
-                    );
-                }
+                return new RedirectResponse(
+                    $this->generateUrl(
+                        $indexUrl['path'],
+                        isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                    )
+                );
             }
         }
 

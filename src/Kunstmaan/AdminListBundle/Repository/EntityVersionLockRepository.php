@@ -31,7 +31,7 @@ class EntityVersionLockRepository extends EntityRepository
             ->setParameter('date', new \DateTime(sprintf('-%s seconds', $threshold)))
         ;
 
-        if (!is_null($userToExclude)) {
+        if (!\is_null($userToExclude)) {
             $qb->andWhere('evl.owner <> :owner')
                 ->setParameter('owner', $userToExclude->getUsername())
             ;

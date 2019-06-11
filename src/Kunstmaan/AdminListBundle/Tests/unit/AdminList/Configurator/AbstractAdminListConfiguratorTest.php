@@ -310,7 +310,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $this->assertEquals('', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
 
         // value = PersistentCollection
-        $emMock = $this->createMock(EntityManagerInterface::class, ['getUnitOfWork']);
+        $emMock = $this->createMock(EntityManagerInterface::class);
         $emMock
             ->expects($this->any())
             ->method('getUnitOfWork')

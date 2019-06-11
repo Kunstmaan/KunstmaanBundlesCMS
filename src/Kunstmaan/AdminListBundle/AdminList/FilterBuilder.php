@@ -98,13 +98,11 @@ class FilterBuilder
         $filterBuilderName = 'filter_' . $request->get('_route');
 
         $this->currentParameters = $request->query->all();
-        if (count($this->currentParameters) === 0) {
-            if (!$request->query->has('filter')) {
-                if ($request->getSession()->has($filterBuilderName)) {
-                    $savedQuery = $request->getSession()->get($filterBuilderName);
-                    $request->query->replace($savedQuery);
-                    $this->currentParameters = $savedQuery;
-                }
+        if (\count($this->currentParameters) === 0) {
+            if (!$request->query->has('filter') && $request->getSession()->has($filterBuilderName)) {
+                $savedQuery = $request->getSession()->get($filterBuilderName);
+                $request->query->replace($savedQuery);
+                $this->currentParameters = $savedQuery;
             }
         } else {
             $request->getSession()->set($filterBuilderName, $this->currentParameters);

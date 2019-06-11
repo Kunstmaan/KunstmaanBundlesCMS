@@ -50,9 +50,7 @@ class ExportService
      */
     public function getDownloadableResponse(ExportableInterface $adminList, $format)
     {
-        $response = $this->streamOutput($adminList, $format);
-
-        return $response;
+        return $this->streamOutput($adminList, $format);
     }
 
     /**
@@ -80,7 +78,7 @@ class ExportService
             $iterator = $adminList->getIterator();
             $rows = [];
             foreach ($iterator as $item) {
-                if (array_key_exists(0, $item)) {
+                if (\array_key_exists(0, $item)) {
                     $itemObject = $item[0];
                 } else {
                     $itemObject = $item;
@@ -98,7 +96,7 @@ class ExportService
                     $data = $adminList->getStringValue($itemHelper, $columnName);
                     if (null !== $column->getTemplate()) {
                         if (!$this->renderer->exists($column->getTemplate())) {
-                            throw new ExportException('No export template defined for ' . get_class($data), $data);
+                            throw new ExportException('No export template defined for ' . \get_class($data), $data);
                         }
 
                         $data = $this->renderer->render($column->getTemplate(), ['object' => $data]);
