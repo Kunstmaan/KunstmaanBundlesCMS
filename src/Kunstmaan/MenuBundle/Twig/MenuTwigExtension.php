@@ -67,9 +67,8 @@ class MenuTwigExtension extends \Twig_Extension
         };
 
         $arrayResult = $this->getMenuItems($name, $lang);
-        $html = $this->repository->buildTree($arrayResult, $options);
 
-        return $html;
+        return $this->repository->buildTree($arrayResult, $options);
     }
 
     /**
@@ -91,7 +90,7 @@ class MenuTwigExtension extends \Twig_Extension
             $foundIds[] = $array['id'];
         }
         foreach ($arrayResult as $key => $array) {
-            if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
+            if (!\is_null($array['parent']) && !\in_array($array['parent']['id'], $foundIds)) {
                 unset($arrayResult[$key]);
             }
         }

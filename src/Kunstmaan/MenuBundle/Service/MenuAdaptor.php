@@ -31,22 +31,18 @@ class MenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (count($this->menuNames) > 0) {
-            if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
-                $menuItem = new TopMenuItem($menu);
-                $menuItem
-                    ->setRoute('kunstmaanmenubundle_admin_menu')
-                    ->setUniqueId('menus')
-                    ->setLabel('kuma_menu.menus.title')
-                    ->setParent($parent);
-                if (in_array($request->attributes->get('_route'), array(
-                    'kunstmaanmenubundle_admin_menu',
-                ))) {
-                    $menuItem->setActive(true);
-                    $parent->setActive(true);
-                }
-                $children[] = $menuItem;
+        if ((count($this->menuNames) > 0) && null !== $parent && 'KunstmaanAdminBundle_modules' === $parent->getRoute()) {
+            $menuItem = new TopMenuItem($menu);
+            $menuItem
+                ->setRoute('kunstmaanmenubundle_admin_menu')
+                ->setUniqueId('menus')
+                ->setLabel('kuma_menu.menus.title')
+                ->setParent($parent);
+            if ($request->attributes->get('_route') === 'kunstmaanmenubundle_admin_menu') {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
             }
+            $children[] = $menuItem;
         }
     }
 }

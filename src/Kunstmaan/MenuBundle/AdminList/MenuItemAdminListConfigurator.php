@@ -83,15 +83,21 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         if ($columnName == 'title') {
             return $item->getDisplayTitle();
-        } elseif ($columnName == 'online') {
+        }
+
+        if ($columnName == 'online') {
             return $item;
-        } elseif ($columnName == 'type') {
+        }
+
+        if ($columnName == 'type') {
             if ($item->getType() == MenuItem::TYPE_PAGE_LINK) {
                 return 'Page link';
-            } else {
-                return 'External link';
             }
-        } elseif ($columnName == 'url') {
+
+            return 'External link';
+        }
+
+        if ($columnName == 'url') {
             return $item;
         }
 

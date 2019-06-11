@@ -130,11 +130,11 @@ class MenuItemTest extends TestCase
 
         $violationBuilder->expects($this->never())
             ->method('atPath')
-            ->will($this->returnValue($violationBuilder));
+            ->willReturn($violationBuilder);
 
         $violationBuilder->expects($this->never())
             ->method('addViolation')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $context = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
@@ -142,7 +142,7 @@ class MenuItemTest extends TestCase
 
         $context->expects($this->never())
         ->method('buildViolation')
-        ->will($this->returnValue($violationBuilder));
+        ->willReturn($violationBuilder);
 
         $item->validateEntity($context);
         $item->setType(MenuItem::TYPE_URL_LINK);
