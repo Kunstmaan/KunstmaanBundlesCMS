@@ -25,6 +25,10 @@ matrix:
       env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.clover"
     - php: 7.3
       env: SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+    - php: 7.4snapshot
+      env: SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+  allow_failures:
+    - php: 7.4snapshot
 
 before_install:
   - yes | pecl install imagick
