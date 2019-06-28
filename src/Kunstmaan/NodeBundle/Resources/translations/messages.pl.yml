@@ -115,7 +115,7 @@ kuma_node:
       title: Cofnij publikację
       body: Czy na pewno chcesz cofnąć publikację? Strona zostanie wyłączona!
       later:
-        label: Cofnij publikację późnije
+        label: Cofnij publikację poźniej
         button: Cofnij publikację poźniej
         cancel: Anuluj
       now:
