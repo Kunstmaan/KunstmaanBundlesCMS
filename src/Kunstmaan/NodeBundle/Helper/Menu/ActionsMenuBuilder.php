@@ -75,8 +75,8 @@ class ActionsMenuBuilder
      * @param EventDispatcherInterface      $dispatcher               The event dispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
-     * @param string                        $previewTargetName
      * @param bool                          $enableExportPageTemplate
+     * @param string                        $previewTargetName
      */
     public function __construct(
         FactoryInterface $factory,
@@ -85,8 +85,8 @@ class ActionsMenuBuilder
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
-        $previewTargetName,
-        $enableExportPageTemplate = true
+        $enableExportPageTemplate,
+        $previewTargetName
     ) {
         $this->factory = $factory;
         $this->em = $em;
@@ -94,8 +94,8 @@ class ActionsMenuBuilder
         $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
-        $this->previewTargetName = $previewTargetName;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
+        $this->previewTargetName = $previewTargetName;
     }
 
     /**
