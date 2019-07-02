@@ -30,6 +30,15 @@
                         {% set status_color = 'red' %}
                         {% set txt = 'toolbar.bundle_version.toupdate'|trans %}
                     {% endif %}
+                {% elseif bundle.name == 'kunstmaan/admin-bundle' %}
+                    {% set version = bundle.version %}
+                    {% if bundle.status == 'UP_TO_DATE' %}
+                        {% set status_color = '#4F8A10' %}
+                        {% set txt = 'toolbar.bundle_version.uptodate'|trans %}
+                    {% elseif bundle.status == 'TO_UPDATE' %}
+                        {% set status_color = '#9F6000' %}
+                        {% set txt = 'toolbar.bundle_version.toupdate'|trans %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         {% else %}
