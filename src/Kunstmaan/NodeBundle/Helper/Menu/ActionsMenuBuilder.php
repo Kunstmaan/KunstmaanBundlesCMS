@@ -59,6 +59,11 @@ class ActionsMenuBuilder
     private $isEditableNode = true;
 
     /**
+     * @var string
+     */
+    private $previewTargetName;
+
+    /**
      * @var bool
      */
     private $enableExportPageTemplate = true;
@@ -70,6 +75,7 @@ class ActionsMenuBuilder
      * @param EventDispatcherInterface      $dispatcher               The event dispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
+     * @param string                        $previewTargetName
      * @param bool                          $enableExportPageTemplate
      */
     public function __construct(
@@ -79,6 +85,7 @@ class ActionsMenuBuilder
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
+        $previewTargetName,
         $enableExportPageTemplate = true
     ) {
         $this->factory = $factory;
@@ -87,6 +94,7 @@ class ActionsMenuBuilder
         $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
+        $this->previewTargetName = $previewTargetName;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
     }
 
@@ -227,7 +235,7 @@ class ActionsMenuBuilder
                         ]
                     ),
                     'linkAttributes' => [
-                        'target' => '_blank',
+                        'target' => $this->previewTargetName,
                         'class' => 'btn btn-default btn--raise-on-hover',
                     ],
                 ]
@@ -271,7 +279,7 @@ class ActionsMenuBuilder
                             ['url' => $activeNodeTranslation->getUrl()]
                         ),
                         'linkAttributes' => [
-                            'target' => '_blank',
+                            'target' => $this->previewTargetName,
                             'class' => 'btn btn-default btn--raise-on-hover',
                         ],
                     ]
