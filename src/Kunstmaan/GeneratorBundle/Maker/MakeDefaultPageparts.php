@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Maker;
 
 use Kunstmaan\GeneratorBundle\Helper\DoctrineHelper;
+use Kunstmaan\GeneratorBundle\Helper\SymfonyVersionChecker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -102,6 +103,10 @@ class MakeDefaultPageparts extends AbstractMaker
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
+        if (false === SymfonyVersionChecker::isSymfony4()) {
+            throw new \InvalidArgumentException('This command can only be executed on symfony 4.');
+        }
+
         $dbPrefix = '';
         if ($input->getOption('prefix')) {
             $dbPrefix = rtrim($input->getOption('prefix'), '_') . '_';
