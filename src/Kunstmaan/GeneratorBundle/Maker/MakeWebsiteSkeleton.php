@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Maker;
 
+use Kunstmaan\GeneratorBundle\Helper\DoctrineHelper;
 use Kunstmaan\GeneratorBundle\Helper\SymfonyVersionChecker;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
