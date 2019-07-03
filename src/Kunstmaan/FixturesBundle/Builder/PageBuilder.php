@@ -242,7 +242,7 @@ class PageBuilder implements BuilderInterface
         preg_match($finalDigitGrabberRegex, $string, $matches);
 
         if (count($matches) > 0) {
-            $digit = (int)$matches[0];
+            $digit = (int) $matches[0];
             ++$digit;
 
             // Replace the integer with the new digit.
