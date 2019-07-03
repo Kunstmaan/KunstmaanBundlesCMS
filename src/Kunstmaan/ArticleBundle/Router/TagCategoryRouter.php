@@ -3,7 +3,6 @@
 namespace Kunstmaan\ArticleBundle\Router;
 
 use Kunstmaan\NodeBundle\Router\SlugRouter;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Translation\TranslatorInterface;
 
