@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.3.2 / 2019-07-03
+
+* [GeneratorBundle] Added missing import in admin js task [#2510](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2510) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] added support for anchor tags in MediaTokenTransformer [#2506](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2506) ([@jazzzpor](https://github.com/jazzzpor)) 
+* [NodeBundle] missing form error translations [#2503](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2503) ([@JZuidema](https://github.com/JZuidema)) 
+* [TranslatorBundle] Restored missing service alias for translator datacollector [#2502](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2502) ([@acrobat](https://github.com/acrobat)) 
+* [FixtureBundle] Inject the User Entity class name so the correct Repository can be used [#2500](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2500) ([@devigner](https://github.com/devigner)) 
+* [Dashboardbundle] Mark service as public for sf4 compatibility [#2498](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2498) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Upgrade jquery to fix security warning [#2497](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2497) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Add string return typehint to be compatible with symfony 4.3 [#2493](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2493) ([@acrobat](https://github.com/acrobat)) 
+* [FixturesBundle] Mark services as public [#2492](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2492) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Get correct version when using the separate packages [#2478](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2478) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Explicitly require expression language [#2476](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2476) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix webpack output path for admin-bundle-extra js [#2462](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2462) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.1 / 2019-05-20
 
 * [DashboardBundle] Update incorrect documentation url [#2460](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2460) ([@acrobat](https://github.com/acrobat)) 
