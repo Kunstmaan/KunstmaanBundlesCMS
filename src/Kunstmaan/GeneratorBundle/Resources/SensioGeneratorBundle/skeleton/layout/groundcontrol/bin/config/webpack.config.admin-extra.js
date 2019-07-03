@@ -1,4 +1,5 @@
 import defaultConfig from './webpack.config.default';
+import path from 'path';
 
 export default function webpackConfigAdminExtra(speedupLocalDevelopment, optimize = false) {
     const config = defaultConfig(speedupLocalDevelopment, optimize);
