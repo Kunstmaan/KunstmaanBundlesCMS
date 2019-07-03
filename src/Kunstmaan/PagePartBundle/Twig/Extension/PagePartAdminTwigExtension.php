@@ -55,7 +55,6 @@ final class PagePartAdminTwigExtension extends AbstractExtension
             'page' => $ppAdmin->getPage(),
             'form' => $form,
             'extended' => $this->usesExtendedPagePartChooser,
-            'spacer_pp' => 'App\\Entity\\PageParts\\SpacerPagePart', //TODO: make configurable?
         ]));
     }
 

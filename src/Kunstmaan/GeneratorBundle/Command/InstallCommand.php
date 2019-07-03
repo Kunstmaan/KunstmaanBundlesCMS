@@ -57,7 +57,7 @@ final class InstallCommand extends GeneratorCommand
                         new InputOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle to create (only for SF3)'),
                         new InputOption('dir', '', InputOption::VALUE_OPTIONAL, 'The directory where to create the bundle (only for SF3)'),
                         new InputOption('bundle-name', '', InputOption::VALUE_OPTIONAL, 'The optional bundle name (only for SF3)'),
-                        new InputOption('new-cms-skeleton', '', InputOption::VALUE_NONE, 'Use the new cms skeleton and default pageparts'),  //TODO: use better name
+                        new InputOption('new-cms-skeleton', '', InputOption::VALUE_NONE, 'Use the new cms skeleton and default pageparts'),
                         new InputOption('prefix', '', InputOption::VALUE_REQUIRED, 'The prefix to be used in the table name of the generated entities', ''),
                     ]
                 )
