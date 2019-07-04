@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class AclHelperTest extends TestCase
@@ -140,7 +141,8 @@ class AclHelperTest extends TestCase
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
-        $this->rh = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
+        $this->rh = $this->getMockBuilder(RoleHierarchy::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
         $this->object = new AclHelper($this->em, $this->tokenStorage, $this->rh);
