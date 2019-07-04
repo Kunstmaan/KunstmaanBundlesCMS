@@ -74,11 +74,11 @@ class ButtonPagePart extends AbstractPagePart
     /**
      * @var array Supported sizes
      */
-    public static $sizes = array(
+    public static $sizes = [
         self::SIZE_LARGE,
         self::SIZE_DEFAULT,
         self::SIZE_SMALL,
-    );
+    ];
 
     /**
      * @var array Supported positions
