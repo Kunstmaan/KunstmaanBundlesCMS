@@ -172,3 +172,7 @@ kuma_node:
     export_pagetemplate:
       button:
         title: Exporteer pagina template
+toolbar:
+  node:
+    title: 'Page title'
+    edit: 'Edit page'

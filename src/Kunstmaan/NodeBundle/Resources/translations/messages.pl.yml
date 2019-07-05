@@ -47,6 +47,9 @@ kuma_node:
     online_public.raw: Online / Wersja publiczna
     offline.raw: Offline
     "go_to_draft_version.%url%.raw": (Przejdź do <a href="%url%">wersja robocza</a>)
+  error:
+    title: 'Error'
+    validation: 'The form has not been saved because there are validation errors'
   admin:
     publish:
       flash:
@@ -169,3 +172,7 @@ kuma_node:
     export_pagetemplate:
       button:
         title: Eksportuj szablon strony
+toolbar:
+  node:
+    title: 'Page title'
+    edit: 'Edit page'
