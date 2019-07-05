@@ -56,6 +56,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('name')->end()
                 ->scalarNode('span')->defaultValue(12)->end()
                 ->scalarNode('template')->end()
+                ->booleanNode('auto_spacer')->defaultFalse()->end()
                 ->variableNode('rows')
                     ->validate()->ifTrue(function ($element) {
                         return !\is_array($element);
