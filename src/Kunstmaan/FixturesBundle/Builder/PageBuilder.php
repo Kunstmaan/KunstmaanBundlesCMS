@@ -42,12 +42,13 @@ class PageBuilder implements BuilderInterface
         ACLPermissionCreatorService $aclPermissionCreatorService,
         Populator $populator,
         Slugifier $slugifier,
-        PagesConfiguration $pagesConfiguration
+        PagesConfiguration $pagesConfiguration,
+        string $userClass
     ) {
         $this->manager = $em;
         $this->nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $this->nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
-        $this->userRepo = $em->getRepository('KunstmaanAdminBundle:User');
+        $this->userRepo = $em->getRepository($userClass);
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
         $this->populator = $populator;
         $this->slugifier = $slugifier;

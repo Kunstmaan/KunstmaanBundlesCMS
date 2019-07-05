@@ -17,6 +17,6 @@ class MaxXTimesRuleTest extends TestCase
         $this->assertEquals('MaxXTimesRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/MaxXTimesRule.js', $rule->getJsFilePath());
         $this->assertEquals(MaxXTimeAdminType::class, $rule->getAdminType());
-        $this->assertTrue(is_array($rule->getJsProperties()));
+        $this->assertInternalType('array', $rule->getJsProperties());
     }
 }

@@ -34,7 +34,7 @@ class FileFormSubmissionFieldTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
     }
 
     public function testIsNull()
@@ -64,7 +64,7 @@ class FileFormSubmissionFieldTest extends TestCase
         $fileName = 'test.jpg';
         $object->setFileName($fileName);
         $object->setUrl('https://nasa.gov');
-        $object->setuuid('123');
+        $object->setUuid('123');
 
         $this->assertEquals($fileName, $object->getFileName());
         $this->assertEquals('https://nasa.gov', $object->getUrl());
@@ -89,7 +89,7 @@ class FileFormSubmissionFieldTest extends TestCase
 
         $file->expects($this->any())
             ->method('move')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $object->file = $file;
         $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/');
@@ -110,7 +110,7 @@ class FileFormSubmissionFieldTest extends TestCase
 
         $container->expects($this->any())
             ->method('getParameter')
-            ->will($this->returnValue('whatever'));
+            ->willReturn('whatever');
 
         $object->onValidPost($form, $builder, $request, $container);
     }

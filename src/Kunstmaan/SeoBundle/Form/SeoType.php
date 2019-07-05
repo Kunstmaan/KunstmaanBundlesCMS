@@ -88,9 +88,7 @@ class SeoType extends AbstractType
                     // trim all the values
                     $value = array_map('trim', $submitted);
                     // join together
-                    $string = implode(',', $value);
-
-                    return $string;
+                    return implode(',', $value);
                 }
             ));
         $builder->add('extraMetadata', TextareaType::class, array(

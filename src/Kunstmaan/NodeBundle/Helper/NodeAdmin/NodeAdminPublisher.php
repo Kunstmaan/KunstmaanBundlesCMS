@@ -84,16 +84,16 @@ class NodeAdminPublisher
             throw new AccessDeniedException();
         }
 
-        if (is_null($user)) {
+        if (\is_null($user)) {
             $user = $this->tokenStorage->getToken()->getUser();
         }
 
         $node = $nodeTranslation->getNode();
 
         $nodeVersion = $nodeTranslation->getNodeVersion('draft');
-        if (!is_null($nodeVersion)) {
+        if (!\is_null($nodeVersion)) {
             $page = $nodeVersion->getRef($this->em);
-            /** @var $nodeVersion NodeVersion */
+            /** @var NodeVersion $nodeVersion */
             $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, $user);
             $nodeTranslation = $nodeVersion->getNodeTranslation();
         } else {
@@ -216,7 +216,7 @@ class NodeAdminPublisher
         $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')
             ->findOneBy(array('nodeTranslation' => $nodeTranslation));
 
-        if (!is_null($queuedNodeTranslationAction)) {
+        if (!\is_null($queuedNodeTranslationAction)) {
             $this->em->remove($queuedNodeTranslationAction);
             $this->em->flush();
         }

@@ -26,42 +26,42 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="name", type="text", nullable=true)
      */
-    private $name = null;
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="token", type="text", nullable=true)
      */
-    private $token = null;
+    private $token;
 
     /**
      * @var string
      *
      * @ORM\Column(name="account_id", type="string", nullable=true)
      */
-    private $accountId = null;
+    private $accountId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="property_id", type="string", nullable=true)
      */
-    private $propertyId = null;
+    private $propertyId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="profile_id", type="string", nullable=true)
      */
-    private $profileId = null;
+    private $profileId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
-    private $lastUpdate = null;
+    private $lastUpdate;
 
     /**
      * @var bool

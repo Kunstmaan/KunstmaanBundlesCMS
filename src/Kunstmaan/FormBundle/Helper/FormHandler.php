@@ -44,13 +44,13 @@ class FormHandler implements FormHandlerInterface
      */
     public function handleForm(FormPageInterface $page, Request $request, RenderContext $context)
     {
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->container->get('doctrine.orm.entity_manager');
-        /* @var $formBuilder FormBuilderInterface */
+        /* @var FormBuilderInterface $formBuilder */
         $formBuilder = $this->container->get('form.factory')->createBuilder(FormType::class);
-        /* @var $router RouterInterface */
+        /* @var RouterInterface $router */
         $router = $this->container->get('router');
-        /* @var $fields ArrayObject */
+        /* @var ArrayObject $fields */
         $fields = new ArrayObject();
         $pageParts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $page->getFormElementsContext());
         foreach ($pageParts as $sequence => $pagePart) {
@@ -69,7 +69,7 @@ class FormHandler implements FormHandlerInterface
                 $formSubmission->setLang($request->getLocale());
                 $em->persist($formSubmission);
 
-                /* @var $field FormSubmissionField */
+                /* @var FormSubmissionField $field */
                 foreach ($fields as $field) {
                     $field->setSubmission($formSubmission);
                     $field->onValidPost($form, $formBuilder, $request, $this->container);

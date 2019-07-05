@@ -107,6 +107,6 @@ class PageTemplateConfiguration extends AbstractEntity
      */
     public function getPage(EntityManager $em)
     {
-        return $em->getRepository($this->getPageEntityname())->find($this->getPageId());
+        return $em->getRepository($this->getPageEntityName())->find($this->getPageId());
     }
 }

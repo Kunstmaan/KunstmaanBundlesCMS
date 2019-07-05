@@ -90,7 +90,7 @@ class FileFormSubmissionField extends FormSubmissionField
         }
 
         // sanitize filename for security
-        $safeFileName = $this->getSafeFileName($this->file);
+        $safeFileName = $this->getSafeFileName();
 
         $uuid = uniqid();
         $this->setUuid($uuid);

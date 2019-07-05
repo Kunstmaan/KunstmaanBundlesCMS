@@ -37,12 +37,12 @@ class PageTemplateConfigurationTest extends TestCase
 
         $repo->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($testNode));
+            ->willReturn($testNode);
 
         $em->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
-        $this->assertInstanceOf(get_class($testNode), $config->getPage($em));
+        $this->assertInstanceOf(\get_class($testNode), $config->getPage($em));
     }
 }

@@ -33,7 +33,7 @@ class SeoRepository extends EntityRepository
     {
         $seo = $this->findFor($entity);
 
-        if (is_null($seo)) {
+        if (\is_null($seo)) {
             $seo = new Seo();
             $seo->setRef($entity);
         }

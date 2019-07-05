@@ -23,6 +23,6 @@ class RecurringEveryXTimeRuleTest extends TestCase
         $this->assertEquals('RecurringEveryXTimeRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/RecurringEveryXTimeRule.js', $rule->getJsFilePath());
         $this->assertEquals(RecurringEveryXTimeAdminType::class, $rule->getAdminType());
-        $this->assertTrue(is_array($rule->getJsProperties()));
+        $this->assertInternalType('array', $rule->getJsProperties());
     }
 }

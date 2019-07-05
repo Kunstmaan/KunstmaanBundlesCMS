@@ -19,7 +19,7 @@ class OrderConverter
         $orderItems = array();
 
         foreach ($order->orderItems as $orderItem) {
-            /* @var $orderItem OrderItem */
+            /* @var OrderItem $orderItem */
             $orderItems[] = array(
                 'sku' => $orderItem->getSKU(),
                 'quantity' => $this->formatNumber($orderItem->getQuantity()),

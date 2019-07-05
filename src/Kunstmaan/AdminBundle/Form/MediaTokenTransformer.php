@@ -24,13 +24,14 @@ class MediaTokenTransformer implements DataTransformerInterface
         $crawler = new Crawler();
         $crawler->addHtmlContent($content);
 
-        $crawler->filter('img')->each(
+        $crawler->filter('img,a')->each(
             function (Crawler $node) {
-                $image = $node->getNode(0);
-                if ($image->hasAttribute('data-src')) {
-                    $src = $image->getAttribute('data-src');
-                    $image->setAttribute('src', $src);
-                    $image->removeAttribute('data-src');
+                $element = $node->getNode(0);
+                $attribute = $element->nodeName === 'img' ? 'src' : 'href';
+                if ($element->hasAttribute('data-' . $attribute)) {
+                    $attributeValue = $element->getAttribute('data-' . $attribute);
+                    $element->setAttribute($attribute, $attributeValue);
+                    $element->removeAttribute('data-' . $attribute);
                 }
             }
         );
@@ -56,18 +57,19 @@ class MediaTokenTransformer implements DataTransformerInterface
         $crawler = new Crawler();
         $crawler->addHtmlContent($content);
 
-        // Get all img tags and parse the token.
-        $crawler->filter('img')->each(
+        // Get all img and a tags and parse the token.
+        $crawler->filter('img,a')->each(
             function (Crawler $node) {
-                $image = $node->getNode(0);
-                $src = $image->getAttribute('src');
-                $parsed = parse_url($src, PHP_URL_QUERY);
+                $element = $node->getNode(0);
+                $attribute = $element->nodeName === 'img' ? 'src' : 'href';
+                $attributeValue = $element->getAttribute($attribute);
+                $parsed = parse_url($attributeValue, PHP_URL_QUERY);
                 parse_str($parsed, $query);
 
                 if (isset($query['token'])) {
-                    $image->setAttribute('src', $query['token']);
+                    $element->setAttribute($attribute, $query['token']);
                 }
-                $image->setAttribute('data-src', $src);
+                $element->setAttribute('data-' . $attribute, $attributeValue);
             }
         );
 

@@ -104,7 +104,7 @@ class SlugController extends Controller
 
         $view = $renderContext->getView();
         if (empty($view)) {
-            throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', get_class($entity)));
+            throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', \get_class($entity)));
         }
 
         $template = new Template(array());
@@ -131,12 +131,12 @@ class SlugController extends Controller
             $version = $request->get('version');
             if (!empty($version) && is_numeric($version)) {
                 $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
-                if (!is_null($nodeVersion)) {
+                if (!\is_null($nodeVersion)) {
                     $entity = $nodeVersion->getRef($em);
                 }
             }
         }
-        if (is_null($entity)) {
+        if (\is_null($entity)) {
             $entity = $nodeTranslation->getPublicNodeVersion()->getRef($em);
 
             return $entity;

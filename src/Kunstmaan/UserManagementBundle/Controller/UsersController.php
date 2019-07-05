@@ -86,7 +86,7 @@ class UsersController extends BaseSettingsController
 
         $user = $this->getUserClassInstance();
 
-        $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => get_class($user));
+        $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => \get_class($user));
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
 
@@ -147,7 +147,7 @@ class UsersController extends BaseSettingsController
         }
         $this->denyAccessUnlessGranted($requiredRole);
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var UserInterface $user */
@@ -159,7 +159,7 @@ class UsersController extends BaseSettingsController
         $userEvent = new UserEvent($user, $request);
         $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
 
-        $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
+        $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user));
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
 
@@ -231,11 +231,11 @@ class UsersController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
-        if (!is_null($user)) {
+        if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
 

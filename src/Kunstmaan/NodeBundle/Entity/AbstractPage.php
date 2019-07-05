@@ -82,9 +82,9 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     {
         if (!empty($this->pageTitle)) {
             return $this->pageTitle;
-        } else {
-            return $this->getTitle();
         }
+
+        return $this->getTitle();
     }
 
     /**

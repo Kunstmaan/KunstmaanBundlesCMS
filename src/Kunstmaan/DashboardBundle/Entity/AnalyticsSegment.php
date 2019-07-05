@@ -128,7 +128,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @return AnalyticsGoal[]
      */
-    public function getoverviews()
+    public function getOverviews()
     {
         return $this->overviews;
     }

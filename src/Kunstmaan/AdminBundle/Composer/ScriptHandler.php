@@ -7,6 +7,11 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 
+@trigger_error(sprintf('The composer script class "%s" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. If you use this script handler, remove it from your composer.json scripts section.', __CLASS__), E_USER_DEPRECATED);
+
+/**
+ * NEXT_MAJOR remove the symfony/filesystem and symfony/yaml as direct dependency of the admin-bundle (if unused in other classes)
+ */
 class ScriptHandler
 {
     protected static $options = array(

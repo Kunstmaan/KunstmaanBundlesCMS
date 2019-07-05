@@ -35,7 +35,7 @@ class TagManager extends BaseTagManager
     {
         $tags = clone $resource->getTags();
         parent::saveTagging($resource);
-        if (count($tags) !== count($resource->getTags())) {
+        if (\count($tags) !== \count($resource->getTags())) {
             // parent::saveTagging uses getTags by reference and removes elements, so it ends up empty :-/
             // this causes all tags to be deleted when an entity is persisted more than once in a request
             // Restore:
@@ -55,7 +55,7 @@ class TagManager extends BaseTagManager
         $em = $this->em;
 
         $config = $em->getConfiguration();
-        if (is_null($config->getCustomHydrationMode(self::TAGGING_HYDRATOR))) {
+        if (\is_null($config->getCustomHydrationMode(self::TAGGING_HYDRATOR))) {
             $config->addCustomHydrationMode(self::TAGGING_HYDRATOR, 'Doctrine\ORM\Internal\Hydration\ObjectHydrator');
         }
 
@@ -82,7 +82,7 @@ class TagManager extends BaseTagManager
      */
     public function findById($id)
     {
-        if (!isset($id) || is_null($id)) {
+        if (!isset($id) || \is_null($id)) {
             return null;
         }
         $builder = $this->em->createQueryBuilder();
@@ -175,8 +175,6 @@ EOD;
             LIMIT {$nbOfItems};
 EOD;
 
-        $items = $em->createNativeQuery($query, $rsm)->getResult();
-
-        return $items;
+        return $em->createNativeQuery($query, $rsm)->getResult();
     }
 }

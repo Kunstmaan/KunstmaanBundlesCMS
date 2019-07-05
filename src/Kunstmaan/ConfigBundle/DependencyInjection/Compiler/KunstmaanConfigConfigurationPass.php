@@ -36,7 +36,7 @@ class KunstmaanConfigConfigurationPass implements CompilerPassInterface
                 }
 
                 // Check if entity implements the ConfigurationInterface.
-                if (!in_array(ConfigurationInterface::class, class_implements($class))) {
+                if (!\in_array(ConfigurationInterface::class, class_implements($class))) {
                     throw new RuntimeException(sprintf('The entity class "%s" needs to implement the ConfigurationInterface', $class));
                 }
             }

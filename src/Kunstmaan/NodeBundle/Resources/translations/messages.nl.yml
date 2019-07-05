@@ -47,6 +47,9 @@ kuma_node:
     online_public.raw: Online / Publieke versie
     offline.raw: Offline
     "go_to_draft_version.%url%.raw": (Ga naar <a href="%url%">draft versie</a>)
+  error:
+    title: 'Error'
+    validation: 'Het formulier is niet opgeslagen, omdat er validatie errors zijn'
   admin:
     publish:
       flash:

@@ -23,7 +23,7 @@ class AbstractArticleOverviewPageTest extends TestCase
         $entity = new ArticleOverViewPage();
         $this->assertEquals('KunstmaanArticleBundle:AbstractArticleOverviewPage:service', $entity->getControllerAction());
         $this->assertEquals('KunstmaanArticleBundle:AbstractArticleOverviewPage:view.html.twig', $entity->getDefaultView());
-        $this->assertTrue(is_array($entity->getPossibleChildTypes()));
-        $this->assertTrue(is_array($entity->getPagePartAdminConfigurations()));
+        $this->assertInternalType('array', $entity->getPossibleChildTypes());
+        $this->assertInternalType('array', $entity->getPagePartAdminConfigurations());
     }
 }

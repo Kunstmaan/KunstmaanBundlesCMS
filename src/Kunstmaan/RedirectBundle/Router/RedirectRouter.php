@@ -18,7 +18,7 @@ class RedirectRouter implements RouterInterface
     private $context;
 
     /** @var RouteCollection */
-    private $routeCollection = null;
+    private $routeCollection;
 
     /** @var ObjectRepository */
     private $redirectRepository;
@@ -88,9 +88,8 @@ class RedirectRouter implements RouterInterface
     public function match($pathinfo)
     {
         $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
-        $result = $urlMatcher->match($pathinfo);
 
-        return $result;
+        return $urlMatcher->match($pathinfo);
     }
 
     /**
@@ -100,7 +99,7 @@ class RedirectRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
-        if (is_null($this->routeCollection)) {
+        if (\is_null($this->routeCollection)) {
             $this->routeCollection = new RouteCollection();
             $this->initRoutes();
         }
@@ -124,8 +123,6 @@ class RedirectRouter implements RouterInterface
 
             // Only add the route when the domain matches or the domain is empty
             if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
-                $needsUtf8 = (preg_match('/[\x80-\xFF]/', $redirect->getTarget()));
-
                 $this->routeCollection->add(
                     '_redirect_route_' . $redirect->getId(),
                     $route
@@ -164,12 +161,14 @@ class RedirectRouter implements RouterInterface
      */
     private function createRoute(Redirect $redirect)
     {
+        $needsUtf8 = preg_match('/[\x80-\xFF]/', $redirect->getTarget());
+
         return new Route(
-            $redirect->getOrigin(), array(
-                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                    'path' => $redirect->getTarget(),
-                    'permanent' => $redirect->isPermanent(),
-                ));
+            $redirect->getOrigin(), [
+                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                'path' => $redirect->getTarget(),
+                'permanent' => $redirect->isPermanent(),
+            ], [], ['utf8' => $needsUtf8]);
     }
 
     /**
@@ -182,6 +181,7 @@ class RedirectRouter implements RouterInterface
         $origin = $redirect->getOrigin();
         $target = $redirect->getTarget();
         $url = $this->context->getPathInfo();
+        $needsUtf8 = preg_match('/[\x80-\xFF]/', $redirect->getTarget());
 
         $origin = substr($origin, 0, -1);
         $target = substr($target, 0, -1);
@@ -189,12 +189,11 @@ class RedirectRouter implements RouterInterface
 
         $this->context->setPathInfo($pathInfo);
 
-        return new Route(
-            $url, array(
-                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                    'path' => $url,
-                    'permanent' => $redirect->isPermanent(),
-                ));
+        return new Route($url, [
+            '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+            'path' => $url,
+            'permanent' => $redirect->isPermanent(),
+        ], [], ['utf8' => $needsUtf8]);
     }
 
     /**

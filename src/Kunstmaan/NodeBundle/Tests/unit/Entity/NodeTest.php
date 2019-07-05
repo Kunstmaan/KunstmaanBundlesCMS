@@ -120,7 +120,7 @@ class NodeTest extends TestCase
         $this->object->addNode($child);
         $parents = $grandChild->getParents();
 
-        $this->assertEquals(2, count($parents));
+        $this->assertCount(2, $parents);
         $this->assertEquals($child, $parents[1]);
         $this->assertEquals($this->object, $parents[0]);
     }
@@ -136,7 +136,7 @@ class NodeTest extends TestCase
     {
         $entity = $this->createMock(HasNodeInterface::class);
         $this->object->setRef($entity);
-        $this->assertEquals(get_class($entity), $this->object->getRefEntityName());
+        $this->assertEquals(\get_class($entity), $this->object->getRefEntityName());
     }
 
     public function testSetInternalName()
@@ -156,7 +156,7 @@ class NodeTest extends TestCase
         $this->object->setId(1);
         $this->object->setRef($entity);
 
-        $this->assertEquals('node 1, refEntityName: '.get_class($entity), $this->object->__toString());
+        $this->assertEquals('node 1, refEntityName: '. \get_class($entity), $this->object->__toString());
     }
 
     public function testGetSetLeftRightLevel()

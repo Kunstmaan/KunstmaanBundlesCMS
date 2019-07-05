@@ -16,17 +16,17 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /**
      * @var Connection
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * @var QueryBuilder
      */
-    protected $queryBuilder = null;
+    protected $queryBuilder;
 
     /**
      * @var Pagerfanta
      */
-    private $pagerfanta = null;
+    private $pagerfanta;
 
     /**
      * @var string
@@ -87,7 +87,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function getPagerfanta()
     {
-        if (is_null($this->pagerfanta)) {
+        if (\is_null($this->pagerfanta)) {
             $adapter = new DoctrineDBALAdapter(
                 $this->getQueryBuilder(),
                 $this->getCountField(),
@@ -135,9 +135,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function getIterator()
     {
-        $statement = $this->getQueryBuilder()->execute();
-
-        return $statement;
+        return $this->getQueryBuilder()->execute();
     }
 
     /**
@@ -145,7 +143,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function getQueryBuilder()
     {
-        if (is_null($this->queryBuilder)) {
+        if (\is_null($this->queryBuilder)) {
             $this->queryBuilder = new QueryBuilder($this->connection);
             $this->adaptQueryBuilder($this->queryBuilder);
 

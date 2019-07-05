@@ -56,16 +56,44 @@ class CacheValidatorTest extends TestCase
         $this->assertTrue($fresh);
     }
 
+    /**
+     * @group time-sensitive
+     */
+    public function testOlderCacheFileMtDate()
+    {
+        $this->createDummyCachedFile();
+
+        $expectedDate = (new \DateTime())->setTimestamp(time() - 3600);
+        $actualDate = $this->cacheValidator->getOldestCachefileDate();
+
+        $this->assertInstanceOf(\DateTime::class, $actualDate);
+        $this->assertSame($expectedDate->getTimestamp(), $actualDate->getTimestamp());
+    }
+
+    public function testOlderCacheFileMtDateNoFiles()
+    {
+        $actualDate = $this->cacheValidator->getOldestCachefileDate();
+
+        $this->assertNull($actualDate);
+    }
+
     public function createDummyCachedFile()
     {
         touch(sprintf('%s/catalogue.test.php', $this->cacheDir));
+        touch(sprintf('%s/catalogue2.test.php', $this->cacheDir), time() - 3600);
     }
 
     public function deleteDummyCachedFile()
     {
-        $file = sprintf('%s/catalogue.test.php', $this->cacheDir);
-        if (file_exists($file)) {
-            unlink($file);
+        $files = [
+            sprintf('%s/catalogue.test.php', $this->cacheDir),
+            sprintf('%s/catalogue2.test.php', $this->cacheDir),
+        ];
+
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
         }
     }
 }

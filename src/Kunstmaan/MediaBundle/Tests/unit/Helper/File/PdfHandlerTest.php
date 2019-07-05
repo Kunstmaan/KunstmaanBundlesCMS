@@ -61,7 +61,7 @@ class PdfHandlerTest extends TestCase
         $this->pdfTransformer
             ->expects($this->any())
             ->method('getPreviewFilename')
-            ->will($this->returnValue('/media.pdf.jpg'));
+            ->willReturn('/media.pdf.jpg');
 
         $media = new Media();
         $media->setUrl('/path/to/media.pdf');

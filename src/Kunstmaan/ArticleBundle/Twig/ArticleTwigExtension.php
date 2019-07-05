@@ -34,7 +34,7 @@ class ArticleTwigExtension extends Twig_Extension
         $this->em = $em;
         $this->router = $router;
 
-        if (func_num_args() > 2) {
+        if (\func_num_args() > 2) {
             @trigger_error(sprintf('Passing the "request_stack" service as the third argument in "%s" is deprecated in KunstmaanArticleBundle 5.1 and will be removed in KunstmaanArticleBundle 6.0. Remove the "request_stack" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
         }
     }
@@ -190,7 +190,7 @@ class ArticleTwigExtension extends Twig_Extension
         $routeName = sprintf('_slug_%s_%s', $type, $locale);
 
         try {
-            return !is_null($this->router->getRouteCollection()->get($routeName));
+            return !\is_null($this->router->getRouteCollection()->get($routeName));
         } catch (\Exception $e) {
             return false;
         }

@@ -132,34 +132,35 @@ class EmailPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $efsf = new EmailFormSubmissionField();
-        $efsf->setFieldName('field_' . $this->getUniqueId());
+        $efsf->setFieldName('field_'.$this->getUniqueId());
         $efsf->setLabel($this->getLabel());
         $efsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $efsf;
+        $data['formwidget_'.$this->getUniqueId()] = $efsf;
 
-        $constraints = array();
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
             $constraints[] = new NotBlank($options);
         }
-        $options = array();
+        $options = [];
         if (!empty($this->errorMessageInvalid)) {
             $options['message'] = $this->getErrorMessageInvalid();
         }
         $constraints[] = new Email($options);
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+        $formBuilder->add(
+            'formwidget_'.$this->getUniqueId(),
             EmailFormSubmissionType::class,
-            array(
+            [
                 'label' => $this->getLabel(),
-                'constraints' => $constraints,
+                'value_constraints' => $constraints,
                 'required' => $this->getRequired(),
-            )
+            ]
         );
         $formBuilder->setData($data);
 

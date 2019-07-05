@@ -185,7 +185,7 @@ class ConfigHelper
 
         foreach ($webproperties->getItems() as $property) {
             $profiles = $this->getProfiles($accountId, $property->getId());
-            if (count($profiles) > 0) {
+            if (\count($profiles) > 0) {
                 $data[$property->getName()] = array(
                         'propertyId' => $property->getId(),
                         'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
@@ -245,7 +245,7 @@ class ConfigHelper
      */
     public function getProfiles($accountId = false, $propertyId = false)
     {
-        if (!$this->getAccountId() && !$accountId || !$this->getPropertyId() && !$propertyId) {
+        if ((!$this->getAccountId() && !$accountId) || (!$this->getPropertyId() && !$propertyId)) {
             return false;
         }
 
@@ -263,7 +263,7 @@ class ConfigHelper
         }
 
         $data = array();
-        if (is_array($profiles->getItems())) {
+        if (\is_array($profiles->getItems())) {
             foreach ($profiles->getItems() as $profile) {
                 $data[$profile->name] = array(
                             'profileId' => $profile->id,
@@ -326,7 +326,7 @@ class ConfigHelper
         $profiles = $this->getProfiles();
         $profileId = $this->getProfileId();
 
-        if (!is_array($profiles)) {
+        if (!\is_array($profiles)) {
             throw new \Exception('<fg=red>The config is invalid</fg=red>');
         }
 

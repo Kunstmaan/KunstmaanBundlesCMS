@@ -34,7 +34,7 @@ class GroupsController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
         $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new GroupAdminListConfigurator($em));
@@ -59,7 +59,7 @@ class GroupsController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
@@ -102,7 +102,7 @@ class GroupsController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var Group $group */
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
@@ -146,10 +146,10 @@ class GroupsController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
-        if (!is_null($group)) {
+        if (!\is_null($group)) {
             $em->remove($group);
             $em->flush();
 

@@ -73,8 +73,8 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      *
      * If the options are not set it'll try and load the account ID from your parameters (google.analytics.account_id)
      *
-     * @param $environment \Twig_Environment
-     * @param $options     array|null        Example: {account_id: 'UA-XXXXX-Y'}
+     * @param \Twig_Environment $environment
+     * @param array|null        $options     Example: {account_id: 'UA-XXXXX-Y'}
      *
      * @return string the HTML rendered
      *
@@ -82,7 +82,7 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      */
     public function renderInitialize(\Twig_Environment $environment, $options = null)
     {
-        if (is_null($options)) {
+        if (\is_null($options)) {
             $options = array();
         }
 

@@ -95,7 +95,7 @@ class Field
      */
     public function hasAlias()
     {
-        if (is_null($this->alias)) {
+        if (\is_null($this->alias)) {
             return false;
         }
 

@@ -163,36 +163,37 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $sfsf = new StringFormSubmissionField();
-        $sfsf->setFieldName('field_' . $this->getUniqueId());
+        $sfsf->setFieldName('field_'.$this->getUniqueId());
         $sfsf->setLabel($this->getLabel());
         $sfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $sfsf;
+        $data['formwidget_'.$this->getUniqueId()] = $sfsf;
 
-        $constraints = array();
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
             $constraints[] = new NotBlank($options);
         }
         if ($this->getRegex()) {
-            $options = array('pattern' => $this->getRegex());
+            $options = ['pattern' => $this->getRegex()];
             if (!empty($this->errorMessageRegex)) {
                 $options['message'] = $this->errorMessageRegex;
             }
             $constraints[] = new Regex($options);
         }
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+        $formBuilder->add(
+            'formwidget_'.$this->getUniqueId(),
             StringFormSubmissionType::class,
-            array(
+            [
                 'label' => $this->getLabel(),
-                'constraints' => $constraints,
+                'value_constraints' => $constraints,
                 'required' => $this->getRequired(),
-            )
+            ]
         );
         $formBuilder->setData($data);
 

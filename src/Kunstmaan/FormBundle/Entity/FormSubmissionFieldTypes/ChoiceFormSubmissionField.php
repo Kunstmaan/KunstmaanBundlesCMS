@@ -79,10 +79,10 @@ class ChoiceFormSubmissionField extends FormSubmissionField
                 }
 
                 return implode(', ', $result);
-            } else {
-                if (isset($choices[$values])) {
-                    return trim($choices[$values]);
-                }
+            }
+
+            if (isset($choices[$values])) {
+                return trim($choices[$values]);
             }
         }
 
@@ -99,11 +99,13 @@ class ChoiceFormSubmissionField extends FormSubmissionField
         $values = $this->getValue();
         if (is_array($values)) {
             return empty($values) || count($values) <= 0;
-        } elseif (is_string($values)) {
-            return !isset($values) || trim($values) === '';
-        } else {
-            return is_null($values);
         }
+
+        if (is_string($values)) {
+            return !isset($values) || trim($values) === '';
+        }
+
+        return is_null($values);
     }
 
     /**

@@ -23,7 +23,7 @@ class AnalyticsOverview extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="AnalyticsSegment", inversedBy="overviews")
      * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", nullable=true)
      */
-    private $segment = null;
+    private $segment;
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist", "remove"})

@@ -25,7 +25,7 @@
     {% endif %}
     {% if form_has_errors_recursive(form) %}
         <div class="alert alert-danger">
-            <strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
+            <strong>{{ "kuma_node.error.title" | trans }}: </strong>{{ "kuma_node.error.validation" | trans }}
             {{ form_errors(form) }}
             <button class="close" data-dismiss="alert">
                 <i class="fa fa-times"></i>

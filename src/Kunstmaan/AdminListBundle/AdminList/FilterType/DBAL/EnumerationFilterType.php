@@ -30,7 +30,7 @@ class EnumerationFilterType extends AbstractDBALFilterType
      */
     public function apply(array $data, $uniqueId)
     {
-        if (isset($data['value']) && isset($data['comparator'])) {
+        if (isset($data['value'], $data['comparator'])) {
             switch ($data['comparator']) {
                 case 'in':
                     $this->queryBuilder->andWhere($this->getAlias() . $this->columnName . ' IN (:var_' . $uniqueId . ')');

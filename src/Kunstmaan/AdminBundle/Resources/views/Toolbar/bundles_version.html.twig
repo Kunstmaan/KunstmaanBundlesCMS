@@ -4,13 +4,33 @@
     {% endif %}
 
     {% if data is defined %}
-        {% set status_color = '#00529B' %}
+        {% set status_color = 'yellow' %}
+        {% set version = 'Unknown' %}
         {% set txt = 'toolbar.bundle_version.unknown'|trans %}
-        {% set version = null %}
 
         {% if data is iterable %}
             {% for bundle in data %}
                 {% if bundle.name == "kunstmaan/bundles-cms" %}
+                    {% set version = bundle.version %}
+                    {% if bundle.status == 'UP_TO_DATE' %}
+                        {% set status_color = '' %}
+                        {% set label_color = 'green' %}
+                        {% set txt = 'toolbar.bundle_version.uptodate'|trans %}
+                    {% elseif bundle.status == 'TO_UPDATE' %}
+                        {% set status_color = 'red' %}
+                        {% set txt = 'toolbar.bundle_version.toupdate'|trans %}
+                    {% endif %}
+                {% elseif bundle.name == 'kunstmaan/admin-bundle' %}
+                    {% set version = bundle.version %}
+                    {% if bundle.status == 'UP_TO_DATE' %}
+                        {% set status_color = '' %}
+                        {% set label_color = 'green' %}
+                        {% set txt = 'toolbar.bundle_version.uptodate'|trans %}
+                    {% elseif bundle.status == 'TO_UPDATE' %}
+                        {% set status_color = 'red' %}
+                        {% set txt = 'toolbar.bundle_version.toupdate'|trans %}
+                    {% endif %}
+                {% elseif bundle.name == 'kunstmaan/admin-bundle' %}
                     {% set version = bundle.version %}
                     {% if bundle.status == 'UP_TO_DATE' %}
                         {% set status_color = '#4F8A10' %}
@@ -22,24 +42,30 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            <div class="alert-error">{{ 'settings.version.error'|trans }}</div>
+            {% set status_color = 'red' %}
+            {% set version = 'Unknown' %}
+            {% set txt = 'toolbar.bundle_version.error'|trans %}
         {% endif %}
 
         {% set icon %}
             {{ include('@KunstmaanAdmin/Toolbar/Icon/time.svg') }}
-            <span class="sf-toolbar-value">{{ txt }}</span>
-            <span class="sf-toolbar-label">{{ version }}</span>
+            <span class="sf-toolbar-value">{{ version }}</span>
         {% endset %}
 
         {% set text %}
-            <div class="sf-toolbar-info-piece">
-                <b> {{ 'toolbar.bundle_version.version'|trans }}</b>
-                <span>{{ version }}</span>
+            <div class="sf-toolbar-info-group">
+                <div class="sf-toolbar-info-piece">
+                    <div class="sf-toolbar-info-piece">
+                        <b> {{ 'toolbar.bundle_version.version'|trans }}</b>
+                        <span>{{ version }}</span>
+                    </div>
+                    <div class="sf-toolbar-info-piece">
+                        <b> {{ 'toolbar.bundle_version.status'|trans }}</b>
+                        <span class="sf-toolbar-status sf-toolbar-status-{% if label_color is defined %}{{ label_color }}{% else %}{{ status_color }}{% endif %}">{{ txt }} </span>
+                    </div>
+                </div>
             </div>
-            <div class="sf-toolbar-info-piece">
-                <b> {{ 'toolbar.bundle_version.status'|trans }}</b>
-                <span>{{ txt }} </span>
-            </div>
+
         {% endset %}
 
         {{ include('@KunstmaanAdmin/Toolbar/toolbar_item.html.twig', { status: status_color }) }}

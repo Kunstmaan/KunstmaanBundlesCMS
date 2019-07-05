@@ -33,12 +33,12 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     /**
      * @var array
      */
-    private $treeNodes = null;
+    private $treeNodes;
 
     /**
      * @var array
      */
-    private $activeNodeIds = null;
+    private $activeNodeIds;
 
     /**
      * @var PagesConfiguration
@@ -94,7 +94,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
-        } elseif (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes') === 0) {
+        } elseif (strncasecmp($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes', 25) === 0) {
             $treeNodes = $this->getTreeNodes(
                 $request->getLocale(),
                 PermissionMap::PERMISSION_VIEW,
@@ -114,7 +114,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             } elseif ('KunstmaanNodeBundle_nodes_edit' === $parent->getRoute()) {
                 $parentRouteParams = $parent->getRouteParams();
                 $parent_id = $parentRouteParams['id'];
-                if (array_key_exists($parent_id, $treeNodes)) {
+                if (\array_key_exists($parent_id, $treeNodes)) {
                     $this->processNodes(
                         $menu,
                         $children,
@@ -163,7 +163,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 if ($this->pagesConfiguration->isHiddenFromTree($refEntityName)) {
                     continue;
                 }
-                $parent_id = is_null($nodeInfo['parent']) ? 0 : $nodeInfo['parent'];
+                $parent_id = \is_null($nodeInfo['parent']) ? 0 : $nodeInfo['parent'];
                 unset($nodeInfo['parent']);
                 $this->treeNodes[$parent_id][] = $nodeInfo;
             }
@@ -183,20 +183,18 @@ class PageMenuAdaptor implements MenuAdaptorInterface
      */
     private function getActiveNodeIds($request)
     {
-        if (null === $this->activeNodeIds) {
-            if (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes_edit') === 0) {
-                $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+        if ((null === $this->activeNodeIds) && strncasecmp($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes_edit', 30) === 0) {
+            $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
-                $currentNode = $repo->findOneById($request->attributes->get('id'));
-                $parentNodes = $repo->getAllParents($currentNode);
-                $this->activeNodeIds = [];
-                foreach ($parentNodes as $parentNode) {
-                    $this->activeNodeIds[] = $parentNode->getId();
-                }
+            $currentNode = $repo->findOneById($request->attributes->get('id'));
+            $parentNodes = $repo->getAllParents($currentNode);
+            $this->activeNodeIds = [];
+            foreach ($parentNodes as $parentNode) {
+                $this->activeNodeIds[] = $parentNode->getId();
             }
         }
 
-        return is_null($this->activeNodeIds) ? [] : $this->activeNodeIds;
+        return \is_null($this->activeNodeIds) ? [] : $this->activeNodeIds;
     }
 
     /**

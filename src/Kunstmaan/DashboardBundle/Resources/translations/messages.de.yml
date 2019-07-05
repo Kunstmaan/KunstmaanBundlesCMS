@@ -22,7 +22,7 @@ dashboard:
         disable: Ziele deaktivieren
       title: Google Analytics dashboard widget einrichten
       content: "Um mehr Informationen zur Einrichtung des Google Analytics Widgets zu erhalten, besuchen Sie"
-      docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
+      docs_url: "https://kunstmaanbundlescms.readthedocs.io/en/stable/cookbook/google-analytics-dashboard/"
       docs: die Dokumentation
       redirect: "Dies ist die Umleitungs-URI:"
       refresh: "Aktualisieren Sie diese Seite sobald Sie mit der Einrichtung fertig sind."

@@ -58,7 +58,7 @@ class ImageHandler extends FileHandler
      */
     public function canHandle($object)
     {
-        if (parent::canHandle($object) && ($object instanceof File || strpos($object->getContentType(), 'image') === 0)) {
+        if (parent::canHandle($object) && ($object instanceof File || strncmp($object->getContentType(), 'image', 5) === 0)) {
             return true;
         }
 

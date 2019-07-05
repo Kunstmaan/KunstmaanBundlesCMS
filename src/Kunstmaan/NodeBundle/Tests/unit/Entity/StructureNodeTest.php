@@ -67,7 +67,7 @@ class StructureNodeTest extends TestCase
         $entity = $this->createMock(HasNodeInterface::class);
         $node = new TestStructureNode();
         $node->setParent($entity);
-        $this->assertInstanceOf(get_class($entity), $node->getParent());
+        $this->assertInstanceOf(\get_class($entity), $node->getParent());
     }
 
     public function testGetDefaultAdminType()

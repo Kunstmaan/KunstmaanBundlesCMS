@@ -38,13 +38,13 @@ class FileUploadPagePartTest extends TestCase
 
         $formBuilder->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue(array()));
+            ->willReturn([]);
 
         $fields = new ArrayObject();
 
         $object->setErrorMessageRequired('this is required');
-        $this->assertTrue(count($fields) == 0);
-        /* @var $formBuilder FormBuilderInterface */
+        $this->assertEquals(count($fields), 0);
+        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
         $this->assertEquals('this is required', $object->getErrorMessageRequired());
@@ -54,7 +54,7 @@ class FileUploadPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
     }
 
     public function testGetDefaultAdminType()

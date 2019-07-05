@@ -33,7 +33,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
         $tokenStorage = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         $roleHierarchy = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
           ->getMock();
-        $aclHelper = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper', array(), array($em, $tokenStorage, $roleHierarchy));
+        $aclHelper = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper');
 
         $this->object = new FormPageAdminListConfigurator($em, $aclHelper, self::PERMISSION_VIEW);
     }
@@ -75,7 +75,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
             ->method('andWhere')
             ->will($this->returnSelf());
 
-        /* @var $queryBuilder QueryBuilder */
+        /* @var QueryBuilder $queryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder);
     }
 

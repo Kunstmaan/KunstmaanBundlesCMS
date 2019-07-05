@@ -42,8 +42,8 @@ class FilterBuilderTest extends TestCase
         $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType', $definition['type']);
         $this->assertEquals('filterName', $definition['filtername']);
         $this->assertEquals(array('option1' => 'value1'), $definition['options']);
-        $this->assertTrue(is_array($this->object->getCurrentParameters()));
-        $this->assertTrue(is_array($this->object->getCurrentFilters()));
+        $this->assertTrue(\is_array($this->object->getCurrentParameters()));
+        $this->assertTrue(\is_array($this->object->getCurrentFilters()));
     }
 
     public function testRemove()

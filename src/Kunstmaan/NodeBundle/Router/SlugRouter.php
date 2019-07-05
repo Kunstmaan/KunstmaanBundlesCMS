@@ -111,7 +111,7 @@ class SlugRouter implements RouterInterface
 
         if (!empty($result)) {
             $nodeTranslation = $this->getNodeTranslation($result);
-            if (is_null($nodeTranslation)) {
+            if (\is_null($nodeTranslation)) {
                 throw new ResourceNotFoundException(
                     'No page found for slug ' . $pathinfo
                 );
@@ -180,7 +180,7 @@ class SlugRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
-        if (is_null($this->routeCollection)) {
+        if (\is_null($this->routeCollection)) {
             $this->routeCollection = new RouteCollection();
 
             $this->addPreviewRoute();
@@ -195,7 +195,7 @@ class SlugRouter implements RouterInterface
      */
     protected function getMasterRequest()
     {
-        if (is_null($this->requestStack)) {
+        if (\is_null($this->requestStack)) {
             return null;
         }
 

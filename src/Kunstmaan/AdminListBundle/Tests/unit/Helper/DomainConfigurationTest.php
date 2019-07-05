@@ -69,8 +69,6 @@ class DomainConfigurationTest extends TestCase
 
     private function getRequest()
     {
-        $request = Request::create('http://domain.tld/');
-
-        return $request;
+        return Request::create('http://domain.tld/');
     }
 }

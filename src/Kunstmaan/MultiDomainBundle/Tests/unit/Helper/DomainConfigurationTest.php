@@ -280,7 +280,7 @@ class DomainConfigurationTest extends TestCase
 
         $container
             ->method('getParameter')
-            ->will($this->returnValueMap($map));
+            ->willReturnMap($map);
 
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
@@ -290,7 +290,7 @@ class DomainConfigurationTest extends TestCase
 
         $container
             ->method('get')
-            ->will($this->returnValueMap($serviceMap));
+            ->willReturnMap($serviceMap);
 
         return $container;
     }
@@ -320,7 +320,7 @@ class DomainConfigurationTest extends TestCase
         $adminRouteHelper
             ->expects($this->any())
             ->method('isAdminRoute')
-            ->will($this->returnValueMap($adminRouteReturnValueMap));
+            ->willReturnMap($adminRouteReturnValueMap);
 
         return $adminRouteHelper;
     }
@@ -354,30 +354,22 @@ class DomainConfigurationTest extends TestCase
 
     private function getUnknownDomainRequest()
     {
-        $request = Request::create('http://unknown.tld/');
-
-        return $request;
+        return Request::create('http://unknown.tld/');
     }
 
     private function getMultiLanguageRequest()
     {
-        $request = Request::create('http://multilangdomain.tld/');
-
-        return $request;
+        return Request::create('http://multilangdomain.tld/');
     }
 
     private function getSingleLanguageRequest()
     {
-        $request = Request::create('http://singlelangdomain.tld/');
-
-        return $request;
+        return Request::create('http://singlelangdomain.tld/');
     }
 
     private function getAliasedRequest()
     {
-        $request = Request::create('http://single-alias.tld/');
-
-        return $request;
+        return Request::create('http://single-alias.tld/');
     }
 
     private function getRequestWithOverride($uri)
@@ -428,8 +420,6 @@ class DomainConfigurationTest extends TestCase
             array('kunstmaan_multi_domain.hosts', $hostMap),
         );
 
-        $object = new DomainConfiguration($this->getContainer($map, $request));
-
-        return $object;
+        return new DomainConfiguration($this->getContainer($map, $request));
     }
 }

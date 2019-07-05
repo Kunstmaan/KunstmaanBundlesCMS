@@ -51,7 +51,7 @@ class SimpleItemAction implements ItemActionInterface
     public function getUrlFor($item)
     {
         $routeGenerator = $this->routerGenerator;
-        if (is_callable($routeGenerator)) {
+        if (\is_callable($routeGenerator)) {
             return $routeGenerator($item);
         }
 

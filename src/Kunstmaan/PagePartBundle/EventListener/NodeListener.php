@@ -72,7 +72,7 @@ class NodeListener
 
             /* @var Tab $propertiesTab */
             $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
-            if (!is_null($propertiesTab)) {
+            if (!\is_null($propertiesTab)) {
                 $propertiesWidget = $propertiesTab->getWidget();
                 $tabPane->removeTab($propertiesTab);
                 $tabPane->addTab(new Tab('kuma_pagepart.tab.content.title', new ListWidget(array($propertiesWidget, $pageTemplateWidget))), 0);
@@ -89,7 +89,7 @@ class NodeListener
                     /* @var Tab $propertiesTab */
                     $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
 
-                    if (!is_null($propertiesTab)) {
+                    if (!\is_null($propertiesTab)) {
                         $propertiesWidget = $propertiesTab->getWidget();
                         $tabPane->removeTab($propertiesTab);
                         $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), new ListWidget(array($propertiesWidget, $pagePartWidget))), 0);
@@ -97,7 +97,7 @@ class NodeListener
                         continue;
                     }
                 }
-                $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), $pagePartWidget), count($tabPane->getTabs()));
+                $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), $pagePartWidget), \count($tabPane->getTabs()));
             }
         }
     }

@@ -107,7 +107,6 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $this->assertEquals('KunstmaanNodeBundle_nodes_edit', $url['path']);
         $this->assertCount(1, $url['params']);
         $this->assertEquals(1314, $url['params']['id']);
-        $url = $this->object->getEditUrlFor($item);
 
         $url = $this->object->getDeleteUrlFor($item);
 

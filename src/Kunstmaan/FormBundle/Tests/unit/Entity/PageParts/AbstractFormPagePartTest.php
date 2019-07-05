@@ -39,6 +39,6 @@ class AbstractFormPagePartTest extends TestCase
     {
         $stringValue = $this->object->getAdminView();
         $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
+        $this->assertInternalType('string', $stringValue);
     }
 }
