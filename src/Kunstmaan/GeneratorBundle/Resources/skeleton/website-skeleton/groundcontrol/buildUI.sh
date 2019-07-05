@@ -9,7 +9,7 @@ fi
 rm -rf node_modules
 
 # Set correct node version
-nvm install
+nvm use
 
 npm install
 npm run build
