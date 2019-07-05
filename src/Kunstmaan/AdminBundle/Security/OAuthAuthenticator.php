@@ -191,7 +191,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $this->session->getFlashBag()->add(FlashTypes::ERROR, $this->translator->trans('errors.oauth.invalid'));
+        $this->session->getFlashBag()->add(FlashTypes::DANGER, $this->translator->trans('errors.oauth.invalid'));
 
         return new RedirectResponse($this->router->generate('fos_user_security_login'));
     }

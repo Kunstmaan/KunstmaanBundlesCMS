@@ -175,7 +175,7 @@ class FormSubmissionsController extends Controller
         } catch (\Exception $e) {
             $this->get('logger')->error($e->getMessage());
             $this->addFlash(
-                FlashTypes::ERROR,
+                FlashTypes::DANGER,
                 $this->get('translator')->trans('formsubmissions.delete.flash.error')
             );
         }

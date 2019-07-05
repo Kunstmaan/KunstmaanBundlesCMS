@@ -83,7 +83,7 @@ class PasswordCheckListener
                 if ($user->isPasswordChanged() === false) {
                     $response = new RedirectResponse($this->router->generate('fos_user_change_password'));
                     $this->session->getFlashBag()->add(
-                        FlashTypes::ERROR,
+                        FlashTypes::DANGER,
                         $this->translator->trans('kuma_admin.password_check.flash.error')
                     );
                     $event->setResponse($response);
