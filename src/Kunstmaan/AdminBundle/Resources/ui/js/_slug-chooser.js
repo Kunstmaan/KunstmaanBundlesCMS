@@ -31,20 +31,20 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
         // Update
         $input.on('change', function() {
-            updateSlugPreview($input, $preview, urlprefix);
+            updateSlugPreview($input, $preview, urlprefix, resetValue);
         });
         $input.on('keyup', function() {
-            updateSlugPreview($input, $preview, urlprefix);
+            updateSlugPreview($input, $preview, urlprefix, resetValue);
         });
 
         // Reset Btn
         $resetBtn.on('click', function() {
             resetSlug($input, resetValue);
-            updateSlugPreview($input, $preview, urlprefix);
+            updateSlugPreview($input, $preview, urlprefix, resetValue);
         });
 
         // Set initial value
-        updateSlugPreview($input, $preview, urlprefix);
+        updateSlugPreview($input, $preview, urlprefix, resetValue);
     };
 
 
@@ -53,10 +53,16 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
     };
 
 
-    updateSlugPreview = function($input, $preview, urlprefix) {
+    updateSlugPreview = function($input, $preview, urlprefix, resetValue) {
         var inputValue = $input.val();
 
-        $preview.html('url: ' + urlprefix + inputValue);
+        if(inputValue === resetValue) {
+            $preview.hide();
+
+            return;
+        }
+
+        $preview.html('url: ' + urlprefix + inputValue).show();
     };
 
 

@@ -84,6 +84,13 @@
                 </button>
             </span>
             </div>
+            <small>
+                {% set url = path('_slug', {
+                    url: prefix ~ value
+                }) %}
+
+                {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">{{ url }}</a>
+            </small>
             <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
         </div>
     {% endspaceless %}
