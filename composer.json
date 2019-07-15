@@ -75,7 +75,8 @@
         "ruflin/elastica": "^5.1|^6.0",
         "behat/transliterator": "~1.2",
         "defuse/php-encryption": "v2.1.0",
-        "kunstmaan/sensio-generator-bundle": "^3.2"
+        "kunstmaan/sensio-generator-bundle": "^3.2",
+        "doctrine/collections": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.6",

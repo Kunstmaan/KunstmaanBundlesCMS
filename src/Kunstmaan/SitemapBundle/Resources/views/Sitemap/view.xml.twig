@@ -14,4 +14,13 @@
             {% endfor %}
         {% endfor %}
     {% endif %}
+    {% if extraItems is defined and extraItems is not empty %}
+        {% for item in extraItems %}
+            <url>
+                <loc>{{ item.url }}</loc>
+                <lastmod>{{ item.lastModified|date('Y-m-d') }}</lastmod>
+                <priority>{{ item.priority }}</priority>
+            </url>
+        {% endfor %}
+    {% endif %}
 </urlset>
