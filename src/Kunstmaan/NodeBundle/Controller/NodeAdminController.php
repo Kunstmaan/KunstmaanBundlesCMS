@@ -758,10 +758,13 @@ class NodeAdminController extends Controller
                 $this->em->flush($node);
             }
 
-            /* @var NodeTranslation $nodeTranslation */
-            $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+            $nodeTranslations = $node->getNodeTranslations(true);
 
-            if ($nodeTranslation) {
+            foreach ($nodeTranslations as $nodeTranslation) {
+                if (!$nodeTranslation instanceof NodeTranslation) {
+                    continue;
+                }
+
                 $nodeVersion = $nodeTranslation->getPublicNodeVersion();
                 $page = $nodeVersion->getRef($this->em);
 
@@ -771,6 +774,7 @@ class NodeAdminController extends Controller
                 );
 
                 $nodeTranslation->setWeight($weight);
+                $nodeTranslation->setUpdated(new \DateTime());
                 $this->em->persist($nodeTranslation);
                 $this->em->flush($nodeTranslation);
 
@@ -778,9 +782,9 @@ class NodeAdminController extends Controller
                     Events::POST_PERSIST,
                     new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
                 );
-
-                ++$weight;
             }
+
+            ++$weight;
         }
 
         return new JsonResponse(
