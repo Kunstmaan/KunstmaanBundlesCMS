@@ -41,7 +41,7 @@ kuma_node:
             page_title:
                 label:  Page title
                 info_text: Used as title inside the page.
-    current_url: Current url
+        current_url: Current url
     status:
         "will_be_publish_at.%date%.raw":    This page will be published at %date%
         "will_be_unpublish_at.%date%.raw":  This page will be unpublished at %date%

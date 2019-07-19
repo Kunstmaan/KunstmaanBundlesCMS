@@ -38,7 +38,7 @@ kuma_node:
       page_title:
         label: Pagina titel
         info_text: Wordt gebruikt als titel op de pagina.
-  current_url: Huidige url
+    current_url: Huidige url
   status:
     "will_be_publish_at.%date%.raw": Deze pagina zal worden gepubliceerd op %date%
     "will_be_unpublish_at.%date%.raw": Deze pagina wordt offline gezet op %date%
