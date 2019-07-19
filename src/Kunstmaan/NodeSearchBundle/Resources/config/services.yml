@@ -8,6 +8,10 @@ parameters:
     kunstmaan_node_search.search_service.class: Kunstmaan\NodeSearchBundle\Services\SearchService
 
 services:
+    # Autowire aliases
+    Kunstmaan\NodeSearchBundle\Services\SearchService: '@kunstmaan_node_search.search.service'
+    Kunstmaan\NodeSearchBundle\Search\NodeSearcher: '@kunstmaan_node_search.search.node'
+
     kunstmaan_node_search.search.abstract_elastica_searcher:
         class: Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher
         abstract: true
