@@ -21,7 +21,7 @@
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/pagepart-bundle": "~5.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "symfony/css-selector": "^3.4|^4.0"
+        "symfony/css-selector": "^3.4|^4.2"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
