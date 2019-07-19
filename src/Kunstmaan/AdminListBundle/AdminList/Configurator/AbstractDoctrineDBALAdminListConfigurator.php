@@ -106,7 +106,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function adaptQueryBuilder(
         QueryBuilder $queryBuilder,
-        /* @noinspection PhpUnusedParameterInspection */
         array $params = array()
     ) {
         $queryBuilder->where('1=1');

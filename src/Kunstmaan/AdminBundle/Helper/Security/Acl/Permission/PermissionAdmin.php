@@ -278,7 +278,6 @@ class PermissionAdmin
             }
 
             // Iterate over children and apply recursively
-            /* @noinspection PhpUndefinedMethodInspection */
             foreach ($entity->getChildren() as $child) {
                 $this->applyAclChangeset($child, $changeset);
             }
