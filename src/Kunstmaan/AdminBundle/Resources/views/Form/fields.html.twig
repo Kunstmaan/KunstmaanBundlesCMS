@@ -175,7 +175,7 @@
 
                 {# Items #}
                 {% for obj in form %}
-                    <div id="{{ form.vars.id }}__{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}-pp-container" class="js-nested-form__item nested-form__item{% if sortable %} js-sortable-item sortable-item{% endif %}"
+                    <div id="{{ form.vars.id }}__{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}-pp-container" class="js-nested-form__item nested-form__item{% if obj.children | length > 5 %} nested-form__item__collapsed{% endif %}{% if sortable %} js-sortable-item sortable-item{% endif %}"
                             {% if attr['nested_deletable'] is not defined or attr['nested_deletable'] != false %}
                                 data-delete-key="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}"
                             {% endif %}
@@ -195,10 +195,15 @@
                                 <i class="fa fa-chevron-down"></i>
                             </button>
                             {% endif %}
+                            {% if obj.children | length > 5 %}
+                                <button type="button" class="js-move-up-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--up" title="{{ 'pagepart.buttons.expand'|trans }}" onclick="$(this).parent().parent().toggleClass('nested-form__item__collapsed');">
+                                    <i class="fa fa-expand"></i>
+                                </button>
+                            {% endif %}
                         </header>
 
                         {# View #}
-                        <div class="js-nested-form__item__view nested-form__item__view">
+                        <div class="js-nested-form__item__view nested-form__item__view nested-form__item__view__collapsed">
                             {% if obj.vars.compound %}
                                 {{ form_widget(obj) }}
                             {% else %}

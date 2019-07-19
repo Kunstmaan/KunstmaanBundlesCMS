@@ -23,6 +23,7 @@ pagepart:
         edit: Edit
         delete: Delete
         resize: Minimize-Maximize
+        expand: Expand-Collapse
 
 region:
     button:

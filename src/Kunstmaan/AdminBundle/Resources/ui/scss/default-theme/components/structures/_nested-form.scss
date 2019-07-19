@@ -30,7 +30,9 @@
     }
 }
 
-
+.nested-form__item__collapsed {
+    box-shadow: inset 0px -13px 10px -10px #999;
+}
 
 /* Header
    ========================================================================== */
@@ -111,4 +113,9 @@
    ========================================================================== */
 .nested-form__item__view {
     padding: 1em;
+}
+
+.nested-form__item__collapsed .nested-form__item__view__collapsed {
+    height: 120px;
+    overflow-y: hidden;
 }
