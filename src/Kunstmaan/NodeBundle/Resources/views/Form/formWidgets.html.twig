@@ -77,14 +77,23 @@
     {% spaceless %}
         <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')}) }}" data-reset="{{ reset }}">
             <div class="input-group">
+                <span class="input-group-addon">
+                    {% if prefix|first != '/' %}/{% endif %}{{ prefix }}
+                </span>
                 <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
-            <span class="input-group-btn">
-                <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
-                    Reset
-                </button>
-            </span>
+                <span class="input-group-btn">
+                    <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                        Reset
+                    </button>
+                </span>
             </div>
-            <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
+            <small>
+                {% set url = path('_slug', {
+                    url: prefix ~ value
+                }) %}
+
+                {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">{{ url }}</a>
+            </small>
         </div>
     {% endspaceless %}
 {% endblock slug_widget %}
