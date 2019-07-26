@@ -175,6 +175,7 @@ abstract class AdminListController extends Controller
             'form' => $form->createView(),
             'adminlistconfigurator' => $configurator,
             'entityVersionLockCheck' => false,
+            'entity' => $helper,
         ];
 
         if ($tabPane) {
