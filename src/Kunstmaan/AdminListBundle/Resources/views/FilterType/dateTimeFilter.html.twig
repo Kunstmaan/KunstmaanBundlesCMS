@@ -15,7 +15,7 @@
             <input
                 type="text"
                 class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}"
-                name="{{ nameprefix }}value{{ namesuffix }}"
+                name="{{ nameprefix }}value{{ namesuffix }}[date]"
                 data-date-format="DD/MM/YYYY"
                 {% if data.value['date'] is defined %} value="{{ data.value['date'] }}"{% endif %}
                 {% if datePicker_startDate is defined %} data-startDate="{{ datePicker_startDate }}"{% endif %}
@@ -31,7 +31,7 @@
             <input
                 type="text"
                 class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}"
-                name="{{ nameprefix }}value{{ namesuffix }}"
+                name="{{ nameprefix }}value{{ namesuffix }}[time]"
                 data-date-format="HH:mm"
                 {% if data.value['time'] is defined %} value="{{ data.value['time'] }}"{% endif %}
                 {% if datePicker_startDate is defined %} data-startDate="{{ datePicker_startDate }}"{% endif %}

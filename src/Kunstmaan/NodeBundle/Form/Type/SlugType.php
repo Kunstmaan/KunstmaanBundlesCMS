@@ -54,7 +54,7 @@ class SlugType extends AbstractType
             $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
             $slug = $nodeTranslation->getSlugPart();
             if (!empty($slug)) {
-                $slug .= '/';
+                $slug = rtrim($slug, '/') . '/';
             }
             $view->vars['prefix'] = $slug;
         }
