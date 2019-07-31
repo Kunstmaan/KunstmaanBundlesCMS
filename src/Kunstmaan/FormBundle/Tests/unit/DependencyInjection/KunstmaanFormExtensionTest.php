@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Tests\DependencyInjection;
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class KunstmaanFormExtensionTest
@@ -21,10 +22,16 @@ class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
 
     public function testCorrectParametersHaveBeenSet()
     {
-        $this->container->setParameter('kernel.root_dir', '/somewhere/over/the/rainbow');
+        $this->container->setParameter('kernel.project_dir', '/somewhere/over/the/rainbow');
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_form.form_mailer.class');
         $this->assertContainerBuilderHasParameter('kunstmaan_form.form_handler.class');
+
+        $expectedFormSubmissionPath = '/somewhere/over/the/rainbow/web/uploads/formsubmissions';
+        if (Kernel::VERSION_ID >= 40000) {
+            $expectedFormSubmissionPath = '/somewhere/over/the/rainbow/public/uploads/formsubmissions';
+        }
+        $this->assertContainerBuilderHasParameter('form_submission_rootdir', $expectedFormSubmissionPath);
     }
 }
