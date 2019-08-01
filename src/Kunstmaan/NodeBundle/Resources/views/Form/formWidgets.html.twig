@@ -79,7 +79,7 @@
             <div class="input-group">
                 {% if prefix is not empty %}
                     <span class="input-group-addon">
-                        prefix|first != '/' %}/{% endif %}{{ prefix }}
+                        {% if prefix|first != '/' %}/{% endif %}{{ prefix }}
                     </span>
                 {% endif %}
                 <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
