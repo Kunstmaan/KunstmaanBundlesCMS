@@ -37,7 +37,7 @@ kuma_node:
         label: Tytuł w menu
       page_title:
         label: Tytuł strony
-        info_text: Używany jako nagłówke w konkretnej stronie.
+        info_text: Używany jako nagłówek w konkretnej stronie.
   status:
     "will_be_publish_at.%date%.raw": Strona zostanie opublikowana w %date%
     "will_be_unpublish_at.%date%.raw": Strona zostanie odpubliczniona w %date%
@@ -72,7 +72,7 @@ kuma_node:
       flash:
         success: Strona została zmodyfikowana
         locked: Strona jest aktualnie edytowana przez %users%
-        locked_success: Automatyczna kopia zapasowa została utworzona ponieważ inny użytkownik również modyfikuje tą stronę
+        locked_success: Automatyczna kopia zapasowa została utworzona ponieważ inny użytkownik również modyfikuje tę stronę
     new_page:
       title:
         default: Nowa strona
@@ -89,7 +89,7 @@ kuma_node:
         online: Online
       online: (Online)
       offline: (Offline)
-      additional_title: Ta lista zawiera wszystkie strony, posortowane wg. ostatniej aktualizacji
+      additional_title: Ta lista zawiera wszystkie strony, posortowane wg ostatniej aktualizacji
   tab:
     properties:
       title: Właściwości
@@ -115,15 +115,15 @@ kuma_node:
       title: Cofnij publikację
       body: Czy na pewno chcesz cofnąć publikację? Strona zostanie wyłączona!
       later:
-        label: Cofnij publikację późnije
+        label: Cofnij publikację później
         button: Cofnij publikację poźniej
         cancel: Anuluj
       now:
-        button: Cofnij publikacje
+        button: Cofnij publikację
         cancel: Anuluj
     publish:
       title: Publikuj
-      body: Czy na pewno chcesz opublikować tą stronę?
+      body: Czy na pewno chcesz opublikować tę stronę?
       later:
         label: Publikuj później
         button: Publikuj później
@@ -150,8 +150,8 @@ kuma_node:
         add: Dodaj
         cancel: Anuluj
     delete_page:
-      'title.%page%': Usuń stornę '%page%'
-      'body.%page%': To spowoduje usunięcie stron z wszystkich języków! Czy na pewno chcesz to usunąć?
+      'title.%page%': Usuń stronę '%page%'
+      'body.%page%': To spowoduje usunięcie stron ze wszystkich języków! Czy na pewno chcesz to usunąć?
       button:
         delete: Usuń
         cancel: Anuluj
