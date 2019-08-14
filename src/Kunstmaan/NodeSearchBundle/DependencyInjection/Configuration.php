@@ -53,6 +53,7 @@ class Configuration implements ConfigurationInterface
             'date',
             'boolean',
             'binary',
+            'geo_point',
         ];
         if (!$this->useElasticSearchVersion6) {
             $types[] = 'string';
