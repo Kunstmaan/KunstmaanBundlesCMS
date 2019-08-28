@@ -13,6 +13,8 @@ use Twig\TwigFunction;
 
 /**
  * Twig extensions for Seo
+ *
+ * @final since 5.4
  */
 class SeoTwigExtension extends AbstractExtension
 {

@@ -7,6 +7,9 @@ use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @final since 5.4
+ */
 class PagesConfigurationTwigExtension extends AbstractExtension
 {
     /** @var PagesConfiguration */

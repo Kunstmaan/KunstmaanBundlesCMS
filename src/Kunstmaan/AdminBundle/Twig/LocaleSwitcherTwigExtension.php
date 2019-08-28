@@ -9,6 +9,8 @@ use Twig\TwigFunction;
 
 /**
  * LocaleSwitcherTwigExtension
+ *
+ * @final since 5.4
  */
 class LocaleSwitcherTwigExtension extends AbstractExtension
 {

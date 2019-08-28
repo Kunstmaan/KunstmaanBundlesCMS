@@ -9,6 +9,8 @@ use Twig\TwigFunction;
 
 /**
  * FormToolsExtension
+ *
+ * @final since 5.4
  */
 class FormToolsExtension extends AbstractExtension
 {

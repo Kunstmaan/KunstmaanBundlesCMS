@@ -11,6 +11,8 @@ use Twig\TwigFunction;
 
 /**
  * Extension for article bundle.
+ *
+ * @final since 5.4
  */
 class ArticleTwigExtension extends AbstractExtension
 {

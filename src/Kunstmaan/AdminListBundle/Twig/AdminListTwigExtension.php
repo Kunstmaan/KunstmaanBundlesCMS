@@ -14,6 +14,8 @@ use Twig\TwigTest;
 
 /**
  * AdminListTwigExtension
+ *
+ * @final since 5.4
  */
 class AdminListTwigExtension extends AbstractExtension
 {

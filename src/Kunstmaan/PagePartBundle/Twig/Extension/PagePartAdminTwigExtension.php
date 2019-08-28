@@ -9,6 +9,8 @@ use Twig\TwigFunction;
 
 /**
  * PagePartAdminTwigExtension
+ *
+ * @final since 5.4
  */
 class PagePartAdminTwigExtension extends AbstractExtension
 {

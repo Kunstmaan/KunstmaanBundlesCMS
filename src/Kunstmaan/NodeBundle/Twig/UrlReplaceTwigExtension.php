@@ -6,6 +6,9 @@ use Kunstmaan\NodeBundle\Helper\URLHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
+/**
+ * @final since 5.4
+ */
 class UrlReplaceTwigExtension extends AbstractExtension
 {
     /**

@@ -1,6 +1,11 @@
 UPGRADE FROM 5.3 to 5.4
 =======================
 
+General
+-------
+
+* All Twig extension are marked as final.
+
 AdminBundle
 -----------
 

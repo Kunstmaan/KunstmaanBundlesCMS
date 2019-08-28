@@ -9,6 +9,8 @@ use Twig\TwigFunction;
 
 /**
  * Extension to fetch config
+ *
+ * @final since 5.4
  */
 class ConfigTwigExtension extends AbstractExtension
 {

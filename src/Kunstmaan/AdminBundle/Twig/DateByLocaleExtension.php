@@ -8,6 +8,8 @@ use Twig\TwigFilter;
 
 /**
  * DateByLocaleExtension
+ *
+ * @final since 5.4
  */
 class DateByLocaleExtension extends AbstractExtension
 {

@@ -13,6 +13,8 @@ use Twig\TwigFunction;
 
 /**
  * Twig extensions for Google Analytics
+ *
+ * @final since 5.4
  */
 class GoogleAnalyticsTwigExtension extends AbstractExtension
 {
