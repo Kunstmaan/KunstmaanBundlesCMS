@@ -28,6 +28,7 @@ matrix:
 
 before_install:
   - yes | pecl install imagick
+  - sudo sed -i -e 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/' /etc/ImageMagick-6/policy.xml
   - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
   - echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer selfupdate
@@ -48,9 +49,9 @@ install:
 script: ./vendor/bin/phpunit $PHPUNIT_FLAGS
 
 after_script:
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-    - npm run build -- --continueAfterTestError=true
-    - npm run buildGroundControlSkeleton
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - npm run build -- --continueAfterTestError=true
+  - npm run buildGroundControlSkeleton
 
 notifications:
   email:
