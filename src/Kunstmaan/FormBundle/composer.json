@@ -17,6 +17,7 @@
         "php": "^7.1",
         "behat/transliterator": "~1.2",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
+        "kunstmaan/admin-bundle": "^5.4",
         "kunstmaan/adminlist-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/pagepart-bundle": "~5.2",
