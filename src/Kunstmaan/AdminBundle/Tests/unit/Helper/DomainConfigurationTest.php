@@ -95,7 +95,7 @@ class DomainConfigurationTest extends TestCase
     private function getRequestStack()
     {
         $requestStack = $this->createMock(RequestStack::class);
-        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn( Request::create('http://domain.tld/'));
+        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn(Request::create('http://domain.tld/'));
 
         return $requestStack;
     }
