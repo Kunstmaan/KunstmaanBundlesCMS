@@ -129,6 +129,8 @@ class SearchService
 
         $searcher = $this->searchers[$entity->getSearcher()] ?? null;
         if (null === $searcher) {
+            $searcher = $this->container->get($entity->getSearcher());
+
             @trigger_error(
                 sprintf(
                     'Getting the node searcher "%s" from the container is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Tag your searcher service with the "kunstmaan_node_search.node_searcher" tag to add a searcher.',
@@ -136,8 +138,6 @@ class SearchService
                 ),
                 E_USER_DEPRECATED
             );
-
-            $searcher = $this->container->get($entity->getSearcher());
         }
 
         $this->applySearchParams($searcher, $request, $this->renderContext);
