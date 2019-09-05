@@ -44,7 +44,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator($request), $request);
+        return parent::doAddAction($this->getAdminListConfigurator($request), null, $request);
     }
 
     /**
