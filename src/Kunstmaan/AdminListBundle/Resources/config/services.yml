@@ -11,6 +11,7 @@ services:
         calls:
             -  [ setRenderer, [ '@templating' ] ]
             -  [ setTranslator, [ '@translator' ] ]
+        public: true
 
     kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension

@@ -172,7 +172,7 @@ kunstmaanbundles.filter = (function($, window, undefined) {
 
 
     removeFilterLine = function($el) {
-        if($filterHolder.children('.js-filter-line').size() === 2 ){
+        if ($filterHolder.children('.js-filter-line').length === 2) {
             $('#first-filter-line option:first').attr('selected', 'selected');
             $('#first-filter-line').removeClass('hidden');
             $addFilterBtn.addClass('hidden');
