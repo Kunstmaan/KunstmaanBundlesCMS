@@ -19,7 +19,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class AclHelperTest extends TestCase
@@ -134,14 +133,16 @@ class AclHelperTest extends TestCase
             ->getMock();
 
         $this->token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')
-            ->getMock();
+            ->setMethods(['getRoleNames'])
+            ->getMockForAbstractClass();
 
         $this->tokenStorage->expects($this->any())
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
         $this->rh = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
-            ->getMock();
+            ->setMethods(['getReachableRoleNames'])
+            ->getMockForAbstractClass();
 
         $this->object = new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
@@ -178,15 +179,15 @@ class AclHelperTest extends TestCase
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        $roles = array(new Role('ROLE_KING'));
-        $allRoles = array($roles[0], new Role('ROLE_SUBJECT'));
+        $roles = array('ROLE_KING');
+        $allRoles = array($roles[0], 'ROLE_SUBJECT');
 
         $this->token->expects($this->once())
-            ->method('getRoles')
+            ->method('getRoleNames')
             ->will($this->returnValue($roles));
 
         $this->rh->expects($this->once())
-            ->method('getReachableRoles')
+            ->method('getReachableRoleNames')
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
@@ -231,13 +232,13 @@ class AclHelperTest extends TestCase
         $roles = array();
 
         $this->token->expects($this->once())
-            ->method('getRoles')
+            ->method('getRoleNames')
             ->will($this->returnValue($roles));
 
         $this->rh->expects($this->once())
-            ->method('getReachableRoles')
+            ->method('getReachableRoleNames')
             ->with($roles)
-            ->will($this->returnValue($roles));
+            ->willReturn($roles);
 
         $this->token->expects($this->any())
             ->method('getUser')
@@ -259,15 +260,15 @@ class AclHelperTest extends TestCase
 
     public function testGetAllowedEntityIds()
     {
-        $roles = array(new Role('ROLE_KING'));
-        $allRoles = array($roles[0], new Role('ROLE_SUBJECT'));
+        $roles = array('ROLE_KING');
+        $allRoles = array($roles[0], 'ROLE_SUBJECT');
 
         $this->token->expects($this->once())
-            ->method('getRoles')
+            ->method('getRoleNames')
             ->will($this->returnValue($roles));
 
         $this->rh->expects($this->once())
-            ->method('getReachableRoles')
+            ->method('getReachableRoleNames')
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
