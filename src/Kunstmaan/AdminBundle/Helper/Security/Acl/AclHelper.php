@@ -14,7 +14,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * AclHelper is a helper class to help setting the permissions when querying using ORM
@@ -148,17 +147,17 @@ class AclHelper
         $user = null;
         if (!is_null($token)) {
             $user = $token->getUser();
-            $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+            $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
         }
 
         // Security context does not provide anonymous role automatically.
         $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
 
-        /* @var $role RoleInterface */
+        /* @var string $role */
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
-            if ($role->getRole() !== 'ROLE_USER') {
-                $uR[] = '"' . $role->getRole() . '"';
+            if ($role !== 'ROLE_USER') {
+                $uR[] = '"' . $role . '"';
             }
         }
         $uR = array_unique($uR);
