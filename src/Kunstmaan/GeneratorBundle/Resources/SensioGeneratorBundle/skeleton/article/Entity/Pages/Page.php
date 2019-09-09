@@ -26,41 +26,27 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
 
     //%PagePartialFunctions.php.twig%
 
-    /**
-     * Returns the default backend form type for this page
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ entity_class }}PageAdminType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSearchType()
+    public function getSearchType(): string
     {
         return '{{ entity_class }}';
     }
 
-    /**
-     * @return array
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page'];
     }
 
-    public function getDefaultView()
+    public function getDefaultView(): array
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}Page{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
