@@ -49,7 +49,7 @@
         "symfony/twig-bundle": "^3.4|^4.0",
         "symfony/validator": "^3.4|^4.0",
         "symfony/yaml": "^3.4|^4.0",
-        "twig/twig": "^1.36|^2.6",
+        "twig/twig": "^1.40|^2.9",
         "twig/extensions": "~1.0",
         "sensio/framework-extra-bundle": "^5.0",
         "white-october/pagerfanta-bundle": "~1.0"

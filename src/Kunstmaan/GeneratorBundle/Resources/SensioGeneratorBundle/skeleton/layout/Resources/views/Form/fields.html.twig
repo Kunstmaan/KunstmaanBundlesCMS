@@ -1,27 +1,27 @@
 {# Widget attributes #}
 {% block widget_container_attributes %}
-{% spaceless %}
+{% apply spaceless %}
     {% if id is not empty %}id="{{ id }}" {% endif %}
     {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock widget_container_attributes %}
 
 
 {# Form row #}
 {% block form_row %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock form_row %}
 
 
 {# Form label #}
 {% block form_label %}
-{% spaceless %}
+{% apply spaceless %}
     {% if label is not same as(false) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
@@ -37,45 +37,45 @@
             {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
         </label>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_label %}
 
 
 {# Form widget: Hidden #}
 {% block hidden_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div {{ block('widget_container_attributes') }} class="form-widget--hidden hidden">
         {% set type = type|default('hidden') %}
         {{ block('form_widget_simple') }}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock hidden_widget %}
 
 
 {# Form widget: Input #}
 {% block form_widget_simple %}
-{% spaceless %}
+{% apply spaceless %}
     {% set type = type|default('text') %}
     {% set class = (attr.class|default('') ~ ' form-control form-control--input') %}
     {% set attr = attr|merge({'class': class|trim}) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
-{% endspaceless %}
+{% endapply %}
 {% endblock form_widget_simple %}
 
 
 {# Form widget: Textarea #}
 {% block textarea_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% set class = (attr.class|default('') ~ ' form-control form-control--textarea form-widget--textarea') %}
     {% set attr = attr|merge({'class': class|trim}) %}
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
-{% endspaceless %}
+{% endapply %}
 {% endblock textarea_widget %}
 
 
 {# Form widget: Selectbox #}
 {% block choice_widget_collapsed %}
-{% spaceless %}
+{% apply spaceless %}
     <div {{ block('widget_container_attributes') }} class="form-widget--select">
         <i class="icon icon--triangle-down select__icon"></i>
         {% set class = (attr.class|default('') ~ ' form-control form-control--select') %}
@@ -96,25 +96,25 @@
         </select>
         <span class="form-bar"></span>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock choice_widget_collapsed %}
 
 
 {# Form widget: Choice expanded - Radiobutton / Checkbox #}
 {% block choice_widget_expanded %}
-{% spaceless %}
+{% apply spaceless %}
     <div {{ block('widget_container_attributes') }} class="form-widget--choices">
         {% for child in form %}
             {{ form_widget(child, { 'required': false }) }}
         {% endfor %}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock choice_widget_expanded %}
 
 
 {# Form widget: Radiobutton #}
 {% block radio_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="radio">
         {% if required and not compound %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -129,13 +129,13 @@
             {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-symbol">*</span>{% endif %}
         </label>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock radio_widget %}
 
 
 {# Form widget: Checkbox #}
 {% block checkbox_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="checkbox">
         {% if required %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -150,48 +150,48 @@
             {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-symbol">*</span>{% endif %}
         </label>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock checkbox_widget %}
 
 
 {# Form widget: File upload #}
 {% block file_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div {{ block('widget_container_attributes') }} class="form-widget--file-upload">
         {{ block('form_widget') }}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 
 {# Form errors #}
 {% block form_errors %}
-{% spaceless %}
+{% apply spaceless %}
     {% if errors|length > 0 %}
         {% for error in errors %}
             <span class="help-block">{{ error.message }}</span>
         {% endfor %}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_errors %}
 
 
 {# Button row #}
 {% block button_row %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="form-group text--right">
         {{ form_widget(form) }}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock button_row %}
 
 
 {# Submit button #}
 {% block submit_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="form-group text--right">
         {% set type = type|default('submit') %}
         {{ block('button_widget') }}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock submit_widget %}

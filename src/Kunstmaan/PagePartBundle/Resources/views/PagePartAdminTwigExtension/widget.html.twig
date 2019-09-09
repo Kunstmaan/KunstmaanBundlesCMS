@@ -6,7 +6,7 @@
     {% endif %}
 
     <!-- Sortable container -->
-    <div id="parts-{{ pagepartadmin.context }}" class="js-sortable-container sortable-container" data-scope="{% spaceless %}{% for type in pagepartadmin.possiblePagePartTypes %}{{ type.class|replace({'\\':""})~' ' }}{% endfor %}{% endspaceless %}">
+    <div id="parts-{{ pagepartadmin.context }}" class="js-sortable-container sortable-container" data-scope="{% apply spaceless %}{% for type in pagepartadmin.possiblePagePartTypes %}{{ type.class|replace({'\\':""})~' ' }}{% endfor %}{% endapply %}">
         {% for id, pagepart in pagepartadmin.pagepartmap %}
             {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/pagepart.html.twig' with { 'id': id, 'pagepartadmin': pagepartadmin, 'editmode': false} %}
         {% endfor %}
