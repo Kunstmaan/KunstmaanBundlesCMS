@@ -975,6 +975,10 @@ class NodeAdminController extends Controller
                     $tabPane->getExtraParams($request)
                 );
 
+                if ($subaction === 'draft' && ($request->request->has('publishing') || $request->request->has('publish_later'))) {
+                    unset($params['subaction']);
+                }
+
                 return $this->redirect(
                     $this->generateUrl(
                         'KunstmaanNodeBundle_nodes_edit',

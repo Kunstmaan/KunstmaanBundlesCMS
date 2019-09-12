@@ -98,6 +98,7 @@ services:
         calls:
             - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
             - [setResourceCacher, ['@kunstmaan_translator.service.translator.resource_cacher']]
+        tags: ['kernel.locale_aware']
 
     # TODO: needs to be refactored, should not need to be public
     kunstmaan_translator.service.migrations.migrations:
