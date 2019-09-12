@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.3.3 / 2019-09-12
+
+* [NodeBundle] Fix redirect publish draft version [#2551](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2551) ([@bakie](https://github.com/bakie)) 
+* [TranslatorBundle] Tag translator to inject correct locale on sf4.3 [#2548](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2548) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] fix jQuery deprecated size() [#2547](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2547) ([@dbeerten](https://github.com/dbeerten)) 
+* [AllBundles] Allow Imagegick pdf read/write to fix travis tests [#2544](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2544) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] rewrite method in aclhelpers to fix deprecation message [#2539](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2539) ([@Numkil](https://github.com/Numkil)) 
+* [NodeSearchBundle] Fix missing geopoint option for elastic mapping [#2538](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2538) ([@Devolicious](https://github.com/Devolicious)) 
+* [NodeBundle] Fix translation typos [#2537](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2537) ([@poveu](https://github.com/poveu)) 
+* [AdminListBundle] Fix missing date and time suffixes on form fields #… [#2534](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2534) ([@lkeijmel](https://github.com/lkeijmel)) 
+* [AdminListBundle] Mark export service public to fix sf4 incompatibility in form submission export [#2533](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2533) ([@acrobat](https://github.com/acrobat)) 
+* [FormBundle] Fix sf4 compatibility in the form submission directory [#2532](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2532) ([@acrobat](https://github.com/acrobat)) 
+* [AdminListBundle] Fixed undefined entity when creating entity having itemActions [#2530](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2530) ([@JZuidema](https://github.com/JZuidema)) 
+* [GeneratorBundle] Add missing parameter in article adminlist controller [#2527](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2527) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Updated SlugType prefix build [#2518](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2518) ([@jverdeyen](https://github.com/jverdeyen)) 
+
 ## 5.3.2 / 2019-07-03
 
 * [GeneratorBundle] Added missing import in admin js task [#2510](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2510) ([@acrobat](https://github.com/acrobat)) 
