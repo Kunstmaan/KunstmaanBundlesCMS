@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.3.4 / 2019-09-12
+
+* [AdminBundle] Revert "rewrite method in aclhelpers to fix deprecation message" [#2552](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2552) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix phpunit test warnings [#2515](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2515) ([@acrobat](https://github.com/acrobat))
+
 ## 5.3.3 / 2019-09-12
 
 * [NodeBundle] Fix redirect publish draft version [#2551](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2551) ([@bakie](https://github.com/bakie)) 
