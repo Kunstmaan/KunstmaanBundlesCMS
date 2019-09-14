@@ -31,7 +31,7 @@ class TranslatorController extends AdminListController
 
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
-     * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
+     * @Template("@KunstmaanTranslator/Translator/list.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -72,7 +72,7 @@ class TranslatorController extends AdminListController
      * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add", methods={"GET", "POST"})
-     * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
+     * @Template("@KunstmaanTranslator/Translator/addTranslation.html.twig")
      */
     public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
     {
@@ -128,7 +128,7 @@ class TranslatorController extends AdminListController
      * The edit action
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit", methods={"GET", "POST"})
-     * @Template("KunstmaanTranslatorBundle:Translator:editTranslation.html.twig")
+     * @Template("@KunstmaanTranslator/Translator/editTranslation.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param $id
@@ -197,7 +197,7 @@ class TranslatorController extends AdminListController
 
     /**
      * @Route("upload", name="KunstmaanTranslatorBundle_settings_translations_upload", methods={"GET", "POST"})
-     * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
+     * @Template("@KunstmaanTranslator/Translator/addTranslation.html.twig")
      *
      * @param Request $request
      *

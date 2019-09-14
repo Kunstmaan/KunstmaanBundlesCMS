@@ -100,7 +100,7 @@ class GoogleAnalyticsTwigExtension extends AbstractExtension
             throw new RuntimeError("The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'.");
         }
 
-        $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:init.html.twig');
+        $template = $environment->loadTemplate('@KunstmaanSeo/GoogleAnalyticsTwigExtension/init.html.twig');
 
         return $template->render($options);
     }
@@ -116,7 +116,7 @@ class GoogleAnalyticsTwigExtension extends AbstractExtension
         $order = $this->orderPreparer->prepare($order);
         $options = $this->orderConverter->convert($order);
         $template = $environment->loadTemplate(
-            'KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig'
+            '@KunstmaanSeo/GoogleAnalyticsTwigExtension/ecommerce_tracking.html.twig'
         );
 
         return $template->render($options);

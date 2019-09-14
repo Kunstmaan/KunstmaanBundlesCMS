@@ -64,7 +64,7 @@ class PagePartWidget extends FormWidget
         $this->pagePartAdminConfigurator = $pagePartAdminConfigurator;
 
         $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page);
-        $this->setTemplate('KunstmaanPagePartBundle:FormWidgets\PagePartWidget:widget.html.twig');
+        $this->setTemplate('@KunstmaanPagePart/FormWidgets/PagePartWidget/widget.html.twig');
     }
 
     /**

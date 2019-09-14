@@ -60,6 +60,6 @@ class BooleanFilterTypeTest extends BaseDbalFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:FilterType:booleanFilter.html.twig', $this->object->getTemplate());
+        $this->assertEquals('@KunstmaanAdminList/FilterType/booleanFilter.html.twig', $this->object->getTemplate());
     }
 }

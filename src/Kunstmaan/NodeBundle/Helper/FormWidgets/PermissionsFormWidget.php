@@ -94,7 +94,7 @@ class PermissionsFormWidget extends FormWidget
      */
     public function getTemplate()
     {
-        return 'KunstmaanNodeBundle:FormWidgets\PermissionsFormWidget:widget.html.twig';
+        return '@KunstmaanNode/FormWidgets/PermissionsFormWidget/widget.html.twig';
     }
 
     /**

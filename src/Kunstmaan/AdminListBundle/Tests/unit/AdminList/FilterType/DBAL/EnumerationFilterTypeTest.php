@@ -89,6 +89,6 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:FilterType:enumerationFilter.html.twig', $this->object->getTemplate());
+        $this->assertEquals('@KunstmaanAdminList/FilterType/enumerationFilter.html.twig', $this->object->getTemplate());
     }
 }

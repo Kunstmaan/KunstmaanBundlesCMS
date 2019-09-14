@@ -109,7 +109,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
                 $addHomepageRoute,
                 'kuma_node.modal.add_homepage.h',
                 null,
-                'KunstmaanNodeBundle:Admin:list_action_button.html.twig'
+                '@KunstmaanNode/Admin/list_action_button.html.twig'
             )
         );
     }
@@ -132,10 +132,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFields()
     {
         $this
-            ->addField('title', 'kuma_node.admin.list.header.title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
+            ->addField('title', 'kuma_node.admin.list.header.title', true, '@KunstmaanNode/Admin/title.html.twig')
             ->addField('created', 'kuma_node.admin.list.header.created_at', true)
             ->addField('updated', 'kuma_node.admin.list.header.updated_at', true)
-            ->addField('online', 'kuma_node.admin.list.header.online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
+            ->addField('online', 'kuma_node.admin.list.header.online', true, '@KunstmaanNode/Admin/online.html.twig');
     }
 
     /**

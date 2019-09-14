@@ -77,6 +77,6 @@ class NumberFilterTypeTest extends BaseDbalFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:FilterType:numberFilter.html.twig', $this->object->getTemplate());
+        $this->assertEquals('@KunstmaanAdminList/FilterType/numberFilter.html.twig', $this->object->getTemplate());
     }
 }

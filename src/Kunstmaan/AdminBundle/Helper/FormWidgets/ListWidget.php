@@ -85,7 +85,7 @@ class ListWidget extends FormWidget
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminBundle:FormWidgets\ListWidget:widget.html.twig';
+        return '@KunstmaanAdmin/FormWidgets/ListWidget/widget.html.twig';
     }
 
     /**

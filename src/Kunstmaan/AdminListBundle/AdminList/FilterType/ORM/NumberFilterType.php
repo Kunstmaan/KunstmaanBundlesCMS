@@ -70,6 +70,6 @@ class NumberFilterType extends AbstractORMFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:numberFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/numberFilter.html.twig';
     }
 }

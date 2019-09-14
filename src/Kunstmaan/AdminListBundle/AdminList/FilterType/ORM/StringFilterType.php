@@ -76,6 +76,6 @@ class StringFilterType extends AbstractORMFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:stringFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/stringFilter.html.twig';
     }
 }

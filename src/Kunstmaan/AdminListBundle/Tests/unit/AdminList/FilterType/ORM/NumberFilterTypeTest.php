@@ -73,6 +73,6 @@ class NumberFilterTypeTest extends BaseOrmFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:FilterType:numberFilter.html.twig', $this->object->getTemplate());
+        $this->assertEquals('@KunstmaanAdminList/FilterType/numberFilter.html.twig', $this->object->getTemplate());
     }
 }

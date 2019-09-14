@@ -5,7 +5,7 @@
     {% if mediaFolder.__children is not empty %}
         <ul>
             {% for mediaFolder in mediaFolder.__children %}
-                {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
+                {% include '@KunstmaanMedia/Chooser/chooserShowRecTreeView.html.twig' %}
             {% endfor %}
         </ul>
     {% endif %}

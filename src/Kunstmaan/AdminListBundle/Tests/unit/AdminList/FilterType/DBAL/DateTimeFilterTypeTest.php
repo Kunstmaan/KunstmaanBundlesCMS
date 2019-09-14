@@ -75,7 +75,7 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
     public function testGetTemplate()
     {
         $this->assertEquals(
-            'KunstmaanAdminListBundle:FilterType:dateTimeFilter.html.twig',
+            '@KunstmaanAdminList/FilterType/dateTimeFilter.html.twig',
             $this->object->getTemplate()
         );
     }

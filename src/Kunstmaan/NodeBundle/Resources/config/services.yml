@@ -223,4 +223,4 @@ services:
             - '@kunstmaan_node.node_menu'
             - '@router'
         tags:
-            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanNodeBundle:Toolbar:node.html.twig', id: kuma_node}
+            - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanNode/Toolbar/node.html.twig', id: kuma_node}

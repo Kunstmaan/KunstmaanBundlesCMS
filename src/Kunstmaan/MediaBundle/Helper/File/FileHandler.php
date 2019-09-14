@@ -291,7 +291,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\File:show.html.twig';
+        return '@KunstmaanMedia/Media/File/show.html.twig';
     }
 
     /**

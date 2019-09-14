@@ -199,7 +199,7 @@ class FolderController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
 
         return $this->render(
-            'KunstmaanMediaBundle:Folder:addsub-modal.html.twig',
+            '@KunstmaanMedia/Folder/addsub-modal.html.twig',
             array(
                 'subform' => $form->createView(),
                 'galleries' => $galleries,
@@ -259,7 +259,7 @@ class FolderController extends Controller
         }
 
         return $this->render(
-            'KunstmaanMediaBundle:Folder:empty-modal.html.twig',
+            '@KunstmaanMedia/Folder/empty-modal.html.twig',
             array(
                 'form' => $form->createView(),
             )

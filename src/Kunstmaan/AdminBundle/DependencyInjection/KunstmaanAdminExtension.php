@@ -108,7 +108,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         // Use this node only if you don't want the global email address for the resetting email
         $fosUserConfig['resetting']['email']['from_email']['address'] = 'kunstmaancms@myproject.dev';
         $fosUserConfig['resetting']['email']['from_email']['sender_name'] = 'KunstmaanCMS';
-        $fosUserConfig['resetting']['email']['template'] = 'FOSUserBundle:Resetting:email.txt.twig';
+        $fosUserConfig['resetting']['email']['template'] = '@FOSUser/Resetting/email.txt.twig';
         $fosUserConfig['resetting']['form']['type'] = ResettingFormType::class;
         $fosUserConfig['resetting']['form']['name'] = 'fos_user_resetting_form';
         $fosUserConfig['resetting']['form']['validation_groups'] = ['ResetPassword'];

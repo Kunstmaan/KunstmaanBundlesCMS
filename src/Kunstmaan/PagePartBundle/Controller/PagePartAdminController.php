@@ -18,7 +18,7 @@ class PagePartAdminController extends Controller
 {
     /**
      * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
-     * @Template("KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig")
+     * @Template("@KunstmaanPagePart/PagePartAdminTwigExtension/pagepart.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -59,10 +59,7 @@ class PagePartAdminController extends Controller
         $pagePart = new $pagePartClass();
 
         if (false === $pagePart instanceof PagePartInterface) {
-            throw new \RuntimeException(sprintf(
-                'Given pagepart expected to implement PagePartInterface, %s given',
-                $pagePartClass
-            ));
+            throw new \RuntimeException(sprintf('Given pagepart expected to implement PagePartInterface, %s given', $pagePartClass));
         }
 
         $formFactory = $this->container->get('form.factory');
