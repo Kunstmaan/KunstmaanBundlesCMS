@@ -112,6 +112,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['resetting']['form']['type'] = ResettingFormType::class;
         $fosUserConfig['resetting']['form']['name'] = 'fos_user_resetting_form';
         $fosUserConfig['resetting']['form']['validation_groups'] = ['ResetPassword'];
+
+        $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
         $monologConfig['handlers']['main']['type'] = 'rotating_file';
@@ -122,6 +124,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 
+        // NEXT_MAJOR: Remove templating config (toghether with templating dependency)
         $frameworkConfig['templating']['engines'] = ['twig'];
         $container->prependExtensionConfig('framework', $frameworkConfig);
 
