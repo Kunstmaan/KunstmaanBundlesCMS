@@ -17,6 +17,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\Role;
@@ -134,8 +135,7 @@ class AclHelperTest extends TestCase
         $this->tokenStorage = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
             ->getMock();
 
-        $this->token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')
-            ->getMock();
+        $this->token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\AbstractToken');
 
         $this->tokenStorage->expects($this->any())
             ->method('getToken')
@@ -180,15 +180,14 @@ class AclHelperTest extends TestCase
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        $roles = array(new Role('ROLE_KING'));
-        $allRoles = array($roles[0], new Role('ROLE_SUBJECT'));
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData();
 
         $this->token->expects($this->once())
-            ->method('getRoles')
+            ->method($rolesMethodName)
             ->will($this->returnValue($roles));
 
         $this->rh->expects($this->once())
-            ->method('getReachableRoles')
+            ->method($reachableRolesMethodName)
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
@@ -230,16 +229,16 @@ class AclHelperTest extends TestCase
             ->method('getRootAliases')
             ->will($this->returnValue(array('n')));
 
-        $roles = array();
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData(true);
 
         $this->token->expects($this->once())
-            ->method('getRoles')
+            ->method($rolesMethodName)
             ->will($this->returnValue($roles));
 
         $this->rh->expects($this->once())
-            ->method('getReachableRoles')
+            ->method($reachableRolesMethodName)
             ->with($roles)
-            ->will($this->returnValue($roles));
+            ->will($this->returnValue($allRoles));
 
         $this->token->expects($this->any())
             ->method('getUser')
@@ -261,15 +260,14 @@ class AclHelperTest extends TestCase
 
     public function testGetAllowedEntityIds()
     {
-        $roles = array(new Role('ROLE_KING'));
-        $allRoles = array($roles[0], new Role('ROLE_SUBJECT'));
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData();
 
         $this->token->expects($this->once())
-            ->method('getRoles')
+            ->method($rolesMethodName)
             ->will($this->returnValue($roles));
 
         $this->rh->expects($this->once())
-            ->method('getReachableRoles')
+            ->method($reachableRolesMethodName)
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
@@ -326,5 +324,27 @@ class AclHelperTest extends TestCase
     public function testGetTokenStorage()
     {
         $this->assertSame($this->tokenStorage, $this->object->getTokenStorage());
+    }
+
+    private function getRoleMockData($anonymous = false)
+    {
+        if (Kernel::VERSION_ID >= 40300) {
+            $rolesMethodName = 'getRoleNames';
+            $reachableRolesMethodName = 'getReachableRoleNames';
+            $roles = ['ROLE_KING'];
+            $allRoles = [$roles[0], 'ROLE_SUBJECT'];
+        } else {
+            $rolesMethodName = 'getRoles';
+            $reachableRolesMethodName = 'getReachableRoles';
+            $roles = $anonymous ? [] : [new Role('ROLE_KING')];
+            $allRoles = $anonymous ? [] : [$roles[0], new Role('ROLE_SUBJECT')];
+        }
+
+        return [
+            $rolesMethodName,
+            $roles,
+            $reachableRolesMethodName,
+            $allRoles,
+        ];
     }
 }
