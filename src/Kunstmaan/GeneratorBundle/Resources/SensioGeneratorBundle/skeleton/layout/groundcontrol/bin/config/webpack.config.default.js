@@ -15,7 +15,7 @@ function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes =
         presets: [
             require.resolve('babel-preset-env', {
                 targets: {
-                    browsers: ['last 2 Chrome versions'],
+                    browsers: ['>0.25%', 'ie 11', 'not op_mini all'],
                 },
                 debug: true,
             }),
