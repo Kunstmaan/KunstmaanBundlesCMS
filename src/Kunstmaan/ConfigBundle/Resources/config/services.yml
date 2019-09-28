@@ -21,7 +21,7 @@ services:
     class: "%kunstmaan_config.controller.config.class%"
     arguments:
       - "@router"
-      - "@templating"
+      - "@twig"
       - "@security.authorization_checker"
       - "@doctrine.orm.entity_manager"
       - "%kunstmaan_config%"
