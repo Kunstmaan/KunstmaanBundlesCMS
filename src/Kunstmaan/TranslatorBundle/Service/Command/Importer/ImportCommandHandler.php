@@ -37,11 +37,22 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     public function executeImportCommand(ImportCommand $importCommand)
     {
-        if ($importCommand->getGlobals() || $importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null) {
-            return $this->importGlobalTranslationFiles($importCommand);
+        $amount = 0;
+        $defaultBundleNotSet = $importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null;
+
+        if ($importCommand->getGlobals()) {
+            if ($defaultBundleNotSet) {
+                return $this->importGlobalTranslationFiles($importCommand);
+            }
+
+            $amount = $this->importGlobalTranslationFiles($importCommand);
+        } elseif ($defaultBundleNotSet) {
+            $importCommand->setDefaultBundle('all');
         }
 
-        return $this->importBundleTranslationFiles($importCommand);
+        $amount += $this->importBundleTranslationFiles($importCommand);
+
+        return $amount;
     }
 
     /**
@@ -126,7 +137,7 @@ class ImportCommandHandler extends AbstractCommandHandler
     private function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
     {
         $imported = 0;
-        $srcDir = $this->kernel->getProjectDir() . '/src';
+        $srcDir = $this->kernel->getProjectDir().'/src';
 
         foreach ($this->kernel->getBundles() as $name => $bundle) {
             if (strpos($bundle->getPath(), $srcDir) !== false) {
@@ -193,7 +204,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      * Forcing the import will override all existing translations in the stasher
      *
      * @param Finder $finder
-     * @param bool   $force  override identical translations in the stasher (domain/locale and keyword combination)
+     * @param bool   $force override identical translations in the stasher (domain/locale and keyword combination)
      *
      * @return int total number of files imported
      */
