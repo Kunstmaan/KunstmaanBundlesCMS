@@ -21,15 +21,15 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
         // Elements
         var $input = $widget.find('.js-slug-chooser__input'),
             $preview = $widget.find('.js-slug-chooser__preview'),
-            $prefix = $widget.find('.js-slug-chooser__prefix'),
+            $chooser = $widget.find('.js-slug-chooser'),
             $resetBtn = $widget.find('.js-slug-chooser__reset-btn');
 
         // Update
         $input.on('change', function() {
-            updateSlugPreview($input, $preview, $prefix);
+            updateSlugPreview($input, $preview, $chooser);
         });
         $input.on('keyup', function() {
-            updateSlugPreview($input, $preview, $prefix);
+            updateSlugPreview($input, $preview, $chooser);
         });
 
         // Reset Btn
@@ -38,8 +38,8 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
         });
     };
 
-    updateSlugPreview = function($input, $preview, $prefix) {
-        var updatedUrl = $prefix.html() + $input.val();
+    updateSlugPreview = function($input, $preview, $chooser) {
+        var updatedUrl = $chooser.attr('data-url-prefix') + $input.val();
 
         if($input.attr('data-slug') === $input.val()) {
             $preview.hide();

@@ -75,11 +75,11 @@
 
 {% block slug_widget %}
     {% spaceless %}
-        <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')}) }}" data-reset="{{ reset }}">
+        <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ prefix }}" data-reset="{{ reset }}">
             <div class="input-group">
                 {% if prefix is not empty %}
                     <span class="input-group-addon js-slug-chooser__prefix">
-                        {% if prefix|first != '/' %}/{% endif %}{{ prefix }}
+                        {{ prefix }}
                     </span>
                 {% endif %}
                 <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control" data-slug="{{ full_name }}">
@@ -89,20 +89,21 @@
                     </button>
                 </span>
             </div>
-            <small class="js-slug-chooser__preview">
-                {% set url = slug('_slug', {
-                    url: prefix ~ value
-                }) %}
-                {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">
-                    {{ url }}
-                </a>
-            </small>
-            <small class="js-slug-chooser__preview">
-                {% set url = slug('_slug', {
-                    url: prefix ~ value
-                }) %}
-                {{ 'kuma_node.form.updated_url' | trans }}: <a href="#" target="_blank"></a>
-            </small>
+            <div>
+                <small>
+                    {% set url = path('_slug', {
+                        url: prefix ~ value
+                    }) %}
+                    {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">
+                        {{ url }}
+                    </a>
+                </small>
+            </div>
+            <div>
+                <small class="js-slug-chooser__preview" style="display: none;">
+                    {{ 'kuma_node.form.updated_url' | trans }}: <a href="#" target="_blank"></a>
+                </small>
+            </div>
         </div>
     {% endspaceless %}
 {% endblock slug_widget %}
