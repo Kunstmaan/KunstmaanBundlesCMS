@@ -78,23 +78,30 @@
         <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')}) }}" data-reset="{{ reset }}">
             <div class="input-group">
                 {% if prefix is not empty %}
-                    <span class="input-group-addon">
+                    <span class="input-group-addon js-slug-chooser__prefix">
                         {% if prefix|first != '/' %}/{% endif %}{{ prefix }}
                     </span>
                 {% endif %}
-                <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+                <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control" data-slug="{{ full_name }}">
                 <span class="input-group-btn">
                     <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
                         Reset
                     </button>
                 </span>
             </div>
-            <small>
-                {% set url = path('_slug', {
+            <small class="js-slug-chooser__preview">
+                {% set url = slug('_slug', {
                     url: prefix ~ value
                 }) %}
-
-                {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">{{ url }}</a>
+                {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">
+                    {{ url }}
+                </a>
+            </small>
+            <small class="js-slug-chooser__preview">
+                {% set url = slug('_slug', {
+                    url: prefix ~ value
+                }) %}
+                {{ 'kuma_node.form.updated_url' | trans }}: <a href="#" target="_blank"></a>
             </small>
         </div>
     {% endspaceless %}
