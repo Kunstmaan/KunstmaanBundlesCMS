@@ -55,6 +55,7 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
     resetSlug = function($input, resetValue) {
         $input.val(resetValue);
+        $input.trigger('change')
     };
 
     return {
