@@ -18,7 +18,6 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
     slugChooser = function($widget) {
         var resetValue = $widget.data('reset');
         var urlPrefix = $widget.data('url-prefix');
-        var originalUrl = urlPrefix + resetValue;
 
         // Elements
         var $input = $widget.find('.js-slug-chooser__input'),
@@ -27,10 +26,10 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
         // Update
         $input.on('change', function() {
-            updateSlugPreview($input, $preview, urlPrefix, originalUrl);
+            updateSlugPreview($input, $preview, urlPrefix, resetValue);
         });
         $input.on('keyup', function() {
-            updateSlugPreview($input, $preview, urlPrefix, originalUrl);
+            updateSlugPreview($input, $preview, urlPrefix, resetValue);
         });
 
         // Reset Btn
@@ -39,10 +38,10 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
         });
     };
 
-    updateSlugPreview = function($input, $preview, urlPrefix, originalUrl) {
+    updateSlugPreview = function($input, $preview, urlPrefix, resetValue) {
         var updatedUrl = urlPrefix + $input.val();
 
-        if(originalUrl === $input.val()) {
+        if(resetValue === $input.val()) {
             $preview.hide();
 
             return;
