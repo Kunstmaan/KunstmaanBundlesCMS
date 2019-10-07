@@ -17,19 +17,20 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
     // Slug-Chooser
     slugChooser = function($widget) {
         var resetValue = $widget.data('reset');
+        var urlPrefix = $widget.data('url-prefix');
+        var originalUrl = urlPrefix + resetValue;
 
         // Elements
         var $input = $widget.find('.js-slug-chooser__input'),
             $preview = $widget.find('.js-slug-chooser__preview'),
-            $chooser = $widget.find('.js-slug-chooser'),
             $resetBtn = $widget.find('.js-slug-chooser__reset-btn');
 
         // Update
         $input.on('change', function() {
-            updateSlugPreview($input, $preview, $chooser);
+            updateSlugPreview($input, $preview, urlPrefix, originalUrl);
         });
         $input.on('keyup', function() {
-            updateSlugPreview($input, $preview, $chooser);
+            updateSlugPreview($input, $preview, urlPrefix, originalUrl);
         });
 
         // Reset Btn
@@ -38,10 +39,10 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
         });
     };
 
-    updateSlugPreview = function($input, $preview, $chooser) {
-        var updatedUrl = $chooser.attr('data-url-prefix') + $input.val();
+    updateSlugPreview = function($input, $preview, urlPrefix, originalUrl) {
+        var updatedUrl = urlPrefix + $input.val();
 
-        if($input.attr('data-slug') === $input.val()) {
+        if(originalUrl === $input.val()) {
             $preview.hide();
 
             return;
@@ -55,7 +56,7 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
     resetSlug = function($input, resetValue) {
         $input.val(resetValue);
-        $input.trigger('change')
+        $input.trigger('change');
     };
 
     return {
