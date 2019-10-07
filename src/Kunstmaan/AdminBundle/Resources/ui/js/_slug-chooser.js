@@ -47,9 +47,7 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
             return;
         }
 
-        $preview.find('a').attr('href', updatedUrl);
-        $preview.find('a').html(updatedUrl);
-
+        $preview.find('span').html(updatedUrl);
         $preview.show();
     };
 
