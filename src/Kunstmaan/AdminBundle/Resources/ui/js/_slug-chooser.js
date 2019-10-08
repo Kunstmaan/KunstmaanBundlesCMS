@@ -16,13 +16,8 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
     // Slug-Chooser
     slugChooser = function($widget) {
-        var resetValue = $widget.data('reset'),
-            urlprefix = $widget.data('url-prefix');
-
-        // Setup url prefix
-        if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-            urlprefix += '/';
-        }
+        var resetValue = $widget.data('reset');
+        var urlPrefix = $widget.data('url-prefix');
 
         // Elements
         var $input = $widget.find('.js-slug-chooser__input'),
@@ -31,34 +26,35 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
         // Update
         $input.on('change', function() {
-            updateSlugPreview($input, $preview, urlprefix);
+            updateSlugPreview($input, $preview, urlPrefix, resetValue);
         });
         $input.on('keyup', function() {
-            updateSlugPreview($input, $preview, urlprefix);
+            updateSlugPreview($input, $preview, urlPrefix, resetValue);
         });
 
         // Reset Btn
         $resetBtn.on('click', function() {
             resetSlug($input, resetValue);
-            updateSlugPreview($input, $preview, urlprefix);
         });
-
-        // Set initial value
-        updateSlugPreview($input, $preview, urlprefix);
     };
 
+    updateSlugPreview = function($input, $preview, urlPrefix, resetValue) {
+        var updatedUrl = urlPrefix + $input.val();
+
+        if(resetValue === $input.val()) {
+            $preview.hide();
+
+            return;
+        }
+
+        $preview.find('span').html(updatedUrl);
+        $preview.show();
+    };
 
     resetSlug = function($input, resetValue) {
         $input.val(resetValue);
+        $input.trigger('change');
     };
-
-
-    updateSlugPreview = function($input, $preview, urlprefix) {
-        var inputValue = $input.val();
-
-        $preview.html('url: ' + urlprefix + inputValue);
-    };
-
 
     return {
         init: init

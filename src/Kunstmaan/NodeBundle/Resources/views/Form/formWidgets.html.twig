@@ -75,16 +75,40 @@
 
 {% block slug_widget %}
     {% spaceless %}
-        <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')}) }}" data-reset="{{ reset }}">
+        {% set url = path('_slug', {
+            url: prefix ~ value
+        }) %}
+
+        {% if prefix|first != '/' %}
+            {% set prefix = '/' ~ prefix %}
+        {% endif %}
+
+        <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ prefix }}" data-reset="{{ reset }}">
             <div class="input-group">
+                {% if prefix is not empty %}
+                    <span class="input-group-addon js-slug-chooser__prefix">
+                        {{ prefix }}
+                    </span>
+                {% endif %}
                 <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
-            <span class="input-group-btn">
-                <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
-                    Reset
-                </button>
-            </span>
+                <span class="input-group-btn">
+                    <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                        Reset
+                    </button>
+                </span>
             </div>
-            <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
+            <div>
+                <small>
+                    {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">
+                        {{ url }}
+                    </a>
+                </small>
+            </div>
+            <div>
+                <small class="js-slug-chooser__preview" style="display: none;">
+                    {{ 'kuma_node.form.updated_url' | trans }}: <span></span>
+                </small>
+            </div>
         </div>
     {% endspaceless %}
 {% endblock slug_widget %}
