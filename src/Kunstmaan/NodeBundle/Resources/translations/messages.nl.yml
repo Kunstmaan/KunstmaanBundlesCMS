@@ -38,6 +38,8 @@ kuma_node:
       page_title:
         label: Pagina titel
         info_text: Wordt gebruikt als titel op de pagina.
+    current_url: Current url
+    updated_url: Updated url
   status:
     "will_be_publish_at.%date%.raw": Deze pagina zal worden gepubliceerd op %date%
     "will_be_unpublish_at.%date%.raw": Deze pagina wordt offline gezet op %date%
@@ -49,7 +51,7 @@ kuma_node:
     "go_to_draft_version.%url%.raw": (Ga naar <a href="%url%">draft versie</a>)
   error:
     title: 'Error'
-    validation: 'Het formulier is niet opgeslagen, omdat er validatie errors zijn'
+    validation: 'The form has not been saved because there are validation errors'
   admin:
     publish:
       flash:
