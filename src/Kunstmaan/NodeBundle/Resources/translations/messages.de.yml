@@ -38,6 +38,8 @@ kuma_node:
       page_title:
         label: Seiten-Titel
         info_text: Wird als Titel der Seite verwendet.
+    current_url: Current url
+    updated_url: Updated url
   status:
     "will_be_publish_at.%date%.raw": Diese Seite wird am %date% veröffentlicht
     "will_be_unpublish_at.%date%.raw": Die Veröffentlichung der Seite wird am %date% aufgehoben
