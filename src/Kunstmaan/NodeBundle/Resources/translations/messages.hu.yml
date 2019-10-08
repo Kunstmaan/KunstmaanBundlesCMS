@@ -38,6 +38,8 @@ kuma_node:
       page_title:
         label: Oldal cím
         info_text: Belső hivatkozásoknál használd.
+    current_url: Current url
+    updated_url: Updated url
   status:
     "will_be_publish_at.%date%.raw": 'Ez az oldal publikálva lesz: %date%'
     "will_be_unpublish_at.%date%.raw": 'Az oldal rejtett lesz (publikálás visszavonása): %date%'
