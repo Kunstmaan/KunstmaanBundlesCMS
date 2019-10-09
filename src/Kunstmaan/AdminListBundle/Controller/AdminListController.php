@@ -322,10 +322,10 @@ abstract class AdminListController extends Controller
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
-        $MetaData = $em->getClassMetadata($configurator->getRepositoryName());
-        $fields = array();
+        $metaData = $em->getClassMetadata($configurator->getRepositoryName());
+        $fields = [];
         $accessor = PropertyAccess::createPropertyAccessor();
-        foreach ($MetaData->fieldNames as $value) {
+        foreach ($metaData->getReflectionProperties() as $value => $reflectionProperty) {
             $fields[$value] = $accessor->getValue($helper, $value);
         }
 
