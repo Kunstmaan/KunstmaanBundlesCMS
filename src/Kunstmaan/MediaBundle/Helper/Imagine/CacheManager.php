@@ -9,7 +9,7 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
     /**
      * {@inheritdoc}
      */
-    public function generateUrl($path, $filter, array $runtimeConfig = array(), $resolver = null)
+    public function generateUrl($path, $filter, array $runtimeConfig = array(), $resolver = null, $referenceType = Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL)
     {
         $originalPath = $path;
         $filterConf = $this->filterConfig->get($filter);
