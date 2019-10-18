@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.3.5 / 2019-10-18
+
+* [TranslatorBundle] Fix import translations on symfony 3.4 installations [#2568](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2568) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fixed compatibility with new LiipImagine generateUrl() function [#2565](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2565) ([@poveu](https://github.com/poveu)) 
+
 ## 5.3.4 / 2019-09-12
 
 * [AdminBundle] Revert "rewrite method in aclhelpers to fix deprecation message" [#2552](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2552) ([@acrobat](https://github.com/acrobat)) 
