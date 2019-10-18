@@ -37,11 +37,23 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     public function executeImportCommand(ImportCommand $importCommand)
     {
-        if ($importCommand->getGlobals() || $importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null) {
-            return $this->importGlobalTranslationFiles($importCommand);
+        $amount = 0;
+        $defaultBundleNotSet = $importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null;
+
+        if ($importCommand->getGlobals()) {
+            $amount = $this->importGlobalTranslationFiles($importCommand);
+            if ($defaultBundleNotSet) {
+                return $amount;
+            }
         }
 
-        return $this->importBundleTranslationFiles($importCommand);
+        if ($defaultBundleNotSet) {
+            $importCommand->setDefaultBundle('all');
+        }
+
+        $amount += $this->importBundleTranslationFiles($importCommand);
+
+        return $amount;
     }
 
     /**
@@ -126,7 +138,7 @@ class ImportCommandHandler extends AbstractCommandHandler
     private function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
     {
         $imported = 0;
-        $srcDir = $this->kernel->getProjectDir() . '/src';
+        $srcDir = $this->kernel->getProjectDir().'/src';
 
         foreach ($this->kernel->getBundles() as $name => $bundle) {
             if (strpos($bundle->getPath(), $srcDir) !== false) {
