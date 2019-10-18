@@ -25,12 +25,12 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
         }
 
         if (empty($runtimeConfig)) {
-            $filterUrl = $this->router->generate('liip_imagine_filter', $params, UrlGeneratorInterface::ABSOLUTE_URL);
+            $filterUrl = $this->router->generate('liip_imagine_filter', $params, $referenceType);
         } else {
             $params['filters'] = $runtimeConfig;
             $params['hash'] = $this->signer->sign($originalPath, $runtimeConfig);
 
-            $filterUrl = $this->router->generate('liip_imagine_filter_runtime', $params, UrlGeneratorInterface::ABSOLUTE_URL);
+            $filterUrl = $this->router->generate('liip_imagine_filter_runtime', $params, $referenceType);
         }
 
         return $filterUrl;
@@ -78,8 +78,6 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
         }
 
         $info = pathinfo($path);
-        $path = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
-
-        return $path;
+        return $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
     }
 }
