@@ -78,6 +78,7 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
         }
 
         $info = pathinfo($path);
+
         return $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
     }
 }
