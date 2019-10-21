@@ -9,7 +9,7 @@
     <header class="app__content__header">
         {% set title = 'media.media.bulkupload.addto' %}
         <h1 class="app__content__header__title">
-            {{ title | trans({'%folder%': folder.name|trans }) | capitalize | raw }}
+            {{ title | trans({'%folder%': folder.name|trans }) | capitalize }}
         </h1>
     </header>
 {% endblock %}
