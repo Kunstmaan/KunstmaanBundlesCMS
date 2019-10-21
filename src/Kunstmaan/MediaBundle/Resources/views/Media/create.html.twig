@@ -2,7 +2,7 @@
 {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block title %}
-    {{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}
+    {{ 'media.media.new' | trans({'%folder%': folder.name|trans }) }}
 {% endblock %}
 
 {% block header %}{% endblock %}
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-8">
                     <h1 class="app__content__header__title">
-                        {{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}
+                        {{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) }}
                     </h1>
                 </div>
                 <div class="col-sm-6 col-md-4">
