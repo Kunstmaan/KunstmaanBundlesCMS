@@ -95,8 +95,12 @@ class RenderContextListener
             //the SensioFrameworkExtraBundle kernel.view will handle everything else
             $event->setControllerResult((array) $parameters);
 
-            $template = new Template(array());
+            $template = new Template([]);
             $template->setTemplate($entity->getDefaultView());
+
+            $controllerBits = explode(':', $request->attributes->get('_controller'));
+            $action = array_pop($controllerBits);
+            $template->setOwner([join(':', $controllerBits), $action]);
 
             $request->attributes->set('_template', $template);
         }
