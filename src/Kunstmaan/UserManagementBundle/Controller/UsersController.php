@@ -221,7 +221,7 @@ class UsersController extends BaseSettingsController
      * @param Request $request
      * @param int     $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"POST"})
      *
      * @throws AccessDeniedException
      *
