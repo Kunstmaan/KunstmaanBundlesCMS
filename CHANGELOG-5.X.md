@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.3.6 / 2019-10-24
+
+* [UserManagementBundle] The delete route should only allow post requests [#2571](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2571) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Remove unnecessary raw filter on translations [#2570](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2570) ([@acrobat](https://github.com/acrobat))
+* [SeoBundle] Translate the website title as it can be a translation key [#2569](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2569) ([@acrobat](https://github.com/acrobat))
+
 ## 5.3.5 / 2019-10-18
 
 * [TranslatorBundle] Fix import translations on symfony 3.4 installations [#2568](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2568) ([@acrobat](https://github.com/acrobat)) 

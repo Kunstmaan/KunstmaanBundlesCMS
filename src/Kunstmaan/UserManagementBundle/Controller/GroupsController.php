@@ -136,7 +136,7 @@ class GroupsController extends BaseSettingsController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_delete", methods={"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_delete", methods={"POST"})
      *
      * @throws AccessDeniedException
      *
