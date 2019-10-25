@@ -82,14 +82,12 @@ class SlugController extends Controller
             )
         );
         if (method_exists($entity, 'getDefaultView')) {
-            /* @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($entity->getDefaultView());
         }
         $preEvent = new SlugEvent(null, $renderContext);
         $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
         $renderContext = $preEvent->getRenderContext();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $response = $entity->service($this->container, $request, $renderContext);
 
         $postEvent = new SlugEvent($response, $renderContext);
