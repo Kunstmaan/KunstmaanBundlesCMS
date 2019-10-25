@@ -9,10 +9,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Twig\Environment;
 
 /**
  * Class ConfigController
@@ -25,9 +27,9 @@ class ConfigController
     private $router;
 
     /**
-     * @var EngineInterface
+     * @var EngineInterface|Environment
      */
-    private $templating;
+    private $twig;
 
     /**
      * @var AuthorizationCheckerInterface
@@ -51,7 +53,7 @@ class ConfigController
 
     /**
      * @param RouterInterface               $router
-     * @param EngineInterface               $templating
+     * @param EngineInterface|Environment   $twig
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param EntityManagerInterface        $em
      * @param array                         $configuration
@@ -60,7 +62,7 @@ class ConfigController
      */
     public function __construct(
         RouterInterface $router,
-        EngineInterface $templating,
+        /* Environment */ $twig,
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         array $configuration,
@@ -68,10 +70,14 @@ class ConfigController
         /* FormFactoryInterface */ $formFactory
     ) {
         $this->router = $router;
-        $this->templating = $templating;
+        $this->twig = $twig;
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->configuration = $configuration;
+
+        if ($twig instanceof EngineInterface) {
+            @trigger_error('Passing the "@templating" service as the 2nd argument is deprecated since KunstmaanConfigBundle 5.4 and will be replaced by the Twig renderer in KunstmaanConfigBundle 6.0. Injected the "@twig" service instead.', E_USER_DEPRECATED);
+        }
 
         if (\func_num_args() > 6) {
             @trigger_error(sprintf('Passing the "container" as the sixth argument in "%s" is deprecated in KunstmaanConfigBundle 5.1 and will be removed in KunstmaanConfigBundle 6.0. Remove the "container" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
@@ -90,7 +96,7 @@ class ConfigController
      * @param Request $request
      * @param string  $internalName
      *
-     * @return array|RedirectResponse
+     * @return Response
      */
     public function indexAction(Request $request, $internalName)
     {
@@ -128,11 +134,8 @@ class ConfigController
             }
         }
 
-        return $this->templating->renderResponse(
-            '@KunstmaanConfig/Settings/configSettings.html.twig',
-            array(
-                'form' => $form->createView(),
-            )
+        return new Response(
+            $this->twig->render('@KunstmaanConfig/Settings/configSettings.html.twig', ['form' => $form->createView()])
         );
     }
 

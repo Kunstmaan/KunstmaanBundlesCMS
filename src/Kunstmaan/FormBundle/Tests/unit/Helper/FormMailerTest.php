@@ -5,20 +5,31 @@ namespace Kunstmaan\FormBundle\Tests\Helper;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Helper\FormMailer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Templating\DelegatingEngine;
+use Twig\Environment;
 
 class FormMailerTest extends TestCase
 {
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing the "@templating" service as the 2nd argument is deprecated since KunstmaanFormBundle 5.4 and will be replaced by the Twig service in KunstmaanFormBundle 6.0. Injected the "@twig" service instead.
+     */
+    public function testDeprecatedTemplating()
+    {
+        $mailer = $this->createMock(\Swift_Mailer::class);
+        $templating = $this->createMock(EngineInterface::class);
+        $container = $this->createMock(ContainerInterface::class);
+
+        new FormMailer($mailer, $templating, $container);
+    }
+
     public function testSendContactMail()
     {
-        /** @var \Swift_Mailer $mailer */
         $mailer = $this->createMock(\Swift_Mailer::class);
-        /** @var DelegatingEngine $twigEngine */
-        $twigEngine = $this->createMock(DelegatingEngine::class);
-        /** @var ContainerInterface $container */
+        $twig = $this->createMock(Environment::class);
         $container = $this->createMock(ContainerInterface::class);
         $request = $this->createMock(Request::class);
         $requestStack = $this->createMock(RequestStack::class);
@@ -29,7 +40,7 @@ class FormMailerTest extends TestCase
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
         $container->expects($this->once())->method('get')->willReturn($requestStack);
 
-        $formMailer = new FormMailer($mailer, $twigEngine, $container);
+        $formMailer = new FormMailer($mailer, $twig, $container);
 
         /** @var FormSubmission $formSubmission */
         $formSubmission = $this->createMock(FormSubmission::class);

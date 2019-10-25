@@ -7,6 +7,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * The form mailer
@@ -16,21 +17,26 @@ class FormMailer implements FormMailerInterface
     /** @var \Swift_Mailer */
     private $mailer;
 
-    /** @var EngineInterface */
-    private $templating;
+    /** @var EngineInterface|Environment */
+    private $twig;
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
     private $container;
 
     /**
-     * @param Swift_Mailer       $mailer     The mailer service
-     * @param EngineInterface    $templating The templating service
-     * @param ContainerInterface $container  The container
+     * @param Swift_Mailer       $mailer    The mailer service
+     * @param EngineInterface    $twig      The templating service
+     * @param ContainerInterface $container The container
      */
-    public function __construct(Swift_Mailer $mailer, EngineInterface $templating, ContainerInterface $container)
+    public function __construct(Swift_Mailer $mailer, /*Environment*/ $twig, ContainerInterface $container)
     {
         $this->mailer = $mailer;
-        $this->templating = $templating;
+        $this->twig = $twig;
+
+        if ($twig instanceof EngineInterface) {
+            @trigger_error('Passing the "@templating" service as the 2nd argument is deprecated since KunstmaanFormBundle 5.4 and will be replaced by the Twig service in KunstmaanFormBundle 6.0. Injected the "@twig" service instead.', E_USER_DEPRECATED);
+        }
+
         $this->container = $container;
     }
 
@@ -50,8 +56,8 @@ class FormMailer implements FormMailerInterface
             ->setFrom($from)
             ->setTo($toArr)
             ->setBody(
-                $this->templating->render(
-                    'KunstmaanFormBundle:Mailer:mail.html.twig',
+                $this->twig->render(
+                    '@KunstmaanForm/Mailer/mail.html.twig',
                     [
                         'submission' => $submission,
                         'host' => $request->getScheme().'://'.$request->getHttpHost(),
