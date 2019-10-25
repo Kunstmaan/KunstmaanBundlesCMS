@@ -42,8 +42,6 @@ class HomePageAdminType extends PageAdminType
     }
 
     /**
-     * @assert () == 'homepage'
-     *
      * @return string
      */
     public function getBlockPrefix()
