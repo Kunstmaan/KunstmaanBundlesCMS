@@ -15,9 +15,8 @@ class YamlFileExporter implements FileExporterInterface
     public function export(array $translations)
     {
         $ymlDumper = new Dumper();
-        $ymlContent = $ymlDumper->dump($translations);
 
-        return $ymlContent;
+        return $ymlDumper->dump($translations);
     }
 
     /**

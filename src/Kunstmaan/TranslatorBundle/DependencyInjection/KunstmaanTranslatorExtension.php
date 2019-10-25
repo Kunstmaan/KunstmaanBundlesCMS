@@ -43,7 +43,7 @@ class KunstmaanTranslatorExtension extends Extension
         $container->setParameter('kuma_translator.file_formats', $config['file_formats']);
         $container->setParameter('kuma_translator.storage_engine.type', $config['storage_engine']['type']);
         $container->setParameter('kuma_translator.profiler', $container->getParameter('kernel.debug'));
-        $container->setParameter('kuma_translator.debug', is_null($config['debug']) ? $container->getParameter('kernel.debug') : $config['debug']);
+        $container->setParameter('kuma_translator.debug', \is_null($config['debug']) ? $container->getParameter('kernel.debug') : $config['debug']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -84,12 +84,12 @@ class KunstmaanTranslatorExtension extends Extension
         if (class_exists('Symfony\Component\Validator\Validation')) {
             $r = new \ReflectionClass('Symfony\Component\Validator\Validation');
 
-            $dirs[] = dirname($r->getFilename()).'/Resources/translations';
+            $dirs[] = \dirname($r->getFileName()).'/Resources/translations';
         }
         if (class_exists('Symfony\Component\Form\Form')) {
             $r = new \ReflectionClass('Symfony\Component\Form\Form');
 
-            $dirs[] = dirname($r->getFilename()).'/Resources/translations';
+            $dirs[] = \dirname($r->getFileName()).'/Resources/translations';
         }
 
         if (Kernel::VERSION_ID < 4000) {
@@ -100,7 +100,7 @@ class KunstmaanTranslatorExtension extends Extension
 
         foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {
             $reflection = new \ReflectionClass($class);
-            if (is_dir($dir = dirname($reflection->getFilename()).'/Resources/translations')) {
+            if (is_dir($dir = \dirname($reflection->getFileName()).'/Resources/translations')) {
                 $dirs[] = $dir;
             }
             if (is_dir($dir = sprintf($overridePath, $bundle))) {
@@ -119,7 +119,7 @@ class KunstmaanTranslatorExtension extends Extension
         }
 
         // Register translation resources
-        if (count($dirs) > 0) {
+        if (\count($dirs) > 0) {
             foreach ($dirs as $dir) {
                 $container->addResource(new DirectoryResource($dir));
             }

@@ -60,7 +60,9 @@ class TranslationCacheCommand extends ContainerAwareCommand
     {
         if ($input->getOption('flush')) {
             return $this->flushTranslationCache($input, $output);
-        } elseif ($input->getOption('status')) {
+        }
+
+        if ($input->getOption('status')) {
             return $this->showTranslationCacheStatus($input, $output);
         }
 

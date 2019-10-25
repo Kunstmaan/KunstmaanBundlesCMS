@@ -38,7 +38,7 @@ class CacheValidator
     /**
      * Get the last updated or inserted from all database translations
      *
-     * @return DateTime last createdAt or updateAt date from the translations stash
+     * @return \DateTime last createdAt or updateAt date from the translations stash
      */
     public function getLastTranslationChangeDate()
     {
@@ -48,7 +48,7 @@ class CacheValidator
     /**
      * Retrieve a Datetime of the oldest cache file made
      *
-     * @return DateTime mtime of oldest cache file
+     * @return \DateTime mtime of oldest cache file
      */
     public function getOldestCachefileDate()
     {

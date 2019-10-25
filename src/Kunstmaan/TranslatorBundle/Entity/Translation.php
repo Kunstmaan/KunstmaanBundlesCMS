@@ -107,7 +107,7 @@ class Translation
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    protected $flag = null;
+    protected $flag;
 
     /**
      * @ORM\PrePersist

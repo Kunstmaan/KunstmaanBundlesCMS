@@ -18,7 +18,7 @@ class CSVFileExporter implements FileExporterInterface
      */
     public function export(array $translations)
     {
-        $handle = fopen('php://temp', 'r+');
+        $handle = fopen('php://temp', 'rb+');
 
         // Add the header of the CSV file
         $headers = ['Keyword', 'Domain'];

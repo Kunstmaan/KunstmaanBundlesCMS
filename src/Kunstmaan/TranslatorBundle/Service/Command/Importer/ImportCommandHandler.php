@@ -84,7 +84,7 @@ class ImportCommandHandler extends AbstractCommandHandler
     {
         $importBundle = strtolower($importCommand->getDefaultBundle());
 
-        if ($importBundle == 'all') {
+        if ($importBundle === 'all') {
             $importCount = $this->importAllBundlesTranslationFiles($importCommand);
 
             if (Kernel::VERSION_ID >= 40000) {
@@ -92,15 +92,17 @@ class ImportCommandHandler extends AbstractCommandHandler
             }
 
             return $importCount;
-        } elseif ($importBundle == 'custom') {
-            return $this->importCustomBundlesTranslationFiles($importCommand);
-        } else {
-            if (Kernel::VERSION_ID >= 40000) {
-                return $this->importSf4TranslationFiles($importCommand);
-            }
-
-            return $this->importOwnBundlesTranslationFiles($importCommand);
         }
+
+        if ($importBundle === 'custom') {
+            return $this->importCustomBundlesTranslationFiles($importCommand);
+        }
+
+        if (Kernel::VERSION_ID >= 40000) {
+            return $this->importSf4TranslationFiles($importCommand);
+        }
+
+        return $this->importOwnBundlesTranslationFiles($importCommand);
     }
 
     /**
@@ -209,7 +211,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      *
      * @return int total number of files imported
      */
-    private function importTranslationFiles(Finder $finder, $force = flase)
+    private function importTranslationFiles(Finder $finder, $force = false)
     {
         if (!$finder instanceof Finder) {
             return false;
@@ -238,7 +240,7 @@ class ImportCommandHandler extends AbstractCommandHandler
         // strtolower all bundle names
         $bundles = array_map('strtolower', array_keys($this->kernel->getBundles()));
 
-        if (in_array(strtolower(trim($bundle)), $bundles)) {
+        if (\in_array(strtolower(trim($bundle)), $bundles)) {
             return true;
         }
 

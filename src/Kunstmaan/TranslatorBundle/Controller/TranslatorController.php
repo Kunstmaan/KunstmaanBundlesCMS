@@ -76,19 +76,19 @@ class TranslatorController extends AdminListController
      */
     public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
     {
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
         $translator = $this->container->get('translator');
 
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
-        foreach ($locales as $locale) {
-            $translation->addText($locale, '');
+        $managedLocales = $this->container->getParameter('kuma_translator.managed_locales');
+        foreach ($managedLocales as $managedLocale) {
+            $translation->addText($managedLocale, '');
         }
 
         $form = $this->createForm(TranslationAdminType::class, $translation, ['csrf_token_id' => 'add']);
-        if ('POST' == $request->getMethod()) {
+        if ($request->getMethod() === Request::METHOD_POST) {
             $form->handleRequest($request);
 
             // Fetch form data
@@ -143,7 +143,7 @@ class TranslatorController extends AdminListController
         $configurator = $this->getAdminListConfigurator();
 
         $translations = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findBy(['translationId' => $id]);
-        if (count($translations) < 1) {
+        if (\count($translations) < 1) {
             throw new \InvalidArgumentException('No existing translations found for this id');
         }
 
@@ -166,7 +166,7 @@ class TranslatorController extends AdminListController
 
         $form = $this->createForm(TranslationAdminType::class, $translation, ['intention' => 'edit']);
 
-        if ('POST' == $request->getMethod()) {
+        if ($request->getMethod() === Request::METHOD_POST) {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -266,7 +266,7 @@ class TranslatorController extends AdminListController
      */
     public function deleteAction(Request $request, $id)
     {
-        /* @var $em EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
@@ -327,7 +327,7 @@ class TranslatorController extends AdminListController
                 // Find existing translation
                 $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
 
-                if (is_null($translation)) {
+                if (\is_null($translation)) {
                     return new Response($translator->trans('translator.translator.invalid_translation'), 500);
                 }
             } else {
