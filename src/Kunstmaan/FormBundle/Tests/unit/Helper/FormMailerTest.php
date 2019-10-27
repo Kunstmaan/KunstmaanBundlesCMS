@@ -30,7 +30,6 @@ class FormMailerTest extends TestCase
     {
         $mailer = $this->createMock(\Swift_Mailer::class);
         $twig = $this->createMock(Environment::class);
-        $container = $this->createMock(ContainerInterface::class);
         $request = $this->createMock(Request::class);
         $requestStack = $this->createMock(RequestStack::class);
 
@@ -38,13 +37,27 @@ class FormMailerTest extends TestCase
         $request->expects($this->once())->method('getScheme')->willReturn('http');
         $request->expects($this->once())->method('getHttpHost')->willReturn('example.com');
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
-        $container->expects($this->once())->method('get')->willReturn($requestStack);
 
-        $formMailer = new FormMailer($mailer, $twig, $container);
+        $formMailer = new FormMailer($mailer, $twig, $requestStack);
 
         /** @var FormSubmission $formSubmission */
         $formSubmission = $this->createMock(FormSubmission::class);
 
         $formMailer->sendContactMail($formSubmission, 'from@example.com', 'to@example.com', 'subject');
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing the container as the 3th argument is deprecated since KunstmaanFormBundle 5.4 and will be replaced by the "request_stack" service in KunstmaanFormBundle 6.0. Injected the "@request_stack" service instead.
+     */
+    public function testDeprecatedConstructor()
+    {
+        $mailer = $this->createMock(\Swift_Mailer::class);
+        $twig = $this->createMock(Environment::class);
+        $requestStack = $this->createMock(RequestStack::class);
+        $container = $this->createMock(ContainerInterface::class);
+        $container->expects($this->once())->method('get')->willReturn($requestStack);
+
+        new FormMailer($mailer, $twig, $container);
     }
 }
