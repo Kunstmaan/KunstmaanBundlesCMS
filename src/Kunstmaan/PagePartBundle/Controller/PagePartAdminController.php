@@ -18,7 +18,7 @@ class PagePartAdminController extends Controller
 {
     /**
      * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
-     * @Template("KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig")
+     * @Template("@KunstmaanPagePart/PagePartAdminTwigExtension/pagepart.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
