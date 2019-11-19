@@ -36,7 +36,7 @@ class RenderService
 
         $hasActiveChild = false;
         if ($node['__children']) {
-            foreach($node['__children'] as $childNode) {
+            foreach ($node['__children'] as $childNode) {
                 if ($childNode['type'] == MenuItem::TYPE_PAGE_LINK) {
                     $childUrl = $this->router->generate('_slug', array('url' => $childNode['nodeTranslation']['url']));
                     if ($this->router->getContext()->getPathInfo() == $childUrl) {
