@@ -9,14 +9,17 @@ liip_imagine:
         media_list_thumbnail:
             quality: 75
             filters:
+                auto_rotate: ~
                 thumbnail: { size: [210, 150], mode: outbound }
                 relative_resize: { widen: 210 }
         media_list_thumbnail_retina:
             quality: 85
             filters:
+                auto_rotate: ~
                 thumbnail: { size: [420, 300], mode: outbound }
                 relative_resize: { widen: 420 }
         media_detail_thumbnail:
             quality: 75
             filters:
+                auto_rotate: ~
                 thumbnail: { size: [700, 500], mode: inset }
