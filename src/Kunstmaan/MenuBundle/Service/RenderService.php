@@ -41,6 +41,7 @@ class RenderService
                     $childUrl = $this->router->generate('_slug', array('url' => $childNode['nodeTranslation']['url']));
                     if ($this->router->getContext()->getPathInfo() == $childUrl) {
                         $hasActiveChild = true;
+
                         break;
                     }
                 }
