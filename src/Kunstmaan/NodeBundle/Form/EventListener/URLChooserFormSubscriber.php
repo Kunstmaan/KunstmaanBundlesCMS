@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Form\EventListener;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Kunstmaan\NodeBundle\Validation\URLValidator;
+use Kunstmaan\NodeBundle\Validator\Constraint\ValidExternalUrl;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
@@ -58,7 +59,7 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
             } // Else, it's an external link
             else {
                 $form->get('link_type')->setData(URLChooserType::EXTERNAL);
-                $constraints[] = new Url();
+                $constraints[] = new ValidExternalUrl();
             }
         } else {
             $choices = $form->get('link_type')->getConfig()->getOption('choices');
@@ -71,7 +72,7 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
                     break;
                 case URLChooserType::EXTERNAL:
                     $attributes['placeholder'] = 'https://';
-                    $constraints[] = new Url();
+                    $constraints[] = new ValidExternalUrl();
 
                     break;
                 case URLChooserType::EMAIL:
