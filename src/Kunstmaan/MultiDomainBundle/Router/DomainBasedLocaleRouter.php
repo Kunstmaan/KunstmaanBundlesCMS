@@ -20,7 +20,7 @@ class DomainBasedLocaleRouter extends SlugRouter
     protected $routeCollectionMultiLanguage;
 
     /**
-     * @var string|null
+     * @var array|null
      */
     private $otherSite;
 
@@ -93,9 +93,7 @@ class DomainBasedLocaleRouter extends SlugRouter
 
             $nodeTranslation = $this->getNodeTranslation($result);
             if (\is_null($nodeTranslation)) {
-                throw new ResourceNotFoundException(
-                    'No page found for slug ' . $pathinfo
-                );
+                throw new ResourceNotFoundException('No page found for slug ' . $pathinfo);
             }
             $result['_nodeTranslation'] = $nodeTranslation;
         }
@@ -155,7 +153,9 @@ class DomainBasedLocaleRouter extends SlugRouter
 
     private function getHostLocales()
     {
-        return $this->domainConfiguration->getFrontendLocales($this->otherSite['host']);
+        $host = null !== $this->otherSite ? $this->otherSite['host'] : null;
+
+        return $this->domainConfiguration->getFrontendLocales($host);
     }
 
     /**
