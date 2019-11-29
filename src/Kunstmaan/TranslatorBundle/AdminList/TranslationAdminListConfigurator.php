@@ -5,15 +5,19 @@ namespace Kunstmaan\TranslatorBundle\AdminList;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineDBALAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\ChangeableLimitInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
+use Kunstmaan\AdminListBundle\Traits\ChangeableLimitTrait;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * TranslationAdminListConfigurator
  */
-class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConfigurator
+class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConfigurator implements ChangeableLimitInterface
 {
+    use ChangeableLimitTrait;
+
     /**
      * @var array
      */
