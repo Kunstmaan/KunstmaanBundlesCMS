@@ -56,6 +56,6 @@ class DateTimeFilterType extends AbstractDBALFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:dateTimeFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/dateTimeFilter.html.twig';
     }
 }

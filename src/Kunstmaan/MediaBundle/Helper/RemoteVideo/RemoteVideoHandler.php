@@ -270,7 +270,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\RemoteVideo:show.html.twig';
+        return '@KunstmaanMedia/Media/RemoteVideo/show.html.twig';
     }
 
     /**

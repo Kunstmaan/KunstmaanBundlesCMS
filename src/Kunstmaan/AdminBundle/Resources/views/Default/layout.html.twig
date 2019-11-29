@@ -34,7 +34,7 @@
 {% block body %}
     <!-- Header -->
     {% block appHeader %}
-        {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
+        {% include "@KunstmaanAdmin/Default/app_header.html.twig" %}
     {% endblock %}
 
 
@@ -61,7 +61,7 @@
                 <!-- App Sidebar -->
                 <aside id="app__sidebar" class="col-md-3 app__sidebar">
                     {% block sidebar %}
-                    {% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
+                    {% include "@KunstmaanAdmin/Default/sidebar.html.twig" %}
                     {% endblock %}
                 </aside>
 
@@ -88,13 +88,13 @@
 
                     <!-- App Content - Breadcrumbs -->
                     {% block breadcrumb %}
-                        {% include "KunstmaanAdminBundle:Default:breadcrumbs.html.twig" %}
+                        {% include "@KunstmaanAdmin/Default/breadcrumbs.html.twig" %}
                     {% endblock %}
 
 
                     <!-- App Content - Flash Messages -->
                     {% block flashmessages %}
-                        {% include "KunstmaanAdminBundle:Default:flashmessages.html.twig" %}
+                        {% include "@KunstmaanAdmin/Default/flashmessages.html.twig" %}
                     {% endblock %}
 
 
@@ -144,7 +144,7 @@
 
     {% block js_footer %}
         <!-- JS -->
-        {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+        {% include "@KunstmaanAdmin/Default/_js_footer.html.twig" %}
     {% endblock %}
 
     <!-- JS - Extra -->

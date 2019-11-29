@@ -70,6 +70,6 @@ class NumberFilterType extends AbstractDBALFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:numberFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/numberFilter.html.twig';
     }
 }

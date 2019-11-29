@@ -93,7 +93,7 @@
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
+                {% include '@KunstmaanMedia/Chooser/chooserShowRecTreeView.html.twig' %}
             {% endfor %}
         </ul>
     </nav>

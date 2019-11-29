@@ -66,27 +66,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var string
      */
-    private $listTemplate = 'KunstmaanAdminListBundle:Default:list.html.twig';
+    private $listTemplate = '@KunstmaanAdminList/Default/list.html.twig';
 
     /**
      * @var string
      */
-    private $addTemplate = 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig';
+    private $addTemplate = '@KunstmaanAdminList/Default/add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $editTemplate = 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig';
+    private $editTemplate = '@KunstmaanAdminList/Default/add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $viewTemplate = 'KunstmaanAdminListBundle:Default:view.html.twig';
+    private $viewTemplate = '@KunstmaanAdminList/Default/view.html.twig';
 
     /**
      * @var string
      */
-    private $deleteTemplate = 'KunstmaanAdminListBundle:Default:delete.html.twig';
+    private $deleteTemplate = '@KunstmaanAdminList/Default/delete.html.twig';
 
     /**
      * @var FilterBuilder
@@ -282,10 +282,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException(
-            'You need to implement the getAdminType method in '.
-            \get_class($this).' or '. \get_class($entity)
-        );
+        throw new InvalidArgumentException('You need to implement the getAdminType method in '. \get_class($this).' or '. \get_class($entity));
     }
 
     /**

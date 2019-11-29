@@ -267,7 +267,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetListTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:Default:list.html.twig', $this->abstractAdminListConfMock->getListTemplate());
+        $this->assertEquals('@KunstmaanAdminList/Default/list.html.twig', $this->abstractAdminListConfMock->getListTemplate());
     }
 
     public function testSetListTemplate()

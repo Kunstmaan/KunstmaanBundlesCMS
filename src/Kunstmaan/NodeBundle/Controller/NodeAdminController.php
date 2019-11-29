@@ -107,7 +107,7 @@ class NodeAdminController extends Controller
 
     /**
      * @Route("/", name="KunstmaanNodeBundle_nodes")
-     * @Template("KunstmaanNodeBundle:Admin:list.html.twig")
+     * @Template("@KunstmaanNode/Admin/list.html.twig")
      *
      * @param Request $request
      *
@@ -1223,9 +1223,7 @@ class NodeAdminController extends Controller
         $type = $request->get('type');
 
         if (empty($type)) {
-            throw new InvalidArgumentException(
-                'Please specify a type of page you want to create'
-            );
+            throw new InvalidArgumentException('Please specify a type of page you want to create');
         }
 
         return $type;
@@ -1264,7 +1262,7 @@ class NodeAdminController extends Controller
         }
 
         return $this->render(
-            'KunstmaanNodeBundle:NodeAdmin:pagenottranslated.html.twig',
+            '@KunstmaanNode/NodeAdmin/pagenottranslated.html.twig',
             array(
                 'node' => $node,
                 'nodeTranslations' => $node->getNodeTranslations(

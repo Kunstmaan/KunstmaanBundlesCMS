@@ -32,7 +32,7 @@ class SettingsController extends BaseSettingsController
      * Show bundles version update information
      *
      * @Route("/bundle-version", name="KunstmaanAdminBundle_settings_bundle_version")
-     * @Template("KunstmaanAdminBundle:Settings:bundleVersion.html.twig")
+     * @Template("@KunstmaanAdmin/Settings/bundleVersion.html.twig")
      *
      * @throws AccessDeniedException
      *

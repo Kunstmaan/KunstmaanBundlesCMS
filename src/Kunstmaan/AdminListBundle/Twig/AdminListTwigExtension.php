@@ -83,7 +83,7 @@ class AdminListTwigExtension extends AbstractExtension
         $filterBuilder = $view->getFilterBuilder();
 
         return $env->render(
-            'KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig',
+            '@KunstmaanAdminList/AdminListTwigExtension/widget.html.twig',
             [
                 'filter' => $filterBuilder,
                 'basepath' => $basepath,
@@ -125,7 +125,7 @@ class AdminListTwigExtension extends AbstractExtension
         $filterBuilder = $view->getFilterBuilder();
 
         return $env->render(
-            'KunstmaanAdminListBundle:AdminListTwigExtension:thumbwidget.html.twig',
+            '@KunstmaanAdminList/AdminListTwigExtension/thumbwidget.html.twig',
             [
                 'filter' => $filterBuilder,
                 'basepath' => $basepath,

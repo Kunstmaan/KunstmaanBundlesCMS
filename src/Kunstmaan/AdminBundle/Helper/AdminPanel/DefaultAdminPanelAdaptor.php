@@ -37,7 +37,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
             array(),
             '',
             '',
-            'KunstmaanAdminBundle:AdminPanel:_language_chooser.html.twig'
+            '@KunstmaanAdmin/AdminPanel/_language_chooser.html.twig'
         );
     }
 

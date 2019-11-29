@@ -24,7 +24,7 @@ class RolesController extends BaseSettingsController
      * List roles
      *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_roles")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Template("@KunstmaanAdminList/Default/list.html.twig")
      *
      * @throws AccessDeniedException
      *

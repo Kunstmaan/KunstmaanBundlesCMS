@@ -324,13 +324,13 @@ services:
             - '@kunstmaan_admin.versionchecker'
             - '@kunstmaan_admin.cache'
         tags:
-            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions }
+            - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanAdmin/Toolbar/bundles_version.html.twig', id: kuma_bundle_versions }
 
     kunstmaan_admin.datacollector.exception:
         class: '%kunstmaan_admin.toolbar.collector.exception.class%'
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:exception.html.twig', id: kuma_exception }
+            - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanAdmin/Toolbar/exception.html.twig', id: kuma_exception }
 
     Kunstmaan\AdminBundle\Twig\AdminBundleTwigExtension:
         arguments:

@@ -24,7 +24,7 @@ class GroupsController extends BaseSettingsController
      * List groups
      *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_groups")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Template("@KunstmaanAdminList/Default/list.html.twig")
      *
      * @throws AccessDeniedException
      *

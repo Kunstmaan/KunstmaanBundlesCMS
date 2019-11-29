@@ -47,7 +47,7 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         parent::__construct($em->getConnection());
         $this->em = $em;
         $this->locale = $locale;
-        $this->setListTemplate('KunstmaanAdminListBundle:Page:list.html.twig');
+        $this->setListTemplate('@KunstmaanAdminList/Page/list.html.twig');
     }
 
     /**
@@ -55,8 +55,8 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
      */
     public function buildFields()
     {
-        $this->addField('title', 'Title', true, 'KunstmaanAdminListBundle:Page:list-title.html.twig');
-        $this->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
+        $this->addField('title', 'Title', true, '@KunstmaanAdminList/Page/list-title.html.twig');
+        $this->addField('online', 'Online', true, '@KunstmaanNode/Admin/online.html.twig');
         $this->addField('updated', 'Updated at', true);
     }
 

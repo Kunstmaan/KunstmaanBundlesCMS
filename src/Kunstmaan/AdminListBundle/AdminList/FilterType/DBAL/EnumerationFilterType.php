@@ -61,6 +61,6 @@ class EnumerationFilterType extends AbstractDBALFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:enumerationFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/enumerationFilter.html.twig';
     }
 }

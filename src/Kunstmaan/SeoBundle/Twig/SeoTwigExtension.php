@@ -159,7 +159,7 @@ class SeoTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function renderSeoMetadataFor(Environment $environment, AbstractEntity $entity, $currentNode = null, $template = 'KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
+    public function renderSeoMetadataFor(Environment $environment, AbstractEntity $entity, $currentNode = null, $template = '@KunstmaanSeo/SeoTwigExtension/metadata.html.twig')
     {
         $seo = $this->getSeoFor($entity);
         $template = $environment->loadTemplate($template);

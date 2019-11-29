@@ -176,7 +176,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\RemoteSlide:show.html.twig';
+        return '@KunstmaanMedia/Media/RemoteSlide/show.html.twig';
     }
 
     /**

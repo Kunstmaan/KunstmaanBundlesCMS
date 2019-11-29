@@ -90,7 +90,7 @@ abstract class AbstractMediaHandler
 
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media:show.html.twig';
+        return '@KunstmaanMedia/Media/show.html.twig';
     }
 
     /**

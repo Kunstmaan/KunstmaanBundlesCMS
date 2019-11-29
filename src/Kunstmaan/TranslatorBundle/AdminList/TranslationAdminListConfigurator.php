@@ -179,7 +179,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
             // Field building hack...
             foreach ($this->locales as $locale) {
-                $this->addField($locale, strtoupper($locale), false, 'KunstmaanTranslatorBundle:Translator:inline_edit.html.twig');
+                $this->addField($locale, strtoupper($locale), false, '@KunstmaanTranslator/Translator/inline_edit.html.twig');
             }
 
             // Field filter hack...

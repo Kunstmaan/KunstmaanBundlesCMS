@@ -211,7 +211,7 @@ class PageTemplateWidget extends FormWidget
      */
     public function getTemplate()
     {
-        return 'KunstmaanPagePartBundle:FormWidgets\PageTemplateWidget:widget.html.twig';
+        return '@KunstmaanPagePart/FormWidgets/PageTemplateWidget/widget.html.twig';
     }
 
     /**
