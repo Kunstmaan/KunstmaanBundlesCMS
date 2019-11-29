@@ -6,6 +6,7 @@ AdminBundle
 
 * The composer script class `Kunstmaan\AdminBundle\Composer\ScriptHandler` is deprecated and will be removed in 6.0. 
   If you use this script handler, remove it from your composer.json scripts section.
+* We don't enable the templating component by default anymore. If you use the templating component or the `@templating` service, activate it by enabling the `framework.templating` config in your project.
 
 AdminListBundle
 ---------------

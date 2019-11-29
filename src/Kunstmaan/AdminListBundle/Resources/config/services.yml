@@ -11,9 +11,6 @@ services:
         arguments:
             - '@twig'
             - '@translator'
-        calls:
-            -  [ setRenderer, [ '@templating' ] ]
-            -  [ setTranslator, [ '@translator' ] ]
         public: true
 
     kunstmaan_adminlist.twig.extension:
