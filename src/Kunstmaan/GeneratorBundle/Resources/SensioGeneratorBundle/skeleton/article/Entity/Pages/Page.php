@@ -9,7 +9,6 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}PageRepository")
@@ -50,7 +49,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
     }
 
     /**
@@ -58,7 +57,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPageTemplates()
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page'];
     }
 
     public function getDefaultView()

@@ -5,7 +5,6 @@ namespace {{ namespace }}\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\ArticleBundle\Entity\AbstractCategory;
-use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\{{ entity_class }}CategoryAdminType;
 
 /**

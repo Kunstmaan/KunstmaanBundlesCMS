@@ -38,6 +38,6 @@ class {{ entity_class }}TagAdminListConfigurator extends AbstractArticleTagAdmin
      */
     public function getEntityName()
     {
-	    return '{{ entity_class }}Tag';
+        return '{{ entity_class }}Tag';
     }
 }

@@ -5,14 +5,12 @@ namespace {{ namespace }}\Controller;
 use {{ namespace }}\AdminList\{{ entity_class }}TagAdminListConfigurator;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticleTagAdminListController;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 {% if isV4 %}
 
 /**
- * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/tag", requirements={"_locale"="%requiredlocales%"})
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-tag", requirements={"_locale"="%requiredlocales%"})
  */
 {% endif %}
 class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminListController

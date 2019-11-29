@@ -1,7 +1,7 @@
         {% if type == 'Author' %}
         $builder->add('author');
         {% else %}
-        $builder->add('{{ pluralType }}', EntityType::class, array(
+        $builder->add('{{ pluralType }}', EntityType::class, [
             'class' => '{{ bundle.name }}:{{ entity_class }}{{ type }}',
             'choice_label' => 'name',
             'query_builder' => function(EntityRepository $er) {
@@ -11,10 +11,10 @@
             },
             'multiple' => true,
             'expanded' => false,
-            'attr' => array(
+            'attr' => [
                  'class' => 'js-advanced-select',
                  'data-placeholder' => 'Choose the related {{ pluralType }}'
-            ),
+            ],
             'required' => false
-        ));
+        ]);
         {% endif %}

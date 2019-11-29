@@ -8,11 +8,7 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * The article overview page which shows its articles
@@ -27,7 +23,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
     }
 
     /**
@@ -35,7 +31,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getPageTemplates()
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage'];
     }
 
     /**

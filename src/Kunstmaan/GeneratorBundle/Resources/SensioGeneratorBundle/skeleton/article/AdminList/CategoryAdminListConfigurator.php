@@ -39,6 +39,6 @@ class {{ entity_class }}CategoryAdminListConfigurator extends AbstractArticleCat
      */
     public function getEntityName()
     {
-	    return '{{ entity_class }}Category';
+        return '{{ entity_class }}Category';
     }
 }
