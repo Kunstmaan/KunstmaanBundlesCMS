@@ -10,8 +10,6 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true, enabled: true }
-    templating:
-        engines: ['twig']
     default_locale:  nl
     session:         ~
     fragments:       ~
@@ -22,6 +20,12 @@ services:
         class: Symfony\Component\Translation\Loader\YamlFileLoader
         tags:
             - { name: translation.loader, alias: yml }
+
+kunstmaan_admin:
+    website_title: 'PHPUnit test app'
+    multi_language: true
+    required_locales: 'nl|fr|en'
+    default_locale: 'nl'
 
 kunstmaan_translator:
     managed_locales: ['nl','en','de']
@@ -50,3 +54,10 @@ fos_user:
         sender_name:    Admin
     service:
         mailer: fos_user.mailer.noop
+
+sensio_framework_extra:
+    router:
+        annotations: false
+
+twig:
+    strict_variables: '%kernel.debug%'

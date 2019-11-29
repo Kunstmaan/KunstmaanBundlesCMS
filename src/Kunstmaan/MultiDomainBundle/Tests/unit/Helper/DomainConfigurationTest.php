@@ -274,27 +274,6 @@ class DomainConfigurationTest extends TestCase
         $this->assertEquals(array('en'), $object->getBackendLocales());
     }
 
-    private function getContainer($map, $request)
-    {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-
-        $container
-            ->method('getParameter')
-            ->willReturnMap($map);
-
-        $serviceMap = array(
-            array('request_stack', 1, $this->getRequestStack($request)),
-            array('doctrine.orm.entity_manager', 1, $this->getEntityManager()),
-            array('kunstmaan_admin.adminroute.helper', 1, $this->getAdminRouteHelper()),
-        );
-
-        $container
-            ->method('get')
-            ->willReturnMap($serviceMap);
-
-        return $container;
-    }
-
     private function getEntityManager()
     {
         $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
@@ -327,29 +306,16 @@ class DomainConfigurationTest extends TestCase
 
     private function getNodeRepository()
     {
+        $this->node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
+
         $repository = $this->getMockBuilder('Kunstmaan\NodeBundle\Repository\NodeRepository')
             ->disableOriginalConstructor()
             ->getMock();
         $repository
             ->method('getNodeByInternalName')
-            ->willReturn($this->getRootNode());
+            ->willReturn($this->node);
 
         return $repository;
-    }
-
-    private function getRootNode()
-    {
-        $this->node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
-
-        return $this->node;
-    }
-
-    private function getRequestStack($request)
-    {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
-
-        return $requestStack;
     }
 
     private function getUnknownDomainRequest()
@@ -413,13 +379,9 @@ class DomainConfigurationTest extends TestCase
             ],
         );
 
-        $map = array(
-            array('kunstmaan_admin.multi_language', false),
-            array('kunstmaan_admin.default_locale', 'en'),
-            array('kunstmaan_admin.required_locales', 'en'),
-            array('kunstmaan_multi_domain.hosts', $hostMap),
-        );
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->method('getMasterRequest')->willReturn($request);
 
-        return new DomainConfiguration($this->getContainer($map, $request));
+        return new DomainConfiguration($requestStack, false, 'en', 'en', $this->getAdminRouteHelper(), $this->getEntityManager(), $hostMap);
     }
 }

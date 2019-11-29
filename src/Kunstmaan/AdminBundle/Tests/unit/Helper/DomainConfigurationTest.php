@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class DomainConfigurationTest extends TestCase
 {
@@ -91,60 +92,21 @@ class DomainConfigurationTest extends TestCase
         $this->assertEquals(array('nl', 'fr', 'en'), $object->getBackendLocales());
     }
 
-    private function getContainer($map)
-    {
-        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-
-        $this->container
-            ->method('getParameter')
-            ->will($this->returnValueMap($map));
-        $this->container
-            ->expects($this->any())
-            ->method('get')
-            ->with($this->equalTo('request_stack'))
-            ->willReturn($this->getRequestStack());
-
-        return $this->container;
-    }
-
     private function getRequestStack()
     {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($this->getRequest());
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn(Request::create('http://domain.tld/'));
 
         return $requestStack;
     }
 
-    private function getRequest()
-    {
-        $request = Request::create('http://domain.tld/');
-
-        return $request;
-    }
-
     private function getSingleLanguageDomainConfiguration()
     {
-        $map = [
-            ['kunstmaan_admin.multi_language', false],
-            ['kunstmaan_admin.default_locale', 'en'],
-            ['kunstmaan_admin.required_locales', 'en'],
-        ];
-
-        $object = new DomainConfiguration($this->getContainer($map));
-
-        return $object;
+        return new DomainConfiguration($this->getRequestStack(), false, 'en', 'en');
     }
 
     private function getMultiLanguageDomainConfiguration()
     {
-        $map = [
-            ['kunstmaan_admin.multi_language', true],
-            ['kunstmaan_admin.default_locale', 'nl'],
-            ['kunstmaan_admin.required_locales', 'nl|fr|en'],
-        ];
-
-        $object = new DomainConfiguration($this->getContainer($map));
-
-        return $object;
+        return new DomainConfiguration($this->getRequestStack(), true, 'nl', 'nl|fr|en');
     }
 }

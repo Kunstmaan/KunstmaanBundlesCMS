@@ -16,8 +16,7 @@ class DomainBasedLocaleRouterTest extends TestCase
     public function testGenerate()
     {
         $request = $this->getRequest();
-        $container = $this->getContainer($request);
-        $object = new DomainBasedLocaleRouter($container);
+        $object = $this->getDomainBasedLocaleRouter($request);
         $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/en/some-uri', $url);
 
@@ -29,8 +28,7 @@ class DomainBasedLocaleRouterTest extends TestCase
     {
         $request = $this->getRequest();
         $request->setLocale('nl_BE');
-        $container = $this->getContainer($request);
-        $object = new DomainBasedLocaleRouter($container);
+        $object = $this->getDomainBasedLocaleRouter($request);
         $url = $object->generate('_slug', array('url' => 'some-uri', 'otherSite' => 'https://cia.gov'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
 
@@ -42,8 +40,7 @@ class DomainBasedLocaleRouterTest extends TestCase
     {
         $request = $this->getRequest();
         $request->setLocale('nl_BE');
-        $container = $this->getContainer($request);
-        $object = new DomainBasedLocaleRouter($container);
+        $object = $this->getDomainBasedLocaleRouter($request);
         $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
 
@@ -55,8 +52,7 @@ class DomainBasedLocaleRouterTest extends TestCase
     {
         $request = $this->getRequest();
         $nodeTranslation = new NodeTranslation();
-        $container = $this->getContainer($request, $nodeTranslation);
-        $object = new DomainBasedLocaleRouter($container);
+        $object = $this->getDomainBasedLocaleRouter($request, $nodeTranslation);
         $result = $object->match('/en/some-uri');
         $this->assertEquals('some-uri', $result['url']);
         $this->assertEquals('en_GB', $result['_locale']);
@@ -67,8 +63,7 @@ class DomainBasedLocaleRouterTest extends TestCase
     {
         $this->expectException(ResourceNotFoundException::class);
         $request = $this->getRequest();
-        $container = $this->getContainer($request);
-        $object = new DomainBasedLocaleRouter($container);
+        $object = $this->getDomainBasedLocaleRouter($request);
         $object->match('/en/some-uri');
     }
 
@@ -102,18 +97,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $request = $this->getRequest('http://singlelangdomain.tld/');
 
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $serviceMap = array(
-            array('request_stack', 1, $this->getRequestStack($request)),
-            array('kunstmaan_admin.domain_configuration', 1, $domainConfiguration),
-            array('doctrine.orm.entity_manager', 1, $this->getEntityManager(new NodeTranslation())),
-        );
-
-        $container
-            ->method('get')
-            ->willReturnMap($serviceMap);
-        /** @var Container $container */
-        $object = new DomainBasedLocaleRouter($container);
+        $object = new DomainBasedLocaleRouter($domainConfiguration, $this->getRequestStack($request), $this->getEntityManager(new NodeTranslation()));
 
         $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
@@ -155,18 +139,8 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $request = $this->getRequest('http://singlelangdomain.tld/');
 
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $serviceMap = array(
-            array('request_stack', 1, $this->getRequestStack($request)),
-            array('kunstmaan_admin.domain_configuration', 1, $domainConfiguration),
-            array('doctrine.orm.entity_manager', 1, $this->getEntityManager(new NodeTranslation())),
-        );
-
-        $container
-            ->method('get')
-            ->willReturnMap($serviceMap);
         /** @var Container $container */
-        $object = new DomainBasedLocaleRouter($container);
+        $object = new DomainBasedLocaleRouter($domainConfiguration, $this->getRequestStack($request), $this->getEntityManager(new NodeTranslation()));
         $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
         $property->setAccessible(true);
@@ -175,29 +149,6 @@ class DomainBasedLocaleRouterTest extends TestCase
         $array = $collection->getIterator()->getArrayCopy();
         $this->assertArrayHasKey('_slug', $array);
         $this->assertArrayHasKey('_slug_preview', $array);
-    }
-
-    /**
-     * @param $request
-     * @param null $nodeTranslation
-     *
-     * @return Container
-     */
-    private function getContainer($request, $nodeTranslation = null)
-    {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $serviceMap = array(
-            array('request_stack', 1, $this->getRequestStack($request)),
-            array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration()),
-            array('doctrine.orm.entity_manager', 1, $this->getEntityManager($nodeTranslation)),
-        );
-
-        $container
-            ->method('get')
-            ->willReturnMap($serviceMap);
-
-        /* @var Container $container */
-        return $container;
     }
 
     private function getRequestStack($request)
@@ -262,5 +213,10 @@ class DomainBasedLocaleRouterTest extends TestCase
             ->willReturn($nodeTranslation);
 
         return $repository;
+    }
+
+    private function getDomainBasedLocaleRouter($request, $nodeTranslation = null)
+    {
+        return new DomainBasedLocaleRouter($this->getDomainConfiguration(), $this->getRequestStack($request), $this->getEntityManager($nodeTranslation));
     }
 }

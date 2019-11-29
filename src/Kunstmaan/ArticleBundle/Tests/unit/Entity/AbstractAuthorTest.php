@@ -21,7 +21,8 @@ class AbstractAuthorTest extends TestCase
 
     public function testGettersAndSetters()
     {
-        $entity = new AbstractAuthor();
+        $entity = new class() extends AbstractAuthor {
+        };
         $entity->setId(666);
         $entity->setLink('https://nasa.gov');
         $entity->setName('NASA');
