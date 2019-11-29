@@ -1,15 +1,27 @@
 <?php
 
-namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
+namespace Kunstmaan\SeoBundle\Tests\DependencyInjection;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\SeoBundle\DependencyInjection\KunstmaanSeoExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->registerService('doctrine.orm.entity_manager', EntityManager::class);
+        $this->registerService('kunstmaan_admin.clone.helper', CloneHelper::class);
+        $this->registerService('security.authorization_checker', AuthorizationChecker::class);
+    }
+
     /**
      * @return ExtensionInterface[]
      */

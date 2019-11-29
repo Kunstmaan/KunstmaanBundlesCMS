@@ -7,6 +7,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class KunstmaanTranslatorCompilerPassTest extends AbstractCompilerPassTestCase
 {
@@ -17,6 +18,8 @@ class KunstmaanTranslatorCompilerPassTest extends AbstractCompilerPassTestCase
 
     public function testContainerKeys()
     {
+        $this->registerService('request_stack', RequestStack::class);
+
         $svcId = 'kunstmaan_translator.service.importer.importer';
         $svc = new Definition();
         $svc->addTag('translation.loader', ['alias' => 'someAlias', 'legacy-alias' => 'someLegacyAlias']);
