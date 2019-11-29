@@ -4,6 +4,7 @@ namespace Kunstmaan\MenuBundle\Service;
 
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 class RenderService
 {
@@ -21,13 +22,13 @@ class RenderService
     }
 
     /**
-     * @param \Twig_Environment $environment
+     * @param Environment $environment
      * @param $node
      * @param array $options
      *
      * @return string
      */
-    public function renderMenuItemTemplate(\Twig_Environment $environment, $node, $options = array())
+    public function renderMenuItemTemplate(Environment $environment, $node, $options = array())
     {
         $template = isset($options['template']) ? $options['template'] : false;
         if ($template === false) {

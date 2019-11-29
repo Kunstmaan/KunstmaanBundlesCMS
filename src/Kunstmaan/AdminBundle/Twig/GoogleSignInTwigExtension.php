@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Class GoogleSignInTwigExtension
  */
-class GoogleSignInTwigExtension extends Twig_Extension
+class GoogleSignInTwigExtension extends AbstractExtension
 {
     private $enabled;
 
@@ -27,8 +28,8 @@ class GoogleSignInTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('google_signin_enabled', array($this, 'isGoogleSignInEnabled')),
-            new \Twig_SimpleFunction('google_signin_client_id', array($this, 'getClientId')),
+            new TwigFunction('google_signin_enabled', array($this, 'isGoogleSignInEnabled')),
+            new TwigFunction('google_signin_client_id', array($this, 'getClientId')),
         );
     }
 

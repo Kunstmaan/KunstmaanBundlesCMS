@@ -7,11 +7,14 @@ use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * PagePartTwigExtension
  */
-class PagePartTwigExtension extends \Twig_Extension
+class PagePartTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManager
@@ -32,14 +35,14 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
-            new \Twig_SimpleFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
-            new \Twig_SimpleFunction('has_page_parts', [$this, 'hasPageParts']),
+            new TwigFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
+            new TwigFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
+            new TwigFunction('has_page_parts', [$this, 'hasPageParts']),
         );
     }
 
     /**
-     * @param \Twig_Environment     $env
+     * @param Environment           $env
      * @param array                 $twigContext The twig context
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context
@@ -47,7 +50,7 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderPageParts(\Twig_Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = array())
+    public function renderPageParts(Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = array())
     {
         $template = $env->loadTemplate('KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig');
         /* @var $entityRepository PagePartRefRepository */

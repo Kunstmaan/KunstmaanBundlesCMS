@@ -11,12 +11,13 @@ use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Extension to fetch node / translation by page in Twig templates
  */
-class NodeTwigExtension extends Twig_Extension
+class NodeTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManagerInterface
@@ -64,46 +65,46 @@ class NodeTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_node_for', array($this, 'getNodeFor')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_node_translation_for',
                 array($this, 'getNodeTranslationFor')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_node_by_internal_name',
                 array($this, 'getNodeByInternalName')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_url_by_internal_name',
                 array($this, 'getUrlByInternalName')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_path_by_internal_name',
                 array($this, 'getPathByInternalName')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_page_by_node_translation',
                 array($this, 'getPageByNodeTranslation')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_node_menu',
                 array($this, 'getNodeMenu')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'is_structure_node',
                 array($this, 'isStructureNode')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'file_exists',
                 array($this, 'fileExists')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_node_trans_by_node_id',
                 array($this, 'getNodeTranslationByNodeId')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'getOverviewRoute',
                 array($this, 'getOverviewRoute')
             ),

@@ -3,11 +3,11 @@
 namespace Kunstmaan\AdminBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Twig_Environment;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MultiDomainAdminTwigExtension extends Twig_Extension
+class MultiDomainAdminTwigExtension extends AbstractExtension
 {
     /**
      * @var DomainConfigurationInterface
@@ -27,23 +27,23 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('multidomain_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
-            new Twig_SimpleFunction('is_multidomain_site', [$this, 'isMultiDomainSite']),
-            new Twig_SimpleFunction('get_switched_host', [$this, 'getSwitchedHost']),
-            new Twig_SimpleFunction('switched_host_is_current', [$this, 'switchedHostIsCurrent']),
+            new TwigFunction('multidomain_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('is_multidomain_site', [$this, 'isMultiDomainSite']),
+            new TwigFunction('get_switched_host', [$this, 'getSwitchedHost']),
+            new TwigFunction('switched_host_is_current', [$this, 'switchedHostIsCurrent']),
         ];
     }
 
     /**
      * Render multidomain switcher widget.
      *
-     * @param Twig_Environment $env
-     * @param string           $route      The route
-     * @param array            $parameters The route parameters
+     * @param Environment $env
+     * @param string      $route      The route
+     * @param array       $parameters The route parameters
      *
      * @return string
      */
-    public function renderWidget(Twig_Environment $env, $route, array $parameters = [])
+    public function renderWidget(Environment $env, $route, array $parameters = [])
     {
         $template = $env->loadTemplate(
             '@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig'

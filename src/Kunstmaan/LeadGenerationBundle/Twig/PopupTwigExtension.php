@@ -7,8 +7,11 @@ use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 use Kunstmaan\LeadGenerationBundle\Service\PopupManager;
 use Kunstmaan\LeadGenerationBundle\Service\RuleServiceInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class PopupTwigExtension extends \Twig_Extension
+class PopupTwigExtension extends AbstractExtension
 {
     /**
      * @var PopupManager
@@ -52,19 +55,19 @@ class PopupTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('lead_generation_render_js_includes', array($this, 'renderJsIncludes'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('lead_generation_render_popups_html', array($this, 'renderPopupsHtml'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('lead_generation_render_initialize_js', array($this, 'renderInitializeJs'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('lead_generation_get_rule_properties', array($this, 'getRuleProperties')),
-            new \Twig_SimpleFunction('get_available_popup_types', array($this, 'getAvailablePopupTypes')),
-            new \Twig_SimpleFunction('get_available_rule_types', array($this, 'getAvailableRuleTypes')),
+            new TwigFunction('lead_generation_render_js_includes', array($this, 'renderJsIncludes'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new TwigFunction('lead_generation_render_popups_html', array($this, 'renderPopupsHtml'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new TwigFunction('lead_generation_render_initialize_js', array($this, 'renderInitializeJs'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new TwigFunction('lead_generation_get_rule_properties', array($this, 'getRuleProperties')),
+            new TwigFunction('get_available_popup_types', array($this, 'getAvailablePopupTypes')),
+            new TwigFunction('get_available_rule_types', array($this, 'getAvailableRuleTypes')),
         );
     }
 
     /**
      * @return string
      */
-    public function renderJsIncludes(\Twig_Environment $environment)
+    public function renderJsIncludes(Environment $environment)
     {
         $files = $this->popupManager->getUniqueJsIncludes();
 
@@ -74,7 +77,7 @@ class PopupTwigExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function renderPopupsHtml(\Twig_Environment $environment)
+    public function renderPopupsHtml(Environment $environment)
     {
         $popups = $this->popupManager->getPopups();
 
@@ -84,7 +87,7 @@ class PopupTwigExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function renderInitializeJs(\Twig_Environment $environment)
+    public function renderInitializeJs(Environment $environment)
     {
         $popups = $this->popupManager->getPopups();
 

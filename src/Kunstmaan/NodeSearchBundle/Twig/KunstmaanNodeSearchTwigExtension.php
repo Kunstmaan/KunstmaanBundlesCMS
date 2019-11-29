@@ -7,8 +7,11 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
+class KunstmaanNodeSearchTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManager
@@ -38,8 +41,8 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_parent_page', array($this, 'getParentPage')),
-            new \Twig_SimpleFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
+            new TwigFunction('get_parent_page', array($this, 'getParentPage')),
+            new TwigFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
         );
     }
 
@@ -60,7 +63,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment     $env
+     * @param Environment           $env
      * @param array                 $twigContext The twig context
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context
@@ -69,7 +72,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
      * @return string
      */
     public function renderIndexablePageParts(
-        \Twig_Environment $env,
+        Environment $env,
         array $twigContext,
         HasPagePartsInterface $page,
         $contextName = 'main',

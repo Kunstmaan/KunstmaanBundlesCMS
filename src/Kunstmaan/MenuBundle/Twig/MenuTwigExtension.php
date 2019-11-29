@@ -5,8 +5,11 @@ namespace Kunstmaan\MenuBundle\Twig;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
 use Kunstmaan\MenuBundle\Service\RenderService;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MenuTwigExtension extends \Twig_Extension
+class MenuTwigExtension extends AbstractExtension
 {
     /**
      * @var RenderService
@@ -36,7 +39,7 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_menu',
                 array($this, 'getMenu'),
                 array(
@@ -44,7 +47,7 @@ class MenuTwigExtension extends \Twig_Extension
                     'needs_environment' => true,
                 )
             ),
-            new \Twig_SimpleFunction('get_menu_items', array($this, 'getMenuItems')),
+            new TwigFunction('get_menu_items', array($this, 'getMenuItems')),
         );
     }
 
@@ -57,7 +60,7 @@ class MenuTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function getMenu(\Twig_Environment $environment, $name, $lang, $options = array())
+    public function getMenu(Environment $environment, $name, $lang, $options = array())
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 

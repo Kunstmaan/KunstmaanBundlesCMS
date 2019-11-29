@@ -3,8 +3,10 @@
 namespace Kunstmaan\SitemapBundle\Twig;
 
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SitemapTwigExtension extends \Twig_Extension
+class SitemapTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.
@@ -14,8 +16,8 @@ class SitemapTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('hide_from_sitemap', array($this, 'isHiddenFromSitemap')),
-            new \Twig_SimpleFunction('hide_children_from_sitemap', array($this, 'isHiddenChildrenFromSitemap')),
+            new TwigFunction('hide_from_sitemap', array($this, 'isHiddenFromSitemap')),
+            new TwigFunction('hide_children_from_sitemap', array($this, 'isHiddenChildrenFromSitemap')),
         );
     }
 

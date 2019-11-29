@@ -7,12 +7,14 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Psr\Cache\CacheItemPoolInterface;
-use Twig_Extension;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Twig extensions for Seo
  */
-class SeoTwigExtension extends Twig_Extension
+class SeoTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManager
@@ -55,12 +57,12 @@ class SeoTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_seo_metadata_for', array($this, 'renderSeoMetadataFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('get_seo_for', array($this, 'getSeoFor')),
-            new \Twig_SimpleFunction('get_title_for', array($this, 'getTitleFor')),
-            new \Twig_SimpleFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
-            new \Twig_SimpleFunction('get_absolute_url', array($this, 'getAbsoluteUrl')),
-            new \Twig_SimpleFunction('get_image_dimensions', array($this, 'getImageDimensions')),
+            new TwigFunction('render_seo_metadata_for', array($this, 'renderSeoMetadataFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new TwigFunction('get_seo_for', array($this, 'getSeoFor')),
+            new TwigFunction('get_title_for', array($this, 'getTitleFor')),
+            new TwigFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
+            new TwigFunction('get_absolute_url', array($this, 'getAbsoluteUrl')),
+            new TwigFunction('get_image_dimensions', array($this, 'getImageDimensions')),
         );
     }
 
@@ -150,14 +152,14 @@ class SeoTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment $environment
-     * @param AbstractEntity    $entity      The entity
-     * @param mixed             $currentNode The current node
-     * @param string            $template    The template
+     * @param Environment    $environment
+     * @param AbstractEntity $entity      The entity
+     * @param mixed          $currentNode The current node
+     * @param string         $template    The template
      *
      * @return string
      */
-    public function renderSeoMetadataFor(\Twig_Environment $environment, AbstractEntity $entity, $currentNode = null, $template = 'KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
+    public function renderSeoMetadataFor(Environment $environment, AbstractEntity $entity, $currentNode = null, $template = 'KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
     {
         $seo = $this->getSeoFor($entity);
         $template = $environment->loadTemplate($template);

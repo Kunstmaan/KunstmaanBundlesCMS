@@ -4,11 +4,13 @@ namespace Kunstmaan\AdminBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\FormHelper;
 use Symfony\Component\Form\FormView;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * FormToolsExtension
  */
-class FormToolsExtension extends \Twig_Extension
+class FormToolsExtension extends AbstractExtension
 {
     /**
      * @var FormHelper
@@ -31,8 +33,8 @@ class FormToolsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('form_errors_recursive', array($this, 'getErrorMessages')),
-            new \Twig_SimpleFunction('form_has_errors_recursive', array($this, 'hasErrorMessages')),
+            new TwigFunction('form_errors_recursive', array($this, 'getErrorMessages')),
+            new TwigFunction('form_has_errors_recursive', array($this, 'hasErrorMessages')),
         );
     }
 
