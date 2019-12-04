@@ -172,3 +172,6 @@ kuma_node:
     export_pagetemplate:
       button:
         title: Exporteer pagina template
+  widget:
+    choose: Kies
+    url_chooser: URL-keuze

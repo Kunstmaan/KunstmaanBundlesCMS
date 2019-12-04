@@ -14,7 +14,7 @@
                                 <i class="fa fa-times"></i>
                             </button>
                             <h3 class="modal-title">
-                                URL-Chooser
+                                {{ 'kuma_node.widget.url_chooser' | trans }}
                             </h3>
                         </div>
 
@@ -58,7 +58,7 @@
                             <input type="text" disabled="disabled" class="form-control js-urlchooser-value" value="{{ linkUrl.value ? linkUrl.value|replace_url : '' }}">
                             <span class="input-group-btn">
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ linkUrl.id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
-                            Choose
+                            {{ 'kuma_node.widget.choose' | trans }}
                         </button>
                     </span>
                         {% else %}
