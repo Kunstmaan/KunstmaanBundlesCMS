@@ -23,10 +23,10 @@ class NodeVersionRepository extends EntityRepository
     public function getNodeVersionFor(HasNodeInterface $hasNode)
     {
         return $this->findOneBy(
-            array(
+            [
                 'refId' => $hasNode->getId(),
                 'refEntityName' => ClassLookup::getClass($hasNode),
-            )
+            ]
         );
     }
 
@@ -47,7 +47,8 @@ class NodeVersionRepository extends EntityRepository
         NodeVersion $origin = null,
         $type = 'public',
         $created = null
-    ) {
+    )
+    {
         $em = $this->getEntityManager();
 
         $nodeVersion = new NodeVersion();
@@ -66,5 +67,24 @@ class NodeVersionRepository extends EntityRepository
         $em->refresh($nodeVersion);
 
         return $nodeVersion;
+    }
+
+    public function removeOldNodeVersions()
+    {
+        $lastyear = new \DateTime('-1 year');
+        $ids =
+            $this->createQueryBuilder('nv')
+                ->select('nv.id')
+                ->innerJoin(NodeTranslation::class, 'nt', 'WITH', 'nt.id = nv.nodeTranslation')
+                ->where('nv.updated < :lastyear')
+                ->andWhere('nt.publicNodeVersion != nv.id')
+                ->setParameter('lastyear', $lastyear)->getQuery()->getResult();
+
+        $this->createQueryBuilder('nv')
+            ->where('nv.id in (:ids)')
+            ->setParameter('ids', $ids)
+            ->delete()
+            ->getQuery()
+            ->execute();
     }
 }

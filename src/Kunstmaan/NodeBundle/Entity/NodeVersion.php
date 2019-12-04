@@ -77,7 +77,7 @@ class NodeVersion extends AbstractEntity
      * @var NodeVersion
      *
      * @ORM\ManyToOne(targetEntity="NodeVersion")
-     * @ORM\JoinColumn(name="origin_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="origin_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $origin;
 

@@ -14,3 +14,9 @@ services:
             - '@kunstmaan_node.admin_node.publisher'
         tags:
             - { name: console.command }
+
+    Kunstmaan\NodeBundle\Command\DeleteOldVersionsCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }
