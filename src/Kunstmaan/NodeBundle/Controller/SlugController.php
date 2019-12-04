@@ -107,6 +107,7 @@ class SlugController extends Controller
 
         $template = new Template(array());
         $template->setTemplate($view);
+        $template->setOwner([SlugController::class, 'slugAction']);
 
         $request->attributes->set('_template', $template);
 

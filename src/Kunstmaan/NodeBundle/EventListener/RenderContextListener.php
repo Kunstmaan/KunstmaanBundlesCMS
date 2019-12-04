@@ -98,7 +98,33 @@ class RenderContextListener
             $template = new Template(array());
             $template->setTemplate($entity->getDefaultView());
 
+            $controllerInfo = $this->getControllerInfo($request->attributes->get('_controller'));
+            $template->setOwner($controllerInfo);
+
             $request->attributes->set('_template', $template);
         }
+    }
+
+    /**
+     * BC check to return correct controller/action information.
+     *
+     * @param string $controllerString
+     *
+     * @return array
+     */
+    private function getControllerInfo($controllerString)
+    {
+        if (strpos($controllerString, '::') !== false) {
+            $controllerBits = explode('::', $controllerString);
+            $action = array_pop($controllerBits);
+
+            return [$controllerBits, $action];
+        }
+
+        // NEXT_MAJOR: Remove BC check when we drop sf 3.4 support
+        $controllerBits = explode(':', $controllerString);
+        $action = array_pop($controllerBits);
+
+        return [implode(':', $controllerBits), $action];
     }
 }
