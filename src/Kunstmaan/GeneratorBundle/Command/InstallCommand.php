@@ -167,6 +167,8 @@ final class InstallCommand extends GeneratorCommand
 
         $this->assistant->writeSection('Installation done. Enjoy your KunstmaanCMS', 'bg=green;fg=black');
         $this->assistant->writeSection('PRO TIP: If you like to use the default frontend setup, run the buildUI.sh script or run the commands separate to compile the frontend assets. ', 'bg=blue;fg=white');
+
+        return 0;
     }
 
     protected function executeCommand(OutputInterface $output, $command, array $options = [])

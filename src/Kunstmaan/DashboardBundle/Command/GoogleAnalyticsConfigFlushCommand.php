@@ -79,8 +79,12 @@ class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
             }
             $this->em->flush();
             $output->writeln('<fg=green>Config flushed</fg=green>');
+
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
+
+            return 1;
         }
     }
 }

@@ -165,9 +165,7 @@ EOT
                 $groupOutput[] = $group->getName();
                 $user->getGroups()->add($group);
             } else {
-                throw new \RuntimeException(
-                    'The selected group(s) can\'t be found.'
-                );
+                throw new \RuntimeException('The selected group(s) can\'t be found.');
             }
         }
 
@@ -180,6 +178,8 @@ EOT
         $this->em->flush();
 
         $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
+
+        return 0;
     }
 
     /**
@@ -274,9 +274,7 @@ EOT
                 }
 
                 if ($groupsInput === '') {
-                    throw new \RuntimeException(
-                        'Group(s) must be of type integer and can not be empty'
-                    );
+                    throw new \RuntimeException('Group(s) must be of type integer and can not be empty');
                 }
 
                 return $groupsInput;

@@ -98,6 +98,8 @@ EOT
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
             '',
         ));
+
+        return 0;
     }
 
     /**

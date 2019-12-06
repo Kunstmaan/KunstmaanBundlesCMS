@@ -101,5 +101,7 @@ class UpdateAclCommand extends ContainerAwareCommand
         $this->aclManager->updateNodesAclToRole($nodes, $role, $mask);
 
         $output->writeln(count($nodes) . ' nodes processed.');
+
+        return 0;
     }
 }

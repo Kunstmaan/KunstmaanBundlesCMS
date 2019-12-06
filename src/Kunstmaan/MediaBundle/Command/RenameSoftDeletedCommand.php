@@ -111,5 +111,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         }
 
         $output->writeln('<info>' . $updates . ' soft-deleted media files have been renamed.</info>');
+
+        return 0;
     }
 }

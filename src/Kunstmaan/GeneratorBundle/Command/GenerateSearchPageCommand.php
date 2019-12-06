@@ -91,6 +91,8 @@ EOT
         }
 
         $output->writeln('');
+
+        return 0;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

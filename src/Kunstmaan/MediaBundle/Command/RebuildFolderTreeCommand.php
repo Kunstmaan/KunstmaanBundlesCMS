@@ -60,5 +60,7 @@ class RebuildFolderTreeCommand extends ContainerAwareCommand
 
         $this->em->getRepository('KunstmaanMediaBundle:Folder')->rebuildTree();
         $output->writeln('Updated all folders');
+
+        return 0;
     }
 }

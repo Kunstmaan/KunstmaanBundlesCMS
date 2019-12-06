@@ -58,5 +58,7 @@ class DashboardCommand extends ContainerAwareCommand
             /* @var DashboardWidget $widget */
             $widget->getCommand()->execute($input, $output);
         }
+
+        return 0;
     }
 }

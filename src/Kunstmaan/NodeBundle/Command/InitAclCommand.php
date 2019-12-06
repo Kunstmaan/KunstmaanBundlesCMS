@@ -109,5 +109,7 @@ class InitAclCommand extends ContainerAwareCommand
             $this->aclProvider->updateAcl($acl);
         }
         $output->writeln("{$count} nodes processed.");
+
+        return 0;
     }
 }

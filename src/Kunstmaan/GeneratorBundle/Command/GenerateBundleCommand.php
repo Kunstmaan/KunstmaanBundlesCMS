@@ -114,6 +114,8 @@ EOT
         $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format));
 
         $questionHelper->writeGeneratorSummary($output, $errors);
+
+        return 0;
     }
 
     /**

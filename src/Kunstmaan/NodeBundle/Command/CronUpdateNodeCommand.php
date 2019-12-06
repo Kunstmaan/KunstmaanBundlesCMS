@@ -112,5 +112,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
         } else {
             $output->writeln('No queued jobs');
         }
+
+        return 0;
     }
 }

@@ -67,6 +67,8 @@ EOT
         if (!$this->isSubCommand()) {
             $this->assistant->writeSection('Layout successfully created', 'bg=green;fg=black');
         }
+
+        return 0;
     }
 
     /**

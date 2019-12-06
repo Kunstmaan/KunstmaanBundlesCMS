@@ -99,8 +99,12 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
             } else {
                 $output->writeln('No overviews found');
             }
+
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
+
+            return 1;
         }
     }
 
