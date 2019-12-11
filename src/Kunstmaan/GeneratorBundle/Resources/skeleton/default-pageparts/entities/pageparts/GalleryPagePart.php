@@ -54,7 +54,7 @@ class GalleryPagePart extends AbstractPagePart implements DeepCloneInterface
 
     public function getDefaultView(): string
     {
-        return 'pageparts/Gallery_pagepart/view.html.twig';
+        return 'pageparts/gallery_pagepart/view.html.twig';
     }
 
     public function getDefaultAdminType(): string
