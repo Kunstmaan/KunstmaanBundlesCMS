@@ -204,6 +204,7 @@ class TagManagerTest extends TestCase
     public function testFindRelatedItems()
     {
         $meta = new ClassMetadata(Random::class);
+        $meta->table = ['name' => 'test_table'];
 
         $connection = $this->getMockBuilder(Connection::class)
             ->disableOriginalConstructor()
@@ -254,6 +255,7 @@ class TagManagerTest extends TestCase
     public function testFindRelatedItemsWithAbstractPage()
     {
         $meta = new ClassMetadata(Random::class);
+        $meta->table = ['name' => 'test_table'];
 
         $connection = $this->getMockBuilder(Connection::class)
             ->disableOriginalConstructor()

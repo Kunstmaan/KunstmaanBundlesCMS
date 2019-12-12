@@ -20,7 +20,7 @@ class DomainBasedLocaleRouter extends SlugRouter
     protected $routeCollectionMultiLanguage;
 
     /**
-     * @var string|null
+     * @var array|null
      */
     private $otherSite;
 
@@ -153,7 +153,9 @@ class DomainBasedLocaleRouter extends SlugRouter
 
     private function getHostLocales()
     {
-        return $this->domainConfiguration->getFrontendLocales($this->otherSite['host']);
+        $host = null !== $this->otherSite ? $this->otherSite['host'] : null;
+
+        return $this->domainConfiguration->getFrontendLocales($host);
     }
 
     /**

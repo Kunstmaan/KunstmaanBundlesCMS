@@ -15,6 +15,8 @@ class MappingListenerTest extends TestCase
         $args = $this->createMock(LoadClassMetadataEventArgs::class);
         $meta = $this->createMock(ClassMetadata::class);
 
+        $meta->table = ['name' => 'test_table'];
+
         $args->expects($this->once())->method('getClassMetadata')->willReturn($meta);
         $meta->expects($this->once())->method('getName')->willReturn(AclChangeset::class);
         $meta->expects($this->once())->method('mapManyToOne')->willReturn(AclChangeset::class);
