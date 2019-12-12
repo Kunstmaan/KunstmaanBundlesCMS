@@ -17,7 +17,7 @@ settings:
     import_translations: Importieren
     import_file: Aus Tabelle importieren
     actions: Aktionen
-    export_translations: Export nach csv
+    export_translations: Export nach
     not_live_warning: "Die Übersetzungen der Liveseite sind nicht aktuell. Bitte 'Liveseite Aktualisieren' klicken."
     choose_language: "Sprache Auswählen"
     succesful_added: "Übersetzung wurde erfolgreich angelegt"
