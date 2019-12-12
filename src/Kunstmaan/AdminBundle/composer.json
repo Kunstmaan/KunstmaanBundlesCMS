@@ -16,7 +16,7 @@
         "php": "^7.1",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
-        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-bundle": "^1.6.12",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "friendsofsymfony/user-bundle": "^2.0",
         "guzzlehttp/guzzle": "~6.1",

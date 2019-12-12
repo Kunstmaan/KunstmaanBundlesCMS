@@ -19,7 +19,10 @@ matrix:
   include:
     # Test lowest dependencies
     - php: 7.1
-      env: SYMFONY_REQUIRE='^3.4' COMPOSER_FLAGS="--prefer-lowest"
+      env:
+        - SYMFONY_REQUIRE='^3.4'
+        - COMPOSER_FLAGS="--prefer-lowest"
+        - SYMFONY_DEPRECATIONS_HELPER="max[direct]=1" # Workaround for BC layer triggering a deprecation in Group entity
 
     # Test latest php with LTS versions.
     - php: 7.3

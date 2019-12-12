@@ -46,7 +46,6 @@ class ConfigurationTest extends TestCase
             'admin_prefix' => 'admin',
             'admin_exception_excludes' => ['404'],
             'enable_toolbar_helper' => false,
-            'provider_keys' => [],
             'toolbar_firewall_names' => [],
             'admin_firewall_name' => 'main',
             'password_restrictions' => [
@@ -58,12 +57,16 @@ class ConfigurationTest extends TestCase
             ],
         ];
 
-        $this->assertProcessedConfigurationEquals([$array], $array);
+        $expectedConfig = $array;
+        $expectedConfig['provider_keys'] = [];
+
+        $this->assertProcessedConfigurationEquals([$array], $expectedConfig);
 
         $array['google_signin']['enabled'] = false;
         $check = $array;
         $check['google_signin']['client_id'] = null;
         $check['google_signin']['client_secret'] = null;
+        $check['provider_keys'] = [];
 
         $this->assertProcessedConfigurationEquals([$array], $check);
     }
