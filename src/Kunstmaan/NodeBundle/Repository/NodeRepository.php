@@ -204,11 +204,7 @@ class NodeRepository extends NestedTreeRepository
         $node = new Node();
         $node->setRef($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException(
-                'the entity of class '.
-                $node->getRefEntityName(
-                ).' has no id, maybe you forgot to flush first'
-            );
+            throw new \InvalidArgumentException('the entity of class '. $node->getRefEntityName().' has no id, maybe you forgot to flush first');
         }
         $node->setDeleted(false);
         $node->setInternalName($internalName);

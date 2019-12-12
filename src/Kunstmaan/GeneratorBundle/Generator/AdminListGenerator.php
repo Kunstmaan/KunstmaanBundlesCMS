@@ -97,13 +97,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         $classPath = sprintf('%s/%s.php', $dirPath, str_replace('\\', '/', $className));
 
         if (file_exists($classPath)) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Unable to generate the %s class as it already exists under the %s file',
-                    $className,
-                    $classPath
-                )
-            );
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
         $this->setSkeletonDirs(array($this->skeletonDir));
         $this->renderFile(
@@ -138,13 +132,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         }
 
         if (file_exists($classPath)) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Unable to generate the %s class as it already exists under the %s file',
-                    $className,
-                    $classPath
-                )
-            );
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
         $this->setSkeletonDirs(array($this->skeletonDir));
@@ -176,13 +164,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         $classPath = sprintf('%s/%s.php', $dirPath, str_replace('\\', '/', $className));
 
         if (file_exists($classPath)) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Unable to generate the %s class as it already exists under the %s file',
-                    $className,
-                    $classPath
-                )
-            );
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
         $this->setSkeletonDirs(array($this->skeletonDir));

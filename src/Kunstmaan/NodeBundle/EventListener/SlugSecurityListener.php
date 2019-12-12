@@ -57,9 +57,7 @@ class SlugSecurityListener
         $request = $event->getRequest();
 
         if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
-            throw new AccessDeniedException(
-                'You do not have sufficient rights to access this page.'
-            );
+            throw new AccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $isPreview = $request->attributes->get('preview');

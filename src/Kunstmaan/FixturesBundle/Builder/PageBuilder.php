@@ -190,9 +190,7 @@ class PageBuilder implements BuilderInterface
             $rootNode->setParent($parent);
 
             if (!$this->canHaveChild($parent->getRefEntityName(), get_class($page))) {
-                throw new \Exception(
-                    sprintf('A %s can\'t have a %s as child. Forgot to add in allowed_children or getPossibleChildTypes?', $parent->getRefEntityName(), get_class($page))
-                );
+                throw new \Exception(sprintf('A %s can\'t have a %s as child. Forgot to add in allowed_children or getPossibleChildTypes?', $parent->getRefEntityName(), get_class($page)));
             }
         }
 

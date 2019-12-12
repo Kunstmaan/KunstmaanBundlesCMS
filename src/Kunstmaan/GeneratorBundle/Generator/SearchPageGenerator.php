@@ -176,13 +176,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     ) {
         $classPath = sprintf('%s/%s.php', $dirPath, $className);
         if (file_exists($classPath)) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Unable to generate the %s class as it already exists under the %s file',
-                    $className,
-                    $classPath
-                )
-            );
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
         $this->renderFile(
             $fullSkeletonDir . $className . '.php',

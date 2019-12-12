@@ -179,9 +179,7 @@ class VersionChecker
 
         $composerPath = $this->getLockPath();
         if (!file_exists($composerPath)) {
-            throw new ParseException(
-                $translator->trans('settings.version.composer_lock_not_found')
-            );
+            throw new ParseException($translator->trans('settings.version.composer_lock_not_found'));
         }
 
         $json = file_get_contents($composerPath);
