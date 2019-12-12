@@ -282,10 +282,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException(
-            'You need to implement the getAdminType method in '.
-            get_class($this).' or '.get_class($entity)
-        );
+        throw new InvalidArgumentException('You need to implement the getAdminType method in '. get_class($this).' or '.get_class($entity));
     }
 
     /**

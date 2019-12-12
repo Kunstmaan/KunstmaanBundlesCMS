@@ -116,8 +116,7 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         if (strpos($name, ':')) {
             $nameParts = explode(':', $name);
             if (2 !== count($nameParts)) {
-                throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").',
-                    $name));
+                throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
             }
             list($namespace, $name) = $nameParts;
             $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pageparts/' . $name . '.yml');

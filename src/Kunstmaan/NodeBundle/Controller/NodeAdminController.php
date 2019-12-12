@@ -1226,9 +1226,7 @@ class NodeAdminController extends Controller
         $type = $request->get('type');
 
         if (empty($type)) {
-            throw new InvalidArgumentException(
-                'Please specify a type of page you want to create'
-            );
+            throw new InvalidArgumentException('Please specify a type of page you want to create');
         }
 
         return $type;

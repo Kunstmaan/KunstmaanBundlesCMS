@@ -94,9 +94,7 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         $options = array_merge($defaults, $options);
 
         if (!$this->isOptionSet($options, $this->accountVarName)) {
-            throw new \Twig_Error_Runtime(
-                "The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'."
-            );
+            throw new \Twig_Error_Runtime("The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'.");
         }
 
         $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:init.html.twig');

@@ -76,12 +76,7 @@ class MediaValidator extends ConstraintValidator
 
         if ($constraint->minHeight) {
             if (!ctype_digit((string) $constraint->minHeight)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid minimum height',
-                        $constraint->minHeight
-                    )
-                );
+                throw new ConstraintDefinitionException(sprintf('"%s" is not a valid minimum height', $constraint->minHeight));
             }
 
             if ($height < $constraint->minHeight) {
@@ -97,12 +92,7 @@ class MediaValidator extends ConstraintValidator
 
         if ($constraint->maxHeight) {
             if (!ctype_digit((string) $constraint->maxHeight)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid maximum height',
-                        $constraint->maxHeight
-                    )
-                );
+                throw new ConstraintDefinitionException(sprintf('"%s" is not a valid maximum height', $constraint->maxHeight));
             }
 
             if ($height > $constraint->maxHeight) {
@@ -118,12 +108,7 @@ class MediaValidator extends ConstraintValidator
 
         if ($constraint->minWidth) {
             if (!ctype_digit((string) $constraint->minWidth)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid minimum width',
-                        $constraint->minWidth
-                    )
-                );
+                throw new ConstraintDefinitionException(sprintf('"%s" is not a valid minimum width', $constraint->minWidth));
             }
 
             if ($width < $constraint->minWidth) {
@@ -139,12 +124,7 @@ class MediaValidator extends ConstraintValidator
 
         if ($constraint->maxWidth) {
             if (!ctype_digit((string) $constraint->maxWidth)) {
-                throw new ConstraintDefinitionException(
-                    sprintf(
-                        '"%s" is not a valid maximum width',
-                        $constraint->maxWidth
-                    )
-                );
+                throw new ConstraintDefinitionException(sprintf('"%s" is not a valid maximum width', $constraint->maxWidth));
             }
 
             if ($width > $constraint->maxWidth) {
