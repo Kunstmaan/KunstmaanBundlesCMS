@@ -49,7 +49,7 @@ class DashboardWidget
                 if (empty($annotation)) {
                     throw new \Exception('The name is not configured in the annotation');
                 }
-                /* @var \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route $annotation */
+
                 return $annotation->getName();
             }
         }
