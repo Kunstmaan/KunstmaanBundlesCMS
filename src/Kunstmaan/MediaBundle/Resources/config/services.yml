@@ -163,6 +163,18 @@ services:
             - '@event_dispatcher'
             - '%liip_imagine.cache.resolver.default%'
 
+    Kunstmaan\MediaBundle\Helper\ManipulateImageService:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_utilities.slugifier'
+            - '@liip_imagine.service.filter'
+
+    Kunstmaan\MediaBundle\Twig\MediaTwigExtension:
+        arguments:
+            - '@Kunstmaan\MediaBundle\Helper\ManipulateImageService'
+        tags:
+            - { name: twig.extension }
+
     Gedmo\Tree\TreeListener:
         tags:
             - { name: doctrine.event_subscriber, connection: default }

@@ -7,7 +7,9 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
+use Kunstmaan\MediaBundle\Helper\ManipulateImageService;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -15,7 +17,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @final since 5.9
@@ -329,6 +330,43 @@ class MediaController extends Controller
         );
 
         return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]);
+    }
+
+    /**
+     * @param Request $request
+     * @param         $folderId
+     * @return JsonResponse
+     *
+     * @Route("/crop_on_the_fly/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_crop_on_the_fly")
+     */
+    public function cropOnTheFlyAction(Request $request, $mediaId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var Media $media */
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+
+        $start = $request->query->get('start', '0,0');
+        $end = $request->query->get('end', '5000,5000');
+        $start = explode(',', $start);
+        $end = explode(',', $end);
+        $start[0] = (int) $start[0];
+        $start[1] = (int) $start[1];
+        $end[0] = (int) $end[0] - $start[0];
+        $end[1] = (int) $end[1] - $start[1];
+
+        $runtimeConfig = [
+            'crop' => [
+                'start' => $start,
+                'size' => $end
+            ],
+        ];
+
+        $pagePartRefId = $request->query->get('pp_ref_id', null);
+
+        $url = $this->get(ManipulateImageService::class)->manipulateOnTheFly($media, $runtimeConfig, $pagePartRefId);
+
+        return new RedirectResponse($url);
     }
 
     /**
