@@ -38,7 +38,7 @@ class MediaTwigExtension extends AbstractExtension
         );
     }
 
-    public function getCroppedVersion($pagePart)
+    public function getCroppedVersion($pagePart, $mediaGetter)
     {
         if($pagePart instanceof ConfigurableMediaInterface) {
             $runTimeConfig = [
@@ -50,7 +50,7 @@ class MediaTwigExtension extends AbstractExtension
             if($pagePart->getRunTimeConfig() !== null) {
                 $runTimeConfig = unserialize($pagePart->getRunTimeConfig());
             }
-            return $this->manipulateImageService->manipulateOnTheFly($pagePart->getMedia(), $runTimeConfig);
+            return $this->manipulateImageService->manipulateOnTheFly($pagePart->$mediaGetter(), $runTimeConfig);
         }
 
         throw new \Exception('PagePart not configured correctly to get manipulated version');

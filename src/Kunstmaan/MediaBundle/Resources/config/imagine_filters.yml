@@ -23,3 +23,8 @@ liip_imagine:
             filters:
                 auto_rotate: ~
                 thumbnail: { size: [700, 500], mode: inset }
+        optim:
+            quality: 85
+            format: jpg
+            filters:
+                strip: ~
