@@ -15,6 +15,7 @@ use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class MediaTwigExtension extends AbstractExtension
@@ -24,35 +25,51 @@ class MediaTwigExtension extends AbstractExtension
 
     public function __construct(
         ManipulateImageService $manipulateImageService
-    ) {
+    )
+    {
         $this->manipulateImageService = $manipulateImageService;
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
                 'get_cropped_version',
-                array($this, 'getCroppedVersion')
+                [$this, 'getCroppedVersion']
             ),
-        );
+        ];
+    }
+
+    public function getFilters()
+    {
+        return [
+            new TwigFilter(
+                'strip_letters',
+                [$this, 'stripLetters']
+            ),
+        ];
     }
 
     public function getCroppedVersion($pagePart, $mediaGetter)
     {
-        if($pagePart instanceof ConfigurableMediaInterface) {
+        if ($pagePart instanceof ConfigurableMediaInterface) {
             $runTimeConfig = [
                 'crop' => [
-                    'start' => [0,0],
-                    'size' => [5000,5000]
+                    'start' => [0, 0],
+                    'size' => [5000, 5000],
                 ],
             ];
-            if($pagePart->getRunTimeConfig() !== null) {
+            if ($pagePart->getRunTimeConfig() !== null) {
                 $runTimeConfig = unserialize($pagePart->getRunTimeConfig());
             }
+
             return $this->manipulateImageService->manipulateOnTheFly($pagePart->$mediaGetter(), $runTimeConfig);
         }
 
         throw new \Exception('PagePart not configured correctly to get manipulated version');
+    }
+
+    public function stripLetters($string) {
+        return preg_replace('/[^0-9+]/', '', $string);
     }
 }

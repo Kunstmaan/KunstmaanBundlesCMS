@@ -85,7 +85,7 @@
                 {% endif %}
             </figure>
 
-            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
+            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn media-chooser__preview__crop-btn" data-linked-id="{{ id }}" data-pp-ref-id="{{ id|strip_letters }}">
                 <i class="fa fa-edit"></i>
             </button>
 
@@ -122,6 +122,7 @@
                     <figure class="thumbnail">
                         {% if(value.ent is defined) %}
                             {% set media = value.ent %}
+                            <div class="crop-path-container" data-crop-url="{{ path('KunstmaanMediaBundle_media_crop_on_the_fly', {'mediaId': media.id}) }}"></div>
                             {% set handler = mediamanager.getHandler(media) %}
                             {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                             {% if imageurl is not empty and media.location == 'local' %}
