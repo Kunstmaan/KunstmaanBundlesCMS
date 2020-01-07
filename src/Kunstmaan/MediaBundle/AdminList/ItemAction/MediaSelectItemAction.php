@@ -41,6 +41,6 @@ class MediaSelectItemAction implements ItemActionInterface
      */
     public function getTemplate()
     {
-        return '@KunstmaanMedia/AdminList/ItemAction:select.html.twig';
+        return '@KunstmaanMedia/AdminList/ItemAction/select.html.twig';
     }
 }
