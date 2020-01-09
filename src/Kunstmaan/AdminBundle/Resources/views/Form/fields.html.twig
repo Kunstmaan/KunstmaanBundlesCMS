@@ -1,16 +1,16 @@
 {# Widgets #}
 {% block color_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]'>
         <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
         <span class="input-group-addon"><i></i></span>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
 
 
 {% block choice_widget_expanded %}
-{% spaceless %}
+{% apply spaceless %}
     <div {{ block('widget_container_attributes') }}>
         {% for child in form %}
             <div class="form-group">
@@ -19,12 +19,12 @@
             </div>
         {% endfor %}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock choice_widget_expanded %}
 
 
 {% block choice_widget_collapsed %}
-{% spaceless %}
+{% apply spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
     <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}
         {%- if attr.placeholder is defined %} data-placeholder="{{ attr.placeholder|trans({}, translation_domain) }}"{% endif %}>
@@ -41,21 +41,21 @@
         {% set options = choices %}
         {{ block('choice_widget_options') }}
     </select>
-{% endspaceless %}
+{% endapply %}
 {% endblock choice_widget_collapsed %}
 
 
 {% block form_widget_simple %}
-{% spaceless %}
+{% apply spaceless %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} {% if attr['maxlength'] is defined %}data-reinit-js='["charactersLeft"]' data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
-{% endspaceless %}
+{% endapply %}
 {% endblock form_widget_simple %}
 
 
 {% block textarea_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
     {% set reInitMethods = [] %}
     {% if attr['maxlength'] is defined %}
@@ -65,21 +65,21 @@
         {% set reInitMethods = reInitMethods|merge(['"richEditor"']) %}
     {% endif %}
     <textarea {{ block('widget_attributes') }} {% if reInitMethods|length > 0 %}data-reinit-js="[{{ reInitMethods|join(',') }}]"{% endif %} rows="5" {% if attr['maxlength'] is defined %} data-target="#counter-for-{{ form.vars.id }}" {% endif %}>{{ value }}</textarea>
-{% endspaceless %}
+{% endapply %}
 {% endblock textarea_widget %}
 
 {% block wysiwyg_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
     {% if attr['maxlength'] is defined %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
     {% endif %}
     <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
-{% endspaceless %}
+{% endapply %}
 {% endblock wysiwyg_widget %}
 
 {% block checkbox_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="checkbox">
         {% if required %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -92,12 +92,12 @@
             {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-icon">*</span>{% endif %}
         </label>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock checkbox_widget %}
 
 
 {% block radio_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="radio">
         {% if required and not compound %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -111,7 +111,7 @@
             {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-icon">*</span>{% endif %}
         </label>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock radio_widget %}
 
 
@@ -119,7 +119,7 @@
 
 {# Labels #}
 {% block form_label %}
-{% spaceless %}
+{% apply spaceless %}
     {% if 'checkbox' not in block_prefixes and label is not same as(false) %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
         {% if not compound %}
@@ -137,7 +137,7 @@
             </label>
         {% endif %}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_label %}
 
 
@@ -145,7 +145,7 @@
 
 {# Rows #}
 {% block form_row %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="form-group{% if errors|length > 0 %} has-error{% endif %}{% if attr['nested_form'] is defined and attr['nested_form'] == true or 'textarea' in block_prefixes %} form-group--no-max-width{% endif %}">
         {{ form_label(form) }}
 
@@ -241,7 +241,7 @@
 
         {{ form_errors(form) }}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock form_row %}
 
 
@@ -285,21 +285,21 @@
 
 
 {% block form_errors %}
-{% spaceless %}
+{% apply spaceless %}
     {% if errors|length > 0 %}
         {% for error in errors %}
             <span class="help-block text-danger">{{ error.message }}</span>
         {% endfor %}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_errors %}
 
 
 {% block range_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="range">
         {{ form_widget(form, {'type' : 'range', 'attr' : attr }) }}
         <span class="range--value"></span>
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock %}
