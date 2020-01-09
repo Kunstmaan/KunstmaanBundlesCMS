@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Definition
+   ========================================================================== */
+
+$black:                 #000000;
+$grey-darkest:          #171A2F;
+$grey-dark:             #3A3F44;
+$grey:                  #8A9093;
+$grey-light:            #C1C7CC;
+$grey-lightest:         #F4F4F4;
+$white:                 #FFFFFF;
+
+$pink:                  #FF4A85;
+$pink-light:            #F9D2DC;
+$blue:                  #1CAED8;
+$blue-light:            #82C6D9;
+$yellow:                #FFD900;
+$yellow-light:          #FFEC80;
+$green:                 #9ACC04;
+$green-light:           #CDED6E;
+$orange:                #FF7200;
+$red:                   #FF0020;
+
+/* Application
+   ========================================================================== */
+
+$color-primary:           $pink;
+$color-secondary:         $blue;
+$color-tertiary:          $yellow;
+$color-quarternary:       $green;
+
+$color-primary-desat:     $pink-light;
+$color-secondary-desat:   $blue-light;
+$color-tertiary-desat:    $yellow-light;
+$color-quarternary-desat: $green-light;
+
+$color-link:                $blue;
+$color-success:             $green;
+$color-warning:             $orange;
+$color-error:               $red;
+$color-disabled:            $grey-dark;
+$color-text:                $grey-darkest;
+
+$color-greyscale-black:     $black;
+$color-greyscale-darkest:   $grey-darkest;
+$color-greyscale-dark:      $grey-dark;
+$color-greyscale-grey:      $grey;
+$color-greyscale-light:     $grey-light;
+$color-greyscale-lightest:  $grey-lightest;
+$color-greyscale-white:     $white;
+
+/* Expose variables
+   ========================================================================== */
+
+:root {
+    --color-primary: $color-primary;
+    --color-secondary: $color-secondary;
+    --color-tertiary: $color-tertiary;
+    --color-quarternary: $color-quarternary;
+    --color-primary-desat: $color-primary-desat;
+    --color-secondary-desat: $color-secondary-desat;
+    --color-tertiary-desat: $color-tertiary-desat;
+    --color-quarternary-desat: $color-quarternary-desat;
+    --color-link: $color-link;
+    --color-success: $color-success;
+    --color-warning: $color-warning;
+    --color-error: $color-error;
+    --color-disabled: $color-disabled;
+    --color-text: $color-text;
+    --color-greyscale-black: $color-greyscale-black;
+    --color-greyscale-darkest: $color-greyscale-darkest;
+    --color-greyscale-dark: $color-greyscale-dark;
+    --color-greyscale-grey: $color-greyscale-grey;
+    --color-greyscale-light: $color-greyscale-light;
+    --color-greyscale-lightest: $color-greyscale-lightest;
+    --color-greyscale-white: $color-greyscale-white;
+}

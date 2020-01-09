@@ -1,0 +1,43 @@
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+@import "helpers";
+
+.btn {
+    @extend %button-base;
+}
+
+$button-types: primary secondary eye-catcher;
+$button-sizes: lg md sm;
+
+@each $type in $button-types {
+    .btn--#{$type} {
+        @include buttonType($type: $type);
+    }
+}
+
+@each $size in $button-sizes {
+    .btn--#{$size} {
+        @include buttonSize($size: $size);
+    }
+}
+
+/* Icon Buttons
+    ========================================================================== */
+
+.icon-btn {
+    @extend %button-base;
+}
+
+@each $size in $button-sizes {
+    .icon-btn--#{$size} {
+        @include buttonSize($size: $size, $iconbutton: true);
+    }
+}
+
+/*
+ * @doc ../docs/icon-buttons.md
+ * @section Icon Buttons
+ * @sectionof Components.Basic
+*/

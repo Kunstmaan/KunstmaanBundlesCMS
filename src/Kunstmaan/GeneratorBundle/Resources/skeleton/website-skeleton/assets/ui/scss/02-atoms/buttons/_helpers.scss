@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Buttons helpers
+   ========================================================================== */
+
+%button-base {
+    position: relative;
+
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+
+    background: transparent;
+
+    border-radius: 0;
+    border: none;
+
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+
+    transition: background-color .3s $ease-out-quart;
+
+    &:disabled {
+        pointer-events: not-allowed;
+        cursor: not-allowed;
+
+        background: transparent;
+
+        opacity: .4;
+    }
+
+    @media (min-width: $break-sm) {
+        display: inline-block;
+        width: auto;
+    }
+}
+
+@mixin buttonType($type) {
+    $types: (
+        primary: (
+            border: $color-greyscale-black,
+            background: $color-greyscale-white,
+            text: $color-greyscale-black,
+            border-hover: $color-greyscale-black,
+            background-hover: $color-greyscale-black,
+            text-hover: $color-greyscale-white,
+        ),
+        secondary: (
+            border: $color-greyscale-black,
+            background: $color-greyscale-black,
+            text: $color-greyscale-white,
+            border-hover: $color-greyscale-black,
+            background-hover: $color-greyscale-white,
+            text-hover: $color-greyscale-black,
+        ),
+        eye-catcher: (
+            border: $color-primary,
+            background: $color-primary,
+            text: $color-greyscale-white,
+            border-hover: $color-primary,
+            background-hover: $color-greyscale-white,
+            text-hover: $color-primary,
+        )
+    );
+
+    background: deep-get(background, $type, $types);
+
+    border: deep-get(border, $type, $types) 2px solid;
+
+    color: deep-get(text, $type, $types);
+
+    .icon-btn__icon {
+        fill: deep-get(text, $type, $types);
+    }
+
+    &:not(:disabled) {
+        &:hover,
+        &:focus {
+            background: deep-get(background-hover, $type, $types);
+
+            border: deep-get(border-hover, $type, $types) 2px solid;
+
+            color: deep-get(text-hover, $type, $types);
+
+            .icon-btn__icon {
+                fill: deep-get(text-hover, $type, $types);
+            }
+        }
+    }
+}
+
+@mixin buttonSize($size, $iconbutton: false) {
+    $sizes: (
+        lg: (
+            font-size: 25px,
+            spacing: 18px 50px,
+            size: 80px,
+            icon-size: 50px
+        ),
+        md: (
+            font-size: 17px,
+            spacing: 12px 50px,
+            size: 60px,
+            icon-size: 40px
+        ),
+        sm: (
+            font-size: 14px,
+            spacing: 8px 50px,
+            size: 45px,
+            icon-size: 30px
+        )
+    );
+
+    padding: deep-get(spacing, $size, $sizes);
+
+    font-size: deep-get(font-size, $size, $sizes);
+
+    @if $iconbutton == true {
+        position: relative;
+
+        height: deep-get(size, $size, $sizes);
+        width: deep-get(size, $size, $sizes);
+        padding: 0;
+
+        border-radius: 50%;
+
+        .icon-btn__icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            height: deep-get(icon-size, $size, $sizes);
+            width: deep-get(icon-size, $size, $sizes);
+
+            transform: translate3d(-50%, -50%, 0);
+        }
+    }
+}

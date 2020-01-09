@@ -59,6 +59,8 @@ final class InstallCommand extends GeneratorCommand
                         new InputOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle to create (only for SF3)'),
                         new InputOption('dir', '', InputOption::VALUE_OPTIONAL, 'The directory where to create the bundle (only for SF3)'),
                         new InputOption('bundle-name', '', InputOption::VALUE_OPTIONAL, 'The optional bundle name (only for SF3)'),
+                        new InputOption('new-cms-skeleton', '', InputOption::VALUE_NONE, 'Use the new cms skeleton and default pageparts'),
+                        new InputOption('prefix', '', InputOption::VALUE_REQUIRED, 'The prefix to be used in the table name of the generated entities', ''),
                     ]
                 )
             );
@@ -85,6 +87,13 @@ final class InstallCommand extends GeneratorCommand
         $outputStyle->writeln('<info>Installing KunstmaanCms...</info>');
         $outputStyle->writeln($this->getKunstmaanLogo());
 
+        if (Kernel::VERSION_ID < 40000 && $input->getOption('new-cms-skeleton')) {
+            $output->writeln('<error>The new cms skeleton and default pageparts are not supported on Symfony 3</error>');
+            $this->shouldStop = true;
+
+            return;
+        }
+
         if (Kernel::VERSION_ID >= 40000 && true !== $input->getOption('db-installed')) {
             $this->shouldStop = !$this->assistant->askConfirmation('We need access to your database. Are the database credentials setup properly? (y/n)', 'y');
             if ($this->shouldStop) {
@@ -107,7 +116,12 @@ final class InstallCommand extends GeneratorCommand
             $input->setOption('dir', $dir);
         }
 
-        if (null === $input->getOption('demosite')) {
+        if ($input->getOption('demosite') && $input->getOption('new-cms-skeleton')) {
+            $this->assistant->writeSection('The demosite option is not available together with the new cms skeleton and default pageparts. Ignoring the demosite option..', 'bg=yellow;fg=black;options=bold');
+            $input->setOption('demosite', 'No');
+        }
+
+        if (null === $input->getOption('demosite') && false === $input->getOption('new-cms-skeleton')) {
             $demoSiteOption = $this->assistant->askConfirmation('Do you want to create a "demosite"? (y/n)', 'n');
             $input->setOption('demosite', $demoSiteOption === true ? 'Yes' : 'No');
         }
@@ -128,7 +142,9 @@ final class InstallCommand extends GeneratorCommand
 
         $this->initAssistant($input, $output);
 
-        $defaultSiteOptions = [];
+        $defaultSiteOptions = [
+            '--prefix' => $input->getOption('prefix'),
+        ];
         if ($input->getOption('demosite') === 'Yes') {
             $defaultSiteOptions['--demosite'] = true;
         }
@@ -147,8 +163,14 @@ final class InstallCommand extends GeneratorCommand
             $this->executeCommand($output, 'kuma:generate:config');
         }
 
+        if ($input->getOption('new-cms-skeleton')) {
+            $this->executeCommand($output, 'make:website-skeleton', $defaultSiteOptions);
+            $this->executeCommand($output, 'make:default-pageparts', $defaultSiteOptions);
+        } else {
+            $this->executeCommand($output, 'kuma:generate:default-site', $defaultSiteOptions);
+        }
+
         $this
-            ->executeCommand($output, 'kuma:generate:default-site', $defaultSiteOptions)
             ->executeCommand($output, 'doctrine:database:create')
             ->executeCommand($output, 'doctrine:schema:drop', ['--force' => true])
             ->executeCommand($output, 'doctrine:schema:create')
@@ -176,6 +198,7 @@ final class InstallCommand extends GeneratorCommand
         $options = array_merge(
             [
                 '--no-debug' => true,
+                'command' => $command,
             ],
             $options
         );
@@ -187,10 +210,8 @@ final class InstallCommand extends GeneratorCommand
             $updateInput->setInteractive(true);
             $this->getApplication()->find($command)->run($updateInput, $output);
             $output->writeln(sprintf('<info>Step %d: "%s" - [OK]</info>', $this->commandSteps, $command));
-        } catch (RuntimeException $exception) {
-            $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED]</error>', $this->commandSteps, $command));
-        } catch (\Throwable $e) {
-            $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED]</error>', $this->commandSteps, $command));
+        } catch (RuntimeException | \Throwable $e) {
+            $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED]. Error: "%s"</error>', $this->commandSteps, $command, $e->getMessage()));
         }
 
         return $this;

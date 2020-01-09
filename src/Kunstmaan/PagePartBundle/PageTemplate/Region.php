@@ -32,19 +32,23 @@ class Region
      */
     protected $rows;
 
+    /** @var bool */
+    private $autoSpacer;
+
     /**
      * @param string $name
      * @param number $span
      * @param string $template
      * @param array  $children
      */
-    public function __construct($name, $span, $template = null, $children = [], $rows = [])
+    public function __construct($name, $span, $template = null, $children = [], $rows = [], $autoSpacer = null)
     {
         $this->setName($name);
         $this->setSpan($span);
         $this->setTemplate($template);
         $this->setChildren($children);
         $this->setRows($rows);
+        $this->setAutoSpacer($autoSpacer ?? false);
     }
 
     /**
@@ -143,6 +147,26 @@ class Region
     public function setRows($rows)
     {
         $this->rows = $rows;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoSpacer(): bool
+    {
+        return $this->autoSpacer;
+    }
+
+    /**
+     * @param bool $autoSpacer
+     *
+     * @return Region
+     */
+    public function setAutoSpacer($autoSpacer)
+    {
+        $this->autoSpacer = $autoSpacer;
 
         return $this;
     }

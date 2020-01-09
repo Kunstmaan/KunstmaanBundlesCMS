@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Label
+   ========================================================================== */
+
+.label {
+    display: inline-block;
+    padding: 3px 8px;
+
+    background: $color-greyscale-dark;
+
+    font-size: 13px;
+    font-family: $font-family-primary;
+    font-weight: $font-weight-medium;
+    color: $color-greyscale-lightest;
+
+    &--inactive {
+        background: $color-greyscale-lightest;
+
+        color: $color-text;
+    }
+
+    &--active {
+        background: $color-primary-desat;
+
+        color: $color-greyscale-white;
+    }
+
+    + .label {
+        margin-left: $spacing-mobile-sm;
+    }
+}

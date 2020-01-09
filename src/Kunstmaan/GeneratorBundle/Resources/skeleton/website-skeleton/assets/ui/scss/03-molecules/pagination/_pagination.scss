@@ -1,0 +1,51 @@
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: $spacing-mobile-lg 0 $spacing-mobile-lg 0;
+
+    @media (min-width: $break-md) {
+        margin: $spacing-desktop-lg 0 $spacing-desktop-xxl 0;
+    }
+}
+
+.pagination__list {
+    display: flex;
+    align-items: center;
+}
+
+.pagination__item {
+    margin: 0 $spacing-mobile-xs;
+
+    &--active {
+        .pagination__item__link {
+            color: $color-primary;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &--disabled {
+        .pagination__item__link {
+            opacity: .5;
+        }
+    }
+}
+
+.pagination__item__link {
+    padding: $spacing-mobile-xs;
+
+    color: $color-greyscale-black;
+    text-decoration: none;
+    font-family: $font-family-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-normal;
+}
+
+/**
+ * @doc docs/pagination.md
+ * @section Pagination
+ * @sectionof Molecules
+ */

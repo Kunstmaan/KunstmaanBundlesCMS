@@ -1,0 +1,5 @@
+.kds-font-weight {
+    & + .kds-font-weight {
+        margin-top: 20px;
+    }
+}

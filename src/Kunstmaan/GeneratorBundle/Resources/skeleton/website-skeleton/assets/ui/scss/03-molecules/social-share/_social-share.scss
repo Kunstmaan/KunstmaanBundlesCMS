@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Social share
+   ========================================================================== */
+
+.social-share {
+    width: 100%;
+
+    @media (min-width: $break-sm) {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+.social-share__title {
+    margin: 0 0 10px;
+
+    text-align: center;
+    font-family: $font-family-primary;
+    font-weight: $font-weight-medium;
+
+    @media (min-width: $break-sm) {
+        margin: 0 10px 0 0;
+    }
+}
+
+.social-share__list {
+    text-align: center;
+
+    @media (min-width: $break-sm) {
+        text-align: left;
+    }
+
+    li {
+        display: inline-block;
+
+        + li {
+            margin-left: 5px;
+        }
+    }
+}
+
+.social-share__icon {
+    width: 30px;
+    height: 30px;
+
+    padding: 5px;
+
+    text-align: center;
+
+    fill: #FFFFFF;
+
+    &--facebook {
+        background-color: #3B5998;
+    }
+
+    &--github {
+        background-color: #BD2C00;
+    }
+
+    &--linkedin {
+        background-color: #0077B5;
+    }
+
+    &--twitter {
+        background-color: #1DA1F2;
+    }
+}

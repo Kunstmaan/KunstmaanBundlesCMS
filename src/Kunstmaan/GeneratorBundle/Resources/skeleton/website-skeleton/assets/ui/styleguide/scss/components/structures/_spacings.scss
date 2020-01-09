@@ -1,0 +1,62 @@
+/* ==========================================================================
+   Structures - Spacing cards
+   ========================================================================== */
+
+.kds-spacing {
+    display: inline-block;
+    margin: 10px;
+}
+
+.kds-spacing__description {
+    margin-left: 10px;
+
+    display: inline-block;
+
+    text-align: left;
+    vertical-align: text-bottom;
+
+    .kds-spacing__description__value {
+        margin: 0;
+    }
+
+    .kds-spacing__description__title {
+        margin: 0;
+    }
+}
+
+.kds-spacing__spacing {
+    position: relative;
+
+    display: inline-block;
+
+    background: $grey;
+
+    &:before,
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        display: block;
+    }
+
+    &:before {
+        bottom: -5px;
+        left: 0;
+
+        width: calc(100% + 5px);
+        height: 1px;
+
+        background: $black;
+    }
+
+    &:after {
+        right: -6px;
+        bottom: -5px;
+
+        height: calc(100% + 5px);
+        width: 1px;
+
+        background: $black;
+    }
+}

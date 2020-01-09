@@ -101,7 +101,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="col-md-{{ region.span }}">
+        <div class="col-md-{{ region.span }} {% if region.autoSpacer is defined and region.autoSpacer %}js-auto-spacer{% endif %}">
             <div class="page-template__region" id="{{ region.name|trans|title }}">
                 <header>
                     <h5 class="page-template__region__header">

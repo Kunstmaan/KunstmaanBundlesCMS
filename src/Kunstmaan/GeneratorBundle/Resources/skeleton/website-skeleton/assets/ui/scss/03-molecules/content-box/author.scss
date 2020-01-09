@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Author
+   ========================================================================== */
+
+.author__img {
+    flex-shrink: 0;
+    margin-right: $spacing-mobile-xs;
+}
+
+.author__title {
+    display: inline-block;
+    padding: 3px 8px;
+
+    background-color: $color-primary;
+
+    color: $color-greyscale-white;
+}
+
+.author__body {
+    margin-top: $spacing-mobile-xs;
+}
+
+/**
+ * @doc docs/author.md
+ * @section Author content box
+ * @sectionof Molecules
+ */

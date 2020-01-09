@@ -1,0 +1,50 @@
+{% macro getImageUrl(media, filter) %}{% spaceless %}
+    {% if media %}
+        {% set type = media.url|lower|split('.')|last %}
+
+        {% if type == 'svg' or 'image/svg' in media.contentType or type == "gif" %}
+            {% if app.request %}
+                {% set imgUrl = asset(media.url) %}
+            {% endif %}
+        {% elseif 'remote/image' in media.contentType %}
+            {% if app.request %}
+                {% set imgUrl = asset(media.url|imagine_filter(filter ~ '_external')) %}
+            {% endif %}
+        {% else %}
+            {% if app.request %}
+                {% set imgUrl = asset(media.url|imagine_filter(filter)) %}
+            {% endif %}
+        {% endif %}
+
+        {{ imgUrl | replace({' ': '%20'}) }}
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getImageUrlString(media, filter) %}{% spaceless %}
+    {% if media %}
+        {% set type = media|lower|split('.')|last %}
+
+        {% if type == 'svg' %}
+            {% set imgUrl = asset(media) %}
+        {% elseif 'https://' in media %}
+            {% set imgUrl = asset(media|imagine_filter(filter ~ '_external')) %}
+        {% else %}
+            {% set imgUrl = asset(media|imagine_filter(filter)) %}
+        {% endif %}
+
+        {{ imgUrl | replace({' ': '%20'}) }}
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getImageDimensions(url) %}
+    {% set dimensions = get_image_dimensions(url) %}
+
+    {% if dimensions is defined and dimensions is not null %}
+        {% if dimensions.height is defined and dimensions.height is not empty %}
+            <meta property="og:image:height" content="{{ dimensions.height }}">
+        {% endif %}
+        {% if dimensions.width is defined and dimensions.width is not empty %}
+            <meta property="og:image:width" content="{{ dimensions.width }}">
+        {% endif %}
+    {% endif %}
+{% endmacro %}

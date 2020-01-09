@@ -1,0 +1,14 @@
+{% extends 'error/layout.html.twig' %}
+
+{% block title %} - {{ status_code }} - {{ status_text }} - {{ websitetitle }}{% endblock %}
+
+{% block content %}
+    <h1>Sorry, an error has occurred</h1>
+    <h2>
+        {% if status_code == 404 %}
+            The page you requested could not be found.
+        {% else %}
+            The server returned a "{{ status_code }} {{ status_text }}".
+        {% endif %}
+    </h2>
+{% endblock %}
