@@ -20,6 +20,7 @@ pagepart:
     edit: Bewerk
     delete: Verwijder
     resize: Minimaliseer / Maximaliseer
+    expand: Inklappen / Uitklappen
 region:
   button:
     min: Minimaliseer
