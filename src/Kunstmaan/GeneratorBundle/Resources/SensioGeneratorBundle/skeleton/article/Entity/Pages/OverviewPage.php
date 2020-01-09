@@ -11,25 +11,17 @@ use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 /**
- * The article overview page which shows its articles
- *
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}OverviewPageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overview_pages")
  */
 class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface, SlugActionInterface
 {
-    /**
-     * @return AbstractPagePartAdminConfigurator[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage'];
     }
@@ -44,37 +36,22 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
         return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}Page');
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}OverviewPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSearchType()
+    public function getSearchType(): string
     {
         return '{{ entity_class }}';
     }
 
-    /**
-     * Returns the default backend form type for this page
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ entity_class }}OverviewPageAdminType::class;
     }
 
-    /**
-     * @return string
-     *
-     */
-    public function getControllerAction()
+    public function getControllerAction(): string
     {
         {% if isV4 %}
         return 'App\Controller\{{ entity_class }}ArticleController::serviceAction';

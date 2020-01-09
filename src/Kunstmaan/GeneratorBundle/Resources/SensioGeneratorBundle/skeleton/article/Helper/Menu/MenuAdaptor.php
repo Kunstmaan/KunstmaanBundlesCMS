@@ -15,9 +15,6 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 
     private $em;
 
-    /**
-     * @param EntityManager $em The entity manager
-     */
     public function __construct(EntityManagerInterface $em)
     {
 	    $this->em = $em;
@@ -25,7 +22,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if ($this->overviewpageIds === null) {
+        if (null === $this->overviewpageIds) {
             $overviewPageNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\Pages\\{{ entity_class }}OverviewPage');
             $this->overviewpageIds = array();
             foreach ($overviewPageNodes as $overviewPageNode) {
@@ -33,7 +30,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             }
         }
 
-        if ($parent !== null && 'KunstmaanAdminBundle_modules' === $parent->getRoute()) {
+        if (null !== $parent && 'KunstmaanAdminBundle_modules' === $parent->getRoute()) {
             // submenu
             $menuItem = new TopMenuItem($menu);
             $menuItem
@@ -51,7 +48,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 
         }
 
-        if ($parent !== null && '{{ entity_class|lower }}' === $parent->getUniqueId()) {
+        if (null !== $parent && '{{ entity_class|lower }}' === $parent->getUniqueId()) {
             // Page
             $menuItem = new TopMenuItem($menu);
             $menuItem
@@ -70,13 +67,13 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
         }
 
         //don't load children
-        if ($parent !== null && 'KunstmaanNodeBundle_nodes_edit' === $parent->getRoute()) {
+        if (null !== $parent && 'KunstmaanNodeBundle_nodes_edit' === $parent->getRoute()) {
             foreach ($children as $key => $child) {
                 if ('KunstmaanNodeBundle_nodes_edit' === $child->getRoute()){
                     $params = $child->getRouteParams();
                     $id = $params['id'];
                     if (in_array($id, $this->overviewpageIds, true)) {
-                        $child->setChildren(array());
+                        $child->setChildren([]);
                     }
                 }
             }
