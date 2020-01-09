@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -66,10 +67,14 @@ class PasswordCheckListener
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param GetResponseEvent|ResponseEvent $event
      **/
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest($event)
     {
+        if (!$event instanceof GetResponseEvent && !$event instanceof ResponseEvent) {
+            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
+        }
+
         $url = $event->getRequest()->getRequestUri();
         if ($this->tokenStorage->getToken() && $this->adminRouteHelper->isAdminRoute($url)) {
             $route = $event->getRequest()->get('_route');
