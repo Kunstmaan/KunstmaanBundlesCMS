@@ -35,6 +35,8 @@ class MigrationsDiffCommand extends DiffCommand
         $configuration = $this->getMigrationConfiguration($input, $output);
         DoctrineCommand::configureMigrations($this->getApplication()->getKernel()->getContainer(), $configuration);
 
-        parent::execute($input, $output);
+        $exitCode = parent::execute($input, $output);
+
+        return is_numeric($exitCode) ? (int) $exitCode : 0;
     }
 }

@@ -56,6 +56,8 @@ class TranslationFlagCommand extends ContainerAwareCommand
             $this->resetAllTranslationFlags();
             $output->writeln('<info>All translation and translation domain flags are reset.</info>');
         }
+
+        return 0;
     }
 
     /**

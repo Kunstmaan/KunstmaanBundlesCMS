@@ -98,6 +98,8 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         }
 
         $output->writeln('<info>PDF preview images have been created.</info>');
+
+        return 0;
     }
 
     /**

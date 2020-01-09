@@ -178,6 +178,8 @@ EOT
         $this->em->flush();
 
         $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
+
+        return 0;
     }
 
     /**

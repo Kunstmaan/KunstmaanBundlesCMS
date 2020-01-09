@@ -79,5 +79,7 @@ class PopulateIndexCommand extends ContainerAwareCommand
             $searchConfiguration->populateIndex();
             $output->writeln('Index populated : ' . $alias);
         }
+
+        return 0;
     }
 }

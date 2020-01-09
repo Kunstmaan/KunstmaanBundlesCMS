@@ -82,10 +82,12 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
-            return;
+            return 0;
         }
 
         $this->aclManager->applyAclChangesets();
+
+        return 0;
     }
 
     /**

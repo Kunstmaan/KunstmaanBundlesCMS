@@ -71,5 +71,7 @@ final class ImportTranslationsFromFileCommand extends Command
             $confirmation = $this->translator->trans('kuma_translator.command.import.flash.success');
         }
         $output->writeln($confirmation);
+
+        return 0;
     }
 }

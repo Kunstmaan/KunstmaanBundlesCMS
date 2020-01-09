@@ -66,8 +66,12 @@ class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
         try {
             $configRepository->flushConfig($configId);
             $output->writeln('<fg=green>Data flushed</fg=green>');
+
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
+
+            return 1;
         }
     }
 }

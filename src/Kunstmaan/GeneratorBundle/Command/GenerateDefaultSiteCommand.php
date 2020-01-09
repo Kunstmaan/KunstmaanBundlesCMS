@@ -138,6 +138,8 @@ EOT
         }
 
         $this->assistant->writeSection('Site successfully created', 'bg=green;fg=black');
+
+        return 0;
     }
 
     /**
