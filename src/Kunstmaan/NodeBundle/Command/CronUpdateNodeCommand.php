@@ -85,12 +85,12 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
                 $now = new \DateTime();
                 if ($queuedNodeTranslationAction->getDate()->getTimestamp() < $now->getTimestamp()) {
                     $action = $queuedNodeTranslationAction->getAction();
-                    {
-                        // Set user security context
-                        $user = $queuedNodeTranslationAction->getUser();
-                        $runAsToken = new UsernamePasswordToken($user, null, 'foo', $user->getRoles());
-                        $this->tokenStorage->setToken($runAsToken);
-                    }
+
+                    // Set user security context
+                    $user = $queuedNodeTranslationAction->getUser();
+                    $runAsToken = new UsernamePasswordToken($user, null, 'foo', $user->getRoles());
+                    $this->tokenStorage->setToken($runAsToken);
+
                     $nodeTranslation = $queuedNodeTranslationAction->getNodeTranslation();
                     switch ($action) {
                         case QueuedNodeTranslationAction::ACTION_PUBLISH:
