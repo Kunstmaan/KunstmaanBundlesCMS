@@ -23,3 +23,4 @@ FormBundle
 ----------
 
 * Passing the "@templating" service as the 2nd argument to "Kunstmaan\FormBundle\Helper\FormMailer" is deprecated and will be replaced by the Twig service in 6.0. Injected the "@twig" service instead.
+* Passing the "@container" service as the 3th argument to "Kunstmaan\FormBundle\Helper\FormMailer" is deprecated and will be replaced by the requeststack service in 6.0. Injected the "@request_stack" service instead.
