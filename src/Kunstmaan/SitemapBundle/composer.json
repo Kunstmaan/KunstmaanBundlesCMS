@@ -16,7 +16,8 @@
         "php": "^7.1",
         "kunstmaan/admin-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",
-        "kunstmaan/pagepart-bundle": "~5.2"
+        "kunstmaan/pagepart-bundle": "~5.2",
+        "doctrine/collections": "^1.6"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
