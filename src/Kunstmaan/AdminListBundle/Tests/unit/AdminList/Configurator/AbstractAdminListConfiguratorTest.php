@@ -184,14 +184,17 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testAddField()
     {
-        $this->abstractAdminListConfMock->addField('name', 'header', true);
+        $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->addField('name', 'header', true));
         $this->assertCount(1, $this->abstractAdminListConfMock->getFields());
     }
 
     public function testAddExportField()
     {
-        $this->abstractAdminListConfMock->addExportField('name', 'header', true);
-        $this->assertCount(1, $this->abstractAdminListConfMock->getExportFields());
+        $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->addExportField('name', 'header', true));
+        $exportFields = $this->abstractAdminListConfMock->getExportFields();
+        $this->assertCount(1, $exportFields);
+
+        $this->assertFalse($exportFields[0]->isSortable());
     }
 
     public function testAddFilter()
@@ -252,7 +255,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
     public function testAddHasGetListAction()
     {
         $listActionInterfaceMock = $this->createMock(ListActionInterface::class);
-        $this->abstractAdminListConfMock->addListAction($listActionInterfaceMock);
+        $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->addListAction($listActionInterfaceMock));
         $this->assertTrue($this->abstractAdminListConfMock->hasListActions());
         $this->assertContainsOnlyInstancesOf(ListActionInterface::class, $this->abstractAdminListConfMock->getListActions());
     }
@@ -260,7 +263,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
     public function testAddHasGetBulkAction()
     {
         $bulkActionInterfaceMock = $this->createMock(BulkActionInterface::class);
-        $this->abstractAdminListConfMock->addBulkAction($bulkActionInterfaceMock);
+        $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->addBulkAction($bulkActionInterfaceMock));
         $this->assertTrue($this->abstractAdminListConfMock->hasBulkActions());
         $this->assertContainsOnlyInstancesOf(BulkActionInterface::class, $this->abstractAdminListConfMock->getBulkActions());
     }

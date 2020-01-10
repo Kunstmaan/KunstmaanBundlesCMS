@@ -52,7 +52,7 @@ class FilterBuilderTest extends TestCase
         $definition = $this->object->get('columnName');
         $this->assertNotNull($definition);
 
-        $this->object->remove('columnName');
+        $this->assertInstanceOf(FilterBuilder::class, $this->object->remove('columnName'));
         $definition = $this->object->get('columnName');
         $this->assertNull($definition);
     }
