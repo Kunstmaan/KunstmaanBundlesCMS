@@ -5,8 +5,8 @@ namespace Kunstmaan\RedirectBundle\Router;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
-use Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -87,7 +87,7 @@ class RedirectRouter implements RouterInterface
      */
     public function match($pathinfo)
     {
-        $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
+        $urlMatcher = new UrlMatcher($this->getRouteCollection(), $this->getContext());
 
         return $urlMatcher->match($pathinfo);
     }
