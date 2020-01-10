@@ -13,6 +13,9 @@ parameters:
     kunstmaan_media.validator.has_guessable_extension.class: 'Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator'
 
 services:
+    # Autowire aliases
+    Kunstmaan\MediaBundle\Helper\MediaManager: '@kunstmaan_media.media_manager'
+
     kunstmaan_media.media_manager:
         class: '%kunstmaan_media.media_manager.class%'
         calls:

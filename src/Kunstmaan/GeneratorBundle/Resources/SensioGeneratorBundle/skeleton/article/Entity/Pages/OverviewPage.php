@@ -8,34 +8,22 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\AbstractType;
 
 /**
- * The article overview page which shows its articles
- *
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}OverviewPageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overview_pages")
  */
 class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface, SlugActionInterface
 {
-    /**
-     * @return AbstractPagePartAdminConfigurator[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage'];
     }
 
     /**
@@ -48,37 +36,22 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
         return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}Page');
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}OverviewPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSearchType()
+    public function getSearchType(): string
     {
         return '{{ entity_class }}';
     }
 
-    /**
-     * Returns the default backend form type for this page
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ entity_class }}OverviewPageAdminType::class;
     }
 
-    /**
-     * @return string
-     *
-     */
-    public function getControllerAction()
+    public function getControllerAction(): string
     {
         {% if isV4 %}
         return 'App\Controller\{{ entity_class }}ArticleController::serviceAction';

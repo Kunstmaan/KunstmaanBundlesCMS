@@ -3,8 +3,13 @@
 namespace Kunstmaan\UtilitiesBundle\Twig;
 
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class UtilitiesTwigExtension extends \Twig_Extension
+/**
+ * @final since 5.4
+ */
+class UtilitiesTwigExtension extends AbstractExtension
 {
     /**
      * @var SlugifierInterface
@@ -27,7 +32,7 @@ class UtilitiesTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('slugify', [$this, 'slugify']),
+            new TwigFilter('slugify', [$this, 'slugify']),
         ];
     }
 

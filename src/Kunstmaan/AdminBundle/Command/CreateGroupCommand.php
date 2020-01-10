@@ -106,5 +106,7 @@ EOT
         $this->em->flush();
 
         $output->writeln(sprintf('Created group <comment>%s</comment>', $groupName));
+
+        return 0;
     }
 }

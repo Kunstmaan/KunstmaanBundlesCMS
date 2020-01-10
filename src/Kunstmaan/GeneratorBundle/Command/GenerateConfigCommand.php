@@ -92,6 +92,8 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
         );
 
         $this->assistant->writeSection('Config successfully created', 'bg=green;fg=black');
+
+        return 0;
     }
 
     /**

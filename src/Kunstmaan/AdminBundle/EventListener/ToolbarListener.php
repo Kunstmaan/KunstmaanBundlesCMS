@@ -9,12 +9,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
+use Twig\Environment;
 
 class ToolbarListener implements EventSubscriberInterface
 {
@@ -23,7 +25,7 @@ class ToolbarListener implements EventSubscriberInterface
     const ENABLED = 2;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
@@ -75,7 +77,7 @@ class ToolbarListener implements EventSubscriberInterface
     /**
      * ToolbarListener constructor.
      *
-     * @param \Twig_Environment     $twig
+     * @param Environment           $twig
      * @param UrlGeneratorInterface $urlGenerator
      * @param DataCollector         $dataCollector
      * @param AuthorizationChecker  $authorizationChecker
@@ -87,7 +89,7 @@ class ToolbarListener implements EventSubscriberInterface
      * @param string                $adminFirewallName
      */
     public function __construct(
-        \Twig_Environment $twig,
+        Environment $twig,
         UrlGeneratorInterface $urlGenerator,
         DataCollector $dataCollector,
         AuthorizationChecker $authorizationChecker,
@@ -129,10 +131,14 @@ class ToolbarListener implements EventSubscriberInterface
     }
 
     /**
-     * @param FilterResponseEvent $event
+     * @param FilterResponseEvent|ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse($event)
     {
+        if (!$event instanceof FilterResponseEvent && !$event instanceof ResponseEvent) {
+            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : FilterResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
+        }
+
         if (!$this->isEnabled() || HttpKernel::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }

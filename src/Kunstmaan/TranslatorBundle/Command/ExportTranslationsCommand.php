@@ -71,5 +71,7 @@ class ExportTranslationsCommand extends ContainerAwareCommand
             ->setLocales($locales === null ? false : $locales);
 
         $this->exportCommandHandler->executeExportCommand($exportCommand);
+
+        return 0;
     }
 }

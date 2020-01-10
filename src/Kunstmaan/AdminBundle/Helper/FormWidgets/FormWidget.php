@@ -54,7 +54,7 @@ class FormWidget implements FormWidgetInterface
         $this->data = $data;
         $this->options = $options;
 
-        $this->setTemplate('KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig');
+        $this->setTemplate('@KunstmaanAdmin/FormWidgets/FormWidget/widget.html.twig');
     }
 
     /**
@@ -111,7 +111,7 @@ class FormWidget implements FormWidgetInterface
      */
     protected function getFormHelper()
     {
-        if (is_null($this->formHelper)) {
+        if (\is_null($this->formHelper)) {
             $this->formHelper = new FormHelper();
         }
 

@@ -69,6 +69,8 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
         } else {
             $output->writeln('No configs found');
         }
+
+        return 0;
     }
 
     /**

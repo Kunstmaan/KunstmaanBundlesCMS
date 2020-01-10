@@ -165,9 +165,7 @@ EOT
                 $groupOutput[] = $group->getName();
                 $user->getGroups()->add($group);
             } else {
-                throw new \RuntimeException(
-                    'The selected group(s) can\'t be found.'
-                );
+                throw new \RuntimeException('The selected group(s) can\'t be found.');
             }
         }
 
@@ -180,6 +178,8 @@ EOT
         $this->em->flush();
 
         $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
+
+        return 0;
     }
 
     /**
@@ -269,14 +269,12 @@ EOT
 
                 // Validate that the chosen group options exist in the available groups
                 $groupNames = array_unique(explode(',', $groupsInput));
-                if (count(array_intersect_key(array_flip($groupNames), $this->groups)) !== count($groupNames)) {
+                if (\count(array_intersect_key(array_flip($groupNames), $this->groups)) !== \count($groupNames)) {
                     throw new InvalidArgumentException('You have chosen non existing group(s)');
                 }
 
                 if ($groupsInput === '') {
-                    throw new \RuntimeException(
-                        'Group(s) must be of type integer and can not be empty'
-                    );
+                    throw new \RuntimeException('Group(s) must be of type integer and can not be empty');
                 }
 
                 return $groupsInput;

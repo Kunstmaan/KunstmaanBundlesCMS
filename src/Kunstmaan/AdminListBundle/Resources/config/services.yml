@@ -8,9 +8,9 @@ services:
 
     kunstmaan_adminlist.service.export:
         class:  '%kunstmaan_adminlist.service.export.class%'
-        calls:
-            -  [ setRenderer, [ '@templating' ] ]
-            -  [ setTranslator, [ '@translator' ] ]
+        arguments:
+            - '@twig'
+            - '@translator'
         public: true
 
     kunstmaan_adminlist.twig.extension:

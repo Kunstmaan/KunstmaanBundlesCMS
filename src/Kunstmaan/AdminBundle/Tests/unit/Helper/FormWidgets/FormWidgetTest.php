@@ -38,7 +38,7 @@ class FormWidgetTest extends TestCase
         $widget->setIdentifier('id');
         $widget->persist($em);
 
-        $this->assertEquals('KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig', $widget->getTemplate());
+        $this->assertEquals('@KunstmaanAdmin/FormWidgets/FormWidget/widget.html.twig', $widget->getTemplate());
         $this->assertEquals('id', $widget->getIdentifier());
         $this->assertCount(1, $widget->getFormErrors($view));
         $this->assertCount(0, $widget->getExtraParams(new Request()));

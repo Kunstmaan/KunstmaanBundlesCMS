@@ -5,6 +5,9 @@ namespace Kunstmaan\AdminBundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
+/**
+ * @final since 5.4
+ */
 class AdminBundleTwigExtension extends AbstractExtension implements GlobalsInterface
 {
     /** @var string */

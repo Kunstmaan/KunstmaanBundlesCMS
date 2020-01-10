@@ -3,8 +3,13 @@
 namespace Kunstmaan\AdminBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class AdminRouteHelperTwigExtension extends \Twig_Extension
+/**
+ * @final since 5.4
+ */
+class AdminRouteHelperTwigExtension extends AbstractExtension
 {
     /** @var AdminRouteHelper $adminRouteHelper */
     private $adminRouteHelper;
@@ -25,7 +30,7 @@ class AdminRouteHelperTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('is_admin_route', array($this, 'isAdminRoute')),
+            new TwigFunction('is_admin_route', array($this, 'isAdminRoute')),
         );
     }
 

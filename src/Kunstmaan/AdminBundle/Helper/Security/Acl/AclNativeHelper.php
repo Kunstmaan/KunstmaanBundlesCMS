@@ -69,7 +69,7 @@ class AclNativeHelper
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = constant(get_class($builder) . '::MASK_' . strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
         $mask = $builder->get();
@@ -77,7 +77,7 @@ class AclNativeHelper
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
         $userRoles = array();
-        if (!is_null($token)) {
+        if (!\is_null($token)) {
             $user = $token->getUser();
             if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
                 $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
@@ -104,13 +104,13 @@ class AclNativeHelper
             }
         }
         $uR = array_unique($uR);
-        $inString = implode(' OR s.identifier = ', (array) $uR);
+        $inString = implode(' OR s.identifier = ', $uR);
 
-        if (is_object($user)) {
+        if (\is_object($user)) {
             $inString .= ' OR s.identifier = "' . str_replace(
                     '\\',
                     '\\\\',
-                    get_class($user)
+                    \get_class($user)
                 ) . '-' . $user->getUserName() . '"';
         }
 

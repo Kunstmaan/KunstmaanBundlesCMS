@@ -82,5 +82,7 @@ class ExceptionCommand extends ContainerAwareCommand
         }
 
         $output->writeln(sprintf('Removed exceptions <comment>%s</comment>', $cp));
+
+        return 0;
     }
 }

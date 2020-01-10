@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Security\Acl\Domain\Acl;
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 
 /**
@@ -100,6 +99,8 @@ class UpdateAclCommand extends ContainerAwareCommand
 
         $this->aclManager->updateNodesAclToRole($nodes, $role, $mask);
 
-        $output->writeln(count($nodes) . ' nodes processed.');
+        $output->writeln(\count($nodes) . ' nodes processed.');
+
+        return 0;
     }
 }

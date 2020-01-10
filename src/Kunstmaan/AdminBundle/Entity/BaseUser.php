@@ -84,7 +84,7 @@ abstract class BaseUser extends AbstractUser
         $groups = $this->groups;
 
         $groupIds = array();
-        if (count($groups) > 0) {
+        if (\count($groups) > 0) {
             /* @var $group GroupInterface */
             foreach ($groups as $group) {
                 $groupIds[] = $group->getId();

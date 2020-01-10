@@ -28,12 +28,23 @@ class UserProcessor
      */
     private $record = array();
 
+    private $tokenStorage;
+
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface|TokenStorageInterface $tokenStorage
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/*TokenStorageInterface */ $tokenStorage)
     {
-        $this->container = $container;
+        if ($tokenStorage instanceof ContainerInterface) {
+            @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. Inject the "security.token_storage" service instead.', __CLASS__), E_USER_DEPRECATED);
+
+            $this->container = $tokenStorage;
+            $this->tokenStorage = $this->container->get('security.token_storage');
+
+            return;
+        }
+
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -43,11 +54,9 @@ class UserProcessor
      */
     public function processRecord(array $record)
     {
-        if (is_null($this->user)) {
-            /* @var TokenStorageInterface $securityTokenStorage */
-            $securityTokenStorage = $this->container->get('security.token_storage');
-            if (($securityTokenStorage !== null) && ($securityTokenStorage->getToken() !== null) && ($securityTokenStorage->getToken()->getUser() instanceof \Symfony\Component\Security\Core\User\AdvancedUserInterface)) {
-                $this->user = $securityTokenStorage->getToken()->getUser();
+        if (\is_null($this->user)) {
+            if (($this->tokenStorage !== null) && ($this->tokenStorage->getToken() !== null) && ($this->tokenStorage->getToken()->getUser() instanceof \Symfony\Component\Security\Core\User\AdvancedUserInterface)) {
+                $this->user = $this->tokenStorage->getToken()->getUser();
                 $this->record['extra']['user']['username'] = $this->user->getUsername();
                 $this->record['extra']['user']['roles'] = $this->user->getRoles();
                 $this->record['extra']['user']['is_account_non_expired'] = $this->user->isAccountNonExpired();

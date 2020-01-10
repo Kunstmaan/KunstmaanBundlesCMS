@@ -48,7 +48,7 @@ class Tab implements TabInterface
         $this->title = $title;
         $this->widget = $widget;
 
-        $this->template = 'KunstmaanAdminBundle:Tabs:tab.html.twig';
+        $this->template = '@KunstmaanAdmin/Tabs/tab.html.twig';
     }
 
     /**
@@ -118,7 +118,7 @@ class Tab implements TabInterface
      */
     protected function getFormHelper()
     {
-        if (is_null($this->formHelper)) {
+        if (\is_null($this->formHelper)) {
             $this->formHelper = new FormHelper();
         }
 

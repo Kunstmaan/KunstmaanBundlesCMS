@@ -52,7 +52,7 @@ class FilterBuilderTest extends TestCase
         $definition = $this->object->get('columnName');
         $this->assertNotNull($definition);
 
-        $this->object->remove('columnName');
+        $this->assertInstanceOf(FilterBuilder::class, $this->object->remove('columnName'));
         $definition = $this->object->get('columnName');
         $this->assertNull($definition);
     }
@@ -76,6 +76,7 @@ class FilterBuilderTest extends TestCase
     public function testBindRequest()
     {
         $session = $this->createMock(Session::class);
+        $session->expects($this->any())->method('has')->with('filter_')->willReturn(false);
         $session->expects($this->any())->method('has')->willReturn(true);
         $session->expects($this->any())->method('get')->willReturn(['filter_columnname' => ['something' => 'columnName']]);
         $request = new Request();

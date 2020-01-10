@@ -119,5 +119,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         $imported = $this->importCommandHandler->executeImportCommand($importCommand);
 
         $output->writeln(sprintf('Translation imported: %d', $imported));
+
+        return 0;
     }
 }

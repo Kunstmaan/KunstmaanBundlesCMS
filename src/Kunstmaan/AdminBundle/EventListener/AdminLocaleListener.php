@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -59,10 +60,14 @@ class AdminLocaleListener implements EventSubscriberInterface
     /**
      * onKernelRequest
      *
-     * @param GetResponseEvent $event
+     * @param GetResponseEvent|ResponseEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest($event)
     {
+        if (!$event instanceof GetResponseEvent && !$event instanceof ResponseEvent) {
+            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
+        }
+
         $url = $event->getRequest()->getRequestUri();
         $token = $this->tokenStorage->getToken();
 
@@ -85,7 +90,7 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     private function isAdminToken($providerKey, TokenInterface $token = null)
     {
-        return is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
+        return \is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
     }
 
     /**

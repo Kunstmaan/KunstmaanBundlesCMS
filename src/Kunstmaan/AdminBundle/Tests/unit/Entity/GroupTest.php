@@ -109,7 +109,7 @@ class GroupTest extends TestCase
         $roles = array($role1, $role2, $role3);
         $this->object->setRoles($roles);
 
-        $this->assertEquals(3, count($this->object->getRoles()));
+        $this->assertEquals(3, \count($this->object->getRoles()));
     }
 
     public function testSetRolesCollection()

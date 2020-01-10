@@ -98,9 +98,8 @@ use Your\Bundle\AdminList\DocumentAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class DocumentAdminController extends AdminListController
 {
@@ -140,8 +139,7 @@ The add action method will build the form to add a new entity.
     /**
      * The add action
      *
-     * @Route("/add", name="yourbundle_admin_document_add")
-     * @Method({"GET", "POST"})
+     * @Route("/add", name="yourbundle_admin_document_add", methods={"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
      * @return array
      */
@@ -161,8 +159,7 @@ The edit action method will build and process the edit form.
      * @internal param $eid
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="yourbundle_admin_document_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="yourbundle_admin_document_edit", methods={"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
      */
     public function editAction(Request $request, $id)
@@ -179,8 +176,7 @@ The delete action will handle the deletion of your Entity.
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws NotFoundHttpException
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="yourbundle_admin_document_delete")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="yourbundle_admin_document_delete", methods={"GET", "POST"})
      */
     public function deleteAction(Request $request, $id)
     {
@@ -192,8 +188,7 @@ To export your Entities, there's the export action method.
 
 ```PHP
     /**
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="yourbundle_document_export")
-     * @Method({"GET", "POST"})
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="yourbundle_document_export", methods={"GET", "POST"})
      *
      * @param $_format
      *
@@ -215,8 +210,7 @@ To make your Entities sortable, there's the move up and down action method. (aut
          *
          * @param int $id
          *
-         * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="yourbundle_admin_document_move_up")
-         * @Method({"GET"})
+         * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="yourbundle_admin_document_move_up", methods={"GET"})
          *
          * @return array
          */
@@ -230,8 +224,7 @@ To make your Entities sortable, there's the move up and down action method. (aut
          *
          * @param int $id
          *
-         * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="yourbundle_admin_document_move_down")
-         * @Method({"GET"})
+         * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="yourbundle_admin_document_move_down", methods={"GET"})
          *
          * @return array
          */

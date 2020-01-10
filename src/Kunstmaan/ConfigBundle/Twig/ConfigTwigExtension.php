@@ -4,12 +4,15 @@ namespace Kunstmaan\ConfigBundle\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Extension to fetch config
+ *
+ * @final since 5.4
  */
-class ConfigTwigExtension extends Twig_Extension
+class ConfigTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManagerInterface
@@ -43,7 +46,7 @@ class ConfigTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_config_by_internal_name', array($this, 'getConfigByInternalName')
             ),
         );

@@ -135,5 +135,7 @@ class CipherCommand extends ContainerAwareCommand
 
                 break;
         }
+
+        return 0;
     }
 }

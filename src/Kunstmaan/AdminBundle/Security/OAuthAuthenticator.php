@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -191,7 +190,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $this->session->getFlashBag()->add(FlashTypes::ERROR, $this->translator->trans('errors.oauth.invalid'));
+        $this->session->getFlashBag()->add(FlashTypes::DANGER, $this->translator->trans('errors.oauth.invalid'));
 
         return new RedirectResponse($this->router->generate('fos_user_security_login'));
     }

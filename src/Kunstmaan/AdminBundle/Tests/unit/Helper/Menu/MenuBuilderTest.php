@@ -16,26 +16,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class MenuBuilderTest extends TestCase
 {
     /**
-     * @var ContainerInterface (mock)
-     */
-    protected $container;
-
-    protected function setUp()
-    {
-        $container = $this->createMock(ContainerInterface::class);
-        $this->container = $container;
-    }
-
-    /**
-     * @param ContainerInterface $container
-     * @param array|null         $methods
+     * @param array|null $methods
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|MenuBuilder
      */
-    public function setUpMenuBuilderMock(ContainerInterface $container, ?array $methods)
+    public function setUpMenuBuilderMock(?array $methods)
     {
         $menuBuilderMock = $this->getMockBuilder(MenuBuilder::class)
-            ->setConstructorArgs([$container])
+            ->setConstructorArgs([$this->createMock(RequestStack::class)])
             ->setMethods($methods)
             ->getMock()
         ;
@@ -43,13 +31,19 @@ class MenuBuilderTest extends TestCase
         return $menuBuilderMock;
     }
 
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing the container as the first argument of "Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. Inject the "request_stack" service instead.
+     */
+    public function testConstructorContainerDeprecation()
+    {
+        $container = $this->createMock(ContainerInterface::class);
+        new MenuBuilder($container);
+    }
+
     public function testGetChildrenAndTopChildren()
     {
-        $stack = $this->createMock(RequestStack::class);
-
-        $this->container->expects($this->any())->method('get')->willReturn($stack);
-
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
+        $menuBuilderMock = $this->setUpMenuBuilderMock(null);
 
         /** @var MenuAdaptorInterface $menuAdaptorInterfaceMock */
         $menuAdaptorInterfaceMock = $this->createMock(MenuAdaptorInterface::class);
@@ -74,7 +68,7 @@ class MenuBuilderTest extends TestCase
             ->willReturn(true)
         ;
 
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
             ->expects($this->any())
             ->method('getChildren')
@@ -95,7 +89,7 @@ class MenuBuilderTest extends TestCase
             ->willReturn(true)
         ;
 
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
             ->expects($this->any())
             ->method('getChildren')
@@ -119,7 +113,7 @@ class MenuBuilderTest extends TestCase
             ->willReturn($this->createMock(TopMenuItem::class))
         ;
 
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
             ->expects($this->any())
             ->method('getChildren')
@@ -138,7 +132,7 @@ class MenuBuilderTest extends TestCase
             ->willReturn(false)
         ;
 
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, ['getChildren']);
+        $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
             ->expects($this->any())
             ->method('getChildren')
@@ -150,12 +144,6 @@ class MenuBuilderTest extends TestCase
 
     public function testGetTopChildren()
     {
-        $stack = $this->createMock(RequestStack::class);
-
-        $this->container->expects($this->any())->method('get')->willReturn($stack);
-
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
-
         /** @var MenuAdaptorInterface $menuAdaptorInterfaceMock */
         $menuAdaptorInterfaceMock = $this->createMock(MenuAdaptorInterface::class);
         $menuAdaptorInterfaceMock
@@ -163,7 +151,7 @@ class MenuBuilderTest extends TestCase
             ->method('adaptChildren')
         ;
 
-        $menuBuilderMock = $this->setUpMenuBuilderMock($this->container, null);
+        $menuBuilderMock = $this->setUpMenuBuilderMock(null);
         $menuBuilderMock->addAdaptMenu($menuAdaptorInterfaceMock);
 
         $this->assertIsArray($menuBuilderMock->getTopChildren());

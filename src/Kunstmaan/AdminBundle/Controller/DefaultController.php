@@ -60,7 +60,7 @@ class DefaultController extends Controller
             ->getRepository('KunstmaanAdminBundle:DashboardConfiguration')
             ->findOneBy(array());
 
-        if (is_null($dashboardConfiguration)) {
+        if (\is_null($dashboardConfiguration)) {
             $dashboardConfiguration = new DashboardConfiguration();
         }
         $form = $this->createForm(DashboardConfigurationType::class, $dashboardConfiguration);

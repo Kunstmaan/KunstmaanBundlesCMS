@@ -169,3 +169,6 @@ kuma_node:
     export_pagetemplate:
       button:
         title: Eksportuj szablon strony
+  widget:
+    choose: Wybierz
+    url_chooser: Wybierz URL

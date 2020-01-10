@@ -26,7 +26,7 @@ class SitesAdminPanelAdaptor implements AdminPanelAdaptorInterface
             ),
             '',
             '',
-            'KunstmaanMultiDomainBundle:AdminPanel:_site_switch_action.html.twig'
+            '@KunstmaanMultiDomain/AdminPanel/_site_switch_action.html.twig'
         );
     }
 }

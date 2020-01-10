@@ -28,7 +28,7 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
-            array('KunstmaanNodeBundle:Form:formWidgets.html.twig')
+            ['@KunstmaanNode/Form/formWidgets.html.twig']
         ));
 
         $nodePagesDefinition = new Definition('Kunstmaan\NodeBundle\Helper\PagesConfiguration', [$config['pages']]);

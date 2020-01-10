@@ -81,7 +81,7 @@ class VersionChecker
         }
 
         $data = $this->cache->fetch('version_check');
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             $this->check();
         }
     }
@@ -179,9 +179,7 @@ class VersionChecker
 
         $composerPath = $this->getLockPath();
         if (!file_exists($composerPath)) {
-            throw new ParseException(
-                $translator->trans('settings.version.composer_lock_not_found')
-            );
+            throw new ParseException($translator->trans('settings.version.composer_lock_not_found'));
         }
 
         $json = file_get_contents($composerPath);
@@ -191,7 +189,7 @@ class VersionChecker
             throw new ParseException($errorMessage.' (#'.json_last_error().')');
         }
 
-        if (array_key_exists('packages', $result) && is_array($result['packages'])) {
+        if (\array_key_exists('packages', $result) && \is_array($result['packages'])) {
             return $result['packages'];
         }
 
@@ -210,7 +208,7 @@ class VersionChecker
     {
         $bundles = array();
         foreach ($this->getPackages() as $package) {
-            if (!strncmp($package['name'], 'kunstmaan/', strlen('kunstmaan/'))) {
+            if (!strncmp($package['name'], 'kunstmaan/', \strlen('kunstmaan/'))) {
                 $bundles[] = array(
                     'name' => $package['name'],
                     'version' => $package['version'],

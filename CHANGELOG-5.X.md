@@ -1,5 +1,17 @@
 # Changelog
 
+## 5.3.8 / 2019-12-4
+
+* [NodeBundle] Fix incompatibility with framework-extra-bundle 5.5.* [#2594](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2594) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix symfony 4.4 test failures [#2593](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2593) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.3.7 / 2019-11-26
+
+* [NodeBundle] Fix url chooser to allow # and #! urls [#2590](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2590) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fixed imagine ignoring EXIF orientation data [#2586](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2586) ([@poveu](https://github.com/poveu)) 
+* [AdminBundle] Fix bootstrap-colorpicker [#2579](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2579) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminListBundle] Added missing limit dropdown caret [#2575](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2575) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.6 / 2019-10-24
 
 * [UserManagementBundle] The delete route should only allow post requests [#2571](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2571) ([@acrobat](https://github.com/acrobat))

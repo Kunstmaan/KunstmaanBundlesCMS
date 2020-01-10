@@ -56,6 +56,6 @@ class DateFilterType extends AbstractORMFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:dateFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/dateFilter.html.twig';
     }
 }

@@ -5,8 +5,13 @@ namespace Kunstmaan\AdminBundle\Twig;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelActionInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MenuTwigExtension extends \Twig_Extension
+/**
+ * @final since 5.4
+ */
+class MenuTwigExtension extends AbstractExtension
 {
     /**
      * @var MenuBuilder
@@ -36,8 +41,8 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_admin_menu', array($this, 'getAdminMenu')),
-            new \Twig_SimpleFunction('get_admin_panel_actions', array($this, 'getAdminPanelActions')),
+            new TwigFunction('get_admin_menu', array($this, 'getAdminMenu')),
+            new TwigFunction('get_admin_panel_actions', array($this, 'getAdminPanelActions')),
         );
     }
 

@@ -77,7 +77,7 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
             $question = new ConfirmationQuestion('<question>Are you sure you want to remove all deleted Media from the file system?</question> ', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return;
+                return 0;
             }
         }
 
@@ -93,10 +93,14 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
             $this->em->flush();
             $this->em->commit();
             $output->writeln('<info>All Media flagged as deleted, have now been removed from the file system.<info>');
+
+            return 0;
         } catch (\Exception $e) {
             $this->em->rollback();
             $output->writeln('An error occured while trying to delete Media from the file system:');
             $output->writeln('<error>'. $e->getMessage() . '</error>');
+
+            return 1;
         }
     }
 }

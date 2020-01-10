@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Templating\EngineInterface;
 
 class RenderContextListener
@@ -40,10 +42,14 @@ class RenderContextListener
     }
 
     /**
-     * @param GetResponseForControllerResultEvent $event
+     * @param GetResponseForControllerResultEvent|ViewEvent $event
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function onKernelView($event)
     {
+        if (!$event instanceof GetResponseForControllerResultEvent && !$event instanceof ViewEvent) {
+            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(RequestEvent::class) ? ViewEvent::class : GetResponseForControllerResultEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
+        }
+
         $response = $event->getControllerResult();
         if ($response instanceof Response) {
             // If it's a response, just continue
@@ -98,7 +104,33 @@ class RenderContextListener
             $template = new Template(array());
             $template->setTemplate($entity->getDefaultView());
 
+            $controllerInfo = $this->getControllerInfo($request->attributes->get('_controller'));
+            $template->setOwner($controllerInfo);
+
             $request->attributes->set('_template', $template);
         }
+    }
+
+    /**
+     * BC check to return correct controller/action information.
+     *
+     * @param string $controllerString
+     *
+     * @return array
+     */
+    private function getControllerInfo($controllerString)
+    {
+        if (strpos($controllerString, '::') !== false) {
+            $controllerBits = explode('::', $controllerString);
+            $action = array_pop($controllerBits);
+
+            return [$controllerBits, $action];
+        }
+
+        // NEXT_MAJOR: Remove BC check when we drop sf 3.4 support
+        $controllerBits = explode(':', $controllerString);
+        $action = array_pop($controllerBits);
+
+        return [implode(':', $controllerBits), $action];
     }
 }

@@ -233,7 +233,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                         'page' => [
                             'class' => $refName,
                             'children' => $this->pagesConfiguration->getPossibleChildTypes($refName),
-                            'icon' => $this->pagesConfiguration->getIcon($refName) ?? $this->pagesConfiguration->isHomePage($refName) ? 'fa fa-home' : null,
+                            'icon' => $this->pagesConfiguration->getIcon($refName) ?? ($this->pagesConfiguration->isHomePage($refName) ? 'fa fa-home' : null),
                         ],
                     ]
                 );

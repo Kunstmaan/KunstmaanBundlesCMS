@@ -29,7 +29,7 @@ class UsersController extends BaseSettingsController
      * List users
      *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_users")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Template("@KunstmaanAdminList/Default/list.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

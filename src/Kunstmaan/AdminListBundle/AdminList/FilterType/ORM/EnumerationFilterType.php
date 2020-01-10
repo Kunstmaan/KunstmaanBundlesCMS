@@ -47,6 +47,6 @@ class EnumerationFilterType extends AbstractORMFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:enumerationFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/enumerationFilter.html.twig';
     }
 }

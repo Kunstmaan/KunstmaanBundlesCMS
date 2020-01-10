@@ -27,7 +27,7 @@ class FormSubmissionsController extends Controller
      * The index action will use an admin list to list all the form pages
      *
      * @Route("/", name="KunstmaanFormBundle_formsubmissions")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Template("@KunstmaanAdminList/Default/list.html.twig")
      *
      * @return array
      */
@@ -175,7 +175,7 @@ class FormSubmissionsController extends Controller
         } catch (\Exception $e) {
             $this->get('logger')->error($e->getMessage());
             $this->addFlash(
-                FlashTypes::ERROR,
+                FlashTypes::DANGER,
                 $this->get('translator')->trans('formsubmissions.delete.flash.error')
             );
         }

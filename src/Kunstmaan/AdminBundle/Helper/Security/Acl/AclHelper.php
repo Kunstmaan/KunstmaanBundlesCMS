@@ -95,7 +95,7 @@ class AclHelper
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = constant(get_class($builder) . '::MASK_' . strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
         $query->setHint('acl.mask', $builder->get());
@@ -145,7 +145,7 @@ class AclHelper
         $token = $this->tokenStorage->getToken();
         $userRoles = array();
         $user = null;
-        if (!is_null($token)) {
+        if (!\is_null($token)) {
             $user = $token->getUser();
             if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
                 $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
@@ -174,11 +174,11 @@ class AclHelper
         $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', $uR);
 
-        if (is_object($user)) {
+        if (\is_object($user)) {
             $inString .= ' OR s.identifier = "' . str_replace(
                     '\\',
                     '\\\\',
-                    get_class($user)
+                    \get_class($user)
                 ) . '-' . $user->getUserName() . '"';
         }
 
@@ -217,7 +217,7 @@ SELECTQUERY;
         }
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = constant(get_class($builder) . '::MASK_' . strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
 

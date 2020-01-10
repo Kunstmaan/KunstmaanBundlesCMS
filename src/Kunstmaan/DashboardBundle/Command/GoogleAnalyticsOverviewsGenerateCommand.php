@@ -89,8 +89,12 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
             }
 
             $output->writeln('<fg=green>Overviews succesfully generated</fg=green>');
+
+            return 0;
         } catch (\InvalidArgumentException $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
+
+            return 1;
         }
     }
 

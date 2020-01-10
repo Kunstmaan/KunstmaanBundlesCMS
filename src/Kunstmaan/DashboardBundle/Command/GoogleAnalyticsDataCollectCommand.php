@@ -106,7 +106,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         if (!$configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
 
-            return;
+            return 0;
         }
 
         // get params
@@ -140,8 +140,12 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             $result = '<fg=green>Google Analytics data updated with <fg=red>'.$this->errors.'</fg=red> error';
             $result .= $this->errors != 1 ? 's</fg=green>' : '</fg=green>';
             $this->output->writeln($result); // done
+
+            return 0;
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
+
+            return 1;
         }
     }
 

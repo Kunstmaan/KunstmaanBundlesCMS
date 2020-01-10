@@ -64,5 +64,7 @@ class DeleteIndexCommand extends ContainerAwareCommand
             $searchConfiguration->deleteIndex();
             $output->writeln('Index deleted : ' . $alias);
         }
+
+        return 0;
     }
 }

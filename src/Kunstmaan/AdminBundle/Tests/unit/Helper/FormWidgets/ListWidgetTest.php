@@ -44,7 +44,7 @@ class ListWidgetTest extends TestCase
         $listWidget->persist($em);
 
         $this->assertCount(1, $listWidget->getFormErrors($view));
-        $this->assertEquals('KunstmaanAdminBundle:FormWidgets\ListWidget:widget.html.twig', $listWidget->getTemplate());
+        $this->assertEquals('@KunstmaanAdmin/FormWidgets/ListWidget/widget.html.twig', $listWidget->getTemplate());
         $this->assertCount(1, $listWidget->getExtraParams(new Request()));
     }
 }

@@ -51,16 +51,12 @@ class PagePartBuilder implements BuilderInterface
         $original = $fixture->getEntity();
 
         if (!isset($params['page']) || empty($translations)) {
-            throw new \Exception(
-                'No page reference and/or translations detected for pagepart fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')'
-            );
+            throw new \Exception('No page reference and/or translations detected for pagepart fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')');
         }
 
         $pageFixture = $params['page'];
         if (!$pageFixture instanceof Fixture) {
-            throw new \Exception(
-                'Could not find a reference "' . $params['page'] . '"" for fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')'
-            );
+            throw new \Exception('Could not find a reference "' . $params['page'] . '"" for fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')');
         }
 
         $additionalEntities = $pageFixture->getAdditionalEntities();

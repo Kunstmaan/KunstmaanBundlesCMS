@@ -89,5 +89,7 @@ EOT
         $this->em->flush();
 
         $output->writeln(sprintf('Created role <comment>%s</comment>', $roleName));
+
+        return 0;
     }
 }

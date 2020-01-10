@@ -125,7 +125,7 @@ class TabPane
             $tab->setIdentifier($this->generateIdentifier($tab));
         }
 
-        if (!is_null($position) && is_numeric($position) && $position < count($this->tabs)) {
+        if (!\is_null($position) && is_numeric($position) && $position < \count($this->tabs)) {
             array_splice($this->tabs, $position, 0, array($tab));
         } else {
             $this->tabs[] = $tab;
@@ -141,7 +141,7 @@ class TabPane
      */
     public function removeTab(TabInterface $tab)
     {
-        if (in_array($tab, $this->tabs)) {
+        if (\in_array($tab, $this->tabs)) {
             unset($this->tabs[array_search($tab, $this->tabs)]);
             $this->reindexTabs();
         }
@@ -175,7 +175,7 @@ class TabPane
      */
     public function removeTabByPosition($position)
     {
-        if (is_numeric($position) && $position < count($this->tabs)) {
+        if (is_numeric($position) && $position < \count($this->tabs)) {
             array_splice($this->tabs, $position, 1);
         }
 
@@ -213,7 +213,7 @@ class TabPane
      */
     public function getTabByPosition($position)
     {
-        if (is_numeric($position) && $position < count($this->tabs)) {
+        if (is_numeric($position) && $position < \count($this->tabs)) {
             return $this->tabs[$position];
         }
 
@@ -241,7 +241,7 @@ class TabPane
      */
     public function getFormView()
     {
-        if (is_null($this->formView)) {
+        if (\is_null($this->formView)) {
             $this->formView = $this->form->createView();
         }
 

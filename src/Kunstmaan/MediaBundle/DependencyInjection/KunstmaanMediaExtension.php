@@ -33,7 +33,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             'twig.form.resources',
             array_merge(
                 $container->hasParameter('twig.form.resources') ? $container->getParameter('twig.form.resources') : [],
-                array('KunstmaanMediaBundle:Form:formWidgets.html.twig')
+                array('@KunstmaanMedia/Form/formWidgets.html.twig')
             )
         );
         $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);

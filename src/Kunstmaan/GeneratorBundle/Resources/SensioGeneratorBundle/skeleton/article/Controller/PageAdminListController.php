@@ -5,86 +5,59 @@ namespace {{ namespace }}\Controller;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticlePageAdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
 {% if isV4 %}
 
 /**
- * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/page", requirements={"_locale"="%requiredlocales%"})
+ * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-page", requirements={"_locale"="%requiredlocales%"})
  */
 {% endif %}
 class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdminListController
 {
-    /**
-     * @return AdminListConfiguratorInterface
-     */
-    public function createAdminListConfigurator()
+    public function createAdminListConfigurator(): AdminListConfiguratorInterface
     {
         return new {{ entity_class }}PageAdminListConfigurator($this->getEntityManager(), $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
     }
 
     /**
-     * The index action
-     *
      * @Route("/", name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         return parent::doIndexAction($this->getAdminListConfigurator($request), $request);
     }
 
     /**
-     * The add action
-     *
      * @Route("/add", name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_add", methods={"GET", "POST"})
-     * @return array
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request): Response
     {
         return parent::doAddAction($this->getAdminListConfigurator($request), null, $request);
     }
 
     /**
-     * The edit action
-     *
-     * @param int $id
-     *
      * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_edit", methods={"GET", "POST"})
-     *
-     * @return array
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
-     * The delete action
-     *
-     * @param int $id
-     *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_delete", methods={"GET", "POST"})
-     *
-     * @return array
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
-     * Export action
-     *
-     * @param $_format
-     *
      * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_export", methods={"GET", "POST"})
-     *
-     * @return array
      */
-    public function exportAction(Request $request, $_format)
+    public function exportAction(Request $request, string $_format): Response
     {
         return parent::doExportAction($this->getAdminListConfigurator($request), $_format, $request);
     }

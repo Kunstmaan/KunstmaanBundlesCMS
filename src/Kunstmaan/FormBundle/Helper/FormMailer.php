@@ -6,6 +6,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
@@ -20,15 +21,15 @@ class FormMailer implements FormMailerInterface
     /** @var EngineInterface|Environment */
     private $twig;
 
-    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
-    private $container;
+    /** @var RequestStack */
+    private $requestStack;
 
     /**
-     * @param Swift_Mailer       $mailer    The mailer service
-     * @param EngineInterface    $twig      The templating service
-     * @param ContainerInterface $container The container
+     * @param Swift_Mailer                    $mailer
+     * @param EngineInterface                 $twig
+     * @param ContainerInterface|RequestStack $requestStack
      */
-    public function __construct(Swift_Mailer $mailer, /*Environment*/ $twig, ContainerInterface $container)
+    public function __construct(Swift_Mailer $mailer, /*Environment*/ $twig, /*RequestStack*/ $requestStack)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -37,7 +38,12 @@ class FormMailer implements FormMailerInterface
             @trigger_error('Passing the "@templating" service as the 2nd argument is deprecated since KunstmaanFormBundle 5.4 and will be replaced by the Twig service in KunstmaanFormBundle 6.0. Injected the "@twig" service instead.', E_USER_DEPRECATED);
         }
 
-        $this->container = $container;
+        $this->requestStack = $requestStack;
+        if ($requestStack instanceof ContainerInterface) {
+            @trigger_error('Passing the container as the 3th argument is deprecated since KunstmaanFormBundle 5.4 and will be replaced by the "request_stack" service in KunstmaanFormBundle 6.0. Injected the "@request_stack" service instead.', E_USER_DEPRECATED);
+
+            $this->requestStack = $requestStack->get('request_stack');
+        }
     }
 
     /**
@@ -48,7 +54,7 @@ class FormMailer implements FormMailerInterface
      */
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject)
     {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
 
         $toArr = explode("\r\n", $to);
 

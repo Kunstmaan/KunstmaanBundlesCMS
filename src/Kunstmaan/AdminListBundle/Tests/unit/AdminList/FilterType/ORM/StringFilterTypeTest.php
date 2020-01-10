@@ -69,6 +69,6 @@ class StringFilterTypeTest extends BaseOrmFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:FilterType:stringFilter.html.twig', $this->object->getTemplate());
+        $this->assertEquals('@KunstmaanAdminList/FilterType/stringFilter.html.twig', $this->object->getTemplate());
     }
 }

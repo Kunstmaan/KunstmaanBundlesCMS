@@ -9,7 +9,6 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}PageRepository")
@@ -27,41 +26,27 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
 
     //%PagePartialFunctions.php.twig%
 
-    /**
-     * Returns the default backend form type for this page
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ entity_class }}PageAdminType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSearchType()
+    public function getSearchType(): string
     {
         return '{{ entity_class }}';
     }
 
-    /**
-     * @return array
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page'];
     }
 
-    public function getDefaultView()
+    public function getDefaultView(): array
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}Page{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }

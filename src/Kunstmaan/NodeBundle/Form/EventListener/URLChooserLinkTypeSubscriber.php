@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Form\EventListener;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Kunstmaan\NodeBundle\Validator\Constraint\ValidExternalUrl;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
@@ -52,7 +53,7 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
                     break;
                 case URLChooserType::EXTERNAL:
                     $attributes['placeholder'] = 'https://';
-                    $constraints[] = new Url();
+                    $constraints[] = new ValidExternalUrl();
 
                     break;
                 case URLChooserType::EMAIL:

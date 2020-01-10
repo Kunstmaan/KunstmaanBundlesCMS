@@ -9,6 +9,10 @@ parameters:
     kunstmaan_node.toolbar.collector.node.class: Kunstmaan\NodeBundle\Toolbar\NodeDataCollector
 
 services:
+    # Autowire aliases
+    Kunstmaan\NodeBundle\Helper\Services\PageCreatorService: '@kunstmaan_node.page_creator_service'
+    Kunstmaan\NodeBundle\Helper\NodeMenu: '@kunstmaan_node.node_menu'
+
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
         arguments:
@@ -223,4 +227,4 @@ services:
             - '@kunstmaan_node.node_menu'
             - '@router'
         tags:
-            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanNodeBundle:Toolbar:node.html.twig', id: kuma_node}
+            - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanNode/Toolbar/node.html.twig', id: kuma_node}

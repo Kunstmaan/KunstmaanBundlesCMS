@@ -443,11 +443,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 function ($name) use ($fields, $reservedFields, $generator) {
                     // The fields cannot exist in the reserved field list
                     if (in_array($name, $reservedFields)) {
-                        throw new \InvalidArgumentException(sprintf(
-                            'Field "%s" is already defined in the parent class',
-                            $name
-                        )
-                        );
+                        throw new \InvalidArgumentException(sprintf('Field "%s" is already defined in the parent class', $name));
                     }
 
                     // The fields cannot exist already

@@ -80,6 +80,8 @@ EOT
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
             ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : ''),
         ));
+
+        return 0;
     }
 
     /**

@@ -37,10 +37,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (array_key_exists('dashboard_route', $config)) {
+        if (\array_key_exists('dashboard_route', $config)) {
             $container->setParameter('kunstmaan_admin.dashboard_route', $config['dashboard_route']);
         }
-        if (array_key_exists('admin_password', $config)) {
+        if (\array_key_exists('admin_password', $config)) {
             $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
         }
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
@@ -78,7 +78,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $loader->load('console_listener.yml');
         }
 
-        if (0 !== count($config['menu_items'])) {
+        if (0 !== \count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
 
@@ -108,10 +108,12 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         // Use this node only if you don't want the global email address for the resetting email
         $fosUserConfig['resetting']['email']['from_email']['address'] = 'kunstmaancms@myproject.dev';
         $fosUserConfig['resetting']['email']['from_email']['sender_name'] = 'KunstmaanCMS';
-        $fosUserConfig['resetting']['email']['template'] = 'FOSUserBundle:Resetting:email.txt.twig';
+        $fosUserConfig['resetting']['email']['template'] = '@FOSUser/Resetting/email.txt.twig';
         $fosUserConfig['resetting']['form']['type'] = ResettingFormType::class;
         $fosUserConfig['resetting']['form']['name'] = 'fos_user_resetting_form';
         $fosUserConfig['resetting']['form']['validation_groups'] = ['ResetPassword'];
+
+        $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
         $monologConfig['handlers']['main']['type'] = 'rotating_file';
@@ -119,11 +121,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $monologConfig['handlers']['main']['level'] = 'debug';
         $container->prependExtensionConfig('monolog', $monologConfig);
 
-        $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
+        $twigConfig['paths'][] = ['value' => \dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $frameworkConfig['templating']['engines'] = ['twig'];
-        $container->prependExtensionConfig('framework', $frameworkConfig);
+        // NEXT_MAJOR: Remove templating dependency
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);

@@ -16,6 +16,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Twig\Environment;
+use Twig\Lexer;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Class that contains all common generator logic.
@@ -447,8 +450,8 @@ class KunstmaanGenerator extends Generator
      */
     public function renderTwig($template, array $parameters, $sourceDir)
     {
-        $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(array($sourceDir)), array(
+        $twig = new Environment(
+            new FilesystemLoader(array($sourceDir)), array(
                 'debug' => true,
                 'cache' => false,
                 'strict_variables' => true,
@@ -457,7 +460,7 @@ class KunstmaanGenerator extends Generator
         );
 
         // Ruby erb template syntax
-        $lexer = new \Twig_Lexer(
+        $lexer = new Lexer(
             $twig, array(
                 'tag_comment' => array('<%#', '%>'),
                 'tag_block' => array('<%', '%>'),

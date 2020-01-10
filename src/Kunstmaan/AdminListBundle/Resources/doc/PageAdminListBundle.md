@@ -79,7 +79,7 @@ namespace YourProject\WebsiteBundle\Controller;
 use YourProject\WebsiteBundle\AdminList\ProjectPageAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

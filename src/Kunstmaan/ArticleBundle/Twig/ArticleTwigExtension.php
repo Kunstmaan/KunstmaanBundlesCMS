@@ -6,12 +6,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Extension for article bundle.
+ *
+ * @final since 5.4
  */
-class ArticleTwigExtension extends Twig_Extension
+class ArticleTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManagerInterface
@@ -47,16 +50,16 @@ class ArticleTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_article_tag_path', array($this, 'getArticleTagRouterPath')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_article_category_path', array($this, 'getArticleCategoryRouterPath')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_article_categories', array($this, 'getCategories')
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'get_article_tags', array($this, 'getTags')
             ),
         );

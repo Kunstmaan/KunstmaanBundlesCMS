@@ -38,7 +38,7 @@ class MaskBuilder extends AbstractMaskBuilder
     public function getPattern()
     {
         $pattern = self::ALL_OFF;
-        $length = strlen($pattern);
+        $length = \strlen($pattern);
         $bitmask = str_pad(decbin($this->mask), $length, '0', STR_PAD_LEFT);
 
         for ($i = $length - 1; $i >= 0; --$i) {
@@ -66,22 +66,22 @@ class MaskBuilder extends AbstractMaskBuilder
      */
     public static function getCode($mask)
     {
-        if (!is_int($mask)) {
+        if (!\is_int($mask)) {
             throw new InvalidArgumentException('$mask must be an integer.');
         }
 
-        $reflection = new \ReflectionClass(get_called_class());
+        $reflection = new \ReflectionClass(\get_called_class());
         foreach ($reflection->getConstants() as $name => $cMask) {
-            if (0 !== strpos($name, 'MASK_')) {
+            if (0 !== strncmp($name, 'MASK_', 5)) {
                 continue;
             }
 
             if ($mask === $cMask) {
-                if (!defined($cName = 'static::CODE_'.substr($name, 5))) {
+                if (!\defined($cName = 'static::CODE_'.substr($name, 5))) {
                     throw new \RuntimeException('There was no code defined for this mask.');
                 }
 
-                return constant($cName);
+                return \constant($cName);
             }
         }
 
@@ -99,9 +99,9 @@ class MaskBuilder extends AbstractMaskBuilder
      */
     public function has($mask)
     {
-        if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
-            $mask = constant($name);
-        } elseif (!is_int($mask)) {
+        if (\is_string($mask) && \defined($name = 'static::MASK_'.strtoupper($mask))) {
+            $mask = \constant($name);
+        } elseif (!\is_int($mask)) {
             throw new InvalidArgumentException('$mask must be an integer.');
         }
 
@@ -119,15 +119,15 @@ class MaskBuilder extends AbstractMaskBuilder
      */
     public function resolveMask($code)
     {
-        if (is_string($code)) {
-            if (!defined($name = sprintf('static::MASK_%s', strtoupper($code)))) {
+        if (\is_string($code)) {
+            if (!\defined($name = sprintf('static::MASK_%s', strtoupper($code)))) {
                 throw new \InvalidArgumentException(sprintf('The code "%s" is not supported', $code));
             }
 
-            return constant($name);
+            return \constant($name);
         }
 
-        if (!is_int($code)) {
+        if (!\is_int($code)) {
             throw new \InvalidArgumentException('$code must be an integer.');
         }
 

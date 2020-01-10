@@ -8,14 +8,14 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RequestContext;
 
 class SlugRouterTest extends TestCase
 {
     public function testGenerateMultiLanguage()
     {
-        $request = $this->getRequest();
-        $container = $this->getContainer($request, true);
-        $object = new SlugRouter($container);
+        $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1));
         $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/en/some-uri', $url);
 
@@ -25,9 +25,7 @@ class SlugRouterTest extends TestCase
 
     public function testGenerateSingleLanguage()
     {
-        $request = $this->getRequest();
-        $container = $this->getContainer($request);
-        $object = new SlugRouter($container);
+        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1));
         $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/some-uri', $url);
 
@@ -37,20 +35,18 @@ class SlugRouterTest extends TestCase
 
     public function testSetContext()
     {
-        $context = $this->createMock('Symfony\Component\Routing\RequestContext');
-        $container = $this->getContainer(null);
-        $object = new SlugRouter($container);
+        $context = $this->createMock(RequestContext::class);
+        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack());
         $object->setContext($context);
         $this->assertEquals($context, $object->getContext());
     }
 
     public function testMatchWithNodeTranslation()
     {
-        $request = $this->getRequest();
         $nodeTranslation = new NodeTranslation();
-        $container = $this->getContainer($request, true, $nodeTranslation);
-        $object = new SlugRouter($container);
+        $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1), $this->getEntityManager($nodeTranslation));
         $result = $object->match('/en/some-uri');
+
         $this->assertEquals('some-uri', $result['url']);
         $this->assertEquals('en', $result['_locale']);
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
@@ -59,32 +55,15 @@ class SlugRouterTest extends TestCase
     public function testMatchWithoutNodeTranslation()
     {
         $this->expectException(ResourceNotFoundException::class);
-        $request = $this->getRequest();
-        $container = $this->getContainer($request);
-        $object = new SlugRouter($container);
+
+        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1), $this->getEntityManager());
         $object->match('/en/some-uri');
     }
 
-    private function getContainer($request, $multiLanguage = false, $nodeTranslation = null)
+    private function getRequestStack($callCount = 0)
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $serviceMap = array(
-            array('request_stack', 1, $this->getRequestStack($request)),
-            array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration($multiLanguage)),
-            array('doctrine.orm.entity_manager', 1, $this->getEntityManager($nodeTranslation)),
-        );
-
-        $container
-            ->method('get')
-            ->willReturnMap($serviceMap);
-
-        return $container;
-    }
-
-    private function getRequestStack($request)
-    {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->exactly($callCount))->method('getMasterRequest')->willReturn(Request::create('http://domain.tld/'));
 
         return $requestStack;
     }
@@ -114,11 +93,6 @@ class SlugRouterTest extends TestCase
             ->willReturn(null);
 
         return $domainConfiguration;
-    }
-
-    private function getRequest($url = 'http://domain.tld/')
-    {
-        return Request::create($url);
     }
 
     private function getEntityManager($nodeTranslation = null)

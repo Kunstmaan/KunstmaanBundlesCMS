@@ -1,25 +1,14 @@
-    /**
-     * Returns the default backend form type for this page.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
         return [
 {% for section in sections %}
@@ -28,20 +17,12 @@
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): string
     {
         return ['{% if not isV4 %}{{ bundle }}:{%endif%}{{ template }}'];
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}Pages/Common{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }

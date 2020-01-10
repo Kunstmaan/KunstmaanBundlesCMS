@@ -74,7 +74,7 @@ class DateFilterTypeTest extends BaseOrmFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('KunstmaanAdminListBundle:FilterType:dateFilter.html.twig', $this->object->getTemplate());
+        $this->assertEquals('@KunstmaanAdminList/FilterType/dateFilter.html.twig', $this->object->getTemplate());
     }
 
     /**

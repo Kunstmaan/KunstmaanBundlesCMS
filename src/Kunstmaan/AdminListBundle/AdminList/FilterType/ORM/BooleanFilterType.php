@@ -44,6 +44,6 @@ class BooleanFilterType extends AbstractORMFilterType
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminListBundle:FilterType:booleanFilter.html.twig';
+        return '@KunstmaanAdminList/FilterType/booleanFilter.html.twig';
     }
 }

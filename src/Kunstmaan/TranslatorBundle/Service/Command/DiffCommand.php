@@ -30,13 +30,15 @@ class DiffCommand extends GenerateCommand
         if (!$up && !$down) {
             $output->writeln('No changes detected in your mapping information.', 'ERROR');
 
-            return;
+            return 0;
         }
 
         $version = date('YmdHis');
         $path = $this->generateMigration($configuration, $input, $version, $up, $down);
 
         $output->writeln(sprintf('Generated new migration class to "<info>%s</info>" from schema differences.', $path));
+
+        return 0;
     }
 
     private function buildCodeFromSql(Configuration $configuration, array $sql)

@@ -9,6 +9,7 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class SlugListener
@@ -43,12 +44,16 @@ class SlugListener
     }
 
     /**
-     * @param FilterControllerEvent $event
+     * @param FilterControllerEvent|ControllerEvent $event
      *
      * @throws \Exception
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController($event)
     {
+        if (!$event instanceof FilterControllerEvent && !$event instanceof ControllerEvent) {
+            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ControllerEvent::class) ? ControllerEvent::class : FilterControllerEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
+        }
+
         $request = $event->getRequest();
 
         // Check if the event has a nodeTranslation, if not this method can be skipped

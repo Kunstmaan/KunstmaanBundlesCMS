@@ -37,6 +37,17 @@ class FieldTest extends TestCase
         $this->assertEquals('template.html.twig', $object->getTemplate());
     }
 
+    public function testConstructorDefaultValues()
+    {
+        $object = new Field('name', 'header');
+
+        $this->assertEquals('name', $object->getName());
+        $this->assertEquals('header', $object->getHeader());
+        $this->assertFalse($object->isSortable());
+        $this->assertNull($object->getTemplate());
+        $this->assertNull($object->getAlias());
+    }
+
     public function testGetName()
     {
         $this->assertEquals('name', $this->object->getName());

@@ -62,6 +62,8 @@ EOT
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $output);
+
+        return 0;
     }
 
     /**

@@ -79,5 +79,7 @@ class SetupIndexCommand extends ContainerAwareCommand
             $searchConfiguration->createIndex();
             $output->writeln('Index created : ' . $alias);
         }
+
+        return 0;
     }
 }

@@ -154,7 +154,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'KunstmaanMediaBundle:Media\RemoteAudio:show.html.twig';
+        return '@KunstmaanMedia/Media/RemoteAudio/show.html.twig';
     }
 
     /**

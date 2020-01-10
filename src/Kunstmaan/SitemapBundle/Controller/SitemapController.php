@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\SitemapBundle\Controller;
 
+use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,9 +31,13 @@ class SitemapController extends Controller
         $nodeMenu->setIncludeHiddenFromNav(true);
         $nodeMenu->setCurrentNode(null);
 
+        $event = new PreSitemapRenderEvent($locale);
+        $this->get('event_dispatcher')->dispatch(PreSitemapRenderEvent::NAME, $event);
+
         return array(
             'nodemenu' => $nodeMenu,
             'locale' => $locale,
+            'extraItems' => $event->getExtraItems(),
         );
     }
 

@@ -41,7 +41,7 @@ class TabTest extends TestCase
         $this->assertEquals('Title', $tab->getTitle());
         $tab->setTitle('Title 2');
 
-        $this->assertEquals('KunstmaanAdminBundle:Tabs:tab.html.twig', $tab->getTemplate());
+        $this->assertEquals('@KunstmaanAdmin/Tabs/tab.html.twig', $tab->getTemplate());
         $tab->setTemplate('new.twig');
         $this->assertEquals('new.twig', $tab->getTemplate());
         $this->assertEquals(666, $tab->getIdentifier());

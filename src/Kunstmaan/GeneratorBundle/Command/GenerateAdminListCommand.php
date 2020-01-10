@@ -99,6 +99,8 @@ EOT
         $entityClass = array_pop($parts);
 
         $this->updateRouting($questionHelper, $input, $output, $bundle, $entityClass);
+
+        return 0;
     }
 
     /**
