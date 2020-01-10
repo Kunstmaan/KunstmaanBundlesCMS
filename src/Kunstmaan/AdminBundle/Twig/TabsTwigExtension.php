@@ -36,7 +36,7 @@ class TabsTwigExtension extends AbstractExtension
      */
     public function renderWidget(Environment $env, TabPane $tabPane, $options = array(), $template = '@KunstmaanAdmin/TabsTwigExtension/widget.html.twig')
     {
-        $template = $env->loadTemplate($template);
+        $template = $env->load($template);
 
         return $template->render(array_merge($options, array(
             'tabPane' => $tabPane,

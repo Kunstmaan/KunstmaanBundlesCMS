@@ -35,7 +35,7 @@ class ToolbarTwigExtension extends AbstractExtension
      */
     public function renderBlock(Environment $env, $template, $block, $context)
     {
-        $template = $env->loadTemplate($template);
+        $template = $env->load($template);
         $context = $env->mergeGlobals($context);
 
         return $template->renderBlock($block, $context);

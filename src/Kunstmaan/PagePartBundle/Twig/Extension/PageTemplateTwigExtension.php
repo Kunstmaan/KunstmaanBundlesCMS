@@ -51,7 +51,7 @@ class PageTemplateTwigExtension extends AbstractExtension
 
         $pageTemplate = $pageTemplates[$this->getPageTemplate($page)];
 
-        $template = $env->loadTemplate($pageTemplate->getTemplate());
+        $template = $env->load($pageTemplate->getTemplate());
 
         return $template->render(array_merge($parameters, $twigContext));
     }
@@ -80,7 +80,7 @@ class PageTemplateTwigExtension extends AbstractExtension
 
         $pageTemplate = $pageTemplates[$this->getPageTemplate($page)];
 
-        $template = $env->loadTemplate($parameters['template']);
+        $template = $env->load($parameters['template']);
 
         return $template->render(array_merge(['pageTemplate' => $pageTemplate], $twigContext));
     }

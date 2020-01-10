@@ -48,7 +48,7 @@ class MultiDomainAdminTwigExtension extends AbstractExtension
      */
     public function renderWidget(Environment $env, $route, array $parameters = [])
     {
-        $template = $env->loadTemplate(
+        $template = $env->load(
             '@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig'
         );
 
