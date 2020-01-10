@@ -8,6 +8,9 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @final since 5.4
+ */
 class MenuTwigExtension extends AbstractExtension
 {
     /**

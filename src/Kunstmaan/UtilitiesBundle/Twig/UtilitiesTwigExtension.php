@@ -6,6 +6,9 @@ use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
+/**
+ * @final since 5.4
+ */
 class UtilitiesTwigExtension extends AbstractExtension
 {
     /**

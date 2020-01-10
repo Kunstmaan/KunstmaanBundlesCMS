@@ -16,6 +16,8 @@ use Twig\TwigFunction;
 
 /**
  * Extension to fetch node / translation by page in Twig templates
+ *
+ * @final since 5.4
  */
 class NodeTwigExtension extends AbstractExtension
 {

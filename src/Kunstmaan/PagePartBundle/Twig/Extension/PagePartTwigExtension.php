@@ -13,6 +13,8 @@ use Twig\TwigFunction;
 
 /**
  * PagePartTwigExtension
+ *
+ * @final since 5.4
  */
 class PagePartTwigExtension extends AbstractExtension
 {

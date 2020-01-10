@@ -10,6 +10,8 @@ use Twig\TwigFunction;
 
 /**
  * AdminPermissionsTwigExtension
+ *
+ * @final since 5.4
  */
 class AdminPermissionsTwigExtension extends AbstractExtension
 {
