@@ -35,6 +35,20 @@ class RenderService
             $template = 'KunstmaanMenuBundle::menu-item.html.twig';
         }
 
+        $hasActiveChild = false;
+        if ($node['__children']) {
+            foreach ($node['__children'] as $childNode) {
+                if ($childNode['type'] == MenuItem::TYPE_PAGE_LINK) {
+                    $childUrl = $this->router->generate('_slug', array('url' => $childNode['nodeTranslation']['url']));
+                    if ($this->router->getContext()->getPathInfo() == $childUrl) {
+                        $hasActiveChild = true;
+
+                        break;
+                    }
+                }
+            }
+        }
+
         $active = false;
         if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
             $url = $this->router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
@@ -62,6 +76,7 @@ class RenderService
             'options' => $options,
             'title' => $title,
             'active' => $active,
+            'hasActiveChild' => $hasActiveChild,
         ));
     }
 }
