@@ -116,7 +116,7 @@ class FolderController extends Controller
 
         if (\is_null($parentFolder)) {
             $this->addFlash(
-                FlashTypes::ERROR,
+                FlashTypes::DANGER,
                 $this->get('translator')->trans('media.folder.delete.failure.text', array(
                     '%folder%' => $folderName,
                 ))

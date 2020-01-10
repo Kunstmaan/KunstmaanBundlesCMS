@@ -395,7 +395,7 @@ class MediaController extends Controller
 
             if ($isInModal) {
                 $this->addFlash(
-                    FlashTypes::ERROR,
+                    FlashTypes::DANGER,
                     $this->get('translator')->trans(
                         'media.flash.not_created',
                         [
