@@ -23,7 +23,7 @@ parameters:
 services:
     kunstmaan_admin.menubuilder:
         class: '%kunstmaan_admin.menubuilder.class%'
-        arguments: ['@service_container']
+        arguments: ['@request_stack']
 
     kunstmaan_admin.admin_panel:
         class: '%kunstmaan_admin.admin_panel.class%'
