@@ -377,7 +377,7 @@ class PermissionAdminTest extends TestCase
 
         $roles = $object->getManageableRolesForPages();
         $this->assertCount(1, $roles);
-        $this->assertTrue(in_array('USER', $roles));
+        $this->assertTrue(\in_array('USER', $roles));
     }
 
     /**

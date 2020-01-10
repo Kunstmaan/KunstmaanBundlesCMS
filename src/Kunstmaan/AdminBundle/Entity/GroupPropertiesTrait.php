@@ -232,7 +232,7 @@ trait GroupPropertiesTrait
      */
     public function isGroupValid(ExecutionContextInterface $context)
     {
-        if (!(count($this->getRoles()) > 0)) {
+        if (!(\count($this->getRoles()) > 0)) {
             $context
                 ->buildViolation('errors.group.selectone', array())
                 ->atPath('rolesCollection')

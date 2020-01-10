@@ -19,7 +19,7 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (is_null($parent)) {
+        if (\is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanAdminBundle_modules')

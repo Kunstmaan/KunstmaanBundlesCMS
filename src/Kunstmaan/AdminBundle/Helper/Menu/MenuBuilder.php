@@ -95,7 +95,7 @@ class MenuBuilder
     {
         $result = array();
         $current = $this->getCurrent();
-        while (!is_null($current)) {
+        while (!\is_null($current)) {
             array_unshift($result, $current);
             $current = $current->getParent();
         }
@@ -111,7 +111,7 @@ class MenuBuilder
     public function getLowestTopChild()
     {
         $current = $this->getCurrent();
-        while (!is_null($current)) {
+        while (!\is_null($current)) {
             if ($current instanceof TopMenuItem) {
                 return $current;
             }
@@ -128,7 +128,7 @@ class MenuBuilder
      */
     public function getTopChildren()
     {
-        if (is_null($this->topMenuItems)) {
+        if (\is_null($this->topMenuItems)) {
             /* @var $request Request */
             $request = $this->container->get('request_stack')->getCurrentRequest();
             $this->topMenuItems = array();
@@ -180,7 +180,7 @@ class MenuBuilder
 
         if (isset($this->adaptors)) {
             krsort($this->adaptors);
-            $this->sorted = call_user_func_array('array_merge', $this->adaptors);
+            $this->sorted = array_merge(...$this->adaptors);
         }
     }
 }

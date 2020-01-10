@@ -111,7 +111,7 @@ class FormWidget implements FormWidgetInterface
      */
     protected function getFormHelper()
     {
-        if (is_null($this->formHelper)) {
+        if (\is_null($this->formHelper)) {
             $this->formHelper = new FormHelper();
         }
 

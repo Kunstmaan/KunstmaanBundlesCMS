@@ -21,7 +21,7 @@ class FormHelper
     {
         $errors = $formView->vars['errors'];
 
-        if (is_object($errors) && $errors instanceof \Traversable) {
+        if (\is_object($errors) && $errors instanceof \Traversable) {
             $errors = iterator_to_array($errors);
         }
 
@@ -50,14 +50,14 @@ class FormHelper
      */
     public function getRecursiveErrorMessages($formViews, array &$errors = array())
     {
-        if (is_array($formViews)) {
+        if (\is_array($formViews)) {
             foreach ($formViews as $formView) {
                 $this->getRecursiveErrorMessages($formView, $errors);
             }
         } else {
             $viewErrors = $formViews->vars['errors'];
 
-            if (is_object($viewErrors) && $viewErrors instanceof \Traversable) {
+            if (\is_object($viewErrors) && $viewErrors instanceof \Traversable) {
                 $viewErrors = iterator_to_array($viewErrors);
             }
 

@@ -134,11 +134,11 @@ class SessionSecurityListener
     {
         if (!$this->ip) {
             $forwarded = $request->server->get('HTTP_X_FORWARDED_FOR');
-            if (strlen($forwarded) > 0) {
+            if (\strlen($forwarded) > 0) {
                 $parts = explode(',', $forwarded);
                 $parts = array_map('trim', $parts);
                 $parts = array_filter($parts);
-                if (count($parts) > 0) {
+                if (\count($parts) > 0) {
                     $ip = $parts[0];
                 }
             }

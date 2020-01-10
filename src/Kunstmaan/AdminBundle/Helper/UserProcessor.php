@@ -43,7 +43,7 @@ class UserProcessor
      */
     public function processRecord(array $record)
     {
-        if (is_null($this->user)) {
+        if (\is_null($this->user)) {
             /* @var TokenStorageInterface $securityTokenStorage */
             $securityTokenStorage = $this->container->get('security.token_storage');
             if (($securityTokenStorage !== null) && ($securityTokenStorage->getToken() !== null) && ($securityTokenStorage->getToken()->getUser() instanceof \Symfony\Component\Security\Core\User\AdvancedUserInterface)) {

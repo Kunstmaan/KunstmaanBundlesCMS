@@ -59,12 +59,12 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if ($exception instanceof HttpExceptionInterface) {
             $uri = $request->getUri();
 
-            if (count($this->excludes) > 0) {
+            if (\count($this->excludes) > 0) {
                 $excludes = array_filter($this->excludes, function ($pattern) use ($uri) {
                     return preg_match($pattern, $uri);
                 });
 
-                if (count($excludes) > 0) {
+                if (\count($excludes) > 0) {
                     return;
                 }
             }

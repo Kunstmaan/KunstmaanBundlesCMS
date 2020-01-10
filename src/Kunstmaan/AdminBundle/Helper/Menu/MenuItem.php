@@ -251,7 +251,7 @@ class MenuItem
      */
     public function getChildren()
     {
-        if (is_null($this->children)) {
+        if (\is_null($this->children)) {
             $this->children = $this->menu->getChildren($this);
         }
 

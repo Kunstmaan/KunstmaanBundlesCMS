@@ -308,11 +308,11 @@ class PermissionAdmin
                 }
                 switch ($type) {
                     case self::ADD:
-                        $mask = $mask | $maskChange->get();
+                        $mask |= $maskChange->get();
 
                         break;
                     case self::DELETE:
-                        $mask = $mask & ~$maskChange->get();
+                        $mask &= ~$maskChange->get();
 
                         break;
                 }
@@ -341,10 +341,8 @@ class PermissionAdmin
         /* @var $ace AuditableEntryInterface */
         foreach ($objectAces as $index => $ace) {
             $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                if ($securityIdentity->getRole() == $role) {
-                    return $index;
-                }
+            if (($securityIdentity instanceof RoleSecurityIdentity) && $securityIdentity->getRole() == $role) {
+                return $index;
             }
         }
 

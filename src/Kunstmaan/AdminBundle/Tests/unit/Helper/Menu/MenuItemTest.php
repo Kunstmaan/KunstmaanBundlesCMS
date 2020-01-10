@@ -139,7 +139,7 @@ class MenuItemTest extends TestCase
         /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getChildren();
-        $this->assertEquals(2, count($result));
+        $this->assertEquals(2, \count($result));
         $this->assertEquals($children, $result);
     }
 
@@ -161,7 +161,7 @@ class MenuItemTest extends TestCase
         /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getNavigationChildren();
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertEquals([$child1], $result);
     }
 
@@ -181,7 +181,7 @@ class MenuItemTest extends TestCase
         /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getTopChildren();
-        $this->assertEquals(1, count($result));
+        $this->assertEquals(1, \count($result));
         $this->assertEquals([$child2], $result);
     }
 

@@ -92,7 +92,7 @@ class AclManager
         do {
             /* @var AclChangeset $changeset */
             $changeset = $aclRepo->findNewChangeset();
-            if (is_null($changeset)) {
+            if (\is_null($changeset)) {
                 break;
             }
 
@@ -110,13 +110,13 @@ class AclManager
         $aclChangeset->setPid(getmypid());
         $aclChangeset->setStatus(AclChangeset::STATUS_RUNNING);
         $this->em->persist($aclChangeset);
-        $this->em->flush($aclChangeset);
+        $this->em->flush();
 
         $entity = $this->em->getRepository($aclChangeset->getRefEntityName())->find($aclChangeset->getRefId());
         $this->permissionAdmin->applyAclChangeset($entity, $aclChangeset->getChangeset());
 
         $aclChangeset->setStatus(AclChangeset::STATUS_FINISHED);
         $this->em->persist($aclChangeset);
-        $this->em->flush($aclChangeset);
+        $this->em->flush();
     }
 }

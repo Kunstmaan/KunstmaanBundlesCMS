@@ -46,7 +46,7 @@ class DateByLocaleExtension extends AbstractExtension
             'full' => DateFormatter::FULL,
         );
 
-        if (is_null($pattern)) {
+        if (\is_null($pattern)) {
             $dateFormatter = DateFormatter::create(
                 $locale,
                 $values[$dateType],
