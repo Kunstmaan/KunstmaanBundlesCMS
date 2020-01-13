@@ -17,7 +17,7 @@ settings:
     import_translations: Importeer
     import_file: Import from spreadsheet
     actions: Acties
-    export_translations: Exporteer naar CSV
+    export_translations: Export to
     not_live_warning: "De live vertalingen zijn niet up-to-date. Klik op 'Live herladen' om deze te updaten."
     choose_language: "Kies een taal"
     succesful_added: "Vertaling met succes gemaakt"
@@ -57,6 +57,7 @@ kuma_translator:
       text: Tekst
       locale: Lokaal
       status: Status
+#Toolbar
 toolbar:
   translations:
     title: Vertalingen
