@@ -71,6 +71,7 @@ class TranslatorCommandController extends Controller
 
     /**
      * @Route("/export", name="KunstmaanTranslatorBundle_command_export")
+     *
      * @deprecated Using the "KunstmaanTranslatorBundle_command_export" route is deprecated since KunstmaanTranslatorBundle 5.4 and will be removed in KunstmaanTranslatorBundle 6.0. Use the default adminlist bundle export functionality instead.
      */
     public function exportAction()
