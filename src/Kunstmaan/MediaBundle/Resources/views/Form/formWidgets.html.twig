@@ -125,7 +125,7 @@
                     <figure class="thumbnail">
                         {% if(value.ent is defined) %}
                             {% set media = value.ent %}
-                            <div class="crop-path-container" data-crop-url="{{ path('KunstmaanMediaBundle_media_crop_on_the_fly', {'mediaId': media.id}) }}"></div>
+                            <div class="crop-path-container" data-crop-url="{{ path('KunstmaanMediaBundle_media_crop_on_the_fly', {'mediaLinkId': form.parent.vars.value.id}) }}"></div>
                             {% set handler = mediamanager.getHandler(media) %}
                             {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                             {% if imageurl is not empty and media.location == 'local' %}
