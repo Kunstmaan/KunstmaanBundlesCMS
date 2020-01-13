@@ -14,7 +14,8 @@ class CroppableMediaLinkAdminType extends AbstractType
     {
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
-            'show_cropper_modal' => true
+            'show_cropper_modal' => true,
+            'mediatype' => 'image'
         ]);
     }
 
