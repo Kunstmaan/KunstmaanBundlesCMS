@@ -2,20 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Twig;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
-use Kunstmaan\MediaBundle\Entity\ConfigurableMediaInterface;
+use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Helper\ManipulateImageService;
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
-use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class MediaTwigExtension extends AbstractExtension
@@ -40,36 +29,18 @@ class MediaTwigExtension extends AbstractExtension
         ];
     }
 
-    public function getFilters()
+    public function getCroppedVersion(CroppableMediaLink $croppableMediaLink)
     {
-        return [
-            new TwigFilter(
-                'strip_letters',
-                [$this, 'stripLetters']
-            ),
+        $runTimeConfig = [
+            'crop' => [
+                'start' => [0, 0],
+                'size' => [5000, 5000],
+            ],
         ];
-    }
-
-    public function getCroppedVersion($pagePart, $mediaGetter)
-    {
-        if ($pagePart instanceof ConfigurableMediaInterface) {
-            $runTimeConfig = [
-                'crop' => [
-                    'start' => [0, 0],
-                    'size' => [5000, 5000],
-                ],
-            ];
-            if ($pagePart->getRunTimeConfig() !== null) {
-                $runTimeConfig = unserialize($pagePart->getRunTimeConfig());
-            }
-
-            return $this->manipulateImageService->manipulateOnTheFly($pagePart->$mediaGetter(), $runTimeConfig);
+        if ($croppableMediaLink->getRunTimeConfig() !== null) {
+            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig(), false);
         }
 
-        throw new \Exception('PagePart not configured correctly to get manipulated version');
-    }
-
-    public function stripLetters($string) {
-        return preg_replace('/[^0-9+]/', '', $string);
+        return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink->getMedia(), $runTimeConfig);
     }
 }

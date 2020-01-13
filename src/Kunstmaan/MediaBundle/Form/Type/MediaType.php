@@ -78,6 +78,7 @@ class MediaType extends AbstractType
                 'chooser' => 'KunstmaanMediaBundle_chooser',
                 'mediatype' => null,
                 'current_value_container' => new CurrentValueContainer(),
+                'show_cropper_modal' => false,
             ]
         );
     }
@@ -98,5 +99,6 @@ class MediaType extends AbstractType
         $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
         $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
+        $view->vars['showCropperModal'] = $options['show_cropper_modal'];
     }
 }
