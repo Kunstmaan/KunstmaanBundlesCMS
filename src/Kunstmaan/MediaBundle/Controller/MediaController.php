@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Controller;
 use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\ConfigurableMediaInterface;
+use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
@@ -334,18 +335,14 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param         $folderId
-     * @return JsonResponse
-     *
-     * @Route("/crop_on_the_fly/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_crop_on_the_fly")
+     * @Route("/crop_on_the_fly/{mediaLinkId}", requirements={"mediaLinkId" = "\d+"}, name="KunstmaanMediaBundle_media_crop_on_the_fly")
      */
-    public function cropOnTheFlyAction(Request $request, $mediaId)
+    public function cropOnTheFlyAction(Request $request, $mediaLinkId): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        /* @var CroppableMediaLink $mediaLink */
+        $mediaLink = $em->getRepository(CroppableMediaLink::class)->find($mediaLinkId);
 
         $start = $request->query->get('start', '0,0');
         $end = $request->query->get('end', '5000,5000');
@@ -363,9 +360,7 @@ class MediaController extends Controller
             ],
         ];
 
-        $pagePartRefId = $request->query->get('pp_ref_id', null);
-
-        $url = $this->get(ManipulateImageService::class)->manipulateOnTheFly($media, $runtimeConfig, $pagePartRefId);
+        $url = $this->get(ManipulateImageService::class)->manipulateOnTheFly($mediaLink, $runtimeConfig);
 
         return new RedirectResponse($url);
     }
