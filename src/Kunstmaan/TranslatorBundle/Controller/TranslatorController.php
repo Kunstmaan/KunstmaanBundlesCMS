@@ -228,6 +228,20 @@ class TranslatorController extends AdminListController
     }
 
     /**
+     * The export action
+     *
+     * @param string $_format
+     *
+     * @Route("/export.{_format}", requirements={"_format" = "csv|ods|xlsx"}, name="KunstmaanTranslatorBundle_settings_translations_export", methods={"GET", "POST"})
+     *
+     * @return array
+     */
+    public function exportAction(Request $request, $_format)
+    {
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+    }
+
+    /**
      * @param $domain
      * @param $locale
      * @param $keyword

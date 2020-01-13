@@ -6,6 +6,8 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineDBALAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ChangeableLimitInterface;
+use Kunstmaan\AdminListBundle\AdminList\Field;
+use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
 use Kunstmaan\AdminListBundle\Traits\ChangeableLimitTrait;
@@ -27,6 +29,11 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      * @var string
      */
     protected $locale;
+
+    /**
+     * @var Field[]
+     */
+    private $exportFields = [];
 
     /**
      * @param Connection $connection
@@ -64,6 +71,31 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         $this->addField('status', 'kuma_translator.adminlist.header.status', true);
     }
 
+    public function getExportFields()
+    {
+        if (empty($this->exportFields)) {
+            $this->addExportField('domain', 'kuma_translator.adminlist.header.domain');
+            $this->addExportField('keyword', 'kuma_translator.adminlist.header.keyword');
+
+            $this->locales = array_unique($this->locales);
+            // Field building hack...
+            foreach ($this->locales as $locale) {
+                $this->addExportField($locale, strtoupper($locale));
+            }
+
+            $this->addExportField('status', 'kuma_translator.adminlist.header.status');
+        }
+
+        return $this->exportFields;
+    }
+
+    public function addExportField($name, $header, $template = null, FieldAlias $alias = null)
+    {
+        $this->exportFields[] = new Field($name, $header);
+
+        return $this;
+    }
+
     /**
      * @return bool
      */
@@ -88,6 +120,14 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      * @return bool
      */
     public function canEditInline($item)
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canExport()
     {
         return true;
     }

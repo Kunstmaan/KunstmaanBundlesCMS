@@ -17,7 +17,7 @@ settings:
     import_translations: Importálás
     import_file: Importálás táblázatból
     actions: Műveletek
-    export_translations: Exportálás CSV fáljba
+    export_translations: Exportálás
     not_live_warning: "A fordítás nem azonnali idejű!"
     choose_language: "Válassz egy nyelvet"
     succesful_added: "Sikeresen hozzá lett adva."

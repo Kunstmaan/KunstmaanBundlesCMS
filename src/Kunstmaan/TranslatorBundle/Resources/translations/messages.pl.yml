@@ -17,7 +17,7 @@ settings:
     import_translations: Importuj
     import_file: Import from spreadsheet
     actions: Akcje
-    export_translations: Eksportuj do CSV
+    export_translations: Eksportuj do
     not_live_warning: "Tłumaczenia aktywnej strony nie zostały zaktualizowane, wybierz „odśwież” aby wgrać ostatnie zmiany tłumaczeń."
     choose_language: "Wybierz język"
     succesful_added: "Tłumaczenie zostało pomyślnie utworzone"
