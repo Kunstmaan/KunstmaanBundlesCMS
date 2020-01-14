@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\MediaBundle\Entity\ConfigurableMediaInterface;
 use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
