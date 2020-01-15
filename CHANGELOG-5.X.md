@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.3.9 / 2020-01-15
+
+* [FormBundle] fix export formsubmissions if pagepart order got changed on the form page [#2613](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2613) ([@Numkil](https://github.com/Numkil)) 
+* [NodeBundle] Fixed default page icon [#2605](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2605) ([@jazzzpor](https://github.com/jazzzpor)) 
+* [NodeBundle] added translations for  URL-chooser  and  Choose [#2597](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2597) ([@jazzzpor](https://github.com/jazzzpor)) 
+
 ## 5.3.8 / 2019-12-4
 
 * [NodeBundle] Fix incompatibility with framework-extra-bundle 5.5.* [#2594](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2594) ([@acrobat](https://github.com/acrobat)) 
