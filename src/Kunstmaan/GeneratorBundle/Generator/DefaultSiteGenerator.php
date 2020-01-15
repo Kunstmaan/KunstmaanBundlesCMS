@@ -446,10 +446,16 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             return $this->container->getParameter('kunstmaan_admin.multi_language');
         }
 
+        return preg_match('/_locale:/i', $this->getRoutingFile());
+    }
+
+    private function getRoutingFile()
+    {
         // This is a pretty silly implementation.
         // It just checks if it can find _locale in the routing.yml
-        $routingFile = file_get_contents($this->rootDir.'/app/config/routing.yml');
-
-        return preg_match('/_locale:/i', $routingFile);
+        if ($this->isSymfony4()) {
+            return file_get_contents($this->rootDir . 'config/routes.yaml');
+        }
+        return file_get_contents($this->rootDir . '/app/config/routing.yml');
     }
 }
