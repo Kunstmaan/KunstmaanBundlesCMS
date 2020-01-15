@@ -456,6 +456,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         if ($this->isSymfony4()) {
             return file_get_contents($this->rootDir . 'config/routes.yaml');
         }
+
         return file_get_contents($this->rootDir . '/app/config/routing.yml');
     }
 }
