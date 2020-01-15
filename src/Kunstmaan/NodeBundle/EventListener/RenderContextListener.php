@@ -2,33 +2,24 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\Templating\EngineInterface;
 
 class RenderContextListener
 {
-    /**
-     * @var EngineInterface
-     */
-    protected $templating;
-
     /**
      * @var EntityManagerInterface
      */
     protected $em;
 
     /**
-     * @param EngineInterface        $templating
      * @param EntityManagerInterface $em
      */
-    public function __construct(EngineInterface $templating, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->templating = $templating;
-        $this->em         = $em;
+        $this->em = $em;
     }
 
     /**
