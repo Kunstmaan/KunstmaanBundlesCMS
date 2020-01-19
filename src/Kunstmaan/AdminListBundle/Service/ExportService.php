@@ -49,11 +49,16 @@ class ExportService
             @trigger_error(sprintf('Not passing the Twig service as the first argument of "%s" is deprecated since KunstmaanAdminListBundle 5.4 and will be required in KunstmaanAdminListBundle 6.0. Injected the required services in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
         }
 
+        if (null === $translator) {
+            @trigger_error(sprintf('Not passing the "translator" service as the second argument of "%s" is deprecated since KunstmaanAdminListBundle 5.4 and will be required in KunstmaanAdminListBundle 6.0. Injected the required services in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+        }
+
         if (null !== $translator && (!$translator instanceof LegaceTranslatorInterface && !$translator instanceof TranslatorInterface)) {
             throw new \InvalidArgumentException(sprintf('Argument 2 passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegaceTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
         }
 
         $this->renderer = $twig;
+        $this->translator = $translator;
     }
 
     /**
