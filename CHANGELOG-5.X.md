@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.3.10 / 2020-01-19
+
+* [AdminBundle] Fix unnecessary collapsing of top-nav when zooming [#2615](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2615) ([@dbeerten](https://github.com/dbeerten)) 
+* [FormBundle] previous bugfix to avoid empty rows caused another bug [#2614](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2614) ([@Numkil](https://github.com/Numkil)) 
+* [PagepartBundle] Fixed not being able to search for translated names of PageParts [#2588](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2588) ([@poveu](https://github.com/poveu)) 
+
 ## 5.3.9 / 2020-01-15
 
 * [FormBundle] fix export formsubmissions if pagepart order got changed on the form page [#2613](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2613) ([@Numkil](https://github.com/Numkil)) 
