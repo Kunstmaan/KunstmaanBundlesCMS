@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\PagePartBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * PagePartEvent
  */
-class PagePartEvent extends BcEvent
+class PagePartEvent extends Event
 {
     /**
      * @var PagePartInterface

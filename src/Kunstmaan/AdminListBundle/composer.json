@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "kunstmaan/admin-bundle": "^5.4",
+        "kunstmaan/admin-bundle": "~5.2",
         "box/spout": "^2.5"
     },
     "require-dev": {
