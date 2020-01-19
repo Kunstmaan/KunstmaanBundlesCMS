@@ -1,6 +1,6 @@
 <div class="modal fade pp-chooser js-pp-chooser pp-search" id="pagePartModal{{ pagepartadmin.context }}" tabindex="-1" role="dialog" aria-labelledby="pagePartModalLabel"
      aria-hidden="true"
-     data-pp-types="{{ pagepartadmin.possiblePagePartTypes|json_encode() }}"
+     data-pp-types="{{ pagepartadmin.possiblePagePartTypes|map(pp => {'name': pp.name|trans, 'class': pp.class, 'preview': pp.preview })|json_encode(constant('JSON_UNESCAPED_UNICODE')) }}"
 >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -20,7 +20,7 @@
             <div class="modal-body clearfix">
                 <div class="row">
                     {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-                        <div class="pp-search__item js-pp-search-item col-sm-6 col-lg-4" data-pp-name="{{ pagePartType.name }}">
+                        <div class="pp-search__item js-pp-search-item col-sm-6 col-lg-4" data-pp-name="{{ pagePartType.name|trans }}">
                             {% if pagePartType.preview is defined and pagePartType.preview is not empty %}
                                 {% set background = asset(pagePartType.preview) %}
                             {% else %}
