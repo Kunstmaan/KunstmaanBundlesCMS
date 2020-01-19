@@ -34,8 +34,8 @@ matrix:
     - php: 7.1
     - php: 7.2
     - php: 7.3
-      env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.clover"
     - php: 7.4
+      env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.clover"
 
 before_install:
   - yes | pecl install imagick
