@@ -27,7 +27,8 @@ kunstmaanbundles.topNav = (function($, window, undefined) {
         var navBarHeight = $navBar.height();
         var singleNavBarItemHeight = $navBar.find('li:first-child').innerHeight();
 
-        if (navBarHeight > singleNavBarItemHeight) {
+
+        if (navBarHeight > singleNavBarItemHeight + 5) { // allow error margin of 5px
             $navBar.addClass(collapseClass);
         } else {
             $navBar.removeClass(collapseClass);
