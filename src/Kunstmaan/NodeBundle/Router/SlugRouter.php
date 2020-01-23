@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Router;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\NodeBundle\Controller\SlugController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -227,7 +228,7 @@ class SlugRouter implements RouterInterface
     {
         $previewPath = sprintf('/%s/preview/{url}', $this->adminKey);
         $previewDefaults = array(
-            '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+            '_controller' => SlugController::class.'::slugAction',
             'preview' => true,
             'url' => '',
             '_locale' => $this->getDefaultLocale(),
@@ -258,7 +259,7 @@ class SlugRouter implements RouterInterface
     {
         $slugPath = '/{url}';
         $slugDefaults = array(
-            '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+            '_controller' => SlugController::class.'::slugAction',
             'preview' => false,
             'url' => '',
             '_locale' => $this->getDefaultLocale(),
