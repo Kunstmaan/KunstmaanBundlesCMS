@@ -150,7 +150,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:SingleLineTextPagePart:view.html.twig';
+        return '@KunstmaanForm/SingleLineTextPagePart/view.html.twig';
     }
 
     /**

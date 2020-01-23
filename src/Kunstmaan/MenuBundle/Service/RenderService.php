@@ -32,7 +32,7 @@ class RenderService
     {
         $template = isset($options['template']) ? $options['template'] : false;
         if ($template === false) {
-            $template = 'KunstmaanMenuBundle::menu-item.html.twig';
+            $template = '@KunstmaanMenu/menu-item.html.twig';
         }
 
         $hasActiveChild = false;

@@ -62,6 +62,6 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
      */
     public function getAdminView()
     {
-        return 'KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig';
+        return '@KunstmaanForm/AbstractFormPagePart/admin-view.html.twig';
     }
 }

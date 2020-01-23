@@ -52,7 +52,7 @@ class LinkPagePartTest extends TestCase
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('KunstmaanPagePartBundle:LinkPagePart:view.html.twig', $this->object->getDefaultView());
+        $this->assertEquals('@KunstmaanPagePart/LinkPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()

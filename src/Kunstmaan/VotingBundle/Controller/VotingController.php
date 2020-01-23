@@ -17,7 +17,7 @@ class VotingController extends Controller
 {
     /**
      * @Route("/voting-upvote", name="voting_upvote")
-     * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
+     * @Template("@KunstmaanVoting/UpDown/voted.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
@@ -30,7 +30,7 @@ class VotingController extends Controller
 
     /**
      * @Route("/voting-downvote", name="voting_downvote")
-     * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
+     * @Template("@KunstmaanVoting/UpDown/voted.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */

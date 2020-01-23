@@ -62,7 +62,7 @@ class DownloadPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig';
+        return '@KunstmaanMediaPagePart/DownloadPagePart/view.html.twig';
     }
 
     /**

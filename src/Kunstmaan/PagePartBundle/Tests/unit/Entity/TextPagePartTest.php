@@ -34,7 +34,7 @@ class TextPagePartTest extends TestCase
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('KunstmaanPagePartBundle:TextPagePart:view.html.twig', $this->object->getDefaultView());
+        $this->assertEquals('@KunstmaanPagePart/TextPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()

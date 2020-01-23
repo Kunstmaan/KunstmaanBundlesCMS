@@ -39,7 +39,7 @@ class DownloadPagePartTest extends TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals('KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig', $defaultView);
+        $this->assertEquals('@KunstmaanMediaPagePart/DownloadPagePart/view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()

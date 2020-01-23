@@ -149,7 +149,7 @@ class ImagePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig';
+        return '@KunstmaanMediaPagePart/ImagePagePart/view.html.twig';
     }
 
     /**
