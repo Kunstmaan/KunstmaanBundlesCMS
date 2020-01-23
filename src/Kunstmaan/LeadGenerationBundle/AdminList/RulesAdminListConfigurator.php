@@ -26,9 +26,9 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         parent::__construct($em, $aclHelper);
 
         $this->setPopupId($id);
-        $this->setListTemplate('KunstmaanLeadGenerationBundle:AdminList:rules-list.html.twig');
-        $this->setEditTemplate('KunstmaanLeadGenerationBundle:AdminList:rules-edit.html.twig');
-        $this->setAddTemplate('KunstmaanLeadGenerationBundle:AdminList:rules-edit.html.twig');
+        $this->setListTemplate('@KunstmaanLeadGeneration/AdminList/rules-list.html.twig');
+        $this->setEditTemplate('@KunstmaanLeadGeneration/AdminList/rules-edit.html.twig');
+        $this->setAddTemplate('@KunstmaanLeadGeneration/AdminList/rules-edit.html.twig');
     }
 
     /**

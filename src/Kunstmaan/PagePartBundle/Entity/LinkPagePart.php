@@ -101,7 +101,7 @@ class LinkPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:LinkPagePart:view.html.twig';
+        return '@KunstmaanPagePart/LinkPagePart/view.html.twig';
     }
 
     /**

@@ -618,7 +618,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         EngineInterface $renderer
     ) {
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page);
-        $view = 'KunstmaanNodeSearchBundle:PagePart:view.html.twig';
+        $view = '@KunstmaanNodeSearch/PagePart/view.html.twig';
         $content = $this->removeHtml(
             $renderer->render(
                 $view,

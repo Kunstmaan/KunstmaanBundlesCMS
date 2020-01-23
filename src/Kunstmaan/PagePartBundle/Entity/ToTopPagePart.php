@@ -26,7 +26,7 @@ class ToTopPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig';
+        return '@KunstmaanPagePart/ToTopPagePart/view.html.twig';
     }
 
     /**

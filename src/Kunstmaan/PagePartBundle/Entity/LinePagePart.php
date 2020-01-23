@@ -26,7 +26,7 @@ class LinePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:LinePagePart:view.html.twig';
+        return '@KunstmaanPagePart/LinePagePart/view.html.twig';
     }
 
     /**

@@ -25,9 +25,9 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         parent::__construct($em, $aclHelper);
 
-        $this->setListTemplate('KunstmaanMenuBundle:AdminList:list-menu-item.html.twig');
-        $this->setAddTemplate('KunstmaanMenuBundle:AdminList:edit-menu-item.html.twig');
-        $this->setEditTemplate('KunstmaanMenuBundle:AdminList:edit-menu-item.html.twig');
+        $this->setListTemplate('@KunstmaanMenu/AdminList/list-menu-item.html.twig');
+        $this->setAddTemplate('@KunstmaanMenu/AdminList/edit-menu-item.html.twig');
+        $this->setEditTemplate('@KunstmaanMenu/AdminList/edit-menu-item.html.twig');
         $this->menu = $menu;
     }
 
@@ -36,10 +36,10 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function buildFields()
     {
-        $this->addField('title', 'kuma_menu.menu_item.adminlist.field.title', false, 'KunstmaanMenuBundle:AdminList:menu-item-title.html.twig');
-        $this->addField('online', 'kuma_menu.menu_item.adminlist.field.online', false, 'KunstmaanMenuBundle:AdminList:menu-item-online.html.twig');
+        $this->addField('title', 'kuma_menu.menu_item.adminlist.field.title', false, '@KunstmaanMenu/AdminList/menu-item-title.html.twig');
+        $this->addField('online', 'kuma_menu.menu_item.adminlist.field.online', false, '@KunstmaanMenu/AdminList/menu-item-online.html.twig');
         $this->addField('type', 'kuma_menu.menu_item.adminlist.field.type', false);
-        $this->addField('url', 'kuma_menu.menu_item.adminlist.field.url', false, 'KunstmaanMenuBundle:AdminList:menu-item-url.html.twig');
+        $this->addField('url', 'kuma_menu.menu_item.adminlist.field.url', false, '@KunstmaanMenu/AdminList/menu-item-url.html.twig');
         $this->addField('newWindow', 'kuma_menu.menu_item.adminlist.field.new_window', false);
     }
 

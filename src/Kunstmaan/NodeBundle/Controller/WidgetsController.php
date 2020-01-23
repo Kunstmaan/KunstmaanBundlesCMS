@@ -21,7 +21,7 @@ class WidgetsController extends Controller
 {
     /**
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
-     * @Template("KunstmaanNodeBundle:Widgets:selectLink.html.twig")
+     * @Template("@KunstmaanNode/Widgets/selectLink.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -40,7 +40,7 @@ class WidgetsController extends Controller
      * Select a link
      *
      * @Route("/selecturl", name="KunstmaanNodeBundle_selecturl")
-     * @Template("KunstmaanNodeBundle:Widgets:selectLink.html.twig")
+     * @Template("@KunstmaanNode/Widgets/selectLink.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

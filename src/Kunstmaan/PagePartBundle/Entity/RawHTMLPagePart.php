@@ -51,7 +51,7 @@ class RawHTMLPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig';
+        return '@KunstmaanPagePart/RawHTMLPagePart/view.html.twig';
     }
 
     /**

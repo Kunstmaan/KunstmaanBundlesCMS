@@ -45,7 +45,7 @@ class ToTopPagePartTest extends TestCase
      */
     public function testGetDefaultView()
     {
-        $this->assertEquals('KunstmaanPagePartBundle:ToTopPagePart:view.html.twig', $this->object->getDefaultView());
+        $this->assertEquals('@KunstmaanPagePart/ToTopPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()

@@ -73,7 +73,7 @@ class ChoicePagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:ChoicePagePart:view.html.twig';
+        return '@KunstmaanForm/ChoicePagePart/view.html.twig';
     }
 
     /**

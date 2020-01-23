@@ -119,7 +119,7 @@ class EmailPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:EmailPagePart:view.html.twig';
+        return '@KunstmaanForm/EmailPagePart/view.html.twig';
     }
 
     /**

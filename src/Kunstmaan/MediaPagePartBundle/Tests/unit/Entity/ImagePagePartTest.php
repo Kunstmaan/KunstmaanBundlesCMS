@@ -59,7 +59,7 @@ class ImagePagePartTest extends TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals('KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig', $defaultView);
+        $this->assertEquals('@KunstmaanMediaPagePart/ImagePagePart/view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()

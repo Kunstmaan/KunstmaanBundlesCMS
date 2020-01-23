@@ -87,7 +87,7 @@ class CheckboxPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:CheckboxPagePart:view.html.twig';
+        return '@KunstmaanForm/CheckboxPagePart/view.html.twig';
     }
 
     /**

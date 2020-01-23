@@ -74,7 +74,7 @@ class PopupTwigExtension extends AbstractExtension
     {
         $files = $this->popupManager->getUniqueJsIncludes();
 
-        return $environment->render('KunstmaanLeadGenerationBundle::js-includes.html.twig', array('files' => $files));
+        return $environment->render('@KunstmaanLeadGeneration/js-includes.html.twig', array('files' => $files));
     }
 
     /**
@@ -84,7 +84,7 @@ class PopupTwigExtension extends AbstractExtension
     {
         $popups = $this->popupManager->getPopups();
 
-        return $environment->render('KunstmaanLeadGenerationBundle::popups-html.html.twig', array('popups' => $popups));
+        return $environment->render('@KunstmaanLeadGeneration/popups-html.html.twig', array('popups' => $popups));
     }
 
     /**
@@ -94,7 +94,7 @@ class PopupTwigExtension extends AbstractExtension
     {
         $popups = $this->popupManager->getPopups();
 
-        return $environment->render('KunstmaanLeadGenerationBundle::initialize-js.html.twig', array('popups' => $popups, 'debug' => $this->debug));
+        return $environment->render('@KunstmaanLeadGeneration/initialize-js.html.twig', array('popups' => $popups, 'debug' => $this->debug));
     }
 
     /**

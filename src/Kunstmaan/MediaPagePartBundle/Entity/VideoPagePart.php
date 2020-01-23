@@ -62,7 +62,7 @@ class VideoPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanMediaPagePartBundle:VideoPagePart:view.html.twig';
+        return '@KunstmaanMediaPagePart/VideoPagePart/view.html.twig';
     }
 
     /**

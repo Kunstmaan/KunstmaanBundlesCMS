@@ -7,6 +7,6 @@
 {% endif %}
 {% if not hide_children_from_sitemap(entry) %}
     {% for subNode in entry.getChildren() %}
-        {% include 'KunstmaanSitemapBundle:Sitemap:entry.xml.twig' with {'entry' : subNode, 'priority' : (priority - 1) } %}
+        {% include '@KunstmaanSitemap/Sitemap/entry.xml.twig' with {'entry' : subNode, 'priority' : (priority - 1) } %}
     {% endfor %}
 {% endif %}

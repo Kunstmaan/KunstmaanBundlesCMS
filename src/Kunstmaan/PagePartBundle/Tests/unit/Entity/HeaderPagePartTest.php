@@ -57,7 +57,7 @@ class HeaderPagePartTest extends TestCase
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('KunstmaanPagePartBundle:HeaderPagePart:view.html.twig', $this->object->getDefaultView());
+        $this->assertEquals('@KunstmaanPagePart/HeaderPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()
