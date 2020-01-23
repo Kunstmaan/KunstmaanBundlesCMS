@@ -51,7 +51,7 @@ class TextPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:TextPagePart:view.html.twig';
+        return '@KunstmaanPagePart/TextPagePart/view.html.twig';
     }
 
     /**

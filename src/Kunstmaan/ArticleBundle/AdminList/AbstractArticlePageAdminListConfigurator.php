@@ -179,7 +179,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function getListTemplate()
     {
-        return 'KunstmaanArticleBundle:AbstractArticlePageAdminList:list.html.twig';
+        return '@KunstmaanArticle/AbstractArticlePageAdminList/list.html.twig';
     }
 
     /**

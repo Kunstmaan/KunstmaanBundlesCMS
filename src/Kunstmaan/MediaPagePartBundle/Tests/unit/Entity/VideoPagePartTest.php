@@ -38,7 +38,7 @@ class VideoPagePartTest extends TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals('KunstmaanMediaPagePartBundle:VideoPagePart:view.html.twig', $defaultView);
+        $this->assertEquals('@KunstmaanMediaPagePart/VideoPagePart/view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()

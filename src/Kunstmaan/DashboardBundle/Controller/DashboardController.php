@@ -27,6 +27,6 @@ class DashboardController extends Controller
         $widgets = $widgetManager->getWidgets();
         $segmentId = $request->query->get('segment');
 
-        return $this->render('KunstmaanDashboardBundle:Dashboard:index.html.twig', array('widgets' => $widgets, 'id' => $segmentId));
+        return $this->render('@KunstmaanDashboard/Dashboard/index.html.twig', array('widgets' => $widgets, 'id' => $segmentId));
     }
 }

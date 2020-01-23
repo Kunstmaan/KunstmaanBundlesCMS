@@ -62,7 +62,7 @@ class SubmitButtonPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig';
+        return '@KunstmaanForm/SubmitButtonPagePart/view.html.twig';
     }
 
     /**
@@ -72,7 +72,7 @@ class SubmitButtonPagePart extends AbstractPagePart
      */
     public function getAdminView()
     {
-        return 'KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig';
+        return '@KunstmaanForm/SubmitButtonPagePart/view-admin.html.twig';
     }
 
     /**

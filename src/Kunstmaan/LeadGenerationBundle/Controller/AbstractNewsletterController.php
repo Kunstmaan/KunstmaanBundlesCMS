@@ -77,17 +77,17 @@ abstract class AbstractNewsletterController extends Controller
 
     protected function getIndexTemplate()
     {
-        return 'KunstmaanLeadGenerationBundle:Newsletter:index.html.twig';
+        return '@KunstmaanLeadGeneration/Newsletter/index.html.twig';
     }
 
     protected function getFormTemplate()
     {
-        return 'KunstmaanLeadGenerationBundle:Newsletter:form.html.twig';
+        return '@KunstmaanLeadGeneration/Newsletter/form.html.twig';
     }
 
     protected function getThanksTemplate()
     {
-        return 'KunstmaanLeadGenerationBundle:Newsletter:thanks.html.twig';
+        return '@KunstmaanLeadGeneration/Newsletter/thanks.html.twig';
     }
 
     /**

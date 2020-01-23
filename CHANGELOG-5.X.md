@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.4.1 / 2020-01-23
+
+* [AllBundles] Fixed remaining template path using the old notation [#2624](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2624) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Always defined the prefix variable [#2621](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2621) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.0 / 2020-01-19
 
 * [AdminListBundle] Fixed missing translator property set in constructor [#2618](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2618) ([@acrobat](https://github.com/acrobat)) 

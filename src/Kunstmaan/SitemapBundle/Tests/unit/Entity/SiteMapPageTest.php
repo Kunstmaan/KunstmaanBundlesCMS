@@ -14,7 +14,7 @@ class SiteMapPageTest extends TestCase
     {
         $object = new SitemapPage();
 
-        $this->assertEquals('KunstmaanSitemapBundle:SitemapPage:view.html.twig', $object->getDefaultView());
+        $this->assertEquals('@KunstmaanSitemap/SitemapPage/view.html.twig', $object->getDefaultView());
         $this->assertTrue($object->isHiddenFromSitemap());
         $this->assertTrue($object->isChildrenHiddenFromSitemap());
         $this->assertTrue(is_array($object->getPossibleChildTypes()));

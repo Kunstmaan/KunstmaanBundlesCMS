@@ -91,7 +91,7 @@ class HeaderPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:HeaderPagePart:view.html.twig';
+        return '@KunstmaanPagePart/HeaderPagePart/view.html.twig';
     }
 
     /**

@@ -22,6 +22,6 @@ abstract class AbstractRedirectController extends Controller
 
     protected function getIndexTemplate()
     {
-        return 'KunstmaanLeadGenerationBundle:Redirect:index.html.twig';
+        return '@KunstmaanLeadGeneration/Redirect/index.html.twig';
     }
 }

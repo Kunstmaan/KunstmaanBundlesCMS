@@ -33,7 +33,7 @@ class GoogleAnalyticsController extends Controller
                 $params['authUrl'] = $configHelper->getAuthUrl();
             }
 
-            return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
+            return $this->render('@KunstmaanDashboard/GoogleAnalytics/connect.html.twig', $params);
         }
 
         // if propertyId not set
@@ -153,7 +153,7 @@ class GoogleAnalyticsController extends Controller
         $params['profileSegments'] = $configHelper->getProfileSegments();
 
         return $this->render(
-            'KunstmaanDashboardBundle:GoogleAnalytics:setupcontainer.html.twig',
+            '@KunstmaanDashboard/GoogleAnalytics/setupcontainer.html.twig',
             $params
         );
     }

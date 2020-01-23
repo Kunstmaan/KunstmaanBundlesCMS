@@ -17,9 +17,9 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         parent::__construct($em, $aclHelper);
 
-        $this->setListTemplate('KunstmaanLeadGenerationBundle:AdminList:popup-list.html.twig');
-        $this->setEditTemplate('KunstmaanLeadGenerationBundle:AdminList:popup-edit.html.twig');
-        $this->setAddTemplate('KunstmaanLeadGenerationBundle:AdminList:popup-edit.html.twig');
+        $this->setListTemplate('@KunstmaanLeadGeneration/AdminList/popup-list.html.twig');
+        $this->setEditTemplate('@KunstmaanLeadGeneration/AdminList/popup-edit.html.twig');
+        $this->setAddTemplate('@KunstmaanLeadGeneration/AdminList/popup-edit.html.twig');
     }
 
     /**

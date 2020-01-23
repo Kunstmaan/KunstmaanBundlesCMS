@@ -62,7 +62,7 @@ class SlidePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanMediaPagePartBundle:SlidePagePart:view.html.twig';
+        return '@KunstmaanMediaPagePart/SlidePagePart/view.html.twig';
     }
 
     /**

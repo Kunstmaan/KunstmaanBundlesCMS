@@ -102,7 +102,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:MultiLineTextPagePart:view.html.twig';
+        return '@KunstmaanForm/MultiLineTextPagePart/view.html.twig';
     }
 
     /**

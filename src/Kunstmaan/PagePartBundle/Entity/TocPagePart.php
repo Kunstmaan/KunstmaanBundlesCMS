@@ -26,7 +26,7 @@ class TocPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanPagePartBundle:TocPagePart:view.html.twig';
+        return '@KunstmaanPagePart/TocPagePart/view.html.twig';
     }
 
     /**

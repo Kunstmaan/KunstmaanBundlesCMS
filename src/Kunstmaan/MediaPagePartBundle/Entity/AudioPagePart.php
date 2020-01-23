@@ -62,7 +62,7 @@ class AudioPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanMediaPagePartBundle:AudioPagePart:view.html.twig';
+        return '@KunstmaanMediaPagePart/AudioPagePart/view.html.twig';
     }
 
     /**

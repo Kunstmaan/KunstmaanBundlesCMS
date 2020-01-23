@@ -78,7 +78,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
     {
         $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
         $this->assertEquals('AbstractArticlePage', $this->object->getEntityName());
-        $this->assertEquals('KunstmaanArticleBundle:AbstractArticlePageAdminList:list.html.twig', $this->object->getListTemplate());
+        $this->assertEquals('@KunstmaanArticle/AbstractArticlePageAdminList/list.html.twig', $this->object->getListTemplate());
         $this->assertEquals('KunstmaanArticleBundle:AbstractArticlePage', $this->object->getRepositoryName());
     }
 

@@ -17,7 +17,7 @@ class SitemapController extends Controller
      *
      * @Route("/sitemap-{locale}.{_format}", name="KunstmaanSitemapBundle_sitemap",
      *                                       requirements={"_format" = "xml"})
-     * @Template("KunstmaanSitemapBundle:Sitemap:view.xml.twig")
+     * @Template("@KunstmaanSitemap/Sitemap/view.xml.twig")
      *
      * @param $locale
      *
@@ -50,7 +50,7 @@ class SitemapController extends Controller
      *
      * @Route("/sitemap.{_format}", name="KunstmaanSitemapBundle_sitemapindex",
      *                              requirements={"_format" = "xml"})
-     * @Template("KunstmaanSitemapBundle:SitemapIndex:view.xml.twig")
+     * @Template("@KunstmaanSitemap/SitemapIndex/view.xml.twig")
      *
      * @param Request $request
      *

@@ -28,7 +28,7 @@ class TocPagePartTest extends TestCase
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('KunstmaanPagePartBundle:TocPagePart:view.html.twig', $this->object->getDefaultView());
+        $this->assertEquals('@KunstmaanPagePart/TocPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()

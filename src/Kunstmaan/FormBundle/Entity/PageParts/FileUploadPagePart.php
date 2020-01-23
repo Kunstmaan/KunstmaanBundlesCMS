@@ -128,7 +128,7 @@ class FileUploadPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return 'KunstmaanFormBundle:FileUploadPagePart:view.html.twig';
+        return '@KunstmaanForm/FileUploadPagePart/view.html.twig';
     }
 
     /**

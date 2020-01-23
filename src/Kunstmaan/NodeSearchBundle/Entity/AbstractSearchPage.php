@@ -32,7 +32,7 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface, Slu
      */
     public function getDefaultView()
     {
-        return 'KunstmaanNodeSearchBundle:AbstractSearchPage:view.html.twig';
+        return '@KunstmaanNodeSearch/AbstractSearchPage/view.html.twig';
     }
 
     /**

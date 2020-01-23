@@ -31,7 +31,7 @@ class RawHTMLPagePartTest extends TestCase
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig', $this->object->getDefaultView());
+        $this->assertEquals('@KunstmaanPagePart/RawHTMLPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testSetGetContent()
