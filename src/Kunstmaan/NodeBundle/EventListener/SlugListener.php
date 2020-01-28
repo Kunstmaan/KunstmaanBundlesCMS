@@ -32,7 +32,6 @@ class SlugListener
      */
     protected $eventDispatcher;
 
-
     /**
      * SlugListener constructor.
      *
