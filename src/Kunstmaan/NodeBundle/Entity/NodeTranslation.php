@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
@@ -373,19 +373,30 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param EntityManager $em   The entity manager
-     * @param string        $type The type
+     * @param EntityManagerInterface $em   The entity manager
+     * @param string                 $type The type
      *
      * @return object|null
      */
-    public function getRef(EntityManager $em, $type = 'public')
+    public function getRef(EntityManagerInterface $em, $type = 'public')
     {
         $nodeVersion = $this->getNodeVersion($type);
-        if ($nodeVersion) {
-            return $em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
+
+        if ($nodeVersion instanceof NodeVersion) {
+            return $this->getRefByNodeVersion($em, $nodeVersion);
         }
 
         return null;
+    }
+
+    /**
+     * @param EntityManagerInterface $em   The entity manager
+     * @param NodeVersion            $nodeVersion
+     *
+     * @return object|null
+     */
+    public function getRefByNodeVersion(EntityManagerInterface $em, NodeVersion $nodeVersion) {
+        return $em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
     }
 
     /**
