@@ -390,7 +390,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param EntityManagerInterface $em   The entity manager
+     * @param EntityManagerInterface $em          The entity manager
      * @param NodeVersion            $nodeVersion
      *
      * @return object|null
