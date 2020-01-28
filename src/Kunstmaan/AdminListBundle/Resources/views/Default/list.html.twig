@@ -18,34 +18,36 @@
             <div class="app__content__header__extra-actions">
                 <div class="btn-group">
                     {% if adminlist.canAdd() %}
-                        {% if adminlist.getIndexUrl()['params'] is defined %}
-                            {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
-                        {% else %}
-                            {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
-                        {% endif %}
+                        {% block add_action %}
+                            {% if adminlist.getIndexUrl()['params'] is defined %}
+                                {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
+                            {% else %}
+                                {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
+                            {% endif %}
 
-                        {% if adminaddlist|length > 1 %}
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                {{ 'form.add' | trans }}
-                                <i class="fa fa-caret-down btn__icon"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                {% for key,add in adminaddlist %}
-                                    <li>
-                                        <a href="{{ path(add["path"], add[("params")]) }}">
-                                            {{ key }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {% for key,add in adminaddlist %}
-                                <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
-                                    {{ 'form.add.%subject%' | trans({ '%subject%': key|trans }) }}
+                            {% if adminaddlist|length > 1 %}
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    {{ 'form.add' | trans }}
+                                    <i class="fa fa-caret-down btn__icon"></i>
                                 </a>
-                            {% endfor %}
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    {% for key,add in adminaddlist %}
+                                        <li>
+                                            <a href="{{ path(add["path"], add[("params")]) }}">
+                                                {{ key }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {% for key,add in adminaddlist %}
+                                    <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
+                                        {{ 'form.add.%subject%' | trans({ '%subject%': key|trans }) }}
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
+                    {% endblock %}
                 </div>
 
                 {% if adminlist.canExport() %}

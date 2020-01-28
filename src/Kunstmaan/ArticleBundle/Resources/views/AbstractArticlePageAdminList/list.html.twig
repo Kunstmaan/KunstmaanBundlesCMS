@@ -45,44 +45,16 @@
 {% import _self as modal %}
 
 {% block extra_actions_header %}
-
     {% if adminmenu.current %}
         {% set title = adminmenu.current.label | trans %}
     {% else %}
         {% set title = adminlist.configurator.getEntityName() %}
     {% endif %}
-    
-    {% if adminlistconfigurator.overviewPage %}
-        {% if adminlist.canAdd() %}
-            <div class="col-sm-6 col-md-4">
-                <!-- Main-actions -->
-                <div class="page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
-                    <div class="btn-group">
-                        {% block actions %}
-                            {% if adminlistconfigurator.overviewPages | length > 1 %}
-                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                    {{ 'form.add' | trans }}
-                                    <i class="fa fa-caret-down"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    {% for key, overviewPage in adminlistconfigurator.overviewPages %}
-                                        <li>
-                                            <a data-target="#add-subpage-modal-{{ overviewPage.id }}" data-toggle="modal" href="#">
-                                                {{ overviewPage.pageTitle }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <button type="button" data-target="#add-subpage-modal-{{ adminlistconfigurator.overviewPage.id }}" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
-                                    {{ 'form.add' | trans }}
-                                </button>
-                            {% endif %}
-                        {% endblock %}
-                    </div>
-                </div>
-            </div>
 
+    {% if adminlistconfigurator.overviewPage %}
+        {{ parent() }}
+
+        {% if adminlist.canAdd() %}
             {% if adminlistconfigurator.overviewPages | length > 1 %}
                 {% for overviewPage in adminlistconfigurator.overviewPages %}
                     {{ modal.modal(overviewPage, title, adminlist.configurator.getEntityClassName) }}
@@ -90,7 +62,6 @@
             {% else %}
                 {{ modal.modal(adminlistconfigurator.overviewPage, title, adminlist.configurator.getEntityClassName) }}
             {% endif %}
-
         {% endif %}
 
     {% else %}
