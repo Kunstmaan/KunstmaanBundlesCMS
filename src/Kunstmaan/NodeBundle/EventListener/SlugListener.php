@@ -110,7 +110,7 @@ class SlugListener
 
         $nodeVersion = $nodeVersionRepository->findOneBy([
             'nodeTranslation' => $nodeTranslation,
-            'id' => $versionId
+            'id' => $versionId,
         ]);
 
         if (!$nodeVersion instanceof NodeVersion) {

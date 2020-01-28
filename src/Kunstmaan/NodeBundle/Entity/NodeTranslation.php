@@ -395,7 +395,8 @@ class NodeTranslation extends AbstractEntity
      *
      * @return object|null
      */
-    public function getRefByNodeVersion(EntityManagerInterface $em, NodeVersion $nodeVersion) {
+    public function getRefByNodeVersion(EntityManagerInterface $em, NodeVersion $nodeVersion)
+    {
         return $em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
     }
 
