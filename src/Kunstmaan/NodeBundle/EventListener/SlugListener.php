@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
