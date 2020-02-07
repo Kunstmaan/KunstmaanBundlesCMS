@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
@@ -188,11 +188,11 @@ class WidgetsController extends Controller
      */
     protected function nodesToArray($locale, $rootNodes, $depth = 2)
     {
-        /** @var DomainConfiguration $domainconfig */
+        /** @var DomainConfigurationInterface $domainconfig */
         $domainconfig = $this->get('kunstmaan_admin.domain_configuration');
         $isMultiDomain = $domainconfig->isMultiDomainHost();
         $switchedHost = $domainconfig->getHostSwitched();
-        $switched = $domainconfig->getHost() == $switchedHost['host'];
+        $switched = null !== $switchedHost && array_key_exists('host', $switchedHost) && $domainconfig->getHost() === $switchedHost['host'];
 
         $results = [];
 

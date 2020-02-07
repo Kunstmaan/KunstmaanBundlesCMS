@@ -81,8 +81,10 @@ class URLHelper
                     $nodeTranslationFound = false;
                     $fullTag = $match[0];
                     $hostId = $match[2];
-                    $hostConfig = $this->domainConfiguration->getFullHostById($hostId);
-                    $hostBaseUrl = $this->domainConfiguration->getHostBaseUrl($hostConfig['host']);
+
+                    $hostConfig = !empty($hostId) ? $this->domainConfiguration->getFullHostById((int) $hostId) : null;
+                    $host = null !== $hostConfig && array_key_exists('host', $hostConfig) ? $hostConfig['host'] : null;
+                    $hostBaseUrl = $this->domainConfiguration->getHostBaseUrl($host);
 
                     $nodeTranslationId = $match[3];
 
@@ -91,7 +93,7 @@ class URLHelper
                             $urlParams = ['url' => $nodeTranslation['url']];
                             $nodeTranslationFound = true;
                             // Only add locale if multilingual site
-                            if ($this->domainConfiguration->isMultiLanguage($hostConfig['host'])) {
+                            if ($this->domainConfiguration->isMultiLanguage($host)) {
                                 $urlParams['_locale'] = $nodeTranslation['lang'];
                             }
 
