@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.4.2 / 2020-02-07
+
+* [AdminBundle] Re-enable templating component for search nodepages config [#2630](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2630) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Fix php 7.4 incompatibilities in the url chooser [#2629](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2629) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.1 / 2020-01-23
 
 * [AllBundles] Fixed remaining template path using the old notation [#2624](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2624) ([@acrobat](https://github.com/acrobat)) 
