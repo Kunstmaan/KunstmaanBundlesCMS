@@ -16,7 +16,9 @@
                     </h3>
                 </div>
 
-                <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(overviewPage).id , 'type' : type}) }}" method="post" novalidate="novalidate">
+                <form
+                    action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(overviewPage).id , 'type' : type}) }}"
+                    method="post" novalidate="novalidate">
                     <!-- Body -->
                     <div class="modal-body">
                         <div class="form-group">
@@ -66,10 +68,34 @@
 
     {% else %}
         <div class="alert alert-warning">
-            <strong>{{ 'form.warning' | trans }}: </strong> {{ 'article.warning.create_overview_page' | trans({ '%type%': title | lower }) }}
+            <strong>{{ 'form.warning' | trans }}
+                : </strong> {{ 'article.warning.create_overview_page' | trans({ '%type%': title | lower }) }}
             <button class="close" data-dismiss="alert">
                 <i class="fa fa-times"></i>
             </button>
         </div>
+    {% endif %}
+{% endblock %}
+
+{% block add_action %}
+    {% if adminlistconfigurator.overviewPages | length > 1 %}
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+            {{ 'form.add' | trans }}
+            <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right">
+            {% for key, overviewPage in adminlistconfigurator.overviewPages %}
+                <li>
+                    <a data-target="#add-subpage-modal-{{ overviewPage.id }}" data-toggle="modal" href="#">
+                        {{ overviewPage.pageTitle }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <button type="button" data-target="#add-subpage-modal-{{ adminlistconfigurator.overviewPage.id }}"
+                data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
+            {{ 'form.add' | trans }}
+        </button>
     {% endif %}
 {% endblock %}
