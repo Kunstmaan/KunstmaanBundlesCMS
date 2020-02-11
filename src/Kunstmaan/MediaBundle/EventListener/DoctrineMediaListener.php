@@ -51,7 +51,11 @@ class DoctrineMediaListener
             return false;
         }
 
-        $this->mediaManager->prepareMedia($entity);
+        try {
+            $this->mediaManager->prepareMedia($entity);
+        } catch (\Exception $exception) {
+            return false;
+        }
 
         return true;
     }

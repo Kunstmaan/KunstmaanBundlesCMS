@@ -136,7 +136,7 @@ class FileHandler extends AbstractMediaHandler
     {
         if ($object instanceof File ||
             ($object instanceof Media &&
-            (is_file($object->getContent()) || $object->getLocation() == 'local'))
+            (is_file($object->getUrl()) || $object->getLocation() == 'local'))
         ) {
             return true;
         }
@@ -172,12 +172,9 @@ class FileHandler extends AbstractMediaHandler
         }
 
         if (!$content instanceof File) {
-            if (!is_file($content)) {
-                throw new \RuntimeException('Invalid file');
-            }
+            $content = new File($media->getUrl());
 
-            $file = new File($content);
-            $media->setContent($file);
+            $media->setContent($content);
         }
 
         $contentType = $this->mimeTypeGuesser->guess($content->getPathname());
