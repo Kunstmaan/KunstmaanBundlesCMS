@@ -45,7 +45,7 @@ class Redirect extends AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="target", type="string", length=255)
+     * @ORM\Column(name="target", type="text")
      * @Assert\NotBlank()
      */
     private $target;
