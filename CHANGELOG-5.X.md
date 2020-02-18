@@ -79,6 +79,10 @@
 * [AllBundles] Remove deprecated FrameworkExtraBundle annotations [#2448](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2448) ([@acrobat](https://github.com/acrobat)) 
 * [GeneratorBundle] Improved the generated article classes [#2447](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2447) ([@acrobat](https://github.com/acrobat)) 
 
+## 5.3.11 / 2020-02-18
+
+* [RedirectBundle] Fix target column length for long urls [#2633](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2633) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.10 / 2020-01-19
 
 * [AdminBundle] Fix unnecessary collapsing of top-nav when zooming [#2615](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2615) ([@dbeerten](https://github.com/dbeerten)) 
