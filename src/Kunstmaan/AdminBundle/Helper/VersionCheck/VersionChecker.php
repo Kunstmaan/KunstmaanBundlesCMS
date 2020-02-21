@@ -7,6 +7,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Version checker
@@ -44,15 +45,21 @@ class VersionChecker
     private $client;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
      * Constructor
      *
      * @param ContainerInterface $container
      * @param Cache              $cache
      */
-    public function __construct(ContainerInterface $container, Cache $cache)
+    public function __construct(ContainerInterface $container, Cache $cache, TranslatorInterface $translator)
     {
         $this->container = $container;
         $this->cache = $cache;
+        $this->translator = $translator;
 
         $this->webserviceUrl = $this->container->getParameter('version_checker.url');
         $this->cacheTimeframe = $this->container->getParameter('version_checker.timeframe');
@@ -109,7 +116,7 @@ class VersionChecker
             'host' => $host,
             'installed' => $installed,
             'bundles' => $bundles,
-            'project' => $title,
+            'project' => $this->translator->trans($title),
         ));
 
         try {
