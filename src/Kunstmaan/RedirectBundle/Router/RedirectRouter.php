@@ -166,6 +166,7 @@ class RedirectRouter implements RouterInterface
         foreach ([$redirect->getOrigin(), $redirect->getTarget()] as $item) {
             if (preg_match('/[\x80-\xFF]/', $item)) {
                 $needsUtf8 = true;
+                
                 break;
             }
         }
