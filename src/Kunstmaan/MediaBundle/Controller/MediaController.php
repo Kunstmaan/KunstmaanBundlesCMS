@@ -4,11 +4,9 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
-use Kunstmaan\MediaBundle\Helper\ManipulateImageService;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -331,37 +329,6 @@ class MediaController extends Controller
         );
 
         return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]);
-    }
-
-    /**
-     * @Route("/crop_on_the_fly/{mediaLinkId}", requirements={"mediaLinkId" = "\d+"}, name="KunstmaanMediaBundle_media_crop_on_the_fly")
-     */
-    public function cropOnTheFlyAction(Request $request, $mediaLinkId): RedirectResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var CroppableMediaLink $mediaLink */
-        $mediaLink = $em->getRepository(CroppableMediaLink::class)->find($mediaLinkId);
-
-        $start = $request->query->get('start', '0,0');
-        $end = $request->query->get('end', '5000,5000');
-        $start = explode(',', $start);
-        $end = explode(',', $end);
-        $start[0] = (int) $start[0];
-        $start[1] = (int) $start[1];
-        $end[0] = (int) $end[0] - $start[0];
-        $end[1] = (int) $end[1] - $start[1];
-
-        $runtimeConfig = [
-            'crop' => [
-                'start' => $start,
-                'size' => $end
-            ],
-        ];
-
-        $url = $this->get(ManipulateImageService::class)->manipulateOnTheFly($mediaLink, $runtimeConfig);
-
-        return new RedirectResponse($url);
     }
 
     /**

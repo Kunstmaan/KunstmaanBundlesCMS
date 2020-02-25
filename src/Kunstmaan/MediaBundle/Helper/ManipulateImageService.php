@@ -26,7 +26,7 @@ class ManipulateImageService
         $this->em = $em;
     }
 
-    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, ?array $runTimeConfig): string
+    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, ?array $runTimeConfig, string $view = ''): string
     {
         /** @var Media $media */
         $media = $croppableMediaLink->getMedia();
@@ -51,6 +51,11 @@ class ManipulateImageService
             $this->em->flush();
         }
 
-        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, 'optim', is_array($runTimeConfig) ? $runTimeConfig : []);
+        $runTimeConfigForView = [];
+        if(is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view])) {
+            $runTimeConfigForView = $runTimeConfig[$view];
+        }
+
+        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, 'optim', $runTimeConfigForView);
     }
 }
