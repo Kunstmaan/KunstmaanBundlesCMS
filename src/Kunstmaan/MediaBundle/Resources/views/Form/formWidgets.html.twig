@@ -48,6 +48,7 @@
 
 {% block croppable_media_link_widget %}
     <div class="cropper-config" data-cropping-views="{{ cropping_views }}"></div>
+    {{ block('media_widget') }}
 {% endblock %}
 
 {% block media_widget %}
