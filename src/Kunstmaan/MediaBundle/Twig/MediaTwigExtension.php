@@ -15,7 +15,7 @@ class MediaTwigExtension extends AbstractExtension
     public function __construct(
         ManipulateImageService $manipulateImageService
     ) {
-    
+
         $this->manipulateImageService = $manipulateImageService;
     }
 
@@ -38,7 +38,7 @@ class MediaTwigExtension extends AbstractExtension
             ],
         ];
         if ($croppableMediaLink->getRunTimeConfig() !== null) {
-            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig(), false);
+            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig());
         }
 
         return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $runTimeConfig);
