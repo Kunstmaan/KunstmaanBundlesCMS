@@ -23,10 +23,19 @@ class CroppableMediaLinkAdminType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $selectedCroppingViews = [];
+        foreach($options['cropping_views'] as $croppingView) {
+            foreach($this->croppingViews as $possibleCroppingView) {
+                if($possibleCroppingView['name'] === $croppingView) {
+                    $selectedCroppingViews[] = $possibleCroppingView;
+                }
+            }
+        }
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
-            'show_cropper_modal' => true,
             'mediatype' => 'image',
+            'show_cropper_modal' => true,
+            'cropping_views' => json_encode($selectedCroppingViews),
         ]);
         $builder->add('runTimeConfig', HiddenType::class, [
             'label' => false,
@@ -51,18 +60,5 @@ class CroppableMediaLinkAdminType extends AbstractType
                 'cropping_views' => ['desktop', 'media'],
             ]
         );
-    }
-
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $selectedCroppingViews = [];
-        foreach($options['cropping_views'] as $croppingView) {
-            foreach($this->croppingViews as $possibleCroppingView) {
-                if($possibleCroppingView['name'] === $croppingView) {
-                    $selectedCroppingViews[] = $possibleCroppingView;
-                }
-            }
-        }
-        $view->vars['cropping_views'] = json_encode($selectedCroppingViews);
     }
 }
