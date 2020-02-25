@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Form;
 use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,6 +17,9 @@ class CroppableMediaLinkAdminType extends AbstractType
             'label' => 'mediapagepart.image.choosefile',
             'show_cropper_modal' => true,
             'mediatype' => 'image'
+        ]);
+        $builder->add('runTimeConfig', HiddenType::class, [
+            'label' => false
         ]);
     }
 

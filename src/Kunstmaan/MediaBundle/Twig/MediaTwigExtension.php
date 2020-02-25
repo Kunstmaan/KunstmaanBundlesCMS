@@ -29,7 +29,7 @@ class MediaTwigExtension extends AbstractExtension
         ];
     }
 
-    public function getCroppedVersion($croppableMediaLink)
+    public function getCroppedVersion(?CroppableMediaLink $croppableMediaLink = null, string $view = '')
     {
         if (!$croppableMediaLink instanceof CroppableMediaLink) {
             return '';
@@ -40,6 +40,6 @@ class MediaTwigExtension extends AbstractExtension
             $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig(), [false]);
         }
 
-        return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $runTimeConfig);
+        return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $runTimeConfig, $view);
     }
 }
