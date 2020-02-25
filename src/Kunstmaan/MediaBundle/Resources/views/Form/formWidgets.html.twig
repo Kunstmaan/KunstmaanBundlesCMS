@@ -46,11 +46,6 @@
     {% endapply %}
 {% endblock iconfont_widget %}
 
-{% block croppable_media_link_widget %}
-    <div class="cropper-config" data-cropping-views="{{ cropping_views }}"></div>
-    {{ parent() }}
-{% endblock %}
-
 {% block media_widget %}
 {% apply spaceless %}
     <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
@@ -109,6 +104,7 @@
     </div>
 
     {% if showCropperModal is defined and showCropperModal %}
+    <div class="cropper-config" data-cropping-views="{{ cropping_views }}"></div>
     <!-- cropper modal Modal -->
     <div class="js-ajax-modal modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
         <div class="modal-dialog modal-lg">
