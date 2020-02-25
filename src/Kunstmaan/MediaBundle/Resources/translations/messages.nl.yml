@@ -122,6 +122,12 @@ media:
     delete: Verwijder
     media_chooser: Media-keuze
     icon_chooser: Icoon-keuze
+    media_cropper:
+        title: Pas het formaat van je afbeelding aan
+        meta_title: Nieuwe afmetingen
+        meta_width: breedte
+        meta_height: hoogte
+
   adminlist:
     configurator:
       name: Naam

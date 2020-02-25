@@ -116,13 +116,13 @@
                         <i class="fa fa-times"></i>
                     </button>
                     <h3 class="modal-title">
-                        {{ 'media.widget.media_cropper' | trans }}
+                        {{ 'media.widget.media_cropper.title' | trans }}
                     </h3>
                 </div>
 
                 <!-- Body -->
-                <div>
-                    <figure class="thumbnail">
+                <div class="media-cropper js-media-cropper">
+                    <figure class="media-cropper__preview">
                         {% if(value.ent is defined) %}
                             {% set media = value.ent %}
                             {% set handler = mediamanager.getHandler(media) %}
@@ -136,13 +136,34 @@
                                 {% endif %}
                             {% endif %}
                             {% if imageurl %}
-                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img">
-                                <figcaption id="{{ id }}__preview__title" class="media-cropper__preview__title">
-                                    {{ media.name }}
-                                </figcaption>
+                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
                             {% endif %}
+                            <figcaption id="{{ id }}__preview__title" class="media-cropper__preview__caption">
+                                {{ media.name }}
+                            </figcaption>
                         {% endif %}
                     </figure>
+                    <aside class="media-cropper__meta js-media-cropper-meta">
+                        <h4>{{ 'media.widget.media_cropper.meta_title' | trans }}</h4>
+                        <dl class="media-cropper__meta__list">
+                            <div class="media-cropper__meta__list__row">
+                                <dt class="media-cropper__meta__key">x</dt>
+                                <dd class="media-cropper__meta__value js-media-cropper-meta-value-x"></dd>
+                            </div>
+                            <div class="media-cropper__meta__list__row">
+                                <dt class="media-cropper__meta__key">y</dt>
+                                <dd class="media-cropper__meta__value js-media-cropper-meta-value-y"></dd>
+                            </div>
+                            <div class="media-cropper__meta__list__row">
+                                <dt class="media-cropper__meta__key">{{ 'media.widget.media_cropper.meta_width' | trans }}</dt>
+                                <dd class="media-cropper__meta__value js-media-cropper-meta-value-width"></dd>
+                            </div>
+                            <div class="media-cropper__meta__list__row">
+                                <dt class="media-cropper__meta__key">{{ 'media.widget.media_cropper.meta_height' | trans }}</dt>
+                                <dd class="media-cropper__meta__value js-media-cropper-meta-value-height"></dd>
+                            </div>
+                        </dl>
+                    </aside>
                 </div>
             </div>
         </div>
