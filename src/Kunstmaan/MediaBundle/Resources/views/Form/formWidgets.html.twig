@@ -107,6 +107,7 @@
     {% if showCropperModal is defined and showCropperModal %}
     <!-- cropper modal Modal -->
     <div class="js-ajax-modal modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
+        <div class="cropper-config" data-cropping-views="{{ cropping_views }}"></div>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 

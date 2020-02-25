@@ -44,6 +44,13 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(SymfonyVersion::getRootWebPath())
                     ->cannotBeEmpty()
                 ->end()
+                ->arrayNode('cropping_views')
+                    ->prototype('array')->end()
+                    ->children()
+                        ->scalarNode('height')->isRequired()->end()
+                        ->scalarNode('width')->isRequired()->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
