@@ -57,7 +57,7 @@ class CroppableMediaLinkAdminType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => CroppableMediaLink::class,
-                'cropping_views' => ['desktop', 'media'],
+                'cropping_views' => ['desktop', 'mobile'],
             ]
         );
     }
