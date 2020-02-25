@@ -26,7 +26,7 @@ class ManipulateImageService
         $this->em = $em;
     }
 
-    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, ?array $runTimeConfig, string $view = ''): string
+    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, string $view = ''): string
     {
         /** @var Media $media */
         $media = $croppableMediaLink->getMedia();
@@ -45,15 +45,18 @@ class ManipulateImageService
             $filename
         );
 
-        $serializedRunTimeConfig = $runTimeConfig !== null ? serialize($runTimeConfig) : null;
-        if ($serializedRunTimeConfig !== $croppableMediaLink->getRunTimeConfig()) {
-            $croppableMediaLink->setRunTimeConfig($serializedRunTimeConfig);
-            $this->em->flush();
-        }
-
         $runTimeConfigForView = [];
-        if(is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view])) {
-            $runTimeConfigForView = $runTimeConfig[$view];
+        if ($croppableMediaLink->getRunTimeConfig() !== null) {
+            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig(), [false]);
+
+            if (is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view])) {
+                $runTimeConfigForView = [
+                    'crop' => [
+                        'start' => $runTimeConfig[$view]['start'],
+                        'size' => $runTimeConfig[$view]['size'],
+                    ],
+                ];
+            }
         }
 
         return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, 'optim', $runTimeConfigForView);
