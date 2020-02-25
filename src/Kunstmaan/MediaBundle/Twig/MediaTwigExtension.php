@@ -14,8 +14,8 @@ class MediaTwigExtension extends AbstractExtension
 
     public function __construct(
         ManipulateImageService $manipulateImageService
-    ) {
-
+    )
+    {
         $this->manipulateImageService = $manipulateImageService;
     }
 
@@ -31,14 +31,13 @@ class MediaTwigExtension extends AbstractExtension
 
     public function getCroppedVersion($croppableMediaLink)
     {
-        $runTimeConfig = [
-            'crop' => [
-                'start' => [0, 0],
-                'size' => [5000, 5000],
-            ],
-        ];
+        if (!$croppableMediaLink instanceof CroppableMediaLink) {
+            return '';
+        }
+
+        $runTimeConfig = null;
         if ($croppableMediaLink->getRunTimeConfig() !== null) {
-            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig());
+            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig(), [false]);
         }
 
         return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $runTimeConfig);

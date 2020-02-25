@@ -26,7 +26,7 @@ class ManipulateImageService
         $this->em = $em;
     }
 
-    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, array $runTimeConfig): string
+    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, ?array $runTimeConfig): string
     {
         /** @var Media $media */
         $media = $croppableMediaLink->getMedia();
@@ -45,12 +45,12 @@ class ManipulateImageService
             $filename
         );
 
-        $serializedRunTimeConfig = serialize($runTimeConfig);
+        $serializedRunTimeConfig = $runTimeConfig !== null ? serialize($runTimeConfig) : null;
         if ($serializedRunTimeConfig !== $croppableMediaLink->getRunTimeConfig()) {
             $croppableMediaLink->setRunTimeConfig($serializedRunTimeConfig);
             $this->em->flush();
         }
 
-        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, 'optim', $runTimeConfig);
+        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, 'optim', is_array($runTimeConfig) ? $runTimeConfig : []);
     }
 }
