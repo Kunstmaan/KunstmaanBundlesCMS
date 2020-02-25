@@ -1,0 +1,40 @@
+/* ==========================================================================
+    cropper image
+   ========================================================================== */
+
+.media-cropper {
+    padding: 15px;
+
+    @media (min-width: $screen-sm) {
+        display: flex;
+    }
+}
+
+.media-cropper__meta {
+    width: 100%;
+    margin-top: 20px;
+
+    @media (min-width: $screen-sm) {
+        flex: 0 0 300px;
+        margin-left: 20px;
+        margin-top: 0;
+    }
+}
+
+.media-cropper__meta__key,
+.media-cropper__meta__value {
+    display: inline-block;
+}
+
+.media-cropper__meta__key {
+    &:after {
+        content: ':';
+    }
+}
+
+.media-cropper__meta__list__row + .media-cropper__meta__list__row {
+    margin-top: 5px;
+    padding-top: 5px;
+
+    border-top: 1px solid $gray-ultralight;
+}
