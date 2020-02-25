@@ -56,6 +56,7 @@
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-sass": "^3.4.1",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
+    "croppr": "^2.3.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "fuse.js": "^3.1.0",
     "jquery": "^3.4.1",

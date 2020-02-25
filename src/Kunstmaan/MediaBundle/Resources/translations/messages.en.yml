@@ -128,6 +128,11 @@ media:
         delete: Delete
         media_chooser: Media-chooser
         icon_chooser: Icon-chooser
+        media_cropper:
+            title: Adjust your image
+            meta_title: New dimensions
+            meta_width: width
+            meta_height: height
 
     adminlist:
         configurator:
