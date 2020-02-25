@@ -40,7 +40,7 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type}
-            -
+
     form.type.croppable_media_link:
         class: '%kunstmaan_media.form.type.croppable_media_link.class%'
         arguments:
