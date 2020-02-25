@@ -4,6 +4,7 @@ parameters:
     kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
     kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
+    kunstmaan_media.form.type.croppable_media_link.class: 'Kunstmaan\MediaBundle\Form\CroppableMediaLinkAdminType'
     kunstmaan_media.form.type.iconfont.class: 'Kunstmaan\MediaBundle\Form\Type\IconFontType'
     kunstmaan_media.icon_font_manager.class: 'Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager'
     kunstmaan_media.icon_font.default_loader.class: 'Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
@@ -37,6 +38,13 @@ services:
         arguments:
             - '@kunstmaan_media.media_manager'
             - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type}
+            -
+    form.type.croppable_media_link:
+        class: '%kunstmaan_media.form.type.croppable_media_link.class%'
+        arguments:
+            - '%kunstmaan_media.cropping_views%'
         tags:
             - { name: form.type}
 
