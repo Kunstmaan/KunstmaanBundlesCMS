@@ -42,6 +42,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('kunstmaan_media.web_root', $config['web_root']);
         $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'] . '%kunstmaan_media.media_path%');
+        $container->setParameter('kunstmaan_media.cropping_views', $config['cropping_views']);
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');
@@ -78,6 +79,9 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
+
+        $mediaConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/cropping_views.yml'));
+        $container->prependExtensionConfig('kunstmaan_media', $mediaConfig['kunstmaan_media']);
 
         $defaultLocale = $container->hasParameter('kunstmaan_admin.default_locale') ? $container->getParameter('kunstmaan_admin.default_locale') : 'en';
         $stofDoctrineExtensionsConfig = [

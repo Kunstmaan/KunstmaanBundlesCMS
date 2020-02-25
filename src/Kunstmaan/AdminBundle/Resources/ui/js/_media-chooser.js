@@ -34,7 +34,7 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
         });
     };
 
-    // Del btn
+    // Crop btn
     initCropBtn = function () {
         $body.on('click', '.js-media-chooser-crop-preview-btn', function (element) {
             var $this = $(this),
@@ -43,32 +43,6 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
 
             $mediaCropperModal.modal('show');
 
-            var clicks = [];
-
-            $mediaCropperModal.on('click', '.thumbnail', function (e) {
-                var offset_t = $(this).offset().top - $(window).scrollTop();
-                var offset_l = $(this).offset().left - $(window).scrollLeft();
-
-                var left = Math.round((e.clientX - offset_l));
-                var top = Math.round((e.clientY - offset_t));
-
-                clicks.push([left, top]);
-
-                console.log(clicks);
-                if (clicks.length >= 2) {
-                    var cropUrl = $mediaCropperModal.find('.crop-path-container').data('crop-url');
-                    var start = clicks[0].join();
-                    var end = clicks[1].join();
-                    $.ajax({
-                        url: cropUrl,
-                        type: 'GET',
-                        data: {'start': start, 'end': end},
-                        success: function (response) {
-                            alert('yay cropped image');
-                        }
-                    });
-                }
-            });
         });
     };
 

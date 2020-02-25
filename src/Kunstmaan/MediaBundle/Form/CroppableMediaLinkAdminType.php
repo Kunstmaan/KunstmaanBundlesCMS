@@ -5,17 +5,40 @@ namespace Kunstmaan\MediaBundle\Form;
 use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CroppableMediaLinkAdminType extends AbstractType
 {
+    /** @var array */
+    private $croppingViews;
+
+    public function __construct(array $croppingViews)
+    {
+        $this->croppingViews = $croppingViews;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $selectedCroppingViews = [];
+        foreach($options['cropping_views'] as $croppingView) {
+            foreach($this->croppingViews as $possibleCroppingView) {
+                if($possibleCroppingView['name'] === $croppingView) {
+                    $selectedCroppingViews[] = $possibleCroppingView;
+                }
+            }
+        }
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
+            'mediatype' => 'image',
             'show_cropper_modal' => true,
-            'mediatype' => 'image'
+            'cropping_views' => json_encode($selectedCroppingViews),
+        ]);
+        $builder->add('runTimeConfig', HiddenType::class, [
+            'label' => false,
         ]);
     }
 
@@ -34,6 +57,7 @@ class CroppableMediaLinkAdminType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => CroppableMediaLink::class,
+                'cropping_views' => ['desktop', 'mobile'],
             ]
         );
     }
