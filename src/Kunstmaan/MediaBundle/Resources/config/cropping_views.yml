@@ -1,8 +1,4 @@
 kunstmaan_media:
     cropping_views:
-        desktop:
-            width: 1080
-            heigth: 1920
-        mobile:
-            width: 300
-            heigth: 1000
+        - { name: desktop, width: 108, heigth: 192}
+        - { name: mobile, width: 30, heigth: 100}
