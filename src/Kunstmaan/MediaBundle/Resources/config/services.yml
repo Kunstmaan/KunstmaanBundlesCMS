@@ -168,6 +168,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_utilities.slugifier'
             - '@liip_imagine.service.filter'
+        public: true
 
     Kunstmaan\MediaBundle\Twig\MediaTwigExtension:
         arguments:
