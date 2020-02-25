@@ -56,9 +56,11 @@ class CroppableMediaLinkAdminType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $selectedCroppingViews = [];
-        foreach($options['cropping_views'] as $cropping_view) {
-            if(isset($this->croppingViews[$cropping_view])) {
-                $selectedCroppingViews[] = $this->croppingViews[$cropping_view];
+        foreach($options['cropping_views'] as $croppingView) {
+            foreach($this->croppingViews as $possibleCroppingView) {
+                if($possibleCroppingView['name'] === $croppingView) {
+                    $selectedCroppingViews[] = $possibleCroppingView;
+                }
             }
         }
         $view->vars['cropping_views'] = json_encode($selectedCroppingViews);
