@@ -47,7 +47,7 @@ class ManipulateImageService
 
         $runTimeConfigForView = [];
         if ($croppableMediaLink->getRunTimeConfig() !== null) {
-            $runTimeConfig = unserialize($croppableMediaLink->getRunTimeConfig(), [false]);
+            $runTimeConfig = json_decode($croppableMediaLink->getRunTimeConfig(), true);
 
             if (is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view])) {
                 $runTimeConfigForView = [
