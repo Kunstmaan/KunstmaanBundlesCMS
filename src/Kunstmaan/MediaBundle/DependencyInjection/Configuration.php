@@ -54,7 +54,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('name')->end()
                             ->integerNode('width')->end()
-                            ->integerNode('heigth')->end()
+                            ->integerNode('height')->end()
                         ->end()
                     ->end()
                 ->end()
