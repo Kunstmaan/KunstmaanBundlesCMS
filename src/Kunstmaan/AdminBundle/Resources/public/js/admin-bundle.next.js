@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -102,13 +102,110 @@ const ATTRIBUTES = exports.ATTRIBUTES = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+const SELECTORS = {
+    HOOK: '.js-media-chooser-crop-preview-btn',
+    CONTAINER: '.js-media-cropper',
+    IMAGE: '.js-media-cropper-image',
+    META_CONTAINER: '.js-media-cropper-meta',
+    META_ITEM: '.js-media-cropper-meta-value'
+};
+
+const MODIFIERS = {
+    CROP_BOX_SMALL_CROPPED_AREA: 'cropper-crop-box--expanded'
+};
+
+const CROP_BOX_THRESHOLD = 250;
+
+const META_KEYS = ['x', 'y', 'width', 'height'];
+
+const CROPPER_CONFIG = {
+    viewMode: 2,
+    rotatable: false,
+    zoomable: false,
+    zoomOnTouch: false,
+    zoomOnWheel: false
+};
+
+exports.SELECTORS = SELECTORS;
+exports.MODIFIERS = MODIFIERS;
+exports.CROP_BOX_THRESHOLD = CROP_BOX_THRESHOLD;
+exports.META_KEYS = META_KEYS;
+exports.CROPPER_CONFIG = CROPPER_CONFIG;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.initMediaCroppers = undefined;
+
+var _config = __webpack_require__(1);
+
+var _MediaCropper = __webpack_require__(4);
+
+function initMediaCroppers(container = window.document) {
+    const PREVIEW_BTNS = [...container.querySelectorAll(_config.SELECTORS.HOOK)];
+
+    PREVIEW_BTNS.forEach(btn => {
+        btn.addEventListener('modalOpen', e => {
+            const targetModal = e.detail;
+            const node = targetModal.querySelector(_config.SELECTORS.CONTAINER);
+
+            new _MediaCropper.MediaCropper(node, _config.CROPPER_CONFIG);
+        });
+    });
+}
+
+exports.initMediaCroppers = initMediaCroppers;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _config = __webpack_require__(0);
+
+var _initSearch = __webpack_require__(5);
+
+class PagePartChooser {
+    static init(container = window.document) {
+        const pagePartChoosers = [...container.querySelectorAll(_config.SELECTORS.PP_CHOOSER)];
+
+        pagePartChoosers.forEach(pagePartChooser => {
+            (0, _initSearch.initSearch)(pagePartChooser);
+        });
+    }
+}
+exports.default = PagePartChooser;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.MediaCropper = undefined;
 
-var _cropperjs = __webpack_require__(8);
+var _cropperjs = __webpack_require__(9);
 
 var _cropperjs2 = _interopRequireDefault(_cropperjs);
 
-var _config = __webpack_require__(3);
+var _config = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -119,8 +216,6 @@ class MediaCropper {
         this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
         this.metaValueNodes = {};
         this.cropper = new _cropperjs2.default(this.image, CROPPER_CONFIG);
-
-        console.log(this);
 
         this.getValueNodes();
 
@@ -161,73 +256,7 @@ class MediaCropper {
 exports.MediaCropper = MediaCropper;
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _config = __webpack_require__(0);
-
-var _initSearch = __webpack_require__(4);
-
-class PagePartChooser {
-    static init(container = window.document) {
-        const pagePartChoosers = [...container.querySelectorAll(_config.SELECTORS.PP_CHOOSER)];
-
-        pagePartChoosers.forEach(pagePartChooser => {
-            (0, _initSearch.initSearch)(pagePartChooser);
-        });
-    }
-}
-exports.default = PagePartChooser;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-const SELECTORS = {
-    HOOK: '.js-media-chooser-crop-preview-btn',
-    CONTAINER: '.js-media-cropper',
-    IMAGE: '.js-media-cropper-image',
-    META_CONTAINER: '.js-media-cropper-meta',
-    META_ITEM: '.js-media-cropper-meta-value'
-};
-
-const MODIFIERS = {
-    CROP_BOX_SMALL_CROPPED_AREA: 'cropper-crop-box--expanded'
-};
-
-const CROP_BOX_THRESHOLD = 250;
-
-const META_KEYS = ['x', 'y', 'width', 'height'];
-
-const CROPPER_CONFIG = {
-    viewMode: 2,
-    rotatable: false,
-    zoomable: false,
-    zoomOnTouch: false,
-    zoomOnWheel: false
-};
-
-exports.SELECTORS = SELECTORS;
-exports.MODIFIERS = MODIFIERS;
-exports.CROP_BOX_THRESHOLD = CROP_BOX_THRESHOLD;
-exports.META_KEYS = META_KEYS;
-exports.CROPPER_CONFIG = CROPPER_CONFIG;
-
-/***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -238,15 +267,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initSearch = initSearch;
 
-var _fuse = __webpack_require__(9);
+var _fuse = __webpack_require__(10);
 
 var _fuse2 = _interopRequireDefault(_fuse);
 
 var _config = __webpack_require__(0);
 
-var _resetSearch = __webpack_require__(5);
+var _resetSearch = __webpack_require__(6);
 
-var _updateSearch = __webpack_require__(6);
+var _updateSearch = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -313,7 +342,7 @@ function initFuse(ppSearchData) {
 }
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -333,7 +362,7 @@ function resetSearch(searchItems) {
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -359,17 +388,17 @@ function updateSearch(searchItems, searchResults) {
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _PagePartChooser = __webpack_require__(2);
+var _PagePartChooser = __webpack_require__(3);
 
 var _PagePartChooser2 = _interopRequireDefault(_PagePartChooser);
 
-var _MediaCropper = __webpack_require__(1);
+var _MediaCropper = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -388,7 +417,7 @@ if (document.readyState !== 'loading') {
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -4010,7 +4039,7 @@ if (document.readyState !== 'loading') {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!

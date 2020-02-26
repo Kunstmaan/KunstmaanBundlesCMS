@@ -8,8 +8,6 @@ class MediaCropper {
         this.metaValueNodes = {};
         this.cropper = new Cropper(this.image, CROPPER_CONFIG);
 
-        console.log(this);
-
         this.getValueNodes();
 
         this.image.addEventListener('crop', () => {
