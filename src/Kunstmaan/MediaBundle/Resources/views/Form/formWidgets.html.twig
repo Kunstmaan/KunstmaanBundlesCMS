@@ -136,7 +136,9 @@
                                 {% endif %}
                             {% endif %}
                             {% if imageurl %}
-                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
+                                <div>
+                                    <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
+                                </div>
                             {% endif %}
                             <figcaption id="{{ id }}__preview__title" class="media-cropper__preview__caption">
                                 {{ media.name }}

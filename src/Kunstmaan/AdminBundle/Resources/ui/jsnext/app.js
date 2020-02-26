@@ -1,5 +1,5 @@
 import PagePartChooser from './PagePartChooser';
-import { initMediaCroppers } from './MediaCropper/MediaCropper';
+import { initMediaCroppers } from './MediaCropper';
 
 function init() {
     PagePartChooser.init();
