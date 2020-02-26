@@ -24,9 +24,12 @@
 .media-cropper__meta__key,
 .media-cropper__meta__value {
     display: inline-block;
+    margin: 0;
 }
 
 .media-cropper__meta__key {
+    margin-right: 5px;
+
     &:after {
         content: ':';
     }
