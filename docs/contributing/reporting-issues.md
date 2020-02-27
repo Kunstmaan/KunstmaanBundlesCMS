@@ -2,7 +2,7 @@
 
 ## Reporting a bug
 
-Whenever you find a bug in the Kunstmaan Bundles CMS, we kindly ask you to report it. It helps us make a better content management system.
+Whenever you find a bug in the Kunstmaan CMS, we kindly ask you to report it. It helps us make a better content management system.
 
 > !! If you think you've found a security issue, please use this [special procedure](#reporting-a-security-issue) instead.
 
