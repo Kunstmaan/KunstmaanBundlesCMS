@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}">
+                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ id }}_runTimeConfig">
                     <figure class="media-cropper__preview">
                         {% if (value.ent is defined) %}
                             {% set media = value.ent %}
@@ -146,7 +146,7 @@
                     </figure>
                     <aside class="media-cropper__meta js-media-cropper-meta">
                         <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
-                        <select name="{{ id }}-mediaCropperModal-view-select" id="{{ id }}-mediaCropperModal-view-select" class="js-media-cropper-view-select media-cropper__meta__select" disabled>
+                        <select name="{{ id }}-mediaCropperModal-view-select" id="{{ id }}-mediaCropperModal-view-select" class="form-control js-media-cropper-view-select media-cropper__meta__select" disabled>
                             <option value="">{{ 'media.widget.media_cropper.meta_views_placeholder'|trans }}</option>
                         </select>
                         <h4>{{ 'media.widget.media_cropper.meta_title_dimensions' | trans }}</h4>
@@ -168,6 +168,10 @@
                                 <dd class="media-cropper__meta__value js-media-cropper-meta-value-height"></dd>
                             </div>
                         </dl>
+
+                        <button type="button" class="js-media-cropper-save btn btn-primary" data-dismiss="modal">
+                            {{ 'media.widget.media_cropper.save'|trans }}
+                        </button>
                     </aside>
                 </div>
             </div>

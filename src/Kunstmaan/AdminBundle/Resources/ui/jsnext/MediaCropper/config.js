@@ -5,6 +5,7 @@ const SELECTORS = {
     META_CONTAINER: '.js-media-cropper-meta',
     META_ITEM: '.js-media-cropper-meta-value',
     VIEW_SELECT: '.js-media-cropper-view-select',
+    SAVE: '.js-media-cropper-save',
 };
 
 const MODIFIERS = {
