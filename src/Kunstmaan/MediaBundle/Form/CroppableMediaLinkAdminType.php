@@ -27,8 +27,8 @@ class CroppableMediaLinkAdminType extends AbstractType
     {
         $croppingViewGroup = $options['cropping_views_group'];
         $selectedCroppingViews = $this->croppingViews[self::DEFAULT];
-        if($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews['custom_views'][$croppingViewGroup])) {
-            $selectedCroppingViews = $this->croppingViews['custom_views'][$croppingViewGroup];
+        if($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews['custom_views'][$croppingViewGroup]['views'])) {
+            $selectedCroppingViews = $this->croppingViews['custom_views'][$croppingViewGroup]['views'];
         }
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
