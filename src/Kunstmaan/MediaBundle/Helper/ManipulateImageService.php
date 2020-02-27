@@ -26,7 +26,7 @@ class ManipulateImageService
         $this->em = $em;
     }
 
-    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, string $view = ''): string
+    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = 'optim'): string
     {
         /** @var Media $media */
         $media = $croppableMediaLink->getMedia();
@@ -59,6 +59,6 @@ class ManipulateImageService
             }
         }
 
-        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, 'optim', $runTimeConfigForView);
+        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, $filter, $runTimeConfigForView);
     }
 }
