@@ -1,11 +1,15 @@
 kunstmaan_media:
-    cropping_views:
-        default:
-            - { name: desktop, width: 1, height: 1, lockRatio: false}
-            - { name: tablet, width: 1, height: 1, lockRatio: false}
-            - { name: phone, width: 1, height: 1, lockRatio: false}
-        custom_views:
-            testx:
-                - { name: desktop, width: 108, height: 192}
-            testy:
-                - { name: mobile, width: 30, height: 100}
+  cropping_views:
+    default:
+      - { name: desktop, width: 1, height: 1, lockRatio: false}
+      - { name: tablet, width: 1, height: 1, lockRatio: false}
+      - { name: phone, width: 1, height: 1, lockRatio: false}
+    custom_views:
+      testx:
+        name: desktop
+        width: 108
+        height: 192
+      testy:
+        name: desktop
+        width: 108
+        height: 192
