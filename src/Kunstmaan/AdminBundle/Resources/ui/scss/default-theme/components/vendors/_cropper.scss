@@ -15,7 +15,7 @@
 
         margin-left: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translateY(-10px);
         }
     }
@@ -25,7 +25,7 @@
 
         margin-top: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translateX(10px);
         }
     }
@@ -35,7 +35,7 @@
 
         margin-left: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translateY(10px);
         }
     }
@@ -45,7 +45,7 @@
 
         margin-top: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translateX(-10px);
         }
     }
@@ -54,7 +54,7 @@
         left: -5px;
         top: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translate3d(-10px, -10px, 0);
         }
     }
@@ -63,7 +63,7 @@
         right: -5px;
         top: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translate3d(10px, -10px, 0);
         }
     }
@@ -72,7 +72,7 @@
         bottom: -5px;
         right: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translate3d(10px, 10px, 0);
         }
     }
@@ -81,7 +81,7 @@
         left: -5px;
         bottom: -5px;
 
-        .cropper-crop-box--expanded & {
+        .media-cropper--crop-box-expanded & {
             transform: translate3d(-10px, 10px, 0);
         }
     }

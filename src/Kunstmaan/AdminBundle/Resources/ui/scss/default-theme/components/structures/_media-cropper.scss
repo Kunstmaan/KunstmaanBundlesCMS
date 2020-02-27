@@ -10,6 +10,14 @@
     }
 }
 
+.media-cropper__preview {
+    width: 100%;
+
+    @media (min-width: $screen-sm) {
+        width: calc(100% - 300px);
+    }
+}
+
 .media-cropper__meta {
     width: 100%;
     margin-top: 20px;

@@ -104,9 +104,8 @@
     </div>
 
     {% if showCropperModal is defined and showCropperModal %}
-    <div class="cropper-config" data-cropping-views="{{ cropping_views }}"></div>
     <!-- cropper modal Modal -->
-    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
+    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -121,9 +120,9 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper">
+                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}">
                     <figure class="media-cropper__preview">
-                        {% if(value.ent is defined) %}
+                        {% if (value.ent is defined) %}
                             {% set media = value.ent %}
                             {% set handler = mediamanager.getHandler(media) %}
                             {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
@@ -146,7 +145,11 @@
                         {% endif %}
                     </figure>
                     <aside class="media-cropper__meta js-media-cropper-meta">
-                        <h4>{{ 'media.widget.media_cropper.meta_title' | trans }}</h4>
+                        <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
+                        <select name="{{ id }}-mediaCropperModal-view-select" id="{{ id }}-mediaCropperModal-view-select" class="js-media-cropper-view-select media-cropper__meta__select" disabled>
+                            <option value="">{{ 'media.widget.media_cropper.meta_views_placeholder'|trans }}</option>
+                        </select>
+                        <h4>{{ 'media.widget.media_cropper.meta_title_dimensions' | trans }}</h4>
                         <dl class="media-cropper__meta__list">
                             <div class="media-cropper__meta__list__row">
                                 <dt class="media-cropper__meta__key">x</dt>
