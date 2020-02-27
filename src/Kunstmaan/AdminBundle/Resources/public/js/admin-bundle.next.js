@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,11 +107,12 @@ const SELECTORS = {
     CONTAINER: '.js-media-cropper',
     IMAGE: '.js-media-cropper-image',
     META_CONTAINER: '.js-media-cropper-meta',
-    META_ITEM: '.js-media-cropper-meta-value'
+    META_ITEM: '.js-media-cropper-meta-value',
+    VIEW_SELECT: '.js-media-cropper-view-select'
 };
 
 const MODIFIERS = {
-    CROP_BOX_SMALL_CROPPED_AREA: 'cropper-crop-box--expanded'
+    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded'
 };
 
 const CROP_BOX_THRESHOLD = 250;
@@ -121,6 +122,7 @@ const META_KEYS = ['x', 'y', 'width', 'height'];
 const CROPPER_CONFIG = {
     viewMode: 2,
     rotatable: false,
+    scalable: false,
     zoomable: false,
     zoomOnTouch: false,
     zoomOnWheel: false
@@ -176,7 +178,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _config = __webpack_require__(0);
 
-var _initSearch = __webpack_require__(5);
+var _initSearch = __webpack_require__(6);
 
 class PagePartChooser {
     static init(container = window.document) {
@@ -201,11 +203,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MediaCropper = undefined;
 
-var _cropperjs = __webpack_require__(9);
+var _cropperjs = __webpack_require__(10);
 
 var _cropperjs2 = _interopRequireDefault(_cropperjs);
 
 var _config = __webpack_require__(1);
+
+var _renderViewSelectOptions = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -214,15 +218,13 @@ class MediaCropper {
         this.node = node;
         this.image = this.node.querySelector(_config.SELECTORS.IMAGE);
         this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
+        this.viewSelect = this.metaContainer.querySelector(_config.SELECTORS.VIEW_SELECT);
         this.metaValueNodes = {};
         this.cropper = new _cropperjs2.default(this.image, CROPPER_CONFIG);
+        this.views = this.node.hasAttribute('data-cropping-views');
+        this.viewData = {};
 
-        this.getValueNodes();
-
-        this.image.addEventListener('crop', () => {
-            const data = this.getData();
-            this.updateValue(data);
-        });
+        this.init();
     }
 
     getValueNodes() {
@@ -244,12 +246,45 @@ class MediaCropper {
         this.metaValueNodes.height.textContent = height;
 
         if ((width || height) <= _config.CROP_BOX_THRESHOLD && !small_crop_box_area) {
-            this.cropper.cropBox.classList.add(_config.MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
+            this.node.classList.add(_config.MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
             small_crop_box_area = true;
         } else {
-            this.cropper.cropBox.classList.remove(_config.MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
+            this.node.classList.remove(_config.MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
             small_crop_box_area = false;
         }
+
+        if (this.viewData && this.currentView) {
+            this.cropData[this.currentView].x = x;
+            this.cropData[this.currentView].y = y;
+            this.cropData[this.currentView].width = width;
+            this.cropData[this.currentView].height = height;
+        }
+    }
+
+    addEventListeners() {
+        this.image.addEventListener('crop', () => {
+            const data = this.getData();
+            this.updateValue(data);
+        });
+    }
+
+    init() {
+        this.getValueNodes();
+
+        if (this.views) {
+            const viewData = JSON.parse(this.node.dataset.croppingViews);
+            viewData.forEach(view => {
+                this.viewData[view.name] = {};
+                this.viewData[view.name].aspectRatio = view.height / view.width;
+                this.viewData[view.name].width = view.width;
+                this.viewData[view.name].height = view.height;
+            });
+            (0, _renderViewSelectOptions.renderViewSelectOptions)(this.viewSelect, this.viewData);
+        }
+
+        this.addEventListeners();
+
+        console.log(this);
     }
 }
 
@@ -265,17 +300,33 @@ exports.MediaCropper = MediaCropper;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+function renderViewSelectOptions(select, data) {
+    console.log(select, data);
+}
+
+exports.renderViewSelectOptions = renderViewSelectOptions;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.initSearch = initSearch;
 
-var _fuse = __webpack_require__(10);
+var _fuse = __webpack_require__(11);
 
 var _fuse2 = _interopRequireDefault(_fuse);
 
 var _config = __webpack_require__(0);
 
-var _resetSearch = __webpack_require__(6);
+var _resetSearch = __webpack_require__(7);
 
-var _updateSearch = __webpack_require__(7);
+var _updateSearch = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -342,7 +393,7 @@ function initFuse(ppSearchData) {
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -362,7 +413,7 @@ function resetSearch(searchItems) {
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -388,7 +439,7 @@ function updateSearch(searchItems, searchResults) {
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -417,7 +468,7 @@ if (document.readyState !== 'loading') {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -4039,7 +4090,7 @@ if (document.readyState !== 'loading') {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!

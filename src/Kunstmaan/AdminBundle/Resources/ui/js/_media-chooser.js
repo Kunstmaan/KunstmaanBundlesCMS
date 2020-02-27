@@ -42,7 +42,10 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
                 $mediaCropperModal = $('#' + linkedID + '-mediaCropperModal');
 
             $mediaCropperModal.modal('show');
-            $this[0].dispatchEvent(new CustomEvent('modalOpen', {detail: $mediaCropperModal[0]}));
+
+            $mediaCropperModal.on('shown.bs.modal', function() {
+                $this[0].dispatchEvent(new CustomEvent('modalOpen', {detail: $mediaCropperModal[0]}));
+            });
         });
     };
 

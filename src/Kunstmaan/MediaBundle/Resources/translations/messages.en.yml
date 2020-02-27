@@ -132,9 +132,11 @@ media:
         icon_chooser: Icon-chooser
         media_cropper:
             title: Adjust your image
-            meta_title: New dimensions
+            meta_title_dimensions: New dimensions
             meta_width: width
             meta_height: height
+            meta_title_views: Select your viewport
+            meta_views_placeholder: Only one viewport available
 
     adminlist:
         configurator:
