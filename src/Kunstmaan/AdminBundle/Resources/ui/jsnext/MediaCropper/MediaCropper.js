@@ -7,10 +7,13 @@ class MediaCropper {
         this.image = this.node.querySelector(SELECTORS.IMAGE);
         this.metaContainer = this.node.querySelector(SELECTORS.META_CONTAINER);
         this.viewSelect = this.metaContainer.querySelector(SELECTORS.VIEW_SELECT);
+        this.save = this.metaContainer.querySelector(SELECTORS.SAVE);
+        this.input = null;
         this.metaValueNodes = {};
-        this.cropper = new Cropper(this.image, CROPPER_CONFIG);
-        this.views = this.node.hasAttribute('data-cropping-views');
+        this.cropperConfig = CROPPER_CONFIG;
+        this.cropper = null;
         this.viewData = {};
+        this.cropData = {};
 
 
         this.init();
@@ -43,6 +46,9 @@ class MediaCropper {
         }
 
         if (this.viewData && this.currentView) {
+            if (!this.cropData.hasOwnProperty(this.currentView)) {
+                this.cropData[this.currentView] = {};
+            }
             this.cropData[this.currentView].x = x;
             this.cropData[this.currentView].y = y;
             this.cropData[this.currentView].width = width;
@@ -55,25 +61,48 @@ class MediaCropper {
             const data = this.getData();
             this.updateValue(data);
         });
+
+        this.viewSelect.addEventListener('change', () => {
+            this.currentView = this.viewSelect.value;
+            this.cropper.destroy();
+            this.initCropper();
+        });
+
+        this.save.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.cropper.destroy();
+            console.log(this.cropData);
+        });
+    }
+
+    initCropper() {
+        const entries = Object.entries(this.viewData[this.currentView]);
+
+        for (const [key, value] of entries) {
+            this.cropperConfig[key] = value;
+        }
+
+        this.cropper = new Cropper(this.image, this.cropperConfig);
     }
 
     init() {
         this.getValueNodes();
 
-        if (this.views) {
-            const viewData = JSON.parse(this.node.dataset.croppingViews);
+        const viewData = JSON.parse(this.node.dataset.croppingViews);
+        if (viewData.length > 0) {
             viewData.forEach((view) => {
                 this.viewData[view.name] = {};
-                this.viewData[view.name].aspectRatio = view.height / view.width;
-                this.viewData[view.name].width = view.width;
-                this.viewData[view.name].height = view.height;
+                this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
+                this.viewData[view.name].minContainerWidth = view.width ? view.width : 200;
+                this.viewData[view.name].minContainerHeight = view.height ? view.height : 100;
             });
             renderViewSelectOptions(this.viewSelect, this.viewData);
+
+            this.currentView = this.viewSelect.value;
         }
 
+        this.initCropper();
         this.addEventListeners();
-
-        console.log(this);
     }
 }
 
