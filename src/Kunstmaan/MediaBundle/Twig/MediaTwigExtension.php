@@ -29,8 +29,12 @@ class MediaTwigExtension extends AbstractExtension
         ];
     }
 
-    public function getCroppedVersion(CroppableMediaLink $croppableMediaLink, string $view = '')
+    public function getCroppedVersion(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = null)
     {
+        if ($filter) {
+            return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $view, $filter);
+        }
+
         return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $view);
     }
 }

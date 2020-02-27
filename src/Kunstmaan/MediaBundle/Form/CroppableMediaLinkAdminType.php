@@ -13,6 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CroppableMediaLinkAdminType extends AbstractType
 {
+    const DEFAULT = 'default';
+
     /** @var array */
     private $croppingViews;
 
@@ -23,13 +25,10 @@ class CroppableMediaLinkAdminType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $selectedCroppingViews = [];
-        foreach($options['cropping_views'] as $croppingView) {
-            foreach($this->croppingViews as $possibleCroppingView) {
-                if($possibleCroppingView['name'] === $croppingView) {
-                    $selectedCroppingViews[] = $possibleCroppingView;
-                }
-            }
+        $croppingViewGroup = $options['cropping_views_group'];
+        $selectedCroppingViews = $this->croppingViews[self::DEFAULT];
+        if($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews['custom_views'][$croppingViewGroup])) {
+            $selectedCroppingViews = $this->croppingViews['custom_views'][$croppingViewGroup];
         }
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
@@ -57,7 +56,7 @@ class CroppableMediaLinkAdminType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => CroppableMediaLink::class,
-                'cropping_views' => ['desktop', 'mobile'],
+                'cropping_views_group' => self::DEFAULT,
             ]
         );
     }
