@@ -196,9 +196,4 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      * @return \Doctrine\ORM\EntityRepository
      */
     abstract public function getOverviewPageRepository();
-
-    public function getIterator()
-    {
-        return $this->getItems();
-    }
 }
