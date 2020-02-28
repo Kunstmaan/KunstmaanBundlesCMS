@@ -160,7 +160,7 @@ function initMediaCroppers(container = window.document) {
             const node = targetModal.querySelector(_config.SELECTORS.CONTAINER);
 
             if (!node.hasAttribute('data-initialized')) {
-                new _MediaCropper.MediaCropper(node, _config.CROPPER_CONFIG);
+                new _MediaCropper.MediaCropper(node);
             }
         });
     });
@@ -217,7 +217,7 @@ var _renderViewSelectOptions = __webpack_require__(5);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class MediaCropper {
-    constructor(node, CROPPER_CONFIG) {
+    constructor(node) {
         this.node = node;
         this.image = this.node.querySelector(_config.SELECTORS.IMAGE);
         this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
@@ -225,15 +225,11 @@ class MediaCropper {
         this.save = this.metaContainer.querySelector(_config.SELECTORS.SAVE);
         this.input = document.querySelector(`#${this.node.dataset.inputId}`);
         this.metaValueNodes = {};
-        this.cropperConfig = CROPPER_CONFIG;
         this.cropper = null;
         this.viewData = {};
         this.cropData = {};
+        this.savedCropData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
         this.initialized = false;
-
-        this.crop = this.crop.bind(this);
-        this.changeViewport = this.changeViewport.bind(this);
-        this.saveCrops = this.saveCrops.bind(this);
 
         this.init();
     }
@@ -242,10 +238,6 @@ class MediaCropper {
         _config.META_KEYS.forEach(key => {
             this.metaValueNodes[key] = this.metaContainer.querySelector(`${_config.SELECTORS.META_ITEM}-${key}`);
         });
-    }
-
-    getData() {
-        return this.cropper.getData([true]);
     }
 
     updateValue({ x, y, width, height }) {
@@ -273,45 +265,46 @@ class MediaCropper {
         }
     }
 
-    crop() {
-        const data = this.getData();
-        this.updateValue(data);
-    }
-
-    changeViewport() {
-        this.currentView = this.viewSelect.value;
-        this.cropper.destroy();
-        this.initCropper();
-    }
-
-    saveCrops(e) {
-        e.preventDefault();
-        this.input.value = JSON.stringify(this.cropData);
-        console.log(this.cropData);
-    }
-
     addEventListeners() {
-        this.image.addEventListener('crop', this.crop);
+        this.image.addEventListener('crop', () => {
+            const data = this.cropper.getData([true]);
+            this.updateValue(data);
+        });
 
-        this.viewSelect.addEventListener('change', this.changeViewport);
+        this.viewSelect.addEventListener('change', () => {
+            this.currentView = this.viewSelect.value;
+            this.cropper.destroy();
+            this.initCropper();
+        });
 
-        this.save.addEventListener('click', this.saveCrops);
+        this.save.addEventListener('click', e => {
+            e.preventDefault();
+            this.input.value = JSON.stringify(this.cropData);
+        });
     }
 
     initCropper() {
         const entries = Object.entries(this.viewData[this.currentView]);
+        const config = _config.CROPPER_CONFIG;
 
         for (const [key, value] of entries) {
-            this.cropperConfig[key] = value;
+            config[key] = value;
         }
 
-        this.cropper = new _cropperjs2.default(this.image, this.cropperConfig);
-    }
+        if (this.savedCropData && this.savedCropData.hasOwnProperty(this.currentView)) {
+            const savedValues = this.savedCropData[this.currentView];
 
-    handleInitState() {
-        if (this.initialized) {
-            this.node.dataset.initialized = true;
+            config.data = {
+                x: savedValues.start[0],
+                y: savedValues.start[1],
+                width: savedValues.size[0],
+                height: savedValues.size[1]
+            };
+        } else {
+            config.data = null;
         }
+
+        this.cropper = new _cropperjs2.default(this.image, config);
     }
 
     init() {
@@ -330,13 +323,15 @@ class MediaCropper {
             this.currentView = this.viewSelect.value;
         }
 
+        if (this.savedCropData) {
+            this.cropData = this.savedCropData;
+        }
+
         this.initCropper();
         this.addEventListeners();
 
         this.initialized = true;
-        this.handleInitState();
-
-        console.log(this);
+        this.node.dataset.initialized = true;
     }
 }
 
