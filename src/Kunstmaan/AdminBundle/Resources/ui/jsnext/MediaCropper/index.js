@@ -1,7 +1,6 @@
 import { SELECTORS, CROPPER_CONFIG } from './config';
 import { MediaCropper } from './MediaCropper';
 
-
 function initMediaCroppers(container = window.document) {
     const PREVIEW_BTNS = [...container.querySelectorAll(SELECTORS.HOOK)];
 
@@ -10,7 +9,9 @@ function initMediaCroppers(container = window.document) {
             const targetModal = e.detail;
             const node = targetModal.querySelector(SELECTORS.CONTAINER);
 
-            new MediaCropper(node, CROPPER_CONFIG);
+            if (!node.hasAttribute('data-initialized')) {
+                new MediaCropper(node, CROPPER_CONFIG);
+            }
         });
     })
 

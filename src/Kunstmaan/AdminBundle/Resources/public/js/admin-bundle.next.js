@@ -159,7 +159,9 @@ function initMediaCroppers(container = window.document) {
             const targetModal = e.detail;
             const node = targetModal.querySelector(_config.SELECTORS.CONTAINER);
 
-            new _MediaCropper.MediaCropper(node, _config.CROPPER_CONFIG);
+            if (!node.hasAttribute('data-initialized')) {
+                new _MediaCropper.MediaCropper(node, _config.CROPPER_CONFIG);
+            }
         });
     });
 }
@@ -221,12 +223,17 @@ class MediaCropper {
         this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
         this.viewSelect = this.metaContainer.querySelector(_config.SELECTORS.VIEW_SELECT);
         this.save = this.metaContainer.querySelector(_config.SELECTORS.SAVE);
-        this.input = null;
+        this.input = document.querySelector(`#${this.node.dataset.inputId}`);
         this.metaValueNodes = {};
         this.cropperConfig = CROPPER_CONFIG;
         this.cropper = null;
         this.viewData = {};
         this.cropData = {};
+        this.initialized = false;
+
+        this.crop = this.crop.bind(this);
+        this.changeViewport = this.changeViewport.bind(this);
+        this.saveCrops = this.saveCrops.bind(this);
 
         this.init();
     }
@@ -261,30 +268,34 @@ class MediaCropper {
             if (!this.cropData.hasOwnProperty(this.currentView)) {
                 this.cropData[this.currentView] = {};
             }
-            this.cropData[this.currentView].x = x;
-            this.cropData[this.currentView].y = y;
-            this.cropData[this.currentView].width = width;
-            this.cropData[this.currentView].height = height;
+            this.cropData[this.currentView].start = [x, y];
+            this.cropData[this.currentView].size = [width, height];
         }
     }
 
+    crop() {
+        const data = this.getData();
+        this.updateValue(data);
+    }
+
+    changeViewport() {
+        this.currentView = this.viewSelect.value;
+        this.cropper.destroy();
+        this.initCropper();
+    }
+
+    saveCrops(e) {
+        e.preventDefault();
+        this.input.value = JSON.stringify(this.cropData);
+        console.log(this.cropData);
+    }
+
     addEventListeners() {
-        this.image.addEventListener('crop', () => {
-            const data = this.getData();
-            this.updateValue(data);
-        });
+        this.image.addEventListener('crop', this.crop);
 
-        this.viewSelect.addEventListener('change', () => {
-            this.currentView = this.viewSelect.value;
-            this.cropper.destroy();
-            this.initCropper();
-        });
+        this.viewSelect.addEventListener('change', this.changeViewport);
 
-        this.save.addEventListener('click', e => {
-            e.preventDefault();
-            this.cropper.destroy();
-            console.log(this.cropData);
-        });
+        this.save.addEventListener('click', this.saveCrops);
     }
 
     initCropper() {
@@ -295,6 +306,12 @@ class MediaCropper {
         }
 
         this.cropper = new _cropperjs2.default(this.image, this.cropperConfig);
+    }
+
+    handleInitState() {
+        if (this.initialized) {
+            this.node.dataset.initialized = true;
+        }
     }
 
     init() {
@@ -315,6 +332,11 @@ class MediaCropper {
 
         this.initCropper();
         this.addEventListeners();
+
+        this.initialized = true;
+        this.handleInitState();
+
+        console.log(this);
     }
 }
 
