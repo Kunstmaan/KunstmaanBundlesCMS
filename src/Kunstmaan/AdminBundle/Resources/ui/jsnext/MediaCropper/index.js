@@ -1,4 +1,4 @@
-import { SELECTORS, CROPPER_CONFIG } from './config';
+import { SELECTORS } from './config';
 import { MediaCropper } from './MediaCropper';
 
 function initMediaCroppers(container = window.document) {
@@ -10,7 +10,7 @@ function initMediaCroppers(container = window.document) {
             const node = targetModal.querySelector(SELECTORS.CONTAINER);
 
             if (!node.hasAttribute('data-initialized')) {
-                new MediaCropper(node, CROPPER_CONFIG);
+                new MediaCropper(node);
             }
         });
     })
