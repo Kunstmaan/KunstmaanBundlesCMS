@@ -82,6 +82,8 @@ class RedirectRouterTest extends TestCase
             $this->redirects[] = $this->getRedirect(2, 'test2', '/target2', true, null);
             $this->redirects[] = $this->getRedirect(3, 'test3', '/target3', true, 'sub.domain.com');
             $this->redirects[] = $this->getRedirect(4, 'test4', '/target4', true, 'other.domain.com');
+            $this->redirects[] = $this->getRedirect(5, 'test5', '/targét5', true, null);
+            $this->redirects[] = $this->getRedirect(6, 'tést6', '/target6', true, null);
         }
 
         return $this->redirects;
@@ -97,19 +99,19 @@ class RedirectRouterTest extends TestCase
     public function testGetRouteCollection()
     {
         $collection = $this->firstObject->getRouteCollection();
-        $this->assertEquals(3, $collection->count());
+        $this->assertEquals(5, $collection->count());
 
         $collection = $this->secondObject->getRouteCollection();
-        $this->assertEquals(3, $collection->count());
+        $this->assertEquals(5, $collection->count());
     }
 
     public function testGetRouteCollectionf()
     {
         $collection = $this->firstObject->getRouteCollection();
-        $this->assertEquals(3, $collection->count());
+        $this->assertEquals(5, $collection->count());
 
         $collection = $this->secondObject->getRouteCollection();
-        $this->assertEquals(3, $collection->count());
+        $this->assertEquals(5, $collection->count());
     }
 
     /**

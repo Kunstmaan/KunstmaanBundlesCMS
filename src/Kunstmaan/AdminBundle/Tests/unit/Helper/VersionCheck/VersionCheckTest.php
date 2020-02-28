@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionCheckTest extends TestCase
 {
@@ -31,6 +32,7 @@ class VersionCheckTest extends TestCase
 
         /* @var Cache $cache */
         $this->cache = $this->createMock(Cache::class);
+        $this->translator = $this->createMock(TranslatorInterface::class);
     }
 
     /**
@@ -41,7 +43,7 @@ class VersionCheckTest extends TestCase
     public function setUpVersionCheckerMock(?array $methods)
     {
         $versionCheckerMock = $this->getMockBuilder(VersionChecker::class)
-            ->setConstructorArgs([$this->container, $this->cache])
+            ->setConstructorArgs([$this->container, $this->cache, $this->translator])
             ->setMethods($methods)
             ->getMock()
         ;
