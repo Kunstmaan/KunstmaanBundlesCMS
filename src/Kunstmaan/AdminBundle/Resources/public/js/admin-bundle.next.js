@@ -118,7 +118,7 @@ const MODIFIERS = {
 
 const CROP_BOX_THRESHOLD = 250;
 
-const META_KEYS = ['x', 'y', 'width', 'height'];
+const META_KEYS = ['width', 'height'];
 
 const CROPPER_CONFIG = {
     viewMode: 2,
@@ -243,10 +243,8 @@ class MediaCropper {
     updateValue({ x, y, width, height }) {
         let small_crop_box_area = false;
 
-        this.metaValueNodes.x.textContent = x;
-        this.metaValueNodes.y.textContent = y;
-        this.metaValueNodes.width.textContent = width;
-        this.metaValueNodes.height.textContent = height;
+        this.metaValueNodes.width.textContent = Math.ceil(width);
+        this.metaValueNodes.height.textContent = Math.ceil(height);
 
         if ((width || height) <= _config.CROP_BOX_THRESHOLD && !small_crop_box_area) {
             this.node.classList.add(_config.MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
@@ -267,7 +265,7 @@ class MediaCropper {
 
     addEventListeners() {
         this.image.addEventListener('crop', () => {
-            const data = this.cropper.getData([true]);
+            const data = this.cropper.getData();
             this.updateValue(data);
         });
 
@@ -291,7 +289,7 @@ class MediaCropper {
             config[key] = value;
         }
 
-        if (this.savedCropData && this.savedCropData.hasOwnProperty(this.currentView)) {
+        if (this.cropData.hasOwnProperty(this.currentView)) {
             const savedValues = this.savedCropData[this.currentView];
 
             config.data = {
@@ -315,8 +313,8 @@ class MediaCropper {
             viewData.forEach(view => {
                 this.viewData[view.name] = {};
                 this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
-                this.viewData[view.name].minContainerWidth = view.width ? view.width : 200;
-                this.viewData[view.name].minContainerHeight = view.height ? view.height : 100;
+                this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
+                this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
             });
             (0, _renderViewSelectOptions.renderViewSelectOptions)(this.viewSelect, this.viewData);
 
@@ -363,7 +361,7 @@ function renderViewSelectOptions(select, data) {
         select.appendChild(option);
     });
 
-    select.disabled = false;
+    select.disabled = OPTION_NAMES.length === 1;
 }
 
 exports.renderViewSelectOptions = renderViewSelectOptions;

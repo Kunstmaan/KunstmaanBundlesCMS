@@ -1,6 +1,7 @@
 import Cropper from 'cropperjs';
 import { SELECTORS, MODIFIERS, META_KEYS, CROP_BOX_THRESHOLD, CROPPER_CONFIG } from './config';
 import { renderViewSelectOptions } from './renderViewSelectOptions';
+
 class MediaCropper {
     constructor(node) {
         this.node = node;
@@ -28,10 +29,8 @@ class MediaCropper {
     updateValue({x, y, width, height}) {
         let small_crop_box_area = false;
 
-        this.metaValueNodes.x.textContent = x;
-        this.metaValueNodes.y.textContent = y;
-        this.metaValueNodes.width.textContent = width;
-        this.metaValueNodes.height.textContent = height;
+        this.metaValueNodes.width.textContent = Math.ceil(width);
+        this.metaValueNodes.height.textContent = Math.ceil(height);
 
         if ((width || height) <= CROP_BOX_THRESHOLD && !small_crop_box_area) {
             this.node.classList.add(MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
@@ -52,7 +51,7 @@ class MediaCropper {
 
     addEventListeners() {
         this.image.addEventListener('crop', () => {
-            const data = this.cropper.getData([true]);
+            const data = this.cropper.getData();
             this.updateValue(data);
         });
 
@@ -76,7 +75,7 @@ class MediaCropper {
             config[key] = value;
         }
 
-        if (this.savedCropData && this.savedCropData.hasOwnProperty(this.currentView)) {
+        if (this.cropData.hasOwnProperty(this.currentView)) {
             const savedValues = this.savedCropData[this.currentView];
 
             config.data = {
@@ -100,8 +99,8 @@ class MediaCropper {
             viewData.forEach((view) => {
                 this.viewData[view.name] = {};
                 this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
-                this.viewData[view.name].minContainerWidth = view.width ? view.width : 200;
-                this.viewData[view.name].minContainerHeight = view.height ? view.height : 100;
+                this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
+                this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
             });
             renderViewSelectOptions(this.viewSelect, this.viewData);
 
