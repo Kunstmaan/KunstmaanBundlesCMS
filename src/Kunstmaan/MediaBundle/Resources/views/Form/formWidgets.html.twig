@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ id }}_runTimeConfig">
+                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}">
                     <figure class="media-cropper__preview">
                         {% if (value.ent is defined) %}
                             {% set media = value.ent %}
