@@ -161,7 +161,14 @@ class RedirectRouter implements RouterInterface
      */
     private function createRoute(Redirect $redirect)
     {
-        $needsUtf8 = preg_match('/[\x80-\xFF]/', $redirect->getTarget());
+        $needsUtf8 = false;
+        foreach ([$redirect->getOrigin(), $redirect->getTarget()] as $item) {
+            if (preg_match('/[\x80-\xFF]/', $item)) {
+                $needsUtf8 = true;
+
+                break;
+            }
+        }
 
         return new Route(
             $redirect->getOrigin(), [
