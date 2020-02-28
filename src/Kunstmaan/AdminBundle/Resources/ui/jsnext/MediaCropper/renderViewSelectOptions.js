@@ -14,7 +14,7 @@ function renderViewSelectOptions(select, data) {
         select.appendChild(option);
     });
 
-    select.disabled = false;
+    select.disabled = OPTION_NAMES.length === 1;
 }
 
 export { renderViewSelectOptions };

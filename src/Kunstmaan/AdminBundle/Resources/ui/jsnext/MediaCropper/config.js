@@ -14,7 +14,7 @@ const MODIFIERS = {
 
 const CROP_BOX_THRESHOLD = 250;
 
-const META_KEYS = ['x', 'y', 'width', 'height'];
+const META_KEYS = ['width', 'height'];
 
 const CROPPER_CONFIG = {
     viewMode: 2,

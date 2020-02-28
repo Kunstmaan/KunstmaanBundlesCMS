@@ -80,7 +80,6 @@
                     {% endif %}
                 {% else %}
                     <img id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
-                    <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
                 {% endif %}
             </figure>
 
@@ -151,14 +150,6 @@
                         </select>
                         <h4>{{ 'media.widget.media_cropper.meta_title_dimensions' | trans }}</h4>
                         <dl class="media-cropper__meta__list">
-                            <div class="media-cropper__meta__list__row">
-                                <dt class="media-cropper__meta__key">x</dt>
-                                <dd class="media-cropper__meta__value js-media-cropper-meta-value-x"></dd>
-                            </div>
-                            <div class="media-cropper__meta__list__row">
-                                <dt class="media-cropper__meta__key">y</dt>
-                                <dd class="media-cropper__meta__value js-media-cropper-meta-value-y"></dd>
-                            </div>
                             <div class="media-cropper__meta__list__row">
                                 <dt class="media-cropper__meta__key">{{ 'media.widget.media_cropper.meta_width' | trans }}</dt>
                                 <dd class="media-cropper__meta__value js-media-cropper-meta-value-width"></dd>
