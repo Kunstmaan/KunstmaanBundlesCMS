@@ -23,13 +23,13 @@ class MediaTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction(
-                'get_cropped_version',
-                [$this, 'getCroppedVersion']
+                'cropped_imagine_filter',
+                [$this, 'getCroppedImage']
             ),
         ];
     }
 
-    public function getCroppedVersion(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = null)
+    public function getCroppedImage(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = null)
     {
         if ($filter) {
             return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $view, $filter);
