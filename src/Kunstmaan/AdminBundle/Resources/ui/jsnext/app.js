@@ -1,3 +1,5 @@
+import './polyfills';
+
 import PagePartChooser from './PagePartChooser';
 import { initMediaCroppers } from './MediaCropper';
 
