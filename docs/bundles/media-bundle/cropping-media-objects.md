@@ -1,0 +1,185 @@
+# Cropping media objects in the bundles
+
+## cropping
+
+Oftentimes before this implementation we needed to make pageparts with multiple media object uploads to be able to scale up or down for desktops to mobile phones.
+Now we have made a feature that allows you to use one media object and crop it in several different ways for each viewport.
+
+## Implementation
+
+To use a croppable media object you want to use the wrapper object instead of the actual media object. If you do that all the rest will be done automatically.
+
+pagepart.php
+```php
+<?php
+
+namespace App\Entity\PageParts;
+
+use App\Form\PageParts\CroppableImagePagePartAdminType;
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="app_croppable_image_page_parts")
+ */
+class CroppableImagePartPart extends AbstractPagePart
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\CroppableMediaLink", cascade={"persist"})
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * @Assert\NotNull()
+     */
+    private $media;
+
+    /**
+     * @ORM\Column(name="link", type="string", nullable=true)
+     */
+    private $link;
+
+    /**
+     * @ORM\Column(name="open_in_new_window", type="boolean", nullable=true)
+     */
+    private $openInNewWindow;
+
+    public function getOpenInNewWindow(): ?bool
+    {
+        return $this->openInNewWindow;
+    }
+
+    public function setOpenInNewWindow($openInNewWindow): CroppableImagePartPart
+    {
+        $this->openInNewWindow = $openInNewWindow;
+
+        return $this;
+    }
+
+    public function setLink($link): CroppableImagePartPart
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function getMedia(): ?CroppableMediaLink
+    {
+        return $this->media;
+    }
+
+    public function setMedia(CroppableMediaLink $media): CroppableImagePartPart
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    public function getDefaultView(): string
+    {
+        return 'PageParts/CroppableImagePagePart/view.html.twig';
+    }
+
+    public function getDefaultAdminType(): string
+    {
+        return CroppableImagePagePartAdminType::class;
+    }
+}
+```
+
+pagepartadmintype.php
+```php
+<?php
+
+namespace App\Form\PageParts;
+
+use App\Entity\PageParts\CroppableImagePartPart;
+use Kunstmaan\MediaBundle\Form\CroppableMediaLinkAdminType;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class CroppableImagePagePartAdminType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        parent::buildForm($builder, $options);
+
+        $builder->add('media', CroppableMediaLinkAdminType::class, [
+            'required' => true,
+        ]);
+        $builder->add('link', URLChooserType::class, [
+            'required' => false,
+            'label' => 'mediapagepart.image.link',
+        ]);
+        $builder->add('openInNewWindow', CheckboxType::class, [
+            'required' => false,
+            'label' => 'mediapagepart.image.openinnewwindow',
+        ]);
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return 'croppableimagepageparttype';
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => CroppableImagePartPart::class,
+        ]);
+    }
+}
+```
+
+In your twig file you will have to use the new twig function we provided to generate the cropped image. (this image will be cached for future requests with the twig filter)
+```twig
+    {% set imgUrl = cropped_imagine_filter(resource.media, 'desktop') %}
+```
+
+It is also possible to configure your own viewports using the following config.
+```yaml
+kunstmaan_media:
+    cropping_views:
+        custom_views:
+            example1:
+                views:
+                    - { name: desktop, width: 50, height: 50, lockRatio: true}
+            example2:
+                views:
+                    - { name: desktop, width: 400, height: 400}
+                    - { name: phone, width: 30, height: 30}
+```
+```
+width: minimum width of your cropbox
+height: minimum height of your cropbox
+name: name that is shown in cropping modal and needs to be used in your twig template
+lockRatio: if the cropping box needs to respect the aspect ratio of your width and height at all times.
+```
+
+You can then use it by telling your form admintype which group of viewports to use.
+
+```php
+<?php
+
+class CroppableImagePagePartAdminType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add('media', CroppableMediaLinkAdminType::class, [
+            'required' => true,
+            'cropping_views_group' => 'example1',
+        ]);
+    }
+}
+
+```
