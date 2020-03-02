@@ -18,6 +18,7 @@ const META_KEYS = ['width', 'height'];
 
 const CROPPER_CONFIG = {
     viewMode: 2,
+    movable: false,
     rotatable: false,
     scalable: false,
     zoomable: false,

@@ -63,9 +63,10 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             // Save
             if (!cke) {
                 var isMediaChooser = $(window.frameElement).closest('.js-ajax-modal').data('media-chooser');
+                var isCropable = $(window.frameElement).closest('.js-ajax-modal').data('cropable');
 
                 if (isMediaChooser) {
-                    saveMediaChooserModal(false);
+                    saveMediaChooserModal(false, isCropable);
                 } else {
                     // Replace URL
                     $.ajax({
@@ -81,7 +82,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                 }
 
             } else {
-                saveMediaChooserModal(true);
+                saveMediaChooserModal(true, false);
             }
         });
 
@@ -140,7 +141,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
 
     // Save for Media-chooser
-    saveMediaChooserModal = function (cke) {
+    saveMediaChooserModal = function (cke, isCropable) {
         if (!cke) {
             var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                 linkedInputId = $parentModal.data('linked-input-id'),
@@ -154,8 +155,15 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                 $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
                 $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
 
+            var cropper;
+
+            if (isCropable) {
+                cropper = parent.$('#' + linkedInputId + '-mediaCropperModal .js-media-cropper');
+            }
+
             $mediaChooser.addClass('media-chooser--choosen');
             $previewTitle.html(itemTitle);
+
 
             if (itemThumbPath === "") {
                 var $parent = $previewTitle.parent();
@@ -163,6 +171,12 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             }
             else {
                 $previewImg.attr('src', itemThumbPath);
+
+                if (isCropable && cropper) {
+                    cropper.attr('data-path', itemUrl);
+
+                    console.log(cropper, itemUrl);
+                }
             }
 
             // Close modal

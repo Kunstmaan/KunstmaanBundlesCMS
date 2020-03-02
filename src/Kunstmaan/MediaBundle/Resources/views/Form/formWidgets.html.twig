@@ -84,12 +84,12 @@
             </figure>
 
             {% if showCropperModal is defined and showCropperModal %}
-            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
-                <i class="fa fa-edit"></i>
+            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
+                <i class="fa fa-crop"></i>
             </button>
             {% endif %}
 
-            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
+            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn  media-chooser__preview__del-btn" data-linked-id="{{ id }}">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
@@ -138,9 +138,10 @@
                                     <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
                                 </div>
                             {% endif %}
-                            <figcaption id="{{ id }}__preview__title" class="media-cropper__preview__caption">
-                                {{ media.name }}
-                            </figcaption>
+                        {% else %}
+                            <div>
+                                <img src="" alt="" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
+                            </div>
                         {% endif %}
                     </figure>
                     <aside class="media-cropper__meta js-media-cropper-meta">
@@ -171,7 +172,7 @@
     {% endif %}
 
     <!-- Media Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true">
+    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true" {% if showCropperModal is defined and showCropperModal %}data-cropable="true"{% endif %}>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
