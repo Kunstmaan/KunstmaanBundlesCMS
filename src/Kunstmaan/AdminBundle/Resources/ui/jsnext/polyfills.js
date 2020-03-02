@@ -13,7 +13,7 @@
           return resArray;
         };
       }
-}());
+})();
 
 (function () {
 
