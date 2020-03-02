@@ -1,11 +1,7 @@
 // This can be used to import extra polyfills that aren't in babel-polyfill already.
 
-console.log('polyfills');
-
 (function() {
     if (!Object.entries) {
-
-        console.log('object.entries not available');
 
         Object.entries = function( obj ){
           var ownProps = Object.keys( obj ),
