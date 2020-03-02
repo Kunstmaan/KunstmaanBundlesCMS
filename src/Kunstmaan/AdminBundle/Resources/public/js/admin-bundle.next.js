@@ -122,6 +122,7 @@ const META_KEYS = ['width', 'height'];
 
 const CROPPER_CONFIG = {
     viewMode: 2,
+    movable: false,
     rotatable: false,
     scalable: false,
     zoomable: false,
@@ -154,15 +155,13 @@ var _MediaCropper = __webpack_require__(4);
 function initMediaCroppers(container = window.document) {
     const PREVIEW_BTNS = [...container.querySelectorAll(_config.SELECTORS.HOOK)];
 
-    PREVIEW_BTNS.forEach(btn => {
-        btn.addEventListener('modalOpen', e => {
-            const targetModal = e.detail;
-            const node = targetModal.querySelector(_config.SELECTORS.CONTAINER);
+    document.addEventListener('modalOpen', e => {
+        const targetModal = e.detail;
+        const node = targetModal.querySelector(_config.SELECTORS.CONTAINER);
 
-            if (!node.hasAttribute('data-initialized')) {
-                new _MediaCropper.MediaCropper(node);
-            }
-        });
+        if (!node.hasAttribute('data-initialized')) {
+            new _MediaCropper.MediaCropper(node);
+        }
     });
 }
 
@@ -220,6 +219,7 @@ class MediaCropper {
     constructor(node) {
         this.node = node;
         this.image = this.node.querySelector(_config.SELECTORS.IMAGE);
+        this.imagePath = this.node.hasAttribute('data-path') ? this.node.dataset.path : false;
         this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
         this.viewSelect = this.metaContainer.querySelector(_config.SELECTORS.VIEW_SELECT);
         this.save = this.metaContainer.querySelector(_config.SELECTORS.SAVE);
@@ -319,6 +319,10 @@ class MediaCropper {
             (0, _renderViewSelectOptions.renderViewSelectOptions)(this.viewSelect, this.viewData);
 
             this.currentView = this.viewSelect.value;
+        }
+
+        if (this.imagePath) {
+            this.image.src = this.imagePath;
         }
 
         if (this.savedCropData) {

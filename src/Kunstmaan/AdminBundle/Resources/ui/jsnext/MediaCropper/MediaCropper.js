@@ -6,6 +6,7 @@ class MediaCropper {
     constructor(node) {
         this.node = node;
         this.image = this.node.querySelector(SELECTORS.IMAGE);
+        this.imagePath = this.node.hasAttribute('data-path') ? this.node.dataset.path : false;
         this.metaContainer = this.node.querySelector(SELECTORS.META_CONTAINER);
         this.viewSelect = this.metaContainer.querySelector(SELECTORS.VIEW_SELECT);
         this.save = this.metaContainer.querySelector(SELECTORS.SAVE);
@@ -105,6 +106,11 @@ class MediaCropper {
             renderViewSelectOptions(this.viewSelect, this.viewData);
 
             this.currentView = this.viewSelect.value;
+        }
+
+
+        if (this.imagePath) {
+            this.image.src = this.imagePath;
         }
 
         if (this.savedCropData) {

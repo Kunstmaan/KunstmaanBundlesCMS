@@ -36,7 +36,7 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
 
     // Crop btn
     initCropBtn = function () {
-        $body.on('click', '.js-media-chooser-crop-preview-btn', function (element) {
+        $body.on('click', '.js-media-chooser-crop-preview-btn', function () {
             var $this = $(this),
                 linkedID = $this.data('linked-id'),
                 $mediaCropperModal = $('#' + linkedID + '-mediaCropperModal');
@@ -44,7 +44,7 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
             $mediaCropperModal.modal('show');
 
             $mediaCropperModal.on('shown.bs.modal', function() {
-                $this[0].dispatchEvent(new CustomEvent('modalOpen', {detail: $mediaCropperModal[0]}));
+                document.dispatchEvent(new CustomEvent('modalOpen', {detail: $mediaCropperModal[0]}));
             });
         });
     };
