@@ -7,8 +7,6 @@ use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CroppableMediaLinkAdminType extends AbstractType
@@ -27,7 +25,7 @@ class CroppableMediaLinkAdminType extends AbstractType
     {
         $croppingViewGroup = $options['cropping_views_group'];
         $selectedCroppingViews = $this->croppingViews[self::DEFAULT];
-        if($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews['custom_views'][$croppingViewGroup]['views'])) {
+        if ($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews['custom_views'][$croppingViewGroup]['views'])) {
             $selectedCroppingViews = $this->croppingViews['custom_views'][$croppingViewGroup]['views'];
         }
         $builder->add('media', MediaType::class, [

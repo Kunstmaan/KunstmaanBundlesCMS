@@ -4,14 +4,10 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
-use Kunstmaan\MediaBundle\Helper\ManipulateImageService;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -19,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * MediaController
