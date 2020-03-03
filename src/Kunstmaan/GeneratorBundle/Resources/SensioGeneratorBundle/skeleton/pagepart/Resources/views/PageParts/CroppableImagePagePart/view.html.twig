@@ -4,10 +4,10 @@
 
     {% set imgUrl = '' %}
 
-    {% set imgUrl_huge = get_cropped_version(media, 'desktop') %}
-    {% set imgUrl_big = get_cropped_version(media, 'desktop') %}
-    {% set imgUrl_medium = get_cropped_version(media, 'tablet') %}
-    {% set imgUrl_small = get_cropped_version(media, 'phone') %}
+    {% set imgUrl_huge = cropped_imagine_filter(media, 'desktop') %}
+    {% set imgUrl_big = cropped_imagine_filter(media, 'desktop') %}
+    {% set imgUrl_medium = cropped_imagine_filter(media, 'tablet') %}
+    {% set imgUrl_small = cropped_imagine_filter(media, 'phone') %}
     {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
 
     <img srcset="{{ srcSet }}" sizes="100vw"{% if altText %} alt="{{ altText }}"{% endif %} width="{{ originalWidth }}"/>
