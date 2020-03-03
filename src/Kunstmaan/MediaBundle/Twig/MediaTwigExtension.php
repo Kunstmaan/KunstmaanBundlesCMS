@@ -14,8 +14,7 @@ class MediaTwigExtension extends AbstractExtension
 
     public function __construct(
         ManipulateImageService $manipulateImageService
-    )
-    {
+    ) {
         $this->manipulateImageService = $manipulateImageService;
     }
 
