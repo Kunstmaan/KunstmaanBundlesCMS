@@ -18,9 +18,12 @@ use Symfony\Component\Translation\Translator;
 
 class PasswordCheckListenerTest extends TestCase
 {
-    public function testListener()
+    /**
+     * @dataProvider requestDataProvider
+     */
+    public function testListener($uri, $shouldPerformCheck, $tokenStorageCallCount)
     {
-        $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/en/admin/']);
+        $request = new Request([], [], [], [], [], ['REQUEST_URI' => $uri]);
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
         $storage = $this->createMock(TokenStorageInterface::class);
         $token = $this->createMock(UsernamePasswordToken::class);
@@ -32,34 +35,27 @@ class PasswordCheckListenerTest extends TestCase
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $event = $this->createMock(GetResponseEvent::class);
 
-        $event->expects($this->exactly(2))->method('getRequest')->willReturn($request);
-        $storage->expects($this->exactly(4))->method('getToken')->willReturn($token);
-        $auth->expects($this->exactly(1))->method('isGranted')->willReturn(true);
-        $token->expects($this->exactly(1))->method('getUser')->willReturn($user);
-        $user->expects($this->exactly(1))->method('isPasswordChanged')->willReturn(false);
-        $router->expects($this->exactly(1))->method('generate')->willReturn(true);
-        $session->expects($this->exactly(1))->method('getFlashBag')->willReturn($flash);
-        $flash->expects($this->exactly(1))->method('add')->willReturn(true);
-        $trans->expects($this->exactly(1))->method('trans')->willReturn(true);
-        $adminRouteHelper->method('isAdminRoute')->will($this->returnValueMap([
-            ['/en/admin/', true],
-            ['/en/random', false],
-            ['/en/admin/preview/', false],
-        ]));
+        $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
+        $event->expects($this->exactly($shouldPerformCheck ? 2 : 1))->method('getRequest')->willReturn($request);
+        $auth->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isGranted')->willReturn(true);
+        $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getUser')->willReturn($user);
+        $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isPasswordChanged')->willReturn(false);
+        $router->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('generate')->willReturn(true);
+        $session->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getFlashBag')->willReturn($flash);
+        $flash->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('add')->willReturn(true);
+        $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('trans')->willReturn(true);
+        $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);
 
         $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);
         $listener->onKernelRequest($event);
+    }
 
-        $request = $request->duplicate([], [], [], [], [], ['REQUEST_URI' => '/en/random']);
-        $event = $this->createMock(GetResponseEvent::class);
-        $event->expects($this->any())->method('getRequest')->willReturn($request);
-
-        $listener->onKernelRequest($event);
-
-        $request = $request->duplicate([], [], [], [], [], ['REQUEST_URI' => '/en/admin/preview/']);
-        $event = $this->createMock(GetResponseEvent::class);
-        $event->expects($this->any())->method('getRequest')->willReturn($request);
-
-        $listener->onKernelRequest($event);
+    public function requestDataProvider()
+    {
+        return [
+            ['/en/admin/', true, 2],
+            ['/en/random', false, 0],
+            ['/en/admin/preview/', true, 2],
+        ];
     }
 }
