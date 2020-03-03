@@ -67,6 +67,7 @@ EOT
             'AbstractPagePart',
             'AudioPagePart',
             'ButtonPagePart',
+            'CroppableImagePagePart',
             'DownloadPagePart',
             'HeaderPagePart',
             'ImagePagePart',
