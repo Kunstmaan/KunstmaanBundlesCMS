@@ -35,6 +35,11 @@ class ConfigurationTest extends TestCase
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
             'web_root' => '%kernel.project_dir%/web',
+            'cropping_views' => [
+                'default' => [
+                    ['name' => 'desktop', 'width' => 1, 'height' => 1, 'cropRatio' => true],
+                ],
+            ],
         ];
 
         if (Kernel::VERSION_ID >= 40000) {
