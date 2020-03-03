@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
