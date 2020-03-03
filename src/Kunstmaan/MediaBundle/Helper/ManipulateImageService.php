@@ -10,9 +10,6 @@ use Liip\ImagineBundle\Service\FilterService;
 
 class ManipulateImageService
 {
-    /** @var EntityManagerInterface */
-    private $em;
-
     /** @var Slugifier */
     private $slugifier;
 
@@ -23,7 +20,6 @@ class ManipulateImageService
     {
         $this->slugifier = $slugifier;
         $this->filterService = $filterService;
-        $this->em = $em;
     }
 
     public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = 'optim'): string
