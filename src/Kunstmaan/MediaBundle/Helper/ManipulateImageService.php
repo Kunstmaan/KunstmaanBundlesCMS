@@ -16,7 +16,7 @@ class ManipulateImageService
     /** @var FilterService */
     private $filterService;
 
-    public function __construct(EntityManagerInterface $em, Slugifier $slugifier, FilterService $filterService)
+    public function __construct(Slugifier $slugifier, FilterService $filterService)
     {
         $this->slugifier = $slugifier;
         $this->filterService = $filterService;
