@@ -38,8 +38,10 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         if (!isset($config['cropping_views'])) {
             $config['cropping_views'] = self::DEFAULT_CROPPING_CONFIG;
-        } else  {
-            $config['cropping_views'] = \array_merge(self::DEFAULT_CROPPING_CONFIG, $config['cropping_views']);
+        } else {
+            if (empty($config['cropping_views']['default'])) {
+                $config['cropping_views']['default'] = self::DEFAULT_CROPPING_CONFIG['default'];
+            }
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
