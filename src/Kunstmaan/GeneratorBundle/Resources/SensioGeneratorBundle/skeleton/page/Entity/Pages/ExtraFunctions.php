@@ -17,7 +17,7 @@
         ];
     }
 
-    public function getPageTemplates(): string
+    public function getPageTemplates(): array
     {
         return ['{% if not isV4 %}{{ bundle }}:{%endif%}{{ template }}'];
     }
