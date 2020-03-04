@@ -25,7 +25,18 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        if (!isset($config['cropping_views'])) {
+            $config['cropping_views'] = [
+                'default' => [
+                    ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lockRation' => true],
+                    ['name' => 'tablet', 'width' => 1, 'height' => 1, 'lockRatio' => true],
+                    ['name' => 'phone', 'width' => 1, 'height' => 1, 'lockRatio' => true],
+                ],
+                'custom_views' => [],
+            ];
+        }
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter(
             'twig.form.resources',
@@ -39,7 +50,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('kunstmaan_media.web_root', $config['web_root']);
-        $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'] . '%kunstmaan_media.media_path%');
+        $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'].'%kunstmaan_media.media_path%');
         $container->setParameter('kunstmaan_media.cropping_views', $config['cropping_views']);
 
         $loader->load('services.yml');
@@ -81,11 +92,8 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $twigConfig['globals']['mediamanager'] = '@kunstmaan_media.media_manager';
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
-
-        $mediaConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/cropping_views.yml'));
-        $container->prependExtensionConfig('kunstmaan_media', $mediaConfig['kunstmaan_media']);
 
         $defaultLocale = $container->hasParameter('kunstmaan_admin.default_locale') ? $container->getParameter('kunstmaan_admin.default_locale') : 'en';
         $stofDoctrineExtensionsConfig = [
