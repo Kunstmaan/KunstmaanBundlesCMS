@@ -46,7 +46,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page'];
     }
 
-    public function getDefaultView(): array
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}Page{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
