@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.4.3 / 2020-03-05
+
+* [GeneratorBundle] Fix incorrect return types in generated classes [#2641](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2641) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Avoid accessing user token when it is not needed [#2640](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2640) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Restore NodeMenuItem::getLang method to fix BC break [#2639](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2639) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Replace old website url and name usages [#2638](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2638) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Update slack invite url and replace old bundles site references [#2637](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2637) ([@acrobat](https://github.com/acrobat)) 
+* [documentation] move blogpost to docs [#2636](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2636) ([@Numkil](https://github.com/Numkil)) 
+* [RedirectBundle] Fix UTF-8 issue with redirect origin [#2635](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2635) ([@tombevers](https://github.com/tombevers)) 
+* [AdminBundle] Translate website title for versionchecker [#2634](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2634) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.2 / 2020-02-07
 
 * [AdminBundle] Re-enable templating component for search nodepages config [#2630](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2630) ([@acrobat](https://github.com/acrobat)) 
