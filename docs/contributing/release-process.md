@@ -1,6 +1,6 @@
 # Release process
 
-We are implementing a flexible release process approach with some limitations. We will not follow the same fixed release points as the Symfony project, nor the version numbers, but we try to make the Kunstmaan Bundles CMS compatible with the latest Symfony releases as soon as possible. This means that when a new minor Symfony version gets released, that this version can be used in the next minor release of the Kunstmaan Bundles CMS. A new major Symfony version can be used in the next major release of the CMS.
+We are implementing a flexible release process approach with some limitations. We will not follow the same fixed release points as the Symfony project, nor the version numbers, but we try to make the Kunstmaan CMS compatible with the latest Symfony releases as soon as possible. This means that when a new minor Symfony version gets released, that this version can be used in the next minor release of the Kunstmaan Bundles CMS. A new major Symfony version can be used in the next major release of the CMS.
 
 ## Major releases
 

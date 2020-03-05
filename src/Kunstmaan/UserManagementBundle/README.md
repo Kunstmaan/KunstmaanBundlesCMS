@@ -8,10 +8,10 @@
 The Kunstmaan User Management bundle supplies your project with a basic, elegant backend interface to manage users,
 groups and roles.
 
-View screenshots and more information [http://bundles.kunstmaan.be](http://bundles.kunstmaan.be).
+View screenshots and more information [https://cms.kunstmaan.be](https://cms.kunstmaan.be).
 
 ## Installation
 
 This bundle is compatible with all Symfony 3.* releases. More information about installing can be found in this line
 by line walkthrough of installing Symfony and all our bundles, please refer to the
-[Getting Started guide](http://bundles.kunstmaan.be/getting-started) and enjoy the full blown experience.
+[Getting Started guide](https://kunstmaanbundlescms.readthedocs.io/en/stable/installation/) and enjoy the full blown experience.

@@ -79,6 +79,15 @@
 * [AllBundles] Remove deprecated FrameworkExtraBundle annotations [#2448](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2448) ([@acrobat](https://github.com/acrobat)) 
 * [GeneratorBundle] Improved the generated article classes [#2447](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2447) ([@acrobat](https://github.com/acrobat)) 
 
+## 5.3.12 / 2020-03-05
+
+* [NodeBundle] Restore NodeMenuItem::getLang method to fix BC break [#2639](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2639) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Replace old website url and name usages [#2638](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2638) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Update slack invite url and replace old bundles site references [#2637](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2637) ([@acrobat](https://github.com/acrobat)) 
+* [documentation] move blogpost to docs [#2636](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2636) ([@Numkil](https://github.com/Numkil)) 
+* [RedirectBundle] Fix UTF-8 issue with redirect origin [#2635](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2635) ([@tombevers](https://github.com/tombevers)) 
+* [AdminBundle] Translate website title for versionchecker [#2634](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2634) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.11 / 2020-02-18
 
 * [RedirectBundle] Fix target column length for long urls [#2633](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2633) ([@acrobat](https://github.com/acrobat)) 
