@@ -79,6 +79,7 @@ class MediaType extends AbstractType
                 'mediatype' => null,
                 'current_value_container' => new CurrentValueContainer(),
                 'show_cropper_modal' => false,
+                'use_focus_point' => false,
                 'cropping_views' => '',
             ]
         );
@@ -101,6 +102,7 @@ class MediaType extends AbstractType
         $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
         $view->vars['showCropperModal'] = $options['show_cropper_modal'];
+        $view->vars['use_focus_point'] = $options['use_focus_point'];
         $view->vars['cropping_views'] = $options['cropping_views'];
     }
 }

@@ -152,12 +152,14 @@ kunstmaan_media:
     cropping_views:
         custom_views:
             example1:
+                useFocusPoint: false
                 views:
                     - { name: desktop, width: 50, height: 50, lockRatio: true}
             example2:
+                useFocusPoint: true
                 views:
-                    - { name: desktop, width: 400, height: 400}
-                    - { name: phone, width: 30, height: 30}
+                    - { name: desktop, width: 1, height: 1}
+                    - { name: phone, width: 1, height: 1}
 ```
 ```
 width: minimum width of your cropbox
