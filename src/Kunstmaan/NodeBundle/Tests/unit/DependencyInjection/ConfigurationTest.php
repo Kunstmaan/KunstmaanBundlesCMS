@@ -34,6 +34,7 @@ class ConfigurationTest extends TestCase
                 'check_interval' => 15,
                 'threshold' => 35,
             ],
+            'enable_permissions' => true,
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
