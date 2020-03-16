@@ -7,6 +7,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -45,7 +46,7 @@ class VersionChecker
     private $client;
 
     /**
-     * @var TranslatorInterface
+     * @var TranslatorInterface|LegacyTranslatorInterface
      */
     private $translator;
 
@@ -55,10 +56,16 @@ class VersionChecker
      * @param ContainerInterface $container
      * @param Cache              $cache
      */
-    public function __construct(ContainerInterface $container, Cache $cache, TranslatorInterface $translator)
+    public function __construct(ContainerInterface $container, Cache $cache, $translator)
     {
         $this->container = $container;
         $this->cache = $cache;
+
+        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
+        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', Symfony\Contracts\Translation\TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
+
         $this->translator = $translator;
 
         $this->webserviceUrl = $this->container->getParameter('version_checker.url');
