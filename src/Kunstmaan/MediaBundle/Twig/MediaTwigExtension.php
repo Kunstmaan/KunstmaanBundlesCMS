@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Twig;
 
+use Imagine\Filter\Basic\Crop;
 use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Helper\ManipulateImageService;
 use Twig\Extension\AbstractExtension;
@@ -25,6 +26,10 @@ class MediaTwigExtension extends AbstractExtension
                 'cropped_imagine_filter',
                 [$this, 'getCroppedImage']
             ),
+            new TwigFunction(
+                'get_focus_point_class',
+                [$this, 'getFocusPointClass']
+            ),
         ];
     }
 
@@ -35,5 +40,10 @@ class MediaTwigExtension extends AbstractExtension
         }
 
         return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $view);
+    }
+
+    public function getFocusPointClass(CroppableMediaLink $croppableMediaLink, string $view = '')
+    {
+        return $this->manipulateImageService->getFocusPointClass($croppableMediaLink, $view);
     }
 }
