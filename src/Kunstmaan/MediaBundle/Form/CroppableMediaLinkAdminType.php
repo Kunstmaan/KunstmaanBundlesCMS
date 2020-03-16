@@ -6,7 +6,6 @@ use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,7 +38,7 @@ class CroppableMediaLinkAdminType extends AbstractType
             'use_focus_point' => $useFocusPoint,
             'cropping_views' => json_encode($selectedCroppingViews),
         ]);
-        $builder->add('runTimeConfig', TextType::class, [
+        $builder->add('runTimeConfig', HiddenType::class, [
             'label' => false,
         ]);
     }
