@@ -16,9 +16,9 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 {
     const DEFAULT_CROPPING_CONFIG = [
         'default' => [
-            ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lockRation' => true],
-            ['name' => 'tablet', 'width' => 1, 'height' => 1, 'lockRatio' => true],
-            ['name' => 'phone', 'width' => 1, 'height' => 1, 'lockRatio' => true],
+            ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lockRation' => true, 'byFocusPoint' => false],
+            ['name' => 'tablet', 'width' => 1, 'height' => 1, 'lockRatio' => true, 'byFocusPoint' => false],
+            ['name' => 'phone', 'width' => 1, 'height' => 1, 'lockRatio' => true, 'byFocusPoint' => false],
         ],
         'custom_views' => [],
     ];

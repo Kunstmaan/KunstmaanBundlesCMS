@@ -33,7 +33,7 @@ class ConfigurationTest extends TestCase
             'web_root' => '%kernel.project_dir%/web',
             'cropping_views' => [
                 'default' => [
-                    ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lockRatio' => true],
+                    ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lockRatio' => true, 'byFocusPoint' => false],
                 ],
                 'custom_views' => [],
             ],
