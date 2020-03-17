@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MultiDomainBundle\Router;
 
+use Kunstmaan\NodeBundle\Controller\SlugController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -262,7 +263,7 @@ class DomainBasedLocaleRouter extends SlugRouter
     {
         $slugPath = '/{url}';
         $slugDefaults = array(
-            '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+            '_controller' => SlugController::class.'::slugAction',
             'preview' => false,
             'url' => '',
             '_locale' => $this->getDefaultLocale(),
