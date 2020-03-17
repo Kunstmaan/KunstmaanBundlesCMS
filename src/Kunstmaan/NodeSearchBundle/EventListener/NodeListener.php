@@ -13,7 +13,7 @@ use Kunstmaan\NodeSearchBundle\Helper\FormWidgets\SearchFormWidget;
  */
 class NodeListener
 {
-    /** @var EntityManager $em */
+    /** @var EntityManager */
     private $em;
 
     /**

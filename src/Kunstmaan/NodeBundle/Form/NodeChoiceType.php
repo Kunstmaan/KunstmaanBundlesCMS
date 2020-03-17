@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NodeChoiceType extends AbstractType
 {
-    /** @var $requestStack RequestStack */
+    /** @var RequestStack */
     private $requestStack;
 
     /**
