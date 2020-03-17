@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionCheckTest extends TestCase
@@ -32,7 +33,12 @@ class VersionCheckTest extends TestCase
 
         /* @var Cache $cache */
         $this->cache = $this->createMock(Cache::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
+
+        if (\interface_exists(TranslatorInterface::class)) {
+            $this->translator = $this->createMock(TranslatorInterface::class);
+        } else {
+            $this->translator = $this->createMock(LegacyTranslatorInterface::class);
+        }
     }
 
     /**
