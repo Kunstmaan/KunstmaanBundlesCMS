@@ -137,6 +137,7 @@ media:
             meta_height: height
             meta_title_views: Select your viewport
             meta_views_placeholder: Only one viewport available
+            save: Save all viewports
 
     adminlist:
         configurator:
