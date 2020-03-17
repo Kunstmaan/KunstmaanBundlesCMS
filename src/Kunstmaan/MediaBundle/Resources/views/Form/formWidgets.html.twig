@@ -104,7 +104,7 @@
 
     {% if showCropperModal is defined and showCropperModal %}
     <!-- cropper modal Modal -->
-    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true" data-use-focus-point="{{ use_focus_point }}">
+    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true" data-use-focus-point="{{ use_focus_point ? 'true' : 'false' }}">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
