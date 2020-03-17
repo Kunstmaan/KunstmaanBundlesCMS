@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
  */
 abstract class AbstractRemoteHelper
 {
-    /** @var Media $media */
+    /** @var Media */
     protected $media;
 
     /**

@@ -7,10 +7,10 @@ use Kunstmaan\DashboardBundle\Helper\Google\ClientHelper;
 
 class ServiceHelper
 {
-    /** @var Google_AnalyticsService $service */
+    /** @var Google_AnalyticsService */
     private $service;
 
-    /** @var GoogleClientHelper $clientHelper */
+    /** @var GoogleClientHelper */
     private $clientHelper;
 
     /**

@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SearchFormWidget extends FormWidget
 {
-    /** @var Node $node */
+    /** @var Node */
     private $node;
 
-    /** @var NodeSearch $nodeSearch */
+    /** @var NodeSearch */
     private $nodeSearch;
 
     /**
