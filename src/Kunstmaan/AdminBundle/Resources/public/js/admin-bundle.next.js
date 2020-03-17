@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -109,11 +109,16 @@ const SELECTORS = {
     META_CONTAINER: '.js-media-cropper-meta',
     META_ITEM: '.js-media-cropper-meta-value',
     VIEW_SELECT: '.js-media-cropper-view-select',
-    SAVE: '.js-media-cropper-save'
+    SAVE: '.js-media-cropper-save',
+    SELECT_FOCUS_POINT: '.js-media-cropper-choose-focus-point',
+    CROPPER_PREVIEW: '.js-media-cropper-preview',
+    FOCUS_POINT_WRAPPER: '.js-media-cropper-focus-wrapper'
 };
 
 const MODIFIERS = {
-    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded'
+    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded',
+    FOCUS_POINT_WRAPPER_VISIBLE: 'media-cropper__focus-wrapper--visible',
+    PREVIEW_HIDDEN: 'media-cropper__preview--hidden'
 };
 
 const CROP_BOX_THRESHOLD = 250;
@@ -150,7 +155,7 @@ exports.initMediaCroppers = undefined;
 
 var _config = __webpack_require__(1);
 
-var _MediaCropper = __webpack_require__(5);
+var _MediaCropper = __webpack_require__(6);
 
 function initMediaCroppers(container = window.document) {
     const PREVIEW_BTNS = [...container.querySelectorAll(_config.SELECTORS.HOOK)];
@@ -180,7 +185,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _config = __webpack_require__(0);
 
-var _initSearch = __webpack_require__(7);
+var _initSearch = __webpack_require__(8);
 
 class PagePartChooser {
     static init(container = window.document) {
@@ -242,15 +247,71 @@ exports.default = PagePartChooser;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Focuspoint = undefined;
+
+var _config = __webpack_require__(1);
+
+class Focuspoint {
+    constructor(cropper) {
+        this.cropper = cropper;
+        this.toggle = cropper.node.querySelector(_config.SELECTORS.SELECT_FOCUS_POINT);
+        this.cropperPreview = cropper.node.querySelector(_config.SELECTORS.CROPPER_PREVIEW);
+        this.focusPointWrapper = cropper.node.querySelector(_config.SELECTORS.FOCUS_POINT_WRAPPER);
+
+        this.isVisible = false;
+
+        this.addEventListeners = this.addEventListeners.bind(this);
+        this.toggleVisibility = this.toggleVisibility.bind(this);
+
+        console.log(this);
+    }
+
+    toggleVisibility(e) {
+        e.preventDefault();
+
+        if (!this.isVisible) {
+            this.cropperPreview.classList.add(_config.MODIFIERS.PREVIEW_HIDDEN);
+            this.focusPointWrapper.classList.add(_config.MODIFIERS.FOCUS_POINT_WRAPPER_VISIBLE);
+        } else {
+            this.cropperPreview.classList.remove(_config.MODIFIERS.PREVIEW_HIDDEN);
+            this.focusPointWrapper.classList.remove(_config.MODIFIERS.FOCUS_POINT_WRAPPER_VISIBLE);
+        }
+
+        this.isVisible = !this.isVisible;
+    }
+
+    addEventListeners() {
+        this.toggle.addEventListener('click', this.toggleVisibility);
+    }
+
+    init() {
+        this.addEventListeners();
+    }
+}
+
+exports.Focuspoint = Focuspoint;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.MediaCropper = undefined;
 
-var _cropperjs = __webpack_require__(11);
+var _cropperjs = __webpack_require__(12);
 
 var _cropperjs2 = _interopRequireDefault(_cropperjs);
 
 var _config = __webpack_require__(1);
 
-var _renderViewSelectOptions = __webpack_require__(6);
+var _renderViewSelectOptions = __webpack_require__(7);
+
+var _Focuspoint = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -269,6 +330,7 @@ class MediaCropper {
         this.cropData = {};
         this.savedCropData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
         this.initialized = false;
+        this.selectableFocusPoint = this.node.dataset.useFocusPoint === 'true';
 
         this.init();
     }
@@ -368,6 +430,11 @@ class MediaCropper {
             this.cropData = this.savedCropData;
         }
 
+        if (this.selectableFocusPoint) {
+            this.focusPointComponent = new _Focuspoint.Focuspoint(this);
+            this.focusPointComponent.init();
+        }
+
         this.initCropper();
         this.addEventListeners();
 
@@ -379,7 +446,7 @@ class MediaCropper {
 exports.MediaCropper = MediaCropper;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -410,7 +477,7 @@ function renderViewSelectOptions(select, data) {
 exports.renderViewSelectOptions = renderViewSelectOptions;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -421,15 +488,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initSearch = initSearch;
 
-var _fuse = __webpack_require__(12);
+var _fuse = __webpack_require__(13);
 
 var _fuse2 = _interopRequireDefault(_fuse);
 
 var _config = __webpack_require__(0);
 
-var _resetSearch = __webpack_require__(8);
+var _resetSearch = __webpack_require__(9);
 
-var _updateSearch = __webpack_require__(9);
+var _updateSearch = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -496,7 +563,7 @@ function initFuse(ppSearchData) {
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -516,7 +583,7 @@ function resetSearch(searchItems) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -542,7 +609,7 @@ function updateSearch(searchItems, searchResults) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -573,7 +640,7 @@ if (document.readyState !== 'loading') {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -4195,7 +4262,7 @@ if (document.readyState !== 'loading') {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
