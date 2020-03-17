@@ -142,7 +142,7 @@ services:
 
     kunstmaan_admin.logger.processor.user:
         class: Kunstmaan\AdminBundle\Helper\UserProcessor
-        arguments: [ '@service_container' ]
+        arguments: [ '@security.token_storage' ]
         tags:
             - { name: monolog.processor, method: processRecord }
             - { name: kunstmaan_admin.logger.processor, method: processRecord }
