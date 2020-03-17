@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     {% if multilanguage %}
     /**
@@ -18,15 +18,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return new RedirectResponse(
-            $this->generateUrl(
-                '_slug',
-                [
-                    'url'       => '',
-                    '_locale'   => $this->getLocale($request)
-                ]
-            )
-        );
+        return $this->redirectToRoute('_slug', [
+            'url' => '',
+            '_locale' => $this->getLocale($request),
+        ]);
     }
 
     /**
