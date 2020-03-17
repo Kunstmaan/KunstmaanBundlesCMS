@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Imagine\Filter\Basic\Crop;
 use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
@@ -19,6 +20,24 @@ class ManipulateImageService
     {
         $this->slugifier = $slugifier;
         $this->filterService = $filterService;
+    }
+
+    public function getFocusPointClass(CroppableMediaLink $croppableMediaLink, string $view = ''): string
+    {
+        $class = '';
+        if ($croppableMediaLink->getRunTimeConfig() !== null) {
+            $runTimeConfig = json_decode($croppableMediaLink->getRunTimeConfig(), true);
+
+            if (
+                is_array($runTimeConfig)
+                && !empty($view)
+                && isset($runTimeConfig[$view]['class'])
+            ) {
+                $class = $runTimeConfig[$view]['class'];
+            }
+        }
+
+        return $class;
     }
 
     public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = 'optim'): string
@@ -44,7 +63,11 @@ class ManipulateImageService
         if ($croppableMediaLink->getRunTimeConfig() !== null) {
             $runTimeConfig = json_decode($croppableMediaLink->getRunTimeConfig(), true);
 
-            if (is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view])) {
+            if (
+                is_array($runTimeConfig)
+                && !empty($view)
+                && isset($runTimeConfig[$view]['start'], $runTimeConfig[$view]['size'])
+            ) {
                 $runTimeConfigForView = [
                     'crop' => [
                         'start' => $runTimeConfig[$view]['start'],

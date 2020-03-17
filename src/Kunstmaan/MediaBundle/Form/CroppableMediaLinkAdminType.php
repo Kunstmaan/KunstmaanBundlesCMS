@@ -11,7 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CroppableMediaLinkAdminType extends AbstractType
 {
-    const DEFAULT = 'default';
+    private const DEFAULT = 'default';
+    private const CUSTOM_VIEWS = 'custom_views';
 
     /** @var array */
     private $croppingViews;
@@ -25,13 +26,16 @@ class CroppableMediaLinkAdminType extends AbstractType
     {
         $croppingViewGroup = $options['cropping_views_group'];
         $selectedCroppingViews = $this->croppingViews[self::DEFAULT];
-        if ($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews['custom_views'][$croppingViewGroup]['views'])) {
-            $selectedCroppingViews = $this->croppingViews['custom_views'][$croppingViewGroup]['views'];
+        $useFocusPoint = false;
+        if ($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['views'])) {
+            $selectedCroppingViews = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['views'];
+            $useFocusPoint = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['useFocusPoint'] ?? false;
         }
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
             'mediatype' => 'image',
             'show_cropper_modal' => true,
+            'use_focus_point' => $useFocusPoint,
             'cropping_views' => json_encode($selectedCroppingViews),
         ]);
         $builder->add('runTimeConfig', HiddenType::class, [

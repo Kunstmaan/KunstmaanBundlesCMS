@@ -67,6 +67,7 @@ class Configuration implements ConfigurationInterface
                             ->arrayPrototype()
                                 ->addDefaultsIfNotSet()
                                 ->children()
+                                    ->booleanNode('useFocusPoint')->defaultFalse()->end()
                                     ->arrayNode('views')
                                         ->arrayPrototype()
                                             ->addDefaultsIfNotSet()

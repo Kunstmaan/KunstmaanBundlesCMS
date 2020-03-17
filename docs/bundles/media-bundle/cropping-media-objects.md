@@ -152,18 +152,21 @@ kunstmaan_media:
     cropping_views:
         custom_views:
             example1:
+                useFocusPoint: false
                 views:
                     - { name: desktop, width: 50, height: 50, lockRatio: true}
             example2:
+                useFocusPoint: true
                 views:
-                    - { name: desktop, width: 400, height: 400}
-                    - { name: phone, width: 30, height: 30}
+                    - { name: desktop, width: 1, height: 1}
+                    - { name: phone, width: 1, height: 1}
 ```
 ```
 width: minimum width of your cropbox
 height: minimum height of your cropbox
 name: name that is shown in cropping modal and needs to be used in your twig template
-lockRatio: if the cropping box needs to respect the aspect ratio of your width and height at all times.
+lockRatio: if the cropping box needs to respect the aspect ratio of your width and height at all times. Is Ignored when byFocusPoint is true
+byFocusPoint: if byFocusPoint is set to true the frontend won't display a cropping box but will allow the user to select a focus point and use the width/height configured to calculate what area is shown.
 ```
 
 You can then use it by telling your form admintype which group of viewports to use.
