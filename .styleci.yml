@@ -6,6 +6,9 @@ disabled:
     - concat_without_spaces
     - phpdoc_summary
     - const_separation
+    - method_argument_space_strict
+enabled:
+    - method_argument_space
 
 finder:
     exclude:
