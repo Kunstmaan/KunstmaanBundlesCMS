@@ -104,7 +104,7 @@
 
     {% if showCropperModal is defined and showCropperModal %}
     <!-- cropper modal Modal -->
-    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true" data-use-focus-point="{{ use_focus_point ? 'true' : 'false' }}">
+    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -119,7 +119,7 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}">
+                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}" data-use-focus-point="{{ use_focus_point ? 'true' : 'false' }}">
                     <figure class="media-cropper__preview">
                         {% if (value.ent is defined) %}
                             {% set media = value.ent %}
