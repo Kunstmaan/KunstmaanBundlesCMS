@@ -13,6 +13,7 @@ class CroppableMediaLinkAdminType extends AbstractType
 {
     private const DEFAULT = 'default';
     private const CUSTOM_VIEWS = 'custom_views';
+    private const FOCUS_POINT_CLASSES = 'focus_point_classes';
 
     /** @var array */
     private $croppingViews;
@@ -27,6 +28,7 @@ class CroppableMediaLinkAdminType extends AbstractType
         $croppingViewGroup = $options['cropping_views_group'];
         $selectedCroppingViews = $this->croppingViews[self::DEFAULT];
         $useFocusPoint = false;
+        $focusPointClasses = $this->croppingViews[self::FOCUS_POINT_CLASSES];
         if ($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['views'])) {
             $selectedCroppingViews = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['views'];
             $useFocusPoint = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['useFocusPoint'] ?? false;
@@ -36,6 +38,7 @@ class CroppableMediaLinkAdminType extends AbstractType
             'mediatype' => 'image',
             'show_cropper_modal' => true,
             'use_focus_point' => $useFocusPoint,
+            'focus_point_classes' => $focusPointClasses,
             'cropping_views' => json_encode($selectedCroppingViews),
         ]);
         $builder->add('runTimeConfig', HiddenType::class, [
