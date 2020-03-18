@@ -9,6 +9,9 @@ const SELECTORS = {
     SELECT_FOCUS_POINT: '.js-media-cropper-choose-focus-point',
     CROPPER_PREVIEW: '.js-media-cropper-preview',
     FOCUS_POINT_WRAPPER: '.js-media-cropper-focus-wrapper',
+    FOCUS_POINT_IMG: '.js-media-cropper-focus-media',
+    META_FOCUS_VALUE: '.js-media-cropper-meta-value-focus',
+    FOCUS_POINT_CHOICE: '.js-media-cropper-focus-choice',
 };
 
 const MODIFIERS = {
