@@ -90,6 +90,15 @@
 * [AllBundles] Remove deprecated FrameworkExtraBundle annotations [#2448](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2448) ([@acrobat](https://github.com/acrobat)) 
 * [GeneratorBundle] Improved the generated article classes [#2447](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2447) ([@acrobat](https://github.com/acrobat)) 
 
+## 5.3.13 / 2020-03-18
+
+* [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
+* [SeoBundle] Use correct nodetranslation property to generate slug url [#2651](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2651) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Tweak styleci config [#2650](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2650) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix symfony 3.4 translator incompatibility [#2647](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2647) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Replace incorrect mobile icons [#2644](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2644) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix incompatibility with liip/imagine-bundle 2.2+ [#2643](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2643) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.12 / 2020-03-05
 
 * [NodeBundle] Restore NodeMenuItem::getLang method to fix BC break [#2639](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2639) ([@acrobat](https://github.com/acrobat)) 
