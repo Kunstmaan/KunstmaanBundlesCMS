@@ -11,7 +11,7 @@ use Twig\TwigFunction;
  */
 class AdminRouteHelperTwigExtension extends AbstractExtension
 {
-    /** @var AdminRouteHelper $adminRouteHelper */
+    /** @var AdminRouteHelper */
     private $adminRouteHelper;
 
     /**

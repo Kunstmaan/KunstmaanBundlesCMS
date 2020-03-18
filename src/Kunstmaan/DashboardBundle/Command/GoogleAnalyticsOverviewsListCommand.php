@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
 {
-    /** @var EntityManagerInterface $em */
+    /** @var EntityManagerInterface */
     private $em;
 
     /**

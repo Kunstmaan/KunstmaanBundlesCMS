@@ -8,16 +8,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractAnalyticsCommandHelper
 {
-    /** @var ConfigHelper $configHelper */
+    /** @var ConfigHelper */
     protected $configHelper;
 
-    /** @var GooglequeryHelper $queryHelper */
+    /** @var GooglequeryHelper */
     protected $query;
 
-    /** @var EntityManager $em */
+    /** @var EntityManager */
     protected $em;
 
-    /** @var OutputInterface $output */
+    /** @var OutputInterface */
     protected $output;
 
     /**

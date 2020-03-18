@@ -8,10 +8,10 @@ use Elastica\Index;
 
 class ElasticaProvider implements SearchProviderInterface
 {
-    /** @var Client $client The Elastica client */
+    /** @var Client The Elastica client */
     private $client;
 
-    /** @var array $nodes An array of Elastica search nodes (each item in the array needs a host and port) */
+    /** @var array An array of Elastica search nodes (each item in the array needs a host and port) */
     private $nodes = array();
 
     /**

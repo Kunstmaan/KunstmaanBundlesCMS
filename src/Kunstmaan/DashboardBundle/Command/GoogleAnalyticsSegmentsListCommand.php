@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class GoogleAnalyticsSegmentsListCommand extends ContainerAwareCommand
 {
-    /** @var EntityManagerInterface $em */
+    /** @var EntityManagerInterface */
     private $em;
 
     /**

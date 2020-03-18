@@ -9,19 +9,19 @@ class ConfigHelper
     /** @var ServiceHelper */
     private $serviceHelper;
 
-    /** @var string $token */
+    /** @var string */
     private $token = false;
 
-    /** @var string $accountId */
+    /** @var string */
     private $propertyId = false;
 
-    /** @var string $accountId */
+    /** @var string */
     private $accountId = false;
 
-    /** @var string $profileId */
+    /** @var string */
     private $profileId = false;
 
-    /** @var EntityManager $em */
+    /** @var EntityManager */
     private $em;
 
     /**
