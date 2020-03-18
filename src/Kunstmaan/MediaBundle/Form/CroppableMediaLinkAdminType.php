@@ -61,5 +61,8 @@ class CroppableMediaLinkAdminType extends AbstractType
                 'cropping_views_group' => self::DEFAULT,
             ]
         );
+        $groups = array_keys($this->croppingViews[self::CUSTOM_VIEWS]);
+        $groups[] = self::DEFAULT;
+        $resolver->setAllowedValues('cropping_views_group', $groups);
     }
 }

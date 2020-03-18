@@ -21,7 +21,7 @@ class CroppableMediaLink extends AbstractEntity
     private $media;
 
     /**
-     * @ORM\Column(name="run_time_config", type="text", nullable=true)
+     * @ORM\Column(name="runtime_config", type="text", nullable=true)
      */
     private $runTimeConfig;
 

@@ -36,10 +36,10 @@ class MediaTwigExtension extends AbstractExtension
     public function getCroppedImage(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = null)
     {
         if ($filter) {
-            return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $view, $filter);
+            return $this->manipulateImageService->cropImage($croppableMediaLink, $view, $filter);
         }
 
-        return $this->manipulateImageService->manipulateOnTheFly($croppableMediaLink, $view);
+        return $this->manipulateImageService->cropImage($croppableMediaLink, $view);
     }
 
     public function getFocusPointClass(CroppableMediaLink $croppableMediaLink, string $view = '')
