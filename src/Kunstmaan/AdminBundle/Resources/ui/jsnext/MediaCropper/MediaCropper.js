@@ -50,6 +50,8 @@ class MediaCropper {
             this.cropData[this.currentView].start = [x, y];
             this.cropData[this.currentView].size = [width, height];
         }
+
+        this.croppedImageUrl = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
     }
 
     addEventListeners() {
@@ -62,6 +64,10 @@ class MediaCropper {
             this.currentView = this.viewSelect.value;
             this.cropper.destroy();
             this.initCropper();
+
+            if (this.selectableFocusPoint) {
+                this.focusPointComponent.reset();
+            }
         });
 
         this.save.addEventListener('click', (e) => {
@@ -87,6 +93,11 @@ class MediaCropper {
                 width: savedValues.size[0],
                 height: savedValues.size[1],
             };
+
+            if (savedValues.hasOwnProperty('class')) {
+                this.focusPointComponent.setSelectedFocus(savedValues.class);
+                this.focusPointComponent.setChoice(savedValues.class);
+            }
         } else {
             config.data = null;
         }
