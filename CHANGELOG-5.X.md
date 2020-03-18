@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.5.0 / 2020-03-18
+
+* [NodeBundle] Add configuration option to disable permission module/checking [#2649](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2649) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Replace deprecated Controller base class in DefaultController [#2646](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2646) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Adding .gitattributes to remove Tests directory from "dist" package [#2645](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2645) ([@acrobat](https://github.com/acrobat)) 
+* [UtilitiesBundle] Deprecated hex2bin polyfill method [#2625](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2625) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Inject correct dependency in UserProcessor [#2623](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2623) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Replace deprecated controller routing notation with fqcn [#2622](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2622) ([@acrobat](https://github.com/acrobat)) 
+* [RedirectBundle] Replace deprecated RedirectableUrlMatcher [#2610](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2610) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.4 / 2020-03-18
            
 * [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
