@@ -40,7 +40,7 @@
     <meta property="og:url" content="{{ seo.ogUrl | replace_url }}">
 {% else %}
     {% if currentNode %}
-        <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.slug, '_locale': app.request.locale }) }}"/>
+        <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.url, '_locale': app.request.locale }) }}"/>
     {% endif %}
 {% endif %}
 {% if seo.getOgImage() is defined and seo.getOgImage() is not null %}
