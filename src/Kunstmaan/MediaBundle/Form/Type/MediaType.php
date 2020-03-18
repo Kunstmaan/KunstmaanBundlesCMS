@@ -80,7 +80,7 @@ class MediaType extends AbstractType
                 'current_value_container' => new CurrentValueContainer(),
                 'show_cropper_modal' => false,
                 'use_focus_point' => false,
-                'focus_point_classes' => [],
+                'focus_point_classes' => '',
                 'cropping_views' => '',
             )
         );

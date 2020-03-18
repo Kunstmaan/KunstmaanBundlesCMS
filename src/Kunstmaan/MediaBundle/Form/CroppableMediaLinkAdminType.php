@@ -38,7 +38,7 @@ class CroppableMediaLinkAdminType extends AbstractType
             'mediatype' => 'image',
             'show_cropper_modal' => true,
             'use_focus_point' => $useFocusPoint,
-            'focus_point_classes' => $focusPointClasses,
+            'focus_point_classes' => json_encode($focusPointClasses),
             'cropping_views' => json_encode($selectedCroppingViews),
         ]);
         $builder->add('runTimeConfig', HiddenType::class, [
