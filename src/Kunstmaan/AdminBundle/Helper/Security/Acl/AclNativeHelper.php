@@ -33,17 +33,23 @@ class AclNativeHelper
     private $roleHierarchy = null;
 
     /**
+     * @var bool
+     */
+    private $permissionsEnabled;
+
+    /**
      * Constructor.
      *
      * @param EntityManager          $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security context
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->roleHierarchy = $rh;
+        $this->permissionsEnabled = $permissionsEnabled;
     }
 
     /**
@@ -56,6 +62,10 @@ class AclNativeHelper
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
+        if (!$this->permissionsEnabled) {
+            return $queryBuilder;
+        }
+
         $aclConnection = $this->em->getConnection();
 
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
@@ -108,10 +118,10 @@ class AclNativeHelper
 
         if (\is_object($user)) {
             $inString .= ' OR s.identifier = "' . str_replace(
-                    '\\',
-                    '\\\\',
-                    \get_class($user)
-                ) . '-' . $user->getUserName() . '"';
+                '\\',
+                '\\\\',
+                \get_class($user)
+            ) . '-' . $user->getUserName() . '"';
         }
 
         $joinTableQuery = <<<SELECTQUERY

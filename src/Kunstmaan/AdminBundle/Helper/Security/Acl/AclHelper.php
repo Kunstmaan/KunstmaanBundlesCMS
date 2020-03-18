@@ -43,18 +43,24 @@ class AclHelper
     private $roleHierarchy = null;
 
     /**
+     * @var bool
+     */
+    private $permissionsEnabled;
+
+    /**
      * Constructor.
      *
      * @param EntityManager          $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security token storage
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->quoteStrategy = $em->getConfiguration()->getQuoteStrategy();
         $this->roleHierarchy = $rh;
+        $this->permissionsEnabled = $permissionsEnabled;
     }
 
     /**
@@ -86,6 +92,10 @@ class AclHelper
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
+        if (!$this->permissionsEnabled) {
+            return $queryBuilder->getQuery();
+        }
+
         $whereQueryParts = $queryBuilder->getDQLPart('where');
         if (empty($whereQueryParts)) {
             $queryBuilder->where('1 = 1'); // this will help in cases where no where query is specified
@@ -176,10 +186,10 @@ class AclHelper
 
         if (\is_object($user)) {
             $inString .= ' OR s.identifier = "' . str_replace(
-                    '\\',
-                    '\\\\',
-                    \get_class($user)
-                ) . '-' . $user->getUserName() . '"';
+                '\\',
+                '\\\\',
+                \get_class($user)
+            ) . '-' . $user->getUserName() . '"';
         }
 
         $selectQuery = <<<SELECTQUERY

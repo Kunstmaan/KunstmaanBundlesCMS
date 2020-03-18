@@ -109,7 +109,11 @@ services:
 
     kunstmaan_node.edit_node.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeListener
-        arguments: ['@security.authorization_checker', '@kunstmaan_admin.permissionadmin', '@kunstmaan_admin.security.acl.permission.map']
+        arguments:
+            - '@security.authorization_checker'
+            - '@kunstmaan_admin.permissionadmin'
+            - '@kunstmaan_admin.security.acl.permission.map'
+            - '%kunstmaan_node.permissions.enabled%'
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.adaptForm, method: adaptForm }
 
@@ -172,7 +176,11 @@ services:
 
     kunstmaan_node.slug.security.listener:
         class: Kunstmaan\NodeBundle\EventListener\SlugSecurityListener
-        arguments: ['@doctrine.orm.entity_manager', '@security.authorization_checker', '@kunstmaan_node.node_menu']
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.authorization_checker'
+            - '@kunstmaan_node.node_menu'
+            - '%kunstmaan_node.permissions.enabled%'
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.slug.security, method: onSlugSecurityEvent }
 

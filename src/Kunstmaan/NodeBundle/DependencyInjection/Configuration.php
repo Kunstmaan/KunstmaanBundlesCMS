@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->booleanNode('enable_permissions')->defaultTrue()->end()
                 ->scalarNode('publish_later_stepping')->defaultValue('15')->end()
                 ->scalarNode('unpublish_later_stepping')->defaultValue('15')->end()
                 ->booleanNode('show_add_homepage')->defaultTrue()->end()

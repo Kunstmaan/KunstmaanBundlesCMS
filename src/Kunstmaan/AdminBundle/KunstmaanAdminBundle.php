@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\ConsoleCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\EnablePermissionsPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\InjectUntrackedTokenStorageCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
@@ -33,6 +34,7 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new DomainConfigurationPass());
         $container->addCompilerPass(new ConsoleCompilerPass());
         $container->addCompilerPass(new InjectUntrackedTokenStorageCompilerPass());
+        $container->addCompilerPass(new EnablePermissionsPass());
 
         $container->addCompilerPass(new DeprecateClassParametersPass());
 
