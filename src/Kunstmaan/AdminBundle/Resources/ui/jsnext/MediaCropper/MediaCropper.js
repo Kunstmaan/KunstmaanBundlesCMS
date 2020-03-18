@@ -1,6 +1,7 @@
 import Cropper from 'cropperjs';
 import { SELECTORS, MODIFIERS, META_KEYS, CROP_BOX_THRESHOLD, CROPPER_CONFIG } from './config';
 import { renderViewSelectOptions } from './renderViewSelectOptions';
+import { Focuspoint } from './Focuspoint';
 
 class MediaCropper {
     constructor(node) {
@@ -17,6 +18,7 @@ class MediaCropper {
         this.cropData = {};
         this.savedCropData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
         this.initialized = false;
+        this.selectableFocusPoint = this.node.dataset.useFocusPoint === 'true';
 
         this.init();
     }
@@ -115,6 +117,11 @@ class MediaCropper {
 
         if (this.savedCropData) {
             this.cropData = this.savedCropData;
+        }
+
+        if (this.selectableFocusPoint) {
+            this.focusPointComponent = new Focuspoint(this);
+            this.focusPointComponent.init();
         }
 
         this.initCropper();

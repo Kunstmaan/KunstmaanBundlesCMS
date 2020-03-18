@@ -1,3 +1,19 @@
+{% import _self as mediaChooser %}
+{% macro getImageUrl(media, filter) %}
+    {% set handler = mediamanager.getHandler(media) %}
+    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+    {% if imageurl is not empty and media.location == 'local' %}
+        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+            {{ imageurl }}
+        {% else %}
+            {% set imageurl = asset(imageurl | imagine_filter(filter)) %}
+            {{ imageurl }}
+        {% endif %}
+    {% else %}
+        {{ null }}
+    {% endif %}
+{% endmacro %}
+
 {% block iconfont_widget %}
     {% apply spaceless %}
         <!-- Icon Chooser -->
@@ -57,18 +73,10 @@
             <figure class="thumbnail">
                 {% if(value.ent is defined) %}
                     {% set media = value.ent %}
-                    {% set handler = mediamanager.getHandler(media) %}
-                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-                    {% if imageurl is not empty and media.location == 'local' %}
-                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                            {% set imageurlretina = imageurl %}
-                        {% else %}
-                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
-                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
-                        {% endif %}
-                    {% endif %}
-                    {% if imageurl %}
-                        <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                    {% set imageUrl = _self.getImageUrl(media, 'media_list_thumbnail') %}
+                    {% set retinaImageUrl = _self.getImageUrl(media, 'media_list_thumbnail_retina') %}
+                    {% if imageUrl and retinaImageUrl %}
+                        <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                         <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                             {{ media.name }}
                         </figcaption>
@@ -104,7 +112,7 @@
 
     {% if show_cropper_modal is defined and show_cropper_modal %}
     <!-- cropper modal Modal -->
-    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true" data-use-focus-point="{{ use_focus_point ? 'true' : 'false' }}">
+    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -119,23 +127,15 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}">
-                    <figure class="media-cropper__preview">
+                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}" data-use-focus-point="{{ use_focus_point ? 'false' : 'true' }}">
+                    <figure class="media-cropper__preview js-media-cropper-preview">
                         {% if (value.ent is defined) %}
                             {% set media = value.ent %}
-                            {% set handler = mediamanager.getHandler(media) %}
-                            {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-                            {% if imageurl is not empty and media.location == 'local' %}
-                                {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                                    {% set imageurlretina = imageurl %}
-                                {% else %}
-                                    {% set imageurlretina = asset(imageurl | imagine_filter('optim')) %}
-                                    {% set imageurl = asset(imageurl | imagine_filter('optim')) %}
-                                {% endif %}
-                            {% endif %}
-                            {% if imageurl %}
+                            {% set imageUrl = _self.getImageUrl(media, 'optim') %}
+                            {% set retinaImageUrl = _self.getImageUrl(media, 'optim') %}
+                            {% if imageUrl %}
                                 <div>
-                                    <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
+                                    <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
                                 </div>
                             {% endif %}
                         {% else %}
@@ -144,6 +144,69 @@
                             </div>
                         {% endif %}
                     </figure>
+                    <div class="js-media-cropper-focus-wrapper media-cropper__focus-wrapper">
+                        <div class="media-cropper__focus-holder">
+                            <div class="media-cropper__focus-grid js-media-cropper-focus-grid">
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-1" class="media-cropper__focus-item__choice" value="top-left">
+                                        {{ 'media.widget.media_cropper.focus_option.top_left'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-2" class="media-cropper__focus-item__choice" value="top-center">
+                                        {{ 'media.widget.media_cropper.focus_option.top_center'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-3" class="media-cropper__focus-item__choice" value="top-right">
+                                        {{ 'media.widget.media_cropper.focus_option.top_right'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-4" class="media-cropper__focus-item__choice" value="center-left">
+                                        {{ 'media.widget.media_cropper.focus_option.center_left'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-5" class="media-cropper__focus-item__choice" value="center">
+                                        {{ 'media.widget.media_cropper.focus_option.center'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-6" class="media-cropper__focus-item__choice" value="center-right">
+                                        {{ 'media.widget.media_cropper.focus_option.center_right'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-7" class="media-cropper__focus-item__choice" value="bottom-left">
+                                        {{ 'media.widget.media_cropper.focus_option.bottom_left'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-8" class="media-cropper__focus-item__choice" value="bottom-center">
+                                        {{ 'media.widget.media_cropper.focus_option.bottom_center'|trans }}
+                                    </label>
+                                </div>
+                                <div class="media-cropper__focus-item radio">
+                                    <label class="media-cropper__focus-item__label">
+                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-9" class="media-cropper__focus-item__choice" value="bottom-right">
+                                        {{ 'media.widget.media_cropper.focus_option.bottom_right'|trans }}
+                                    </label>
+                                </div>
+                            </div>
+                            <figure class="media-cropper__focus-media">
+                                <img src="" alt="" class="js-media-cropper-focus-media">
+                            </figure>
+                        </div>
+                    </div>
                     <aside class="media-cropper__meta js-media-cropper-meta">
                         <div class="media-cropper__meta__item">
                             <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
@@ -166,8 +229,19 @@
                             </dl>
                         </div>
 
+                        <div class="media-cropper__meta__item">
+                            <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
+                            <p>
+                                {{ 'media-widget.media_cropper.meta_focus_selected'| trans }}:
+                                <span class="js-media-cropper-meta-value-focus"></span>
+                            </p>
+                            <button class="js-media-cropper-choose-focus-point btn btn-default">
+                                {{ 'media.widget.media_cropper.choose_focus_point'| trans }}
+                            </button>
+                        </div>
+
                         <div class="media-cropper__meta__item media-cropper__meta__item--submit">
-                            <button type="button" class="js-media-cropper-save btn btn-primary" data-dismiss="modal">
+                            <button type="button" class="js-media-cropper-save btn btn-primary btn-lg" data-dismiss="modal">
                                 {{ 'media.widget.media_cropper.save'|trans }}
                             </button>
                         </div>
