@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.4.4 / 2020-03-18
+           
+* [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
+* [SeoBundle] Use correct nodetranslation property to generate slug url [#2651](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2651) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Tweak styleci config [#2650](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2650) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix symfony 3.4 translator incompatibility [#2647](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2647) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Replace incorrect mobile icons [#2644](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2644) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix incompatibility with liip/imagine-bundle 2.2+ [#2643](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2643) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.3 / 2020-03-05
 
 * [GeneratorBundle] Fix incorrect return types in generated classes [#2641](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2641) ([@acrobat](https://github.com/acrobat)) 
