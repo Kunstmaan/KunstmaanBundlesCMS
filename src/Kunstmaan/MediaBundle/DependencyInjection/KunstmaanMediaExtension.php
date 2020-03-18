@@ -20,6 +20,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             ['name' => 'tablet', 'width' => 1, 'height' => 1, 'lockRatio' => true],
             ['name' => 'phone', 'width' => 1, 'height' => 1, 'lockRatio' => true],
         ],
+        'focus_point_classes' => ['top-left' ,'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'],
         'custom_views' => [],
     ];
 

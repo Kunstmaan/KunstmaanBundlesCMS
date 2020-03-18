@@ -135,7 +135,7 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}" data-use-focus-point="{{ use_focus_point ? 'false' : 'true' }}">
+                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}" data-use-focus-point="{{ use_focus_point ? 'false' : 'true' }}" {% if use_focus_point %}data-focus-point-classes="{{ focus_point_classes }}"{% endif %}>
                     <figure class="media-cropper__preview js-media-cropper-preview">
                         {% if (value.ent is defined) %}
                             {% set media = value.ent %}
