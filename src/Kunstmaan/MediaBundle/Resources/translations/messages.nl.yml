@@ -127,6 +127,9 @@ media:
         meta_title: Nieuwe afmetingen
         meta_width: breedte
         meta_height: hoogte
+        meta_title_dimensions: Nieuwe dimensies
+        meta_title_views: Kies een view
+        meta_views_placeholder: Maar 1 view beschikbaar
 
   adminlist:
     configurator:

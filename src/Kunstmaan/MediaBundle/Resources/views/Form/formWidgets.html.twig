@@ -83,7 +83,7 @@
                 {% endif %}
             </figure>
 
-            {% if showCropperModal is defined and showCropperModal %}
+            {% if show_cropper_modal is defined and show_cropper_modal %}
             <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
                 <i class="fa fa-crop"></i>
             </button>
@@ -102,7 +102,7 @@
         </button>
     </div>
 
-    {% if showCropperModal is defined and showCropperModal %}
+    {% if show_cropper_modal is defined and show_cropper_modal %}
     <!-- cropper modal Modal -->
     <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true" data-use-focus-point="{{ use_focus_point ? 'true' : 'false' }}">
         <div class="modal-dialog modal-lg">
@@ -180,7 +180,7 @@
     {% endif %}
 
     <!-- Media Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true" {% if showCropperModal is defined and showCropperModal %}data-cropable="true"{% endif %}>
+    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true" {% if show_cropper_modal is defined and show_cropper_modal %}data-cropable="true"{% endif %}>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 

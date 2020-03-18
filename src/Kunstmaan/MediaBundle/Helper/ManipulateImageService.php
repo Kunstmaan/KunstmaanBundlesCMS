@@ -40,7 +40,7 @@ class ManipulateImageService
         return $class;
     }
 
-    public function manipulateOnTheFly(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = 'optim'): string
+    public function cropImage(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = 'optim'): string
     {
         /** @var Media $media */
         $media = $croppableMediaLink->getMedia();
