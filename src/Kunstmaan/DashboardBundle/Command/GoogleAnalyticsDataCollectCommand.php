@@ -20,13 +20,13 @@ use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
  */
 class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 {
-    /** @var EntityManagerInterface $em */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /** @var OutputInterface $output */
+    /** @var OutputInterface */
     private $output;
 
-    /** @var int $errors */
+    /** @var int */
     private $errors = 0;
 
     /** @var ServiceHelper */

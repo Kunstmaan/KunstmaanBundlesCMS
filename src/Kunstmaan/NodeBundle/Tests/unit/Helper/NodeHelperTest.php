@@ -89,7 +89,7 @@ class TestType extends AbstractType
 
 class NodeHelperTest extends TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject|EntityManagerInterface $em */
+    /** @var \PHPUnit_Framework_MockObject_MockObject|EntityManagerInterface */
     private $em;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|NodeRepository */
