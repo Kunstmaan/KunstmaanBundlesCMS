@@ -59,7 +59,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->arrayNode('focus_point_classes')
                             ->defaultValue(['top-left' ,'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'])
-                            ->prototype('array')
+                            ->prototype('array')->end()
                         ->end()
                         ->arrayNode('custom_views')
                             ->useAttributeAsKey('groupName')
