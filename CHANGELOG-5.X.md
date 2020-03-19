@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.5.1 / 2020-03-19
+
+* [AdminBundle] Aclvoter should only grant access for supported attributes with disabled permissions  [#2653](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2653) ([@acrobat](https://github.com/acrobat))
+
 ## 5.5.0 / 2020-03-18
 
 * [NodeBundle] Add configuration option to disable permission module/checking [#2649](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2649) ([@acrobat](https://github.com/acrobat)) 

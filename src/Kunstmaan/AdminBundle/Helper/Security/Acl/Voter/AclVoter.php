@@ -37,8 +37,21 @@ class AclVoter extends BaseAclVoter
 
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        if (!$this->permissionsEnabled) {
+        $attributeIsSupported = false;
+        foreach ($attributes as $attribute) {
+            if ($this->supportsAttribute($attribute)) {
+                $attributeIsSupported = true;
+
+                break;
+            }
+        }
+
+        if (!$this->permissionsEnabled && $attributeIsSupported) {
             return self::ACCESS_GRANTED;
+        }
+
+        if (!$this->permissionsEnabled) {
+            return self::ACCESS_ABSTAIN;
         }
 
         return parent::vote($token, $object, $attributes);
