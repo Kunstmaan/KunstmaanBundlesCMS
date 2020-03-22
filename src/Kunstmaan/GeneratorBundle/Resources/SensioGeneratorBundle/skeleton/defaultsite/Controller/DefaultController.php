@@ -32,7 +32,7 @@ class DefaultController extends AbstractController
     private function getLocale(Request $request)
     {
         $locales = array_filter(
-            explode('|', $this->container->getParameter('requiredlocales'))
+            explode('|', $this->getParameter('requiredlocales'))
         );
         return $request->getPreferredLanguage($locales);
     }
