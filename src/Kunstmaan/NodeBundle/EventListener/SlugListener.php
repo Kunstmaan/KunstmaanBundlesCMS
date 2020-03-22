@@ -69,6 +69,8 @@ class SlugListener
 
         // If the entity is an instance of the SlugActionInterface, change the controller
         if ($entity instanceof SlugActionInterface) {
+            @trigger_error(sprintf('Using the "%s" to customize the page render is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the "%s" event instead.', SlugActionInterface::class, Events::PAGE_RENDER), E_USER_DEPRECATED);
+
             $request->attributes->set('_entity', $entity);
 
             // Do security check by firing an event that gets handled by the SlugSecurityListener

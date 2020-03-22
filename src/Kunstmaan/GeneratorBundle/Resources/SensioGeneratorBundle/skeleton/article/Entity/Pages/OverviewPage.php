@@ -14,7 +14,7 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}OverviewPageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overview_pages")
  */
-class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface, SlugActionInterface
+class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface
 {
     public function getPagePartAdminConfigurations(): array
     {
@@ -49,14 +49,5 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
     public function getDefaultAdminType(): string
     {
         return {{ entity_class }}OverviewPageAdminType::class;
-    }
-
-    public function getControllerAction(): string
-    {
-        {% if isV4 %}
-        return 'App\Controller\{{ entity_class }}ArticleController::serviceAction';
-        {% else %}
-        return '{{ bundle.getName() }}:{{ entity_class }}Article:service';
-        {% endif %}
     }
 }

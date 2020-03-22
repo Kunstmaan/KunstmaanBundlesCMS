@@ -12,6 +12,8 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Event\Events;
+use Kunstmaan\NodeBundle\Event\PageRenderEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
@@ -622,10 +624,16 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             'nodetranslation' => $nodeTranslation,
         ]);
 
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        // NEXT_MAJOR: Remove if and `$page->service` call
         if ($page instanceof PageInterface) {
-            $request = $this->container->get('request_stack')->getCurrentRequest();
             $page->service($this->container, $request, $renderContext);
         }
+
+        $pageRenderEvent = new PageRenderEvent($request, $page, $renderContext);
+        $this->getEventDispatcher()->dispatch(Events::PAGE_RENDER, $pageRenderEvent);
+
+        $renderContext = clone $pageRenderEvent->getRenderContext();
 
         $content = $this->removeHtml(
             $renderer->render(
@@ -679,7 +687,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
         $event = new IndexNodeEvent($page, $doc);
-        $this->container->get('event_dispatcher')->dispatch(IndexNodeEvent::EVENT_INDEX_NODE, $event);
+        $this->getEventDispatcher()->dispatch(IndexNodeEvent::EVENT_INDEX_NODE, $event);
 
         $doc = $event->doc;
 
@@ -785,5 +793,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         return $this->nodeRefs[$refEntityName];
+    }
+
+    private function getEventDispatcher()
+    {
+        return $this->container->get('event_dispatcher');
     }
 }

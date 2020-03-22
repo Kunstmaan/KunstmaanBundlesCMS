@@ -74,6 +74,7 @@ class ArticleGenerator extends KunstmaanGenerator
         $this->generateEntities($parameters);
         $this->generateRepositories($parameters);
         $this->generateForm($parameters);
+        $this->generateEventSubscriber($parameters);
         $this->generateAdminList($parameters);
         $this->generateController($parameters);
         $this->generatePageTemplateConfigs($parameters);
@@ -249,9 +250,6 @@ class ArticleGenerator extends KunstmaanGenerator
             $filename = 'TagAdminListController.php';
             $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
         }
-
-        $filename = 'ArticleController.php';
-        $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
 
         $this->assistant->writeLine('Generating controllers : <info>OK</info>');
     }
@@ -507,5 +505,15 @@ class ArticleGenerator extends KunstmaanGenerator
             );
             file_put_contents($file, $data);
         }
+    }
+
+    private function generateEventSubscriber(array $parameters)
+    {
+        $relPath = '/EventSubscriber/';
+        $sourceDir = $this->skeletonDir.$relPath;
+        $targetDir = $this->bundle->getPath().$relPath;
+
+        $filename = 'ArticleEventSubscriber.php';
+        $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
     }
 }

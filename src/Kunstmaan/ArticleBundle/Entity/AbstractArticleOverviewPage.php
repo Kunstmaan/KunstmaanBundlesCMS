@@ -48,6 +48,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
 
     public function getControllerAction()
     {
+        //TODO: deprecation
         return 'KunstmaanArticleBundle:AbstractArticleOverviewPage:service';
     }
 }

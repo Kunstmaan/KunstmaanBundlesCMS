@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SlugEventTest extends TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testGetSet()
     {
         $event = new SlugEvent(new Response(), new RenderContext());

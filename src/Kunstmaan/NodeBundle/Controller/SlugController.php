@@ -7,7 +7,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Event\Events;
+use Kunstmaan\NodeBundle\Event\PageRenderEvent;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
@@ -73,25 +75,39 @@ class SlugController extends Controller
         $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
         //render page
-        $renderContext = new RenderContext(
-            array(
-                'nodetranslation' => $nodeTranslation,
-                'slug' => $url,
-                'page' => $entity,
-                'resource' => $entity,
-                'nodemenu' => $nodeMenu,
-            )
-        );
+        $renderContext = new RenderContext([
+            'nodetranslation' => $nodeTranslation,
+            'slug' => $url,
+            'page' => $entity,
+            'resource' => $entity,
+            'nodemenu' => $nodeMenu,
+        ]);
+
         if (method_exists($entity, 'getDefaultView')) {
             $renderContext->setView($entity->getDefaultView());
         }
+
+        // NEXT_MAJOR: remove PRE_SLUG_ACTION dispatch
         $preEvent = new SlugEvent(null, $renderContext);
         $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
         $renderContext = $preEvent->getRenderContext();
 
-        $response = $entity->service($this->container, $request, $renderContext);
+        /** @var PageInterface $entity */
+        $deprecatedResponse = $entity->service($this->container, $request, $renderContext);
+        // NEXT_MAJOR: end remove
 
-        $postEvent = new SlugEvent($response, $renderContext);
+        $pageRenderEvent = new PageRenderEvent($request, $entity, $renderContext);
+        $eventDispatcher->dispatch(Events::PAGE_RENDER, $pageRenderEvent);
+
+        $response = $pageRenderEvent->getResponse();
+        $renderContext = clone $pageRenderEvent->getRenderContext();
+
+        if ($response instanceof Response) {
+            return $response;
+        }
+
+        // NEXT_MAJOR: remove POST_SLUG_ACTION dispatch
+        $postEvent = new SlugEvent($deprecatedResponse, $renderContext);
         $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
 
         $response = $postEvent->getResponse();
@@ -100,6 +116,7 @@ class SlugController extends Controller
         if ($response instanceof Response) {
             return $response;
         }
+        // NEXT_MAJOR: end remove
 
         $view = $renderContext->getView();
         if (empty($view)) {
