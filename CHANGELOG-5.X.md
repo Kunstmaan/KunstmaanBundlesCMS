@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.5.2 / 2020-03-24
+
+* [GeneratorBundle] getParameter should be called on the controller class [#2654](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2654) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.5.1 / 2020-03-19
 
 * [AdminBundle] Aclvoter should only grant access for supported attributes with disabled permissions  [#2653](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2653) ([@acrobat](https://github.com/acrobat))
