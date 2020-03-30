@@ -99,7 +99,7 @@
                 {% endif %}
             </figure>
 
-            {% if show_cropper_modal is defined and show_cropper_modal %}
+            {% if show_image_edit_modal is defined and show_image_edit_modal %}
             <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
                 <i class="fa fa-crop"></i>
             </button>
@@ -118,8 +118,8 @@
         </button>
     </div>
 
-    {% if show_cropper_modal is defined and show_cropper_modal %}
-    <!-- cropper modal Modal -->
+    {% if show_image_edit_modal is defined and show_image_edit_modal %}
+    <!-- image edit Modal -->
     <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -135,7 +135,12 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper" data-cropping-views="{{ cropping_views }}" data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}" data-use-focus-point="{{ use_focus_point ? 'false' : 'true' }}" {% if use_focus_point %}data-focus-point-classes="{{ focus_point_classes }}"{% endif %}>
+                <div class="media-cropper js-media-cropper"
+                     data-cropping-views="{{ cropping_views }}"
+                     data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}"
+                     data-use-focus-point="{{ use_focus_point ? 'false' : 'true' }}"
+                     {% if use_focus_point %}data-focus-point-classes="{{ focus_point_classes }}"{% endif %}
+                     data-use-cropping="{{ use_cropping ? 'true' :  'false' }}">
                     <figure class="media-cropper__preview js-media-cropper-preview">
                         {% if (value.ent is defined) %}
                             {% set media = value.ent %}
@@ -262,7 +267,7 @@
     {% endif %}
 
     <!-- Media Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true" {% if show_cropper_modal is defined and show_cropper_modal %}data-cropable="true"{% endif %}>
+    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true" {% if show_image_edit_modal is defined and show_image_edit_modal %}data-cropable="true"{% endif %}>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 

@@ -14,16 +14,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class KunstmaanMediaExtension extends Extension implements PrependExtensionInterface
 {
-    const DEFAULT_CROPPING_CONFIG = [
-        'default' => [
-            ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lockRation' => true],
-            ['name' => 'tablet', 'width' => 1, 'height' => 1, 'lockRatio' => true],
-            ['name' => 'phone', 'width' => 1, 'height' => 1, 'lockRatio' => true],
-        ],
-        'focus_point_classes' => ['top-left' ,'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'],
-        'custom_views' => [],
-    ];
-
     /**
      * Loads configuration
      *
@@ -34,14 +24,6 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        if (!isset($config['cropping_views'])) {
-            $config['cropping_views'] = self::DEFAULT_CROPPING_CONFIG;
-        } else {
-            if (empty($config['cropping_views']['default'])) {
-                $config['cropping_views']['default'] = self::DEFAULT_CROPPING_CONFIG['default'];
-            }
-        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

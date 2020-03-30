@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
-use Kunstmaan\MediaBundle\Form\CroppableMediaLinkAdminType;
+use Kunstmaan\MediaBundle\Form\EditableMediaWrapperAdminType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -29,7 +29,7 @@ class {{ pagepart }}AdminType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('media', CroppableMediaLinkAdminType::class, [
+        $builder->add('media', EditableMediaWrapperAdminType::class, [
             'required' => true,
         ]);
         $builder->add('caption', TextType::class, array(

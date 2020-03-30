@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
+use Kunstmaan\MediaBundle\Entity\EditableMediaWrapper;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\CroppableMediaLink", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\EditableMediaWrapper", cascade={"persist"})
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * @Assert\NotNull()
      */
@@ -118,7 +118,7 @@ class {{ pagepart }} extends AbstractPagePart
         return $this->media;
     }
 
-    public function setMedia(CroppableMediaLink $media)
+    public function setMedia(EditableMediaWrapper $media)
     {
         $this->media = $media;
 

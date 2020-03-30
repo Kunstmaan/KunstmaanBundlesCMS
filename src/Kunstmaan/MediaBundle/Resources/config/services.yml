@@ -40,8 +40,7 @@ services:
         tags:
             - { name: form.type}
 
-    form.type.croppable_media_link:
-        class: Kunstmaan\MediaBundle\Form\CroppableMediaLinkAdminType
+    Kunstmaan\MediaBundle\Form\EditableMediaWrapperAdminType:
         arguments:
             - '%kunstmaan_media.cropping_views%'
         tags:

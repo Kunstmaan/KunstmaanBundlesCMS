@@ -8,6 +8,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    private const DEFAULT_CROPPING_VIEWS_CONFIG = [
+        ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lock_ratio' => true],
+        ['name' => 'tablet', 'width' => 1, 'height' => 1, 'lock_ratio' => true],
+        ['name' => 'phone', 'width' => 1, 'height' => 1, 'lock_ratio' => true],
+    ];
+    private const DEFAULT_FOCUS_POINT_CLASSES = ['top-left', 'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'];
+
     /**
      * Generates the configuration tree.
      *
@@ -47,18 +54,19 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('cropping_views')
                     ->children()
                         ->arrayNode('default')
+                            ->defaultValue(self::DEFAULT_CROPPING_VIEWS_CONFIG)
                             ->arrayPrototype()
                                 ->addDefaultsIfNotSet()
                                 ->children()
                                     ->scalarNode('name')->end()
                                     ->integerNode('width')->end()
                                     ->integerNode('height')->end()
-                                    ->booleanNode('lockRatio')->defaultTrue()->end()
+                                    ->booleanNode('lock_ratio')->defaultTrue()->end()
                                 ->end()
                             ->end()
                         ->end()
                         ->arrayNode('focus_point_classes')
-                            ->defaultValue(['top-left' ,'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'])
+                            ->defaultValue(self::DEFAULT_FOCUS_POINT_CLASSES)
                             ->prototype('array')->end()
                         ->end()
                         ->arrayNode('custom_views')
@@ -66,7 +74,8 @@ class Configuration implements ConfigurationInterface
                             ->arrayPrototype()
                                 ->addDefaultsIfNotSet()
                                 ->children()
-                                    ->booleanNode('useFocusPoint')->defaultFalse()->end()
+                                    ->booleanNode('use_focus_point')->defaultFalse()->end()
+                                    ->booleanNode('use_cropping')->defaultTrue()->end()
                                     ->arrayNode('views')
                                         ->arrayPrototype()
                                             ->addDefaultsIfNotSet()
@@ -74,7 +83,7 @@ class Configuration implements ConfigurationInterface
                                                 ->scalarNode('name')->end()
                                                 ->integerNode('width')->end()
                                                 ->integerNode('height')->end()
-                                                ->booleanNode('lockRatio')->defaultTrue()->end()
+                                                ->booleanNode('lock_ratio')->defaultTrue()->end()
                                             ->end()
                                         ->end()
                                     ->end()
