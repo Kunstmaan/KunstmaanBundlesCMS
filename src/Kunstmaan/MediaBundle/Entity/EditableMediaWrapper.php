@@ -8,10 +8,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="kuma_croppable_media_link")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="kuma_editable_media_wrapper")
  */
-class CroppableMediaLink extends AbstractEntity
+class EditableMediaWrapper extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media", cascade={"persist"})

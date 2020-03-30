@@ -2,8 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
-use Imagine\Filter\Basic\Crop;
-use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
+use Kunstmaan\MediaBundle\Entity\EditableMediaWrapper;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Liip\ImagineBundle\Service\FilterService;
@@ -22,16 +21,14 @@ class ManipulateImageService
         $this->filterService = $filterService;
     }
 
-    public function getFocusPointClass(CroppableMediaLink $croppableMediaLink, string $view = ''): string
+    public function getFocusPointClass(EditableMediaWrapper $editableMediaWrapper, string $view = ''): string
     {
         $class = '';
-        if ($croppableMediaLink->getRunTimeConfig() !== null) {
-            $runTimeConfig = json_decode($croppableMediaLink->getRunTimeConfig(), true);
+        if ($editableMediaWrapper->getRunTimeConfig() !== null) {
+            $runTimeConfig = json_decode($editableMediaWrapper->getRunTimeConfig(), true);
 
             if (
-                is_array($runTimeConfig)
-                && !empty($view)
-                && isset($runTimeConfig[$view]['class'])
+                is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view]['class'])
             ) {
                 $class = $runTimeConfig[$view]['class'];
             }
@@ -40,10 +37,10 @@ class ManipulateImageService
         return $class;
     }
 
-    public function cropImage(CroppableMediaLink $croppableMediaLink, string $view = '', string $filter = 'optim'): string
+    public function cropImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', string $filter = 'optim'): string
     {
         /** @var Media $media */
-        $media = $croppableMediaLink->getMedia();
+        $media = $editableMediaWrapper->getMedia();
         $filename = $media->getOriginalFilename();
         $filename = str_replace(['/', '\\', '%'], '', $filename);
 
@@ -60,8 +57,8 @@ class ManipulateImageService
         );
 
         $runTimeConfigForView = [];
-        if ($croppableMediaLink->getRunTimeConfig() !== null) {
-            $runTimeConfig = json_decode($croppableMediaLink->getRunTimeConfig(), true);
+        if ($editableMediaWrapper->getRunTimeConfig() !== null) {
+            $runTimeConfig = json_decode($editableMediaWrapper->getRunTimeConfig(), true);
 
             if (
                 is_array($runTimeConfig)

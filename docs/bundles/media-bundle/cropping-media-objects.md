@@ -17,8 +17,7 @@ namespace App\Entity\PageParts;
 
 use App\Form\PageParts\CroppableImagePagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\EditableMediaWrapper;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -28,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CroppableImagePartPart extends AbstractPagePart
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\CroppableMediaLink", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\EditableMediaWrapper", cascade={"persist"})
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * @Assert\NotNull()
      */
@@ -68,12 +67,12 @@ class CroppableImagePartPart extends AbstractPagePart
         return $this->link;
     }
 
-    public function getMedia(): ?CroppableMediaLink
+    public function getMedia(): ?EditableMediaWrapper
     {
         return $this->media;
     }
 
-    public function setMedia(CroppableMediaLink $media): CroppableImagePartPart
+    public function setMedia(EditableMediaWrapper $media): CroppableImagePartPart
     {
         $this->media = $media;
 
@@ -99,7 +98,7 @@ pagepartadmintype.php
 namespace App\Form\PageParts;
 
 use App\Entity\PageParts\CroppableImagePartPart;
-use Kunstmaan\MediaBundle\Form\CroppableMediaLinkAdminType;
+use Kunstmaan\MediaBundle\Form\EditableMediaWrapperAdminType;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\AbstractType;
@@ -114,7 +113,7 @@ class CroppableImagePagePartAdminType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('media', CroppableMediaLinkAdminType::class, [
+        $builder->add('media', EditableMediaWrapperAdminType::class, [
             'required' => true,
         ]);
         $builder->add('link', URLChooserType::class, [
@@ -152,11 +151,13 @@ kunstmaan_media:
     cropping_views:
         custom_views:
             example1:
-                useFocusPoint: false
+                use_focus_point: false
+                use_cropping: true
                 views:
-                    - { name: desktop, width: 50, height: 50, lockRatio: true}
+                    - { name: desktop, width: 50, height: 50, lock_ratio: true}
             example2:
-                useFocusPoint: true
+                use_focus_point: true
+                use_cropping: false
                 views:
                     - { name: desktop, width: 1, height: 1}
                     - { name: phone, width: 1, height: 1}
@@ -165,8 +166,8 @@ kunstmaan_media:
 width: minimum width of your cropbox
 height: minimum height of your cropbox
 name: name that is shown in cropping modal and needs to be used in your twig template
-lockRatio: if the cropping box needs to respect the aspect ratio of your width and height at all times. Is Ignored when byFocusPoint is true
-byFocusPoint: if byFocusPoint is set to true the frontend won't display a cropping box but will allow the user to select a focus point and use the width/height configured to calculate what area is shown.
+lock_ratio: if the cropping box needs to respect the aspect ratio of your width and height at all times. Is Ignored when byFocusPoint is true
+by_focus_point: if by_focus_point is set to true the frontend won't display a cropping box but will allow the user to select a focus point and use the width/height configured to calculate what area is shown.
 ```
 
 You can then use it by telling your form admintype which group of viewports to use.
@@ -178,7 +179,7 @@ class CroppableImagePagePartAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('media', CroppableMediaLinkAdminType::class, [
+        $builder->add('media', EditableMediaWrapperAdminType::class, [
             'required' => true,
             'cropping_views_group' => 'example1',
         ]);

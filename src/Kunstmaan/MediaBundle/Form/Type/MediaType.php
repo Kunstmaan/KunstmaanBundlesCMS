@@ -78,8 +78,9 @@ class MediaType extends AbstractType
                 'chooser' => 'KunstmaanMediaBundle_chooser',
                 'mediatype' => null,
                 'current_value_container' => new CurrentValueContainer(),
-                'show_cropper_modal' => false,
+                'show_image_edit_modal' => false,
                 'use_focus_point' => false,
+                'use_cropping' => false,
                 'focus_point_classes' => '',
                 'cropping_views' => '',
             )
@@ -104,8 +105,9 @@ class MediaType extends AbstractType
         $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
         $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
-        $view->vars['show_cropper_modal'] = $options['show_cropper_modal'];
+        $view->vars['show_image_edit_modal'] = $options['show_image_edit_modal'];
         $view->vars['use_focus_point'] = $options['use_focus_point'];
+        $view->vars['use_cropping'] = $options['use_cropping'];
         $view->vars['focus_point_classes'] = $options['focus_point_classes'];
         $view->vars['cropping_views'] = $options['cropping_views'];
     }

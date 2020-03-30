@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
-use Kunstmaan\MediaBundle\Entity\CroppableMediaLink;
+use Kunstmaan\MediaBundle\Entity\EditableMediaWrapper;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CroppableMediaLinkAdminType extends AbstractType
+class EditableMediaWrapperAdminType extends AbstractType
 {
     private const DEFAULT = 'default';
     private const CUSTOM_VIEWS = 'custom_views';
@@ -28,16 +28,19 @@ class CroppableMediaLinkAdminType extends AbstractType
         $croppingViewGroup = $options['cropping_views_group'];
         $selectedCroppingViews = $this->croppingViews[self::DEFAULT];
         $useFocusPoint = false;
+        $useCropper = true;
         $focusPointClasses = $this->croppingViews[self::FOCUS_POINT_CLASSES];
         if ($croppingViewGroup !== self::DEFAULT && isset($this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['views'])) {
             $selectedCroppingViews = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['views'];
-            $useFocusPoint = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['useFocusPoint'] ?? false;
+            $useFocusPoint = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['use_focus_point'] ?? false;
+            $useCropper = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['use_cropping'] ?? true;
         }
         $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
             'mediatype' => 'image',
-            'show_cropper_modal' => true,
+            'show_image_edit_modal' => true,
             'use_focus_point' => $useFocusPoint,
+            'use_cropping' => $useCropper,
             'focus_point_classes' => json_encode($focusPointClasses),
             'cropping_views' => json_encode($selectedCroppingViews),
         ]);
@@ -46,21 +49,11 @@ class CroppableMediaLinkAdminType extends AbstractType
         ]);
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getBlockPrefix()
-    {
-        return 'croppable_media_link';
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'data_class' => CroppableMediaLink::class,
+                'data_class' => EditableMediaWrapper::class,
                 'cropping_views_group' => self::DEFAULT,
             ]
         );
