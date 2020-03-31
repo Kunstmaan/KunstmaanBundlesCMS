@@ -12,9 +12,7 @@ class MediaTwigExtension extends AbstractExtension
     /** @var ManipulateImageService */
     private $manipulateImageService;
 
-    public function __construct(
-        ManipulateImageService $manipulateImageService
-    )
+    public function __construct(ManipulateImageService $manipulateImageService)
     {
         $this->manipulateImageService = $manipulateImageService;
     }
@@ -23,10 +21,12 @@ class MediaTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction(
-                'cropped_imagine_filter', [$this, 'getCroppedImage']
+                'cropped_imagine_filter',
+                [$this, 'getCroppedImage']
             ),
             new TwigFunction(
-                'get_focus_point_class', [$this, 'getFocusPointClass']
+                'get_focus_point_class',
+                [$this, 'getFocusPointClass']
             ),
         ];
     }

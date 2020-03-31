@@ -36,7 +36,8 @@ class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
     protected function configure()
     {
         $this->setDescription('Generates default pageparts')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 The <info>kuma:generate:default-pageparts</info> command generates the default pageparts and adds the pageparts configuration.
 
 <info>php bin/console kuma:generate:default-pageparts</info>
