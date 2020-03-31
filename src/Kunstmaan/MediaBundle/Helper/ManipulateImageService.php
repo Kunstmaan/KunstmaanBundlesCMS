@@ -23,18 +23,17 @@ class ManipulateImageService
 
     public function getFocusPointClass(EditableMediaWrapper $editableMediaWrapper, string $view = ''): string
     {
-        $class = '';
-        if ($editableMediaWrapper->getRunTimeConfig() !== null) {
-            $runTimeConfig = json_decode($editableMediaWrapper->getRunTimeConfig(), true);
-
-            if (
-                is_array($runTimeConfig) && !empty($view) && isset($runTimeConfig[$view]['class'])
-            ) {
-                $class = $runTimeConfig[$view]['class'];
-            }
+        if (null === $editableMediaWrapper->getRunTimeConfig()) {
+            return '';
         }
 
-        return $class;
+        $runTimeConfig = json_decode($editableMediaWrapper->getRunTimeConfig(), true);
+
+        if (!is_array($runTimeConfig) || empty($view) || !isset($runTimeConfig[$view]['class'])) {
+            return '';
+        }
+
+        return $runTimeConfig[$view]['class'];
     }
 
     public function cropImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', string $filter = 'optim'): string
