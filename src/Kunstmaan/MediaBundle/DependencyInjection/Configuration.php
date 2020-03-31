@@ -57,6 +57,7 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->arrayNode('cropping_views')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('default')
                             ->defaultValue(self::DEFAULT_CROPPING_VIEWS_CONFIG)
