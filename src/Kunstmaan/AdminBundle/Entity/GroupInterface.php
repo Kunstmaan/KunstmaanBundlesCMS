@@ -6,4 +6,5 @@ use FOS\UserBundle\Model\GroupInterface as FosGroupInterface;
 
 interface GroupInterface extends FosGroupInterface
 {
+
 }
