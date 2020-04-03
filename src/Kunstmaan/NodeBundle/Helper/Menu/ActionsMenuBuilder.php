@@ -3,9 +3,9 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\Model\UserInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;

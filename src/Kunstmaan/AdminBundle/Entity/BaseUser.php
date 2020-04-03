@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as AbstractUser;
 use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictions;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-abstract class BaseUser extends AbstractUser
+abstract class BaseUser extends AbstractUser implements UserInterface
 {
     /**
      * @ORM\Id
