@@ -90,4 +90,10 @@ jobs:
         - npm run buildGroundControlSkeleton
       after_script: skip
 
+    # Code quality checks
+    - stage: Code quality
+      php: 7.4
+      env: PHPStan=true
+      script: vendor/bin/phpstan analyse --no-progress
+
 

@@ -1,0 +1,17 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+
+parameters:
+    level: 1
+    paths:
+        -  src
+
+    excludes_analyse:
+        - src/Kunstmaan/*/Tests/*
+        - src/Kunstmaan/*/vendor/*
+        - src/Kunstmaan/BehatBundle
+        - src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle
+        - src/Kunstmaan/CacheBundle # Temporary excluded for full rework
+        # Excluded deprecated classes/files
+        - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
+        - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
