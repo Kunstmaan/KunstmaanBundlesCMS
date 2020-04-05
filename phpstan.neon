@@ -15,3 +15,8 @@ parameters:
         # Excluded deprecated classes/files
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
+
+    ignoreErrors:
+        # Ignore errors on unfound classes for old symfony version BC layers
+        - '#^Class Symfony\\Component\\Security\\Core\\Role\\RoleInterface not found\.\z#'
+        - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR

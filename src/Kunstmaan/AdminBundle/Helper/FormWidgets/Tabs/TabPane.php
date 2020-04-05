@@ -46,6 +46,9 @@ class TabPane
      */
     protected $formView;
 
+    /** @var Slugifier */
+    private $slugifier;
+
     /**
      * @param string               $identifier  The identifier
      * @param Request              $request     The request

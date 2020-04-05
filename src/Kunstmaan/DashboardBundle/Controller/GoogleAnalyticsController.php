@@ -93,9 +93,10 @@ class GoogleAnalyticsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $code = urldecode($request->query->get('code'));
+        $codeParameter = $request->query->get('code');
 
-        if (isset($code)) {
+        if (null !== $codeParameter) {
+            $code = urldecode($codeParameter);
             $clientHelper = $this->container->get('kunstmaan_dashboard.helper.google.client');
             $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
