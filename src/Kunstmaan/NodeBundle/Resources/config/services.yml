@@ -12,7 +12,7 @@ services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
         arguments:
-          - '@session.flash_bag'
+          - '@session'
           - '@kunstmaan_admin.logger'
           - '@kunstmaan_utilities.slugifier'
           - '@request_stack'

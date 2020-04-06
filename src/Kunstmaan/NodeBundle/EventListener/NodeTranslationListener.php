@@ -17,7 +17,7 @@ use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class NodeTranslationListener
@@ -27,8 +27,8 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  */
 class NodeTranslationListener
 {
-    /** @var FlashBagInterface */
-    private $flashBag;
+    /** @var SessionInterface */
+    private $session;
 
     /** @var LoggerInterface */
     private $logger;
@@ -48,7 +48,7 @@ class NodeTranslationListener
     /**
      * NodeTranslationListener constructor.
      *
-     * @param FlashBagInterface            $flashBag
+     * @param SessionInterface             $session
      * @param LoggerInterface              $logger
      * @param SlugifierInterface           $slugifier
      * @param RequestStack                 $requestStack
@@ -56,14 +56,14 @@ class NodeTranslationListener
      * @param PagesConfiguration           $pagesConfiguration
      */
     public function __construct(
-        FlashBagInterface $flashBag,
+        SessionInterface $session,
         LoggerInterface $logger,
         SlugifierInterface $slugifier,
         RequestStack $requestStack,
         DomainConfigurationInterface $domainConfiguration,
         PagesConfiguration $pagesConfiguration
     ) {
-        $this->flashBag = $flashBag;
+        $this->session = $session;
         $this->logger = $logger;
         $this->slugifier = $slugifier;
         $this->requestStack = $requestStack;
@@ -158,7 +158,7 @@ class NodeTranslationListener
                     if ($entity !== false) {
                         $em->persist($entity);
                         $em->getUnitOfWork()->recomputeSingleEntityChangeSet($class, $entity);
-    
+
                         $this->updateNodeChildren($entity, $em, $class);
                     }
                 }
@@ -333,7 +333,7 @@ class NodeTranslationListener
         } elseif (\count($flashes) > 0 && $this->isInRequestScope()) {
             // No translations found so we're certain we can show this message.
             $flash = current(\array_slice($flashes, -1));
-            $this->flashBag->add(FlashTypes::WARNING, $flash);
+            $this->session->getFlashBag()->add(FlashTypes::WARNING, $flash);
         }
 
         return true;
