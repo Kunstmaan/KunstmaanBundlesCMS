@@ -18,6 +18,7 @@ use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class NodeTranslationListener
@@ -46,15 +47,15 @@ class NodeTranslationListener
     /**
      * NodeTranslationListener constructor.
      *
-     * @param FlashBagInterface            $flashBag
-     * @param LoggerInterface              $logger
-     * @param SlugifierInterface           $slugifier
-     * @param RequestStack                 $requestStack
-     * @param DomainConfigurationInterface $domainConfiguration
-     * @param PagesConfiguration           $pagesConfiguration
+     * @param SessionInterface|FlashBagInterface $session
+     * @param LoggerInterface                    $logger
+     * @param SlugifierInterface                 $slugifier
+     * @param RequestStack                       $requestStack
+     * @param DomainConfigurationInterface       $domainConfiguration
+     * @param PagesConfiguration                 $pagesConfiguration
      */
     public function __construct(
-        FlashBagInterface $flashBag,
+        /* SessionInterface */ $flashBag,
         LoggerInterface $logger,
         SlugifierInterface $slugifier,
         RequestStack $requestStack,
@@ -62,6 +63,13 @@ class NodeTranslationListener
         PagesConfiguration $pagesConfiguration
     ) {
         $this->flashBag = $flashBag;
+
+        if ($flashBag instanceof FlashBagInterface) {
+            @trigger_error('Passing the "@session.flash_bag" service as first argument is deprecated since KunstmaanNodeBundle 5.6 and will be replaced by the session in KunstmaanNodeBundle 6.0. Inject the "@session" service instead.', E_USER_DEPRECATED);
+        } elseif ($flashBag instanceof SessionInterface) {
+            $this->flashBag = $flashBag->getFlashBag();
+        }
+
         $this->logger = $logger;
         $this->slugifier = $slugifier;
         $this->requestStack = $requestStack;
