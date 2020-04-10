@@ -3,6 +3,7 @@
 namespace Kunstmaan\FixturesBundle\Provider;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation as NodeBundleNodeTranslation;
 
 class NodeTranslation
 {
@@ -10,7 +11,7 @@ class NodeTranslation
 
     public function __construct(EntityManager $em)
     {
-        $this->nodeTransRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+        $this->nodeTransRepo = $em->getRepository(NodeBundleNodeTranslation::class);
     }
 
     public function getTranslationByTitle($title, $lang)

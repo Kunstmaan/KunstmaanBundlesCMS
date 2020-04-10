@@ -21,6 +21,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
@@ -167,7 +168,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
@@ -179,7 +180,7 @@ class NodeAdminController extends Controller
             ->deepCloneAndSave($otherLanguagePage);
 
         /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)
             ->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -219,18 +220,18 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
-        $otherLanguageNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($request->get('source'));
+        $otherLanguageNodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($request->get('source'));
         $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
         $otherLanguagePage = $otherLanguageNodeNodeVersion->getRef($this->em);
         $myLanguagePage = $this->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($otherLanguagePage);
 
         /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)
             ->addDraftNodeVersionFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -270,7 +271,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
@@ -282,7 +283,7 @@ class NodeAdminController extends Controller
         $this->em->persist($myLanguagePage);
         $this->em->flush();
         /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)
             ->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -310,7 +311,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request = $this->get('request_stack')->getCurrentRequest();
@@ -338,7 +339,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request = $this->get('request_stack')->getCurrentRequest();
@@ -367,7 +368,7 @@ class NodeAdminController extends Controller
         $this->init($request);
 
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $this->nodePublisher->unSchedulePublish($nodeTranslation);
@@ -399,7 +400,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
 
@@ -464,7 +465,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $parentNode */
-        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
+        $originalNode = $this->em->getRepository(Node::class)
             ->find($id);
 
         // Check with Acl
@@ -493,7 +494,7 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor(
+        $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor(
             $newPage,
             $this->locale,
             $this->user
@@ -539,7 +540,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
@@ -550,7 +551,7 @@ class NodeAdminController extends Controller
         }
 
         /* @var NodeVersionRepository $nodeVersionRepo */
-        $nodeVersionRepo = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion');
+        $nodeVersionRepo = $this->em->getRepository(NodeVersion::class);
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $nodeVersionRepo->find($version);
 
@@ -624,7 +625,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $parentNode */
-        $parentNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $parentNode = $this->em->getRepository(Node::class)->find($id);
 
         // Check with Acl
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $parentNode);
@@ -638,13 +639,13 @@ class NodeAdminController extends Controller
         $newPage->setParent($parentPage);
 
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')
+        $nodeNewPage = $this->em->getRepository(Node::class)
             ->createNodeFor($newPage, $this->locale, $this->user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation(
             $this->locale,
             true
         );
-        $weight = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+        $weight = $this->em->getRepository(NodeTranslation::class)
                 ->getMaxChildrenWeight($parentNode, $this->locale) + 1;
         $nodeTranslation->setWeight($weight);
 
@@ -694,7 +695,7 @@ class NodeAdminController extends Controller
         $newPage = $this->createNewPage($request, $type);
 
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')
+        $nodeNewPage = $this->em->getRepository(Node::class)
             ->createNodeFor($newPage, $this->locale, $this->user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation(
             $this->locale,
@@ -741,7 +742,7 @@ class NodeAdminController extends Controller
 
         foreach ($nodeIds as $id) {
             /* @var Node $node */
-            $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+            $node = $this->em->getRepository(Node::class)->find($id);
             $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
             $nodes[] = $node;
         }
@@ -750,7 +751,7 @@ class NodeAdminController extends Controller
         foreach ($nodes as $node) {
             $newParentId = isset($changeParents[$node->getId()]) ? $changeParents[$node->getId()] : null;
             if ($newParentId) {
-                $parent = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($newParentId);
+                $parent = $this->em->getRepository(Node::class)->find($newParentId);
                 $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $parent);
                 $node->setParent($parent);
                 $this->em->persist($node);
@@ -811,7 +812,7 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
@@ -988,15 +989,11 @@ class NodeAdminController extends Controller
             }
         }
 
-        $nodeVersions = $this->em->getRepository(
-            'KunstmaanNodeBundle:NodeVersion'
-        )->findBy(
+        $nodeVersions = $this->em->getRepository(NodeVersion::class)->findBy(
             ['nodeTranslation' => $nodeTranslation],
             ['updated' => 'ASC']
         );
-        $queuedNodeTranslationAction = $this->em->getRepository(
-            'KunstmaanNodeBundle:QueuedNodeTranslationAction'
-        )->findOneBy(['nodeTranslation' => $nodeTranslation]);
+        $queuedNodeTranslationAction = $this->em->getRepository(QueuedNodeTranslationAction::class)->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
         return [
             'page' => $page,
@@ -1035,7 +1032,7 @@ class NodeAdminController extends Controller
         $this->init($request);
 
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         try {
             $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
@@ -1094,7 +1091,7 @@ class NodeAdminController extends Controller
         /* @var NodeVersion $publicNodeVersion */
 
         $publicNodeVersion = $this->em->getRepository(
-            'KunstmaanNodeBundle:NodeVersion'
+            NodeVersion::class
         )->createNodeVersionFor(
             $publicPage,
             $nodeTranslation,
@@ -1248,7 +1245,7 @@ class NodeAdminController extends Controller
 
             if ($parentNodeTranslation) {
                 $parentsAreOk = $this->em->getRepository(
-                    'KunstmaanNodeBundle:NodeTranslation'
+                    NodeTranslation::class
                 )->hasParentNodeTranslationsForLanguage(
                     $node->getParent()->getNodeTranslation(
                         $this->locale,

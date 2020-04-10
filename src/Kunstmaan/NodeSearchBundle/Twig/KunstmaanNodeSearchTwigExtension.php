@@ -58,7 +58,7 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
     public function getParentPage(HasNodeInterface $page, $locale)
     {
         /** @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
+        $node = $this->em->getRepository(Node::class)->getNodeFor($page);
         $parentNode = $node->getParent();
         $nodeTranslation = $parentNode->getNodeTranslation($locale);
 

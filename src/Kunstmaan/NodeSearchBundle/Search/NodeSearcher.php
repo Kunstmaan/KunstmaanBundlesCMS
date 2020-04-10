@@ -11,6 +11,8 @@ use Elastica\Query\Term;
 use Elastica\Util;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -186,7 +188,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         $rescoreQueryBool = new BoolQuery();
 
         //Apply page type boosts
-        $pageClasses = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAllDistinctPageClasses();
+        $pageClasses = $this->em->getRepository(Node::class)->findAllDistinctPageClasses();
         foreach ($pageClasses as $pageClass) {
             $page = new $pageClass['refEntityName']();
 
@@ -202,7 +204,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         //Apply page specific boosts
-        $nodeSearches = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findAll();
+        $nodeSearches = $this->em->getRepository(NodeSearch::class)->findAll();
         foreach ($nodeSearches as $nodeSearch) {
             $elasticaQueryNodeId = new QueryString();
             $elasticaQueryNodeId

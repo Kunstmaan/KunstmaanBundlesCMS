@@ -42,7 +42,7 @@ class CloneListener
 
         if ($originalEntity instanceof AbstractEntity) {
             /* @var Seo $seo */
-            $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findFor($originalEntity);
+            $seo = $this->em->getRepository(Seo::class)->findFor($originalEntity);
 
             if (!\is_null($seo)) {
                 /* @var Seo $clonedSeo */

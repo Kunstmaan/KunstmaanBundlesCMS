@@ -123,7 +123,7 @@ class NodeTwigExtension extends AbstractExtension
      */
     public function getNodeTranslationByNodeId($nodeId, $lang)
     {
-        $repo = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+        $repo = $this->em->getRepository(NodeTranslation::class);
 
         return $repo->getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang);
     }
@@ -145,7 +145,7 @@ class NodeTwigExtension extends AbstractExtension
      */
     public function getNodeFor(PageInterface $page)
     {
-        return $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
+        return $this->em->getRepository(Node::class)->getNodeFor($page);
     }
 
     /**
@@ -155,7 +155,7 @@ class NodeTwigExtension extends AbstractExtension
      */
     public function getNodeTranslationFor(PageInterface $page)
     {
-        return $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationFor($page);
+        return $this->em->getRepository(NodeTranslation::class)->getNodeTranslationFor($page);
     }
 
     /**
@@ -166,7 +166,7 @@ class NodeTwigExtension extends AbstractExtension
      */
     public function getNodeByInternalName($internalName, $locale)
     {
-        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')
+        $nodes = $this->em->getRepository(Node::class)
             ->getNodesByInternalName($internalName, $locale);
         if (!empty($nodes)) {
             return $nodes[0];
@@ -252,7 +252,7 @@ class NodeTwigExtension extends AbstractExtension
     private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
     {
         $url = '';
-        $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+        $translation = $this->em->getRepository(NodeTranslation::class)
             ->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
 
         if (!\is_null($translation)) {

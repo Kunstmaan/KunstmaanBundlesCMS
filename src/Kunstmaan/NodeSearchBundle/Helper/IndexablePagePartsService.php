@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeSearchBundle\Helper;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 
@@ -47,7 +48,7 @@ class IndexablePagePartsService
         $indexablePageParts = [];
         foreach ($contexts as $context) {
             $pageParts = $this->em
-                ->getRepository('KunstmaanPagePartBundle:PagePartRef')
+                ->getRepository(PagePartRef::class)
                 ->getPageParts($page, $context);
 
             foreach ($pageParts as $pagePart) {

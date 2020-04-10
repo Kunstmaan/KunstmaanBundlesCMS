@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -103,7 +105,7 @@ class GoogleAnalyticsSegmentsListCommand extends ContainerAwareCommand
     private function getSegmentsOfConfig($configId)
     {
         // get specified config
-        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $configRepository = $this->em->getRepository(AnalyticsConfig::class);
         $config = $configRepository->find($configId);
 
         if (!$config) {
@@ -122,7 +124,7 @@ class GoogleAnalyticsSegmentsListCommand extends ContainerAwareCommand
     private function getAllSegments()
     {
         // get all segments
-        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
 
         return $segmentRepository->findAll();
     }

@@ -177,7 +177,7 @@ class DomainConfiguration extends BaseDomainConfiguration
             $host = $this->getRealHost($host);
 
             $internalName = $this->hosts[$host]['root'];
-            $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+            $nodeRepo = $this->em->getRepository(Node::class);
             $this->rootNode = $nodeRepo->getNodeByInternalName($internalName);
         }
 

@@ -175,7 +175,7 @@ class PermissionAdmin
      */
     public function getAllRoles()
     {
-        return $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+        return $this->em->getRepository(Role::class)->findAll();
     }
 
     /**
@@ -185,7 +185,7 @@ class PermissionAdmin
      */
     public function getManageableRolesForPages()
     {
-        $roles = $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+        $roles = $this->em->getRepository(Role::class)->findAll();
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
             if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN'))) {

@@ -8,6 +8,7 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
@@ -164,9 +165,7 @@ class ActionsMenuBuilder
 
         $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
         $node = $activeNodeTranslation->getNode();
-        $queuedNodeTranslationAction = $this->em->getRepository(
-            'KunstmaanNodeBundle:QueuedNodeTranslationAction'
-        )->findOneBy(['nodeTranslation' => $activeNodeTranslation]);
+        $queuedNodeTranslationAction = $this->em->getRepository(QueuedNodeTranslationAction::class)->findOneBy(['nodeTranslation' => $activeNodeTranslation]);
 
         $isFirst = true;
         $canEdit = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $node);

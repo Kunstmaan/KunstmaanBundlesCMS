@@ -119,7 +119,7 @@ class NodeRepository extends NestedTreeRepository
     {
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()->getRepository(
-            'KunstmaanNodeBundle:NodeVersion'
+            NodeVersion::class
         )->getNodeVersionFor(
             $hasNode
         );
@@ -144,7 +144,7 @@ class NodeRepository extends NestedTreeRepository
     {
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()->getRepository(
-            'KunstmaanNodeBundle:NodeVersion'
+            NodeVersion::class
         )->findOneBy(
             array('refId' => $id, 'refEntityName' => $entityName)
         );
@@ -212,7 +212,7 @@ class NodeRepository extends NestedTreeRepository
         if ($parent) {
             /* @var NodeVersion $parentNodeVersion */
             $parentNodeVersion = $em->getRepository(
-                'KunstmaanNodeBundle:NodeVersion'
+                NodeVersion::class
             )->findOneBy(
                 array(
                     'refId' => $parent->getId(),
@@ -231,7 +231,7 @@ class NodeRepository extends NestedTreeRepository
         $em->persist($node);
         $em->flush();
         $em->refresh($node);
-        $em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+        $em->getRepository(NodeTranslation::class)
             ->createNodeTranslationFor(
                 $hasNode,
                 $lang,

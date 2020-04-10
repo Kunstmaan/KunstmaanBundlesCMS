@@ -348,7 +348,7 @@ class SlugRouter implements RouterInterface
     /**
      * @param array $matchResult
      *
-     * @return \Kunstmaan\NodeBundle\Entity\NodeTranslation
+     * @return NodeTranslation
      */
     protected function getNodeTranslation($matchResult)
     {
@@ -371,7 +371,7 @@ class SlugRouter implements RouterInterface
     {
         /* @var NodeTranslationRepository $nodeTranslationRepo */
         $nodeTranslationRepo = $this->em->getRepository(
-            'KunstmaanNodeBundle:NodeTranslation'
+            NodeTranslation::class
         );
 
         return $nodeTranslationRepo;

@@ -60,7 +60,7 @@ class MediaRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($pictureId);
+        $picture = $em->getRepository(\Kunstmaan\MediaBundle\Entity\Image::class)->find($pictureId);
         if (!$picture) {
             throw new EntityNotFoundException();
         }

@@ -5,6 +5,7 @@ namespace Kunstmaan\TaggingBundle\Controller;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
+use Kunstmaan\TaggingBundle\Entity\Tag;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +79,7 @@ class TagAdminListController extends AdminListController
     {
         $search = $request->get('term');
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('KunstmaanTaggingBundle:Tag')->createQueryBuilder('n')
+        $qb = $em->getRepository(Tag::class)->createQueryBuilder('n')
             ->where('n.name LIKE :search')
             ->orderBy('n.name', 'ASC')
             ->setParameter('search', '%' . $search . '%');

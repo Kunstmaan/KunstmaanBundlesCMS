@@ -34,7 +34,7 @@ class DefaultController extends Controller
         /* @var DashboardConfiguration $dashboardConfiguration */
         $dashboardConfiguration = $this->getDoctrine()
             ->getManager()
-            ->getRepository('KunstmaanAdminBundle:DashboardConfiguration')
+            ->getRepository(DashboardConfiguration::class)
             ->findOneBy(array());
 
         return array('dashboardConfiguration' => $dashboardConfiguration);
@@ -57,7 +57,7 @@ class DefaultController extends Controller
 
         /* @var DashboardConfiguration $dashboardConfiguration */
         $dashboardConfiguration = $em
-            ->getRepository('KunstmaanAdminBundle:DashboardConfiguration')
+            ->getRepository(DashboardConfiguration::class)
             ->findOneBy(array());
 
         if (\is_null($dashboardConfiguration)) {

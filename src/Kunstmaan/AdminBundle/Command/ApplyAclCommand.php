@@ -97,7 +97,7 @@ class ApplyAclCommand extends ContainerAwareCommand
     {
         // Check if we have records in running state, if so read PID & check if process is active
         /* @var AclChangeset $runningAclChangeset */
-        $runningAclChangeset = $this->em->getRepository('KunstmaanAdminBundle:AclChangeset')->findRunningChangeset();
+        $runningAclChangeset = $this->em->getRepository(AclChangeset::class)->findRunningChangeset();
         // Found running process, check if PID is still running
         if (!\is_null($runningAclChangeset) && !$this->shellHelper->isRunning($runningAclChangeset->getPid())) {
             // PID not running, process probably failed...
