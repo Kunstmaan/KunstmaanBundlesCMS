@@ -296,10 +296,12 @@ kunstmaanbundles.richEditor = (function (window, undefined) {
 
     // Destroy Specific
     destroySpecificRichEditor = function ($el) {
+        debugger;
         var elementId = $el.attr('id'),
             editor = CKEDITOR.instances[elementId];
 
         if (editor) {
+            editor.updateElement();
             editor.destroy(true);
         }
     };
