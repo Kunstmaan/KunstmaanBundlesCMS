@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\AdminList;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -45,6 +47,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      * @var AuthorizationCheckerInterface
      */
     protected $authorizationChecker;
+
+    /**
+     * @var bool
+     */
+    private $deletedPagesOnly;
 
     /**
      * @param EntityManager $em         The entity
@@ -164,6 +171,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 
     public function canEdit($item)
     {
+        if ($this->deletedPagesOnly) {
+            return false;
+        }
+
         return $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $item->getNode());
     }
 
@@ -241,10 +252,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 
         $queryBuilder
             ->select('b,n')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->innerJoin('b.node', 'n', Join::WITH, 'b.node = n.id')
             ->andWhere('b.lang = :lang')
-            ->andWhere('n.deleted = 0')
-            ->addOrderBy('b.updated', 'DESC')
+            ->andWhere('n.deleted = :deletedPagesOnly')
+            ->setParameter('deletedPagesOnly', $this->deletedPagesOnly)
+            ->addOrderBy('b.updated', Criteria::DESC)
             ->setParameter('lang', $this->locale);
 
         if (!$this->domainConfiguration) {
@@ -258,5 +270,17 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
                 ->setParameter('left', $rootNode->getLeft())
                 ->setParameter('right', $rootNode->getRight());
         }
+    }
+
+    /**
+     * @var bool $deletedPagesOnly
+     *
+     * @return NodeAdminListConfigurator
+     */
+    public function setDeletedPagesOnly($deletedPagesOnly): NodeAdminListConfigurator
+    {
+        $this->deletedPagesOnly = $deletedPagesOnly;
+
+        return $this;
     }
 }
