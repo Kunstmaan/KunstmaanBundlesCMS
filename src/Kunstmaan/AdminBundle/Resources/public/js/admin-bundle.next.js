@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -109,11 +109,19 @@ const SELECTORS = {
     META_CONTAINER: '.js-media-cropper-meta',
     META_ITEM: '.js-media-cropper-meta-value',
     VIEW_SELECT: '.js-media-cropper-view-select',
-    SAVE: '.js-media-cropper-save'
+    SAVE: '.js-media-cropper-save',
+    SELECT_FOCUS_POINT: '.js-media-cropper-choose-focus-point',
+    CROPPER_PREVIEW: '.js-media-cropper-preview',
+    FOCUS_POINT_WRAPPER: '.js-media-cropper-focus-wrapper',
+    FOCUS_POINT_IMG: '.js-media-cropper-focus-media',
+    META_FOCUS_VALUE: '.js-media-cropper-meta-value-focus',
+    FOCUS_POINT_CHOICE: '.js-media-cropper-focus-choice'
 };
 
 const MODIFIERS = {
-    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded'
+    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded',
+    FOCUS_POINT_WRAPPER_VISIBLE: 'media-cropper__focus-wrapper--visible',
+    PREVIEW_HIDDEN: 'media-cropper__preview--hidden'
 };
 
 const CROP_BOX_THRESHOLD = 250;
@@ -150,7 +158,7 @@ exports.initMediaCroppers = undefined;
 
 var _config = __webpack_require__(1);
 
-var _MediaCropper = __webpack_require__(4);
+var _MediaCropper = __webpack_require__(6);
 
 function initMediaCroppers(container = window.document) {
     const PREVIEW_BTNS = [...container.querySelectorAll(_config.SELECTORS.HOOK)];
@@ -180,7 +188,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _config = __webpack_require__(0);
 
-var _initSearch = __webpack_require__(6);
+var _initSearch = __webpack_require__(8);
 
 class PagePartChooser {
     static init(container = window.document) {
@@ -200,18 +208,166 @@ exports.default = PagePartChooser;
 "use strict";
 
 
+// This can be used to import extra polyfills that aren't in babel-polyfill already.
+
+(function () {
+    if (!Object.entries) {
+
+        Object.entries = function (obj) {
+            var ownProps = Object.keys(obj),
+                i = ownProps.length,
+                resArray = new Array(i); // preallocate the Array
+            while (i--) resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+            return resArray;
+        };
+    }
+})();
+
+(function () {
+
+    if (typeof window.CustomEvent === "function") return false;
+
+    function CustomEvent(event, params) {
+        params = params || { bubbles: false, cancelable: false, detail: undefined };
+        var evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        return evt;
+    }
+
+    CustomEvent.prototype = window.Event.prototype;
+
+    window.CustomEvent = CustomEvent;
+})();
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Focuspoint = undefined;
+
+var _config = __webpack_require__(1);
+
+class Focuspoint {
+    constructor(cropper) {
+        this.cropper = cropper;
+        this.toggle = cropper.node.querySelector(_config.SELECTORS.SELECT_FOCUS_POINT);
+        this.cropperPreview = cropper.node.querySelector(_config.SELECTORS.CROPPER_PREVIEW);
+        this.focusPointWrapper = cropper.node.querySelector(_config.SELECTORS.FOCUS_POINT_WRAPPER);
+        this.img = cropper.node.querySelector(_config.SELECTORS.FOCUS_POINT_IMG);
+        this.choices = [...cropper.node.querySelectorAll(_config.SELECTORS.FOCUS_POINT_CHOICE)];
+        this.metaValueHolder = cropper.node.querySelector(_config.SELECTORS.META_FOCUS_VALUE);
+
+        this.isVisible = false;
+        this.selectedFocus = null;
+
+        this.addEventListeners = this.addEventListeners.bind(this);
+        this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.setSelectedFocus = this.setSelectedFocus.bind(this);
+        this.setImage = this.setImage.bind(this);
+        this.setCropperData = this.setCropperData.bind(this);
+    }
+
+    toggleVisibility(e) {
+        if (e) {
+            e.preventDefault();
+        }
+
+        const currentTextContent = this.toggle.textContent;
+        const nextTextContent = this.toggle.dataset.booleanText;
+
+        if (!this.isVisible) {
+            this.cropperPreview.classList.add(_config.MODIFIERS.PREVIEW_HIDDEN);
+            this.focusPointWrapper.classList.add(_config.MODIFIERS.FOCUS_POINT_WRAPPER_VISIBLE);
+            this.setImage();
+        } else {
+            this.cropperPreview.classList.remove(_config.MODIFIERS.PREVIEW_HIDDEN);
+            this.focusPointWrapper.classList.remove(_config.MODIFIERS.FOCUS_POINT_WRAPPER_VISIBLE);
+        }
+
+        this.isVisible = !this.isVisible;
+        this.toggle.textContent = nextTextContent;
+        this.toggle.dataset.booleanText = currentTextContent;
+    }
+
+    setSelectedFocus(value) {
+        this.selectedFocus = value;
+        this.metaValueHolder.textContent = value;
+    }
+
+    setChoice(value) {
+        this.choices.forEach(choice => {
+            choice.checked = choice.value === value;
+        });
+    }
+
+    setCropperData() {
+        if (this.selectedFocus !== null) {
+            this.cropper.cropData[this.cropper.currentView].class = this.selectedFocus;
+        }
+    }
+
+    reset() {
+        this.selectedFocus = null;
+        this.metaValueHolder.textContent = '';
+
+        this.choices.forEach(choice => {
+            choice.checked = false;
+        });
+    }
+
+    getSelectedFocus() {
+        return this.selectedFocus;
+    }
+
+    setImage() {
+        this.img.src = this.cropper.croppedImageUrl;
+    }
+
+    addEventListeners() {
+        this.toggle.addEventListener('click', this.toggleVisibility);
+        this.choices.forEach(choice => {
+            choice.addEventListener('click', e => {
+                this.setSelectedFocus(choice.value);
+                this.setCropperData();
+            });
+        });
+    }
+
+    init() {
+        this.addEventListeners();
+    }
+}
+
+exports.Focuspoint = Focuspoint;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.MediaCropper = undefined;
 
-var _cropperjs = __webpack_require__(10);
+var _cropperjs = __webpack_require__(12);
 
 var _cropperjs2 = _interopRequireDefault(_cropperjs);
 
 var _config = __webpack_require__(1);
 
-var _renderViewSelectOptions = __webpack_require__(5);
+var _renderViewSelectOptions = __webpack_require__(7);
+
+var _Focuspoint = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -230,6 +386,7 @@ class MediaCropper {
         this.cropData = {};
         this.savedCropData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
         this.initialized = false;
+        this.selectableFocusPoint = this.node.dataset.useFocusPoint === 'true';
 
         this.init();
     }
@@ -261,6 +418,9 @@ class MediaCropper {
             this.cropData[this.currentView].start = [x, y];
             this.cropData[this.currentView].size = [width, height];
         }
+
+        this.croppedImageUrl = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
+        console.log(this.cropData);
     }
 
     addEventListeners() {
@@ -272,6 +432,10 @@ class MediaCropper {
         this.viewSelect.addEventListener('change', () => {
             this.currentView = this.viewSelect.value;
             this.cropper.destroy();
+            if (this.selectableFocusPoint) {
+                this.focusPointComponent.reset();
+                this.focusPointComponent.toggleVisibility();
+            }
             this.initCropper();
         });
 
@@ -290,7 +454,7 @@ class MediaCropper {
         }
 
         if (this.cropData.hasOwnProperty(this.currentView)) {
-            const savedValues = this.savedCropData[this.currentView];
+            const savedValues = this.cropData[this.currentView];
 
             config.data = {
                 x: savedValues.start[0],
@@ -298,6 +462,11 @@ class MediaCropper {
                 width: savedValues.size[0],
                 height: savedValues.size[1]
             };
+
+            if (savedValues.hasOwnProperty('class')) {
+                this.focusPointComponent.setSelectedFocus(savedValues.class);
+                this.focusPointComponent.setChoice(savedValues.class);
+            }
         } else {
             config.data = null;
         }
@@ -329,6 +498,11 @@ class MediaCropper {
             this.cropData = this.savedCropData;
         }
 
+        if (this.selectableFocusPoint) {
+            this.focusPointComponent = new _Focuspoint.Focuspoint(this);
+            this.focusPointComponent.init();
+        }
+
         this.initCropper();
         this.addEventListeners();
 
@@ -340,7 +514,7 @@ class MediaCropper {
 exports.MediaCropper = MediaCropper;
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +545,7 @@ function renderViewSelectOptions(select, data) {
 exports.renderViewSelectOptions = renderViewSelectOptions;
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -382,15 +556,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initSearch = initSearch;
 
-var _fuse = __webpack_require__(11);
+var _fuse = __webpack_require__(13);
 
 var _fuse2 = _interopRequireDefault(_fuse);
 
 var _config = __webpack_require__(0);
 
-var _resetSearch = __webpack_require__(7);
+var _resetSearch = __webpack_require__(9);
 
-var _updateSearch = __webpack_require__(8);
+var _updateSearch = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -457,7 +631,7 @@ function initFuse(ppSearchData) {
 }
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -477,7 +651,7 @@ function resetSearch(searchItems) {
 }
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -503,11 +677,13 @@ function updateSearch(searchItems, searchResults) {
 }
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+__webpack_require__(4);
 
 var _PagePartChooser = __webpack_require__(3);
 
@@ -532,7 +708,7 @@ if (document.readyState !== 'loading') {
 }
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -4154,23 +4330,1032 @@ if (document.readyState !== 'loading') {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
- * Fuse.js v3.6.1 - Lightweight fuzzy-search (http://fusejs.io)
- *
+ * Fuse.js v3.3.1 - Lightweight fuzzy-search (http://fusejs.io)
+ * 
  * Copyright (c) 2012-2017 Kirollos Risk (http://kiro.me)
  * All Rights Reserved. Apache Software License 2.0
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
  */
-t.exports=function(t){var e={};function r(n){if(e[n])return e[n].exports;var o=e[n]={i:n,l:!1,exports:{}};return t[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=t,r.c=e,r.d=function(t,e,n){r.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(t,e){if(1&e&&(t=r(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)r.d(n,o,function(e){return t[e]}.bind(null,o));return n},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=0)}([function(t,e,r){function n(t){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var r=0;r<e.length;r++){var n=e[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}var i=r(1),a=r(7),c=a.get,u=(a.deepValue,a.isArray),s=function(){function t(e,r){var n=r.location,o=void 0===n?0:n,i=r.distance,a=void 0===i?100:i,u=r.threshold,s=void 0===u?.6:u,l=r.maxPatternLength,f=void 0===l?32:l,h=r.caseSensitive,p=void 0!==h&&h,v=r.tokenSeparator,d=void 0===v?/ +/g:v,g=r.findAllMatches,y=void 0!==g&&g,m=r.minMatchCharLength,x=void 0===m?1:m,b=r.id,S=void 0===b?null:b,w=r.keys,E=void 0===w?[]:w,O=r.shouldSort,A=void 0===O||O,k=r.getFn,L=void 0===k?c:k,M=r.sortFn,_=void 0===M?function(t,e){return t.score-e.score}:M,T=r.tokenize,j=void 0!==T&&T,I=r.matchAllTokens,P=void 0!==I&&I,C=r.includeMatches,R=void 0!==C&&C,N=r.includeScore,F=void 0!==N&&N,$=r.verbose,D=void 0!==$&&$;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.options={location:o,distance:a,threshold:s,maxPatternLength:f,isCaseSensitive:p,tokenSeparator:d,findAllMatches:y,minMatchCharLength:x,id:S,keys:E,includeMatches:R,includeScore:F,shouldSort:A,getFn:L,sortFn:_,verbose:D,tokenize:j,matchAllTokens:P},this.setCollection(e),this._processKeys(E)}var e,r,a;return e=t,(r=[{key:"setCollection",value:function(t){return this.list=t,t}},{key:"_processKeys",value:function(t){if(this._keyWeights={},this._keyNames=[],t.length&&"string"==typeof t[0])for(var e=0,r=t.length;e<r;e+=1){var n=t[e];this._keyWeights[n]=1,this._keyNames.push(n)}else{for(var o=null,i=null,a=0,c=0,u=t.length;c<u;c+=1){var s=t[c];if(!s.hasOwnProperty("name"))throw new Error('Missing "name" property in key object');var l=s.name;if(this._keyNames.push(l),!s.hasOwnProperty("weight"))throw new Error('Missing "weight" property in key object');var f=s.weight;if(f<0||f>1)throw new Error('"weight" property in key must bein the range of [0, 1)');i=null==i?f:Math.max(i,f),o=null==o?f:Math.min(o,f),this._keyWeights[l]=f,a+=f}if(a>1)throw new Error("Total of weights cannot exceed 1")}}},{key:"search",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{limit:!1};this._log('---------\nSearch pattern: "'.concat(t,'"'));var r=this._prepareSearchers(t),n=r.tokenSearchers,o=r.fullSearcher,i=this._search(n,o);return this._computeScore(i),this.options.shouldSort&&this._sort(i),e.limit&&"number"==typeof e.limit&&(i=i.slice(0,e.limit)),this._format(i)}},{key:"_prepareSearchers",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",e=[];if(this.options.tokenize)for(var r=t.split(this.options.tokenSeparator),n=0,o=r.length;n<o;n+=1)e.push(new i(r[n],this.options));return{tokenSearchers:e,fullSearcher:new i(t,this.options)}}},{key:"_search",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=arguments.length>1?arguments[1]:void 0,r=this.list,n={},o=[];if("string"==typeof r[0]){for(var i=0,a=r.length;i<a;i+=1)this._analyze({key:"",value:r[i],record:i,index:i},{resultMap:n,results:o,tokenSearchers:t,fullSearcher:e});return o}for(var c=0,u=r.length;c<u;c+=1)for(var s=r[c],l=0,f=this._keyNames.length;l<f;l+=1){var h=this._keyNames[l];this._analyze({key:h,value:this.options.getFn(s,h),record:s,index:c},{resultMap:n,results:o,tokenSearchers:t,fullSearcher:e})}return o}},{key:"_analyze",value:function(t,e){var r=this,n=t.key,o=t.arrayIndex,i=void 0===o?-1:o,a=t.value,c=t.record,s=t.index,l=e.tokenSearchers,f=void 0===l?[]:l,h=e.fullSearcher,p=e.resultMap,v=void 0===p?{}:p,d=e.results,g=void 0===d?[]:d;!function t(e,o,i,a){if(null!=o)if("string"==typeof o){var c=!1,s=-1,l=0;r._log("\nKey: ".concat(""===n?"--":n));var p=h.search(o);if(r._log('Full text: "'.concat(o,'", score: ').concat(p.score)),r.options.tokenize){for(var d=o.split(r.options.tokenSeparator),y=d.length,m=[],x=0,b=f.length;x<b;x+=1){var S=f[x];r._log('\nPattern: "'.concat(S.pattern,'"'));for(var w=!1,E=0;E<y;E+=1){var O=d[E],A=S.search(O),k={};A.isMatch?(k[O]=A.score,c=!0,w=!0,m.push(A.score)):(k[O]=1,r.options.matchAllTokens||m.push(1)),r._log('Token: "'.concat(O,'", score: ').concat(k[O]))}w&&(l+=1)}s=m[0];for(var L=m.length,M=1;M<L;M+=1)s+=m[M];s/=L,r._log("Token score average:",s)}var _=p.score;s>-1&&(_=(_+s)/2),r._log("Score average:",_);var T=!r.options.tokenize||!r.options.matchAllTokens||l>=f.length;if(r._log("\nCheck Matches: ".concat(T)),(c||p.isMatch)&&T){var j={key:n,arrayIndex:e,value:o,score:_};r.options.includeMatches&&(j.matchedIndices=p.matchedIndices);var I=v[a];I?I.output.push(j):(v[a]={item:i,output:[j]},g.push(v[a]))}}else if(u(o))for(var P=0,C=o.length;P<C;P+=1)t(P,o[P],i,a)}(i,a,c,s)}},{key:"_computeScore",value:function(t){this._log("\n\nComputing score:\n");for(var e=this._keyWeights,r=!!Object.keys(e).length,n=0,o=t.length;n<o;n+=1){for(var i=t[n],a=i.output,c=a.length,u=1,s=0;s<c;s+=1){var l=a[s],f=l.key,h=r?e[f]:1,p=0===l.score&&e&&e[f]>0?Number.EPSILON:l.score;u*=Math.pow(p,h)}i.score=u,this._log(i)}}},{key:"_sort",value:function(t){this._log("\n\nSorting...."),t.sort(this.options.sortFn)}},{key:"_format",value:function(t){var e=[];if(this.options.verbose){var r=[];this._log("\n\nOutput:\n\n",JSON.stringify(t,(function(t,e){if("object"===n(e)&&null!==e){if(-1!==r.indexOf(e))return;r.push(e)}return e}),2)),r=null}var o=[];this.options.includeMatches&&o.push((function(t,e){var r=t.output;e.matches=[];for(var n=0,o=r.length;n<o;n+=1){var i=r[n];if(0!==i.matchedIndices.length){var a={indices:i.matchedIndices,value:i.value};i.key&&(a.key=i.key),i.hasOwnProperty("arrayIndex")&&i.arrayIndex>-1&&(a.arrayIndex=i.arrayIndex),e.matches.push(a)}}})),this.options.includeScore&&o.push((function(t,e){e.score=t.score}));for(var i=0,a=t.length;i<a;i+=1){var c=t[i];if(this.options.id&&(c.item=this.options.getFn(c.item,this.options.id)[0]),o.length){for(var u={item:c.item},s=0,l=o.length;s<l;s+=1)o[s](c,u);e.push(u)}else e.push(c.item)}return e}},{key:"_log",value:function(){var t;this.options.verbose&&(t=console).log.apply(t,arguments)}}])&&o(e.prototype,r),a&&o(e,a),t}();t.exports=s},function(t,e,r){function n(t,e){for(var r=0;r<e.length;r++){var n=e[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}var o=r(2),i=r(3),a=r(6),c=function(){function t(e,r){var n=r.location,o=void 0===n?0:n,i=r.distance,c=void 0===i?100:i,u=r.threshold,s=void 0===u?.6:u,l=r.maxPatternLength,f=void 0===l?32:l,h=r.isCaseSensitive,p=void 0!==h&&h,v=r.tokenSeparator,d=void 0===v?/ +/g:v,g=r.findAllMatches,y=void 0!==g&&g,m=r.minMatchCharLength,x=void 0===m?1:m,b=r.includeMatches,S=void 0!==b&&b;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.options={location:o,distance:c,threshold:s,maxPatternLength:f,isCaseSensitive:p,tokenSeparator:d,findAllMatches:y,includeMatches:S,minMatchCharLength:x},this.pattern=p?e:e.toLowerCase(),this.pattern.length<=f&&(this.patternAlphabet=a(this.pattern))}var e,r,c;return e=t,(r=[{key:"search",value:function(t){var e=this.options,r=e.isCaseSensitive,n=e.includeMatches;if(r||(t=t.toLowerCase()),this.pattern===t){var a={isMatch:!0,score:0};return n&&(a.matchedIndices=[[0,t.length-1]]),a}var c=this.options,u=c.maxPatternLength,s=c.tokenSeparator;if(this.pattern.length>u)return o(t,this.pattern,s);var l=this.options,f=l.location,h=l.distance,p=l.threshold,v=l.findAllMatches,d=l.minMatchCharLength;return i(t,this.pattern,this.patternAlphabet,{location:f,distance:h,threshold:p,findAllMatches:v,minMatchCharLength:d,includeMatches:n})}}])&&n(e.prototype,r),c&&n(e,c),t}();t.exports=c},function(t,e){var r=/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;t.exports=function(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:/ +/g,o=new RegExp(e.replace(r,"\\$&").replace(n,"|")),i=t.match(o),a=!!i,c=[];if(a)for(var u=0,s=i.length;u<s;u+=1){var l=i[u];c.push([t.indexOf(l),l.length-1])}return{score:a?.5:1,isMatch:a,matchedIndices:c}}},function(t,e,r){var n=r(4),o=r(5);t.exports=function(t,e,r,i){for(var a=i.location,c=void 0===a?0:a,u=i.distance,s=void 0===u?100:u,l=i.threshold,f=void 0===l?.6:l,h=i.findAllMatches,p=void 0!==h&&h,v=i.minMatchCharLength,d=void 0===v?1:v,g=i.includeMatches,y=void 0!==g&&g,m=c,x=t.length,b=f,S=t.indexOf(e,m),w=e.length,E=[],O=0;O<x;O+=1)E[O]=0;if(-1!==S){var A=n(e,{errors:0,currentLocation:S,expectedLocation:m,distance:s});if(b=Math.min(A,b),-1!==(S=t.lastIndexOf(e,m+w))){var k=n(e,{errors:0,currentLocation:S,expectedLocation:m,distance:s});b=Math.min(k,b)}}S=-1;for(var L=[],M=1,_=w+x,T=1<<(w<=31?w-1:30),j=0;j<w;j+=1){for(var I=0,P=_;I<P;)n(e,{errors:j,currentLocation:m+P,expectedLocation:m,distance:s})<=b?I=P:_=P,P=Math.floor((_-I)/2+I);_=P;var C=Math.max(1,m-P+1),R=p?x:Math.min(m+P,x)+w,N=Array(R+2);N[R+1]=(1<<j)-1;for(var F=R;F>=C;F-=1){var $=F-1,D=r[t.charAt($)];if(D&&(E[$]=1),N[F]=(N[F+1]<<1|1)&D,0!==j&&(N[F]|=(L[F+1]|L[F])<<1|1|L[F+1]),N[F]&T&&(M=n(e,{errors:j,currentLocation:$,expectedLocation:m,distance:s}))<=b){if(b=M,(S=$)<=m)break;C=Math.max(1,2*m-S)}}if(n(e,{errors:j+1,currentLocation:m,expectedLocation:m,distance:s})>b)break;L=N}var z={isMatch:S>=0,score:0===M?.001:M};return y&&(z.matchedIndices=o(E,d)),z}},function(t,e){t.exports=function(t,e){var r=e.errors,n=void 0===r?0:r,o=e.currentLocation,i=void 0===o?0:o,a=e.expectedLocation,c=void 0===a?0:a,u=e.distance,s=void 0===u?100:u,l=n/t.length,f=Math.abs(c-i);return s?l+f/s:f?1:l}},function(t,e){t.exports=function(){for(var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1,r=[],n=-1,o=-1,i=0,a=t.length;i<a;i+=1){var c=t[i];c&&-1===n?n=i:c||-1===n||((o=i-1)-n+1>=e&&r.push([n,o]),n=-1)}return t[i-1]&&i-n>=e&&r.push([n,i-1]),r}},function(t,e){t.exports=function(t){for(var e={},r=t.length,n=0;n<r;n+=1)e[t.charAt(n)]=0;for(var o=0;o<r;o+=1)e[t.charAt(o)]|=1<<r-o-1;return e}},function(t,e){var r=function(t){return Array.isArray?Array.isArray(t):"[object Array]"===Object.prototype.toString.call(t)},n=function(t){return null==t?"":function(t){if("string"==typeof t)return t;var e=t+"";return"0"==e&&1/t==-1/0?"-0":e}(t)},o=function(t){return"string"==typeof t},i=function(t){return"number"==typeof t};t.exports={get:function(t,e){var a=[];return function t(e,c){if(c){var u=c.indexOf("."),s=c,l=null;-1!==u&&(s=c.slice(0,u),l=c.slice(u+1));var f=e[s];if(null!=f)if(l||!o(f)&&!i(f))if(r(f))for(var h=0,p=f.length;h<p;h+=1)t(f[h],l);else l&&t(f,l);else a.push(n(f))}else a.push(e)}(t,e),a},isArray:r,isString:o,isNum:i,toString:n}}])},1788:()=>{
-/*!
- * @copyright Copyright (c) 2017 IcoMoon.io
- * @license   Licensed under MIT license
- *            See https://github.com/Keyamoon/svgxuse
- * @version   1.2.6
- */
-!function(){"use strict";if("undefined"!=typeof window&&window.addEventListener){var t,e,r,n=Object.create(null),o=function(){clearTimeout(e),e=setTimeout(t,100)},i=function(){},a=function(t){function e(t){var e;return void 0!==t.protocol?e=t:(e=document.createElement("a")).href=t,e.protocol.replace(/:/g,"")+e.host}var r,n,o;return window.XMLHttpRequest&&(r=new XMLHttpRequest,n=e(location),o=e(t),r=void 0===r.withCredentials&&""!==o&&o!==n?XDomainRequest||void 0:XMLHttpRequest),r},c="http://www.w3.org/1999/xlink";t=function(){var t,e,r,u,s,l,f,h,p,v,d=0;function g(){var t;0===(d-=1)&&(i(),window.addEventListener("resize",o,!1),window.addEventListener("orientationchange",o,!1),window.MutationObserver?((t=new MutationObserver(o)).observe(document.documentElement,{childList:!0,subtree:!0,attributes:!0}),i=function(){try{t.disconnect(),window.removeEventListener("resize",o,!1),window.removeEventListener("orientationchange",o,!1)}catch(t){}}):(document.documentElement.addEventListener("DOMSubtreeModified",o,!1),i=function(){document.documentElement.removeEventListener("DOMSubtreeModified",o,!1),window.removeEventListener("resize",o,!1),window.removeEventListener("orientationchange",o,!1)}))}function y(t){return function(){!0!==n[t.base]&&(t.useEl.setAttributeNS(c,"xlink:href","#"+t.hash),t.useEl.hasAttribute("href")&&t.useEl.setAttribute("href","#"+t.hash))}}function m(t){return function(){var e,r=document.body,n=document.createElement("x");t.onload=null,n.innerHTML=t.responseText,(e=n.getElementsByTagName("svg")[0])&&(e.setAttribute("aria-hidden","true"),e.style.position="absolute",e.style.width=0,e.style.height=0,e.style.overflow="hidden",r.insertBefore(e,r.firstChild)),g()}}function x(t){return function(){t.onerror=null,t.ontimeout=null,g()}}for(i(),p=document.getElementsByTagName("use"),s=0;s<p.length;s+=1){try{e=p[s].getBoundingClientRect()}catch(t){e=!1}t=(h=(u=p[s].getAttribute("href")||p[s].getAttributeNS(c,"href")||p[s].getAttribute("xlink:href"))&&u.split?u.split("#"):["",""])[0],r=h[1],l=e&&0===e.left&&0===e.right&&0===e.top&&0===e.bottom,e&&0===e.width&&0===e.height&&!l?(p[s].hasAttribute("href")&&p[s].setAttributeNS(c,"xlink:href",u),t.length&&(!0!==(v=n[t])&&setTimeout(y({useEl:p[s],base:t,hash:r}),0),void 0===v&&void 0!==(f=a(t))&&(v=new f,n[t]=v,v.onload=m(v),v.onerror=x(v),v.ontimeout=x(v),v.open("GET",t),v.send(),d+=1))):l?t.length&&n[t]&&setTimeout(y({useEl:p[s],base:t,hash:r}),0):void 0===n[t]?n[t]=!0:n[t].onload&&(n[t].abort(),delete n[t].onload,n[t]=!0)}p="",d+=1,g()},r=function(){window.removeEventListener("load",r,!1),e=setTimeout(t,0)},"complete"!==document.readyState?window.addEventListener("load",r,!1):r()}}()}},e={};function r(n){if(e[n])return e[n].exports;var o=e[n]={exports:{}};return t[n].call(o.exports,o,o.exports,r),o.exports}r.n=t=>{var e=t&&t.__esModule?()=>t.default:()=>t;return r.d(e,{a:e}),e},r.d=(t,e)=>{for(var n in e)r.o(e,n)&&!r.o(t,n)&&Object.defineProperty(t,n,{enumerable:!0,get:e[n]})},r.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(t){if("object"==typeof window)return window}}(),r.o=(t,e)=>Object.prototype.hasOwnProperty.call(t,e),(()=>{"use strict";r(1788),r(9554),r(9070),r(4747);var t=".js-pp-chooser",e=".js-pp-search",n=".js-pp-search-item",o=".js-pp-search__reset",i="pp-search-item--hidden",a="data-pp-types",c="data-pp-name",u=(r(4986),r(1249),r(8309),r(4916),r(5306),r(4765),r(3210),r(4070)),s=r.n(u);function l(t){t.forEach((function(t){t.classList.remove(i)}))}r(6699),r(2023);function f(t){return function(t){if(Array.isArray(t))return h(t)}(t)||function(t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||function(t,e){if(!t)return;if("string"==typeof t)return h(t,e);var r=Object.prototype.toString.call(t).slice(8,-1);"Object"===r&&t.constructor&&(r=t.constructor.name);if("Map"===r||"Set"===r)return Array.from(t);if("Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r))return h(t,e)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function h(t,e){(null==e||e>t.length)&&(e=t.length);for(var r=0,n=new Array(e);r<e;r++)n[r]=t[r];return n}function p(t){var r,u=function(t){return t.map((function(t){return{name:t.name,className:v(t.class)}}))}(JSON.parse(t.getAttribute(a))),h=f(t.querySelectorAll(n)),p=(r=u,new(s())(r,{keys:[{name:"name",weight:.7},{name:"className",weight:.3}],id:"name",threshold:.4,shouldSort:!0})),d=t.querySelector(e);d.addEventListener("keyup",(function(){if(d.value.trim().length>0){var t=p.search(d.value);!function(t,e){t.forEach((function(t){var r=t.getAttribute(c);e.includes(r)?t.classList.remove(i):t.classList.add(i)}))}(h,t)}else l(h)})),t.querySelector(o).addEventListener("click",(function(){d.value="",l(h)})),$(t).on("shown.bs.modal",(function(){d.focus()}))}function v(t){var e=t,r=e.lastIndexOf("\\");return-1!==r&&(e=e.substring(r+1)),e.replace("PagePart","")}function d(t){return function(t){if(Array.isArray(t))return g(t)}(t)||function(t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t))return Array.from(t)}(t)||function(t,e){if(!t)return;if("string"==typeof t)return g(t,e);var r=Object.prototype.toString.call(t).slice(8,-1);"Object"===r&&t.constructor&&(r=t.constructor.name);if("Map"===r||"Set"===r)return Array.from(t);if("Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r))return g(t,e)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function g(t,e){(null==e||e>t.length)&&(e=t.length);for(var r=0,n=new Array(e);r<e;r++)n[r]=t[r];return n}function y(t,e){for(var r=0;r<e.length;r++){var n=e[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}var m=function(){function e(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e)}var r,n,o;return r=e,o=[{key:"init",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.document,r=d(e.querySelectorAll(t));r.forEach((function(t){p(t)}))}}],(n=null)&&y(r.prototype,n),o&&y(r,o),e}();function x(){m.init()}"loading"!==document.readyState?x():document.addEventListener("DOMContentLoaded",(function(){x()}))})()})();
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("Fuse", [], factory);
+	else if(typeof exports === 'object')
+		exports["Fuse"] = factory();
+	else
+		root["Fuse"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (obj) {
+  return !Array.isArray ? Object.prototype.toString.call(obj) === '[object Array]' : Array.isArray(obj);
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var bitapRegexSearch = __webpack_require__(5);
+var bitapSearch = __webpack_require__(7);
+var patternAlphabet = __webpack_require__(4);
+
+var Bitap = function () {
+  function Bitap(pattern, _ref) {
+    var _ref$location = _ref.location,
+        location = _ref$location === undefined ? 0 : _ref$location,
+        _ref$distance = _ref.distance,
+        distance = _ref$distance === undefined ? 100 : _ref$distance,
+        _ref$threshold = _ref.threshold,
+        threshold = _ref$threshold === undefined ? 0.6 : _ref$threshold,
+        _ref$maxPatternLength = _ref.maxPatternLength,
+        maxPatternLength = _ref$maxPatternLength === undefined ? 32 : _ref$maxPatternLength,
+        _ref$isCaseSensitive = _ref.isCaseSensitive,
+        isCaseSensitive = _ref$isCaseSensitive === undefined ? false : _ref$isCaseSensitive,
+        _ref$tokenSeparator = _ref.tokenSeparator,
+        tokenSeparator = _ref$tokenSeparator === undefined ? / +/g : _ref$tokenSeparator,
+        _ref$findAllMatches = _ref.findAllMatches,
+        findAllMatches = _ref$findAllMatches === undefined ? false : _ref$findAllMatches,
+        _ref$minMatchCharLeng = _ref.minMatchCharLength,
+        minMatchCharLength = _ref$minMatchCharLeng === undefined ? 1 : _ref$minMatchCharLeng;
+
+    _classCallCheck(this, Bitap);
+
+    this.options = {
+      location: location,
+      distance: distance,
+      threshold: threshold,
+      maxPatternLength: maxPatternLength,
+      isCaseSensitive: isCaseSensitive,
+      tokenSeparator: tokenSeparator,
+      findAllMatches: findAllMatches,
+      minMatchCharLength: minMatchCharLength
+    };
+
+    this.pattern = this.options.isCaseSensitive ? pattern : pattern.toLowerCase();
+
+    if (this.pattern.length <= maxPatternLength) {
+      this.patternAlphabet = patternAlphabet(this.pattern);
+    }
+  }
+
+  _createClass(Bitap, [{
+    key: 'search',
+    value: function search(text) {
+      if (!this.options.isCaseSensitive) {
+        text = text.toLowerCase();
+      }
+
+      // Exact match
+      if (this.pattern === text) {
+        return {
+          isMatch: true,
+          score: 0,
+          matchedIndices: [[0, text.length - 1]]
+        };
+      }
+
+      // When pattern length is greater than the machine word length, just do a a regex comparison
+      var _options = this.options,
+          maxPatternLength = _options.maxPatternLength,
+          tokenSeparator = _options.tokenSeparator;
+
+      if (this.pattern.length > maxPatternLength) {
+        return bitapRegexSearch(text, this.pattern, tokenSeparator);
+      }
+
+      // Otherwise, use Bitap algorithm
+      var _options2 = this.options,
+          location = _options2.location,
+          distance = _options2.distance,
+          threshold = _options2.threshold,
+          findAllMatches = _options2.findAllMatches,
+          minMatchCharLength = _options2.minMatchCharLength;
+
+      return bitapSearch(text, this.pattern, this.patternAlphabet, {
+        location: location,
+        distance: distance,
+        threshold: threshold,
+        findAllMatches: findAllMatches,
+        minMatchCharLength: minMatchCharLength
+      });
+    }
+  }]);
+
+  return Bitap;
+}();
+
+// let x = new Bitap("od mn war", {})
+// let result = x.search("Old Man's War")
+// console.log(result)
+
+module.exports = Bitap;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isArray = __webpack_require__(0);
+
+var deepValue = function deepValue(obj, path, list) {
+  if (!path) {
+    // If there's no path left, we've gotten to the object we care about.
+    list.push(obj);
+  } else {
+    var dotIndex = path.indexOf('.');
+    var firstSegment = path;
+    var remaining = null;
+
+    if (dotIndex !== -1) {
+      firstSegment = path.slice(0, dotIndex);
+      remaining = path.slice(dotIndex + 1);
+    }
+
+    var value = obj[firstSegment];
+
+    if (value !== null && value !== undefined) {
+      if (!remaining && (typeof value === 'string' || typeof value === 'number')) {
+        list.push(value.toString());
+      } else if (isArray(value)) {
+        // Search each item in the array.
+        for (var i = 0, len = value.length; i < len; i += 1) {
+          deepValue(value[i], remaining, list);
+        }
+      } else if (remaining) {
+        // An object. Recurse further.
+        deepValue(value, remaining, list);
+      }
+    }
+  }
+
+  return list;
+};
+
+module.exports = function (obj, path) {
+  return deepValue(obj, path, []);
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function () {
+  var matchmask = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var minMatchCharLength = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  var matchedIndices = [];
+  var start = -1;
+  var end = -1;
+  var i = 0;
+
+  for (var len = matchmask.length; i < len; i += 1) {
+    var match = matchmask[i];
+    if (match && start === -1) {
+      start = i;
+    } else if (!match && start !== -1) {
+      end = i - 1;
+      if (end - start + 1 >= minMatchCharLength) {
+        matchedIndices.push([start, end]);
+      }
+      start = -1;
+    }
+  }
+
+  // (i-1 - start) + 1 => i - start
+  if (matchmask[i - 1] && i - start >= minMatchCharLength) {
+    matchedIndices.push([start, i - 1]);
+  }
+
+  return matchedIndices;
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (pattern) {
+  var mask = {};
+  var len = pattern.length;
+
+  for (var i = 0; i < len; i += 1) {
+    mask[pattern.charAt(i)] = 0;
+  }
+
+  for (var _i = 0; _i < len; _i += 1) {
+    mask[pattern.charAt(_i)] |= 1 << len - _i - 1;
+  }
+
+  return mask;
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var SPECIAL_CHARS_REGEX = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;
+
+module.exports = function (text, pattern) {
+  var tokenSeparator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : / +/g;
+
+  var regex = new RegExp(pattern.replace(SPECIAL_CHARS_REGEX, '\\$&').replace(tokenSeparator, '|'));
+  var matches = text.match(regex);
+  var isMatch = !!matches;
+  var matchedIndices = [];
+
+  if (isMatch) {
+    for (var i = 0, matchesLen = matches.length; i < matchesLen; i += 1) {
+      var match = matches[i];
+      matchedIndices.push([text.indexOf(match), match.length - 1]);
+    }
+  }
+
+  return {
+    // TODO: revisit this score
+    score: isMatch ? 0.5 : 1,
+    isMatch: isMatch,
+    matchedIndices: matchedIndices
+  };
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (pattern, _ref) {
+  var _ref$errors = _ref.errors,
+      errors = _ref$errors === undefined ? 0 : _ref$errors,
+      _ref$currentLocation = _ref.currentLocation,
+      currentLocation = _ref$currentLocation === undefined ? 0 : _ref$currentLocation,
+      _ref$expectedLocation = _ref.expectedLocation,
+      expectedLocation = _ref$expectedLocation === undefined ? 0 : _ref$expectedLocation,
+      _ref$distance = _ref.distance,
+      distance = _ref$distance === undefined ? 100 : _ref$distance;
+
+  var accuracy = errors / pattern.length;
+  var proximity = Math.abs(expectedLocation - currentLocation);
+
+  if (!distance) {
+    // Dodge divide by zero error.
+    return proximity ? 1.0 : accuracy;
+  }
+
+  return accuracy + proximity / distance;
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bitapScore = __webpack_require__(6);
+var matchedIndices = __webpack_require__(3);
+
+module.exports = function (text, pattern, patternAlphabet, _ref) {
+  var _ref$location = _ref.location,
+      location = _ref$location === undefined ? 0 : _ref$location,
+      _ref$distance = _ref.distance,
+      distance = _ref$distance === undefined ? 100 : _ref$distance,
+      _ref$threshold = _ref.threshold,
+      threshold = _ref$threshold === undefined ? 0.6 : _ref$threshold,
+      _ref$findAllMatches = _ref.findAllMatches,
+      findAllMatches = _ref$findAllMatches === undefined ? false : _ref$findAllMatches,
+      _ref$minMatchCharLeng = _ref.minMatchCharLength,
+      minMatchCharLength = _ref$minMatchCharLeng === undefined ? 1 : _ref$minMatchCharLeng;
+
+  var expectedLocation = location;
+  // Set starting location at beginning text and initialize the alphabet.
+  var textLen = text.length;
+  // Highest score beyond which we give up.
+  var currentThreshold = threshold;
+  // Is there a nearby exact match? (speedup)
+  var bestLocation = text.indexOf(pattern, expectedLocation);
+
+  var patternLen = pattern.length;
+
+  // a mask of the matches
+  var matchMask = [];
+  for (var i = 0; i < textLen; i += 1) {
+    matchMask[i] = 0;
+  }
+
+  if (bestLocation !== -1) {
+    var score = bitapScore(pattern, {
+      errors: 0,
+      currentLocation: bestLocation,
+      expectedLocation: expectedLocation,
+      distance: distance
+    });
+    currentThreshold = Math.min(score, currentThreshold);
+
+    // What about in the other direction? (speed up)
+    bestLocation = text.lastIndexOf(pattern, expectedLocation + patternLen);
+
+    if (bestLocation !== -1) {
+      var _score = bitapScore(pattern, {
+        errors: 0,
+        currentLocation: bestLocation,
+        expectedLocation: expectedLocation,
+        distance: distance
+      });
+      currentThreshold = Math.min(_score, currentThreshold);
+    }
+  }
+
+  // Reset the best location
+  bestLocation = -1;
+
+  var lastBitArr = [];
+  var finalScore = 1;
+  var binMax = patternLen + textLen;
+
+  var mask = 1 << patternLen - 1;
+
+  for (var _i = 0; _i < patternLen; _i += 1) {
+    // Scan for the best match; each iteration allows for one more error.
+    // Run a binary search to determine how far from the match location we can stray
+    // at this error level.
+    var binMin = 0;
+    var binMid = binMax;
+
+    while (binMin < binMid) {
+      var _score3 = bitapScore(pattern, {
+        errors: _i,
+        currentLocation: expectedLocation + binMid,
+        expectedLocation: expectedLocation,
+        distance: distance
+      });
+
+      if (_score3 <= currentThreshold) {
+        binMin = binMid;
+      } else {
+        binMax = binMid;
+      }
+
+      binMid = Math.floor((binMax - binMin) / 2 + binMin);
+    }
+
+    // Use the result from this iteration as the maximum for the next.
+    binMax = binMid;
+
+    var start = Math.max(1, expectedLocation - binMid + 1);
+    var finish = findAllMatches ? textLen : Math.min(expectedLocation + binMid, textLen) + patternLen;
+
+    // Initialize the bit array
+    var bitArr = Array(finish + 2);
+
+    bitArr[finish + 1] = (1 << _i) - 1;
+
+    for (var j = finish; j >= start; j -= 1) {
+      var currentLocation = j - 1;
+      var charMatch = patternAlphabet[text.charAt(currentLocation)];
+
+      if (charMatch) {
+        matchMask[currentLocation] = 1;
+      }
+
+      // First pass: exact match
+      bitArr[j] = (bitArr[j + 1] << 1 | 1) & charMatch;
+
+      // Subsequent passes: fuzzy match
+      if (_i !== 0) {
+        bitArr[j] |= (lastBitArr[j + 1] | lastBitArr[j]) << 1 | 1 | lastBitArr[j + 1];
+      }
+
+      if (bitArr[j] & mask) {
+        finalScore = bitapScore(pattern, {
+          errors: _i,
+          currentLocation: currentLocation,
+          expectedLocation: expectedLocation,
+          distance: distance
+        });
+
+        // This match will almost certainly be better than any existing match.
+        // But check anyway.
+        if (finalScore <= currentThreshold) {
+          // Indeed it is
+          currentThreshold = finalScore;
+          bestLocation = currentLocation;
+
+          // Already passed `loc`, downhill from here on in.
+          if (bestLocation <= expectedLocation) {
+            break;
+          }
+
+          // When passing `bestLocation`, don't exceed our current distance from `expectedLocation`.
+          start = Math.max(1, 2 * expectedLocation - bestLocation);
+        }
+      }
+    }
+
+    // No hope for a (better) match at greater error levels.
+    var _score2 = bitapScore(pattern, {
+      errors: _i + 1,
+      currentLocation: expectedLocation,
+      expectedLocation: expectedLocation,
+      distance: distance
+    });
+
+    // console.log('score', score, finalScore)
+
+    if (_score2 > currentThreshold) {
+      break;
+    }
+
+    lastBitArr = bitArr;
+  }
+
+  // console.log('FINAL SCORE', finalScore)
+
+  // Count exact matches (those with a score of 0) to be "almost" exact
+  return {
+    isMatch: bestLocation >= 0,
+    score: finalScore === 0 ? 0.001 : finalScore,
+    matchedIndices: matchedIndices(matchMask, minMatchCharLength)
+  };
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Bitap = __webpack_require__(1);
+var deepValue = __webpack_require__(2);
+var isArray = __webpack_require__(0);
+
+var Fuse = function () {
+  function Fuse(list, _ref) {
+    var _ref$location = _ref.location,
+        location = _ref$location === undefined ? 0 : _ref$location,
+        _ref$distance = _ref.distance,
+        distance = _ref$distance === undefined ? 100 : _ref$distance,
+        _ref$threshold = _ref.threshold,
+        threshold = _ref$threshold === undefined ? 0.6 : _ref$threshold,
+        _ref$maxPatternLength = _ref.maxPatternLength,
+        maxPatternLength = _ref$maxPatternLength === undefined ? 32 : _ref$maxPatternLength,
+        _ref$caseSensitive = _ref.caseSensitive,
+        caseSensitive = _ref$caseSensitive === undefined ? false : _ref$caseSensitive,
+        _ref$tokenSeparator = _ref.tokenSeparator,
+        tokenSeparator = _ref$tokenSeparator === undefined ? / +/g : _ref$tokenSeparator,
+        _ref$findAllMatches = _ref.findAllMatches,
+        findAllMatches = _ref$findAllMatches === undefined ? false : _ref$findAllMatches,
+        _ref$minMatchCharLeng = _ref.minMatchCharLength,
+        minMatchCharLength = _ref$minMatchCharLeng === undefined ? 1 : _ref$minMatchCharLeng,
+        _ref$id = _ref.id,
+        id = _ref$id === undefined ? null : _ref$id,
+        _ref$keys = _ref.keys,
+        keys = _ref$keys === undefined ? [] : _ref$keys,
+        _ref$shouldSort = _ref.shouldSort,
+        shouldSort = _ref$shouldSort === undefined ? true : _ref$shouldSort,
+        _ref$getFn = _ref.getFn,
+        getFn = _ref$getFn === undefined ? deepValue : _ref$getFn,
+        _ref$sortFn = _ref.sortFn,
+        sortFn = _ref$sortFn === undefined ? function (a, b) {
+      return a.score - b.score;
+    } : _ref$sortFn,
+        _ref$tokenize = _ref.tokenize,
+        tokenize = _ref$tokenize === undefined ? false : _ref$tokenize,
+        _ref$matchAllTokens = _ref.matchAllTokens,
+        matchAllTokens = _ref$matchAllTokens === undefined ? false : _ref$matchAllTokens,
+        _ref$includeMatches = _ref.includeMatches,
+        includeMatches = _ref$includeMatches === undefined ? false : _ref$includeMatches,
+        _ref$includeScore = _ref.includeScore,
+        includeScore = _ref$includeScore === undefined ? false : _ref$includeScore,
+        _ref$verbose = _ref.verbose,
+        verbose = _ref$verbose === undefined ? false : _ref$verbose;
+
+    _classCallCheck(this, Fuse);
+
+    this.options = {
+      location: location,
+      distance: distance,
+      threshold: threshold,
+      maxPatternLength: maxPatternLength,
+      isCaseSensitive: caseSensitive,
+      tokenSeparator: tokenSeparator,
+      findAllMatches: findAllMatches,
+      minMatchCharLength: minMatchCharLength,
+      id: id,
+      keys: keys,
+      includeMatches: includeMatches,
+      includeScore: includeScore,
+      shouldSort: shouldSort,
+      getFn: getFn,
+      sortFn: sortFn,
+      verbose: verbose,
+      tokenize: tokenize,
+      matchAllTokens: matchAllTokens
+    };
+
+    this.setCollection(list);
+  }
+
+  _createClass(Fuse, [{
+    key: 'setCollection',
+    value: function setCollection(list) {
+      this.list = list;
+      return list;
+    }
+  }, {
+    key: 'search',
+    value: function search(pattern) {
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { limit: false };
+
+      this._log('---------\nSearch pattern: "' + pattern + '"');
+
+      var _prepareSearchers2 = this._prepareSearchers(pattern),
+          tokenSearchers = _prepareSearchers2.tokenSearchers,
+          fullSearcher = _prepareSearchers2.fullSearcher;
+
+      var _search2 = this._search(tokenSearchers, fullSearcher),
+          weights = _search2.weights,
+          results = _search2.results;
+
+      this._computeScore(weights, results);
+
+      if (this.options.shouldSort) {
+        this._sort(results);
+      }
+
+      if (opts.limit && typeof opts.limit === 'number') {
+        results = results.slice(0, opts.limit);
+      }
+
+      return this._format(results);
+    }
+  }, {
+    key: '_prepareSearchers',
+    value: function _prepareSearchers() {
+      var pattern = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      var tokenSearchers = [];
+
+      if (this.options.tokenize) {
+        // Tokenize on the separator
+        var tokens = pattern.split(this.options.tokenSeparator);
+        for (var i = 0, len = tokens.length; i < len; i += 1) {
+          tokenSearchers.push(new Bitap(tokens[i], this.options));
+        }
+      }
+
+      var fullSearcher = new Bitap(pattern, this.options);
+
+      return { tokenSearchers: tokenSearchers, fullSearcher: fullSearcher };
+    }
+  }, {
+    key: '_search',
+    value: function _search() {
+      var tokenSearchers = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var fullSearcher = arguments[1];
+
+      var list = this.list;
+      var resultMap = {};
+      var results = [];
+
+      // Check the first item in the list, if it's a string, then we assume
+      // that every item in the list is also a string, and thus it's a flattened array.
+      if (typeof list[0] === 'string') {
+        // Iterate over every item
+        for (var i = 0, len = list.length; i < len; i += 1) {
+          this._analyze({
+            key: '',
+            value: list[i],
+            record: i,
+            index: i
+          }, {
+            resultMap: resultMap,
+            results: results,
+            tokenSearchers: tokenSearchers,
+            fullSearcher: fullSearcher
+          });
+        }
+
+        return { weights: null, results: results };
+      }
+
+      // Otherwise, the first item is an Object (hopefully), and thus the searching
+      // is done on the values of the keys of each item.
+      var weights = {};
+      for (var _i = 0, _len = list.length; _i < _len; _i += 1) {
+        var item = list[_i];
+        // Iterate over every key
+        for (var j = 0, keysLen = this.options.keys.length; j < keysLen; j += 1) {
+          var key = this.options.keys[j];
+          if (typeof key !== 'string') {
+            weights[key.name] = {
+              weight: 1 - key.weight || 1
+            };
+            if (key.weight <= 0 || key.weight > 1) {
+              throw new Error('Key weight has to be > 0 and <= 1');
+            }
+            key = key.name;
+          } else {
+            weights[key] = {
+              weight: 1
+            };
+          }
+
+          this._analyze({
+            key: key,
+            value: this.options.getFn(item, key),
+            record: item,
+            index: _i
+          }, {
+            resultMap: resultMap,
+            results: results,
+            tokenSearchers: tokenSearchers,
+            fullSearcher: fullSearcher
+          });
+        }
+      }
+
+      return { weights: weights, results: results };
+    }
+  }, {
+    key: '_analyze',
+    value: function _analyze(_ref2, _ref3) {
+      var key = _ref2.key,
+          _ref2$arrayIndex = _ref2.arrayIndex,
+          arrayIndex = _ref2$arrayIndex === undefined ? -1 : _ref2$arrayIndex,
+          value = _ref2.value,
+          record = _ref2.record,
+          index = _ref2.index;
+      var _ref3$tokenSearchers = _ref3.tokenSearchers,
+          tokenSearchers = _ref3$tokenSearchers === undefined ? [] : _ref3$tokenSearchers,
+          _ref3$fullSearcher = _ref3.fullSearcher,
+          fullSearcher = _ref3$fullSearcher === undefined ? [] : _ref3$fullSearcher,
+          _ref3$resultMap = _ref3.resultMap,
+          resultMap = _ref3$resultMap === undefined ? {} : _ref3$resultMap,
+          _ref3$results = _ref3.results,
+          results = _ref3$results === undefined ? [] : _ref3$results;
+
+      // Check if the texvaluet can be searched
+      if (value === undefined || value === null) {
+        return;
+      }
+
+      var exists = false;
+      var averageScore = -1;
+      var numTextMatches = 0;
+
+      if (typeof value === 'string') {
+        this._log('\nKey: ' + (key === '' ? '-' : key));
+
+        var mainSearchResult = fullSearcher.search(value);
+        this._log('Full text: "' + value + '", score: ' + mainSearchResult.score);
+
+        if (this.options.tokenize) {
+          var words = value.split(this.options.tokenSeparator);
+          var scores = [];
+
+          for (var i = 0; i < tokenSearchers.length; i += 1) {
+            var tokenSearcher = tokenSearchers[i];
+
+            this._log('\nPattern: "' + tokenSearcher.pattern + '"');
+
+            // let tokenScores = []
+            var hasMatchInText = false;
+
+            for (var j = 0; j < words.length; j += 1) {
+              var word = words[j];
+              var tokenSearchResult = tokenSearcher.search(word);
+              var obj = {};
+              if (tokenSearchResult.isMatch) {
+                obj[word] = tokenSearchResult.score;
+                exists = true;
+                hasMatchInText = true;
+                scores.push(tokenSearchResult.score);
+              } else {
+                obj[word] = 1;
+                if (!this.options.matchAllTokens) {
+                  scores.push(1);
+                }
+              }
+              this._log('Token: "' + word + '", score: ' + obj[word]);
+              // tokenScores.push(obj)
+            }
+
+            if (hasMatchInText) {
+              numTextMatches += 1;
+            }
+          }
+
+          averageScore = scores[0];
+          var scoresLen = scores.length;
+          for (var _i2 = 1; _i2 < scoresLen; _i2 += 1) {
+            averageScore += scores[_i2];
+          }
+          averageScore = averageScore / scoresLen;
+
+          this._log('Token score average:', averageScore);
+        }
+
+        var finalScore = mainSearchResult.score;
+        if (averageScore > -1) {
+          finalScore = (finalScore + averageScore) / 2;
+        }
+
+        this._log('Score average:', finalScore);
+
+        var checkTextMatches = this.options.tokenize && this.options.matchAllTokens ? numTextMatches >= tokenSearchers.length : true;
+
+        this._log('\nCheck Matches: ' + checkTextMatches);
+
+        // If a match is found, add the item to <rawResults>, including its score
+        if ((exists || mainSearchResult.isMatch) && checkTextMatches) {
+          // Check if the item already exists in our results
+          var existingResult = resultMap[index];
+          if (existingResult) {
+            // Use the lowest score
+            // existingResult.score, bitapResult.score
+            existingResult.output.push({
+              key: key,
+              arrayIndex: arrayIndex,
+              value: value,
+              score: finalScore,
+              matchedIndices: mainSearchResult.matchedIndices
+            });
+          } else {
+            // Add it to the raw result list
+            resultMap[index] = {
+              item: record,
+              output: [{
+                key: key,
+                arrayIndex: arrayIndex,
+                value: value,
+                score: finalScore,
+                matchedIndices: mainSearchResult.matchedIndices
+              }]
+            };
+
+            results.push(resultMap[index]);
+          }
+        }
+      } else if (isArray(value)) {
+        for (var _i3 = 0, len = value.length; _i3 < len; _i3 += 1) {
+          this._analyze({
+            key: key,
+            arrayIndex: _i3,
+            value: value[_i3],
+            record: record,
+            index: index
+          }, {
+            resultMap: resultMap,
+            results: results,
+            tokenSearchers: tokenSearchers,
+            fullSearcher: fullSearcher
+          });
+        }
+      }
+    }
+  }, {
+    key: '_computeScore',
+    value: function _computeScore(weights, results) {
+      this._log('\n\nComputing score:\n');
+
+      for (var i = 0, len = results.length; i < len; i += 1) {
+        var output = results[i].output;
+        var scoreLen = output.length;
+
+        var currScore = 1;
+        var bestScore = 1;
+
+        for (var j = 0; j < scoreLen; j += 1) {
+          var weight = weights ? weights[output[j].key].weight : 1;
+          var score = weight === 1 ? output[j].score : output[j].score || 0.001;
+          var nScore = score * weight;
+
+          if (weight !== 1) {
+            bestScore = Math.min(bestScore, nScore);
+          } else {
+            output[j].nScore = nScore;
+            currScore *= nScore;
+          }
+        }
+
+        results[i].score = bestScore === 1 ? currScore : bestScore;
+
+        this._log(results[i]);
+      }
+    }
+  }, {
+    key: '_sort',
+    value: function _sort(results) {
+      this._log('\n\nSorting....');
+      results.sort(this.options.sortFn);
+    }
+  }, {
+    key: '_format',
+    value: function _format(results) {
+      var finalOutput = [];
+
+      if (this.options.verbose) {
+        var cache = [];
+        this._log('\n\nOutput:\n\n', JSON.stringify(results, function (key, value) {
+          if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+              // Circular reference found, discard key
+              return;
+            }
+            // Store value in our collection
+            cache.push(value);
+          }
+          return value;
+        }));
+        cache = null; // Enable garbage collection
+      }
+
+      var transformers = [];
+
+      if (this.options.includeMatches) {
+        transformers.push(function (result, data) {
+          var output = result.output;
+          data.matches = [];
+
+          for (var i = 0, len = output.length; i < len; i += 1) {
+            var item = output[i];
+
+            if (item.matchedIndices.length === 0) {
+              continue;
+            }
+
+            var obj = {
+              indices: item.matchedIndices,
+              value: item.value
+            };
+            if (item.key) {
+              obj.key = item.key;
+            }
+            if (item.hasOwnProperty('arrayIndex') && item.arrayIndex > -1) {
+              obj.arrayIndex = item.arrayIndex;
+            }
+            data.matches.push(obj);
+          }
+        });
+      }
+
+      if (this.options.includeScore) {
+        transformers.push(function (result, data) {
+          data.score = result.score;
+        });
+      }
+
+      for (var i = 0, len = results.length; i < len; i += 1) {
+        var result = results[i];
+
+        if (this.options.id) {
+          result.item = this.options.getFn(result.item, this.options.id)[0];
+        }
+
+        if (!transformers.length) {
+          finalOutput.push(result.item);
+          continue;
+        }
+
+        var data = {
+          item: result.item
+        };
+
+        for (var j = 0, _len2 = transformers.length; j < _len2; j += 1) {
+          transformers[j](result, data);
+        }
+
+        finalOutput.push(data);
+      }
+
+      return finalOutput;
+    }
+  }, {
+    key: '_log',
+    value: function _log() {
+      if (this.options.verbose) {
+        var _console;
+
+        (_console = console).log.apply(_console, arguments);
+      }
+    }
+  }]);
+
+  return Fuse;
+}();
+
+module.exports = Fuse;
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=fuse.js.map
+
+/***/ })
+/******/ ]);
 //# sourceMappingURL=admin-bundle.next.js.map

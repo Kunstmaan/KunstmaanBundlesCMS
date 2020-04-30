@@ -157,69 +157,73 @@
                             </div>
                         {% endif %}
                     </figure>
-                    <div class="js-media-cropper-focus-wrapper media-cropper__focus-wrapper">
-                        <div class="media-cropper__focus-holder">
-                            <div class="media-cropper__focus-grid js-media-cropper-focus-grid">
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-1" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-left">
-                                        {{ 'media.widget.media_cropper.focus_option.top_left'|trans }}
-                                    </label>
+
+                    {% if use_focus_point %}
+                        <div class="js-media-cropper-focus-wrapper media-cropper__focus-wrapper">
+                            <div class="media-cropper__focus-holder">
+                                <div class="media-cropper__focus-grid js-media-cropper-focus-grid">
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-1" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-left">
+                                            {{ 'media.widget.media_cropper.focus_option.top_left'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-2" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-center">
+                                            {{ 'media.widget.media_cropper.focus_option.top_center'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-3" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-right">
+                                            {{ 'media.widget.media_cropper.focus_option.top_right'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-4" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center-left">
+                                            {{ 'media.widget.media_cropper.focus_option.center_left'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-5" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center">
+                                            {{ 'media.widget.media_cropper.focus_option.center'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-6" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center-right">
+                                            {{ 'media.widget.media_cropper.focus_option.center_right'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-7" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-left">
+                                            {{ 'media.widget.media_cropper.focus_option.bottom_left'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-8" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-center">
+                                            {{ 'media.widget.media_cropper.focus_option.bottom_center'|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="media-cropper__focus-item radio">
+                                        <label class="media-cropper__focus-item__label">
+                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-9" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-right">
+                                            {{ 'media.widget.media_cropper.focus_option.bottom_right'|trans }}
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-2" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-center">
-                                        {{ 'media.widget.media_cropper.focus_option.top_center'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-3" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-right">
-                                        {{ 'media.widget.media_cropper.focus_option.top_right'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-4" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center-left">
-                                        {{ 'media.widget.media_cropper.focus_option.center_left'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-5" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center">
-                                        {{ 'media.widget.media_cropper.focus_option.center'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-6" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center-right">
-                                        {{ 'media.widget.media_cropper.focus_option.center_right'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-7" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-left">
-                                        {{ 'media.widget.media_cropper.focus_option.bottom_left'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-8" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-center">
-                                        {{ 'media.widget.media_cropper.focus_option.bottom_center'|trans }}
-                                    </label>
-                                </div>
-                                <div class="media-cropper__focus-item radio">
-                                    <label class="media-cropper__focus-item__label">
-                                        <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-9" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-right">
-                                        {{ 'media.widget.media_cropper.focus_option.bottom_right'|trans }}
-                                    </label>
-                                </div>
+                                <figure class="media-cropper__focus-media">
+                                    <img src="" alt="" class="js-media-cropper-focus-media">
+                                </figure>
                             </div>
-                            <figure class="media-cropper__focus-media">
-                                <img src="" alt="" class="js-media-cropper-focus-media">
-                            </figure>
                         </div>
-                    </div>
+                    {% endif %}
+
                     <aside class="media-cropper__meta js-media-cropper-meta">
                         <div class="media-cropper__meta__item">
                             <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
@@ -242,16 +246,18 @@
                             </dl>
                         </div>
 
-                        <div class="media-cropper__meta__item">
-                            <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
-                            <p>
-                                {{ 'media.widget.media_cropper.meta_focus_selected'| trans }}:
-                                <span class="js-media-cropper-meta-value-focus"></span>
-                            </p>
-                            <button class="js-media-cropper-choose-focus-point btn btn-default" data-boolean-text="{{ 'media.widget.media_cropper.hide_choose_focus_point'| trans }}">
-                                {{ 'media.widget.media_cropper.choose_focus_point'| trans }}
-                            </button>
-                        </div>
+                        {% if use_focus_point %}
+                            <div class="media-cropper__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
+                                <p>
+                                    {{ 'media.widget.media_cropper.meta_focus_selected'| trans }}:
+                                    <span class="js-media-cropper-meta-value-focus"></span>
+                                </p>
+                                <button class="js-media-cropper-choose-focus-point btn btn-default" data-boolean-text="{{ 'media.widget.media_cropper.hide_choose_focus_point'| trans }}">
+                                    {{ 'media.widget.media_cropper.choose_focus_point'| trans }}
+                                </button>
+                            </div>
+                        {% endif %}
 
                         <div class="media-cropper__meta__item media-cropper__meta__item--submit">
                             <button type="button" class="js-media-cropper-save btn btn-primary btn-lg" data-dismiss="modal">
