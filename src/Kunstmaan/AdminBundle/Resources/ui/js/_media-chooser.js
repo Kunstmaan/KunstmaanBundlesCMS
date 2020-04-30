@@ -36,10 +36,10 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
 
     // Crop btn
     initCropBtn = function () {
-        $body.on('click', '.js-media-chooser-crop-preview-btn', function () {
+        $body.on('click', '.js-media-chooser-image-edit-btn', function () {
             var $this = $(this),
                 linkedID = $this.data('linked-id'),
-                $mediaCropperModal = $('#' + linkedID + '-mediaCropperModal');
+                $mediaCropperModal = $('#' + linkedID + '-image-edit-modal');
 
             $mediaCropperModal.modal('show');
 

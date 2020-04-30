@@ -1,23 +1,24 @@
 const SELECTORS = {
-    HOOK: '.js-media-chooser-crop-preview-btn',
-    CONTAINER: '.js-media-cropper',
-    IMAGE: '.js-media-cropper-image',
-    META_CONTAINER: '.js-media-cropper-meta',
-    META_ITEM: '.js-media-cropper-meta-value',
-    VIEW_SELECT: '.js-media-cropper-view-select',
-    SAVE: '.js-media-cropper-save',
-    SELECT_FOCUS_POINT: '.js-media-cropper-choose-focus-point',
-    CROPPER_PREVIEW: '.js-media-cropper-preview',
-    FOCUS_POINT_WRAPPER: '.js-media-cropper-focus-wrapper',
-    FOCUS_POINT_IMG: '.js-media-cropper-focus-media',
-    META_FOCUS_VALUE: '.js-media-cropper-meta-value-focus',
-    FOCUS_POINT_CHOICE: '.js-media-cropper-focus-choice',
+    HOOK: '.js-media-chooser-image-edit-btn',
+    CONTAINER: '.js-image-edit',
+    IMAGE: '.js-image-edit-image',
+    META_CONTAINER: '.js-image-edit-meta',
+    META_ITEM: '.js-image-edit-meta-value',
+    VIEW_SELECT: '.js-image-edit-view-select',
+    SAVE: '.js-image-edit-save',
+    SELECT_FOCUS_POINT: '.js-image-edit-choose-focus-point',
+    CROPPER_PREVIEW: '.js-image-edit-preview',
+    CROPPER_WRAPPER: '.js-image-edit-crop-wrapper',
+    FOCUS_WRAPPER: '.js-image-edit-focus-wrapper',
+    FOCUS_POINT_IMG: '.js-image-edit-focus-media',
+    META_FOCUS_VALUE: '.js-image-edit-meta-value-focus',
+    FOCUS_POINT_CHOICE: '.js-image-edit-focus-choice',
 };
 
 const MODIFIERS = {
     CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded',
-    FOCUS_POINT_WRAPPER_VISIBLE: 'media-cropper__focus-wrapper--visible',
-    PREVIEW_HIDDEN: 'media-cropper__preview--hidden',
+    CROPPER_HIDDEN: 'image-edit__crop-wrapper--hidden',
+    FOCUS_HIDDEN: 'image-edit__focus-wrapper--hidden',
 };
 
 const CROP_BOX_THRESHOLD = 250;
