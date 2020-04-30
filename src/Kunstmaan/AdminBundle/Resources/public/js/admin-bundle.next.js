@@ -275,7 +275,9 @@ class Focuspoint {
     }
 
     toggleVisibility(e) {
-        e.preventDefault();
+        if (e) {
+            e.preventDefault();
+        }
 
         const currentTextContent = this.toggle.textContent;
         const nextTextContent = this.toggle.dataset.booleanText;
@@ -308,13 +310,12 @@ class Focuspoint {
     setCropperData() {
         if (this.selectedFocus !== null) {
             this.cropper.cropData[this.cropper.currentView].class = this.selectedFocus;
-
-            console.log(this.cropper.cropData);
         }
     }
 
     reset() {
         this.selectedFocus = null;
+        this.metaValueHolder.textContent = '';
 
         this.choices.forEach(choice => {
             choice.checked = false;
@@ -419,6 +420,7 @@ class MediaCropper {
         }
 
         this.croppedImageUrl = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
+        console.log(this.cropData);
     }
 
     addEventListeners() {
@@ -430,11 +432,11 @@ class MediaCropper {
         this.viewSelect.addEventListener('change', () => {
             this.currentView = this.viewSelect.value;
             this.cropper.destroy();
-            this.initCropper();
-
             if (this.selectableFocusPoint) {
                 this.focusPointComponent.reset();
+                this.focusPointComponent.toggleVisibility();
             }
+            this.initCropper();
         });
 
         this.save.addEventListener('click', e => {
@@ -452,7 +454,7 @@ class MediaCropper {
         }
 
         if (this.cropData.hasOwnProperty(this.currentView)) {
-            const savedValues = this.savedCropData[this.currentView];
+            const savedValues = this.cropData[this.currentView];
 
             config.data = {
                 x: savedValues.start[0],

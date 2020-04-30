@@ -22,7 +22,9 @@ class Focuspoint {
     }
 
     toggleVisibility(e) {
-        e.preventDefault();
+        if (e) {
+            e.preventDefault();
+        }
 
         const currentTextContent = this.toggle.textContent;
         const nextTextContent = this.toggle.dataset.booleanText;
@@ -55,13 +57,12 @@ class Focuspoint {
     setCropperData() {
         if (this.selectedFocus !== null) {
             this.cropper.cropData[this.cropper.currentView].class = this.selectedFocus;
-
-            console.log(this.cropper.cropData);
         }
     }
 
     reset() {
         this.selectedFocus = null;
+        this.metaValueHolder.textContent = '';
 
         this.choices.forEach((choice) => {
             choice.checked = false;
