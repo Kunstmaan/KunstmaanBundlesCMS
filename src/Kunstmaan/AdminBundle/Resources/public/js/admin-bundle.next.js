@@ -63,11 +63,64 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+const SELECTORS = {
+    HOOK: '.js-media-chooser-image-edit-btn',
+    CONTAINER: '.js-image-edit',
+    IMAGE: '.js-image-edit-image',
+    META_CONTAINER: '.js-image-edit-meta',
+    META_ITEM: '.js-image-edit-meta-value',
+    VIEW_SELECT: '.js-image-edit-view-select',
+    SAVE: '.js-image-edit-save',
+    SELECT_FOCUS_POINT: '.js-image-edit-choose-focus-point',
+    CROPPER_PREVIEW: '.js-image-edit-preview',
+    CROPPER_WRAPPER: '.js-image-edit-crop-wrapper',
+    FOCUS_WRAPPER: '.js-image-edit-focus-wrapper',
+    FOCUS_POINT_IMG: '.js-image-edit-focus-media',
+    META_FOCUS_VALUE: '.js-image-edit-meta-value-focus',
+    FOCUS_POINT_CHOICE: '.js-image-edit-focus-choice'
+};
+
+const MODIFIERS = {
+    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded',
+    CROPPER_HIDDEN: 'image-edit__crop-wrapper--hidden',
+    FOCUS_HIDDEN: 'image-edit__focus-wrapper--hidden'
+};
+
+const CROP_BOX_THRESHOLD = 250;
+
+const META_KEYS = ['width', 'height'];
+
+const CROPPER_CONFIG = {
+    viewMode: 2,
+    movable: false,
+    rotatable: false,
+    scalable: false,
+    zoomable: false,
+    zoomOnTouch: false,
+    zoomOnWheel: false
+};
+
+exports.SELECTORS = SELECTORS;
+exports.MODIFIERS = MODIFIERS;
+exports.CROP_BOX_THRESHOLD = CROP_BOX_THRESHOLD;
+exports.META_KEYS = META_KEYS;
+exports.CROPPER_CONFIG = CROPPER_CONFIG;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93,58 +146,6 @@ const ATTRIBUTES = exports.ATTRIBUTES = {
 };
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-const SELECTORS = {
-    HOOK: '.js-media-chooser-crop-preview-btn',
-    CONTAINER: '.js-media-cropper',
-    IMAGE: '.js-media-cropper-image',
-    META_CONTAINER: '.js-media-cropper-meta',
-    META_ITEM: '.js-media-cropper-meta-value',
-    VIEW_SELECT: '.js-media-cropper-view-select',
-    SAVE: '.js-media-cropper-save',
-    SELECT_FOCUS_POINT: '.js-media-cropper-choose-focus-point',
-    CROPPER_PREVIEW: '.js-media-cropper-preview',
-    FOCUS_POINT_WRAPPER: '.js-media-cropper-focus-wrapper',
-    FOCUS_POINT_IMG: '.js-media-cropper-focus-media',
-    META_FOCUS_VALUE: '.js-media-cropper-meta-value-focus',
-    FOCUS_POINT_CHOICE: '.js-media-cropper-focus-choice'
-};
-
-const MODIFIERS = {
-    CROP_BOX_SMALL_CROPPED_AREA: 'media-cropper--crop-box-expanded',
-    FOCUS_POINT_WRAPPER_VISIBLE: 'media-cropper__focus-wrapper--visible',
-    PREVIEW_HIDDEN: 'media-cropper__preview--hidden'
-};
-
-const CROP_BOX_THRESHOLD = 250;
-
-const META_KEYS = ['width', 'height'];
-
-const CROPPER_CONFIG = {
-    viewMode: 2,
-    movable: false,
-    rotatable: false,
-    scalable: false,
-    zoomable: false,
-    zoomOnTouch: false,
-    zoomOnWheel: false
-};
-
-exports.SELECTORS = SELECTORS;
-exports.MODIFIERS = MODIFIERS;
-exports.CROP_BOX_THRESHOLD = CROP_BOX_THRESHOLD;
-exports.META_KEYS = META_KEYS;
-exports.CROPPER_CONFIG = CROPPER_CONFIG;
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -156,19 +157,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initMediaCroppers = undefined;
 
-var _config = __webpack_require__(1);
+var _config = __webpack_require__(0);
 
-var _MediaCropper = __webpack_require__(6);
+var _EditImage = __webpack_require__(5);
 
-function initMediaCroppers(container = window.document) {
-    const PREVIEW_BTNS = [...container.querySelectorAll(_config.SELECTORS.HOOK)];
-
+function initMediaCroppers() {
     document.addEventListener('modalOpen', e => {
         const targetModal = e.detail;
         const node = targetModal.querySelector(_config.SELECTORS.CONTAINER);
 
         if (!node.hasAttribute('data-initialized')) {
-            new _MediaCropper.MediaCropper(node);
+            new _EditImage.EditImage(node);
         }
     });
 }
@@ -186,9 +185,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _config = __webpack_require__(0);
+var _config = __webpack_require__(1);
 
-var _initSearch = __webpack_require__(8);
+var _initSearch = __webpack_require__(9);
 
 class PagePartChooser {
     static init(container = window.document) {
@@ -250,9 +249,79 @@ exports.default = PagePartChooser;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.EditImage = undefined;
+
+var _config = __webpack_require__(0);
+
+var _MediaCropper = __webpack_require__(7);
+
+var _Focuspoint = __webpack_require__(6);
+
+class EditImage {
+    constructor(node) {
+        this.node = node;
+        this.hasCropper = node.hasAttribute('data-cropping-views');
+        this.hasFocusSelect = node.hasAttribute('data-focus-point-classes');
+        this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
+        this.save = this.metaContainer.querySelector(_config.SELECTORS.SAVE);
+        this.input = document.querySelector(`#${node.dataset.inputId}`);
+        this.components = {};
+
+        this.init();
+    }
+
+    changeView() {
+        switch (this.currentView) {
+            case 'focus':
+                this.components.focus.wrapper.classList.remove(_config.MODIFIERS.FOCUS_HIDDEN);
+                this.components.cropper.wrapper.classList.add(_config.MODIFIERS.CROPPER_HIDDEN);
+                break;
+
+            default:
+                this.components.cropper.wrapper.classList.remove(_config.MODIFIERS.CROPPER_HIDDEN);
+                this.components.focus.wrapper.classList.add(_config.MODIFIERS.FOCUS_HIDDEN);
+                break;
+        }
+    }
+
+    init() {
+        if (this.hasCropper) {
+            this.components.cropper = {};
+            this.components.cropper.wrapper = this.node.querySelector(_config.SELECTORS.CROPPER_WRAPPER);
+            this.components.cropper.component = new _MediaCropper.MediaCropper(this);
+            this.components.cropper.component.init();
+
+            this.currentView = 'cropper';
+        } else {
+            this.currentView = 'focus';
+        }
+
+        if (this.hasFocusSelect) {
+            this.components.focus = {};
+            this.components.focus.wrapper = this.node.querySelector(_config.SELECTORS.FOCUS_WRAPPER);
+            this.components.focus.component = new _Focuspoint.Focuspoint(this);
+            this.components.focus.component.init();
+        }
+
+        console.log(this);
+    }
+}
+
+exports.EditImage = EditImage;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.Focuspoint = undefined;
 
-var _config = __webpack_require__(1);
+var _config = __webpack_require__(0);
 
 class Focuspoint {
     constructor(cropper) {
@@ -348,7 +417,7 @@ class Focuspoint {
 exports.Focuspoint = Focuspoint;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -359,41 +428,34 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MediaCropper = undefined;
 
-var _cropperjs = __webpack_require__(12);
+var _cropperjs = __webpack_require__(13);
 
 var _cropperjs2 = _interopRequireDefault(_cropperjs);
 
-var _config = __webpack_require__(1);
+var _config = __webpack_require__(0);
 
-var _renderViewSelectOptions = __webpack_require__(7);
-
-var _Focuspoint = __webpack_require__(5);
+var _renderViewSelectOptions = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class MediaCropper {
-    constructor(node) {
-        this.node = node;
+    constructor(EditImage) {
+        this.EditImage = EditImage;
+        this.node = EditImage.node;
         this.image = this.node.querySelector(_config.SELECTORS.IMAGE);
         this.imagePath = this.node.hasAttribute('data-path') ? this.node.dataset.path : false;
-        this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
-        this.viewSelect = this.metaContainer.querySelector(_config.SELECTORS.VIEW_SELECT);
-        this.save = this.metaContainer.querySelector(_config.SELECTORS.SAVE);
-        this.input = document.querySelector(`#${this.node.dataset.inputId}`);
+        this.viewSelect = this.EditImage.metaContainer.querySelector(_config.SELECTORS.VIEW_SELECT);
         this.metaValueNodes = {};
         this.cropper = null;
         this.viewData = {};
-        this.cropData = {};
-        this.savedCropData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
+        this.EditImage.cropData = {};
+        this.savedCropData = this.EditImage.input.value !== '' ? JSON.parse(this.EditImage.input.value) : false;
         this.initialized = false;
-        this.selectableFocusPoint = this.node.dataset.useFocusPoint === 'true';
-
-        this.init();
     }
 
     getValueNodes() {
         _config.META_KEYS.forEach(key => {
-            this.metaValueNodes[key] = this.metaContainer.querySelector(`${_config.SELECTORS.META_ITEM}-${key}`);
+            this.metaValueNodes[key] = this.EditImage.metaContainer.querySelector(`${_config.SELECTORS.META_ITEM}-${key}`);
         });
     }
 
@@ -412,15 +474,15 @@ class MediaCropper {
         }
 
         if (this.viewData && this.currentView) {
-            if (!this.cropData.hasOwnProperty(this.currentView)) {
-                this.cropData[this.currentView] = {};
+            if (!this.EditImage.cropData.hasOwnProperty(this.currentView)) {
+                this.EditImage.cropData[this.currentView] = {};
             }
-            this.cropData[this.currentView].start = [x, y];
-            this.cropData[this.currentView].size = [width, height];
+            this.EditImage.cropData[this.currentView].start = [x, y];
+            this.EditImage.cropData[this.currentView].size = [width, height];
         }
 
-        this.croppedImageUrl = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
-        console.log(this.cropData);
+        this.EditImage.croppedImageUrl = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
+        console.log(this.EditImage.cropData);
     }
 
     addEventListeners() {
@@ -432,17 +494,17 @@ class MediaCropper {
         this.viewSelect.addEventListener('change', () => {
             this.currentView = this.viewSelect.value;
             this.cropper.destroy();
-            if (this.selectableFocusPoint) {
-                this.focusPointComponent.reset();
-                this.focusPointComponent.toggleVisibility();
-            }
+            // if (this.selectableFocusPoint) {
+            //     this.focusPointComponent.reset();
+            //     this.focusPointComponent.toggleVisibility();
+            // }
             this.initCropper();
         });
 
-        this.save.addEventListener('click', e => {
-            e.preventDefault();
-            this.input.value = JSON.stringify(this.cropData);
-        });
+        // this.save.addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     this.input.value = JSON.stringify(this.cropData);
+        // });
     }
 
     initCropper() {
@@ -453,8 +515,8 @@ class MediaCropper {
             config[key] = value;
         }
 
-        if (this.cropData.hasOwnProperty(this.currentView)) {
-            const savedValues = this.cropData[this.currentView];
+        if (this.EditImage.cropData.hasOwnProperty(this.currentView)) {
+            const savedValues = this.EditImage.cropData[this.currentView];
 
             config.data = {
                 x: savedValues.start[0],
@@ -463,10 +525,10 @@ class MediaCropper {
                 height: savedValues.size[1]
             };
 
-            if (savedValues.hasOwnProperty('class')) {
-                this.focusPointComponent.setSelectedFocus(savedValues.class);
-                this.focusPointComponent.setChoice(savedValues.class);
-            }
+            // if (savedValues.hasOwnProperty('class')) {
+            //     this.focusPointComponent.setSelectedFocus(savedValues.class);
+            //     this.focusPointComponent.setChoice(savedValues.class);
+            // }
         } else {
             config.data = null;
         }
@@ -495,12 +557,7 @@ class MediaCropper {
         }
 
         if (this.savedCropData) {
-            this.cropData = this.savedCropData;
-        }
-
-        if (this.selectableFocusPoint) {
-            this.focusPointComponent = new _Focuspoint.Focuspoint(this);
-            this.focusPointComponent.init();
+            this.EditImage.cropData = this.savedCropData;
         }
 
         this.initCropper();
@@ -514,7 +571,7 @@ class MediaCropper {
 exports.MediaCropper = MediaCropper;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -545,7 +602,7 @@ function renderViewSelectOptions(select, data) {
 exports.renderViewSelectOptions = renderViewSelectOptions;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -556,15 +613,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initSearch = initSearch;
 
-var _fuse = __webpack_require__(13);
+var _fuse = __webpack_require__(14);
 
 var _fuse2 = _interopRequireDefault(_fuse);
 
-var _config = __webpack_require__(0);
+var _config = __webpack_require__(1);
 
-var _resetSearch = __webpack_require__(9);
+var _resetSearch = __webpack_require__(10);
 
-var _updateSearch = __webpack_require__(10);
+var _updateSearch = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -631,7 +688,7 @@ function initFuse(ppSearchData) {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -642,7 +699,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.resetSearch = resetSearch;
 
-var _config = __webpack_require__(0);
+var _config = __webpack_require__(1);
 
 function resetSearch(searchItems) {
     searchItems.forEach(item => {
@@ -651,7 +708,7 @@ function resetSearch(searchItems) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -662,7 +719,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateSearch = updateSearch;
 
-var _config = __webpack_require__(0);
+var _config = __webpack_require__(1);
 
 function updateSearch(searchItems, searchResults) {
     searchItems.forEach(item => {
@@ -677,7 +734,7 @@ function updateSearch(searchItems, searchResults) {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -708,7 +765,7 @@ if (document.readyState !== 'loading') {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -4330,7 +4387,7 @@ if (document.readyState !== 'loading') {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!

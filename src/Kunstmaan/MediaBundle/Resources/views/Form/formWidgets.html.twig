@@ -100,7 +100,7 @@
             </figure>
 
             {% if show_image_edit_modal is defined and show_image_edit_modal %}
-            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-crop-preview-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
+            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-image-edit-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
                 <i class="fa fa-crop"></i>
             </button>
             {% endif %}
@@ -120,7 +120,7 @@
 
     {% if show_image_edit_modal is defined and show_image_edit_modal %}
     <!-- image edit Modal -->
-    <div class="modal fade" id="{{ id }}-mediaCropperModal" role="dialog" aria-labelledby="mediaCropperModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-cropper="true">
+    <div class="modal fade" id="{{ id }}-image-edit-modal" role="dialog" aria-labelledby="image-edit-modal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-image-edit="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -135,132 +135,100 @@
                 </div>
 
                 <!-- Body -->
-                <div class="media-cropper js-media-cropper"
-                     data-cropping-views="{{ cropping_views }}"
-                     data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}"
-                     data-use-focus-point="{{ use_focus_point ? 'false' : 'true' }}"
-                     {% if use_focus_point %}data-focus-point-classes="{{ focus_point_classes }}"{% endif %}
-                     data-use-cropping="{{ use_cropping ? 'true' :  'false' }}">
-                    <figure class="media-cropper__preview js-media-cropper-preview">
-                        {% if (value.ent is defined) %}
-                            {% set media = value.ent %}
-                            {% set imageUrl = _self.getImageUrl(media, 'optim') %}
-                            {% set retinaImageUrl = _self.getImageUrl(media, 'optim') %}
-                            {% if imageUrl %}
-                                <div>
-                                    <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            <div>
-                                <img src="" alt="" class="thumbnail-img media-cropper__preview__img js-media-cropper-image">
-                            </div>
-                        {% endif %}
-                    </figure>
-
-                    {% if use_focus_point %}
-                        <div class="js-media-cropper-focus-wrapper media-cropper__focus-wrapper">
-                            <div class="media-cropper__focus-holder">
-                                <div class="media-cropper__focus-grid js-media-cropper-focus-grid">
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-1" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-left">
-                                            {{ 'media.widget.media_cropper.focus_option.top_left'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-2" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-center">
-                                            {{ 'media.widget.media_cropper.focus_option.top_center'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-3" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="top-right">
-                                            {{ 'media.widget.media_cropper.focus_option.top_right'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-4" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center-left">
-                                            {{ 'media.widget.media_cropper.focus_option.center_left'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-5" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center">
-                                            {{ 'media.widget.media_cropper.focus_option.center'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-6" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="center-right">
-                                            {{ 'media.widget.media_cropper.focus_option.center_right'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-7" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-left">
-                                            {{ 'media.widget.media_cropper.focus_option.bottom_left'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-8" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-center">
-                                            {{ 'media.widget.media_cropper.focus_option.bottom_center'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="media-cropper__focus-item radio">
-                                        <label class="media-cropper__focus-item__label">
-                                            <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-9" class="media-cropper__focus-item__choice js-media-cropper-focus-choice" value="bottom-right">
-                                            {{ 'media.widget.media_cropper.focus_option.bottom_right'|trans }}
-                                        </label>
-                                    </div>
-                                </div>
-                                <figure class="media-cropper__focus-media">
-                                    <img src="" alt="" class="js-media-cropper-focus-media">
-                                </figure>
-                            </div>
-                        </div>
+                <div class="image-edit js-image-edit"
+                    data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}"
+                    {% if use_cropping %}
+                        data-cropping-views="{{ cropping_views }}"
                     {% endif %}
-
-                    <aside class="media-cropper__meta js-media-cropper-meta">
-                        <div class="media-cropper__meta__item">
-                            <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
-                            <select name="{{ id }}-mediaCropperModal-view-select" id="{{ id }}-mediaCropperModal-view-select" class="form-control js-media-cropper-view-select media-cropper__meta__select" disabled>
-                                <option value="">{{ 'media.widget.media_cropper.meta_views_placeholder'|trans }}</option>
-                            </select>
-                        </div>
-
-                        <div class="media-cropper__meta__item">
-                            <h4>{{ 'media.widget.media_cropper.meta_title_dimensions' | trans }}</h4>
-                            <dl class="media-cropper__meta__list">
-                                <div class="media-cropper__meta__list__row">
-                                    <dt class="media-cropper__meta__key">{{ 'media.widget.media_cropper.meta_width' | trans }}</dt>
-                                    <dd class="media-cropper__meta__value js-media-cropper-meta-value-width"></dd>
-                                </div>
-                                <div class="media-cropper__meta__list__row">
-                                    <dt class="media-cropper__meta__key">{{ 'media.widget.media_cropper.meta_height' | trans }}</dt>
-                                    <dd class="media-cropper__meta__value js-media-cropper-meta-value-height"></dd>
-                                </div>
-                            </dl>
-                        </div>
+                    {% if use_focus_point %}
+                        data-focus-point-classes="{{ focus_point_classes }}"
+                    {% endif %}
+                >
+                    <div class="image-edit__main">
+                        {% if use_cropping %}
+                            <article class="image-edit__crop-wrapper js-image-edit-crop-wrapper">
+                                <figure class="image-edit__preview js-image-edit-preview">
+                                    {% if (value.ent is defined) %}
+                                        {% set media = value.ent %}
+                                        {% set imageUrl = _self.getImageUrl(media, 'optim') %}
+                                        {% set retinaImageUrl = _self.getImageUrl(media, 'optim') %}
+                                        {% if imageUrl %}
+                                            <div>
+                                                <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img image-edit__preview__img js-image-edit-image">
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div>
+                                            <img src="" alt="" class="thumbnail-img image-edit__preview__img js-image-edit-image">
+                                        </div>
+                                    {% endif %}
+                                </figure>
+                            </article>
+                        {% endif %}
 
                         {% if use_focus_point %}
-                            <div class="media-cropper__meta__item">
+                            {% set imageUrl = null %}
+                            {% set isHidden = false %}
+                            {% if use_focus_point and not use_cropping %}
+                                {% set imageUrl = _self.getImageUrl(media, 'optim')  %}
+                            {% endif %}
+                            {% if use_cropping %}
+                                {% set isHidden = true %}
+                            {% endif %}
+                            {% include '@KunstmaanMedia/Form/_focus-point-block.html.twig' with {imageUrl : imageUrl, isHidden: isHidden } %}
+                        {% endif %}
+
+                    </div>
+
+                    <aside class="image-edit__meta js-image-edit-meta">
+                        {% if use_cropping %}
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
+                                <select name="{{ id }}-image-edit-modal-view-select" id="{{ id }}-image-edit-modal-view-select" class="form-control js-image-edit-view-select image-edit__meta__select" disabled>
+                                    <option value="">{{ 'media.widget.media_cropper.meta_views_placeholder'|trans }}</option>
+                                </select>
+                            </div>
+
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_dimensions' | trans }}</h4>
+                                <dl class="image-edit__meta__list">
+                                    <div class="image-edit__meta__list__row">
+                                        <dt class="image-edit__meta__key">{{ 'media.widget.media_cropper.meta_width' | trans }}</dt>
+                                        <dd class="image-edit__meta__value js-image-edit-meta-value-width"></dd>
+                                    </div>
+                                    <div class="image-edit__meta__list__row">
+                                        <dt class="image-edit__meta__key">{{ 'media.widget.media_cropper.meta_height' | trans }}</dt>
+                                        <dd class="image-edit__meta__value js-image-edit-meta-value-height"></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        {% endif %}
+
+                        {% if use_cropping and use_focus_point %}
+                            <div class="image-edit__meta__item">
                                 <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
                                 <p>
                                     {{ 'media.widget.media_cropper.meta_focus_selected'| trans }}:
-                                    <span class="js-media-cropper-meta-value-focus"></span>
+                                    <span class="js-image-edit-meta-value-focus"></span>
                                 </p>
-                                <button class="js-media-cropper-choose-focus-point btn btn-default" data-boolean-text="{{ 'media.widget.media_cropper.hide_choose_focus_point'| trans }}">
+                                <button class="js-image-edit-choose-focus-point btn btn-default" data-boolean-text="{{ 'media.widget.media_cropper.hide_choose_focus_point'| trans }}">
                                     {{ 'media.widget.media_cropper.choose_focus_point'| trans }}
                                 </button>
                             </div>
                         {% endif %}
 
-                        <div class="media-cropper__meta__item media-cropper__meta__item--submit">
-                            <button type="button" class="js-media-cropper-save btn btn-primary btn-lg" data-dismiss="modal">
+                        {% if use_focus_point and not use_cropping %}
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
+                                <p>
+                                    {{ 'media.widget.media_cropper.meta_focus_selected'| trans }}:
+                                    <span class="js-image-edit-meta-value-focus"></span>
+                                </p>
+                            </div>
+                        {% endif %}
+
+                        <div class="image-edit__meta__item image-edit__meta__item--submit">
+                            <button type="button" class="js-image-edit-save btn btn-primary btn-lg" data-dismiss="modal">
                                 {{ 'media.widget.media_cropper.save'|trans }}
                             </button>
                         </div>

@@ -1,0 +1,18 @@
+/* ==========================================================================
+    image edit | focus
+   ========================================================================== */
+
+.image-edit__focus-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    &--hidden {
+        display: none;
+    }
+
+    .image-edit__crop-wrapper + & {
+        display: none;
+    }
+}
