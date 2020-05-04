@@ -10,26 +10,54 @@ class EditImage {
         this.metaContainer = this.node.querySelector(SELECTORS.META_CONTAINER);
         this.save = this.metaContainer.querySelector(SELECTORS.SAVE);
         this.input = document.querySelector(`#${node.dataset.inputId}`);
+        this.imagePath = this.node.hasAttribute('data-path') ? this.node.dataset.path : false;
+        this.initialized = false;
         this.components = {};
+        this.editData = {};
+        this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
 
         this.init();
     }
 
     changeView() {
+        const currentTextContent = this.viewSwitch.textContent;
+        const nextTextContent = this.viewSwitch.dataset.booleanText;
+
+        this.viewSwitch.textContent = nextTextContent;
+        this.viewSwitch.dataset.booleanText = currentTextContent;
+
         switch (this.currentView) {
             case 'focus':
-                this.components.focus.wrapper.classList.remove(MODIFIERS.FOCUS_HIDDEN);
-                this.components.cropper.wrapper.classList.add(MODIFIERS.CROPPER_HIDDEN);
+                if (this.components.cropper.component.viewSelect) {
+                    this.components.cropper.component.viewSelect.disabled = false;
+                }
+
+                this.components.focus.wrapper.classList.add(MODIFIERS.FOCUS_HIDDEN);
+                this.components.cropper.wrapper.classList.remove(MODIFIERS.CROPPER_HIDDEN);
+                this.currentView = 'cropper';
                 break;
 
             default:
-                this.components.cropper.wrapper.classList.remove(MODIFIERS.CROPPER_HIDDEN);
-                this.components.focus.wrapper.classList.add(MODIFIERS.FOCUS_HIDDEN);
+                if (this.croppedImageUrl !== 'undefined') {
+                    this.components.focus.component.setImage(this.croppedImageUrl);
+                }
+
+                if (this.components.cropper.component.viewSelect) {
+                    this.components.cropper.component.viewSelect.disabled = true;
+                }
+
+                this.components.cropper.wrapper.classList.add(MODIFIERS.CROPPER_HIDDEN);
+                this.components.focus.wrapper.classList.remove(MODIFIERS.FOCUS_HIDDEN);
+                this.currentView = 'focus';
                 break;
         }
     }
 
     init() {
+        if (this.savedEditData) {
+            this.editData = this.savedEditData;
+        }
+
         if (this.hasCropper) {
             this.components.cropper = {};
             this.components.cropper.wrapper = this.node.querySelector(
@@ -51,6 +79,25 @@ class EditImage {
             this.components.focus.component = new Focuspoint(this);
             this.components.focus.component.init();
         }
+
+        if (this.hasCropper && this.hasFocusSelect) {
+            this.viewSwitch = this.node.querySelector(SELECTORS.SELECT_FOCUS_POINT);
+
+            this.viewSwitch.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                this.changeView();
+            });
+        }
+
+        this.save.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            this.input.value = JSON.stringify(this.editData);
+        })
+
+        this.initialized = true;
+        this.node.dataset.initialized = true;
 
         console.log(this);
 
