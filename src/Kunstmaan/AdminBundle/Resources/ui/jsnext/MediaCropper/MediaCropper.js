@@ -7,14 +7,10 @@ class MediaCropper {
         this.EditImage = EditImage;
         this.node = EditImage.node;
         this.image = this.node.querySelector(SELECTORS.IMAGE);
-        this.imagePath = this.node.hasAttribute('data-path') ? this.node.dataset.path : false;
         this.viewSelect = this.EditImage.metaContainer.querySelector(SELECTORS.VIEW_SELECT);
         this.metaValueNodes = {};
         this.cropper = null;
         this.viewData = {};
-        this.EditImage.cropData = {};
-        this.savedCropData = this.EditImage.input.value !== '' ? JSON.parse(this.EditImage.input.value) : false;
-        this.initialized = false;
     }
 
     getValueNodes() {
@@ -25,9 +21,15 @@ class MediaCropper {
 
     updateValue({x, y, width, height}) {
         let small_crop_box_area = false;
+        const values = {
+            x: Math.ceil(x),
+            y: Math.ceil(y),
+            width: Math.ceil(width),
+            height: Math.ceil(height),
+        }
 
-        this.metaValueNodes.width.textContent = Math.ceil(width);
-        this.metaValueNodes.height.textContent = Math.ceil(height);
+        this.metaValueNodes.width.textContent = values.width;
+        this.metaValueNodes.height.textContent = values.height;
 
         if ((width || height) <= CROP_BOX_THRESHOLD && !small_crop_box_area) {
             this.node.classList.add(MODIFIERS.CROP_BOX_SMALL_CROPPED_AREA);
@@ -37,16 +39,16 @@ class MediaCropper {
             small_crop_box_area = false;
         }
 
-        if (this.viewData && this.currentView) {
-            if (!this.EditImage.cropData.hasOwnProperty(this.currentView)) {
-                this.EditImage.cropData[this.currentView] = {};
+        if (this.viewData && this.EditImage.currentCropView) {
+            if (!this.EditImage.editData.hasOwnProperty(this.EditImage.currentCropView)) {
+                this.EditImage.editData[this.EditImage.currentCropView] = {};
             }
-            this.EditImage.cropData[this.currentView].start = [x, y];
-            this.EditImage.cropData[this.currentView].size = [width, height];
+            this.EditImage.editData[this.EditImage.currentCropView].start = [values.x, values.y];
+            this.EditImage.editData[this.EditImage.currentCropView].size = [values.width, values.height];
         }
 
         this.EditImage.croppedImageUrl = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
-        console.log(this.EditImage.cropData);
+
     }
 
     addEventListeners() {
@@ -56,31 +58,25 @@ class MediaCropper {
         });
 
         this.viewSelect.addEventListener('change', () => {
-            this.currentView = this.viewSelect.value;
+            this.EditImage.currentCropView = this.viewSelect.value;
             this.cropper.destroy();
-            // if (this.selectableFocusPoint) {
-            //     this.focusPointComponent.reset();
-            //     this.focusPointComponent.toggleVisibility();
-            // }
+            if (this.EditImage.hasFocusSelect) {
+                this.EditImage.components.focus.component.reset();
+            }
             this.initCropper();
         });
-
-        // this.save.addEventListener('click', (e) => {
-        //     e.preventDefault();
-        //     this.input.value = JSON.stringify(this.cropData);
-        // });
     }
 
     initCropper() {
-        const entries = Object.entries(this.viewData[this.currentView]);
+        const entries = Object.entries(this.viewData[this.EditImage.currentCropView]);
         const config = CROPPER_CONFIG;
 
         for (const [key, value] of entries) {
             config[key] = value;
         }
 
-        if (this.EditImage.cropData.hasOwnProperty(this.currentView)) {
-            const savedValues = this.EditImage.cropData[this.currentView];
+        if (this.EditImage.editData.hasOwnProperty(this.EditImage.currentCropView)) {
+            const savedValues = this.EditImage.editData[this.EditImage.currentCropView];
 
             config.data = {
                 x: savedValues.start[0],
@@ -88,11 +84,6 @@ class MediaCropper {
                 width: savedValues.size[0],
                 height: savedValues.size[1],
             };
-
-            // if (savedValues.hasOwnProperty('class')) {
-            //     this.focusPointComponent.setSelectedFocus(savedValues.class);
-            //     this.focusPointComponent.setChoice(savedValues.class);
-            // }
         } else {
             config.data = null;
         }
@@ -113,23 +104,15 @@ class MediaCropper {
             });
             renderViewSelectOptions(this.viewSelect, this.viewData);
 
-            this.currentView = this.viewSelect.value;
+            this.EditImage.currentCropView = this.viewSelect.value;
         }
 
-
-        if (this.imagePath) {
-            this.image.src = this.imagePath;
-        }
-
-        if (this.savedCropData) {
-            this.EditImage.cropData = this.savedCropData;
+        if (this.EditImage.imagePath) {
+            this.image.src = this.EditImage.imagePath;
         }
 
         this.initCropper();
         this.addEventListeners();
-
-        this.initialized = true;
-        this.node.dataset.initialized = true;
     }
 }
 

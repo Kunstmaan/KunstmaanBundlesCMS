@@ -158,7 +158,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             var cropper;
 
             if (isCropable) {
-                cropper = parent.$('#' + linkedInputId + '-mediaCropperModal .js-media-cropper');
+                cropper = parent.$('#' + linkedInputId + '-image-edit-modal .js-image-edit');
             }
 
             $mediaChooser.addClass('media-chooser--choosen');
