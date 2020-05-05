@@ -9,6 +9,7 @@ kuma_lead_generation:
       email: E-mail
     message:
       thanks: Köszönjük!
+  #@todo backward compatible, need move to kuma_lead_generation.form...
   on_exit_intent:
     sensitivity:
       label: Érzékenység
