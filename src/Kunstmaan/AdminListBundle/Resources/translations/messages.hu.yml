@@ -13,6 +13,7 @@ kuma_admin_list:
     delete: Törlés
     move_up: Felfelé mozgatás
     move_down: Lefelé mozgatás
+#Filters
 filter:
   "true": "igaz"
   "false": "hamis"
