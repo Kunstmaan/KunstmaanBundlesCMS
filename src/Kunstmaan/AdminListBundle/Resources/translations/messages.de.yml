@@ -13,6 +13,7 @@ kuma_admin_list:
     delete: Löschen
     move_up: Nach oben
     move_down: Nach unten
+#Filters
 filter:
   "true": "wahr"
   "false": "falsch"
