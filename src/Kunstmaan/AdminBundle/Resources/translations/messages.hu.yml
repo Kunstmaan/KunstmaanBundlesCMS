@@ -1,4 +1,5 @@
 ---
+#Pages
 pages:
   title: Oldalak
   parts: Oldalelem
@@ -7,8 +8,10 @@ pages:
   copyfrom: Másolás innen
   createemptypage: Üres oldal létrehozása
   movingconfirmation: Biztos, hogy áthelyezi az oldalt?
+#Modules
 modules:
   title: Modulok
+#Settings
 settings:
   title: Beállítások
   maintanance: Karbantartás
@@ -33,14 +36,17 @@ settings:
     resolved: Megoldva
     unresolved: Megoldatlan
     resolve_all: Mindegyik megoldása
+#Tools
 tools:
   title: Eszközök
   clear_frontend_cache: Frontend cache törlése
   clear_backend_cache: Backend cache törlése
   clear_all_caches: Az összes cache törlése
   shutdown: Leállítás
+#Search
 search:
   title: Keresés
+#Forms
 form:
   cancel: Mégse
   delete: Törlés
