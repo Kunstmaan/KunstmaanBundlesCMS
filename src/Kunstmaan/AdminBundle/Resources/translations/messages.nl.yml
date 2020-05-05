@@ -1,4 +1,5 @@
 ---
+#Pages
 pages:
   title: Pagina's
   parts: PageParts
@@ -7,8 +8,10 @@ pages:
   copyfrom: Kopieer van taal
   createemptypage: Als lege pagina aanmaken
   movingconfirmation: U gaat "%title%" verplaatsen naar "%target%". Weet u dit zeker?
+#Modules
 modules:
   title: Modules
+#Settings
 settings:
   title: Instellingen
   maintanance: Onderhoud
@@ -33,14 +36,17 @@ settings:
     resolved: Resolved
     unresolved: Unresolved
     resolve_all: Resolve all
+#Tools
 tools:
   title: Hulpmiddelen
   clear_frontend_cache: Frontend cache legen
   clear_backend_cache: Backend cache legen
   clear_all_caches: Alle caches legen
   shutdown: Uitschakelen
+#Search
 search:
   title: Zoeken
+#Forms
 form:
   cancel: Annuleer
   delete: Verwijder
