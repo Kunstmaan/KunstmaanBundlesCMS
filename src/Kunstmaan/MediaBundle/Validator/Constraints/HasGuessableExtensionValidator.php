@@ -5,7 +5,10 @@ namespace Kunstmaan\MediaBundle\Validator\Constraints;
 use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
@@ -25,8 +28,16 @@ class HasGuessableExtensionValidator extends ConstraintValidator
      */
     private $mimeTypeGuesser;
 
+    /** @var MimeTypes */
+    private $mimeTypes;
+
+    public function __construct($mimeTypes = null)
+    {
+        $this->mimeTypes = $mimeTypes;
+    }
+
     /**
-     * @param $value
+     * @param            $value
      * @param Constraint $constraint
      *
      * @throws ConstraintDefinitionException
@@ -35,17 +46,17 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof HasGuessableExtension) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\HasGuessableExtension');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\HasGuessableExtension');
         }
 
         if (!$value instanceof UploadedFile) {
             return;
         }
 
-        $contentType = $this->mimeTypeGuesser->guess($value->getPathname());
+        $contentType = $this->guessMimeType($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
         if (!\array_key_exists('extension', $pathInfo)) {
-            $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
+            $pathInfo['extension'] = $this->getExtensions($contentType);
         }
 
         if ($pathInfo['extension'] === null) {
@@ -55,11 +66,30 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         }
     }
 
+    private function guessMimeType($pathName)
+    {
+        if ($this->mimeTypeGuesser !== null) {
+            return $this->mimeTypeGuesser->guess($pathName);
+        }
+
+        return $this->mimeTypes->guessMimeType($pathName);
+    }
+
+    private function getExtensions($mimeType)
+    {
+        if ($this->extensionGuesser !== null) {
+            return $this->extensionGuesser->guess($mimeType);
+        }
+
+        return $this->mimeTypes->getExtensions($mimeType)[0] ?? null;
+    }
+
     /**
      * @param ExtensionGuesserFactoryInterface $extensionGuesserFactory
      */
     public function setExtensionGuesser(ExtensionGuesserFactoryInterface $extensionGuesserFactory)
     {
+        @trigger_error('Calling the setExtensionGuesser method of this service is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime.types" service in KunstmaanMediaBundle 6.0.', E_USER_DEPRECATED);
         $this->extensionGuesser = $extensionGuesserFactory->get();
     }
 
@@ -68,6 +98,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
      */
     public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
+        @trigger_error('Calling the setMimeTypeGuesser method of this service is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime.types" service in KunstmaanMediaBundle 6.0.', E_USER_DEPRECATED);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
     }
 }

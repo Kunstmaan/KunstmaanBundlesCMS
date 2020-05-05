@@ -7,6 +7,7 @@ use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\MimeTypes;
 
 /**
  * FileHandler
@@ -16,14 +17,14 @@ class ImageHandler extends FileHandler
     protected $aviaryApiKey;
 
     /**
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
-     * @param string                           $aviaryApiKey                     The aviary key
+     * @param int                                        $priority
+     * @param MimeTypeGuesserFactoryInterface|MimeTypes  $mimeTypeGuesserFactory
+     * @param ExtensionGuesserFactoryInterface|MimeTypes $extensionGuesserFactoryInterface
+     * @param string                                     $aviaryApiKey
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface, $aviaryApiKey)
+    public function __construct($priority, $mimeTypeGuesser, $extensionGuesser, $aviaryApiKey)
     {
-        parent::__construct($priority, $mimeTypeGuesserFactory, $extensionGuesserFactoryInterface);
+        parent::__construct($priority, $mimeTypeGuesser, $extensionGuesser);
         $this->aviaryApiKey = $aviaryApiKey;
     }
 
@@ -81,7 +82,7 @@ class ImageHandler extends FileHandler
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        return $basepath . $media->getUrl();
+        return $basepath.$media->getUrl();
     }
 
     /**

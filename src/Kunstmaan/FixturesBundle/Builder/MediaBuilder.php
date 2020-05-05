@@ -9,7 +9,8 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Symfony\Component\Mime\MimeTypes;
 
 class MediaBuilder implements BuilderInterface
 {
@@ -18,17 +19,21 @@ class MediaBuilder implements BuilderInterface
     private $fileHandler;
 
     /**
-     * @var MimeTypeGuesserInterface
+     * @var MimeTypes|MimeTypeGuesser
      */
     private $mimeTypeGuesser;
 
     private $folder;
 
-    public function __construct(EntityManager $em, FileHandler $fileHandler, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
+    public function __construct(EntityManager $em, FileHandler $fileHandler, $mimeTypeGuesser)
     {
         $this->em = $em;
         $this->fileHandler = $fileHandler;
-        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+        $this->mimeTypeGuesser = $mimeTypeGuesser;
+        if ($mimeTypeGuesser instanceof MimeTypeGuesserFactoryInterface) {
+            $this->mimeTypeGuesser = $mimeTypeGuesser->get();
+            @trigger_error('Passing the "@kunstmaan_media.mimetype_guesser.factory" service as second argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
+        }
     }
 
     public function canBuild(Fixture $fixture)
@@ -44,17 +49,17 @@ class MediaBuilder implements BuilderInterface
     {
         $properties = $fixture->getProperties();
         if (!isset($properties['folder'])) {
-            throw new \Exception('There is no folder specified for media fixture ' . $fixture->getName());
+            throw new \Exception('There is no folder specified for media fixture '.$fixture->getName());
         }
 
-        $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => $properties['folder']));
+        $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(['rel' => $properties['folder']]);
 
         if (!$this->folder instanceof Folder) {
-            $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('internalName' => $properties['folder']));
+            $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(['internalName' => $properties['folder']]);
         }
 
         if (!$this->folder instanceof Folder) {
-            throw new \Exception('Could not find the specified folder for media fixture ' . $fixture->getName());
+            throw new \Exception('Could not find the specified folder for media fixture '.$fixture->getName());
         }
     }
 
@@ -65,7 +70,7 @@ class MediaBuilder implements BuilderInterface
 
         $filePath = $media->getOriginalFilename();
         $data = new File($filePath, true);
-        $contentType = $this->mimeTypeGuesser->guess($data->getPathname());
+        $contentType = $this->guessMimeType($data->getPathname());
 
         if (method_exists($data, 'getClientOriginalName')) {
             $media->setOriginalFilename($data->getClientOriginalName());
@@ -85,6 +90,15 @@ class MediaBuilder implements BuilderInterface
         $this->fileHandler->prepareMedia($media);
         $this->fileHandler->updateMedia($media);
         $this->fileHandler->saveMedia($media);
+    }
+
+    private function guessMimeType($pathName)
+    {
+        if ($this->mimeTypeGuesser instanceof MimeTypeGuesser) {
+            return $this->mimeTypeGuesser->guess($pathName);
+        }
+
+        return $this->mimeTypeGuesser->guessMimeType($pathName);
     }
 
     public function postFlushBuild(Fixture $fixture)

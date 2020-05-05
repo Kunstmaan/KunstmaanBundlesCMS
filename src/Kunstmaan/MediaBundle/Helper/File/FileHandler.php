@@ -10,9 +10,10 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\MimeTypes;
 
 /**
  * FileHandler
@@ -35,12 +36,12 @@ class FileHandler extends AbstractMediaHandler
     public $fileSystem;
 
     /**
-     * @var MimeTypeGuesserInterface
+     * @var MimeTypes|MimeTypeGuesser
      */
     public $mimeTypeGuesser;
 
     /**
-     * @var ExtensionGuesserInterface
+     * @var MimeTypes|ExtensionGuesser
      */
     public $extensionGuesser;
 
@@ -49,7 +50,7 @@ class FileHandler extends AbstractMediaHandler
      *
      * @var array
      */
-    private $blacklistedExtensions = array();
+    private $blacklistedExtensions = [];
 
     /**
      * @var SlugifierInterface
@@ -59,15 +60,23 @@ class FileHandler extends AbstractMediaHandler
     /**
      * Constructor
      *
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
+     * @param int                                   $priority
+     * @param MimeTypeGuesserFactoryInterface       $mimeTypeGuesserFactory
+     * @param ExtensionGuesserFactoryInterface|null $extensionGuesserFactoryInterface
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
+    public function __construct($priority, $mimeTypeGuesser, $extensionGuesser)
     {
         parent::__construct($priority);
-        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
-        $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
+        $this->extensionGuesser = $extensionGuesser;
+        if ($extensionGuesser instanceof ExtensionGuesserFactoryInterface) {
+            $this->extensionGuesser = $extensionGuesser->get();
+            @trigger_error('Passing the "@kunstmaan_media.extension_guesser.factory" service as third argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
+        }
+        $this->mimeTypeGuesser = $mimeTypeGuesser;
+        if ($mimeTypeGuesser instanceof MimeTypeGuesserFactoryInterface) {
+            $this->mimeTypeGuesser = $mimeTypeGuesser->get();
+            @trigger_error('Passing the "@kunstmaan_media.mimetype_guesser.factory" service as second argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
+        }
     }
 
     /**
@@ -136,7 +145,7 @@ class FileHandler extends AbstractMediaHandler
     {
         if ($object instanceof File ||
             ($object instanceof Media &&
-            (is_file($object->getContent()) || $object->getLocation() == 'local'))
+                (is_file($object->getContent()) || $object->getLocation() == 'local'))
         ) {
             return true;
         }
@@ -180,12 +189,12 @@ class FileHandler extends AbstractMediaHandler
             $media->setContent($file);
         }
 
-        $contentType = $this->mimeTypeGuesser->guess($content->getPathname());
+        $contentType = $this->guessMimeType($content->getPathname());
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
 
             if (!\array_key_exists('extension', $pathInfo)) {
-                $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
+                $pathInfo['extension'] = $this->getExtensions($contentType);
             }
 
             $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
@@ -198,7 +207,7 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setContentType($contentType);
         $media->setFileSize(filesize($media->getContent()));
-        $media->setUrl($this->mediaPath . $this->getFilePath($media));
+        $media->setUrl($this->mediaPath.$this->getFilePath($media));
         $media->setLocation('local');
     }
 
@@ -277,7 +286,7 @@ class FileHandler extends AbstractMediaHandler
             }
             $media->setContent($data);
 
-            $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
+            $contentType = $this->guessMimeType($media->getContent()->getPathname());
             $media->setContentType($contentType);
 
             return $media;
@@ -299,12 +308,12 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-            FileHandler::TYPE => array(
+        return [
+            FileHandler::TYPE => [
                 'type' => FileHandler::TYPE,
                 'name' => 'media.file.add',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -315,7 +324,7 @@ class FileHandler extends AbstractMediaHandler
     private function getFilePath(Media $media)
     {
         $filename = $media->getOriginalFilename();
-        $filename = str_replace(array('/', '\\', '%'), '', $filename);
+        $filename = str_replace(['/', '\\', '%'], '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.implode('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
@@ -342,5 +351,23 @@ class FileHandler extends AbstractMediaHandler
     private function getFileFolderPath(Media $media)
     {
         return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
+    }
+
+    private function guessMimeType($pathName)
+    {
+        if ($this->mimeTypeGuesser instanceof MimeTypeGuesser) {
+            return $this->mimeTypeGuesser->guess($pathName);
+        }
+
+        return $this->mimeTypeGuesser->guessMimeType($pathName);
+    }
+
+    private function getExtensions($mimeType)
+    {
+        if ($this->extensionGuesser instanceof ExtensionGuesser) {
+            return $this->extensionGuesser->guess($mimeType);
+        }
+
+        return $this->extensionGuesser->getExtensions($mimeType)[0] ?? '';
     }
 }

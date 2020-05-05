@@ -4,7 +4,13 @@ namespace Kunstmaan\MediaBundle\Helper;
 
 use Kunstmaan\MediaBundle\Helper\File\SVGMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 
+@trigger_error(sprintf('The "%s" class is deprecated since KunstmaanMediaBundle 5.6 and will be removed in KunstmaanMediaBundle 6.0. Use the symfony/mime component instead.', __CLASS__), E_USER_DEPRECATED);
+
+/**
+ * @deprecated this class is deprecated since KunstmaanMediaBundle 5.6 and will be removed in KunstmaanMediaBundle 6.0
+ */
 class MimeTypeGuesserFactory implements MimeTypeGuesserFactoryInterface
 {
     /**
@@ -12,7 +18,7 @@ class MimeTypeGuesserFactory implements MimeTypeGuesserFactoryInterface
      *
      * NOTE: If you override this, you'll probably still have to register the SVGMimeTypeGuesser as last guesser...
      *
-     * @return MimeTypeGuesser
+     * @return MimeTypeGuesserInterface
      */
     public function get()
     {
