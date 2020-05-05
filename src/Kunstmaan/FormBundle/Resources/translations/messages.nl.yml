@@ -93,6 +93,7 @@ kuma_form:
         created: Datum
         language: Taal
         ip_address: IP-adres
+#Form Submissions
 formsubmissions:
   index:
     title: Formulierpagina's met inzendingen
