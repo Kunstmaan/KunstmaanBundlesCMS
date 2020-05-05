@@ -1,4 +1,5 @@
 ---
+#Pages
 pages:
   title: Páginas
   parts: PageParts
@@ -7,8 +8,10 @@ pages:
   copyfrom: Copiar de otro idioma
   createemptypage: Crear como página vacía
   movingconfirmation: You are moving "%title%" to "%target%", are you sure?
+#Modules
 modules:
   title: Modulos
+#Settings
 settings:
   title: Ajustes
   maintanance: Mantenimiento
@@ -33,14 +36,17 @@ settings:
     resolved: Resolved
     unresolved: Unresolved
     resolve_all: Resolve all
+#Tools
 tools:
   title: Herramientas
   clear_frontend_cache: Borrar caché frontend
   clear_backend_cache: Borrar caché backend
   clear_all_caches: Borrar toda la caché
   shutdown: Apagar
+#Search
 search:
   title: Search
+#Forms
 form:
   cancel: Cancelar
   delete: Eliminar
