@@ -93,6 +93,7 @@ kuma_form:
         created: Data
         language: Język
         ip_address: Address IP
+#Form Submissions
 formsubmissions:
   index:
     title: Strony z wysłanymi formularzami
