@@ -93,6 +93,7 @@ kuma_form:
         created: Dátum
         language: Nyelv
         ip_address: IP cím
+#Form Submissions
 formsubmissions:
   index:
     title: Űrlapos oldalak
