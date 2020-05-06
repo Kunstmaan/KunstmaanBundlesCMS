@@ -5,7 +5,7 @@ import { Focuspoint } from './Focuspoint';
 class EditImage {
     constructor(node) {
         this.node = node;
-        this.hasCropper = node.hasAttribute('data-cropping-views');
+        this.hasCropper = node.hasAttribute('data-use-cropping');
         this.hasFocusSelect = node.hasAttribute('data-focus-point-classes');
         this.metaContainer = this.node.querySelector(SELECTORS.META_CONTAINER);
         this.save = this.metaContainer.querySelector(SELECTORS.SAVE);
@@ -14,6 +14,7 @@ class EditImage {
         this.initialized = false;
         this.components = {};
         this.editData = {};
+        this.viewData = {};
         this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
 
         this.init();
@@ -54,6 +55,19 @@ class EditImage {
     }
 
     init() {
+        const viewData = JSON.parse(this.node.dataset.croppingViews);
+
+        if (viewData.length > 0) {
+            viewData.forEach((view) => {
+                this.viewData[view.name] = {};
+                this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
+                this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
+                this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
+            });
+        }
+
+        this.currentCropView = Object.keys(this.viewData)[0];
+
         if (this.savedEditData) {
             this.editData = this.savedEditData;
         }
@@ -98,10 +112,6 @@ class EditImage {
 
         this.initialized = true;
         this.node.dataset.initialized = true;
-
-        console.log(this);
-
-
     }
 }
 

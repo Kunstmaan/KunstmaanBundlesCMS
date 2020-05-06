@@ -8,9 +8,7 @@ class Focuspoint {
         this.img = EditImage.node.querySelector(SELECTORS.FOCUS_POINT_IMG);
         this.choices = [...EditImage.node.querySelectorAll(SELECTORS.FOCUS_POINT_CHOICE)];
         this.metaValueHolder = EditImage.node.querySelector(SELECTORS.META_FOCUS_VALUE);
-
         this.selectedFocus = null;
-
         this.addEventListeners = this.addEventListeners.bind(this);
         this.setSelectedFocus = this.setSelectedFocus.bind(this);
         this.setImage = this.setImage.bind(this);
@@ -30,7 +28,10 @@ class Focuspoint {
     }
 
     setEditData() {
-        if (this.selectedFocus !== null) {
+        if (this.selectedFocus !== null && this.EditImage.currentCropView) {
+            if (!this.EditImage.editData.hasOwnProperty(this.EditImage.currentCropView)) {
+                this.EditImage.editData[this.EditImage.currentCropView] = {};
+            }
             this.EditImage.editData[this.EditImage.currentCropView].class = this.selectedFocus;
         }
     }
@@ -55,7 +56,6 @@ class Focuspoint {
     }
 
     addEventListeners() {
-        // this.toggle.addEventListener('click', this.toggleVisibility);
         this.choices.forEach((choice) => {
             choice.addEventListener('click', (e) => {
                 this.setSelectedFocus(choice.value);

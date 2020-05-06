@@ -138,8 +138,9 @@
                 <div class="image-edit js-image-edit"
                     data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}"
                     {% if use_cropping %}
-                        data-cropping-views="{{ cropping_views }}"
+                        data-use-cropping
                     {% endif %}
+                    data-cropping-views="{{ cropping_views }}"
                     {% if use_focus_point %}
                         data-focus-point-classes="{{ focus_point_classes }}"
                     {% endif %}

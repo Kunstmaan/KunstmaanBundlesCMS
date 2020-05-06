@@ -68,7 +68,7 @@ class MediaCropper {
     }
 
     initCropper() {
-        const entries = Object.entries(this.viewData[this.EditImage.currentCropView]);
+        const entries = Object.entries(this.EditImage.viewData[this.EditImage.currentCropView]);
         const config = CROPPER_CONFIG;
 
         for (const [key, value] of entries) {
@@ -94,17 +94,8 @@ class MediaCropper {
     init() {
         this.getValueNodes();
 
-        const viewData = JSON.parse(this.node.dataset.croppingViews);
-        if (viewData.length > 0) {
-            viewData.forEach((view) => {
-                this.viewData[view.name] = {};
-                this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
-                this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
-                this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
-            });
-            renderViewSelectOptions(this.viewSelect, this.viewData);
-
-            this.EditImage.currentCropView = this.viewSelect.value;
+        if (this.EditImage.viewData.length > 0) {
+            renderViewSelectOptions(this.viewSelect, this.EditImage.viewData);
         }
 
         if (this.EditImage.imagePath) {

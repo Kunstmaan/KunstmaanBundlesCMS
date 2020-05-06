@@ -260,7 +260,7 @@ var _Focuspoint = __webpack_require__(6);
 class EditImage {
     constructor(node) {
         this.node = node;
-        this.hasCropper = node.hasAttribute('data-cropping-views');
+        this.hasCropper = node.hasAttribute('data-use-cropping');
         this.hasFocusSelect = node.hasAttribute('data-focus-point-classes');
         this.metaContainer = this.node.querySelector(_config.SELECTORS.META_CONTAINER);
         this.save = this.metaContainer.querySelector(_config.SELECTORS.SAVE);
@@ -269,6 +269,7 @@ class EditImage {
         this.initialized = false;
         this.components = {};
         this.editData = {};
+        this.viewData = {};
         this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
 
         this.init();
@@ -309,6 +310,19 @@ class EditImage {
     }
 
     init() {
+        const viewData = JSON.parse(this.node.dataset.croppingViews);
+
+        if (viewData.length > 0) {
+            viewData.forEach(view => {
+                this.viewData[view.name] = {};
+                this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
+                this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
+                this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
+            });
+        }
+
+        this.currentCropView = Object.keys(this.viewData)[0];
+
         if (this.savedEditData) {
             this.editData = this.savedEditData;
         }
@@ -349,8 +363,6 @@ class EditImage {
 
         this.initialized = true;
         this.node.dataset.initialized = true;
-
-        console.log(this);
     }
 }
 
@@ -377,9 +389,7 @@ class Focuspoint {
         this.img = EditImage.node.querySelector(_config.SELECTORS.FOCUS_POINT_IMG);
         this.choices = [...EditImage.node.querySelectorAll(_config.SELECTORS.FOCUS_POINT_CHOICE)];
         this.metaValueHolder = EditImage.node.querySelector(_config.SELECTORS.META_FOCUS_VALUE);
-
         this.selectedFocus = null;
-
         this.addEventListeners = this.addEventListeners.bind(this);
         this.setSelectedFocus = this.setSelectedFocus.bind(this);
         this.setImage = this.setImage.bind(this);
@@ -399,7 +409,10 @@ class Focuspoint {
     }
 
     setEditData() {
-        if (this.selectedFocus !== null) {
+        if (this.selectedFocus !== null && this.EditImage.currentCropView) {
+            if (!this.EditImage.editData.hasOwnProperty(this.EditImage.currentCropView)) {
+                this.EditImage.editData[this.EditImage.currentCropView] = {};
+            }
             this.EditImage.editData[this.EditImage.currentCropView].class = this.selectedFocus;
         }
     }
@@ -424,7 +437,6 @@ class Focuspoint {
     }
 
     addEventListeners() {
-        // this.toggle.addEventListener('click', this.toggleVisibility);
         this.choices.forEach(choice => {
             choice.addEventListener('click', e => {
                 this.setSelectedFocus(choice.value);
@@ -537,7 +549,7 @@ class MediaCropper {
     }
 
     initCropper() {
-        const entries = Object.entries(this.viewData[this.EditImage.currentCropView]);
+        const entries = Object.entries(this.EditImage.viewData[this.EditImage.currentCropView]);
         const config = _config.CROPPER_CONFIG;
 
         for (const [key, value] of entries) {
@@ -563,17 +575,8 @@ class MediaCropper {
     init() {
         this.getValueNodes();
 
-        const viewData = JSON.parse(this.node.dataset.croppingViews);
-        if (viewData.length > 0) {
-            viewData.forEach(view => {
-                this.viewData[view.name] = {};
-                this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
-                this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
-                this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
-            });
-            (0, _renderViewSelectOptions.renderViewSelectOptions)(this.viewSelect, this.viewData);
-
-            this.EditImage.currentCropView = this.viewSelect.value;
+        if (this.EditImage.viewData.length > 0) {
+            (0, _renderViewSelectOptions.renderViewSelectOptions)(this.viewSelect, this.EditImage.viewData);
         }
 
         if (this.EditImage.imagePath) {
