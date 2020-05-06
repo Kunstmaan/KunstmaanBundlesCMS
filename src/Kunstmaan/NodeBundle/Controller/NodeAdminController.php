@@ -447,6 +447,53 @@ class NodeAdminController extends Controller
     }
 
     /**
+     * @Route("/deleted", name="KunstmaanNodeBundle_deleted_nodes")
+     * @Template("@KunstmaanNode/Admin/list.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function removedNodesAction(Request $request)
+    {
+        $this->init($request);
+
+        $locale = $this->locale;
+        $acl = $this->authorizationChecker;
+
+        $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
+            if ($acl->isGranted(PermissionMap::PERMISSION_DELETE, $item->getNode())) {
+                return [
+                    'path' => 'KunstmaanNodeBundle_nodes_delete_undo',
+                    'params' => [
+                        '_locale' => $locale,
+                        'id' => $item->getNode()->getId()
+                    ],
+                ];
+            }
+
+            return null;
+        };
+
+        $nodeAdminListConfigurator = $this->getNodeAdminListConfigurator();
+        $nodeAdminListConfigurator->setDeletedPagesOnly(true);
+        $nodeAdminListConfigurator->addSimpleItemAction('action.undo', $itemRoute, 'undo');
+        $nodeAdminListConfigurator->addListAction(
+            new SimpleListAction(
+                [
+                    'path' => 'KunstmaanNodeBundle_nodes',
+                    'params' => [],
+                ],
+                'view_pages.label',
+                null,
+                '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
+            )
+        );
+
+        return $this->renderAdminList($request, $nodeAdminListConfigurator);
+    }
+
+    /**
      * @Route(
      *      "/{id}/delete/undo",
      *      requirements={"id" = "\d+"},
@@ -1248,7 +1295,7 @@ class NodeAdminController extends Controller
         $this->em->persist($node);
 
         foreach ($node->getChildren() as $child) {
-            $this->undoDeleteNode($node);
+            $this->undoDeleteNode($child);
         }
     }
 
@@ -1358,53 +1405,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/deleted", name="KunstmaanNodeBundle_deleted_nodes")
-     * @Template("@KunstmaanNode/Admin/list.html.twig")
-     *
      * @param Request $request
-     *
-     * @return array
-     */
-    public function removedNodesAction(Request $request)
-    {
-        $this->init($request);
-
-        $locale = $this->locale;
-        $acl = $this->authorizationChecker;
-
-        $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
-            if ($acl->isGranted(PermissionMap::PERMISSION_DELETE, $item->getNode())) {
-                return [
-                    'path' => 'KunstmaanNodeBundle_nodes_delete_undo',
-                    'params' => [
-                        '_locale' => $locale,
-                        'id' => $item->getNode()->getId()
-                    ],
-                ];
-            }
-
-            return null;
-        };
-
-        $nodeAdminListConfigurator = $this->getNodeAdminListConfigurator();
-        $nodeAdminListConfigurator->setDeletedPagesOnly(true);
-        $nodeAdminListConfigurator->addSimpleItemAction('action.undo', $itemRoute, 'undo');
-        $nodeAdminListConfigurator->addListAction(
-            new SimpleListAction(
-                [
-                    'path' => 'KunstmaanNodeBundle_nodes',
-                    'params' => [],
-                ],
-                'view_pages.label',
-                null,
-                '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
-            )
-        );
-
-        return $this->renderAdminList($request, $nodeAdminListConfigurator);
-    }
-
-    /**
      * @var NodeAdminListConfigurator $nodeAdminListConfigurator
      *
      * @return array

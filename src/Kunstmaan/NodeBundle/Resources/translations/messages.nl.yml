@@ -15,6 +15,7 @@ action:
 modal:
   sourcelanguage: "Bron taal"
 pages:
+  view_action: "Bekijk pagina's"
   copynotavailable: "Gelieve de bovenliggende pagina eerst te vertalen"
 kuma_node:
   form:
@@ -177,3 +178,7 @@ kuma_node:
   widget:
     choose: Kies
     url_chooser: URL-keuze
+deleted_pages:
+    title: "Verwijderde pagina's"
+    additional_title: "Deze lijst bevat alle verwijderde pagina's chronologisch gesorteerd op laatste wijziging."
+    view_action: "Bekijk verwijderde pagina's"

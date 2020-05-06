@@ -51,7 +51,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     /**
      * @var bool
      */
-    private $deletedPagesOnly;
+    private $deletedPagesOnly = false;
 
     /**
      * @param EntityManager $em         The entity

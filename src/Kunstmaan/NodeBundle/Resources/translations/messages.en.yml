@@ -17,6 +17,7 @@ modal:
     sourcelanguage: "Source language"
 
 pages:
+    view_action: 'View pages'
     copynotavailable: "Please translate the parent page first"
 
 kuma_node:
@@ -187,3 +188,8 @@ toolbar:
     node:
         title: 'Page title'
         edit: 'Edit page'
+
+deleted_pages:
+    title: 'Deleted pages'
+    additional_title: 'This list contains all the deleted pages, chronologically ordered by updated date.'
+    view_action: 'View deleted pages'
