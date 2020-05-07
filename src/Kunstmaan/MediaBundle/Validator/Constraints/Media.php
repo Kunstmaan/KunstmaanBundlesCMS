@@ -9,16 +9,16 @@ use Symfony\Component\Validator\Constraint;
  */
 class Media extends Constraint
 {
-    const NOT_FOUND_ERROR = 1;
-    const NOT_READABLE_ERROR = 2;
-    const EMPTY_ERROR = 3;
-    const INVALID_MIME_TYPE_ERROR = 5;
-    const TOO_WIDE_ERROR = 11;
-    const TOO_NARROW_ERROR = 12;
-    const TOO_HIGH_ERROR = 13;
-    const TOO_LOW_ERROR = 14;
+    public const NOT_FOUND_ERROR = 'b707694b-ff60-4f3f-a1bb-22ecae5b6e0d';
+    public const NOT_READABLE_ERROR = 'b4fca756-28db-4c71-adfc-ef2a0c3c3d7c';
+    public const EMPTY_ERROR = 'bb60ad41-e149-407f-b52c-35023d123016';
+    public const INVALID_MIME_TYPE_ERROR = 'a6afff66-fe95-4f97-8753-de0b0ec9cdf3';
+    public const TOO_WIDE_ERROR = '30d779e0-0bb2-48d8-8571-9ce592ff04d3';
+    public const TOO_NARROW_ERROR = '2420b5ba-fd3e-4bf4-9f81-a91132ec42a3';
+    public const TOO_HIGH_ERROR = '9de7ece8-7837-4a6a-9602-6d0f4d2bd5fb';
+    public const TOO_LOW_ERROR = '8833baac-1c7f-402c-96b5-1cf7ac2eb955';
 
-    protected static $errorNames = array(
+    protected static $errorNames = [
         self::NOT_FOUND_ERROR => 'NOT_FOUND_ERROR',
         self::NOT_READABLE_ERROR => 'NOT_READABLE_ERROR',
         self::EMPTY_ERROR => 'EMPTY_ERROR',
@@ -27,7 +27,7 @@ class Media extends Constraint
         self::TOO_LOW_ERROR => 'TOO_LOW_ERROR',
         self::TOO_WIDE_ERROR => 'TOO_WIDE_ERROR',
         self::TOO_NARROW_ERROR => 'TOO_NARROW_ERROR',
-    );
+    ];
 
     public $minHeight;
 
@@ -39,7 +39,7 @@ class Media extends Constraint
 
     public $binaryFormat;
 
-    public $mimeTypes = array();
+    public $mimeTypes = [];
 
     public $notFoundMessage = 'The file could not be found.';
 
@@ -68,9 +68,4 @@ class Media extends Constraint
     public $uploadExtensionErrorMessage = 'A PHP extension caused the upload to fail.';
 
     public $uploadErrorMessage = 'The file could not be uploaded.';
-
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
-    }
 }

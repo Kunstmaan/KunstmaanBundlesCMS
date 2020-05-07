@@ -9,16 +9,11 @@ use Symfony\Component\Validator\Constraint;
  */
 class HasGuessableExtension extends Constraint
 {
-    const NOT_GUESSABLE_ERROR = 1;
+    public const NOT_GUESSABLE_ERROR = '496c3e10-17a0-4bb0-b3ad-c2bf99731703';
 
-    protected static $errorNames = array(
+    protected static $errorNames = [
         self::NOT_GUESSABLE_ERROR => 'NOT_GUESSABLE_ERROR',
-    );
+    ];
 
     public $notGuessableErrorMessage = 'The uploaded file has no extension and could not be automatically guessed by the system.';
-
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
-    }
 }
