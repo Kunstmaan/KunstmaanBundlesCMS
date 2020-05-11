@@ -59,6 +59,11 @@ class ActionsMenuBuilder
     private $isEditableNode = true;
 
     /**
+     * @var string
+     */
+    private $previewTargetName;
+
+    /**
      * @var bool
      */
     private $enableExportPageTemplate;
@@ -71,6 +76,7 @@ class ActionsMenuBuilder
      * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
      * @param bool                          $enableExportPageTemplate
+     * @param string                        $previewTargetName
      */
     public function __construct(
         FactoryInterface $factory,
@@ -79,7 +85,8 @@ class ActionsMenuBuilder
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
-        $enableExportPageTemplate = true
+        $enableExportPageTemplate,
+        $previewTargetName
     ) {
         $this->factory = $factory;
         $this->em = $em;
@@ -88,6 +95,7 @@ class ActionsMenuBuilder
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
+        $this->previewTargetName = $previewTargetName;
     }
 
     /**
@@ -227,7 +235,7 @@ class ActionsMenuBuilder
                         ]
                     ),
                     'linkAttributes' => [
-                        'target' => '_blank',
+                        'target' => $this->previewTargetName,
                         'class' => 'btn btn-default btn--raise-on-hover',
                     ],
                 ]
@@ -271,7 +279,7 @@ class ActionsMenuBuilder
                             ['url' => $activeNodeTranslation->getUrl()]
                         ),
                         'linkAttributes' => [
-                            'target' => '_blank',
+                            'target' => $this->previewTargetName,
                             'class' => 'btn btn-default btn--raise-on-hover',
                         ],
                     ]
