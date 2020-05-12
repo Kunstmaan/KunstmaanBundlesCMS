@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.5.3 / 2020-05-12
+
+* [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.5.2 / 2020-03-24
 
 * [GeneratorBundle] getParameter should be called on the controller class [#2654](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2654) ([@acrobat](https://github.com/acrobat)) 
@@ -17,6 +22,11 @@
 * [AdminBundle] Inject correct dependency in UserProcessor [#2623](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2623) ([@acrobat](https://github.com/acrobat)) 
 * [AllBundles] Replace deprecated controller routing notation with fqcn [#2622](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2622) ([@acrobat](https://github.com/acrobat)) 
 * [RedirectBundle] Replace deprecated RedirectableUrlMatcher [#2610](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2610) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.4.5 / 2020-05-12
+
+* [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
 
 ## 5.4.4 / 2020-03-18
            
@@ -116,6 +126,10 @@
 * [AllBundles] Replace deprecated twig namespaces by the new namespace format [#2449](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2449) ([@acrobat](https://github.com/acrobat)) 
 * [AllBundles] Remove deprecated FrameworkExtraBundle annotations [#2448](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2448) ([@acrobat](https://github.com/acrobat)) 
 * [GeneratorBundle] Improved the generated article classes [#2447](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2447) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.3.14 / 2020-05-12
+
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
 
 ## 5.3.13 / 2020-03-18
 
