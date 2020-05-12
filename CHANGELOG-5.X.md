@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.5.3 / 2020-05-12
+
+* [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.5.2 / 2020-03-24
 
 * [GeneratorBundle] getParameter should be called on the controller class [#2654](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2654) ([@acrobat](https://github.com/acrobat)) 
