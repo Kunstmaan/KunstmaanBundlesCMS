@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.4.5 / 2020-05-12
+
+* [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.4 / 2020-03-18
            
 * [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
