@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.3.14 / 2020-05-12
+
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.3.13 / 2020-03-18
 
 * [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
