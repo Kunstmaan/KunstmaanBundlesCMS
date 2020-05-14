@@ -82,7 +82,7 @@ class URLHelper
                     $fullTag = $match[0];
                     $hostId = $match[2];
 
-                    $hostConfig = !empty($hostId) ? $this->domainConfiguration->getFullHostById((int) $hostId) : null;
+                    $hostConfig = !empty($hostId) ? $this->domainConfiguration->getFullHostById($hostId) : null;
                     $host = null !== $hostConfig && array_key_exists('host', $hostConfig) ? $hostConfig['host'] : null;
                     $hostBaseUrl = $this->domainConfiguration->getHostBaseUrl($host);
 

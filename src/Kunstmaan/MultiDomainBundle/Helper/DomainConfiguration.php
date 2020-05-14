@@ -291,7 +291,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @param int $id
+     * @param string|int $id
      *
      * @return array
      */
