@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kunstmaan\NodeBundle\Helper;
-
 
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -10,14 +8,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 interface NodeMenuItemInterface
 {
-    /**
-     * @param Node                    $node            The node
-     * @param NodeTranslation         $nodeTranslation The nodetranslation
-     * @param NodeMenuItem|null|false $parent          The parent nodemenuitem
-     * @param NodeMenu                $menu            The menu
-     */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu);
-
     /**
      * @return int
      */

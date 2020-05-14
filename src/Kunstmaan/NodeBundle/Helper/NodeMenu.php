@@ -113,10 +113,11 @@ class NodeMenu
     }
 
     /**
-     * @param Node $node
+     * @param Node            $node
      * @param NodeTranslation $nodeTranslation
-     * @param bool $parent
-     * @param NodeMenu $menu
+     * @param bool            $parent
+     * @param NodeMenu        $menu
+     *
      * @return NodeMenuItemInterface
      */
     protected function createMenuItem(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu)
