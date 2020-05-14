@@ -113,6 +113,18 @@ class NodeMenu
     }
 
     /**
+     * @param Node $node
+     * @param NodeTranslation $nodeTranslation
+     * @param bool $parent
+     * @param NodeMenu $menu
+     * @return NodeMenuItemInterface
+     */
+    protected function createMenuItem(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu)
+    {
+        return new NodeMenuItem($node, $nodeTranslation, $parent, $menu);
+    }
+
+    /**
      * @param string $locale
      */
     public function setLocale($locale)
@@ -257,7 +269,7 @@ class NodeMenu
                     $this->includeOffline
                 );
                 if (!\is_null($nodeTranslation)) {
-                    $nodeMenuItem = new NodeMenuItem(
+                    $nodeMenuItem = $this->createMenuItem(
                         $parentNode,
                         $nodeTranslation,
                         $parentNodeMenuItem,
@@ -321,7 +333,7 @@ class NodeMenu
                     $this->includeOffline
                 );
                 if (!\is_null($nodeTranslation)) {
-                    $children[] = new NodeMenuItem(
+                    $children[] = $this->createMenuItem(
                         $childNode,
                         $nodeTranslation,
                         false,
@@ -536,7 +548,7 @@ class NodeMenu
                 $includeOffline
             );
             if (!\is_null($nodeTranslation)) {
-                return new NodeMenuItem(
+                return $this->createMenuItem(
                     $resultNode,
                     $nodeTranslation,
                     false,
@@ -560,7 +572,7 @@ class NodeMenu
                     $this->locale,
                     $this->includeOffline
                 );
-                $this->rootNodeMenuItem = new NodeMenuItem(
+                $this->rootNodeMenuItem = $this->createMenuItem(
                     $rootNode,
                     $nodeTranslation,
                     false,
@@ -679,7 +691,7 @@ class NodeMenu
                 $this->includeOffline
             );
             if (!\is_null($nodeTranslation)) {
-                $topNodeMenuItems[] = new NodeMenuItem(
+                $topNodeMenuItems[] = $this->createMenuItem(
                     $topNode,
                     $nodeTranslation,
                     null,
