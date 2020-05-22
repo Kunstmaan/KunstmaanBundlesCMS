@@ -13,6 +13,45 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    private const DEFAULT_ALLOWED_EXTENSIONS = [
+        'bmp',
+        'csv',
+        'doc',
+        'docx',
+        'gif',
+        'ico',
+        'jpeg',
+        'jpg',
+        'mkv',
+        'mp3',
+        'mp4',
+        'mpeg',
+        'ogg',
+        'pdf',
+        'png',
+        'pps',
+        'ppsx',
+        'ppt',
+        'pptx',
+        'tif',
+        'tiff',
+        'txt',
+        'wav',
+        'webm',
+        'webp',
+        'xlsx',
+    ];
+
+    private const DEFAULT_IMAGE_EXTENSIONS = [
+        'bmp',
+        'ico',
+        'jpeg',
+        'jpg',
+        'png',
+        'tif',
+        'tiff',
+    ];
+
     /**
      * Generates the configuration tree.
      *
@@ -41,6 +80,14 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->booleanNode('enable_pdf_preview')->defaultFalse()->end()
+                ->arrayNode('allowed_extensions')
+                    ->defaultValue(self::DEFAULT_ALLOWED_EXTENSIONS)
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('image_extensions')
+                    ->defaultValue(self::DEFAULT_IMAGE_EXTENSIONS)
+                    ->prototype('scalar')->end()
+                ->end()
                 ->arrayNode('blacklisted_extensions')
                     ->defaultValue(array('php', 'htaccess'))
                     ->prototype('scalar')->end()

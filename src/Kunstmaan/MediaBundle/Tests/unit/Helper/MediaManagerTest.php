@@ -4,7 +4,12 @@ namespace Kunstmaan\MediaBundle\Tests\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\MediaBundle\Tests\DependencyInjection\ConfigurationTest;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\MimeTypesInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MediaManagerTest extends TestCase
 {
@@ -21,7 +26,7 @@ class MediaManagerTest extends TestCase
      */
     protected function setUp()
     {
-        $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', array(0));
+        $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', [0]);
         $this->defaultHandler
             ->expects($this->any())
             ->method('canHandle')
@@ -34,7 +39,21 @@ class MediaManagerTest extends TestCase
             ->expects($this->any())
             ->method('getType')
             ->willReturn('any/type');
-        $this->object = new MediaManager();
+        $validator = $this->getMockForAbstractClass(ValidatorInterface::class);
+        $validator
+            ->expects($this->any())
+            ->method('validate')
+            ->willReturn(new ConstraintViolationList());
+        $mimeTypes = $this->getMockForAbstractClass(MimeTypesInterface::class);
+        $mimeTypes
+            ->expects($this->any())
+            ->method('guessMimeType')
+            ->willReturn('image/jpeg');
+        $mimeTypes
+            ->expects($this->any())
+            ->method('getExtensions')
+            ->willReturn(['jpg']);
+        $this->object = new MediaManager($mimeTypes, $validator, ConfigurationTest::DEFAULT_IMAGE_EXTENSIONS, ConfigurationTest::DEFAULT_ALLOWED_EXTENSIONS);
         $this->object->setDefaultHandler($this->defaultHandler);
     }
 
@@ -164,7 +183,11 @@ class MediaManagerTest extends TestCase
     public function testCreateNew()
     {
         $media = new Media();
-        $data = new \StdClass();
+        $data = $this->createMock(UploadedFile::class);
+        $data
+            ->expects($this->exactly(2))
+            ->method('getRealPath')
+            ->willReturn('testpath');
         $this->assertNull($this->object->createNew($data));
 
         $handler1 = $this->getCustomHandler(null, 'CustomHandler1');
@@ -188,10 +211,10 @@ class MediaManagerTest extends TestCase
 
     public function testGetFolderAddActions()
     {
-        $actions = array();
+        $actions = [];
         $this->assertEquals($actions, $this->object->getFolderAddActions());
 
-        $actions = array('action1', 'action2');
+        $actions = ['action1', 'action2'];
         $handler = $this->getCustomHandler();
         $handler
             ->expects($this->once())
@@ -209,7 +232,7 @@ class MediaManagerTest extends TestCase
      */
     protected function getCustomHandler($media = null, $name = null)
     {
-        $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', array(1));
+        $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', [1]);
         if (empty($name)) {
             $name = 'CustomHandler';
         }

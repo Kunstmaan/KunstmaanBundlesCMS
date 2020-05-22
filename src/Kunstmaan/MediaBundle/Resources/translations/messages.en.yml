@@ -180,3 +180,4 @@ media:
     flash:
         created: Media %medianame% has been created!
         not_created: Media not created! %mediaerrors%
+        not_valid: The extension of this file is not allowed on this server.

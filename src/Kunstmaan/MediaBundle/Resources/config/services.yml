@@ -18,6 +18,11 @@ services:
 
     kunstmaan_media.media_manager:
         class: '%kunstmaan_media.media_manager.class%'
+        arguments:
+            - '@mime_types'
+            - '@validator'
+            - '%kunstmaan_media.manager.image_extensions%'
+            - '%kunstmaan_media.manager.allowed_extensions%'
         calls:
             - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
         public: true

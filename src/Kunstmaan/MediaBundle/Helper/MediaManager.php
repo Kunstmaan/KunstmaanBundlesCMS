@@ -4,7 +4,10 @@ namespace Kunstmaan\MediaBundle\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Kunstmaan\MediaBundle\Model\ImageUploadModel;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\MimeTypesInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * MediaManager
@@ -14,12 +17,32 @@ class MediaManager
     /**
      * @var AbstractMediaHandler[]
      */
-    protected $handlers = array();
+    protected $handlers = [];
 
     /**
      * @var AbstractMediaHandler
      */
     protected $defaultHandler;
+
+    /** @var MimeTypesInterface */
+    private $mimeTypes;
+
+    /** @var ValidatorInterface */
+    private $validator;
+
+    /** @var array */
+    private $imageExtensions;
+
+    /** @var array */
+    private $allowedExtensions;
+
+    public function __construct(MimeTypesInterface $mimeTypes, ValidatorInterface $validator, array $imageExtesions, array $allowedExtensions)
+    {
+        $this->mimeTypes = $mimeTypes;
+        $this->validator = $validator;
+        $this->imageExtensions = $imageExtesions;
+        $this->allowedExtensions = $allowedExtensions;
+    }
 
     /**
      * @param AbstractMediaHandler $handler Media handler
@@ -92,8 +115,6 @@ class MediaManager
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     *
      * @return MediaManager
      */
     public function prepareMedia(Media $media)
@@ -119,9 +140,6 @@ class MediaManager
         }
     }
 
-    /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     */
     public function removeMedia(Media $media)
     {
         $handler = $this->getHandler($media);
@@ -131,14 +149,16 @@ class MediaManager
     /**
      * @param mixed $data
      *
-     * @return Media
+     * @return mixed
      */
     public function createNew($data)
     {
-        foreach ($this->handlers as $handler) {
-            $result = $handler->createNew($data);
-            if ($result) {
-                return $result;
+        if ($this->isExtensionAllowed($data)) {
+            foreach ($this->handlers as $handler) {
+                $result = $handler->createNew($data);
+                if ($result) {
+                    return $result;
+                }
             }
         }
 
@@ -150,7 +170,7 @@ class MediaManager
      */
     public function getFolderAddActions()
     {
-        $result = array();
+        $result = [];
         foreach ($this->handlers as $handler) {
             $actions = $handler->getAddFolderActions();
             if ($actions) {
@@ -159,5 +179,23 @@ class MediaManager
         }
 
         return $result;
+    }
+
+    public function isExtensionAllowed(File $file): bool
+    {
+        $mimeType = $this->mimeTypes->guessMimeType($file->getRealPath());
+        $extension = $this->mimeTypes->getExtensions($mimeType)[0];
+        if (!in_array($extension, $this->allowedExtensions, true)) {
+            return false;
+        }
+
+        if (!in_array($extension, $this->imageExtensions, true)) {
+            return true;
+        }
+
+        $fileUploadModel = new ImageUploadModel($file);
+        $errors = $this->validator->validate($fileUploadModel);
+
+        return 0 === $errors->count();
     }
 }

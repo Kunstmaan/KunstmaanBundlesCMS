@@ -14,6 +14,45 @@ class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
+    public const DEFAULT_ALLOWED_EXTENSIONS = [
+        'bmp',
+        'csv',
+        'doc',
+        'docx',
+        'gif',
+        'ico',
+        'jpeg',
+        'jpg',
+        'mkv',
+        'mp3',
+        'mp4',
+        'mpeg',
+        'ogg',
+        'pdf',
+        'png',
+        'pps',
+        'ppsx',
+        'ppt',
+        'pptx',
+        'tif',
+        'tiff',
+        'txt',
+        'wav',
+        'webm',
+        'webp',
+        'xlsx',
+    ];
+
+    public const DEFAULT_IMAGE_EXTENSIONS = [
+        'bmp',
+        'ico',
+        'jpeg',
+        'jpg',
+        'png',
+        'tif',
+        'tiff',
+    ];
+
     /**
      * @return \Symfony\Component\Config\Definition\ConfigurationInterface
      */
@@ -34,6 +73,8 @@ class ConfigurationTest extends TestCase
             ],
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
+            'allowed_extensions' => self::DEFAULT_ALLOWED_EXTENSIONS,
+            'image_extensions' => self::DEFAULT_IMAGE_EXTENSIONS,
             'web_root' => '%kernel.project_dir%/web',
         ];
 
