@@ -12,7 +12,8 @@ kunstmaanMediaBundle.bulkUpload = (function(window, undefined) {
     initUploader = function() {
         // Get values and elements
         var $uploader = $('#bulk-upload'),
-            url = $uploader.data('url');
+            url = $uploader.data('url'),
+            $token = $uploader.data('token');
 
         var $fileList = $('#bulk-upload__file-list'),
             $uploadWrapper = $('#bulk-button-wrapper--upload'),
@@ -26,6 +27,7 @@ kunstmaanMediaBundle.bulkUpload = (function(window, undefined) {
             runtimes : 'html5',
             browse_button: 'bulk-button--pick-files',
             container: 'bulk-upload__container',
+            headers: {'x-upload-token': $token},
             url: url,
             processing_id: null,
 

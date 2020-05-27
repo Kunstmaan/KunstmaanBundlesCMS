@@ -25,17 +25,15 @@
 
             <!-- Footer -->
             <div class="modal-footer">
-                {% set deleteform = get_user_delete_form(item) %}
-                {{ form_start(deleteform, {'action': path('KunstmaanUserManagementBundle_settings_users_delete'), 'method': 'POST'}) }}
-                    {{ form_row(deleteform.id) }}
+                <form action="{{ url('KunstmaanUserManagementBundle_settings_users_form_delete', { id: item.id }) }}" method="post">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete-user') }}"/>
                     <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
                         {{ 'kuma_node.modal.delete_page.button.delete'|trans() }}
                     </button>
                     <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
                         {{ 'kuma_node.modal.delete_page.button.cancel'|trans() }}
                     </button>
-                    {{ form_rest(deleteform) }}
-                {{ form_end(deleteform) }}
+                </form>
             </div>
         </div>
     </div>
