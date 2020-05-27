@@ -8,3 +8,9 @@ services:
         arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 250 }
+
+    kunstmaan_user_management.twig.extension:
+        class: Kunstmaan\UserManagementBundle\Twig\UserManagementTwigExtension
+        arguments: ['@form.factory']
+        tags:
+            - { name: twig.extension }

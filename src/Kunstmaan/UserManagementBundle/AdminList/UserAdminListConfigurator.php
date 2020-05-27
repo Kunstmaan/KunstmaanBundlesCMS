@@ -4,6 +4,7 @@ namespace Kunstmaan\UserManagementBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\UserManagementBundle\AdminList\ItemAction\UserDeleteItemAction;
 
 /**
  * User admin list configurator used to manage {@link User} in the admin
@@ -42,6 +43,19 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     public function getPathByConvention($suffix = null)
     {
         return 'KunstmaanUserManagementBundle_settings_users' . (empty($suffix) ? '' : '_' . $suffix);
+    }
+
+    /**
+     * Add item actions buttons
+     */
+    public function buildItemActions()
+    {
+        $this->addItemAction(new UserDeleteItemAction());
+    }
+
+    public function canDelete($item)
+    {
+        return false;
     }
 
     /**
