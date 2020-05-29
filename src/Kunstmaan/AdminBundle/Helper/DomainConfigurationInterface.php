@@ -104,7 +104,7 @@ interface DomainConfigurationInterface
     /**
      * Return the full host of a given id.
      *
-     * @param int $id
+     * @param string|int $id
      *
      * @return array|null
      */
