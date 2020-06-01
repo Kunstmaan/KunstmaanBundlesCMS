@@ -89,7 +89,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
      */
     public function setExtensionGuesser(ExtensionGuesserFactoryInterface $extensionGuesserFactory)
     {
-        @trigger_error('Calling the setExtensionGuesser method of this service is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime.types" service in KunstmaanMediaBundle 6.0.', E_USER_DEPRECATED);
+        @trigger_error('Calling the "setExtensionGuesser" method on "\Kunstmaan\MediaBundle\Validator\Constraints\ HasGuessableExtensionValidator" is deprecated since KunstmaanMediaBundle 5.6 and the method will be removed in KunstmaanMediaBundle 6.0. Inject the required services through the constructor instead.', E_USER_DEPRECATED);
         $this->extensionGuesser = $extensionGuesserFactory->get();
     }
 
