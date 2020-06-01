@@ -28,10 +28,10 @@ class CroppableImagePartPart extends AbstractPagePart
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\EditableMediaWrapper", cascade={"persist"})
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     * @Assert\NotNull()
+     * @ORM\JoinColumn(name="media_wrapper_id", referencedColumnName="id")
+     * @Assert\Valid()
      */
-    private $media;
+    private $mediaWrapper;
 
     /**
      * @ORM\Column(name="link", type="string", nullable=true)
@@ -67,14 +67,14 @@ class CroppableImagePartPart extends AbstractPagePart
         return $this->link;
     }
 
-    public function getMedia(): ?EditableMediaWrapper
+    public function getMediaWrapper()
     {
-        return $this->media;
+        return $this->mediaWrapper;
     }
 
-    public function setMedia(EditableMediaWrapper $media): CroppableImagePartPart
+    public function setMediaWrapper(EditableMediaWrapper $mediaWrapper)
     {
-        $this->media = $media;
+        $this->mediaWrapper = $mediaWrapper;
 
         return $this;
     }
@@ -99,11 +99,9 @@ namespace App\Form\PageParts;
 
 use App\Entity\PageParts\CroppableImagePartPart;
 use Kunstmaan\MediaBundle\Form\EditableMediaWrapperAdminType;
-use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -111,9 +109,7 @@ class CroppableImagePagePartAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::buildForm($builder, $options);
-
-        $builder->add('media', EditableMediaWrapperAdminType::class, [
+        $builder->add('mediaWrapper', EditableMediaWrapperAdminType::class, [
             'required' => true,
         ]);
         $builder->add('link', URLChooserType::class, [
@@ -142,7 +138,11 @@ class CroppableImagePagePartAdminType extends AbstractType
 
 In your twig file you will have to use the new twig function we provided to generate the cropped image. (this image will be cached for future requests with the twig filter)
 ```twig
-    {% set imgUrl = cropped_imagine_filter(resource.media, 'desktop') %}
+    {% set imgUrl = cropped_imagine_filter(resource.mediaWrapper, 'desktop') %}
+```
+And in your twig file you can use the following call to get the focus_point class for your image with the following method
+```twig
+    {% set imgUrl = get_focus_point_class(resource.mediaWrapper, 'desktop') %}
 ```
 
 It is also possible to configure your own viewports using the following config.
@@ -179,7 +179,7 @@ class CroppableImagePagePartAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('media', EditableMediaWrapperAdminType::class, [
+        $builder->add('mediaWrapper', EditableMediaWrapperAdminType::class, [
             'required' => true,
             'cropping_views_group' => 'example1',
         ]);
