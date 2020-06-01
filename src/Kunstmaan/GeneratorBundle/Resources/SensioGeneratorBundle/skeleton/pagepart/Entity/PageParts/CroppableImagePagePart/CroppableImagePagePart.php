@@ -16,10 +16,10 @@ class {{ pagepart }} extends AbstractPagePart
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\EditableMediaWrapper", cascade={"persist"})
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     * @Assert\NotNull()
+     * @ORM\JoinColumn(name="media_wrapper_id", referencedColumnName="id")
+     * @Assert\Valid()
      */
-    private $media;
+    private $mediaWrapper;
 
     /**
      * @ORM\Column(type="string", name="caption", nullable=true)
@@ -113,14 +113,14 @@ class {{ pagepart }} extends AbstractPagePart
         return $this->altText;
     }
 
-    public function getMedia()
+    public function getMediaWrapper()
     {
-        return $this->media;
+        return $this->mediaWrapper;
     }
 
-    public function setMedia(EditableMediaWrapper $media)
+    public function setMediaWrapper(EditableMediaWrapper $mediaWrapper)
     {
-        $this->media = $media;
+        $this->mediaWrapper = $mediaWrapper;
 
         return $this;
     }

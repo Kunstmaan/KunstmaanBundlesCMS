@@ -29,7 +29,7 @@ class {{ pagepart }}AdminType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('media', EditableMediaWrapperAdminType::class, [
+        $builder->add('mediaWrapper', EditableMediaWrapperAdminType::class, [
             'required' => true,
         ]);
         $builder->add('caption', TextType::class, array(
