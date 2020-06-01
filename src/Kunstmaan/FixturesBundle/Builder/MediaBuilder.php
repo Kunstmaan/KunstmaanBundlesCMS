@@ -32,7 +32,7 @@ class MediaBuilder implements BuilderInterface
         $this->mimeTypeGuesser = $mimeTypeGuesser;
         if ($mimeTypeGuesser instanceof MimeTypeGuesserFactoryInterface) {
             $this->mimeTypeGuesser = $mimeTypeGuesser->get();
-            @trigger_error('Passing the "@kunstmaan_media.mimetype_guesser.factory" service as second argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
+            @trigger_error('Passing a service instance of "\Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface" as the second argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
         }
     }
 
