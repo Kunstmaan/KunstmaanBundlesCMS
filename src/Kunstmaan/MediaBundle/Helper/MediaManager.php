@@ -184,7 +184,8 @@ class MediaManager
     public function isExtensionAllowed(File $file): bool
     {
         $mimeType = $this->mimeTypes->guessMimeType($file->getRealPath());
-        $extension = array_shift($this->mimeTypes->getExtensions($mimeType));
+        $extensions = $this->mimeTypes->getExtensions($mimeType);
+        $extension = array_shift($extensions);
         if (!in_array($extension, $this->allowedExtensions, true)) {
             return false;
         }
