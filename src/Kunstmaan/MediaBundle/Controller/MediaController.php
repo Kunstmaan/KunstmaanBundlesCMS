@@ -251,6 +251,7 @@ class MediaController extends Controller
         if (!$this->get('kunstmaan_media.media_manager')->isExtensionAllowed($file)) {
             return $this->returnJsonError('104', 'This file type is not allowed on the server');
         }
+
         try {
             /* @var Media $media */
             $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
