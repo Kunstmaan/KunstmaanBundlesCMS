@@ -394,8 +394,7 @@ class MediaController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $allowed = $mediaManager->isExtensionAllowed($helper->getFile());
-                if ($allowed) {
+                if ($mediaManager->isExtensionAllowed($helper->getFile());) {
                     $media = $helper->getMedia();
                     $media->setFolder($folder);
                     $em->getRepository(Media::class)->save($media);
