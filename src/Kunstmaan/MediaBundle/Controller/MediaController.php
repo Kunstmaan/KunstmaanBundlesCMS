@@ -248,15 +248,9 @@ class MediaController extends Controller
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
-        try {
-            $result = $this->get('kunstmaan_media.media_manager')->isExtensionAllowed($file);
-            if (!$result) {
-                throw new Exception();
-            }
-        } catch (\Exception $e) {
+        if (!$this->get('kunstmaan_media.media_manager')->isExtensionAllowed($file)) {
             return $this->returnJsonError('104', 'This file type is not allowed on the server');
         }
-
         try {
             /* @var Media $media */
             $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
@@ -337,10 +331,10 @@ class MediaController extends Controller
             return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success')]);
         }
 
-        if ($mediaManager->isExtensionAllowed($drop)) {
+        if (!$mediaManager->isExtensionAllowed($drop)) {
             $request->getSession()->getFlashBag()->add(
                 FlashTypes::DANGER,
-                $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')
+                $this->get('translator')->trans('media.flash.not_valid')
             );
 
             return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]);
@@ -348,7 +342,7 @@ class MediaController extends Controller
 
         $request->getSession()->getFlashBag()->add(
             FlashTypes::DANGER,
-            $this->get('translator')->trans('media.flash.not_valid')
+            $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')
         );
 
         return new JsonResponse(['status' => $this->get('translator')->trans('media.flash.not_valid')]);
