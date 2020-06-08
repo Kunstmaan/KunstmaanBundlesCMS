@@ -284,7 +284,7 @@ class EditImage {
 
         switch (this.currentView) {
             case 'focus':
-                if (this.components.cropper.component.viewSelect) {
+                if (this.components.cropper.component.viewSelect && Object.keys(this.viewData).length > 1) {
                     this.components.cropper.component.viewSelect.disabled = false;
                 }
 
@@ -492,7 +492,6 @@ class MediaCropper {
         this.viewSelect = this.EditImage.metaContainer.querySelector(_config.SELECTORS.VIEW_SELECT);
         this.metaValueNodes = {};
         this.cropper = null;
-        this.viewData = {};
     }
 
     getValueNodes() {
@@ -575,7 +574,7 @@ class MediaCropper {
     init() {
         this.getValueNodes();
 
-        if (this.EditImage.viewData.length > 0) {
+        if (Object.keys(this.EditImage.viewData).length > 1) {
             (0, _renderViewSelectOptions.renderViewSelectOptions)(this.viewSelect, this.EditImage.viewData);
         }
 

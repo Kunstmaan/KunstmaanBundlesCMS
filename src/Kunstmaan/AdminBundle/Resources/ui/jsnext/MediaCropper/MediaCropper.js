@@ -10,7 +10,6 @@ class MediaCropper {
         this.viewSelect = this.EditImage.metaContainer.querySelector(SELECTORS.VIEW_SELECT);
         this.metaValueNodes = {};
         this.cropper = null;
-        this.viewData = {};
     }
 
     getValueNodes() {
@@ -94,7 +93,7 @@ class MediaCropper {
     init() {
         this.getValueNodes();
 
-        if (this.EditImage.viewData.length > 0) {
+        if (Object.keys(this.EditImage.viewData).length > 1) {
             renderViewSelectOptions(this.viewSelect, this.EditImage.viewData);
         }
 

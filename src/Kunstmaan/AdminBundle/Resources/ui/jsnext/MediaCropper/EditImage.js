@@ -29,7 +29,7 @@ class EditImage {
 
         switch (this.currentView) {
             case 'focus':
-                if (this.components.cropper.component.viewSelect) {
+                if (this.components.cropper.component.viewSelect && Object.keys(this.viewData).length > 1) {
                     this.components.cropper.component.viewSelect.disabled = false;
                 }
 
