@@ -92,7 +92,7 @@ class PageCloningHelper
                 $newChildPage = $this->clonePage($originalNodeChild, $locale);
                 $newChildPage->setParent($newPage);
                 $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
-                $this->cloneChildren($originalNodeChild, $newChildPage);
+                $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
             }
         }
     }

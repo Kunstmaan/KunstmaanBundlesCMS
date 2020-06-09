@@ -388,6 +388,22 @@ class ActionsMenuBuilder
                     'extras' => ['renderType' => 'button'],
                 ]
             );
+
+            if(true) {
+                $menu->addChild(
+                    'action.duplicate_with_children',
+                    [
+                        'linkAttributes' => [
+                            'type' => 'button',
+                            'class' => 'btn btn-default btn--raise-on-hover',
+                            'data-toggle' => 'modal',
+                            'data-keyboard' => 'true',
+                            'data-target' => '#duplicate-with-children-page-modal',
+                        ],
+                        'extras' => ['renderType' => 'button'],
+                    ]
+                );
+            }
         }
 
         if ((null !== $node->getParent() || $node->getChildren()->isEmpty())
