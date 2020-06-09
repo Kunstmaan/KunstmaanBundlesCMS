@@ -31,14 +31,15 @@ use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
+use Kunstmaan\NodeBundle\Helper\PageCloningHelper;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -88,6 +89,9 @@ class NodeAdminController extends Controller
      */
     protected $translator;
 
+    /** @var PageCloningHelper */
+    protected $pageCloningHelper;
+
     /**
      * init
      *
@@ -103,6 +107,7 @@ class NodeAdminController extends Controller
         $this->aclManager = $this->container->get('kunstmaan_admin.acl.manager');
         $this->nodePublisher = $this->container->get('kunstmaan_node.admin_node.publisher');
         $this->translator = $this->container->get('translator');
+        $this->pageCloningHelper = $this->container->get('kunstmaan_node.helper.page_cloning_helper');
     }
 
     /**
@@ -515,6 +520,56 @@ class NodeAdminController extends Controller
 
         return $this->redirect(
             $this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeNewPage->getId()))
+        );
+    }
+
+
+    /**
+     * @Route(
+     *      "/{id}/duplicate-with-children",
+     *      requirements={"id" = "\d+"},
+     *      name="KunstmaanNodeBundle_nodes_duplicate_with_children",
+     *      methods={"POST"}
+     * )
+     *
+     * @throws AccessDeniedException
+     */
+    public function duplicateWithChildrenAction(Request $request, $id)
+    {
+        if (!$this->getParameter('kunstmaan_node.show_duplicate_with_children')) {
+            return $this->redirect(
+                $this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id])
+            );
+        }
+
+        $this->init($request);
+        /* @var Node $parentNode */
+        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
+            ->find($id);
+
+        // Check with Acl
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
+
+        $request = $this->get('request_stack')->getCurrentRequest();
+
+        //set the title
+        $title = $request->get('title', null);
+
+        $newPage = $this->pageCloningHelper->clonePage($originalNode, $this->locale, $title);
+        $nodeNewPage = $this->pageCloningHelper->createNodeStructureForNewPage($originalNode, $newPage, $this->user, $this->locale);
+
+        // after first title set, remove from request so tabbable children do not inherit the same title
+        $request->request->remove('title');
+
+        $this->pageCloningHelper->cloneChildren($originalNode, $newPage, $this->user, $this->locale);
+
+        $this->addFlash(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_node.admin.duplicate.flash.success')
+        );
+
+        return $this->redirect(
+            $this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $nodeNewPage->getId()])
         );
     }
 
@@ -998,6 +1053,8 @@ class NodeAdminController extends Controller
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
         )->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
+
+        $showDuplicateWithChildren = $this->getParameter('kunstmaan_node.show_duplicate_with_children');
         return [
             'page' => $page,
             'entityname' => ClassLookup::getClass($page),
@@ -1006,6 +1063,7 @@ class NodeAdminController extends Controller
             'nodeTranslation' => $nodeTranslation,
             'draft' => $draft,
             'draftNodeVersion' => $draftNodeVersion,
+            'showDuplicateWithChildren' => $showDuplicateWithChildren,
             'nodeVersion' => $nodeVersion,
             'subaction' => $subaction,
             'tabPane' => $tabPane,

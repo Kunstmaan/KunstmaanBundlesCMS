@@ -46,6 +46,10 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 250 }
 
+    kunstmaan_node.helper.page_cloning_helper:
+        class: Kunstmaan\NodeBundle\Helper\PageCloningHelper
+        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.clone.helper', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
+
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         tags:

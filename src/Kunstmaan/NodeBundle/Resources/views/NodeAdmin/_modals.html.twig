@@ -8,6 +8,10 @@
 {% include '@KunstmaanNode/NodeAdmin/Modals/_delete.html.twig' %}
 <!-- Modal - Duplicate page -->
 {% include '@KunstmaanNode/NodeAdmin/Modals/_duplicate.html.twig' %}
+{% if showDuplicateWithChildren %}
+    <!-- Modal - Duplicate with children page -->
+    {% include '@KunstmaanNode/NodeAdmin/Modals/_duplicate_with_children.html.twig' %}
+{% endif %}
 <!-- Modal - ReCopy content from other language -->
 {% include '@KunstmaanNode/NodeAdmin/Modals/_recopy.html.twig' %}
 
