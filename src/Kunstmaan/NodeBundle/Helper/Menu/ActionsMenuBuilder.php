@@ -63,6 +63,9 @@ class ActionsMenuBuilder
      */
     private $enableExportPageTemplate;
 
+    /** @var bool  */
+    private $showDuplicateWithChildren;
+
     /**
      * @param FactoryInterface              $factory                  The factory
      * @param EntityManager                 $em                       The entity manager
@@ -71,6 +74,7 @@ class ActionsMenuBuilder
      * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
      * @param bool                          $enableExportPageTemplate
+     * @param bool                          $showDuplicateWithChildren
      */
     public function __construct(
         FactoryInterface $factory,
@@ -79,7 +83,8 @@ class ActionsMenuBuilder
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
-        $enableExportPageTemplate = true
+        $enableExportPageTemplate = true,
+        bool $showDuplicateWithChildren = false
     ) {
         $this->factory = $factory;
         $this->em = $em;
@@ -88,6 +93,7 @@ class ActionsMenuBuilder
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
+        $this->showDuplicateWithChildren = $showDuplicateWithChildren;
     }
 
     /**
@@ -389,7 +395,7 @@ class ActionsMenuBuilder
                 ]
             );
 
-            if(true) {
+            if($this->showDuplicateWithChildren) {
                 $menu->addChild(
                     'action.duplicate_with_children',
                     [

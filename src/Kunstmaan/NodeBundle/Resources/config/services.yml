@@ -85,7 +85,15 @@ services:
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
-        arguments: ['@knp_menu.factory', '@doctrine.orm.entity_manager', '@router', '@event_dispatcher', '@security.authorization_checker', '@kunstmaan_node.pages_configuration', '%kunstmaan_node.enable_export_page_template%' ]
+        arguments:
+            - '@knp_menu.factory'
+            - '@doctrine.orm.entity_manager'
+            - '@router'
+            - '@event_dispatcher'
+            - '@security.authorization_checker'
+            - '@kunstmaan_node.pages_configuration'
+            - '%kunstmaan_node.enable_export_page_template%'
+            - '%kunstmaan_node.show_duplicate_with_children%'
         public: true
 
     kunstmaan_node.menu.sub_actions:

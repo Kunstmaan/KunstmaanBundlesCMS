@@ -64,6 +64,20 @@ class Events
     const POST_DELETE = 'kunstmaan_node.postDelete';
 
     /**
+     * The preDuplicateWithChildren event occurs for a given node, before it's duplicated.
+     *
+     * @var string
+     */
+    const PRE_DUPLICATE_WITH_CHILDREN = 'kunstmaan_node.preDuplicateWithChildren';
+
+    /**
+     * The postDuplicateWithChildren event occurs for a given node, after it's duplicated.
+     *
+     * @var string
+     */
+    const POST_DUPLICATE_WITH_CHILDREN = 'kunstmaan_node.postDuplicateWithChildren';
+
+    /**
      * The adaptForm event occurs when building the form for the node.
      *
      * @var string

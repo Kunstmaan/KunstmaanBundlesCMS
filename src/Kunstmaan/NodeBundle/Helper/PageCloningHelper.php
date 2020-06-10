@@ -45,8 +45,8 @@ class PageCloningHelper
             $user
         );
 
-        $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
         if ($newPage->isStructureNode()) {
+            $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
             $nodeTranslation->setSlug('');
             $this->em->persist($nodeTranslation);
         }

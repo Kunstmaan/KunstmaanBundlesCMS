@@ -159,6 +159,17 @@ class Node extends AbstractEntity implements GedmoNode
         );
     }
 
+    public function countChildren()
+    {
+      $children = $this->getChildren();
+      $count = $children->count();
+      foreach($children as $child) {
+          $count += $child->countChildren();
+      }
+
+      return $count;
+    }
+
     /**
      * @param ArrayCollection $children
      *

@@ -24,6 +24,7 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
+use Kunstmaan\NodeBundle\Event\NodeDuplicateEvent;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
@@ -550,6 +551,11 @@ class NodeAdminController extends Controller
         // Check with Acl
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
+        $this->get('event_dispatcher')->dispatch(
+            Events::PRE_DUPLICATE_WITH_CHILDREN,
+            new NodeDuplicateEvent($originalNode)
+        );
+
         $request = $this->get('request_stack')->getCurrentRequest();
 
         //set the title
@@ -562,6 +568,11 @@ class NodeAdminController extends Controller
         $request->request->remove('title');
 
         $this->pageCloningHelper->cloneChildren($originalNode, $newPage, $this->user, $this->locale);
+
+        $this->get('event_dispatcher')->dispatch(
+            Events::POST_DELETE,
+            new NodeDuplicateEvent($originalNode)
+        );
 
         $this->addFlash(
             FlashTypes::SUCCESS,
@@ -1053,6 +1064,7 @@ class NodeAdminController extends Controller
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
         )->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
+        $childCount = $node->countChildren();
 
         $showDuplicateWithChildren = $this->getParameter('kunstmaan_node.show_duplicate_with_children');
         return [
@@ -1068,6 +1080,7 @@ class NodeAdminController extends Controller
             'subaction' => $subaction,
             'tabPane' => $tabPane,
             'editmode' => true,
+            'childCount' => $childCount,
             'queuedNodeTranslationAction' => $queuedNodeTranslationAction,
             'nodeVersionLockCheck' => $this->container->getParameter('kunstmaan_node.lock_enabled'),
             'nodeVersionLockInterval' => $this->container->getParameter('kunstmaan_node.lock_check_interval'),
