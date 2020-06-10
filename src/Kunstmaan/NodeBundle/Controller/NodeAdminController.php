@@ -560,7 +560,7 @@ class NodeAdminController extends Controller
         $this->pageCloningHelper->cloneChildren($originalNode, $newPage, $this->user, $this->locale);
 
         $this->get('event_dispatcher')->dispatch(
-            Events::PRE_DUPLICATE_WITH_CHILDREN,
+            Events::POST_DUPLICATE_WITH_CHILDREN,
             new NodeDuplicateEvent($originalNode)
         );
 
