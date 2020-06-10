@@ -5,8 +5,8 @@ namespace Kunstmaan\NodeBundle\Helper;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\NodeBundle\Entity\DuplicateSubPageInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Entity\IgnoreDuplicateAsChildInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -87,7 +87,7 @@ class PageCloningHelper
             $originalNodeTranslations = $originalNodeChild->getNodeTranslation($locale, true);
             $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
 
-            if (!$originalRef instanceof IgnoreDuplicateAsChildInterface) {
+            if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
                 $newChildPage = $this->clonePage($originalNodeChild, $locale);
                 $newChildPage->setParent($newPage);
                 $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
