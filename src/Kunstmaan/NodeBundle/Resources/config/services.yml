@@ -48,7 +48,13 @@ services:
 
     kunstmaan_node.helper.page_cloning_helper:
         class: Kunstmaan\NodeBundle\Helper\PageCloningHelper
-        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.clone.helper', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.clone.helper'
+            - '@security.acl.provider'
+            - '@security.acl.object_identity_retrieval_strategy'
+            - '@security.authorization_checker'
+            - '@event_dispatcher'
 
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType

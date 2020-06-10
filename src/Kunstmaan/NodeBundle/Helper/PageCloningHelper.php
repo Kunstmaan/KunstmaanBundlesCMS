@@ -5,14 +5,20 @@ namespace Kunstmaan\NodeBundle\Helper;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\DuplicateSubPageInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Event\Events;
+use Kunstmaan\NodeBundle\Event\NodeDuplicateEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PageCloningHelper
 {
@@ -28,36 +34,62 @@ class PageCloningHelper
     /** @var ObjectIdentityRetrievalStrategyInterface */
     private $identityRetrievalStrategy;
 
-    public function __construct(EntityManagerInterface $em, CloneHelper $cloneHelper, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $identityRetrivalStrategy)
+    /** @var AuthorizationCheckerInterface */
+    private $authorizationCheckerInterface;
+
+    /** @var EventDispatcherInterface */
+    private $eventDispatcherInterface;
+
+    public function __construct(EntityManagerInterface $em, CloneHelper $cloneHelper, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $identityRetrivalStrategy, AuthorizationCheckerInterface $authorizationChecker, EventDispatcherInterface $eventDispatcher)
     {
         $this->em = $em;
         $this->cloneHelper = $cloneHelper;
         $this->aclProvider = $aclProvider;
         $this->identityRetrievalStrategy = $identityRetrivalStrategy;
+        $this->authorizationCheckerInterface = $authorizationChecker;
+        $this->eventDispatcherInterface = $eventDispatcher;
     }
 
-    public function createNodeStructureForNewPage(Node $originalNode, HasNodeInterface $newPage, BaseUser $user, string $locale): Node
+    /**
+     * @throws AccessDeniedException
+     */
+    public function duplicateWithChildren($id, string $locale, BaseUser $user, string $title = null): Node
     {
-        /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor(
-            $newPage,
-            $locale,
-            $user
+        /* @var Node $parentNode */
+        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
+            ->find($id);
+
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
+
+        $this->eventDispatcherInterface->dispatch(
+            Events::PRE_DUPLICATE_WITH_CHILDREN,
+            new NodeDuplicateEvent($originalNode)
         );
 
-        if ($newPage->isStructureNode()) {
-            $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
-            $nodeTranslation->setSlug('');
-            $this->em->persist($nodeTranslation);
-        }
-        $this->em->flush();
+        $newPage = $this->clonePage($originalNode, $locale, $title);
+        $nodeNewPage = $this->createNodeStructureForNewPage($originalNode, $newPage, $user, $locale);
+        $this->cloneChildren($originalNode, $newPage, $user, $locale);
 
-        $this->updateAcl($originalNode, $nodeNewPage);
+        $this->eventDispatcherInterface->dispatch(
+            Events::POST_DUPLICATE_WITH_CHILDREN,
+            new NodeDuplicateEvent($originalNode)
+        );
 
         return $nodeNewPage;
     }
 
-    public function clonePage(Node $originalNode, $locale, $title = null)
+    private function denyAccessUnlessGranted($attributes, $subject = null, $message = 'Access Denied.')
+    {
+        if (!$this->authorizationCheckerInterface->isGranted($attributes, $subject)) {
+            $exception = new AccessDeniedException();
+            $exception->setAttributes($attributes);
+            $exception->setSubject($subject);
+
+            throw $exception;
+        }
+    }
+
+    private function clonePage(Node $originalNode, $locale, $title = null)
     {
         $originalNodeTranslations = $originalNode->getNodeTranslation($locale, true);
         $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
@@ -79,21 +111,25 @@ class PageCloningHelper
         return $newPage;
     }
 
-    public function cloneChildren(Node $originalNode, PageInterface $newPage, BaseUser $user, string $locale): void
+    private function createNodeStructureForNewPage(Node $originalNode, HasNodeInterface $newPage, BaseUser $user, string $locale): Node
     {
-        $nodeChildren = $originalNode->getChildren();
-        /** @var Node $originalNodeChild */
-        foreach ($nodeChildren as $originalNodeChild) {
-            $originalNodeTranslations = $originalNodeChild->getNodeTranslation($locale, true);
-            $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
+        /* @var Node $nodeNewPage */
+        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor(
+            $newPage,
+            $locale,
+            $user
+        );
 
-            if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
-                $newChildPage = $this->clonePage($originalNodeChild, $locale);
-                $newChildPage->setParent($newPage);
-                $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
-                $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
-            }
+        if ($newPage->isStructureNode()) {
+            $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
+            $nodeTranslation->setSlug('');
+            $this->em->persist($nodeTranslation);
         }
+        $this->em->flush();
+
+        $this->updateAcl($originalNode, $nodeNewPage);
+
+        return $nodeNewPage;
     }
 
     private function updateAcl($originalNode, $nodeNewPage): void
@@ -113,5 +149,22 @@ class PageCloningHelper
             }
         }
         $this->aclProvider->updateAcl($newAcl);
+    }
+
+    private function cloneChildren(Node $originalNode, PageInterface $newPage, BaseUser $user, string $locale): void
+    {
+        $nodeChildren = $originalNode->getChildren();
+        /** @var Node $originalNodeChild */
+        foreach ($nodeChildren as $originalNodeChild) {
+            $originalNodeTranslations = $originalNodeChild->getNodeTranslation($locale, true);
+            $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
+
+            if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
+                $newChildPage = $this->clonePage($originalNodeChild, $locale);
+                $newChildPage->setParent($newPage);
+                $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
+                $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
+            }
+        }
     }
 }

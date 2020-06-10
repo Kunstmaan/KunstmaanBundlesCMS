@@ -24,7 +24,6 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\NodeDuplicateEvent;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
@@ -545,24 +544,8 @@ class NodeAdminController extends Controller
 
         $this->init($request);
         $title = $request->get('title', null);
-        /* @var Node $parentNode */
-        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
-            ->find($id);
-        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::PRE_DUPLICATE_WITH_CHILDREN,
-            new NodeDuplicateEvent($originalNode)
-        );
-
-        $newPage = $this->pageCloningHelper->clonePage($originalNode, $this->locale, $title);
-        $nodeNewPage = $this->pageCloningHelper->createNodeStructureForNewPage($originalNode, $newPage, $this->user, $this->locale);
-        $this->pageCloningHelper->cloneChildren($originalNode, $newPage, $this->user, $this->locale);
-
-        $this->get('event_dispatcher')->dispatch(
-            Events::POST_DUPLICATE_WITH_CHILDREN,
-            new NodeDuplicateEvent($originalNode)
-        );
+        $nodeNewPage = $this->pageCloningHelper->duplicateWithChildren($id, $this->locale, $this->user, $title);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
