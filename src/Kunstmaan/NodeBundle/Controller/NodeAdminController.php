@@ -544,11 +544,10 @@ class NodeAdminController extends Controller
         }
 
         $this->init($request);
+        $title = $request->get('title', null);
         /* @var Node $parentNode */
         $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
             ->find($id);
-
-        // Check with Acl
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
         $this->get('event_dispatcher')->dispatch(
@@ -556,17 +555,8 @@ class NodeAdminController extends Controller
             new NodeDuplicateEvent($originalNode)
         );
 
-        $request = $this->get('request_stack')->getCurrentRequest();
-
-        //set the title
-        $title = $request->get('title', null);
-
         $newPage = $this->pageCloningHelper->clonePage($originalNode, $this->locale, $title);
         $nodeNewPage = $this->pageCloningHelper->createNodeStructureForNewPage($originalNode, $newPage, $this->user, $this->locale);
-
-        // after first title set, remove from request so tabbable children do not inherit the same title
-        $request->request->remove('title');
-
         $this->pageCloningHelper->cloneChildren($originalNode, $newPage, $this->user, $this->locale);
 
         $this->get('event_dispatcher')->dispatch(

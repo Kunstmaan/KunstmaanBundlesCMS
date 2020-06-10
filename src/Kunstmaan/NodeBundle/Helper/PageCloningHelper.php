@@ -36,7 +36,7 @@ class PageCloningHelper
         $this->identityRetrievalStrategy = $identityRetrivalStrategy;
     }
 
-    public function createNodeStructureForNewPage(Node $originalNode, HasNodeInterface $newPage, BaseUser $user, string $locale)
+    public function createNodeStructureForNewPage(Node $originalNode, HasNodeInterface $newPage, BaseUser $user, string $locale): Node
     {
         /* @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor(
@@ -65,8 +65,7 @@ class PageCloningHelper
         $newPage = $this->cloneHelper
             ->deepCloneAndSave($originalRef);
 
-        //set the title
-        if (is_string($title) && !empty($title)) {
+        if ($title !== null) {
             $newPage->setTitle($title);
         }
 
@@ -80,7 +79,7 @@ class PageCloningHelper
         return $newPage;
     }
 
-    public function cloneChildren(Node $originalNode, PageInterface $newPage, BaseUser $user, string $locale)
+    public function cloneChildren(Node $originalNode, PageInterface $newPage, BaseUser $user, string $locale): void
     {
         $nodeChildren = $originalNode->getChildren();
         /** @var Node $originalNodeChild */
