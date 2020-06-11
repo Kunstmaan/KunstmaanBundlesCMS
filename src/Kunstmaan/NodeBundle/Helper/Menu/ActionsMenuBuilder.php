@@ -67,11 +67,11 @@ class ActionsMenuBuilder
     private $showDuplicateWithChildren;
 
     /**
-     * @param FactoryInterface              $factory                  The factory
-     * @param EntityManager                 $em                       The entity manager
-     * @param RouterInterface               $router                   The router
-     * @param EventDispatcherInterface      $dispatcher               The event dispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
+     * @param FactoryInterface              $factory
+     * @param EntityManager                 $em
+     * @param RouterInterface               $router
+     * @param EventDispatcherInterface      $dispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker
      * @param PagesConfiguration            $pagesConfiguration
      * @param bool                          $enableExportPageTemplate
      * @param bool                          $showDuplicateWithChildren
@@ -395,7 +395,7 @@ class ActionsMenuBuilder
                 ]
             );
 
-            if($this->showDuplicateWithChildren) {
+            if ($this->showDuplicateWithChildren) {
                 $menu->addChild(
                     'action.duplicate_with_children',
                     [

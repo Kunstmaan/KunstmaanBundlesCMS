@@ -523,7 +523,6 @@ class NodeAdminController extends Controller
         );
     }
 
-
     /**
      * @Route(
      *      "/{id}/duplicate-with-children",
