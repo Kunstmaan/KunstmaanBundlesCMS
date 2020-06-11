@@ -24,14 +24,19 @@ class PageCloningHelper
 {
     /** @var EntityManagerInterface */
     private $em;
+
     /** @var CloneHelper */
     private $cloneHelper;
+
     /** @var AclProviderInterface */
     private $aclProvider;
+
     /** @var ObjectIdentityRetrievalStrategyInterface */
     private $identityRetrievalStrategy;
+
     /** @var AuthorizationCheckerInterface */
     private $authorizationCheckerInterface;
+
     /** @var EventDispatcherInterface */
     private $eventDispatcherInterface;
 
