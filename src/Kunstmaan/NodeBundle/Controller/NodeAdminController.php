@@ -90,7 +90,7 @@ class NodeAdminController extends Controller
     protected $translator;
 
     /** @var PageCloningHelper */
-    protected $pageCloningHelper;
+    private $pageCloningHelper;
 
     /**
      * init
@@ -107,7 +107,7 @@ class NodeAdminController extends Controller
         $this->aclManager = $this->container->get('kunstmaan_admin.acl.manager');
         $this->nodePublisher = $this->container->get('kunstmaan_node.admin_node.publisher');
         $this->translator = $this->container->get('translator');
-        $this->pageCloningHelper = $this->container->get('kunstmaan_node.helper.page_cloning_helper');
+        $this->pageCloningHelper = $this->container->get(PageCloningHelper::class);
     }
 
     /**
@@ -1037,7 +1037,7 @@ class NodeAdminController extends Controller
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
         )->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
-        $childCount = $node->countChildren();
+        $childCount = $this->em->getRepository('KunstmaanNodeBundle:Node')->getChildCount($node);
 
         $showDuplicateWithChildren = $this->getParameter('kunstmaan_node.show_duplicate_with_children');
         return [

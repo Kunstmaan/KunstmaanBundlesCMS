@@ -63,7 +63,7 @@ class ActionsMenuBuilder
      */
     private $enableExportPageTemplate;
 
-    /** @var bool  */
+    /** @var bool */
     private $showDuplicateWithChildren;
 
     /**

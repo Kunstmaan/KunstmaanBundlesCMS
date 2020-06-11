@@ -6,12 +6,12 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 
-class NodeDuplicateEvent extends Event
+final class NodeDuplicateEvent extends Event
 {
     /**
      * @var Node
      */
-    protected $node;
+    private $node;
 
     /**
      * @var Response
@@ -23,24 +23,24 @@ class NodeDuplicateEvent extends Event
         $this->node = $node;
     }
 
-    public function getNode(): ?Node
+    public function getNode(): Node
     {
         return $this->node;
     }
 
-    public function setNode(?Node $node): self
+    public function setNode(Node $node): self
     {
         $this->node = $node;
 
         return $this;
     }
 
-    public function getResponse(): ?Response
+    public function getResponse(): Response
     {
         return $this->response;
     }
 
-    public function setResponse(?Response $response): self
+    public function setResponse(Response $response): self
     {
         $this->response = $response;
 

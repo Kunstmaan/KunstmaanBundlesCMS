@@ -529,4 +529,21 @@ SQL;
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    public function getChildCount(Node $node, bool $direct = false, bool $includeDeleted = false): int
+    {
+        $qb = $this->getChildrenQueryBuilder($node, $direct);
+        $qb->resetDQLPart('orderBy');
+
+        $aliases = $qb->getRootAliases();
+        $alias = $aliases[0];
+
+        $qb->select('COUNT('.$alias.')');
+
+        if (false === $includeDeleted) {
+            $qb->andWhere($alias.'.deleted = 0');
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }
