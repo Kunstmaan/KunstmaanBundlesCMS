@@ -536,9 +536,7 @@ class NodeAdminController extends Controller
     public function duplicateWithChildrenAction(Request $request, $id)
     {
         if (!$this->getParameter('kunstmaan_node.show_duplicate_with_children')) {
-            return $this->redirect(
-                $this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id])
-            );
+            return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $id]);
         }
 
         $this->init($request);
@@ -546,14 +544,9 @@ class NodeAdminController extends Controller
 
         $nodeNewPage = $this->pageCloningHelper->duplicateWithChildren($id, $this->locale, $this->user, $title);
 
-        $this->addFlash(
-            FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_node.admin.duplicate.flash.success')
-        );
+        $this->addFlash(FlashTypes::SUCCESS, $this->get('translator')->trans('kuma_node.admin.duplicate.flash.success'));
 
-        return $this->redirect(
-            $this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $nodeNewPage->getId()])
-        );
+        return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $nodeNewPage->getId()]);
     }
 
     /**
@@ -1036,9 +1029,6 @@ class NodeAdminController extends Controller
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
         )->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
-        $childCount = $this->em->getRepository('KunstmaanNodeBundle:Node')->getChildCount($node);
-
-        $showDuplicateWithChildren = $this->getParameter('kunstmaan_node.show_duplicate_with_children');
         return [
             'page' => $page,
             'entityname' => ClassLookup::getClass($page),
@@ -1047,12 +1037,12 @@ class NodeAdminController extends Controller
             'nodeTranslation' => $nodeTranslation,
             'draft' => $draft,
             'draftNodeVersion' => $draftNodeVersion,
-            'showDuplicateWithChildren' => $showDuplicateWithChildren,
+            'showDuplicateWithChildren' => $this->getParameter('kunstmaan_node.show_duplicate_with_children'),
             'nodeVersion' => $nodeVersion,
             'subaction' => $subaction,
             'tabPane' => $tabPane,
             'editmode' => true,
-            'childCount' => $childCount,
+            'childCount' => $this->em->getRepository('KunstmaanNodeBundle:Node')->getChildCount($node),
             'queuedNodeTranslationAction' => $queuedNodeTranslationAction,
             'nodeVersionLockCheck' => $this->container->getParameter('kunstmaan_node.lock_enabled'),
             'nodeVersionLockInterval' => $this->container->getParameter('kunstmaan_node.lock_check_interval'),

@@ -24,19 +24,14 @@ class PageCloningHelper
 {
     /** @var EntityManagerInterface */
     private $em;
-
     /** @var CloneHelper */
     private $cloneHelper;
-
     /** @var AclProviderInterface */
     private $aclProvider;
-
     /** @var ObjectIdentityRetrievalStrategyInterface */
     private $identityRetrievalStrategy;
-
     /** @var AuthorizationCheckerInterface */
     private $authorizationCheckerInterface;
-
     /** @var EventDispatcherInterface */
     private $eventDispatcherInterface;
 
@@ -56,24 +51,18 @@ class PageCloningHelper
     public function duplicateWithChildren($id, string $locale, BaseUser $user, string $title = null): Node
     {
         /* @var Node $parentNode */
-        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
-            ->find($id);
+        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
-        $this->eventDispatcherInterface->dispatch(
-            Events::PRE_DUPLICATE_WITH_CHILDREN,
-            new NodeDuplicateEvent($originalNode)
-        );
+        $this->eventDispatcherInterface->dispatch(Events::PRE_DUPLICATE_WITH_CHILDREN, new NodeDuplicateEvent($originalNode));
 
         $newPage = $this->clonePage($originalNode, $locale, $title);
         $nodeNewPage = $this->createNodeStructureForNewPage($originalNode, $newPage, $user, $locale);
+
         $this->cloneChildren($originalNode, $newPage, $user, $locale);
 
-        $this->eventDispatcherInterface->dispatch(
-            Events::POST_DUPLICATE_WITH_CHILDREN,
-            new NodeDuplicateEvent($originalNode)
-        );
+        $this->eventDispatcherInterface->dispatch(Events::POST_DUPLICATE_WITH_CHILDREN, new NodeDuplicateEvent($originalNode));
 
         return $nodeNewPage;
     }
@@ -94,8 +83,7 @@ class PageCloningHelper
         $originalNodeTranslations = $originalNode->getNodeTranslation($locale, true);
         $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
 
-        $newPage = $this->cloneHelper
-            ->deepCloneAndSave($originalRef);
+        $newPage = $this->cloneHelper->deepCloneAndSave($originalRef);
 
         if ($title !== null) {
             $newPage->setTitle($title);
@@ -105,6 +93,7 @@ class PageCloningHelper
         $parentNodeTranslation = $originalNode->getParent()->getNodeTranslation($locale, true);
         $parent = $parentNodeTranslation->getPublicNodeVersion()->getRef($this->em);
         $newPage->setParent($parent);
+
         $this->em->persist($newPage);
         $this->em->flush();
 
@@ -114,11 +103,7 @@ class PageCloningHelper
     private function createNodeStructureForNewPage(Node $originalNode, HasNodeInterface $newPage, BaseUser $user, string $locale): Node
     {
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor(
-            $newPage,
-            $locale,
-            $user
-        );
+        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $locale, $user);
 
         if ($newPage->isStructureNode()) {
             $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
@@ -154,7 +139,6 @@ class PageCloningHelper
     private function cloneChildren(Node $originalNode, PageInterface $newPage, BaseUser $user, string $locale): void
     {
         $nodeChildren = $originalNode->getChildren();
-        /** @var Node $originalNodeChild */
         foreach ($nodeChildren as $originalNodeChild) {
             $originalNodeTranslations = $originalNodeChild->getNodeTranslation($locale, true);
             $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
@@ -162,6 +146,7 @@ class PageCloningHelper
             if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
                 $newChildPage = $this->clonePage($originalNodeChild, $locale);
                 $newChildPage->setParent($newPage);
+
                 $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
                 $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
             }
