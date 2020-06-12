@@ -12,6 +12,7 @@ action:
   delete: "Verwijder"
   addsubpage: "Subpagina toevoegen"
   duplicate: "Dupliceer"
+  duplicate_with_children: "Duplicate with sub pages"
 modal:
   sourcelanguage: "Bron taal"
 pages:
@@ -163,6 +164,7 @@ kuma_node:
     duplicate_page:
       'title.%page%': Dupliceer pagina '%page%'
       label:
+        childcount_warning: There are currently %count% children for this page. Are you sure you want to copy all of these?
         new_title: Nieuwe titel
       button:
         duplicate: Dupliceer
