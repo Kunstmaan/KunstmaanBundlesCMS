@@ -169,7 +169,7 @@ kuma_node:
         duplicate_page:
             'title.%page%': Duplicate page '%page%'
             label:
-                childcount_warning: there are currently %count% children for this node. are you sure you really want to copy all of these?
+                childcount_warning: There are currently %count% children for this page. Are you sure you want to copy all of these?
                 new_title:  New title
             button:
                 duplicate:  Duplicate
