@@ -12,7 +12,7 @@ action:
     delete: "Delete"
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
-    duplicate_with_children: "Duplicate node with all sub pages"
+    duplicate_with_children: "Duplicate with sub pages"
 
 modal:
     sourcelanguage: "Source language"
