@@ -12,6 +12,7 @@ action:
   delete: "Usuń"
   addsubpage: "Dodaj podstronę"
   duplicate: "Powielaj"
+  duplicate_with_children: "Duplicate with sub pages"
 modal:
   sourcelanguage: "Język źródłowy"
 pages:
@@ -163,6 +164,7 @@ kuma_node:
     duplicate_page:
       'title.%page%': Duplikuj stronę '%page%'
       label:
+        childcount_warning: There are currently %count% children for this page. Are you sure you want to copy all of these?
         new_title: Nowy tytuł
       button:
         duplicate: Duplikuj
