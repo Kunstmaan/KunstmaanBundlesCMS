@@ -12,6 +12,7 @@ action:
   delete: "Törlés"
   addsubpage: "Aloldal hozzáadása"
   duplicate: "Másolás"
+  duplicate_with_children: "Duplicate with sub pages"
 modal:
   sourcelanguage: "modal.sourcelanguage"
 pages:
@@ -163,6 +164,7 @@ kuma_node:
     duplicate_page:
       'title.%page%': A(z) '%page%' oldal duplikálása
       label:
+        childcount_warning: There are currently %count% children for this page. Are you sure you want to copy all of these?
         new_title: Új cím
       button:
         duplicate: Duplikálás
