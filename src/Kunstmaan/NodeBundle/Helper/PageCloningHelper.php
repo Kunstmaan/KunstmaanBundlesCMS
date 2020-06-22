@@ -11,7 +11,8 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\NodeDuplicateEvent;
+use Kunstmaan\NodeBundle\Event\PreNodeDuplicateEvent;
+use Kunstmaan\NodeBundle\Event\PostNodeDuplicateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
@@ -60,14 +61,14 @@ class PageCloningHelper
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
-        $this->eventDispatcherInterface->dispatch(Events::PRE_DUPLICATE_WITH_CHILDREN, new NodeDuplicateEvent($originalNode));
+        $this->eventDispatcherInterface->dispatch(Events::PRE_DUPLICATE_WITH_CHILDREN, new PreNodeDuplicateEvent($originalNode));
 
         $newPage = $this->clonePage($originalNode, $locale, $title);
         $nodeNewPage = $this->createNodeStructureForNewPage($originalNode, $newPage, $user, $locale);
 
-        $this->cloneChildren($originalNode, $newPage, $user, $locale);
+        $this->eventDispatcherInterface->dispatch(Events::POST_DUPLICATE_WITH_CHILDREN, new PostNodeDuplicateEvent($originalNode, $nodeNewPage, $newPage));
 
-        $this->eventDispatcherInterface->dispatch(Events::POST_DUPLICATE_WITH_CHILDREN, new NodeDuplicateEvent($originalNode));
+        $this->cloneChildren($originalNode, $newPage, $user, $locale);
 
         return $nodeNewPage;
     }
@@ -83,7 +84,7 @@ class PageCloningHelper
         }
     }
 
-    private function clonePage(Node $originalNode, $locale, $title = null)
+    public function clonePage(Node $originalNode, $locale, $title = null)
     {
         $originalNodeTranslations = $originalNode->getNodeTranslation($locale, true);
         $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
@@ -149,10 +150,12 @@ class PageCloningHelper
             $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
 
             if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
+                $this->eventDispatcherInterface->dispatch(Events::PRE_DUPLICATE_WITH_CHILDREN, new PreNodeDuplicateEvent($originalNodeChild));
                 $newChildPage = $this->clonePage($originalNodeChild, $locale);
                 $newChildPage->setParent($newPage);
 
-                $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
+                $newChildNode = $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
+                $this->eventDispatcherInterface->dispatch(Events::POST_DUPLICATE_WITH_CHILDREN, new PostNodeDuplicateEvent($originalNodeChild, $newChildNode, $newChildPage));
                 $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
             }
         }
