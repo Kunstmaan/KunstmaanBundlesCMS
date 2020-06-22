@@ -72,8 +72,6 @@ final class PostNodeDuplicateEvent extends Event
         return $this;
     }
 
-
-
     public function getResponse(): Response
     {
         return $this->response;
