@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 
-final class NodeDuplicateEvent extends Event
+final class PreNodeDuplicateEvent extends Event
 {
     /**
      * @var Node
