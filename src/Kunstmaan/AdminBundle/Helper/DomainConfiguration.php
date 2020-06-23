@@ -165,7 +165,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param int $id
+     * @param string|int $id
      */
     public function getFullHostById($id)
     {
