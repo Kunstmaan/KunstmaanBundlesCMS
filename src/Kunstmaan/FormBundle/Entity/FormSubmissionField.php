@@ -46,7 +46,7 @@ abstract class FormSubmissionField
      * The FormSubmission this field is part of
      *
      * @ORM\ManyToOne(targetEntity="FormSubmission", inversedBy="fields")
-     * @ORM\JoinColumn(name="form_submission_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="form_submission_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $formSubmission;
 
