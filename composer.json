@@ -88,7 +88,9 @@
         "matthiasnoback/symfony-dependency-injection-test": "^3.1",
         "symfony/phpunit-bridge": "^4.3",
         "phpunit/phpunit": "^7.5",
-        "friendsofphp/php-cs-fixer": "^2.13"
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "phpstan/phpstan": "^0.12.18",
+        "phpstan/phpstan-doctrine": "^0.12.10"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",

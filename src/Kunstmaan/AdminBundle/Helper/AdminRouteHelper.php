@@ -41,7 +41,7 @@ class AdminRouteHelper
      */
     public function isAdminRoute($url)
     {
-        if ($this->matchesPreviewRoute($url)) {
+        if ($this->matchesPreviewRoute()) {
             return false;
         }
 

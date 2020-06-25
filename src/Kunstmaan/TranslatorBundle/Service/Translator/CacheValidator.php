@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -9,6 +10,9 @@ use Symfony\Component\Finder\Finder;
  */
 class CacheValidator
 {
+    /** @var LoggerInterface */
+    private $logger;
+
     /**
      * Where to store cache files
      *

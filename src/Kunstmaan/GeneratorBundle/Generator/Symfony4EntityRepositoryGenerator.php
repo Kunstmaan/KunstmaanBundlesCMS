@@ -50,8 +50,6 @@ class <repository> extends ServiceEntityRepository
     public function writeEntityRepositoryClass($entityClass, $repositoryClass, $outputDirectory)
     {
         $classNameParts = explode('\\', $repositoryClass);
-        $repositoryClassName = end($classNameParts);
-        $this->repositoryName = $repositoryClassName;
         $code = $this->generateEntityRepositoryClass($entityClass, $repositoryClass);
 
         $path = $outputDirectory . DIRECTORY_SEPARATOR . 'Repository' . DIRECTORY_SEPARATOR . end($classNameParts) . '.php';

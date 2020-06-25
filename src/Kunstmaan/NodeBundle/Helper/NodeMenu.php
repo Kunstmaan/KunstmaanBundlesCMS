@@ -485,6 +485,7 @@ class NodeMenu
             );
 
             if (!\is_null($parent)) {
+                $parentNode = null;
                 /** @var Node $parentNode */
                 if ($parent instanceof NodeTranslation) {
                     $parentNode = $parent->getNode();
@@ -500,7 +501,7 @@ class NodeMenu
                 // Look for a node with the same parent id
                 /** @var Node $node */
                 foreach ($nodes as $node) {
-                    if ($node->getParent()->getId() == $parentNode->getId()) {
+                    if ($parentNode && $node->getParent()->getId() == $parentNode->getId()) {
                         $resultNode = $node;
 
                         break;
@@ -516,7 +517,7 @@ class NodeMenu
                                 $tempNode->getParent()
                             )) {
                             $tempParent = $tempNode->getParent();
-                            if ($tempParent->getId() == $parentNode->getId()) {
+                            if ($parentNode && $tempParent->getId() == $parentNode->getId()) {
                                 $resultNode = $node;
 
                                 break;

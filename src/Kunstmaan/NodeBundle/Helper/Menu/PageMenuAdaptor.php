@@ -10,7 +10,6 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Symfony\Component\HttpFoundation\Request;
@@ -157,7 +156,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $includeHiddenFromNav,
                 $rootNode
             );
-            /** @var Node $nodeInfo */
             foreach ($allNodes as $nodeInfo) {
                 $refEntityName = $nodeInfo['ref_entity_name'];
                 if ($this->pagesConfiguration->isHiddenFromTree($refEntityName)) {

@@ -247,6 +247,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
                 foreach ($this->locales as $key => $locale) {
                     $uniqueId = 'txt_'.$key;
+                    $expr = null;
                     switch ($textComparator) {
                         case 'equals':
                             $expr = $this->queryBuilder->expr()->eq('t_'.$locale.'.`text`', ':var_'.$uniqueId);
@@ -287,7 +288,10 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
                             break;
                     }
-                    $orX->add($expr);
+
+                    if (null !== $expr) {
+                        $orX->add($expr);
+                    }
                 }
 
                 $this->queryBuilder->andWhere($orX);
