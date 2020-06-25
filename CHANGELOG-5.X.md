@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.6.1 / 2020-06-25
+
+* [SearchBundle] Updated ruflin/elastic version constraint in search bundle package [#2697](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2697) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.6.0 / 2020-06-25
 
 * [AllBundles] Allow phpstan to fail for now [#2696](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2696) ([@acrobat](https://github.com/acrobat)) 
