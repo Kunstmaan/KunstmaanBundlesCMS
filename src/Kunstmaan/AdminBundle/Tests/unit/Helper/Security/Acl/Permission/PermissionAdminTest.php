@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
@@ -78,7 +79,7 @@ class PermissionAdminTest extends TestCase
         $em = $this->getEntityManager();
         $em->expects($this->once())
             ->method('getRepository')
-            ->with('KunstmaanAdminBundle:Role')
+            ->with(Role::class)
             ->will($this->returnValue($roleRepo));
         $context = $this->getTokenStorage();
         $aclProvider = $this->getAclProvider();

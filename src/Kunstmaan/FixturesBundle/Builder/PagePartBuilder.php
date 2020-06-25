@@ -5,6 +5,7 @@ namespace Kunstmaan\FixturesBundle\Builder;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\FixturesBundle\Populator\Populator;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 
 class PagePartBuilder implements BuilderInterface
@@ -21,7 +22,7 @@ class PagePartBuilder implements BuilderInterface
     public function __construct(EntityManager $em, Populator $populator)
     {
         $this->em = $em;
-        $this->pagePartRepo = $em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        $this->pagePartRepo = $em->getRepository(PagePartRef::class);
         $this->populator = $populator;
     }
 

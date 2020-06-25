@@ -195,7 +195,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function populateIndex()
     {
-        $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepository = $this->em->getRepository(Node::class);
         $nodes = $nodeRepository->getAllTopNodes();
 
         foreach ($nodes as $node) {
@@ -431,7 +431,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $rootNode = $this->currentTopNode;
         if (!$rootNode) {
             // Fetch main parent of current node...
-            $rootNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->getRootNodeFor(
+            $rootNode = $this->em->getRepository(Node::class)->getRootNodeFor(
                 $node,
                 $nodeTranslation->getLang()
             );

@@ -40,7 +40,7 @@ class PopupManager
     public function getPopups()
     {
         if (\is_null($this->popups)) {
-            $this->popups = $this->em->getRepository('KunstmaanLeadGenerationBundle:Popup\AbstractPopup')->findAll();
+            $this->popups = $this->em->getRepository(AbstractPopup::class)->findAll();
         }
 
         return $this->popups;

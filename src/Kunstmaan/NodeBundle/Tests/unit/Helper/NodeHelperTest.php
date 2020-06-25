@@ -199,8 +199,8 @@ class NodeHelperTest extends TestCase
         $this->em
             ->method('getRepository')
             ->withConsecutive(
-                [$this->equalTo('KunstmaanNodeBundle:Node')],
-                [$this->equalTo('KunstmaanNodeBundle:NodeTranslation')]
+                [$this->equalTo(Node::class)],
+                [$this->equalTo(NodeTranslation::class)]
             )
             ->willReturnOnConsecutiveCalls(
                 $nodeRepository,
@@ -369,7 +369,7 @@ class NodeHelperTest extends TestCase
             ->willReturn($publicNodeVersion);
 
         $this->em->method('getRepository')
-            ->with('KunstmaanNodeBundle:NodeVersion')
+            ->with(NodeVersion::class)
             ->willReturn($nodeVersionRepository);
 
         $this->eventDispatcher

@@ -99,7 +99,7 @@ class PagePartAdmin
     {
         // Get all the pagepartrefs
         /** @var PagePartRefRepository $ppRefRepo */
-        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        $ppRefRepo = $this->em->getRepository(PagePartRef::class);
         $ppRefs = $ppRefRepo->getPagePartRefs($this->page, $this->context);
 
         // Group pagepartrefs per type
@@ -250,7 +250,7 @@ class PagePartAdmin
     public function persist(Request $request)
     {
         /** @var PagePartRefRepository $ppRefRepo */
-        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        $ppRefRepo = $this->em->getRepository(PagePartRef::class);
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
         $sequences = $request->get($this->context.'_sequence', []);
@@ -309,7 +309,7 @@ class PagePartAdmin
                 if (\array_key_exists('pagelimit', $possibleTypeData)) {
                     $pageLimit = $possibleTypeData['pagelimit'];
                     /** @var PagePartRefRepository $entityRepository */
-                    $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+                    $entityRepository = $this->em->getRepository(PagePartRef::class);
                     $formPPCount = $entityRepository->countPagePartsOfType(
                         $this->page,
                         $possibleTypeData['class'],
@@ -369,7 +369,7 @@ class PagePartAdmin
     public function getPagePart($id, $sequenceNumber)
     {
         /** @var PagePartRefRepository $ppRefRepo */
-        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        $ppRefRepo = $this->em->getRepository(PagePartRef::class);
 
         return $ppRefRepo->getPagePart($id, $this->context, $sequenceNumber);
     }

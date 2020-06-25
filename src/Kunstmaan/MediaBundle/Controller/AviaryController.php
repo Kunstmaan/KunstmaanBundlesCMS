@@ -29,9 +29,9 @@ class AviaryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 

@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 
 class ConfigHelper
 {
@@ -71,7 +72,7 @@ class ConfigHelper
     {
         if (!$this->token || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
-            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $analyticsConfigRepository = $this->em->getRepository(AnalyticsConfig::class);
             if ($configId) {
                 $this->token = $analyticsConfigRepository->find($configId)->getToken();
             } else {
@@ -88,7 +89,7 @@ class ConfigHelper
     public function saveToken($token, $configId = false)
     {
         $this->token = $token;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveToken($token, $configId);
+        $this->em->getRepository(AnalyticsConfig::class)->saveToken($token, $configId);
     }
 
     /**
@@ -133,7 +134,7 @@ class ConfigHelper
     {
         if (!$this->accountId || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
-            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $analyticsConfigRepository = $this->em->getRepository(AnalyticsConfig::class);
             if ($configId) {
                 $this->accountId = $analyticsConfigRepository->find($configId)->getAccountId();
             } else {
@@ -150,7 +151,7 @@ class ConfigHelper
     public function saveAccountId($accountId, $configId = false)
     {
         $this->accountId = $accountId;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveAccountId($accountId, $configId);
+        $this->em->getRepository(AnalyticsConfig::class)->saveAccountId($accountId, $configId);
     }
 
     /**
@@ -206,7 +207,7 @@ class ConfigHelper
     {
         if (!$this->propertyId || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
-            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $analyticsConfigRepository = $this->em->getRepository(AnalyticsConfig::class);
             if ($configId) {
                 $this->propertyId = $analyticsConfigRepository->find($configId)->getPropertyId();
             } else {
@@ -223,7 +224,7 @@ class ConfigHelper
     public function savePropertyId($propertyId, $configId = false)
     {
         $this->propertyId = $propertyId;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->savePropertyId($propertyId, $configId);
+        $this->em->getRepository(AnalyticsConfig::class)->savePropertyId($propertyId, $configId);
     }
 
     /**
@@ -286,7 +287,7 @@ class ConfigHelper
     {
         if (!$this->profileId || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
-            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $analyticsConfigRepository = $this->em->getRepository(AnalyticsConfig::class);
             if ($configId) {
                 $this->profileId = $analyticsConfigRepository->find($configId)->getProfileId();
             } else {
@@ -303,7 +304,7 @@ class ConfigHelper
     public function saveProfileId($profileId, $configId = false)
     {
         $this->profileId = $profileId;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveProfileId($profileId, $configId);
+        $this->em->getRepository(AnalyticsConfig::class)->saveProfileId($profileId, $configId);
     }
 
     /**
@@ -379,7 +380,7 @@ class ConfigHelper
      */
     public function saveConfigName($configName, $configId = false)
     {
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveConfigName($configName, $configId);
+        $this->em->getRepository(AnalyticsConfig::class)->saveConfigName($configName, $configId);
     }
 
     /* =============================== AUTH URL =============================== */

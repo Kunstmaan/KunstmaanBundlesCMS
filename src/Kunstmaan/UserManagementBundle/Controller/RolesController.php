@@ -104,7 +104,7 @@ class RolesController extends BaseSettingsController
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
-        $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
+        $role = $em->getRepository(Role::class)->find($id);
         $form = $this->createForm(RoleType::class, $role);
 
         if ($request->isMethod('POST')) {
@@ -148,7 +148,7 @@ class RolesController extends BaseSettingsController
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
-        $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
+        $role = $em->getRepository(Role::class)->find($id);
         if (!\is_null($role)) {
             $em->remove($role);
             $em->flush();

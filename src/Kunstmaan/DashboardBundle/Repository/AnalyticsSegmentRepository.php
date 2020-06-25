@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 
 /**
  * AnalyticsSegmentRepository
@@ -45,11 +46,11 @@ class AnalyticsSegmentRepository extends EntityRepository
     {
         if (!\count($segment->getOverviews()->toArray())) {
             if ($configId) {
-                $config = $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+                $config = $this->getEntityManager()->getRepository(AnalyticsConfig::class)->find($configId);
             } else {
-                $config = $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+                $config = $this->getEntityManager()->getRepository(AnalyticsConfig::class)->findFirst();
             }
-            $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config, $segment);
+            $this->getEntityManager()->getRepository(AnalyticsOverview::class)->addOverviews($config, $segment);
         }
     }
 }

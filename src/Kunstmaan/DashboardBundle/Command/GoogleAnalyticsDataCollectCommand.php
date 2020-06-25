@@ -6,7 +6,9 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -159,7 +161,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     private function getSingleOverview($overviewId)
     {
         // get specified overview
-        $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $overviewRepository = $this->em->getRepository(AnalyticsOverview::class);
         $overview = $overviewRepository->find($overviewId);
 
         if (!$overview) {
@@ -179,7 +181,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     private function getOverviewsOfSegment($segmentId)
     {
         // get specified segment
-        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
         $segment = $segmentRepository->find($segmentId);
 
         if (!$segment) {
@@ -202,9 +204,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
      */
     private function getOverviewsOfConfig($configId)
     {
-        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $configRepository = $this->em->getRepository(AnalyticsConfig::class);
+        $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
+        $overviewRepository = $this->em->getRepository(AnalyticsOverview::class);
         // get specified config
         $config = $configRepository->find($configId);
 
@@ -234,9 +236,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
      */
     private function getAllOverviews()
     {
-        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $configRepository = $this->em->getRepository(AnalyticsConfig::class);
+        $overviewRepository = $this->em->getRepository(AnalyticsOverview::class);
+        $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
         $configs = $configRepository->findAll();
 
         foreach ($configs as $config) {
@@ -299,7 +301,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                 $this->em->persist($overview);
                 $this->em->flush();
 
-                $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
+                $this->em->getRepository(AnalyticsConfig::class)->setUpdated($overview->getConfig()->getId());
             } catch (\Google_ServiceException $e) {
                 $error = explode(')', $e->getMessage());
                 $error = $error[1];
