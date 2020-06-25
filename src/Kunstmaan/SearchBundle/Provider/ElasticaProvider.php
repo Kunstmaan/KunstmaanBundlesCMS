@@ -67,7 +67,11 @@ class ElasticaProvider implements SearchProviderInterface
      */
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
-        return new Document($uid, $document, $indexType, $indexName);
+        if (method_exists(Document::class, 'setType')) {
+            return new Document($uid, $document, $indexType, $indexName);
+        }
+
+        return new Document($uid, $document, $indexName);
     }
 
     /**
@@ -81,8 +85,12 @@ class ElasticaProvider implements SearchProviderInterface
     public function addDocument($indexName, $indexType, $document, $uid)
     {
         $doc = $this->createDocument($uid, $document);
+        $index = $this->getClient()->getIndex($indexName);
+        if (method_exists($index, 'getType')) {
+            return $index->getType($indexType)->addDocument($doc);
+        }
 
-        return $this->getClient()->getIndex($indexName)->getType($indexType)->addDocument($doc);
+        return $index->addDocument($doc);
     }
 
     /**
@@ -122,9 +130,14 @@ class ElasticaProvider implements SearchProviderInterface
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
         $index = $this->getIndex($indexName);
-        $type = $index->getType($indexType);
 
-        return $this->getClient()->deleteIds($ids, $index, $type);
+        if (method_exists($index, 'getType')) {
+            $type = $index->getType($indexType);
+
+            return $this->getClient()->deleteIds($ids, $index, $type);
+        }
+
+        return $this->getClient()->deleteIds($ids, $index);
     }
 
     /**

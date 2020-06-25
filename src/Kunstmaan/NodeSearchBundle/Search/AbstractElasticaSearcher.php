@@ -98,7 +98,10 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
 
         $search = new Search($this->search->getClient());
         $search->addIndex($index);
-        $search->addType($index->getType($this->indexType));
+
+        if (method_exists($search, 'getType')) {
+            $search->addType($index->getType($this->indexType));
+        }
 
         return $search->search($this->query);
     }
