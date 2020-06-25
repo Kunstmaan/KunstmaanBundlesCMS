@@ -92,7 +92,7 @@ class ExportService
             $row = [];
             /** @var Field $column */
             foreach ($adminList->getExportColumns() as $column) {
-                $row[] = $this->translator->trans($column->getHeader());
+                $row[] = $this->translator->trans($column->getHeader(), [], null, 'en');
             }
             $writer->addRow($row);
 
