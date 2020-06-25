@@ -54,24 +54,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
      */
     public function prepend(ContainerBuilder $container)
     {
-        $hosts = [];
-        if ($container->hasParameter('kunstmaan_search.hostname') && $container->hasParameter('kunstmaan_search.port')) {
-            $host = $container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('kunstmaan_search.port');
-
-            if ($container->hasParameter('kunstmaan_search.username') && $container->hasParameter('kunstmaan_search.password') &&
-                null !== $container->getParameter('kunstmaan_search.username') && null !== $container->getParameter('kunstmaan_search.password')) {
-                $host = sprintf(
-                    '%s:%s@%s',
-                    $container->getParameter('kunstmaan_search.username'),
-                    $container->getParameter('kunstmaan_search.password'),
-                    $host
-                );
-            }
-
-            $hosts[] = $host;
-        }
-
-        $this->useElasticSearchVersion6 = ElasticSearchUtil::useVersion6($hosts);
+        $this->useElasticSearchVersion6 = $this->useElasticSearchV6($container);
 
         if ($this->useElasticSearchVersion6) {
             $mapping = [
@@ -174,5 +157,45 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
         }
 
         $container->prependExtensionConfig('kunstmaan_node_search', $mapping);
+    }
+
+    private function useElasticSearchV6(ContainerBuilder $container)
+    {
+        if ($container->hasParameter('kunstmaan_search.elasticsearch_version')) {
+            $version = (string) $container->getParameter('kunstmaan_search.elasticsearch_version');
+            if (!preg_match('/^(\d+\.)?(\d+\.)?(\*|\d+)$/', $version)) {
+                throw new \InvalidArgumentException('Invalid value for "%kunstmaan_search.elasticsearch_version%" parameter, expected value must match a format like "6", "6.1" or "6.1.2".');
+            }
+
+            if (version_compare($version, '5.0.0', '>=')) {
+                return true;
+            }
+
+            return false;
+        }
+
+        $hosts = [];
+        if ($container->hasParameter('kunstmaan_search.hostname') && $container->hasParameter('kunstmaan_search.port')) {
+            $host = $container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('kunstmaan_search.port');
+
+            if ($container->hasParameter('kunstmaan_search.username') && $container->hasParameter('kunstmaan_search.password') &&
+                null !== $container->getParameter('kunstmaan_search.username') && null !== $container->getParameter('kunstmaan_search.password')) {
+                $host = sprintf(
+                    '%s:%s@%s',
+                    $container->getParameter('kunstmaan_search.username'),
+                    $container->getParameter('kunstmaan_search.password'),
+                    $host
+                );
+            }
+
+            $hosts[] = $host;
+        }
+
+        return ElasticSearchUtil::useVersion6($hosts);
+    }
+
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration($this->useElasticSearchV6($container));
     }
 }
