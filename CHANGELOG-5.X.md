@@ -1,5 +1,24 @@
 # Changelog
 
+## 5.6.1 / 2020-06-25
+
+* [SearchBundle] Updated ruflin/elastic version constraint in search bundle package [#2697](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2697) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.6.0 / 2020-06-25
+
+* [AllBundles] Allow phpstan to fail for now [#2696](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2696) ([@acrobat](https://github.com/acrobat)) 
+* [SearchBundle][NodeSearch] Add elastica/elasticsearch 7 support [#2695](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2695) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Refactored duplicate events for better usage [#2693](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2693) ([@Devolicious](https://github.com/Devolicious)) 
+* [NodeBundle] Allow duplicate with children  [#2686](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2686) ([@Numkil](https://github.com/Numkil)) 
+* [AllBundles] Validate composer.json files in travis build [#2679](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2679) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Improve url helper by replacing full data load by specific lookup [#2678](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2678) ([@acrobat](https://github.com/acrobat)) 
+* [FormBundle] Cascade delete form submission fields when removing a form submission [#2675](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2675) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Remove monolog main handler configuration [#2669](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2669) ([@dannyvw](https://github.com/dannyvw)) 
+* [AllBundles] Replace deprecated doctrine string entity alias to fqcn [#2662](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2662) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Use flashbag from session [#2661](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2661) ([@dannyvw](https://github.com/dannyvw)) 
+* [AllBundles] Integrate phpstan in travis build suite [#2660](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2660) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Rework travis-ci test setup [#2659](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2659) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.5.4 / 2020-06-25
 
 * [AdminBundle][AdminListBundle] translation in admin fixes [#2692](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2692) ([@Numkil](https://github.com/Numkil)) 
