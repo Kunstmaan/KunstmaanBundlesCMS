@@ -72,6 +72,16 @@ jobs:
         - COVERAGE=true
         - PHPUNIT_FLAGS="-v --coverage-clover=coverage.clover"
 
+    - stage: Test
+      php: 7.4
+      env:
+        - COMPOSER_VALIDATE=true
+      before_install: skip
+      install: skip
+      before_script: skip
+      script: sh ./.build/validate-composer.sh || exit $?;
+      after_script: skip
+
     # Validate frontend setup
     - stage: Test
       language: javascript
