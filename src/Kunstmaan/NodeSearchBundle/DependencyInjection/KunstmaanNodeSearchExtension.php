@@ -45,6 +45,11 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
             ->addMethodCall('setDefaultProperties', [$config['mapping']]);
 
         $container->setParameter('kunstmaan_node_search.contexts', $config['contexts']);
+
+        if (class_exists(\Elastica\Type\Mapping::class)) {
+            $nodeSearch = $container->getDefinition('kunstmaan_node_search.search.node');
+            $nodeSearch->addMethodCall('setIndexType', ['%kunstmaan_node_search.indextype%']);
+        }
     }
 
     /**

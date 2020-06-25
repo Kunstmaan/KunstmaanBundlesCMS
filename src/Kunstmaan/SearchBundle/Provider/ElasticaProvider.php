@@ -24,6 +24,11 @@ class ElasticaProvider implements SearchProviderInterface
                 array('connections' => $this->nodes,
                 )
             );
+
+            //NEXT_MAJOR: remove checks and update ruflin/elastica dependency constraints
+            if (!class_exists(\Elastica\Mapping::class)) {
+                @trigger_error('Using a version of ruflin/elastica below v7.0 is deprecated since KunstmaanSearchBundle 5.6 and support for older versions will be removed in KunstmaanSearchBundle 6.0. Upgrade to ruflin/elastica and elasticsearch v7 instead.', E_USER_DEPRECATED);
+            }
         }
 
         return $this->client;
