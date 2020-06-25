@@ -24,6 +24,11 @@ class ElasticaProvider implements SearchProviderInterface
                 array('connections' => $this->nodes,
                 )
             );
+
+            //NEXT_MAJOR: remove checks and update ruflin/elastica dependency constraints
+            if (!class_exists(\Elastica\Mapping::class)) {
+                @trigger_error('Using a version of ruflin/elastica below v7.0 is deprecated since KunstmaanSearchBundle 5.6 and support for older versions will be removed in KunstmaanSearchBundle 6.0. Upgrade to ruflin/elastica and elasticsearch v7 instead.', E_USER_DEPRECATED);
+            }
         }
 
         return $this->client;
@@ -67,7 +72,11 @@ class ElasticaProvider implements SearchProviderInterface
      */
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
-        return new Document($uid, $document, $indexType, $indexName);
+        if (method_exists(Document::class, 'setType')) {
+            return new Document($uid, $document, $indexType, $indexName);
+        }
+
+        return new Document($uid, $document, $indexName);
     }
 
     /**
@@ -81,8 +90,12 @@ class ElasticaProvider implements SearchProviderInterface
     public function addDocument($indexName, $indexType, $document, $uid)
     {
         $doc = $this->createDocument($uid, $document);
+        $index = $this->getClient()->getIndex($indexName);
+        if (method_exists($index, 'getType')) {
+            return $index->getType($indexType)->addDocument($doc);
+        }
 
-        return $this->getClient()->getIndex($indexName)->getType($indexType)->addDocument($doc);
+        return $index->addDocument($doc);
     }
 
     /**
@@ -122,9 +135,14 @@ class ElasticaProvider implements SearchProviderInterface
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
         $index = $this->getIndex($indexName);
-        $type = $index->getType($indexType);
 
-        return $this->getClient()->deleteIds($ids, $index, $type);
+        if (method_exists($index, 'getType')) {
+            $type = $index->getType($indexType);
+
+            return $this->getClient()->deleteIds($ids, $index, $type);
+        }
+
+        return $this->getClient()->deleteIds($ids, $index);
     }
 
     /**

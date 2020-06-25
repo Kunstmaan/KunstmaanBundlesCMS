@@ -89,9 +89,10 @@ class NodeSearcher extends AbstractElasticaSearcher
         if ($this->useMatchQueryForTitle) {
             $elasticaQueryTitle = new Match();
             $elasticaQueryTitle
-              ->setFieldQuery('title', $query)
-              ->setFieldMinimumShouldMatch('title', '80%')
-              ->setFieldBoost(2);
+                ->setFieldQuery('title', $query)
+                ->setFieldMinimumShouldMatch('title', '80%')
+                ->setFieldBoost('title', 2)
+            ;
         } else {
             $elasticaQueryTitle = new QueryString();
             $elasticaQueryTitle
@@ -149,9 +150,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     {
         $roles = $this->getCurrentUserRoles();
 
-        $elasticaQueryRoles = new Query\Terms();
-        $elasticaQueryRoles
-            ->setTerms('view_roles', $roles);
+        $elasticaQueryRoles = new Query\Terms('view_roles', $roles);
         $elasticaQueryBool->addMust($elasticaQueryRoles);
     }
 
@@ -169,11 +168,13 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         // Anonymous access should always be available for both anonymous & logged in users
-        if (!\in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles)) {
+        if (!\in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles, true)) {
             $roles[] = 'IS_AUTHENTICATED_ANONYMOUSLY';
         }
 
-        return $roles;
+        // Return a re-indexed array to make sure the array keys are incremental and don't skip a number. Otherwise
+        // this causes issues in ES7.
+        return array_values($roles);
     }
 
     /**
