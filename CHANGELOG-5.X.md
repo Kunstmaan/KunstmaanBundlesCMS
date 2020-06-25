@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.5.4 / 2020-06-25
+
+* [AdminBundle][AdminListBundle] translation in admin fixes [#2692](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2692) ([@Numkil](https://github.com/Numkil)) 
+* [GeneratorBundle] Use https by default to avoid any mixed content errors [#2684](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2684) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix incorrect typecast in UrlHelper [#2676](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2676) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Aviariy does not exist anymore [#2673](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2673) ([@tarjei](https://github.com/tarjei)) 
+* [AdminBundle] Remember editor content when dragging and dropping [#2666](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2666) ([@waaghals](https://github.com/waaghals)) 
+
 ## 5.5.3 / 2020-05-12
 
 * [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
