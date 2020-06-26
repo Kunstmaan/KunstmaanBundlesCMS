@@ -502,7 +502,7 @@ SQL;
      *
      * @param string $internalName The internal name of the node
      *
-     * @return Node
+     * @return null|Node
      */
     public function getNodeByInternalName($internalName)
     {
