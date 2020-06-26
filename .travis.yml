@@ -42,8 +42,6 @@ after_script:
     fi
 
 jobs:
-  allow_failures:
-    - env: PHPStan=true
   include:
     # Test lowest dependencies
     - stage: Test

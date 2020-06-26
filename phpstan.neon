@@ -5,6 +5,8 @@ parameters:
     level: 1
     paths:
         -  src
+    scanFiles:
+        - .build/stubs/RoleInterface.php
 
     excludes_analyse:
         - src/Kunstmaan/*/Tests/*
@@ -17,6 +19,4 @@ parameters:
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
 
     ignoreErrors:
-        # Ignore errors on unfound classes for old symfony version BC layers
-        - '#^Class Symfony\\Component\\Security\\Core\\Role\\RoleInterface not found\.\z#'
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR
