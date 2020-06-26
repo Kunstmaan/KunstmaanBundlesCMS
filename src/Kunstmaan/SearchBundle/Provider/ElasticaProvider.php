@@ -73,6 +73,7 @@ class ElasticaProvider implements SearchProviderInterface
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
         if (method_exists(Document::class, 'setType')) {
+            // @phpstan-ignore-next-line
             return new Document($uid, $document, $indexType, $indexName);
         }
 

@@ -50,25 +50,6 @@ class MediaRepository extends EntityRepository
     }
 
     /**
-     * @param int $pictureId
-     *
-     * @return object
-     *
-     * @throws EntityNotFoundException
-     */
-    public function getPicture($pictureId)
-    {
-        $em = $this->getEntityManager();
-
-        $picture = $em->getRepository(\Kunstmaan\MediaBundle\Entity\Image::class)->find($pictureId);
-        if (!$picture) {
-            throw new EntityNotFoundException();
-        }
-
-        return $picture;
-    }
-
-    /**
      * Finds all Media  that has their deleted flag set to 1
      * and have their remove_from_file_system flag set to 0
      *
