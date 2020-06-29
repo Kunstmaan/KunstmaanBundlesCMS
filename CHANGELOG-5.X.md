@@ -31,6 +31,10 @@
 * [AllBundles] Replace deprecated controller routing notation with fqcn [#2622](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2622) ([@acrobat](https://github.com/acrobat)) 
 * [RedirectBundle] Replace deprecated RedirectableUrlMatcher [#2610](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2610) ([@acrobat](https://github.com/acrobat)) 
 
+## 5.4.7 / 2020-06-29
+
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens)) 
+
 ## 5.4.6 / 2020-06-25
 
 * [AdminBundle][AdminListBundle] translation in admin fixes [#2692](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2692) ([@Numkil](https://github.com/Numkil)) 
