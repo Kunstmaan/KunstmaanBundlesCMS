@@ -49,11 +49,6 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     protected $authorizationChecker;
 
     /**
-     * @var bool
-     */
-    private $deletedPagesOnly = false;
-
-    /**
      * @param EntityManager $em         The entity
      *                                  manager
      * @param AclHelper     $aclHelper  The ACL helper
@@ -69,14 +64,14 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->setPermissionDefinition(
             new PermissionDefinition(
                 array($permission),
-                'Kunstmaan\NodeBundle\Entity\Node',
+                Node::class,
                 'n'
             )
         );
     }
 
     /**
-     * @param \Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface $domainConfiguration
+     * @param DomainConfigurationInterface $domainConfiguration
      */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
     {
@@ -171,10 +166,6 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 
     public function canEdit($item)
     {
-        if ($this->deletedPagesOnly) {
-            return false;
-        }
-
         return $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $item->getNode());
     }
 
@@ -254,8 +245,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
             ->select('b,n')
             ->innerJoin('b.node', 'n', Join::WITH, 'b.node = n.id')
             ->andWhere('b.lang = :lang')
-            ->andWhere('n.deleted = :deletedPagesOnly')
-            ->setParameter('deletedPagesOnly', $this->deletedPagesOnly)
+            ->andWhere('n.deleted = 0')
             ->addOrderBy('b.updated', Criteria::DESC)
             ->setParameter('lang', $this->locale);
 
@@ -270,17 +260,5 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
                 ->setParameter('left', $rootNode->getLeft())
                 ->setParameter('right', $rootNode->getRight());
         }
-    }
-
-    /**
-     * @var bool $deletedPagesOnly
-     *
-     * @return NodeAdminListConfigurator
-     */
-    public function setDeletedPagesOnly($deletedPagesOnly): NodeAdminListConfigurator
-    {
-        $this->deletedPagesOnly = $deletedPagesOnly;
-
-        return $this;
     }
 }

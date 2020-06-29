@@ -17,6 +17,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
+use Kunstmaan\NodeBundle\AdminList\DeletedNodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -118,9 +119,16 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
 
+        $nodeAdminListConfigurator = new NodeAdminListConfigurator(
+            $this->em,
+            $this->aclHelper,
+            $this->locale,
+            PermissionMap::PERMISSION_VIEW,
+            $this->authorizationChecker
+        );
+
         $locale = $this->locale;
         $acl = $this->authorizationChecker;
-
         $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
             if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
                 return array(
@@ -132,7 +140,6 @@ class NodeAdminController extends Controller
             return null;
         };
 
-        $nodeAdminListConfigurator = $this->getNodeAdminListConfigurator();
         $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
         $nodeAdminListConfigurator->addListAction(
             new SimpleListAction(
@@ -140,13 +147,23 @@ class NodeAdminController extends Controller
                     'path' => 'KunstmaanNodeBundle_deleted_nodes',
                     'params' => [],
                 ],
-                'view_deleted_pages.label',
+                'deleted_pages.view_action',
                 null,
                 '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
             )
         );
+        $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
+        $nodeAdminListConfigurator->setShowAddHomepage(
+            $this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN')
+        );
 
-        return $this->renderAdminList($request, $nodeAdminListConfigurator);
+        /** @var AdminList $adminlist */
+        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
+        $adminlist->bindRequest($request);
+
+        return [
+            'adminlist' => $adminlist,
+        ];
     }
 
     /**
@@ -454,40 +471,48 @@ class NodeAdminController extends Controller
      *
      * @return array
      */
-    public function removedNodesAction(Request $request)
+    public function deletedNodesAction(Request $request)
     {
         $this->init($request);
 
-        $locale = $this->locale;
-        $acl = $this->authorizationChecker;
-
-        $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
-            if ($acl->isGranted(PermissionMap::PERMISSION_DELETE, $item->getNode())) {
-                return [
-                    'path' => 'KunstmaanNodeBundle_nodes_delete_undo',
-                    'params' => [
-                        '_locale' => $locale,
-                        'id' => $item->getNode()->getId()
-                    ],
-                ];
-            }
-
-            return null;
-        };
-
-        $nodeAdminListConfigurator = $this->getNodeAdminListConfigurator();
-        $nodeAdminListConfigurator->setDeletedPagesOnly(true);
-        $nodeAdminListConfigurator->addSimpleItemAction('action.undo', $itemRoute, 'undo');
+        $nodeAdminListConfigurator = new DeletedNodeAdminListConfigurator(
+            $this->em,
+            $this->aclHelper,
+            $this->locale,
+            PermissionMap::PERMISSION_DELETE,
+            $this->authorizationChecker
+        );
         $nodeAdminListConfigurator->addListAction(
             new SimpleListAction(
                 [
                     'path' => 'KunstmaanNodeBundle_nodes',
                     'params' => [],
                 ],
-                'view_pages.label',
+                'pages.view_action',
                 null,
                 '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
             )
+        );
+
+        $locale = $this->locale;
+        $acl = $this->authorizationChecker;
+
+        $nodeAdminListConfigurator->addSimpleItemAction(
+            'action.undo',
+            function (EntityInterface $item) use ($locale, $acl) {
+                if ($acl->isGranted(PermissionMap::PERMISSION_DELETE, $item->getNode())) {
+                    return [
+                        'path' => 'KunstmaanNodeBundle_nodes_delete_undo',
+                        'params' => [
+                            '_locale' => $locale,
+                            'id' => $item->getNode()->getId()
+                        ],
+                    ];
+                }
+
+                return null;
+            },
+            'undo'
         );
 
         return $this->renderAdminList($request, $nodeAdminListConfigurator);
@@ -1381,45 +1406,5 @@ class NodeAdminController extends Controller
                 'copyfromotherlanguages' => $parentsAreOk,
             )
         );
-    }
-
-    /**
-     * @return NodeAdminListConfigurator
-     */
-    private function getNodeAdminListConfigurator()
-    {
-        $nodeAdminListConfigurator = new NodeAdminListConfigurator(
-            $this->em,
-            $this->aclHelper,
-            $this->locale,
-            PermissionMap::PERMISSION_VIEW,
-            $this->authorizationChecker
-        );
-
-        $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
-        $nodeAdminListConfigurator->setShowAddHomepage(
-            $this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN')
-        );
-
-        return $nodeAdminListConfigurator;
-    }
-
-    /**
-     * @param Request $request
-     * @var NodeAdminListConfigurator $nodeAdminListConfigurator
-     *
-     * @return array
-     */
-    private function renderAdminList(
-        Request $request,
-        NodeAdminListConfigurator $nodeAdminListConfigurator
-    ) {
-        /** @var AdminList $adminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
-        $adminList->bindRequest($request);
-
-        return [
-            'adminlist' => $adminList,
-        ];
     }
 }
