@@ -4,7 +4,8 @@
 
 * [AllBundles] Fix remaining phpstan issues [#2702](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2702) ([@acrobat](https://github.com/acrobat)) 
 * [AdminBundle] Fix nonexistent RoleInterface for the BC layer [#2701](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2701) ([@ondrejmirtes](https://github.com/ondrejmirtes)) 
-* [AllBundles] Fix missing use statements [#2699](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2699) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix missing use statements [#2699](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2699) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens))  
 
 ## 5.6.1 / 2020-06-25
 
