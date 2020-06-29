@@ -12,6 +12,7 @@ action:
   delete: "Verwijder"
   addsubpage: "Subpagina toevoegen"
   duplicate: "Dupliceer"
+  undo_delete: "Verwijderen ongedaan maken"
 modal:
   sourcelanguage: "Bron taal"
 pages:
@@ -79,6 +80,10 @@ kuma_node:
         success: De pagina is bewerkt
         locked: De pagina wordt momenteel bewerkt door %users%
         locked_success: Een automatische back-up is aangemaakt, omdat de pagina is bewerkt door een andere gebruiker
+    undo_delete:
+      flash:
+        success: Het ongedaan maken van het verwijderen van de pagina is gelukt
+        error: Er is een probleem opgetreden tijdens het ongedaan maken van het verwijderen van de pagina
     new_page:
       title:
         default: Nieuwe pagina

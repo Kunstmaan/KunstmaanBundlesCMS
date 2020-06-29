@@ -12,6 +12,7 @@ action:
     delete: "Delete"
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
+    undo_delete: "Undo deleting page"
 
 modal:
     sourcelanguage: "Source language"
@@ -82,6 +83,10 @@ kuma_node:
                 success: The page has been edited
                 locked: The page is currently being edited by %users%
                 locked_success: An automatic backup has been created because the page is being edited by another user
+        undo_delete:
+            flash:
+                success: The deleting the page has been undone
+                error: There was an error while undoing deleting the page
         new_page:
             title:
                 default: New page

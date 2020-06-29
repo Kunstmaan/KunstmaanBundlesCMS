@@ -157,13 +157,7 @@ class NodeAdminController extends Controller
             $this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN')
         );
 
-        /** @var AdminList $adminlist */
-        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
-        $adminlist->bindRequest($request);
-
-        return [
-            'adminlist' => $adminlist,
-        ];
+        return $this->renderAdminList($request, $nodeAdminListConfigurator);
     }
 
     /**
@@ -465,7 +459,7 @@ class NodeAdminController extends Controller
 
     /**
      * @Route("/deleted", name="KunstmaanNodeBundle_deleted_nodes")
-     * @Template("@KunstmaanNode/Admin/list.html.twig")
+     * @Template("@KunstmaanNode/Admin/deleted_list.html.twig")
      *
      * @param Request $request
      *
@@ -498,7 +492,7 @@ class NodeAdminController extends Controller
         $acl = $this->authorizationChecker;
 
         $nodeAdminListConfigurator->addSimpleItemAction(
-            'action.undo',
+            'action.undo_delete',
             function (EntityInterface $item) use ($locale, $acl) {
                 if ($acl->isGranted(PermissionMap::PERMISSION_DELETE, $item->getNode())) {
                     return [
@@ -544,12 +538,12 @@ class NodeAdminController extends Controller
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_node.admin.delete_undo.flash.success')
+                $this->get('translator')->trans('kuma_node.admin.undo_delete.flash.success')
             );
         } catch (AccessDeniedException $exception) {
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_node.admin.delete_undo.flash.error')
+                $this->get('translator')->trans('kuma_node.admin.undo_delete.flash.error')
             );
         }
 
@@ -1406,5 +1400,24 @@ class NodeAdminController extends Controller
                 'copyfromotherlanguages' => $parentsAreOk,
             )
         );
+    }
+
+    /**
+     * @param Request $request
+     * @var NodeAdminListConfigurator $nodeAdminListConfigurator
+     *
+     * @return array
+     */
+    private function renderAdminList(
+        Request $request,
+        NodeAdminListConfigurator $nodeAdminListConfigurator
+    ) {
+        /** @var AdminList $adminList */
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
+        $adminList->bindRequest($request);
+
+        return [
+            'adminlist' => $adminList,
+        ];
     }
 }
