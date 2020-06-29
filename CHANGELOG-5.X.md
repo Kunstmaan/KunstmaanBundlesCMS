@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.6.2 / 2020-06-29
+
+* [AllBundles] Fix remaining phpstan issues [#2702](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2702) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix nonexistent RoleInterface for the BC layer [#2701](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2701) ([@ondrejmirtes](https://github.com/ondrejmirtes)) 
+* [AllBundles] Fix missing use statements [#2699](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2699) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens))  
+
 ## 5.6.1 / 2020-06-25
 
 * [SearchBundle] Updated ruflin/elastic version constraint in search bundle package [#2697](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2697) ([@acrobat](https://github.com/acrobat)) 
@@ -18,6 +25,10 @@
 * [NodeBundle] Use flashbag from session [#2661](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2661) ([@dannyvw](https://github.com/dannyvw)) 
 * [AllBundles] Integrate phpstan in travis build suite [#2660](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2660) ([@acrobat](https://github.com/acrobat)) 
 * [AllBundles] Rework travis-ci test setup [#2659](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2659) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.5.5 / 2020-06-29
+
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens)) 
 
 ## 5.5.4 / 2020-06-25
 
@@ -49,6 +60,10 @@
 * [AdminBundle] Inject correct dependency in UserProcessor [#2623](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2623) ([@acrobat](https://github.com/acrobat)) 
 * [AllBundles] Replace deprecated controller routing notation with fqcn [#2622](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2622) ([@acrobat](https://github.com/acrobat)) 
 * [RedirectBundle] Replace deprecated RedirectableUrlMatcher [#2610](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2610) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.4.7 / 2020-06-29
+
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens)) 
 
 ## 5.4.6 / 2020-06-25
 
