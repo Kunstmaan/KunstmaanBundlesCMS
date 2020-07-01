@@ -4,16 +4,10 @@ namespace Kunstmaan\TranslatorBundle\Service;
 
 use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Kernel;
 
 class TranslationFileExplorer
 {
-    /**
-     * Symfony default translation folder (in a bundle)
-     *
-     * @var string
-     */
-    private $defaultTranslationFolder = 'Resources/translations';
-
     /**
      * An array of supported file formats to look for
      *
@@ -32,7 +26,7 @@ class TranslationFileExplorer
     public function find($path, array $locales, $translationDirectory = null)
     {
         $finder = new Finder();
-        $translationDirectory = $translationDirectory ?? $this->defaultTranslationFolder;
+        $translationDirectory = $translationDirectory ?? $this->getDefaultTranslationFolder();
 
         $exploreDir = $path . '/' . $translationDirectory;
 
@@ -50,5 +44,14 @@ class TranslationFileExplorer
     public function setFileFormats($fileFormats)
     {
         $this->fileFormats = $fileFormats;
+    }
+
+    protected function getDefaultTranslationFolder(): string
+    {
+        if (Kernel::VERSION_ID >= 40000) {
+            return 'translations';
+        }
+
+        return 'Resources/translations';
     }
 }
