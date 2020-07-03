@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Form\File;
 
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtension;
+use Kunstmaan\MediaBundle\Validator\Constraints\IsExtensionAllowed;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
@@ -47,7 +48,7 @@ class FileType extends AbstractType
             BaseFileType::class,
             array(
                 'label' => 'media.form.file.file.label',
-                'constraints' => array(new File(), new HasGuessableExtension()),
+                'constraints' => array(new File(), new HasGuessableExtension(), new IsExtensionAllowed()),
                 'required' => false,
             )
         );
@@ -81,7 +82,7 @@ class FileType extends AbstractType
                         BaseFileType::class,
                         array(
                             'label' => 'media.form.file.file.label',
-                            'constraints' => array(new NotBlank(), new File(), new HasGuessableExtension()),
+                            'constraints' => array(new NotBlank(), new File(), new HasGuessableExtension(), new IsExtensionAllowed()),
                             'required' => true,
                         )
                     );

@@ -4,9 +4,9 @@ namespace Kunstmaan\MediaBundle\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Model\ImageUploadModel;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mime\MimeTypesInterface;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -36,12 +36,16 @@ class MediaManager
     /** @var array */
     private $allowedExtensions;
 
-    public function __construct(MimeTypesInterface $mimeTypes, ValidatorInterface $validator, array $imageExtesions, array $allowedExtensions)
+    /** @var bool */
+    private $limitAllowedExtesions;
+
+    public function __construct(MimeTypesInterface $mimeTypes, ValidatorInterface $validator, array $imageExtesions, array $allowedExtensions, bool $limitAllowedExtensions = true)
     {
         $this->mimeTypes = $mimeTypes;
         $this->validator = $validator;
         $this->imageExtensions = $imageExtesions;
         $this->allowedExtensions = $allowedExtensions;
+        $this->limitAllowedExtesions = $limitAllowedExtensions;
     }
 
     /**
@@ -183,6 +187,10 @@ class MediaManager
 
     public function isExtensionAllowed(File $file): bool
     {
+        if (!$this->limitAllowedExtesions) {
+            return true;
+        }
+
         $mimeType = $this->mimeTypes->guessMimeType($file->getRealPath());
         $extensions = $this->mimeTypes->getExtensions($mimeType);
         $extension = array_shift($extensions);
@@ -194,8 +202,7 @@ class MediaManager
             return true;
         }
 
-        $fileUploadModel = new ImageUploadModel($file);
-        $errors = $this->validator->validate($fileUploadModel);
+        $errors = $this->validator->validate($file, new Image(['detectCorrupted' => true]));
 
         return 0 === $errors->count();
     }

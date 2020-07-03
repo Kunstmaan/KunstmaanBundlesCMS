@@ -23,6 +23,7 @@ services:
             - '@validator'
             - '%kunstmaan_media.manager.image_extensions%'
             - '%kunstmaan_media.manager.allowed_extensions%'
+            - '%kunstmaan_media.manager.limit_allowed_extentions%'
         calls:
             - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
         public: true
@@ -126,6 +127,14 @@ services:
         class: Gaufrette\Filesystem
         arguments:
             - '@kunstmaan_media.filesystem_adapter'
+
+    kunstmaan_media.validator.is_extension_allowed:
+        class: Kunstmaan\MediaBundle\Validator\Constraints\IsExtensionAllowedValidator
+        arguments:
+            - '@kunstmaan_media.media_manager'
+            - '@translator'
+        tags:
+            - { name: validator.constraint_validator, alias: is_extension_allowed }
 
     kunstmaan_media.validator.has_guessable_extension:
         class: '%kunstmaan_media.validator.has_guessable_extension.class%'

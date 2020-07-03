@@ -14,32 +14,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     private const DEFAULT_ALLOWED_EXTENSIONS = [
-        'bmp',
-        'csv',
-        'doc',
-        'docx',
-        'gif',
-        'ico',
-        'jpeg',
-        'jpg',
-        'mkv',
-        'mp3',
-        'mp4',
-        'mpeg',
-        'ogg',
-        'pdf',
-        'png',
-        'pps',
-        'ppsx',
-        'ppt',
-        'pptx',
-        'tif',
-        'tiff',
-        'txt',
-        'wav',
-        'webm',
-        'webp',
-        'xlsx',
+        'bmp', 'csv', 'doc', 'docx', 'gif',
+        'ico', 'jpeg', 'jpg', 'mkv', 'mp3',
+        'mp4', 'mpeg', 'ogg', 'pdf', 'png',
+        'pps', 'ppsx', 'ppt', 'pptx', 'tif',
+        'tiff', 'txt', 'wav', 'webm', 'webp',
+        'xlsx', 'svg', 'zip', 'docm', 'xlsm',
+        'xls',
     ];
 
     private const DEFAULT_IMAGE_EXTENSIONS = [
@@ -69,33 +50,34 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('soundcloud_api_key')->defaultValue('YOUR_CLIENT_ID')->end()
-                ->scalarNode('aviary_api_key')->defaultNull()->end()
-                ->arrayNode('remote_video')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->booleanNode('vimeo')->defaultTrue()->end()
-                        ->booleanNode('youtube')->defaultTrue()->end()
-                        ->booleanNode('dailymotion')->defaultTrue()->end()
-                    ->end()
-                ->end()
-                ->booleanNode('enable_pdf_preview')->defaultFalse()->end()
-                ->arrayNode('allowed_extensions')
-                    ->defaultValue(self::DEFAULT_ALLOWED_EXTENSIONS)
-                    ->prototype('scalar')->end()
-                ->end()
-                ->arrayNode('image_extensions')
-                    ->defaultValue(self::DEFAULT_IMAGE_EXTENSIONS)
-                    ->prototype('scalar')->end()
-                ->end()
-                ->arrayNode('blacklisted_extensions')
-                    ->defaultValue(array('php', 'htaccess'))
-                    ->prototype('scalar')->end()
-                ->end()
-                ->scalarNode('web_root')
-                    ->defaultValue(SymfonyVersion::getRootWebPath())
-                    ->cannotBeEmpty()
-                ->end()
+            ->scalarNode('soundcloud_api_key')->defaultValue('YOUR_CLIENT_ID')->end()
+            ->scalarNode('aviary_api_key')->defaultNull()->end()
+            ->arrayNode('remote_video')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->booleanNode('vimeo')->defaultTrue()->end()
+            ->booleanNode('youtube')->defaultTrue()->end()
+            ->booleanNode('dailymotion')->defaultTrue()->end()
+            ->end()
+            ->end()
+            ->booleanNode('enable_pdf_preview')->defaultFalse()->end()
+            ->booleanNode('limit_allowed_extensions')->defaultTrue()->end()
+            ->arrayNode('allowed_extensions')
+            ->defaultValue(self::DEFAULT_ALLOWED_EXTENSIONS)
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('image_extensions')
+            ->defaultValue(self::DEFAULT_IMAGE_EXTENSIONS)
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('blacklisted_extensions')
+            ->defaultValue(['php', 'htaccess'])
+            ->prototype('scalar')->end()
+            ->end()
+            ->scalarNode('web_root')
+            ->defaultValue(SymfonyVersion::getRootWebPath())
+            ->cannotBeEmpty()
+            ->end()
             ->end();
 
         return $treeBuilder;

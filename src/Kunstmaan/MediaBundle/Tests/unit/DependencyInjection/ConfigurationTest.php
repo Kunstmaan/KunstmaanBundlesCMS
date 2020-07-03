@@ -72,6 +72,7 @@ class ConfigurationTest extends TestCase
                 'dailymotion' => false,
             ],
             'enable_pdf_preview' => true,
+            'limit_allowed_extensions' => true,
             'blacklisted_extensions' => [],
             'allowed_extensions' => self::DEFAULT_ALLOWED_EXTENSIONS,
             'image_extensions' => self::DEFAULT_IMAGE_EXTENSIONS,
