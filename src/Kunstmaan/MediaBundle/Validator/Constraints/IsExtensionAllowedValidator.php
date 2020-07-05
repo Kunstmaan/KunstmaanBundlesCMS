@@ -12,9 +12,7 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 class IsExtensionAllowedValidator extends ConstraintValidator
 {
-    /**
-     * @var MediaManager
-     */
+    /** @var MediaManager */
     private $mediaManager;
 
     /** @var TranslatorInterface */
