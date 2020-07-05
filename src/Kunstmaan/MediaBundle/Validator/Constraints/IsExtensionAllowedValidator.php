@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 class IsExtensionAllowedValidator extends ConstraintValidator
 {
