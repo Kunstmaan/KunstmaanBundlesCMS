@@ -128,8 +128,7 @@ services:
         arguments:
             - '@kunstmaan_media.filesystem_adapter'
 
-    kunstmaan_media.validator.is_extension_allowed:
-        class: Kunstmaan\MediaBundle\Validator\Constraints\IsExtensionAllowedValidator
+    Kunstmaan\MediaBundle\Validator\Constraints\IsExtensionAllowedValidator:
         arguments:
             - '@kunstmaan_media.media_manager'
             - '@translator'
