@@ -10,6 +10,8 @@ settings:
     roles_placeholder: Válassz egy jogosultságot...
   users: Felhasználók
   user:
+    delete: Delete user
+    delete_body: This will remove the user completely! Are you really sure about this?
     username: Felhasználónév
     password: Jelszó
     repeatedpassword: Megismételt jelszó
