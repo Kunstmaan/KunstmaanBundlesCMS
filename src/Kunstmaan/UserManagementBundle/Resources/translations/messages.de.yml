@@ -10,6 +10,8 @@ settings:
     roles_placeholder: Rollen auswählen...
   users: Benutzer
   user:
+    delete: Delete user
+    delete_body: This will remove the user completely! Are you really sure about this?
     username: Benutzername
     password: Passwort
     repeatedpassword: Passwort Wiederholung
