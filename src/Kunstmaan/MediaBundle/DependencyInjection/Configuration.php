@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
         'png',
         'tif',
         'tiff',
+        'gif',
     ];
 
     /**

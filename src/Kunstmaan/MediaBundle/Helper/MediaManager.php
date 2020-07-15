@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Helper;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mime\MimeTypesInterface;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -73,25 +74,6 @@ class MediaManager
     }
 
     /**
-     * Returns handler with the highest priority to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
-     *
-     * @param Media|File $media
-     *
-     * @return AbstractMediaHandler
-     */
-    public function getHandler($media)
-    {
-        $bestHandler = $this->defaultHandler;
-        foreach ($this->handlers as $handler) {
-            if ($handler->canHandle($media) && $handler->getPriority() > $bestHandler->getPriority()) {
-                $bestHandler = $handler;
-            }
-        }
-
-        return $bestHandler;
-    }
-
-    /**
      * Returns handler with the highest priority to handle the Media item based on the Type. If no handler is found, it returns FileHandler
      *
      * @param string $type
@@ -127,6 +109,25 @@ class MediaManager
         $handler->prepareMedia($media);
 
         return $this;
+    }
+
+    /**
+     * Returns handler with the highest priority to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
+     *
+     * @param Media|File $media
+     *
+     * @return AbstractMediaHandler
+     */
+    public function getHandler($media)
+    {
+        $bestHandler = $this->defaultHandler;
+        foreach ($this->handlers as $handler) {
+            if ($handler->canHandle($media) && $handler->getPriority() > $bestHandler->getPriority()) {
+                $bestHandler = $handler;
+            }
+        }
+
+        return $bestHandler;
     }
 
     /**
@@ -169,6 +170,31 @@ class MediaManager
         return null;
     }
 
+    public function isExtensionAllowed(File $file): bool
+    {
+        if (!$this->limitAllowedExtesions) {
+            return true;
+        }
+
+        $mimeType = $this->mimeTypes->guessMimeType($file->getRealPath());
+        if ($mimeType === 'text/plain' && $file instanceof UploadedFile) {
+            $mimeType = $file->getClientMimeType();
+        }
+        $extensions = $this->mimeTypes->getExtensions($mimeType);
+        $extension = array_shift($extensions);
+        if (!in_array($extension, $this->allowedExtensions, true)) {
+            return false;
+        }
+
+        if (!in_array($extension, $this->imageExtensions, true)) {
+            return true;
+        }
+
+        $errors = $this->validator->validate($file, new Image(['detectCorrupted' => true]));
+
+        return 0 === $errors->count();
+    }
+
     /**
      * @return array
      */
@@ -183,27 +209,5 @@ class MediaManager
         }
 
         return $result;
-    }
-
-    public function isExtensionAllowed(File $file): bool
-    {
-        if (!$this->limitAllowedExtesions) {
-            return true;
-        }
-
-        $mimeType = $this->mimeTypes->guessMimeType($file->getRealPath());
-        $extensions = $this->mimeTypes->getExtensions($mimeType);
-        $extension = array_shift($extensions);
-        if (!in_array($extension, $this->allowedExtensions, true)) {
-            return false;
-        }
-
-        if (!in_array($extension, $this->imageExtensions, true)) {
-            return true;
-        }
-
-        $errors = $this->validator->validate($file, new Image(['detectCorrupted' => true]));
-
-        return 0 === $errors->count();
     }
 }
