@@ -21,7 +21,6 @@ services:
         arguments:
             - '@mime_types'
             - '@validator'
-            - '%kunstmaan_media.manager.image_extensions%'
             - '%kunstmaan_media.manager.allowed_extensions%'
             - '%kunstmaan_media.manager.limit_allowed_extentions%'
         calls:
