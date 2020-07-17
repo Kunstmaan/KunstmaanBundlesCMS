@@ -43,7 +43,6 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('kunstmaan_media.manager.limit_allowed_extentions', $config['limit_allowed_extensions']);
-        $container->setParameter('kunstmaan_media.manager.image_extensions', $config['image_extensions']);
         $container->setParameter('kunstmaan_media.manager.allowed_extensions', $config['allowed_extensions']);
         $container->setParameter('kunstmaan_media.web_root', $config['web_root']);
         $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'] . '%kunstmaan_media.media_path%');

@@ -43,16 +43,6 @@ class ConfigurationTest extends TestCase
         'xlsx',
     ];
 
-    public const DEFAULT_IMAGE_EXTENSIONS = [
-        'bmp',
-        'ico',
-        'jpeg',
-        'jpg',
-        'png',
-        'tif',
-        'tiff',
-    ];
-
     /**
      * @return \Symfony\Component\Config\Definition\ConfigurationInterface
      */
@@ -75,7 +65,6 @@ class ConfigurationTest extends TestCase
             'limit_allowed_extensions' => true,
             'blacklisted_extensions' => [],
             'allowed_extensions' => self::DEFAULT_ALLOWED_EXTENSIONS,
-            'image_extensions' => self::DEFAULT_IMAGE_EXTENSIONS,
             'web_root' => '%kernel.project_dir%/web',
         ];
 

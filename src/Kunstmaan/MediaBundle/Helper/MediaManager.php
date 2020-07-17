@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class MediaManager
 {
+    private const IMAGE_MIMETYPE_REGEX = '/^image\/.*$/m';
+
     /**
      * @var AbstractMediaHandler[]
      */
@@ -32,19 +34,15 @@ class MediaManager
     private $validator;
 
     /** @var array */
-    private $imageExtensions;
-
-    /** @var array */
     private $allowedExtensions;
 
     /** @var bool */
     private $limitAllowedExtesions;
 
-    public function __construct(MimeTypesInterface $mimeTypes, ValidatorInterface $validator, array $imageExtesions, array $allowedExtensions, bool $limitAllowedExtensions = true)
+    public function __construct(MimeTypesInterface $mimeTypes, ValidatorInterface $validator, array $allowedExtensions, bool $limitAllowedExtensions = true)
     {
         $this->mimeTypes = $mimeTypes;
         $this->validator = $validator;
-        $this->imageExtensions = $imageExtesions;
         $this->allowedExtensions = $allowedExtensions;
         $this->limitAllowedExtesions = $limitAllowedExtensions;
     }
@@ -186,13 +184,11 @@ class MediaManager
             return false;
         }
 
-        if (!in_array($extension, $this->imageExtensions, true)) {
-            return true;
+        if (1 === preg_match(self::IMAGE_MIMETYPE_REGEX, $mimeType)) {
+            return 0 === $this->validator->validate($file, new Image(['detectCorrupted' => true]))->count();
         }
 
-        $errors = $this->validator->validate($file, new Image(['detectCorrupted' => true]));
-
-        return 0 === $errors->count();
+        return true;
     }
 
     /**

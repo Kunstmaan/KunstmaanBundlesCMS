@@ -23,17 +23,6 @@ class Configuration implements ConfigurationInterface
         'xls',
     ];
 
-    private const DEFAULT_IMAGE_EXTENSIONS = [
-        'bmp',
-        'ico',
-        'jpeg',
-        'jpg',
-        'png',
-        'tif',
-        'tiff',
-        'gif',
-    ];
-
     /**
      * Generates the configuration tree.
      *
@@ -65,10 +54,6 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('limit_allowed_extensions')->defaultTrue()->end()
                 ->arrayNode('allowed_extensions')
                     ->defaultValue(self::DEFAULT_ALLOWED_EXTENSIONS)
-                    ->prototype('scalar')->end()
-                ->end()
-                ->arrayNode('image_extensions')
-                    ->defaultValue(self::DEFAULT_IMAGE_EXTENSIONS)
                     ->prototype('scalar')->end()
                 ->end()
                 ->arrayNode('blacklisted_extensions')
