@@ -396,20 +396,34 @@ class ActionsMenuBuilder
                 $node
             )
         ) {
-            $menu->addChild(
-                'action.delete',
-                [
-                    'linkAttributes' => [
-                        'type' => 'button',
-                        'class' => 'btn btn-default btn--raise-on-hover',
-                        'onClick' => 'oldEdited = isEdited; isEdited=false',
-                        'data-toggle' => 'modal',
-                        'data-keyboard' => 'true',
-                        'data-target' => '#delete-page-modal',
-                    ],
-                    'extras' => ['renderType' => 'button'],
-                ]
-            );
+            if (!$node->isDeleted()) {
+                $menu->addChild(
+                    'action.delete',
+                    [
+                        'linkAttributes' => [
+                            'type' => 'button',
+                            'class' => 'btn btn-default btn--raise-on-hover',
+                            'onClick' => 'oldEdited = isEdited; isEdited=false',
+                            'data-toggle' => 'modal',
+                            'data-keyboard' => 'true',
+                            'data-target' => '#delete-page-modal',
+                        ],
+                        'extras' => ['renderType' => 'button'],
+                    ]
+                );
+            } else {
+                $menu->addChild(
+                    'action.undo_delete',
+                    [
+                        'linkAttributes' => [
+                            'type' => 'submit',
+                            'value' => 'undo_delete',
+                            'name' => 'undo_delete',
+                        ],
+                        'extras' => ['renderType' => 'button'],
+                    ]
+                );
+            }
         }
 
         $this->dispatcher->dispatch(

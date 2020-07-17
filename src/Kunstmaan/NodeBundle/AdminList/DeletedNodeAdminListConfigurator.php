@@ -26,11 +26,6 @@ class DeletedNodeAdminListConfigurator extends NodeAdminListConfigurator
         ;
     }
 
-    public function canEdit($item)
-    {
-        return false;
-    }
-
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         parent::adaptQueryBuilder($queryBuilder);

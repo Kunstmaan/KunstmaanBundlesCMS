@@ -956,6 +956,13 @@ class NodeAdminController extends Controller
             $nodeVersion = $draftNodeVersion;
             $page = $nodeVersion->getRef($this->em);
         } else {
+            if (!empty($request->request->get('undo_delete'))) {
+                $node->setDeleted(false);
+
+                $this->em->persist($node);
+                $this->em->flush();
+            }
+
             if ($request->getMethod() == 'POST') {
                 $nodeVersionIsLocked = $this->isNodeVersionLocked($nodeTranslation, true);
 
