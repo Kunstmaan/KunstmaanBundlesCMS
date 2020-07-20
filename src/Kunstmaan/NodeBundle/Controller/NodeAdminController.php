@@ -505,7 +505,7 @@ class NodeAdminController extends Controller
                         'path' => 'KunstmaanNodeBundle_nodes_delete_undo',
                         'params' => [
                             '_locale' => $locale,
-                            'id' => $item->getNode()->getId()
+                            'id' => $item->getNode()->getId(),
                         ],
                     ];
                 }
@@ -1335,8 +1335,6 @@ class NodeAdminController extends Controller
 
     /**
      * @param Node $node
-     *
-     * @return void
      */
     private function undoDeleteNode(
         Node $node
@@ -1441,7 +1439,7 @@ class NodeAdminController extends Controller
 
     /**
      * @param Request $request
-     * @var NodeAdminListConfigurator $nodeAdminListConfigurator
+     * @param NodeAdminListConfigurator $nodeAdminListConfigurator
      *
      * @return array
      */
