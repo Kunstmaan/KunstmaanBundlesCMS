@@ -59,3 +59,5 @@ src/Kunstmaan/TranslatorBundle/Tests     export-ignore
 src/Kunstmaan/UserManagementBundle/Tests export-ignore
 src/Kunstmaan/UtilitiesBundle/Tests      export-ignore
 src/Kunstmaan/VotingBundle/Tests         export-ignore
+
+.build export-ignore

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\SeoBundle\Controller;
 
+use Kunstmaan\SeoBundle\Entity\Robots;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,7 +22,7 @@ class RobotsController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $entity = $this->getDoctrine()->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
+        $entity = $this->getDoctrine()->getRepository(Robots::class)->findOneBy(array());
         $robots = $this->getParameter('robots_default');
 
         if ($entity && $entity->getRobotsTxt()) {

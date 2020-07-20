@@ -46,8 +46,8 @@ class PageBuilder implements BuilderInterface
         string $userClass
     ) {
         $this->manager = $em;
-        $this->nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
-        $this->nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+        $this->nodeRepo = $em->getRepository(Node::class);
+        $this->nodeTranslationRepo = $em->getRepository(NodeTranslation::class);
         $this->userRepo = $em->getRepository($userClass);
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
         $this->populator = $populator;

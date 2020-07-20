@@ -93,7 +93,7 @@ class TranslatorController extends AdminListController
 
             // Fetch form data
             $data = $form->getData();
-            if (!$em->getRepository('KunstmaanTranslatorBundle:Translation')->isUnique($data)) {
+            if (!$em->getRepository(Translation::class)->isUnique($data)) {
                 $error = new FormError($translator->trans('translator.translation_not_unique'));
                 $form->get('domain')->addError($error);
                 $form->get('keyword')->addError($error);
@@ -101,7 +101,7 @@ class TranslatorController extends AdminListController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // Create translation
-                $em->getRepository('KunstmaanTranslatorBundle:Translation')->createTranslations($data);
+                $em->getRepository(Translation::class)->createTranslations($data);
                 $em->flush();
 
                 $this->addFlash(
@@ -142,7 +142,7 @@ class TranslatorController extends AdminListController
         $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
 
-        $translations = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findBy(['translationId' => $id]);
+        $translations = $em->getRepository(Translation::class)->findBy(['translationId' => $id]);
         if (\count($translations) < 1) {
             throw new \InvalidArgumentException('No existing translations found for this id');
         }
@@ -171,7 +171,7 @@ class TranslatorController extends AdminListController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // Update translations
-                $em->getRepository('KunstmaanTranslatorBundle:Translation')->updateTranslations($translation, $id);
+                $em->getRepository(Translation::class)->updateTranslations($translation, $id);
                 $em->flush();
 
                 $this->addFlash(
@@ -252,7 +252,7 @@ class TranslatorController extends AdminListController
     {
         $configurator = $this->getAdminListConfigurator();
         $em = $this->getDoctrine()->getManager();
-        $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findOneBy(
+        $translation = $em->getRepository(Translation::class)->findOneBy(
             ['domain' => $domain, 'keyword' => $keyword, 'locale' => $locale]
         );
 
@@ -285,7 +285,7 @@ class TranslatorController extends AdminListController
 
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
         if ($request->isMethod('POST')) {
-            $em->getRepository('KunstmaanTranslatorBundle:Translation')->removeTranslations($id);
+            $em->getRepository(Translation::class)->removeTranslations($id);
         }
 
         return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : []));
@@ -339,7 +339,7 @@ class TranslatorController extends AdminListController
         try {
             if ($id !== 0) {
                 // Find existing translation
-                $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
+                $translation = $em->getRepository(Translation::class)->find($id);
 
                 if (\is_null($translation)) {
                     return new Response($translator->trans('translator.translator.invalid_translation'), 500);

@@ -63,7 +63,7 @@ class VersionChecker
 
         // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
         if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', Symfony\Contracts\Translation\TranslatorInterface::class, LegacyTranslatorInterface::class));
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
         }
 
         $this->translator = $translator;

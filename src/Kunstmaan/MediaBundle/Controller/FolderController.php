@@ -49,7 +49,7 @@ class FolderController extends Controller
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
@@ -66,7 +66,7 @@ class FolderController extends Controller
         if ($request->isMethod('POST')) {
             $editForm->handleRequest($request);
             if ($editForm->isValid()) {
-                $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
+                $em->getRepository(Folder::class)->save($folder);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -110,7 +110,7 @@ class FolderController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         $folderName = $folder->getName();
         $parentFolder = $folder->getParent();
 
@@ -122,7 +122,7 @@ class FolderController extends Controller
                 ))
             );
         } else {
-            $em->getRepository('KunstmaanMediaBundle:Folder')->delete($folder);
+            $em->getRepository(Folder::class)->delete($folder);
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('media.folder.delete.success.text', array(
@@ -163,14 +163,14 @@ class FolderController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $parent */
-        $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $parent = $em->getRepository(Folder::class)->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
         $form = $this->createForm(FolderType::class, $folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
+                $em->getRepository(Folder::class)->save($folder);
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('media.folder.addsub.success.text', array(
@@ -196,7 +196,7 @@ class FolderController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+        $galleries = $em->getRepository(Folder::class)->getAllFolders();
 
         return $this->render(
             '@KunstmaanMedia/Folder/addsub-modal.html.twig',
@@ -223,7 +223,7 @@ class FolderController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $form = $this->createEmptyForm();
 
@@ -233,7 +233,7 @@ class FolderController extends Controller
                 $data = $form->getData();
                 $alsoDeleteFolders = $data['checked'];
 
-                $em->getRepository('KunstmaanMediaBundle:Folder')->emptyFolder($folder, $alsoDeleteFolders);
+                $em->getRepository(Folder::class)->emptyFolder($folder, $alsoDeleteFolders);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -279,7 +279,7 @@ class FolderController extends Controller
         $nodeIds = $request->get('nodes');
 
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('KunstmaanMediaBundle:Folder');
+        $repository = $em->getRepository(Folder::class);
 
         foreach ($nodeIds as $id) {
             /* @var Folder $folder */

@@ -195,7 +195,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function populateIndex()
     {
-        $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepository = $this->em->getRepository(Node::class);
         $nodes = $nodeRepository->getAllTopNodes();
 
         foreach ($nodes as $node) {
@@ -340,13 +340,39 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function setAnalysis(Index $index, AnalysisFactoryInterface $analysis)
     {
-        $index->create(
-            array(
-                'number_of_shards' => $this->numberOfShards,
-                'number_of_replicas' => $this->numberOfReplicas,
-                'analysis' => $analysis->build(),
-            )
-        );
+        $analysers = $analysis->build();
+        $args = [
+            'number_of_shards' => $this->numberOfShards,
+            'number_of_replicas' => $this->numberOfReplicas,
+            'analysis' => $analysers,
+        ];
+
+        if (class_exists(\Elastica\Mapping::class)) {
+            $args = [
+                'settings' => [
+                    'number_of_shards' => $this->numberOfShards,
+                    'number_of_replicas' => $this->numberOfReplicas,
+                    'analysis' => $analysers,
+                ],
+            ];
+
+            $ngramDiff = 1;
+            if (isset($analysers['tokenizer']) && count($analysers['tokenizer']) > 0) {
+                foreach ($analysers['tokenizer'] as $tokenizer) {
+                    if ($tokenizer['type'] === 'nGram') {
+                        $diff = $tokenizer['max_gram'] - $tokenizer['min_gram'];
+
+                        $ngramDiff = $diff > $ngramDiff ? $diff : $ngramDiff;
+                    }
+                }
+            }
+
+            if ($ngramDiff > 1) {
+                $args['settings']['max_ngram_diff'] = $ngramDiff;
+            }
+        }
+
+        $index->create($args);
     }
 
     /**
@@ -355,12 +381,16 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param Index  $index
      * @param string $lang
      *
-     * @return Mapping
+     * @return Mapping|\Elastica\Mapping
      */
     protected function createDefaultSearchFieldsMapping(Index $index, $lang = 'en')
     {
-        $mapping = new Mapping();
-        $mapping->setType($index->getType($this->indexType));
+        if (class_exists(\Elastica\Type\Mapping::class)) {
+            $mapping = new Mapping();
+            $mapping->setType($index->getType($this->indexType));
+        } else {
+            $mapping = new \Elastica\Mapping();
+        }
 
         $mapping->setProperties($this->properties);
 
@@ -376,7 +406,11 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function setMapping(Index $index, $lang = 'en')
     {
         $mapping = $this->createDefaultSearchFieldsMapping($index, $lang);
-        $mapping->send();
+        if (class_exists(\Elastica\Mapping::class)) {
+            $mapping->send($index);
+        } else {
+            $mapping->send();
+        }
         $index->refresh();
     }
 
@@ -397,7 +431,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $rootNode = $this->currentTopNode;
         if (!$rootNode) {
             // Fetch main parent of current node...
-            $rootNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->getRootNodeFor(
+            $rootNode = $this->em->getRepository(Node::class)->getRootNodeFor(
                 $node,
                 $nodeTranslation->getLang()
             );
@@ -548,6 +582,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function enterRequestScope($lang)
     {
+        $locale = null;
         $requestStack = $this->container->get('request_stack');
         // If there already is a request, get the locale from it.
         if ($requestStack->getCurrentRequest()) {

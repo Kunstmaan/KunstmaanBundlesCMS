@@ -13,11 +13,11 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -30,8 +30,6 @@ class UsersController extends BaseSettingsController
      *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_users")
      * @Template("@KunstmaanAdminList/Default/list.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -53,9 +51,9 @@ class UsersController extends BaseSettingsController
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
-        return array(
+        return [
             'adminlist' => $adminList,
-        );
+        ];
     }
 
     /**
@@ -76,8 +74,6 @@ class UsersController extends BaseSettingsController
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add", methods={"GET", "POST"})
      * @Template("@KunstmaanUserManagement/Users/add.html.twig")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
     public function addAction(Request $request)
@@ -86,7 +82,7 @@ class UsersController extends BaseSettingsController
 
         $user = $this->getUserClassInstance();
 
-        $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => \get_class($user));
+        $options = ['password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => ['Registration'], 'data_class' => \get_class($user)];
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
 
@@ -120,9 +116,9 @@ class UsersController extends BaseSettingsController
             }
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -133,9 +129,9 @@ class UsersController extends BaseSettingsController
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit", methods={"GET", "POST"})
      * @Template("@KunstmaanUserManagement/Users/edit.html.twig")
      *
-     * @throws AccessDeniedException
-     *
      * @return array
+     *
+     * @throws AccessDeniedException
      */
     public function editAction(Request $request, $id)
     {
@@ -159,7 +155,7 @@ class UsersController extends BaseSettingsController
         $userEvent = new UserEvent($user, $request);
         $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
 
-        $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user));
+        $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
 
@@ -197,19 +193,19 @@ class UsersController extends BaseSettingsController
                 return new RedirectResponse(
                     $this->generateUrl(
                         'KunstmaanUserManagementBundle_settings_users_edit',
-                        array('id' => $id)
+                        ['id' => $id]
                     )
                 );
             }
         }
 
-        $params = array(
+        $params = [
             'form' => $form->createView(),
             'user' => $user,
-        );
+        ];
 
         if ($tabPane) {
-            $params = array_merge($params, array('tabPane' => $tabPane));
+            $params = array_merge($params, ['tabPane' => $tabPane]);
         }
 
         return $params;
@@ -223,13 +219,50 @@ class UsersController extends BaseSettingsController
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"POST"})
      *
+     * @return array
+     *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @deprecated this method is deprecated since KunstmaanUserManagementBundle 5.6 and will be removed in KunstmaanUserManagementBundle 6.0
      */
     public function deleteAction(Request $request, $id)
     {
+        @trigger_error('Using the deleteAction method from the UsersController is deprecated since KunstmaanUserManagementBundle 5.6 and will be replaced by the method deleteFormAction in KunstmaanUserManagementBundle 6.0. Use the correct method instead.', E_USER_DEPRECATED);
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        /* @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /* @var UserInterface $user */
+        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        if (!\is_null($user)) {
+            $userEvent = new UserEvent($user, $request);
+            $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
+
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->container->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
+                    '%username%' => $user->getUsername(),
+                ])
+            );
+        }
+
+        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+    }
+
+    /**
+     * @Route("/form-delete/{id}", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_form_delete", methods={"POST"})
+     */
+    public function deleteFormAction(Request $request, $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('delete-user', $submittedToken)) {
+            return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+        }
 
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -262,9 +295,9 @@ class UsersController extends BaseSettingsController
         return new RedirectResponse(
             $this->generateUrl(
                 'KunstmaanUserManagementBundle_settings_users_edit',
-                array(
+                [
                     'id' => $this->container->get('security.token_storage')->getToken()->getUser()->getId(),
-                )
+                ]
             )
         );
     }

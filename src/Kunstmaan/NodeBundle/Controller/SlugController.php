@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
@@ -129,7 +130,7 @@ class SlugController extends Controller
         if ($preview) {
             $version = $request->get('version');
             if (!empty($version) && is_numeric($version)) {
-                $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
+                $nodeVersion = $em->getRepository(NodeVersion::class)->find($version);
                 if (!\is_null($nodeVersion)) {
                     $entity = $nodeVersion->getRef($em);
                 }

@@ -75,7 +75,7 @@ class WidgetsController extends Controller
 
         $results = [];
         if ($search) {
-            $nts = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationsLikeTitle($search, $locale);
+            $nts = $em->getRepository(NodeTranslation::class)->getNodeTranslationsLikeTitle($search, $locale);
             /** @var NodeTranslation $nt */
             foreach ($nts as $nt) {
                 $node = $nt->getNode();
@@ -116,10 +116,10 @@ class WidgetsController extends Controller
                 $switchedHost = $domainConfig->getHostSwitched();
                 $rootItems = [$domainConfig->getRootNode($switchedHost['host'])];
             } else {
-                $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->getAllTopNodes();
+                $rootItems = $em->getRepository(Node::class)->getAllTopNodes();
             }
         } else {
-            $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->find($id)->getChildren();
+            $rootItems = $em->getRepository(Node::class)->find($id)->getChildren();
         }
 
         $results = $this->nodesToArray($locale, $rootItems, $depth);

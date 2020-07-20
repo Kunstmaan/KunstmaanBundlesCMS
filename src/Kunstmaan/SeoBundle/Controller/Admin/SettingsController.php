@@ -28,7 +28,7 @@ class SettingsController extends BaseSettingsController
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository('KunstmaanSeoBundle:Robots');
+        $repo = $this->getDoctrine()->getRepository(Robots::class);
         $robot = $repo->findOneBy(array());
         $default = $this->container->getParameter('robots_default');
         $isSaved = true;

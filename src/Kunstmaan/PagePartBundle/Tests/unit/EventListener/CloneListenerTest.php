@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Tests\EventListener;
 
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\EventListener\CloneListener;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
@@ -61,7 +62,7 @@ class CloneListenerTest extends TestCase
 
         $this->em->expects($this->any())
             ->method('getRepository')
-            ->with($this->equalTo('KunstmaanPagePartBundle:PagePartRef'))
+            ->with($this->equalTo(PagePartRef::class))
             ->willReturn($this->repo);
 
         $this->configurator = new PagePartAdminConfigurator();

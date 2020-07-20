@@ -156,7 +156,7 @@ class TwigExtensionTest extends TestCase
     {
         $this->emMock->expects($this->once())
             ->method('getRepository')
-            ->with($this->equalTo('KunstmaanSeoBundle:Seo'))
+            ->with($this->equalTo(Seo::class))
             ->willReturn($this->seoRepoMock);
     }
 

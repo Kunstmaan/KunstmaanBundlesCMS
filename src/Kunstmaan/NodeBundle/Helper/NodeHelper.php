@@ -78,7 +78,7 @@ class NodeHelper
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
 
         /* @var NodeVersion $publicNodeVersion */
-        $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $publicNodeVersion = $this->em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $publicPage,
                 $nodeTranslation,
@@ -215,10 +215,10 @@ class NodeHelper
         }
 
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $locale, $user);
+        $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($newPage, $locale, $user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
         if (null !== $parentNode) {
-            $weight = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getMaxChildrenWeight(
+            $weight = $this->em->getRepository(NodeTranslation::class)->getMaxChildrenWeight(
                     $parentNode,
                     $locale
                 ) + 1;

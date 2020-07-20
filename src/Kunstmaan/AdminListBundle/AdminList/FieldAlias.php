@@ -7,6 +7,12 @@ namespace Kunstmaan\AdminListBundle\AdminList;
  */
 class FieldAlias
 {
+    /** @var string */
+    private $abbr;
+
+    /** @var string */
+    private $relation;
+
     /**
      * FieldAlias constructor.
      *

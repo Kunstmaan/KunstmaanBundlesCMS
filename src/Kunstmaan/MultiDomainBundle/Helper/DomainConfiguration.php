@@ -33,6 +33,9 @@ class DomainConfiguration extends BaseDomainConfiguration
      */
     protected $adminRouteHelper;
 
+    /** @var EntityManagerInterface */
+    private $em;
+
     /**
      * @param ContainerInterface|string $multilanguage
      */
@@ -177,7 +180,7 @@ class DomainConfiguration extends BaseDomainConfiguration
             $host = $this->getRealHost($host);
 
             $internalName = $this->hosts[$host]['root'];
-            $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+            $nodeRepo = $this->em->getRepository(Node::class);
             $this->rootNode = $nodeRepo->getNodeByInternalName($internalName);
         }
 
@@ -291,7 +294,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @param int $id
+     * @param string|int $id
      *
      * @return array
      */

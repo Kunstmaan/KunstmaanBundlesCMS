@@ -12,6 +12,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * The AdminList configurator for the AbstractArticlePage
@@ -91,7 +92,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     protected function getQueryBuilder()
     {
         $queryBuilder = $this->em
-            ->getRepository('KunstmaanNodeBundle:NodeTranslation')
+            ->getRepository(NodeTranslation::class)
             ->createQueryBuilder('b');
 
         return $queryBuilder;

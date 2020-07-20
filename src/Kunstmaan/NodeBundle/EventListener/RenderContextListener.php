@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -71,7 +72,7 @@ class RenderContextListener
             if ($request->get('preview') === true) {
                 $version = $request->get('version');
                 if (!empty($version) && is_numeric($version)) {
-                    $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
+                    $nodeVersion = $this->em->getRepository(NodeVersion::class)->find($version);
                     if (!\is_null($nodeVersion)) {
                         $entity = $nodeVersion->getRef($this->em);
                     }

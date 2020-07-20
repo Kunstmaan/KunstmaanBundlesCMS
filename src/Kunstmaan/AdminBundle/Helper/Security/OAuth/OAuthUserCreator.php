@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\GroupInterface;
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
 
 class OAuthUserCreator implements OAuthUserCreatorInterface
@@ -58,7 +59,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
 
             foreach ($this->getAccessLevels($email) as $accessLevel) {
                 /** @var GroupInterface $group */
-                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(['name' => $accessLevel]);
+                $group = $this->em->getRepository(Group::class)->findOneBy(['name' => $accessLevel]);
                 if (null !== $group) {
                     $user->addGroup($group);
                 }

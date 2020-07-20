@@ -4,6 +4,7 @@ namespace Kunstmaan\DashboardBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 /**
  * AnalyticsConfigRepository
@@ -45,7 +46,7 @@ class AnalyticsConfigRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        return $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')
+        return $em->getRepository(AnalyticsOverview::class)
             ->findBy(array(
                     'config' => $config,
                     'segment' => null,
@@ -65,7 +66,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $em->persist($config);
         $em->flush();
 
-        $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config);
+        $this->getEntityManager()->getRepository(AnalyticsOverview::class)->addOverviews($config);
 
         return $config;
     }
@@ -81,7 +82,7 @@ class AnalyticsConfigRepository extends EntityRepository
 
         // Backward compatibilty to flush overviews without a config set
         if (!$id) {
-            $overviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+            $overviewRepository = $em->getRepository(AnalyticsOverview::class);
             foreach ($overviewRepository->findAll() as $overview) {
                 $em->remove($overview);
             }
