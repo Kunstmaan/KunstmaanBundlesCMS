@@ -1438,7 +1438,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request                   $request
      * @param NodeAdminListConfigurator $nodeAdminListConfigurator
      *
      * @return array
