@@ -73,6 +73,12 @@ class ManipulateImageService
             }
         }
 
-        return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, $filter, $runTimeConfigForView);
+        try {
+            return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, $filter, $runTimeConfigForView);
+        } catch (\Exception $exception) {
+            $runTimeConfigForView = [];
+
+            return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters($path, $filter, $runTimeConfigForView);
+        }
     }
 }
