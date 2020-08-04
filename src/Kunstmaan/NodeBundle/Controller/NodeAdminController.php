@@ -1022,7 +1022,7 @@ class NodeAdminController extends Controller
 
         $nodeVersions = $this->em->getRepository(NodeVersion::class)->findBy(
             ['nodeTranslation' => $nodeTranslation],
-            ['updated' => 'ASC']
+            ['updated' => 'DESC']
         );
         $queuedNodeTranslationAction = $this->em->getRepository(QueuedNodeTranslationAction::class)->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
