@@ -137,7 +137,7 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         $el.parents('.js-filter-line').find('.js-filter-options').find('input:not(.js-unique-filter-id), select').each(function() {
             var name = $(this).attr('name');
 
-            if (name.indexOf('[') !== -1) {
+            if (typeof name === 'string' && name.indexOf('[') !== -1) {
                 var bracketPos = name.indexOf('['),
                     arrayName = name.substr(0, bracketPos),
                     arrayIndex = name.substr(bracketPos);
