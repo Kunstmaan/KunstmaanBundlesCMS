@@ -19,6 +19,9 @@ class TranslationsFileUploadType extends AbstractType
         $builder->add('file', FileType::class, [
             'required' => true,
             'label' => 'kuma_translator.form.upload_file_choose',
+            'constraints' => array(
+                new NotBlank()
+            ),
         ]);
         $builder->add('force', CheckboxType::class, [
             'required' => false,
