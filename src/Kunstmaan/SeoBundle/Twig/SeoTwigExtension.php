@@ -132,7 +132,7 @@ class SeoTwigExtension extends AbstractExtension
 
     /**
      * @param AbstractPage $entity
-     * @param null|string  $default if given we'll return this text if no SEO title was found
+     * @param string|null  $default if given we'll return this text if no SEO title was found
      *
      * @return string
      */
@@ -194,7 +194,7 @@ class SeoTwigExtension extends AbstractExtension
     /**
      * @param AbstractPage $entity
      *
-     * @return null|string
+     * @return string|null
      */
     private function getSeoTitle(AbstractPage $entity = null)
     {

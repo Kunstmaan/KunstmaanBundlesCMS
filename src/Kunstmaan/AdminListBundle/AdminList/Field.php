@@ -25,12 +25,12 @@ class Field
     private $sort;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $template;
 
     /**
-     * @var null|FieldAlias
+     * @var FieldAlias|null
      */
     private $alias;
 

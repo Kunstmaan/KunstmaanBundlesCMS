@@ -7,7 +7,7 @@ namespace Kunstmaan\GeneratorBundle\Generator;
  */
 final class Symfony4EntityRepositoryGenerator
 {
-    protected static $_template =
+    private static $_template =
         '<?php
 
 namespace <namespace>;

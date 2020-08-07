@@ -44,7 +44,7 @@ abstract class AdminListController extends Controller
      * Shows the list of entities
      *
      * @param AbstractAdminListConfigurator $configurator
-     * @param null|Request                  $request
+     * @param Request|null                  $request
      *
      * @return Response
      */
@@ -69,7 +69,7 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $_format      The format to export to
-     * @param null|Request                  $request
+     * @param Request|null                  $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -93,7 +93,7 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $type         The type to add
-     * @param null|Request                  $request
+     * @param Request|null                  $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -188,7 +188,7 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $entityId     The id of the entity that will be edited
-     * @param null|Request                  $request
+     * @param Request|null                  $request
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
@@ -342,7 +342,7 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param int                           $entityId     The id to delete
-     * @param null|Request                  $request
+     * @param Request|null                  $request
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException

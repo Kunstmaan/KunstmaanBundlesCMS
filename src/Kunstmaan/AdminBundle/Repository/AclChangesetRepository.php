@@ -13,7 +13,7 @@ class AclChangesetRepository extends EntityRepository
     /**
      * Find a changeset with status RUNNING
      *
-     * @return null|AclChangeset
+     * @return AclChangeset|null
      */
     public function findRunningChangeset()
     {
@@ -30,7 +30,7 @@ class AclChangesetRepository extends EntityRepository
     /**
      * Fetch the oldest acl changeset for state NEW
      *
-     * @return null|AclChangeset
+     * @return AclChangeset|null
      */
     public function findNewChangeset()
     {

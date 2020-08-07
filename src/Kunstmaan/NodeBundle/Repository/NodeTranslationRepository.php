@@ -155,7 +155,6 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Finds all nodetranslations where title is like the given $title parameter
      *
-     *
      * @param string $title
      * @param string $lang  (optional, if not specified all languages will be
      *                      returned)
