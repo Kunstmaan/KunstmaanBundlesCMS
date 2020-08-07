@@ -326,7 +326,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @param string|null $host
      *
-     * @return null|string
+     * @return string|null
      */
     private function getRealHost($host = null)
     {

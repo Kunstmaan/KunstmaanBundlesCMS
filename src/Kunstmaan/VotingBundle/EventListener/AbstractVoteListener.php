@@ -39,7 +39,7 @@ abstract class AbstractVoteListener
     /**
      * @param AbstractVote   $vote
      * @param EventInterface $event
-     * @param null|int       $defaultValue
+     * @param int|null       $defaultValue
      */
     protected function createVote(AbstractVote $vote, EventInterface $event, $defaultValue = null)
     {

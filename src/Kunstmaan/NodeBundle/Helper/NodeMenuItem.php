@@ -45,7 +45,7 @@ class NodeMenuItem
     /**
      * @param Node                    $node            The node
      * @param NodeTranslation         $nodeTranslation The nodetranslation
-     * @param NodeMenuItem|null|false $parent          The parent nodemenuitem
+     * @param NodeMenuItem|false|null $parent          The parent nodemenuitem
      * @param NodeMenu                $menu            The menu
      */
     public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu)
@@ -156,7 +156,7 @@ class NodeMenuItem
     }
 
     /**
-     * @param NodeMenuItem|null|false $parent
+     * @param NodeMenuItem|false|null $parent
      */
     public function setParent($parent = false)
     {

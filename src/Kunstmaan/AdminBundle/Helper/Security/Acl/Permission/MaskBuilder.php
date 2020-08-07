@@ -57,7 +57,7 @@ class MaskBuilder extends AbstractMaskBuilder
     /**
      * Returns the code for the passed mask
      *
-     * @param null|int $mask
+     * @param int|null $mask
      *
      * @throws InvalidArgumentException
      * @throws \RuntimeException

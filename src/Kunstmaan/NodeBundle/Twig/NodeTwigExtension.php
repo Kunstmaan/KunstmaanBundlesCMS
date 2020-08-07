@@ -131,7 +131,7 @@ class NodeTwigExtension extends AbstractExtension
     /**
      * @param NodeTranslation $nodeTranslation
      *
-     * @return null|object
+     * @return object|null
      */
     public function getPageByNodeTranslation(NodeTranslation $nodeTranslation)
     {

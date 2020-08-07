@@ -160,7 +160,7 @@ class SlugRouter implements RouterInterface
      * @param array    $parameters    The route parameters
      * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
-     * @return null|string
+     * @return string|null
      */
     public function generate($name, $parameters = array(), $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
@@ -190,7 +190,7 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * @return null|\Symfony\Component\HttpFoundation\Request
+     * @return \Symfony\Component\HttpFoundation\Request|null
      */
     protected function getMasterRequest()
     {

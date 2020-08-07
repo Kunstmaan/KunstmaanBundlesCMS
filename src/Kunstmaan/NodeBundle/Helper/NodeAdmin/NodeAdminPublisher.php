@@ -74,7 +74,7 @@ class NodeAdminPublisher
      * If there is a draft version it'll try to publish the draft first. Makse snese because if you want to publish the public version you don't publish but you save.
      *
      * @param NodeTranslation $nodeTranslation
-     * @param null|BaseUser   $user
+     * @param BaseUser|null   $user
      *
      *  @throws AccessDeniedException
      */
