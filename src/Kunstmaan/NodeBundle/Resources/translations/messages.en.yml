@@ -86,7 +86,7 @@ kuma_node:
                 locked_success: An automatic backup has been created because the page is being edited by another user
         undo_delete:
             flash:
-                success: The deleting the page has been undone
+                success: Deleting the page has been undone
                 error: There was an error while undoing deleting the page
         new_page:
             title:
@@ -172,6 +172,9 @@ kuma_node:
             button:
                 delete:     Delete
                 cancel:     Cancel
+        undo_delete_page:
+            'title.%page%': Undo deleting page '%page%'
+            'body.%page%':  This will undo deleting this page in all languages! Are you really sure about this?
         duplicate_page:
             'title.%page%': Duplicate page '%page%'
             label:

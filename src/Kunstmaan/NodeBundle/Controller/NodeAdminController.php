@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Esites\CustomerAdminBundle\Entity\User;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
@@ -16,6 +17,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\NodeBundle\AdminList\DeletedNodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
@@ -359,7 +361,6 @@ class NodeAdminController extends Controller
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $request = $this->get('request_stack')->getCurrentRequest();
         $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
@@ -512,7 +513,8 @@ class NodeAdminController extends Controller
 
                 return null;
             },
-            'undo'
+            'undo',
+            '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
         );
 
         return $this->renderAdminList($request, $nodeAdminListConfigurator);
@@ -1345,6 +1347,14 @@ class NodeAdminController extends Controller
         );
 
         $node->setDeleted(false);
+
+        foreach ($node->getNodeTranslations() as $nodeTranslation) {
+            if (!$nodeTranslation instanceof NodeTranslation) {
+                continue;
+            }
+
+            $this->nodePublisher->unPublish($nodeTranslation);
+        }
 
         $this->em->persist($node);
 

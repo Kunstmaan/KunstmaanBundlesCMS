@@ -166,6 +166,9 @@ kuma_node:
       button:
         delete: Verwijder
         cancel: Annuleer
+    undo_delete_page:
+      'title.%page%': Verwijderen van de pagina '%page% ongedaan maken'
+      'body.%page%': Hiermee maakt u het verwijderen van deze pagina ongedaan in alle talen! Bent u echt zeker over dit?
     duplicate_page:
       'title.%page%': Dupliceer pagina '%page%'
       label:

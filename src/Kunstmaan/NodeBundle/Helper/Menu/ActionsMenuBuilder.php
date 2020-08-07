@@ -437,9 +437,11 @@ class ActionsMenuBuilder
                     'action.undo_delete',
                     [
                         'linkAttributes' => [
-                            'type' => 'submit',
-                            'value' => 'undo_delete',
-                            'name' => 'undo_delete',
+                            'type' => 'button',
+                            'class' => 'btn btn-default btn--raise-on-hover',
+                            'data-toggle' => 'modal',
+                            'data-keyboard' => 'true',
+                            'data-target' => '#undo-delete-page-modal',
                         ],
                         'extras' => ['renderType' => 'button'],
                     ]
