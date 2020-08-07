@@ -513,8 +513,8 @@ class NodeAdminController extends Controller
 
                 return null;
             },
-            'undo',
-            '@KunstmaanAdmin/Settings/undo_delete_button.html.twig'
+            'fa fa-undo',
+            '@KunstmaanNode\Admin\undo_delete_button.html.twig'
         );
 
         return $this->renderAdminList($request, $nodeAdminListConfigurator);
