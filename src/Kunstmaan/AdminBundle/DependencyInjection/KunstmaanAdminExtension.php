@@ -116,6 +116,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
+        // Manually register the KunstmaanAdminBundle folder as a FosUser override for symfony 4.
+        if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir').'/templates/bundles/KunstmaanAdminBundle')) {
+            $twigConfig['paths'][] = ['value' => '%kernel.project_dir%/templates/bundles/KunstmaanAdminBundle', 'namespace' => 'FOSUser'];
+        }
         $twigConfig['paths'][] = ['value' => \dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 

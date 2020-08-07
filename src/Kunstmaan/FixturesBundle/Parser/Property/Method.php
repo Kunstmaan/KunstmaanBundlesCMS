@@ -125,7 +125,7 @@ class Method implements PropertyParserInterface
      * @param \ReflectionParameter $parameter
      * @param $parameters
      *
-     * @return null|object
+     * @return object|null
      */
     private function typeHintChecker(\ReflectionParameter $parameter, $parameters)
     {
@@ -149,7 +149,7 @@ class Method implements PropertyParserInterface
      * @param \ReflectionParameter $parameter
      * @param $parameters
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     private function getArgumentByName(\ReflectionParameter $parameter, $parameters)
     {

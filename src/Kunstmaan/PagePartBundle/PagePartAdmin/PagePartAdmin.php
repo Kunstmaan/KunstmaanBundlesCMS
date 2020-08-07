@@ -65,8 +65,8 @@ class PagePartAdmin
      * @param PagePartAdminConfiguratorInterface $configurator The configurator
      * @param EntityManagerInterface             $em           The entity manager
      * @param HasPagePartsInterface              $page         The page
-     * @param null|string                        $context      The context
-     * @param null|ContainerInterface            $container    The container
+     * @param string|null                        $context      The context
+     * @param ContainerInterface|null            $container    The container
      *
      * @throws \InvalidArgumentException
      */
@@ -284,7 +284,7 @@ class PagePartAdmin
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContext()
     {
