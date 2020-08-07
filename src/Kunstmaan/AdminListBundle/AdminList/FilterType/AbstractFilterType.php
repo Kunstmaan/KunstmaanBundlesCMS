@@ -10,12 +10,12 @@ namespace Kunstmaan\AdminListBundle\AdminList\FilterType;
 abstract class AbstractFilterType implements FilterTypeInterface
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $columnName;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $alias;
 

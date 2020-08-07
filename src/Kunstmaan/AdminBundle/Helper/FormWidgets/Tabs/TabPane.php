@@ -114,7 +114,7 @@ class TabPane
 
     /**
      * @param TabInterface $tab      The tab
-     * @param null|int     $position The position
+     * @param int|null     $position The position
      *
      * @return TabPane
      */
