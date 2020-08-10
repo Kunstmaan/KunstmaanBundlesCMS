@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TranslationsFileUploadType extends AbstractType
 {
@@ -19,6 +20,9 @@ class TranslationsFileUploadType extends AbstractType
         $builder->add('file', FileType::class, [
             'required' => true,
             'label' => 'kuma_translator.form.upload_file_choose',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('force', CheckboxType::class, [
             'required' => false,
