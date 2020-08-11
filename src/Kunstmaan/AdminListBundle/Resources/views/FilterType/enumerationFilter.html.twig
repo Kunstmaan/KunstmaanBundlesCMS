@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group">
-    <select name="{{ nameprefix }}value{{ namesuffix }}[]" size="4" multiple class="form-control">
+    <select name="{{ nameprefix }}value{{ namesuffix }}[]" multiple class="form-control js-advanced-select">
         {% for key,option in options %}
             <option value="{{ key }}"{% if data.value is defined and key in data.value %} selected{% endif %}>{{ option|trans }}</option>
         {% endfor %}
