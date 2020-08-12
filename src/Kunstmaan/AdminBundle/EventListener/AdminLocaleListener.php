@@ -102,8 +102,7 @@ class AdminLocaleListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            // Must be registered before the default Locale listener
-            KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
+            KernelEvents::REQUEST => array(array('onKernelRequest', -1)),
         );
     }
 }
