@@ -158,7 +158,6 @@ class NodeHelperTest extends TestCase
     public function testCreatePage()
     {
         $title = 'Test page';
-        $user = new User();
 
         [$homePage, , $nodeHomePage] = $this->createNodeEntities('Homepage');
 
@@ -181,7 +180,7 @@ class NodeHelperTest extends TestCase
             ->with(
                 $this->equalTo($expectedTestPageCreateNodeFor),
                 $this->equalTo($this->locale),
-                $this->equalTo($user)
+                $this->equalTo($this->user)
             )
             ->willReturn($nodeChildPage);
 
@@ -256,8 +255,6 @@ class NodeHelperTest extends TestCase
 
     public function testPrepareNodeVersionForPublic()
     {
-        $user = new User();
-
         $page = new TestPage();
         $page->setTitle('Test');
         $page->setId(1);
@@ -289,7 +286,7 @@ class NodeHelperTest extends TestCase
                 $this->equalTo($page),
                 $this->equalTo($nodeTranslation),
                 $this->equalTo($nodeVersion),
-                $this->equalTo($user)
+                $this->equalTo($this->user)
             );
 
         $this->nodeHelper->prepareNodeVersion($nodeVersion, $nodeTranslation, 10, true);
