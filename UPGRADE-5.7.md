@@ -5,6 +5,7 @@ General
 -------
 
 * We don't enable the templating component by default anymore. If you use the templating component or the `@templating` service, run `composer req symfony/templating` and activate it by enabling the `framework.templating` config in your project.
+* Update your database schema after the upgrade to have the latest entity changes applied to your database.
 
 AdminBundle
 ------------

@@ -8,3 +8,9 @@ services:
         arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 250 }
+
+    Kunstmaan\UserManagementBundle\EventSubscriber\UserDeleteEventSubscriber:
+        arguments:
+            - '@kunstmaan_admin.logger'
+        tags:
+            - { name: 'kernel.event_subscriber' }

@@ -17,4 +17,11 @@ class UserEvents
      * @var string
      */
     const USER_DELETE_INITIALIZE = 'kunstmaan_usermanagement.delete.initialize';
+
+    /**
+     * This event will be triggered after succesfully deleting the user.
+     *
+     * @var string
+     */
+    const AFTER_USER_DELETE = 'kunstmaan_usermanagement.delete.after';
 }
