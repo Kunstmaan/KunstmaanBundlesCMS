@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ChooserController extends Controller
 {
+    private const TYPE_ALL = 'all';
+
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
      *
@@ -33,7 +35,7 @@ class ChooserController extends Controller
         $session = $request->getSession();
         $folderId = false;
 
-        $type = $request->get('type', 'all');
+        $type = $request->get('type', self::TYPE_ALL);
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser = $request->get('linkChooser');
 
@@ -101,7 +103,7 @@ class ChooserController extends Controller
 
         /** @var AbstractMediaHandler $handler */
         $handler = null;
-        if ($type) {
+        if ($type && $type !== self::TYPE_ALL) {
             $handler = $mediaHandler->getHandlerForType($type);
         }
 
