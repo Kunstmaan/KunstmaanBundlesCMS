@@ -18,10 +18,10 @@ class DefaultController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        return $this->redirectToRoute('_slug', [
+        return $this->redirectToRoute('_slug', array_merge($request->query->all(), [
             'url' => '',
             '_locale' => $this->getLocale($request),
-        ]);
+        ]));
     }
 
     /**
