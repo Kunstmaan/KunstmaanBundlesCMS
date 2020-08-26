@@ -14,7 +14,7 @@ export default function createBundleTask({config = undefined, watch = false, log
         } else {
             compiler.run(handleWebpackResult);
         }
-        
+
         function handleWebpackResult(err, stats) {
             if (err) {
                 console.error(err.stack || err);
@@ -47,8 +47,8 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
         return {
             babelrc: false,
             presets: [
-                ['es2015', {
-                    // TODO
+                ['@babel/preset-env', {
+                    useBuiltIns: 'usage',
                     modules: false
                 }]
             ]
@@ -58,12 +58,18 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
     return {
         babelrc: false,
         presets: [
-            ['env', {
+            ['@babel/preset-env', {
+                useBuiltIns: 'usage',
                 targets: {
-                    browsers: ['last 2 Chrome versions']
+                    browsers: [
+                        '>0.25%',
+                        'ie 11',
+                        'not op_mini all'
+                    ]
                 }
             }]
         ],
+        plugins: ['@babel/plugin-transform-spread'],
         cacheDirectory: true
     };
 }
