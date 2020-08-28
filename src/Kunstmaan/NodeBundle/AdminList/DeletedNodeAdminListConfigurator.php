@@ -30,9 +30,6 @@ class DeletedNodeAdminListConfigurator extends NodeAdminListConfigurator
     {
         parent::adaptQueryBuilder($queryBuilder);
 
-        $queryBuilder
-            ->where('b.lang = :lang')
-            ->andWhere('n.deleted = 1')
-        ;
+        $queryBuilder->setParameter('deleted', 1);
     }
 }
