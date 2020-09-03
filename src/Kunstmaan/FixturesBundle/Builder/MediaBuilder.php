@@ -3,6 +3,7 @@
 namespace Kunstmaan\FixturesBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -14,25 +15,24 @@ use Symfony\Component\Mime\MimeTypes;
 
 class MediaBuilder implements BuilderInterface
 {
+    /** @var EntityManagerInterface */
     private $em;
-
+    /** @var FileHandler */
     private $fileHandler;
-
-    /**
-     * @var MimeTypes|MimeTypeGuesser
-     */
+    /** @var MimeTypes|MimeTypeGuesser */
     private $mimeTypeGuesser;
 
     private $folder;
 
-    public function __construct(EntityManager $em, FileHandler $fileHandler, $mimeTypeGuesser)
+    public function __construct(EntityManager $em, FileHandler $fileHandler, /* MimeTypes|MimeTypeGuesser */$mimeTypeGuesser)
     {
         $this->em = $em;
         $this->fileHandler = $fileHandler;
         $this->mimeTypeGuesser = $mimeTypeGuesser;
         if ($mimeTypeGuesser instanceof MimeTypeGuesserFactoryInterface) {
+            @trigger_error(sprintf('Passing an instance of "%s" for the "$mimeTypeGuesser" parameter is deprecated since KunstmaanMediaBundle 5.7 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', MimeTypeGuesserFactoryInterface::class), E_USER_DEPRECATED);
+
             $this->mimeTypeGuesser = $mimeTypeGuesser->get();
-            @trigger_error('Passing a service instance of "\Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface" as the second argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
         }
     }
 
@@ -92,7 +92,7 @@ class MediaBuilder implements BuilderInterface
         $this->fileHandler->saveMedia($media);
     }
 
-    private function guessMimeType($pathName)
+    private function guessMimeType($pathName): ?string
     {
         if ($this->mimeTypeGuesser instanceof MimeTypeGuesser) {
             return $this->mimeTypeGuesser->guess($pathName);
