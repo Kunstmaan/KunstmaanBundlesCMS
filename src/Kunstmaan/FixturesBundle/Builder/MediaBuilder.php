@@ -24,7 +24,7 @@ class MediaBuilder implements BuilderInterface
 
     private $folder;
 
-    public function __construct(EntityManager $em, FileHandler $fileHandler, /* MimeTypes|MimeTypeGuesser */$mimeTypeGuesser)
+    public function __construct(EntityManager $em, FileHandler $fileHandler, /* MimeTypes */$mimeTypeGuesser)
     {
         $this->em = $em;
         $this->fileHandler = $fileHandler;
