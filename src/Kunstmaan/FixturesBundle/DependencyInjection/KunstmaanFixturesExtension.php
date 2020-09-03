@@ -4,10 +4,8 @@ namespace Kunstmaan\FixturesBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Mime\MimeTypes;
 
 /**
  * This is the class that loads and manages your bundle configuration
