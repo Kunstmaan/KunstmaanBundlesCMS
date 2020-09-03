@@ -36,12 +36,12 @@ class FileHandler extends AbstractMediaHandler
     public $fileSystem;
 
     /**
-     * @var MimeTypes|MimeTypeGuesser
+     * @var MimeTypeGuesser
      */
     public $mimeTypeGuesser;
 
     /**
-     * @var MimeTypes|ExtensionGuesser
+     * @var ExtensionGuesser
      */
     public $extensionGuesser;
 
@@ -64,19 +64,11 @@ class FileHandler extends AbstractMediaHandler
      * @param MimeTypeGuesserFactoryInterface       $mimeTypeGuesserFactory
      * @param ExtensionGuesserFactoryInterface|null $extensionGuesserFactoryInterface
      */
-    public function __construct($priority, $mimeTypeGuesser, $extensionGuesser)
+    public function __construct($priority, $mimeTypeGuesserFactory, $extensionGuesserFactoryInterface, MimeTypes $mimeTypes = null)
     {
         parent::__construct($priority);
-        $this->extensionGuesser = $extensionGuesser;
-        if ($extensionGuesser instanceof ExtensionGuesserFactoryInterface) {
-            $this->extensionGuesser = $extensionGuesser->get();
-            @trigger_error('Passing the "@kunstmaan_media.extension_guesser.factory" service as third argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
-        }
-        $this->mimeTypeGuesser = $mimeTypeGuesser;
-        if ($mimeTypeGuesser instanceof MimeTypeGuesserFactoryInterface) {
-            $this->mimeTypeGuesser = $mimeTypeGuesser->get();
-            @trigger_error('Passing the "@kunstmaan_media.mimetype_guesser.factory" service as second argument is deprecated since KunstmaanMediaBundle 5.6 and will be replaced by the "@mime_types" service in KunstmaanMediaBundle 6.0. Inject the correct service instead.', E_USER_DEPRECATED);
-        }
+        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+        $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
     }
 
     /**
@@ -145,7 +137,7 @@ class FileHandler extends AbstractMediaHandler
     {
         if ($object instanceof File ||
             ($object instanceof Media &&
-                (is_file($object->getContent()) || $object->getLocation() == 'local'))
+            (is_file($object->getContent()) || $object->getLocation() == 'local'))
         ) {
             return true;
         }

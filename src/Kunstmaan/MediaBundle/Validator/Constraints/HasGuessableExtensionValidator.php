@@ -33,6 +33,10 @@ class HasGuessableExtensionValidator extends ConstraintValidator
 
     public function __construct($mimeTypes = null)
     {
+        if (null === $mimeTypes) {
+            @trigger_error(sprintf('Not passing an instance of "%s" as the first argument of "%s" is deprecated in KunstmaanMediaBundle 5.7 and will be required in KunstmaanMediaBundle 6.0.', MimeTypes::class, __METHOD__), E_USER_DEPRECATED);
+        }
+
         $this->mimeTypes = $mimeTypes;
     }
 
@@ -56,7 +60,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         $contentType = $this->guessMimeType($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
         if (!\array_key_exists('extension', $pathInfo)) {
-            $pathInfo['extension'] = $this->getExtensions($contentType);
+            $pathInfo['extension'] = $this->getExtension($contentType);
         }
 
         if ($pathInfo['extension'] === null) {
@@ -75,7 +79,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         return $this->mimeTypes->guessMimeType($pathName);
     }
 
-    private function getExtensions($mimeType)
+    private function getExtension($mimeType)
     {
         if ($this->extensionGuesser !== null) {
             return $this->extensionGuesser->guess($mimeType);
@@ -85,20 +89,26 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     }
 
     /**
+     * @deprecated This method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0.
+     *
      * @param ExtensionGuesserFactoryInterface $extensionGuesserFactory
      */
     public function setExtensionGuesser(ExtensionGuesserFactoryInterface $extensionGuesserFactory)
     {
-        @trigger_error('Calling the "setExtensionGuesser" method on "\Kunstmaan\MediaBundle\Validator\Constraints\ HasGuessableExtensionValidator" is deprecated since KunstmaanMediaBundle 5.6 and the method will be removed in KunstmaanMediaBundle 6.0. Inject the required services through the constructor instead.', E_USER_DEPRECATED);
+        @trigger_error(sprintf('Calling the "%s" method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Inject the required services through the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->extensionGuesser = $extensionGuesserFactory->get();
     }
 
     /**
+     * @deprecated This method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0.
+     *
      * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
      */
     public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
-        @trigger_error('Calling the "setMimeTypeGuesser" method on "\Kunstmaan\MediaBundle\Validator\Constraints\ HasGuessableExtensionValidator" is deprecated since KunstmaanMediaBundle 5.6 and the method will be removed in KunstmaanMediaBundle 6.0. Inject the required services through the constructor instead.', E_USER_DEPRECATED);
+        @trigger_error(sprintf('Calling the "%s" method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Inject the required services through the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
     }
 }
