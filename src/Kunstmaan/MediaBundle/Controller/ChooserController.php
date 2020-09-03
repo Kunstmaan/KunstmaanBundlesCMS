@@ -40,7 +40,7 @@ class ChooserController extends Controller
         // Go to the last visited folder
         if ($session->get('last-media-folder')) {
             try {
-                $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($session->get('last-media-folder'));
+                $em->getRepository(Folder::class)->getFolder($session->get('last-media-folder'));
                 $folderId = $session->get('last-media-folder');
             } catch (EntityNotFoundException $e) {
                 $folderId = false;
@@ -50,7 +50,7 @@ class ChooserController extends Controller
         if (!$folderId) {
             // Redirect to the first top folder
             /* @var Folder $firstFolder */
-            $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
+            $firstFolder = $em->getRepository(Folder::class)->getFirstTopFolder();
             $folderId = $firstFolder->getId();
         }
 
@@ -97,7 +97,7 @@ class ChooserController extends Controller
         $mediaHandler = $this->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         /** @var AbstractMediaHandler $handler */
         $handler = null;

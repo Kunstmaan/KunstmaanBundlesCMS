@@ -100,7 +100,7 @@ class SlugRouterTest extends TestCase
         $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
-            ->with($this->equalTo('KunstmaanNodeBundle:NodeTranslation'))
+            ->with($this->equalTo(NodeTranslation::class))
             ->willReturn($this->getNodeTranslationRepository($nodeTranslation));
 
         return $em;

@@ -87,6 +87,7 @@ class AclNativeHelper
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
         $userRoles = array();
+        $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
             if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
@@ -145,7 +146,7 @@ SELECTQUERY;
     }
 
     /**
-     * @return null|TokenStorageInterface
+     * @return TokenStorageInterface|null
      */
     public function getTokenStorage()
     {

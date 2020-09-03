@@ -123,8 +123,8 @@ class EntityVersionLockServiceTest extends TestCase
             ->will($this->returnValueMap($lockableMap));
 
         $repositoryMap = [
-            ['KunstmaanAdminListBundle:EntityVersionLock', $mockLockRepository],
-            ['KunstmaanAdminListBundle:LockableEntity', $mockLockableRepository],
+            [EntityVersionLock::class, $mockLockRepository],
+            [LockableEntity::class, $mockLockableRepository],
         ];
         $mockObjectManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
             ->disableOriginalConstructor()

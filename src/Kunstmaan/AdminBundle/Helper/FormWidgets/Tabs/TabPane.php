@@ -46,6 +46,9 @@ class TabPane
      */
     protected $formView;
 
+    /** @var Slugifier */
+    private $slugifier;
+
     /**
      * @param string               $identifier  The identifier
      * @param Request              $request     The request
@@ -114,7 +117,7 @@ class TabPane
 
     /**
      * @param TabInterface $tab      The tab
-     * @param null|int     $position The position
+     * @param int|null     $position The position
      *
      * @return TabPane
      */

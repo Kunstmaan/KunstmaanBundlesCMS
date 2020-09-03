@@ -249,7 +249,7 @@ SELECTQUERY;
     }
 
     /**
-     * @return null|TokenStorageInterface
+     * @return TokenStorageInterface|null
      */
     public function getTokenStorage()
     {

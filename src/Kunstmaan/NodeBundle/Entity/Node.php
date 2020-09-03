@@ -144,7 +144,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Node[]
      */
     public function getChildren()
     {

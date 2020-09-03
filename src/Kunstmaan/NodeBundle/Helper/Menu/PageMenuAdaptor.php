@@ -144,7 +144,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         $includeHiddenFromNav
     ) {
         if (null === $this->treeNodes) {
-            $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+            $repo = $this->em->getRepository(Node::class);
             $this->treeNodes = [];
 
             $rootNode = $this->domainConfiguration->getRootNode();
@@ -157,7 +157,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $includeHiddenFromNav,
                 $rootNode
             );
-            /** @var Node $nodeInfo */
             foreach ($allNodes as $nodeInfo) {
                 $refEntityName = $nodeInfo['ref_entity_name'];
                 if ($this->pagesConfiguration->isHiddenFromTree($refEntityName)) {
@@ -184,7 +183,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private function getActiveNodeIds($request)
     {
         if ((null === $this->activeNodeIds) && strncasecmp($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes_edit', 30) === 0) {
-            $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+            $repo = $this->em->getRepository(Node::class);
 
             $currentNode = $repo->findOneById($request->attributes->get('id'));
             $parentNodes = $repo->getAllParents($currentNode);

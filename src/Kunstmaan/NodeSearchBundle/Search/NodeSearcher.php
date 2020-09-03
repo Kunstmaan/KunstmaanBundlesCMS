@@ -11,6 +11,8 @@ use Elastica\Query\Term;
 use Elastica\Util;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -89,9 +91,10 @@ class NodeSearcher extends AbstractElasticaSearcher
         if ($this->useMatchQueryForTitle) {
             $elasticaQueryTitle = new Match();
             $elasticaQueryTitle
-              ->setFieldQuery('title', $query)
-              ->setFieldMinimumShouldMatch('title', '80%')
-              ->setFieldBoost(2);
+                ->setFieldQuery('title', $query)
+                ->setFieldMinimumShouldMatch('title', '80%')
+                ->setFieldBoost('title', 2)
+            ;
         } else {
             $elasticaQueryTitle = new QueryString();
             $elasticaQueryTitle
@@ -149,9 +152,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     {
         $roles = $this->getCurrentUserRoles();
 
-        $elasticaQueryRoles = new Query\Terms();
-        $elasticaQueryRoles
-            ->setTerms('view_roles', $roles);
+        $elasticaQueryRoles = new Query\Terms('view_roles', $roles);
         $elasticaQueryBool->addMust($elasticaQueryRoles);
     }
 
@@ -169,11 +170,13 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         // Anonymous access should always be available for both anonymous & logged in users
-        if (!\in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles)) {
+        if (!\in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles, true)) {
             $roles[] = 'IS_AUTHENTICATED_ANONYMOUSLY';
         }
 
-        return $roles;
+        // Return a re-indexed array to make sure the array keys are incremental and don't skip a number. Otherwise
+        // this causes issues in ES7.
+        return array_values($roles);
     }
 
     /**
@@ -186,7 +189,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         $rescoreQueryBool = new BoolQuery();
 
         //Apply page type boosts
-        $pageClasses = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAllDistinctPageClasses();
+        $pageClasses = $this->em->getRepository(Node::class)->findAllDistinctPageClasses();
         foreach ($pageClasses as $pageClass) {
             $page = new $pageClass['refEntityName']();
 
@@ -202,7 +205,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         //Apply page specific boosts
-        $nodeSearches = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findAll();
+        $nodeSearches = $this->em->getRepository(NodeSearch::class)->findAll();
         foreach ($nodeSearches as $nodeSearch) {
             $elasticaQueryNodeId = new QueryString();
             $elasticaQueryNodeId

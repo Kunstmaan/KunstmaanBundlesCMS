@@ -155,7 +155,6 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Finds all nodetranslations where title is like the given $title parameter
      *
-     *
      * @param string $title
      * @param string $lang  (optional, if not specified all languages will be
      *                      returned)
@@ -183,7 +182,7 @@ class NodeTranslationRepository extends EntityRepository
     {
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()
-            ->getRepository('KunstmaanNodeBundle:NodeVersion')
+            ->getRepository(NodeVersion::class)
             ->getNodeVersionFor($hasNode);
 
         if (!\is_null($nodeVersion)) {
@@ -411,7 +410,7 @@ class NodeTranslationRepository extends EntityRepository
 
         $em->persist($nodeTranslation);
 
-        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $nodeVersion = $em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $hasNode,
                 $nodeTranslation,
@@ -452,9 +451,9 @@ class NodeTranslationRepository extends EntityRepository
             throw new \InvalidArgumentException('The entity of class ' . $className . ' has no id, maybe you forgot to flush first');
         }
 
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->findOneBy(['lang' => $lang, 'node' => $node]);
+        $nodeTranslation = $em->getRepository(NodeTranslation::class)->findOneBy(['lang' => $lang, 'node' => $node]);
 
-        $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $hasNode,
                 $nodeTranslation,

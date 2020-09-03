@@ -7,7 +7,7 @@ namespace Kunstmaan\GeneratorBundle\Generator;
  */
 final class Symfony4EntityRepositoryGenerator
 {
-    protected static $_template =
+    private static $_template =
         '<?php
 
 namespace <namespace>;
@@ -50,8 +50,6 @@ class <repository> extends ServiceEntityRepository
     public function writeEntityRepositoryClass($entityClass, $repositoryClass, $outputDirectory)
     {
         $classNameParts = explode('\\', $repositoryClass);
-        $repositoryClassName = end($classNameParts);
-        $this->repositoryName = $repositoryClassName;
         $code = $this->generateEntityRepositoryClass($entityClass, $repositoryClass);
 
         $path = $outputDirectory . DIRECTORY_SEPARATOR . 'Repository' . DIRECTORY_SEPARATOR . end($classNameParts) . '.php';

@@ -203,7 +203,7 @@ EOT
          * Ask for which sections pagepart configuration the end user wants to use for the different sections
          */
         $this->assistant->writeLine(array("\nThe select page template consists of these contexts: " . implode(', ', $templateConfig['contexts'])));
-        $this->section = array();
+        $this->sections = array();
         foreach ($templateConfig['contexts'] as $context) {
             $question = "Which pagepart configuration would you like to use for the '$context' context";
             $section = $this->askForSections($question, $this->bundle, false, $context);

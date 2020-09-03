@@ -24,7 +24,7 @@ class SimpleListAction implements ListActionInterface
     private $label;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $template;
 

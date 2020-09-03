@@ -49,7 +49,7 @@ services:
         class: '%kunstmaan_admin.admin_locale.listener.class%'
         arguments: ['@security.token_storage', '@translator', '@kunstmaan_admin.adminroute.helper', '%kunstmaan_admin.default_admin_locale%', '%kunstmaan_admin.firewall.provider_key%']
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
+            - { name: 'kernel.event_subscriber' }
 
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
