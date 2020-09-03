@@ -10,7 +10,8 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\Mime\MimeTypes;
 
 class MediaBuilder implements BuilderInterface
@@ -19,7 +20,7 @@ class MediaBuilder implements BuilderInterface
     private $em;
     /** @var FileHandler */
     private $fileHandler;
-    /** @var MimeTypes|MimeTypeGuesser */
+    /** @var MimeTypes|ExtensionGuesserInterface */
     private $mimeTypeGuesser;
 
     private $folder;
@@ -94,7 +95,7 @@ class MediaBuilder implements BuilderInterface
 
     private function guessMimeType($pathName): ?string
     {
-        if ($this->mimeTypeGuesser instanceof MimeTypeGuesser) {
+        if ($this->mimeTypeGuesser instanceof MimeTypeGuesserInterface) {
             return $this->mimeTypeGuesser->guess($pathName);
         }
 
