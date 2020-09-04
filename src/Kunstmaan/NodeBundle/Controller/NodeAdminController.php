@@ -492,7 +492,7 @@ class NodeAdminController extends Controller
                 '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
             )
         );
-
+        $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
         $locale = $this->locale;
         $acl = $this->authorizationChecker;
 
