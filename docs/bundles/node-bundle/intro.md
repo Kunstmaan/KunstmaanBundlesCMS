@@ -15,7 +15,10 @@ TODO : Documentation on how to retrieve certain nodes, node translations and nod
 
 ## Events
 
-TODO : Add documentation on which events exists and how they can be used.
+### PageRenderEvent 
+
+The `kunstmaan_node.page_render` event is dispatched each time a page is rendered. Use this event to hook into the render logic to customize
+view parameters, redirect the user, etc.
 
 ## Slugs & Router
 

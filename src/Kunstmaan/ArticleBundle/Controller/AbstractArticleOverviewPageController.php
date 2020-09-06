@@ -2,13 +2,16 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
+use Kunstmaan\NodeBundle\Event\Events;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+@trigger_error(sprintf('The "%s" class is deprecated since KunstmaanArticleBundle 5.7 and will be removed in KunstmaanArticleBundle 6.0. Instead create your own event listener/subscriber for the "%s" event to customize the page render.', AbstractArticleOverviewPageController::class, Events::PAGE_RENDER), E_USER_DEPRECATED);
+
 /**
- * Class AbstractArticleOverviewPageController
+ * @deprecated The "Kunstmaan\ArticleBundle\Controller\AbstractArticleOverviewPageController" class is deprecated since KunstmaanArticleBundle 5.7 and will be removed in KunstmaanArticleBundle 6.0. Instead create your own eventlistener for the "kunstmaan_node.page_render" event to customize the page render.
  */
 class AbstractArticleOverviewPageController extends Controller
 {

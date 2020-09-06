@@ -159,6 +159,8 @@ class Events
     /**
      * This event will be triggered before the slugaction is performed
      *
+     * @deprecated The "Kunstmaan\NodeBundle\Event\Events::PRE_SLUG_ACTION" event/constant is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\NodeBundle\Event\Events::PAGE_RENDER" constant/event instead.
+     *
      * @var string
      */
     const PRE_SLUG_ACTION = 'kunstmaan_node.preSlugAction';
@@ -166,7 +168,14 @@ class Events
     /**
      * This event will be triggered after the slugaction is performed
      *
+     * @deprecated The "Kunstmaan\NodeBundle\Event\Events::POST_SLUG_ACTION" event/constant is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\NodeBundle\Event\Events::PAGE_RENDER" constant/event instead.
+     *
      * @var string
      */
     const POST_SLUG_ACTION = 'kunstmaan_node.postSlugAction';
+
+    /**
+     * This event is dispatched during the page render.
+     */
+    const PAGE_RENDER = 'kunstmaan_node.page_render';
 }
