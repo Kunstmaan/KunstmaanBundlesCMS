@@ -13,7 +13,6 @@ final class DeprecateClassParametersPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $expectedValues = [
-            'kunstmaan_user_management.user_admin_list_configurator.class' => \Kunstmaan\UserManagementBundle\AdminList\UserAdminListConfigurator::class,
             'kunstmaan_user_management.menu.adaptor.class' => \Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor::class,
         ];
 
