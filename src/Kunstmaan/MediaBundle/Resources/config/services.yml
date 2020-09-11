@@ -140,6 +140,7 @@ services:
             - '@liip_imagine.service.filter'
             - '@liip_imagine.data.manager'
             - '@liip_imagine.cache.signer'
+            - '@liip_imagine.controller.config'
         tags:
             - { name: 'controller.service_arguments' }
         public: true
