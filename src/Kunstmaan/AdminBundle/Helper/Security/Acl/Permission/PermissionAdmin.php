@@ -232,7 +232,7 @@ class PermissionAdmin
             $user = $this->tokenStorage->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
 
-            $cmd = 'php ' . $this->kernel->getRootDir() . '/../bin/console kuma:acl:apply';
+            $cmd = 'php ' . $this->kernel->getProjectDir() . '/bin/console kuma:acl:apply';
             $cmd .= ' --env=' . $this->kernel->getEnvironment();
 
             $this->shellHelper->runInBackground($cmd);

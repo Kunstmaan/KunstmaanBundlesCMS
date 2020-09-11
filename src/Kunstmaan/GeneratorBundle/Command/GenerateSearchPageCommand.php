@@ -75,7 +75,7 @@ EOT
             $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
         }
 
-        $rootDir = $this->getApplication()->getKernel()->getRootDir();
+        $rootDir = $this->getApplication()->getKernel()->getProjectDir();
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $prefix, $rootDir, $createPage, $output);
