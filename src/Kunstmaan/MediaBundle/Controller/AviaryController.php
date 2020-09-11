@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller class which Aviary can use to upload the edited image and add it to the database
+ *
+ * @deprecated The AviaryController is deprecated in KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.
  */
 class AviaryController extends Controller
 {

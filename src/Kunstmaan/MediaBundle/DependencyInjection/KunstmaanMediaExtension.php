@@ -130,9 +130,10 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
     private function addAvairyApiKeyParameter(ContainerBuilder $container, array $config)
     {
+        // NEXT_MAJOR: Remove parameter, config option and all aviary related files (twig, js, etc)
         $aviaryApiKey = $container->hasParameter('aviary_api_key') ? $container->getParameter('aviary_api_key') : null;
         if (null === $config['aviary_api_key'] && null !== $aviaryApiKey) {
-            @trigger_error('Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanDashboardBundle 6.0.', E_USER_DEPRECATED);
+            @trigger_error('Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanMediaBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanMediaBundle 6.0.', E_USER_DEPRECATED);
         }
 
         if (null !== $config['aviary_api_key']) {
