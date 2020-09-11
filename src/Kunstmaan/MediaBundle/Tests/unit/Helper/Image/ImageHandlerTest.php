@@ -9,6 +9,7 @@ use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\MimeTypes;
 
 class ImageHandlerTest extends TestCase
 {
@@ -17,7 +18,7 @@ class ImageHandlerTest extends TestCase
         $media = new Media();
         $media->setContent(new File(__DIR__.'/../../Fixtures/sample.svg'));
 
-        $handler = new ImageHandler(1, new MimeTypeGuesserFactory(), new ExtensionGuesserFactory(), 'aviaryKey');
+        $handler = new ImageHandler(1, new MimeTypes(), null, 'aviaryKey');
         $handler->setSlugifier(new Slugifier());
 
         $handler->prepareMedia($media);

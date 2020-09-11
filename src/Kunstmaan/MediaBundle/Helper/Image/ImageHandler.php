@@ -8,6 +8,7 @@ use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 /**
  * FileHandler
@@ -17,10 +18,10 @@ class ImageHandler extends FileHandler
     protected $aviaryApiKey;
 
     /**
-     * @param int                                        $priority
-     * @param MimeTypeGuesserFactoryInterface|MimeTypes  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface|MimeTypes $extensionGuesserFactoryInterface
-     * @param string                                     $aviaryApiKey
+     * @param int                                                $priority
+     * @param MimeTypeGuesserFactoryInterface|MimeTypesInterface $mimeTypeGuesserFactory
+     * @param ExtensionGuesserFactoryInterface|null              $extensionGuesserFactoryInterface
+     * @param string                                             $aviaryApiKey
      */
     public function __construct($priority, $mimeTypeGuesser, $extensionGuesser, $aviaryApiKey)
     {
@@ -97,7 +98,7 @@ class ImageHandler extends FileHandler
 
             $width = $height = null;
             if (false !== $imageInfo) {
-                list($width, $height) = $imageInfo;
+                [$width, $height] = $imageInfo;
             }
 
             $media

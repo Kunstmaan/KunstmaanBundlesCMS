@@ -30,7 +30,7 @@ class PdfHandlerTest extends TestCase
         $this->pdfTransformer = $this->createMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
         $this->filesDir = realpath(__DIR__ . '/../../Files');
 
-        $this->object = new PdfHandler(1, new MimeTypes(), new MimeTypes());
+        $this->object = new PdfHandler(1, new MimeTypes());
         $this->object->setPdfTransformer($this->pdfTransformer);
     }
 
