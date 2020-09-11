@@ -33,7 +33,7 @@
             </div>
         {% endfor %}
 
-        {% block fos_user_content %}{% endblock fos_user_content %}
+        {% block login_content %}{% endblock login_content %}
 
         {% block admin_link %}
             {% if 'profile' in app.request.pathInfo and 'change-password' not in app.request.pathInfo %}

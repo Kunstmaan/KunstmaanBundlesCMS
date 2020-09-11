@@ -13,9 +13,16 @@ class UserLoginType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('_username', TextType::class)
-            ->add('_password', PasswordType::class)
-            ->add('submit', SubmitType::class);
+            ->add('_username', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control form-group--icon-in-control__form-control'
+                ]
+            ])
+            ->add('_password', PasswordType::class, [
+                'attr' => [
+                    'class' => 'form-control form-group--icon-in-control__form-control'
+                ]
+            ]);
     }
 
     public function getBlockPrefix()

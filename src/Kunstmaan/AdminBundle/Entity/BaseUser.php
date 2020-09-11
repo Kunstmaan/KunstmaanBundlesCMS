@@ -561,7 +561,7 @@ abstract class BaseUser implements UserInterface
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
-        
+
         list(
             $this->password,
             $this->salt,
