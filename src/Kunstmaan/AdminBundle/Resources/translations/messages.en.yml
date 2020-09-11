@@ -8,6 +8,12 @@ pages:
     createemptypage: Create as an empty page
     movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 
+security:
+    login:
+        username: Username
+        password: Password
+        submit: submit
+
 # Modules
 modules:
     title: Modules

@@ -344,3 +344,8 @@ services:
         public: true
         tags:
             - { name: controller.service_arguments }
+
+    Kunstmaan\AdminBundle\Controller\ResettingController:
+        public: true
+        tags:
+            - { name: controller.service_arguments }

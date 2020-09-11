@@ -23,6 +23,11 @@ KunstmaanAdminBundle_security:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%
 
+KunstmaanAdminBundle_resetting:
+    resource: '@KunstmaanAdminBundle/Controller/ResettingController.php'
+    type:     annotation
+    prefix:   /
+
 ###########################
 ## fos_userbundle routes ##
 ###########################
@@ -30,10 +35,6 @@ KunstmaanAdminBundle_security:
 fos_user_profile:
     resource: '@FOSUserBundle/Resources/config/routing/profile.xml'
     prefix: /%kunstmaan_admin.admin_prefix%/profile
-
-fos_user_resetting:
-    resource: '@FOSUserBundle/Resources/config/routing/resetting.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%/resetting
 
 fos_user_change_password:
     resource: '@FOSUserBundle/Resources/config/routing/change_password.xml'
