@@ -270,7 +270,7 @@ abstract class BaseUser implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail($email)
     {
         $this->email = $email;
 
@@ -285,7 +285,7 @@ abstract class BaseUser implements UserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
 
@@ -300,7 +300,7 @@ abstract class BaseUser implements UserInterface
         return $this->plainPassword;
     }
 
-    public function setPlainPassword(?string $plainPassword)
+    public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
 
@@ -373,7 +373,7 @@ abstract class BaseUser implements UserInterface
         return $this->salt;
     }
 
-    public function setSalt(?string $salt)
+    public function setSalt($salt)
     {
         $this->salt = $salt;
 
@@ -393,7 +393,7 @@ abstract class BaseUser implements UserInterface
         return $this->username;
     }
 
-    public function setUsername(?string $username)
+    public function setUsername($username)
     {
         $this->username = $username;
 
@@ -474,4 +474,81 @@ abstract class BaseUser implements UserInterface
     {
         return (string) $this->getUsername();
     }
+
+    public function getUsernameCanonical()
+    {
+        // TODO: Implement getUsernameCanonical() method.
+    }
+
+    public function setUsernameCanonical($usernameCanonical)
+    {
+        // TODO: Implement setUsernameCanonical() method.
+    }
+
+    public function getEmailCanonical()
+    {
+        // TODO: Implement getEmailCanonical() method.
+    }
+
+    public function setEmailCanonical($emailCanonical)
+    {
+        // TODO: Implement setEmailCanonical() method.
+    }
+
+    public function isSuperAdmin()
+    {
+        // TODO: Implement isSuperAdmin() method.
+    }
+
+    public function setSuperAdmin($boolean)
+    {
+        // TODO: Implement setSuperAdmin() method.
+    }
+
+    public function getConfirmationToken()
+    {
+        // TODO: Implement getConfirmationToken() method.
+    }
+
+    public function setConfirmationToken($confirmationToken)
+    {
+        // TODO: Implement setConfirmationToken() method.
+    }
+
+    public function setPasswordRequestedAt(\DateTime $date = null)
+    {
+        // TODO: Implement setPasswordRequestedAt() method.
+    }
+
+    public function isPasswordRequestNonExpired($ttl)
+    {
+        // TODO: Implement isPasswordRequestNonExpired() method.
+    }
+
+    public function setLastLogin(\DateTime $time = null)
+    {
+        // TODO: Implement setLastLogin() method.
+    }
+
+    public function isAccountNonExpired()
+    {
+        // TODO: Implement isAccountNonExpired() method.
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        // TODO: Implement isCredentialsNonExpired() method.
+    }
+
+    public function serialize()
+    {
+        // TODO: Implement serialize() method.
+    }
+
+    public function unserialize($serialized)
+    {
+        // TODO: Implement unserialize() method.
+    }
+
+
 }

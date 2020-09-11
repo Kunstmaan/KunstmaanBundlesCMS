@@ -8,6 +8,6 @@ use FOS\UserBundle\Model\UserInterface as FosUserInterface;
 interface UserInterface extends FosUserInterface, FosGroupableInterface
 {
     //NEXT_MAJOR add these constants to this interface (after fos user interface is removed)
-    const ROLE_DEFAULT = 'ROLE_USER';
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+//    const ROLE_DEFAULT = 'ROLE_USER';
+//    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 }
