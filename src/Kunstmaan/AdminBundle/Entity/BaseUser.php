@@ -532,23 +532,43 @@ abstract class BaseUser implements UserInterface
 
     public function isAccountNonExpired()
     {
-        // TODO: Implement isAccountNonExpired() method.
+        return true;
     }
 
     public function isCredentialsNonExpired()
     {
-        // TODO: Implement isCredentialsNonExpired() method.
+        return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function serialize()
     {
-        // TODO: Implement serialize() method.
+        return serialize(array(
+            $this->password,
+            $this->salt,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+        ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function unserialize($serialized)
     {
-        // TODO: Implement unserialize() method.
+        $data = unserialize($serialized);
+        
+        list(
+            $this->password,
+            $this->salt,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+            ) = $data;
     }
-
-
 }
