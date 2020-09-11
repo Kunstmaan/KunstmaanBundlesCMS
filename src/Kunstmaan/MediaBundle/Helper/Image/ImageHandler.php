@@ -7,7 +7,6 @@ use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Mime\MimeTypesInterface;
 
 /**

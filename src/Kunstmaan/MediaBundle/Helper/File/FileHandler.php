@@ -37,12 +37,14 @@ class FileHandler extends AbstractMediaHandler
 
     /**
      * @deprecated This property is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Use the `$mimeTypes` property instead.
+     *
      * @var MimeTypeGuesser
      */
     public $mimeTypeGuesser;
 
     /**
      * @deprecated This property is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Use the `$mimeTypes` property instead.
+     *
      * @var ExtensionGuesser
      */
     public $extensionGuesser;

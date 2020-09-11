@@ -3,9 +3,7 @@
 namespace Kunstmaan\MediaBundle\Tests\Helper\Image;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory;
 use Kunstmaan\MediaBundle\Helper\Image\ImageHandler;
-use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\File;
