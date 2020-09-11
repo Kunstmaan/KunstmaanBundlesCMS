@@ -18,13 +18,14 @@ KunstmaanAdminBundle_settings_exception:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/exception
 
+KunstmaanAdminBundle_security:
+    resource: '@KunstmaanAdminBundle/Controller/SecurityController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%
+
 ###########################
 ## fos_userbundle routes ##
 ###########################
-
-fos_user_security:
-    resource: '@FOSUserBundle/Resources/config/routing/security.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%
 
 fos_user_profile:
     resource: '@FOSUserBundle/Resources/config/routing/profile.xml'

@@ -59,7 +59,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     {
         return new AdminPanelAction(
             array(
-                'path' => 'fos_user_security_logout',
+                'path' => 'cms_logout',
                 'attrs' => array('id' => 'app__logout', 'title' => 'logout'),
             ),
             '',
