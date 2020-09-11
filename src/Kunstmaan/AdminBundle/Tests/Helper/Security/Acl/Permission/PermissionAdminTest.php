@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
@@ -201,7 +202,12 @@ class PermissionAdminTest extends TestCase
      */
     public function getShell()
     {
-        return new Shell();
+        $mock = $this->createMock(Shell::class);
+        $mock->method('runInBackground')
+            ->with('php /some/project/directory/bin/console kuma:acl:apply --env=test')
+        ;
+
+        return $mock;
     }
 
     /**
@@ -209,7 +215,11 @@ class PermissionAdminTest extends TestCase
      */
     public function getKernel()
     {
-        return $this->createMock('Symfony\Component\HttpKernel\KernelInterface');
+        $mock = $this->createMock(Kernel::class);
+        $mock->method('getProjectDir')->willReturn('/some/project/directory');
+        $mock->method('getEnvironment')->willReturn('test');
+
+        return $mock;
     }
 
     /**
