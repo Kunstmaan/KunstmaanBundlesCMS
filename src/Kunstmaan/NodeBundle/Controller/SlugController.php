@@ -13,6 +13,7 @@ use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -69,8 +70,7 @@ class SlugController extends Controller
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
 
-        $eventDispatcher = $this->get('event_dispatcher');
-        $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
+        $this->dispatch($securityEvent, Events::SLUG_SECURITY);
 
         //render page
         $renderContext = new RenderContext(
@@ -86,13 +86,13 @@ class SlugController extends Controller
             $renderContext->setView($entity->getDefaultView());
         }
         $preEvent = new SlugEvent(null, $renderContext);
-        $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
+        $this->dispatch($preEvent, Events::PRE_SLUG_ACTION);
         $renderContext = $preEvent->getRenderContext();
 
         $response = $entity->service($this->container, $request, $renderContext);
 
         $postEvent = new SlugEvent($response, $renderContext);
-        $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
+        $this->dispatch($postEvent, Events::POST_SLUG_ACTION);
 
         $response = $postEvent->getResponse();
         $renderContext = $postEvent->getRenderContext();
@@ -140,5 +140,23 @@ class SlugController extends Controller
         }
 
         return $entity;
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

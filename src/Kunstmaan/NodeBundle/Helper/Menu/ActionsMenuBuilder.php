@@ -14,6 +14,7 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -112,13 +113,13 @@ class ActionsMenuBuilder
             );
         }
 
-        $this->dispatcher->dispatch(
-            Events::CONFIGURE_SUB_ACTION_MENU,
+        $this->dispatch(
             new ConfigureActionMenuEvent(
                 $this->factory,
                 $menu,
                 $activeNodeVersion
-            )
+            ),
+            Events::CONFIGURE_SUB_ACTION_MENU
         );
 
         return $menu;
@@ -150,13 +151,13 @@ class ActionsMenuBuilder
         );
 
         if (null === $activeNodeVersion) {
-            $this->dispatcher->dispatch(
-                Events::CONFIGURE_ACTION_MENU,
+            $this->dispatch(
                 new ConfigureActionMenuEvent(
                     $this->factory,
                     $menu,
                     $activeNodeVersion
-                )
+                ),
+                Events::CONFIGURE_ACTION_MENU
             );
 
             return $menu;
@@ -426,13 +427,13 @@ class ActionsMenuBuilder
             );
         }
 
-        $this->dispatcher->dispatch(
-            Events::CONFIGURE_ACTION_MENU,
+        $this->dispatch(
             new ConfigureActionMenuEvent(
                 $this->factory,
                 $menu,
                 $activeNodeVersion
-            )
+            ),
+            Events::CONFIGURE_ACTION_MENU
         );
 
         return $menu;
@@ -523,5 +524,22 @@ class ActionsMenuBuilder
     public function setEditableNode($value)
     {
         $this->isEditableNode = $value;
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->dispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->dispatcher->dispatch($eventName, $event);
     }
 }
