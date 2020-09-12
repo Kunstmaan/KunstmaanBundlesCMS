@@ -37,6 +37,7 @@ use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -189,8 +190,7 @@ class NodeAdminController extends Controller
             ->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::COPY_PAGE_TRANSLATION,
+        $this->dispatch(
             new CopyPageTranslationNodeEvent(
                 $node,
                 $nodeTranslation,
@@ -200,7 +200,8 @@ class NodeAdminController extends Controller
                 $otherLanguageNodeNodeVersion,
                 $otherLanguagePage,
                 $originalLanguage
-            )
+            ),
+            Events::COPY_PAGE_TRANSLATION
         );
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
@@ -240,8 +241,7 @@ class NodeAdminController extends Controller
             ->addDraftNodeVersionFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::RECOPY_PAGE_TRANSLATION,
+        $this->dispatch(
             new RecopyPageTranslationNodeEvent(
                 $node,
                 $nodeTranslation,
@@ -251,7 +251,8 @@ class NodeAdminController extends Controller
                 $otherLanguageNodeNodeVersion,
                 $otherLanguagePage,
                 $otherLanguageNodeTranslation->getLang()
-            )
+            ),
+            Events::RECOPY_PAGE_TRANSLATION
         );
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id, 'subaction' => NodeVersion::DRAFT_VERSION)));
@@ -292,9 +293,9 @@ class NodeAdminController extends Controller
             ->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::ADD_EMPTY_PAGE_TRANSLATION,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage),
+            Events::ADD_EMPTY_PAGE_TRANSLATION
         );
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
@@ -413,9 +414,9 @@ class NodeAdminController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::PRE_DELETE,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::PRE_DELETE
         );
 
         $node->setDeleted(true);
@@ -426,7 +427,7 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $event = new NodeEvent($node, $nodeTranslation, $nodeVersion, $page);
-        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, $event);
+        $this->dispatch($event, Events::POST_DELETE);
         if (null === $response = $event->getResponse()) {
             $nodeParent = $node->getParent();
             // Check if we have a parent. Otherwise redirect to pages overview.
@@ -608,8 +609,7 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::REVERT,
+        $this->dispatch(
             new RevertNodeAction(
                 $node,
                 $nodeTranslation,
@@ -617,7 +617,8 @@ class NodeAdminController extends Controller
                 $clonedPage,
                 $nodeVersion,
                 $page
-            )
+            ),
+            Events::REVERT
         );
 
         $this->addFlash(
@@ -691,11 +692,11 @@ class NodeAdminController extends Controller
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::ADD_NODE,
+        $this->dispatch(
             new NodeEvent(
                 $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
-            )
+            ),
+            Events::ADD_NODE
         );
 
         return $this->redirect(
@@ -740,11 +741,11 @@ class NodeAdminController extends Controller
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::ADD_NODE,
+        $this->dispatch(
             new NodeEvent(
                 $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
-            )
+            ),
+            Events::ADD_NODE
         );
 
         return $this->redirect(
@@ -796,18 +797,18 @@ class NodeAdminController extends Controller
                 $nodeVersion = $nodeTranslation->getPublicNodeVersion();
                 $page = $nodeVersion->getRef($this->em);
 
-                $this->get('event_dispatcher')->dispatch(
-                    Events::PRE_PERSIST,
-                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+                $this->dispatch(
+                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+                    Events::PRE_PERSIST
                 );
 
                 $nodeTranslation->setWeight($weight);
                 $this->em->persist($nodeTranslation);
                 $this->em->flush($nodeTranslation);
 
-                $this->get('event_dispatcher')->dispatch(
-                    Events::POST_PERSIST,
-                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+                $this->dispatch(
+                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+                    Events::POST_PERSIST
                 );
 
                 ++$weight;
@@ -939,8 +940,7 @@ class NodeAdminController extends Controller
         $menuWidget->addType('menunode', NodeMenuTabAdminType::class, $node, ['available_in_nav' => !$isStructureNode]);
         $tabPane->addTab(new Tab('kuma_node.tab.menu.title', $menuWidget));
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::ADAPT_FORM,
+        $this->dispatch(
             new AdaptFormEvent(
                 $request,
                 $tabPane,
@@ -948,7 +948,8 @@ class NodeAdminController extends Controller
                 $node,
                 $nodeTranslation,
                 $nodeVersion
-            )
+            ),
+            Events::ADAPT_FORM
         );
 
         $tabPane->buildForm();
@@ -958,9 +959,9 @@ class NodeAdminController extends Controller
 
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($tabPane->isValid() && !$request->isXmlHttpRequest()) {
-                $this->get('event_dispatcher')->dispatch(
-                    Events::PRE_PERSIST,
-                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+                $this->dispatch(
+                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+                    Events::PRE_PERSIST
                 );
 
                 $nodeTranslation->setTitle($page->getTitle());
@@ -976,9 +977,9 @@ class NodeAdminController extends Controller
                 $tabPane->persist($this->em);
                 $this->em->flush();
 
-                $this->get('event_dispatcher')->dispatch(
-                    Events::POST_PERSIST,
-                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+                $this->dispatch(
+                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+                    Events::POST_PERSIST
                 );
 
                 if ($nodeVersionIsLocked) {
@@ -1143,14 +1144,14 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeVersion);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(
-            Events::CREATE_DRAFT_VERSION,
+        $this->dispatch(
             new NodeEvent(
                 $nodeTranslation->getNode(),
                 $nodeTranslation,
                 $nodeVersion,
                 $page
-            )
+            ),
+            Events::CREATE_DRAFT_VERSION
         );
 
         return $nodeVersion;
@@ -1191,14 +1192,14 @@ class NodeAdminController extends Controller
             $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
             $childNodePage = $childNodeVersion->getRef($this->em);
 
-            $this->get('event_dispatcher')->dispatch(
-                Events::PRE_DELETE,
+            $this->dispatch(
                 new NodeEvent(
                     $childNode,
                     $childNodeTranslation,
                     $childNodeVersion,
                     $childNodePage
-                )
+                ),
+                Events::PRE_DELETE
             );
 
             $childNode->setDeleted(true);
@@ -1207,14 +1208,14 @@ class NodeAdminController extends Controller
             $children2 = $childNode->getChildren();
             $this->deleteNodeChildren($em, $user, $locale, $children2);
 
-            $this->get('event_dispatcher')->dispatch(
-                Events::POST_DELETE,
+            $this->dispatch(
                 new NodeEvent(
                     $childNode,
                     $childNodeTranslation,
                     $childNodeVersion,
                     $childNodePage
-                )
+                ),
+                Events::POST_DELETE
             );
         }
     }
@@ -1301,5 +1302,23 @@ class NodeAdminController extends Controller
                 'copyfromotherlanguages' => $parentsAreOk,
             )
         );
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

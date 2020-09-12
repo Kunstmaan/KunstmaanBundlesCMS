@@ -14,6 +14,7 @@ use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -153,7 +154,7 @@ class UsersController extends BaseSettingsController
         }
 
         $userEvent = new UserEvent($user, $request);
-        $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
+        $this->dispatch($userEvent, UserEvents::USER_EDIT_INITIALIZE);
 
         $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
@@ -165,7 +166,7 @@ class UsersController extends BaseSettingsController
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $event = $this->dispatch($event, Events::ADAPT_SIMPLE_FORM);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formFqn, $user, $options);
@@ -236,7 +237,7 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
-            $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
+            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
 
             $em->remove($user);
             $em->flush();
@@ -270,7 +271,7 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
-            $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
+            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
 
             $em->remove($user);
             $em->flush();
@@ -300,5 +301,23 @@ class UsersController extends BaseSettingsController
                 ]
             )
         );
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

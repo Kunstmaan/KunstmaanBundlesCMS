@@ -17,6 +17,7 @@ use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,7 +119,7 @@ abstract class AdminListController extends Controller
         $formType = $configurator->getAdminType($helper);
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $event = $this->dispatch($event, Events::ADAPT_SIMPLE_FORM);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formType, $helper, $event->getOptions());
@@ -134,9 +135,9 @@ abstract class AdminListController extends Controller
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::PRE_ADD,
-                    $adminListEvent
+                $this->dispatch(
+                    $adminListEvent,
+                    AdminListEvents::PRE_ADD
                 );
 
                 // Check if Response is given
@@ -149,9 +150,9 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::POST_ADD,
-                    $adminListEvent
+                $this->dispatch(
+                    $adminListEvent,
+                    AdminListEvents::POST_ADD
                 );
 
                 // Check if Response is given
@@ -236,7 +237,7 @@ abstract class AdminListController extends Controller
         $formType = $configurator->getAdminType($helper);
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $event = $this->dispatch($event, Events::ADAPT_SIMPLE_FORM);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formType, $helper, $event->getOptions());
@@ -252,9 +253,9 @@ abstract class AdminListController extends Controller
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::PRE_EDIT,
-                    $adminListEvent
+                $this->dispatch(
+                    $adminListEvent,
+                    AdminListEvents::PRE_EDIT
                 );
 
                 // Check if Response is given
@@ -264,9 +265,9 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::POST_EDIT,
-                    $adminListEvent
+                $this->dispatch(
+                    $adminListEvent,
+                    AdminListEvents::POST_EDIT
                 );
 
                 // Check if Response is given
@@ -364,9 +365,9 @@ abstract class AdminListController extends Controller
         $indexUrl = $configurator->getIndexUrl();
         if ($request->isMethod('POST')) {
             $adminListEvent = new AdminListEvent($helper, $request);
-            $this->container->get('event_dispatcher')->dispatch(
-                AdminListEvents::PRE_DELETE,
-                $adminListEvent
+            $this->dispatch(
+                $adminListEvent,
+                AdminListEvents::PRE_DELETE
             );
 
             // Check if Response is given
@@ -376,9 +377,9 @@ abstract class AdminListController extends Controller
 
             $em->remove($helper);
             $em->flush();
-            $this->container->get('event_dispatcher')->dispatch(
-                AdminListEvents::POST_DELETE,
-                $adminListEvent
+            $this->dispatch(
+                $adminListEvent,
+                AdminListEvents::POST_DELETE
             );
 
             // Check if Response is given
@@ -558,5 +559,23 @@ abstract class AdminListController extends Controller
         }
 
         return $configurator->getRepositoryName();
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

@@ -14,6 +14,7 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\PreNodeDuplicateEvent;
 use Kunstmaan\NodeBundle\Event\PostNodeDuplicateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
@@ -61,12 +62,12 @@ class PageCloningHelper
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
-        $this->eventDispatcherInterface->dispatch(Events::PRE_DUPLICATE_WITH_CHILDREN, new PreNodeDuplicateEvent($originalNode));
+        $this->dispatch(new PreNodeDuplicateEvent($originalNode), Events::PRE_DUPLICATE_WITH_CHILDREN);
 
         $newPage = $this->clonePage($originalNode, $locale, $title);
         $nodeNewPage = $this->createNodeStructureForNewPage($originalNode, $newPage, $user, $locale);
 
-        $this->eventDispatcherInterface->dispatch(Events::POST_DUPLICATE_WITH_CHILDREN, new PostNodeDuplicateEvent($originalNode, $nodeNewPage, $newPage));
+        $this->dispatch(new PostNodeDuplicateEvent($originalNode, $nodeNewPage, $newPage), Events::POST_DUPLICATE_WITH_CHILDREN);
 
         $this->cloneChildren($originalNode, $newPage, $user, $locale);
 
@@ -150,14 +151,31 @@ class PageCloningHelper
             $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
 
             if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
-                $this->eventDispatcherInterface->dispatch(Events::PRE_DUPLICATE_WITH_CHILDREN, new PreNodeDuplicateEvent($originalNodeChild));
+                $this->dispatch(new PreNodeDuplicateEvent($originalNodeChild), Events::PRE_DUPLICATE_WITH_CHILDREN);
                 $newChildPage = $this->clonePage($originalNodeChild, $locale);
                 $newChildPage->setParent($newPage);
 
                 $newChildNode = $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
-                $this->eventDispatcherInterface->dispatch(Events::POST_DUPLICATE_WITH_CHILDREN, new PostNodeDuplicateEvent($originalNodeChild, $newChildNode, $newChildPage));
+                $this->dispatch(new PostNodeDuplicateEvent($originalNodeChild, $newChildNode, $newChildPage), Events::POST_DUPLICATE_WITH_CHILDREN);
                 $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
             }
         }
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcherInterface);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->eventDispatcherInterface->dispatch($eventName, $event);
     }
 }

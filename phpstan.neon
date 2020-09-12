@@ -17,6 +17,7 @@ parameters:
         # Excluded deprecated classes/files
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
+        - src/Kunstmaan/*/Event/*.php # Ignore the event classes until we get rid of the BC layer. The BC layer causes a weird phpstan error.
 
     ignoreErrors:
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR
