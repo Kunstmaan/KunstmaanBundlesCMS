@@ -15,7 +15,7 @@ services:
         parent: kunstmaan_media.media_handlers.file
         arguments: [1, '@mime_types']
         calls:
-            - [ setMediaPath, [ '%kernel.root_dir%' ] ]
+            - [ setMediaPath, [ '%kernel.project_dir%' ] ]
             - [ setPdfTransformer, [ '@kunstmaan_media.pdf_transformer' ]]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }

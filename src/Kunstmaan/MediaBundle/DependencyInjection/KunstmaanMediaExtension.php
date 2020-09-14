@@ -106,7 +106,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
                     'gedmo_translatable' => [
                         'type' => 'annotation',
                         'prefix' => 'Gedmo\Translatable\Entity',
-                        'dir' => '%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
+                        'dir' => '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
                         'alias' => 'GedmoTranslatable',
                         'is_bundle' => false,
                     ],
