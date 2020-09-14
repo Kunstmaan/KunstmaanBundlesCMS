@@ -81,6 +81,13 @@ abstract class BaseUser implements UserInterface
     protected $salt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_login", type="datetime_immutable")
+     */
+    protected $lastLogin;
+
+    /**
      * @var array $roles
      *
      * @ORM\Column(name="roles", type="array")
@@ -525,9 +532,16 @@ abstract class BaseUser implements UserInterface
         // TODO: Implement isPasswordRequestNonExpired() method.
     }
 
-    public function setLastLogin(\DateTime $time = null)
+    public function getLastLogin()
     {
-        // TODO: Implement setLastLogin() method.
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?DateTime $time = NULL)
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
     }
 
     public function isAccountNonExpired()
@@ -562,13 +576,13 @@ abstract class BaseUser implements UserInterface
     {
         $data = unserialize($serialized);
 
-        list(
+        [
             $this->password,
             $this->salt,
             $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-            ) = $data;
+            ] = $data;
     }
 }

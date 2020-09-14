@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use Psr\Log\LoggerInterface;
@@ -23,16 +24,20 @@ class LoginListener
      */
     private $versionChecker;
 
+    /** @var EntityManagerInterface */
+    private $em;
+
     /**
      * Constructor
      *
      * @param LoggerInterface $logger         The logger
      * @param VersionChecker  $versionChecker The version checker
      */
-    public function __construct(LoggerInterface $logger, VersionChecker $versionChecker)
+    public function __construct(LoggerInterface $logger, VersionChecker $versionChecker, EntityManagerInterface  $em)
     {
         $this->logger = $logger;
         $this->versionChecker = $versionChecker;
+        $this->em = $em;
     }
 
     /**
@@ -48,6 +53,8 @@ class LoginListener
         if ($user instanceof UserInterface) {
             $this->logger->info($user . ' successfully logged in to the cms');
             $this->versionChecker->periodicallyCheck();
+            $user->setLastLogin(new \DateTime());
+            $this->em->flush();
         }
     }
 }

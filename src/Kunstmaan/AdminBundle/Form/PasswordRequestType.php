@@ -12,7 +12,12 @@ class PasswordRequestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('send', SubmitType::class);
+            ->add('email', EmailType::class, [
+                'attr' => ['class' => 'form-control form-group--icon-in-control__form-control'],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Reset password',
+                'attr' => ['class' => 'btn btn-brand btn-block btn--raise-on-hover'],
+            ]);
     }
 }

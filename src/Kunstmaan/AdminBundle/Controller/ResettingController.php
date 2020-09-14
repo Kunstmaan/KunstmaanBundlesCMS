@@ -81,7 +81,7 @@ class ResettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('password')->getData();
+            $plainPassword = $form->get('plainPassword')->getData();
             $password = $encoder->encodePassword($user, $plainPassword);
             $user->setPassword($password);
             $user->setPasswordRequestToken(null);
