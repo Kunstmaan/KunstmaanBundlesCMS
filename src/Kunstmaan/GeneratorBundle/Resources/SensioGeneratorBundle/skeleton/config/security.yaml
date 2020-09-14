@@ -30,7 +30,6 @@ security:
                 lifetime: 604800
                 path:     /
                 domain:   ~
-            logout_on_user_change: true
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
