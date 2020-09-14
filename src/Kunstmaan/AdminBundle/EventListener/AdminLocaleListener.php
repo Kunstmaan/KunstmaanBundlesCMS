@@ -101,9 +101,9 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            // Must be registered before the default Locale listener
-            KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
-        );
+        return [
+            // The event subscriber must be registered after the Symfony FirewallListener so the user token is populated.
+            KernelEvents::REQUEST => [['onKernelRequest', 5]],
+        ];
     }
 }
