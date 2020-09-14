@@ -4,9 +4,11 @@ namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Yaml\Yaml;
 
 class KunstmaanMediaExtension extends Extension implements PrependExtensionInterface
@@ -57,6 +59,12 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setAlias('liip_imagine.filter.loader.background', 'kunstmaan_media.imagine.filter.loader.background')->setPublic(true);
 
         $this->addAvairyApiKeyParameter($container, $config);
+
+        if (!$container->hasDefinition('mime_types')) {
+            $mimeTypes = new Definition(MimeTypes::class);
+            $mimeTypes->setPublic(true);
+            $container->setDefinition('mime_types', $mimeTypes);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
