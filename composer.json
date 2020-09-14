@@ -46,6 +46,7 @@
         "symfony/validator": "^3.4|^4.2",
         "symfony/yaml": "^3.4|^4.2",
         "symfony/css-selector": "^3.4|^4.2",
+        "symfony/mime": "^4.4",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-bundle": "^1.6.12",

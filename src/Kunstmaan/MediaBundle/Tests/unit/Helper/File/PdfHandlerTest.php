@@ -4,15 +4,18 @@ namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\PdfHandler;
+use Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\MimeTypes;
 
 class PdfHandlerTest extends TestCase
 {
     /** @var PdfHandler */
     protected $object;
 
+    /** @var PreviewTransformerInterface */
     protected $pdfTransformer;
 
     /** @var string */
@@ -25,11 +28,9 @@ class PdfHandlerTest extends TestCase
     protected function setUp()
     {
         $this->pdfTransformer = $this->createMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
-        $mockMimeTypeGuesserfactory = $this->createMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
-        $mockExtensionGuesserfactory = $this->createMock('Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface');
         $this->filesDir = realpath(__DIR__ . '/../../Files');
 
-        $this->object = new PdfHandler(1, $mockMimeTypeGuesserfactory, $mockExtensionGuesserfactory);
+        $this->object = new PdfHandler(1, new MimeTypes());
         $this->object->setPdfTransformer($this->pdfTransformer);
     }
 

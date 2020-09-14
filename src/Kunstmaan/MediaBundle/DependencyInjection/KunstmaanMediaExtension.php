@@ -4,9 +4,11 @@ namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -33,7 +35,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             'twig.form.resources',
             array_merge(
                 $container->hasParameter('twig.form.resources') ? $container->getParameter('twig.form.resources') : [],
-                array('@KunstmaanMedia/Form/formWidgets.html.twig')
+                ['@KunstmaanMedia/Form/formWidgets.html.twig']
             )
         );
         $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);
@@ -52,7 +54,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('liip_imagine.filter.loader.background.class', 'Kunstmaan\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('imagine.xml');
 
         $container->setAlias('liip_imagine.controller', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController')->setPublic(true);
@@ -62,6 +64,12 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setAlias('liip_imagine.filter.loader.background', 'kunstmaan_media.imagine.filter.loader.background')->setPublic(true);
 
         $this->addAvairyApiKeyParameter($container, $config);
+
+        if (!$container->hasDefinition('mime_types')) {
+            $mimeTypes = new Definition(MimeTypes::class);
+            $mimeTypes->setPublic(true);
+            $container->setDefinition('mime_types', $mimeTypes);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
@@ -70,7 +78,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
         }
 
-        $twigConfig = array();
+        $twigConfig = [];
         $twigConfig['globals']['upload_dir'] = $container->getParameter('kunstmaan_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
         $twigConfig['globals']['mediamanager'] = '@kunstmaan_media.media_manager';

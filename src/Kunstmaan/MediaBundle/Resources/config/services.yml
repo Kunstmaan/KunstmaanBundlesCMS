@@ -124,11 +124,9 @@ services:
 
     kunstmaan_media.validator.has_guessable_extension:
         class: '%kunstmaan_media.validator.has_guessable_extension.class%'
+        arguments: ['@mime_types']
         tags:
             - { name: validator.constraint_validator, alias: has_guessable_extension }
-        calls:
-            - [setMimeTypeGuesser, ['@kunstmaan_media.mimetype_guesser.factory']]
-            - [setExtensionGuesser, ['@kunstmaan_media.extension_guesser.factory']]
 
     kunstmaan_media.imagine.filter.loader.background:
         class: '%liip_imagine.filter.loader.background.class%'
