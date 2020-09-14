@@ -41,7 +41,7 @@ services:
 
     kunstmaan_admin.login.listener:
         class: '%kunstmaan_admin.login.listener.class%'
-        arguments: ['@kunstmaan_admin.logger', '@kunstmaan_admin.versionchecker', '@kunstmaan_admin.adminroute.helper', '@doctrine']
+        arguments: ['@kunstmaan_admin.logger', '@kunstmaan_admin.versionchecker',  '@doctrine.orm.default_entity_manager']
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 

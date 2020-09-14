@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use \DateTime;
 
 abstract class BaseUser implements UserInterface
 {
@@ -83,7 +84,7 @@ abstract class BaseUser implements UserInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_login", type="datetime_immutable")
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     protected $lastLogin;
 
@@ -537,7 +538,7 @@ abstract class BaseUser implements UserInterface
         return $this->lastLogin;
     }
 
-    public function setLastLogin(?DateTime $time = NULL)
+    public function setLastLogin(?DateTime $lastLogin = null)
     {
         $this->lastLogin = $lastLogin;
 
