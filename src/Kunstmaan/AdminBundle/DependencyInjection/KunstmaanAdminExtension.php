@@ -114,8 +114,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->prependExtensionConfig('twig', $twigConfig);
 
         // NEXT_MAJOR: Remove templating dependency
-        $frameworkConfig['templating']['engines'] = ['twig'];
-        $container->prependExtensionConfig('framework', $frameworkConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);

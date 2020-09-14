@@ -1,6 +1,11 @@
 UPGRADE FROM 5.6 to 5.7
 =======================
 
+General
+-------
+
+* We don't enable the templating component by default anymore. If you use the templating component or the `@templating` service, run `composer req symfony/templating` and activate it by enabling the `framework.templating` config in your project.
+
 AdminBundle
 ------------
 
@@ -20,6 +25,11 @@ NodeBundle
 ----------
 
 * The method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeIdQueryBuilder" is deprecated and will be removed in 6.0. Use the renamed method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeId" instead.
+
+NodeSearchBundle
+----------------
+
+* The "renderCustomSearchView", "renderDefaultSearchView" and "removeHtml" methods of the "Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration" class are deprecated and will be removed in 6.0. Use the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" service instead.
 
 UserManagementBundle
 ------------
