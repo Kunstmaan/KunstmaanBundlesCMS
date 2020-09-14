@@ -16,6 +16,7 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
+use Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
@@ -23,7 +24,6 @@ use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -560,17 +560,31 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             );
         }
 
-        $renderer = $this->container->get('templating');
         $doc['content'] = '';
-
         if ($page instanceof SearchViewTemplateInterface) {
-            $doc['content'] = $this->renderCustomSearchView($nodeTranslation, $page, $renderer);
+            if ($this->isMethodOverridden('renderCustomSearchView')) {
+                @trigger_error(sprintf('Overriding the "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Override the "renderCustomSearchView" method of the "%s" service instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
+                $doc['content'] = $this->renderCustomSearchView($nodeTranslation, $page, $this->container->get('templating'));
+            } else {
+                $searchViewRenderer = $this->container->get('kunstmaan_node_search.service.search_view_renderer');
+
+                $doc['content'] = $searchViewRenderer->renderCustomSearchView($nodeTranslation, $page, $this->container);
+            }
 
             return null;
         }
 
         if ($page instanceof HasPagePartsInterface) {
-            $doc['content'] = $this->renderDefaultSearchView($nodeTranslation, $page, $renderer);
+            if ($this->isMethodOverridden('renderDefaultSearchView')) {
+                @trigger_error(sprintf('Overriding the "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Override the "renderDefaultSearchView" method of the "%s" service instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
+                $doc['content'] = $this->renderDefaultSearchView($nodeTranslation, $page, $this->container->get('templating'));
+            } else {
+                $searchViewRenderer = $this->container->get('kunstmaan_node_search.service.search_view_renderer');
+
+                $doc['content'] = $searchViewRenderer->renderDefaultSearchView($nodeTranslation, $page);
+            }
 
             return null;
         }
@@ -604,6 +618,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Render a custom search view
      *
+     * @deprecated This method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "renderCustomSearchView" method of the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" instead.
+     *
      * @param NodeTranslation             $nodeTranslation
      * @param SearchViewTemplateInterface $page
      * @param EngineInterface             $renderer
@@ -615,6 +631,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         SearchViewTemplateInterface $page,
         EngineInterface $renderer
     ) {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "%s" service with method "renderCustomSearchView" instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
         $view = $page->getSearchView();
         $renderContext = new RenderContext([
             'locale' => $nodeTranslation->getLang(),
@@ -642,6 +660,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * Render default search view (all indexable pageparts in the main context
      * of the page)
      *
+     * @deprecated This method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "renderDefaultSearchView" method of the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" instead.
+     *
      * @param NodeTranslation       $nodeTranslation
      * @param HasPagePartsInterface $page
      * @param EngineInterface       $renderer
@@ -653,6 +673,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         HasPagePartsInterface $page,
         EngineInterface $renderer
     ) {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "%s" service with method "renderDefaultSearchView" instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page);
         $view = '@KunstmaanNodeSearch/PagePart/view.html.twig';
         $content = $this->removeHtml(
@@ -707,33 +729,19 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Removes all HTML markup & decode HTML entities
      *
+     * @deprecated This method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "removeHtml" method of the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" instead.
+     *
      * @param $text
      *
      * @return string
      */
     protected function removeHtml($text)
     {
-        if (!trim($text)) {
-            return '';
-        }
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "removeHtml" method of the "%s" service instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
 
-        // Remove Styles and Scripts
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($text);
-        $crawler->filter('style, script')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });
-        $text = $crawler->html();
+        $searchViewRenderer = $this->container->get('kunstmaan_node_search.service.search_view_renderer');
 
-        // Remove HTML markup
-        $result = strip_tags($text);
-
-        // Decode HTML entities
-        $result = trim(html_entity_decode($result, ENT_QUOTES));
-
-        return $result;
+        return $searchViewRenderer->removeHtml($text);
     }
 
     /**
@@ -804,5 +812,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         return $eventDispatcher->dispatch($eventName, $event);
+    }
+
+    private function isMethodOverridden(string $method)
+    {
+        $reflector = new \ReflectionMethod($this, $method);
+
+        return $reflector->getDeclaringClass()->getName() !== __CLASS__;
     }
 }
