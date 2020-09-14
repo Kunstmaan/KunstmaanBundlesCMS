@@ -347,5 +347,17 @@ services:
 
     Kunstmaan\AdminBundle\Controller\ResettingController:
         public: true
+        arguments:
+            - '%fos_user.model.user.class%'
+            - '@Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService'
         tags:
             - { name: controller.service_arguments }
+
+    Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService:
+        public: true
+        arguments:
+            - '@mailer'
+            - '@twig'
+            - '@router'
+            - '@translator'
+            - 'merel.jossart@kunstmaan.be'

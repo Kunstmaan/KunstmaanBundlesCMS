@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Form\NewPasswordType;
 use Kunstmaan\AdminBundle\Form\PasswordRequestType;
+use Kunstmaan\AdminBundle\Service\PasswordMailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -16,6 +17,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ResettingController extends Controller
 {
+    /** @var string */
+    private $userClass;
+
+    private $passwordMailer;
+
+    public function __construct(string $userClass, PasswordMailerInterface $passwordMailer)
+    {
+        $this->userClass = $userClass;
+        $this->passwordMailer = $passwordMailer;
+    }
+
     /**
      * @Route("/reset_password", name="cms_reset_password", methods={"GET", "POST"})
      */
@@ -29,15 +41,17 @@ class ResettingController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
             $token = bin2hex(random_bytes(32));
-            $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+            $user = $entityManager->getRepository($this->userClass)->findOneBy(['email' => $email]);
 
-            if ($user instanceof User) {
+            if ($user instanceof $this->userClass) {
                 $user->setPasswordRequestToken($token);
                 $entityManager->flush();
-                // send your email with SwiftMailer or anything else here
+                $this->passwordMailer->sendPasswordForgotMail($user, $request->getLocale());
                 $this->addFlash('success', "An email has been sent to your address");
 
                 return $this->redirectToRoute('cms_reset_password');
+            } else {
+                $this->addFlash('danger', "Your email was not found");
             }
         }
 
@@ -55,9 +69,9 @@ class ResettingController extends Controller
         TokenStorageInterface $tokenStorage,
         SessionInterface $session
     ) {
-        $user = $entityManager->getRepository(User::class)->findOneBy(['passwordRequestToken' => $token]);
+        $user = $entityManager->getRepository($this->userClass)->findOneBy(['passwordRequestToken' => $token]);
 
-        if (!$token || !$user instanceof User) {
+        if (!$token || !$user instanceof $this->userClass) {
             $this->addFlash('danger', "User not found");
 
             return $this->redirectToRoute('cms_reset_password');
