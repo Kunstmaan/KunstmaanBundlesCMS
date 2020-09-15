@@ -19,7 +19,7 @@ class DeprecateClassParametersPassTest extends AbstractCompilerPassTestCase
      */
     public function testServiceClassParameterOverride()
     {
-        $this->setParameter('kunstmaan_user_management.user_admin_list_configurator.class', 'Custom\Class');
+        $this->setParameter('kunstmaan_user_management.menu.adaptor.class', 'Custom\Class');
 
         $this->compile();
     }
