@@ -28,17 +28,9 @@ KunstmaanAdminBundle_resetting:
     type:     annotation
     prefix:   /
 
-###########################
-## fos_userbundle routes ##
-###########################
-
-fos_user_profile:
-    resource: '@FOSUserBundle/Resources/config/routing/profile.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%/profile
-
-fos_user_change_password:
-    resource: '@FOSUserBundle/Resources/config/routing/change_password.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%/profile
+fos_routes:
+    resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader::loadRoutes'
+    type: service
 
 ##########################
 ## Google OAuth Sign In ##

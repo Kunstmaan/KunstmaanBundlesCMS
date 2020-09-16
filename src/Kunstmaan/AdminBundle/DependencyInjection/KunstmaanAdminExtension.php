@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -42,6 +43,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         }
         if (\array_key_exists('admin_password', $config)) {
             $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
+        }
+        if (\array_key_exists('use_fos_routing', $config)) {
+            $container->setParameter('kunstmaan_admin.use_fos_routing', $config['use_fos_routing']);
         }
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
         $container->setParameter('kunstmaan_admin.default_admin_locale', $config['default_admin_locale']);

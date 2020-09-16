@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('admin_password')->end()
+                ->booleanNode('use_fos_routing')->defaultFalse()->end()
                 ->scalarNode('dashboard_route')->end()
                 ->scalarNode('admin_prefix')->defaultValue('admin')->end()
                 ->arrayNode('admin_locales')

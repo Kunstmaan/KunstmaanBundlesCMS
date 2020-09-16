@@ -361,3 +361,10 @@ services:
             - '@router'
             - '@translator'
             - 'merel.jossart@kunstmaan.be'
+
+    Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
+        public: true
+        arguments:
+            - '%kunstmaan_admin.use_fos_routing%'
+        tags:
+            - { name: routing.route_loader }
