@@ -13,6 +13,7 @@ security:
         username: Username
         password: Password
         submit: submit
+        remember_me: Remember me
 
 # Modules
 modules:

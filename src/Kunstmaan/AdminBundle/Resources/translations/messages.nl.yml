@@ -137,3 +137,4 @@ security:
     username: Gebruikersnaam
     password: Passwoord
     submit: Inloggen
+    remember_me: Onthoud mijn gegevens
