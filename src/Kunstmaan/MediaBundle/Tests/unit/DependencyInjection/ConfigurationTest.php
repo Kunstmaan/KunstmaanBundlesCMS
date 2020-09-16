@@ -26,7 +26,6 @@ class ConfigurationTest extends TestCase
     {
         $array = [
             'soundcloud_api_key' => 'thisismykey',
-            'aviary_api_key' => 'apikey',
             'remote_video' => [
                 'vimeo' => false,
                 'youtube' => true,
@@ -41,6 +40,18 @@ class ConfigurationTest extends TestCase
             $array['web_root'] = '%kernel.project_dir%/public';
         }
 
-        $this->assertProcessedConfigurationEquals([$array], $array);
+        $expectedConfig = $array;
+        $expectedConfig['aviary_api_key'] = null;
+
+        $this->assertProcessedConfigurationEquals([$array], $expectedConfig);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation The child node "aviary_api_key" at path "kunstmaan_media" is deprecated. Because the aviary service is discontinued.
+     */
+    public function testDeprecatedAviaryConfig()
+    {
+        $this->assertConfigurationIsValid([['aviary_api_key' => 'deprecated_key']]);
     }
 }

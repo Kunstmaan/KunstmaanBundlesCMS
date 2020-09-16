@@ -14,6 +14,9 @@ use Symfony\Component\Mime\MimeTypesInterface;
  */
 class ImageHandler extends FileHandler
 {
+    /**
+     * @deprecated This property is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.
+     */
     protected $aviaryApiKey;
 
     /**
@@ -22,17 +25,25 @@ class ImageHandler extends FileHandler
      * @param ExtensionGuesserFactoryInterface|null              $extensionGuesserFactoryInterface
      * @param string                                             $aviaryApiKey
      */
-    public function __construct($priority, $mimeTypeGuesser, $extensionGuesser, $aviaryApiKey)
+    public function __construct($priority, $mimeTypeGuesser, $extensionGuesser, $aviaryApiKey = null)
     {
         parent::__construct($priority, $mimeTypeGuesser, $extensionGuesser);
+
+        if (null !== $aviaryApiKey) {
+            @trigger_error(sprintf('Passing a value for the "$aviaryApiKey" constructor parameter of "%s" is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.', __CLASS__), E_USER_DEPRECATED);
+        }
         $this->aviaryApiKey = $aviaryApiKey;
     }
 
     /**
+     * @deprecated This method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.
+     *
      * @return string
      */
     public function getAviaryApiKey()
     {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.', __METHOD__), E_USER_DEPRECATED);
+
         return $this->aviaryApiKey;
     }
 
