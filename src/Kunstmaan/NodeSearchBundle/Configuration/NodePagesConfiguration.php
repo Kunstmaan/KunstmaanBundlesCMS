@@ -24,6 +24,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -679,7 +680,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
         $event = new IndexNodeEvent($page, $doc);
-        $this->container->get('event_dispatcher')->dispatch(IndexNodeEvent::EVENT_INDEX_NODE, $event);
+        $this->dispatch($event, IndexNodeEvent::EVENT_INDEX_NODE);
 
         $doc = $event->doc;
 
@@ -785,5 +786,23 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         return $this->nodeRefs[$refEntityName];
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

@@ -15,6 +15,7 @@
     "require": {
         "php": "^7.1",
         "gedmo/doctrine-extensions": "^2.4.34",
+        "kunstmaan/admin-bundle": "^5.7",
         "kunstmaan/adminlist-bundle": "~5.2",
         "stof/doctrine-extensions-bundle": "~1.1",
         "symfony/expression-language": "^3.4|^4.2",
