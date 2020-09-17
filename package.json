@@ -13,17 +13,18 @@
   "author": "Kunstmaan",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^6.7.6",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/plugin-transform-spread": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
+    "autoprefixer": "^6.7.6",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
     "browser-sync": "^2.26.12",
     "chalk": "^1.1.3",
+    "core-js": "^2.6.11",
     "cssnano": "^4.1.10",
     "del": "^3.0.0",
     "eslint-config-airbnb-base": "^11.1.1",
@@ -43,6 +44,7 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-uglify": "^2.1.2",
+    "gulp-util": "^3.0.8",
     "mime-types": "^2.1.15",
     "node-notifier": "^5.0.2",
     "postcss-reporter": "^3.0.0",
@@ -52,8 +54,7 @@
     "stylelint-order": "^4.1.0",
     "twig": "^1.10.5",
     "webpack": "^4.44.1",
-    "yargs": "^15.4.1",
-    "core-js": "^2.6.11"
+    "yargs": "^15.4.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
