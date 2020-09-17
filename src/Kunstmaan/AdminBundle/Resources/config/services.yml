@@ -171,12 +171,18 @@ services:
 
     kunstmaan_admin.versionchecker:
         class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
-        arguments: ['@service_container', '@kunstmaan_admin.cache', '@translator']
+        arguments: ['@service_container', '@cache.kunstmaan_versioncheck', '@translator']
         public: true
 
     kunstmaan_admin.cache:
         class: Doctrine\Common\Cache\FilesystemCache
         arguments: ['%kernel.cache_dir%/fcache']
+        deprecated: 'The "%service_id%" service is deprecated since Kunstmaan/AdminBundle 5.7 and will be removed in KunstmaanAdminBundle 6.0.'
+
+    cache.kunstmaan_versioncheck:
+        parent: cache.adapter.filesystem
+        tags:
+            - { name: cache.pool }
 
     kunstmaan_admin.form.type.color:
         class: Kunstmaan\AdminBundle\Form\ColorType
@@ -322,7 +328,7 @@ services:
         class: '%kunstmaan_admin.toolbar.collector.bundle.class%'
         arguments:
             - '@kunstmaan_admin.versionchecker'
-            - '@kunstmaan_admin.cache'
+            - '@cache.kunstmaan_versioncheck'
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanAdmin/Toolbar/bundles_version.html.twig', id: kuma_bundle_versions }
 
