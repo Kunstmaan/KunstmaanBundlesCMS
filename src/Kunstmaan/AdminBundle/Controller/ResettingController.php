@@ -46,7 +46,7 @@ class ResettingController extends Controller
             $user = $entityManager->getRepository($this->userClass)->findOneBy(['email' => $email]);
 
             if ($user instanceof $this->userClass) {
-                $user->setPasswordRequestToken($token);
+                $user->setConfirmationToken($token);
                 $entityManager->flush();
                 $this->passwordMailer->sendPasswordForgotMail($user, $request->getLocale());
                 $this->addFlash('success', 'security.resetting.send_email_success');
@@ -71,7 +71,7 @@ class ResettingController extends Controller
         TokenStorageInterface $tokenStorage,
         SessionInterface $session
     ) {
-        $user = $entityManager->getRepository($this->userClass)->findOneBy(['passwordRequestToken' => $token]);
+        $user = $entityManager->getRepository($this->userClass)->findOneBy(['confirmationToken' => $token]);
 
         if (!$token || !$user instanceof $this->userClass) {
             $this->addFlash('danger', "security.resetting.user_not_found");
@@ -86,7 +86,7 @@ class ResettingController extends Controller
             $plainPassword = $form->get('plainPassword')->getData();
             $password = $encoder->encodePassword($user, $plainPassword);
             $user->setPassword($password);
-            $user->setPasswordRequestToken(null);
+            $user->setConfirmationToken(null);
             $entityManager->flush();
 
             $token = new UsernamePasswordToken($user, $password, 'main');

@@ -29,6 +29,13 @@ abstract class BaseUser implements UserInterface
     protected $username;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    protected $usernameCanonical;
+
+    /**
      * The doctrine metadata is set dynamically in Kunstmaan\AdminBundle\EventListener\MappingListener
      */
     protected $groups;
@@ -58,6 +65,13 @@ abstract class BaseUser implements UserInterface
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    protected $emailCanonical;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="password", type="string", length=100)
      */
     protected $password;
@@ -72,7 +86,7 @@ abstract class BaseUser implements UserInterface
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $passwordRequestToken;
+    protected $confirmationToken;
 
     /**
      * @var string
@@ -316,21 +330,6 @@ abstract class BaseUser implements UserInterface
     }
 
     /**
-     * @return null|string
-     */
-    public function getPasswordRequestToken(): ?string
-    {
-        return $this->passwordRequestToken;
-    }
-
-    public function setPasswordRequestToken(?string $passwordRequestToken)
-    {
-        $this->passwordRequestToken = $passwordRequestToken;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getRoles()
@@ -485,22 +484,22 @@ abstract class BaseUser implements UserInterface
 
     public function getUsernameCanonical()
     {
-        // TODO: Implement getUsernameCanonical() method.
+        return $this->usernameCanonical;
     }
 
     public function setUsernameCanonical($usernameCanonical)
     {
-        // TODO: Implement setUsernameCanonical() method.
+        $this->usernameCanonical = $usernameCanonical;
     }
 
     public function getEmailCanonical()
     {
-        // TODO: Implement getEmailCanonical() method.
+        return $this->emailCanonical
     }
 
     public function setEmailCanonical($emailCanonical)
     {
-        // TODO: Implement setEmailCanonical() method.
+        $this->emailCanonical = $emailCanonical;
     }
 
     public function isSuperAdmin()
@@ -515,12 +514,12 @@ abstract class BaseUser implements UserInterface
 
     public function getConfirmationToken()
     {
-        // TODO: Implement getConfirmationToken() method.
+        return $this->confirmationToken;
     }
 
     public function setConfirmationToken($confirmationToken)
     {
-        // TODO: Implement setConfirmationToken() method.
+        $this->confirmationToken = $confirmationToken;
     }
 
     public function setPasswordRequestedAt(\DateTime $date = null)

@@ -11,6 +11,7 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\EnablePermissionsPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\InjectUntrackedTokenStorageCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\TwigGlobalCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -35,6 +36,7 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new ConsoleCompilerPass());
         $container->addCompilerPass(new InjectUntrackedTokenStorageCompilerPass());
         $container->addCompilerPass(new EnablePermissionsPass());
+        $container->addCompilerPass(new TwigGlobalCompilerPass());
 
         $container->addCompilerPass(new DeprecateClassParametersPass());
 

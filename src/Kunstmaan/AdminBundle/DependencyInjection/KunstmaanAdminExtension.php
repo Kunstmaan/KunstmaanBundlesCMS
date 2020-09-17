@@ -131,10 +131,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $frameworkConfig['templating']['engines'] = ['twig'];
         $container->prependExtensionConfig('framework', $frameworkConfig);
 
-        $useFosRouting = $container->getParameter('kunstmaan_admin.use_fos_routing');
-        $def = $container->getDefinition('twig');
-        $def->addMethodCall('addGlobal', array('use_fos_routing', $useFosRouting));
-
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }
