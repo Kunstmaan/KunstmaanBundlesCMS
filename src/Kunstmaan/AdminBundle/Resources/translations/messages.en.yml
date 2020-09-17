@@ -14,6 +14,13 @@ security:
         password: Password
         submit: submit
         remember_me: Remember me
+        logged_in_as: 'Logged in as %username%'
+        logout: 'Log out'
+    resetting:
+        send_email_success: "An email has been sent to your address"
+        send_email_failure: "Your email was not found"
+        user_not_found: "User not found"
+        password_set_success: 'Your password has been changed.'
 
 # Modules
 modules:

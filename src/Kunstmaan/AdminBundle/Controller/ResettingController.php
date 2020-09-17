@@ -14,12 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResettingController extends Controller
 {
     /** @var string */
     private $userClass;
 
+    /** @var PasswordMailerInterface */
     private $passwordMailer;
 
     public function __construct(string $userClass, PasswordMailerInterface $passwordMailer)
@@ -47,11 +49,11 @@ class ResettingController extends Controller
                 $user->setPasswordRequestToken($token);
                 $entityManager->flush();
                 $this->passwordMailer->sendPasswordForgotMail($user, $request->getLocale());
-                $this->addFlash('success', "An email has been sent to your address");
+                $this->addFlash('success', 'security.resetting.send_email_success');
 
                 return $this->redirectToRoute('cms_reset_password');
             } else {
-                $this->addFlash('danger', "Your email was not found");
+                $this->addFlash('danger', 'security.resetting.send_email_failure');
             }
         }
 
@@ -72,7 +74,7 @@ class ResettingController extends Controller
         $user = $entityManager->getRepository($this->userClass)->findOneBy(['passwordRequestToken' => $token]);
 
         if (!$token || !$user instanceof $this->userClass) {
-            $this->addFlash('danger', "User not found");
+            $this->addFlash('danger', "security.resetting.user_not_found");
 
             return $this->redirectToRoute('cms_reset_password');
         }
@@ -91,7 +93,7 @@ class ResettingController extends Controller
             $tokenStorage->setToken($token);
             $session->set('_security_main', serialize($token));
 
-            $this->addFlash('success', "Your new password has been set");
+            $this->addFlash('success', "security.resetting.password_set_success");
 
             return $this->redirectToRoute('KunstmaanAdminBundle_homepage');
         }

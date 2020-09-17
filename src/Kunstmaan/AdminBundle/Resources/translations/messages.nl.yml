@@ -138,3 +138,10 @@ security:
     password: Passwoord
     submit: Inloggen
     remember_me: Onthoud mijn gegevens
+    logged_in_as: 'Ingelogd as %username%'
+    logout: 'Uitloggen'
+  resetting:
+    send_email_success: "Een email is verzonden naar jouw email adres"
+    send_email_failure: "Uw email is niet door ons gevonden."
+    user_not_found: "User niet gevonden."
+    password_set_success: 'Uw passwoord is veranderd.'

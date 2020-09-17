@@ -19,7 +19,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm(UserLoginType::class);
 
         return $this->render(
-            '@KunstmaanAdmin/Security/login.html.twig',
+            '@KunstmaanAdmin/Security/login_cms.html.twig',
             [
                 'form' => $form->createView(),
                 'last_username' => $lastUsername,
