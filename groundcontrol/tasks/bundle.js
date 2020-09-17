@@ -63,7 +63,6 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
                 targets: {
                     browsers: [
                         '>0.25%',
-                        'ie 11',
                         'not op_mini all'
                     ]
                 }
