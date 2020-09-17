@@ -11,12 +11,16 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
      */
     protected $tokenStorage;
 
+    /** @var boolean */
+    protected $useFosRouting;
+
     /**
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, bool $useFosRouting)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->useFosRouting = $useFosRouting;
     }
 
     /**
@@ -59,7 +63,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     {
         return new AdminPanelAction(
             array(
-                'path' => 'cms_logout',
+                'path' => $this->useFosRouting ? 'fos_user_security_logout' : 'cms_logout',
                 'attrs' => array('id' => 'app__logout', 'title' => 'logout'),
             ),
             '',

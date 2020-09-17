@@ -220,7 +220,7 @@ services:
 
     kunstmaan_admin.admin_panel.adaptor:
         class: Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor
-        arguments: ['@security.token_storage']
+        arguments: ['@security.token_storage', '%kunstmaan_admin.use_fos_routing%']
         tags:
             -  { name: 'kunstmaan_admin.admin_panel.adaptor' }
 
