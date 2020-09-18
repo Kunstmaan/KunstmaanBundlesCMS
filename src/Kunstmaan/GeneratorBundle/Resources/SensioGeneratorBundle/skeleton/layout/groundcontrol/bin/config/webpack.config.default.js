@@ -1,11 +1,15 @@
+import TerserPlugin from 'terser-webpack-plugin';
+import path from 'path';
+
 function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes = false }) {
     if (optimize || !transpileOnlyForLastChromes) {
         return {
             babelrc: false,
             presets: [
-                require.resolve('babel-preset-env', {
+                ['@babel/preset-env', {
+                    useBuiltIns: 'usage',
                     modules: false,
-                }),
+                }],
             ],
         };
     }
@@ -13,15 +17,28 @@ function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes =
     return {
         babelrc: false,
         presets: [
-            require.resolve('babel-preset-env', {
+            ['@babel/preset-env', {
+                useBuiltIns: 'usage',
                 targets: {
                     browsers: ['last 2 Chrome versions'],
                 },
-                debug: true,
-            }),
+            }],
         ],
         cacheDirectory: true,
     };
+}
+
+function shouldOptimize({ optimize = false }) {
+    if (optimize) {
+        return {
+            minimizer: [new TerserPlugin({
+                terserOptions: {
+                    mangle: true,
+                    sourceMap: true,
+                },
+            })],
+        };
+    }
 }
 
 export default function defaultConfig(speedupLocalDevelopment, optimize = false) {
@@ -32,16 +49,42 @@ export default function defaultConfig(speedupLocalDevelopment, optimize = false)
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: /node_modules/,
+                    /**
+                     * Exclude all node modules except ES6 packages
+                     * This speeds up the build significantly
+                     */
+                    exclude: [/node_modules\/(?!(quill)\/).*/],
                     use: {
                         loader: 'babel-loader',
                         options: getBabelLoaderOptions({
                             transpileOnlyForLastChromes: speedupLocalDevelopment,
                         }),
                     },
+                }, {
+                    test: /\.ts$/,
+                    use: [{
+                        loader: 'ts-loader',
+                        options: {
+                            compilerOptions: {
+                                declaration: false,
+                                target: 'es5',
+                                module: 'commonjs',
+                            },
+                            transpileOnly: true,
+                        },
+                    }],
+                }, {
+                    test: /\.svg$/,
+                    use: [{
+                        loader: 'html-loader',
+                        options: {
+                            minimize: true,
+                        },
+                    }],
                 },
             ],
         },
+        optimization: shouldOptimize({ optimize }),
         plugins: [],
     };
 
