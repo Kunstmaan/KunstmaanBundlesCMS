@@ -11,7 +11,7 @@ services:
 
     kunstmaan_form.form_mailer:
         class: '%kunstmaan_form.form_mailer.class%'
-        arguments: ['@mailer', '@twig', '@service_container']
+        arguments: ['@mailer', '@twig', '@request_stack']
         public: true
 
     kunstmaan_form.form_handler:
