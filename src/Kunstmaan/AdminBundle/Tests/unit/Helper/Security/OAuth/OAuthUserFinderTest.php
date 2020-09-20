@@ -33,7 +33,7 @@ class OAuthUserFinderTest extends TestCase
         return $this->em;
     }
 
-    public function setup()
+    public function setUp(): void
     {
         $em = $this->getEm();
         $object = new OAuthUserFinder($em, User::class);

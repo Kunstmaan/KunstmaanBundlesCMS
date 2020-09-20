@@ -20,7 +20,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ChoiceFormSubmissionField();
     }
@@ -34,7 +34,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
         $object = $this->object;
         $object->setChoices(['delboy1978uk' => 123456789]);
         $object->setValue('delboy1978uk');

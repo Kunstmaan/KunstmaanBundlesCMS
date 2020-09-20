@@ -90,7 +90,7 @@ class TagManagerTest extends TestCase
 
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         $tag = new Tag();
 

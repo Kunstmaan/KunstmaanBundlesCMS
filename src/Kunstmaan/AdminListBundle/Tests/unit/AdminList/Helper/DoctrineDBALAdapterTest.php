@@ -12,12 +12,10 @@ use PHPUnit\Framework\TestCase;
  */
 class DoctrineDBALAdapterTest extends TestCase
 {
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage The $countField must contain a table alias in the string.
-     */
     public function testConstructorWithIncorrectCountField()
     {
+        $this->expectExceptionMessage('The $countField must contain a table alias in the string.');
+        $this->expectException(\LogicException::class);
         $qb = $this->createMock(QueryBuilder::class);
         new DoctrineDBALAdapter($qb, 'somefield');
     }
@@ -31,12 +29,10 @@ class DoctrineDBALAdapterTest extends TestCase
         $this->assertInstanceOf(QueryBuilder::class, $adapter->getQueryBuilder());
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Only SELECT queries can be paginated.
-     */
     public function testConstructorThrowsAnotherException()
     {
+        $this->expectExceptionMessage('Only SELECT queries can be paginated.');
+        $this->expectException(\LogicException::class);
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::DELETE);
 

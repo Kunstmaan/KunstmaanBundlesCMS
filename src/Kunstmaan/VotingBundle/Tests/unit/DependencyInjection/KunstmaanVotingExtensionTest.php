@@ -20,7 +20,7 @@ class KunstmaanVotingExtensionTest extends TestCase
      */
     private $root;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -34,7 +34,7 @@ class KunstmaanVotingExtensionTest extends TestCase
         $container->setParameter('voting_default_value', 2);
         $this->extension->load([['actions' => [['name' => 'foo', 'max_number_by_ip' => 2]]]], $container);
         $this->assertTrue($container->hasParameter($this->root . '.actions'));
-        $this->assertInternalType('array', $container->getParameter($this->root . '.actions'));
+        $this->assertIsArray($container->getParameter($this->root . '.actions'));
 
         $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
@@ -53,7 +53,7 @@ class KunstmaanVotingExtensionTest extends TestCase
         $container = $this->getContainer();
         $this->extension->load(array(array()), $container);
         $this->assertTrue($container->hasParameter($this->root . '.actions'));
-        $this->assertInternalType('array', $container->getParameter($this->root . '.actions'));
+        $this->assertIsArray($container->getParameter($this->root . '.actions'));
 
         $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
@@ -83,7 +83,7 @@ class KunstmaanVotingExtensionTest extends TestCase
         $container = $this->getContainer();
         $this->extension->load(array($configs), $container);
         $this->assertTrue($container->hasParameter($this->root . '.actions'));
-        $this->assertInternalType('array', $container->getParameter($this->root . '.actions'));
+        $this->assertIsArray($container->getParameter($this->root . '.actions'));
 
         $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {

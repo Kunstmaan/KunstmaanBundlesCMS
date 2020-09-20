@@ -15,7 +15,7 @@ class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
     /**
      * @return ExtensionInterface[]
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanFormExtension()];
     }

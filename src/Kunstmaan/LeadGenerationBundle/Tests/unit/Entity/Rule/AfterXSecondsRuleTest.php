@@ -17,6 +17,6 @@ class AfterXSecondsRuleTest extends TestCase
         $this->assertEquals('AfterXSecondsRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/AfterXSecondsRule.js', $rule->getJsFilePath());
         $this->assertEquals(AfterXSecondsAdminType::class, $rule->getAdminType());
-        $this->assertInternalType('array', $rule->getJsProperties());
+        $this->assertIsArray($rule->getJsProperties());
     }
 }

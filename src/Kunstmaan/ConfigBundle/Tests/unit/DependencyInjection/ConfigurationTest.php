@@ -36,12 +36,10 @@ class ConfigurationTest extends TestCase
         $this->assertPartialConfigurationIsInvalid([['fail']], 'entities');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Entity "App\UndefinedEntity" does not exist
-     */
     public function testConfigUndefinedEntity()
     {
+        $this->expectExceptionMessage('Entity "App\\UndefinedEntity" does not exist');
+        $this->expectException(\InvalidArgumentException::class);
         $array = [
             'entities' => [
                 'App\\UndefinedEntity',
@@ -51,12 +49,10 @@ class ConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals([$array], $array);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage The entity class "Kunstmaan\ConfigBundle\Tests\DependencyInjection\InvalidConfigEntity" needs to implement the Kunstmaan\ConfigBundle\Entity\ConfigurationInterface
-     */
     public function testConfigInvalidEntity()
     {
+        $this->expectExceptionMessage('The entity class "Kunstmaan\\ConfigBundle\\Tests\\DependencyInjection\\InvalidConfigEntity" needs to implement the Kunstmaan\\ConfigBundle\\Entity\\ConfigurationInterface');
+        $this->expectException(\RuntimeException::class);
         $array = [
             'entities' => [
                 InvalidConfigEntity::class,

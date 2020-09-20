@@ -39,7 +39,7 @@ abstract class AbstractTypeTest extends WebTestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $formFactoryBuilderInterface = Forms::createFormFactoryBuilder();
         $formFactoryBuilderInterface->addType(new URLChooserType());

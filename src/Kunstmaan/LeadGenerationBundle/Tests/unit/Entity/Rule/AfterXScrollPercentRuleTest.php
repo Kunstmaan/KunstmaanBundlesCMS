@@ -17,6 +17,6 @@ class AfterXScrollPercentRuleTest extends TestCase
         $this->assertEquals('AfterXScrollPercentRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/AfterXScrollPercentRule.js', $rule->getJsFilePath());
         $this->assertEquals(AfterXScrollPercentRuleAdminType::class, $rule->getAdminType());
-        $this->assertInternalType('array', $rule->getJsProperties());
+        $this->assertIsArray($rule->getJsProperties());
     }
 }

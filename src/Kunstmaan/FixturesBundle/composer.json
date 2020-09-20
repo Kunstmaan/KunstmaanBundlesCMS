@@ -18,7 +18,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "fzaninotto/faker": "^1.6",
         "kunstmaan/admin-bundle": "~5.2",
@@ -31,9 +31,9 @@
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
-        "symfony/phpunit-bridge": "^4.2",
-        "phpunit/phpunit": "^7.5"
+        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "symfony/phpunit-bridge": "^5.1",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {

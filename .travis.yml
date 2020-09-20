@@ -45,7 +45,7 @@ jobs:
   include:
     # Test lowest dependencies
     - stage: Test
-      php: 7.1
+      php: 7.2
       env:
         - SYMFONY_REQUIRE='^3.4'
         - COMPOSER_FLAGS="--prefer-lowest"
@@ -60,8 +60,6 @@ jobs:
       env: SYMFONY_REQUIRE='^4.4'
 
     # Test the latest stable release
-    - stage: Test
-      php: 7.1
     - stage: Test
       php: 7.2
     - stage: Test
