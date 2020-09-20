@@ -54,7 +54,7 @@ class OAuthUserCreatorTest extends TestCase
         return $this->finder;
     }
 
-    public function setup()
+    public function setUp(): void
     {
         $em = $this->getEm();
         $finder = $this->getFinder();

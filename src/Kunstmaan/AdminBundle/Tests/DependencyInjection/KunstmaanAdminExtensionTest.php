@@ -11,7 +11,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
     /**
      * @return ExtensionInterface[]
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanAdminExtension()];
     }
@@ -162,7 +162,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', '');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

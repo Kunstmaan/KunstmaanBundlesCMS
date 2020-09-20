@@ -18,7 +18,7 @@ class ExportServiceTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ExportService($this->createMock(Environment::class), new Translator('nl'));
     }

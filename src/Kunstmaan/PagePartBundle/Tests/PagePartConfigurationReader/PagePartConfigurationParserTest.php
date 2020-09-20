@@ -70,11 +70,9 @@ class PagePartConfigurationParserTest extends TestCase
         $this->assertCount(4, $value->getPossiblePagePartTypes());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testCircularReferenceIsDetected()
     {
+        $this->expectException(\RuntimeException::class);
         $kernel = $this->createMock(KernelInterface::class);
 
         $parser = new PagePartConfigurationParser($kernel, [

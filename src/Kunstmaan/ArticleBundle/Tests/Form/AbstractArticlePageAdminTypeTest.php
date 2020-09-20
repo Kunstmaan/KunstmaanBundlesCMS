@@ -14,7 +14,7 @@ class AbstractArticlePageAdminTypeTest extends TestCase
      */
     private $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $entity = new AbstractArticlePageAdminType();
         $this->object = $entity;

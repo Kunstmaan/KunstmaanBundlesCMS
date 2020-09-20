@@ -20,6 +20,6 @@ class UrlWhitelistRuleTest extends TestCase
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/UrlWhitelistRule.js', $rule->getJsFilePath());
         $this->assertEquals(UrlWhiteListAdminType::class, $rule->getAdminType());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
-        $this->assertInternalType('array', $rule->getJsProperties());
+        $this->assertIsArray($rule->getJsProperties());
     }
 }

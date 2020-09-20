@@ -26,7 +26,7 @@ class VersionCheckTest extends TestCase
     /** @var Cache (mock) */
     private $cache;
 
-    public function setUp()
+    public function setUp(): void
     {
         /* @var ContainerInterface $container */
         $this->container = $this->createMock(ContainerInterface::class);

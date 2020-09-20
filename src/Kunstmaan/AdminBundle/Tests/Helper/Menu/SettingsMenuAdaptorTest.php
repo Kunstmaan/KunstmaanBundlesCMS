@@ -21,7 +21,7 @@ class SettingsMenuAdaptorTest extends TestCase
      */
     private $isEnabledVersionChecker = true;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->authorizationCheckerInterface = $this->createMock(AuthorizationCheckerInterface::class);
     }

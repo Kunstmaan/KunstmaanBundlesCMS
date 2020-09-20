@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class ExporterTest extends AbstractCompilerPassTestCase
 {
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new KunstmaanTranslatorCompilerPass());
     }
@@ -53,10 +53,10 @@ class ExporterTest extends AbstractCompilerPassTestCase
 
     /**
      * @group exporter
-     * @expectedException \Exception
      */
     public function testGetExporterByExtensionNonFound()
     {
+        $this->expectException(\Exception::class);
         $this->expectException('\Exception');
         $this->expectExceptionMessage('No exotic file exporter found or defined.');
         $this->registerDefinations();

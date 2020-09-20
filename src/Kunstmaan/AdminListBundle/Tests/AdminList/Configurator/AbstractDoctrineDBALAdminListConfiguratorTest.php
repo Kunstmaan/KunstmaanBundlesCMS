@@ -19,7 +19,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     /** @var Connection */
     private $connectionMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->connectionMock = $this->createMock(Connection::class);
         $this->connectionMock

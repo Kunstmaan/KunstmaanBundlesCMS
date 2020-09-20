@@ -17,7 +17,7 @@ class AdminListTest extends TestCase
     /** @var AdminList */
     protected $adminList;
 
-    public function setUp()
+    public function setUp(): void
     {
         /** @var AdminListConfiguratorInterface */
         $configurator = $this->createMock(AdminListConfiguratorInterface::class);

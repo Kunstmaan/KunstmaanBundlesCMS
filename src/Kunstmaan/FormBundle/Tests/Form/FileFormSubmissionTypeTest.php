@@ -19,7 +19,7 @@ class FileFormSubmissionTypeTest extends TypeTestCase
      */
     private $image;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

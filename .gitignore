@@ -16,3 +16,4 @@ src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/gr
 .idea
 .php_cs
 .php_cs.cache
+.phpunit.result.cache

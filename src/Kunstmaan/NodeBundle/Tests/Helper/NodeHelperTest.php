@@ -113,7 +113,7 @@ class NodeHelperTest extends TestCase
     /** @var User */
     private $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->createORM();
         $this->nodeHelper = $this->createNodeHelper();

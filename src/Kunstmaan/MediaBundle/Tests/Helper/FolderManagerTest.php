@@ -29,7 +29,7 @@ class FolderManagerTest extends TestCase
      */
     private $parents;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->repository = $this->getMockBuilder('Kunstmaan\MediaBundle\Repository\FolderRepository')
             ->disableOriginalConstructor()
