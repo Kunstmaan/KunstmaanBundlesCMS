@@ -56,3 +56,15 @@ services:
         arguments: ['%kernel.project_dir%']
         tags:
             - { name: console.command }
+
+    Kunstmaan\GeneratorBundle\DataFixtures\ORM\UserFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }
+
+    Kunstmaan\GeneratorBundle\DataFixtures\ORM\RoleFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }
+
+    Kunstmaan\GeneratorBundle\DataFixtures\ORM\GroupFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }

@@ -63,7 +63,7 @@
         "kunstmaan/google-api-custom": "~1.0",
         "ddeboer/data-import-bundle": "~0.1",
         "gedmo/doctrine-extensions": "^2.4.34",
-        "doctrine/doctrine-fixtures-bundle": "~2.2",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "stof/doctrine-extensions-bundle": "~1.1",
         "liip/imagine-bundle": "^2.2",
         "imagine/imagine": "~0.6",
