@@ -168,3 +168,7 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    Kunstmaan\MediaBundle\DataFixtures\ORM\FolderFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }
