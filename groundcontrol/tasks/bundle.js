@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-
+import 'core-js';
 /**
  * You can let webpack watch the files and rebundle on change, or you can do it
  * via gulp. Gulp will probably be easier at first, since you have to configure
@@ -49,6 +49,7 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
             presets: [
                 ['@babel/preset-env', {
                     useBuiltIns: 'usage',
+                    corejs: 3.6,
                     modules: false
                 }]
             ]
@@ -60,6 +61,7 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
         presets: [
             ['@babel/preset-env', {
                 useBuiltIns: 'usage',
+                corejs: 3.6,
                 targets: {
                     browsers: [
                         '>0.25%',

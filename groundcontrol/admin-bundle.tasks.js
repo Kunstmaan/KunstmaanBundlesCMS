@@ -2,6 +2,7 @@
 
 import gulp from 'gulp';
 import webpack from 'webpack';
+import path from 'path';
 
 import consoleArguments from './console-arguments';
 
@@ -59,9 +60,11 @@ adminBundle.tasks.bundle = createBundleTask({
     config: {
         entry: `${adminBundle.config.srcPath}jsnext/app.js`,
         output: {
-            filename: `${adminBundle.config.distPath}js/admin-bundle.next.js`
+            filename: `admin-bundle.next.js`,
+            path: path.resolve(__dirname, '../src/Kunstmaan/AdminBundle/Resources/public/js'),
         },
         devtool: 'cheap-module-source-map',
+        mode: 'development',
         module: {
             rules: [
                 {
@@ -81,12 +84,15 @@ adminBundle.tasks.bundleOptimized = createBundleTask({
     config: {
         entry: `${adminBundle.config.srcPath}jsnext/app.js`,
         output: {
-            filename: `${adminBundle.config.distPath}js/admin-bundle.next.js`
+            filename: 'admin-bundle.next.js',
+            path: path.resolve(__dirname, '../src/Kunstmaan/AdminBundle/Resources/public/js'),
+
         },
         devtool: 'source-map',
         optimization: {
             minimize: true
         },
+        mode: 'production',
         module: {
             rules: [
                 {
@@ -107,12 +113,14 @@ adminBundle.tasks.bundlePolyfills = createBundleTask({
     config: {
         entry: ['babel-polyfill', `${adminBundle.config.srcPath}jsnext/polyfills.js`],
         output: {
-            filename: `${adminBundle.config.distPath}js/admin-bundle-polyfills.js`
+            filename: 'admin-bundle-polyfills.js',
+            path: path.resolve(__dirname, '../src/Kunstmaan/AdminBundle/Resources/public/js'),
         },
         devtool: 'source-map',
         optimization: {
             minimize: true
         },
+        mode: 'production',
         module: {
             rules: [
                 {
