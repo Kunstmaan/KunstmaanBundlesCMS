@@ -69,7 +69,7 @@ class URLHelper
         }
 
         if ($this->isInternalLink($text)) {
-            preg_match_all("/\[(([a-z_A-Z]+):)?NT([0-9]+)\]|(link:\/\/([a-z_A-Z]*):?([0-9]+)([\w-._~!?$&%'()*+,;=:@\/]+))/", $text, $matches, PREG_SET_ORDER);
+            preg_match_all("/\[(([a-z_A-Z]+):)?NT([0-9]+)\]|(link:\/\/([a-z_A-Z]*):?([0-9]+)([\w\-._~!?$&%'()*+,;=:@\/]+))/", $text, $matches, PREG_SET_ORDER);
 
             if (\count($matches) > 0) {
                 foreach ($matches as $match) {
