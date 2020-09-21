@@ -116,6 +116,19 @@
                             <dd>{{ media.name }}</dd>
                             <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
                             <dd>{{ media.contentType }}</dd>
+
+                            {% set originalWidth = media.metadata.original_width|default %}
+                            {% if originalWidth %}
+                                <dt>{{ 'media.media.mediainfo.width'|trans }}:</dt>
+                                <dd>{{ originalWidth }}px</dd>
+                            {% endif %}
+
+                            {% set originalHeight = media.metadata.original_height|default %}
+                            {% if originalHeight %}
+                                <dt>{{ 'media.media.mediainfo.height'|trans }}:</dt>
+                                <dd>{{ originalHeight }}px</dd>
+                            {% endif %}
+
                             <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
                             <dd>{{ media.createdat|date|escape }}</dd>
                             <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
