@@ -145,3 +145,5 @@ security:
     send_email_failure: "Uw email is niet door ons gevonden."
     user_not_found: "User niet gevonden."
     password_set_success: 'Uw passwoord is veranderd.'
+    email: 'Gebruikersnaam of email address.'
+    reset: 'Reset passwoord'

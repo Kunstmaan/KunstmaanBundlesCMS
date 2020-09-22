@@ -21,6 +21,8 @@ security:
         send_email_failure: "Your email was not found"
         user_not_found: "User not found"
         password_set_success: 'Your password has been changed.'
+        email: 'Username or email address'
+        reset: 'Reset password'
 
 # Modules
 modules:

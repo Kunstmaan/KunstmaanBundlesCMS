@@ -26,7 +26,7 @@ KunstmaanAdminBundle_security:
 KunstmaanAdminBundle_resetting:
     resource: '@KunstmaanAdminBundle/Controller/ResettingController.php'
     type:     annotation
-    prefix:   /
+    prefix:   /%kunstmaan_admin.admin_prefix%
 
 fos_routes:
     resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader::loadRoutes'

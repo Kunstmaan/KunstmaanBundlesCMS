@@ -44,6 +44,9 @@ class ResettingController extends Controller
             $email = $form->get('email')->getData();
             $token = bin2hex(random_bytes(32));
             $user = $entityManager->getRepository($this->userClass)->findOneBy(['email' => $email]);
+            if(!$user instanceof $this->userClass) {
+                $user = $entityManager->getRepository($this->userClass)->findOneBy(['username' => $email]);
+            }
 
             if ($user instanceof $this->userClass) {
                 $user->setConfirmationToken($token);

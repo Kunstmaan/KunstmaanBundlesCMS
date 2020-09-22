@@ -25,8 +25,8 @@ class NewPasswordType extends AbstractType
                 ),
             ))
             ->add('submit', SubmitType::class, [
-                'label' => 'Reset password',
-                'attr' => ['class' => 'btn btn-brand btn-block btn--raise-on-hover'],
+                'label' => 'security.resetting.reset',
+                'attr' => ['class' => 'btn btn-primary btn--raise-on-hover'],
             ]);
     }
 }
