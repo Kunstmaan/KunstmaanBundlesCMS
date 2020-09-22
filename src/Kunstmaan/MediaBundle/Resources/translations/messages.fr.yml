@@ -28,6 +28,8 @@ media:
     mediainfo:
       name: Nom
       contenttype: Content-type
+      width: Width
+      height: Height
       createdat: Ajouté
       updatedat: Modifié
       downloadlink: Lien de téléchargement
