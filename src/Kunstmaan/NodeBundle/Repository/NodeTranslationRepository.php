@@ -20,12 +20,24 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the QueryBuilder based on node id and language.
      *
+     * @deprecated This method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the renamed method "getNodeTranslationByNodeId" instead.
+     *
      * @param int    $nodeId
      * @param string $lang
      *
-     * @return array_shift($result)
+     * @return NodeTranslation|null
      */
     public function getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang)
+    {
+        @trigger_error(sprintf('The method "%s" is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the renamed method "getNodeTranslationByNodeId" instead.', __METHOD__), E_USER_DEPRECATED);
+
+        return $this->getNodeTranslationByNodeId($nodeId, $lang);
+    }
+
+    /**
+     * @return NodeTranslation|null
+     */
+    public function getNodeTranslationByNodeId(int $nodeId, string $lang)
     {
         $qb = $this->createQueryBuilder('nt')
             ->select('nt')
