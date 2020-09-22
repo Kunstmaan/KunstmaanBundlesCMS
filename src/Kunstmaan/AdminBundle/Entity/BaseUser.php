@@ -494,7 +494,7 @@ abstract class BaseUser implements UserInterface
 
     public function getEmailCanonical()
     {
-        return $this->emailCanonical
+        return $this->emailCanonical;
     }
 
     public function setEmailCanonical($emailCanonical)
@@ -527,11 +527,6 @@ abstract class BaseUser implements UserInterface
         // TODO: Implement setPasswordRequestedAt() method.
     }
 
-    public function isPasswordRequestNonExpired($ttl)
-    {
-        // TODO: Implement isPasswordRequestNonExpired() method.
-    }
-
     public function getLastLogin()
     {
         return $this->lastLogin;
@@ -550,6 +545,11 @@ abstract class BaseUser implements UserInterface
     }
 
     public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isPasswordRequestNonExpired($ttl)
     {
         return true;
     }

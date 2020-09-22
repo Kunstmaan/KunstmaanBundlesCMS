@@ -46,7 +46,7 @@
 
         {% block forgot_password_link %}
             {% if 'reset' not in app.request.pathInfo and 'profile' not in app.request.pathInfo %}
-                <a href="{{ path('cms_reset_password') }}" class="login__form__forgot-pw">
+                <a href="{{ path(use_fos_routing? 'fos_user_resetting_request' : 'cms_reset_password') }}" class="login__form__forgot-pw">
                     {{ 'kuma_admin.login.forgot_password'|trans }}
                 </a>
             {% endif %}
