@@ -28,6 +28,8 @@ media:
     mediainfo:
       name: Naam
       contenttype: Inhoudstype
+      width: Width
+      height: Height
       createdat: Toegevoegd
       updatedat: Bewerkt
       downloadlink: Download link
