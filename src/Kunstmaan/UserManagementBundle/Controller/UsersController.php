@@ -103,7 +103,7 @@ class UsersController extends BaseSettingsController
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
                 /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->container->get('kunstmaan_admin.user_class');
                 $userManager->updateUser($user, true);
 
                 $this->addFlash(

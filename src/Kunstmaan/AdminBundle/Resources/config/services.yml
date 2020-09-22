@@ -186,7 +186,7 @@ services:
 
     kunstmaan_admin.doctrine_mapping.listener:
         class: Kunstmaan\AdminBundle\EventListener\MappingListener
-        arguments: ['%fos_user.model.user.class%']
+        arguments: ['%kunstmaan_admin.user_class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
@@ -245,14 +245,14 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.google_signin.hosted_domains%'
-            - '%fos_user.model.user.class%'
+            - '%kunstmaan_admin.user_class%'
             - '@kunstmaan_admin.oauth_user_finder'
 
     kunstmaan_admin.oauth_user_finder:
         class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinder
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '%fos_user.model.user.class%'
+            - '%kunstmaan_admin.user_class%'
 
     kunstmaan_admin.google_signin.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension

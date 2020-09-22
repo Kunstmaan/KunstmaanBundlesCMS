@@ -114,7 +114,7 @@ EOT
         if (null === $this->em) {
             $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $this->groupManager = $this->getContainer()->get('fos_user.group_manager');
-            $this->userClassname = $this->getContainer()->getParameter('fos_user.model.user.class');
+            $this->userClassname = $this->getContainer()->getParameter('kunstmaan_admin.user_class');
             $this->defaultLocale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
         }
 
