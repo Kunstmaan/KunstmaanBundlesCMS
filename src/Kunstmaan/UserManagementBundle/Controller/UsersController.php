@@ -64,7 +64,7 @@ class UsersController extends BaseSettingsController
      */
     private function getUserClassInstance()
     {
-        $userClassName = $this->container->getParameter('fos_user.model.user.class');
+        $userClassName = $this->container->getParameter('kunstmaan_admin.user_class');
 
         return new $userClassName();
     }
@@ -148,7 +148,7 @@ class UsersController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
 
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
@@ -234,7 +234,7 @@ class UsersController extends BaseSettingsController
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
@@ -268,7 +268,7 @@ class UsersController extends BaseSettingsController
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);

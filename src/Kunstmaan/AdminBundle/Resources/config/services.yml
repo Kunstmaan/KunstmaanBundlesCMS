@@ -19,6 +19,7 @@ parameters:
     kunstmaan_admin.toolbar.listener.class: 'Kunstmaan\AdminBundle\EventListener\ToolbarListener'
     kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
     kunstmaan_admin.toolbar.collector.exception.class: 'Kunstmaan\AdminBundle\Toolbar\ExceptionDataCollector'
+    kunstmaan_admin.user_class: 'Kunstmaan\AdminBundle\Entity\User'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -348,7 +349,7 @@ services:
     Kunstmaan\AdminBundle\Controller\ResettingController:
         public: true
         arguments:
-            - '%fos_user.model.user.class%'
+            - '%kunstmaan_admin.user_class%'
             - '@Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService'
         tags:
             - { name: controller.service_arguments }
