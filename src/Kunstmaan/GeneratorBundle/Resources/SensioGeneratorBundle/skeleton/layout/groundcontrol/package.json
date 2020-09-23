@@ -1,5 +1,5 @@
 {
-  "name":"demo",
+  "name":"{{ bundle.namespace|replace({'\\':'-'})|lower }}",
   "version": "1.0.0",
   "scripts": {
     "start": "gulp startLocal --continueAfterTestError --speedupLocalDev",

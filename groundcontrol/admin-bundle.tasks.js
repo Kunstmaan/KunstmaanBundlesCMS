@@ -60,8 +60,8 @@ adminBundle.tasks.bundle = createBundleTask({
     config: {
         entry: `${adminBundle.config.srcPath}jsnext/app.js`,
         output: {
-            filename: `admin-bundle.next.js`,
-            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`),
+            filename: 'admin-bundle.next.js',
+            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`)
         },
         devtool: 'cheap-module-source-map',
         mode: 'development',
@@ -85,7 +85,7 @@ adminBundle.tasks.bundleOptimized = createBundleTask({
         entry: `${adminBundle.config.srcPath}jsnext/app.js`,
         output: {
             filename: 'admin-bundle.next.js',
-            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`),
+            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`)
 
         },
         devtool: 'source-map',
@@ -114,7 +114,7 @@ adminBundle.tasks.bundlePolyfills = createBundleTask({
         entry: ['babel-polyfill', `${adminBundle.config.srcPath}jsnext/polyfills.js`],
         output: {
             filename: 'admin-bundle-polyfills.js',
-            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`),
+            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`)
         },
         devtool: 'source-map',
         optimization: {
