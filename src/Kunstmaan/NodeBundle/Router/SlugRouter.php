@@ -71,7 +71,7 @@ class SlugRouter implements RouterInterface
         EntityManagerInterface $em = null,
         $adminKey = null
     ) {
-        $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
+        $this->slugPattern = "[a-zA-Z0-9\-_\/]*[^\/]$";
 
         if ($domainConfiguration instanceof ContainerInterface) {
             @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
