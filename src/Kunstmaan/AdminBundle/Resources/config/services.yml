@@ -213,6 +213,7 @@ services:
         arguments: ['@kunstmaan_admin.user_manager']
         tags:
             - { name: kernel.event_listener, event: fos_user.change_password.edit.completed, method: onPasswordResettingSuccess }
+            - { name: kernel.event_listener, event: kunstmaan_admin.change_password.edit.completed, method: onPasswordResettingSuccessCMS }
 
     kunstmaan_admin.password_check.listener:
         class: '%kunstmaan_admin.password_check.listener.class%'
@@ -353,6 +354,7 @@ services:
         arguments:
             - '%kunstmaan_admin.user_class%'
             - '@Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService'
+            - '@event_dispatcher'
         tags:
             - { name: controller.service_arguments }
 

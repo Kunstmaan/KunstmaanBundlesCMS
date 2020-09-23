@@ -2,7 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Kunstmaan\AdminBundle\Event\FilterUserResponseEvent;
+use \FOS\UserBundle\Event\FilterUserResponseEvent as FosFilterUserResponseEvent;
 use Kunstmaan\AdminBundle\Service\UserManager;
 
 /**
@@ -26,7 +27,14 @@ class PasswordResettingListener
     /**
      * @param FilterUserResponseEvent $event
      */
-    public function onPasswordResettingSuccess(FilterUserResponseEvent $event)
+    public function onPasswordResettingSuccess(FosFilterUserResponseEvent $event)
+    {
+        $user = $event->getUser();
+        $user->setPasswordChanged(true);
+        $this->userManager->updateUser($user);
+    }
+
+    public function onPasswordResettingSuccessCMS(FilterUserResponseEvent $event)
     {
         $user = $event->getUser();
         $user->setPasswordChanged(true);

@@ -4,10 +4,14 @@ namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Event\Events;
+use Kunstmaan\AdminBundle\Event\FilterUserResponseEvent;
 use Kunstmaan\AdminBundle\Form\NewPasswordType;
 use Kunstmaan\AdminBundle\Form\PasswordRequestType;
 use Kunstmaan\AdminBundle\Service\PasswordMailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,10 +28,14 @@ class ResettingController extends Controller
     /** @var PasswordMailerInterface */
     private $passwordMailer;
 
-    public function __construct(string $userClass, PasswordMailerInterface $passwordMailer)
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(string $userClass, PasswordMailerInterface $passwordMailer, EventDispatcherInterface $eventDispatcher)
     {
         $this->userClass = $userClass;
         $this->passwordMailer = $passwordMailer;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -96,9 +104,17 @@ class ResettingController extends Controller
             $tokenStorage->setToken($token);
             $session->set('_security_main', serialize($token));
 
+            $url = $this->generateUrl('KunstmaanAdminBundle_homepage');
+            $response = new RedirectResponse($url);
+
+            $this->eventDispatcher->dispatch(
+                Events::CHANGE_PASSWORD_COMPLETED,
+                new FilterUserResponseEvent($user, $request, $response)
+            );
+
             $this->addFlash('success', "security.resetting.password_set_success");
 
-            return $this->redirectToRoute('KunstmaanAdminBundle_homepage');
+            return $response;
         }
 
         return $this->render('@KunstmaanAdmin/Security/reset-password-confirm.html.twig', ['form' => $form->createView()]);
