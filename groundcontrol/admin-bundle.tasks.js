@@ -2,15 +2,14 @@
 
 import gulp from 'gulp';
 import webpack from 'webpack';
+import path from 'path';
 
 import consoleArguments from './console-arguments';
 
 import createEslintTask from './tasks/eslint';
-import createStylelintTask from './tasks/stylelint';
 import createCopyTask from './tasks/copy';
 import {createCssLocalTask, createCssOptimizedTask} from './tasks/css';
 import createScriptsTask from './tasks/scripts';
-import createServerTask from './tasks/server';
 import createBundleTask, {getBabelLoaderOptions} from './tasks/bundle';
 
 export const adminBundle = {
@@ -23,17 +22,17 @@ export const adminBundle = {
 };
 
 adminBundle.tasks.eslint = createEslintTask({
-    src: adminBundle.config.srcPath + 'jsnext/**/*.js',
+    src: `${adminBundle.config.srcPath}jsnext/**/*.js`,
     failAfterError: !consoleArguments.continueAfterTestError
 });
 
 adminBundle.tasks.copy = gulp.parallel(
-    createCopyTask({src: [adminBundle.config.srcPath + 'img/**'], dest: adminBundle.config.distPath + 'img'})
+    createCopyTask({src: [`${adminBundle.config.srcPath}img/**`], dest: `${adminBundle.config.distPath}img`})
 );
 
-adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
+adminBundle.tasks.cssLocal = createCssLocalTask({src: `${adminBundle.config.srcPath}scss/*.scss`, dest: `${adminBundle.config.distPath}css`});
 
-adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
+adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: `${adminBundle.config.srcPath}scss/*.scss`, dest: `${adminBundle.config.distPath}css`});
 
 adminBundle.tasks.scripts = createScriptsTask({
     src: [
@@ -51,19 +50,21 @@ adminBundle.tasks.scripts = createScriptsTask({
         './node_modules/jquery.typewatch/jquery.typewatch.js',
         './node_modules/ckeditor/ckeditor.js',
         './node_modules/ckeditor/adapters/jquery.js',
-        adminBundle.config.srcPath + 'js/**/*.js'
+        `${adminBundle.config.srcPath}js/**/*.js`
     ],
-    dest: adminBundle.config.distPath + 'js',
+    dest: `${adminBundle.config.distPath}js`,
     filename: 'admin-bundle.min.js'
 });
 
 adminBundle.tasks.bundle = createBundleTask({
     config: {
-        entry: adminBundle.config.srcPath + 'jsnext/app.js',
+        entry: `${adminBundle.config.srcPath}jsnext/app.js`,
         output: {
-            filename: adminBundle.config.distPath + 'js/admin-bundle.next.js',
+            filename: 'admin-bundle.next.js',
+            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`)
         },
         devtool: 'cheap-module-source-map',
+        mode: 'development',
         module: {
             rules: [
                 {
@@ -81,11 +82,17 @@ adminBundle.tasks.bundle = createBundleTask({
 
 adminBundle.tasks.bundleOptimized = createBundleTask({
     config: {
-        entry: adminBundle.config.srcPath + 'jsnext/app.js',
+        entry: `${adminBundle.config.srcPath}jsnext/app.js`,
         output: {
-            filename: adminBundle.config.distPath + 'js/admin-bundle.next.js',
+            filename: 'admin-bundle.next.js',
+            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`)
+
         },
         devtool: 'source-map',
+        optimization: {
+            minimize: true
+        },
+        mode: 'production',
         module: {
             rules: [
                 {
@@ -97,27 +104,23 @@ adminBundle.tasks.bundleOptimized = createBundleTask({
                     })
                 }
             ]
-        },
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                mangle: true,
-                sourceMap: true,
-                output: {
-                    comments: false
-                }
-            })
-        ]
+        }
     },
     logStats: true
 });
 
 adminBundle.tasks.bundlePolyfills = createBundleTask({
     config: {
-        entry: ['babel-polyfill', adminBundle.config.srcPath + 'jsnext/polyfills.js'],
+        entry: ['babel-polyfill', `${adminBundle.config.srcPath}jsnext/polyfills.js`],
         output: {
-            filename: adminBundle.config.distPath + 'js/admin-bundle-polyfills.js',
+            filename: 'admin-bundle-polyfills.js',
+            path: path.resolve(__dirname, `.${adminBundle.config.distPath}js`)
         },
         devtool: 'source-map',
+        optimization: {
+            minimize: true
+        },
+        mode: 'production',
         module: {
             rules: [
                 {
@@ -129,16 +132,7 @@ adminBundle.tasks.bundlePolyfills = createBundleTask({
                     })
                 }
             ]
-        },
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                mangle: true,
-                sourceMap: true,
-                output: {
-                    comments: false
-                }
-            })
-        ]
+        }
     },
     logStats: true
 });
