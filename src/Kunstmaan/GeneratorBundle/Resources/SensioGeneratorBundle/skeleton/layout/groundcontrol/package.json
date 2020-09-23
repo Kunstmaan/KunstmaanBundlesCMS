@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "picturefill": "^3.0.3",
+    "bootstrap-sass": "^3.3.7",
     "svgxuse": "^1.2.6",
     "gsap": "^1.19.1"{% if demosite %},
     "ramda": "^0.23.0",
