@@ -376,3 +376,10 @@ services:
             - '@security.encoder_factory'
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.user_class%'
+
+    kunstmaan_admin.group_manager:
+        class: Kunstmaan\AdminBundle\Service\GroupManager
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%kunstmaan_admin.user_class%'
