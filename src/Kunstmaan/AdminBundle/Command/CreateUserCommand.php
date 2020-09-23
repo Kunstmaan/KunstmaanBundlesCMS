@@ -3,8 +3,8 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\GroupManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Service\GroupManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,7 +26,7 @@ class CreateUserCommand extends ContainerAwareCommand
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var GroupManagerInterface */
+    /** @var GroupManager */
     private $groupManager;
 
     /** @var string */
@@ -38,7 +38,7 @@ class CreateUserCommand extends ContainerAwareCommand
     /** @var array */
     protected $groups = [];
 
-    public function __construct(/* EntityManagerInterface */ $em = null, GroupManagerInterface $groupManager = null, $userClassname = null, $defaultLocale = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, GroupManager $groupManager = null, $userClassname = null, $defaultLocale = null)
     {
         parent::__construct();
 

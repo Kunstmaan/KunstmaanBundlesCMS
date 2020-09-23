@@ -20,6 +20,7 @@ parameters:
     kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
     kunstmaan_admin.toolbar.collector.exception.class: 'Kunstmaan\AdminBundle\Toolbar\ExceptionDataCollector'
     kunstmaan_admin.user_class: 'Kunstmaan\AdminBundle\Entity\User'
+    kunstmaan_admin.group_class: 'Kunstmaan\AdminBundle\Entity\Group'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -360,7 +361,7 @@ services:
             - '@twig'
             - '@router'
             - '@translator'
-            - 'merel.jossart@kunstmaan.be'
+            - 'kunstmaancms@myproject.dev'
 
     Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
         public: true
@@ -382,4 +383,4 @@ services:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '%kunstmaan_admin.user_class%'
+            - '%kunstmaan_admin.group_class%'
