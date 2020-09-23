@@ -209,7 +209,7 @@ services:
 
     kunstmaan_admin.password_resetting.listener:
         class: '%kunstmaan_admin.password_resetting.listener.class%'
-        arguments: ['@fos_user.user_manager']
+        arguments: ['@kunstmaan_admin.user_manager']
         tags:
             - { name: kernel.event_listener, event: fos_user.change_password.edit.completed, method: onPasswordResettingSuccess }
 
@@ -355,7 +355,6 @@ services:
             - { name: controller.service_arguments }
 
     Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService:
-        public: true
         arguments:
             - '@mailer'
             - '@twig'
@@ -369,3 +368,11 @@ services:
             - '%kunstmaan_admin.use_fos_routing%'
         tags:
             - { name: routing.route_loader }
+
+    kunstmaan_admin.user_manager:
+        class: Kunstmaan\AdminBundle\Service\UserManager
+        public: true
+        arguments:
+            - '@security.encoder_factory'
+            - '@doctrine.orm.entity_manager'
+            - '%kunstmaan_admin.user_class%'

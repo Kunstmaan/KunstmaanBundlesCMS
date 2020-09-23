@@ -14,7 +14,6 @@ class KunstmaanUserManagementBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new FixUserManagerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1);
         $container->addCompilerPass(new DeprecateClassParametersPass());
     }
 }

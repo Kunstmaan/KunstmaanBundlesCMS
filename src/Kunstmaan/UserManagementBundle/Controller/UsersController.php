@@ -11,6 +11,7 @@ use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -181,7 +182,7 @@ class UsersController extends BaseSettingsController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->container->get('kunstmaan_admin.user_manager');
                 $userManager->updateUser($user, true);
 
                 $this->addFlash(

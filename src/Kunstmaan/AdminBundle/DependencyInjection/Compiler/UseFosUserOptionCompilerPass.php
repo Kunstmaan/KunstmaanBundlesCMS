@@ -16,6 +16,7 @@ class UseFosUserOptionCompilerPass implements CompilerPassInterface
 
         if($useFosRouting) {
             $container->setParameter('kunstmaan_admin.user_class', $container->getParameter('fos_user.model.user.class'));
+            $container->setDefinition('kunstmaan_admin.user_manager', $container->getDefinition('fos_user.user_manager'));
         }
     }
 }

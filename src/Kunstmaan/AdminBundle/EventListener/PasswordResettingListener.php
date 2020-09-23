@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Model\UserManager;
+use Kunstmaan\AdminBundle\Service\UserManager;
 
 /**
  * Set password_changed property to 1 after changing the password
