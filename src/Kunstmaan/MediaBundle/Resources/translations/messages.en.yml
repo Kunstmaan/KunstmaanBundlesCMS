@@ -65,7 +65,7 @@ media:
             modal:
                 title: Bulk move media
                 text: Select to which folder you want to move the selected media.
-                save: "Move.."
+                save: "Move"
                 form:
                     name: Parent folder
             success:
