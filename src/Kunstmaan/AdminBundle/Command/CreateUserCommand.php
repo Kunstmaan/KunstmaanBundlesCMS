@@ -38,7 +38,7 @@ class CreateUserCommand extends ContainerAwareCommand
     /** @var array */
     protected $groups = [];
 
-    public function __construct(/* EntityManagerInterface */ $em = null, GroupManager $groupManager = null, $userClassname = null, $defaultLocale = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, $groupManager = null, $userClassname = null, $defaultLocale = null)
     {
         parent::__construct();
 

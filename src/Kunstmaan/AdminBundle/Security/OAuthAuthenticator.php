@@ -36,17 +36,10 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     /** @var string */
     private $clientSecret;
 
-    /**
-     * OAuthAuthenticator constructor.
-     *
-     * @param RouterInterface           $router
-     * @param SessionInterface          $session
-     * @param TranslatorInterface       $translator
-     * @param OAuthUserCreatorInterface $oAuthUserCreator
-     * @param $clientId
-     * @param $clientSecret
-     */
-    public function __construct(RouterInterface $router, SessionInterface $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret)
+    /** @var bool */
+    private $useFosRouting;
+
+    public function __construct(RouterInterface $router, SessionInterface $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret, $useFosRouting = true)
     {
         $this->router = $router;
         $this->session = $session;
@@ -54,6 +47,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
         $this->oAuthUserCreator = $oAuthUserCreator;
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
+        $this->useFosRouting = $useFosRouting;
     }
 
     /**
@@ -86,7 +80,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse($this->router->generate('fos_user_security_login'));
+        return new RedirectResponse($this->router->generate($this->useFosRouting ? 'fos_user_security_login' : 'cms_login'));
     }
 
     /**
@@ -192,7 +186,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     {
         $this->session->getFlashBag()->add(FlashTypes::DANGER, $this->translator->trans('errors.oauth.invalid'));
 
-        return new RedirectResponse($this->router->generate('fos_user_security_login'));
+        return new RedirectResponse($this->router->generate($this->useFosRouting ? 'fos_user_security_login' : 'cms_login'));
     }
 
     /**

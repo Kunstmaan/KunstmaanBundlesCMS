@@ -240,6 +240,7 @@ services:
             - '@kunstmaan_admin.oauth_user_creator'
             - '%kunstmaan_admin.google_signin.client_id%'
             - '%kunstmaan_admin.google_signin.client_secret%'
+            - '%kunstmaan_admin.use_fos_routing%'
 
     kunstmaan_admin.oauth_user_creator:
         class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator
