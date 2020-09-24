@@ -357,13 +357,12 @@ services:
         tags:
             - { name: controller.service_arguments }
 
-    Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService:
+    Kunstmaan\AdminBundle\Service\MailerPasswordMailerService:
         arguments:
-            - '@mailer'
+            - '@mailer.mailer'
             - '@twig'
             - '@router'
             - '@translator'
-            - 'kunstmaancms@myproject.dev'
 
     Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
         public: true

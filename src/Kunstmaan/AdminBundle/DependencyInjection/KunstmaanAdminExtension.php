@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Mime\Address;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -119,6 +120,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
+
+        $address = new Address('kunstmaancms@myproject.dev', 'KunstmaanCMS');
+        $mailerPasswordMailer = $container->getDefinition('Kunstmaan\AdminBundle\Service\MailerPasswordMailerService');
+        $mailerPasswordMailer->setArgument('from', $address);
 
         // Manually register the KunstmaanAdminBundle folder as a FosUser override for symfony 4.
         if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir').'/templates/bundles/KunstmaanAdminBundle')) {
