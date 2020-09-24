@@ -12,11 +12,11 @@ use Symfony\Component\Routing\RouteCollection;
 class FosRouteLoader implements RouteLoaderInterface
 {
     /** @var boolean */
-    private $enableFosLogin;
+    private $enableCustomLogin;
 
-    public function __construct(bool $enableFosLogin)
+    public function __construct(bool $enableCustomLogin)
     {
-        $this->enableFosLogin = $enableFosLogin;
+        $this->enableCustomLogin = $enableCustomLogin;
     }
 
     public function loadRoutes()
@@ -24,7 +24,7 @@ class FosRouteLoader implements RouteLoaderInterface
         $configDirectories = [__DIR__.'/../../Resources/config'];
         $fileLocator = new FileLocator($configDirectories);
 
-        if ($this->enableFosLogin) {
+        if (!$this->enableCustomLogin) {
             $loaderResolver = new LoaderResolver([new XmlFileLoader($fileLocator)]);
             $delegatingLoader = new DelegatingLoader($loaderResolver);
             $collection = $delegatingLoader->load('routing_fos.xml');

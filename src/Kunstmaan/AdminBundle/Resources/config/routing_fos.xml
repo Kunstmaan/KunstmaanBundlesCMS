@@ -16,6 +16,10 @@
         <default key="_controller">fos_user.resetting.controller:requestAction</default>
     </route>
 
+    <route id="cms_reset_password" path="resetting/request" methods="GET">
+        <default key="_controller">fos_user.resetting.controller:requestAction</default>
+    </route>
+
     <route id="fos_user_resetting_send_email" path="resetting/send-email" methods="POST">
         <default key="_controller">fos_user.resetting.controller:sendEmailAction</default>
     </route>
@@ -32,7 +36,7 @@
         <default key="_controller">fos_user.security.controller:loginAction</default>
     </route>
 
-    <route id="cms_login" path="/cms_login" methods="GET POST">
+    <route id="cms_login" path="/login" methods="GET POST">
         <default key="_controller">fos_user.security.controller:loginAction</default>
     </route>
 
@@ -44,7 +48,7 @@
         <default key="_controller">fos_user.security.controller:logoutAction</default>
     </route>
 
-    <route id="cms_logout" path="/cms_logout" methods="GET POST">
+    <route id="cms_logout" path="/logout" methods="GET POST">
         <default key="_controller">fos_user.security.controller:logoutAction</default>
     </route>
 

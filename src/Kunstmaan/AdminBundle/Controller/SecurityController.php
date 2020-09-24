@@ -11,6 +11,7 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="cms_login", methods={"GET", "POST"})
+     * @Route("/login", name="fos_user_security_login", methods={"GET", "POST"})
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -30,6 +31,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/logout", name="cms_logout")
+     * @Route("/logout", name="fos_user_security_logout")
      */
     public function logout()
     {

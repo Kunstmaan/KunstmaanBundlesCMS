@@ -39,7 +39,8 @@ class ResettingController extends Controller
     }
 
     /**
-     * @Route("/reset_password", name="cms_reset_password", methods={"GET", "POST"})
+     * @Route("/resetting/request", name="cms_reset_password", methods={"GET", "POST"})
+     * @Route("/resetting/request", name="fos_user_resetting_request", methods={"GET", "POST"})
      */
     public function resetPassword(
         Request $request,
