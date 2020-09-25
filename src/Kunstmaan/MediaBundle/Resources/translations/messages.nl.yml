@@ -63,7 +63,7 @@ media:
       modal:
         title: Bulk media verplaatsen
         text: Selecteer naar welke map je het media-item wilt verplaatsen.
-        save: "Verplaatsen.."
+        save: "Verplaatsen"
         form:
           name: Bovenliggende map
       success:
