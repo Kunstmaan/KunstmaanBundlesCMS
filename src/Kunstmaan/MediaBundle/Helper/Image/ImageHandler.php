@@ -7,31 +7,43 @@ use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 /**
  * FileHandler
  */
 class ImageHandler extends FileHandler
 {
+    /**
+     * @deprecated This property is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.
+     */
     protected $aviaryApiKey;
 
     /**
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
-     * @param string                           $aviaryApiKey                     The aviary key
+     * @param int                                                $priority
+     * @param MimeTypeGuesserFactoryInterface|MimeTypesInterface $mimeTypeGuesserFactory
+     * @param ExtensionGuesserFactoryInterface|null              $extensionGuesserFactoryInterface
+     * @param string                                             $aviaryApiKey
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface, $aviaryApiKey)
+    public function __construct($priority, $mimeTypeGuesser, $extensionGuesser, $aviaryApiKey = null)
     {
-        parent::__construct($priority, $mimeTypeGuesserFactory, $extensionGuesserFactoryInterface);
+        parent::__construct($priority, $mimeTypeGuesser, $extensionGuesser);
+
+        if (null !== $aviaryApiKey) {
+            @trigger_error(sprintf('Passing a value for the "$aviaryApiKey" constructor parameter of "%s" is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.', __CLASS__), E_USER_DEPRECATED);
+        }
         $this->aviaryApiKey = $aviaryApiKey;
     }
 
     /**
+     * @deprecated This method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.
+     *
      * @return string
      */
     public function getAviaryApiKey()
     {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.', __METHOD__), E_USER_DEPRECATED);
+
         return $this->aviaryApiKey;
     }
 
@@ -81,7 +93,7 @@ class ImageHandler extends FileHandler
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        return $basepath . $media->getUrl();
+        return $basepath.$media->getUrl();
     }
 
     /**
@@ -96,7 +108,7 @@ class ImageHandler extends FileHandler
 
             $width = $height = null;
             if (false !== $imageInfo) {
-                list($width, $height) = $imageInfo;
+                [$width, $height] = $imageInfo;
             }
 
             $media

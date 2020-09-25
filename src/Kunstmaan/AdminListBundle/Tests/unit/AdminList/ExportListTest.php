@@ -15,7 +15,7 @@ class ExportListTest extends TestCase
     /** @var ExportList */
     protected $exportList;
 
-    public function setUp()
+    public function setUp(): void
     {
         /** @var AdminListConfiguratorInterface */
         $configurator = $this->createMock(ExportListConfiguratorInterface::class);

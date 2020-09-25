@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DeprecateClassParametersPassTest extends AbstractCompilerPassTestCase
 {
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new DeprecateClassParametersPass());
     }
@@ -19,7 +19,7 @@ class DeprecateClassParametersPassTest extends AbstractCompilerPassTestCase
      */
     public function testServiceClassParameterOverride()
     {
-        $this->setParameter('kunstmaan_user_management.user_admin_list_configurator.class', 'Custom\Class');
+        $this->setParameter('kunstmaan_user_management.menu.adaptor.class', 'Custom\Class');
 
         $this->compile();
     }

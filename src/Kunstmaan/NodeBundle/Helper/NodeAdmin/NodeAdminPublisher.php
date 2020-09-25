@@ -14,6 +14,7 @@ use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -74,7 +75,7 @@ class NodeAdminPublisher
      * If there is a draft version it'll try to publish the draft first. Makse snese because if you want to publish the public version you don't publish but you save.
      *
      * @param NodeTranslation $nodeTranslation
-     * @param null|BaseUser   $user
+     * @param BaseUser|null   $user
      *
      *  @throws AccessDeniedException
      */
@@ -102,9 +103,9 @@ class NodeAdminPublisher
 
         $page = $nodeVersion->getRef($this->em);
 
-        $this->eventDispatcher->dispatch(
-            Events::PRE_PUBLISH,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::PRE_PUBLISH
         );
         $nodeTranslation
             ->setOnline(true)
@@ -116,9 +117,9 @@ class NodeAdminPublisher
         // Remove scheduled task
         $this->unSchedulePublish($nodeTranslation);
 
-        $this->eventDispatcher->dispatch(
-            Events::POST_PUBLISH,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::POST_PUBLISH
         );
     }
 
@@ -164,9 +165,9 @@ class NodeAdminPublisher
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->eventDispatcher->dispatch(
-            Events::PRE_UNPUBLISH,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::PRE_UNPUBLISH
         );
         $nodeTranslation->setOnline(false);
         $this->em->persist($nodeTranslation);
@@ -175,9 +176,9 @@ class NodeAdminPublisher
         // Remove scheduled task
         $this->unSchedulePublish($nodeTranslation);
 
-        $this->eventDispatcher->dispatch(
-            Events::POST_UNPUBLISH,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::POST_UNPUBLISH
         );
     }
 
@@ -260,9 +261,9 @@ class NodeAdminPublisher
         $this->em->persist($nodeVersion);
         $this->em->persist($nodeTranslation);
         $this->em->flush();
-        $this->eventDispatcher->dispatch(
-            Events::CREATE_PUBLIC_VERSION,
-            new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage)
+        $this->dispatch(
+            new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage),
+            Events::CREATE_PUBLIC_VERSION
         );
 
         return $newNodeVersion;
@@ -318,5 +319,22 @@ class NodeAdminPublisher
                 $translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
             );
         }
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

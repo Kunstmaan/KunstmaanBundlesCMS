@@ -20,7 +20,7 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new HeaderPagePartAdminType();
@@ -38,6 +38,6 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart');
+        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\HeaderPagePart', $resolve['data_class']);
     }
 }

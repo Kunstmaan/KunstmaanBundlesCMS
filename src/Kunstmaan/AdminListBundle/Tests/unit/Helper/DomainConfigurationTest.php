@@ -15,7 +15,7 @@ class DomainConfigurationTest extends TestCase
      */
     protected $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $this->object = new DomainConfiguration($requestStack, true, 'nl', 'nl|fr|en');

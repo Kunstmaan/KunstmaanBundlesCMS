@@ -11,6 +11,7 @@ use Kunstmaan\FormBundle\Event\FormEvents;
 use Kunstmaan\FormBundle\Event\SubmissionEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -80,7 +81,7 @@ class FormHandler implements FormHandlerInterface
                 $em->refresh($formSubmission);
 
                 $event = new SubmissionEvent($formSubmission, $page);
-                $this->container->get('event_dispatcher')->dispatch(FormEvents::ADD_SUBMISSION, $event);
+                $this->dispatch($event, FormEvents::ADD_SUBMISSION);
 
                 return new RedirectResponse($page->generateThankYouUrl($router, $context));
             }
@@ -89,5 +90,23 @@ class FormHandler implements FormHandlerInterface
         $context['frontendformobject'] = $form;
 
         return null;
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

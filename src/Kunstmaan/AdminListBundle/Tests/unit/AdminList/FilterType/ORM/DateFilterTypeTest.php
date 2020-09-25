@@ -24,7 +24,7 @@ class DateFilterTypeTest extends BaseOrmFilterTest
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DateFilterType('date', 'b');
     }

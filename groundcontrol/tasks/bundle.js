@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-
 /**
  * You can let webpack watch the files and rebundle on change, or you can do it
  * via gulp. Gulp will probably be easier at first, since you have to configure
@@ -14,7 +13,7 @@ export default function createBundleTask({config = undefined, watch = false, log
         } else {
             compiler.run(handleWebpackResult);
         }
-        
+
         function handleWebpackResult(err, stats) {
             if (err) {
                 console.error(err.stack || err);
@@ -47,8 +46,9 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
         return {
             babelrc: false,
             presets: [
-                ['es2015', {
-                    // TODO
+                ['@babel/preset-env', {
+                    useBuiltIns: 'usage',
+                    corejs: 3.6,
                     modules: false
                 }]
             ]
@@ -58,9 +58,14 @@ export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChr
     return {
         babelrc: false,
         presets: [
-            ['env', {
+            ['@babel/preset-env', {
+                useBuiltIns: 'usage',
+                corejs: 3.6,
                 targets: {
-                    browsers: ['last 2 Chrome versions']
+                    browsers: [
+                        '>0.25%',
+                        'not op_mini all'
+                    ]
                 }
             }]
         ],

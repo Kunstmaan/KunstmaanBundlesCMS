@@ -26,7 +26,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
     /** @var AclHelper */
     private $aclHelperMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $queryMock = $this->createMock(AbstractQuery::class);
         $queryMock

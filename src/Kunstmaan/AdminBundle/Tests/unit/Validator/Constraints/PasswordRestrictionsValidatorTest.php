@@ -45,7 +45,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -58,7 +58,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -72,7 +72,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -86,7 +86,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -100,7 +100,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -114,7 +114,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -128,7 +128,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      *
@@ -144,7 +144,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
      * Uses the set validator combined with data to assert.
      *
      * @param string      $password
-     * @param null|string $message
+     * @param string|null $message
      * @param array       $parameters
      * @param null        $code
      */

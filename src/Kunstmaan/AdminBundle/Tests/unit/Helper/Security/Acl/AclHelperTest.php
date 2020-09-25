@@ -60,7 +60,7 @@ class AclHelperTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
@@ -202,10 +202,10 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertContains('"ROLE_SUBJECT"', $aclQuery);
-        $this->assertContains('"ROLE_KING"', $aclQuery);
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
-        $this->assertContains('MyUser', $aclQuery);
+        $this->assertStringContainsString('"ROLE_SUBJECT"', $aclQuery);
+        $this->assertStringContainsString('"ROLE_KING"', $aclQuery);
+        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('MyUser', $aclQuery);
     }
 
     public function testApplyAnonymous()
@@ -255,7 +255,7 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
     }
 
     public function testGetAllowedEntityIds()

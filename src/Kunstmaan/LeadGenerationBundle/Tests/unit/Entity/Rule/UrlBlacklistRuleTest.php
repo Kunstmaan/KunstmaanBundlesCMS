@@ -20,6 +20,6 @@ class UrlBlacklistRuleTest extends TestCase
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/UrlBlacklistRule.js', $rule->getJsFilePath());
         $this->assertEquals(UrlBlackListAdminType::class, $rule->getAdminType());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
-        $this->assertInternalType('array', $rule->getJsProperties());
+        $this->assertIsArray($rule->getJsProperties());
     }
 }

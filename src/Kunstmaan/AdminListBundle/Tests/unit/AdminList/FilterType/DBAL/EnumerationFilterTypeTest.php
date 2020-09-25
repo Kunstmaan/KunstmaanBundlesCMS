@@ -20,7 +20,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EnumerationFilterType('enumeration', 'e');
     }
@@ -75,7 +75,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
         $data = array();
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
-        $this->assertEquals($this->object->getComparator(), 'in');
+        $this->assertEquals('in', $this->object->getComparator());
     }
 
     public function testGetValue()
@@ -84,7 +84,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
         $data = array();
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
-        $this->assertEquals($this->object->getValue(), array(1, 2));
+        $this->assertEquals(array(1, 2), $this->object->getValue());
     }
 
     public function testGetTemplate()

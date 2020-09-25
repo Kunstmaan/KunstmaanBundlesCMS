@@ -451,7 +451,7 @@ SQL;
      *
      * @param string        $internalName   The internal name of the node
      * @param string        $lang           The locale
-     * @param int|null|bool $parentId       The parent id
+     * @param int|bool|null $parentId       The parent id
      * @param bool          $includeOffline Include offline nodes
      *
      * @return Node[]
@@ -502,7 +502,7 @@ SQL;
      *
      * @param string $internalName The internal name of the node
      *
-     * @return null|Node
+     * @return Node|null
      */
     public function getNodeByInternalName($internalName)
     {

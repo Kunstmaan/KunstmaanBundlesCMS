@@ -48,7 +48,7 @@ class EntityVersionLockServiceTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $user = new User();
         $user->setId(self::$USER_ID);
@@ -135,14 +135,6 @@ class EntityVersionLockServiceTest extends TestCase
             ->will($this->returnValueMap($repositoryMap));
 
         $this->object = new EntityVersionLockService($mockObjectManager, self::$THRESHOLD, true);
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 
     public function testIsEntityBelowThresholdReturnsFalseWhenLockIsNew()

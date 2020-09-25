@@ -13,7 +13,7 @@ class UrlValidatorTest extends TestCase
      */
     private $validatorMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->validatorMock = $this->getMockForTrait(URLValidator::class);
     }

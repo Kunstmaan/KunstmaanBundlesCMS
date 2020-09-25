@@ -12,7 +12,7 @@ class CacheValidatorTest extends TestCase
 
     private $cacheDir = __DIR__.'/../../app/cache';
 
-    public function setUp()
+    public function setUp(): void
     {
         $date = new \DateTimeImmutable();
         $yesterday = $date->modify('-1 day');
@@ -31,7 +31,7 @@ class CacheValidatorTest extends TestCase
         $this->cacheValidator->setCacheDir($this->cacheDir);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $this->deleteDummyCachedFile();
     }

@@ -9,7 +9,7 @@ class MigrationsServiceTest extends WebTestCase
 {
     private $migrationsService;
 
-    public function setUp()
+    public function setUp(): void
     {
         static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
         $container = static::$kernel->getContainer();

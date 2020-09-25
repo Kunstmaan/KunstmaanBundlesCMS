@@ -31,7 +31,7 @@ class RedirectAdminTypeTest extends TestCase
      */
     protected $singleDomainConfiguration;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $multiDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();

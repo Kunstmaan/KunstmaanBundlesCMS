@@ -13,6 +13,7 @@ use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -65,8 +66,8 @@ class PagePartAdmin
      * @param PagePartAdminConfiguratorInterface $configurator The configurator
      * @param EntityManagerInterface             $em           The entity manager
      * @param HasPagePartsInterface              $page         The page
-     * @param null|string                        $context      The context
-     * @param null|ContainerInterface            $container    The container
+     * @param string|null                        $context      The context
+     * @param ContainerInterface|null            $container    The container
      *
      * @throws \InvalidArgumentException
      */
@@ -275,16 +276,13 @@ class PagePartAdmin
             }
 
             if (isset($pagePart)) {
-                $this->container->get('event_dispatcher')->dispatch(
-                    Events::POST_PERSIST,
-                    new PagePartEvent($pagePart)
-                );
+                $this->dispatch(new PagePartEvent($pagePart), Events::POST_PERSIST);
             }
         }
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContext()
     {
@@ -382,5 +380,23 @@ class PagePartAdmin
     public function getClassName($pagepart)
     {
         return \get_class($pagepart);
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

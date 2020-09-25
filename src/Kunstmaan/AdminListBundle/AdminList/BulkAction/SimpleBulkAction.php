@@ -24,7 +24,7 @@ class SimpleBulkAction implements BulkActionInterface
     private $label;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $template;
 

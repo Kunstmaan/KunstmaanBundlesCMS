@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 
 /**
  * This helper will help you to clone Entities
@@ -40,13 +41,30 @@ class CloneHelper
     public function deepCloneAndSave($entity)
     {
         $clonedEntity = clone $entity;
-        $this->eventDispatcher->dispatch(Events::DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity));
+        $this->dispatch(new DeepCloneAndSaveEvent($entity, $clonedEntity), Events::DEEP_CLONE_AND_SAVE);
 
         $this->em->persist($clonedEntity);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity));
+        $this->dispatch(new DeepCloneAndSaveEvent($entity, $clonedEntity), Events::POST_DEEP_CLONE_AND_SAVE);
 
         return $clonedEntity;
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }
