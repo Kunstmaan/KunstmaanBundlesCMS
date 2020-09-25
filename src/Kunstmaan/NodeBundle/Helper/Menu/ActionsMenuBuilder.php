@@ -64,8 +64,15 @@ class ActionsMenuBuilder
      */
     private $enableExportPageTemplate;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $showDuplicateWithChildren;
+
+    /**
+     * @var bool
+     */
+    private $enableUndoDeletingNodes;
 
     /**
      * @param FactoryInterface              $factory
@@ -76,6 +83,7 @@ class ActionsMenuBuilder
      * @param PagesConfiguration            $pagesConfiguration
      * @param bool                          $enableExportPageTemplate
      * @param bool                          $showDuplicateWithChildren
+     * @param bool                          $enableUndoDeletingNodes
      */
     public function __construct(
         FactoryInterface $factory,
@@ -85,7 +93,8 @@ class ActionsMenuBuilder
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
         $enableExportPageTemplate = true,
-        bool $showDuplicateWithChildren = false
+        bool $showDuplicateWithChildren = false,
+        bool $enableUndoDeletingNodes = true
     ) {
         $this->factory = $factory;
         $this->em = $em;
@@ -95,6 +104,7 @@ class ActionsMenuBuilder
         $this->pagesConfiguration = $pagesConfiguration;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
         $this->showDuplicateWithChildren = $showDuplicateWithChildren;
+        $this->enableUndoDeletingNodes = $enableUndoDeletingNodes;
     }
 
     /**
@@ -432,7 +442,7 @@ class ActionsMenuBuilder
                         'extras' => ['renderType' => 'button'],
                     ]
                 );
-            } else {
+            } else if ($this->enableUndoDeletingNodes) {
                 $menu->addChild(
                     'action.undo_delete',
                     [

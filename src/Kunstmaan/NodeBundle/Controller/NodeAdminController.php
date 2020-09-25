@@ -92,8 +92,15 @@ class NodeAdminController extends Controller
      */
     protected $translator;
 
-    /** @var PageCloningHelper */
+    /**
+     * @var PageCloningHelper
+     */
     private $pageCloningHelper;
+
+    /**
+     * @var bool
+     */
+    private $isUndoDeletingNodesEnabled;
 
     /**
      * init
@@ -111,6 +118,9 @@ class NodeAdminController extends Controller
         $this->nodePublisher = $this->container->get('kunstmaan_node.admin_node.publisher');
         $this->translator = $this->container->get('translator');
         $this->pageCloningHelper = $this->container->get(PageCloningHelper::class);
+        $this->isUndoDeletingNodesEnabled = $this->container->getParameter(
+            'kunstmaan_node.kunstmaan_node.enable_undo_deleting_nodes'
+        );
     }
 
     /**
@@ -147,6 +157,22 @@ class NodeAdminController extends Controller
         };
 
         $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
+        $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
+        $nodeAdminListConfigurator->setShowAddHomepage(
+            $this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN')
+        );
+
+        $this->addViewDeletedNodesAction($nodeAdminListConfigurator);
+
+        return $this->renderAdminList($request, $nodeAdminListConfigurator);
+    }
+
+    private function addViewDeletedNodesAction(NodeAdminListConfigurator $nodeAdminListConfigurator): void
+    {
+        if (!$this->isUndoDeletingNodesEnabled) {
+            return;
+        }
+
         $nodeAdminListConfigurator->addListAction(
             new SimpleListAction(
                 [
@@ -158,12 +184,6 @@ class NodeAdminController extends Controller
                 '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
             )
         );
-        $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
-        $nodeAdminListConfigurator->setShowAddHomepage(
-            $this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN')
-        );
-
-        return $this->renderAdminList($request, $nodeAdminListConfigurator);
     }
 
     /**
@@ -474,6 +494,10 @@ class NodeAdminController extends Controller
     {
         $this->init($request);
 
+        if (!$this->isUndoDeletingNodesEnabled) {
+            throw $this->createAccessDeniedException();
+        }
+
         $nodeAdminListConfigurator = new DeletedNodeAdminListConfigurator(
             $this->em,
             $this->aclHelper,
@@ -533,6 +557,10 @@ class NodeAdminController extends Controller
     public function undoDeleteAction(Request $request, $id)
     {
         $this->init($request);
+
+        if (!$this->isUndoDeletingNodesEnabled) {
+            throw $this->createAccessDeniedException();
+        }
 
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
