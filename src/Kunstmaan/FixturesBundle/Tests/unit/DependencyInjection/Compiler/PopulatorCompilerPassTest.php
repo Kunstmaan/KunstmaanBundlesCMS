@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class PopulatorCompilerPassTest extends AbstractCompilerPassTestCase
 {
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new PopulatorCompilerPass());
     }

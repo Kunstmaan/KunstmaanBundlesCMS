@@ -16,7 +16,7 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new RawHTMLPagePartAdminType();
@@ -34,6 +34,6 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart');
+        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart', $resolve['data_class']);
     }
 }

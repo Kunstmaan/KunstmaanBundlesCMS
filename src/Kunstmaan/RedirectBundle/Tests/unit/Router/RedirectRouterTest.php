@@ -33,7 +33,7 @@ class RedirectRouterTest extends TestCase
      */
     protected $redirects;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $firstDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
@@ -114,19 +114,15 @@ class RedirectRouterTest extends TestCase
         $this->assertEquals(5, $collection->count());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Routing\Exception\RouteNotFoundException
-     */
     public function testGenerate()
     {
+        $this->expectException(\Symfony\Component\Routing\Exception\RouteNotFoundException::class);
         $this->firstObject->generate('test');
     }
 
-    /**
-     * @expectedException \Symfony\Component\Routing\Exception\ResourceNotFoundException
-     */
     public function testMatch()
     {
+        $this->expectException(\Symfony\Component\Routing\Exception\ResourceNotFoundException::class);
         $redirect = $this->firstObject->match('/test1');
         $this->assertEquals(
             array(

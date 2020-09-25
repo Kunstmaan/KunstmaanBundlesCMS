@@ -17,6 +17,6 @@ class AbstractSearchPageTest extends TestCase
         $this->assertEquals('@KunstmaanNodeSearch/AbstractSearchPage/view.html.twig', $page->getDefaultView());
         $this->assertEquals('kunstmaan_node_search.search.node', $page->getSearcher());
         $this->assertFalse($page->isIndexable());
-        $this->assertInternalType('array', $page->getPossibleChildTypes());
+        $this->assertIsArray($page->getPossibleChildTypes());
     }
 }

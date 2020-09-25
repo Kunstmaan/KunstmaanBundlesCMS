@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-bundle": "^1.6.12",
@@ -31,9 +31,9 @@
         "symfony/event-dispatcher": "^3.4|^4.2",
         "symfony/filesystem": "^3.4|^4.2",
         "symfony/finder": "^3.4|^4.2",
-        "symfony/framework-bundle": "^3.4|^4.2",
-        "symfony/form": "^3.4|^4.2",
-        "symfony/http-foundation": "^3.4|^4.2",
+        "symfony/framework-bundle": "^3.4.31|^4.2",
+        "symfony/form": "^3.4.31|^4.2",
+        "symfony/http-foundation": "^3.4.16|^4.2",
         "symfony/http-kernel": "^3.4|^4.2",
         "symfony/inflector": "^3.4|^4.2",
         "symfony/monolog-bridge": "^3.4|^4.2",
@@ -47,7 +47,7 @@
         "symfony/templating": "^3.4|^4.2",
         "symfony/translation": "^3.4|^4.2",
         "symfony/twig-bundle": "^3.4|^4.2",
-        "symfony/validator": "^3.4|^4.2",
+        "symfony/validator": "^3.4.31|^4.2",
         "symfony/yaml": "^3.4|^4.2",
         "twig/twig": "^1.40|^2.9",
         "twig/extensions": "~1.0",
@@ -64,10 +64,10 @@
         "kunstmaan/media-bundle": "^5.2",
         "kunstmaan/menu-bundle": "^5.2",
         "kunstmaan/translator-bundle": "^5.2",
-        "symfony/phpunit-bridge": "^4.2",
+        "symfony/phpunit-bridge": "^5.1",
         "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
-        "phpunit/phpunit": "^7.5"
+        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "minimum-stability": "dev",
     "autoload": {

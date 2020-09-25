@@ -16,7 +16,7 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new ToTopPagePartAdminType();
@@ -34,6 +34,6 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart');
+        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\ToTopPagePart', $resolve['data_class']);
     }
 }

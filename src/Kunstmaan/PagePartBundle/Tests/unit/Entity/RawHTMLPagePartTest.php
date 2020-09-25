@@ -19,7 +19,7 @@ class RawHTMLPagePartTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new RawHTMLPagePart();
     }
@@ -37,7 +37,7 @@ class RawHTMLPagePartTest extends TestCase
     public function testSetGetContent()
     {
         $this->object->setContent('tèst content with s3ç!àL');
-        $this->assertEquals($this->object->getContent(), 'tèst content with s3ç!àL');
+        $this->assertEquals('tèst content with s3ç!àL', $this->object->getContent());
     }
 
     public function testGetDefaultAdminType()

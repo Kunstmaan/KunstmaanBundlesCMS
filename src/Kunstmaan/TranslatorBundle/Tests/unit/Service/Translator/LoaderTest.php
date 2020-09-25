@@ -14,7 +14,7 @@ class LoaderTest extends TestCase
     const TEST_DATA_KEYWORD = 'validation.ok';
     const TEST_DATA_TEXT = 'Everything ok';
 
-    public function setUp()
+    public function setUp(): void
     {
         $translation = new Translation();
         $translation
@@ -36,7 +36,7 @@ class LoaderTest extends TestCase
     {
         $catalogue = $this->loader->load('', self::TEST_DATA_LOCALE, self::TEST_DATA_DOMAIN);
         $messages = $catalogue->all(self::TEST_DATA_DOMAIN);
-        $this->assertEquals($messages[self::TEST_DATA_KEYWORD], self::TEST_DATA_TEXT);
-        $this->assertEquals($catalogue->getLocale(), self::TEST_DATA_LOCALE);
+        $this->assertEquals(self::TEST_DATA_TEXT, $messages[self::TEST_DATA_KEYWORD]);
+        $this->assertEquals(self::TEST_DATA_LOCALE, $catalogue->getLocale());
     }
 }

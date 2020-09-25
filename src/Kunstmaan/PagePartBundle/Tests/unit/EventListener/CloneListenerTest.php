@@ -50,7 +50,7 @@ class CloneListenerTest extends TestCase
      */
     private $templateService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()

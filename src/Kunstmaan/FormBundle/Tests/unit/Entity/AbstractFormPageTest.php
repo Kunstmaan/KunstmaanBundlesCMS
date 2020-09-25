@@ -20,7 +20,7 @@ class AbstractFormPageTest extends TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('Kunstmaan\FormBundle\Entity\AbstractFormPage');
     }
@@ -66,7 +66,7 @@ class AbstractFormPageTest extends TestCase
     {
         $stringValue = $this->object->getFormElementsContext();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testGetControllerAction()

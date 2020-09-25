@@ -18,7 +18,7 @@ class ExportCommandHandlerTest extends TestCase
 
     private $exportCommandHandler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $translation = new Translation();
         $translation

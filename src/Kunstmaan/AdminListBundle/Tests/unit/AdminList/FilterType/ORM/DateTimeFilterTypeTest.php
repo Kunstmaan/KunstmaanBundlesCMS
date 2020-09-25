@@ -15,7 +15,7 @@ class DateTimeFilterTypeTest extends BaseOrmFilterTest
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new DateTimeFilterType('datetime', 'b');
     }

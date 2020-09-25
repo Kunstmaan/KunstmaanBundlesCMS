@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.2"
     },
     "require-dev": {
         "symfony/http-kernel": "^3.4|^4.2",
@@ -25,9 +25,9 @@
         "behat/mink-goutte-driver": "dev-master",
         "behat/mink-sahi-driver": "dev-master",
         "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
-        "symfony/phpunit-bridge": "^4.2",
-        "phpunit/phpunit": "^7.5"
+        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "symfony/phpunit-bridge": "^5.1",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\BehatBundle\\": "" }
