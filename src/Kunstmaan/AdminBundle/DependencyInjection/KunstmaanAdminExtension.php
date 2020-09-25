@@ -87,6 +87,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
 
+        $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer_address');
+        $mailerAddress->setArgument('$address', 'kunstmaancms@myproject.dev');
+        $mailerAddress->setArgument('$name', 'KunstmaanCMS');
+
         $this->addWebsiteTitleParameter($container, $config);
         $this->addMultiLanguageParameter($container, $config);
         $this->addRequiredLocalesParameter($container, $config);
@@ -120,10 +124,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
-
-        $address = new Address('kunstmaancms@myproject.dev', 'KunstmaanCMS');
-        $mailerPasswordMailer = $container->getDefinition('Kunstmaan\AdminBundle\Service\MailerPasswordMailerService');
-        $mailerPasswordMailer->setArgument('from', $address);
 
         // Manually register the KunstmaanAdminBundle folder as a FosUser override for symfony 4.
         if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir').'/templates/bundles/KunstmaanAdminBundle')) {

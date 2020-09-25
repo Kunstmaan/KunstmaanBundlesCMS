@@ -352,7 +352,7 @@ services:
         public: true
         arguments:
             - '%kunstmaan_admin.user_class%'
-            - '@Kunstmaan\AdminBundle\Service\SwiftMailerPasswordMailerService'
+            - '@Kunstmaan\AdminBundle\Service\MailerPasswordMailerService'
             - '@event_dispatcher'
         tags:
             - { name: controller.service_arguments }
@@ -363,6 +363,10 @@ services:
             - '@twig'
             - '@router'
             - '@translator'
+            - '@kunstmaan_admin.mailer_address'
+
+    kunstmaan_admin.mailer_address:
+        class: Symfony\Component\Mime\Address
 
     Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
         public: true
