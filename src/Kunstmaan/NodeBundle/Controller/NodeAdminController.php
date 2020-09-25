@@ -486,12 +486,8 @@ class NodeAdminController extends Controller
     /**
      * @Route("/deleted", name="KunstmaanNodeBundle_deleted_nodes")
      * @Template("@KunstmaanNode/Admin/deleted_list.html.twig")
-     *
-     * @param Request $request
-     *
-     * @return array
      */
-    public function deletedNodesAction(Request $request)
+    public function deletedNodesAction(Request $request): array
     {
         $this->init($request);
 
@@ -549,13 +545,8 @@ class NodeAdminController extends Controller
      *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_delete_undo",
      * )
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return RedirectResponse
      */
-    public function undoDeleteAction(Request $request, $id)
+    public function undoDeleteAction(Request $request, int $id): RedirectResponse
     {
         $this->init($request);
 
@@ -564,7 +555,7 @@ class NodeAdminController extends Controller
         }
 
         /* @var Node $node */
-        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $node = $this->em->getRepository(Node::class)->find($id);
 
         try {
             $this->undoDeleteNode($node);
@@ -1362,12 +1353,11 @@ class NodeAdminController extends Controller
         }
     }
 
-    /**
-     * @param Node $node
-     */
-    private function undoDeleteNode(
-        Node $node
-    ) {
+    private function undoDeleteNode(Node $node): void {
+        if (!$node->isDeleted()) {
+            return;
+        }
+
         $this->denyAccessUnlessGranted(
             PermissionMap::PERMISSION_DELETE,
             $node
@@ -1492,16 +1482,10 @@ class NodeAdminController extends Controller
         return $eventDispatcher->dispatch($eventName, $event);
     }
 
-    /**
-     * @param Request                   $request
-     * @param NodeAdminListConfigurator $nodeAdminListConfigurator
-     *
-     * @return array
-     */
     private function renderAdminList(
         Request $request,
         NodeAdminListConfigurator $nodeAdminListConfigurator
-    ) {
+    ): array {
         /** @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
         $adminList->bindRequest($request);
