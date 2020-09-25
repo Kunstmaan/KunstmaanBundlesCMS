@@ -38,13 +38,13 @@ class MailerPasswordMailerService implements PasswordMailerInterface
 
     public function sendPasswordForgotMail(UserInterface $user, string $locale = 'nl')
     {
-        $toArr = [$user->getEmail()];
+        $to = $user->getEmail();
         $confirmationUrl = $this->router->generate('cms_reset_password_confirm', ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL);
         $subject = $this->translator->trans('Password reset email', [], null, $locale);
 
         $email = (new TemplatedEmail())
             ->from($this->from ?: 'kunstmaancms@myproject.dev')
-            ->to($toArr)
+            ->to($to)
             ->subject($subject)
             ->htmlTemplate('@KunstmaanAdmin/Resetting/email.txt.twig')
             ->context([
