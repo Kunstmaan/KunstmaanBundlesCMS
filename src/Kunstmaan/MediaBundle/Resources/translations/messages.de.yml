@@ -66,7 +66,7 @@ media:
       modal:
         title: Alle Medien verschieben
         text: Order auswählen, in denen die ausgewählten Medien verschoben werden sollen.
-        save: "Verschieben..."
+        save: "Move"
         form:
           name: Übergeordneter Order
       success:
