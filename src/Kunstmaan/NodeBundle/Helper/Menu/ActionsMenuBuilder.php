@@ -443,7 +443,7 @@ class ActionsMenuBuilder
                         'extras' => ['renderType' => 'button'],
                     ]
                 );
-            } else if ($this->enableUndoDeletingNodes) {
+            } elseif ($this->enableUndoDeletingNodes) {
                 $menu->addChild(
                     'action.undo_delete',
                     [

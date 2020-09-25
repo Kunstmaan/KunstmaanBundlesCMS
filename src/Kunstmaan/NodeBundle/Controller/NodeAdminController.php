@@ -1353,7 +1353,8 @@ class NodeAdminController extends Controller
         }
     }
 
-    private function undoDeleteNode(Node $node): void {
+    private function undoDeleteNode(Node $node): void
+    {
         if (!$node->isDeleted()) {
             return;
         }
