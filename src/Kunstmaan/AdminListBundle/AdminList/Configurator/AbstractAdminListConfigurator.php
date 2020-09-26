@@ -613,19 +613,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function getStringValue($item, $columnName)
     {
         $result = $this->getValue($item, $columnName);
+
         if (\is_bool($result)) {
             return $result ? 'true' : 'false';
         }
+
         if ($result instanceof \DateTimeInterface) {
             return $result->format('Y-m-d H:i:s');
         }
 
         if ($result instanceof PersistentCollection) {
             $results = [];
+
             /* @var Object $entry */
             foreach ($result as $entry) {
-                $results[] = $entry->getName();
+                $value = $this->getObjectValue($entry);
+
+                if (!empty($value)) {
+                    $results[] = $value;
+                }
             }
+
             if (empty($results)) {
                 return '';
             }
@@ -638,6 +646,31 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         }
 
         return $result;
+    }
+
+    /**
+     * @param object $object
+     * @return string|null
+     */
+    private function getObjectValue($object)
+    {
+        $methods = [
+            'getName',
+            '__toString',
+            'getTitle',
+        ];
+
+        foreach ($methods as $method) {
+            if (method_exists($object, $method)) {
+                return $object->$method();
+            }
+        }
+
+        if ($object instanceof AbstractEntity) {
+            return (string) $object->getId();
+        }
+
+        return null;
     }
 
     /**

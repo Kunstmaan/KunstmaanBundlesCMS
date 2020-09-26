@@ -7,7 +7,7 @@
     {% for key, value in fields %}
         <tr>
             <td>
-                {{ key }}
+                {{ key | trans }}
             </td>
             <td>
                 {{ adminlistconfigurator.getStringValue(entity, key) }}
