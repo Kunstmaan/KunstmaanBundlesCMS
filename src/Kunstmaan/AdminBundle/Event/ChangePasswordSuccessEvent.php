@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\Event;
 
-class FilterUserResponseEvent extends Event
+class ChangePasswordSuccessEvent extends Event
 {
     /** @var Response */
     private $response;

@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent;
 use Kunstmaan\AdminBundle\Event\Events;
-use Kunstmaan\AdminBundle\Event\FilterUserResponseEvent;
 use Kunstmaan\AdminBundle\Form\NewPasswordType;
 use Kunstmaan\AdminBundle\Form\PasswordRequestType;
 use Kunstmaan\AdminBundle\Service\PasswordMailerInterface;
@@ -110,7 +110,7 @@ class ResettingController extends Controller
 
             $this->eventDispatcher->dispatch(
                 Events::CHANGE_PASSWORD_COMPLETED,
-                new FilterUserResponseEvent($user, $request, $response)
+                new ChangePasswordSuccessEvent($user, $request, $response)
             );
 
             $this->addFlash('success', "security.resetting.password_set_success");
