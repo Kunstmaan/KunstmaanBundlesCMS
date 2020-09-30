@@ -33,7 +33,7 @@ class LoginListener
      * @param LoggerInterface $logger         The logger
      * @param VersionChecker  $versionChecker The version checker
      */
-    public function __construct(LoggerInterface $logger, VersionChecker $versionChecker, EntityManagerInterface  $em)
+    public function __construct(LoggerInterface $logger, VersionChecker $versionChecker, EntityManagerInterface $em)
     {
         $this->logger = $logger;
         $this->versionChecker = $versionChecker;
@@ -51,7 +51,7 @@ class LoginListener
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            $this->logger->info($user . ' successfully logged in to the cms');
+            $this->logger->info($user.' successfully logged in to the cms');
             $this->versionChecker->periodicallyCheck();
             $user->setLastLogin(new \DateTime());
             $this->em->flush();

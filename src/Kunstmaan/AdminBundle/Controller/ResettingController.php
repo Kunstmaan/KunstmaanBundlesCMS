@@ -41,11 +41,10 @@ class ResettingController extends Controller
      * @Route("/resetting/request", name="cms_reset_password", methods={"GET", "POST"})
      * @Route("/resetting/request", name="fos_user_resetting_request", methods={"GET", "POST"})
      */
-    public function resetPassword(
+    public function resetPasswordAction(
         Request $request,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $form = $this->createForm(PasswordRequestType::class);
         $form->handleRequest($request);
 
@@ -75,19 +74,18 @@ class ResettingController extends Controller
     /**
      * @Route("/reset_password/confirm/{token}", name="cms_reset_password_confirm", methods={"GET", "POST"})
      */
-    public function resetPasswordCheck(
+    public function resetPasswordCheckAction(
         Request $request,
         string $token,
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $encoder,
         TokenStorageInterface $tokenStorage,
         SessionInterface $session
-    )
-    {
+    ) {
         $user = $entityManager->getRepository($this->userClass)->findOneBy(['confirmationToken' => $token]);
 
         if (!$token || !$user instanceof $this->userClass) {
-            $this->addFlash('danger', "security.resetting.user_not_found");
+            $this->addFlash('danger', 'security.resetting.user_not_found');
 
             return $this->redirectToRoute('cms_reset_password');
         }
@@ -111,7 +109,7 @@ class ResettingController extends Controller
 
             $this->dispatch(new ChangePasswordSuccessEvent($user, $request, $response), Events::CHANGE_PASSWORD_COMPLETED);
 
-            $this->addFlash('success', "security.resetting.password_set_success");
+            $this->addFlash('success', 'security.resetting.password_set_success');
 
             return $response;
         }

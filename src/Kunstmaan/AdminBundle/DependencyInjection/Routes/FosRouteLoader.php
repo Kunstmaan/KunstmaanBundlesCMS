@@ -11,7 +11,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class FosRouteLoader implements RouteLoaderInterface
 {
-    /** @var boolean */
+    /** @var bool */
     private $enableCustomLogin;
 
     public function __construct(bool $enableCustomLogin)

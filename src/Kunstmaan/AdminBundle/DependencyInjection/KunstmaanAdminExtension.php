@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

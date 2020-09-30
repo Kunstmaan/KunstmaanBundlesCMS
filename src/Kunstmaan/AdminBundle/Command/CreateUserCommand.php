@@ -38,7 +38,7 @@ class CreateUserCommand extends ContainerAwareCommand
     /**
      * Next Major: add typehint to kunstmaan groupmanager
      */
-    public function __construct(/* EntityManagerInterface */ $em = null,/* GroupManager */ $groupManager = null, $userClassname = null, $defaultLocale = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* GroupManager */ $groupManager = null, $userClassname = null, $defaultLocale = null)
     {
         parent::__construct();
 
@@ -157,8 +157,8 @@ EOT
         $groupOutput = [];
 
         foreach (explode(',', $groupOption) as $groupId) {
-            if ((int)$groupId === 0) {
-                foreach ($this->groups as $value) {
+            if ((int) $groupId === 0) {
+                    foreach ($this->groups as $value) {
                     if ($groupId === $value->getName()) {
                         $group = $value;
 

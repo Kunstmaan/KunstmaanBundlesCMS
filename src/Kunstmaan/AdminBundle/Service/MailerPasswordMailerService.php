@@ -12,11 +12,8 @@ use Twig\Environment;
 
 class MailerPasswordMailerService implements PasswordMailerInterface
 {
-    /** @var MailerInterface  */
+    /** @var MailerInterface */
     private $mailer;
-
-    /** @var Environment */
-    private $twig;
 
     /** @var RouterInterface */
     private $router;
@@ -27,10 +24,9 @@ class MailerPasswordMailerService implements PasswordMailerInterface
     /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(MailerInterface $mailer, Environment $twig, RouterInterface $router, TranslatorInterface $translator, Address $from = null)
+    public function __construct(MailerInterface $mailer, RouterInterface $router, TranslatorInterface $translator, Address $from = null)
     {
         $this->mailer = $mailer;
-        $this->twig = $twig;
         $this->router = $router;
         $this->translator = $translator;
         $this->from = $from;

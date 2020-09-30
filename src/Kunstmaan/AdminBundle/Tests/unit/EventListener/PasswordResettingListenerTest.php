@@ -29,7 +29,7 @@ class PasswordResettingListenerTest extends TestCase
 
     public function testListenerNewMethod()
     {
-        $manager = $this->createMock(User::class);
+        $manager = $this->createMock(UserManager::class);
         $user = $this->createMock(User::class);
 
         $manager->expects($this->once())->method('updateUser')->willReturn(true);

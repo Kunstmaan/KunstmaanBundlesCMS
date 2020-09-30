@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
      * @Route("/login", name="cms_login", methods={"GET", "POST"})
      * @Route("/login", name="fos_user_security_login", methods={"GET", "POST"})
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function loginAction(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
      * @Route("/logout", name="cms_logout")
      * @Route("/logout", name="fos_user_security_logout")
      */
-    public function logout()
+    public function logoutAction()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }

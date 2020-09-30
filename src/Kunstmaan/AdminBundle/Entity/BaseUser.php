@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use \DateTime;
+use DateTime;
 
 abstract class BaseUser implements UserInterface
 {
@@ -29,6 +29,7 @@ abstract class BaseUser implements UserInterface
     protected $username;
 
     /**
+     * Next Major: Remove attribute
      * @var string
      *
      * @ORM\Column(type="string", length=180, unique=true)
@@ -63,6 +64,8 @@ abstract class BaseUser implements UserInterface
     protected $email;
 
     /**
+     * Next Major: Remove attribute
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=180, unique=true)
@@ -103,7 +106,7 @@ abstract class BaseUser implements UserInterface
     protected $lastLogin;
 
     /**
-     * @var array $roles
+     * @var array
      *
      * @ORM\Column(name="roles", type="array")
      */
@@ -314,9 +317,6 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
@@ -484,32 +484,46 @@ abstract class BaseUser implements UserInterface
 
     public function getUsernameCanonical()
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         return $this->usernameCanonical;
     }
 
     public function setUsernameCanonical($usernameCanonical)
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         $this->usernameCanonical = $usernameCanonical;
     }
 
     public function getEmailCanonical()
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         return $this->emailCanonical;
     }
 
     public function setEmailCanonical($emailCanonical)
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         $this->emailCanonical = $emailCanonical;
     }
 
     public function isSuperAdmin()
     {
-        // TODO: Implement isSuperAdmin() method.
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
     }
 
     public function setSuperAdmin($boolean)
     {
-        // TODO: Implement setSuperAdmin() method.
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
     }
 
     public function getConfirmationToken()
@@ -522,9 +536,10 @@ abstract class BaseUser implements UserInterface
         $this->confirmationToken = $confirmationToken;
     }
 
-    public function setPasswordRequestedAt(\DateTime $date = null)
+    public function setPasswordRequestedAt(DateTime $date = null)
     {
-        // TODO: Implement setPasswordRequestedAt() method.
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
     }
 
     public function getLastLogin()
@@ -541,16 +556,25 @@ abstract class BaseUser implements UserInterface
 
     public function isAccountNonExpired()
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         return true;
     }
 
     public function isCredentialsNonExpired()
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         return true;
     }
 
     public function isPasswordRequestNonExpired($ttl)
     {
+        // NEXT_MAJOR remove method
+        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
         return true;
     }
 
