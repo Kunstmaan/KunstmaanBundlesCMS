@@ -158,7 +158,7 @@ EOT
 
         foreach (explode(',', $groupOption) as $groupId) {
             if ((int) $groupId === 0) {
-                    foreach ($this->groups as $value) {
+                foreach ($this->groups as $value) {
                     if ($groupId === $value->getName()) {
                         $group = $value;
 

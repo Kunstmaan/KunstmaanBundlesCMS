@@ -30,6 +30,7 @@ abstract class BaseUser implements UserInterface
 
     /**
      * Next Major: Remove attribute
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=180, unique=true)

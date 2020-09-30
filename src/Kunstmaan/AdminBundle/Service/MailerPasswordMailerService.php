@@ -8,7 +8,6 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Twig\Environment;
 
 class MailerPasswordMailerService implements PasswordMailerInterface
 {
