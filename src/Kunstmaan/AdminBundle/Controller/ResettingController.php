@@ -30,35 +30,52 @@ class ResettingController extends Controller
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct(string $userClass, PasswordMailerInterface $passwordMailer, EventDispatcherInterface $eventDispatcher)
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var UserPasswordEncoderInterface */
+    private $encoder;
+
+    /** @var TokenStorageInterface */
+    private $tokenStorage;
+
+    public function __construct(
+        string $userClass,
+        PasswordMailerInterface $passwordMailer,
+        EventDispatcherInterface $eventDispatcher,
+        EntityManagerInterface $em,
+        UserPasswordEncoderInterface $encoder,
+        TokenStorageInterface $tokenStorage
+    )
     {
         $this->userClass = $userClass;
         $this->passwordMailer = $passwordMailer;
         $this->eventDispatcher = $eventDispatcher;
+        $this->em = $em;
+        $this->encoder = $encoder;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
      * @Route("/resetting/request", name="cms_reset_password", methods={"GET", "POST"})
      * @Route("/resetting/request", name="fos_user_resetting_request", methods={"GET", "POST"})
      */
-    public function resetPasswordAction(
-        Request $request,
-        EntityManagerInterface $entityManager
-    ) {
+    public function resetPasswordAction(Request $request)
+    {
         $form = $this->createForm(PasswordRequestType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
             $token = bin2hex(random_bytes(32));
-            $user = $entityManager->getRepository($this->userClass)->findOneBy(['email' => $email]);
+            $user = $this->em->getRepository($this->userClass)->findOneBy(['email' => $email]);
             if (!$user instanceof $this->userClass) {
-                $user = $entityManager->getRepository($this->userClass)->findOneBy(['username' => $email]);
+                $user = $this->em->getRepository($this->userClass)->findOneBy(['username' => $email]);
             }
 
             if ($user instanceof $this->userClass) {
                 $user->setConfirmationToken($token);
-                $entityManager->flush();
+                $this->em->flush();
                 $this->passwordMailer->sendPasswordForgotMail($user, $request->getLocale());
                 $this->addFlash('success', 'security.resetting.send_email_success');
 
@@ -77,12 +94,10 @@ class ResettingController extends Controller
     public function resetPasswordCheckAction(
         Request $request,
         string $token,
-        EntityManagerInterface $entityManager,
-        UserPasswordEncoderInterface $encoder,
-        TokenStorageInterface $tokenStorage,
         SessionInterface $session
-    ) {
-        $user = $entityManager->getRepository($this->userClass)->findOneBy(['confirmationToken' => $token]);
+    )
+    {
+        $user = $this->em->getRepository($this->userClass)->findOneBy(['confirmationToken' => $token]);
 
         if (!$token || !$user instanceof $this->userClass) {
             $this->addFlash('danger', 'security.resetting.user_not_found');
@@ -95,13 +110,13 @@ class ResettingController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $plainPassword = $form->get('plainPassword')->getData();
-            $password = $encoder->encodePassword($user, $plainPassword);
+            $password = $this->encoder->encodePassword($user, $plainPassword);
             $user->setPassword($password);
             $user->setConfirmationToken(null);
-            $entityManager->flush();
+            $this->em->flush();
 
             $token = new UsernamePasswordToken($user, $password, 'main');
-            $tokenStorage->setToken($token);
+            $this->tokenStorage->setToken($token);
             $session->set('_security_main', serialize($token));
 
             $url = $this->generateUrl('KunstmaanAdminBundle_homepage');

@@ -354,6 +354,9 @@ services:
             - '%kunstmaan_admin.user_class%'
             - '@Kunstmaan\AdminBundle\Service\MailerPasswordMailerService'
             - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'
+            - '@security.user_password_encoder.generic'
+            - '@security.token_storage'
         tags:
             - { name: controller.service_arguments }
 
