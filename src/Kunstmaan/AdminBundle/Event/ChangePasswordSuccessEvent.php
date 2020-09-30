@@ -5,9 +5,8 @@ namespace Kunstmaan\AdminBundle\Event;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\EventDispatcher\Event;
 
-class ChangePasswordSuccessEvent extends Event
+class ChangePasswordSuccessEvent extends BcEvent
 {
     /** @var Response */
     private $response;
