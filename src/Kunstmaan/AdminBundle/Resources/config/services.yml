@@ -363,7 +363,6 @@ services:
     Kunstmaan\AdminBundle\Service\MailerPasswordMailerService:
         arguments:
             - '@mailer.mailer'
-            - '@twig'
             - '@router'
             - '@translator'
             - '@kunstmaan_admin.mailer_address'
