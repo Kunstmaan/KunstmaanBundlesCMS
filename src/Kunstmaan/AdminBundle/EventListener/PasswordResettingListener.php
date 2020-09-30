@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Kunstmaan\AdminBundle\Service\UserManager;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\Model\UserManager as FOSUserManager;
 use Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent;
+use Kunstmaan\AdminBundle\Service\UserManager;
 
 /**
  * Set password_changed property to 1 after changing the password
@@ -21,6 +22,13 @@ class PasswordResettingListener
      */
     public function __construct(/* UserManager */ $userManager)
     {
+        if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
+            throw new \InvalidArgumentException(sprintf('The "$userManager" argument must be of type "%s" or type "%s"', UserManager::class, FOSUserManager::class));
+        }
+        if ($userManager instanceof FOSUserManager) {
+            // NEXT_MAJOR set the usermanaged typehint to the kunstmaan usermanager.
+            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the new Kunstmaan Usermanager %s.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
+        }
         $this->userManager = $userManager;
     }
 
