@@ -46,8 +46,7 @@ class ResettingController extends Controller
         EntityManagerInterface $em,
         UserPasswordEncoderInterface $encoder,
         TokenStorageInterface $tokenStorage
-    )
-    {
+    ) {
         $this->userClass = $userClass;
         $this->passwordMailer = $passwordMailer;
         $this->eventDispatcher = $eventDispatcher;
@@ -95,8 +94,7 @@ class ResettingController extends Controller
         Request $request,
         string $token,
         SessionInterface $session
-    )
-    {
+    ) {
         $user = $this->em->getRepository($this->userClass)->findOneBy(['confirmationToken' => $token]);
 
         if (!$token || !$user instanceof $this->userClass) {

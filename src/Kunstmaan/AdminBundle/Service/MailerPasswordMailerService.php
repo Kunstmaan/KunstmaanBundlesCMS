@@ -49,5 +49,4 @@ class MailerPasswordMailerService implements PasswordMailerInterface
 
         $this->mailer->send($email);
     }
-
 }
