@@ -14,8 +14,9 @@
         {{ 'media.media.mediainfo.downloadlink'|trans }}:
     </dt>
     <dd>
-        <a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}" target="_blank">
-            {{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}
+        {% set mediaUrl = media.url %}
+        <a href="{{ absolute_url(asset(mediaUrl)) }}" target="_blank">
+            {{ absolute_url(asset(mediaUrl)) }}
         </a>
     </dd>
 {% endblock %}
