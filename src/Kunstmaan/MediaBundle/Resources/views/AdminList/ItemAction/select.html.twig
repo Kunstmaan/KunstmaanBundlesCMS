@@ -1,5 +1,5 @@
 {% set mediaHandler = mediamanager.getHandler(item) %}
-{% set thumbnailurl =  mediaHandler.getImageUrl(item, app.request.basePath, 210, 150) %}
+{% set thumbnailurl =  mediaHandler.getImageUrl(item, app.request.basePath) %}
 
 {% set cke = (app.request and app.request.get('CKEditorFuncNum')) %}
 <a data-thumb-path="{{ thumbnailurl }}" data-path="{{ item.url }}" data-title="{{ item.name|escape('js') }}" data-id="{{ item.id }}" href="javascript:void(0)" class="js-url-chooser-media-select" data-cke="{% if cke %}true{% else %}false{% endif %}">
