@@ -1,0 +1,53 @@
+/* ==========================================================================
+    main nav
+   ========================================================================== */
+
+.kuma-main-nav {
+    padding: 20px 0;
+}
+
+.kuma-main-nav__item {
+    position: relative;
+
+    display: flex;
+    align-items: middle;
+    padding: 10px 25px;
+
+    &:hover,
+    &--active {
+        .kuma-main-nav__item__icon {
+            fill: var(--color-client-primary);
+        }
+
+        .kuma-main-nav__item__text {
+            color: var(--color-client-primary);
+        }
+    }
+}
+
+.kuma-main-nav__item__icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    fill: var(--color-greyscale-100);
+
+    transition: fill .3s $snip-ease-sine-in-out;
+}
+
+.kuma-main-nav__item__text {
+    position: absolute;
+    left: 70px;
+    top: 50%;
+
+    display: block;
+    transform: translate3d(0, -50%, 0);
+
+    font-size: 16px;
+    color: var(--color-greyscale-100);
+
+    visibility: hidden;
+
+    transition: visibility .3s $snip-ease-sine-in-out;
+    transition-delay: 0;
+}

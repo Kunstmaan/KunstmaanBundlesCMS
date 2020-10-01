@@ -69,6 +69,11 @@ export const buildOnChange = (done) => {
 
         const styleAssets = srcPath + 'scss/**/*.scss';
         gulp.watch(styleAssets, bundle.tasks.cssOptimized);
+
+        if (bundle.tasks.cssNextOptimized) {
+            const styleNextAssets = srcPath + 'scssnext/**/*.scss';
+            gulp.watch(styleNextAssets, bundle.tasks.cssNextOptimized);
+        }
     }
     done();
 };

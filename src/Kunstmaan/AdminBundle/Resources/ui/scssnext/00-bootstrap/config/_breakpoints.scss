@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Break-points
+
+   This file is exclusively intended for setting up and accessing variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+$xxs: 321px;
+$xs: 480px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1400px;
+$xxl: 2000px;
+
+$break-xxs: $xxs;
+$break-xxs-min: $xxs;
+$break-xxs-max: $xs - 1;
+
+$break-xs: $xs;
+$break-xs-min: $xs;
+$break-xs-max: $sm - 1;
+
+$break-sm: $sm;
+$break-sm-min: $sm;
+$break-sm-max: $md - 1;
+
+$break-md: $md;
+$break-md-min: $md;
+$break-md-max: $lg - 1;
+
+$break-lg: $lg;
+$break-lg-min: $lg;
+$break-lg-max: $xl - 1;
+
+$break-xl: $xl;
+$break-xl-min: $xl;
+$break-xl-max: $xxl - 1;
+
+$break-xxl: $xxl;
+$break-xxl-min: $xxl;
+$break-xxl-max: $xxl + 1;

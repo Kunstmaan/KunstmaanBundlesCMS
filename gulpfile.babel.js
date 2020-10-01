@@ -17,6 +17,7 @@ const analyzeAdminBundle = gulp.series(
 const buildLocalAdminBundle = gulp.series(
     adminBundle.tasks.copy,
     adminBundle.tasks.cssLocal,
+    adminBundle.tasks.cssNextLocal,
     adminBundle.tasks.scripts,
     adminBundle.tasks.bundle
 );
@@ -24,6 +25,7 @@ const buildLocalAdminBundle = gulp.series(
 const buildOptimizedAdminBundle = gulp.series(
     adminBundle.tasks.copy,
     adminBundle.tasks.cssOptimized,
+    adminBundle.tasks.cssNextOptimized,
     adminBundle.tasks.scripts,
     adminBundle.tasks.bundlePolyfills,
     adminBundle.tasks.bundleOptimized

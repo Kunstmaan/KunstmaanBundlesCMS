@@ -1,0 +1,33 @@
+/* ==========================================================================
+    language chooser
+   ========================================================================== */
+
+.kuma-language-chooser {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    font-size: 14px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-kuma-primary);
+
+    &:after {
+        @include snip-pseudo();
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+        border-top-left-radius: 0;
+        border: 1px solid var(--color-client-primary);
+    }
+}

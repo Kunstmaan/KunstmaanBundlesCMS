@@ -27,12 +27,17 @@ adminBundle.tasks.eslint = createEslintTask({
 });
 
 adminBundle.tasks.copy = gulp.parallel(
-    createCopyTask({src: [`${adminBundle.config.srcPath}img/**`], dest: `${adminBundle.config.distPath}img`})
+    createCopyTask({src: [`${adminBundle.config.srcPath}img/**`], dest: `${adminBundle.config.distPath}img`}),
+    createCopyTask({src: [`${adminBundle.config.srcPath}icons/**`], dest: `${adminBundle.config.distPath}icons`})
 );
 
 adminBundle.tasks.cssLocal = createCssLocalTask({src: `${adminBundle.config.srcPath}scss/*.scss`, dest: `${adminBundle.config.distPath}css`});
+adminBundle.tasks.cssNextLocal = createCssLocalTask({src: `${adminBundle.config.srcPath}scssnext/*.scss`, dest: `${adminBundle.config.distPath}cssnext`});
+
+
 
 adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: `${adminBundle.config.srcPath}scss/*.scss`, dest: `${adminBundle.config.distPath}css`});
+adminBundle.tasks.cssNextOptimized = createCssOptimizedTask({src: `${adminBundle.config.srcPath}scssnext/*.scss`, dest: `${adminBundle.config.distPath}cssnext`});
 
 adminBundle.tasks.scripts = createScriptsTask({
     src: [

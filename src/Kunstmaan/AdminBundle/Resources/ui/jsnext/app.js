@@ -1,4 +1,5 @@
 import PagePartChooser from './PagePartChooser';
+import 'svgxuse/svgxuse';
 
 function init() {
     PagePartChooser.init();

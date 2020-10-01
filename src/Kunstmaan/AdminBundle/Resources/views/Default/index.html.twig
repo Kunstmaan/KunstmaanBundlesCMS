@@ -28,6 +28,12 @@
     {% endif %}
 {% endblock %}
 
+{% block appHeader %}
+    <header class="kuma-main-header">
+        Welcome {{ app.user }}
+    </header>
+{% endblock %}
+
 {% block content %}
     {% if dashboardConfiguration %}
         <div style="margin-top:25px">
