@@ -2,7 +2,7 @@
     <div class="image-pp">
         {% set imgUrl = '' %}
         {% if app.request %}
-            {% set imgUrl = absolute_url(asset(resource.media.url)) %}
+            {% set imgUrl = absolute_url(asset(resource.media.url, 'media')) %}
         {% endif %}
         {% if resource.link is defined and resource.link != "" %}
             <a href="{{ resource.link | replace_url}}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ imgUrl }}" alt="{{ resource.alttext }}" /></a>

@@ -5,13 +5,13 @@
     {% set imgUrl = '' %}
 
     {% if type in ['svg', 'gif'] %}
-        {% set imgUrl = absolute_url(asset(image)) %}
+        {% set imgUrl = absolute_url(asset(image, 'media')) %}
         <img src="{{ imgUrl }}"{% if altText %} alt="{{ altText }}"{% endif %} />
     {% else %}
-        {% set imgUrl_huge =    asset(image | imagine_filter('image_huge_' ~ type)) %}
-        {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type)) %}
-        {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type)) %}
-        {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
+        {% set imgUrl_huge =    asset(image | imagine_filter('image_huge_' ~ type), 'media') %}
+        {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type), 'media') %}
+        {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type), 'media') %}
+        {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type), 'media') %}
         {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
 
         {#
