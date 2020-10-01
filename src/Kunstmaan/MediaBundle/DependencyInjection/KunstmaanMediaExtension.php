@@ -114,6 +114,15 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $container->prependExtensionConfig('doctrine', $doctrineGedmoEntityConfig);
 
+        $frameworkExtensionConfig = [
+            'assets' => [
+                'packages' => [
+                    'media' => null,
+                ],
+            ],
+        ];
+        $container->prependExtensionConfig('framework', $frameworkExtensionConfig);
+
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }

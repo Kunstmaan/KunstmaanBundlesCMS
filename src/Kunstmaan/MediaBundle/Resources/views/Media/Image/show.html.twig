@@ -3,14 +3,14 @@
 {% block extraactions %}
 
     {% if handler.aviaryApiKey and not (handler.aviaryApiKey starts with 'Register') %}
-        <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ absolute_url(asset(media.url)) }}');" >
+        <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ absolute_url(asset(media.url, 'media')) }}');" >
             {{ 'media.media.edit.action' | trans }}
         </button>
 
         {% include '@KunstmaanMedia/Media/Image/aviary.html.twig' %}
     {% endif %}
 
-    <a href="{{ asset(media.url) }}" target="_blank" class="btn btn-default btn--raise-on-hover">
+    <a href="{{ asset(media.url, 'media') }}" target="_blank" class="btn btn-default btn--raise-on-hover">
         {{ 'media.media.download.action'|trans }}
     </a>
 {% endblock %}
@@ -21,7 +21,7 @@
         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
             {% set imageurl = imageurl %}
         {% else %}
-            {% set imageurl = asset(imageurl | imagine_filter('media_detail_thumbnail')) %}
+            {% set imageurl = asset(imageurl | imagine_filter('media_detail_thumbnail'), 'media') %}
         {% endif %}
     {% endif %}
     <img id="editimage" class="img-thumbnail" src="{{ imageurl }}" alt="{{ media.name }}">
