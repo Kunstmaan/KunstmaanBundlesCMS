@@ -57,19 +57,22 @@ kunstmaanbundles.urlchoosertree = (function($, window, undefined) {
                     'icon': 'fa fa-home'
                 },
                 'default': {
-                    'icon' : 'fa fa-file-o'
+                    'icon': 'fa fa-file'
                 },
                 'offline': {
                     'icon': 'fa fa-chain-broken'
                 },
+                'hidden-from-nav': {
+                    'icon': 'fa fa-eye-slash'
+                },
                 'folder': {
-                    'icon': 'fa fa-folder-o'
+                    'icon': 'fa fa-folder'
                 },
                 'image': {
-                    'icon': 'fa fa-picture-o'
+                    'icon': 'fa fa-image'
                 },
                 'files': {
-                    'icon': 'fa fa-files-o'
+                    'icon': 'fa fa-copy'
                 },
                 'slideshow': {
                     'icon': 'fa fa-desktop'
@@ -78,7 +81,7 @@ kunstmaanbundles.urlchoosertree = (function($, window, undefined) {
                     'icon': 'fa fa-film'
                 },
                 'media': {
-                    'icon': 'fa fa-folder-o'
+                    'icon': 'fa fa-folder'
                 }
             },
             'search' : {
