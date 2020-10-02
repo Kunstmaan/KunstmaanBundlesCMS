@@ -11,7 +11,7 @@ If you want to enable it now you can use the following config to do so.
 kunstmaan_admin:
   enable_custom_login: true
 
-#Only necessary when you have overriden the default BundlesCMS User object as when you enable the custom_login option we do not longer rely on the fos_user userclass parameter.
+#Only necessary when you have overriden the default Kunstmaan CMS User object as when you enable the custom_login option we do not longer rely on the fos_user userclass parameter.
 parameters:
   kunstmaan_admin.user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
   ```
