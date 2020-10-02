@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ResettingController extends Controller
+class ResettingController extends AbstractController
 {
     /** @var string */
     private $userClass;
