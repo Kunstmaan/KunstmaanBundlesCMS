@@ -39,13 +39,17 @@ class ResettingController extends AbstractController
     /** @var TokenStorageInterface */
     private $tokenStorage;
 
+    /** @var SessionInterface */
+    private $session;
+
     public function __construct(
         string $userClass,
         PasswordMailerInterface $passwordMailer,
         EventDispatcherInterface $eventDispatcher,
         EntityManagerInterface $em,
         UserPasswordEncoderInterface $encoder,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
     ) {
         $this->userClass = $userClass;
         $this->passwordMailer = $passwordMailer;
@@ -53,6 +57,7 @@ class ResettingController extends AbstractController
         $this->em = $em;
         $this->encoder = $encoder;
         $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
     }
 
     /**
@@ -92,8 +97,7 @@ class ResettingController extends AbstractController
      */
     public function resetPasswordCheckAction(
         Request $request,
-        string $token,
-        SessionInterface $session
+        string $token
     ) {
         $user = $this->em->getRepository($this->userClass)->findOneBy(['confirmationToken' => $token]);
 
@@ -115,7 +119,7 @@ class ResettingController extends AbstractController
 
             $token = new UsernamePasswordToken($user, $password, 'main');
             $this->tokenStorage->setToken($token);
-            $session->set('_security_main', serialize($token));
+            $this->session->set('_security_main', serialize($token));
 
             $url = $this->generateUrl('KunstmaanAdminBundle_homepage');
             $response = new RedirectResponse($url);

@@ -357,6 +357,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@security.user_password_encoder.generic'
             - '@security.token_storage'
+            - '@session'
         tags:
             - { name: controller.service_arguments }
 
