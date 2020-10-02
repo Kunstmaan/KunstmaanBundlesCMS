@@ -33,7 +33,7 @@
         "symfony/http-kernel": "^3.4|^4.2",
         "symfony/inflector": "^3.4|^4.2",
         "symfony/monolog-bridge": "^3.4|^4.2",
-        "symfony/mailer": "^3.4|^4.2",
+        "symfony/mailer": "^4.4",
         "symfony/options-resolver": "^3.4|^4.2",
         "symfony/property-access": "^3.4|^4.2",
         "symfony/routing": "^3.4|^4.2",
