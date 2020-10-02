@@ -119,7 +119,7 @@ class Importer
                 $domain = $row[array_search('domain', $headers)];
                 $keyword = $row[array_search('keyword', $headers)];
                 foreach ($locales as $locale) {
-                    $this->importSingleTranslation($keyword, $row[array_search($locale, $headers)], $locale, $file, $domain, $force);
+                    $this->importSingleTranslation($keyword, $row[array_search($locale, $headers)], $locale, null, $domain, $force);
                     ++$importedTranslations;
                 }
             }
