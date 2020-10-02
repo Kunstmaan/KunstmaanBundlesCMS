@@ -15,7 +15,7 @@ kunstmaan_admin:
 parameters:
   kunstmaan_admin.user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
   ```
-If you enable our custom login implentation you will also have to update your security.yaml to use our new routes. Upon changing these 2 things you are now not using anything from the FosUserBundle anymore.
+If you enable our custom login implementation you will also have to update your security.yaml to use our new routes. Upon changing these 2 things you are now not using anything from the FosUserBundle anymore.
 
 ```
 security:
