@@ -29,6 +29,8 @@ class ConfigurationTest extends TestCase
             'required_locales' => null,
             'default_locale' => null,
             'enable_new_cms_authentication' => false,
+            'mail_from_address' => 'kunstmaancms@myproject.dev',
+            'mail_from_name' => 'Kunstmaan CMS',
             'admin_password' => 'l3tM31n!',
             'admin_locales' => [],
             'session_security' => [
@@ -82,6 +84,8 @@ class ConfigurationTest extends TestCase
                 'user_agent_check' => false,
             ],
             'enable_new_cms_authentication' => false,
+            'mail_from_address' => 'kunstmaancms@myproject.dev',
+            'mail_from_name' => 'Kunstmaan CMS',
             'default_admin_locale' => 'en',
             'enable_console_exception_listener' => true,
             'menu_items' => [],
