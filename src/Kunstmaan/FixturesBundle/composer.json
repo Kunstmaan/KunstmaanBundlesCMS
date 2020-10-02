@@ -19,7 +19,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2",
-        "doctrine/doctrine-fixtures-bundle": "~2.2",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.6",
         "kunstmaan/admin-bundle": "~5.2",
         "kunstmaan/media-bundle": "^5.7",
