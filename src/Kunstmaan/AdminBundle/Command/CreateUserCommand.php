@@ -35,9 +35,6 @@ class CreateUserCommand extends ContainerAwareCommand
     /** @var string */
     private $defaultLocale;
 
-    /**
-     * Next Major: add typehint to kunstmaan groupmanager
-     */
     public function __construct(/* EntityManagerInterface */ $em = null, /* GroupManager */ $groupManager = null, $userClassname = null, $defaultLocale = null)
     {
         parent::__construct();
