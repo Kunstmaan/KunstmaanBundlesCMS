@@ -85,7 +85,7 @@ class NodeTranslationRepository extends EntityRepository
             )
             ->where('n.deleted = false')
             ->orderBy('nt.weight')
-            ->addOrderBy('nt.weight');
+        ;
 
         if (!empty($lang)) {
             $queryBuilder
