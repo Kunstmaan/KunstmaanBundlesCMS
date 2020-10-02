@@ -9,7 +9,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 
-class MailerPasswordMailerService implements PasswordMailerInterface
+class PasswordMailerService implements PasswordMailerInterface
 {
     /** @var MailerInterface */
     private $mailer;

@@ -352,7 +352,7 @@ services:
         public: true
         arguments:
             - '%kunstmaan_admin.user_class%'
-            - '@Kunstmaan\AdminBundle\Service\MailerPasswordMailerService'
+            - '@Kunstmaan\AdminBundle\Service\PasswordMailerService'
             - '@event_dispatcher'
             - '@doctrine.orm.entity_manager'
             - '@security.user_password_encoder.generic'
@@ -360,7 +360,7 @@ services:
         tags:
             - { name: controller.service_arguments }
 
-    Kunstmaan\AdminBundle\Service\MailerPasswordMailerService:
+    Kunstmaan\AdminBundle\Service\PasswordMailerService:
         arguments:
             - '@mailer.mailer'
             - '@router'
