@@ -10,14 +10,10 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     protected $em;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $class;
 
     /** @var string */

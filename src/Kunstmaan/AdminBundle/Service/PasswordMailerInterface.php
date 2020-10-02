@@ -6,5 +6,5 @@ use Kunstmaan\AdminBundle\Entity\UserInterface;
 
 interface PasswordMailerInterface
 {
-    public function sendPasswordForgotMail(UserInterface $user, string $locale = 'nl');
+    public function sendPasswordForgotMail(UserInterface $user, string $locale);
 }

@@ -31,7 +31,7 @@ class MailerPasswordMailerService implements PasswordMailerInterface
         $this->from = $from;
     }
 
-    public function sendPasswordForgotMail(UserInterface $user, string $locale = 'nl')
+    public function sendPasswordForgotMail(UserInterface $user, string $locale)
     {
         $to = $user->getEmail();
         $confirmationUrl = $this->router->generate('cms_reset_password_confirm', ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL);
@@ -49,4 +49,5 @@ class MailerPasswordMailerService implements PasswordMailerInterface
 
         $this->mailer->send($email);
     }
+
 }
