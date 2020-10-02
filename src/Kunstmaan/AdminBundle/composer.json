@@ -20,7 +20,7 @@
         "doctrine/doctrine-cache-bundle": "^1.2",
         "friendsofsymfony/user-bundle": "^2.0",
         "guzzlehttp/guzzle": "~6.1",
-        "knplabs/knp-menu-bundle": "~2.0",
+        "knplabs/knp-menu-bundle": "^3.0",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/utilities-bundle": "~5.2",
         "symfony/acl-bundle": "^1.0",

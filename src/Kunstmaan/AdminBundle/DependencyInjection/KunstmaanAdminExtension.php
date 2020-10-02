@@ -90,11 +90,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
     public function prepend(ContainerBuilder $container)
     {
-        $knpMenuConfig['twig'] = true; // set to false to disable the Twig extension and the TwigRenderer
-        $knpMenuConfig['templating'] = false; // if true, enables the helper for PHP templates
-        $knpMenuConfig['default_renderer'] = 'twig'; // The renderer to use, list is also available by default
-        $container->prependExtensionConfig('knp_menu', $knpMenuConfig);
-
         $fosUserOriginalConfig = $container->getExtensionConfig('fos_user');
         if (!isset($fosUserOriginalConfig[0]['db_driver'])) {
             $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
