@@ -23,7 +23,7 @@ class PasswordMailerService implements PasswordMailerInterface
     /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(MailerInterface $mailer, RouterInterface $router, TranslatorInterface $translator, Address $from = null)
+    public function __construct(MailerInterface $mailer, RouterInterface $router, TranslatorInterface $translator, Address $from)
     {
         $this->mailer = $mailer;
         $this->router = $router;
@@ -38,7 +38,7 @@ class PasswordMailerService implements PasswordMailerInterface
         $subject = $this->translator->trans('Password reset email', [], null, $locale);
 
         $email = (new TemplatedEmail())
-            ->from($this->from ?: 'kunstmaancms@myproject.dev')
+            ->from($this->from)
             ->to($to)
             ->subject($subject)
             ->htmlTemplate('@KunstmaanAdmin/Resetting/email.txt.twig')
