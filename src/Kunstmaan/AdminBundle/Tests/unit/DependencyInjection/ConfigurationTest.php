@@ -28,7 +28,7 @@ class ConfigurationTest extends TestCase
             'multi_language' => null,
             'required_locales' => null,
             'default_locale' => null,
-            'enable_custom_login' => false,
+            'enable_new_cms_authentication' => false,
             'admin_password' => 'l3tM31n!',
             'admin_locales' => [],
             'session_security' => [
@@ -81,7 +81,7 @@ class ConfigurationTest extends TestCase
                 'ip_check' => false,
                 'user_agent_check' => false,
             ],
-            'enable_custom_login' => false,
+            'enable_new_cms_authentication' => false,
             'default_admin_locale' => 'en',
             'enable_console_exception_listener' => true,
             'menu_items' => [],

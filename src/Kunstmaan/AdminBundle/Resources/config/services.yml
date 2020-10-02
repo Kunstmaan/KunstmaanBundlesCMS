@@ -373,7 +373,7 @@ services:
     Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
         public: true
         arguments:
-            - '%kunstmaan_admin.enable_custom_login%'
+            - '%kunstmaan_admin.enable_new_cms_authentication%'
         tags:
             - { name: routing.route_loader }
 

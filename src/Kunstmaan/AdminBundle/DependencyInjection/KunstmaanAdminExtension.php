@@ -44,8 +44,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (\array_key_exists('admin_password', $config)) {
             $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
         }
-        if (\array_key_exists('enable_custom_login', $config)) {
-            $container->setParameter('kunstmaan_admin.enable_custom_login', $config['enable_custom_login']);
+        if (\array_key_exists('enable_new_cms_authentication', $config)) {
+            $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $config['enable_new_cms_authentication']);
         }
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
         $container->setParameter('kunstmaan_admin.default_admin_locale', $config['default_admin_locale']);

@@ -9,7 +9,7 @@ class UseFosUserOptionCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $enableCustomLogin = $container->getParameter('kunstmaan_admin.enable_custom_login');
+        $enableCustomLogin = $container->getParameter('kunstmaan_admin.enable_new_cms_authentication');
         if (!$enableCustomLogin) {
             @trigger_error('Using FosUserBundle routing and services is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use our custom implementation instead', E_USER_DEPRECATED);
             $container->setParameter('kunstmaan_admin.user_class', $container->getParameter('fos_user.model.user.class'));
