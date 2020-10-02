@@ -3,20 +3,19 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use FOS\UserBundle\Model\UserManager as FOSUserManager;
-use FOS\UserBundle\Util\UserManipulator;
+use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Service\UserManager;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use InvalidArgumentException;
-use RuntimeException;
 
 abstract class RoleCommand extends Command
 {
-    /** @var FOSUserManager|UserManager  */
+    /** @var FOSUserManager|UserManager */
     protected $userManager;
 
     public function __construct(/* UserManager */ $userManager)
@@ -37,11 +36,11 @@ abstract class RoleCommand extends Command
     protected function configure()
     {
         $this
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
                 new InputOption('super', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role'),
-            ));
+            ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,7 +64,7 @@ abstract class RoleCommand extends Command
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $questions = array();
+        $questions = [];
 
         if (!$input->getArgument('username')) {
             $question = new Question('Please choose a username:');

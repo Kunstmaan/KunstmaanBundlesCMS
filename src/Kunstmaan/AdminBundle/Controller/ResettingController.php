@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\Form\NewPasswordType;
 use Kunstmaan\AdminBundle\Form\PasswordRequestType;
 use Kunstmaan\AdminBundle\Service\PasswordMailerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;

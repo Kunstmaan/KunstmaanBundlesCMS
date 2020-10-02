@@ -46,7 +46,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         }
         if (\array_key_exists('enable_new_cms_authentication', $config)) {
             $enableCustomLogin = $config['enable_new_cms_authentication'];
-            if(!$enableCustomLogin) {
+            if (!$enableCustomLogin) {
                 @trigger_error('Not setting "enable_new_cms_authentication" to true in the KunstmaanAdminBundle is deprecated as of 5.8, it will always be true in 6.0.', \E_USER_DEPRECATED);
             }
             $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableCustomLogin);
