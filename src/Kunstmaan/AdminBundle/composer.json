@@ -23,7 +23,7 @@
         "knplabs/knp-menu-bundle": "^3.0",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/utilities-bundle": "~5.2",
-        "symfony/acl-bundle": "^1.0",
+        "symfony/acl-bundle": "^1.0|^2.0",
         "symfony/config": "^3.4|^4.2",
         "symfony/console": "^3.4|^4.2",
         "symfony/dependency-injection": "^3.4|^4.2",
