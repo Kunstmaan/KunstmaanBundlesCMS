@@ -61,6 +61,7 @@
     "picturefill": "^3.0.3",
     "bootstrap-sass": "^3.3.7",
     "svgxuse": "^1.2.6",
+    "@snipsonian/scss": "1.8.2",
     "gsap": "^1.19.1"{% if demosite %},
     "ramda": "^0.23.0",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",

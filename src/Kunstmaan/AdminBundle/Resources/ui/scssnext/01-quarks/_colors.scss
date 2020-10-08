@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+:root {
+    --color-greyscale-000: #2E2B29;
+    --color-greyscale-100: #5B5856;
+    --color-greyscale-200: #91908F;
+    --color-greyscale-300: #CDCDCD;
+    --color-greyscale-400: #F2F2F2;
+    --color-greyscale-500: #FFFFFF;
+    // --color-client-primary: #02A0E6; // has to be set in layout
+    --color-kuma-primary: #02A0E6;
+    --color-kuma-secondary-1: #FA1A57;
+    --color-kuma-secondary-2: #08D6E5;
+    --color-link: #02A0E6;
+    --color-success: #2BE4AE;
+    --color-warning: #F59823;
+    --color-error: #FA1A57;
+    --color-disabled: #2E2B29;
+    --color-text: #2E2B29;
+}
