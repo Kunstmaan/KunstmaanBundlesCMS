@@ -26,3 +26,8 @@ UserManagementBundle
 ------------
 
 * Overriding the user adminlist configurator class with `kunstmaan_user_management.user_admin_list_configurator.class` is deprecated, use the `kunstmaan_user_management.user.adminlist_configurator` config instead.
+
+MediaBundle
+-----------
+
+* Parameter `kunstmaan_media.full_media_path` is deprecated and will be removed in 6.0.
