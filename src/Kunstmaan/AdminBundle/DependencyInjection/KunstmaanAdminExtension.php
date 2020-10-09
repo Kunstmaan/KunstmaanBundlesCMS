@@ -4,8 +4,6 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -76,8 +74,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
         $container->setParameter('kunstmaan_admin.toolbar_firewall_names', !empty($config['provider_keys']) ? $config['provider_keys'] : $config['toolbar_firewall_names']);
         $container->setParameter('kunstmaan_admin.admin_firewall_name', $config['admin_firewall_name']);
-        $container->setParameter('kunstmaan_admin.user_class', $config['admin_user_class'] ?? User::class);
-        $container->setParameter('kunstmaan_admin.group_class', $config['admin_group_class'] ?? Group::class);
+        $container->setParameter('kunstmaan_admin.user_class', $config['admin_user_class']);
+        $container->setParameter('kunstmaan_admin.group_class', $config['admin_group_class']);
 
         $container->registerForAutoconfiguration(MenuAdaptorInterface::class)
             ->addTag('kunstmaan_admin.menu.adaptor');
