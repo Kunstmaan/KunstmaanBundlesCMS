@@ -33,6 +33,9 @@ class DomainConfiguration extends BaseDomainConfiguration
      */
     protected $adminRouteHelper;
 
+    /** @var array */
+    private $rootNodeCache = [];
+
     /** @var EntityManagerInterface */
     private $em;
 
@@ -176,15 +179,23 @@ class DomainConfiguration extends BaseDomainConfiguration
             return parent::getRootNode();
         }
 
-        if (\is_null($this->rootNode)) {
-            $host = $this->getRealHost($host);
-
-            $internalName = $this->hosts[$host]['root'];
-            $nodeRepo = $this->em->getRepository(Node::class);
-            $this->rootNode = $nodeRepo->getNodeByInternalName($internalName);
+        $host = $this->getRealHost($host);
+        if (null === $host) {
+            return null;
         }
 
-        return $this->rootNode;
+        if (!array_key_exists($host, $this->rootNodeCache)) {
+            $internalName = $this->hosts[$host]['root'];
+            $nodeRepo = $this->em->getRepository(Node::class);
+            $this->rootNodeCache[$host] = $nodeRepo->getNodeByInternalName($internalName);
+
+            // Keep BC by setting the first node found.
+            if (null === $this->rootNode) {
+                $this->rootNode = $this->rootNodeCache[$host];
+            }
+        }
+
+        return $this->rootNodeCache[$host];
     }
 
     /**

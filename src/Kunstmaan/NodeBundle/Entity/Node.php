@@ -189,7 +189,7 @@ class Node extends AbstractEntity implements GedmoNode
     /**
      * @param bool $includeOffline
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|NodeTranslation[]
      */
     public function getNodeTranslations($includeOffline = false)
     {
