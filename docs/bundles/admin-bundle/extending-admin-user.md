@@ -6,9 +6,11 @@ To use this new feature, update the Kunstmaan Bundles to the latest version, and
 
 In config/kunstmaan_admin.yml add:
 
+
+kunstmaan_admin:
+    admin_user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
 ```
 parameters:
-    kunstmaan_admin.user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
     kunstmaan_user_management.user_admin_list_configurator.class: App\AdminList\UserAdminListConfigurator
 ```
 Create your own User class that extends the BaseUser class:
