@@ -6,37 +6,35 @@ use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ChangePasswordSuccessEvent extends BcEvent
+final class ChangePasswordSuccessEvent extends BcEvent
 {
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
-    /**
-     * @var UserInterface
-     */
+
+    /** @var UserInterface */
     protected $user;
+
     /** @var Response */
     private $response;
 
-    public function __construct(UserInterface $user, Request $request = null, Response $response = null)
+    public function __construct(UserInterface $user, Request $request, Response $response)
     {
         $this->user = $user;
         $this->request = $request;
         $this->response = $response;
     }
 
-    public function getUser()
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
 
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }

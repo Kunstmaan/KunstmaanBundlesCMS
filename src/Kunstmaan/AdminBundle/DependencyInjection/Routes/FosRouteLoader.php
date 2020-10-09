@@ -9,7 +9,10 @@ use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Routing\Loader\XmlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
 
-class FosRouteLoader implements RouteLoaderInterface
+/**
+ * @internal
+ */
+final class FosRouteLoader implements RouteLoaderInterface
 {
     /** @var bool */
     private $enableCustomLogin;
@@ -25,7 +28,6 @@ class FosRouteLoader implements RouteLoaderInterface
         $fileLocator = new FileLocator($configDirectories);
 
         if (!$this->enableCustomLogin) {
-            @trigger_error('Using FosUserBundle routing and services is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use our custom implementation instead', E_USER_DEPRECATED);
             $loaderResolver = new LoaderResolver([new XmlFileLoader($fileLocator)]);
             $delegatingLoader = new DelegatingLoader($loaderResolver);
             $collection = $delegatingLoader->load('routing_fos.xml');
