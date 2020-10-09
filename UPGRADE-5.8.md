@@ -10,10 +10,8 @@ If you want to enable it now you can use the following config to do so.
 ```
 kunstmaan_admin:
   enable_new_cms_authentication: true
-
-#Only necessary when you have overriden the default Kunstmaan CMS User object as when you enable the enable_new_cms_authentication option we do not longer rely on the fos_user userclass parameter.
-parameters:
-  kunstmaan_admin.user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
+  #Only necessary when you have overriden the default Kunstmaan CMS User object as when you enable the enable_new_cms_authentication option we do not longer rely on the fos_user userclass parameter.
+  admin_user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
   ```
 If you enable our custom login implementation you will also have to update your security.yaml to use our new routes. Upon changing these 2 things you are now not using anything from the FosUserBundle anymore.
 
