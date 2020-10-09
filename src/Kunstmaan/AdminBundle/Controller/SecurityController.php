@@ -9,14 +9,22 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /** @var AuthenticationUtils */
+    private $authenticationUtils;
+
+    public function __construct(AuthenticationUtils $authenticationUtils)
+    {
+        $this->authenticationUtils = $authenticationUtils;
+    }
+
     /**
      * @Route("/login", name="cms_login", methods={"GET", "POST"})
      * @Route("/login", name="fos_user_security_login", methods={"GET", "POST"})
      */
-    public function loginAction(AuthenticationUtils $authenticationUtils)
+    public function loginAction()
     {
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $error = $this->authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
         $form = $this->createForm(UserLoginType::class);
 
         return $this->render(

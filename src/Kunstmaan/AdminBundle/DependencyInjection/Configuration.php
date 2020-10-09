@@ -43,6 +43,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('admin_password')->end()
+                ->scalarNode('admin_user_class')->defaultNull()->end()
+                ->scalarNode('admin_group_class')->defaultNull()->end()
                 ->scalarNode('mail_from_address')->defaultValue('kunstmaancms@myproject.dev')->end()
                 ->scalarNode('mail_from_name')->defaultValue('Kunstmaan CMS')->end()
                 ->booleanNode('enable_new_cms_authentication')->defaultFalse()->end()

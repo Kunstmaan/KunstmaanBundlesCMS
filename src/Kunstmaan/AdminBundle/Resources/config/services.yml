@@ -19,8 +19,6 @@ parameters:
     kunstmaan_admin.toolbar.listener.class: 'Kunstmaan\AdminBundle\EventListener\ToolbarListener'
     kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
     kunstmaan_admin.toolbar.collector.exception.class: 'Kunstmaan\AdminBundle\Toolbar\ExceptionDataCollector'
-    kunstmaan_admin.user_class: 'Kunstmaan\AdminBundle\Entity\User'
-    kunstmaan_admin.group_class: 'Kunstmaan\AdminBundle\Entity\Group'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -345,8 +343,8 @@ services:
 
     Kunstmaan\AdminBundle\Controller\SecurityController:
         public: true
-        tags:
-            - { name: controller.service_arguments }
+        arguments:
+            - '@security.authentication_utils'
 
     Kunstmaan\AdminBundle\Controller\ResettingController:
         public: true
@@ -358,8 +356,6 @@ services:
             - '@security.user_password_encoder.generic'
             - '@security.token_storage'
             - '@session'
-        tags:
-            - { name: controller.service_arguments }
 
     Kunstmaan\AdminBundle\Service\PasswordMailerService:
         arguments:
@@ -378,17 +374,23 @@ services:
         tags:
             - { name: routing.route_loader }
 
-    kunstmaan_admin.user_manager:
-        class: Kunstmaan\AdminBundle\Service\UserManager
-        public: true
+    Kunstmaan\AdminBundle\Service\UserManager:
+        public: false
         arguments:
             - '@security.encoder_factory'
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.user_class%'
 
-    kunstmaan_admin.group_manager:
-        class: Kunstmaan\AdminBundle\Service\GroupManager
+    kunstmaan_admin.user_manager:
         public: true
+        alias: Kunstmaan\AdminBundle\Service\UserManager
+
+    Kunstmaan\AdminBundle\Service\GroupManager:
+        public: false
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.group_class%'
+
+    kunstmaan_admin.group_manager:
+        public: true
+        alias: Kunstmaan\AdminBundle\Service\GroupManager
