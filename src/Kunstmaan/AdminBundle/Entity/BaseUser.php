@@ -576,7 +576,7 @@ abstract class BaseUser implements UserInterface
         // NEXT_MAJOR remove method
         @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
 
-        return true;
+        return false;
     }
 
     /**
