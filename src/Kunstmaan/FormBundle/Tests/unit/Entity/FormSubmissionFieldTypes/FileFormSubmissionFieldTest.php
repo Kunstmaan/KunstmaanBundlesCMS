@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
+use Gaufrette\Filesystem;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use PHPUnit\Framework\TestCase;
@@ -81,18 +82,16 @@ class FileFormSubmissionFieldTest extends TestCase
     public function testUpload()
     {
         $object = $this->object;
-        $this->assertNull($object->upload('..', '..'));
 
         $file = $this->getMockBuilder(UploadedFile::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $file->expects($this->any())
-            ->method('move')
-            ->willReturn(true);
+            ->method('getPathname')
+            ->willReturn(__FILE__);
 
         $object->file = $file;
-        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/');
 
         $form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
@@ -112,6 +111,16 @@ class FileFormSubmissionFieldTest extends TestCase
             ->method('getParameter')
             ->willReturn('whatever');
 
+        $filesystem = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container->expects($this->any())
+            ->method('get')
+            ->willReturn($filesystem);
+
         $object->onValidPost($form, $builder, $request, $container);
+        $this->assertNull($object->upload('..', $filesystem));
+        $object->upload(__DIR__ . '/../../Resources/assets/', $filesystem);
     }
 }
