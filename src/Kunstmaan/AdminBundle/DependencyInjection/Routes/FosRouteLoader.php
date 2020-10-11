@@ -24,17 +24,14 @@ final class FosRouteLoader implements RouteLoaderInterface
 
     public function loadRoutes()
     {
-        $configDirectories = [__DIR__.'/../../Resources/config'];
-        $fileLocator = new FileLocator($configDirectories);
-
-        if (!$this->enableCustomLogin) {
-            $loaderResolver = new LoaderResolver([new XmlFileLoader($fileLocator)]);
-            $delegatingLoader = new DelegatingLoader($loaderResolver);
-            $collection = $delegatingLoader->load('routing_fos.xml');
-        } else {
-            $collection = new RouteCollection();
+        if ($this->enableCustomLogin) {
+            return new RouteCollection();
         }
 
-        return $collection;
+        $fileLocator = new FileLocator([__DIR__.'/../../Resources/config']);
+        $loaderResolver = new LoaderResolver([new XmlFileLoader($fileLocator)]);
+        $delegatingLoader = new DelegatingLoader($loaderResolver);
+
+        return $delegatingLoader->load('routing_fos.xml');
     }
 }

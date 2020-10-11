@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Mime\Address;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -92,7 +91,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
 
-        $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer_address');
+        $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer.default_sender');
         $mailerAddress->setArgument('$address', $config['mail_from_address']);
         $mailerAddress->setArgument('$name', $config['mail_from_name']);
 

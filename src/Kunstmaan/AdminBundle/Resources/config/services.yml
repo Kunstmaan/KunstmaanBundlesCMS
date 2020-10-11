@@ -362,9 +362,9 @@ services:
             - '@mailer.mailer'
             - '@router'
             - '@translator'
-            - '@kunstmaan_admin.mailer_address'
+            - '@kunstmaan_admin.mailer.default_sender'
 
-    kunstmaan_admin.mailer_address:
+    kunstmaan_admin.mailer.default_sender:
         class: Symfony\Component\Mime\Address
 
     Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
