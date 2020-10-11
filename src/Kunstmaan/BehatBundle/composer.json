@@ -16,7 +16,7 @@
         "php": "^7.2"
     },
     "require-dev": {
-        "symfony/http-kernel": "^3.4|^4.2",
+        "symfony/http-kernel": "^3.4|^4.4",
         "behat/behat": "3.1.0rc1",
         "behat/symfony2-extension": "~2.1.1",
         "behat/mink": "dev-master",
