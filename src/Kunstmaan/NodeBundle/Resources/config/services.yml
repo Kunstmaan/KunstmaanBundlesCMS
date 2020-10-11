@@ -167,17 +167,17 @@ services:
 
     kunstmaan_node.page_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\PageCreatorService
-        calls:
-            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
-            - [ setACLPermissionCreatorService, [ '@kunstmaan_node.acl_permission_creator_service' ] ]
-            - [ setUserEntityClass, [ '%fos_user.model.user.class%' ] ]
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_node.acl_permission_creator_service'
+            - '%fos_user.model.user.class%'
         public: true
 
     kunstmaan_node.acl_permission_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService
-        calls:
-            - [ setAclProvider, [ '@security.acl.provider' ] ]
-            - [ setObjectIdentityRetrievalStrategy, [ '@security.acl.object_identity_retrieval_strategy' ] ]
+        arguments:
+            - '@security.acl.provider'
+            - '@security.acl.object_identity_retrieval_strategy'
         public: true
 
     kunstmaan_node.doctrine_mapping.listener:
