@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 class UserManager
 {
     /** @var EntityManagerInterface */
-    private $em;
+    protected $em;
 
     /** @var string */
     private $class;

@@ -57,10 +57,10 @@ abstract class RoleCommand extends Command
             throw new RuntimeException('Not enough arguments.');
         }
 
-        return $this->executeRoleCommand($output, $username, $super, $role);
+        $this->executeRoleCommand($output, $username, $super, $role);
     }
 
-    abstract protected function executeRoleCommand(OutputInterface $output, string $username, bool $super, string $role): int;
+    abstract protected function executeRoleCommand(OutputInterface $output, $username, $super, $role);
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
