@@ -368,14 +368,12 @@ services:
         class: Symfony\Component\Mime\Address
 
     Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
-        public: true
         arguments:
             - '%kunstmaan_admin.enable_new_cms_authentication%'
         tags:
             - { name: routing.route_loader }
 
     Kunstmaan\AdminBundle\Service\UserManager:
-        public: false
         arguments:
             - '@security.encoder_factory'
             - '@doctrine.orm.entity_manager'
@@ -386,7 +384,6 @@ services:
         alias: Kunstmaan\AdminBundle\Service\UserManager
 
     Kunstmaan\AdminBundle\Service\GroupManager:
-        public: false
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.group_class%'
