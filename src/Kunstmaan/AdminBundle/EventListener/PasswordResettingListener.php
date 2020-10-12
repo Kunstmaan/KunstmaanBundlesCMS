@@ -35,7 +35,7 @@ class PasswordResettingListener
     /**
      * @param FilterUserResponseEvent $event
      *
-     * @deprecated Using the Fos FilterUserResponseEvent is deprecated in KunstmaanNodeBundle 5.8 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\AdminBundle\Event\ ChangePasswordSuccessEvent" instead.
+     * @deprecated Using the FosUser FilterUserResponseEvent is deprecated in KunstmaanNodeBundle 5.8 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent" instead.
      */
     public function onPasswordResettingSuccess(FilterUserResponseEvent $event)
     {
