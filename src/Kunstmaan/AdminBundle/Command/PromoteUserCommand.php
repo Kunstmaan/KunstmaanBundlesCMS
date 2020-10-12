@@ -13,7 +13,6 @@ class PromoteUserCommand extends RoleCommand
         parent::configure();
 
         $this
-            ->setName('kuma:user:promote')
             ->setDescription('Promotes a user by adding a role')
             ->setHelp(<<<'EOT'
 The <info>kuma:user:promote</info> command promotes a user by adding a role

@@ -18,7 +18,7 @@ If you enable our custom login implementation you will also have to update your 
 ```
 security:
   encoders:
-    FOS\UserBundle\Model\UserInterface: sha512
+    Kunstmaan\AdminBundle\Entity\UserInterface: sha512
 
   providers:
     cms_users:

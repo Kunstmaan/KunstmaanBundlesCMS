@@ -36,7 +36,6 @@ final class ChangePasswordCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kuma:user:change-password')
             ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
