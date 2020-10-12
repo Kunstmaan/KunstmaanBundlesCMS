@@ -3,6 +3,6 @@
     {% if name is empty %}
         {% set name = "Download" %}
     {% endif %}
-    <p class="download-pp"><a href="{{ app.request.schemeandhttphost ~ app.request.basePath ~ asset(resource.media.url) }}" target="_blank" class="download">{{ name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span></p>
+    <p class="download-pp"><a href="{{ absolute_url(asset(resource.media.url)) }}" target="_blank" class="download">{{ name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span></p>
 {% endif %}
 

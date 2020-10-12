@@ -102,7 +102,7 @@
             <meta name="twitter:player" content="{{ videoUrl }}" />
             <meta name="twitter:player:width" content="960">
             <meta name="twitter:player:height" content="540">
-            <meta name="twitter:image:src" content="{{ app.request.schemeandhttphost ~ asset(seo.twitterImage.metaData.thumbnail_url) }}" />
+            <meta name="twitter:image:src" content="{{ absolute_url(asset(seo.twitterImage.metaData.thumbnail_url)) }}" />
         {% else %}
             <meta name="twitter:image:src" content="{{ asset(seo.twitterImage.url | imagine_filter('tw_card_image')) }}" />
         {% endif %}
