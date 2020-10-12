@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 final class ChangePasswordSuccessEvent extends BcEvent
 {
     /** @var Request */
-    protected $request;
+    private $request;
 
     /** @var UserInterface */
-    protected $user;
+    private $user;
 
     /** @var Response */
     private $response;
