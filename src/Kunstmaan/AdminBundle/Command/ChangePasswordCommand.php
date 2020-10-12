@@ -71,6 +71,8 @@ EOT
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));
+
+        return 0;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

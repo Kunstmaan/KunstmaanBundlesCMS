@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PromoteUserCommand extends RoleCommand
+final class PromoteUserCommand extends RoleCommand
 {
     protected static $defaultName = 'kuma:user:promote';
 
@@ -46,5 +46,7 @@ EOT
         }
 
         $this->userManager->updateUser($user);
+
+        return 0;
     }
 }

@@ -92,8 +92,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         }
 
         $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer.default_sender');
-        $mailerAddress->setArgument('$address', $config['mail_from_address']);
-        $mailerAddress->setArgument('$name', $config['mail_from_name']);
+        $mailerAddress->setArgument(0, $config['mail_from_address']);
+        $mailerAddress->setArgument(1, $config['mail_from_name']);
 
         $this->addWebsiteTitleParameter($container, $config);
         $this->addMultiLanguageParameter($container, $config);

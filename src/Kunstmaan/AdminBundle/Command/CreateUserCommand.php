@@ -24,6 +24,8 @@ use Symfony\Component\Console\Question\Question;
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
+    protected static $defaultName = 'kuma:user:create';
+
     /** @var array */
     protected $groups = [];
     /** @var EntityManagerInterface */
@@ -65,8 +67,7 @@ class CreateUserCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:user:create')
-            ->setDescription('Create a user.')
+        $this->setDescription('Create a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
