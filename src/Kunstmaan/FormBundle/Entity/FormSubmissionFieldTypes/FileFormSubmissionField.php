@@ -81,7 +81,7 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Move the file to the given uploadDir and save the filename
      */
-    public function upload($webDir, Filesystem $fileSystem)
+    public function upload($uploadDir, $webDir, ?Filesystem $fileSystem)
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
@@ -94,9 +94,20 @@ class FileFormSubmissionField extends FormSubmissionField
         $uuid = uniqid();
         $this->setUuid($uuid);
 
-        $url = \sprintf('%s%s/%s', $webDir, $uuid, $safeFileName);
-        $content = \file_get_contents($this->file->getPathname());
-        $fileSystem->write($url, $content);
+        if ($fileSystem) {
+            $url = \sprintf('%s%s/%s', $webDir, $uuid, $safeFileName);
+            $content = \file_get_contents($this->file->getPathname());
+            $fileSystem->write($url, $content);
+        } else {
+            @trigger_error(
+                    'Not passing the filesystem as the third argument of upload is deprecated since KunstmaanMediaBundle 5.7 and will be required in KunstmaanMediaBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+
+            // move takes the target directory and then the target filename to move to
+            $this->file->move(sprintf('%s/%s', $uploadDir, $uuid), $safeFileName);
+            $url = sprintf('%s%s/', $webDir, $uuid) . $safeFileName;
+        }
 
         // set the path property to the filename where you'ved saved the file
         $this->fileName = $safeFileName;
@@ -118,9 +129,15 @@ class FileFormSubmissionField extends FormSubmissionField
      */
     public function onValidPost(Form $form, FormBuilderInterface $formBuilder, Request $request, ContainerInterface $container)
     {
+        $uploadDir = $container->getParameter('form_submission_rootdir');
         $webDir = $container->getParameter('form_submission_webdir');
-        $fileSystem = $container->get('kunstmaan_form.filesystem');
-        $this->upload($webDir, $fileSystem);
+
+        $fileSystem = null;
+        if ($container->has('kunstmaan_form.filesystem')) {
+            $fileSystem = $container->get('kunstmaan_form.filesystem');
+        }
+
+        $this->upload($uploadDir, $webDir, $fileSystem);
     }
 
     /**

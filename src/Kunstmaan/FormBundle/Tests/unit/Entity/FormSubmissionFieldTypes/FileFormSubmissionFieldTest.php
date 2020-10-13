@@ -116,11 +116,56 @@ class FileFormSubmissionFieldTest extends TestCase
             ->getMock();
 
         $container->expects($this->any())
+            ->method('has')
+            ->willReturn(true);
+
+        $container->expects($this->any())
             ->method('get')
             ->willReturn($filesystem);
 
         $object->onValidPost($form, $builder, $request, $container);
-        $this->assertNull($object->upload('..', $filesystem));
-        $object->upload(__DIR__ . '/../../Resources/assets/', $filesystem);
+        $this->assertNull($object->upload('...', '..', $filesystem));
+        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/', $filesystem);
+    }
+
+    public function testUploadBC()
+    {
+        $object = $this->object;
+        $this->assertNull($object->upload('..', '..', null));
+
+        $file = $this->getMockBuilder(UploadedFile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $file->expects($this->any())
+            ->method('move')
+            ->willReturn(true);
+
+        $object->file = $file;
+        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/', null);
+
+        $form = $this->getMockBuilder(Form::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $builder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request = new Request();
+
+        $container = $this->getMockBuilder(Container::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container->expects($this->any())
+            ->method('getParameter')
+            ->willReturn('whatever');
+
+        $container->expects($this->any())
+            ->method('has')
+            ->willReturn(false);
+
+        $object->onValidPost($form, $builder, $request, $container);
     }
 }
