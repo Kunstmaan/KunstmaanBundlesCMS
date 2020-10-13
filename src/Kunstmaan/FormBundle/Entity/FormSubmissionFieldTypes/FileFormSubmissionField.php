@@ -81,7 +81,7 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Move the file to the given uploadDir and save the filename
      */
-    public function upload($uploadDir, $webDir, ?Filesystem $fileSystem)
+    public function upload($uploadDir, $webDir, Filesystem $fileSystem = null)
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {

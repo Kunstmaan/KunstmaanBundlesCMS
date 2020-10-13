@@ -131,7 +131,7 @@ class FileFormSubmissionFieldTest extends TestCase
     public function testUploadBC()
     {
         $object = $this->object;
-        $this->assertNull($object->upload('..', '..', null));
+        $this->assertNull($object->upload('..', '..'));
 
         $file = $this->getMockBuilder(UploadedFile::class)
             ->disableOriginalConstructor()
@@ -142,7 +142,7 @@ class FileFormSubmissionFieldTest extends TestCase
             ->willReturn(true);
 
         $object->file = $file;
-        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/', null);
+        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/');
 
         $form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
