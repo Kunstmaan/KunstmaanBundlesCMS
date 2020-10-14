@@ -23,7 +23,7 @@ EOT
             );
     }
 
-    protected function executeRoleCommand(OutputInterface $output, $username, $super, $role)
+    protected function executeRoleCommand(OutputInterface $output, string $username, bool $super, string $role): int
     {
         $user = $this->userManager->findUserByUsername($username);
 
