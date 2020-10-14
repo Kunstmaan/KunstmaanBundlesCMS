@@ -38,7 +38,7 @@ EOT
             if ($user->hasRole($role)) {
                 $output->writeln(sprintf('User "%s" did already have "%s" role.', $username, $role));
 
-                return;
+                return 1;
             }
 
             $user->addRole($role);
