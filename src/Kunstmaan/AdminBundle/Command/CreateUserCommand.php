@@ -162,8 +162,8 @@ EOT
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPlainPassword($password);
-        $user->setEnabled(!((bool)$inactive));
-        $user->setSuperAdmin((bool)$superAdmin);
+        $user->setEnabled(!((bool) $inactive));
+        $user->setSuperAdmin((bool) $superAdmin);
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
@@ -171,7 +171,7 @@ EOT
         $groupOutput = [];
 
         foreach (explode(',', $groupOption) as $groupId) {
-            if ((int)$groupId === 0) {
+            if ((int) $groupId === 0) {
                 foreach ($this->groups as $value) {
                     if ($groupId === $value->getName()) {
                         $group = $value;

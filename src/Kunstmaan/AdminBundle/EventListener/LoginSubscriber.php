@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
