@@ -15,6 +15,8 @@ class DomainConfiguration extends BaseDomainConfiguration
 
     /**
      * @var Node
+     *
+     * @deprecated since KunstmaanMultiDomainBundle 5.7 and will be removed in KunstmaanMultiDomainBundle 6.0. Use the `$rootNodeCache` property instead.
      */
     protected $rootNode;
 

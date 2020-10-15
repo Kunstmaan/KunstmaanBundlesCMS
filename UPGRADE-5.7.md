@@ -21,6 +21,11 @@ This header is an added security layer to avoid unintended and malicious uploads
 * Validator\Constraints\Media and Validator\Constraints\HasGuessableExtension have had their error constant values changed from integer to string uuid's because integers have been deprecated by Symfony.
 * All code related to the Aviary image editing service is deprecated because the service is discontinued.
 
+MultiDomainBundle
+-----------------
+
+* The `$rootNode` property on class `Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration` is deprecated and the `$rootNodeCache` property should be used instead.
+
 NodeBundle
 ----------
 
