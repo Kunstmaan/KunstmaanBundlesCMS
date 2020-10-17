@@ -42,12 +42,25 @@ abstract class BaseUser extends AbstractUser
     protected $googleId;
 
     /**
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="created_at", type="datetime_immutable", nullable=true)
+     */
+    protected $createdAt;
+
+    /**
+     * @var string|null
+     * @ORM\Column(name="created_by", type="string", nullable=true)
+     */
+    protected $createdBy;
+
+    /**
      * Construct a new user
      */
     public function __construct()
     {
         parent::__construct();
         $this->groups = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     /**
@@ -206,5 +219,20 @@ abstract class BaseUser extends AbstractUser
     public function isAccountNonLocked()
     {
         return $this->isEnabled();
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(string $createdBy): void
+    {
+        $this->createdBy = $createdBy;
     }
 }
