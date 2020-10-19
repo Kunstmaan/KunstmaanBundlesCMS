@@ -53,7 +53,8 @@ class GroupManager
 
     public function getClass()
     {
-        $metadata = $em->getClassMetadata($this->class);
+        $metadata = $this->em->getClassMetadata($this->class);
+
         return $metadata->getName();
     }
 
