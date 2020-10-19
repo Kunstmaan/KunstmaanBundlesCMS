@@ -11,6 +11,11 @@ AdminBundle
 
 * Validator\Constraints\PasswordRestrictions have had their error constant values changed from integer to string uuid's because integers have been deprecated by Symfony.
 
+GeneratorBundle
+----------
+
+* The task `npm run buildCmsAssets` is removed from the generated frontend build setup. This task is a remainder of old rework and does not work anymore with the new bundles setup. If you want to extend the Javascript functionality of the CMS, you can use the `admin-bundle-extra.js` in the `/assets/admin/js` directory.
+
 MediaBundle
 ------------
 

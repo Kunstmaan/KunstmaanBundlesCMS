@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-import chug from 'gulp-chug';
 
 import {
     images,
@@ -75,13 +74,4 @@ const startOptimized = gulp.series(
     server,
 );
 
-const buildCmsAssets = gulp.series(() => gulp.src('vendor/kunstmaan/bundles-cms/gulpfile.babel.js', { read: false })
-    .pipe(chug({
-        args: [
-            '--rootPath',
-            '../../../../../../../{% if isV4 %}public{% else %}web{% endif %}/assets/',
-        ],
-        tasks: ['buildOptimized'],
-    })));
-
-export { test, buildOptimized, testAndBuildOptimized, startLocal, startOptimized, buildCmsAssets };
+export { test, buildOptimized, testAndBuildOptimized, startLocal, startOptimized };
