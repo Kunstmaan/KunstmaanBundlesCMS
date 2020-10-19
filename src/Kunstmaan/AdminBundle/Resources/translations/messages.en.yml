@@ -12,14 +12,13 @@ security:
     login:
         username: Username
         password: Password
-        submit: submit
+        submit: Submit
         remember_me: Remember me
         logged_in_as: 'Logged in as %username%'
         logout: 'Log out'
     resetting:
-        send_email_success: "An email has been sent to your address"
-        send_email_failure: "Your email was not found"
-        user_not_found: "User not found"
+        send_email_success: 'An email has been sent to your address'
+        user_not_found: 'User not found'
         password_set_success: 'Your password has been changed.'
         email: 'Username or email address'
         reset: 'Reset password'

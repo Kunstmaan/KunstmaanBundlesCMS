@@ -84,8 +84,6 @@ class ResettingController extends AbstractController
                 $this->addFlash('success', 'security.resetting.send_email_success');
 
                 return $this->redirectToRoute('cms_reset_password');
-            } else {
-                $this->addFlash('danger', 'security.resetting.send_email_failure');
             }
         }
 

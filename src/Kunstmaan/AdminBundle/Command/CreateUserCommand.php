@@ -28,7 +28,7 @@ class CreateUserCommand extends ContainerAwareCommand
     protected static $defaultName = 'kuma:user:create';
 
     /** @var array */
-    protected $groups = [];
+    private $groups = [];
     /** @var EntityManagerInterface */
     private $em;
     /** @var GroupManager */

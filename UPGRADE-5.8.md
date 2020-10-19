@@ -5,8 +5,8 @@ AdminBundle
 ------------
 
 Implemented a custom replacement for FosUserBundle. It is disabled by default and will be enabled by default in BundlesCMS 6.0.
-If you want to enable it now you can use the following config to do so.
-
+If you want to enable it now you can use the following config to do so. If you depend on the showAction of the ProfileController in FosUserBundle than you have to implement your own
+action after enabling the new custom routes as we do not officially support this view in the cms.
 ```
 kunstmaan_admin:
   enable_new_cms_authentication: true

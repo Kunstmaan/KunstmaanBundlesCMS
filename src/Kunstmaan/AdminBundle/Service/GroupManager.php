@@ -11,25 +11,23 @@ class GroupManager
     /**
      * @var EntityManagerInterface
      */
-    protected $em;
+    private $em;
 
     /**
      * @var string
      */
-    protected $class;
+    private $class;
 
     /**
      * @var ObjectRepository
      */
-    protected $repository;
+    private $repository;
 
     public function __construct(EntityManagerInterface $em, string $class)
     {
         $this->em = $em;
         $this->repository = $em->getRepository($class);
-
-        $metadata = $em->getClassMetadata($class);
-        $this->class = $metadata->getName();
+        $this->class = $class;
     }
 
     public function createGroup($name)
@@ -55,7 +53,8 @@ class GroupManager
 
     public function getClass()
     {
-        return $this->class;
+        $metadata = $em->getClassMetadata($this->class);
+        return $metadata->getName();
     }
 
     public function findGroups()

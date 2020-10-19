@@ -13,10 +13,11 @@ class PasswordRequestType extends AbstractType
     {
         $builder
             ->add('email', TextType::class, [
+                'label' => 'settings.user.email',
                 'attr' => ['class' => 'form-control form-group--icon-in-control__form-control'],
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Reset password',
+                'label' => 'settings.user.password',
                 'attr' => ['class' => 'btn btn-primary btn--raise-on-hover'],
             ]);
     }
