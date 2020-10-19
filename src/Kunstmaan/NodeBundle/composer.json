@@ -18,7 +18,7 @@
         "kunstmaan/admin-bundle": "^5.8",
         "kunstmaan/adminlist-bundle": "~5.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "symfony/expression-language": "^3.4|^4.2",
+        "symfony/expression-language": "^3.4|^4.4",
         "symfony-cmf/routing-bundle": "~2.0"
     },
     "require-dev": {

@@ -198,9 +198,9 @@
                     {% endif %}
                 {% else %}
                     {{ adminthumb_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()['params']) }}
-                    <div class="row list-group">
+                    <div class="row pull-left">
                         <div class="col-xs-12">
-                            <div class="btn-group pull-right btn-group-md" role="group">
+                            <div class="btn-group btn-group-md" role="group">
                                 <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
                                     {{ 'media.folder.sortby' | trans }} <i class="fa fa-caret-down"></i>
                                 </button>
@@ -214,10 +214,10 @@
                                     {% endfor %}
                                 </ul>
                             </div>
+                            <div class="btn-group" role="group">
+                                {% include '@KunstmaanAdminList/AdminListTwigExtension/limit.html.twig' %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row list-group">
-                        {% include '@KunstmaanAdminList/AdminListTwigExtension/limit.html.twig' %}
                     </div>
 
                     {% if adminlist.count > 0 %}

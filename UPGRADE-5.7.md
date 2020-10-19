@@ -1,6 +1,12 @@
 UPGRADE FROM 5.6 to 5.7
 =======================
 
+General
+-------
+
+* We don't enable the templating component by default anymore. If you use the templating component or the `@templating` service, run `composer req symfony/templating` and activate it by enabling the `framework.templating` config in your project.
+* Update your database schema after the upgrade to have the latest entity changes applied to your database.
+
 AdminBundle
 ------------
 
@@ -16,10 +22,20 @@ This header is an added security layer to avoid unintended and malicious uploads
 * Validator\Constraints\Media and Validator\Constraints\HasGuessableExtension have had their error constant values changed from integer to string uuid's because integers have been deprecated by Symfony.
 * All code related to the Aviary image editing service is deprecated because the service is discontinued.
 
+MultiDomainBundle
+-----------------
+
+* The `$rootNode` property on class `Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration` is deprecated and the `$rootNodeCache` property should be used instead.
+
 NodeBundle
 ----------
 
 * The method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeIdQueryBuilder" is deprecated and will be removed in 6.0. Use the renamed method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeId" instead.
+
+NodeSearchBundle
+----------------
+
+* The "renderCustomSearchView", "renderDefaultSearchView" and "removeHtml" methods of the "Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration" class are deprecated and will be removed in 6.0. Use the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" service instead.
 
 UserManagementBundle
 ------------

@@ -164,9 +164,11 @@ EOT
         $user->setPlainPassword($password);
         $user->setEnabled(!((bool) $inactive));
         $user->setSuperAdmin((bool) $superAdmin);
+        $user->setCreatedBy('kuma:user:create command');
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
+
         // Attach groups
         $groupOutput = [];
 

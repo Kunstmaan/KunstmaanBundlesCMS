@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupInterface;
@@ -10,7 +11,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use DateTime;
 
 abstract class BaseUser implements UserInterface
 {
@@ -119,12 +119,25 @@ abstract class BaseUser implements UserInterface
     protected $enabled;
 
     /**
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(name="created_at", type="datetime_immutable", nullable=true)
+     */
+    protected $createdAt;
+
+    /**
+     * @var string|null
+     * @ORM\Column(name="created_by", type="string", nullable=true)
+     */
+    protected $createdBy;
+
+    /**
      * Construct a new user
      */
     public function __construct()
     {
         $this->groups = new ArrayCollection();
         $this->roles = [];
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     /**
@@ -160,7 +173,7 @@ abstract class BaseUser implements UserInterface
     {
         $groups = $this->groups;
 
-        $groupIds = array();
+        $groupIds = [];
         if (\count($groups) > 0) {
             /* @var $group GroupInterface */
             foreach ($groups as $group) {
@@ -248,29 +261,26 @@ abstract class BaseUser implements UserInterface
         $this->googleId = $googleId;
     }
 
-    /**
-     * @param ClassMetadata $metadata
-     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('username', new NotBlank());
         $metadata->addPropertyConstraints(
             'plainPassword',
-            array(
-                new NotBlank(array('groups' => array('Registration'))),
-                new PasswordRestrictions(array('groups' => array('Registration', 'Default'))),
-            )
+            [
+                new NotBlank(['groups' => ['Registration']]),
+                new PasswordRestrictions(['groups' => ['Registration', 'Default']]),
+            ]
         );
         $metadata->addPropertyConstraint('email', new NotBlank());
         $metadata->addPropertyConstraint('email', new Email());
-        $metadata->addConstraint(new UniqueEntity(array(
+        $metadata->addConstraint(new UniqueEntity([
             'fields' => 'username',
             'message' => 'errors.user.loginexists',
-        )));
-        $metadata->addConstraint(new UniqueEntity(array(
+        ]));
+        $metadata->addConstraint(new UniqueEntity([
             'fields' => 'email',
             'message' => 'errors.user.emailexists',
-        )));
+        ]));
     }
 
     /**
@@ -288,9 +298,6 @@ abstract class BaseUser implements UserInterface
         return $this->isEnabled();
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
@@ -303,9 +310,6 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -357,7 +361,7 @@ abstract class BaseUser implements UserInterface
      */
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
 
         foreach ($roles as $role) {
             $this->addRole($role);
@@ -438,7 +442,7 @@ abstract class BaseUser implements UserInterface
      */
     public function getGroupNames()
     {
-        $names = array();
+        $names = [];
         foreach ($this->getGroups() as $group) {
             $names[] = $group->getName();
         }
@@ -555,6 +559,21 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(string $createdBy): void
+    {
+        $this->createdBy = $createdBy;
+    }
+
     public function isAccountNonExpired()
     {
         // NEXT_MAJOR remove method
@@ -584,14 +603,14 @@ abstract class BaseUser implements UserInterface
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->password,
             $this->salt,
             $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-        ));
+        ]);
     }
 
     /**
@@ -608,6 +627,6 @@ abstract class BaseUser implements UserInterface
             $this->enabled,
             $this->id,
             $this->email,
-            ] = $data;
+        ] = $data;
     }
 }

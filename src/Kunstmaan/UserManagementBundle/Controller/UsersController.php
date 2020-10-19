@@ -13,6 +13,7 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
@@ -103,6 +104,7 @@ class UsersController extends BaseSettingsController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
+                $user->setCreatedBy($this->getUser()->getUsername());
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('kunstmaan_admin.user_manager');
                 $userManager->updateUser($user, true);
@@ -272,10 +274,13 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
+            $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());
             $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
 
             $em->remove($user);
             $em->flush();
+
+            $this->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
 
             $this->addFlash(
                 FlashTypes::SUCCESS,

@@ -53,6 +53,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             true,
             false
         );
+        $user1->setCreatedBy('CMS installation');
         $manager->flush();
 
         $output = new ConsoleOutput();
