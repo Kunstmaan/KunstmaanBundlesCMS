@@ -9,7 +9,7 @@ In config/kunstmaan_admin.yml add:
 
 ```
 kunstmaan_admin:
-    admin_user_class: Kunstmaan\Rest\CoreBundle\Entity\RestUser
+    admin_user_class: App\Entity\User
 
 parameters:
     kunstmaan_user_management.user_admin_list_configurator.class: App\AdminList\UserAdminListConfigurator
