@@ -30,5 +30,5 @@ body {
 }
 
 *:focus {
-    outline: none !important;
+    outline: 1px solid var(--color-kuma-secondary-2);
 }

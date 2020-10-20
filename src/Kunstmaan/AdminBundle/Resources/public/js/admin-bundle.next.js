@@ -5743,6 +5743,131 @@ function updateSearch(searchItems, searchResults) {
 
 /***/ }),
 
+/***/ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/config.js":
+/*!**************************************************************************!*\
+  !*** ./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/config.js ***!
+  \**************************************************************************/
+/*! exports provided: SELECTORS, MODIFIERS, SESSION_ITEM_NAME */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECTORS", function() { return SELECTORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MODIFIERS", function() { return MODIFIERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SESSION_ITEM_NAME", function() { return SESSION_ITEM_NAME; });
+var SELECTORS = {
+  NAV_HOLDER: '.js-side-nav-holder',
+  KEEP_OPEN_CONTROL: '.js-side-nav-keep-open'
+};
+var MODIFIERS = {
+  OPEN: 'kuma-main-app__sidebar--open',
+  KEEP_OPEN: 'kuma-main-app__sidebar--keep-open'
+};
+var SESSION_ITEM_NAME = 'keepOpen';
+
+
+/***/ }),
+
+/***/ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/index.js":
+/*!*************************************************************************!*\
+  !*** ./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/index.js ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SideNav; });
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config */ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/config.js");
+/* harmony import */ var _initSideNav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./initSideNav */ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/initSideNav.js");
+
+
+function SideNav() {
+  var navHolder = document.querySelector(_config__WEBPACK_IMPORTED_MODULE_0__["SELECTORS"].NAV_HOLDER);
+  Object(_initSideNav__WEBPACK_IMPORTED_MODULE_1__["initSideNav"])(navHolder);
+}
+
+/***/ }),
+
+/***/ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/initSideNav.js":
+/*!*******************************************************************************!*\
+  !*** ./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/initSideNav.js ***!
+  \*******************************************************************************/
+/*! exports provided: initSideNav */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initSideNav", function() { return initSideNav; });
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config */ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/config.js");
+
+function initSideNav(holder) {
+  var keepOpenControl = holder.querySelector(_config__WEBPACK_IMPORTED_MODULE_0__["SELECTORS"].KEEP_OPEN_CONTROL);
+  var keepOpen = checkSessionStorage();
+  setKeepOpenControl({
+    keepOpenControl: keepOpenControl,
+    keepOpen: keepOpen
+  });
+  handleKeepOpen({
+    holder: holder,
+    keepOpen: keepOpen
+  });
+  keepOpenControl.addEventListener('change', function () {
+    keepOpen = keepOpenControl.checked;
+    handleKeepOpen({
+      holder: holder,
+      keepOpen: keepOpen
+    });
+  });
+}
+
+function setKeepOpenControl(_ref) {
+  var keepOpenControl = _ref.keepOpenControl,
+      keepOpen = _ref.keepOpen;
+  keepOpenControl.checked = keepOpen;
+}
+
+function handleKeepOpen(_ref2) {
+  var holder = _ref2.holder,
+      keepOpen = _ref2.keepOpen;
+
+  if (keepOpen) {
+    var _holder$classList;
+
+    (_holder$classList = holder.classList).add.apply(_holder$classList, [_config__WEBPACK_IMPORTED_MODULE_0__["MODIFIERS"].OPEN, _config__WEBPACK_IMPORTED_MODULE_0__["MODIFIERS"].KEEP_OPEN]);
+
+    setSessionStorage();
+  } else {
+    var _holder$classList2;
+
+    (_holder$classList2 = holder.classList).remove.apply(_holder$classList2, [_config__WEBPACK_IMPORTED_MODULE_0__["MODIFIERS"].OPEN, _config__WEBPACK_IMPORTED_MODULE_0__["MODIFIERS"].KEEP_OPEN]);
+
+    clearSessionStorage();
+  }
+}
+
+function checkSessionStorage() {
+  if (sessionStorage.getItem(_config__WEBPACK_IMPORTED_MODULE_0__["SESSION_ITEM_NAME"])) {
+    return true;
+  }
+
+  return false;
+}
+
+function setSessionStorage() {
+  if (!sessionStorage.getItem(_config__WEBPACK_IMPORTED_MODULE_0__["SESSION_ITEM_NAME"])) {
+    sessionStorage.setItem(_config__WEBPACK_IMPORTED_MODULE_0__["SESSION_ITEM_NAME"], true);
+  }
+}
+
+function clearSessionStorage() {
+  if (sessionStorage.getItem(_config__WEBPACK_IMPORTED_MODULE_0__["SESSION_ITEM_NAME"])) {
+    sessionStorage.removeItem(_config__WEBPACK_IMPORTED_MODULE_0__["SESSION_ITEM_NAME"]);
+  }
+}
+
+/***/ }),
+
 /***/ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/app.js":
 /*!**************************************************************!*\
   !*** ./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/app.js ***!
@@ -5753,13 +5878,16 @@ function updateSearch(searchItems, searchResults) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PagePartChooser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PagePartChooser */ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/PagePartChooser/index.js");
-/* harmony import */ var svgxuse_svgxuse__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svgxuse/svgxuse */ "./node_modules/svgxuse/svgxuse.js");
-/* harmony import */ var svgxuse_svgxuse__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(svgxuse_svgxuse__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _SlideNav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SlideNav */ "./src/Kunstmaan/AdminBundle/Resources/ui/jsnext/SlideNav/index.js");
+/* harmony import */ var svgxuse_svgxuse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! svgxuse/svgxuse */ "./node_modules/svgxuse/svgxuse.js");
+/* harmony import */ var svgxuse_svgxuse__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(svgxuse_svgxuse__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
 function init() {
   _PagePartChooser__WEBPACK_IMPORTED_MODULE_0__["default"].init();
+  Object(_SlideNav__WEBPACK_IMPORTED_MODULE_1__["default"])();
 } // This script is loaded dynamically, so it could be that DOMContentLoaded was already fired when this script is executed
 
 

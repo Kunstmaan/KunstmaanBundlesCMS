@@ -4,13 +4,14 @@
 
 .kuma-main-nav {
     padding: 20px 0;
+    flex: 1 1 auto;
+    overflow: auto;
 }
 
 .kuma-main-nav__item {
     position: relative;
 
-    display: flex;
-    align-items: middle;
+    display: block;
     padding: 10px 25px;
 
     &:hover,
@@ -41,13 +42,13 @@
     top: 50%;
 
     display: block;
-    transform: translate3d(0, -50%, 0);
+    transform: translate3d(-20px, -50%, 0);
+
+    opacity: 0;
 
     font-size: 16px;
     color: var(--color-greyscale-100);
 
-    visibility: hidden;
-
-    transition: visibility .3s $snip-ease-sine-in-out;
+    transition: opacity .3s $snip-ease-sine-in-out, transform .3s $snip-ease-sine-in-out;
     transition-delay: 0;
 }

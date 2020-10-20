@@ -1,7 +1,14 @@
 <header class="kuma-main-app__sidebar__header">
-    <h1 class="kuma-main-app__sidebar__title">
-        {{ websitetitle | trans }}
-    </h1>
+    <div class="kuma-main-app__sidebar__title-holder">
+        {% if admin_logo is defined %}
+            <img class="kuma-main-app__sidebar__logo" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+        {% else %}
+            <h1 class="kuma-main-app__sidebar__title">
+                {{ websitetitle | trans }}
+            </h1>
+        {% endif %}
+    </div>
+    
 
     <span class="kuma-main-app__sidebar__language-chooser kuma-language-chooser">
         en
@@ -27,27 +34,33 @@
         </a>
     {% endfor %}
 </nav>
-<hr>
-<div class="kuma-main-app__sidebar__user-control">
-    <p class="kuma-main-app__sidebar__user-control__logout-holder">
-        <a href="{{ path('fos_user_security_logout') }}" class="kuma-main-app__sidebar__user-control__logout">
-            <svg class="kuma-main-app__sidebar__user-control__logout__icon">
+<div class="kuma-user-nav">
+    <div class="kuma-user-nav__settings">
+        <a href="{{ path('fos_user_security_logout') }}" class="kuma-user-nav__logout">
+            <svg class="kuma-user-nav__logout__icon">
                 <use xlink:href="{{ asset('/bundles/kunstmaanadmin/icons/symbol-defs.svg') }}#icon-logout"></use>
             </svg>
 
-            <span class="kuma-main-app__sidebar__user-control__logout__text">
+            <span class="kuma-user-nav__logout__text">
                 Logout
             </span>
         </a>
-    </p>
+        <div class="toggle-switch kuma-user-nav__keep-open-toggle">
+            <input type="checkbox" id="kuma-nav-keep-open-switch" class="js-side-nav-keep-open toggle-switch__control">
+            <label for="kuma-nav-keep-open-switch" class="toggle-switch__label kuma-user-nav__keep-open-toggle__label">
+                Keep open
+                <div class="toggle-switch__switch"></div>
+            </label>
+        </div>
+    </div>
 
-    <div class="kuma-main-app__sidebar__user">
-        <figure class="kuma-main-app__sidebar__user__figure">
-            <svg class="kuma-main-app__sidebar__user__figure__icon">
+    <div class="kuma-user-nav__info">
+        <figure class="kuma-user-nav__info__figure">
+            <svg class="kuma-user-nav__info__figure__icon">
                 <use xlink:href="{{ asset('/bundles/kunstmaanadmin/icons/symbol-defs.svg') }}#icon-user"></use>
             </svg>
         </figure>
-        <p class="kuma-main-app__sidebar__user-name">
+        <p class="kuma-user-nav__info__name">
             {{ app.user }}
         </p>
     </div>

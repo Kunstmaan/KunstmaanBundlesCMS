@@ -1,4 +1,4 @@
-{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+{% extends '@KunstmaanAdmin/Default/layout_next.html.twig' %}
 
 {% block admin_page_title %}
     <div class="col-sm-6 col-md-8">
@@ -27,12 +27,12 @@
         </div>
     {% endif %}
 {% endblock %}
-
+{# 
 {% block appHeader %}
     <header class="kuma-main-header">
         Welcome {{ app.user }}
     </header>
-{% endblock %}
+{% endblock %} #}
 
 {% block content %}
     {% if dashboardConfiguration %}

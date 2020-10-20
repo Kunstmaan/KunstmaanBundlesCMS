@@ -4,16 +4,6 @@
 
 $transition: .6s $snip-ease-sine-in-out;
 
-@keyframes blockToFadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 .kuma-main-app-holder {
     display: flex;
     height: 100%;
@@ -22,38 +12,57 @@ $transition: .6s $snip-ease-sine-in-out;
 
 .kuma-main-app__content-holder {
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     overflow: auto;
 }
 
 .kuma-main-app__content {
+    display: flex;
+    flex: 1;
+}
+
+.kuma-main-app__main-content {
     padding: 90px;
+    flex: 1;
 }
 
 .kuma-main-app__sidebar__header {
     padding: 15px;
     overflow: hidden;
     display: flex;
+    flex: 0 0 auto;
     justify-content: flex-end;
     align-items: center;
 
     transition: background-color $transition;
 }
 
-.kuma-main-app__sidebar__title {
+.kuma-main-app__sidebar__title-holder {
     position: absolute;
     top: 0;
     left: 0;
 
-    padding: 20px;
     margin: 0;
-
-    color: var(--color-client-text-on-bg);
 
     visibility: hidden;
 
     transition: visibility .3s $snip-ease-sine-in-out;
     transition-delay: 0;
+}
+
+.kuma-main-app__sidebar__title {
+    margin: 0;
+    padding: 20px;
+
+    color: var(--color-client-text-on-bg);
+}
+
+.kuma-main-app__sidebar__logo {
+    max-height: 70px;
+    height: 100%;
+    width: auto;
 }
 
 .kuma-main-app__sidebar__language-chooser {
@@ -72,6 +81,8 @@ $transition: .6s $snip-ease-sine-in-out;
     z-index: var(--z-show);
 
     flex: 0 0 70px;
+    display: flex;
+    flex-direction: column;
 
     background: var(--color-greyscale-500);
     box-shadow: 0 0 16px 0 rgba(#070C3C, .3);
@@ -79,7 +90,6 @@ $transition: .6s $snip-ease-sine-in-out;
     transition: flex-basis $transition;
 
     &:hover,
-    &:focus,
     &--open {
         flex-basis: 360px;
 
@@ -98,104 +108,37 @@ $transition: .6s $snip-ease-sine-in-out;
             }
         }
 
-        .kuma-main-app__sidebar__title,
-        .kuma-main-nav__item__text {
-            visibility: visible;
+        .kuma-main-app__sidebar__title-holder,
+        .kuma-main-nav__item__text,
+        .kuma-user-nav__logout__text,
+        .kuma-user-nav__keep-open-toggle {
+            opacity: 1;
             transition-delay: .3s;
         }
 
-        .kuma-main-app__sidebar__user-control__logout__text {
-            display: inline-block;
-
-            animation: blockToFadeIn .6s $snip-ease-sine-in-out 1 forwards;
+        .kuma-main-nav__item__text,
+        .kuma-user-nav__logout__text {
+            transform: translate3d(0, -50%, 0);
         }
 
-        .kuma-main-app__sidebar__user-name {
-            transform: translate3d(0, 70px, 0);
+        // .kuma-user-nav__logout__text {
+        //     transform: translate3d(10px, -50%, 0);
+        //     transition-delay: .3s;
+        // }
 
-            opacity: 1;
-        }
+        // .kuma-user-nav__logout__icon {
+        //     transform: translate3d(-20px, 0, 0);
+        // }
+        
 
-        .kuma-main-app__sidebar__user__figure {
-            transform: scale3d(2, 2, 1) translate3d(0, 20px, 0);
-        }
+        // .kuma-user-nav-name {
+        //     transform: translate3d(0, 70px, 0);
+
+        //     opacity: 1;
+        // }
+
+        // .kuma-user-nav__figure {
+        //     transform: scale3d(2, 2, 1) translate3d(0, 20px, 0);
+        // }
     }
-}
-
-.kuma-main-app__sidebar__user__figure {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    margin: 30px auto 0;
-
-    background: var(--color-greyscale-500);
-    box-shadow: 2px 2px 8px 0 rgba(#070C3C, .3);
-
-    border-radius: 50%;
-
-    transition: transform $transition;
-}
-
-.kuma-main-app__sidebar__user__figure__icon {
-    width: 24px;
-    height: 24px;
-
-    fill: var(--color-kuma-primary);
-}
-
-.kuma-main-app__sidebar__user-name {
-    opacity: 0;
-
-    text-align: center;
-    font-size: 14px;
-
-    transition: opacity $transition, transform $transition;
-}
-
-.kuma-main-app__sidebar__user-control__logout-holder {
-    text-align: center;
-}
-
-.kuma-main-app__sidebar__user-control__logout {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 25px;
-
-    &:hover,
-    &--active {
-        text-decoration: none;
-
-        .kuma-main-app__sidebar__user-control__logout__icon {
-            fill: var(--color-client-primary);
-        }
-
-        .kuma-main-app__sidebar__user-control__logout__text {
-            color: var(--color-client-primary);
-        }
-    }
-}
-
-.kuma-main-app__sidebar__user-control__logout__icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-
-    fill: var(--color-greyscale-100);
-
-    transition: fill .3s $snip-ease-sine-in-out;
-
-    vertical-align: middle;
-}
-
-.kuma-main-app__sidebar__user-control__logout__text {
-    display: none;
-    margin-left: 20px;
-
-    font-size: 16px;
-    color: var(--color-greyscale-100);
 }
