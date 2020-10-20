@@ -17,6 +17,8 @@ export function initSearch(ppChooser) {
     const searchResetButton = ppChooser.querySelector(SELECTORS.PP_SEARCH_RESET);
     searchResetButton.addEventListener('click', resetHandler);
 
+    $(ppChooser).on('shown.bs.modal', openModalHandler);
+
     function searchHandler() {
         if (searchField.value.trim().length > 0) {
             const searchResults = fuse.search(searchField.value);
@@ -29,6 +31,10 @@ export function initSearch(ppChooser) {
     function resetHandler() {
         searchField.value = '';
         resetSearch(ppList);
+    }
+
+    function openModalHandler() {
+        searchField.focus();
     }
 }
 
@@ -64,4 +70,3 @@ function initFuse(ppSearchData) {
         shouldSort: true
     });
 }
-
