@@ -33,6 +33,7 @@ class KunstmaanDashboardExtension extends Extension implements PrependExtensionI
     public function prepend(ContainerBuilder $container)
     {
         $container->prependExtensionConfig('framework', ['esi' => ['enabled' => true]]);
+        $container->prependExtensionConfig('kunstmaan_admin', ['dashboard_route' => 'kunstmaan_dashboard']);
     }
 
     private function loadGoogleAnalyticsParameters(ContainerBuilder $container, array $config)
