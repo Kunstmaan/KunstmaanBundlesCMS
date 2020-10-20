@@ -12,9 +12,10 @@
     position: relative;
 
     display: block;
-    padding: 10px 25px;
+    padding: 10px;
 
     &:hover,
+    &:focus,
     &--active {
         .kuma-main-nav__item__icon {
             fill: var(--color-client-primary);
@@ -23,6 +24,10 @@
         .kuma-main-nav__item__text {
             color: var(--color-client-primary);
         }
+    }
+
+    &:focus {
+        outline: 1px solid var(--color-kuma-secondary-2);
     }
 }
 
@@ -38,7 +43,7 @@
 
 .kuma-main-nav__item__text {
     position: absolute;
-    left: 70px;
+    left: 60px;
     top: 50%;
 
     display: block;

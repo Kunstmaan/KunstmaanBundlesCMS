@@ -1,0 +1,80 @@
+/* ==========================================================================
+   toggle-switch
+   ========================================================================== */
+
+$toggle-width: 40px;
+$toggle-height: 22px;
+$toggle-border-radius: 20px;
+$toggle-offset: 2px;
+$toggle-label-font-size: 14px;
+$toggle-switch-width: ($toggle-width / 2) - ($toggle-offset * 2);
+
+.toggle-switch {
+    position: relative;
+}
+
+.toggle-switch__control {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+
+    &:checked {
+        ~ label {
+            .toggle-switch__switch:after {
+                transform: translate3d($toggle-width - ($toggle-switch-width + ($toggle-offset * 3)), 0, 0);
+
+                background: var(--color-success);
+            }
+        }
+    }
+
+    &:focus {
+        ~ label {
+            outline: 1px solid var(--color-kuma-secondary-2);
+        }
+    }
+}
+
+.toggle-switch__label {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    font-size: $toggle-label-font-size;
+    font-weight: normal;
+}
+
+.toggle-switch__switch {
+    position: relative;
+
+    height: $toggle-height;
+    flex: 0 0 $toggle-width;
+
+    background: var(--color-greyscale-400);
+
+    border-radius: $toggle-border-radius;
+    border: 1px solid var(--color-greyscale-200);
+
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: $toggle-offset;
+        left: $toggle-offset;
+        bottom: $toggle-offset;
+        z-index: 9;
+
+        width: $toggle-switch-width;
+        transform: translate3d(0, 0, 0);
+
+        background: var(--color-error);
+
+        border-radius: $toggle-border-radius / 2;
+
+        transition: transform $snip-ease-sine-in-out .3s, background $snip-ease-sine-in-out .3s;
+    }
+}

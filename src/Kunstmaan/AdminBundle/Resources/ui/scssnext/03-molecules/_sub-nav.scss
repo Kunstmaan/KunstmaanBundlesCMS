@@ -1,0 +1,37 @@
+/* ==========================================================================
+    Sub navigation
+   ========================================================================== */
+
+.kuma-main-app__sub-nav-holder {
+    max-width: 180px;
+    width: 100%;
+    flex: 0 0 180px;
+
+    background-color: var(--color-greyscale-500);
+}
+
+.kuma-sub-nav {
+    position: sticky;
+    top: 0;
+}
+
+.kuma-sub-nav__item {
+    display: block;
+    padding: 10px 25px;
+
+    font-size: 15px;
+    color: var(--color-greyscale-000);
+    text-decoration: none;
+
+    transition: background-color .3s $snip-ease-sine-in-out;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &--active {
+        background-color: var(--color-greyscale-400);
+
+        text-decoration: none;
+        color: var(--color-greyscale-000);
+    }
+}

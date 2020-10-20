@@ -1,0 +1,11 @@
+<aside class="kuma-main-app__sub-nav-holder">
+    <nav class="kuma-sub-nav">
+        {% for subNavItem in navigationChildren %}
+            {% if subNavItem.route %}
+            <a class="kuma-sub-nav__item {% if subNavItem.active %}kuma-sub-nav__item--active{% endif %}" href="{{ path(subNavItem.route, subNavItem.routeparams) }}">
+                {{ subNavItem.label | trans }}
+            </a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+</aside>

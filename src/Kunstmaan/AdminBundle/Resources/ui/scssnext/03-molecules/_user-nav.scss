@@ -1,0 +1,128 @@
+/* ==========================================================================
+    User nav
+   ========================================================================== */
+
+.kuma-user-nav__info__figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 30px auto 0;
+
+    background: var(--color-greyscale-500);
+    box-shadow: 2px 2px 8px 0 rgba(#070C3C, .3);
+
+    border-radius: 50%;
+
+    transition: transform $transition;
+}
+
+.kuma-user-nav__info__figure__icon {
+    width: 24px;
+    height: 24px;
+
+    fill: var(--color-kuma-primary);
+}
+
+.kuma-user-nav__info__name {
+    opacity: 0;
+
+    text-align: center;
+    font-size: 14px;
+
+    transition: opacity $transition, transform $transition;
+}
+
+.kuma-user-nav {
+    padding: 20px 0;
+    flex: 0 0 auto;
+
+    border-top: 1px solid var(--color-greyscale-300);
+}
+
+.kuma-user-nav__logout-holder {
+    text-align: center;
+}
+
+.kuma-user-nav__logout {
+    position: relative;
+
+    width: 50%;
+    display: inline-block;
+    padding: 10px;
+
+    &:hover,
+    &:focus,
+    &--active {
+        text-decoration: none;
+
+        .kuma-user-nav__logout__icon {
+            fill: var(--color-client-primary);
+        }
+
+        .kuma-user-nav__logout__text {
+            color: var(--color-client-primary);
+        }
+    }
+
+    &:focus {
+        outline: 1px solid var(--color-kuma-secondary-2);
+    }
+}
+
+.kuma-user-nav__logout__icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    fill: var(--color-greyscale-100);
+
+    transition: fill .3s $snip-ease-sine-in-out, transform .3s $snip-ease-sine-in-out;
+
+    vertical-align: middle;
+}
+
+.kuma-user-nav__logout__text {
+    position: absolute;
+    left: 60px;
+    top: 50%;
+
+    display: block;
+    transform: translate3d(-20px, -50%, 0);
+
+    opacity: 0;
+
+    font-size: 16px;
+    color: var(--color-greyscale-100);
+
+    transition: opacity .3s $snip-ease-sine-in-out, transform .3s $snip-ease-sine-in-out;
+    transition-delay: 0s;
+}
+
+.kuma-user-nav__settings {
+    position: relative;
+}
+
+.kuma-user-nav__keep-open-toggle {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+
+    width: 50%;
+
+    opacity: 0;
+
+    transition: opacity .3s $snip-ease-sine-in-out;
+
+    .toggle-switch__label {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .toggle-switch__switch {
+        margin-left: 10px;
+    }
+}

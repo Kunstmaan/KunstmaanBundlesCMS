@@ -45,11 +45,11 @@ $transition: .6s $snip-ease-sine-in-out;
     left: 0;
 
     margin: 0;
+    transform: translate3d(-40px, 0, 0);
 
-    visibility: hidden;
+    opacity: 0;
 
-    transition: visibility .3s $snip-ease-sine-in-out;
-    transition-delay: 0;
+    transition: opacity .3s $snip-ease-sine-in-out, transform .3s $snip-ease-sine-in-out;
 }
 
 .kuma-main-app__sidebar__title {
@@ -90,6 +90,7 @@ $transition: .6s $snip-ease-sine-in-out;
     transition: flex-basis $transition;
 
     &:hover,
+    &:focus,
     &--open {
         flex-basis: 360px;
 
@@ -121,6 +122,10 @@ $transition: .6s $snip-ease-sine-in-out;
             transform: translate3d(0, -50%, 0);
         }
 
+        .kuma-main-app__sidebar__title-holder {
+            transform: none;
+        }
+
         // .kuma-user-nav__logout__text {
         //     transform: translate3d(10px, -50%, 0);
         //     transition-delay: .3s;
@@ -141,4 +146,11 @@ $transition: .6s $snip-ease-sine-in-out;
         //     transform: scale3d(2, 2, 1) translate3d(0, 20px, 0);
         // }
     }
+}
+
+.kuma-main-app__sidebar__content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
 }
