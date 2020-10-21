@@ -6,9 +6,7 @@
     "startOptimized": "gulp startOptimized",
     "test": "gulp test",
     "build": "gulp buildOptimized",
-    "testAndBuild": "gulp testAndBuildOptimized",
-    "buildCmsAssets": "npm run installCmsAssetsNodemodules && gulp buildCmsAssets",
-    "installCmsAssetsNodemodules": "cd vendor/kunstmaan/bundles-cms && npm install"
+    "testAndBuild": "gulp testAndBuildOptimized"
   },
   "author": "Kunstmaan",
   "license": "ISC",
@@ -37,7 +35,6 @@
     "gulp-autoprefixer": "^3.1.1",
     "gulp-cached": "^1.1.1",
     "gulp-changed": "^3.2.0",
-    "gulp-chug": "^0.5.1",
     "gulp-eslint": "^4.0.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^4.1.0",
