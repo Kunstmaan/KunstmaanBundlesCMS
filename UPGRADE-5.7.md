@@ -36,6 +36,7 @@ NodeBundle
 ----------
 
 * The method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeIdQueryBuilder" is deprecated and will be removed in 6.0. Use the renamed method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeId" instead.
+* Setter injection and the `setContainer` method are deprecated in `Kunstmaan\NodeBundle\Helper\Services\PageCreatorService` and `Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService`, inject the required dependencies in the constructor instead.
 
 NodeSearchBundle
 ----------------
