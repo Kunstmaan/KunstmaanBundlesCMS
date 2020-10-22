@@ -2,8 +2,11 @@
 
 namespace Kunstmaan\FormBundle\Tests\Form;
 
+use Kunstmaan\AdminBundle\Form\MediaTokenTransformer;
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
+use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -59,6 +62,7 @@ class AbstractFormPageAdminTypeTest extends TypeTestCase
             'from_email' => 'delboy1978uk@gmail.com',
             'to_email' => 'iedereen@kunstmaan.be',
         ];
+
         $form = $this->factory->create(NonAbstractFormPageAdminType::class);
 
         $formPage = new FormPage();
@@ -80,5 +84,18 @@ class AbstractFormPageAdminTypeTest extends TypeTestCase
         foreach (array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
+    }
+
+    protected function getExtensions()
+    {
+        $mediaTokenTransformer = $this->createMock(MediaTokenTransformer::class);
+        $mediaTokenTransformer->expects($this->once())
+            ->method('reverseTransform')
+            ->willReturn('<p>Cheers</p>');
+        $wysiwygType = new WysiwygType($mediaTokenTransformer);
+
+        return [
+            new PreloadedExtension([$wysiwygType], []),
+        ];
     }
 }
