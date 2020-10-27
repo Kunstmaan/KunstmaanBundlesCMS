@@ -1,4 +1,4 @@
-import {CLASSES} from '../config';
+import { CLASSES } from '../config';
 
 export function resetSearch(searchItems) {
     searchItems.forEach((item) => {

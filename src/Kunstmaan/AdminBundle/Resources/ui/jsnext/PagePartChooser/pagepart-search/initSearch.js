@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js';
-import {ATTRIBUTES, SELECTORS} from '../config';
-import {resetSearch} from './resetSearch';
-import {updateSearch} from './updateSearch';
+import { ATTRIBUTES, SELECTORS } from '../config';
+import { resetSearch } from './resetSearch';
+import { updateSearch } from './updateSearch';
 
 export function initSearch(ppChooser) {
     const ppTypes = JSON.parse(ppChooser.getAttribute(ATTRIBUTES.PP_TYPES));
@@ -39,9 +39,9 @@ export function initSearch(ppChooser) {
 }
 
 function makePagePartDataSearchable(ppTypes) {
-    return ppTypes.map(({name, class: className}) => ({
+    return ppTypes.map(({ name, class: className }) => ({
         name,
-        className: extractClassNameFromNamespace(className)
+        className: extractClassNameFromNamespace(className),
     }));
 }
 
@@ -60,13 +60,13 @@ function initFuse(ppSearchData) {
     return new Fuse(ppSearchData, {
         keys: [{
             name: 'name',
-            weight: 0.7
+            weight: 0.7,
         }, {
             name: 'className',
-            weight: 0.3 // The internal name is less important
+            weight: 0.3, // The internal name is less important
         }],
         id: 'name',
         threshold: 0.4,
-        shouldSort: true
+        shouldSort: true,
     });
 }

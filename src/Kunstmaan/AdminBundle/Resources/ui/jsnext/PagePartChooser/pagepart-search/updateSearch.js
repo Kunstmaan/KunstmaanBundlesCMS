@@ -1,4 +1,4 @@
-import {CLASSES, ATTRIBUTES} from '../config';
+import { CLASSES, ATTRIBUTES } from '../config';
 
 export function updateSearch(searchItems, searchResults) {
     searchItems.forEach((item) => {
