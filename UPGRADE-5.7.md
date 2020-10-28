@@ -11,6 +11,7 @@ AdminBundle
 ------------
 
 * Validator\Constraints\PasswordRestrictions have had their error constant values changed from integer to string uuid's because integers have been deprecated by Symfony.
+* Passing an instance of `\Doctrine\Common\Cache\Cache` as the second argument in `\Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct` and `\Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector::__construct` is deprecated, an instance of `\Symfony\Component\Cache\Adapter\AdapterInterface` will be required.
 
 GeneratorBundle
 ----------
