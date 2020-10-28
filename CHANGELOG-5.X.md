@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.6.4 / 2020-10-28
+
+* [AdminBundle] use kunstmaan bundles logo in toolbar [#2803](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2803) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminBundleList] Enhancement: Better readability [#2802](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2802) ([@OskarStark](https://github.com/OskarStark)) 
+* [SensioGeneratorBundle] Fixed typo in form class name [#2796](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2796) ([@OskarStark](https://github.com/OskarStark)) 
+
 ## 5.6.3 / 2020-10-09
 
 * [AdminBundle] Fix wrong PHPDoc [#2785](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2785) ([@OskarStark](https://github.com/OskarStark)) 
