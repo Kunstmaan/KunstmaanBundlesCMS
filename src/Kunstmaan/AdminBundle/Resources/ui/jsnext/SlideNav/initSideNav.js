@@ -27,7 +27,7 @@ export function initSideNav(holder) {
             const { activeElement } = document;
             const focusClass = SELECTORS.FOCUSABLE_NAV_ITEM.split('.')[1];
 
-            if (!activeElement.classList.contains(focusClass) && isOpen) {
+            if (!activeElement.classList.contains(focusClass) && isOpen && !keepOpen) {
                 close(holder);
             }
         })

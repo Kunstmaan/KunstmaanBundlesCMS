@@ -1,0 +1,29 @@
+{% if locales|length > 1 %}
+    {% set route_params = app.request.attributes.get('_route_params') %}
+    {% set route_params = route_params|merge(app.request.query.all) %}
+
+    <nav class="kuma-main-app__sidebar__language-chooser kuma-language-nav">
+        <span class="kuma-language-nav__active-language">
+            <span class="kuma-language-nav__active-language__inner">
+                <a href="!#" class="kuma-language-nav__active-language__link js-side-nav-item">
+                    {{ app.request.attributes.get('_locale') }}
+                </a>
+            </span>
+        </span>
+
+        <ul class="kuma-language-nav__list">
+            {% for locale in locales %}
+                {% if app.request.attributes.get('_locale') != locale %}
+
+                <li class="kuma-language-nav__list-item">
+                    <a href="{{ path(route, route_params | merge({'_locale': locale})) }}" hreflang="{{ locale }}" class="kuma-language-nav__link js-side-nav-item">
+                        <abbr title="{{ ('locales.long_name.' ~ locale) |trans }}" lang="{{ locale }}">
+                            {{ locale }}
+                        </abbr>
+                    </a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}

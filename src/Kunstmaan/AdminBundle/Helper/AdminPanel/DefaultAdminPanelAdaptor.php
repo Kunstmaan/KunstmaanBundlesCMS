@@ -31,6 +31,27 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
         );
     }
 
+    /**
+     * @return AdminPanelLanguangeChooser[]
+     */
+    public function getAdminPanelLanguageChooser()
+    {
+        return array(
+            $this->getLanguageChooserActionNext(),
+        );
+    }
+
+    protected function getLanguageChooserActionNext()
+    {
+        return new AdminPanelAction(
+            [],
+            '',
+            '',
+            '@KunstmaanAdmin/AdminPanel/_language_chooser.html.twig'
+        );
+    }
+
+
     protected function getLanguageChooserAction()
     {
         return new AdminPanelAction(

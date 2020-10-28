@@ -43,6 +43,7 @@ class MenuTwigExtension extends AbstractExtension
         return array(
             new TwigFunction('get_admin_menu', array($this, 'getAdminMenu')),
             new TwigFunction('get_admin_panel_actions', array($this, 'getAdminPanelActions')),
+            new TwigFunction('get_admin_panel_language_chooser', array($this, 'getAdminPanelLanguageChooser')),
         );
     }
 
@@ -64,5 +65,15 @@ class MenuTwigExtension extends AbstractExtension
     public function getAdminPanelActions()
     {
         return $this->adminPanel->getAdminPanelActions();
+    }
+
+    /**
+     * Return the admin panel language chooser.
+     *
+     * @return AdminPanelLanguageChooser[]
+     */
+    public function getAdminPanelLanguageChooser()
+    {
+        return $this->adminPanel->getAdminPanelLanguageChooser();
     }
 }

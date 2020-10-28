@@ -2,9 +2,25 @@
     language chooser
    ========================================================================== */
 
-.kuma-language-chooser {
+.kuma-language-nav {
     position: relative;
-    z-index: 1;
+
+    .kuma-main-app__sidebar--open &,
+    .kuma-main-app__sidebar:hover & {
+        &:hover,
+        &:focus {
+            .kuma-language-nav__list {
+                transform: none;
+
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.kuma-language-nav__active-language {
+    position: relative;
+    z-index: 2;
 
     display: flex;
     align-items: center;
@@ -21,7 +37,7 @@
         @include snip-pseudo();
         top: 0;
         left: 0;
-        z-index: -1;
+        z-index: 0;
 
         width: 40px;
         height: 40px;
@@ -30,4 +46,71 @@
         border-top-left-radius: 0;
         border: 1px solid var(--color-client-primary);
     }
+}
+
+.kuma-language-nav__active-language__inner {
+    position: relative;
+    z-index: 1;
+
+    display: inline-block;
+}
+
+.kuma-language-nav__list,
+.kuma-language-nav__list-item {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.kuma-language-nav__list {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    z-index: 1;
+
+    padding-left: 20px;
+    transform: translate3d(-10px, 0, 0);
+    overflow: hidden;
+    display: flex;
+
+    background: var(--color-kuma-primary);
+    opacity: 0;
+    box-shadow: 0 0 16px 0 rgba(#070C3C, .3);
+
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+
+    transition: opacity .3s $snip-ease-sine-in-out, transform .3s $snip-ease-sine-in-out;
+}
+
+.kuma-language-nav__list-item {
+    + .kuma-language-nav__list-item {
+        border-left: 1px solid var(--color-greyscale-400);
+    }
+}
+
+.kuma-language-nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 40px;
+
+    background: var(--color-kuma-primary);
+
+    font-size: 14px;
+    line-height: 1;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-greyscale-400);
+
+    transition: background-color .3s $snip-ease-sine-in-out, color .3s $snip-ease-sine-in-out;
+
+    &:hover {
+        background: var(--color-kuma-secondary-2);
+
+        color: var(--color-greyscale-000);
+    }
+
 }

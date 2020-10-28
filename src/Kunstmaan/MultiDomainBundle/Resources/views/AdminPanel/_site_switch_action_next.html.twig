@@ -1,0 +1,18 @@
+{% set currentHost = get_current_host() %}
+<nav class="kuma-main-app__sidebar__domain-chooser kuma-domain-nav">
+    <a href="!#" class="kuma-domain-nav__active-domain__link js-side-nav-item">
+        {{ currentHost }}
+
+        <svg class="kuma-domain-nav__active-domain__link__icon">
+            <use xlink:href="{{ asset('/bundles/kunstmaanadmin/icons/symbol-defs.svg') }}#icon-chevron-down"></use>
+        </svg>
+    </a>
+    <ul class="kuma-domain-nav__domain-list">
+        {% for host in get_multi_domain_hosts() %}
+            <li class="kuma-domain-nav__domain-list__item {% if currentHost == host %} kuma-domain-nav__domain-list__item--active{% endif %}">
+                {# todo: use action data instead of hardcoded url #}
+                <a class="js-side-nav-item" href="{{ path('KunstmaanMultiDomainBundle_switch_site', { 'host': host, 'route': app.request.attributes.get('_route'), 'route_params': app.request.attributes.get('_route_params') }) }}">{{ host }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>

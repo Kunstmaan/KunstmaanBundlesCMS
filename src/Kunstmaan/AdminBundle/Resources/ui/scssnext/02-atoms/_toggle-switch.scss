@@ -32,7 +32,8 @@ $toggle-switch-width: ($toggle-width / 2) - ($toggle-offset * 2);
 
     &:focus {
         ~ label {
-            outline: 1px solid var(--color-kuma-secondary-2);
+            outline: 2px dashed var(--color-kuma-secondary-2);
+            outline-offset: 2px;
         }
     }
 }

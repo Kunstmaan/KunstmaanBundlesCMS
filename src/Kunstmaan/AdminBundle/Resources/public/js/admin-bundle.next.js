@@ -6070,7 +6070,7 @@ function initSideNav(holder) {
           activeElement = _document.activeElement;
       var focusClass = _config__WEBPACK_IMPORTED_MODULE_15__["SELECTORS"].FOCUSABLE_NAV_ITEM.split('.')[1];
 
-      if (!activeElement.classList.contains(focusClass) && isOpen) {
+      if (!activeElement.classList.contains(focusClass) && isOpen && !keepOpen) {
         close(holder);
       }
     });

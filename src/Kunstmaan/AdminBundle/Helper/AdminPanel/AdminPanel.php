@@ -46,6 +46,23 @@ class AdminPanel
         return $this->actions;
     }
 
+     /**
+     * Return current admin panel actions
+     */
+    public function getAdminPanelLanguageChooser()
+    {
+        if (!$this->actions) {
+            $this->actions = array();
+            $adaptors = $this->getAdaptors();
+            foreach ($adaptors as $adaptor) {
+                $this->actions = array_merge($this->actions, $adaptor->getAdminPanelLanguageChooser());
+            }
+        }
+
+        return $this->actions;
+    }
+
+
     /**
      * Get adaptors sorted by priority.
      *

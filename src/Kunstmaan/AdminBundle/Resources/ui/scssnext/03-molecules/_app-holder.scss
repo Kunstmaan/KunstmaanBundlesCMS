@@ -5,17 +5,23 @@
 $transition: .6s $snip-ease-sine-in-out;
 
 .kuma-main-app-holder {
-    display: flex;
-    height: 100%;
     overflow: hidden;
+    height: 100%;
+
+    @media (min-width: $break-sm) {
+        display: flex;
+    }
 }
 
 .kuma-main-app__content-holder {
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: auto;
+
+    @media (min-width: $break-sm) {
+        flex: 1 1 auto;
+    }
 }
 
 .kuma-main-app__content {
@@ -24,13 +30,18 @@ $transition: .6s $snip-ease-sine-in-out;
 }
 
 .kuma-main-app__main-content {
-    padding: 90px;
+    padding: 20px 20px 20px 90px;
     flex: 1;
+
+    @media (min-width: $break-sm) {
+        padding: 90px;
+    }
 }
 
 .kuma-main-app__sidebar__header {
+    position: relative;
+
     padding: 15px;
-    overflow: hidden;
     display: flex;
     flex: 0 0 auto;
     justify-content: flex-end;
@@ -41,11 +52,14 @@ $transition: .6s $snip-ease-sine-in-out;
 
 .kuma-main-app__sidebar__title-holder {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
+    z-index: 10;
 
+    width: 100%;
+    max-width: calc(100% - 70px);
     margin: 0;
-    transform: translate3d(-40px, 0, 0);
+    transform: translate3d(-40px, -50%, 0);
 
     opacity: 0;
 
@@ -66,40 +80,44 @@ $transition: .6s $snip-ease-sine-in-out;
 }
 
 .kuma-main-app__sidebar__language-chooser {
-    background-color: var(--color-greyscale-500);
-
-    transition: background-color $transition;
-
-    &:after {
-        transition: background-color $transition, transform $transition;
+    .kuma-language-nav__active-language {
+        transition: background-color $transition;
+    
+        &:after {
+            transition: background-color $transition, transform $transition;
+        }
     }
 }
 
 
 .kuma-main-app__sidebar {
-    position: relative;
+    position: fixed;
+    left: 0;
+    top: 0;
     z-index: var(--z-show);
 
-    flex: 0 0 70px;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    width: 100%;
+    max-width: 70px;
 
     background: var(--color-greyscale-500);
     box-shadow: 0 0 16px 0 rgba(#070C3C, .3);
 
-    transition: flex-basis $transition;
+    transition: max-width $transition;
 
     &:hover,
     &:focus,
     &--open {
-        flex-basis: 360px;
+        width: 100%;
+        max-width: 360px;
 
-        .kuma-main-app__sidebar__header,
-        .kuma-main-app__sidebar__language-chooser {
+        .kuma-main-app__sidebar__header {
             background-color: var(--color-client-primary);
         }
 
-        .kuma-main-app__sidebar__language-chooser {
+        .kuma-main-app__sidebar__language-chooser .kuma-language-nav__active-language {
             color: var(--color-kuma-primary);
 
             &:after {
@@ -123,7 +141,7 @@ $transition: .6s $snip-ease-sine-in-out;
         }
 
         .kuma-main-app__sidebar__title-holder {
-            transform: none;
+            transform: translate3d(0, -50%, 0);
         }
 
         // .kuma-user-nav__logout__text {
@@ -145,6 +163,22 @@ $transition: .6s $snip-ease-sine-in-out;
         // .kuma-user-nav__figure {
         //     transform: scale3d(2, 2, 1) translate3d(0, 20px, 0);
         // }
+    }
+
+    @media (min-width: $break-sm) {
+        position: relative;
+
+        flex: 0 0 70px;
+        max-width: none;
+
+        transition: flex-basis $transition;
+
+        &:hover,
+        &:focus,
+        &--open {
+            flex-basis: 360px;
+            max-width: none;
+        }
     }
 }
 

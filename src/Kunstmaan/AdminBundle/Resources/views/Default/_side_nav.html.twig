@@ -1,18 +1,22 @@
 <header class="kuma-main-app__sidebar__header">
     <div class="kuma-main-app__sidebar__title-holder">
-        {% if admin_logo is defined %}
-            <img class="kuma-main-app__sidebar__logo" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+
+        {% if is_multidomain_site() %}
+            {% include "@KunstmaanMultiDomain/AdminPanel/_site_switch_action_next.html.twig" %}
         {% else %}
-            <h1 class="kuma-main-app__sidebar__title">
-                {{ websitetitle | trans }}
-            </h1>
+            {% if admin_logo is defined %}
+                <img class="kuma-main-app__sidebar__logo" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+            {% else %}
+                <h1 class="kuma-main-app__sidebar__title">
+                    {{ websitetitle | trans }}
+                </h1>
+            {% endif %}
         {% endif %}
     </div>
-    
 
-    <span class="kuma-main-app__sidebar__language-chooser kuma-language-chooser">
-        en
-    </span>
+    {% include "@KunstmaanAdmin/AdminPanel/_language_chooser_next.html.twig" %}
+
+    
 </header>
 <div class="kuma-main-app__sidebar__content">
     <nav class="kuma-main-nav">

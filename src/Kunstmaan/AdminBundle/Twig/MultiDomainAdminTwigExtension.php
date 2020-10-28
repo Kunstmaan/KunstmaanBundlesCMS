@@ -31,6 +31,7 @@ class MultiDomainAdminTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('multidomain_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('multidomain_widget_next', [$this, 'renderWidgetNext'], ['needs_environment' => true, 'is_safe' => ['html']]),
             new TwigFunction('is_multidomain_site', [$this, 'isMultiDomainSite']),
             new TwigFunction('get_switched_host', [$this, 'getSwitchedHost']),
             new TwigFunction('switched_host_is_current', [$this, 'switchedHostIsCurrent']),
@@ -50,6 +51,22 @@ class MultiDomainAdminTwigExtension extends AbstractExtension
     {
         $template = $env->load(
             '@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig'
+        );
+
+        return $template->render(
+            \array_merge(
+                $parameters, [
+                    'hosts' => $this->getAdminDomainHosts(),
+                    'route' => $route,
+                ]
+            )
+        );
+    }
+
+    public function renderWidgetNext(Environment $env, $route, array $parameters = [])
+    {
+        $template = $env->load(
+            '@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget_next.html.twig'
         );
 
         return $template->render(

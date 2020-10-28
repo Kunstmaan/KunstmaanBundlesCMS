@@ -30,5 +30,6 @@ body {
 }
 
 *:focus {
-    outline: 1px solid var(--color-kuma-secondary-2);
+    outline: 2px dashed var(--color-kuma-secondary-2);
+    outline-offset: 2px;
 }

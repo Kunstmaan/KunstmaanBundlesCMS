@@ -151,3 +151,13 @@ toolbar:
             exceptions: Exceptions
             events: Events
         title: Exceptions
+
+side_nav:
+    logout: Logout
+    keep_open: Keep open
+    dashboard_link: Dashboard
+
+locales:
+    full_name:
+        nl: Dutch
+        fr: French
