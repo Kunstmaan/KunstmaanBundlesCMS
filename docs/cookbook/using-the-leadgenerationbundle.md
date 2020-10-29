@@ -54,7 +54,7 @@ class NewsletterPopup extends AbstractPopup
      */
     public function getAdminType()
     {
-        return new NewsLetterPopupAdminType();
+        return NewsLetterPopupAdminType::class;
     }
 }
 
