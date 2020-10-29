@@ -3,7 +3,6 @@
 namespace Kunstmaan\MediaBundle\Helper;
 
 use Kunstmaan\MediaBundle\Entity\EditableMediaWrapper;
-use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Liip\ImagineBundle\Service\FilterService;
 
@@ -38,7 +37,6 @@ class ManipulateImageService
 
     public function cropImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', string $filter = 'optim'): string
     {
-        /** @var Media $media */
         $media = $editableMediaWrapper->getMedia();
         $filename = $media->getOriginalFilename();
         $filename = str_replace(['/', '\\', '%'], '', $filename);
@@ -46,7 +44,7 @@ class ManipulateImageService
         $parts = pathinfo($filename);
         $filename = $this->slugifier->slugify($parts['filename']);
         if (\array_key_exists('extension', $parts)) {
-            $filename .= '.'.strtolower($parts['extension']);
+            $filename .= '.' . strtolower($parts['extension']);
         }
 
         $path = sprintf(
