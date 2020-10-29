@@ -35,10 +35,18 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
+     * NEXT_MAJOR: add int typehint for $nodeId.
+     *
+     * @param int $nodeId
+     *
      * @return NodeTranslation|null
      */
-    public function getNodeTranslationByNodeId(int $nodeId, string $lang)
+    public function getNodeTranslationByNodeId($nodeId, string $lang)
     {
+        if (!is_int($nodeId)) {
+            @trigger_error(sprintf('Not passing an integer for the "$nodeId" parameter in "%s" is deprecated since KunstmaanAdminBundle 5.7 and an integer typehint will be added in KunstmaanAdminBundle 6.0."', __METHOD__), E_USER_DEPRECATED);
+        }
+
         $qb = $this->createQueryBuilder('nt')
             ->select('nt')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
