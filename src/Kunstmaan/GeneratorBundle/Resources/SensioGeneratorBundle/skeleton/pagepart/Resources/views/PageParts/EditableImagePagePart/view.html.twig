@@ -28,7 +28,7 @@
                 {% set imageType = resource.mediaWrapper.media.originalFilename|lower|split('.')|last %}
 
                 {% if resource.link is defined and resource.link != '' %}
-                    <a href="{{ resource.link | replace_url }}" class="{{ get_focus_point_class(resource.mediaWrapper, 'desktop') }}" {% if resource.openinnewwindow %}target="_blank" rel="noopener"{% endif %}>
+                    <a href="{{ resource.link | replace_url }}" class="{{ get_focus_point_class(resource.mediaWrapper, 'desktop') }}" {% if resource.openInNewWindow %}target="_blank" rel="noopener"{% endif %}>
                         {{ image }}
                     </a>
                 {% else %}
