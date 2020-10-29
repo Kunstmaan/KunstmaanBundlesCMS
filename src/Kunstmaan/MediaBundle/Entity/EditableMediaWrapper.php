@@ -24,12 +24,12 @@ class EditableMediaWrapper extends AbstractEntity
      */
     private $runTimeConfig;
 
-    public function getMedia()
+    public function getMedia(): ?Media
     {
         return $this->media;
     }
 
-    public function setMedia($media)
+    public function setMedia(Media $media): EditableMediaWrapper
     {
         $this->media = $media;
 
@@ -41,7 +41,7 @@ class EditableMediaWrapper extends AbstractEntity
         return $this->runTimeConfig;
     }
 
-    public function setRunTimeConfig($runTimeConfig)
+    public function setRunTimeConfig($runTimeConfig): EditableMediaWrapper
     {
         $this->runTimeConfig = $runTimeConfig;
 

@@ -7,7 +7,7 @@ Now we have made a feature that allows you to use one media object and crop it i
 
 ## Implementation
 
-To use a croppable media object you want to use the wrapper object instead of the actual media object. If you do that all the rest will be done automatically.
+To use an editable media object you want to use the wrapper object instead of the actual media object. If you do that all the rest will be done automatically.
 
 pagepart.php
 ```php
@@ -15,7 +15,7 @@ pagepart.php
 
 namespace App\Entity\PageParts;
 
-use App\Form\PageParts\CroppableImagePagePartAdminType;
+use App\Form\PageParts\EditableImagePagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\EditableMediaWrapper;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="app_croppable_image_page_parts")
  */
-class CroppableImagePartPart extends AbstractPagePart
+class EditableImagePartPart extends AbstractPagePart
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\EditableMediaWrapper", cascade={"persist"})
@@ -48,14 +48,14 @@ class CroppableImagePartPart extends AbstractPagePart
         return $this->openInNewWindow;
     }
 
-    public function setOpenInNewWindow($openInNewWindow): CroppableImagePartPart
+    public function setOpenInNewWindow($openInNewWindow): EditableImagePartPart
     {
         $this->openInNewWindow = $openInNewWindow;
 
         return $this;
     }
 
-    public function setLink($link): CroppableImagePartPart
+    public function setLink($link): EditableImagePartPart
     {
         $this->link = $link;
 
@@ -81,12 +81,12 @@ class CroppableImagePartPart extends AbstractPagePart
 
     public function getDefaultView(): string
     {
-        return 'PageParts/CroppableImagePagePart/view.html.twig';
+        return 'PageParts/EditableImagePagePart/view.html.twig';
     }
 
     public function getDefaultAdminType(): string
     {
-        return CroppableImagePagePartAdminType::class;
+        return EditableImagePagePartAdminType::class;
     }
 }
 ```
@@ -97,7 +97,7 @@ pagepartadmintype.php
 
 namespace App\Form\PageParts;
 
-use App\Entity\PageParts\CroppableImagePartPart;
+use App\Entity\PageParts\EditableImagePartPart;
 use Kunstmaan\MediaBundle\Form\EditableMediaWrapperAdminType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\AbstractType;
@@ -105,7 +105,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CroppableImagePagePartAdminType extends AbstractType
+class EditableImagePagePartAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -124,13 +124,13 @@ class CroppableImagePagePartAdminType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'croppableimagepageparttype';
+        return 'editableimagepageparttype';
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CroppableImagePartPart::class,
+            'data_class' => EditableImagePartPart::class,
         ]);
     }
 }
@@ -175,7 +175,7 @@ You can then use it by telling your form admintype which group of viewports to u
 ```php
 <?php
 
-class CroppableImagePagePartAdminType extends AbstractType
+class EditableImagePagePartAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

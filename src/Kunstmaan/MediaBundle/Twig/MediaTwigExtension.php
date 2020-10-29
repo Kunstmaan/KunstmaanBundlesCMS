@@ -20,14 +20,8 @@ class MediaTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction(
-                'cropped_imagine_filter',
-                [$this, 'getCroppedImage']
-            ),
-            new TwigFunction(
-                'get_focus_point_class',
-                [$this, 'getFocusPointClass']
-            ),
+            new TwigFunction('cropped_imagine_filter', [$this, 'getCroppedImage']),
+            new TwigFunction('get_focus_point_class', [$this, 'getFocusPointClass']),
         ];
     }
 
