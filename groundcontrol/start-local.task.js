@@ -69,8 +69,28 @@ export const buildOnChange = (done) => {
 
         const styleAssets = srcPath + 'scss/**/*.scss';
         gulp.watch(styleAssets, bundle.tasks.cssOptimized);
+
+        if (bundle.tasks.cssNextOptimized) {
+            const styleNextAssets = srcPath + 'scssnext/**/*.scss';
+            gulp.watch(styleNextAssets, bundle.tasks.cssNextOptimized);
+        }
     }
     done();
 };
+
+export function testOnChange(done) {
+    for (const bundle of BUNDLES) {
+        if (bundle.tasks.eslint) {
+            const srcPath = bundle.config.srcPath;
+            gulp.watch(`${srcPath}jsnext/**/*.js`, bundle.tasks.eslint);
+        }
+        if (bundle.tasks.stylelint) {
+            const srcPath = bundle.config.srcPath;
+            gulp.watch(`${srcPath}scssnext/**/*.scss`, bundle.tasks.stylelint);
+        }
+    }
+    done();
+}
+
 
 export default startLocalTask;
