@@ -54,7 +54,7 @@ class NewsletterPopup extends AbstractPopup
      */
     public function getAdminType()
     {
-        return new NewsLetterPopupAdminType();
+        return NewsLetterPopupAdminType::class;
     }
 }
 
@@ -229,7 +229,7 @@ class AfterXSecondsRule extends AbstractRule
      */
     public function getAdminType()
     {
-        return new AfterXSecondsAdminType();
+        return AfterXSecondsAdminType::class;
     }
 }
 ```
