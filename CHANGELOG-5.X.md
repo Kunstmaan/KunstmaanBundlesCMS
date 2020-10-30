@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.7.1 / 2020-10-30
+
+* [GeneratorBundle] Add missing interface to generated fixtures for auto service registration [#2807](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2807) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.7.0 / 2020-10-29
 
 * [NodeBundle] Improve nodetranslation repository deprecation [#2805](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2805) ([@acrobat](https://github.com/acrobat)) 
