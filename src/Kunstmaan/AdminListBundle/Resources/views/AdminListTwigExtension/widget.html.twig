@@ -54,6 +54,8 @@
         </thead>
         <tbody>
         {% for item in adminlist.items(extraparams) %}
+            {% set firstRow = loop.first %}
+            {% set lastRow = loop.last %}
             <tr>
                 <!-- Bulk -->
                 {% if adminlist.hasBulkActions %}
@@ -106,13 +108,22 @@
                             {% if itemAction.template is not null %}
                                 {% include itemAction.template with {'row': item, 'item': item, 'action': itemAction} %}
                             {% else %}
+                                {% set shouldBeDisabled = (firstRow and itemAction.getIconFor(item) == 'arrow-up') or (lastRow and itemAction.getIconFor(item) == 'arrow-down') %}
                                 {% set url = itemAction.getUrlFor(item) %}
                                 {% if url %}
-                                    <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item" title="{{ itemAction.getLabelFor(item) | trans }}">
-                                        {% if itemAction.getIconFor(item) is not null %}
-                                            <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
-                                        {% endif %}
-                                    </a>
+                                    {% if shouldBeDisabled %}
+                                        <span class="table__actions__item disabled" title="{{ itemAction.getLabelFor(item) | trans }}">
+                                            {% if itemAction.getIconFor(item) is not null %}
+                                                <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
+                                            {% endif %}
+                                        </span>
+                                    {% else %}
+                                        <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item" title="{{ itemAction.getLabelFor(item) | trans }}">
+                                            {% if itemAction.getIconFor(item) is not null %}
+                                                <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
                         {% endfor %}

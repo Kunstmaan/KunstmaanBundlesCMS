@@ -11,6 +11,12 @@ AdminBundle
 ------------
 
 * Validator\Constraints\PasswordRestrictions have had their error constant values changed from integer to string uuid's because integers have been deprecated by Symfony.
+* Passing an instance of `\Doctrine\Common\Cache\Cache` as the second argument in `\Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct` and `\Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector::__construct` is deprecated, an instance of `\Symfony\Component\Cache\Adapter\AdapterInterface` will be required.
+
+GeneratorBundle
+----------
+
+* The task `npm run buildCmsAssets` is removed from the generated frontend build setup. This task is a remainder of old rework and does not work anymore with the new bundles setup. If you want to extend the Javascript functionality of the CMS, you can use the `admin-bundle-extra.js` in the `/assets/admin/js` directory.
 
 MediaBundle
 ------------
@@ -31,6 +37,7 @@ NodeBundle
 ----------
 
 * The method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeIdQueryBuilder" is deprecated and will be removed in 6.0. Use the renamed method "Kunstmaan\NodeBundle\Repository\NodeTranslationRepository::getNodeTranslationByNodeId" instead.
+* Setter injection and the `setContainer` method are deprecated in `Kunstmaan\NodeBundle\Helper\Services\PageCreatorService` and `Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService`, inject the required dependencies in the constructor instead.
 
 NodeSearchBundle
 ----------------
