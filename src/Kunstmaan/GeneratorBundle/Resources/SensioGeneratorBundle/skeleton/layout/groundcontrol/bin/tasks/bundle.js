@@ -5,19 +5,12 @@ import webpack from 'webpack';
  * via gulp. Gulp will probably be easier at first, since you have to configure
  * multiple watches for the other src files as well.
  */
-export default function createBundleTask({
-    config = undefined,
-    watch = false,
-    logStats = false,
-}) {
+export default function createBundleTask({config = undefined, logStats = false}) {
     const compiler = webpack(config);
+    const devMode = config.mode === 'development';
 
     return function bundle(done) {
-        if (watch) {
-            compiler.watch({}, handleWebpackResult);
-        } else {
-            compiler.run(handleWebpackResult);
-        }
+        compiler.run(handleWebpackResult);
 
         function handleWebpackResult(err, stats) {
             if (err) {
@@ -31,11 +24,15 @@ export default function createBundleTask({
             const info = stats.toJson();
 
             if (stats.hasErrors()) {
-                console.error(info.errors);
+                if (devMode) {
+                    console.error('\x1b[31m%s\x1b[0m: ', info.errors.toString());
+                } else {
+                    throw Error(info.errors.toString());
+                }
             }
 
             if (stats.hasWarnings()) {
-                console.warn(info.warnings);
+                console.warn(info.warnings.toString());
             }
 
             if (logStats) {
