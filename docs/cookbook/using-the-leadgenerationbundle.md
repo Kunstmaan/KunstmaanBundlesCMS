@@ -229,7 +229,7 @@ class AfterXSecondsRule extends AbstractRule
      */
     public function getAdminType()
     {
-        return new AfterXSecondsAdminType();
+        return AfterXSecondsAdminType::class;
     }
 }
 ```
