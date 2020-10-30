@@ -141,7 +141,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @return null|\Symfony\Component\HttpFoundation\Request
+     * @return \Symfony\Component\HttpFoundation\Request|null
      */
     protected function getMasterRequest()
     {
@@ -165,7 +165,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param int $id
+     * @param string|int $id
      */
     public function getFullHostById($id)
     {

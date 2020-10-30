@@ -16,6 +16,7 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
+use Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
@@ -23,7 +24,7 @@ use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -195,7 +196,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function populateIndex()
     {
-        $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepository = $this->em->getRepository(Node::class);
         $nodes = $nodeRepository->getAllTopNodes();
 
         foreach ($nodes as $node) {
@@ -340,13 +341,39 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function setAnalysis(Index $index, AnalysisFactoryInterface $analysis)
     {
-        $index->create(
-            array(
-                'number_of_shards' => $this->numberOfShards,
-                'number_of_replicas' => $this->numberOfReplicas,
-                'analysis' => $analysis->build(),
-            )
-        );
+        $analysers = $analysis->build();
+        $args = [
+            'number_of_shards' => $this->numberOfShards,
+            'number_of_replicas' => $this->numberOfReplicas,
+            'analysis' => $analysers,
+        ];
+
+        if (class_exists(\Elastica\Mapping::class)) {
+            $args = [
+                'settings' => [
+                    'number_of_shards' => $this->numberOfShards,
+                    'number_of_replicas' => $this->numberOfReplicas,
+                    'analysis' => $analysers,
+                ],
+            ];
+
+            $ngramDiff = 1;
+            if (isset($analysers['tokenizer']) && count($analysers['tokenizer']) > 0) {
+                foreach ($analysers['tokenizer'] as $tokenizer) {
+                    if ($tokenizer['type'] === 'nGram') {
+                        $diff = $tokenizer['max_gram'] - $tokenizer['min_gram'];
+
+                        $ngramDiff = $diff > $ngramDiff ? $diff : $ngramDiff;
+                    }
+                }
+            }
+
+            if ($ngramDiff > 1) {
+                $args['settings']['max_ngram_diff'] = $ngramDiff;
+            }
+        }
+
+        $index->create($args);
     }
 
     /**
@@ -355,12 +382,16 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param Index  $index
      * @param string $lang
      *
-     * @return Mapping
+     * @return Mapping|\Elastica\Mapping
      */
     protected function createDefaultSearchFieldsMapping(Index $index, $lang = 'en')
     {
-        $mapping = new Mapping();
-        $mapping->setType($index->getType($this->indexType));
+        if (class_exists(\Elastica\Type\Mapping::class)) {
+            $mapping = new Mapping();
+            $mapping->setType($index->getType($this->indexType));
+        } else {
+            $mapping = new \Elastica\Mapping();
+        }
 
         $mapping->setProperties($this->properties);
 
@@ -376,7 +407,11 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function setMapping(Index $index, $lang = 'en')
     {
         $mapping = $this->createDefaultSearchFieldsMapping($index, $lang);
-        $mapping->send();
+        if (class_exists(\Elastica\Mapping::class)) {
+            $mapping->send($index);
+        } else {
+            $mapping->send();
+        }
         $index->refresh();
     }
 
@@ -397,7 +432,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $rootNode = $this->currentTopNode;
         if (!$rootNode) {
             // Fetch main parent of current node...
-            $rootNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->getRootNodeFor(
+            $rootNode = $this->em->getRepository(Node::class)->getRootNodeFor(
                 $node,
                 $nodeTranslation->getLang()
             );
@@ -525,17 +560,31 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             );
         }
 
-        $renderer = $this->container->get('templating');
         $doc['content'] = '';
-
         if ($page instanceof SearchViewTemplateInterface) {
-            $doc['content'] = $this->renderCustomSearchView($nodeTranslation, $page, $renderer);
+            if ($this->isMethodOverridden('renderCustomSearchView')) {
+                @trigger_error(sprintf('Overriding the "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Override the "renderCustomSearchView" method of the "%s" service instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
+                $doc['content'] = $this->renderCustomSearchView($nodeTranslation, $page, $this->container->get('templating'));
+            } else {
+                $searchViewRenderer = $this->container->get('kunstmaan_node_search.service.search_view_renderer');
+
+                $doc['content'] = $searchViewRenderer->renderCustomSearchView($nodeTranslation, $page, $this->container);
+            }
 
             return null;
         }
 
         if ($page instanceof HasPagePartsInterface) {
-            $doc['content'] = $this->renderDefaultSearchView($nodeTranslation, $page, $renderer);
+            if ($this->isMethodOverridden('renderDefaultSearchView')) {
+                @trigger_error(sprintf('Overriding the "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Override the "renderDefaultSearchView" method of the "%s" service instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
+                $doc['content'] = $this->renderDefaultSearchView($nodeTranslation, $page, $this->container->get('templating'));
+            } else {
+                $searchViewRenderer = $this->container->get('kunstmaan_node_search.service.search_view_renderer');
+
+                $doc['content'] = $searchViewRenderer->renderDefaultSearchView($nodeTranslation, $page);
+            }
 
             return null;
         }
@@ -548,6 +597,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function enterRequestScope($lang)
     {
+        $locale = null;
         $requestStack = $this->container->get('request_stack');
         // If there already is a request, get the locale from it.
         if ($requestStack->getCurrentRequest()) {
@@ -568,6 +618,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Render a custom search view
      *
+     * @deprecated This method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "renderCustomSearchView" method of the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" instead.
+     *
      * @param NodeTranslation             $nodeTranslation
      * @param SearchViewTemplateInterface $page
      * @param EngineInterface             $renderer
@@ -579,6 +631,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         SearchViewTemplateInterface $page,
         EngineInterface $renderer
     ) {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "%s" service with method "renderCustomSearchView" instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
         $view = $page->getSearchView();
         $renderContext = new RenderContext([
             'locale' => $nodeTranslation->getLang(),
@@ -606,6 +660,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * Render default search view (all indexable pageparts in the main context
      * of the page)
      *
+     * @deprecated This method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "renderDefaultSearchView" method of the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" instead.
+     *
      * @param NodeTranslation       $nodeTranslation
      * @param HasPagePartsInterface $page
      * @param EngineInterface       $renderer
@@ -617,6 +673,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         HasPagePartsInterface $page,
         EngineInterface $renderer
     ) {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "%s" service with method "renderDefaultSearchView" instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
+
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page);
         $view = '@KunstmaanNodeSearch/PagePart/view.html.twig';
         $content = $this->removeHtml(
@@ -644,7 +702,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
         $event = new IndexNodeEvent($page, $doc);
-        $this->container->get('event_dispatcher')->dispatch(IndexNodeEvent::EVENT_INDEX_NODE, $event);
+        $this->dispatch($event, IndexNodeEvent::EVENT_INDEX_NODE);
 
         $doc = $event->doc;
 
@@ -671,33 +729,19 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Removes all HTML markup & decode HTML entities
      *
+     * @deprecated This method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "removeHtml" method of the "Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer" instead.
+     *
      * @param $text
      *
      * @return string
      */
     protected function removeHtml($text)
     {
-        if (!trim($text)) {
-            return '';
-        }
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeSearchBundle 5.7 and will be removed in KunstmaanNodeSearchBundle 6.0. Use the "removeHtml" method of the "%s" service instead.', __METHOD__, SearchViewRenderer::class), E_USER_DEPRECATED);
 
-        // Remove Styles and Scripts
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($text);
-        $crawler->filter('style, script')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });
-        $text = $crawler->html();
+        $searchViewRenderer = $this->container->get('kunstmaan_node_search.service.search_view_renderer');
 
-        // Remove HTML markup
-        $result = strip_tags($text);
-
-        // Decode HTML entities
-        $result = trim(html_entity_decode($result, ENT_QUOTES));
-
-        return $result;
+        return $searchViewRenderer->removeHtml($text);
     }
 
     /**
@@ -750,5 +794,30 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         return $this->nodeRefs[$refEntityName];
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
+    }
+
+    private function isMethodOverridden(string $method)
+    {
+        $reflector = new \ReflectionMethod($this, $method);
+
+        return $reflector->getDeclaringClass()->getName() !== __CLASS__;
     }
 }

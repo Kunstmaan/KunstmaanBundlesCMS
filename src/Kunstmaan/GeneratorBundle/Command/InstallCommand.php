@@ -13,8 +13,8 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Process\Exception\RuntimeException;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Process\Process;
 
 /**
  * Kunstmaan installer
@@ -129,7 +129,9 @@ final class InstallCommand extends GeneratorCommand
         $this->initAssistant($input, $output);
 
         $defaultSiteOptions = [];
+        $defaultSiteOptions['--browsersync'] = 'https://myproject.dev';
         if ($input->getOption('demosite') === 'Yes') {
+            $defaultSiteOptions['--articleoverviewpageparent'] = 'HomePage';
             $defaultSiteOptions['--demosite'] = true;
         }
 
@@ -152,7 +154,7 @@ final class InstallCommand extends GeneratorCommand
             ->executeCommand($output, 'doctrine:database:create')
             ->executeCommand($output, 'doctrine:schema:drop', ['--force' => true])
             ->executeCommand($output, 'doctrine:schema:create')
-            ->executeCommand($output, 'doctrine:fixtures:load')
+            ->executeCommand($output, 'doctrine:fixtures:load', ['-n' => true], true)
             ->executeCommand($output, 'assets:install')
         ;
 
@@ -171,26 +173,29 @@ final class InstallCommand extends GeneratorCommand
         return 0;
     }
 
-    protected function executeCommand(OutputInterface $output, $command, array $options = [])
+    protected function executeCommand(OutputInterface $output, $command, array $options = [], $separateProcess = false)
     {
-        $options = array_merge(
-            [
-                '--no-debug' => true,
-            ],
-            $options
-        );
+        $options = array_merge(['--no-debug' => true], $options);
 
         ++$this->commandSteps;
 
         try {
-            $updateInput = new ArrayInput($options);
-            $updateInput->setInteractive(true);
-            $this->getApplication()->find($command)->run($updateInput, $output);
+            if ($separateProcess) {
+                $process = new Process(array_merge(['bin/console', $command], array_keys($options)));
+                $process->setTty(true);
+                $process->run();
+
+                if (!$process->isSuccessful()) {
+                    throw new \RuntimeException($process->getErrorOutput());
+                }
+            } else {
+                $updateInput = new ArrayInput($options);
+                $updateInput->setInteractive(true);
+                $this->getApplication()->find($command)->run($updateInput, $output);
+            }
             $output->writeln(sprintf('<info>Step %d: "%s" - [OK]</info>', $this->commandSteps, $command));
-        } catch (RuntimeException $exception) {
-            $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED]</error>', $this->commandSteps, $command));
         } catch (\Throwable $e) {
-            $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED]</error>', $this->commandSteps, $command));
+            $output->writeln(sprintf('<error>Step %d: "%s" - [FAILED] Message: %s</error>', $this->commandSteps, $command, $e->getMessage()));
         }
 
         return $this;

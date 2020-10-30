@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExceptionController extends AdminListController
 {
+    /** @var ExceptionAdminListConfigurator */
+    private $configurator;
+
     private function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {

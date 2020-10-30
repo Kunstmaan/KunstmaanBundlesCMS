@@ -125,3 +125,7 @@ services:
             - '@router'
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanTranslator/Toolbar/translations.html.twig', id: kuma_translation}
+
+    Kunstmaan\TranslatorBundle\DataFixtures\ORM\TranslationFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }

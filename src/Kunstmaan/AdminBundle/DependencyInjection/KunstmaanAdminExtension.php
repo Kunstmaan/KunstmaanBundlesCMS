@@ -30,7 +30,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $container->setParameter('version_checker.url', 'https://bundles.kunstmaan.be/version-check');
+        $container->setParameter('version_checker.url', 'https://cms.kunstmaan.be/version-check');
         $container->setParameter('version_checker.timeframe', 60 * 60 * 24);
         $container->setParameter('version_checker.enabled', true);
 
@@ -90,11 +90,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
     public function prepend(ContainerBuilder $container)
     {
-        $knpMenuConfig['twig'] = true; // set to false to disable the Twig extension and the TwigRenderer
-        $knpMenuConfig['templating'] = false; // if true, enables the helper for PHP templates
-        $knpMenuConfig['default_renderer'] = 'twig'; // The renderer to use, list is also available by default
-        $container->prependExtensionConfig('knp_menu', $knpMenuConfig);
-
         $fosUserOriginalConfig = $container->getExtensionConfig('fos_user');
         if (!isset($fosUserOriginalConfig[0]['db_driver'])) {
             $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
@@ -116,17 +111,14 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
-        $monologConfig['handlers']['main']['type'] = 'rotating_file';
-        $monologConfig['handlers']['main']['path'] = sprintf('%s/%s', $container->getParameter('kernel.logs_dir'), $container->getParameter('kernel.environment'));
-        $monologConfig['handlers']['main']['level'] = 'debug';
-        $container->prependExtensionConfig('monolog', $monologConfig);
-
+        // Manually register the KunstmaanAdminBundle folder as a FosUser override for symfony 4.
+        if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir').'/templates/bundles/KunstmaanAdminBundle')) {
+            $twigConfig['paths'][] = ['value' => '%kernel.project_dir%/templates/bundles/KunstmaanAdminBundle', 'namespace' => 'FOSUser'];
+        }
         $twigConfig['paths'][] = ['value' => \dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 
         // NEXT_MAJOR: Remove templating dependency
-        $frameworkConfig['templating']['engines'] = ['twig'];
-        $container->prependExtensionConfig('framework', $frameworkConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);

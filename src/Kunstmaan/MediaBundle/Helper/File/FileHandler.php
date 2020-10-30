@@ -10,9 +10,10 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 /**
  * FileHandler
@@ -35,21 +36,28 @@ class FileHandler extends AbstractMediaHandler
     public $fileSystem;
 
     /**
-     * @var MimeTypeGuesserInterface
+     * @deprecated This property is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Use the `$mimeTypes` property instead.
+     *
+     * @var MimeTypeGuesser
      */
     public $mimeTypeGuesser;
 
     /**
-     * @var ExtensionGuesserInterface
+     * @deprecated This property is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Use the `$mimeTypes` property instead.
+     *
+     * @var ExtensionGuesser
      */
     public $extensionGuesser;
+
+    /** @var MimeTypesInterface */
+    private $mimeTypes;
 
     /**
      * Files with a blacklisted extension will be converted to txt
      *
      * @var array
      */
-    private $blacklistedExtensions = array();
+    private $blacklistedExtensions = [];
 
     /**
      * @var SlugifierInterface
@@ -59,15 +67,34 @@ class FileHandler extends AbstractMediaHandler
     /**
      * Constructor
      *
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
+     * @param int                                                $priority
+     * @param MimeTypeGuesserFactoryInterface|MimeTypesInterface $mimeTypes
+     * @param ExtensionGuesserFactoryInterface                   $extensionGuesserFactoryInterface
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
+    public function __construct($priority, /*MimeTypesInterface*/ $mimeTypes, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface = null)
     {
         parent::__construct($priority);
-        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
-        $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
+
+        // NEXT_MAJOR: remove type check and enable parameter typehint
+        if (!$mimeTypes instanceof MimeTypesInterface && !$mimeTypes instanceof MimeTypeGuesserFactoryInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$mimeTypes" argument must implement the "%s" or "%s" interface', MimeTypesInterface::class, MimeTypeGuesserFactoryInterface::class));
+        }
+
+        if (null !== $extensionGuesserFactoryInterface) {
+            @trigger_error(sprintf('Passing a value for "$extensionGuesserFactoryInterface" in "%s" is deprecated since KunstmaanMediaBundle 5.7 and this parameter will be removed in KunstmaanMediaBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+        }
+
+        if ($mimeTypes instanceof MimeTypeGuesserFactoryInterface) {
+            @trigger_error(sprintf('Passing an instance of "%s" for "$mimeTypes" in "%s" is deprecated since KunstmaanMediaBundle 5.7 and this parameter will be removed in KunstmaanMediaBundle 6.0. Inject the an instance of "%s" instead.', MimeTypeGuesserFactoryInterface::class, __METHOD__, MimeTypesInterface::class), E_USER_DEPRECATED);
+
+            $this->mimeTypeGuesser = $mimeTypes->get();
+        } else {
+            $this->mimeTypes = $mimeTypes;
+        }
+
+        if ($extensionGuesserFactoryInterface instanceof ExtensionGuesserFactoryInterface) {
+            $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
+        }
     }
 
     /**
@@ -180,12 +207,12 @@ class FileHandler extends AbstractMediaHandler
             $media->setContent($file);
         }
 
-        $contentType = $this->mimeTypeGuesser->guess($content->getPathname());
+        $contentType = $this->guessMimeType($content->getPathname());
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
 
             if (!\array_key_exists('extension', $pathInfo)) {
-                $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
+                $pathInfo['extension'] = $this->getExtensions($contentType);
             }
 
             $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
@@ -198,7 +225,7 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setContentType($contentType);
         $media->setFileSize(filesize($media->getContent()));
-        $media->setUrl($this->mediaPath . $this->getFilePath($media));
+        $media->setUrl($this->mediaPath.$this->getFilePath($media));
         $media->setLocation('local');
     }
 
@@ -277,7 +304,7 @@ class FileHandler extends AbstractMediaHandler
             }
             $media->setContent($data);
 
-            $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
+            $contentType = $this->guessMimeType($media->getContent()->getPathname());
             $media->setContentType($contentType);
 
             return $media;
@@ -299,12 +326,12 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-            FileHandler::TYPE => array(
+        return [
+            FileHandler::TYPE => [
                 'type' => FileHandler::TYPE,
                 'name' => 'media.file.add',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -315,7 +342,7 @@ class FileHandler extends AbstractMediaHandler
     private function getFilePath(Media $media)
     {
         $filename = $media->getOriginalFilename();
-        $filename = str_replace(array('/', '\\', '%'), '', $filename);
+        $filename = str_replace(['/', '\\', '%'], '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.implode('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
@@ -342,5 +369,25 @@ class FileHandler extends AbstractMediaHandler
     private function getFileFolderPath(Media $media)
     {
         return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
+    }
+
+    private function guessMimeType($pathName)
+    {
+        // NEXT_MAJOR: remove method and inline guessMimeType call
+        if ($this->mimeTypeGuesser instanceof MimeTypeGuesser) {
+            return $this->mimeTypeGuesser->guess($pathName);
+        }
+
+        return $this->mimeTypes->guessMimeType($pathName);
+    }
+
+    private function getExtensions($mimeType)
+    {
+        // NEXT_MAJOR: remove method and inline getExtensions call
+        if ($this->extensionGuesser instanceof ExtensionGuesser) {
+            return $this->extensionGuesser->guess($mimeType);
+        }
+
+        return $this->mimeTypes->getExtensions($mimeType)[0] ?? '';
     }
 }

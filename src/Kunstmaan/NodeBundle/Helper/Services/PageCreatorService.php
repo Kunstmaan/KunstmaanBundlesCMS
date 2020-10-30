@@ -2,13 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Kunstmaan\AdminBundle\Repository\UserRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Repository\SeoRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -17,33 +19,53 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PageCreatorService
 {
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /**
-     * @var ACLPermissionCreatorService
-     */
+    /** @var ACLPermissionCreatorService */
     protected $aclPermissionCreatorService;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $userEntityClass;
 
+    public function __construct(EntityManagerInterface $em = null, ACLPermissionCreatorService $aclPermissionCreatorService = null, string $userEntityClass = null)
+    {
+        if (null === $em) {
+            @trigger_error(sprintf('Not injecting the required dependencies in the constructor of "%s" is deprecated since KunstmaanNodeBundle 5.7 and will be required in KunstmaanNodeBundle 6.0.', __CLASS__), E_USER_DEPRECATED);
+        }
+
+        $this->entityManager = $em;
+        $this->aclPermissionCreatorService = $aclPermissionCreatorService;
+        $this->userEntityClass = $userEntityClass;
+    }
+
+    /**
+     * @deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.
+     */
     public function setEntityManager($entityManager)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.
+     */
     public function setACLPermissionCreatorService($aclPermissionCreatorService)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
     }
 
+    /**
+     * @deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.
+     */
     public function setUserEntityClass($userEntityClass)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->userEntityClass = $userEntityClass;
     }
 
@@ -55,10 +77,14 @@ class PageCreatorService
      *
      * @param ContainerInterface $container a ContainerInterface instance
      *
+     * @deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.
+     *
      * @api
      */
     public function setContainer(ContainerInterface $container = null)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Inject the required dependencies in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
         $this->setEntityManager($container->get('doctrine.orm.entity_manager'));
         $this->setACLPermissionCreatorService($container->get('kunstmaan_node.acl_permission_creator_service'));
         $this->setUserEntityClass($container->getParameter('fos_user.model.user.class'));
@@ -106,12 +132,12 @@ class PageCreatorService
         $em = $this->entityManager;
 
         /** @var NodeRepository $nodeRepo */
-        $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $em->getRepository(Node::class);
         /** @var UserRepository $userRepo */
         $userRepo = $em->getRepository($this->userEntityClass);
         /* @var SeoRepository $seoRepo */
         try {
-            $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
+            $seoRepo = $em->getRepository(Seo::class);
         } catch (ORMException $e) {
             $seoRepo = null;
         }
@@ -136,7 +162,7 @@ class PageCreatorService
         $rootNode = null;
 
         /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo*/
-        $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+        $nodeTranslationRepo = $em->getRepository(NodeTranslation::class);
 
         foreach ($translations as $translation) {
             $language = $translation['language'];

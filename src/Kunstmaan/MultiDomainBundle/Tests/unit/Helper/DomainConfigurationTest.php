@@ -279,7 +279,7 @@ class DomainConfigurationTest extends TestCase
         $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
-            ->with($this->equalTo('KunstmaanNodeBundle:Node'))
+            ->with($this->equalTo(Node::class))
             ->willReturn($this->getNodeRepository());
 
         return $em;

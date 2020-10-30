@@ -92,8 +92,3 @@ In order to skip this, set `nested_deletable => false` attribute, i.e.:
     'nested_deletable'      => false,
 )
 ```                
-
-
-## References
-
-- [Using sub entities in pageparts](http://bundles.kunstmaan.be/news/using-sub-entities-in-pageparts)

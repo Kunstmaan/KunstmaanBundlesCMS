@@ -203,6 +203,6 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getPopup()
     {
-        return $this->em->getRepository('KunstmaanLeadGenerationBundle:Popup\AbstractPopup')->find($this->getPopupId());
+        return $this->em->getRepository(AbstractPopup::class)->find($this->getPopupId());
     }
 }

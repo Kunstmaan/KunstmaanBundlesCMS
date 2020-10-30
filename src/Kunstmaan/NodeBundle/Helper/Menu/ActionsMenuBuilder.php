@@ -8,11 +8,13 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -63,14 +65,18 @@ class ActionsMenuBuilder
      */
     private $enableExportPageTemplate;
 
+    /** @var bool */
+    private $showDuplicateWithChildren;
+
     /**
-     * @param FactoryInterface              $factory                  The factory
-     * @param EntityManager                 $em                       The entity manager
-     * @param RouterInterface               $router                   The router
-     * @param EventDispatcherInterface      $dispatcher               The event dispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
+     * @param FactoryInterface              $factory
+     * @param EntityManager                 $em
+     * @param RouterInterface               $router
+     * @param EventDispatcherInterface      $dispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker
      * @param PagesConfiguration            $pagesConfiguration
      * @param bool                          $enableExportPageTemplate
+     * @param bool                          $showDuplicateWithChildren
      */
     public function __construct(
         FactoryInterface $factory,
@@ -79,7 +85,8 @@ class ActionsMenuBuilder
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
-        $enableExportPageTemplate = true
+        $enableExportPageTemplate = true,
+        bool $showDuplicateWithChildren = false
     ) {
         $this->factory = $factory;
         $this->em = $em;
@@ -88,6 +95,7 @@ class ActionsMenuBuilder
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
+        $this->showDuplicateWithChildren = $showDuplicateWithChildren;
     }
 
     /**
@@ -112,13 +120,13 @@ class ActionsMenuBuilder
             );
         }
 
-        $this->dispatcher->dispatch(
-            Events::CONFIGURE_SUB_ACTION_MENU,
+        $this->dispatch(
             new ConfigureActionMenuEvent(
                 $this->factory,
                 $menu,
                 $activeNodeVersion
-            )
+            ),
+            Events::CONFIGURE_SUB_ACTION_MENU
         );
 
         return $menu;
@@ -150,13 +158,13 @@ class ActionsMenuBuilder
         );
 
         if (null === $activeNodeVersion) {
-            $this->dispatcher->dispatch(
-                Events::CONFIGURE_ACTION_MENU,
+            $this->dispatch(
                 new ConfigureActionMenuEvent(
                     $this->factory,
                     $menu,
                     $activeNodeVersion
-                )
+                ),
+                Events::CONFIGURE_ACTION_MENU
             );
 
             return $menu;
@@ -164,9 +172,7 @@ class ActionsMenuBuilder
 
         $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
         $node = $activeNodeTranslation->getNode();
-        $queuedNodeTranslationAction = $this->em->getRepository(
-            'KunstmaanNodeBundle:QueuedNodeTranslationAction'
-        )->findOneBy(['nodeTranslation' => $activeNodeTranslation]);
+        $queuedNodeTranslationAction = $this->em->getRepository(QueuedNodeTranslationAction::class)->findOneBy(['nodeTranslation' => $activeNodeTranslation]);
 
         $isFirst = true;
         $canEdit = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $node);
@@ -388,6 +394,22 @@ class ActionsMenuBuilder
                     'extras' => ['renderType' => 'button'],
                 ]
             );
+
+            if ($this->showDuplicateWithChildren) {
+                $menu->addChild(
+                    'action.duplicate_with_children',
+                    [
+                        'linkAttributes' => [
+                            'type' => 'button',
+                            'class' => 'btn btn-default btn--raise-on-hover',
+                            'data-toggle' => 'modal',
+                            'data-keyboard' => 'true',
+                            'data-target' => '#duplicate-with-children-page-modal',
+                        ],
+                        'extras' => ['renderType' => 'button'],
+                    ]
+                );
+            }
         }
 
         if ((null !== $node->getParent() || $node->getChildren()->isEmpty())
@@ -412,13 +434,13 @@ class ActionsMenuBuilder
             );
         }
 
-        $this->dispatcher->dispatch(
-            Events::CONFIGURE_ACTION_MENU,
+        $this->dispatch(
             new ConfigureActionMenuEvent(
                 $this->factory,
                 $menu,
                 $activeNodeVersion
-            )
+            ),
+            Events::CONFIGURE_ACTION_MENU
         );
 
         return $menu;
@@ -511,5 +533,22 @@ class ActionsMenuBuilder
     public function setEditableNode($value)
     {
         $this->isEditableNode = $value;
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->dispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->dispatcher->dispatch($eventName, $event);
     }
 }

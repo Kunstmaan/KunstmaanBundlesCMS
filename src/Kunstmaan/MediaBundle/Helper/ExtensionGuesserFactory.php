@@ -6,6 +6,9 @@ use Kunstmaan\MediaBundle\Helper\File\SVGExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 
+/**
+ * @deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. Use the symfony/mime component instead.
+ */
 class ExtensionGuesserFactory implements ExtensionGuesserFactoryInterface
 {
     /**

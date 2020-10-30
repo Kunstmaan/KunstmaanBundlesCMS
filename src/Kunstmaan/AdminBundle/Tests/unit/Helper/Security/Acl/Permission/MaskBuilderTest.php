@@ -14,11 +14,11 @@ class MaskBuilderTest extends TestCase
     /**
      * @param mixed $invalidMask
      *
-     * @expectedException \InvalidArgumentException
      * @dataProvider getInvalidConstructorData
      */
     public function testSlugify($invalidMask)
     {
+        $this->expectException(\InvalidArgumentException::class);
         new MaskBuilder($invalidMask);
     }
 
@@ -115,20 +115,16 @@ class MaskBuilderTest extends TestCase
         $this->assertEquals(0, $builder->get());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testAddWithInvalidMask()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $builder = new MaskBuilder();
         $builder->add(null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRemoveWithInvalidMask()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $builder = new MaskBuilder();
         $builder->remove(null);
     }
@@ -142,11 +138,9 @@ class MaskBuilderTest extends TestCase
         $this->assertEquals(MaskBuilder::CODE_UNPUBLISH, $code);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetCodeWithInvalidMask()
     {
+        $this->expectException(\InvalidArgumentException::class);
         MaskBuilder::getCode(null);
     }
 
@@ -162,11 +156,9 @@ class MaskBuilderTest extends TestCase
         $this->assertEquals(false, $builder->has('publish'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testHasWithInvalidMask()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $builder = new MaskBuilder();
         $builder->add('edit')
             ->add('view');

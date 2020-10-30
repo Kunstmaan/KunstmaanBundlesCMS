@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocaleRuleService implements RuleServiceInterface
 {
-    /** @var Request $request */
+    /** @var Request */
     private $request;
 
     /**

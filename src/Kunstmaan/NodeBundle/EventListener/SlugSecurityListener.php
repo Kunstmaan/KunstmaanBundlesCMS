@@ -28,6 +28,11 @@ class SlugSecurityListener
     protected $nodeMenu;
 
     /**
+     * @var bool
+     */
+    private $permissionsEnabled;
+
+    /**
      * @param EntityManager                 $entityManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param NodeMenu                      $nodeMenu
@@ -35,11 +40,13 @@ class SlugSecurityListener
     public function __construct(
         EntityManager $entityManager,
         AuthorizationCheckerInterface $authorizationChecker,
-        NodeMenu $nodeMenu
+        NodeMenu $nodeMenu,
+        $permissionsEnabled = true
     ) {
         $this->em = $entityManager;
         $this->authorizationChecker = $authorizationChecker;
         $this->nodeMenu = $nodeMenu;
+        $this->permissionsEnabled = $permissionsEnabled;
     }
 
     /**
@@ -56,7 +63,7 @@ class SlugSecurityListener
         $nodeTranslation = $event->getNodeTranslation();
         $request = $event->getRequest();
 
-        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
+        if ($this->permissionsEnabled && false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedException('You do not have sufficient rights to access this page.');
         }
 

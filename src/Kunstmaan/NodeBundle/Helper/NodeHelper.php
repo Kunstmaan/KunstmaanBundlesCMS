@@ -16,6 +16,7 @@ use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -78,7 +79,7 @@ class NodeHelper
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
 
         /* @var NodeVersion $publicNodeVersion */
-        $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $publicNodeVersion = $this->em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $publicPage,
                 $nodeTranslation,
@@ -97,14 +98,14 @@ class NodeHelper
         $this->em->persist($nodeVersion);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(
-            Events::CREATE_DRAFT_VERSION,
+        $this->dispatch(
             new NodeEvent(
                 $nodeTranslation->getNode(),
                 $nodeTranslation,
                 $nodeVersion,
                 $page
-            )
+            ),
+            Events::CREATE_DRAFT_VERSION
         );
 
         return $nodeVersion;
@@ -160,9 +161,9 @@ class NodeHelper
         $isStructureNode,
         TabPane $tabPane = null
     ) {
-        $this->eventDispatcher->dispatch(
-            Events::PRE_PERSIST,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::PRE_PERSIST
         );
 
         $nodeTranslation->setTitle($page->getTitle());
@@ -182,9 +183,9 @@ class NodeHelper
         }
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(
-            Events::POST_PERSIST,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::POST_PERSIST
         );
 
         return $nodeTranslation;
@@ -215,10 +216,10 @@ class NodeHelper
         }
 
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $locale, $user);
+        $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($newPage, $locale, $user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
         if (null !== $parentNode) {
-            $weight = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getMaxChildrenWeight(
+            $weight = $this->em->getRepository(NodeTranslation::class)->getMaxChildrenWeight(
                     $parentNode,
                     $locale
                 ) + 1;
@@ -234,11 +235,9 @@ class NodeHelper
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->eventDispatcher->dispatch(
-            Events::ADD_NODE,
-            new NodeEvent(
-                $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
-            )
+        $this->dispatch(
+            new NodeEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage),
+            Events::ADD_NODE
         );
 
         return $nodeTranslation;
@@ -256,9 +255,9 @@ class NodeHelper
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->eventDispatcher->dispatch(
-            Events::PRE_DELETE,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::PRE_DELETE
         );
 
         $node->setDeleted(true);
@@ -267,9 +266,9 @@ class NodeHelper
         $this->deleteNodeChildren($node, $locale);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(
-            Events::POST_DELETE,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
+            Events::POST_DELETE
         );
 
         return $nodeTranslation;
@@ -309,8 +308,7 @@ class NodeHelper
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->eventDispatcher->dispatch(
-            Events::COPY_PAGE_TRANSLATION,
+        $this->dispatch(
             new CopyPageTranslationNodeEvent(
                 $node,
                 $nodeTranslation,
@@ -320,7 +318,8 @@ class NodeHelper
                 $sourceNodeVersion,
                 $sourcePage,
                 $sourceLocale
-            )
+            ),
+            Events::COPY_PAGE_TRANSLATION
         );
 
         return $nodeTranslation;
@@ -383,8 +382,7 @@ class NodeHelper
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->addDraftNodeVersionFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->eventDispatcher->dispatch(
-            Events::RECOPY_PAGE_TRANSLATION,
+        $this->dispatch(
             new RecopyPageTranslationNodeEvent(
                 $node,
                 $nodeTranslation,
@@ -394,7 +392,8 @@ class NodeHelper
                 $sourceNodeVersion,
                 $sourcePage,
                 $sourceNodeTranslation->getLang()
-            )
+            ),
+            Events::RECOPY_PAGE_TRANSLATION
         );
 
         return $nodeTranslation;
@@ -417,9 +416,9 @@ class NodeHelper
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->eventDispatcher->dispatch(
-            Events::ADD_EMPTY_PAGE_TRANSLATION,
-            new NodeEvent($node, $nodeTranslation, $nodeVersion, $targetPage)
+        $this->dispatch(
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $targetPage),
+            Events::ADD_EMPTY_PAGE_TRANSLATION
         );
 
         return $nodeTranslation;
@@ -457,14 +456,14 @@ class NodeHelper
             $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
             $childNodePage = $childNodeVersion->getRef($this->em);
 
-            $this->eventDispatcher->dispatch(
-                Events::PRE_DELETE,
+            $this->dispatch(
                 new NodeEvent(
                     $childNode,
                     $childNodeTranslation,
                     $childNodeVersion,
                     $childNodePage
-                )
+                ),
+                Events::PRE_DELETE
             );
 
             $childNode->setDeleted(true);
@@ -472,14 +471,14 @@ class NodeHelper
 
             $this->deleteNodeChildren($childNode, $locale);
 
-            $this->eventDispatcher->dispatch(
-                Events::POST_DELETE,
+            $this->dispatch(
                 new NodeEvent(
                     $childNode,
                     $childNodeTranslation,
                     $childNodeVersion,
                     $childNodePage
-                )
+                ),
+                Events::POST_DELETE
             );
         }
     }
@@ -511,5 +510,22 @@ class NodeHelper
         }
 
         return $user;
+    }
+
+    /**
+     * @param object $event
+     * @param string $eventName
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

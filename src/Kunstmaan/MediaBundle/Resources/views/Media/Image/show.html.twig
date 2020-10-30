@@ -3,7 +3,7 @@
 {% block extraactions %}
 
     {% if handler.aviaryApiKey and not (handler.aviaryApiKey starts with 'Register') %}
-        <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >
+        <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ absolute_url(asset(media.url)) }}');" >
             {{ 'media.media.edit.action' | trans }}
         </button>
 

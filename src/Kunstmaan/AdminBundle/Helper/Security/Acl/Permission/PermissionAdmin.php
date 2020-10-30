@@ -175,7 +175,7 @@ class PermissionAdmin
      */
     public function getAllRoles()
     {
-        return $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+        return $this->em->getRepository(Role::class)->findAll();
     }
 
     /**
@@ -185,7 +185,7 @@ class PermissionAdmin
      */
     public function getManageableRolesForPages()
     {
-        $roles = $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+        $roles = $this->em->getRepository(Role::class)->findAll();
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
             if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN'))) {
@@ -232,7 +232,7 @@ class PermissionAdmin
             $user = $this->tokenStorage->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
 
-            $cmd = 'php ' . $this->kernel->getRootDir() . '/../bin/console kuma:acl:apply';
+            $cmd = 'php ' . $this->kernel->getProjectDir() . '/bin/console kuma:acl:apply';
             $cmd .= ' --env=' . $this->kernel->getEnvironment();
 
             $this->shellHelper->runInBackground($cmd);

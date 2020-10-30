@@ -5,8 +5,8 @@ namespace Kunstmaan\RedirectBundle\Router;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
-use Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -87,7 +87,7 @@ class RedirectRouter implements RouterInterface
      */
     public function match($pathinfo)
     {
-        $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
+        $urlMatcher = new UrlMatcher($this->getRouteCollection(), $this->getContext());
 
         return $urlMatcher->match($pathinfo);
     }
@@ -161,7 +161,14 @@ class RedirectRouter implements RouterInterface
      */
     private function createRoute(Redirect $redirect)
     {
-        $needsUtf8 = preg_match('/[\x80-\xFF]/', $redirect->getTarget());
+        $needsUtf8 = false;
+        foreach ([$redirect->getOrigin(), $redirect->getTarget()] as $item) {
+            if (preg_match('/[\x80-\xFF]/', $item)) {
+                $needsUtf8 = true;
+
+                break;
+            }
+        }
 
         return new Route(
             $redirect->getOrigin(), [

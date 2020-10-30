@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MultiDomainBundle\Router;
 
+use Kunstmaan\NodeBundle\Controller\SlugController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -36,7 +37,7 @@ class DomainBasedLocaleRouter extends SlugRouter
      * @param array    $parameters    The route parameters
      * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
-     * @return null|string
+     * @return string|null
      */
     public function generate($name, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
@@ -262,7 +263,7 @@ class DomainBasedLocaleRouter extends SlugRouter
     {
         $slugPath = '/{url}';
         $slugDefaults = array(
-            '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+            '_controller' => SlugController::class.'::slugAction',
             'preview' => false,
             'url' => '',
             '_locale' => $this->getDefaultLocale(),

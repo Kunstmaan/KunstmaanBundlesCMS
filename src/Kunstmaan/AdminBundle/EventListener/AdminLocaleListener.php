@@ -69,9 +69,12 @@ class AdminLocaleListener implements EventSubscriberInterface
         }
 
         $url = $event->getRequest()->getRequestUri();
-        $token = $this->tokenStorage->getToken();
+        if (!$this->adminRouteHelper->isAdminRoute($url)) {
+            return;
+        }
 
-        if ($token && $this->isAdminToken($this->providerKey, $token) && $this->adminRouteHelper->isAdminRoute($url)) {
+        $token = $this->tokenStorage->getToken();
+        if ($token && $this->isAdminToken($this->providerKey, $token)) {
             $locale = $token->getUser()->getAdminLocale();
 
             if (!$locale) {
@@ -98,9 +101,9 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            // Must be registered before the default Locale listener
-            KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
-        );
+        return [
+            // The event subscriber must be registered after the Symfony FirewallListener so the user token is populated.
+            KernelEvents::REQUEST => [['onKernelRequest', 5]],
+        ];
     }
 }

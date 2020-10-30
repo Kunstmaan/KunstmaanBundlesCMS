@@ -1,5 +1,189 @@
 # Changelog
 
+## 5.7.0 / 2020-10-29
+
+* [NodeBundle] Improve nodetranslation repository deprecation [#2805](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2805) ([@acrobat](https://github.com/acrobat)) 
+* [AdminListBundle] disable sort arrows of first & last item [#2799](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2799) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminBundle] autofocus search input when opening modal [#2798](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2798) ([@dbeerten](https://github.com/dbeerten)) 
+* [GeneratorBundle] Remove buildCmsAssets from generated FE tasks - assets are compiled in git repo [#2797](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2797) ([@dbeerten](https://github.com/dbeerten)) 
+* [NodeBundle] Replace setter injection in node helper services [#2791](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2791) ([@acrobat](https://github.com/acrobat)) 
+* [DashboardBundle] Improve dashboarbundle dx [#2790](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2790) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Removed the unused ddeboer/data-import-bundle dependency [#2789](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2789) ([@acrobat](https://github.com/acrobat)) 
+* [MultiDomainBundle] Deprecate replaced rootNode property [#2788](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2788) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Bump minimum supported symfony 4 version tot 4.4 [#2787](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2787) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Allow symfony/acl-bundle 2.0 [#2779](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2779) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Allow next majors of doctrine-bundle and doctrine-migrations-bundle to prepare symfony 5 support [#2775](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2775) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] getImageUrl has only 2 params [#2772](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2772) ([@dannyvw](https://github.com/dannyvw)) 
+* [GeneratorBundle] Avoid extra questions during install command [#2770](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2770) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Use absolute_url twig function instead of using app.request data [#2769](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2769) ([@dannyvw](https://github.com/dannyvw)) 
+* [MediaBundle] Update bulk move translations [#2766](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2766) ([@dannyvw](https://github.com/dannyvw)) 
+* [MediaBundle] Position sort by and limit [#2761](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2761) ([@dannyvw](https://github.com/dannyvw)) 
+* [MediaBundle] Add width and height to media show [#2760](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2760) ([@dannyvw](https://github.com/dannyvw)) 
+* [AllBundles] Bump doctrine/fixture-bundle to support symfony 5 [#2757](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2757) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Bump knplabs/knp-menu-bundle and remove default config [#2756](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2756) ([@acrobat](https://github.com/acrobat)) 
+* [FormBundle] Inject correct service in form mailer [#2754](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2754) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Prepare code to remove deprecated doctrine/cache and replace with symfony/cache [#2751](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2751) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Bump supported php version and upgrade to phpunit 8 [#2748](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2748) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Replace deprecation transchoice filter [#2746](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2746) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Don't add deprecated logout_on_user_change config option [#2745](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2745) ([@acrobat](https://github.com/acrobat)) 
+* [NodeSearchBundle] Introduce SearchViewRenderer service to deprecate/remove remaining templating usages [#2744](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2744) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix Event class and EventDispatcher argument order deprecations [#2743](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2743) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Deprecate aviary related code [#2742](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2742) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Replace deprecated getRootDir call [#2741](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2741) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix liip/imagine controller deprecation [#2740](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2740) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix deprecated twig controller render notation [#2730](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2730) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle][UserManagementBundle] Improve audit log for creating/deleting users [#2720](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2720) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] update fe packages [#2719](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2719) ([@FVKVN](https://github.com/FVKVN)) 
+* [GeneratorBundle] Preserve query parameters during redirect [#2718](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2718) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Rename incorrect named NodeTranslation repository method [#2716](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2716) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Sort node versions DESC [#2708](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2708) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] advanced js select for enumeration filter [#2707](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2707) ([@JZuidema](https://github.com/JZuidema)) 
+* [MediaBundle][UserManagementBundle] Improve csrf protection in several calls [#2681](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2681) ([@Numkil](https://github.com/Numkil)) 
+* [AdminBundle, MediaBundle] replace deprecated integer as errorcode in constraints [#2672](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2672) ([@Numkil](https://github.com/Numkil)) 
+* [MediaBundle] Refactor deprecated mimetypeguesser from symfony [#2668](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2668) ([@Numkil](https://github.com/Numkil)) 
+
+## 5.6.4 / 2020-10-28
+
+* [AdminBundle] use kunstmaan bundles logo in toolbar [#2803](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2803) ([@dbeerten](https://github.com/dbeerten)) 
+* [AdminBundleList] Enhancement: Better readability [#2802](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2802) ([@OskarStark](https://github.com/OskarStark)) 
+* [SensioGeneratorBundle] Fixed typo in form class name [#2796](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2796) ([@OskarStark](https://github.com/OskarStark)) 
+
+## 5.6.3 / 2020-10-09
+
+* [AdminBundle] Fix wrong PHPDoc [#2785](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2785) ([@OskarStark](https://github.com/OskarStark)) 
+* [NodeBundle] Remove duplicate query order by [#2778](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2778) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Remove empty src set [#2771](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2771) ([@dannyvw](https://github.com/dannyvw)) 
+* [GeneratorBundle] Fix demo site datafixtures url validation errors [#2767](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2767) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix icons in url chooser [#2762](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2762) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Add brands to font awesome imports [#2759](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2759) ([@dannyvw](https://github.com/dannyvw)) 
+* [NodeBundle] Dont start session if not needed [#2758](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2758) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Change admin locale listener priority to after firewall listener [#2747](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2747) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] Don't use temporary filename for spreadsheet translation imports [#2739](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2739) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix article fixture for articles without authors [#2738](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2738) ([@acrobat](https://github.com/acrobat)) 
+* [UserManagementBundle] Remove incorrect class parameter deprecation [#2731](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2731) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix remote media not shown in icon view [#2717](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2717) ([@Numkil](https://github.com/Numkil)) 
+* [MultidomainBundle] Fix getRootNode method to handle multiple calls with different hosts [#2715](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2715) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Update styleci config for changes in symfony preset [#2713](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2713) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] Added missing validation on translation file [#2712](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2712) ([@krewetka](https://github.com/krewetka)) 
+* [AdminBundle] Manually register the twig KunstmaanAdminBundle override directory [#2656](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2656) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.6.2 / 2020-06-29
+
+* [AllBundles] Fix remaining phpstan issues [#2702](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2702) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix nonexistent RoleInterface for the BC layer [#2701](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2701) ([@ondrejmirtes](https://github.com/ondrejmirtes)) 
+* [AllBundles] Fix missing use statements [#2699](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2699) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens))  
+
+## 5.6.1 / 2020-06-25
+
+* [SearchBundle] Updated ruflin/elastic version constraint in search bundle package [#2697](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2697) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.6.0 / 2020-06-25
+
+* [AllBundles] Allow phpstan to fail for now [#2696](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2696) ([@acrobat](https://github.com/acrobat)) 
+* [SearchBundle][NodeSearch] Add elastica/elasticsearch 7 support [#2695](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2695) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Refactored duplicate events for better usage [#2693](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2693) ([@Devolicious](https://github.com/Devolicious)) 
+* [NodeBundle] Allow duplicate with children  [#2686](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2686) ([@Numkil](https://github.com/Numkil)) 
+* [AllBundles] Validate composer.json files in travis build [#2679](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2679) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Improve url helper by replacing full data load by specific lookup [#2678](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2678) ([@acrobat](https://github.com/acrobat)) 
+* [FormBundle] Cascade delete form submission fields when removing a form submission [#2675](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2675) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Remove monolog main handler configuration [#2669](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2669) ([@dannyvw](https://github.com/dannyvw)) 
+* [AllBundles] Replace deprecated doctrine string entity alias to fqcn [#2662](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2662) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Use flashbag from session [#2661](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2661) ([@dannyvw](https://github.com/dannyvw)) 
+* [AllBundles] Integrate phpstan in travis build suite [#2660](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2660) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Rework travis-ci test setup [#2659](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2659) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.5.6 / 2020-10-09
+
+* [AdminBundle] Fix wrong PHPDoc [#2785](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2785) ([@OskarStark](https://github.com/OskarStark)) 
+* [NodeBundle] Remove duplicate query order by [#2778](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2778) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Remove empty src set [#2771](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2771) ([@dannyvw](https://github.com/dannyvw)) 
+* [GeneratorBundle] Fix demo site datafixtures url validation errors [#2767](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2767) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix icons in url chooser [#2762](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2762) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Add brands to font awesome imports [#2759](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2759) ([@dannyvw](https://github.com/dannyvw)) 
+* [NodeBundle] Dont start session if not needed [#2758](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2758) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Change admin locale listener priority to after firewall listener [#2747](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2747) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] Don't use temporary filename for spreadsheet translation imports [#2739](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2739) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix article fixture for articles without authors [#2738](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2738) ([@acrobat](https://github.com/acrobat)) 
+* [UserManagementBundle] Remove incorrect class parameter deprecation [#2731](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2731) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix remote media not shown in icon view [#2717](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2717) ([@Numkil](https://github.com/Numkil)) 
+* [MultidomainBundle] Fix getRootNode method to handle multiple calls with different hosts [#2715](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2715) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Update styleci config for changes in symfony preset [#2713](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2713) ([@acrobat](https://github.com/acrobat)) 
+* [TranslatorBundle] Added missing validation on translation file [#2712](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2712) ([@krewetka](https://github.com/krewetka)) 
+* [AdminBundle] Manually register the twig KunstmaanAdminBundle override directory [#2656](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2656) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.5.5 / 2020-06-29
+
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens)) 
+
+## 5.5.4 / 2020-06-25
+
+* [AdminBundle][AdminListBundle] translation in admin fixes [#2692](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2692) ([@Numkil](https://github.com/Numkil)) 
+* [GeneratorBundle] Use https by default to avoid any mixed content errors [#2684](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2684) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix incorrect typecast in UrlHelper [#2676](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2676) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Aviariy does not exist anymore [#2673](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2673) ([@tarjei](https://github.com/tarjei)) 
+* [AdminBundle] Remember editor content when dragging and dropping [#2666](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2666) ([@waaghals](https://github.com/waaghals)) 
+
+## 5.5.3 / 2020-05-12
+
+* [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.5.2 / 2020-03-24
+
+* [GeneratorBundle] getParameter should be called on the controller class [#2654](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2654) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.5.1 / 2020-03-19
+
+* [AdminBundle] Aclvoter should only grant access for supported attributes with disabled permissions  [#2653](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2653) ([@acrobat](https://github.com/acrobat))
+
+## 5.5.0 / 2020-03-18
+
+* [NodeBundle] Add configuration option to disable permission module/checking [#2649](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2649) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Replace deprecated Controller base class in DefaultController [#2646](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2646) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Adding .gitattributes to remove Tests directory from "dist" package [#2645](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2645) ([@acrobat](https://github.com/acrobat)) 
+* [UtilitiesBundle] Deprecated hex2bin polyfill method [#2625](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2625) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Inject correct dependency in UserProcessor [#2623](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2623) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Replace deprecated controller routing notation with fqcn [#2622](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2622) ([@acrobat](https://github.com/acrobat)) 
+* [RedirectBundle] Replace deprecated RedirectableUrlMatcher [#2610](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2610) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.4.7 / 2020-06-29
+
+* [NodeBundle] Fix NodeRepository getNodeByInternalName return typehint [#2700](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2700) ([@SvenLiekens](https://github.com/SvenLiekens)) 
+
+## 5.4.6 / 2020-06-25
+
+* [AdminBundle][AdminListBundle] translation in admin fixes [#2692](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2692) ([@Numkil](https://github.com/Numkil)) 
+* [GeneratorBundle] Use https by default to avoid any mixed content errors [#2684](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2684) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Fix incorrect typecast in UrlHelper [#2676](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2676) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Aviariy does not exist anymore [#2673](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2673) ([@tarjei](https://github.com/tarjei)) 
+* [AdminBundle] Remember editor content when dragging and dropping [#2666](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2666) ([@waaghals](https://github.com/waaghals)) 
+
+## 5.4.5 / 2020-05-12
+
+* [MediaBundle] Fix php 7.4 incompatibility [#2671](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2671) ([@acrobat](https://github.com/acrobat)) 
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.4.4 / 2020-03-18
+           
+* [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
+* [SeoBundle] Use correct nodetranslation property to generate slug url [#2651](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2651) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Tweak styleci config [#2650](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2650) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix symfony 3.4 translator incompatibility [#2647](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2647) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Replace incorrect mobile icons [#2644](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2644) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix incompatibility with liip/imagine-bundle 2.2+ [#2643](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2643) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.4.3 / 2020-03-05
+
+* [GeneratorBundle] Fix incorrect return types in generated classes [#2641](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2641) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Avoid accessing user token when it is not needed [#2640](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2640) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Restore NodeMenuItem::getLang method to fix BC break [#2639](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2639) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Replace old website url and name usages [#2638](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2638) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Update slack invite url and replace old bundles site references [#2637](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2637) ([@acrobat](https://github.com/acrobat)) 
+* [documentation] move blogpost to docs [#2636](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2636) ([@Numkil](https://github.com/Numkil)) 
+* [RedirectBundle] Fix UTF-8 issue with redirect origin [#2635](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2635) ([@tombevers](https://github.com/tombevers)) 
+* [AdminBundle] Translate website title for versionchecker [#2634](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2634) ([@acrobat](https://github.com/acrobat)) 
+
 ## 5.4.2 / 2020-02-07
 
 * [AdminBundle] Re-enable templating component for search nodepages config [#2630](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2630) ([@acrobat](https://github.com/acrobat)) 
@@ -78,6 +262,32 @@
 * [AllBundles] Replace deprecated twig namespaces by the new namespace format [#2449](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2449) ([@acrobat](https://github.com/acrobat)) 
 * [AllBundles] Remove deprecated FrameworkExtraBundle annotations [#2448](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2448) ([@acrobat](https://github.com/acrobat)) 
 * [GeneratorBundle] Improved the generated article classes [#2447](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2447) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.3.14 / 2020-05-12
+
+* [GeneratorBundle] Fix doctrine fixtures error during install command [#2658](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2658) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.3.13 / 2020-03-18
+
+* [AllBundles] Apply remaining styleci fixes after config change [#2652](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2652) ([@acrobat](https://github.com/acrobat)) 
+* [SeoBundle] Use correct nodetranslation property to generate slug url [#2651](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2651) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Tweak styleci config [#2650](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2650) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Fix symfony 3.4 translator incompatibility [#2647](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2647) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Replace incorrect mobile icons [#2644](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2644) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Fix incompatibility with liip/imagine-bundle 2.2+ [#2643](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2643) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.3.12 / 2020-03-05
+
+* [NodeBundle] Restore NodeMenuItem::getLang method to fix BC break [#2639](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2639) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Replace old website url and name usages [#2638](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2638) ([@acrobat](https://github.com/acrobat)) 
+* [AllBundles] Update slack invite url and replace old bundles site references [#2637](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2637) ([@acrobat](https://github.com/acrobat)) 
+* [documentation] move blogpost to docs [#2636](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2636) ([@Numkil](https://github.com/Numkil)) 
+* [RedirectBundle] Fix UTF-8 issue with redirect origin [#2635](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2635) ([@tombevers](https://github.com/tombevers)) 
+* [AdminBundle] Translate website title for versionchecker [#2634](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2634) ([@acrobat](https://github.com/acrobat)) 
+
+## 5.3.11 / 2020-02-18
+
+* [RedirectBundle] Fix target column length for long urls [#2633](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2633) ([@acrobat](https://github.com/acrobat)) 
 
 ## 5.3.10 / 2020-01-19
 

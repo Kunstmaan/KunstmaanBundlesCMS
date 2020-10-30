@@ -78,22 +78,26 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
         // Create articles
 	for ($i=1; $i<=6; $i++) {
 
+        {% if uses_author %}
         // Create author
         $author = new {{ entity_class }}Author();
 	    $author->setName($fakerNL->name);
 	    $manager->persist($author);
 	    $manager->flush();
+        {% endif %}
 
             $articlePage = new {{ entity_class }}Page();
 	    $articlePage->setTitle(Lorem::sentence(6));
+	    {% if uses_author %}
             $articlePage->setAuthor($author);
+        {% endif %}
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
             $translations = array();
             foreach ($languages as $lang) {
                 if ($lang == 'nl') {
-                    $title = $fakerEN->sentence;
+                    $title = $fakerNL->sentence;
                 } else {
                     $title = $fakerEN->sentence;
                 }

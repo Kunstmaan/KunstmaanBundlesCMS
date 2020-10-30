@@ -29,7 +29,9 @@ export function createCssOptimizedTask({
 }) {
     return function cssOptimized() {
         return gulp.src(src)
-            .pipe(sass().on('error', sassErrorHandler))
+            .pipe(sass().on('error', (error) => {
+                throw Error(`Sass Error:\n${error.messageFormatted}`);
+            }))
             .pipe(postcss([autoprefixer(), cssnano(cssnanoConfig)]))
             .pipe(gulp.dest(dest));
     };

@@ -5,7 +5,8 @@ disabled:
     - yoda_style
     - concat_without_spaces
     - phpdoc_summary
-    - const_separation
+    - no_superfluous_phpdoc_tags_symfony
+    - short_array_syntax
 
 finder:
     exclude:

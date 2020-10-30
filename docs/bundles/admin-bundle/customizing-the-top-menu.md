@@ -1,8 +1,12 @@
 # Customizing the top menu of the admin interface
 
-Customizing the top menu of the admin interface can be achieved by creating a service which implements the *Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface*. The service you created should provide an implementation for the *adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)* function.
+Customizing the top menu of the admin interface can be achieved by creating a service which implements the *Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface*. The service you created should provide an implementation for the function:
 
-In the adaptChildren function it is possible to customize the children for the given parent by adding or removing menu items in the children array. There are different types of menu items:
+```php
+adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+```
+
+In the `adaptChildren` function it is possible to customize the children for the given parent by adding or removing menu items in the children array. There are different types of menu items:
 
 * *Kunstmaan\AdminBundle\Helper\Menu\MenuItem*: Which represents a menu item that will be shown in the tree
 * *Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem*: Which represents a menu item that will be shown in the top menu

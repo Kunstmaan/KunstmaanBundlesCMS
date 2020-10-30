@@ -17,7 +17,7 @@
 {% block content %}
     <div class="row row--padded">
         <div class="col-md-12">
-            <div id="bulk-upload" data-url="{{ path('KunstmaanMediaBundle_media_bulk_upload_submit', { 'folderId' : folder.id }) }}">
+            <div id="bulk-upload" data-token="{{ csrf_token('bulk-upload-media') }}" data-url="{{ path('KunstmaanMediaBundle_media_bulk_upload_submit', { 'folderId' : folder.id }) }}">
                 <ul class="list-group" id="bulk-upload__file-list">
                     <li class="list-group-item">
                         {{ 'media.bulkupload.not_available' | trans }}

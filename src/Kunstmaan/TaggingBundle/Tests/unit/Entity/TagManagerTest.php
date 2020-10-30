@@ -85,12 +85,12 @@ class Lazy implements LazyLoadingTaggableInterface
  */
 class TagManagerTest extends TestCase
 {
-    /** @var TagManager $object */
+    /** @var TagManager */
     private $object;
 
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         $tag = new Tag();
 

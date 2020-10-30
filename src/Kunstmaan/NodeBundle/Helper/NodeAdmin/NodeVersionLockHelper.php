@@ -80,7 +80,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     protected function removeExpiredLocks(NodeTranslation $nodeTranslation)
     {
         $threshold = $this->container->getParameter('kunstmaan_node.lock_threshold');
-        $locks = $this->objectManager->getRepository('KunstmaanNodeBundle:NodeVersionLock')->getExpiredLocks($nodeTranslation, $threshold);
+        $locks = $this->objectManager->getRepository(NodeVersionLock::class)->getExpiredLocks($nodeTranslation, $threshold);
         foreach ($locks as $lock) {
             $this->objectManager->remove($lock);
         }
@@ -95,7 +95,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
      */
     protected function createNodeVersionLock(BaseUser $user, NodeTranslation $nodeTranslation, $isPublicVersion)
     {
-        $lock = $this->objectManager->getRepository('KunstmaanNodeBundle:NodeVersionLock')->findOneBy([
+        $lock = $this->objectManager->getRepository(NodeVersionLock::class)->findOneBy([
             'owner' => $user->getUsername(),
             'nodeTranslation' => $nodeTranslation,
             'publicVersion' => $isPublicVersion,
@@ -125,7 +125,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     {
         $threshold = $this->container->getParameter('kunstmaan_node.lock_threshold');
         /** @var NodeVersionLockRepository $objectRepository */
-        $objectRepository = $this->objectManager->getRepository('KunstmaanNodeBundle:NodeVersionLock');
+        $objectRepository = $this->objectManager->getRepository(NodeVersionLock::class);
 
         return $objectRepository->getLocksForNodeTranslation($nodeTranslation, $isPublicVersion, $threshold, $userToExclude);
     }

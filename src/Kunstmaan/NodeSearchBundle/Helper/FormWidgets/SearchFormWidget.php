@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SearchFormWidget extends FormWidget
 {
-    /** @var Node $node */
+    /** @var Node */
     private $node;
 
-    /** @var NodeSearch $nodeSearch */
+    /** @var NodeSearch */
     private $nodeSearch;
 
     /**
@@ -24,7 +24,7 @@ class SearchFormWidget extends FormWidget
     public function __construct(Node $node, EntityManager $em)
     {
         $this->node = $node;
-        $this->nodeSearch = $em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findOneByNode($this->node);
+        $this->nodeSearch = $em->getRepository(NodeSearch::class)->findOneByNode($this->node);
     }
 
     /**
@@ -52,7 +52,7 @@ class SearchFormWidget extends FormWidget
      */
     public function persist(EntityManager $em)
     {
-        $nodeSearch = $em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findOneByNode($this->node);
+        $nodeSearch = $em->getRepository(NodeSearch::class)->findOneByNode($this->node);
 
         if ($this->data['node_search'] !== null) {
             if ($nodeSearch === null) {

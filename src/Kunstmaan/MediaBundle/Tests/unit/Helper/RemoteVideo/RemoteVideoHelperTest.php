@@ -19,7 +19,7 @@ class RemoteVideoHelperTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->media = new Media();
         $this->object = new RemoteVideoHelper($this->media);

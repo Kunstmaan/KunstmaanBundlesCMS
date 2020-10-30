@@ -130,11 +130,9 @@ services:
 
     kunstmaan_media.validator.has_guessable_extension:
         class: '%kunstmaan_media.validator.has_guessable_extension.class%'
+        arguments: ['@mime_types']
         tags:
             - { name: validator.constraint_validator, alias: has_guessable_extension }
-        calls:
-            - [setMimeTypeGuesser, ['@kunstmaan_media.mimetype_guesser.factory']]
-            - [setExtensionGuesser, ['@kunstmaan_media.extension_guesser.factory']]
 
     kunstmaan_media.imagine.filter.loader.background:
         class: '%liip_imagine.filter.loader.background.class%'
@@ -148,6 +146,7 @@ services:
             - '@liip_imagine.service.filter'
             - '@liip_imagine.data.manager'
             - '@liip_imagine.cache.signer'
+            - '@liip_imagine.controller.config'
         tags:
             - { name: 'controller.service_arguments' }
         public: true
@@ -187,3 +186,7 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    Kunstmaan\MediaBundle\DataFixtures\ORM\FolderFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }

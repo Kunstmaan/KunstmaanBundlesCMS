@@ -35,7 +35,7 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         $folder = $media->getFolder();
 
         /* @var MediaManager $mediaManager */
@@ -49,7 +49,7 @@ class MediaController extends Controller
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+                $em->getRepository(Media::class)->save($media);
 
                 return new RedirectResponse(
                     $this->generateUrl(
@@ -88,11 +88,11 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
 
-        $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
+        $em->getRepository(Media::class)->delete($media);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
@@ -129,7 +129,7 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         return ['folder' => $folder];
     }
@@ -138,7 +138,7 @@ class MediaController extends Controller
      * @param Request $request
      * @param int     $folderId
      *
-     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
+     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit", methods={"POST"})
      *
      * @return JsonResponse
      */
@@ -157,6 +157,11 @@ class MediaController extends Controller
         // Create target dir
         if (!\file_exists($targetDir)) {
             @\mkdir($targetDir);
+        }
+
+        $submittedToken = $request->headers->get('x-upload-token');
+        if (!$this->isCsrfTokenValid('bulk-upload-media', $submittedToken)) {
+            return $this->returnJsonError('105', 'Could not verify token');
         }
 
         // Get a file name
@@ -240,7 +245,7 @@ class MediaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
         try {
@@ -303,7 +308,7 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $drop = null;
 
@@ -319,7 +324,7 @@ class MediaController extends Controller
         $media = $this->get('kunstmaan_media.media_manager')->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
-            $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+            $em->getRepository(Media::class)->save($media);
 
             return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success')]);
         }
@@ -361,7 +366,7 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
@@ -380,7 +385,7 @@ class MediaController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+                $em->getRepository(Media::class)->save($media);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -468,10 +473,10 @@ class MediaController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository('KunstmaanMediaBundle:Media');
+        $mediaRepo = $em->getRepository(Media::class);
 
         $media = $mediaRepo->getMedia($mediaId);
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $media->setFolder($folder);
         $mediaRepo->save($media);
@@ -491,7 +496,7 @@ class MediaController extends Controller
     public function bulkMoveAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository('KunstmaanMediaBundle:Media');
+        $mediaRepo = $em->getRepository(Media::class);
         $form = $this->createForm(BulkMoveMediaType::class);
 
         $form->handleRequest($request);

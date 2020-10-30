@@ -36,7 +36,7 @@ class NodeListener
     {
         if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
             /* @var Seo $seo */
-            $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
+            $seo = $this->em->getRepository(Seo::class)->findOrCreateFor($event->getPage());
 
             $seoWidget = new FormWidget();
             $seoWidget->addType('seo', SeoType::class, $seo);

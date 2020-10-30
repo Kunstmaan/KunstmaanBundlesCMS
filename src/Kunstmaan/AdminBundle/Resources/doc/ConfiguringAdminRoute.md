@@ -1,6 +1,6 @@
 # Configuring the admin route.
 
-You can now configure the url for the Admin side of your Kunstmaan Bundles Cms.
+You can now configure the url for the Admin side of your Kunstmaan CMS.
 
 You can do this by configuring the following option in your applications configurationg file.
 

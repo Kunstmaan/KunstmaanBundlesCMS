@@ -93,7 +93,7 @@ class EntityVersionLockService
     protected function createEntityVersionLock(User $user, LockableEntity $entity)
     {
         /** @var EntityVersionLock $lock */
-        $lock = $this->objectManager->getRepository('KunstmaanAdminListBundle:EntityVersionLock')->findOneBy([
+        $lock = $this->objectManager->getRepository(EntityVersionLock::class)->findOneBy([
             'owner' => $user->getUsername(),
             'lockableEntity' => $entity,
         ]);
@@ -134,7 +134,7 @@ class EntityVersionLockService
      */
     protected function removeExpiredLocks(LockableEntity $entity)
     {
-        $locks = $this->objectManager->getRepository('KunstmaanAdminListBundle:EntityVersionLock')->getExpiredLocks($entity, $this->threshold);
+        $locks = $this->objectManager->getRepository(EntityVersionLock::class)->getExpiredLocks($entity, $this->threshold);
         foreach ($locks as $lock) {
             $this->objectManager->remove($lock);
         }
@@ -151,7 +151,7 @@ class EntityVersionLockService
     protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, User $userToExclude = null)
     {
         /** @var EntityVersionLockRepository $objectRepository */
-        $objectRepository = $this->objectManager->getRepository('KunstmaanAdminListBundle:EntityVersionLock');
+        $objectRepository = $this->objectManager->getRepository(EntityVersionLock::class);
 
         return $objectRepository->getLocksForLockableEntity($entity, $this->threshold, $userToExclude);
     }
@@ -166,7 +166,7 @@ class EntityVersionLockService
     protected function getLockableEntity(LockableEntityInterface $entity, $create = true)
     {
         /** @var LockableEntity $lockable */
-        $lockable = $this->objectManager->getRepository('KunstmaanAdminListBundle:LockableEntity')->getOrCreate($entity->getId(), \get_class($entity));
+        $lockable = $this->objectManager->getRepository(LockableEntity::class)->getOrCreate($entity->getId(), \get_class($entity));
 
         if ($create === true && $lockable->getId() === null) {
             $this->objectManager->persist($lockable);

@@ -23,7 +23,6 @@ services:
         parent: kunstmaan_node_search.search.abstract_elastica_searcher
         calls:
             - [ setIndexName, ['%kunstmaan_node_search.indexname%']]
-            - [ setIndexType, ['%kunstmaan_node_search.indextype%']]
             - [ setTokenStorage, ['@security.token_storage']]
             - [ setDomainConfiguration, ['@kunstmaan_admin.domain_configuration']]
             - [ setEntityManager, ['@doctrine.orm.entity_manager']]
@@ -58,4 +57,16 @@ services:
             - '@request_stack'
             - 10
             - ~ #Will be replace by the NodeSearcherCompilerPass
+        public: true
+
+    Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer:
+        arguments:
+            - '@twig'
+            - '@kunstmaan_node_search.service.indexable_pageparts'
+            - '@request_stack'
+
+    # Public alias for BC reasons in NodePagesConfiguration class.
+    # To be deprecated after a refactor of the NodePagesConfiguration class.
+    kunstmaan_node_search.service.search_view_renderer:
+        alias: Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer
         public: true

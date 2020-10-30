@@ -18,7 +18,7 @@ class SlugifierTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->slugifier = new Slugifier();
     }
@@ -50,13 +50,5 @@ class SlugifierTest extends TestCase
             ['áàäåéèëíìïóòöúùüñßæ', 'aaaaeeeiiiooouuunssae'],
             ['polish-ążśźęćńół', 'polish-azszecnol'],
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 }

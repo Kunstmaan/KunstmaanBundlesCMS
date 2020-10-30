@@ -18,6 +18,7 @@ use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class NodeTranslationListener
@@ -25,7 +26,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  */
 class NodeTranslationListener
 {
-    /** @var FlashBagInterface */
+    /** @var SessionInterface|FlashBagInterface */
     private $flashBag;
 
     /** @var LoggerInterface */
@@ -46,15 +47,15 @@ class NodeTranslationListener
     /**
      * NodeTranslationListener constructor.
      *
-     * @param FlashBagInterface            $flashBag
-     * @param LoggerInterface              $logger
-     * @param SlugifierInterface           $slugifier
-     * @param RequestStack                 $requestStack
-     * @param DomainConfigurationInterface $domainConfiguration
-     * @param PagesConfiguration           $pagesConfiguration
+     * @param SessionInterface|FlashBagInterface $session
+     * @param LoggerInterface                    $logger
+     * @param SlugifierInterface                 $slugifier
+     * @param RequestStack                       $requestStack
+     * @param DomainConfigurationInterface       $domainConfiguration
+     * @param PagesConfiguration                 $pagesConfiguration
      */
     public function __construct(
-        FlashBagInterface $flashBag,
+        /* SessionInterface */ $flashBag,
         LoggerInterface $logger,
         SlugifierInterface $slugifier,
         RequestStack $requestStack,
@@ -62,6 +63,11 @@ class NodeTranslationListener
         PagesConfiguration $pagesConfiguration
     ) {
         $this->flashBag = $flashBag;
+
+        if ($flashBag instanceof FlashBagInterface) {
+            @trigger_error('Passing the "@session.flash_bag" service as first argument is deprecated since KunstmaanNodeBundle 5.6 and will be replaced by the session in KunstmaanNodeBundle 6.0. Inject the "@session" service instead.', E_USER_DEPRECATED);
+        }
+
         $this->logger = $logger;
         $this->slugifier = $slugifier;
         $this->requestStack = $requestStack;
@@ -331,7 +337,7 @@ class NodeTranslationListener
         } elseif (\count($flashes) > 0 && $this->isInRequestScope()) {
             // No translations found so we're certain we can show this message.
             $flash = current(\array_slice($flashes, -1));
-            $this->flashBag->add(FlashTypes::WARNING, $flash);
+            $this->getFlashBag()->add(FlashTypes::WARNING, $flash);
         }
 
         return true;
@@ -372,5 +378,14 @@ class NodeTranslationListener
     private function isInRequestScope()
     {
         return $this->requestStack && $this->requestStack->getCurrentRequest();
+    }
+
+    private function getFlashBag()
+    {
+        if ($this->flashBag instanceof SessionInterface) {
+            return $this->flashBag->getFlashBag();
+        }
+
+        return $this->flashBag;
     }
 }

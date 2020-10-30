@@ -38,6 +38,6 @@ We released the entire system as **MIT licensed open-source** in January of 2012
 
 Developers over the **entire world** have started using the CMS, some of which in companies who have built their business on top of this technology.
 
-![Countries where developers use the Kunstmaan Bundles CMS](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/world.png)
+![Countries where developers use the Kunstmaan CMS](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/world.png)
 
 This much activity results in a lot of feedback and pull requests from developers and users. The contributions of these **~70** fantastic people have made it better than we could have ever hoped for.

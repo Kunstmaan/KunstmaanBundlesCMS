@@ -4,7 +4,9 @@ namespace Kunstmaan\DashboardBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +44,7 @@ class GoogleAnalyticsAJAXController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
-        $analyticsOverviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $analyticsOverviewRepository = $em->getRepository(AnalyticsOverview::class);
         $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
@@ -194,7 +196,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
         // edit the config
         $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
         if ($accountId && $propertyId && $profileId) {
             $config->setAccountId($accountId);
             $config->setPropertyId($propertyId);
@@ -232,7 +234,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
         // edit the config
         $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
         $em->remove($config);
         $em->flush();
 
@@ -245,7 +247,7 @@ class GoogleAnalyticsAJAXController extends Controller
     public function getConfigAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+        $config = $em->getRepository(AnalyticsConfig::class)->findFirst();
         $accountId = $config->getAccountId();
 
         if (!$accountId) {
@@ -276,7 +278,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $segment->setName($name);
 
         // add the segment to the config
-        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
         $segment->setConfig($config);
         $segments = $config->getSegments();
         $segments[] = $segment;
@@ -296,7 +298,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $id = $request->query->get('id');
-        $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->deleteSegment($id);
+        $em->getRepository(AnalyticsSegment::class)->deleteSegment($id);
 
         return new JsonResponse();
     }
@@ -311,7 +313,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $id = $request->query->get('id');
         $query = $request->query->get('query');
         $name = $request->query->get('name');
-        $segment = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->find($id);
+        $segment = $em->getRepository(AnalyticsSegment::class)->find($id);
         $segment->setName($name);
         $segment->setQuery($query);
         $em->persist($segment);

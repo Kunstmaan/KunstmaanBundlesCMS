@@ -28,6 +28,8 @@ media:
         mediainfo:
             name: Name
             contenttype: Content-type
+            width: Width
+            height: Height
             createdat: Added
             updatedat: Updated
             downloadlink: Download link
@@ -65,7 +67,7 @@ media:
             modal:
                 title: Bulk move media
                 text: Select to which folder you want to move the selected media.
-                save: "Move.."
+                save: "Move"
                 form:
                     name: Parent folder
             success:

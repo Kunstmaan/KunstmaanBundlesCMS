@@ -20,13 +20,33 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the QueryBuilder based on node id and language.
      *
+     * @deprecated This method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the renamed method "getNodeTranslationByNodeId" instead.
+     *
      * @param int    $nodeId
      * @param string $lang
      *
-     * @return array_shift($result)
+     * @return NodeTranslation|null
      */
     public function getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang)
     {
+        @trigger_error(sprintf('The method "%s" is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the renamed method "getNodeTranslationByNodeId" instead.', __METHOD__), E_USER_DEPRECATED);
+
+        return $this->getNodeTranslationByNodeId($nodeId, $lang);
+    }
+
+    /**
+     * NEXT_MAJOR: add int typehint for $nodeId.
+     *
+     * @param int $nodeId
+     *
+     * @return NodeTranslation|null
+     */
+    public function getNodeTranslationByNodeId($nodeId, string $lang)
+    {
+        if (!is_int($nodeId)) {
+            @trigger_error(sprintf('Not passing an integer for the "$nodeId" parameter in "%s" is deprecated since KunstmaanAdminBundle 5.7 and an integer typehint will be added in KunstmaanAdminBundle 6.0."', __METHOD__), E_USER_DEPRECATED);
+        }
+
         $qb = $this->createQueryBuilder('nt')
             ->select('nt')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
@@ -85,7 +105,7 @@ class NodeTranslationRepository extends EntityRepository
             )
             ->where('n.deleted = false')
             ->orderBy('nt.weight')
-            ->addOrderBy('nt.weight');
+        ;
 
         if (!empty($lang)) {
             $queryBuilder
@@ -155,7 +175,6 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Finds all nodetranslations where title is like the given $title parameter
      *
-     *
      * @param string $title
      * @param string $lang  (optional, if not specified all languages will be
      *                      returned)
@@ -183,7 +202,7 @@ class NodeTranslationRepository extends EntityRepository
     {
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()
-            ->getRepository('KunstmaanNodeBundle:NodeVersion')
+            ->getRepository(NodeVersion::class)
             ->getNodeVersionFor($hasNode);
 
         if (!\is_null($nodeVersion)) {
@@ -411,7 +430,7 @@ class NodeTranslationRepository extends EntityRepository
 
         $em->persist($nodeTranslation);
 
-        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $nodeVersion = $em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $hasNode,
                 $nodeTranslation,
@@ -452,9 +471,9 @@ class NodeTranslationRepository extends EntityRepository
             throw new \InvalidArgumentException('The entity of class ' . $className . ' has no id, maybe you forgot to flush first');
         }
 
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->findOneBy(['lang' => $lang, 'node' => $node]);
+        $nodeTranslation = $em->getRepository(NodeTranslation::class)->findOneBy(['lang' => $lang, 'node' => $node]);
 
-        $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $hasNode,
                 $nodeTranslation,

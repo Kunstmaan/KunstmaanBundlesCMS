@@ -9,6 +9,9 @@ use Kunstmaan\AdminListBundle\AdminList\ExportList;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Kunstmaan\FormBundle\Entity\FormSubmissionField;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -60,7 +63,7 @@ class FormSubmissionsController extends Controller
     public function listAction(Request $request, $nodeTranslationId)
     {
         $em = $this->getDoctrine()->getManager();
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
 
         /** @var AdminList $adminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
@@ -86,8 +89,8 @@ class FormSubmissionsController extends Controller
     public function editAction($nodeTranslationId, $submissionId)
     {
         $em = $this->getDoctrine()->getManager();
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
+        $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
+        $formSubmission = $em->getRepository(FormSubmission::class)->find($submissionId);
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $deletableFormsubmission = $this->getParameter('kunstmaan_form.deletable_formsubmissions');
 
@@ -118,7 +121,7 @@ class FormSubmissionsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         /** @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
         $translator = $this->get('translator');
 
         /** @var ExportList $exportList */
@@ -146,9 +149,9 @@ class FormSubmissionsController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $submission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($id);
+        $submission = $em->getRepository(FormSubmission::class)->find($id);
 
-        $node = $em->getRepository('KunstmaanNodeBundle:Node')->find($submission->getNode());
+        $node = $em->getRepository(Node::class)->find($submission->getNode());
         $nt = $node->getNodeTranslation($request->getLocale());
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
@@ -158,7 +161,7 @@ class FormSubmissionsController extends Controller
             ['nodeTranslationId' => $nt->getId()]
         );
 
-        $fields = $em->getRepository('KunstmaanFormBundle:FormSubmissionField')->findBy(['formSubmission' => $submission]);
+        $fields = $em->getRepository(FormSubmissionField::class)->findBy(['formSubmission' => $submission]);
 
         try {
             foreach ($fields as $field) {

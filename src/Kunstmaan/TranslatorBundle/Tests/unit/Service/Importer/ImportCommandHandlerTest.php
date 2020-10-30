@@ -10,7 +10,7 @@ class ImportCommandHandlerTest extends WebTestCase
 {
     private $importCommandHandler;
 
-    public function setUp()
+    public function setUp(): void
     {
         static::bootKernel(['test_case' => 'TranslatorBundleTest', 'root_config' => 'config.yaml']);
         $container = static::$kernel->getContainer();

@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller class which Aviary can use to upload the edited image and add it to the database
+ *
+ * @deprecated The AviaryController is deprecated in KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0. The aviary service is discontinued.
  */
 class AviaryController extends Controller
 {
@@ -29,9 +31,9 @@ class AviaryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 

@@ -144,7 +144,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Node[]
      */
     public function getChildren()
     {
@@ -189,7 +189,7 @@ class Node extends AbstractEntity implements GedmoNode
     /**
      * @param bool $includeOffline
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|NodeTranslation[]
      */
     public function getNodeTranslations($includeOffline = false)
     {

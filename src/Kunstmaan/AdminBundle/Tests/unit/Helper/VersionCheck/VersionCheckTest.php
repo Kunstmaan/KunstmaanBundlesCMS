@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
+use Doctrine\Common\Cache\ArrayCache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -9,28 +10,70 @@ use GuzzleHttp\Psr7\Response;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use PHPUnit\Framework\TestCase;
-use Doctrine\Common\Cache\Cache;
+use Psr\Cache\CacheItemInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionCheckTest extends TestCase
 {
+    /** @var \PHPUnit\Framework\MockObject\MockObject|LegacyTranslatorInterface|TranslatorInterface */
+    private $translator;
     /** @var ContainerInterface (mock) */
     private $container;
 
-    /** @var Cache (mock) */
+    /** @var ArrayAdapter */
     private $cache;
 
-    public function setUp()
+    public function setUp(): void
     {
         /* @var ContainerInterface $container */
         $this->container = $this->createMock(ContainerInterface::class);
 
-        /* @var Cache $cache */
-        $this->cache = $this->createMock(Cache::class);
+        $this->cache = $this->createMock(AdapterInterface::class);
+
+        if (\interface_exists(TranslatorInterface::class)) {
+            $this->translator = $this->createMock(TranslatorInterface::class);
+        } else {
+            $this->translator = $this->createMock(LegacyTranslatorInterface::class);
+        }
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing an instance of "Doctrine\Common\Cache\CacheProvider" as the second argument in "Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct" is deprecated since KunstmaanAdminBundle 5.7 and an instance of "Symfony\Component\Cache\Adapter\AdapterInterface" will be required in KunstmaanAdminBundle 6.0.
+     */
+    public function testDeprecatedCacheConstructorParameter()
+    {
+        new VersionChecker($this->createMock(ContainerInterface::class), new ArrayCache(), $this->translator);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testCacheConstructorParameterType()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "$cache" parameter should extend from "Doctrine\Common\Cache\CacheProvider" or implement "Symfony\Component\Cache\Adapter\AdapterInterface"');
+
+        new VersionChecker($this->createMock(ContainerInterface::class), new \stdClass(), $this->translator);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testTranslatorConstructorParameterType()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "$translator" parameter should be instance of "Symfony\Contracts\Translation\TranslatorInterface" or "Symfony\Component\Translation\TranslatorInterface"');
+
+        new VersionChecker($this->createMock(ContainerInterface::class), new ArrayCache(), new \stdClass());
     }
 
     /**
@@ -41,7 +84,7 @@ class VersionCheckTest extends TestCase
     public function setUpVersionCheckerMock(?array $methods)
     {
         $versionCheckerMock = $this->getMockBuilder(VersionChecker::class)
-            ->setConstructorArgs([$this->container, $this->cache])
+            ->setConstructorArgs([$this->container, $this->cache, $this->translator])
             ->setMethods($methods)
             ->getMock()
         ;
@@ -57,8 +100,9 @@ class VersionCheckTest extends TestCase
             ->will($this->onConsecutiveCalls('url', 300, true))
         ;
 
-        $versionCheckerMock = $this->setUpVersionCheckerMock(null);
-        $this->assertIsBool($versionCheckerMock->isEnabled());
+        $versionChecker = $this->getVersionChecker($this->container, new ArrayAdapter(), $this->translator);
+
+        $this->assertTrue($versionChecker->isEnabled());
     }
 
     public function testPeriodicallyCheck()
@@ -69,10 +113,14 @@ class VersionCheckTest extends TestCase
             ->will($this->onConsecutiveCalls('url', 300, true))
         ;
 
+        $cacheItem = $this->createMock(CacheItemInterface::class);
+        $cacheItem->method('isHit')->willReturn(true);
+        $cacheItem->method('get')->willReturn([]);
+
         $this->cache
             ->expects($this->once())
-            ->method('fetch')
-            ->willReturn([])
+            ->method('getItem')
+            ->willReturn($cacheItem)
         ;
         $versionCheckerMock = $this->setUpVersionCheckerMock(null);
         $versionCheckerMock->periodicallyCheck();
@@ -127,14 +175,8 @@ class VersionCheckTest extends TestCase
             ->will($this->onConsecutiveCalls('url', 300, true, 'title'))
         ;
 
-        $requestMock = $this->createMock(Request::class);
-
-        $stackMock = $this->createMock(RequestStack::class);
-        $stackMock
-            ->expects($this->once())
-            ->method('getCurrentRequest')
-            ->willReturn($requestMock)
-        ;
+        $requestStack = new RequestStack();
+        $requestStack->push(new Request());
 
         $translatorMock = $this->createMock(Translator::class);
         $translatorMock
@@ -145,10 +187,22 @@ class VersionCheckTest extends TestCase
 
         $kernelMock = $this->createMock(Kernel::class);
 
+        if ('instanceOf' === $expectedType) {
+            $cacheItem = $this->createMock(CacheItemInterface::class);
+            $cacheItem->method('isHit')->willReturn(false);
+            $cacheItem->expects($this->once())->method('expiresAfter')->with(300);
+            $cacheItem->expects($this->once())->method('set')->with($this->isInstanceOf($expected));
+
+            $this->cache
+                ->expects($this->once())
+                ->method('getItem')
+                ->willReturn($cacheItem);
+        }
+
         $this->container
             ->expects($this->exactly(3))
             ->method('get')
-            ->will($this->onConsecutiveCalls($stackMock, $kernelMock, $translatorMock))
+            ->will($this->onConsecutiveCalls($requestStack, $kernelMock, $translatorMock))
         ;
 
         $mock = new MockHandler([
@@ -187,5 +241,10 @@ class VersionCheckTest extends TestCase
             'composer.lock bundleless' => [$baseDir.'/composer_bundleless.lock', 'exception', 'translated'],
             'composer.lock not found' => [$baseDir.'/composer_not_there.lock', 'exception', 'translated'],
         ];
+    }
+
+    private function getVersionChecker(ContainerInterface $container, AdapterInterface $cache, $translator)
+    {
+        return new VersionChecker($container, $cache, $translator);
     }
 }

@@ -76,7 +76,11 @@ class PasswordCheckListener
         }
 
         $url = $event->getRequest()->getRequestUri();
-        if ($this->tokenStorage->getToken() && $this->adminRouteHelper->isAdminRoute($url)) {
+        if (!$this->adminRouteHelper->isAdminRoute($url)) {
+            return;
+        }
+
+        if ($this->tokenStorage->getToken()) {
             $route = $event->getRequest()->get('_route');
             if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password') {
                 $user = $this->tokenStorage->getToken()->getUser();

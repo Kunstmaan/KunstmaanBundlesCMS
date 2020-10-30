@@ -125,6 +125,7 @@ kunstmaan_node:
         enabled:              false
         check_interval:       15
         threshold:            35
+    enable_permissions: true # Enable/disable permission checking on nodes (frontend and admin view)
 ```
 
 ## NodeSearchBundle
