@@ -12,9 +12,11 @@ action:
   delete: "Verwijder"
   addsubpage: "Subpagina toevoegen"
   duplicate: "Dupliceer"
+  undo_delete: "Verwijderen ongedaan maken"
 modal:
   sourcelanguage: "Bron taal"
 pages:
+  view_action: "Bekijk pagina's"
   copynotavailable: "Gelieve de bovenliggende pagina eerst te vertalen"
 kuma_node:
   form:
@@ -78,6 +80,10 @@ kuma_node:
         success: De pagina is bewerkt
         locked: De pagina wordt momenteel bewerkt door %users%
         locked_success: Een automatische back-up is aangemaakt, omdat de pagina is bewerkt door een andere gebruiker
+    undo_delete:
+      flash:
+        success: Het ongedaan maken van het verwijderen van de pagina is gelukt
+        error: Er is een probleem opgetreden tijdens het ongedaan maken van het verwijderen van de pagina
     new_page:
       title:
         default: Nieuwe pagina
@@ -160,6 +166,9 @@ kuma_node:
       button:
         delete: Verwijder
         cancel: Annuleer
+    undo_delete_page:
+      'title.%page%': Verwijderen van de pagina '%page% ongedaan maken'
+      'body.%page%': Hiermee maakt u het verwijderen van deze pagina ongedaan in alle talen! Bent u echt zeker over dit?
     duplicate_page:
       'title.%page%': Dupliceer pagina '%page%'
       label:
@@ -177,3 +186,7 @@ kuma_node:
   widget:
     choose: Kies
     url_chooser: URL-keuze
+deleted_pages:
+    title: "Verwijderde pagina's"
+    additional_title: "Deze lijst bevat alle verwijderde pagina's chronologisch gesorteerd op laatste wijziging."
+    view_action: "Bekijk verwijderde pagina's"

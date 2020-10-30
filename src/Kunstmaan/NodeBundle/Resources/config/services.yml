@@ -100,6 +100,7 @@ services:
             - '@kunstmaan_node.pages_configuration'
             - '%kunstmaan_node.enable_export_page_template%'
             - '%kunstmaan_node.show_duplicate_with_children%'
+            - '%kunstmaan_node.enable_undo_deleting_nodes%'
         public: true
 
     kunstmaan_node.menu.sub_actions:

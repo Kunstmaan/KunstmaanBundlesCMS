@@ -16,6 +16,8 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
+use Kunstmaan\NodeBundle\AdminList\DeletedNodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -91,8 +93,15 @@ class NodeAdminController extends Controller
      */
     protected $translator;
 
-    /** @var PageCloningHelper */
+    /**
+     * @var PageCloningHelper
+     */
     private $pageCloningHelper;
+
+    /**
+     * @var bool
+     */
+    private $isUndoDeletingNodesEnabled;
 
     /**
      * init
@@ -110,6 +119,9 @@ class NodeAdminController extends Controller
         $this->nodePublisher = $this->container->get('kunstmaan_node.admin_node.publisher');
         $this->translator = $this->container->get('translator');
         $this->pageCloningHelper = $this->container->get(PageCloningHelper::class);
+        $this->isUndoDeletingNodesEnabled = $this->container->getParameter(
+            'kunstmaan_node.kunstmaan_node.enable_undo_deleting_nodes'
+        );
     }
 
     /**
@@ -141,17 +153,37 @@ class NodeAdminController extends Controller
                     'params' => ['_locale' => $locale, 'url' => $item->getUrl()],
                 );
             }
+
+            return null;
         };
+
         $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
-        $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN'));
+        $nodeAdminListConfigurator->setShowAddHomepage(
+            $this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN')
+        );
 
-        /** @var AdminList $adminlist */
-        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
-        $adminlist->bindRequest($request);
+        $this->addViewDeletedNodesAction($nodeAdminListConfigurator);
 
-        return array(
-            'adminlist' => $adminlist,
+        return $this->renderAdminList($request, $nodeAdminListConfigurator);
+    }
+
+    private function addViewDeletedNodesAction(NodeAdminListConfigurator $nodeAdminListConfigurator): void
+    {
+        if (!$this->isUndoDeletingNodesEnabled) {
+            return;
+        }
+
+        $nodeAdminListConfigurator->addListAction(
+            new SimpleListAction(
+                [
+                    'path' => 'KunstmaanNodeBundle_deleted_nodes',
+                    'params' => [],
+                ],
+                'deleted_pages.view_action',
+                null,
+                '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
+            )
         );
     }
 
@@ -348,7 +380,6 @@ class NodeAdminController extends Controller
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $request = $this->get('request_stack')->getCurrentRequest();
         $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
@@ -450,6 +481,101 @@ class NodeAdminController extends Controller
         );
 
         return $response;
+    }
+
+    /**
+     * @Route("/deleted", name="KunstmaanNodeBundle_deleted_nodes")
+     * @Template("@KunstmaanNode/Admin/deleted_list.html.twig")
+     */
+    public function deletedNodesAction(Request $request): array
+    {
+        $this->init($request);
+
+        if (!$this->isUndoDeletingNodesEnabled) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $nodeAdminListConfigurator = new DeletedNodeAdminListConfigurator(
+            $this->em,
+            $this->aclHelper,
+            $this->locale,
+            PermissionMap::PERMISSION_DELETE,
+            $this->authorizationChecker
+        );
+        $nodeAdminListConfigurator->addListAction(
+            new SimpleListAction(
+                [
+                    'path' => 'KunstmaanNodeBundle_nodes',
+                    'params' => [],
+                ],
+                'pages.view_action',
+                null,
+                '@KunstmaanAdmin/Settings/button_resolve_all.html.twig'
+            )
+        );
+        $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
+        $locale = $this->locale;
+        $acl = $this->authorizationChecker;
+
+        $nodeAdminListConfigurator->addSimpleItemAction(
+            'action.undo_delete',
+            function (EntityInterface $item) use ($locale, $acl) {
+                if ($acl->isGranted(PermissionMap::PERMISSION_DELETE, $item->getNode())) {
+                    return [
+                        'path' => 'KunstmaanNodeBundle_nodes_delete_undo',
+                        'params' => [
+                            '_locale' => $locale,
+                            'id' => $item->getNode()->getId(),
+                        ],
+                    ];
+                }
+
+                return null;
+            },
+            'fa fa-undo',
+            '@KunstmaanNode\Admin\undo_delete_button.html.twig'
+        );
+
+        return $this->renderAdminList($request, $nodeAdminListConfigurator);
+    }
+
+    /**
+     * @Route(
+     *      "/{id}/delete/undo",
+     *      requirements={"id" = "\d+"},
+     *      name="KunstmaanNodeBundle_nodes_delete_undo",
+     * )
+     */
+    public function undoDeleteAction(Request $request, int $id): RedirectResponse
+    {
+        $this->init($request);
+
+        if (!$this->isUndoDeletingNodesEnabled) {
+            throw $this->createAccessDeniedException();
+        }
+
+        /* @var Node $node */
+        $node = $this->em->getRepository(Node::class)->find($id);
+
+        try {
+            $this->undoDeleteNode($node);
+
+            $this->em->flush();
+
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_node.admin.undo_delete.flash.success')
+            );
+        } catch (AccessDeniedException $exception) {
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_node.admin.undo_delete.flash.error')
+            );
+        }
+
+        return $this->redirectToRoute(
+            'KunstmaanNodeBundle_deleted_nodes'
+        );
     }
 
     /**
@@ -882,6 +1008,13 @@ class NodeAdminController extends Controller
             $nodeVersion = $draftNodeVersion;
             $page = $nodeVersion->getRef($this->em);
         } else {
+            if (!empty($request->request->get('undo_delete'))) {
+                $node->setDeleted(false);
+
+                $this->em->persist($node);
+                $this->em->flush();
+            }
+
             if ($request->getMethod() == 'POST') {
                 $nodeVersionIsLocked = $this->isNodeVersionLocked($nodeTranslation, true);
 
@@ -1220,6 +1353,34 @@ class NodeAdminController extends Controller
         }
     }
 
+    private function undoDeleteNode(Node $node): void
+    {
+        if (!$node->isDeleted()) {
+            return;
+        }
+
+        $this->denyAccessUnlessGranted(
+            PermissionMap::PERMISSION_DELETE,
+            $node
+        );
+
+        $node->setDeleted(false);
+
+        foreach ($node->getNodeTranslations() as $nodeTranslation) {
+            if (!$nodeTranslation instanceof NodeTranslation) {
+                continue;
+            }
+
+            $this->nodePublisher->unPublish($nodeTranslation);
+        }
+
+        $this->em->persist($node);
+
+        foreach ($node->getChildren() as $child) {
+            $this->undoDeleteNode($child);
+        }
+    }
+
     /**
      * @param Request $request
      * @param string  $type
@@ -1320,5 +1481,18 @@ class NodeAdminController extends Controller
         }
 
         return $eventDispatcher->dispatch($eventName, $event);
+    }
+
+    private function renderAdminList(
+        Request $request,
+        NodeAdminListConfigurator $nodeAdminListConfigurator
+    ): array {
+        /** @var AdminList $adminList */
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
+        $adminList->bindRequest($request);
+
+        return [
+            'adminlist' => $adminList,
+        ];
     }
 }

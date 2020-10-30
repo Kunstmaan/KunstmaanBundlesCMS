@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('show_add_homepage')->defaultTrue()->end()
                 ->booleanNode('show_duplicate_with_children')->defaultFalse()->end()
                 ->booleanNode('enable_export_page_template')->defaultFalse()->end()
+                ->booleanNode('enable_undo_deleting_nodes')->defaultTrue()->end()
                 ->arrayNode('lock')
                     ->addDefaultsIfNotSet()
                     ->canBeEnabled()

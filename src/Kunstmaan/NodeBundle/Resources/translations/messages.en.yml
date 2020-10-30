@@ -13,11 +13,13 @@ action:
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
     duplicate_with_children: "Duplicate with sub pages"
+    undo_delete: "Undo deleting page"
 
 modal:
     sourcelanguage: "Source language"
 
 pages:
+    view_action: 'View pages'
     copynotavailable: "Please translate the parent page first"
 
 kuma_node:
@@ -82,6 +84,10 @@ kuma_node:
                 success: The page has been edited
                 locked: The page is currently being edited by %users%
                 locked_success: An automatic backup has been created because the page is being edited by another user
+        undo_delete:
+            flash:
+                success: Deleting the page has been undone
+                error: There was an error while undoing deleting the page
         new_page:
             title:
                 default: New page
@@ -166,6 +172,9 @@ kuma_node:
             button:
                 delete:     Delete
                 cancel:     Cancel
+        undo_delete_page:
+            'title.%page%': Undo deleting page '%page%'
+            'body.%page%':  This will undo deleting this page in all languages! Are you really sure about this?
         duplicate_page:
             'title.%page%': Duplicate page '%page%'
             label:
@@ -189,3 +198,8 @@ toolbar:
     node:
         title: 'Page title'
         edit: 'Edit page'
+
+deleted_pages:
+    title: 'Deleted pages'
+    additional_title: 'This list contains all the deleted pages, chronologically ordered by updated date.'
+    view_action: 'View deleted pages'

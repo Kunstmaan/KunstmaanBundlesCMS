@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\AdminList;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -62,14 +64,14 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->setPermissionDefinition(
             new PermissionDefinition(
                 array($permission),
-                'Kunstmaan\NodeBundle\Entity\Node',
+                Node::class,
                 'n'
             )
         );
     }
 
     /**
-     * @param \Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface $domainConfiguration
+     * @param DomainConfigurationInterface $domainConfiguration
      */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
     {
@@ -241,11 +243,13 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 
         $queryBuilder
             ->select('b,n')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->innerJoin('b.node', 'n', Join::WITH, 'b.node = n.id')
             ->andWhere('b.lang = :lang')
-            ->andWhere('n.deleted = 0')
-            ->addOrderBy('b.updated', 'DESC')
-            ->setParameter('lang', $this->locale);
+            ->andWhere('n.deleted = :deleted')
+            ->addOrderBy('b.updated', Criteria::DESC)
+            ->setParameter('lang', $this->locale)
+            ->setParameter('deleted', 0)
+        ;
 
         if (!$this->domainConfiguration) {
             return;

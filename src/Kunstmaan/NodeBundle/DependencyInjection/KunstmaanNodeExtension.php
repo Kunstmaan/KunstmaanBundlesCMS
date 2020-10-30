@@ -39,6 +39,7 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $container->setParameter('kunstmaan_node.show_add_homepage', $config['show_add_homepage']);
         $container->setParameter('kunstmaan_node.show_duplicate_with_children', $config['show_duplicate_with_children']);
         $container->setParameter('kunstmaan_node.enable_export_page_template', $config['enable_export_page_template']);
+        $container->setParameter('kunstmaan_node.enable_undo_deleting_nodes', $config['enable_undo_deleting_nodes']);
         $container->setParameter('kunstmaan_node.lock_check_interval', $config['lock']['check_interval']);
         $container->setParameter('kunstmaan_node.lock_threshold', $config['lock']['threshold']);
         $container->setParameter('kunstmaan_node.lock_enabled', $config['lock']['enabled']);
