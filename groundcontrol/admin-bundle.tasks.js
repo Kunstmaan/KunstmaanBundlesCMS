@@ -7,6 +7,7 @@ import path from 'path';
 import consoleArguments from './console-arguments';
 
 import createEslintTask from './tasks/eslint';
+import createStylelintTask from './tasks/stylelint';
 import createCopyTask from './tasks/copy';
 import {createCssLocalTask, createCssOptimizedTask} from './tasks/css';
 import createScriptsTask from './tasks/scripts';
@@ -26,13 +27,22 @@ adminBundle.tasks.eslint = createEslintTask({
     failAfterError: !consoleArguments.continueAfterTestError
 });
 
+adminBundle.tasks.stylelint = createStylelintTask({
+    src: `${adminBundle.config.srcPath}scssnext/**/*.scss`,
+});
+
 adminBundle.tasks.copy = gulp.parallel(
-    createCopyTask({src: [`${adminBundle.config.srcPath}img/**`], dest: `${adminBundle.config.distPath}img`})
+    createCopyTask({src: [`${adminBundle.config.srcPath}img/**`], dest: `${adminBundle.config.distPath}img`}),
+    createCopyTask({src: [`${adminBundle.config.srcPath}icons/**`], dest: `${adminBundle.config.distPath}icons`})
 );
 
 adminBundle.tasks.cssLocal = createCssLocalTask({src: `${adminBundle.config.srcPath}scss/*.scss`, dest: `${adminBundle.config.distPath}css`});
+adminBundle.tasks.cssNextLocal = createCssLocalTask({src: `${adminBundle.config.srcPath}scssnext/*.scss`, dest: `${adminBundle.config.distPath}cssnext`});
+
+
 
 adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: `${adminBundle.config.srcPath}scss/*.scss`, dest: `${adminBundle.config.distPath}css`});
+adminBundle.tasks.cssNextOptimized = createCssOptimizedTask({src: `${adminBundle.config.srcPath}scssnext/*.scss`, dest: `${adminBundle.config.distPath}cssnext`});
 
 adminBundle.tasks.scripts = createScriptsTask({
     src: [
@@ -45,7 +55,7 @@ adminBundle.tasks.scripts = createScriptsTask({
         './node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         './node_modules/cargobay/src/toggle/js/jquery.toggle.js',
         './node_modules/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js',
-        './node_modules/sortablejs/Sortable.js',
+        './node_modules/sortablejs/dist/sortable.umd.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
         './node_modules/jquery.typewatch/jquery.typewatch.js',
         './node_modules/ckeditor/ckeditor.js',

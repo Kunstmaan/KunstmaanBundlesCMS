@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Z index
+
+   This file is exclusively intended for setting up and accessing variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+:root {
+    --z-hide: -1000;
+    --z-base: 0;
+    --z-middle: 100;
+    --z-near: 500;
+    --z-show: 1000;
+}
