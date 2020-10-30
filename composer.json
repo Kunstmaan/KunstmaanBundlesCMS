@@ -29,7 +29,6 @@
         "symfony/finder": "^3.4|^4.4",
         "symfony/framework-bundle": "^3.4.31|^4.4",
         "symfony/form": "^3.4.31|^4.4",
-        "symfony/mailer": "^4.4",
         "symfony/http-foundation": "^3.4.16|^4.4",
         "symfony/http-kernel": "^3.4|^4.4",
         "symfony/inflector": "^3.4|^4.4",
@@ -91,7 +90,8 @@
         "phpunit/phpunit": "^8.5",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.12.18",
-        "phpstan/phpstan-doctrine": "^0.12.10"
+        "phpstan/phpstan-doctrine": "^0.12.10",
+        "symfony/mailer": "^4.4"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",
