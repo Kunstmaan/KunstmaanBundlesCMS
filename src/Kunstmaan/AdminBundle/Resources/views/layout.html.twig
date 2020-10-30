@@ -33,7 +33,10 @@
             </div>
         {% endfor %}
 
-        {% block fos_user_content %}{% endblock fos_user_content %}
+        {% block fos_user_content %}
+            {# NEXT_MAJOR remove block #}
+            {% deprecated 'The "fos_user_content" block is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the "login_content" block instead.' %}
+        {% endblock fos_user_content %}
         {% block login_content %}{% endblock login_content %}
 
         {% block admin_link %}
@@ -45,6 +48,9 @@
         {% endblock %}
 
         {% block forgot_password_link %}
+            {# NEXT_MAJOR remove block #}
+            {% deprecated 'The "fos_user_content" block is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the "login_content" block instead.' %}
+
             {% if 'reset' not in app.request.pathInfo and 'profile' not in app.request.pathInfo %}
                 <a href="{{ path('cms_reset_password') }}" class="login__form__forgot-pw">
                     {{ 'kuma_admin.login.forgot_password'|trans }}

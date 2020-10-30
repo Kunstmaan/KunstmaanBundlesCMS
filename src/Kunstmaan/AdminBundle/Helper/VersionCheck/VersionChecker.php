@@ -94,10 +94,10 @@ class VersionChecker
             return;
         }
 
-        $data = $this->cache->fetch('version_check');
-        if (!\is_array($data)) {
+//        $data = $this->cache->fetch('version_check');
+//        if (!\is_array($data)) {
             $this->check();
-        }
+//        }
     }
 
     /**

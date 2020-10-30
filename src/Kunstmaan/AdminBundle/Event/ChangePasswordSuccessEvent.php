@@ -8,30 +8,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ChangePasswordSuccessEvent extends BcEvent
 {
-    /** @var Request */
-    private $request;
-
     /** @var UserInterface */
     private $user;
 
     /** @var Response */
     private $response;
 
-    public function __construct(UserInterface $user, Request $request, Response $response)
+    public function __construct(UserInterface $user, Response $response)
     {
         $this->user = $user;
-        $this->request = $request;
         $this->response = $response;
     }
 
     public function getUser(): UserInterface
     {
         return $this->user;
-    }
-
-    public function getRequest(): Request
-    {
-        return $this->request;
     }
 
     public function getResponse(): Response

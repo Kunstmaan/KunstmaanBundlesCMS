@@ -1,20 +1,23 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Controller;
+namespace Kunstmaan\AdminBundle\Controller\Authentication;
 
-use Kunstmaan\AdminBundle\Form\UserLoginType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Twig\Environment;
 
-class SecurityController extends AbstractController
+final class SecurityController
 {
     /** @var AuthenticationUtils */
     private $authenticationUtils;
+    /** @var Environment */
+    private $twig;
 
-    public function __construct(AuthenticationUtils $authenticationUtils)
+    public function __construct(AuthenticationUtils $authenticationUtils, Environment $twig)
     {
         $this->authenticationUtils = $authenticationUtils;
+        $this->twig = $twig;
     }
 
     /**
@@ -25,16 +28,11 @@ class SecurityController extends AbstractController
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
-        $form = $this->createForm(UserLoginType::class);
 
-        return $this->render(
-            '@KunstmaanAdmin/Security/login_cms.html.twig',
-            [
-                'form' => $form->createView(),
-                'last_username' => $lastUsername,
-                'error' => $error,
-            ]
-        );
+        return new Response($this->twig->render('@KunstmaanAdmin/authentication/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]));
     }
 
     /**

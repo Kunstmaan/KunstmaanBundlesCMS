@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -127,5 +128,30 @@ class UserManager
     public function findUserByConfirmationToken($token)
     {
         return $this->findUserBy(['confirmationToken' => $token]);
+    }
+
+    /**
+     * Change the user password and update the security token
+     */
+    public function changePassword(UserInterface $user, string $newPassword)
+    {
+        $encoder = $this->encoderFactory->getEncoder($user);
+        $password = $encoder->encodePassword($user, $newPassword);
+
+        $user->setPassword($password);
+        $user->setConfirmationToken(null);
+        $this->em->flush();
+
+        $token = new UsernamePasswordToken($user, $password, 'main');
+        $this->tokenStorage->setToken($token);
+        $this->session->set('_security_main', serialize($token));
+    }
+
+    public function setResetToken(UserInterface $user)
+    {
+        $token = bin2hex(random_bytes(32));
+        $user->setConfirmationToken($token);
+
+        $this->em->flush();
     }
 }

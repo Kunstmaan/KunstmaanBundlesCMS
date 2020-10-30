@@ -5,13 +5,20 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Mailer\Mailer;
+use Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -30,6 +37,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
+        $loader->load('commands.yml');
+
         $container->setParameter('version_checker.url', 'https://cms.kunstmaan.be/version-check');
         $container->setParameter('version_checker.timeframe', 60 * 60 * 24);
         $container->setParameter('version_checker.enabled', true);
@@ -43,13 +54,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (\array_key_exists('admin_password', $config)) {
             $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
         }
-        if (\array_key_exists('enable_new_cms_authentication', $config)) {
-            $enableCustomLogin = $config['enable_new_cms_authentication'];
-            if (!$enableCustomLogin) {
-                @trigger_error('Not setting "enable_new_cms_authentication" to true in the KunstmaanAdminBundle is deprecated as of 5.8, it will always be true in 6.0.', \E_USER_DEPRECATED);
-            }
-            $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableCustomLogin);
-        }
+
+        $this->configureAuthentication($config, $container, $loader);
+
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
         $container->setParameter('kunstmaan_admin.default_admin_locale', $config['default_admin_locale']);
 
@@ -79,10 +86,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->registerForAutoconfiguration(MenuAdaptorInterface::class)
             ->addTag('kunstmaan_admin.menu.adaptor');
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
-        $loader->load('commands.yml');
-
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
             $loader->load('console_listener.yml');
         }
@@ -90,10 +93,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (0 !== \count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
-
-        $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer.default_sender');
-        $mailerAddress->setArgument(0, $config['mail_from_address']);
-        $mailerAddress->setArgument(1, $config['mail_from_name']);
 
         $this->addWebsiteTitleParameter($container, $config);
         $this->addMultiLanguageParameter($container, $config);
@@ -230,5 +229,58 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         }
 
         $container->setParameter('kunstmaan_admin.default_locale', $defaultLocale);
+    }
+
+    private function configureAuthentication(array $config, ContainerBuilder $container, LoaderInterface $loader)
+    {
+        $enableCustomLogin = $config['authentication']['enable_new_authentication'];
+        $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableCustomLogin);
+
+        if (!$enableCustomLogin) {
+            @trigger_error('Not setting "kunstmaan_admin.authentication.enable_new_authentication" to true is deprecated since KunstmaanAdminBundle 5.8, it will always be true in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+
+            return;
+        }
+
+        $loader->load('authentication.yml');
+
+        $fosRouteLoaderDefinition = $container->getDefinition(FosRouteLoader::class);
+        $fosRouteLoaderDefinition->setArgument(0, $enableCustomLogin);
+
+        $container->setAlias('kunstmaan_admin.authentication.mailer', $config['authentication']['mailer']['service']);
+
+        // Validate mailer config
+        if (!class_exists(SwiftmailerBundle::class) && !class_exists(Mailer::class)) {
+            throw new LogicException('No mail integration found to enable the authentication mailer. Try running "composer require symfony/mailer" or "composer require symfony/swiftmailer-bundle".');
+        }
+
+        if ($config['authentication']['mailer']['service'] === SymfonyMailerService::class && !class_exists(Mailer::class)) {
+            throw new LogicException('Symfony mailer support for the authentication mailer cannot be enabled as the component is not installed. Try running "composer require symfony/mailer".');
+        }
+
+        if ($config['authentication']['mailer']['service'] === SwiftmailerService::class && !class_exists(SwiftmailerBundle::class)) {
+            throw new LogicException('Swiftmailer support for the authentication mailer cannot be enabled as the component is not installed. Try running "composer require symfony/swiftmailer-bundle".');
+        }
+
+        // Cleanup mailer services
+        if (!class_exists(SwiftmailerBundle::class)) {
+            $container->removeDefinition(SwiftmailerService::class);
+        }
+
+        if (!class_exists(Mailer::class)) {
+            $container->removeDefinition(SymfonyMailerService::class);
+        }
+
+        if ($container->hasDefinition(SwiftmailerService::class)) {
+            $definition = $container->getDefinition(SwiftmailerService::class);
+            $definition
+                ->setArgument(4, $config['authentication']['mailer']['from_address'])
+                ->setArgument(5, $config['authentication']['mailer']['from_name'])
+            ;
+        }
+
+        $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer.default_sender');
+        $mailerAddress->setArgument(0, $config['authentication']['mailer']['from_address']);
+        $mailerAddress->setArgument(1, $config['authentication']['mailer']['from_name']);
     }
 }

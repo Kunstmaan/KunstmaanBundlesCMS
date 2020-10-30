@@ -19,12 +19,12 @@ KunstmaanAdminBundle_settings_exception:
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/exception
 
 KunstmaanAdminBundle_security:
-    resource: '@KunstmaanAdminBundle/Controller/SecurityController.php'
+    resource: '@KunstmaanAdminBundle/Controller/Authentication/SecurityController.php'
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%
 
 KunstmaanAdminBundle_resetting:
-    resource: '@KunstmaanAdminBundle/Controller/ResettingController.php'
+    resource: '@KunstmaanAdminBundle/Controller/Authentication/PasswordResetController.php'
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%
 

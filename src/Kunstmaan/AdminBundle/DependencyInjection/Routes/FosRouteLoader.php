@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Loader\XmlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
+ * NEXT_MAJOR: remove class
+ *
  * @internal
  */
 final class FosRouteLoader implements RouteLoaderInterface
@@ -17,7 +19,7 @@ final class FosRouteLoader implements RouteLoaderInterface
     /** @var bool */
     private $enableCustomLogin;
 
-    public function __construct(bool $enableCustomLogin)
+    public function __construct(bool $enableCustomLogin = false)
     {
         $this->enableCustomLogin = $enableCustomLogin;
     }

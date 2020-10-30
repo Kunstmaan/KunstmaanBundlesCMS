@@ -62,7 +62,7 @@ class CreateUserCommand extends ContainerAwareCommand
             throw new \InvalidArgumentException(sprintf('The "$userManager" argument must be of type "%s" or type "%s"', UserManager::class, FOSUserManager::class));
         }
         if ($userManager instanceof FOSUserManager) {
-            // NEXT_MAJOR set the usermanaged typehint to the kunstmaan usermanager.
+            // NEXT_MAJOR set the usermanager typehint to the kunstmaan usermanager.
             @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
         }
 

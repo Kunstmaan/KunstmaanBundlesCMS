@@ -574,27 +574,33 @@ abstract class BaseUser implements UserInterface
         $this->createdBy = $createdBy;
     }
 
+    /**
+     * NEXT_MAJOR remove method
+     *
+     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     */
     public function isAccountNonExpired()
     {
-        // NEXT_MAJOR remove method
-        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
-
         return true;
     }
 
+    /**
+     * NEXT_MAJOR remove method
+     *
+     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     */
     public function isCredentialsNonExpired()
     {
-        // NEXT_MAJOR remove method
-        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
-
         return true;
     }
 
+    /**
+     * NEXT_MAJOR remove method
+     *
+     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     */
     public function isPasswordRequestNonExpired($ttl)
     {
-        // NEXT_MAJOR remove method
-        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
-
         return false;
     }
 

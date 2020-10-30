@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\EventListener;
+namespace Kunstmaan\AdminBundle\EventSubscriber;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
-final class LoginSubscriber implements EventSubscriberInterface
+final class LoginEventSubscriber implements EventSubscriberInterface
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -21,18 +21,20 @@ final class LoginSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            SecurityEvents::INTERACTIVE_LOGIN => 'onLogin',
+            SecurityEvents::INTERACTIVE_LOGIN => 'setLastLoginDate',
         ];
     }
 
-    public function onLogin(InteractiveLoginEvent $event)
+    public function setLastLoginDate(InteractiveLoginEvent $event)
     {
         /* @var UserInterface $user */
         $user = $event->getAuthenticationToken()->getUser();
 
-        if ($user instanceof UserInterface) {
-            $user->setLastLogin(new \DateTime());
-            $this->em->flush();
+        if (!$user instanceof UserInterface) {
+            return;
         }
+
+        $user->setLastLogin(new \DateTime());
+        $this->em->flush();
     }
 }

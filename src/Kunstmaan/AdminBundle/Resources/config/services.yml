@@ -286,7 +286,7 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    Kunstmaan\AdminBundle\EventListener\LoginSubscriber:
+    Kunstmaan\AdminBundle\EventSubscriber\LoginEventSubscriber:
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
@@ -347,38 +347,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    Kunstmaan\AdminBundle\Controller\SecurityController:
-        public: true
-        arguments:
-            - '@security.authentication_utils'
-
-    Kunstmaan\AdminBundle\Controller\ResettingController:
-        public: true
-        arguments:
-            - '%kunstmaan_admin.user_class%'
-            - '@Kunstmaan\AdminBundle\Service\PasswordMailerService'
-            - '@event_dispatcher'
-            - '@doctrine.orm.entity_manager'
-            - '@security.user_password_encoder.generic'
-            - '@security.token_storage'
-            - '@session'
-
-    Kunstmaan\AdminBundle\Service\PasswordMailerService:
-        arguments:
-            - '@mailer.mailer'
-            - '@router'
-            - '@translator'
-            - '@kunstmaan_admin.mailer.default_sender'
-
-    kunstmaan_admin.mailer.default_sender:
-        class: Symfony\Component\Mime\Address
-
-    Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
-        arguments:
-            - '%kunstmaan_admin.enable_new_cms_authentication%'
-        tags:
-            - { name: routing.route_loader }
-
     Kunstmaan\AdminBundle\Service\UserManager:
         arguments:
             - '@security.encoder_factory'
@@ -397,3 +365,9 @@ services:
     kunstmaan_admin.group_manager:
         public: true
         alias: Kunstmaan\AdminBundle\Service\GroupManager
+
+    Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
+        arguments:
+            - false # Correct value will be injected in the KunstmaanAdmin extension class
+        tags:
+            - { name: routing.route_loader }
