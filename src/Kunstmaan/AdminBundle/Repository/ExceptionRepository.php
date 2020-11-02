@@ -26,8 +26,10 @@ class ExceptionRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->update()
-            ->set('e.isResolved', 1)
-            ->where('e.isResolved = 0')
+            ->set('e.isResolved', ':resolved')
+            ->where('e.isResolved = :unresolved')
+            ->setParameter('resolved', true)
+            ->setParameter('unresolved', false)
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -36,7 +38,8 @@ class ExceptionRepository extends EntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('COUNT(e.id) as cp_all, SUM(e.events) as cp_sum')
-            ->where('e.isResolved = 0')
+            ->where('e.isResolved = :isResolved')
+            ->setParameter('isResolved', false)
             ->getQuery()
             ->getOneOrNullResult();
     }
