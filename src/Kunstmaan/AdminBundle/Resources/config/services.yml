@@ -209,8 +209,11 @@ services:
 
     kunstmaan_form.type.wysiwyg:
         class: Kunstmaan\AdminBundle\Form\WysiwygType
+        arguments: ['@Kunstmaan\AdminBundle\Form\MediaTokenTransformer']
         tags:
             - { name: form.type }
+
+    Kunstmaan\AdminBundle\Form\MediaTokenTransformer: ~
 
     kunstmaan_admin.password_resetting.listener:
         class: '%kunstmaan_admin.password_resetting.listener.class%'
