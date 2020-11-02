@@ -67,6 +67,7 @@ class AclNativeHelper
         }
 
         $aclConnection = $this->em->getConnection();
+        $stringQuoteChar = $aclConnection->getDatabasePlatform()->getStringLiteralQuoteCharacter();
 
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
         $rootEntity = $permissionDef->getEntity();
@@ -74,7 +75,7 @@ class AclNativeHelper
         // Only tables with a single ID PK are currently supported
         $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
 
-        $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
+        $rootEntity = $stringQuoteChar . str_replace('\\', '\\\\', $rootEntity) . $stringQuoteChar;
         $query = $queryBuilder;
 
         $builder = new MaskBuilder();
@@ -99,18 +100,18 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+        $uR = array($stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar);
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if (is_string($role)) {
                 if ($role !== 'ROLE_USER') {
-                    $uR[] = '"' . $role . '"';
+                    $uR[] = $stringQuoteChar . $role . $stringQuoteChar;
                 }
             } else {
                 // Symfony 3.4 compatibility
                 if ($role->getRole() !== 'ROLE_USER') {
-                    $uR[] = '"' . $role->getRole() . '"';
+                    $uR[] = $stringQuoteChar . $role->getRole() . $stringQuoteChar;
                 }
             }
         }
@@ -118,11 +119,11 @@ class AclNativeHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = "' . str_replace(
+            $inString .= ' OR s.identifier = ' . $stringQuoteChar . str_replace(
                 '\\',
                 '\\\\',
                 \get_class($user)
-            ) . '-' . $user->getUserName() . '"';
+            ) . '-' . $user->getUserName() . $stringQuoteChar;
         }
 
         $joinTableQuery = <<<SELECTQUERY

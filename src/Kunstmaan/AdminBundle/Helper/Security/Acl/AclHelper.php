@@ -147,9 +147,10 @@ class AclHelper
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
         $aclConnection = $this->em->getConnection();
+        $stringQuoteChar = $aclConnection->getDatabasePlatform()->getStringLiteralQuoteCharacter();
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
         $mask = $query->getHint('acl.mask');
-        $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
+        $rootEntity = $stringQuoteChar . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . $stringQuoteChar;
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
@@ -166,18 +167,18 @@ class AclHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+        $uR = array($stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar);
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if (is_string($role)) {
                 if ($role !== 'ROLE_USER') {
-                    $uR[] = '"' . $role . '"';
+                    $uR[] = $stringQuoteChar . $role . $stringQuoteChar;
                 }
             } else {
                 // Symfony 3.4 compatibility
                 if ($role->getRole() !== 'ROLE_USER') {
-                    $uR[] = '"' . $role->getRole() . '"';
+                    $uR[] = $stringQuoteChar . $role->getRole() . $stringQuoteChar;
                 }
             }
         }
@@ -185,11 +186,11 @@ class AclHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = "' . str_replace(
+            $inString .= ' OR s.identifier = ' . $stringQuoteChar . str_replace(
                 '\\',
                 '\\\\',
                 \get_class($user)
-            ) . '-' . $user->getUserName() . '"';
+            ) . '-' . $user->getUserName() . $stringQuoteChar;
         }
 
         $selectQuery = <<<SELECTQUERY
