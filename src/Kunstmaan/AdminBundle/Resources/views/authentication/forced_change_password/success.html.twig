@@ -1,0 +1,8 @@
+{% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
+
+{% block login_content %}
+    <div class="alert alert-success success">
+        {{ 'security.change_password.success.flash'|trans({'%username%': user.username}) }}
+    </div>
+    <a href="{{ path('KunstmaanAdminBundle_homepage') }}" class="btn btn-brand btn-block btn--raise-on-hover">OK</a>
+{% endblock %}

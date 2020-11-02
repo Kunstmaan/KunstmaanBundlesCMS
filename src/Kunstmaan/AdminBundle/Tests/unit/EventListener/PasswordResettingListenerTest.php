@@ -9,9 +9,13 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent;
 use Kunstmaan\AdminBundle\EventListener\PasswordResettingListener;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class PasswordResettingListenerTest extends TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testListener()
     {
         $manager = $this->createMock(FosUserManager::class);
@@ -35,8 +39,7 @@ class PasswordResettingListenerTest extends TestCase
         $manager->expects($this->once())->method('updateUser')->willReturn(true);
         $user->expects($this->once())->method('setPasswordChanged')->willReturn(true);
 
-        $event = $this->createMock(ChangePasswordSuccessEvent::class);
-        $event->expects($this->any())->method('getUser')->willReturn($user);
+        $event = new ChangePasswordSuccessEvent($user, new Response());
 
         $listener = new PasswordResettingListener($manager);
         $listener->onPasswordResettingSuccessCMS($event);

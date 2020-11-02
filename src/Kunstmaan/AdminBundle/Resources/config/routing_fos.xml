@@ -16,7 +16,7 @@
         <default key="_controller">fos_user.resetting.controller:requestAction</default>
     </route>
 
-    <route id="cms_reset_password" path="resetting/request" methods="GET">
+    <route id="kunstmaan_admin_reset_password" path="resetting/request" methods="GET">
         <default key="_controller">fos_user.resetting.controller:requestAction</default>
     </route>
 
@@ -36,7 +36,7 @@
         <default key="_controller">fos_user.security.controller:loginAction</default>
     </route>
 
-    <route id="cms_login" path="/login" methods="GET POST">
+    <route id="kunstmaan_admin_login" path="/login" methods="GET POST">
         <default key="_controller">fos_user.security.controller:loginAction</default>
     </route>
 
@@ -48,8 +48,15 @@
         <default key="_controller">fos_user.security.controller:logoutAction</default>
     </route>
 
-    <route id="cms_logout" path="/logout" methods="GET POST">
+    <route id="kunstmaan_admin_logout" path="/logout" methods="GET POST">
         <default key="_controller">fos_user.security.controller:logoutAction</default>
     </route>
 
+    <route id="fos_user_change_password" path="/change-password" methods="GET POST">
+        <default key="_controller">fos_user.change_password.controller:changePasswordAction</default>
+    </route>
+
+    <route id="kunstmaan_admin_forced_change_password" path="/change-password" methods="GET POST">
+        <default key="_controller">fos_user.change_password.controller:changePasswordAction</default>
+    </route>
 </routes>

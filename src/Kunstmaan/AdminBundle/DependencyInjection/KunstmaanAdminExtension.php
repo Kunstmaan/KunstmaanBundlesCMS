@@ -80,8 +80,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
         $container->setParameter('kunstmaan_admin.toolbar_firewall_names', !empty($config['provider_keys']) ? $config['provider_keys'] : $config['toolbar_firewall_names']);
         $container->setParameter('kunstmaan_admin.admin_firewall_name', $config['admin_firewall_name']);
-        $container->setParameter('kunstmaan_admin.user_class', $config['admin_user_class']);
-        $container->setParameter('kunstmaan_admin.group_class', $config['admin_group_class']);
+
+        $container->setParameter('kunstmaan_admin.user_class', $config['authentication']['user_class']);
+        $container->setParameter('kunstmaan_admin.group_class', $config['authentication']['group_class']);
 
         $container->registerForAutoconfiguration(MenuAdaptorInterface::class)
             ->addTag('kunstmaan_admin.menu.adaptor');

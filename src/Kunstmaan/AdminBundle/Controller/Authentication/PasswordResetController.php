@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Controller\Authentication;
 
 use Kunstmaan\AdminBundle\Entity\UserInterface;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\NewPasswordType;
 use Kunstmaan\AdminBundle\Form\PasswordRequestType;
 use Kunstmaan\AdminBundle\Service\PasswordResetService;
@@ -25,10 +26,9 @@ final class PasswordResetController extends AbstractController
     }
 
     /**
-     * @Route("/resetting/request", name="cms_reset_password", methods={"GET", "POST"})
-     * @Route("/resetting/request", name="fos_user_resetting_request", methods={"GET", "POST"})
+     * @Route("/resetting/request", name="kunstmaan_admin_reset_password", methods={"GET", "POST"})
      */
-    public function resetPasswordAction(Request $request)
+    public function requestAction(Request $request)
     {
         $form = $this->createForm(PasswordRequestType::class);
 
@@ -36,26 +36,26 @@ final class PasswordResetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->passwordResetService->processResetRequest($form->get('email')->getData(), $request->getLocale());
 
-            $this->addFlash('success', 'security.resetting.send_email_success');
+            $this->addFlash(FlashTypes::SUCCESS, 'security.resetting.send_email_success');
 
-            return $this->redirectToRoute('cms_reset_password');
+            return $this->redirectToRoute('kunstmaan_admin_reset_password');
         }
 
         return $this->render('@KunstmaanAdmin/authentication/password_reset/request.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/reset_password/confirm/{token}", name="cms_reset_password_confirm", methods={"GET", "POST"})
+     * @Route("/reset_password/confirm/{token}", name="kunstmaan_admin_reset_password_confirm", methods={"GET", "POST"})
      */
-    public function resetPasswordCheckAction(Request $request, string $token)
+    public function confirmAction(Request $request, string $token)
     {
         /** @var UserInterface|null $user */
         $user = $this->userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            $this->addFlash('danger', 'security.resetting.user_not_found');
+            $this->addFlash(FlashTypes::DANGER, 'security.resetting.user_not_found');
 
-            return $this->redirectToRoute('cms_reset_password');
+            return $this->redirectToRoute('kunstmaan_admin_reset_password');
         }
 
         $form = $this->createForm(NewPasswordType::class);
@@ -64,7 +64,7 @@ final class PasswordResetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $response = $this->passwordResetService->resetPassword($user, $form->get('plainPassword')->getData());
 
-            $this->addFlash('success', 'security.resetting.password_set_success');
+            $this->addFlash(FlashTypes::SUCCESS, 'security.resetting.password_set_success');
 
             return $response;
         }

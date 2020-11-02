@@ -23,7 +23,7 @@ class PasswordCheckListenerTest extends TestCase
      */
     public function testListener($uri, $shouldPerformCheck, $tokenStorageCallCount)
     {
-        $request = new Request([], [], [], [], [], ['REQUEST_URI' => $uri]);
+        $request = new Request([], [], ['_route' => 'example_route'], [], [], ['REQUEST_URI' => $uri]);
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
         $storage = $this->createMock(TokenStorageInterface::class);
         $token = $this->createMock(UsernamePasswordToken::class);
@@ -53,8 +53,8 @@ class PasswordCheckListenerTest extends TestCase
     public function requestDataProvider()
     {
         return [
-            ['/en/admin/', true, 2],
             ['/en/random', false, 0],
+            ['/en/admin/', true, 2],
             ['/en/admin/preview/', true, 2],
         ];
     }

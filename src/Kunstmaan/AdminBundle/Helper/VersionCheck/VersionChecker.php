@@ -107,10 +107,10 @@ class VersionChecker
             return;
         }
 
-//        $cacheItem = $this->cache->getItem(self::CACHE_KEY);
-//        if (!$cacheItem->isHit() || !\is_array($cacheItem->get())) {
+        $cacheItem = $this->cache->getItem(self::CACHE_KEY);
+        if (!$cacheItem->isHit() || !\is_array($cacheItem->get())) {
             $this->check();
-//        }
+        }
     }
 
     /**

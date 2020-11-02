@@ -46,12 +46,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('admin_password')->end()
-                ->scalarNode('admin_user_class')->defaultValue(User::class)->end()
-                ->scalarNode('admin_group_class')->defaultValue(Group::class)->end()
                 ->arrayNode('authentication')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('enable_new_authentication')->defaultFalse()->end()
+                        ->scalarNode('user_class')->defaultValue(User::class)->end()
+                        ->scalarNode('group_class')->defaultValue(Group::class)->end()
                         ->arrayNode('mailer')
                             ->addDefaultsIfNotSet()
                             ->children()

@@ -28,6 +28,11 @@ KunstmaanAdminBundle_resetting:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%
 
+KunstmaanAdminBundle_change_password:
+    resource: '@KunstmaanAdminBundle/Controller/Authentication/ForcedChangePasswordController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%
+
 fos_routes:
     resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader::loadRoutes'
     type: service

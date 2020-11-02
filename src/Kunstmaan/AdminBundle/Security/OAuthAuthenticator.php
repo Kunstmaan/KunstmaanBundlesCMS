@@ -76,7 +76,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse($this->router->generate('cms_login'));
+        return new RedirectResponse($this->router->generate('kunstmaan_admin_login'));
     }
 
     /**
@@ -182,7 +182,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     {
         $this->session->getFlashBag()->add(FlashTypes::DANGER, $this->translator->trans('errors.oauth.invalid'));
 
-        return new RedirectResponse($this->router->generate('cms_login'));
+        return new RedirectResponse($this->router->generate('kunstmaan_admin_login'));
     }
 
     /**

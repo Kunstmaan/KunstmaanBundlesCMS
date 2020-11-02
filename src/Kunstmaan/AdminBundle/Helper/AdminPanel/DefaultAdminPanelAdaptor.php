@@ -59,7 +59,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     {
         return new AdminPanelAction(
             array(
-                'path' => 'cms_logout',
+                'path' => 'kunstmaan_admin_logout',
                 'attrs' => array('id' => 'app__logout', 'title' => 'logout'),
             ),
             '',

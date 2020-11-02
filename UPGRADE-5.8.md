@@ -9,7 +9,8 @@ If you want to enable it now you can use the following config to do so. If you d
 action after enabling the new custom routes as we do not officially support this view in the cms.
 ```
 kunstmaan_admin:
-  enable_new_cms_authentication: true
+    authentication:
+        enable_new_authentication: true
   #Only necessary when you have overriden the default Kunstmaan CMS User object as when you enable the enable_new_cms_authentication option we do not longer rely on the fos_user userclass parameter.
   admin_user_class: App\Entity\User
   ```
@@ -29,10 +30,10 @@ security:
       pattern: ^/([^/]*)/admin
       form_login:
         provider: cms_users
-        login_path: cms_login
-        check_path: cms_login
+        login_path: kunstmaan_admin_login
+        check_path: kunstmaan_admin_login
       logout:
-        path: cms_logout
+        path: kunstmaan_admin_logout
         target: KunstmaanAdminBundle_homepage
       anonymous:    true
       remember_me:

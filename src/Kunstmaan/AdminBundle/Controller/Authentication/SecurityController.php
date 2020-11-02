@@ -21,8 +21,7 @@ final class SecurityController
     }
 
     /**
-     * @Route("/login", name="cms_login", methods={"GET", "POST"})
-     * @Route("/login", name="fos_user_security_login", methods={"GET", "POST"})
+     * @Route("/login", name="kunstmaan_admin_login", methods={"GET", "POST"})
      */
     public function loginAction()
     {
@@ -36,8 +35,7 @@ final class SecurityController
     }
 
     /**
-     * @Route("/logout", name="cms_logout")
-     * @Route("/logout", name="fos_user_security_logout")
+     * @Route("/logout", name="kunstmaan_admin_logout")
      */
     public function logoutAction()
     {

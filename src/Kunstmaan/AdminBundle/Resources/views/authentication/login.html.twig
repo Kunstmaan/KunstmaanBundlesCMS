@@ -1,4 +1,4 @@
-{% extends '@KunstmaanAdmin/layout.html.twig' %}
+{% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
 
 {% block login_content %}
     <form id="app__login__form" action="" method="post">
@@ -18,7 +18,7 @@
             <label for="_username" class="label--lighter">
                 {{ 'security.login.username'|trans }}
             </label>
-            <input type="text" value="{{ last_username }}" name="_username" class="form-control form-group--icon-in-control__form-control" placeholder="{{ 'security.login.username'|trans }}" required autofocus>
+            <input type="text" value="{{ last_username }}" name="_username" class="form-control form-group--icon-in-control__form-control" placeholder="{{ 'security.login.username'|trans }}" autocomplete="username" required autofocus>
             <i class="fa fa-user form-group--icon-in-control__icon"></i>
         </div>
 
@@ -26,7 +26,7 @@
             <label for="_password" class="label--lighter">
                 {{ 'security.login.password'|trans }}
             </label>
-            <input type="text" name="_password" class="form-control form-group--icon-in-control__form-control" placeholder="{{ 'security.login.password'|trans }}" required>
+            <input type="password" name="_password" class="form-control form-group--icon-in-control__form-control" placeholder="{{ 'security.login.password'|trans }}" autocomplete="current-password" required>
             <i class="fa fa-key form-group--icon-in-control__icon"></i>
         </div>
 
@@ -48,14 +48,7 @@
         </a>
     {% endif %}
 
-    <a href="{{ path('cms_reset_password') }}" class="login__form__forgot-pw">
+    <a href="{{ path('kunstmaan_admin_reset_password') }}" class="login__form__forgot-pw">
         {{ 'kuma_admin.login.forgot_password'|trans }}
     </a>
 {% endblock login_content %}
-
-{% block forgot_password_link %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}
-{% block fos_user_content %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}

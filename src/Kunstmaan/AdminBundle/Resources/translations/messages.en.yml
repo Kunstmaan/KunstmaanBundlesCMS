@@ -22,6 +22,15 @@ security:
         password_set_success: 'Your password has been changed.'
         email: 'Username or email address'
         reset: 'Reset password'
+    change_password:
+        form:
+            current_password: 'Current password'
+            new_password: 'New password'
+            new_password_confirmation: 'Repeat new password'
+            submit: 'Change password'
+        success:
+
+            flash: 'The password for "%username%" has been changed.'
 
 # Modules
 modules:

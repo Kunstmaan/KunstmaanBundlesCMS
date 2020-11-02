@@ -12,9 +12,18 @@ services:
             - '@Kunstmaan\AdminBundle\Service\UserManager'
         calls:
             - ['setContainer', ['@service_container']]
-#        tags:
-#            - { name: container.service_subscriber }
-#            - { name: controller.service_arguments }
+
+    Kunstmaan\AdminBundle\Controller\Authentication\ForcedChangePasswordController:
+        public: true
+        arguments:
+            - '@Kunstmaan\AdminBundle\Service\UserManager'
+        calls:
+            - ['setContainer', ['@service_container']]
+
+    Kunstmaan\AdminBundle\Form\Authentication\ForcedChangePasswordForm:
+        arguments:
+            - '%kunstmaan_admin.user_class%'
+        tags: [form.type]
 
     Kunstmaan\AdminBundle\Service\PasswordResetService:
         arguments:

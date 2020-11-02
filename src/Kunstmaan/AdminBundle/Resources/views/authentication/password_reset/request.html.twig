@@ -1,4 +1,4 @@
-{% extends '@KunstmaanAdmin/layout.html.twig' %}
+{% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
 
 {% block login_content %}
 <p>
@@ -16,18 +16,10 @@
     </div>
 
     {{ form_widget(form.submit) }}
-    <a href="{{ path('cms_login' ) }}" class="btn btn-default btn--raise-on-hover">
+    <a href="{{ path('kunstmaan_admin_login' ) }}" class="btn btn-default btn--raise-on-hover">
         {{ 'form.cancel' | trans }}
     </a>
     {{ form_rest(form) }}
 {{ form_end(form) }}
 
 {% endblock login_content %}
-
-{% block forgot_password_link %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}
-
-{% block fos_user_content %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}

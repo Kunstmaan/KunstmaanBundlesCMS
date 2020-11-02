@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SymfonyMailerService implements AuthenticationMailerInterface
+final class SymfonyMailerService implements AuthenticationMailerInterface
 {
     /** @var MailerInterface */
     private $mailer;
@@ -31,12 +31,13 @@ class SymfonyMailerService implements AuthenticationMailerInterface
 
     public function sendPasswordResetEmail(UserInterface $user, string $locale)
     {
-        $confirmationUrl = $this->urlGenerator->generate('cms_reset_password_confirm', ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL);
+        $confirmationUrl = $this->urlGenerator->generate('kunstmaan_admin_reset_password_confirm', ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL);
 
         $email = (new TemplatedEmail())
             ->from($this->from)
             ->to(new Address($user->getEmail()))
-            ->subject($this->translator->trans('Password reset email', [], null, $locale))
+            ->subject($this->translator->trans('Password reset email', [], null, $locale)) //TODO: translation key
+            //TODO: create new email template in new dir structure
             ->htmlTemplate('@KunstmaanAdmin/Resetting/email.txt.twig')
             ->context([
                 'user' => $user,
