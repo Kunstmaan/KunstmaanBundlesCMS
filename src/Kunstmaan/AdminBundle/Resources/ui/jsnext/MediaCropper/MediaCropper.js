@@ -38,7 +38,7 @@ class MediaCropper {
             small_crop_box_area = false;
         }
 
-        if (this.viewData && this.EditImage.currentCropView) {
+        if (this.EditImage.viewData && this.EditImage.currentCropView) {
             if (!this.EditImage.editData.hasOwnProperty(this.EditImage.currentCropView)) {
                 this.EditImage.editData[this.EditImage.currentCropView] = {};
             }
