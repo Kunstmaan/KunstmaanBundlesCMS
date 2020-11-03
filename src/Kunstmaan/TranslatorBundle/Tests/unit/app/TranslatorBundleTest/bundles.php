@@ -3,7 +3,7 @@
 return [
     new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
     new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-    new \FOS\UserBundle\FOSUserBundle(),
+    new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
     new Symfony\Bundle\TwigBundle\TwigBundle(),
     new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
     new Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle(),

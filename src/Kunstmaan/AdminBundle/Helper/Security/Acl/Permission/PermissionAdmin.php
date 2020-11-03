@@ -188,7 +188,7 @@ class PermissionAdmin
         $roles = $this->em->getRepository(Role::class)->findAll();
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
-            if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN'))) {
+            if ($user && !$user->isSuperAdmin(false) && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN'))) {
                 $superAdminRole = current($superAdminRole);
                 unset($roles[$superAdminRole]);
             }

@@ -519,12 +519,24 @@ abstract class BaseUser implements UserInterface
         $this->emailCanonical = $emailCanonical;
     }
 
-    public function isSuperAdmin()
+    /**
+     * NEXT_MAJOR remove method
+     *
+     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     */
+    public function isSuperAdmin(/*$triggerDeprecation = true*/)
     {
-        // NEXT_MAJOR remove method
-        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+        if (func_num_args() === 0 || (func_num_args() > 0 && (bool) func_get_arg(0) !== false)) {
+            // NEXT_MAJOR remove method
+            @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+        }
     }
 
+    /**
+     * NEXT_MAJOR remove method
+     *
+     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     */
     public function setSuperAdmin($boolean)
     {
         // NEXT_MAJOR remove method
@@ -543,6 +555,7 @@ abstract class BaseUser implements UserInterface
 
     public function setPasswordRequestedAt(DateTime $date = null)
     {
+        //TODO: check if this propery is usefull?
         // NEXT_MAJOR remove method
         @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
     }

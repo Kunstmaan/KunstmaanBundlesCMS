@@ -34,6 +34,15 @@ class UserTest extends TestCase
         $this->assertEquals(1, $object->getId());
     }
 
+    /**
+     * @group legacy
+     * @expectedDeprecation Using method Kunstmaan\AdminBundle\Entity\BaseUser::isSuperAdmin from class Kunstmaan\AdminBundle\Entity\BaseUser is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     */
+    public function testIsSuperAdminDeprecation()
+    {
+        $this->object->isSuperAdmin();
+    }
+
     public function testGetSetId()
     {
         $this->object->setId(3);
