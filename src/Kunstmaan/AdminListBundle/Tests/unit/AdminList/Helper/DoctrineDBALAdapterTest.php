@@ -7,9 +7,6 @@ use Doctrine\DBAL\Statement;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class AdminListTest
- */
 class DoctrineDBALAdapterTest extends TestCase
 {
     /**
