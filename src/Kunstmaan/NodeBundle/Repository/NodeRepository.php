@@ -276,6 +276,7 @@ class NodeRepository extends NestedTreeRepository
         ) use ($databasePlatformName) {
             switch ($databasePlatformName) {
                 case 'sqlite':
+                case 'postgresql':
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
 
                     break;
