@@ -35,8 +35,8 @@ security:
                 authenticators:
                     - kunstmaan_admin.oauth_authenticator
             form_login:
-                login_path: cms_login
-                check_path: cms_login
+                login_path: kunstmaan_admin_login
+                check_path: kunstmaan_admin_login
                 provider: cms_users
             ...
 ```

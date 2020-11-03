@@ -38,7 +38,7 @@ class CreateUserCommand extends ContainerAwareCommand
     /** @var string */
     private $defaultLocale;
 
-    public function __construct(/* EntityManagerInterface */ $em = null, /* GroupManager */ $groupManager = null, /* UserManager */ $userManager, $defaultLocale = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* GroupManager */ $groupManager = null, /* UserManager */ $userManager = null, $defaultLocale = null)
     {
         parent::__construct();
 
@@ -114,19 +114,6 @@ EOT
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->groups = $this->getGroups();
-    }
-
-    private function getGroups()
-    {
-        $groups = $this->groupManager->findGroups();
-
-        // reindexing the array, using the db id as the key
-        $newGroups = [];
-        foreach ($groups as $group) {
-            $newGroups[$group->getId()] = $group;
-        }
-
-        return $newGroups;
     }
 
     /**
@@ -307,5 +294,18 @@ EOT
 
             $input->setOption('group', $groups);
         }
+    }
+
+    private function getGroups()
+    {
+        $groups = $this->groupManager->findGroups();
+
+        // reindexing the array, using the db id as the key
+        $newGroups = [];
+        foreach ($groups as $group) {
+            $newGroups[$group->getId()] = $group;
+        }
+
+        return $newGroups;
     }
 }

@@ -29,7 +29,6 @@ security:
             new_password_confirmation: 'Repeat new password'
             submit: 'Change password'
         success:
-
             flash: 'The password for "%username%" has been changed.'
 
 # Modules

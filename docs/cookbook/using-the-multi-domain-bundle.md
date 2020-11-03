@@ -97,11 +97,11 @@ current browser session.
         main:
             pattern: ^/([^/]*)/admin
             form_login:
-                login_path: cms_login
-                check_path: cms_login
+                login_path: kunstmaan_admin_login
+                check_path: kunstmaan_admin_login
                 provider: cms_users
             logout:
-                path:   cms_logout
+                path:   kunstmaan_admin_logout
                 target: KunstmaanAdminBundle_homepage
                 handlers: ['kunstmaan_multi_domain.host_override_cleanup']
             anonymous:    true

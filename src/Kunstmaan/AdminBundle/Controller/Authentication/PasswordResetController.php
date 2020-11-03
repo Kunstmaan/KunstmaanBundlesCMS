@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminBundle\Controller\Authentication;
 
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminBundle\Form\NewPasswordType;
-use Kunstmaan\AdminBundle\Form\PasswordRequestType;
+use Kunstmaan\AdminBundle\Form\Authentication\NewPasswordType;
+use Kunstmaan\AdminBundle\Form\Authentication\PasswordRequestType;
 use Kunstmaan\AdminBundle\Service\PasswordResetService;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

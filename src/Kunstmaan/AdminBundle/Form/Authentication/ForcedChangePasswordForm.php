@@ -12,9 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class ForcedChangePasswordForm extends AbstractType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $userClass;
 
     public function __construct(string $userClass)
@@ -43,8 +41,12 @@ final class ForcedChangePasswordForm extends AbstractType
                         'autocomplete' => 'new-password',
                     ],
                 ],
-                'first_options' => ['label' => 'security.change_password.new_password'],
-                'second_options' => ['label' => 'security.change_password.new_password_confirmation'],
+                'first_options' => [
+                    'label' => 'security.change_password.new_password',
+                ],
+                'second_options' => [
+                    'label' => 'security.change_password.new_password_confirmation',
+                ],
             ])
         ;
     }
