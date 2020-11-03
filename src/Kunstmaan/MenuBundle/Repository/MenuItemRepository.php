@@ -26,7 +26,8 @@ class MenuItemRepository extends NestedTreeRepository implements MenuItemReposit
             ->setParameter('locale', $locale)
             ->andWhere('m.name = :name')
             ->setParameter('name', $menuName)
-            ->andWhere('nt.online = 1 OR mi.type = :url_type')
+            ->andWhere('nt.online = :online OR mi.type = :url_type')
+            ->setParameter('online', true)
             ->setParameter('url_type', BaseMenuItem::TYPE_URL_LINK);
 
         $query = $query->getQuery();
