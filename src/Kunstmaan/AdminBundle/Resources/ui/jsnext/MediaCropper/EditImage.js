@@ -60,7 +60,7 @@ class EditImage {
         if (viewData.length > 0) {
             viewData.forEach((view) => {
                 this.viewData[view.name] = {};
-                this.viewData[view.name].aspectRatio = view.lockRatio ? view.height / view.width : NaN;
+                this.viewData[view.name].aspectRatio = view.lock_ratio ? view.height / view.width : NaN;
                 this.viewData[view.name].minCropBoxWidth = view.width ? view.width : 200;
                 this.viewData[view.name].minCropBoxHeight = view.height ? view.height : 100;
             });
