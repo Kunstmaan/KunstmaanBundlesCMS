@@ -69,7 +69,6 @@ class DoctrineDBALAdapter implements AdapterInterface
             $distinctString = 'DISTINCT ';
         }
         $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
-            ->orderBy($this->countField)
             ->setMaxResults(1)
             ->execute();
 
