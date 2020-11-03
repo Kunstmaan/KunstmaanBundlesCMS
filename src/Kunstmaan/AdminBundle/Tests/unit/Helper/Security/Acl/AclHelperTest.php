@@ -76,7 +76,10 @@ class AclHelperTest extends TestCase
             ->will($this->returnValue('myDatabase'));
 
         /* @var $platform AbstractPlatform */
-        $platform = $this->getMockForAbstractClass('Doctrine\DBAL\Platforms\AbstractPlatform');
+        $platform = $this->createMock(AbstractPlatform::class);
+        $platform->expects($this->any())
+            ->method('getStringLiteralQuoteCharacter')
+            ->willReturn($this->returnValue('#'));
 
         $conn->expects($this->any())
             ->method('getDatabasePlatform')
@@ -202,9 +205,9 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertStringContainsString('"ROLE_SUBJECT"', $aclQuery);
-        $this->assertStringContainsString('"ROLE_KING"', $aclQuery);
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('#ROLE_SUBJECT#', $aclQuery);
+        $this->assertStringContainsString('#ROLE_KING#', $aclQuery);
+        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $aclQuery);
         $this->assertStringContainsString('MyUser', $aclQuery);
     }
 
@@ -255,7 +258,7 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $aclQuery);
     }
 
     public function testGetAllowedEntityIds()

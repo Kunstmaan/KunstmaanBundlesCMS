@@ -74,7 +74,10 @@ class AclNativeHelperTest extends TestCase
             ->will($this->returnValue('myDatabase'));
 
         /* @var $platform AbstractPlatform */
-        $platform = $this->getMockForAbstractClass('Doctrine\DBAL\Platforms\AbstractPlatform');
+        $platform = $this->createMock(AbstractPlatform::class);
+        $platform->expects($this->any())
+            ->method('getStringLiteralQuoteCharacter')
+            ->willReturn($this->returnValue('#'));
 
         $this->conn->expects($this->any())
             ->method('getDatabasePlatform')
@@ -151,9 +154,9 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertStringContainsString('"ROLE_SUBJECT"', $query);
-        $this->assertStringContainsString('"ROLE_KING"', $query);
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('#ROLE_SUBJECT#', $query);
+        $this->assertStringContainsString('#ROLE_KING#', $query);
+        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $query);
         $this->assertStringContainsString('MyUser', $query);
     }
 
@@ -191,7 +194,7 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $query);
     }
 
     public function testGetTokenStorage()

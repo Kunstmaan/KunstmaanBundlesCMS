@@ -121,6 +121,11 @@ class AclNativeHelper
             $inString .= ' OR s.identifier = ' . $stringQuoteChar . \get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
         }
 
+        $objectIdentifierColumn = 'o.object_identifier';
+        if ($aclConnection->getDatabasePlatform()->getName() === 'postgresql') {
+            $objectIdentifierColumn = 'o.object_identifier::BIGINT';
+        }
+
         $joinTableQuery = <<<SELECTQUERY
 SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
 INNER JOIN acl_classes c ON c.id = o.class_id
