@@ -149,7 +149,7 @@ class AclHelper
         $aclConnection = $this->em->getConnection();
         $stringQuoteChar = $aclConnection->getDatabasePlatform()->getStringLiteralQuoteCharacter();
         $mask = $query->getHint('acl.mask');
-        $rootEntity = $stringQuoteChar . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . $stringQuoteChar;
+        $rootEntity = $stringQuoteChar . $query->getHint('acl.root.entity') . $stringQuoteChar;
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
@@ -185,11 +185,7 @@ class AclHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = ' . $stringQuoteChar . str_replace(
-                '\\',
-                '\\\\',
-                \get_class($user)
-            ) . '-' . $user->getUserName() . $stringQuoteChar;
+            $inString .= ' OR s.identifier = ' . $stringQuoteChar . get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
         }
 
         $selectQuery = <<<SELECTQUERY

@@ -74,7 +74,7 @@ class AclNativeHelper
         // Only tables with a single ID PK are currently supported
         $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
 
-        $rootEntity = $stringQuoteChar . str_replace('\\', '\\\\', $rootEntity) . $stringQuoteChar;
+        $rootEntity = $stringQuoteChar . $rootEntity . $stringQuoteChar;
         $query = $queryBuilder;
 
         $builder = new MaskBuilder();
@@ -118,11 +118,7 @@ class AclNativeHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = ' . $stringQuoteChar . str_replace(
-                '\\',
-                '\\\\',
-                \get_class($user)
-            ) . '-' . $user->getUserName() . $stringQuoteChar;
+            $inString .= ' OR s.identifier = ' . $stringQuoteChar . \get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
         }
 
         $joinTableQuery = <<<SELECTQUERY
