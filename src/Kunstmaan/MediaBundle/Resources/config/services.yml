@@ -173,6 +173,7 @@ services:
         arguments:
             - '@kunstmaan_utilities.slugifier'
             - '@liip_imagine.service.filter'
+            - '@liip_imagine.filter.configuration'
         public: true
 
     Kunstmaan\MediaBundle\Twig\MediaTwigExtension:
