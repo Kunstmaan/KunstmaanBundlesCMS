@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\Tests\AdminList;
+namespace Kunstmaan\AdminListBundle\Tests\AdminList\BulkAction;
 
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\SimpleBulkAction;
 use PHPUnit\Framework\TestCase;
