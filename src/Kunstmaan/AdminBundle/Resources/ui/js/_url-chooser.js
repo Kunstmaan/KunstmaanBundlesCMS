@@ -174,8 +174,6 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
                 if (isCropable && cropper) {
                     cropper.attr('data-path', itemUrl);
-
-                    console.log(cropper, itemUrl);
                 }
             }
 
