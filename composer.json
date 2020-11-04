@@ -47,7 +47,7 @@
         "symfony/yaml": "^3.4|^4.2",
         "symfony/css-selector": "^3.4|^4.2",
         "doctrine/orm": "^2.5",
-        "doctrine/dbal": "^2.5",
+        "doctrine/dbal": "^2.9",
         "doctrine/doctrine-bundle": "^1.6.12",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.3",
