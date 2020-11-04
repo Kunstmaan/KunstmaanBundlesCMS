@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\Tests\AdminList;
+namespace Kunstmaan\AdminListBundle\Tests\AdminList\Helper;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Statement;
