@@ -24,8 +24,7 @@ class AclWalker extends SqlWalker
         $tableAlias = $this->getSQLTableAlias($name, $alias);
         $extraQuery = $this->getQuery()->getHint('acl.extra.query');
 
-        switch ($this->getConnection()->getDatabasePlatform()->getName())
-        {
+        switch ($this->getConnection()->getDatabasePlatform()->getName()) {
             case 'postgresql':
                 $tempAclView = <<<tempAclView
 JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id::integer
