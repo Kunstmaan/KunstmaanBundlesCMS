@@ -312,7 +312,6 @@ SQL;
                 '(v.node_id = n.id AND v.lang <> :lang)'
             )
             ->where('n.deleted = :deleted')
-            ->setParameter('deleted', false)
             ->addGroupBy('n.id')
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
@@ -333,6 +332,7 @@ SQL;
         $qb = $aclNativeHelper->apply($qb, $permissionDef);
 
         $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
+        $stmt->bindValue(':deleted', false);
         $stmt->bindValue(':lang', $lang);
         if (!\is_null($rootNode)) {
             $stmt->bindValue(':left', $rootNode->getLeft());
