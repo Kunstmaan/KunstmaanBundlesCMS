@@ -1,0 +1,20 @@
+name: "CI"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  php-cs-fixer:
+    name: "PHP-CS-Fixer"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      - name: "Run PHP-CS-Fixer"
+        uses: docker://oskarstark/php-cs-fixer-ga:2.16.7
+        with:
+          args: --ansi --verbose --diff
