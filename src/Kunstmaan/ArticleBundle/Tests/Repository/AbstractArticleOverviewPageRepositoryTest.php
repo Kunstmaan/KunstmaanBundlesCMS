@@ -14,9 +14,6 @@ class Repo extends AbstractArticleOverviewPageRepository
 {
 }
 
-/**
- * Class AbstractArticleOverviewPageRepositoryTest
- */
 class AbstractArticleOverviewPageRepositoryTest extends TestCase
 {
     public function testFindActiveOverviewPages()

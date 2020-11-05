@@ -6,9 +6,6 @@ use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 
-/**
- * Class AbstractAuthorAdminTypeTest
- */
 class AbstractAuthorAdminTypeTest extends TestCase
 {
     public function testGettersAndSetters()

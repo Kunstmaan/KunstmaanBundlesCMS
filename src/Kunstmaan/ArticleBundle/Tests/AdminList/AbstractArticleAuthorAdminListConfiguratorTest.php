@@ -7,9 +7,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class AbstractArticleAuthorAdminListConfiguratorTest
- */
 class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
 {
     /**
