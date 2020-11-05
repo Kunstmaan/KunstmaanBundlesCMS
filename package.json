@@ -7,8 +7,7 @@
     "test": "gulp test",
     "build": "gulp buildOptimized",
     "testAndBuild": "gulp testAndBuildOptimized",
-    "buildGroundControlSkeleton": "gulp buildGroundControlSkeleton",
-    "postinstall": "git clone -b full/4.5.3 --single-branch https://github.com/ckeditor/ckeditor-releases.git node_modules/ckeditor"
+    "buildGroundControlSkeleton": "gulp buildGroundControlSkeleton"
   },
   "author": "Kunstmaan",
   "license": "ISC",
