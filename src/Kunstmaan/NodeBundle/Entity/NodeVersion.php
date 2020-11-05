@@ -20,6 +20,7 @@ class NodeVersion extends AbstractEntity
 {
     const DRAFT_VERSION = 'draft';
     const PUBLIC_VERSION = 'public';
+    const AUTO_SAVE_VERSION = 'auto_save';
 
     /**
      * @var NodeTranslation
@@ -132,6 +133,11 @@ class NodeVersion extends AbstractEntity
     public function isPublic()
     {
         return self::PUBLIC_VERSION === $this->type;
+    }
+
+    public function isAutoSave()
+    {
+        return self::AUTO_SAVE_VERSION === $this->type;
     }
 
     /**

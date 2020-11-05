@@ -233,6 +233,17 @@ services:
             - "@kunstmaan_node.helper.url"
         public: true
 
+    Kunstmaan\NodeBundle\Controller\AutoSaveController:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_node.admin_node.publisher'
+            - '@translator'
+            - '@kunstmaan_node.helper.node'
+            - '@kunstmaan_node.node_menu'
+            - '@event_dispatcher'
+            - '@Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPaneCreator'
+        public: true
+
     # Add service alias to use controller as a service with the symfony core route annotation
     Kunstmaan\NodeBundle\Controller\UrlReplaceController: '@kunstmaan_node.url_replace.controller'
 

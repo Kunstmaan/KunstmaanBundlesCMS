@@ -825,7 +825,7 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/{subaction}",
-     *      requirements={"id" = "\d+"},
+     *      requirements={"id" = "\d+", "subaction" = "public|draft"},
      *      defaults={"subaction" = "public"},
      *      name="KunstmaanNodeBundle_nodes_edit",
      *      methods={"GET", "POST"}

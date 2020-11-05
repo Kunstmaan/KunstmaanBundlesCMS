@@ -19,6 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class NodeHelper
@@ -109,6 +110,32 @@ class NodeHelper
         );
 
         return $nodeVersion;
+    }
+
+    public function createAutoSaveVersion(
+        HasNodeInterface $page,
+        NodeTranslation $nodeTranslation,
+        NodeVersion $nodeVersion
+    )
+    {
+        $publicPage = $this->cloneHelper->deepCloneAndSave($page);
+
+        /* @var NodeVersion $publicNodeVersion */
+        $autoSaveVersion = $this->em->getRepository(
+            NodeVersion::class
+        )->createNodeVersionFor(
+            $publicPage,
+            $nodeTranslation,
+            $this->getUser(),
+            $nodeVersion->getOrigin(),
+            NodeVersion::AUTO_SAVE_VERSION
+        );
+
+        $nodeTranslation->addNodeVersion($autoSaveVersion);
+        $this->em->persist($nodeTranslation);
+        $this->em->flush();
+
+        return $autoSaveVersion;
     }
 
     /**
@@ -491,7 +518,7 @@ class NodeHelper
         $token = $this->tokenStorage->getToken();
         if ($token) {
             $user = $token->getUser();
-            if ($user && $user !== 'anon.' && $user instanceof User) {
+            if ($user && $user !== 'anon.' && $user instanceof UserInterface) {
                 return $user;
             }
         }
