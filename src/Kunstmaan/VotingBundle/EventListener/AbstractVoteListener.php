@@ -18,11 +18,7 @@ abstract class AbstractVoteListener
      */
     protected $actions;
 
-    /**
-     * @param EntityManagerInterface $em
-     * @param array                  $actions
-     */
-    public function __construct(EntityManagerInterface $em, array $actions = array())
+    public function __construct(EntityManagerInterface $em, array $actions = [])
     {
         $this->em = $em;
         $this->actions = $actions;
@@ -37,9 +33,7 @@ abstract class AbstractVoteListener
     }
 
     /**
-     * @param AbstractVote   $vote
-     * @param EventInterface $event
-     * @param int|null       $defaultValue
+     * @param int|null $defaultValue
      */
     protected function createVote(AbstractVote $vote, EventInterface $event, $defaultValue = null)
     {

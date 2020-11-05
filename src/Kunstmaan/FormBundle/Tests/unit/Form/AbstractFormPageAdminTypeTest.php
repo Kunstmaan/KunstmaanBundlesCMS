@@ -12,9 +12,9 @@ class NonAbstractFormPageAdminType extends AbstractFormPageAdminType
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\FormBundle\Tests\Form\FormPage',
-        ));
+        ]);
     }
 }
 

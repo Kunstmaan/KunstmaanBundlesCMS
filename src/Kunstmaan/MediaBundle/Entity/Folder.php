@@ -251,7 +251,7 @@ class Folder extends AbstractEntity implements GedmoNode
     public function getParents()
     {
         $parent = $this->getParent();
-        $parents = array();
+        $parents = [];
         while ($parent !== null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
@@ -287,8 +287,6 @@ class Folder extends AbstractEntity implements GedmoNode
     /**
      * Add a child
      *
-     * @param Folder $child
-     *
      * @return Folder
      */
     public function addChild(Folder $child)
@@ -301,8 +299,6 @@ class Folder extends AbstractEntity implements GedmoNode
 
     /**
      * Add file
-     *
-     * @param Media $media
      *
      * @return Folder
      */

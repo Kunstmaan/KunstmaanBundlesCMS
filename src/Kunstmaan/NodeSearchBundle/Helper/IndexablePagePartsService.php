@@ -24,8 +24,7 @@ class IndexablePagePartsService
     /**
      * IndexablePagePartsService constructor.
      *
-     * @param EntityManagerInterface $em
-     * @param []                     $contexts
+     * @param [] $contexts
      */
     public function __construct(EntityManagerInterface $em, $contexts = [])
     {
@@ -36,8 +35,7 @@ class IndexablePagePartsService
     /**
      * Returns all indexable pageparts for the specified page and context
      *
-     * @param HasPagePartsInterface $page
-     * @param string                $context
+     * @param string $context
      *
      * @return array
      */

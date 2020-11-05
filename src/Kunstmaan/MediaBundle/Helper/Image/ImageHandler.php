@@ -16,10 +16,8 @@ class ImageHandler extends FileHandler
     protected $aviaryApiKey;
 
     /**
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
-     * @param string                           $aviaryApiKey                     The aviary key
+     * @param int    $priority
+     * @param string $aviaryApiKey The aviary key
      */
     public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface, $aviaryApiKey)
     {
@@ -84,9 +82,6 @@ class ImageHandler extends FileHandler
         return $basepath . $media->getUrl();
     }
 
-    /**
-     * @param Media $media
-     */
     public function prepareMedia(Media $media)
     {
         parent::prepareMedia($media);

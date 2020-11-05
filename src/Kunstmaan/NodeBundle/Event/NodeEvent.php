@@ -142,8 +142,6 @@ class NodeEvent extends Event
     }
 
     /**
-     * @param Response $response
-     *
      * @return NodeEvent
      */
     public function setResponse(Response $response)

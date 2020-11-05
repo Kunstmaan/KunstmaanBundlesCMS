@@ -29,7 +29,7 @@ class DomainConfigurationTest extends TestCase
     public function testGetHosts()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
-        $this->assertEquals(array('domain.tld'), $object->getHosts());
+        $this->assertEquals(['domain.tld'], $object->getHosts());
     }
 
     public function testGetDefaultLocale()
@@ -41,7 +41,7 @@ class DomainConfigurationTest extends TestCase
     public function testGetExtraData()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
-        $this->assertEquals(array(), $object->getExtraData());
+        $this->assertEquals([], $object->getExtraData());
     }
 
     public function testGetRootNode()
@@ -71,25 +71,25 @@ class DomainConfigurationTest extends TestCase
     public function testGetFrontendLocalesWithSingleLanguage()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
-        $this->assertEquals(array('en'), $object->getFrontendLocales());
+        $this->assertEquals(['en'], $object->getFrontendLocales());
     }
 
     public function testGetFrontendLocalesWithMultiLanguage()
     {
         $object = $this->getMultiLanguageDomainConfiguration();
-        $this->assertEquals(array('nl', 'fr', 'en'), $object->getFrontendLocales());
+        $this->assertEquals(['nl', 'fr', 'en'], $object->getFrontendLocales());
     }
 
     public function testGetBackendLocalesWithSingleLanguage()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
-        $this->assertEquals(array('en'), $object->getBackendLocales());
+        $this->assertEquals(['en'], $object->getBackendLocales());
     }
 
     public function testGetBackendLocalesWithMultiLanguage()
     {
         $object = $this->getMultiLanguageDomainConfiguration();
-        $this->assertEquals(array('nl', 'fr', 'en'), $object->getBackendLocales());
+        $this->assertEquals(['nl', 'fr', 'en'], $object->getBackendLocales());
     }
 
     private function getRequestStack()

@@ -17,10 +17,6 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
      */
     private $menuItems;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param array                         $menuItems
-     */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, array $menuItems)
     {
         $this->authorizationChecker = $authorizationChecker;

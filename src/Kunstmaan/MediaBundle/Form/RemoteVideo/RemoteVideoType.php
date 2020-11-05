@@ -29,18 +29,18 @@ class RemoteVideoType extends AbstractRemoteType
             ->add(
                 'type',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'media.form.remote_video.type.label',
                     'choices' => $this->getRemoteVideoChoices($options['configuration']),
-                    'constraints' => array(new NotBlank()),
+                    'constraints' => [new NotBlank()],
                     'required' => true,
-                )
+                ]
             );
     }
 
     protected function getRemoteVideoChoices($configuration)
     {
-        $choices = array();
+        $choices = [];
         if (\count($configuration)) {
             foreach ($configuration as $config => $enabled) {
                 if (!$enabled) {
@@ -71,10 +71,10 @@ class RemoteVideoType extends AbstractRemoteType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
-                'configuration' => array(),
-            )
+                'configuration' => [],
+            ]
         );
     }
 }

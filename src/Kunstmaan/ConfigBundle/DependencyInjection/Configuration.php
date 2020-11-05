@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\ConfigBundle\DependencyInjection;
 
+use Kunstmaan\ConfigBundle\Entity\ConfigurationInterface as KunstmaanConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Kunstmaan\ConfigBundle\Entity\ConfigurationInterface as KunstmaanConfigurationInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files

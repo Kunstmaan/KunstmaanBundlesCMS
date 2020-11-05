@@ -262,8 +262,6 @@ class Translation
     }
 
     /**
-     * @param \DateTime $createdAt
-     *
      * @return Translation
      */
     public function setCreatedAt(DateTime $createdAt)
@@ -282,8 +280,6 @@ class Translation
     }
 
     /**
-     * @param DateTime $updatedAt
-     *
      * @return Translation
      */
     public function setUpdatedAt(DateTime $updatedAt)

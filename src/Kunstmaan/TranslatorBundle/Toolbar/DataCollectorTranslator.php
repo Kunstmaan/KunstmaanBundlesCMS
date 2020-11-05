@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\TranslatorBundle\Toolbar;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\DataCollectorTranslator as BaseDataCollectorTranslator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class DataCollectorTranslator

@@ -77,7 +77,7 @@ class RedirectRouterTest extends TestCase
     private function getRedirects()
     {
         if (!isset($this->redirects)) {
-            $this->redirects = array();
+            $this->redirects = [];
             $this->redirects[] = $this->getRedirect(1, 'test1', '/target1', false, null);
             $this->redirects[] = $this->getRedirect(2, 'test2', '/target2', true, null);
             $this->redirects[] = $this->getRedirect(3, 'test3', '/target3', true, 'sub.domain.com');
@@ -129,34 +129,34 @@ class RedirectRouterTest extends TestCase
     {
         $redirect = $this->firstObject->match('/test1');
         $this->assertEquals(
-            array(
+            [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                 'path' => '/target1',
                 'permanent' => false,
                 '_route' => '_redirect_route_1',
-            ),
+            ],
             $redirect
         );
 
         $redirect = $this->firstObject->match('/test2');
         $this->assertEquals(
-            array(
+            [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                 'path' => '/target2',
                 'permanent' => true,
                 '_route' => '_redirect_route_2',
-            ),
+            ],
             $redirect
         );
 
         $redirect = $this->firstObject->match('/test3');
         $this->assertEquals(
-            array(
+            [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                 'path' => '/target3',
                 'permanent' => true,
                 '_route' => '_redirect_route_3',
-            ),
+            ],
             $redirect
         );
 
@@ -166,12 +166,12 @@ class RedirectRouterTest extends TestCase
 
         $redirect = $this->secondObject->match('/test4');
         $this->assertEquals(
-            array(
+            [
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                 'path' => '/target4',
                 'permanent' => true,
                 '_route' => '_redirect_route_4',
-            ),
+            ],
             $redirect
         );
     }

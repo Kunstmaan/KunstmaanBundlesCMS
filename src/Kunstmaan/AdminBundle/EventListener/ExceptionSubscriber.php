@@ -34,9 +34,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * ExceptionSubscriber constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param array                  $excludes
      */
     public function __construct(EntityManagerInterface $em, array $excludes = [])
     {
@@ -70,7 +67,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
             }
 
             $hash = md5(
-                $exception->getStatusCode().$uri.$request->headers->get('referer')
+                $exception->getStatusCode() . $uri . $request->headers->get('referer')
             );
 
             if ($model = $this->em->getRepository(Exception::class)->findOneBy(['hash' => $hash])) {

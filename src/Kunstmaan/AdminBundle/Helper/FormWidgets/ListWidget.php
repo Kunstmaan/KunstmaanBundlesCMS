@@ -20,9 +20,9 @@ class ListWidget extends FormWidget
     /**
      * @param FormWidget[] $widgets
      */
-    public function __construct(array $widgets = array())
+    public function __construct(array $widgets = [])
     {
-        parent::__construct(array(), array());
+        parent::__construct([], []);
         $this->widgets = $widgets;
     }
 
@@ -44,9 +44,6 @@ class ListWidget extends FormWidget
         }
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         foreach ($this->widgets as $widget) {
@@ -65,8 +62,6 @@ class ListWidget extends FormWidget
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
@@ -89,13 +84,11 @@ class ListWidget extends FormWidget
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)
     {
-        $params = array();
+        $params = [];
         foreach ($this->widgets as $widget) {
             $params = array_merge($params, $widget->getExtraParams($request));
         }

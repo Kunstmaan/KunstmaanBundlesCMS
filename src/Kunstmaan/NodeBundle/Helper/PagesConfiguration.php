@@ -19,8 +19,6 @@ class PagesConfiguration
 
     /**
      * PagesConfiguration constructor.
-     *
-     * @param array $configuration
      */
     public function __construct(array $configuration)
     {

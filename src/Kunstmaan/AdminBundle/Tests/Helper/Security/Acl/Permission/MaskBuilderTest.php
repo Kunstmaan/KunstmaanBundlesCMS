@@ -43,12 +43,12 @@ class MaskBuilderTest extends TestCase
      */
     public function getInvalidConstructorData()
     {
-        return array(
-            array(234.463),
-            array('asdgasdf'),
-            array(array()),
-            array(new \stdClass()),
-        );
+        return [
+            [234.463],
+            ['asdgasdf'],
+            [[]],
+            [new \stdClass()],
+        ];
     }
 
     public function testConstructorWithoutArguments()
@@ -94,13 +94,13 @@ class MaskBuilderTest extends TestCase
         $this->assertEquals(MaskBuilder::ALL_OFF, $builder->getPattern());
 
         $builder->add('view');
-        $this->assertEquals(str_repeat('.', 31).'V', $builder->getPattern());
+        $this->assertEquals(str_repeat('.', 31) . 'V', $builder->getPattern());
 
         $builder->add('publish');
-        $this->assertEquals(str_repeat('.', 27).'P...V', $builder->getPattern());
+        $this->assertEquals(str_repeat('.', 27) . 'P...V', $builder->getPattern());
 
         $builder->add(1 << 10);
-        $this->assertEquals(str_repeat('.', 21).MaskBuilder::ON.'.....P...V', $builder->getPattern());
+        $this->assertEquals(str_repeat('.', 21) . MaskBuilder::ON . '.....P...V', $builder->getPattern());
     }
 
     public function testReset()

@@ -20,10 +20,10 @@ class URLChooserToLinkTransformer implements DataTransformerInterface
             $linkType = URLChooserType::EXTERNAL;
         }
 
-        return array(
+        return [
             'link_type' => $linkType,
             'link_url' => $value,
-        );
+        ];
     }
 
     public function reverseTransform($value)

@@ -23,9 +23,8 @@ abstract class AbstractVoteEvent extends Event implements EventInterface
     protected $value;
 
     /**
-     * @param Request $request
-     * @param string  $reference
-     * @param int     $value
+     * @param string $reference
+     * @param int    $value
      */
     public function __construct(Request $request, $reference, $value)
     {

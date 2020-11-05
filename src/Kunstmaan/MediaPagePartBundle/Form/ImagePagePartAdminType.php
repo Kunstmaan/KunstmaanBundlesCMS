@@ -28,21 +28,21 @@ class ImagePagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', MediaType::class, array(
+        $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.image.choosefile',
-        ));
-        $builder->add('alttext', TextType::class, array(
+        ]);
+        $builder->add('alttext', TextType::class, [
             'required' => false,
             'label' => 'mediapagepart.image.alttext',
-        ));
-        $builder->add('link', URLChooserType::class, array(
+        ]);
+        $builder->add('link', URLChooserType::class, [
             'required' => false,
             'label' => 'mediapagepart.image.link',
-        ));
-        $builder->add('openinnewwindow', CheckboxType::class, array(
+        ]);
+        $builder->add('openinnewwindow', CheckboxType::class, [
             'required' => false,
             'label' => 'mediapagepart.image.openinnewwindow',
-        ));
+        ]);
     }
 
     /**
@@ -62,8 +62,8 @@ class ImagePagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
-        ));
+        ]);
     }
 }

@@ -21,8 +21,6 @@ class AdminListSubscriber implements EventSubscriberInterface
 
     /**
      * ArticleSubscriber constructor.
-     *
-     * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
@@ -39,9 +37,6 @@ class AdminListSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postDelete(NodeEvent $event)
     {
         $page = $event->getPage();

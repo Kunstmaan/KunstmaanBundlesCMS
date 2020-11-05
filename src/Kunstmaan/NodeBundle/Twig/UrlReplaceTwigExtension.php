@@ -16,9 +16,6 @@ class UrlReplaceTwigExtension extends AbstractExtension
      */
     private $urlHelper;
 
-    /**
-     * @param URLHelper $urlHelper
-     */
     public function __construct(URLHelper $urlHelper)
     {
         $this->urlHelper = $urlHelper;
@@ -29,9 +26,9 @@ class UrlReplaceTwigExtension extends AbstractExtension
      */
     public function getFilters()
     {
-        return array(
-            new TwigFilter('replace_url', array($this, 'replaceUrl')),
-        );
+        return [
+            new TwigFilter('replace_url', [$this, 'replaceUrl']),
+        ];
     }
 
     public function replaceUrl($text)

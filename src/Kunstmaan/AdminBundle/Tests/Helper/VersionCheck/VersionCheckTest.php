@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
+use Doctrine\Common\Cache\Cache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -9,7 +10,6 @@ use GuzzleHttp\Psr7\Response;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use PHPUnit\Framework\TestCase;
-use Doctrine\Common\Cache\Cache;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -42,8 +42,6 @@ class VersionCheckTest extends TestCase
     }
 
     /**
-     * @param array|null $methods
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|VersionChecker
      */
     public function setUpVersionCheckerMock(?array $methods)
@@ -190,10 +188,10 @@ class VersionCheckTest extends TestCase
         $baseDir = __DIR__.'/testdata';
 
         return [
-            'composer.lock ok' => [$baseDir.'/composer_ok.lock', 'instanceOf', \stdClass::class],
-            'composer.lock broken' => [$baseDir.'/composer_broken.lock', 'exception', 'translated (#4)'],
-            'composer.lock bundleless' => [$baseDir.'/composer_bundleless.lock', 'exception', 'translated'],
-            'composer.lock not found' => [$baseDir.'/composer_not_there.lock', 'exception', 'translated'],
+            'composer.lock ok' => [$baseDir . '/composer_ok.lock', 'instanceOf', \stdClass::class],
+            'composer.lock broken' => [$baseDir . '/composer_broken.lock', 'exception', 'translated (#4)'],
+            'composer.lock bundleless' => [$baseDir . '/composer_bundleless.lock', 'exception', 'translated'],
+            'composer.lock not found' => [$baseDir . '/composer_not_there.lock', 'exception', 'translated'],
         ];
     }
 }

@@ -14,8 +14,6 @@ class LocaleRuleService implements RuleServiceInterface
 
     /**
      * LocaleRuleService constructor.
-     *
-     * @param RequestStack $requestStack
      */
     public function __construct(RequestStack $requestStack)
     {
@@ -23,14 +21,12 @@ class LocaleRuleService implements RuleServiceInterface
     }
 
     /**
-     * @param AbstractRule $rule
-     *
      * @return array
      */
     public function getJsProperties(AbstractRule $rule)
     {
-        return array(
+        return [
             'requestlocale' => $this->request->getLocale(),
-        );
+        ];
     }
 }

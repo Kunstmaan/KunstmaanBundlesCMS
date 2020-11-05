@@ -19,7 +19,6 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
-     * @param Menu          $menu
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null, Menu $menu)
     {
@@ -63,9 +62,6 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         return 'MenuItem';
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     public function adaptQueryBuilder(QueryBuilder $qb)
     {
         $qb->andWhere('b.menu = :menu');
@@ -111,7 +107,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getExtraParameters()
     {
-        return array('menuid' => $this->menu->getId());
+        return ['menuid' => $this->menu->getId()];
     }
 
     /**

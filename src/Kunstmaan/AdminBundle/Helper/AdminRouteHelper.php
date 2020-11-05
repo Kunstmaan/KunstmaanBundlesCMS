@@ -23,8 +23,7 @@ class AdminRouteHelper
     protected $requestStack;
 
     /**
-     * @param string       $adminKey
-     * @param RequestStack $requestStack
+     * @param string $adminKey
      */
     public function __construct($adminKey, RequestStack $requestStack)
     {

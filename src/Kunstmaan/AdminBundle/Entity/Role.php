@@ -51,8 +51,6 @@ class Role extends BaseRole
 
     /**
      * Return the string representation of the role entity.
-     *
-     * @return string
      */
     public function __toString(): string
     {

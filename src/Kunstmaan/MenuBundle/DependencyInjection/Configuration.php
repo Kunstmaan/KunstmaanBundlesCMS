@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('menus')
-                    ->defaultValue(array())
+                    ->defaultValue([])
                     ->prototype('scalar')->end()
                 ->end()
                 ->scalarNode('menu_entity')->defaultValue('Kunstmaan\MenuBundle\Entity\Menu')->end()

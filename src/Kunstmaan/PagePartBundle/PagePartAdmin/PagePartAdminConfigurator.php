@@ -40,9 +40,6 @@ class PagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
         return $this->pagePartTypes;
     }
 
-    /**
-     * @param array $pagePartTypes
-     */
     public function setPossiblePagePartTypes(array $pagePartTypes)
     {
         $this->pagePartTypes = $pagePartTypes;

@@ -82,8 +82,6 @@ class RemoteAudioHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return RemoteAudioHelper
      */
     public function getFormHelper(Media $media)
@@ -92,8 +90,6 @@ class RemoteAudioHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
@@ -120,16 +116,10 @@ class RemoteAudioHandler extends AbstractMediaHandler
         }
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
     }
 
-    /**
-     * @param Media $media
-     */
     public function removeMedia(Media $media)
     {
     }
@@ -175,11 +165,11 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-            RemoteAudioHandler::TYPE => array(
+        return [
+            RemoteAudioHandler::TYPE => [
                 'type' => RemoteAudioHandler::TYPE,
                 'name' => 'media.audio.add',
-            ),
-        );
+            ],
+        ];
     }
 }

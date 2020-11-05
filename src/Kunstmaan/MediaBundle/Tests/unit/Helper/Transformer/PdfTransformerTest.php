@@ -26,7 +26,7 @@ class PdfTransformerTest extends TestCase
             $this->markTestSkipped('Imagick is not available.');
         }
         $this->filesDir = realpath(__DIR__ . '/../../Files');
-        $this->tempDir = str_replace('/', DIRECTORY_SEPARATOR, sys_get_temp_dir().'/kunstmaan_media_test');
+        $this->tempDir = str_replace('/', DIRECTORY_SEPARATOR, sys_get_temp_dir() . '/kunstmaan_media_test');
 
         $this->filesystem = new Filesystem();
         $this->removeTempDir();
@@ -51,7 +51,7 @@ class PdfTransformerTest extends TestCase
         }
 
         $pdfFilename = $this->tempDir . '/sample.pdf';
-        $jpgFilename = $pdfFilename.'.jpg';
+        $jpgFilename = $pdfFilename . '.jpg';
 
         $pdf = $this->filesDir . '/sample.pdf';
         $this->filesystem->copy($pdf, $pdfFilename);

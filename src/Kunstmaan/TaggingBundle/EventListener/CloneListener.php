@@ -18,9 +18,6 @@ class CloneListener
         $this->em = $em;
     }
 
-    /**
-     * @param DeepCloneAndSaveEvent $event
-     */
     public function postDeepCloneAndSave(DeepCloneAndSaveEvent $event)
     {
         $originalEntity = $event->getEntity();

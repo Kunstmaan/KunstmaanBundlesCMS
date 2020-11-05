@@ -3,8 +3,8 @@
 namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
-use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 {

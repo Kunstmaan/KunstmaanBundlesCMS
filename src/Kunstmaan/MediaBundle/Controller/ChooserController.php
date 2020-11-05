@@ -9,11 +9,11 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * ChooserController.
@@ -24,8 +24,6 @@ class ChooserController extends Controller
 
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
-     *
-     * @param Request $request
      *
      * @return RedirectResponse
      */
@@ -56,19 +54,18 @@ class ChooserController extends Controller
             $folderId = $firstFolder->getId();
         }
 
-        $params = array(
+        $params = [
             'folderId' => $folderId,
             'type' => $type,
             'CKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser' => $linkChooser,
-        );
+        ];
 
         return $this->redirect($this->generateUrl('KunstmaanMediaBundle_chooser_show_folder', $params));
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
+     * @param int $folderId The folder id
      *
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
      * @Template("@KunstmaanMedia/Chooser/chooserShowFolder.html.twig")
@@ -116,11 +113,11 @@ class ChooserController extends Controller
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
+        $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
 
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
-            $params = array();
+            $params = [];
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
                 $routeName = 'KunstmaanNodeBundle_ckselecturl';
@@ -130,7 +127,7 @@ class ChooserController extends Controller
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
 
-        $viewVariabels = array(
+        $viewVariabels = [
             'cKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser' => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
@@ -141,10 +138,10 @@ class ChooserController extends Controller
             'folder' => $folder,
             'adminlist' => $adminList,
             'subform' => $subForm->createView(),
-        );
+        ];
 
         /* generate all forms */
-        $forms = array();
+        $forms = [];
 
         foreach ($mediaManager->getFolderAddActions()  as $addAction) {
             $forms[$addAction['type']] = $this->createTypeFormView($mediaHandler, $addAction['type']);
@@ -156,8 +153,7 @@ class ChooserController extends Controller
     }
 
     /**
-     * @param MediaManager $mediaManager
-     * @param string       $type
+     * @param string $type
      *
      * @return \Symfony\Component\Form\FormView
      */

@@ -41,8 +41,6 @@ class GeneratorUtils
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
      *
-     * @param ClassMetadata $metadata
-     *
      * @return array $fields
      */
     public static function getFieldsFromMetadata(ClassMetadata $metadata)
@@ -159,12 +157,6 @@ class GeneratorUtils
      * This probably isn't the cleanest way. It'd be nicer if we could make a KunstmaanGenerator class
      * which all generators inherit from. It then provides a bunch of helper functions and a uniform manner
      * in which the input options are handled.
-     *
-     * @param InputInterface     $input
-     * @param OutputInterface    $output
-     * @param QuestionHelper     $questionHelper
-     * @param Kernel             $kernel
-     * @param ContainerInterface $container
      *
      * @return InputAssistant
      */

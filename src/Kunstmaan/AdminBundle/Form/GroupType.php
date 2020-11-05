@@ -22,15 +22,15 @@ class GroupType extends AbstractType
             ->add(
                 'name',
                 TextType::class,
-                array(
+                [
                     'required' => true,
                     'label' => 'settings.group.name',
-                )
+                ]
             )
             ->add(
                 'rolesCollection',
                 EntityType::class,
-                array(
+                [
                     'label' => 'settings.group.roles',
                     'class' => 'KunstmaanAdminBundle:Role',
                     'query_builder' => function (EntityRepository $er) {
@@ -40,11 +40,11 @@ class GroupType extends AbstractType
                     'multiple' => true,
                     'expanded' => false,
                     'required' => true,
-                    'attr' => array(
+                    'attr' => [
                         'placeholder' => 'settings.group.roles_placeholder',
                         'class' => 'js-advanced-select form-control advanced-select',
-                    ),
-                )
+                    ],
+                ]
             );
     }
 

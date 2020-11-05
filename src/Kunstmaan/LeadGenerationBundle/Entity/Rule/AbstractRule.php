@@ -45,8 +45,6 @@ abstract class AbstractRule
     }
 
     /**
-     * @param AbstractPopup $popup
-     *
      * @return AbstractRule
      */
     public function setPopup(AbstractPopup $popup)

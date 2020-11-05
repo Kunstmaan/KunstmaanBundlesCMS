@@ -23,9 +23,6 @@ class PagePartTwigExtension extends AbstractExtension
      */
     protected $em;
 
-    /**
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -36,15 +33,14 @@ class PagePartTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
-            new TwigFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
+        return [
+            new TwigFunction('render_pageparts', [$this, 'renderPageParts'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
+            new TwigFunction('getpageparts', ['needs_environment' => true, $this, 'getPageParts']),
             new TwigFunction('has_page_parts', [$this, 'hasPageParts']),
-        );
+        ];
     }
 
     /**
-     * @param Environment           $env
      * @param array                 $twigContext The twig context
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context
@@ -52,15 +48,15 @@ class PagePartTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function renderPageParts(Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = array())
+    public function renderPageParts(Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = [])
     {
         $template = $env->load('@KunstmaanPagePart/PagePartTwigExtension/widget.html.twig');
         /* @var $entityRepository PagePartRefRepository */
         $pageparts = $this->getPageParts($page, $contextName);
-        $newTwigContext = array_merge($parameters, array(
+        $newTwigContext = array_merge($parameters, [
             'pageparts' => $pageparts,
             'page' => $page,
-        ));
+        ]);
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 
         return $template->render($newTwigContext);
@@ -81,8 +77,7 @@ class PagePartTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param HasPagePartsInterface $page
-     * @param string                $context
+     * @param string $context
      *
      * @return bool
      */

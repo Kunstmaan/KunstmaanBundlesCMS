@@ -40,7 +40,7 @@ class MenuItem
     /**
      * @var array
      */
-    private $routeParams = array();
+    private $routeParams = [];
 
     /**
      * @var bool
@@ -70,7 +70,7 @@ class MenuItem
     /**
      * @var array
      */
-    private $attributes = array();
+    private $attributes = [];
 
     /**
      * @var bool
@@ -84,8 +84,6 @@ class MenuItem
 
     /**
      * Construct the MenuItem
-     *
-     * @param MenuBuilder $menu
      */
     public function __construct(MenuBuilder $menu)
     {
@@ -183,8 +181,6 @@ class MenuItem
     /**
      * Set parent menu item
      *
-     * @param MenuItem|null $parent
-     *
      * @return MenuItem
      */
     public function setParent(MenuItem $parent = null)
@@ -212,7 +208,7 @@ class MenuItem
      *
      * @return MenuItem
      */
-    public function setRoute($route, array $params = array())
+    public function setRoute($route, array $params = [])
     {
         $this->route = $route;
         $this->routeParams = $params;
@@ -233,11 +229,9 @@ class MenuItem
     /**
      * Set route parameters
      *
-     * @param array $routeParams
-     *
      * @return MenuItem
      */
-    public function setRouteParams(array $routeParams = array())
+    public function setRouteParams(array $routeParams = [])
     {
         $this->routeParams = $routeParams;
 
@@ -261,11 +255,9 @@ class MenuItem
     /**
      * Warning: the adaptChildren method on the menuadaptors will not be called anymore for this menuitem
      *
-     * @param array $children
-     *
      * @return MenuItem
      */
-    public function setChildren(array $children = array())
+    public function setChildren(array $children = [])
     {
         $this->children = $children;
 
@@ -279,7 +271,7 @@ class MenuItem
      */
     public function getNavigationChildren()
     {
-        $result = array();
+        $result = [];
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child->getAppearInNavigation()) {
@@ -297,7 +289,7 @@ class MenuItem
      */
     public function getTopChildren()
     {
-        $result = array();
+        $result = [];
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child instanceof TopMenuItem) {

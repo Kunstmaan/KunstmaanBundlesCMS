@@ -27,7 +27,7 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder->expects($this->never())->method('add');
 
-        $this->object->buildForm($this->builder, array());
+        $this->object->buildForm($this->builder, []);
     }
 
     public function testConfigureOptions()

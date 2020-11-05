@@ -15,8 +15,6 @@ class ServiceHelper
 
     /**
      * constructor
-     *
-     * @param ClientHelper $clientHelper
      */
     public function __construct(ClientHelper $clientHelper)
     {

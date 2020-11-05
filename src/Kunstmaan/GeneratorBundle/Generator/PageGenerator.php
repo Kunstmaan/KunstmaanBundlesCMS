@@ -105,7 +105,7 @@ class PageGenerator extends KunstmaanGenerator
         );
 
         // Add some extra functions in the generated entity :s
-        $params = array(
+        $params = [
             'bundle' => $this->bundle->getName(),
             'page' => $this->entity,
             'template' => substr($this->template, 0, strpos($this->template, '.')),
@@ -118,12 +118,12 @@ class PageGenerator extends KunstmaanGenerator
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\Pages\\' . $this->entity . 'AdminType',
             'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity,
             'isV4' => $this->isSymfony4(),
-        );
+        ];
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);
 
         $pos = strrpos($entityCode, "\n}");
         $trimmed = substr($entityCode, 0, $pos);
-        $entityCode = $trimmed."\n\n".$extraCode."\n}\n";
+        $entityCode = $trimmed . "\n\n" . $extraCode . "\n}\n";
 
         // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));
@@ -169,7 +169,7 @@ class PageGenerator extends KunstmaanGenerator
         $phpCode .= "                'class'=> '" .
             $this->bundle->getNamespace() .
             '\\Entity\\Pages\\' . $this->entity . "'\n";
-        $phpCode .= '            ],'."\n        ";
+        $phpCode .= '            ],' . "\n        ";
 
         // When there is a BehatTestPage, we should also allow the new page as sub page
         $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';

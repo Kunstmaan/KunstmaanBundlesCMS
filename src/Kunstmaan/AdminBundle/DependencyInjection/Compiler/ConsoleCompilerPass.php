@@ -12,9 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 final class ConsoleCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         // if the old listener is no longer in use

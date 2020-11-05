@@ -13,17 +13,17 @@ class FilterBuilder
     /**
      * @var array
      */
-    private $filterDefinitions = array();
+    private $filterDefinitions = [];
 
     /**
      * @var Filter[]
      */
-    private $currentFilters = array();
+    private $currentFilters = [];
 
     /**
      * @var array
      */
-    private $currentParameters = array();
+    private $currentParameters = [];
 
     /**
      * @param string              $columnName The column name
@@ -33,13 +33,13 @@ class FilterBuilder
      *
      * @return FilterBuilder
      */
-    public function add($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array())
+    public function add($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = [])
     {
-        $this->filterDefinitions[$columnName] = array(
+        $this->filterDefinitions[$columnName] = [
             'type' => $type,
             'options' => $options,
             'filtername' => $filterName,
-        );
+        ];
 
         return $this;
     }
@@ -90,9 +90,6 @@ class FilterBuilder
         return $this->filterDefinitions;
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $filterBuilderName = 'filter_' . $request->get('_route');

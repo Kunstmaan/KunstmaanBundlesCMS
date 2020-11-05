@@ -89,10 +89,10 @@ class MaxNumberByIpEventListenerTest extends TestCase
      */
     public function dataTestOnVote()
     {
-        return array(
-            array(2, 2, true),
-            array(2, 1, false),
-            array(2, 3, true),
-        );
+        return [
+            [2, 2, true],
+            [2, 1, false],
+            [2, 3, true],
+        ];
     }
 }

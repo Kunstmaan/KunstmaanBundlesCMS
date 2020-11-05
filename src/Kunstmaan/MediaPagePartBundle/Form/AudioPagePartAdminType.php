@@ -25,10 +25,10 @@ class AudioPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', MediaType::class, array(
+        $builder->add('media', MediaType::class, [
             'mediatype' => 'audio',
             'label' => 'mediapagepart.audio.choose',
-        ));
+        ]);
     }
 
     /**
@@ -48,8 +48,8 @@ class AudioPagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\AudioPagePart',
-        ));
+        ]);
     }
 }

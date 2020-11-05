@@ -93,7 +93,7 @@ class MediaTest extends TestCase
     public function testGetSetMetaDataAndValues()
     {
         $this->object->setTranslatableLocale('en');
-        $meta = array('original_width' => 320, 'original_height' => 200);
+        $meta = ['original_width' => 320, 'original_height' => 200];
         $this->object->setMetadata($meta);
         $this->assertEquals($meta, $this->object->getMetadata());
         $this->assertEquals(320, $this->object->getMetadataValue('original_width'));

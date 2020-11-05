@@ -11,17 +11,12 @@ class PageTemplateConfigurationReader implements PageTemplateConfigurationReader
      */
     protected $parser;
 
-    /**
-     * @param PageTemplateConfigurationParserInterface $parser
-     */
     public function __construct(PageTemplateConfigurationParserInterface $parser)
     {
         $this->parser = $parser;
     }
 
     /**
-     * @param HasPageTemplateInterface $page
-     *
      * @throws \Exception
      *
      * @return PageTemplateInterface[]

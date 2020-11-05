@@ -39,10 +39,6 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     /**
      * OAuthAuthenticator constructor.
      *
-     * @param RouterInterface           $router
-     * @param SessionInterface          $session
-     * @param TranslatorInterface       $translator
-     * @param OAuthUserCreatorInterface $oAuthUserCreator
      * @param $clientId
      * @param $clientSecret
      */
@@ -57,8 +53,6 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     * @param Request $request
-     *
      * @return bool
      */
     public function supports(Request $request)
@@ -106,8 +100,6 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      *
      *      return array('api_key' => $request->headers->get('X-API-TOKEN'));
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function getCredentials(Request $request)
@@ -127,8 +119,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * You may throw an AuthenticationException if you wish. If you return
      * null, then a UsernameNotFoundException is thrown for you.
      *
-     * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
+     * @param mixed $credentials
      *
      * @throws AuthenticationException
      *
@@ -162,8 +153,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      *
      * The *credentials* are the return value from getCredentials()
      *
-     * @param mixed         $credentials
-     * @param UserInterface $user
+     * @param mixed $credentials
      *
      * @return bool
      *
@@ -183,9 +173,6 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * If you return null, the request will continue, but the user will
      * not be authenticated. This is probably not what you want to do.
      *
-     * @param Request                 $request
-     * @param AuthenticationException $exception
-     *
      * @return RedirectResponse
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -204,9 +191,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * If you return null, the current request will continue, and the user
      * will be authenticated. This makes sense, for example, with an API.
      *
-     * @param Request        $request
-     * @param TokenInterface $token
-     * @param string         $providerKey The provider (i.e. firewall) key
+     * @param string $providerKey The provider (i.e. firewall) key
      *
      * @return RedirectResponse
      */

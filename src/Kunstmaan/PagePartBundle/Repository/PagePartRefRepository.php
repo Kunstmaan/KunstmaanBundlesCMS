@@ -60,11 +60,11 @@ class PagePartRefRepository extends EntityRepository
      */
     public function getPagePartRefs(HasPagePartsInterface $page, $context = 'main')
     {
-        return $this->findBy(array(
+        return $this->findBy([
             'pageId' => $page->getId(),
             'pageEntityname' => ClassLookup::getClass($page),
             'context' => $context,
-        ), array('sequencenumber' => 'ASC'));
+        ], ['sequencenumber' => 'ASC']);
     }
 
     /**
@@ -78,7 +78,7 @@ class PagePartRefRepository extends EntityRepository
         $pagepartrefs = $this->getPagePartRefs($page, $context);
 
         // Group pagepartrefs per type and remember the sorting order
-        $types = $order = array();
+        $types = $order = [];
         $counter = 1;
         foreach ($pagepartrefs as $pagepartref) {
             $types[$pagepartref->getPagePartEntityname()][] = $pagepartref->getPagePartId();
@@ -87,9 +87,9 @@ class PagePartRefRepository extends EntityRepository
         }
 
         // Fetch all the pageparts (only one query per pagepart type)
-        $pageparts = array();
+        $pageparts = [];
         foreach ($types as $classname => $ids) {
-            $result = $this->getEntityManager()->getRepository($classname)->findBy(array('id' => $ids));
+            $result = $this->getEntityManager()->getRepository($classname)->findBy(['id' => $ids]);
             $pageparts = array_merge($pageparts, $result);
         }
 

@@ -22,10 +22,10 @@ abstract class BaseMenuItem extends AbstractEntity
     /**
      * @var array
      */
-    public static $types = array(
+    public static $types = [
         self::TYPE_PAGE_LINK,
         self::TYPE_URL_LINK,
-    );
+    ];
 
     /**
      * @var Menu
@@ -324,8 +324,6 @@ abstract class BaseMenuItem extends AbstractEntity
 
     /**
      * @Assert\Callback
-     *
-     * @param ExecutionContextInterface $context
      */
     public function validateEntity(ExecutionContextInterface $context)
     {

@@ -31,7 +31,7 @@ class Translator extends SymfonyTranslator
      */
     protected $request;
 
-    public function __construct(ContainerInterface $container, $formatter, $defaultLocale = null, array $loaderIds = array(), array $options = array(), $profilerEnable = false)
+    public function __construct(ContainerInterface $container, $formatter, $defaultLocale = null, array $loaderIds = [], array $options = [], $profilerEnable = false)
     {
         parent::__construct($container, $formatter, $defaultLocale, $loaderIds, $options);
 
@@ -118,7 +118,7 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
-    public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
+    public function trans($id, array $parameters = [], $domain = 'messages', $locale = null)
     {
         if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             return parent::trans($id, $parameters, $domain, $locale);

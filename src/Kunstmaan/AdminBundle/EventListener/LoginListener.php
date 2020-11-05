@@ -37,8 +37,6 @@ class LoginListener
 
     /**
      * Handle login event.
-     *
-     * @param InteractiveLoginEvent $event
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {

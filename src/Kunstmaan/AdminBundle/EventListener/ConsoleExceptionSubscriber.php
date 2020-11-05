@@ -17,8 +17,6 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * ConsoleExceptionListener constructor.
-     *
-     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
@@ -35,9 +33,6 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ConsoleErrorEvent $event
-     */
     public function onConsoleError(ConsoleErrorEvent $event)
     {
         $command = $event->getCommand();

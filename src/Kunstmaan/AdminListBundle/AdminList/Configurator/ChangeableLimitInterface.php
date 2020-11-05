@@ -11,8 +11,6 @@ interface ChangeableLimitInterface
 {
     /**
      * Bind current request.
-     *
-     * @param Request $request
      */
     public function bindRequest(Request $request);
 

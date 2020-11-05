@@ -11,9 +11,6 @@ use Kunstmaan\MediaBundle\Entity\Media;
  */
 class MediaRepository extends EntityRepository
 {
-    /**
-     * @param Media $media
-     */
     public function save(Media $media)
     {
         $em = $this->getEntityManager();
@@ -21,9 +18,6 @@ class MediaRepository extends EntityRepository
         $em->flush();
     }
 
-    /**
-     * @param Media $media
-     */
     public function delete(Media $media)
     {
         $em = $this->getEntityManager();

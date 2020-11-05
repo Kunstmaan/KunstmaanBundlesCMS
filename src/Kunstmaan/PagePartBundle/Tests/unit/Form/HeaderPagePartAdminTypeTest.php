@@ -31,7 +31,7 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder->expects($this->exactly(2))->method('add');
 
-        $this->object->buildForm($builder, array());
+        $this->object->buildForm($builder, []);
     }
 
     public function testConfigureOptions()

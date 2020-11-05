@@ -18,17 +18,12 @@ class ConsoleExceptionListener
 
     /**
      * ConsoleExceptionListener constructor.
-     *
-     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
-    /**
-     * @param ConsoleExceptionEvent $event
-     */
     public function onConsoleException(ConsoleExceptionEvent $event)
     {
         // if the newer error event exists, don't bother with the old exception, our subscriber will handle this

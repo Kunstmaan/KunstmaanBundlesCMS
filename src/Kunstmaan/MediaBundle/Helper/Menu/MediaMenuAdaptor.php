@@ -53,7 +53,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuItem = new TopMenuItem($menu);
                 $menuItem
                     ->setRoute('KunstmaanMediaBundle_folder_show')
-                    ->setRouteparams(array('folderId' => $rootFolder->getId()))
+                    ->setRouteparams(['folderId' => $rootFolder->getId()])
                     ->setUniqueId('folder-' . $rootFolder->getId())
                     ->setLabel($rootFolder->getName())
                     ->setParent(null)

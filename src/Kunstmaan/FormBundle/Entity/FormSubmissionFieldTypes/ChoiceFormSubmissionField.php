@@ -42,7 +42,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      *
      * @ORM\Column(type="array", nullable=true)
      */
-    protected $choices = array();
+    protected $choices = [];
 
     /**
      * If true, this field will be required.
@@ -73,7 +73,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
             $choices = $this->getChoices();
 
             if (is_array($values) && count($values) > 0) {
-                $result = array();
+                $result = [];
                 foreach ($values as $value) {
                     $result[] = array_key_exists($value, $choices) ? trim($choices[$value]) : $value;
                 }
@@ -125,7 +125,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      *
      * @return ChoiceFormSubmissionField
      */
-    public function setValue($values = array())
+    public function setValue($values = [])
     {
         $this->value = $values;
 

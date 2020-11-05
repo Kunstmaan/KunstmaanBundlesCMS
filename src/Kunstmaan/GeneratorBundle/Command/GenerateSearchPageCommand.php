@@ -24,11 +24,11 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
     {
         $this
             ->setDefinition(
-                array(
+                [
                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the SearchPage in. This option is deprecated when using this bundle with symfony 4.'),
                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
                     new InputOption('createpage', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database with a search page'),
-                )
+                ]
             )
             ->setDescription('Generates a SearchPage based on KunstmaanNodeSearchBundle')
             ->setHelp(<<<'EOT'
@@ -80,14 +80,14 @@ EOT
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $prefix, $rootDir, $createPage, $output);
 
-        $output->writeln(array(
+        $output->writeln([
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', )
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', ]
         );
 
         if ($createPage) {
-            $output->writeln('    New DataFixtures were created. You can load them via: <comment>bin/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $bundle->getNamespace()).'/DataFixtures/ORM/SearchPageGenerator/ --append</comment>');
+            $output->writeln('    New DataFixtures were created. You can load them via: <comment>bin/console doctrine:fixtures:load --fixtures=src/' . str_replace('\\', '/', $bundle->getNamespace()) . '/DataFixtures/ORM/SearchPageGenerator/ --append</comment>');
         }
 
         $output->writeln('');
@@ -108,13 +108,13 @@ EOT
             return;
         }
 
-        $inputAssistant->askForNamespace(array(
+        $inputAssistant->askForNamespace([
             '',
             'This command helps you to generate a SearchPage.',
             'You must specify the namespace of the bundle where you want to generate the SearchPage in.',
             'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
             '',
-        ));
+        ]);
 
         $inputAssistant->askForPrefix();
     }

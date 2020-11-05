@@ -9,15 +9,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NodeSearchAdminType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('boost', TextType::class, array(
+        $builder->add('boost', TextType::class, [
             'label' => 'node_search.form.search.boost.label',
-        ));
+        ]);
     }
 
     /**
@@ -28,15 +24,12 @@ class NodeSearchAdminType extends AbstractType
         return 'node_search';
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Kunstmaan\NodeSearchBundle\Entity\NodeSearch',
-            )
+            ]
         );
     }
 }

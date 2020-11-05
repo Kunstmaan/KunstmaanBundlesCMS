@@ -24,7 +24,7 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface, Slu
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return [];
     }
 
     /**

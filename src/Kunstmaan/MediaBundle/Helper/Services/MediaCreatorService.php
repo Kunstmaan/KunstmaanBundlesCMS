@@ -34,8 +34,6 @@ class MediaCreatorService
 
     /**
      * Constructor
-     *
-     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {

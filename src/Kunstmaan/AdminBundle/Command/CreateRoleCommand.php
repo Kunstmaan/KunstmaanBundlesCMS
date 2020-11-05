@@ -47,9 +47,9 @@ class CreateRoleCommand extends ContainerAwareCommand
     {
         $this->setName('kuma:role:create')
             ->setDescription('Create a role.')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('role', InputArgument::REQUIRED, 'The role'),
-            ))
+            ])
             ->setHelp(<<<'EOT'
 The <info>kuma:role:create</info> command creates a role:
 

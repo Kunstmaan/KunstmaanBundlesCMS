@@ -65,7 +65,6 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
      * @param string $dimension
      * @param int    $value
      * @param string $message
-     * @param array  $parameters
      * @param int    $code
      *
      * @dataProvider dataDimensions

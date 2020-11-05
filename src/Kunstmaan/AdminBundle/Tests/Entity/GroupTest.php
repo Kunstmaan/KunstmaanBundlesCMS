@@ -39,7 +39,7 @@ class GroupTest extends TestCase
         $role = $this->getRole();
         $this->object->addRole($role);
 
-        $this->assertEquals(array('role1'), $this->object->getRoles());
+        $this->assertEquals(['role1'], $this->object->getRoles());
     }
 
     public function testGetRolesCollection()
@@ -103,7 +103,7 @@ class GroupTest extends TestCase
         $role1 = $this->getRole('role1');
         $role2 = $this->getRole('role2');
         $role3 = $this->getRole('role3');
-        $roles = array($role1, $role2, $role3);
+        $roles = [$role1, $role2, $role3];
         $this->object->setRoles($roles);
 
         $this->assertEquals(3, \count($this->object->getRoles()));

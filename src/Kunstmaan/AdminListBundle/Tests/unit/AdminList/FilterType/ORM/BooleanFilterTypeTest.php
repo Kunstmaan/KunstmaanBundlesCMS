@@ -26,13 +26,13 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
 
     public function testBindRequest()
     {
-        $request = new Request(array('filter_value_boolean' => 'true'));
+        $request = new Request(['filter_value_boolean' => 'true']);
 
-        $data = array();
+        $data = [];
         $uniqueId = 'boolean';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(array('value' => 'true'), $data);
+        $this->assertEquals(['value' => 'true'], $data);
     }
 
     /**
@@ -46,7 +46,7 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
         $qb->select('b')
             ->from('Entity', 'b');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('value' => $value), 'boolean');
+        $this->object->apply(['value' => $value], 'boolean');
 
         $this->assertEquals("SELECT b FROM Entity b WHERE b.boolean = $value", $qb->getDQL());
     }
@@ -56,10 +56,10 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
      */
     public static function applyDataProvider()
     {
-        return array(
-            array('true'),
-            array('false'),
-        );
+        return [
+            ['true'],
+            ['false'],
+        ];
     }
 
     public function testGetTemplate()

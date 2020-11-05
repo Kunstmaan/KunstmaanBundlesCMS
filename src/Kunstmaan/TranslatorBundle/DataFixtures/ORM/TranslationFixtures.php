@@ -20,8 +20,6 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -31,11 +29,11 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
         $helloWorld->setKeyword('heading.hello_world');
         $helloWorld->setDomain('messages');
 
-        $translations = array(
+        $translations = [
             'en' => 'Hello World!',
             'fr' => 'Bonjour tout le monde',
             'nl' => 'Hallo wereld!',
-        );
+        ];
 
         $needForFlush = false;
         foreach ($translations as $language => $text) {
@@ -65,7 +63,7 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     public function hasFixtureInstalled($domain, $keyword, $locale)
     {
-        $criteria = array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale);
+        $criteria = ['domain' => $domain, 'keyword' => $keyword, 'locale' => $locale];
 
         return $this->repo->findOneBy($criteria) instanceof Entity;
     }

@@ -84,7 +84,7 @@ class DomainConfigurationTest extends TestCase
     {
         $request = $this->getSingleLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('multilangdomain.tld', 'singlelangdomain.tld'), $object->getHosts());
+        $this->assertEquals(['multilangdomain.tld', 'singlelangdomain.tld'], $object->getHosts());
     }
 
     public function testGetDefaultLocale()
@@ -105,14 +105,14 @@ class DomainConfigurationTest extends TestCase
     {
         $request = $this->getSingleLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array(), $object->getExtraData());
+        $this->assertEquals([], $object->getExtraData());
     }
 
     public function testGetExtraDataWithDataSet()
     {
         $request = $this->getMultiLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('foo' => 'bar'), $object->getExtraData());
+        $this->assertEquals(['foo' => 'bar'], $object->getExtraData());
     }
 
     public function testGetRootNode()
@@ -175,7 +175,7 @@ class DomainConfigurationTest extends TestCase
     {
         $request = $this->getSingleLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('en'), $object->getFrontendLocales());
+        $this->assertEquals(['en'], $object->getFrontendLocales());
     }
 
     public function testGetHostBaseUrl()
@@ -243,35 +243,35 @@ class DomainConfigurationTest extends TestCase
     {
         $request = $this->getMultiLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('nl', 'fr', 'en'), $object->getFrontendLocales());
+        $this->assertEquals(['nl', 'fr', 'en'], $object->getFrontendLocales());
     }
 
     public function testGetFrontendLocalesWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('en'), $object->getFrontendLocales());
+        $this->assertEquals(['en'], $object->getFrontendLocales());
     }
 
     public function testGetBackendLocalesWithSingleLanguage()
     {
         $request = $this->getSingleLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('en_GB'), $object->getBackendLocales());
+        $this->assertEquals(['en_GB'], $object->getBackendLocales());
     }
 
     public function testGetBackendLocalesWithMultiLanguage()
     {
         $request = $this->getMultiLanguageRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('nl_BE', 'fr_BE', 'en_GB'), $object->getBackendLocales());
+        $this->assertEquals(['nl_BE', 'fr_BE', 'en_GB'], $object->getBackendLocales());
     }
 
     public function testGetBackendLocalesWithUnknown()
     {
         $request = $this->getUnknownDomainRequest();
         $object = $this->getDomainConfiguration($request);
-        $this->assertEquals(array('en'), $object->getBackendLocales());
+        $this->assertEquals(['en'], $object->getBackendLocales());
     }
 
     private function getEntityManager()
@@ -353,7 +353,7 @@ class DomainConfigurationTest extends TestCase
 
     private function getDomainConfiguration($request)
     {
-        $hostMap = array(
+        $hostMap = [
             'multilangdomain.tld' => [
                 'id' => 456,
                 'host' => 'multilangdomain.tld',
@@ -377,7 +377,7 @@ class DomainConfigurationTest extends TestCase
                 'root' => 'homepage_single',
                 'aliases' => ['single-alias.tld'],
             ],
-        );
+        ];
 
         $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->method('getMasterRequest')->willReturn($request);

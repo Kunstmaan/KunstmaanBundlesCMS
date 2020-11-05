@@ -20,9 +20,6 @@ class IconFontType extends AbstractType
      */
     private $iconFontManager;
 
-    /**
-     * @param IconFontManager $iconFontManager
-     */
     public function __construct(IconFontManager $iconFontManager)
     {
         $this->iconFontManager = $iconFontManager;
@@ -52,10 +49,10 @@ class IconFontType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'loader' => null,
                 'loader_data' => null,
-            )
+            ]
         );
     }
 

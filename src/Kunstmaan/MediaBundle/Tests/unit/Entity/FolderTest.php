@@ -86,7 +86,7 @@ class FolderTest extends TestCase
         $subSubFolder->setId(3);
         $subSubFolder->setParent($subFolder);
 
-        $parents = array($root, $subFolder);
+        $parents = [$root, $subFolder];
         $this->assertEquals($parents, $subSubFolder->getParents());
     }
 

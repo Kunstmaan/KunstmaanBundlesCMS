@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractSearchPageController extends Controller
 {
-    /**
-     * @param Request $request
-     */
     public function serviceAction(Request $request)
     {
         if ($request->query->has('query')) {

@@ -2,17 +2,17 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\unit;
 
+use Nelmio\Alice\Loader\NativeLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Nelmio\Alice\Loader\NativeLoader;
 
 class WebTestCase extends BaseWebTestCase
 {
     public static function assertRedirect($response, $location)
     {
-        self::assertTrue($response->isRedirect(), 'Response is not a redirect, got status code: '.$response->getStatusCode());
-        self::assertEquals('http://localhost'.$location, $response->headers->get('Location'));
+        self::assertTrue($response->isRedirect(), 'Response is not a redirect, got status code: ' . $response->getStatusCode());
+        self::assertEquals('http://localhost' . $location, $response->headers->get('Location'));
     }
 
     public static function setUpBeforeClass()
@@ -27,7 +27,7 @@ class WebTestCase extends BaseWebTestCase
 
     protected static function deleteTmpDir()
     {
-        if (!file_exists($dir = sys_get_temp_dir().'/'.static::getVarDir())) {
+        if (!file_exists($dir = sys_get_temp_dir() . '/' . static::getVarDir())) {
             return;
         }
 
@@ -37,7 +37,7 @@ class WebTestCase extends BaseWebTestCase
 
     protected static function getKernelClass()
     {
-        require_once __DIR__.'/app/AppKernel.php';
+        require_once __DIR__ . '/app/AppKernel.php';
 
         return 'Kunstmaan\TranslatorBundle\Tests\app\AppKernel';
     }
@@ -54,14 +54,14 @@ class WebTestCase extends BaseWebTestCase
             static::getVarDir(),
             $options['test_case'],
             isset($options['root_config']) ? $options['root_config'] : 'config.yml',
-            isset($options['environment']) ? $options['environment'] : strtolower(static::getVarDir().$options['test_case']),
+            isset($options['environment']) ? $options['environment'] : strtolower(static::getVarDir() . $options['test_case']),
             isset($options['debug']) ? $options['debug'] : true
         );
     }
 
     protected static function getVarDir()
     {
-        return 'FB'.substr(strrchr(\get_called_class(), '\\'), 1);
+        return 'FB' . substr(strrchr(\get_called_class(), '\\'), 1);
     }
 
     protected static function loadFixtures(ContainerInterface $container)
@@ -73,7 +73,7 @@ class WebTestCase extends BaseWebTestCase
         $tool->createSchema($meta);
 
         // insert fixtures
-        $fixtures = __DIR__.'/files/fixtures.yml';
+        $fixtures = __DIR__ . '/files/fixtures.yml';
         $loader = new NativeLoader();
         $objects = $loader->loadFile($fixtures)->getObjects();
         foreach ($objects as $object) {

@@ -26,10 +26,6 @@ class RedirectRouter implements RouterInterface
     /** @var DomainConfigurationInterface */
     private $domainConfiguration;
 
-    /**
-     * @param ObjectRepository             $redirectRepository
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
     public function __construct(ObjectRepository $redirectRepository, DomainConfigurationInterface $domainConfiguration)
     {
         $this->redirectRepository = $redirectRepository;
@@ -65,7 +61,7 @@ class RedirectRouter implements RouterInterface
      *
      * @api
      */
-    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         throw new RouteNotFoundException('You cannot generate a url from a redirect');
     }
@@ -132,8 +128,6 @@ class RedirectRouter implements RouterInterface
     }
 
     /**
-     * @param Redirect $redirect
-     *
      * @return bool
      */
     private function isWildcardRedirect(Redirect $redirect)
@@ -155,8 +149,6 @@ class RedirectRouter implements RouterInterface
     }
 
     /**
-     * @param Redirect $redirect
-     *
      * @return Route
      */
     private function createRoute(Redirect $redirect)
@@ -179,8 +171,6 @@ class RedirectRouter implements RouterInterface
     }
 
     /**
-     * @param Redirect $redirect
-     *
      * @return Route
      */
     private function createWildcardRoute(Redirect $redirect)

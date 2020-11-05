@@ -30,22 +30,17 @@ class PageTemplateTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('render_pagetemplate', [$this, 'renderPageTemplate'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
             new TwigFunction('getpagetemplate', [$this, 'getPageTemplate']),
             new TwigFunction('render_pagetemplate_configuration', [$this, 'renderPageTemplateConfiguration'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
-        );
+        ];
     }
 
     /**
-     * @param Environment              $env
-     * @param array                    $twigContext
-     * @param HasPageTemplateInterface $page
-     * @param array                    $parameters
-     *
      * @return string
      */
-    public function renderPageTemplate(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
+    public function renderPageTemplate(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = [])
     {
         $pageTemplates = $this->templateConfiguration->getPageTemplates($page);
 
@@ -67,14 +62,9 @@ class PageTemplateTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param Environment              $env
-     * @param array                    $twigContext
-     * @param HasPageTemplateInterface $page
-     * @param array                    $parameters
-     *
      * @return string
      */
-    public function renderPageTemplateConfiguration(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
+    public function renderPageTemplateConfiguration(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = [])
     {
         $pageTemplates = $this->templateConfiguration->getPageTemplates($page);
 

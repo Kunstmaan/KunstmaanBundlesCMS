@@ -21,8 +21,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
     private $authorizationChecker;
 
     /**
-     * @param array                         $configuration
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param array $configuration
      */
     public function __construct($configuration, AuthorizationCheckerInterface $authorizationChecker)
     {
@@ -56,7 +55,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
                     $menuItem = new MenuItem($menu);
                     $menuItem
                       ->setRoute('kunstmaanconfigbundle_default')
-                      ->setRouteParams(array('internalName' => $entity->getInternalName()))
+                      ->setRouteParams(['internalName' => $entity->getInternalName()])
                       ->setLabel($entity->getLabel())
                       ->setUniqueId($entity->getInternalName())
                       ->setParent($parent);

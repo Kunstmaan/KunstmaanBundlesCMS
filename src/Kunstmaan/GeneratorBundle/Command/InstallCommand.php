@@ -4,16 +4,16 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Output\OutputInterface;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\HttpKernel\Kernel;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Process\Process;
 
 /**

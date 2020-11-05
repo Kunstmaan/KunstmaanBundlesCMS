@@ -18,7 +18,7 @@ class PermissionDefinitionTest extends TestCase
      */
     protected function setUp()
     {
-        $this->object = new PermissionDefinition(array('VIEW'));
+        $this->object = new PermissionDefinition(['VIEW']);
     }
 
     /**
@@ -26,7 +26,7 @@ class PermissionDefinitionTest extends TestCase
      */
     public function test__constructThrowsExceptionWithInvalidParameters()
     {
-        new PermissionDefinition(array(), null, null);
+        new PermissionDefinition([], null, null);
     }
 
     public function testSetGetAlias()
@@ -43,8 +43,8 @@ class PermissionDefinitionTest extends TestCase
 
     public function testSetGetPermissions()
     {
-        $this->object->setPermissions(array('EDIT', 'VIEW', 'DELETE'));
-        $this->assertEquals(array('EDIT', 'VIEW', 'DELETE'), $this->object->getPermissions());
+        $this->object->setPermissions(['EDIT', 'VIEW', 'DELETE']);
+        $this->assertEquals(['EDIT', 'VIEW', 'DELETE'], $this->object->getPermissions());
     }
 
     /**
@@ -52,6 +52,6 @@ class PermissionDefinitionTest extends TestCase
      */
     public function testSetPermissionsWithInvalidData()
     {
-        $this->object->setPermissions(array());
+        $this->object->setPermissions([]);
     }
 }

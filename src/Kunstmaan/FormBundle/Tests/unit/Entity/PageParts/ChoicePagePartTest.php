@@ -80,7 +80,7 @@ class ChoicePagePartTest extends TestCase
     public function testSetGetChoices()
     {
         $object = $this->object;
-        $choices = array('test1' => 'test1', 'test2' => 'test2');
+        $choices = ['test1' => 'test1', 'test2' => 'test2'];
         $object->setChoices($choices);
         $this->assertEquals($choices, $object->getChoices());
     }

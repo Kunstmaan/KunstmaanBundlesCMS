@@ -15,7 +15,6 @@ class OAuthUserFinder implements OAuthUserFinderInterface
     /**
      * OAuthUserCreator constructor.
      *
-     * @param EntityManagerInterface $em
      * @param $userClass
      */
     public function __construct(EntityManagerInterface $em, $userClass)
@@ -31,17 +30,17 @@ class OAuthUserFinder implements OAuthUserFinderInterface
     {
         //Check if already logged in before via Google auth
         $user = $this->em->getRepository($this->userClass)
-            ->findOneBy(array('googleId' => $googleId));
+            ->findOneBy(['googleId' => $googleId]);
 
         if (!$user instanceof $this->userClass) {
             //Check if Email was already present in database but not logged in via Google auth
             $user = $this->em->getRepository($this->userClass)
-                ->findOneBy(array('email' => $email));
+                ->findOneBy(['email' => $email]);
 
             if (!$user instanceof $this->userClass) {
                 //Last chance try looking for email address in username field
                 $user = $this->em->getRepository($this->userClass)
-                    ->findOneBy(array('username' => $email));
+                    ->findOneBy(['username' => $email]);
             }
         }
 

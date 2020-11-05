@@ -68,7 +68,7 @@ class AclNativeHelper
 
         $aclConnection = $this->em->getConnection();
 
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
         $rootEntity = $permissionDef->getEntity();
         $linkAlias = $permissionDef->getAlias();
         // Only tables with a single ID PK are currently supported
@@ -86,7 +86,7 @@ class AclNativeHelper
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
-        $userRoles = array();
+        $userRoles = [];
         $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
@@ -99,7 +99,7 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user

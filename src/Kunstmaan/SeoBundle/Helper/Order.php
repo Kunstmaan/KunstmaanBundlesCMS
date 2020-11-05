@@ -106,7 +106,7 @@ class Order
     /**
      * @var array(of OrderItem) An array of OrderItem objects
      */
-    public $orderItems = array();
+    public $orderItems = [];
 
     /**
      * @var string city the order was shipped to

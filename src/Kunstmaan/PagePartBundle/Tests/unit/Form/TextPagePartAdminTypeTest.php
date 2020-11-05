@@ -27,7 +27,7 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder->expects($this->once())->method('add');
 
-        $this->object->buildForm($builder, array());
+        $this->object->buildForm($builder, []);
     }
 
     public function testConfigureOptions()

@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Helper\NodeAdmin;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -20,7 +21,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
-use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 
 class NodeAdminPublisher
 {
@@ -73,8 +73,7 @@ class NodeAdminPublisher
     /**
      * If there is a draft version it'll try to publish the draft first. Makse snese because if you want to publish the public version you don't publish but you save.
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param BaseUser|null   $user
+     * @param BaseUser|null $user
      *
      *  @throws AccessDeniedException
      */
@@ -150,8 +149,6 @@ class NodeAdminPublisher
     }
 
     /**
-     * @param NodeTranslation $nodeTranslation
-     *
      * @throws AccessDeniedException
      */
     public function unPublish(NodeTranslation $nodeTranslation)
@@ -207,14 +204,11 @@ class NodeAdminPublisher
         $this->em->flush();
     }
 
-    /**
-     * @param NodeTranslation $nodeTranslation
-     */
     public function unSchedulePublish(NodeTranslation $nodeTranslation)
     {
         /* @var Node $node */
         $queuedNodeTranslationAction = $this->em->getRepository(QueuedNodeTranslationAction::class)
-            ->findOneBy(array('nodeTranslation' => $nodeTranslation));
+            ->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
         if (!\is_null($queuedNodeTranslationAction)) {
             $this->em->remove($queuedNodeTranslationAction);
@@ -268,10 +262,6 @@ class NodeAdminPublisher
         return $newNodeVersion;
     }
 
-    /**
-     * @param Request         $request
-     * @param NodeTranslation $nodeTranslation
-     */
     public function chooseHowToPublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
     {
         /** @var Session $session */
@@ -295,10 +285,6 @@ class NodeAdminPublisher
         }
     }
 
-    /**
-     * @param Request         $request
-     * @param NodeTranslation $nodeTranslation
-     */
     public function chooseHowToUnpublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
     {
         /** @var Session $session */

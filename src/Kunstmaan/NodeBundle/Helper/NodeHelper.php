@@ -41,12 +41,6 @@ class NodeHelper
 
     /**
      * NodeHelper constructor.
-     *
-     * @param EntityManagerInterface   $em
-     * @param NodeAdminPublisher       $nodeAdminPublisher
-     * @param TokenStorageInterface    $tokenStorage
-     * @param CloneHelper              $cloneHelper
-     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -111,10 +105,8 @@ class NodeHelper
     }
 
     /**
-     * @param NodeVersion     $nodeVersion
-     * @param NodeTranslation $nodeTranslation
-     * @param int             $nodeVersionTimeout
-     * @param bool            $nodeVersionIsLocked
+     * @param int  $nodeVersionTimeout
+     * @param bool $nodeVersionIsLocked
      */
     public function prepareNodeVersion(NodeVersion $nodeVersion, NodeTranslation $nodeTranslation, $nodeVersionTimeout, $nodeVersionIsLocked)
     {
@@ -143,12 +135,8 @@ class NodeHelper
     }
 
     /**
-     * @param Node             $node
-     * @param NodeTranslation  $nodeTranslation
-     * @param NodeVersion      $nodeVersion
-     * @param HasNodeInterface $page
-     * @param bool             $isStructureNode
-     * @param TabPane          $tabPane
+     * @param bool    $isStructureNode
+     * @param TabPane $tabPane
      *
      * @return NodeTranslation
      */
@@ -191,10 +179,9 @@ class NodeHelper
     }
 
     /**
-     * @param string    $refEntityType
-     * @param string    $pageTitle
-     * @param string    $locale
-     * @param Node|null $parentNode
+     * @param string $refEntityType
+     * @param string $pageTitle
+     * @param string $locale
      *
      * @return NodeTranslation
      */
@@ -245,7 +232,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      *
      * @return NodeTranslation
@@ -276,7 +262,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      *
      * @return HasNodeInterface
@@ -290,7 +275,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $sourceLocale
      * @param string $locale
      *
@@ -327,7 +311,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      * @param string $title
      *
@@ -364,7 +347,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param int    $sourceNodeTranslationId
      * @param string $locale
      *
@@ -401,7 +383,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      *
      * @return NodeTranslation
@@ -444,7 +425,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      */
     protected function deleteNodeChildren(Node $node, $locale)

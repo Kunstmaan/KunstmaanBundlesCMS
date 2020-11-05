@@ -15,9 +15,6 @@ class TagsListener
      */
     protected $tagManager;
 
-    /**
-     * @param TagManager $tagManager
-     */
     public function __construct(TagManager $tagManager)
     {
         $this->tagManager = $tagManager;
@@ -31,9 +28,6 @@ class TagsListener
         return $this->tagManager;
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -45,8 +39,6 @@ class TagsListener
 
     /**
      * Runs the postPersist doctrine event and updates the current flag if needed
-     *
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
     public function postPersist(LifecycleEventArgs $args)
     {
@@ -59,17 +51,12 @@ class TagsListener
 
     /**
      * Runs the postUpdate doctrine event and updates the current flag if needed
-     *
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
     public function postUpdate(LifecycleEventArgs $args)
     {
         $this->postPersist($args);
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postNodePersist(NodeEvent $event)
     {
         $page = $event->getPage();

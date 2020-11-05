@@ -28,12 +28,6 @@ class SettingsMenuAdaptorTest extends TestCase
 
     /**
      * @dataProvider provider
-     *
-     * @param TopMenuItem|null $parent
-     * @param string           $requestRoute
-     * @param int              $expectedCount
-     * @param string|null      $expectedLabel
-     * @param bool             $granted
      */
     public function testAdaptChildren(?TopMenuItem $parent, string $requestRoute, int $expectedCount, ?string $expectedLabel, bool $granted)
     {

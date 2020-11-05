@@ -62,9 +62,6 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
      */
     abstract public function createAdminListConfigurator();
 
-    /**
-     * @param Request $request
-     */
     protected function initAdminListConfigurator(Request $request)
     {
         $this->em = $this->getEntityManager();

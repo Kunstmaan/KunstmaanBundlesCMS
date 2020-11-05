@@ -15,9 +15,6 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
      */
     protected $authorizationChecker;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;

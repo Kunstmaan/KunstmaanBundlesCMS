@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class MenuBuilderTest extends TestCase
 {
     /**
-     * @param array|null $methods
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|MenuBuilder
      */
     public function setUpMenuBuilderMock(?array $methods)

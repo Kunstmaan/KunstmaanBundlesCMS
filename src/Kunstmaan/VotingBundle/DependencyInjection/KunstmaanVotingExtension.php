@@ -24,7 +24,7 @@ class KunstmaanVotingExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         foreach ($config['actions'] as $key => $value) {
@@ -32,17 +32,17 @@ class KunstmaanVotingExtension extends Extension
                 $definition = new Definition('Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener');
                 $definition->addArgument(new Reference('kunstmaan_voting.services.repository_resolver'));
                 $definition->addArgument($value['max_number_by_ip']);
-                $definition->addTag('kernel.event_listener', array(
+                $definition->addTag('kernel.event_listener', [
                     'event' => 'kunstmaan_voting.' . lcfirst(ContainerBuilder::camelize($key)),
                     'method' => 'onVote',
                     'priority' => 100,
-                ));
+                ]);
 
                 $container->setDefinition('kunstmaan_voting.security.' . $key . '.max_number_by_ip_event_listener', $definition);
             }
         }
 
-        $possibleActions = array('up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share');
+        $possibleActions = ['up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share'];
 
         $votingDefaultValue = $config['voting_default_value'];
 

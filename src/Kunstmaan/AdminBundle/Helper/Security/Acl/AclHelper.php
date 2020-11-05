@@ -66,8 +66,6 @@ class AclHelper
     /**
      * Clone specified query with parameters.
      *
-     * @param Query $query
-     *
      * @return Query
      */
     protected function cloneQuery(Query $query)
@@ -140,20 +138,18 @@ class AclHelper
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0
      *
-     * @param Query $query
-     *
      * @return string
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
         $aclConnection = $this->em->getConnection();
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
         $mask = $query->getHint('acl.mask');
         $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
-        $userRoles = array();
+        $userRoles = [];
         $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
@@ -166,7 +162,7 @@ class AclHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
@@ -212,8 +208,6 @@ SELECTQUERY;
 
     /**
      * Returns valid IDs for a specific entity with ACL restrictions for current user applied
-     *
-     * @param PermissionDefinition $permissionDef
      *
      * @throws InvalidArgumentException
      *

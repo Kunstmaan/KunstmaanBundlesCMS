@@ -41,12 +41,6 @@ class NodeTwigExtension extends AbstractExtension
      */
     private $requestStack;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface                       $em
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
-     * @param \Kunstmaan\NodeBundle\Helper\NodeMenu                      $nodeMenu
-     * @param \Symfony\Component\HttpFoundation\RequestStack             $requestStack
-     */
     public function __construct(
         EntityManagerInterface $em,
         UrlGeneratorInterface $generator,
@@ -66,51 +60,51 @@ class NodeTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
-                'get_node_for', array($this, 'getNodeFor')
+                'get_node_for', [$this, 'getNodeFor']
             ),
             new TwigFunction(
                 'get_node_translation_for',
-                array($this, 'getNodeTranslationFor')
+                [$this, 'getNodeTranslationFor']
             ),
             new TwigFunction(
                 'get_node_by_internal_name',
-                array($this, 'getNodeByInternalName')
+                [$this, 'getNodeByInternalName']
             ),
             new TwigFunction(
                 'get_url_by_internal_name',
-                array($this, 'getUrlByInternalName')
+                [$this, 'getUrlByInternalName']
             ),
             new TwigFunction(
                 'get_path_by_internal_name',
-                array($this, 'getPathByInternalName')
+                [$this, 'getPathByInternalName']
             ),
             new TwigFunction(
                 'get_page_by_node_translation',
-                array($this, 'getPageByNodeTranslation')
+                [$this, 'getPageByNodeTranslation']
             ),
             new TwigFunction(
                 'get_node_menu',
-                array($this, 'getNodeMenu')
+                [$this, 'getNodeMenu']
             ),
             new TwigFunction(
                 'is_structure_node',
-                array($this, 'isStructureNode')
+                [$this, 'isStructureNode']
             ),
             new TwigFunction(
                 'file_exists',
-                array($this, 'fileExists')
+                [$this, 'fileExists']
             ),
             new TwigFunction(
                 'get_node_trans_by_node_id',
-                array($this, 'getNodeTranslationByNodeId')
+                [$this, 'getNodeTranslationByNodeId']
             ),
             new TwigFunction(
                 'getOverviewRoute',
-                array($this, 'getOverviewRoute')
+                [$this, 'getOverviewRoute']
             ),
-        );
+        ];
     }
 
     /**
@@ -129,8 +123,6 @@ class NodeTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param NodeTranslation $nodeTranslation
-     *
      * @return object|null
      */
     public function getPageByNodeTranslation(NodeTranslation $nodeTranslation)
@@ -139,8 +131,6 @@ class NodeTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param PageInterface $page
-     *
      * @return Node
      */
     public function getNodeFor(PageInterface $page)
@@ -149,8 +139,6 @@ class NodeTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param PageInterface $page
-     *
      * @return NodeTranslation
      */
     public function getNodeTranslationFor(PageInterface $page)
@@ -183,7 +171,7 @@ class NodeTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getPathByInternalName($internalName, $locale, $parameters = array(), $relative = false)
+    public function getPathByInternalName($internalName, $locale, $parameters = [], $relative = false)
     {
         $routeParameters = $this->getRouteParametersByInternalName($internalName, $locale, $parameters);
 
@@ -202,7 +190,7 @@ class NodeTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getUrlByInternalName($internalName, $locale, $parameters = array(), $schemeRelative = false)
+    public function getUrlByInternalName($internalName, $locale, $parameters = [], $schemeRelative = false)
     {
         $routeParameters = $this->getRouteParametersByInternalName($internalName, $locale, $parameters);
 
@@ -249,7 +237,7 @@ class NodeTwigExtension extends AbstractExtension
      *
      * @return array
      */
-    private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
+    private function getRouteParametersByInternalName($internalName, $locale, $parameters = [])
     {
         $url = '';
         $translation = $this->em->getRepository(NodeTranslation::class)
@@ -260,10 +248,10 @@ class NodeTwigExtension extends AbstractExtension
         }
 
         return array_merge(
-            array(
+            [
                 'url' => $url,
                 '_locale' => $locale,
-            ),
+            ],
             $parameters
         );
     }

@@ -56,7 +56,7 @@ class UserTest extends TestCase
         /* @var $group2 GroupInterface */
         $this->object->addGroup($group2);
 
-        $this->assertEquals(array(1, 2), $this->object->getGroupIds());
+        $this->assertEquals([1, 2], $this->object->getGroupIds());
     }
 
     public function testGetGroups()

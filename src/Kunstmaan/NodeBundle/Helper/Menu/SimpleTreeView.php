@@ -10,7 +10,7 @@ class SimpleTreeView
     /**
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Add an item to the tree array

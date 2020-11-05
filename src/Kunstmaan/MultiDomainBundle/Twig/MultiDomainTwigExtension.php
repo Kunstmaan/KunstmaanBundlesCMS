@@ -28,12 +28,12 @@ class MultiDomainTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('get_multi_domain_hosts', array($this, 'getMultiDomainHosts')),
-            new TwigFunction('get_current_host', array($this, 'getCurrentHost')),
-            new TwigFunction('get_extra_data', array($this, 'getExtraData')),
-            new TwigFunction('get_current_full_host', array($this, 'getCurrentFullHost')),
-        );
+        return [
+            new TwigFunction('get_multi_domain_hosts', [$this, 'getMultiDomainHosts']),
+            new TwigFunction('get_current_host', [$this, 'getCurrentHost']),
+            new TwigFunction('get_extra_data', [$this, 'getExtraData']),
+            new TwigFunction('get_current_full_host', [$this, 'getCurrentFullHost']),
+        ];
     }
 
     /**

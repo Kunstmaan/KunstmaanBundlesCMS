@@ -34,9 +34,9 @@ class AbstractArticleOverviewPageAdminType extends PageAdminType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage',
-        ));
+        ]);
     }
 
     /**

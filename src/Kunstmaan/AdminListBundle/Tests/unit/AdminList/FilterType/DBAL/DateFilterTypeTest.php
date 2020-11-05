@@ -24,13 +24,13 @@ class DateFilterTypeTest extends BaseDbalFilterTest
 
     public function testBindRequest()
     {
-        $request = new Request(array('filter_comparator_date' => 'before', 'filter_value_date' => '01/01/2012'));
+        $request = new Request(['filter_comparator_date' => 'before', 'filter_value_date' => '01/01/2012']);
 
-        $data = array();
+        $data = [];
         $uniqueId = 'date';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(array('comparator' => 'before', 'value' => '01/01/2012'), $data);
+        $this->assertEquals(['comparator' => 'before', 'value' => '01/01/2012'], $data);
     }
 
     /**
@@ -47,7 +47,7 @@ class DateFilterTypeTest extends BaseDbalFilterTest
         $qb->select('*')
             ->from('entity', 'e');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('comparator' => $comparator, 'value' => $value), 'date');
+        $this->object->apply(['comparator' => $comparator, 'value' => $value], 'date');
 
         $this->assertEquals("SELECT * FROM entity e WHERE e.date $whereClause", $qb->getSQL());
         $this->assertEquals($testValue, $qb->getParameter('var_date'));
@@ -58,10 +58,10 @@ class DateFilterTypeTest extends BaseDbalFilterTest
      */
     public static function applyDataProvider()
     {
-        return array(
-            array('before', '<= :var_date', '20/12/2012', '2012-12-20'),
-            array('after', '> :var_date', '21/12/2012', '2012-12-21'),
-        );
+        return [
+            ['before', '<= :var_date', '20/12/2012', '2012-12-20'],
+            ['after', '> :var_date', '21/12/2012', '2012-12-21'],
+        ];
     }
 
     public function testGetTemplate()

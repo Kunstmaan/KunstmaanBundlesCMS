@@ -30,7 +30,7 @@ class KunstmaanUtilitiesExtension extends Extension
             $container->setParameter('kunstmaan_utilities.cipher.secret', $config['cipher']['secret']);
         }
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('commands.yml');
         $loader->load('services.yml');
     }

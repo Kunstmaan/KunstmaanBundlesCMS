@@ -105,9 +105,6 @@ class BaseMenu extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @param MenuItem $item
-     */
     public function addItem(MenuItem $item)
     {
         $item->setMenu($this);
@@ -115,9 +112,6 @@ class BaseMenu extends AbstractEntity
         $this->items->add($item);
     }
 
-    /**
-     * @param MenuItem $item
-     */
     public function removeItem(MenuItem $item)
     {
         $this->items->removeElement($item);

@@ -77,7 +77,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="array")
      */
-    protected $metadata = array();
+    protected $metadata = [];
 
     /**
      * @var \DateTime
@@ -442,8 +442,6 @@ class Media extends AbstractEntity
 
     /**
      * Set folder
-     *
-     * @param Folder $folder
      *
      * @return Media
      */

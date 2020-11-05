@@ -22,8 +22,7 @@ class SlugEvent extends Event
     protected $renderContext;
 
     /**
-     * @param Response      $response
-     * @param RenderContext $renderContext
+     * @param Response $response
      */
     public function __construct(Response $response = null, RenderContext $renderContext)
     {
@@ -39,9 +38,6 @@ class SlugEvent extends Event
         return $this->response;
     }
 
-    /**
-     * @param Response $response
-     */
     public function setResponse(Response $response)
     {
         $this->response = $response;
@@ -55,9 +51,6 @@ class SlugEvent extends Event
         return $this->renderContext;
     }
 
-    /**
-     * @param RenderContext $renderContext
-     */
     public function setRenderContext(RenderContext $renderContext)
     {
         $this->renderContext = $renderContext;

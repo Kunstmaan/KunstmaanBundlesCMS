@@ -39,8 +39,6 @@ abstract class AbstractAnalyticsCommandHelper
     /**
      * Constructor
      *
-     * @param AnalyticsOverview $overview
-     *
      * @return array
      */
     protected function getTimestamps(AnalyticsOverview $overview)
@@ -57,7 +55,7 @@ abstract class AbstractAnalyticsCommandHelper
         // set the end time
         $end = date('Y-m-d', strtotime('-' . $overview->getStartOffset() . ' days'));
 
-        return array('begin' => $begin, 'end' => $end);
+        return ['begin' => $begin, 'end' => $end];
     }
 
     /**
@@ -67,7 +65,7 @@ abstract class AbstractAnalyticsCommandHelper
      */
     protected function getExtra(AnalyticsOverview $overview)
     {
-        $extra = array();
+        $extra = [];
 
         // add segment
         if ($overview->getSegment()) {

@@ -41,25 +41,16 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     protected $useMatchQueryForTitle = false;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function setTokenStorage(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
     {
         $this->domainConfiguration = $domainConfiguration;
     }
 
-    /**
-     * @param EntityManager $em
-     */
     public function setEntityManager(EntityManager $em)
     {
         $this->em = $em;
@@ -129,16 +120,16 @@ class NodeSearcher extends AbstractElasticaSearcher
         $this->query->setQuery($elasticaQueryBool);
         $this->query->setRescore($rescore);
         $this->query->setHighlight(
-            array(
-                'pre_tags' => array('<strong>'),
-                'post_tags' => array('</strong>'),
-                'fields' => array(
-                    'content' => array(
+            [
+                'pre_tags' => ['<strong>'],
+                'post_tags' => ['</strong>'],
+                'fields' => [
+                    'content' => [
                         'fragment_size' => 150,
                         'number_of_fragments' => 3,
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         );
     }
 
@@ -161,7 +152,7 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     protected function getCurrentUserRoles()
     {
-        $roles = array();
+        $roles = [];
         if (!\is_null($this->tokenStorage)) {
             $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof BaseUser) {
