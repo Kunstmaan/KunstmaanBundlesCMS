@@ -115,12 +115,12 @@ class AclNativeHelperTest extends TestCase
         $queryBuilder = new QueryBuilder($this->conn);
         $queryBuilder->add(
             'from',
-            array(
-                array(
+            [
+                [
                     'table' => 'myTable',
                     'alias' => 'n',
-                ),
-            )
+                ],
+            ]
         );
 
         [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData();
@@ -145,7 +145,7 @@ class AclNativeHelperTest extends TestCase
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
         /* @var $qb QueryBuilder */
         $qb = $this->object->apply($queryBuilder, $permissionDef);
@@ -162,12 +162,12 @@ class AclNativeHelperTest extends TestCase
         $queryBuilder = new QueryBuilder($this->conn);
         $queryBuilder->add(
             'from',
-            array(
-                array(
+            [
+                [
                     'table' => 'myTable',
                     'alias' => 'n',
-                ),
-            )
+                ],
+            ]
         );
 
         [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData(true);
@@ -185,7 +185,7 @@ class AclNativeHelperTest extends TestCase
             ->method('getUser')
             ->will($this->returnValue('anon.'));
 
-        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
         /* @var $qb QueryBuilder */
         $qb = $this->object->apply($queryBuilder, $permissionDef);

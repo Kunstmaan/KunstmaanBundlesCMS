@@ -31,11 +31,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->setAddTemplate('@KunstmaanLeadGeneration/AdminList/rules-edit.html.twig');
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param array        $params
-     */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = [])
     {
         $queryBuilder->where('b.popup = :id');
         $queryBuilder->setParameter('id', $this->getPopupId());
@@ -49,10 +45,10 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getIndexUrl()
     {
-        return array(
+        return [
             'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail',
-            'params' => array('popup' => $this->getPopupId()),
-        );
+            'params' => ['popup' => $this->getPopupId()],
+        ];
     }
 
     /**
@@ -64,13 +60,13 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getEditUrlFor($item)
     {
-        $params = array('id' => $item->getId(), 'popup' => $this->getPopupId());
+        $params = ['id' => $item->getId(), 'popup' => $this->getPopupId()];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit',
             'params' => $params,
-        );
+        ];
     }
 
     /**
@@ -82,13 +78,13 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getDeleteUrlFor($item)
     {
-        $params = array('id' => $item->getId(), 'popup' => $this->getPopupId());
+        $params = ['id' => $item->getId(), 'popup' => $this->getPopupId()];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete',
             'params' => $params,
-        );
+        ];
     }
 
     /**

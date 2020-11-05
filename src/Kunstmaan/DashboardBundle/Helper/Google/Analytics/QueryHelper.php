@@ -31,7 +31,7 @@ class QueryHelper
      *
      * @return \Google_GaData result    A data object containing the queried data
      */
-    public function getResults($timespan, $startOffset, $metrics, $extra = array())
+    public function getResults($timespan, $startOffset, $metrics, $extra = [])
     {
         $profileId = $this->configHelper->getProfileId();
 
@@ -54,7 +54,7 @@ class QueryHelper
      *
      * @return \Google_GaData result    A data object containing the queried data
      */
-    public function getResultsByDate($from, $to, $metrics, $extra = array())
+    public function getResultsByDate($from, $to, $metrics, $extra = [])
     {
         $profileId = $this->configHelper->getProfileId();
 

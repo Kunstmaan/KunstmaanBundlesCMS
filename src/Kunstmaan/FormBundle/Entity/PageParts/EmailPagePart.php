@@ -132,12 +132,12 @@ class EmailPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $efsf = new EmailFormSubmissionField();
-        $efsf->setFieldName('field_'.$this->getUniqueId());
+        $efsf->setFieldName('field_' . $this->getUniqueId());
         $efsf->setLabel($this->getLabel());
         $efsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_'.$this->getUniqueId()] = $efsf;
+        $data['formwidget_' . $this->getUniqueId()] = $efsf;
 
         $constraints = [];
         if ($this->getRequired()) {
@@ -154,7 +154,7 @@ class EmailPagePart extends AbstractFormPagePart
         $constraints[] = new Email($options);
 
         $formBuilder->add(
-            'formwidget_'.$this->getUniqueId(),
+            'formwidget_' . $this->getUniqueId(),
             EmailFormSubmissionType::class,
             [
                 'label' => $this->getLabel(),

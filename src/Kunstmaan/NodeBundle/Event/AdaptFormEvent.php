@@ -46,7 +46,6 @@ class AdaptFormEvent extends Event
     private $request;
 
     /**
-     * @param Request          $request
      * @param TabPane          $tabPane         The tab pane
      * @param HasNodeInterface $page            The page
      * @param Node             $node            The node

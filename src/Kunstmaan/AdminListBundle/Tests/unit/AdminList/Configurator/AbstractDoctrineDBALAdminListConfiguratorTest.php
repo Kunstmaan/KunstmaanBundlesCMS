@@ -37,7 +37,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_'.AbstractDoctrineDBALadminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineDBALadminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
         $this->assertContains(888, $editUrl['params']);
     }
 
@@ -49,7 +49,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_'.AbstractDoctrineDBALAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineDBALAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
         $this->assertContains(888, $editUrl['params']);
     }
 

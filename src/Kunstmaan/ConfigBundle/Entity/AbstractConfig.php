@@ -11,6 +11,6 @@ abstract class AbstractConfig extends AbstractEntity implements ConfigurationInt
 {
     public function getRoles()
     {
-        return array('ROLE_SUPER_ADMIN');
+        return ['ROLE_SUPER_ADMIN'];
     }
 }

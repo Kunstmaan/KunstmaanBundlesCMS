@@ -46,7 +46,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsWithAllParameters
@@ -59,7 +58,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsToShort
@@ -73,7 +71,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsToLong
@@ -87,7 +84,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsMinimumDigits
@@ -101,7 +97,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsMinimumUppercase
@@ -115,7 +110,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsMinimumSpecialCharacters
@@ -129,7 +123,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      *
      * @dataProvider dataPasswordsLengthRange
@@ -145,7 +138,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string      $password
      * @param string|null $message
-     * @param array       $parameters
      * @param null        $code
      */
     private function buildAndTestPasswordRestrictions($password, $message = null, array $parameters = [], $code = null)

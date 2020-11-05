@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * The default controller is used to render the main screen the users see when they log in to the admin
@@ -35,9 +35,9 @@ class DefaultController extends Controller
         $dashboardConfiguration = $this->getDoctrine()
             ->getManager()
             ->getRepository(DashboardConfiguration::class)
-            ->findOneBy(array());
+            ->findOneBy([]);
 
-        return array('dashboardConfiguration' => $dashboardConfiguration);
+        return ['dashboardConfiguration' => $dashboardConfiguration];
     }
 
     /**
@@ -45,8 +45,6 @@ class DefaultController extends Controller
      *
      * @Route("/adminindex", name="KunstmaanAdminBundle_homepage_admin")
      * @Template("@KunstmaanAdmin/Default/editIndex.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -58,7 +56,7 @@ class DefaultController extends Controller
         /* @var DashboardConfiguration $dashboardConfiguration */
         $dashboardConfiguration = $em
             ->getRepository(DashboardConfiguration::class)
-            ->findOneBy(array());
+            ->findOneBy([]);
 
         if (\is_null($dashboardConfiguration)) {
             $dashboardConfiguration = new DashboardConfiguration();
@@ -80,9 +78,9 @@ class DefaultController extends Controller
             }
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'dashboardConfiguration' => $dashboardConfiguration,
-        );
+        ];
     }
 }

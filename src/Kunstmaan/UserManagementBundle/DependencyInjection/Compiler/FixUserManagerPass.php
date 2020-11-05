@@ -7,9 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FixUserManagerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         // Mark the fos user manager and related aliases specifically as public.

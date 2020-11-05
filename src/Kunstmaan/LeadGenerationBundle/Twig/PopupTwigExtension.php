@@ -37,10 +37,7 @@ class PopupTwigExtension extends AbstractExtension
     private $debug;
 
     /**
-     * @param PopupManager       $popupManager
-     * @param ContainerInterface $container
-     * @param array              $popupTypes
-     * @param bool               $debug
+     * @param bool $debug
      */
     public function __construct(PopupManager $popupManager, ContainerInterface $container, array $popupTypes, $debug)
     {
@@ -57,14 +54,14 @@ class PopupTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('lead_generation_render_js_includes', array($this, 'renderJsIncludes'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new TwigFunction('lead_generation_render_popups_html', array($this, 'renderPopupsHtml'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new TwigFunction('lead_generation_render_initialize_js', array($this, 'renderInitializeJs'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new TwigFunction('lead_generation_get_rule_properties', array($this, 'getRuleProperties')),
-            new TwigFunction('get_available_popup_types', array($this, 'getAvailablePopupTypes')),
-            new TwigFunction('get_available_rule_types', array($this, 'getAvailableRuleTypes')),
-        );
+        return [
+            new TwigFunction('lead_generation_render_js_includes', [$this, 'renderJsIncludes'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('lead_generation_render_popups_html', [$this, 'renderPopupsHtml'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('lead_generation_render_initialize_js', [$this, 'renderInitializeJs'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('lead_generation_get_rule_properties', [$this, 'getRuleProperties']),
+            new TwigFunction('get_available_popup_types', [$this, 'getAvailablePopupTypes']),
+            new TwigFunction('get_available_rule_types', [$this, 'getAvailableRuleTypes']),
+        ];
     }
 
     /**
@@ -74,7 +71,7 @@ class PopupTwigExtension extends AbstractExtension
     {
         $files = $this->popupManager->getUniqueJsIncludes();
 
-        return $environment->render('@KunstmaanLeadGeneration/js-includes.html.twig', array('files' => $files));
+        return $environment->render('@KunstmaanLeadGeneration/js-includes.html.twig', ['files' => $files]);
     }
 
     /**
@@ -84,7 +81,7 @@ class PopupTwigExtension extends AbstractExtension
     {
         $popups = $this->popupManager->getPopups();
 
-        return $environment->render('@KunstmaanLeadGeneration/popups-html.html.twig', array('popups' => $popups));
+        return $environment->render('@KunstmaanLeadGeneration/popups-html.html.twig', ['popups' => $popups]);
     }
 
     /**
@@ -94,17 +91,15 @@ class PopupTwigExtension extends AbstractExtension
     {
         $popups = $this->popupManager->getPopups();
 
-        return $environment->render('@KunstmaanLeadGeneration/initialize-js.html.twig', array('popups' => $popups, 'debug' => $this->debug));
+        return $environment->render('@KunstmaanLeadGeneration/initialize-js.html.twig', ['popups' => $popups, 'debug' => $this->debug]);
     }
 
     /**
-     * @param AbstractRule $rule
-     *
      * @return array
      */
     public function getRuleProperties(AbstractRule $rule)
     {
-        $properties = array();
+        $properties = [];
         if (!\is_null($rule->getService())) {
             $service = $this->container->get($rule->getService());
             if ($service instanceof RuleServiceInterface) {
@@ -122,7 +117,7 @@ class PopupTwigExtension extends AbstractExtension
      */
     public function getAvailablePopupTypes()
     {
-        $popups = array();
+        $popups = [];
         foreach ($this->popupTypes as $popupType) {
             $object = new $popupType();
             $popups[$object->getClassname()] = $object->getFullClassname();
@@ -134,15 +129,13 @@ class PopupTwigExtension extends AbstractExtension
     /**
      * Get the available popup types for a specific popup.
      *
-     * @param AbstractPopup $popup
-     *
      * @return array
      */
     public function getAvailableRuleTypes(AbstractPopup $popup)
     {
         $rulesTypes = $this->popupManager->getAvailableRules($popup);
 
-        $rules = array();
+        $rules = [];
         foreach ($rulesTypes as $ruleType) {
             $object = new $ruleType();
             $rules[$object->getClassname()] = $object->getFullClassname();

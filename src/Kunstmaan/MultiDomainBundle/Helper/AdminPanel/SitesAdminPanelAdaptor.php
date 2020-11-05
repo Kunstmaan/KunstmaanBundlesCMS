@@ -13,17 +13,17 @@ class SitesAdminPanelAdaptor implements AdminPanelAdaptorInterface
      */
     public function getAdminPanelActions()
     {
-        return array(
+        return [
             $this->getSiteSwitcherAction(),
-        );
+        ];
     }
 
     private function getSiteSwitcherAction()
     {
         return new AdminPanelAction(
-            array(
+            [
                 'path' => 'KunstmaanMultiDomainBundle_switch_site',
-            ),
+            ],
             '',
             '',
             '@KunstmaanMultiDomain/AdminPanel/_site_switch_action.html.twig'

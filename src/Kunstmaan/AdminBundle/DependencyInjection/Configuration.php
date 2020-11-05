@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('dashboard_route')->end()
                 ->scalarNode('admin_prefix')->defaultValue('admin')->end()
                 ->arrayNode('admin_locales')
-                    ->defaultValue(array('en'))
+                    ->defaultValue(['en'])
                     ->prototype('scalar')->end()
                 ->end()
                 ->arrayNode('session_security')

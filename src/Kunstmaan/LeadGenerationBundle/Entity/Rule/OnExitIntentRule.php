@@ -106,11 +106,11 @@ class OnExitIntentRule extends AbstractRule
      */
     public function getJsProperties()
     {
-        return array(
+        return [
             'sensitivity' => $this->getSensitivity(),
             'timer' => $this->getTimer(),
             'delay' => $this->getDelay(),
-        );
+        ];
     }
 
     /**

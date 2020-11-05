@@ -49,7 +49,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
     {
         $object = $this->object;
         $this->assertTrue($object->isNull());
-        $object->setValue(array('test' => 'test'));
+        $object->setValue(['test' => 'test']);
         $this->assertFalse($object->isNull());
         $object->setValue('blah');
         $this->assertFalse($object->isNull());
@@ -58,7 +58,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
     public function testSetGetValue()
     {
         $object = $this->object;
-        $value = array('test' => 'test');
+        $value = ['test' => 'test'];
         $object->setValue($value);
         $this->assertEquals($value, $object->getValue());
     }
@@ -82,7 +82,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
     public function testSetGetChoices()
     {
         $object = $this->object;
-        $choices = array('test1' => 'test1', 'test2' => 'test2');
+        $choices = ['test1' => 'test1', 'test2' => 'test2'];
         $object->setChoices($choices);
         $this->assertEquals($choices, $object->getChoices());
     }

@@ -52,7 +52,7 @@ class RedirectAdminListConfiguratorTest extends TestCase
             },
             $fields
         );
-        $this->assertEquals(array('origin', 'target', 'permanent', 'note'), $fieldNames);
+        $this->assertEquals(['origin', 'target', 'permanent', 'note'], $fieldNames);
     }
 
     public function testBuildFilters()

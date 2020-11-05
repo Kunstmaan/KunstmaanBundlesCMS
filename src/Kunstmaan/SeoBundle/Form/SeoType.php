@@ -21,58 +21,54 @@ class SeoType extends AbstractType
     const ROBOTS_NOTRANSLATE = 'notranslate';
     const ROBOTS_NOIMAGEINDEX = 'noimageindex';
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class)
-            ->add('metaTitle', TextType::class, array(
+            ->add('metaTitle', TextType::class, [
                 'required' => false,
                 'label' => 'seo.form.seo.meta_title.label',
-                'attr' => array(
+                'attr' => [
                     'info_text' => 'seo.form.seo.meta_title.info_text',
                     'maxlength' => 70,
-                ),
+                ],
                 'constraints' => [
                     new Length([
                         'max' => 70,
                     ]),
                 ],
-            ))
-            ->add('metaDescription', TextareaType::class, array(
+            ])
+            ->add('metaDescription', TextareaType::class, [
                 'required' => false,
                 'label' => 'seo.form.seo.meta_description.label',
-                'attr' => array(
+                'attr' => [
                     'maxlength' => 300,
-                ),
+                ],
                 'constraints' => [
                     new Length([
                         'max' => 300,
                     ]),
                 ],
-            ));
+            ]);
 
-        $builder->add('metaRobots', ChoiceType::class, array(
-            'choices' => array(
+        $builder->add('metaRobots', ChoiceType::class, [
+            'choices' => [
                 'seo.form.robots.noindex' => self::ROBOTS_NOINDEX,
                 'seo.form.robots.nofollow' => self::ROBOTS_NOFOLLOW,
                 'seo.form.robots.noarchive' => self::ROBOTS_NOARCHIVE,
                 'seo.form.robots.nosnippet' => self::ROBOTS_NOSNIPPET,
                 'seo.form.robots.notranslate' => self::ROBOTS_NOTRANSLATE,
                 'seo.form.robots.noimageindex' => self::ROBOTS_NOIMAGEINDEX,
-            ),
+            ],
             'required' => false,
             'multiple' => true,
             'expanded' => false,
             'label' => 'seo.form.seo.meta_robots.label',
-            'attr' => array(
+            'attr' => [
                 'placeholder' => 'seo.form.seo.meta_robots.placeholder',
                 'class' => 'js-advanced-select form-control',
                 'maxlength' => 255,
-            ),
-        ));
+            ],
+        ]);
 
         $builder->get('metaRobots')
             ->addModelTransformer(new CallbackTransformer(
@@ -91,10 +87,10 @@ class SeoType extends AbstractType
                     return implode(',', $value);
                 }
             ));
-        $builder->add('extraMetadata', TextareaType::class, array(
+        $builder->add('extraMetadata', TextareaType::class, [
             'label' => 'seo.form.seo.extra_metadata.label',
             'required' => false,
-        ));
+        ]);
     }
 
     /**
@@ -107,8 +103,8 @@ class SeoType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\SeoBundle\Entity\Seo',
-        ));
+        ]);
     }
 }

@@ -22,7 +22,7 @@ class PermissionDefinition
     /**
      * @var array
      */
-    private $permissions = array();
+    private $permissions = [];
 
     /**
      * Construct the PermissionDefinition
@@ -82,8 +82,6 @@ class PermissionDefinition
 
     /**
      * Set permissions.
-     *
-     * @param array $permissions
      *
      * @throws InvalidArgumentException
      */

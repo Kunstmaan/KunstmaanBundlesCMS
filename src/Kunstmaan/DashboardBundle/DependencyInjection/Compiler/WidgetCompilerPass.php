@@ -11,8 +11,6 @@ class WidgetCompilerPass implements CompilerPassInterface
     /**
      * You can modify the container here before it is dumped to PHP code.
      *
-     * @param ContainerBuilder $container
-     *
      * @api
      */
     public function process(ContainerBuilder $container)
@@ -26,11 +24,11 @@ class WidgetCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('kunstmaan_dashboard.widget') as $id => $tags) {
             foreach ($tags as $tag) {
                 if (!empty($tag['method'])) {
-                    $widget = array(new Reference($id), $tag['method']);
+                    $widget = [new Reference($id), $tag['method']];
                 } else {
                     $widget = new Reference($id);
                 }
-                $definition->addMethodCall('addWidget', array($widget));
+                $definition->addMethodCall('addWidget', [$widget]);
             }
         }
     }

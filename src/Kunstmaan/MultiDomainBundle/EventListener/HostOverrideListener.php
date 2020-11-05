@@ -34,12 +34,6 @@ class HostOverrideListener
      */
     protected $adminRouteHelper;
 
-    /**
-     * @param Session                      $session
-     * @param TranslatorInterface          $translator
-     * @param DomainConfigurationInterface $domainConfiguration
-     * @param AdminRouteHelper             $adminRouteHelper
-     */
     public function __construct(
         Session $session,
         TranslatorInterface $translator,

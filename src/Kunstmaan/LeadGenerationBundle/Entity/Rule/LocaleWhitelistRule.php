@@ -52,9 +52,9 @@ class LocaleWhitelistRule extends AbstractRule
      */
     public function getJsProperties()
     {
-        return array(
+        return [
             'locale' => $this->getLocale(),
-        );
+        ];
     }
 
     /**

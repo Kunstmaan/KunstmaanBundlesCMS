@@ -18,7 +18,7 @@ class Media extends Constraint
     const TOO_HIGH_ERROR = 13;
     const TOO_LOW_ERROR = 14;
 
-    protected static $errorNames = array(
+    protected static $errorNames = [
         self::NOT_FOUND_ERROR => 'NOT_FOUND_ERROR',
         self::NOT_READABLE_ERROR => 'NOT_READABLE_ERROR',
         self::EMPTY_ERROR => 'EMPTY_ERROR',
@@ -27,7 +27,7 @@ class Media extends Constraint
         self::TOO_LOW_ERROR => 'TOO_LOW_ERROR',
         self::TOO_WIDE_ERROR => 'TOO_WIDE_ERROR',
         self::TOO_NARROW_ERROR => 'TOO_NARROW_ERROR',
-    );
+    ];
 
     public $minHeight;
 
@@ -39,7 +39,7 @@ class Media extends Constraint
 
     public $binaryFormat;
 
-    public $mimeTypes = array();
+    public $mimeTypes = [];
 
     public $notFoundMessage = 'The file could not be found.';
 

@@ -40,8 +40,6 @@ class SimpleMenuAdaptorTest extends TestCase
 
     /**
      * @dataProvider provider
-     *
-     * @param TopMenuItem|null $parent
      */
     public function testAdaptChildren(?TopMenuItem $parent, ?string $itemParent)
     {

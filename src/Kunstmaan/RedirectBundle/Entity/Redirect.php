@@ -173,8 +173,6 @@ class Redirect extends AbstractEntity
 
     /**
      * @Assert\Callback
-     *
-     * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
     {

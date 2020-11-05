@@ -62,8 +62,7 @@ class ExportService
     }
 
     /**
-     * @param ExportableInterface $adminList
-     * @param string              $format
+     * @param string $format
      *
      * @return StreamedResponse
      *
@@ -75,8 +74,7 @@ class ExportService
     }
 
     /**
-     * @param ExportableInterface $adminList
-     * @param string              $format
+     * @param string $format
      *
      * @return StreamedResponse
      *
@@ -87,7 +85,7 @@ class ExportService
         $response = new StreamedResponse();
         $response->setCallback(function () use ($adminList, $format) {
             $writer = WriterFactory::create($format);
-            $writer->openToBrowser('export.'.$format);
+            $writer->openToBrowser('export.' . $format);
 
             $row = [];
             /** @var Field $column */

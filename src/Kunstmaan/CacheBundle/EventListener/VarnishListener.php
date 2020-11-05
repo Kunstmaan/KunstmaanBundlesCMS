@@ -20,9 +20,6 @@ class VarnishListener
 
     /**
      * VarnishListener constructor.
-     *
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param RouterInterface               $router
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, RouterInterface $router)
     {
@@ -30,9 +27,6 @@ class VarnishListener
         $this->router = $router;
     }
 
-    /**
-     * @param ConfigureActionMenuEvent $event
-     */
     public function onActionMenuConfigure(ConfigureActionMenuEvent $event)
     {
         $menu = $event->getMenu();

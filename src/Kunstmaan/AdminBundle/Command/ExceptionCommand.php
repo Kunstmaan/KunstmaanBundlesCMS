@@ -51,10 +51,6 @@ class ExceptionCommand extends ContainerAwareCommand
             );
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (null === $this->em) {
@@ -68,7 +64,7 @@ class ExceptionCommand extends ContainerAwareCommand
 
         $nowDate = new \DateTime();
         $convertDate = $nowDate->sub(
-            new \DateInterval('P'.$days.'D')
+            new \DateInterval('P' . $days . 'D')
         );
 
         $cp = 0;

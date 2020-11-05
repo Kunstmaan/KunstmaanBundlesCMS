@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * SettingsMenuAdaptor to add the Settings MenuItem to the top menu and build the Settings tree
@@ -23,8 +23,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     /**
      * Constructor
      *
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param bool                          $isEnabledVersionChecker
+     * @param bool $isEnabledVersionChecker
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, $isEnabledVersionChecker)
     {

@@ -25,13 +25,10 @@ class HeaderPagePart extends AbstractPagePart
      */
     protected $title;
 
-    /**
-     * @param ClassMetadata $metadata
-     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('niv', new NotBlank(array('message' => 'headerpagepart.niv.not_blank')));
-        $metadata->addPropertyConstraint('title', new NotBlank(array('message' => 'headerpagepart.title.not_blank')));
+        $metadata->addPropertyConstraint('niv', new NotBlank(['message' => 'headerpagepart.niv.not_blank']));
+        $metadata->addPropertyConstraint('title', new NotBlank(['message' => 'headerpagepart.title.not_blank']));
     }
 
     /**

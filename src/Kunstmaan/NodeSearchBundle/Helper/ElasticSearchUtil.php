@@ -18,7 +18,7 @@ final class ElasticSearchUtil
      *
      * @return bool
      */
-    public static function useVersion6($hosts = array())
+    public static function useVersion6($hosts = [])
     {
         if (PHP_MAJOR_VERSION < 7) {
             return false;

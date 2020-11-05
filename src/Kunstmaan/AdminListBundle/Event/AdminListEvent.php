@@ -32,9 +32,7 @@ class AdminListEvent extends Event
     /**
      * AdminListEvent constructor.
      *
-     * @param object             $entity
-     * @param Request            $request
-     * @param FormInterface|null $form
+     * @param object $entity
      */
     public function __construct($entity, Request $request, FormInterface $form = null)
     {
@@ -77,8 +75,6 @@ class AdminListEvent extends Event
 
     /**
      * Sets a response and stops event propagation.
-     *
-     * @param Response $response
      */
     public function setResponse(Response $response)
     {

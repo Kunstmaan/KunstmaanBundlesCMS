@@ -51,10 +51,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $domainConfiguration;
 
     /**
-     * @param EntityManagerInterface       $em                  The entity manager
-     * @param AclNativeHelper              $aclNativeHelper     The acl helper
-     * @param PagesConfiguration           $pagesConfiguration
-     * @param DomainConfigurationInterface $domainConfiguration
+     * @param EntityManagerInterface $em              The entity manager
+     * @param AclNativeHelper        $aclNativeHelper The acl helper
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -130,10 +128,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     /**
      * Get the list of nodes that is used in the admin menu.
      *
-     * @param string          $lang
-     * @param string          $permission
-     * @param AclNativeHelper $aclNativeHelper
-     * @param bool            $includeHiddenFromNav
+     * @param string $lang
+     * @param string $permission
+     * @param bool   $includeHiddenFromNav
      *
      * @return array
      */
@@ -219,7 +216,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes_edit')
                 ->setRouteParams(['id' => $child['id']])
-                ->setUniqueId('node-'.$child['id'])
+                ->setUniqueId('node-' . $child['id'])
                 ->setLabel($child['title'])
                 ->setParent($parent)
                 ->setOffline(!$child['online'] && !$this->pagesConfiguration->isStructureNode($refName))

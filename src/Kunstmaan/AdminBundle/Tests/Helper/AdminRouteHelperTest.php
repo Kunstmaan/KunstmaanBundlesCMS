@@ -3,9 +3,9 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
+use Kunstmaan\NodeBundle\Router\SlugRouter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminRouteHelperTest extends TestCase
@@ -85,6 +85,6 @@ class AdminRouteHelperTest extends TestCase
 
     private function getPreviewRequest()
     {
-        return Request::create('http://domain.tld/', 'GET', array('_route' => SlugRouter::$SLUG_PREVIEW));
+        return Request::create('http://domain.tld/', 'GET', ['_route' => SlugRouter::$SLUG_PREVIEW]);
     }
 }

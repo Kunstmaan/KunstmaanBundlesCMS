@@ -70,9 +70,6 @@ class SingleLineTextPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_singlelinetextpageparttype';
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart']);

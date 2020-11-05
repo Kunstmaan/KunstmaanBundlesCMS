@@ -46,12 +46,12 @@ class FolderManagerTest extends TestCase
         $folder2 = new Folder();
         $folder2->setId(2);
 
-        $this->parents = array($folder1, $folder2);
+        $this->parents = [$folder1, $folder2];
 
         $this->repository
             ->expects($this->any())
             ->method('getPath')
-            ->willReturn(array($folder1, $folder2));
+            ->willReturn([$folder1, $folder2]);
 
         $rootFolder = new Folder();
         $rootFolder->setId(1);
@@ -74,7 +74,7 @@ class FolderManagerTest extends TestCase
             ->expects($this->once())
             ->method('childrenHierarchy')
             ->with($this->equalTo($this->folder))
-            ->willReturn(array());
+            ->willReturn([]);
 
         $this->object->getFolderHierarchy($this->folder);
     }
@@ -97,7 +97,7 @@ class FolderManagerTest extends TestCase
             ->method('getParentIds')
             ->with($this->equalTo($this->folder));
 
-        $this->assertEquals(array(1, 2), $this->object->getParentIds($this->folder));
+        $this->assertEquals([1, 2], $this->object->getParentIds($this->folder));
     }
 
     public function testGetParents()

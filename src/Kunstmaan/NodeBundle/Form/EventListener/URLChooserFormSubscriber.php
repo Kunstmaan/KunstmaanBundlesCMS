@@ -26,8 +26,6 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
 
     /**
      * When opening the form for the first time, check the type of URL and set the according fields.
-     *
-     * @param FormEvent $event
      */
     public function postSetData(FormEvent $event)
     {

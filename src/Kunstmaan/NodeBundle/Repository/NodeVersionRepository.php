@@ -16,17 +16,15 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class NodeVersionRepository extends EntityRepository
 {
     /**
-     * @param HasNodeInterface $hasNode
-     *
      * @return NodeVersion
      */
     public function getNodeVersionFor(HasNodeInterface $hasNode)
     {
         return $this->findOneBy(
-            array(
+            [
                 'refId' => $hasNode->getId(),
                 'refEntityName' => ClassLookup::getClass($hasNode),
-            )
+            ]
         );
     }
 

@@ -119,7 +119,7 @@ class PermissionAdmin
     {
         $this->resource = $resource;
         $this->permissionMap = $permissionMap;
-        $this->permissions = array();
+        $this->permissions = [];
 
         // Init permissions
         try {
@@ -209,8 +209,6 @@ class PermissionAdmin
 
     /**
      * Handle form entry of permission changes.
-     *
-     * @param Request $request
      *
      * @return bool
      */

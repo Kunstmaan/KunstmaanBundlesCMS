@@ -21,7 +21,7 @@ class RangeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('attr' => array('min' => 0, 'max' => 100, 'step' => 1)));
+        $resolver->setDefaults(['attr' => ['min' => 0, 'max' => 100, 'step' => 1]]);
     }
 
     /**

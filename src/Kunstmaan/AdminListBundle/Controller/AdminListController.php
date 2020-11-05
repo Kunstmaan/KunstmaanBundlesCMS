@@ -14,11 +14,11 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
+use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -43,8 +43,7 @@ abstract class AdminListController extends Controller
     /**
      * Shows the list of entities
      *
-     * @param AbstractAdminListConfigurator $configurator
-     * @param Request|null                  $request
+     * @param Request|null $request
      *
      * @return Response
      */
@@ -59,7 +58,7 @@ abstract class AdminListController extends Controller
         return new Response(
             $this->renderView(
                 $configurator->getListTemplate(),
-                array('adminlist' => $adminList, 'adminlistconfigurator' => $configurator, 'addparams' => array())
+                ['adminlist' => $adminList, 'adminlistconfigurator' => $configurator, 'addparams' => []]
             )
         );
     }
@@ -69,7 +68,6 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $_format      The format to export to
-     * @param Request|null                  $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -162,7 +160,7 @@ abstract class AdminListController extends Controller
                 $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse(
-                    $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+                    $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : [])
                 );
             }
         }
@@ -175,7 +173,7 @@ abstract class AdminListController extends Controller
         ];
 
         if ($tabPane) {
-            $params = array_merge($params, array('tabPane' => $tabPane));
+            $params = array_merge($params, ['tabPane' => $tabPane]);
         }
 
         return new Response(
@@ -218,7 +216,7 @@ abstract class AdminListController extends Controller
                 $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
                 $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
-                $message = $this->container->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                $message = $this->container->get('translator')->trans('kuma_admin_list.edit.flash.locked', ['%user%' => implode(', ', $user)]);
                 $this->addFlash(
                     FlashTypes::WARNING,
                     $message
@@ -227,7 +225,7 @@ abstract class AdminListController extends Controller
                 return new RedirectResponse(
                     $this->generateUrl(
                         $indexUrl['path'],
-                        isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                        isset($indexUrl['params']) ? $indexUrl['params'] : []
                     )
                 );
             }
@@ -281,7 +279,7 @@ abstract class AdminListController extends Controller
                     return new RedirectResponse(
                         $this->generateUrl(
                             $indexUrl['path'],
-                            isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                            isset($indexUrl['params']) ? $indexUrl['params'] : []
                         )
                     );
                 }
@@ -298,7 +296,7 @@ abstract class AdminListController extends Controller
         ];
 
         if ($tabPane) {
-            $params = array_merge($params, array('tabPane' => $tabPane));
+            $params = array_merge($params, ['tabPane' => $tabPane]);
         }
 
         return new Response(
@@ -323,7 +321,7 @@ abstract class AdminListController extends Controller
         }
 
         $MetaData = $em->getClassMetadata($configurator->getRepositoryName());
-        $fields = array();
+        $fields = [];
         $accessor = PropertyAccess::createPropertyAccessor();
         foreach ($MetaData->fieldNames as $value) {
             $fields[$value] = $accessor->getValue($helper, $value);
@@ -332,7 +330,7 @@ abstract class AdminListController extends Controller
         return new Response(
             $this->renderView(
                 $configurator->getViewTemplate(),
-                array('entity' => $helper, 'adminlistconfigurator' => $configurator, 'fields' => $fields)
+                ['entity' => $helper, 'adminlistconfigurator' => $configurator, 'fields' => $fields]
             )
         );
     }
@@ -388,7 +386,7 @@ abstract class AdminListController extends Controller
         }
 
         return new RedirectResponse(
-            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : [])
         );
     }
 
@@ -407,13 +405,13 @@ abstract class AdminListController extends Controller
         $repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
-        $setter = 'set'.ucfirst($sortableField);
-        $getter = 'get'.ucfirst($sortableField);
+        $setter = 'set' . ucfirst($sortableField);
+        $getter = 'get' . ucfirst($sortableField);
 
         $nextItem = $repo->createQueryBuilder('i')
-            ->where('i.'.$sortableField.' < :weight')
+            ->where('i.' . $sortableField . ' < :weight')
             ->setParameter('weight', $item->$getter())
-            ->orderBy('i.'.$sortableField, 'DESC')
+            ->orderBy('i.' . $sortableField, 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -429,7 +427,7 @@ abstract class AdminListController extends Controller
         $indexUrl = $configurator->getIndexUrl();
 
         return new RedirectResponse(
-            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : [])
         );
     }
 
@@ -443,13 +441,13 @@ abstract class AdminListController extends Controller
         $repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
-        $setter = 'set'.ucfirst($sortableField);
-        $getter = 'get'.ucfirst($sortableField);
+        $setter = 'set' . ucfirst($sortableField);
+        $getter = 'get' . ucfirst($sortableField);
 
         $nextItem = $repo->createQueryBuilder('i')
-            ->where('i.'.$sortableField.' > :weight')
+            ->where('i.' . $sortableField . ' > :weight')
             ->setParameter('weight', $item->$getter())
-            ->orderBy('i.'.$sortableField, 'ASC')
+            ->orderBy('i.' . $sortableField, 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -465,14 +463,14 @@ abstract class AdminListController extends Controller
         $indexUrl = $configurator->getIndexUrl();
 
         return new RedirectResponse(
-            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : [])
         );
     }
 
     private function getMaxSortableField($repo, $sort)
     {
         $maxWeight = $repo->createQueryBuilder('i')
-            ->select('max(i.'.$sort.')')
+            ->select('max(i.' . $sort . ')')
             ->getQuery()
             ->getSingleScalarResult();
 
@@ -480,8 +478,6 @@ abstract class AdminListController extends Controller
     }
 
     /**
-     * @param LockableEntityInterface $entity
-     *
      * @return bool
      */
     protected function isLockableEntityLocked(LockableEntityInterface $entity)
@@ -509,7 +505,7 @@ abstract class AdminListController extends Controller
             $repo = $this->getEntityManager()->getRepository($configurator->getRepositoryName());
             $sort = $configurator->getSortableField();
             $weight = $this->getMaxSortableField($repo, $sort);
-            $setter = 'set'.ucfirst($sort);
+            $setter = 'set' . ucfirst($sort);
             $item->$setter($weight + 1);
         }
 
@@ -521,20 +517,20 @@ abstract class AdminListController extends Controller
         // Check if Sortable interface is implemented
         if ($configurator instanceof SortableInterface) {
             $route = function (EntityInterface $item) use ($configurator) {
-                return array(
-                    'path' => $configurator->getPathByConvention().'_move_up',
-                    'params' => array('id' => $item->getId()),
-                );
+                return [
+                    'path' => $configurator->getPathByConvention() . '_move_up',
+                    'params' => ['id' => $item->getId()],
+                ];
             };
 
             $action = new SimpleItemAction($route, 'arrow-up', 'kuma_admin_list.action.move_up');
             $configurator->addItemAction($action);
 
             $route = function (EntityInterface $item) use ($configurator) {
-                return array(
-                    'path' => $configurator->getPathByConvention().'_move_down',
-                    'params' => array('id' => $item->getId()),
-                );
+                return [
+                    'path' => $configurator->getPathByConvention() . '_move_down',
+                    'params' => ['id' => $item->getId()],
+                ];
             };
 
             $action = new SimpleItemAction($route, 'arrow-down', 'kuma_admin_list.action.move_down');
@@ -543,8 +539,6 @@ abstract class AdminListController extends Controller
     }
 
     /**
-     * @param AbstractAdminListConfigurator $configurator
-     *
      * @return string
      */
     protected function getAdminListRepositoryName(AbstractAdminListConfigurator $configurator)

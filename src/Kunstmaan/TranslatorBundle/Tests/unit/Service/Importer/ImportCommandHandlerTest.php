@@ -44,13 +44,13 @@ class ImportCommandHandlerTest extends WebTestCase
             ->setDefaultBundle(false);
 
         $locales = $this->importCommandHandler->determineLocalesToImport($importCommand);
-        $this->assertEquals(array('nl', 'en', 'de'), $locales);
+        $this->assertEquals(['nl', 'en', 'de'], $locales);
     }
 
     public function testParseRequestedLocalesMulti()
     {
         $locale = 'nl,De,   FR';
-        $expectedArray = array('nl', 'de', 'fr');
+        $expectedArray = ['nl', 'de', 'fr'];
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
         $this->assertEquals($expectedArray, $locales);
     }
@@ -58,15 +58,15 @@ class ImportCommandHandlerTest extends WebTestCase
     public function testParseRequestedLocalesSingle()
     {
         $locale = 'dE';
-        $expectedArray = array('de');
+        $expectedArray = ['de'];
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
         $this->assertEquals($expectedArray, $locales);
     }
 
     public function testParseRequestedLocalesArray()
     {
-        $locale = array('dE', 'NL', 'es');
-        $expectedArray = array('de', 'nl', 'es');
+        $locale = ['dE', 'NL', 'es'];
+        $expectedArray = ['de', 'nl', 'es'];
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
         $this->assertEquals($expectedArray, $locales);
     }

@@ -26,14 +26,14 @@ class FilterBuilderTest extends TestCase
 
     public function testAdd()
     {
-        $result = $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', array('option1' => 'value1'));
+        $result = $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', ['option1' => 'value1']);
 
         $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\FilterBuilder', $result);
     }
 
     public function testGet()
     {
-        $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', array('option1' => 'value1'));
+        $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', ['option1' => 'value1']);
         $definition = $this->object->get('columnName');
 
         $this->assertArrayHasKey('type', $definition);
@@ -41,14 +41,14 @@ class FilterBuilderTest extends TestCase
         $this->assertArrayHasKey('options', $definition);
         $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType', $definition['type']);
         $this->assertEquals('filterName', $definition['filtername']);
-        $this->assertEquals(array('option1' => 'value1'), $definition['options']);
+        $this->assertEquals(['option1' => 'value1'], $definition['options']);
         $this->assertTrue(\is_array($this->object->getCurrentParameters()));
         $this->assertTrue(\is_array($this->object->getCurrentFilters()));
     }
 
     public function testRemove()
     {
-        $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', array('option1' => 'value1'));
+        $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', ['option1' => 'value1']);
         $definition = $this->object->get('columnName');
         $this->assertNotNull($definition);
 
@@ -60,15 +60,15 @@ class FilterBuilderTest extends TestCase
     public function testHas()
     {
         $this->assertFalse($this->object->has('columnName'));
-        $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', array('option1' => 'value1'));
+        $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', ['option1' => 'value1']);
         $this->assertTrue($this->object->has('columnName'));
     }
 
     public function testGetFilterDefinitions()
     {
         $filter = new StringFilterType('string', 'e');
-        $filterDef = array('columnName' => array('type' => $filter, 'options' => array('option1' => 'value1'), 'filtername' => 'filterName'));
-        $this->object->add('columnName', $filter, 'filterName', array('option1' => 'value1'));
+        $filterDef = ['columnName' => ['type' => $filter, 'options' => ['option1' => 'value1'], 'filtername' => 'filterName']];
+        $this->object->add('columnName', $filter, 'filterName', ['option1' => 'value1']);
 
         $this->assertEquals($filterDef, $this->object->getFilterDefinitions());
     }
@@ -83,8 +83,8 @@ class FilterBuilderTest extends TestCase
         $request->setSession($session);
 
         $filter = new StringFilterType('string', 'e');
-        $filterDef = array('columnName' => array('type' => $filter, 'options' => array('option1' => 'value1'), 'filtername' => 'filterName'));
-        $this->object->add('columnName', $filter, 'filterName', array('option1' => 'value1'));
+        $filterDef = ['columnName' => ['type' => $filter, 'options' => ['option1' => 'value1'], 'filtername' => 'filterName']];
+        $this->object->add('columnName', $filter, 'filterName', ['option1' => 'value1']);
 
         $this->object->bindRequest($request);
 

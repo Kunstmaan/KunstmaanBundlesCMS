@@ -23,9 +23,6 @@ class VarnishHelper
 
     /**
      * VarnishHelper constructor.
-     *
-     * @param CacheManager                 $cacheManager
-     * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(CacheManager $cacheManager, DomainConfigurationInterface $domainConfiguration)
     {

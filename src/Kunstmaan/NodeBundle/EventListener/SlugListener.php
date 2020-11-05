@@ -31,10 +31,6 @@ class SlugListener
 
     /**
      * SlugListener constructor.
-     *
-     * @param EntityManager               $em
-     * @param ControllerResolverInterface $resolver
-     * @param EventDispatcherInterface    $eventDispatcher
      */
     public function __construct(EntityManager $em, ControllerResolverInterface $resolver, EventDispatcherInterface $eventDispatcher)
     {

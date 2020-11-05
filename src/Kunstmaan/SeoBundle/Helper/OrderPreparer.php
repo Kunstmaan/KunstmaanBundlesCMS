@@ -17,8 +17,6 @@ class OrderPreparer
      * Only one request is made per order/SKU.
      * So the same SKUs on multiple lines need to be grouped.
      *
-     * @param Order $order
-     *
      * @return Order
      */
     public function prepare(Order $order)
@@ -27,7 +25,7 @@ class OrderPreparer
         $orderItems = $order->orderItems;
 
         /** @var OrderItem[] $newOrderItems */
-        $newOrderItems = array();
+        $newOrderItems = [];
 
         foreach ($orderItems as $item) {
             if (!isset($newOrderItems[$item->getSKU()])) {

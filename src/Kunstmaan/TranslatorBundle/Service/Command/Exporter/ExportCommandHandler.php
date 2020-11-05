@@ -30,8 +30,6 @@ class ExportCommandHandler extends AbstractCommandHandler
      * Get all translations per domain and sort on file.
      * A File has a domain locale, an extensions, with keywords and a ArrayCollection with translations.
      *
-     * @param ExportCommand $exportCommand
-     *
      * @return int total number of files imported
      */
     public function executeExportCommand(ExportCommand $exportCommand)
@@ -42,8 +40,6 @@ class ExportCommandHandler extends AbstractCommandHandler
 
     /**
      * Execute an export to CSV command.
-     *
-     * @param ExportCommand $exportCommand
      *
      * @return string|Response
      */
@@ -59,8 +55,6 @@ class ExportCommandHandler extends AbstractCommandHandler
 
     /**
      * Convert an exportCommand into an array of translations
-     *
-     * @param ExportCommand $exportCommand
      *
      * @return array an array of translations
      */
@@ -81,8 +75,6 @@ class ExportCommandHandler extends AbstractCommandHandler
 
     /**
      * Convert an exportCommand into an array of ExportFiles
-     *
-     * @param ExportCommand $exportCommand
      *
      * @return ArrayCollection an array of ExportFiles (without filecontent filled in)
      */
@@ -113,9 +105,6 @@ class ExportCommandHandler extends AbstractCommandHandler
         return $translationFiles;
     }
 
-    /**
-     * @param ArrayCollection $exportFiles
-     */
     public function fillExportFilesContent(ArrayCollection $exportFiles)
     {
         foreach ($exportFiles as $exportFile) {
@@ -129,8 +118,6 @@ class ExportCommandHandler extends AbstractCommandHandler
      * Returns an array with all languages that needs to be imported (from the given ExportCommand)
      * If non is given, all managed locales will be used (defined in config)
      *
-     * @param ExportCommand $exportCommand
-     *
      * @return array all locales to import by the given ExportCommand
      */
     public function determineLocalesToImport(ExportCommand $exportCommand)
@@ -143,8 +130,6 @@ class ExportCommandHandler extends AbstractCommandHandler
     }
 
     /**
-     * @param ExportCommand $exportCommand
-     *
      * @return array
      */
     public function determineDomainsToImport(ExportCommand $exportCommand)

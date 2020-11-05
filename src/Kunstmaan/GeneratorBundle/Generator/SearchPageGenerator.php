@@ -45,7 +45,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
      * @param string          $prefix     The prefix
      * @param string          $rootDir    The root directory
      * @param string          $createPage Create data fixtures or not
-     * @param OutputInterface $output
      */
     public function generate(
         BundleInterface $bundle,
@@ -54,12 +53,12 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $createPage,
         OutputInterface $output
     ) {
-        $parameters = array(
+        $parameters = [
             'namespace' => $bundle->getNamespace(),
             'bundle' => $bundle,
             'prefix' => GeneratorUtils::cleanPrefix($prefix),
             'isV4' => Kernel::VERSION_ID >= 40000,
-        );
+        ];
 
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
@@ -72,7 +71,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
      * @param BundleInterface $bundle     The bundle
      * @param array           $parameters The template parameters
      * @param string          $rootDir    The root directory
-     * @param OutputInterface $output
      */
     public function generateTemplates(
         BundleInterface $bundle,
@@ -89,7 +87,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
             true
         );
 
-        $twigFile = Kernel::VERSION_ID >= 40000 ? "{% extends 'Page/layout.html.twig' %}\n" : "{% extends '".$bundle->getName().":Page:layout.html.twig' %}\n";
+        $twigFile = Kernel::VERSION_ID >= 40000 ? "{% extends 'Page/layout.html.twig' %}\n" : "{% extends '" . $bundle->getName() . ":Page:layout.html.twig' %}\n";
         GeneratorUtils::prepend($twigFile, $dirPath . '/Pages/SearchPage/view.html.twig');
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
@@ -98,7 +96,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     /**
      * @param BundleInterface $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output
      *
      * @throws \RuntimeException
      */
@@ -133,7 +130,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     /**
      * @param BundleInterface $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output
      *
      * @throws \RuntimeException
      */

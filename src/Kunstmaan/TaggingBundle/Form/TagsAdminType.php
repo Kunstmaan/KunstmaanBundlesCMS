@@ -26,25 +26,25 @@ class TagsAdminType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults($this->getDefaultOptions(array()));
+        $resolver->setDefaults($this->getDefaultOptions([]));
     }
 
     public function getDefaultOptions(array $options)
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->tagManager->findAll() as $tag) {
             $result[$tag->getName()] = $tag->getId();
         }
 
-        return array(
+        return [
           'choices' => $result,
           'multiple' => true,
           'required' => false,
-          'attr' => array(
+          'attr' => [
             'class' => 'js-advanced-select form-control advanced-select',
-          ),
-        );
+          ],
+        ];
     }
 
     public function getParent()

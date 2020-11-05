@@ -21,9 +21,6 @@ class TranslatorDataCollector extends AbstractDataCollector
 
     /**
      * TranslatorDataCollector constructor.
-     *
-     * @param DataCollectorTranslator $translator
-     * @param UrlGeneratorInterface   $urlGenerator
      */
     public function __construct(DataCollectorTranslator $translator, UrlGeneratorInterface $urlGenerator)
     {
@@ -78,11 +75,6 @@ class TranslatorDataCollector extends AbstractDataCollector
         return ['data' => $data];
     }
 
-    /**
-     * @param Request         $request
-     * @param Response        $response
-     * @param \Exception|null $exception
-     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {

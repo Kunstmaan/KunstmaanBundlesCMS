@@ -9,19 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractFormPageController extends Controller
 {
-    /**
-     * @param Request $request
-     */
     public function serviceAction(Request $request)
     {
         $thanksParam = $request->get('thanks');
         $entity = $request->attributes->get('_entity');
-        $context = array(
+        $context = [
             'nodetranslation' => $request->attributes->get('_nodeTranslation'),
             'slug' => $request->attributes->get('url'),
             'page' => $entity,
             'resource' => $entity,
-        );
+        ];
 
         if (!empty($thanksParam)) {
             $context['thanks'] = true;

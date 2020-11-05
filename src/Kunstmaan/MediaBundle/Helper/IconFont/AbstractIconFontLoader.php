@@ -14,9 +14,6 @@ abstract class AbstractIconFontLoader implements IconFontLoaderInterface
      */
     protected $rootPath;
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         $this->rootPath = $kernel->getProjectDir();

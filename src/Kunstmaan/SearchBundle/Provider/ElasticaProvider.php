@@ -12,7 +12,7 @@ class ElasticaProvider implements SearchProviderInterface
     private $client;
 
     /** @var array An array of Elastica search nodes (each item in the array needs a host and port) */
-    private $nodes = array();
+    private $nodes = [];
 
     /**
      * @return Client
@@ -21,8 +21,8 @@ class ElasticaProvider implements SearchProviderInterface
     {
         if (!$this->client instanceof Client) {
             $this->client = new Client(
-                array('connections' => $this->nodes,
-                )
+                ['connections' => $this->nodes,
+                ]
             );
 
             //NEXT_MAJOR: remove checks and update ruflin/elastica dependency constraints
@@ -121,7 +121,7 @@ class ElasticaProvider implements SearchProviderInterface
      */
     public function deleteDocument($indexName, $indexType, $uid)
     {
-        $ids = array($uid);
+        $ids = [$uid];
 
         return $this->deleteDocuments($indexName, $indexType, $ids);
     }
@@ -129,7 +129,6 @@ class ElasticaProvider implements SearchProviderInterface
     /**
      * @param string $indexName
      * @param string $indexType
-     * @param array  $ids
      *
      * @return \Elastica\Bulk\ResponseSet
      */
@@ -177,10 +176,10 @@ class ElasticaProvider implements SearchProviderInterface
 
         $authHeader = null;
         if (null !== $username && $password !== null) {
-            $authHeader = array('Authorization' => 'Basic ' . base64_encode($username . ':' . $password));
+            $authHeader = ['Authorization' => 'Basic ' . base64_encode($username . ':' . $password)];
         }
 
-        $this->nodes[] = array('host' => $host, 'port' => $port, 'headers' => $authHeader);
+        $this->nodes[] = ['host' => $host, 'port' => $port, 'headers' => $authHeader];
     }
 
     /**

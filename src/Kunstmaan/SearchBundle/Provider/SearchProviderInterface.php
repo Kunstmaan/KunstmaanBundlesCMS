@@ -83,7 +83,6 @@ interface SearchProviderInterface
     /**
      * @param string $indexName
      * @param string $indexType
-     * @param array  $ids
      */
     public function deleteDocuments($indexName, $indexType, array $ids);
 

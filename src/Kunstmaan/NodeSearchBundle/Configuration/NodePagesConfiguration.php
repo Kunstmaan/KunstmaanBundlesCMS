@@ -106,33 +106,21 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $this->numberOfReplicas = $numberOfReplicas;
     }
 
-    /**
-     * @param AclProviderInterface $aclProvider
-     */
     public function setAclProvider(AclProviderInterface $aclProvider)
     {
         $this->aclProvider = $aclProvider;
     }
 
-    /**
-     * @param IndexablePagePartsService $indexablePagePartsService
-     */
     public function setIndexablePagePartsService(IndexablePagePartsService $indexablePagePartsService)
     {
         $this->indexablePagePartsService = $indexablePagePartsService;
     }
 
-    /**
-     * @param array $properties
-     */
     public function setDefaultProperties(array $properties)
     {
         $this->properties = array_merge($this->properties, $properties);
     }
 
-    /**
-     * @param LoggerInterface $logger
-     */
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
@@ -214,7 +202,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Index a node (including its children) - for the specified language only
      *
-     * @param Node   $node
      * @param string $lang
      */
     public function indexNode(Node $node, $lang)
@@ -230,7 +217,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Add documents for the node translation (and children) to the index
      *
-     * @param Node   $node
      * @param string $lang
      */
     public function createNodeDocuments(Node $node, $lang)
@@ -245,7 +231,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * Index all children of the specified node (only for the specified
      * language)
      *
-     * @param Node   $node
      * @param string $lang
      */
     public function indexChildren(Node $node, $lang)
@@ -258,8 +243,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Index a node translation
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param bool            $add             Add node immediately to index?
+     * @param bool $add Add node immediately to index?
      *
      * @return bool Return true if the document has been indexed
      */
@@ -301,8 +285,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * you can override this by implementing the IndexableInterface on your
      * page entity and returning false in the isIndexable method.
      *
-     * @param HasNodeInterface $page
-     *
      * @return bool
      */
     protected function isIndexable(HasNodeInterface $page)
@@ -312,8 +294,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * Remove the specified node translation from the index
-     *
-     * @param NodeTranslation $nodeTranslation
      */
     public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
     {
@@ -334,9 +314,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * Apply the analysis factory to the index
-     *
-     * @param Index                    $index
-     * @param AnalysisFactoryInterface $analysis
      */
     public function setAnalysis(Index $index, AnalysisFactoryInterface $analysis)
     {
@@ -378,7 +355,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Return default search fields mapping for node translations
      *
-     * @param Index  $index
      * @param string $lang
      *
      * @return Mapping|\Elastica\Mapping
@@ -400,7 +376,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Initialize the index with the default search fields mapping
      *
-     * @param Index  $index
      * @param string $lang
      */
     protected function setMapping(Index $index, $lang = 'en')
@@ -416,11 +391,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * Create a search document for a page
-     *
-     * @param NodeTranslation  $nodeTranslation
-     * @param Node             $node
-     * @param NodeVersion      $publicNodeVersion
-     * @param HasNodeInterface $page
      */
     protected function addPageToIndex(
         NodeTranslation $nodeTranslation,
@@ -437,7 +407,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             );
         }
 
-        $doc = array(
+        $doc = [
             'root_id' => $rootNode->getId(),
             'node_id' => $node->getId(),
             'node_translation_id' => $nodeTranslation->getId(),
@@ -451,7 +421,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             'updated' => $this->getUTCDateTime(
                 $nodeTranslation->getUpdated()
             )->format(\DateTime::ISO8601),
-        );
+        ];
         if ($this->logger) {
             $this->logger->info('Indexing document : ' . implode(', ', $doc));
         }
@@ -484,7 +454,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Add view permissions to the index document
      *
-     * @param Node  $node
      * @param array $doc
      *
      * @return array
@@ -495,7 +464,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             $roles = $this->getAclPermissions($node);
         } else {
             // Fallback when no ACL available / assume everything is accessible...
-            $roles = array('IS_AUTHENTICATED_ANONYMOUSLY');
+            $roles = ['IS_AUTHENTICATED_ANONYMOUSLY'];
         }
         $doc['view_roles'] = $roles;
     }
@@ -539,7 +508,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Add page content to the index document
      *
-     * @param NodeTranslation  $nodeTranslation
      * @param HasNodeInterface $page
      * @param array            $doc
      */
@@ -603,10 +571,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Render a custom search view
      *
-     * @param NodeTranslation             $nodeTranslation
-     * @param SearchViewTemplateInterface $page
-     * @param EngineInterface             $renderer
-     *
      * @return string
      */
     protected function renderCustomSearchView(
@@ -641,10 +605,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * Render default search view (all indexable pageparts in the main context
      * of the page)
      *
-     * @param NodeTranslation       $nodeTranslation
-     * @param HasPagePartsInterface $page
-     * @param EngineInterface       $renderer
-     *
      * @return string
      */
     protected function renderDefaultSearchView(
@@ -657,12 +617,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $content = $this->removeHtml(
             $renderer->render(
                 $view,
-                array(
+                [
                     'locale' => $nodeTranslation->getLang(),
                     'page' => $page,
                     'pageparts' => $pageparts,
                     'indexMode' => true,
-                )
+                ]
             )
         );
 
@@ -673,8 +633,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * Add custom data to index document (you can override to add custom fields
      * to the search index)
      *
-     * @param HasNodeInterface $page
-     * @param array            $doc
+     * @param array $doc
      */
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
@@ -690,8 +649,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * Convert a DateTime to UTC equivalent...
-     *
-     * @param \DateTime $dateTime
      *
      * @return \DateTime
      */
@@ -765,7 +722,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             }
         } catch (AclNotFoundException $e) {
             // No ACL found... assume default
-            $roles = array('IS_AUTHENTICATED_ANONYMOUSLY');
+            $roles = ['IS_AUTHENTICATED_ANONYMOUSLY'];
         }
 
         return $roles;

@@ -27,9 +27,6 @@ class ConfigHelper
 
     /**
      * constructor
-     *
-     * @param ServiceHelper $serviceHelper
-     * @param EntityManager $em
      */
     public function __construct(ServiceHelper $serviceHelper, EntityManager $em)
     {
@@ -112,13 +109,13 @@ class ConfigHelper
     public function getAccounts()
     {
         $accounts = $this->serviceHelper->getService()->management_accounts->listManagementAccounts()->getItems();
-        $data = array();
+        $data = [];
 
         foreach ($accounts as $account) {
-            $data[$account->getName()] = array(
+            $data[$account->getName()] = [
                     'accountId' => $account->getId(),
                     'accountName' => $account->getName(),
-                );
+                ];
         }
         ksort($data);
 
@@ -182,15 +179,15 @@ class ConfigHelper
         } else {
             $webproperties = $this->serviceHelper->getService()->management_webproperties->listManagementWebproperties($this->getAccountId());
         }
-        $data = array();
+        $data = [];
 
         foreach ($webproperties->getItems() as $property) {
             $profiles = $this->getProfiles($accountId, $property->getId());
             if (\count($profiles) > 0) {
-                $data[$property->getName()] = array(
+                $data[$property->getName()] = [
                         'propertyId' => $property->getId(),
                         'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
-                    );
+                    ];
             }
         }
         ksort($data);
@@ -263,14 +260,14 @@ class ConfigHelper
                 );
         }
 
-        $data = array();
+        $data = [];
         if (\is_array($profiles->getItems())) {
             foreach ($profiles->getItems() as $profile) {
-                $data[$profile->name] = array(
+                $data[$profile->name] = [
                             'profileId' => $profile->id,
                             'profileName' => $profile->name,
                             'created' => $profile->created,
-                        );
+                        ];
             }
         }
         ksort($data);
@@ -354,23 +351,23 @@ class ConfigHelper
                     ->listManagementSegments()
                     ->items;
 
-        $builtin = array();
-        $own = array();
+        $builtin = [];
+        $own = [];
         foreach ($profileSegments as $segment) {
             if ($segment->type == 'BUILT_IN') {
-                $builtin[] = array(
+                $builtin[] = [
                         'name' => $segment->name,
                         'query' => $segment->segmentId,
-                    );
+                    ];
             } else {
-                $own[] = array(
+                $own[] = [
                         'name' => $segment->name,
                         'query' => $segment->segmentId,
-                    );
+                    ];
             }
         }
 
-        return array('builtin' => $builtin, 'own' => $own);
+        return ['builtin' => $builtin, 'own' => $own];
     }
 
     /* =============================== CONFIG =============================== */

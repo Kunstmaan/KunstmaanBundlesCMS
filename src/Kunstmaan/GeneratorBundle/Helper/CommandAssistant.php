@@ -188,7 +188,7 @@ class CommandAssistant
         $bundleQuestion->setErrorMessage($errorMessage);
         $bundleQuestion->setMultiselect($multiSelect);
         if ($multiSelect) {
-            $toReturn = array();
+            $toReturn = [];
             foreach ($this->getQuestionHelper()->ask(
                 $this->input,
                 $this->output,

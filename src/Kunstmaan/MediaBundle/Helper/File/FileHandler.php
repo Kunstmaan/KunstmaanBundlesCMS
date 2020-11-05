@@ -49,7 +49,7 @@ class FileHandler extends AbstractMediaHandler
      *
      * @var array
      */
-    private $blacklistedExtensions = array();
+    private $blacklistedExtensions = [];
 
     /**
      * @var SlugifierInterface
@@ -59,9 +59,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * Constructor
      *
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
+     * @param int $priority
      */
     public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
     {
@@ -70,9 +68,6 @@ class FileHandler extends AbstractMediaHandler
         $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
     }
 
-    /**
-     * @param SlugifierInterface $slugifier
-     */
     public function setSlugifier(SlugifierInterface $slugifier)
     {
         $this->slugifier = $slugifier;
@@ -80,8 +75,6 @@ class FileHandler extends AbstractMediaHandler
 
     /**
      * Inject the blacklisted
-     *
-     * @param array $blacklistedExtensions
      */
     public function setBlacklistedExtensions(array $blacklistedExtensions)
     {
@@ -145,8 +138,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return FileHelper
      */
     public function getFormHelper(Media $media)
@@ -155,8 +146,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
@@ -188,7 +177,7 @@ class FileHandler extends AbstractMediaHandler
                 $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
             }
 
-            $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
+            $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']) . '.' . $pathInfo['extension']);
             $name = $media->getName();
 
             if (empty($name)) {
@@ -202,9 +191,6 @@ class FileHandler extends AbstractMediaHandler
         $media->setLocation('local');
     }
 
-    /**
-     * @param Media $media
-     */
     public function removeMedia(Media $media)
     {
         $adapter = $this->fileSystem->getAdapter();
@@ -219,7 +205,7 @@ class FileHandler extends AbstractMediaHandler
         $folderPath = $this->getFileFolderPath($media);
         if ($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
             $allMyKeys = $adapter->keys();
-            $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
+            $everythingfromdir = preg_grep('/' . $folderPath, $allMyKeys);
 
             if (\count($everythingfromdir) === 1) {
                 $adapter->delete($folderPath);
@@ -237,9 +223,6 @@ class FileHandler extends AbstractMediaHandler
         $this->saveMedia($media);
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
         if (!$media->getContent() instanceof File) {
@@ -251,8 +234,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return \Gaufrette\File
      */
     public function getOriginalFile(Media $media)
@@ -299,32 +280,30 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-            FileHandler::TYPE => array(
+        return [
+            FileHandler::TYPE => [
                 'type' => FileHandler::TYPE,
                 'name' => 'media.file.add',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
-     * @param Media $media
-     *
      * @return string
      */
     private function getFilePath(Media $media)
     {
         $filename = $media->getOriginalFilename();
-        $filename = str_replace(array('/', '\\', '%'), '', $filename);
+        $filename = str_replace(['/', '\\', '%'], '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
-            $filename = preg_replace('/\.('.implode('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
+            $filename = preg_replace('/\.(' . implode('|', $this->blacklistedExtensions) . ')$/', '.txt', $filename);
         }
 
         $parts = pathinfo($filename);
         $filename = $this->slugifier->slugify($parts['filename']);
         if (\array_key_exists('extension', $parts)) {
-            $filename .= '.'.strtolower($parts['extension']);
+            $filename .= '.' . strtolower($parts['extension']);
         }
 
         return sprintf(
@@ -335,8 +314,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return string
      */
     private function getFileFolderPath(Media $media)

@@ -20,13 +20,12 @@ class ToolbarTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('block_render', array($this, 'renderBlock'), array('needs_environment' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('block_render', [$this, 'renderBlock'], ['needs_environment' => true, 'is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * @param Environment $env
      * @param $template
      * @param $block
      * @param $context

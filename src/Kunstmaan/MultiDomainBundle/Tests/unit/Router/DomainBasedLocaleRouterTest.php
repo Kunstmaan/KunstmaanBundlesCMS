@@ -17,10 +17,10 @@ class DomainBasedLocaleRouterTest extends TestCase
     {
         $request = $this->getRequest();
         $object = $this->getDomainBasedLocaleRouter($request);
-        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en_GB'], UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/en/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_PATH);
+        $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en_GB'], UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/en/some-uri', $url);
     }
 
@@ -29,10 +29,10 @@ class DomainBasedLocaleRouterTest extends TestCase
         $request = $this->getRequest();
         $request->setLocale('nl_BE');
         $object = $this->getDomainBasedLocaleRouter($request);
-        $url = $object->generate('_slug', array('url' => 'some-uri', 'otherSite' => 'https://cia.gov'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $object->generate('_slug', ['url' => 'some-uri', 'otherSite' => 'https://cia.gov'], UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_PATH);
+        $url = $object->generate('_slug', ['url' => 'some-uri'], UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/nl/some-uri', $url);
     }
 
@@ -41,10 +41,10 @@ class DomainBasedLocaleRouterTest extends TestCase
         $request = $this->getRequest();
         $request->setLocale('nl_BE');
         $object = $this->getDomainBasedLocaleRouter($request);
-        $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $object->generate('_slug', ['url' => 'some-uri'], UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_PATH);
+        $url = $object->generate('_slug', ['url' => 'some-uri'], UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/nl/some-uri', $url);
     }
 
@@ -86,14 +86,14 @@ class DomainBasedLocaleRouterTest extends TestCase
             ->willReturn('nl_BE');
 
         $domainConfiguration->method('getFrontendLocales')
-            ->willReturn(array('nl', 'en'));
+            ->willReturn(['nl', 'en']);
 
         $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
         $domainConfiguration->method('getBackendLocales')
-            ->willReturn(array('nl_BE', 'en_GB'));
+            ->willReturn(['nl_BE', 'en_GB']);
 
         $request = $this->getRequest('http://singlelangdomain.tld/');
 
@@ -128,14 +128,14 @@ class DomainBasedLocaleRouterTest extends TestCase
             ->willReturn('nl_BE');
 
         $domainConfiguration->method('getFrontendLocales')
-            ->willReturn(array('nl', 'en'));
+            ->willReturn(['nl', 'en']);
 
         $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
         $domainConfiguration->method('getBackendLocales')
-            ->willReturn(array('nl_BE', 'en_GB'));
+            ->willReturn(['nl_BE', 'en_GB']);
 
         $request = $this->getRequest('http://singlelangdomain.tld/');
 
@@ -175,14 +175,14 @@ class DomainBasedLocaleRouterTest extends TestCase
             ->willReturn('nl_BE');
 
         $domainConfiguration->method('getFrontendLocales')
-            ->willReturn(array('nl', 'en'));
+            ->willReturn(['nl', 'en']);
 
         $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
         $domainConfiguration->method('getBackendLocales')
-            ->willReturn(array('nl_BE', 'en_GB'));
+            ->willReturn(['nl_BE', 'en_GB']);
 
         return $domainConfiguration;
     }

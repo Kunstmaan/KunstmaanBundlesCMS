@@ -33,7 +33,7 @@ class ImporterTest extends WebTestCase
             $this->importer->import($file, true);
         }
 
-        $translation = $this->translationRepository->findOneBy(array('keyword' => 'newdomain.name', 'locale' => 'de'));
+        $translation = $this->translationRepository->findOneBy(['keyword' => 'newdomain.name', 'locale' => 'de']);
         $this->assertEquals('a new domain', $translation->getText());
     }
 
@@ -46,7 +46,7 @@ class ImporterTest extends WebTestCase
             $this->importer->import($file, false);
         }
 
-        $translation = $this->translationRepository->findOneBy(array('keyword' => 'headers.frontpage', 'locale' => 'en'));
+        $translation = $this->translationRepository->findOneBy(['keyword' => 'headers.frontpage', 'locale' => 'en']);
         $this->assertEquals('a not yet updated frontpage header', $translation->getText());
     }
 
@@ -59,7 +59,7 @@ class ImporterTest extends WebTestCase
             $this->importer->import($file, true);
         }
 
-        $translation = $this->translationRepository->findOneBy(array('keyword' => 'headers.frontpage', 'locale' => 'en'));
+        $translation = $this->translationRepository->findOneBy(['keyword' => 'headers.frontpage', 'locale' => 'en']);
         $this->assertEquals('FrontPage', $translation->getText());
     }
 
@@ -69,7 +69,7 @@ class ImporterTest extends WebTestCase
 
         $finder->files()
                 ->name('newdomain.de.yml')
-                ->in($this->rootDir.'/Resources/translations/');
+                ->in($this->rootDir . '/Resources/translations/');
 
         return $finder;
     }
@@ -80,7 +80,7 @@ class ImporterTest extends WebTestCase
 
         $finder->files()
                 ->name('messages.en.yml')
-                ->in($this->rootDir.'/Resources/translations/');
+                ->in($this->rootDir . '/Resources/translations/');
 
         return $finder;
     }

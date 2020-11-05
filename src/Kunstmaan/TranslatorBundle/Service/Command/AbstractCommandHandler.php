@@ -52,7 +52,7 @@ abstract class AbstractCommandHandler
     public function parseCommaSeperatedValuesToArray($values)
     {
         if (!\is_array($values) && strpos($values, ',') === false && mb_strlen(trim($values)) == 2) {
-            return array(strtolower(trim($values)));
+            return [strtolower(trim($values))];
         }
 
         if (!\is_array($values)) {

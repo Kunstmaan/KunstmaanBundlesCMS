@@ -20,12 +20,12 @@ class UrlWhiteListAdminType extends AbstractRuleAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('urls', TextareaType::class, array(
+        $builder->add('urls', TextareaType::class, [
             'label' => 'kuma_lead_generation.form.url_white_list.urls.label',
-            'attr' => array(
+            'attr' => [
                 'info_text' => 'kuma_lead_generation.form.url_white_list.urls.info_text',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**

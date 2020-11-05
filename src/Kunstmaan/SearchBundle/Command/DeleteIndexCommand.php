@@ -46,9 +46,6 @@ class DeleteIndexCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int|null null or 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output)

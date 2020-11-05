@@ -17,10 +17,6 @@ class SearchFormWidget extends FormWidget
     /** @var NodeSearch */
     private $nodeSearch;
 
-    /**
-     * @param Node          $node
-     * @param EntityManager $em
-     */
     public function __construct(Node $node, EntityManager $em)
     {
         $this->node = $node;
@@ -38,18 +34,12 @@ class SearchFormWidget extends FormWidget
         $builder->setData($data);
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $form = $request->request->get('form');
         $this->data['node_search'] = $form['node_search']['boost'];
     }
 
-    /**
-     * @param EntityManager $em
-     */
     public function persist(EntityManager $em)
     {
         $nodeSearch = $em->getRepository(NodeSearch::class)->findOneByNode($this->node);

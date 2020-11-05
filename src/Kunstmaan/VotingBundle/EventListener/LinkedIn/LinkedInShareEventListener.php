@@ -8,9 +8,6 @@ use Kunstmaan\VotingBundle\EventListener\AbstractVoteListener;
 
 class LinkedInShareEventListener extends AbstractVoteListener
 {
-    /**
-     * @param LinkedInShareEvent $event
-     */
     public function onLinkedInShare(LinkedInShareEvent $event)
     {
         $this->createVote(

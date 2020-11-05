@@ -113,7 +113,7 @@ class AclHelperTest extends TestCase
 
         $conf->expects($this->any())
             ->method('getDefaultQueryHints')
-            ->willReturn(array());
+            ->willReturn([]);
 
         $conf->expects($this->any())
             ->method('isSecondLevelCacheEnabled')
@@ -163,11 +163,11 @@ class AclHelperTest extends TestCase
 
         $queryBuilder->expects($this->once())
             ->method('getRootEntities')
-            ->will($this->returnValue(array('Kunstmaan\NodeBundle\Entity\Node')));
+            ->will($this->returnValue(['Kunstmaan\NodeBundle\Entity\Node']));
 
         $queryBuilder->expects($this->once())
             ->method('getRootAliases')
-            ->will($this->returnValue(array('n')));
+            ->will($this->returnValue(['n']));
 
         $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
             ->getMock();
@@ -191,7 +191,7 @@ class AclHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node');
+        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node');
 
         /* @var $query Query */
         $query = $this->object->apply($queryBuilder, $permissionDef);
@@ -223,11 +223,11 @@ class AclHelperTest extends TestCase
 
         $queryBuilder->expects($this->once())
             ->method('getRootEntities')
-            ->will($this->returnValue(array('Kunstmaan\NodeBundle\Entity\Node')));
+            ->will($this->returnValue(['Kunstmaan\NodeBundle\Entity\Node']));
 
         $queryBuilder->expects($this->once())
             ->method('getRootAliases')
-            ->will($this->returnValue(array('n')));
+            ->will($this->returnValue(['n']));
 
         [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData(true);
 
@@ -244,7 +244,7 @@ class AclHelperTest extends TestCase
             ->method('getUser')
             ->will($this->returnValue('anon.'));
 
-        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node');
+        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node');
 
         /* @var $query Query */
         $query = $this->object->apply($queryBuilder, $permissionDef);
@@ -286,10 +286,10 @@ class AclHelperTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $rows = array(
-            array('id' => 1),
-            array('id' => 9),
-        );
+        $rows = [
+            ['id' => 1],
+            ['id' => 9],
+        ];
 
         $hydrator->expects($this->once())
             ->method('hydrateAll')
@@ -306,19 +306,19 @@ class AclHelperTest extends TestCase
             ->method('createNativeQuery')
             ->will($this->returnValue($query));
 
-        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
         /* @var $result array */
         $result = $this->object->getAllowedEntityIds($permissionDef);
 
-        $this->assertEquals(array(1, 9), $result);
+        $this->assertEquals([1, 9], $result);
     }
 
     public function testGetAllowedEntityIdsNoEntity()
     {
         $this->expectException('InvalidArgumentException');
 
-        $this->object->getAllowedEntityIds(new PermissionDefinition(array('view')));
+        $this->object->getAllowedEntityIds(new PermissionDefinition(['view']));
     }
 
     public function testGetTokenStorage()

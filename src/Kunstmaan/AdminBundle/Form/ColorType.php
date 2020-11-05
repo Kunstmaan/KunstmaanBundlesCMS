@@ -10,7 +10,7 @@ class ColorType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(TextType::class));
+        $resolver->setDefaults([TextType::class]);
     }
 
     public function getParent()

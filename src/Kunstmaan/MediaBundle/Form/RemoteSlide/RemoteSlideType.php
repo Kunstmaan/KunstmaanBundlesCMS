@@ -31,12 +31,12 @@ class RemoteSlideType extends AbstractRemoteType
             ->add(
                 'type',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'media.form.remote_slide.type.label',
-                    'choices' => array('slideshare' => 'slideshare'),
-                    'constraints' => array(new NotBlank()),
+                    'choices' => ['slideshare' => 'slideshare'],
+                    'constraints' => [new NotBlank()],
                     'required' => true,
-                )
+                ]
             );
     }
 
@@ -58,9 +58,9 @@ class RemoteSlideType extends AbstractRemoteType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
-            )
+            ]
         );
     }
 }

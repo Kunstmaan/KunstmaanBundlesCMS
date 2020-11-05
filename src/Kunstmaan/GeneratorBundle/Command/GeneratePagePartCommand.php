@@ -33,7 +33,7 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $sections = array();
+    private $sections = [];
 
     /**
      * @var bool
@@ -74,12 +74,12 @@ EOT
         $this->createGenerator()->generate($this->bundle, $this->pagepartName, $this->prefix, $this->fields, $this->sections, $this->behatTest);
 
         $this->assistant->writeSection('PagePart successfully created', 'bg=green;fg=black');
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
-            ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : ''),
-        ));
+            ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@' . $this->pagepartName . '\' @' . $this->bundle->getName() . '</comment>' : ''),
+        ]);
 
         return 0;
     }
@@ -93,7 +93,7 @@ EOT
             $this->assistant->writeError('KunstmaanPagePartBundle not found', true);
         }
 
-        $this->assistant->writeLine(array("This command helps you to generate a new pagepart.\n"));
+        $this->assistant->writeLine(["This command helps you to generate a new pagepart.\n"]);
 
         /*
          * Ask for which bundle we need to create the pagepart
@@ -108,11 +108,11 @@ EOT
         /*
          * Ask the name of the pagepart
          */
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             '',
             'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
             '',
-        ));
+        ]);
         $generator = $this->getGenerator();
         $bundlePath = $this->bundle->getPath();
         $name = $this->assistant->askAndValidate(
@@ -134,7 +134,7 @@ EOT
                 }
 
                 // Check that entity does not already exist
-                if (file_exists($bundlePath.'/Entity/PageParts/'.$name.'.php')) {
+                if (file_exists($bundlePath . '/Entity/PageParts/' . $name . '.php')) {
                     throw new \InvalidArgumentException(sprintf('PagePart or entity "%s" already exists', $name));
                 }
 
@@ -146,9 +146,9 @@ EOT
         /*
          * Ask which fields need to be present
          */
-        $this->assistant->writeLine(array("\nInstead of starting with a blank pagepart, you can add some fields now.\n"));
+        $this->assistant->writeLine(["\nInstead of starting with a blank pagepart, you can add some fields now.\n"]);
         $fields = $this->askEntityFields($this->bundle);
-        $this->fields = array();
+        $this->fields = [];
         foreach ($fields as $fieldInfo) {
             if ($fieldInfo['type'] == 'image') {
                 $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],

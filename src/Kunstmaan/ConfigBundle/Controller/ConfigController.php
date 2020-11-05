@@ -52,13 +52,9 @@ class ConfigController
     private $formFactory;
 
     /**
-     * @param RouterInterface               $router
-     * @param EngineInterface|Environment   $twig
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityManagerInterface        $em
-     * @param array                         $configuration
-     * @param ContainerInterface            $container
-     * @param FormFactoryInterface          $formFactory
+     * @param EngineInterface|Environment $twig
+     * @param ContainerInterface          $container
+     * @param FormFactoryInterface        $formFactory
      */
     public function __construct(
         RouterInterface $router,
@@ -93,8 +89,7 @@ class ConfigController
     /**
      * Generates the site config administration form and fills it with a default value if needed.
      *
-     * @param Request $request
-     * @param string  $internalName
+     * @param string $internalName
      *
      * @return Response
      */
@@ -112,7 +107,7 @@ class ConfigController
         }
 
         $repo = $this->em->getRepository($entityClass);
-        $config = $repo->findOneBy(array());
+        $config = $repo->findOneBy([]);
 
         if (!$config) {
             $config = new $entityClass();
@@ -130,7 +125,7 @@ class ConfigController
                 $this->em->persist($config);
                 $this->em->flush();
 
-                return new RedirectResponse($this->router->generate('kunstmaanconfigbundle_default', array('internalName' => $internalName)));
+                return new RedirectResponse($this->router->generate('kunstmaanconfigbundle_default', ['internalName' => $internalName]));
             }
         }
 

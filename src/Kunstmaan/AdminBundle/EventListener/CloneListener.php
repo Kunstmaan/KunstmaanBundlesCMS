@@ -11,9 +11,6 @@ use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
  */
 class CloneListener
 {
-    /**
-     * @param DeepCloneAndSaveEvent $event
-     */
     public function onDeepCloneAndSave(DeepCloneAndSaveEvent $event)
     {
         $clonedEntity = $event->getClonedEntity();

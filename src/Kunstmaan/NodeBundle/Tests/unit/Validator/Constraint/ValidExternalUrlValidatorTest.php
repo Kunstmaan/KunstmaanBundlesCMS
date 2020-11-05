@@ -32,7 +32,7 @@ class ValidExternalUrlValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($url, new ValidExternalUrl());
 
         $this->buildViolation('This value is not a valid URL.')
-            ->setParameter('{{ value }}', '"'.$url.'"')
+            ->setParameter('{{ value }}', '"' . $url . '"')
             ->setCode(Url::INVALID_URL_ERROR)
             ->assertRaised();
     }

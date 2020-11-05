@@ -20,15 +20,15 @@ class BulkUploadType extends AbstractType
         $builder->add(
             'files',
             FileType::class,
-            array(
+            [
                 'label' => 'media.form.bulk_upload.files.label',
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'accept' => $options['accept'],
                     'multiple' => 'multiple',
-                ),
+                ],
                 'data_class' => null,
-            )
+            ]
         );
     }
 

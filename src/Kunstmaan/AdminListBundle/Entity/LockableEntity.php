@@ -54,8 +54,6 @@ class LockableEntity extends AbstractEntity
     /**
      * Set created
      *
-     * @param \DateTime $created
-     *
      * @return LockableEntity
      */
     public function setCreated(\DateTime $created)
@@ -77,8 +75,6 @@ class LockableEntity extends AbstractEntity
 
     /**
      * Set updated
-     *
-     * @param \DateTime $updated
      *
      * @return LockableEntity
      */

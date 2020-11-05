@@ -19,8 +19,6 @@ class FolderManager
     }
 
     /**
-     * @param Folder $rootFolder
-     *
      * @return array|string
      */
     public function getFolderHierarchy(Folder $rootFolder)
@@ -29,8 +27,6 @@ class FolderManager
     }
 
     /**
-     * @param Folder $folder
-     *
      * @return Folder
      */
     public function getRootFolderFor(Folder $folder)
@@ -41,8 +37,6 @@ class FolderManager
     }
 
     /**
-     * @param Folder $folder
-     *
      * @return array
      */
     public function getParentIds(Folder $folder)
@@ -51,8 +45,6 @@ class FolderManager
     }
 
     /**
-     * @param Folder $folder
-     *
      * @return array
      */
     public function getParents(Folder $folder)

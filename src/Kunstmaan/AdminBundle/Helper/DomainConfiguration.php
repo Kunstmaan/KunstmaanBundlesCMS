@@ -67,7 +67,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     public function getHosts()
     {
-        return array($this->getHost());
+        return [$this->getHost()];
     }
 
     /**
@@ -129,7 +129,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     public function getExtraData()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -137,7 +137,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     public function getLocalesExtraData()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -153,7 +153,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     public function getFullHostConfig()
     {
-        return array();
+        return [];
     }
 
     /**

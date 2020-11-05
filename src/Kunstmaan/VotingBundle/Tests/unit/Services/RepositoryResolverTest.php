@@ -28,12 +28,12 @@ class RepositoryResolverTest extends TestCase
 
     public function dataRepositoryEvent()
     {
-        return array(
-            array($this->createMock('\Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent'), 'Kunstmaan\VotingBundle\Entity\UpDown\DownVote'),
-            array($this->createMock('\Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent'), 'Kunstmaan\VotingBundle\Entity\UpDown\UpVote'),
-            array($this->createMock('\Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent'), 'Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike'),
-            array($this->createMock('\Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent'), 'Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend'),
-            array($this->createMock('\Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent'), 'Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare'),
-        );
+        return [
+            [$this->createMock('\Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent'), 'Kunstmaan\VotingBundle\Entity\UpDown\DownVote'],
+            [$this->createMock('\Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent'), 'Kunstmaan\VotingBundle\Entity\UpDown\UpVote'],
+            [$this->createMock('\Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent'), 'Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike'],
+            [$this->createMock('\Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent'), 'Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend'],
+            [$this->createMock('\Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent'), 'Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare'],
+        ];
     }
 }

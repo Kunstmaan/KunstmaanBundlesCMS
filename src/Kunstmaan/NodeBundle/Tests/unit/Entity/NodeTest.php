@@ -156,7 +156,7 @@ class NodeTest extends TestCase
         $this->object->setId(1);
         $this->object->setRef($entity);
 
-        $this->assertEquals('node 1, refEntityName: '. \get_class($entity), $this->object->__toString());
+        $this->assertEquals('node 1, refEntityName: ' . \get_class($entity), $this->object->__toString());
     }
 
     public function testGetSetLeftRightLevel()

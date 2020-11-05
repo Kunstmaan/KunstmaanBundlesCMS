@@ -29,7 +29,6 @@ final class ImportTranslationsFromFileCommand extends Command
     /**
      * ImportTranslationsFromFileCommand constructor.
      *
-     * @param Importer   $importer
      * @param Translator $translator
      * @param            $locales
      */
@@ -55,9 +54,6 @@ final class ImportTranslationsFromFileCommand extends Command
 
     /**
      * @throws LogicException
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

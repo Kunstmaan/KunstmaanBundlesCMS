@@ -27,7 +27,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
 
     /**
      * @param $value
-     * @param Constraint $constraint
      *
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
@@ -55,17 +54,11 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactory
-     */
     public function setExtensionGuesser(ExtensionGuesserFactoryInterface $extensionGuesserFactory)
     {
         $this->extensionGuesser = $extensionGuesserFactory->get();
     }
 
-    /**
-     * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
-     */
     public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();

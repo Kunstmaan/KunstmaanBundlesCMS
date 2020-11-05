@@ -28,13 +28,13 @@ class EnumerationFilterTypeTest extends BaseOrmFilterTest
 
     public function testBindRequest()
     {
-        $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
+        $request = new Request(['filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => [1, 2]]);
 
-        $data = array();
+        $data = [];
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(array('comparator' => 'in', 'value' => array(1, 2)), $data);
+        $this->assertEquals(['comparator' => 'in', 'value' => [1, 2]], $data);
     }
 
     /**
@@ -51,7 +51,7 @@ class EnumerationFilterTypeTest extends BaseOrmFilterTest
         $qb->select('b')
           ->from('Entity', 'b');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('comparator' => $comparator, 'value' => $value), 'enumeration');
+        $this->object->apply(['comparator' => $comparator, 'value' => $value], 'enumeration');
 
         $this->assertEquals("SELECT b FROM Entity b WHERE b.enumeration $whereClause", $qb->getDQL());
         if ($testValue) {
@@ -64,10 +64,10 @@ class EnumerationFilterTypeTest extends BaseOrmFilterTest
      */
     public static function applyDataProvider()
     {
-        return array(
-          array('in', 'IN(:var_enumeration)', array(1, 2), true),
-          array('notin', 'NOT IN(:var_enumeration)', array(1, 2), true),
-        );
+        return [
+          ['in', 'IN(:var_enumeration)', [1, 2], true],
+          ['notin', 'NOT IN(:var_enumeration)', [1, 2], true],
+        ];
     }
 
     public function testGetTemplate()

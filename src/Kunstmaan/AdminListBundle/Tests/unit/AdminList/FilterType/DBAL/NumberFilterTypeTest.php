@@ -27,13 +27,13 @@ class NumberFilterTypeTest extends BaseDbalFilterTest
 
     public function testBindRequest()
     {
-        $request = new Request(array('filter_comparator_number' => 'eq', 'filter_value_number' => 1));
+        $request = new Request(['filter_comparator_number' => 'eq', 'filter_value_number' => 1]);
 
-        $data = array();
+        $data = [];
         $uniqueId = 'number';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(array('comparator' => 'eq', 'value' => 1), $data);
+        $this->assertEquals(['comparator' => 'eq', 'value' => 1], $data);
     }
 
     /**
@@ -50,7 +50,7 @@ class NumberFilterTypeTest extends BaseDbalFilterTest
         $qb->select('*')
             ->from('entity', 'e');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('comparator' => $comparator, 'value' => $value), 'number');
+        $this->object->apply(['comparator' => $comparator, 'value' => $value], 'number');
 
         $this->assertEquals("SELECT * FROM entity e WHERE e.number $whereClause", $qb->getSQL());
         if ($testValue) {
@@ -63,16 +63,16 @@ class NumberFilterTypeTest extends BaseDbalFilterTest
      */
     public static function applyDataProvider()
     {
-        return array(
-            array('eq', '= :var_number', 1, true),
-            array('neq', '<> :var_number', 2, true),
-            array('lt', '< :var_number', 3, true),
-            array('lte', '<= :var_number', 4, true),
-            array('gt', '> :var_number', 5, true),
-            array('gte', '>= :var_number', 6, true),
-            array('isnull', 'IS NULL', 0, false),
-            array('isnotnull', 'IS NOT NULL', 0, false),
-        );
+        return [
+            ['eq', '= :var_number', 1, true],
+            ['neq', '<> :var_number', 2, true],
+            ['lt', '< :var_number', 3, true],
+            ['lte', '<= :var_number', 4, true],
+            ['gt', '> :var_number', 5, true],
+            ['gte', '>= :var_number', 6, true],
+            ['isnull', 'IS NULL', 0, false],
+            ['isnotnull', 'IS NOT NULL', 0, false],
+        ];
     }
 
     public function testGetTemplate()

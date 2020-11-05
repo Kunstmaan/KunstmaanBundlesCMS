@@ -51,8 +51,6 @@ class ResourceCacher
 
     /**
      * Cache an array of resources into the given cache
-     *
-     * @param array $resources
      */
     public function cacheResources(array $resources)
     {

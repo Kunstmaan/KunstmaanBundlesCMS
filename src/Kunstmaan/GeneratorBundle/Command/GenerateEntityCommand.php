@@ -94,11 +94,11 @@ EOT
         $this->createGenerator()->generate($this->bundle, $this->entityName, $this->prefix, $this->fields, $this->withRepository);
 
         $this->assistant->writeSection('Entity successfully created', 'bg=green;fg=black');
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             'Make sure you update your database first before you test the entity:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-        ));
+        ]);
 
         return 0;
     }
@@ -108,7 +108,7 @@ EOT
      */
     protected function doInteract()
     {
-        $this->assistant->writeLine(array("This command helps you to generate a new entity.\n"));
+        $this->assistant->writeLine(["This command helps you to generate a new entity.\n"]);
 
         /*
          * Ask for which bundle we need to create the pagepart
@@ -123,11 +123,11 @@ EOT
         /*
          * Ask the name of the pagepart
          */
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             '',
             'The name of your Entity: For example: <comment>Address</comment>',
             '',
-        ));
+        ]);
         $generator = $this->getGenerator();
         $bundlePath = $this->bundle->getPath();
         $name = $this->assistant->askAndValidate(
@@ -143,7 +143,7 @@ EOT
                 }
 
                 // Check that entity does not already exist
-                if (file_exists($bundlePath.'/Entity/'.$name.'.php')) {
+                if (file_exists($bundlePath . '/Entity/' . $name . '.php')) {
                     throw new \InvalidArgumentException(sprintf('Entity "%s" already exists', $name));
                 }
 
@@ -155,7 +155,7 @@ EOT
         /*
          * Ask which fields need to be present
          */
-        $this->assistant->writeLine(array("\nInstead of starting with a blank entity, you can add some fields now.\n"));
+        $this->assistant->writeLine(["\nInstead of starting with a blank entity, you can add some fields now.\n"]);
         $fields = $this->askEntityFields($this->bundle);
         $this->fields = array_map(function ($fieldInfo) {
             switch ($fieldInfo['type']) {

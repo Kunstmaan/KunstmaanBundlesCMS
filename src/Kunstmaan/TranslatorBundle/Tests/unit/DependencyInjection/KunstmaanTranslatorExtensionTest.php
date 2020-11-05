@@ -23,14 +23,14 @@ class KunstmaanTranslatorExtensionTest extends TestCase
     public function testEnabledByDefault()
     {
         $container = $this->getContainer();
-        $this->extension->load(array('kuma_translator' => array('managed_locales' => array('nl'))), $container);
+        $this->extension->load(['kuma_translator' => ['managed_locales' => ['nl']]], $container);
         $this->assertTrue($container->getParameter('kuma_translator.enabled'));
     }
 
     public function testDisabled()
     {
         $container = $this->getContainer();
-        $this->extension->load(array('kuma_translator' => array('enabled' => false)), $container);
+        $this->extension->load(['kuma_translator' => ['enabled' => false]], $container);
         $this->assertFalse($container->hasParameter('kuma_translator.enabled'));
     }
 
@@ -50,7 +50,7 @@ class KunstmaanTranslatorExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.root_dir', 'src/Kunstmaan/TranslatorBundle');
         $container->setParameter('kernel.project_dir', 'src/Kunstmaan/TranslatorBundle');
-        $container->setParameter('kernel.bundles', array(new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle()));
+        $container->setParameter('kernel.bundles', [new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle()]);
         $container->setParameter('kernel.debug', true);
         $container->setParameter('kunstmaan_admin.default_locale', 'en');
 

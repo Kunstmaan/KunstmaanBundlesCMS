@@ -29,25 +29,25 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
      */
     public static function applyDataProvider()
     {
-        return array(
-            array('before', '<= :var_datetime', array('date' => '14/04/2014', 'time' => '09:00'), '2014-04-14 09:00'),
-            array('after', '> :var_datetime', array('date' => '14/04/2014', 'time' => '10:00'), '2014-04-14 10:00'),
-        );
+        return [
+            ['before', '<= :var_datetime', ['date' => '14/04/2014', 'time' => '09:00'], '2014-04-14 09:00'],
+            ['after', '> :var_datetime', ['date' => '14/04/2014', 'time' => '10:00'], '2014-04-14 10:00'],
+        ];
     }
 
     public function testBindRequest()
     {
-        $request = new Request(array(
+        $request = new Request([
             'filter_comparator_datetime' => 'before',
-            'filter_value_datetime' => array('date' => '14/04/2014', 'time' => '09:00'),
-        ));
+            'filter_value_datetime' => ['date' => '14/04/2014', 'time' => '09:00'],
+        ]);
 
-        $data = array();
+        $data = [];
         $uniqueId = 'datetime';
         $this->object->bindRequest($request, $data, $uniqueId);
 
         $this->assertEquals(
-            array('comparator' => 'before', 'value' => array('date' => '14/04/2014', 'time' => '09:00')),
+            ['comparator' => 'before', 'value' => ['date' => '14/04/2014', 'time' => '09:00']],
             $data
         );
     }
@@ -66,7 +66,7 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
         $qb->select('*')
             ->from('entity', 'e');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('comparator' => $comparator, 'value' => $value), 'datetime');
+        $this->object->apply(['comparator' => $comparator, 'value' => $value], 'datetime');
 
         $this->assertEquals("SELECT * FROM entity e WHERE e.datetime $whereClause", $qb->getSQL());
         $this->assertEquals($testValue, $qb->getParameter('var_datetime'));

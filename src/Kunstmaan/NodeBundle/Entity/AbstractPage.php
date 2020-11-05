@@ -96,8 +96,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * @param HasNodeInterface $parent
-     *
      * @return AbstractPage
      */
     public function setParent(HasNodeInterface $parent)

@@ -68,7 +68,7 @@ class Method implements PropertyParserInterface
 
                     break;
                 } elseif (is_callable([$provider, $method])) {
-                    $value = $this->processValue($pattern, call_user_func_array(array($provider, $method), $arguments), $value, $matches[0]);
+                    $value = $this->processValue($pattern, call_user_func_array([$provider, $method], $arguments), $value, $matches[0]);
 
                     break;
                 }
@@ -122,7 +122,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param \ReflectionParameter $parameter
      * @param $parameters
      *
      * @return object|null
@@ -146,7 +145,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param \ReflectionParameter $parameter
      * @param $parameters
      *
      * @return mixed|null

@@ -67,17 +67,17 @@ class NodeMenu
     /**
      * @var Node[]
      */
-    private $allNodes = array();
+    private $allNodes = [];
 
     /**
      * @var Node[]
      */
-    private $childNodes = array();
+    private $childNodes = [];
 
     /**
      * @var Node[]
      */
-    private $nodesByInternalName = array();
+    private $nodesByInternalName = [];
 
     /**
      * @var bool
@@ -170,11 +170,11 @@ class NodeMenu
             return;
         }
 
-        $this->allNodes = array();
+        $this->allNodes = [];
         $this->breadCrumb = null;
-        $this->childNodes = array();
+        $this->childNodes = [];
         $this->topNodeMenuItems = null;
-        $this->nodesByInternalName = array();
+        $this->nodesByInternalName = [];
 
         /* @var NodeRepository $repo */
         $repo = $this->em->getRepository(Node::class);
@@ -212,7 +212,7 @@ class NodeMenu
     {
         $this->init();
         if (!\is_array($this->topNodeMenuItems)) {
-            $this->topNodeMenuItems = array();
+            $this->topNodeMenuItems = [];
 
             // To be backwards compatible we need to create the top node MenuItems
             if (\array_key_exists(0, $this->childNodes)) {
@@ -242,7 +242,7 @@ class NodeMenu
     {
         $this->init();
         if (!\is_array($this->breadCrumb)) {
-            $this->breadCrumb = array();
+            $this->breadCrumb = [];
 
             /* @var NodeRepository $repo */
             $repo = $this->em->getRepository(Node::class);
@@ -302,7 +302,6 @@ class NodeMenu
     }
 
     /**
-     * @param Node $node
      * @param bool $includeHiddenFromNav
      *
      * @return NodeMenuItem[]
@@ -310,7 +309,7 @@ class NodeMenu
     public function getChildren(Node $node, $includeHiddenFromNav = true)
     {
         $this->init();
-        $children = array();
+        $children = [];
 
         if (\array_key_exists($node->getId(), $this->childNodes)) {
             $nodes = $this->childNodes[$node->getId()];
@@ -346,7 +345,6 @@ class NodeMenu
     }
 
     /**
-     * @param Node $node
      * @param bool $includeHiddenFromNav
      *
      * @return array|\Kunstmaan\NodeBundle\Helper\NodeMenuItem[]
@@ -354,7 +352,7 @@ class NodeMenu
     public function getSiblings(Node $node, $includeHiddenFromNav = true)
     {
         $this->init();
-        $siblings = array();
+        $siblings = [];
 
         if (false !== $parent = $this->getParent($node)) {
             $siblings = $this->getChildren($parent, $includeHiddenFromNav);
@@ -370,7 +368,6 @@ class NodeMenu
     }
 
     /**
-     * @param Node $node
      * @param bool $includeHiddenFromNav
      *
      * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
@@ -393,7 +390,6 @@ class NodeMenu
     }
 
     /**
-     * @param Node $node
      * @param bool $includeHiddenFromNav
      *
      * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
@@ -419,8 +415,6 @@ class NodeMenu
     }
 
     /**
-     * @param Node $node
-     *
      * @return NodeMenuItem
      */
     public function getParent(Node $node)
@@ -671,7 +665,7 @@ class NodeMenu
      */
     private function getTopNodeMenuItems()
     {
-        $topNodeMenuItems = array();
+        $topNodeMenuItems = [];
         $topNodes = $this->childNodes[0];
         /* @var Node $topNode */
         foreach ($topNodes as $topNode) {

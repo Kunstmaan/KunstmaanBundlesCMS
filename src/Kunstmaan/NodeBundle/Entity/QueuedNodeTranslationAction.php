@@ -50,8 +50,6 @@ class QueuedNodeTranslationAction extends AbstractEntity
     /**
      * Set nodeTranslation
      *
-     * @param NodeTranslation $nodeTranslation
-     *
      * @return QueuedNodeTranslationAction
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation)
@@ -98,8 +96,6 @@ class QueuedNodeTranslationAction extends AbstractEntity
     /**
      * Set user
      *
-     * @param BaseUser $user
-     *
      * @return QueuedNodeTranslationAction
      */
     public function setUser(BaseUser $user)
@@ -121,8 +117,6 @@ class QueuedNodeTranslationAction extends AbstractEntity
 
     /**
      * Set date
-     *
-     * @param \DateTime $date
      *
      * @return QueuedNodeTranslationAction
      */

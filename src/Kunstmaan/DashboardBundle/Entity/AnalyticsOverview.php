@@ -219,7 +219,7 @@ class AnalyticsOverview extends AbstractEntity
      */
     public function getActiveGoals()
     {
-        $goals = array();
+        $goals = [];
         foreach ($this->getGoals() as $goal) {
             if ($goal->getVisits()) {
                 $goals[] = $goal;

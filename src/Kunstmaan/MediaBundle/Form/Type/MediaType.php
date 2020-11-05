@@ -73,12 +73,12 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'compound' => false,
                 'chooser' => 'KunstmaanMediaBundle_chooser',
                 'mediatype' => null,
                 'current_value_container' => new CurrentValueContainer(),
-            )
+            ]
         );
     }
 

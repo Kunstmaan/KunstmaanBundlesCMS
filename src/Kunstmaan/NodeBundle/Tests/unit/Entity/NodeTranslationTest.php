@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\Node;

@@ -5,10 +5,10 @@ namespace Kunstmaan\MediaBundle\Controller;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller class which Aviary can use to upload the edited image and add it to the database
@@ -16,9 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AviaryController extends Controller
 {
     /**
-     * @param Request $request
-     * @param int     $folderId The id of the Folder
-     * @param int     $mediaId  The id of the image
+     * @param int $folderId The id of the Folder
+     * @param int $mediaId  The id of the image
      *
      * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
      *
@@ -54,7 +53,7 @@ class AviaryController extends Controller
         return new RedirectResponse(
             $this->generateUrl(
                 'KunstmaanMediaBundle_folder_show',
-                array('folderId' => $folder->getId())
+                ['folderId' => $folder->getId()]
             )
         );
     }

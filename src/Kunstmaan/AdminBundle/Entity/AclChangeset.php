@@ -209,8 +209,6 @@ class AclChangeset extends AbstractEntity
     /**
      * Set reference entity
      *
-     * @param AbstractEntity $entity
-     *
      * @return AclChangeset
      */
     public function setRef(AbstractEntity $entity)

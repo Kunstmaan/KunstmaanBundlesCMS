@@ -13,7 +13,7 @@ class Loader implements LoaderInterface
 {
     private $translationRepository;
 
-    private $catalogues = array();
+    private $catalogues = [];
 
     /**
      * @{@inheritdoc}
@@ -22,7 +22,7 @@ class Loader implements LoaderInterface
     {
         if (!isset($this->catalogues[$locale])) {
             $catalogue = new MessageCatalogue($locale);
-            $translations = $this->translationRepository->findBy(array('locale' => $locale));
+            $translations = $this->translationRepository->findBy(['locale' => $locale]);
             foreach ($translations as $translation) {
                 $catalogue->set($translation->getKeyword(), $translation->getText(), $translation->getDomain());
             }

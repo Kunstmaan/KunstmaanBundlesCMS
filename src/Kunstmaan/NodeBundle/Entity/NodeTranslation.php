@@ -272,8 +272,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param NodeVersion $publicNodeVersion
-     *
      * @return NodeTranslation
      */
     public function setPublicNodeVersion(NodeVersion $publicNodeVersion)
@@ -308,8 +306,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param ArrayCollection $nodeVersions
-     *
      * @return NodeTranslation
      */
     public function setNodeVersions(ArrayCollection $nodeVersions)
@@ -347,8 +343,6 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * Add nodeVersion
-     *
-     * @param NodeVersion $nodeVersion
      *
      * @return NodeTranslation
      */

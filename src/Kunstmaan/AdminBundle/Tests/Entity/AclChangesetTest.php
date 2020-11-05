@@ -30,7 +30,7 @@ class AclChangesetTest extends TestCase
 
     public function testSetAndGetChangeset()
     {
-        $changeset = array('ROLE_ADMIN' => array('ADD' => array('VIEW', 'EDIT'), 'DEL' => 'PUBLISH'));
+        $changeset = ['ROLE_ADMIN' => ['ADD' => ['VIEW', 'EDIT'], 'DEL' => 'PUBLISH']];
         $this->object->setChangeset($changeset);
 
         $this->assertEquals($changeset, $this->object->getChangeset());

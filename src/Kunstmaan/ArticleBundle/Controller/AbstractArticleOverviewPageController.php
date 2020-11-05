@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractArticleOverviewPageController extends Controller
 {
-    /**
-     * @param Request $request
-     */
     public function serviceAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

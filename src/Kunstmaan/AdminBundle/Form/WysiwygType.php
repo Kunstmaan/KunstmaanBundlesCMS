@@ -11,10 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class WysiwygType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new MediaTokenTransformer();

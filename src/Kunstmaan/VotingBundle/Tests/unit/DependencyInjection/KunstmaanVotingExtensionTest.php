@@ -51,7 +51,7 @@ class KunstmaanVotingExtensionTest extends TestCase
     public function testGetConfigWithDefaultValues()
     {
         $container = $this->getContainer();
-        $this->extension->load(array(array()), $container);
+        $this->extension->load([[]], $container);
         $this->assertTrue($container->hasParameter($this->root . '.actions'));
         $this->assertInternalType('array', $container->getParameter($this->root . '.actions'));
 
@@ -69,19 +69,19 @@ class KunstmaanVotingExtensionTest extends TestCase
 
     public function testGetConfigWithOverrideValues()
     {
-        $configs = array(
-            'actions' => array(
-                'up_vote' => array(
+        $configs = [
+            'actions' => [
+                'up_vote' => [
                     'default_value' => '2',
-                ),
-                'down_vote' => array(
+                ],
+                'down_vote' => [
                     'default_value' => '-5',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $container = $this->getContainer();
-        $this->extension->load(array($configs), $container);
+        $this->extension->load([$configs], $container);
         $this->assertTrue($container->hasParameter($this->root . '.actions'));
         $this->assertInternalType('array', $container->getParameter($this->root . '.actions'));
 

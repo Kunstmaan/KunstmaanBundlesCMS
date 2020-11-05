@@ -27,13 +27,13 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
 
     public function testBindRequest()
     {
-        $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
+        $request = new Request(['filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => [1, 2]]);
 
-        $data = array();
+        $data = [];
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(array('comparator' => 'in', 'value' => array(1, 2)), $data);
+        $this->assertEquals(['comparator' => 'in', 'value' => [1, 2]], $data);
     }
 
     /**
@@ -50,7 +50,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
         $qb->select('*')
           ->from('entity', 'e');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('comparator' => $comparator, 'value' => $value), 'enumeration');
+        $this->object->apply(['comparator' => $comparator, 'value' => $value], 'enumeration');
 
         $this->assertEquals("SELECT * FROM entity e WHERE e.enumeration $whereClause", $qb->getSQL());
         if ($testValue) {
@@ -63,16 +63,16 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
      */
     public static function applyDataProvider()
     {
-        return array(
-          array('in', 'IN (:var_enumeration)', array(1, 2), true),
-          array('notin', 'NOT IN (:var_enumeration)', array(1, 2), true),
-        );
+        return [
+          ['in', 'IN (:var_enumeration)', [1, 2], true],
+          ['notin', 'NOT IN (:var_enumeration)', [1, 2], true],
+        ];
     }
 
     public function testGetComparator()
     {
-        $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
-        $data = array();
+        $request = new Request(['filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => [1, 2]]);
+        $data = [];
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
         $this->assertEquals($this->object->getComparator(), 'in');
@@ -80,11 +80,11 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
 
     public function testGetValue()
     {
-        $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
-        $data = array();
+        $request = new Request(['filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => [1, 2]]);
+        $data = [];
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
-        $this->assertEquals($this->object->getValue(), array(1, 2));
+        $this->assertEquals($this->object->getValue(), [1, 2]);
     }
 
     public function testGetTemplate()

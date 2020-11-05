@@ -20,21 +20,21 @@ class RecurringEveryXTimeAdminType extends AbstractRuleAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('days', IntegerType::class, array(
+        $builder->add('days', IntegerType::class, [
             'label' => 'kuma_lead_generation.form.recurring_every_x_time.days.label',
             'required' => false,
-        ));
-        $builder->add('hours', IntegerType::class, array(
+        ]);
+        $builder->add('hours', IntegerType::class, [
             'label' => 'kuma_lead_generation.form.recurring_every_x_time.hours.label',
             'required' => false,
-        ));
-        $builder->add('minutes', IntegerType::class, array(
+        ]);
+        $builder->add('minutes', IntegerType::class, [
             'label' => 'kuma_lead_generation.form.recurring_every_x_time.minutes.label',
             'required' => false,
-        ));
-        $builder->add('times', IntegerType::class, array(
+        ]);
+        $builder->add('times', IntegerType::class, [
             'label' => 'kuma_lead_generation.form.recurring_every_x_time.times.label',
-        ));
+        ]);
     }
 
     /**

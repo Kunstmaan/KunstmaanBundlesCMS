@@ -85,7 +85,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_'.AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
         $this->assertContains(747, $editUrl['params']);
     }
 
@@ -104,7 +104,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_'.AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
         $this->assertContains(747, $editUrl['params']);
     }
 

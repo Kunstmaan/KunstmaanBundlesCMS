@@ -25,9 +25,9 @@ class DownloadPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', MediaType::class, array(
+        $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.download.choosefile',
-        ));
+        ]);
     }
 
     /**
@@ -47,8 +47,8 @@ class DownloadPagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart',
-        ));
+        ]);
     }
 }

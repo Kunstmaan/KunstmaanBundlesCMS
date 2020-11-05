@@ -31,7 +31,7 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $builder = $this->createMock(FormBuilderInterface::class);
         $builder->expects($this->exactly(3))->method('add')->willReturnSelf();
 
-        $this->object->buildForm($builder, array());
+        $this->object->buildForm($builder, []);
     }
 
     public function testConfigureOptions()

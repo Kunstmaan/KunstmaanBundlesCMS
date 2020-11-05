@@ -4,9 +4,9 @@ namespace Kunstmaan\DashboardBundle\Controller;
 
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends Controller
 {
@@ -14,8 +14,6 @@ class DashboardController extends Controller
      * The index action will render the main screen the users see when they log in in to the admin
      *
      * @Route("/", name="kunstmaan_dashboard")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -27,6 +25,6 @@ class DashboardController extends Controller
         $widgets = $widgetManager->getWidgets();
         $segmentId = $request->query->get('segment');
 
-        return $this->render('@KunstmaanDashboard/Dashboard/index.html.twig', array('widgets' => $widgets, 'id' => $segmentId));
+        return $this->render('@KunstmaanDashboard/Dashboard/index.html.twig', ['widgets' => $widgets, 'id' => $segmentId]);
     }
 }

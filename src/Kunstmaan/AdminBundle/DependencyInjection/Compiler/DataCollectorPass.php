@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class DataCollectorPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_admin.toolbar.datacollector')) {

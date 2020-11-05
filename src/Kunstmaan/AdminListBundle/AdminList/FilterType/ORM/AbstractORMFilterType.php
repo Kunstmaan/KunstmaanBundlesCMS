@@ -15,9 +15,6 @@ abstract class AbstractORMFilterType extends AbstractFilterType
      */
     protected $queryBuilder;
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     public function setQueryBuilder(QueryBuilder $queryBuilder)
     {
         $this->queryBuilder = $queryBuilder;

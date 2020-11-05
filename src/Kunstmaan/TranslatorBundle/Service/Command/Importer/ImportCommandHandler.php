@@ -31,8 +31,6 @@ class ImportCommandHandler extends AbstractCommandHandler
     /**
      * Execute an import command
      *
-     * @param ImportCommand $importCommand
-     *
      * @return int total number of files imported
      */
     public function executeImportCommand(ImportCommand $importCommand)
@@ -59,8 +57,6 @@ class ImportCommandHandler extends AbstractCommandHandler
     /**
      * Import all translation files from app resources
      *
-     * @param ImportCommand $importCommand
-     *
      * @return int total number of files imported
      */
     private function importGlobalTranslationFiles(ImportCommand $importCommand)
@@ -75,8 +71,6 @@ class ImportCommandHandler extends AbstractCommandHandler
 
     /**
      * Import all translation files from a specific bundle, bundle name will be lowercased so cases don't matter
-     *
-     * @param ImportCommand $importCommand
      *
      * @return int total number of files imported
      */
@@ -108,8 +102,6 @@ class ImportCommandHandler extends AbstractCommandHandler
     /**
      * Import all translation files from all registered bundles (in AppKernel)
      *
-     * @param ImportCommand $importCommand
-     *
      * @return int total number of files imported
      */
     private function importAllBundlesTranslationFiles(ImportCommand $importCommand)
@@ -133,14 +125,12 @@ class ImportCommandHandler extends AbstractCommandHandler
     /**
      * Import all translation files from your own registered bundles (in src/ directory)
      *
-     * @param ImportCommand $importCommand
-     *
      * @return int The total number of imported files
      */
     private function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
     {
         $imported = 0;
-        $srcDir = $this->kernel->getProjectDir().'/src';
+        $srcDir = $this->kernel->getProjectDir() . '/src';
 
         foreach ($this->kernel->getBundles() as $name => $bundle) {
             if (strpos($bundle->getPath(), $srcDir) !== false) {
@@ -159,8 +149,6 @@ class ImportCommandHandler extends AbstractCommandHandler
 
     /**
      * Import the translation files from the defined bundles.
-     *
-     * @param ImportCommand $importCommand
      *
      * @return int The total number of imported files
      */
@@ -184,8 +172,6 @@ class ImportCommandHandler extends AbstractCommandHandler
     /**
      * Import all translation files from a single bundle
      *
-     * @param ImportCommand $importCommand
-     *
      * @return int total number of files imported
      */
     private function importSingleBundleTranslationFiles(ImportCommand $importCommand)
@@ -206,8 +192,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      * The finder object shoud already have the files to look for defined;
      * Forcing the import will override all existing translations in the stasher
      *
-     * @param Finder $finder
-     * @param bool   $force  override identical translations in the stasher (domain/locale and keyword combination)
+     * @param bool $force override identical translations in the stasher (domain/locale and keyword combination)
      *
      * @return int total number of files imported
      */
@@ -250,8 +235,6 @@ class ImportCommandHandler extends AbstractCommandHandler
     /**
      * Gives an array with all languages that needs to be imported (from the given ImportCommand)
      * If non is given, all managed locales will be used (defined in config)
-     *
-     * @param ImportCommand $importCommand
      *
      * @return array all locales to import by the given ImportCommand
      */

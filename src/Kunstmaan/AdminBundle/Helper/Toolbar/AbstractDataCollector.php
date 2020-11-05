@@ -47,18 +47,12 @@ abstract class AbstractDataCollector extends BaseDataCollector implements DataCo
         return $this;
     }
 
-    /**
-     * @param AdminRouteHelper $adminRouteHelper
-     */
     public function setAdminRouteHelper(AdminRouteHelper $adminRouteHelper)
     {
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
     /**
-     * @param Request  $request
-     * @param Response $response
-     *
      * @return bool
      */
     public function showDataCollection(Request $request, Response $response)

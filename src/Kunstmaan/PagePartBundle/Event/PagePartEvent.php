@@ -23,8 +23,6 @@ class PagePartEvent extends Event
 
     /**
      * PagePartEvent constructor.
-     *
-     * @param PagePartInterface $pagePart
      */
     public function __construct(PagePartInterface $pagePart)
     {
@@ -39,9 +37,6 @@ class PagePartEvent extends Event
         return $this->pagePart;
     }
 
-    /**
-     * @param PagePartInterface $pagePart
-     */
     public function setPagePart(PagePartInterface $pagePart)
     {
         $this->pagePart = $pagePart;
@@ -55,9 +50,6 @@ class PagePartEvent extends Event
         return $this->response;
     }
 
-    /**
-     * @param Response $response
-     */
     public function setResponse(Response $response)
     {
         $this->response = $response;

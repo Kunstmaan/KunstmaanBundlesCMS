@@ -163,12 +163,12 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $mfsf = new TextFormSubmissionField();
-        $mfsf->setFieldName('field_'.$this->getUniqueId());
+        $mfsf->setFieldName('field_' . $this->getUniqueId());
         $mfsf->setLabel($this->getLabel());
         $mfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_'.$this->getUniqueId()] = $mfsf;
+        $data['formwidget_' . $this->getUniqueId()] = $mfsf;
 
         $constraints = [];
         if ($this->getRequired()) {
@@ -187,7 +187,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_'.$this->getUniqueId(),
+            'formwidget_' . $this->getUniqueId(),
             TextFormSubmissionType::class,
             [
                 'label' => $this->getLabel(),

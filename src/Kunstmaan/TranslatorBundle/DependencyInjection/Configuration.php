@@ -40,7 +40,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
 
                 ->arrayNode('bundles')
-                    ->defaultValue(array())
+                    ->defaultValue([])
                     ->prototype('scalar')->end()
                 ->end()
 
@@ -54,7 +54,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
 
                 ->arrayNode('managed_locales')
-                    ->defaultValue(array())
+                    ->defaultValue([])
                     ->prototype('scalar')->end()
                 ->end()
 
@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('orm')
                             ->validate()
                                 ->ifNotInArray($availableStorageEngines)
-                                ->thenInvalid('Storage engine should be one of the following: '.implode(', ', $availableStorageEngines))
+                                ->thenInvalid('Storage engine should be one of the following: ' . implode(', ', $availableStorageEngines))
                             ->end()
                         ->end()
                     ->end()

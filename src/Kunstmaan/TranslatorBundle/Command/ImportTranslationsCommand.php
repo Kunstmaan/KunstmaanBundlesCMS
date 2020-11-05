@@ -39,8 +39,6 @@ class ImportTranslationsCommand extends ContainerAwareCommand
      * ImportTranslationsCommand constructor.
      *
      * @param ImportCommandHandler $importCommandHandler
-     * @param string               $defaultBundle
-     * @param array                $bundles
      */
     public function __construct(/* ImportCommandHandler */
         $importCommandHandler = null,
@@ -93,10 +91,6 @@ class ImportTranslationsCommand extends ContainerAwareCommand
             );
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $force = $input->getOption('force');

@@ -18,7 +18,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -26,7 +26,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(new AbstractArticleOverviewPagePagePartAdminConfigurator());
+        return [new AbstractArticleOverviewPagePagePartAdminConfigurator()];
     }
 
     /**

@@ -43,9 +43,6 @@ class SeoTwigExtension extends AbstractExtension
      */
     private $requestCache;
 
-    /**
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -58,14 +55,14 @@ class SeoTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('render_seo_metadata_for', array($this, 'renderSeoMetadataFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new TwigFunction('get_seo_for', array($this, 'getSeoFor')),
-            new TwigFunction('get_title_for', array($this, 'getTitleFor')),
-            new TwigFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
-            new TwigFunction('get_absolute_url', array($this, 'getAbsoluteUrl')),
-            new TwigFunction('get_image_dimensions', array($this, 'getImageDimensions')),
-        );
+        return [
+            new TwigFunction('render_seo_metadata_for', [$this, 'renderSeoMetadataFor'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('get_seo_for', [$this, 'getSeoFor']),
+            new TwigFunction('get_title_for', [$this, 'getTitleFor']),
+            new TwigFunction('get_title_for_page_or_default', [$this, 'getTitleForPageOrDefault']),
+            new TwigFunction('get_absolute_url', [$this, 'getAbsoluteUrl']),
+            new TwigFunction('get_image_dimensions', [$this, 'getImageDimensions']),
+        ];
     }
 
     /**
@@ -89,20 +86,18 @@ class SeoTwigExtension extends AbstractExtension
 
         // Prepend with $host if $url starts with "/"
         if (strpos($url, '/') === 0) {
-            return $url = $host.$url;
+            return $url = $host . $url;
         }
 
         return false;
     }
 
     /**
-     * @param AbstractPage $entity
-     *
      * @return Seo
      */
     public function getSeoFor(AbstractPage $entity)
     {
-        $key = md5(\get_class($entity).$entity->getId());
+        $key = md5(\get_class($entity) . $entity->getId());
 
         if (!\array_key_exists($key, $this->seoCache)) {
             $seo = $this->em->getRepository(Seo::class)->findOrCreateFor($entity);
@@ -121,7 +116,7 @@ class SeoTwigExtension extends AbstractExtension
      */
     public function getTitleFor(AbstractPage $entity)
     {
-        $arr = array();
+        $arr = [];
 
         $arr[] = $this->getSeoTitle($entity);
 
@@ -142,7 +137,7 @@ class SeoTwigExtension extends AbstractExtension
             return $default;
         }
 
-        $arr = array();
+        $arr = [];
 
         $arr[] = $this->getSeoTitle($entity);
 
@@ -154,7 +149,6 @@ class SeoTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param Environment    $environment
      * @param AbstractEntity $entity      The entity
      * @param mixed          $currentNode The current node
      * @param string         $template    The template
@@ -167,17 +161,15 @@ class SeoTwigExtension extends AbstractExtension
         $template = $environment->load($template);
 
         return $template->render(
-            array(
+            [
                 'seo' => $seo,
                 'entity' => $entity,
                 'currentNode' => $currentNode,
-            )
+            ]
         );
     }
 
     /**
-     * @param array $values
-     *
      * @return string
      */
     protected function getPreferredValue(array $values)

@@ -47,8 +47,6 @@ class PagePartCreatorService
 
     /**
      * Sets the EntityManager dependency.
-     *
-     * @param EntityManagerInterface $em
      */
     public function setEntityManager(EntityManagerInterface $em)
     {
@@ -138,9 +136,9 @@ class PagePartCreatorService
         $node = $this->getNode($nodeOrInternalName);
 
         // First instantiate all PageParts. This way no PageParts will be saved if there is an issue instantiating some of them.
-        $instantiatedPageParts = array();
+        $instantiatedPageParts = [];
         foreach ($structure as $context => $pageParts) {
-            $instantiatedPageParts[$context] = array();
+            $instantiatedPageParts[$context] = [];
 
             foreach ($pageParts as $pagePartOrFunction) {
                 if (\is_callable($pagePartOrFunction)) {
@@ -214,7 +212,7 @@ class PagePartCreatorService
 
             if (!\is_null($setters)) {
                 foreach ($setters as $setter => $value) {
-                    \call_user_func(array($pp, $setter), $value);
+                    \call_user_func([$pp, $setter], $value);
                 }
             }
 
@@ -230,7 +228,7 @@ class PagePartCreatorService
     private function getNode($nodeOrInternalName)
     {
         if (\is_string($nodeOrInternalName)) {
-            return $this->nodeRepo->findOneBy(array('internalName' => $nodeOrInternalName));
+            return $this->nodeRepo->findOneBy(['internalName' => $nodeOrInternalName]);
         }
 
         return $nodeOrInternalName;

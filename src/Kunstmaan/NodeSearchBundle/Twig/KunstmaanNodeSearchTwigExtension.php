@@ -26,10 +26,6 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
      */
     private $indexablePagePartsService;
 
-    /**
-     * @param EntityManager             $em
-     * @param IndexablePagePartsService $indexablePagePartsService
-     */
     public function __construct(EntityManager $em, IndexablePagePartsService $indexablePagePartsService)
     {
         $this->em = $em;
@@ -43,15 +39,14 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('get_parent_page', array($this, 'getParentPage')),
-            new TwigFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('get_parent_page', [$this, 'getParentPage']),
+            new TwigFunction('render_indexable_pageparts', [$this, 'renderIndexablePageParts'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * @param HasNodeInterface $page
-     * @param string           $locale
+     * @param string $locale
      *
      * @return HasNodeInterface
      */
@@ -66,7 +61,6 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param Environment           $env
      * @param array                 $twigContext The twig context
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context
@@ -79,15 +73,15 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
         array $twigContext,
         HasPagePartsInterface $page,
         $contextName = 'main',
-        array $parameters = array()
+        array $parameters = []
     ) {
         $template = $env->load('@KunstmaanNodeSearch/PagePart/view.html.twig');
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,
-            array(
+            [
                 'pageparts' => $pageparts,
-            )
+            ]
         );
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 

@@ -48,11 +48,6 @@ class NodeTranslationListener
      * NodeTranslationListener constructor.
      *
      * @param SessionInterface|FlashBagInterface $session
-     * @param LoggerInterface                    $logger
-     * @param SlugifierInterface                 $slugifier
-     * @param RequestStack                       $requestStack
-     * @param DomainConfigurationInterface       $domainConfiguration
-     * @param PagesConfiguration                 $pagesConfiguration
      */
     public function __construct(
         /* SessionInterface */ $flashBag,
@@ -75,9 +70,6 @@ class NodeTranslationListener
         $this->pagesConfiguration = $pagesConfiguration;
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -88,9 +80,6 @@ class NodeTranslationListener
         }
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -101,10 +90,6 @@ class NodeTranslationListener
         }
     }
 
-    /**
-     * @param NodeTranslation        $nodeTranslation
-     * @param EntityManagerInterface $em
-     */
     private function setSlugWhenEmpty(NodeTranslation $nodeTranslation, EntityManagerInterface $em)
     {
         $publicNode = $nodeTranslation->getRef($em);
@@ -122,9 +107,6 @@ class NodeTranslationListener
         }
     }
 
-    /**
-     * @param NodeTranslation $nodeTranslation
-     */
     private function ensureSlugIsSlugified(NodeTranslation $nodeTranslation)
     {
         if ($nodeTranslation->getSlug() !== null) {
@@ -136,8 +118,6 @@ class NodeTranslationListener
 
     /**
      * OnFlush doctrine event - updates the nodetranslation urls if needed
-     *
-     * @param OnFlushEventArgs $args
      */
     public function onFlush(OnFlushEventArgs $args)
     {
@@ -369,7 +349,7 @@ class NodeTranslationListener
             return preg_replace($finalDigitGrabberRegex, $digit, $string);
         }
 
-        return $string.$append.'1';
+        return $string . $append . '1';
     }
 
     /**

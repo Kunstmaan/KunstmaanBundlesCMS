@@ -19,10 +19,6 @@ class PageTemplateConfigurationService
      */
     private $reader;
 
-    /**
-     * @param PageTemplateConfigurationRepository      $repo
-     * @param PageTemplateConfigurationReaderInterface $reader
-     */
     public function __construct(PageTemplateConfigurationRepository $repo, PageTemplateConfigurationReaderInterface $reader)
     {
         $this->repo = $repo;
@@ -31,8 +27,6 @@ class PageTemplateConfigurationService
 
     /**
      * For convenience
-     *
-     * @param HasPageTemplateInterface $page
      *
      * @return PageTemplateInterface[]
      */

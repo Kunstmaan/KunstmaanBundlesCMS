@@ -27,9 +27,9 @@ class RemoteVideoHandlerTest extends TestCase
 
     public function provider()
     {
-        return array(
-            array('https://youtu.be/jPDHAXV8E6w', 'youtube', 'jPDHAXV8E6w'),
-            array('https://www.youtube.com/watch?v=jPDHAXV8E6w', 'youtube', 'jPDHAXV8E6w'),
-        );
+        return [
+            ['https://youtu.be/jPDHAXV8E6w', 'youtube', 'jPDHAXV8E6w'],
+            ['https://www.youtube.com/watch?v=jPDHAXV8E6w', 'youtube', 'jPDHAXV8E6w'],
+        ];
     }
 }

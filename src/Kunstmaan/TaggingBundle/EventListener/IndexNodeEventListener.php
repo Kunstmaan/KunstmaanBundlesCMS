@@ -10,7 +10,7 @@ class IndexNodeEventListener
     {
         $page = $event->getPage();
         if ($page instanceof Taggable) {
-            $tags = array();
+            $tags = [];
             foreach ($page->getTags() as $tag) {
                 $tags[] = $tag->getName();
             }
