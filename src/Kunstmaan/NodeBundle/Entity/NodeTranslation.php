@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(
  *     name="kuma_node_translations",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="ix_kuma_node_translations_node_lang", columns={"node_id", "lang"})},
- *     indexes={@ORM\Index(name="idx__node_translation_lang_url", columns={"lang", "url"}, options={"lengths": {null, 750}})}
+ *     indexes={@ORM\Index(name="idx__node_translation_lang_url", columns={"lang", "url"}, options={"lengths": {null, 255}})}
  * )
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
