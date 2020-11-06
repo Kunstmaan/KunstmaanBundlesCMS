@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -12,13 +13,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 class WysiwygType extends AbstractType
 {
     /**
+     * @var DataTransformerInterface
+     */
+    private $mediaTokenTransformer;
+
+    public function __construct(DataTransformerInterface $mediaTokenTransformer)
+    {
+        $this->mediaTokenTransformer = $mediaTokenTransformer;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new MediaTokenTransformer();
-        $builder->addModelTransformer($transformer);
+        $builder->addModelTransformer($this->mediaTokenTransformer);
     }
 
     /**

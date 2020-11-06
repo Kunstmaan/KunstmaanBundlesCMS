@@ -43,24 +43,25 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('get_parent_page', array($this, 'getParentPage')),
-            new TwigFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('get_parent_page', [$this, 'getParentPage']),
+            new TwigFunction('render_indexable_pageparts', [$this, 'renderIndexablePageParts'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
+        ];
     }
 
     /**
      * @param HasNodeInterface $page
      * @param string           $locale
+     * @param bool             $includeOffline
      *
      * @return HasNodeInterface
      */
-    public function getParentPage(HasNodeInterface $page, $locale)
+    public function getParentPage(HasNodeInterface $page, string $locale, bool $includeOffline = false)
     {
         /** @var Node $node */
         $node = $this->em->getRepository(Node::class)->getNodeFor($page);
         $parentNode = $node->getParent();
-        $nodeTranslation = $parentNode->getNodeTranslation($locale);
+        $nodeTranslation = $parentNode->getNodeTranslation($locale, $includeOffline);
 
         return $nodeTranslation->getRef($this->em);
     }
@@ -79,15 +80,15 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
         array $twigContext,
         HasPagePartsInterface $page,
         $contextName = 'main',
-        array $parameters = array()
+        array $parameters = []
     ) {
         $template = $env->load('@KunstmaanNodeSearch/PagePart/view.html.twig');
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,
-            array(
+            [
                 'pageparts' => $pageparts,
-            )
+            ]
         );
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 
