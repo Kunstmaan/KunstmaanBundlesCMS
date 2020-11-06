@@ -1,13 +1,10 @@
 <?php
 
-namespace Kunstmaan\ArticleBundle\Tests\Form;
+namespace Kunstmaan\ArticleBundle\Tests\PagePartAdmin;
 
 use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticleOverviewPagePagePartAdminConfigurator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class AbstractArticleOverviewPagePagePartAdminConfiguratorTest
- */
 class AbstractArticleOverviewPagePagePartAdminConfiguratorTest extends TestCase
 {
     public function testGettersAndSetters()

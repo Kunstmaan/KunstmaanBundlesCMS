@@ -2,15 +2,13 @@
 
 namespace Kunstmaan\ArticleBundle\Tests\Form;
 
+use Kunstmaan\ArticleBundle\Form\AbstractArticleOverviewPageAdminType;
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class AbstractArticlePageAdminTypeTest
- */
-class AbstractArticlePageAdminTypeTest extends TestCase
+class AbstractArticleOverviewPageAdminTypeTest extends TestCase
 {
     /**
      * @var AbstractArticlePageAdminType
@@ -19,13 +17,13 @@ class AbstractArticlePageAdminTypeTest extends TestCase
 
     public function setUp()
     {
-        $entity = new AbstractArticlePageAdminType();
+        $entity = new AbstractArticleOverviewPageAdminType();
         $this->object = $entity;
     }
 
     public function testBlockPrefix()
     {
-        $this->assertEquals('AbstractArticlePage', $this->object->getBlockPrefix());
+        $this->assertEquals('AbstractArticleOverviewPage', $this->object->getBlockPrefix());
     }
 
     public function testConfigureOptions()
@@ -38,7 +36,7 @@ class AbstractArticlePageAdminTypeTest extends TestCase
     public function testBuildForm()
     {
         $builder = $this->createMock(FormBuilder::class);
-        $builder->expects($this->exactly(5))->method('add')->willReturn($builder);
+        $builder->expects($this->exactly(3))->method('add')->willReturn($builder);
 
         /* @var FormBuilder $builder */
         $this->object->buildForm($builder, []);
