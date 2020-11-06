@@ -185,7 +185,7 @@ class VersionCheckTest extends TestCase
 
     public function provider()
     {
-        $baseDir = __DIR__.'/testdata';
+        $baseDir = __DIR__ . '/testdata';
 
         return [
             'composer.lock ok' => [$baseDir . '/composer_ok.lock', 'instanceOf', \stdClass::class],
