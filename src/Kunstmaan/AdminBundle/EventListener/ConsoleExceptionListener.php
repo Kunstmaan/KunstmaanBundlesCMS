@@ -7,8 +7,6 @@ use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 
 /**
- * Class ConsoleExceptionListener.
- *
  * @deprecated in KunstmaanAdminBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.
  */
 class ConsoleExceptionListener
@@ -16,9 +14,6 @@ class ConsoleExceptionListener
     /** @var LoggerInterface */
     private $logger;
 
-    /**
-     * ConsoleExceptionListener constructor.
-     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
@@ -37,10 +32,6 @@ class ConsoleExceptionListener
         $this->logCommandError($command, $exception);
     }
 
-    /**
-     * @param $command
-     * @param $error
-     */
     private function logCommandError($command, $error)
     {
         $message = sprintf(
