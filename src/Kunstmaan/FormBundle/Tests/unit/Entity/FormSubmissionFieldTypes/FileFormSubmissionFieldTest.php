@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
+use Gaufrette\Filesystem;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use PHPUnit\Framework\TestCase;
@@ -81,6 +82,55 @@ class FileFormSubmissionFieldTest extends TestCase
     public function testUpload()
     {
         $object = $this->object;
+
+        $file = $this->getMockBuilder(UploadedFile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $file->expects($this->any())
+            ->method('getPathname')
+            ->willReturn(__FILE__);
+
+        $object->file = $file;
+
+        $form = $this->getMockBuilder(Form::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $builder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request = new Request();
+
+        $container = $this->getMockBuilder(Container::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container->expects($this->any())
+            ->method('getParameter')
+            ->willReturn('whatever');
+
+        $filesystem = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container->expects($this->any())
+            ->method('has')
+            ->willReturn(true);
+
+        $container->expects($this->any())
+            ->method('get')
+            ->willReturn($filesystem);
+
+        $object->onValidPost($form, $builder, $request, $container);
+        $this->assertNull($object->upload('...', '..', $filesystem));
+        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/', $filesystem);
+    }
+
+    public function testUploadBC()
+    {
+        $object = $this->object;
         $this->assertNull($object->upload('..', '..'));
 
         $file = $this->getMockBuilder(UploadedFile::class)
@@ -111,6 +161,10 @@ class FileFormSubmissionFieldTest extends TestCase
         $container->expects($this->any())
             ->method('getParameter')
             ->willReturn('whatever');
+
+        $container->expects($this->any())
+            ->method('has')
+            ->willReturn(false);
 
         $object->onValidPost($form, $builder, $request, $container);
     }

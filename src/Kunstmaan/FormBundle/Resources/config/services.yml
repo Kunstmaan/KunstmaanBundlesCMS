@@ -30,3 +30,15 @@ services:
         arguments: ['@kunstmaan_form.form_mailer']
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_form.add_submission', method: 'onSubmission' }
+
+    kunstmaan_form.filesystem_adapter:
+        class: Gaufrette\Adapter\Local
+        arguments:
+            - '%kunstmaan_form.web_root%'
+            - true
+
+    kunstmaan_form.filesystem:
+        class: Gaufrette\Filesystem
+        arguments:
+            - '@kunstmaan_form.filesystem_adapter'
+        public: true

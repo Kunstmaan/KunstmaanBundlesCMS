@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Behat\Transliterator\Transliterator;
 use Doctrine\ORM\Mapping as ORM;
+use Gaufrette\Filesystem;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -79,10 +80,8 @@ class FileFormSubmissionField extends FormSubmissionField
 
     /**
      * Move the file to the given uploadDir and save the filename
-     *
-     * @param string $uploadDir
      */
-    public function upload($uploadDir, $webDir)
+    public function upload($uploadDir, $webDir, Filesystem $fileSystem = null)
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
@@ -95,14 +94,26 @@ class FileFormSubmissionField extends FormSubmissionField
         $uuid = uniqid();
         $this->setUuid($uuid);
 
-        // move takes the target directory and then the target filename to move to
-        $this->file->move(sprintf('%s/%s', $uploadDir, $uuid), $safeFileName);
+        if ($fileSystem) {
+            $url = \sprintf('%s%s/%s', $webDir, $uuid, $safeFileName);
+            $content = \file_get_contents($this->file->getPathname());
+            $fileSystem->write($url, $content);
+        } else {
+            @trigger_error(
+                    'Not passing the filesystem as the third argument of upload is deprecated since KunstmaanMediaBundle 5.7 and will be required in KunstmaanMediaBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+
+            // move takes the target directory and then the target filename to move to
+            $this->file->move(sprintf('%s/%s', $uploadDir, $uuid), $safeFileName);
+            $url = sprintf('%s%s/', $webDir, $uuid) . $safeFileName;
+        }
 
         // set the path property to the filename where you'ved saved the file
         $this->fileName = $safeFileName;
 
         // set the url to the uuid directory inside the web dir
-        $this->setUrl(sprintf('%s%s/', $webDir, $uuid) . $safeFileName);
+        $this->setUrl($url);
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
@@ -120,7 +131,13 @@ class FileFormSubmissionField extends FormSubmissionField
     {
         $uploadDir = $container->getParameter('form_submission_rootdir');
         $webDir = $container->getParameter('form_submission_webdir');
-        $this->upload($uploadDir, $webDir);
+
+        $fileSystem = null;
+        if ($container->has('kunstmaan_form.filesystem')) {
+            $fileSystem = $container->get('kunstmaan_form.filesystem');
+        }
+
+        $this->upload($uploadDir, $webDir, $fileSystem);
     }
 
     /**
