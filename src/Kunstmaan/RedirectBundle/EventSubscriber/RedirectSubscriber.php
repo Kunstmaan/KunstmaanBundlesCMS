@@ -68,7 +68,7 @@ class RedirectSubscriber implements EventSubscriber
     ): void {
         $changeSet = $unitOfWork->getEntityChangeSet($nodeTranslation);
 
-        if (!isset($changeSet['url'][0], $changeSet['url'][1])) {
+        if (!isset($changeSet['slug'])) {
             return;
         }
 
@@ -78,15 +78,10 @@ class RedirectSubscriber implements EventSubscriber
             return;
         }
 
-        [
-            $oldUrl,
-            $newUrl,
-        ] = $changeSet['url'];
-
         $this->processRedirect(
             $entityManager,
-            $oldUrl,
-            $newUrl
+            $nodeTranslation->getUrl(),
+            $nodeTranslation->getFullSlug()
         );
     }
 
