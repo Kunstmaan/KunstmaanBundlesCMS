@@ -25,3 +25,7 @@ services:
         arguments: ['@kunstmaan_admin.domain_configuration']
         tags:
             - { name: form.type, alias: kunstmaan_redirect_form_type }
+
+    Kunstmaan\RedirectBundle\EventSubscriber\RedirectSubscriber:
+        arguments:
+            $requestStack: '@request_stack'
