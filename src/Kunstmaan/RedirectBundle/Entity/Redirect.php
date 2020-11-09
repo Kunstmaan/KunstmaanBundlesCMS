@@ -60,7 +60,7 @@ class Redirect extends AbstractEntity
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_auto_redirect", type="boolean")
+     * @ORM\Column(name="is_auto_redirect", type="boolean", nullable=true)
      */
     private $isAutoRedirect = false;
 
