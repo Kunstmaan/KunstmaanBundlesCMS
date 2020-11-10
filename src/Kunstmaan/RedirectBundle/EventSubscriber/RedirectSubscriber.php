@@ -107,6 +107,17 @@ class RedirectSubscriber implements EventSubscriber
         return $url;
     }
 
+    private function removeSlashAtStart(string $url): string
+    {
+        $firstCharacter = $url[0] ?? '';
+
+        if ($firstCharacter !== '/') {
+            return $url;
+        }
+
+        return substr($url, 1);
+    }
+
     private function processRedirect(
         EntityManager $entityManager,
         string $oldUrl,
@@ -134,9 +145,11 @@ class RedirectSubscriber implements EventSubscriber
         string $newUrl,
         EntityManager $entityManager
     ): void {
+        $origin = $this->removeSlashAtStart($newUrl);
+
         $redirects = $entityManager->getRepository(Redirect::class)->findBy(
             [
-                'origin' => $newUrl,
+                'origin' => $origin,
             ]
         );
 
@@ -145,8 +158,8 @@ class RedirectSubscriber implements EventSubscriber
             $entityManager->remove($redirect);
         }
 
-        if (isset($this->redirects[$newUrl])) {
-            foreach ($this->redirects[$newUrl] as $redirect) {
+        if (isset($this->redirects[$origin])) {
+            foreach ($this->redirects[$origin] as $redirect) {
                 $entityManager->remove($redirect);
             }
         }
