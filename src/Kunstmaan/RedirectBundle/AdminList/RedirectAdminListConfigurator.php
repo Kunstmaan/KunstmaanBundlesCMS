@@ -140,6 +140,10 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             return 'All domains';
         }
 
+        if ($columnName === 'isAutoRedirect' && $item->isAutoRedirect() === null) {
+            return false;
+        }
+
         return parent::getValue(
             $item,
             $columnName

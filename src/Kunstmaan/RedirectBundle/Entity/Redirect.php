@@ -124,12 +124,12 @@ class Redirect extends AbstractEntity
         return $this;
     }
 
-    public function isAutoRedirect(): bool
+    public function isAutoRedirect(): ?bool
     {
         return $this->isAutoRedirect;
     }
 
-    public function setIsAutoRedirect(bool $isAutoRedirect): Redirect
+    public function setIsAutoRedirect(?bool $isAutoRedirect): Redirect
     {
         $this->isAutoRedirect = $isAutoRedirect;
 
