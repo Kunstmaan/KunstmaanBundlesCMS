@@ -81,8 +81,23 @@ class RedirectSubscriber implements EventSubscriber
         $this->processRedirect(
             $entityManager,
             $nodeTranslation->getUrl(),
-            $nodeTranslation->getFullSlug()
+            $this->getNewUrl($nodeTranslation)
         );
+    }
+
+    private function getNewUrl(NodeTranslation $nodeTranslation): string
+    {
+        $newUrl = $nodeTranslation->getFullSlug();
+
+        if (!is_string($newUrl)) {
+            return '/';
+        }
+
+        if ($newUrl[0] !== '/') {
+            return '/' . $newUrl;
+        }
+
+        return $newUrl;
     }
 
     private function processRedirect(
