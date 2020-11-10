@@ -81,6 +81,15 @@ class EditImage {
             this.components.cropper.component.init();
 
             this.currentView = 'cropper';
+
+            this.node.addEventListener('destroy', () => {
+                this.components.cropper.component.cropper.clear();
+                this.components.cropper.component.cropper.destroy();
+                this.components.cropper.component.cropper = null;
+                this.imagePath = this.node.dataset.path;
+                this.components.cropper.component.init();
+            })
+
         } else {
             this.currentView = 'focus';
         }
@@ -102,13 +111,15 @@ class EditImage {
 
                 this.changeView();
             });
+
+
         }
 
         this.save.addEventListener('click', (e) => {
             e.preventDefault();
 
             this.input.value = JSON.stringify(this.editData);
-        })
+        });
 
         this.initialized = true;
         this.node.dataset.initialized = true;
