@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\RedirectBundle\Tests\Entity;
+namespace Kunstmaan\RedirectBundle\Tests\unit\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -41,21 +41,21 @@ class RedirectAdminListConfiguratorTest extends TestCase
         $this->object = new RedirectAdminListConfigurator($this->em, $this->aclHelper, $domainConfiguration);
     }
 
-    public function testBuildFields()
+    public function testBuildFields(): void
     {
         $this->object->buildFields();
         $fields = $this->object->getFields();
-        $this->assertCount(4, $fields);
+        $this->assertCount(5, $fields);
         $fieldNames = array_map(
             function (Field $field) {
                 return $field->getName();
             },
             $fields
         );
-        $this->assertEquals(array('origin', 'target', 'permanent', 'note'), $fieldNames);
+        $this->assertEquals(['origin', 'target', 'permanent', 'note', 'isAutoRedirect'], $fieldNames);
     }
 
-    public function testBuildFilters()
+    public function testBuildFilters(): void
     {
         $filterBuilder = $this->createMock('Kunstmaan\AdminListBundle\AdminList\FilterBuilder');
         $filterBuilder
@@ -74,16 +74,20 @@ class RedirectAdminListConfiguratorTest extends TestCase
             ->expects($this->at(3))
             ->method('add')
             ->with('note');
+        $filterBuilder
+            ->expects($this->at(4))
+            ->method('add')
+            ->with('isAutoRedirect');
         $this->object->setFilterBuilder($filterBuilder);
         $this->object->buildFilters();
     }
 
-    public function testGetBundleName()
+    public function testGetBundleName(): void
     {
         $this->assertEquals('KunstmaanRedirectBundle', $this->object->getBundleName());
     }
 
-    public function testGetEntityName()
+    public function testGetEntityName(): void
     {
         $this->assertEquals('Redirect', $this->object->getEntityName());
     }

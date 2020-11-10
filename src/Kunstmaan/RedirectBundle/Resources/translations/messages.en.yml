@@ -19,14 +19,16 @@ redirect:
 
     adminlist:
         header:
-            domain:     Domain
-            origin:     Origin
-            target:     Target
-            permanent:  Permanent?
-            note:       Note
+            domain:           Domain
+            origin:           Origin
+            target:           Target
+            permanent:        Permanent?
+            note:             Note
+            is_auto_redirect: Automatische redirect?
         filter:
-            domain:     Domain
-            origin:     Origin
-            target:     Target
-            permanent:  Permanent
-            note:       Note
+            domain:           Domain
+            origin:           Origin
+            target:           Target
+            permanent:        Permanent
+            note:             Note
+            is_auto_redirect: Automatische redirect?

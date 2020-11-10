@@ -23,6 +23,7 @@ redirect:
       target: Bestemming
       permanent: Permanent?
       note: Notitie
+      is_auto_redirect: Automatische redirect?
     filter:
       domain: Domein
       origin: Herkomst
