@@ -78,9 +78,15 @@ class RedirectSubscriber implements EventSubscriber
             return;
         }
 
+        $oldUrl = $nodeTranslation->getUrl();
+
+        if (!is_string($oldUrl)) {
+            return;
+        }
+
         $this->processRedirect(
             $entityManager,
-            $nodeTranslation->getUrl(),
+            $oldUrl,
             $this->getNewUrl($nodeTranslation)
         );
     }
