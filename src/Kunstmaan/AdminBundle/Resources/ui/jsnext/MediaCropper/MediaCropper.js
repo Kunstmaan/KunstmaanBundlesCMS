@@ -101,10 +101,6 @@ class MediaCropper {
             this.image.src = this.EditImage.imagePath;
         }
 
-        this.node.addEventListener('destroy', (e) => {
-            this.cropper.destroy();
-        })
-
         this.initCropper();
         this.addEventListeners();
     }
