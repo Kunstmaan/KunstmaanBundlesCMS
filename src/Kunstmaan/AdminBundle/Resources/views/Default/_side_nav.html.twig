@@ -7,25 +7,30 @@
             {% if admin_logo is defined %}
                 <img class="kuma-main-app__sidebar__logo" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
             {% else %}
-                <h1 class="kuma-main-app__sidebar__title">
+                <p class="kuma-main-app__sidebar__title">
                     {{ websitetitle | trans }}
-                </h1>
+                </p>
             {% endif %}
         {% endif %}
     </div>
 
-    {% include "@KunstmaanAdmin/AdminPanel/_language_chooser_next.html.twig" %}
+    {% if locales is defined and locales|length > 1 %}
+        {% include "@KunstmaanAdmin/AdminPanel/_language_chooser_next.html.twig" %}
+    {% else %}
+        <img class="kuma-main-app__sidebar__cms-logo" src="{{ asset('/bundles/kunstmaanadmin/img/general/cms-logo.svg') }}" alt="Kunstmaan CMS">
+    {% endif %}
 
     
 </header>
 <div class="kuma-main-app__sidebar__content">
     <nav class="kuma-main-nav">
+        {# @todo: active state #}
         <a href="{{ path('KunstmaanAdminBundle_homepage') }}" class="kuma-main-nav__item js-side-nav-item">
             <svg class="kuma-main-nav__item__icon">
                 <use xlink:href="{{ asset('/bundles/kunstmaanadmin/icons/symbol-defs.svg') }}#icon-dashboard"></use>
             </svg>
             <span class="kuma-main-nav__item__text">
-                Dashboard
+                {{ 'kuma_admin.main_nav.dashboard'|trans }}
             </span>
         </a>
         {% for menuitem in adminmenu.topchildren %}
@@ -47,13 +52,13 @@
                 </svg>
 
                 <span class="kuma-user-nav__logout__text">
-                    Logout
+                    {{ 'kuma_admin.main_nav.log_out'|trans }}
                 </span>
             </a>
             <div class="toggle-switch kuma-user-nav__keep-open-toggle">
                 <input type="checkbox" id="kuma-nav-keep-open-switch" class="js-side-nav-item js-side-nav-keep-open toggle-switch__control">
                 <label for="kuma-nav-keep-open-switch" class="toggle-switch__label kuma-user-nav__keep-open-toggle__label">
-                    Keep open
+                    {{ 'kuma_admin.main_nav.keep_open'|trans }}
                     <div class="toggle-switch__switch"></div>
                 </label>
             </div>

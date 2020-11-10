@@ -1,7 +1,8 @@
 {% extends '@KunstmaanAdmin/Default/layout_next.html.twig' %}
 
 {% block admin_page_title %}
-    <div class="col-sm-6 col-md-8">
+    {# todo: uncomment this when using old layout #}
+    {# <div class="col-sm-6 col-md-8">
         {% if dashboardConfiguration %}
             <h1 class="app__content__header__title">
                 {{ dashboardConfiguration.title }}
@@ -11,7 +12,11 @@
                 {{ 'omnext.welcome' | trans | raw }}
             </h1>
         {% endif %}
-    </div>
+    </div> #}
+
+    <header class="kuma-main-header">
+        Welcome {{ app.user }}
+    </header>
 {% endblock %}
 
 {% block extra_actions_header %}
@@ -29,9 +34,7 @@
 {% endblock %}
 
 {% block appHeader %}
-    <header class="kuma-main-header">
-        Welcome {{ app.user }}
-    </header>
+    
 {% endblock %}
 
 {% block content %}

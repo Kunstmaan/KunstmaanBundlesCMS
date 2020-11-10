@@ -96,6 +96,10 @@ kuma_admin:
     error: Fout
     info: Info
     danger: Gevaar
+  main_nav:
+    dashboard: Dashboard
+    keep_open: Keep open
+    log_out: Log out
   dashboard:
     configuration:
       title:
