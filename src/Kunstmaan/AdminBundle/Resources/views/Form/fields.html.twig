@@ -61,8 +61,8 @@
     {% if attr['maxlength'] is defined %}
         {% set reInitMethods = reInitMethods|merge(['"charactersLeft"']) %}
     {% endif %}
-    {% if 'js-rich-editor' in attr.class %}
-        {% set reInitMethods = reInitMethods|merge(['"richEditor"']) %}
+    {% if 'js-wysiwyg-editor' in attr.class %}
+        {% set reInitMethods = reInitMethods|merge(['"wysiwygEditor"']) %}
     {% endif %}
     <textarea {{ block('widget_attributes') }} {% if reInitMethods|length > 0 %}data-reinit-js="[{{ reInitMethods|join(',') }}]"{% endif %} rows="5" {% if attr['maxlength'] is defined %} data-target="#counter-for-{{ form.vars.id }}" {% endif %}>{{ value }}</textarea>
 {% endapply %}
@@ -70,11 +70,11 @@
 
 {% block wysiwyg_widget %}
 {% apply spaceless %}
-    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-wysiwyg-editor wysiwyg-editor form-control')|trim }) %}
     {% if attr['maxlength'] is defined %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
     {% endif %}
-    <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
+    <textarea {{ block('widget_attributes') }}{% if 'js-wysiwyg-editor' in attr.class %} data-reinit-js='["wysiwygEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
 {% endapply %}
 {% endblock wysiwyg_widget %}
 
@@ -220,7 +220,15 @@
                 {% set widget %}
                     <div class="input-group-counter">
                         {{ widget }}
-                        <span id="counter-for-{{ form.vars.id }}" class="js-max-length-counter form-control__character-counter"></span>
+                        {% if 'wysiwyg' in block_prefixes %}
+                            <div
+                                id="counter-for-{{ form.vars.id }}"
+                                class="js-max-length-counter wysiwyg-editor__character-counter"
+                                data-characters-label="{{ 'pagepart.wysiwyg.characters'|trans }}"
+                            ></div>
+                        {% else %}
+                            <span id="counter-for-{{ form.vars.id }}" class="js-max-length-counter form-control__character-counter"></span>
+                        {% endif %}
                     </div>
                 {% endset %}
             {% endif %}

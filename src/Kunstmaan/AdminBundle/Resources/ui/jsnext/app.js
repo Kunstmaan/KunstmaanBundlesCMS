@@ -1,8 +1,10 @@
 import 'svgxuse/svgxuse';
-import PagePartChooser from './PagePartChooser';
+import { initPagePartChoosers } from './PagePartChooser';
+import { initWysiwygEditors } from './WysiwygEditor';
 
 function init() {
-    PagePartChooser.init();
+    initPagePartChoosers();
+    initWysiwygEditors();
 }
 
 // This script is loaded dynamically, so it could be that

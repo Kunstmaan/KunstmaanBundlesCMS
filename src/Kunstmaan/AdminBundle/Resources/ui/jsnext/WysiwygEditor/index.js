@@ -1,10 +1,12 @@
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 import { defaultConfig } from './config';
+import { wordCountConfig } from './wordCount';
 
-const SELECTOR = '.js-rich-editor';
+const SELECTOR = '.js-wysiwyg-editor';
 const editors = new Map();
 
-export const init = ({ container = window.document } = {}) => {
+export const initWysiwygEditors = ({ container = window.document } = {}) => {
     if (container) {
         const editorElements = [...container.querySelectorAll(SELECTOR)];
 
@@ -49,14 +51,21 @@ function isConfigDefined(configName) {
 }
 
 function createEditor({ elementToReplace, config = defaultConfig } = {}) {
-    console.log(elementToReplace, config);
-    ClassicEditor.create(elementToReplace, config).then((editor) => {
-        console.log('Editor was initialized', editor);
+    const editorConfig = { ...config };
+    const maxLength = elementToReplace.getAttribute('maxlength')
+        && parseInt(elementToReplace.getAttribute('maxlength'), 10);
+
+    if (maxLength) {
+        editorConfig.plugins = [...config.plugins, WordCount];
+        editorConfig.wordCount = wordCountConfig({ elementId: elementToReplace.id, maxCharacters: maxLength });
+    }
+
+    ClassicEditor.create(elementToReplace, editorConfig).then((editor) => {
         editors.set(elementToReplace, editor);
     }).catch((error) => console.error(error.stack));
 }
 
-const reInit = init;
+const reInit = initWysiwygEditors;
 
 // Make it available in the old js
 window.kunstmaanbundles = {

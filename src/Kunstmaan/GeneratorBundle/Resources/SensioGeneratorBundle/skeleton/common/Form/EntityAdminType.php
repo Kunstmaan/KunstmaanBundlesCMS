@@ -41,7 +41,7 @@ class {{ className }} extends {{ extend_class }}
             ])],
 {% endif %}
 {% endif %}
-{% if key == 'rich_text' %}            'attr' => ['rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140],
+{% if key == 'rich_text' %}            'attr' => ['rows' => 10, 'cols' => 600, 'class' => 'js-wysiwyg-editor wysiwyg-editor', 'height' => 140],
 {% endif %}
 {% if key == 'multi_line' %}            'attr' => ['rows' => 10, 'cols' => 600],
 {% endif %}

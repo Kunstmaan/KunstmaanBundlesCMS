@@ -24,6 +24,9 @@ pagepart:
         delete: Delete
         resize: Minimize-Maximize
 
+    wysiwyg:
+        characters: Characters
+
 region:
     button:
         min: Minimize

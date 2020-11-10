@@ -47,7 +47,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
     initModules = function() {
         // Init new rich editors
-        kunstmaanbundles.richEditor.init();
+        // kunstmaanbundles.richEditor.init();
         // Init new nested forms
         kunstmaanbundles.nestedForm.init();
         // Init new selects.

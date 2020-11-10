@@ -79,20 +79,6 @@ input[type=file].form-control {
     }
 }
 
-.rich-editor + .form-control__character-counter {
-    position: static;
-
-    @media (min-width: $screen-sm) {
-        position: static;
-        left: 0;
-        top: 0;
-
-        padding: .5rem;
-
-        transform: none;
-    }
-}
-
 /* Range slider
    =========================================================================== */
 
@@ -179,5 +165,3 @@ input[type=range]:focus {
 
     background-color: $accent-color;
 }
-
-

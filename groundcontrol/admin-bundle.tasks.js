@@ -1,8 +1,9 @@
 /* eslint-env node */
 
 import gulp from 'gulp';
-import webpack from 'webpack';
 import path from 'path';
+import CKEditorWebpackPlugin from '@ckeditor/ckeditor5-dev-webpack-plugin';
+import { styles } from '@ckeditor/ckeditor5-dev-utils';
 
 import consoleArguments from './console-arguments';
 
@@ -12,6 +13,7 @@ import createCopyTask from './tasks/copy';
 import {createCssLocalTask, createCssOptimizedTask} from './tasks/css';
 import createScriptsTask from './tasks/scripts';
 import createBundleTask, {getBabelLoaderOptions} from './tasks/bundle';
+
 
 export const adminBundle = {
     config: {
@@ -58,8 +60,6 @@ adminBundle.tasks.scripts = createScriptsTask({
         './node_modules/sortablejs/Sortable.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
         './node_modules/jquery.typewatch/jquery.typewatch.js',
-        './node_modules/ckeditor/ckeditor.js',
-        './node_modules/ckeditor/adapters/jquery.js',
         `${adminBundle.config.srcPath}js/**/*.js`
     ],
     dest: `${adminBundle.config.distPath}js`,
@@ -84,10 +84,43 @@ adminBundle.tasks.bundle = createBundleTask({
                     query: getBabelLoaderOptions({
                         transpileOnlyForLastChromes: consoleArguments.speedupLocalDevelopment
                     })
+                },
+                {
+                    test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                    use: [ 'raw-loader' ]
+                },
+                {
+                    test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+                    use: [
+                        {
+                            loader: 'style-loader',
+                            options: {
+                                injectType: 'singletonStyleTag',
+                                attributes: {
+                                    'data-cke': true
+                                }
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: styles.getPostCssConfig( {
+                                themeImporter: {
+                                    themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+                                },
+                                minify: true
+                            } )
+                        },
+                    ]
                 }
             ]
-        }
-    }
+        },
+        plugins: [
+            new CKEditorWebpackPlugin({
+                // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+                language: 'en',
+            }),
+        ],
+    },
 });
 
 adminBundle.tasks.bundleOptimized = createBundleTask({
