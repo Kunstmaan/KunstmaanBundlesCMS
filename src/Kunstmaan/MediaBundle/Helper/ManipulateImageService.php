@@ -44,20 +44,8 @@ class ManipulateImageService
     public function cropImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', string $filter = 'optim'): string
     {
         $media = $editableMediaWrapper->getMedia();
-        $filename = $media->getOriginalFilename();
-        $filename = str_replace(['/', '\\', '%'], '', $filename);
-
-        $parts = pathinfo($filename);
-        $filename = $this->slugifier->slugify($parts['filename']);
-        if (\array_key_exists('extension', $parts)) {
-            $filename .= '.' . strtolower($parts['extension']);
-        }
-
-        $path = sprintf(
-            'uploads/media/%s/%s',
-            $media->getUuid(),
-            $filename
-        );
+        $path = $media->getUrl();
+        $path = str_replace('://', '---', $path);
 
         $runTimeConfigForView = [];
         if ($editableMediaWrapper->getRunTimeConfig() !== null) {
