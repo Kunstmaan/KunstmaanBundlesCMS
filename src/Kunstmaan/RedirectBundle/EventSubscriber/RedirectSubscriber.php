@@ -93,11 +93,18 @@ class RedirectSubscriber implements EventSubscriber
             return '/';
         }
 
-        if ($newUrl[0] !== '/') {
-            return '/' . $newUrl;
+        return $this->startWithSlash($newUrl);
+    }
+
+    private function startWithSlash(string $url): string
+    {
+        $firstCharacter = $url[0] ?? '';
+
+        if ($firstCharacter !== '/') {
+            return '/' . $url;
         }
 
-        return $newUrl;
+        return $url;
     }
 
     private function processRedirect(
@@ -152,7 +159,7 @@ class RedirectSubscriber implements EventSubscriber
     ): void {
         $redirects = $entityManager->getRepository(Redirect::class)->findBy(
             [
-                'target' => $oldUrl,
+                'target' => $this->startWithSlash($oldUrl),
             ]
         );
 
