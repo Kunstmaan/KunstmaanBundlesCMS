@@ -17,8 +17,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     private $domainConfiguration;
 
     /**
-     * @param EntityManager $em The entity manager
-     * @param AclHelper $aclHelper The acl helper
+     * @param EntityManager                $em The entity manager
+     * @param AclHelper                    $aclHelper The acl helper
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(
@@ -127,8 +127,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * @param array|object $item The item
-     * @param string $columnName The column name
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return string
      */
