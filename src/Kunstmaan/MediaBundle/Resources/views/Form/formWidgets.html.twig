@@ -105,7 +105,7 @@
             </button>
             {% endif %}
 
-            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn  media-chooser__preview__del-btn" data-linked-id="{{ id }}">
+            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn  media-chooser__preview__del-btn" data-linked-id="{{ id }}" {% if show_image_edit_modal is defined and show_image_edit_modal %}data-clear-image-edit{% endif %}>
                 <i class="fa fa-trash"></i>
             </button>
         </div>

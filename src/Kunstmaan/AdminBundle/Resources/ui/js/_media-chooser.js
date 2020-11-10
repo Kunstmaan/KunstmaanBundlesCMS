@@ -31,6 +31,21 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
 
             $widget.removeClass('media-chooser--choosen');
             $input.val('');
+
+            if (typeof $this.data('clear-image-edit') !== 'undefined') {
+                var linkedID = $this.data('linked-id');
+                var $mediaCropperModal = $('#' + linkedID + '-image-edit-modal');
+                var imageEdit = $mediaCropperModal.find('.js-image-edit');
+                var destroyEvent = new CustomEvent('destroy');
+
+                imageEdit[0].removeAttribute('data-initialized');
+                $mediaCropperModal.find('.image-edit__preview__img').attr({
+                    'src': '',
+                    'srcset': '',
+                    'alt': ''
+                });
+                imageEdit[0].dispatchEvent(destroyEvent);
+            }
         });
     };
 
