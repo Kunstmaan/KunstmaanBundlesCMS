@@ -100,7 +100,7 @@ class Redirect extends AbstractEntity
         return $this;
     }
 
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
