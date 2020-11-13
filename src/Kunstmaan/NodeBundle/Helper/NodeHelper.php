@@ -116,7 +116,7 @@ class NodeHelper
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,
         NodeVersion $nodeVersion
-    )
+    ): NodeVersion
     {
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
 

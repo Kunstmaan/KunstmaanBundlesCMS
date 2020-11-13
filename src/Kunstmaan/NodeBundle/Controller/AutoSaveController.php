@@ -23,6 +23,7 @@ use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -122,6 +123,34 @@ class AutoSaveController extends AbstractController
             $nodeTranslation,
             $publicVersion
         );
+        $page = $nodeVersion->getRef($this->em);
+        $pagePartRefs = $this->em->getRepository(PagePartRef::class)->getPagePartRefs($page);
+        $pagePartRefIds = array_reduce($pagePartRefs, function($array, $ref) {
+            if($array === null){
+                $array = [];
+            }
+            $array[] = $ref->getId();
+
+            return $array;
+        });
+
+        $request->request->set('main_sequence', $pagePartRefIds);
+        $form = $request->request->get('form');
+        $form['main']['id'] = $page->getId();
+        $formCopy = $form;
+        foreach(array_keys($formCopy) as $key) {
+            $matches = [];
+            if(false !== strpos($key, 'pagepartadmin_')){
+                $pagePartRef = reset($pagePartRefs);
+                $newKey = 'pagepartadmin_'.$pagePartRef->getId();
+                $form[$newKey] = $form[$key];
+                unset($form[$key]);
+                array_shift($pagePartRefs);
+            }
+        }
+        $request->request->set('form', $form);
+        unset($form);
+        unset($formCopy);
 
         $tabPane = $this->tabPaneCreator->getDefaultTabPane(
             $request,
@@ -132,7 +161,7 @@ class AutoSaveController extends AbstractController
             $nodeVersion
         );
 
-        if (!$tabPane->isValid() || !$request->isXmlHttpRequest()) {
+        if (!$tabPane->isValid()) {
             return new Response();
         }
 
