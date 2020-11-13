@@ -128,13 +128,8 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             parent.$('#' + parentModalId).modal('hide');
 
         } else {
-            var funcNum = getUrlParam('CKEditorFuncNum');
-
-            // Set val
-            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
-
-            // Close window
-            window.close();
+            // Send URL back to parent window
+            window.opener.postMessage({ itemUrl: itemUrl }, window.location.origin);
         }
     };
 
@@ -169,13 +164,8 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             parent.$('#' + parentModalId).modal('hide');
 
         } else {
-            var funcNum = getUrlParam('CKEditorFuncNum');
-
-            // Set val
-            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
-
-            // Close window
-            window.close();
+            // Send URL back to parent window
+            window.opener.postMessage({ itemUrl: itemUrl }, window.location.origin);
         }
     };
 

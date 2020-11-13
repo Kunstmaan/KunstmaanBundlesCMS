@@ -1,5 +1,7 @@
 # Defining custom CKEditor configurations
 
+TODO: UPDATE DOC FOR CKEDITOR5
+
 Sometimes you want to limit or extend the possibilities of your rich text editor fields used in the Kunstmaan bundles admin.
 You can do so by following 3 easy steps.
 

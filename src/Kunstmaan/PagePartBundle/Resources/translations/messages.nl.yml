@@ -20,6 +20,8 @@ pagepart:
     edit: Bewerk
     delete: Verwijder
     resize: Minimaliseer / Maximaliseer
+  wysiwyg:
+    characters: Karakters
 region:
   button:
     min: Minimaliseer

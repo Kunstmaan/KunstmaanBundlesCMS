@@ -2,7 +2,8 @@
   "root": true,
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jquery": true
   },
   "globals": {
     "dataLayer": "readonly"
@@ -10,5 +11,6 @@
   "extends": ["./node_modules/@kunstmaan/eslint-config/index.js"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": ["gulpfile.babel.js", "./groundcontrol/**/*.js"]}]
-  }
+  },
+  "ignorePatterns": ["**/AdminBundle/Resources/ui/js/*.js"]
 }

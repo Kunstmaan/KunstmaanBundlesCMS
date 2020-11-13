@@ -385,7 +385,7 @@ class PagePartGenerator extends KunstmaanGenerator
                                     } elseif ($blocks[2] == 'textarea' && array_key_exists(
                                             'class',
                                             $attr
-                                        ) && $attr['class'] == 'js-rich-editor rich-editor'
+                                        ) && $attr['class'] == 'js-wysiwyg-editor wysiwyg-editor'
                                     ) {
                                         $pageFields[]['rich_text'] = array(
                                             'label' => $this->labelCase($name),
