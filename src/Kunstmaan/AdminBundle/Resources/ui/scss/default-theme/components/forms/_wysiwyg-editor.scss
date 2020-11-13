@@ -4,7 +4,8 @@
 
 /* General
    ========================================================================== */
-.wysiwyg-editor {}
+.wysiwyg-editor {
+}
 
 /* Character count
    ========================================================================== */
@@ -27,5 +28,18 @@
 
     &.limit-close {
         color: $orangy;
+    }
+}
+
+
+/* Internal link button in linkUI
+   ========================================================================== */
+.internal-link-btn {
+    .ck.ck-link-form_layout-vertical &.ck-button {
+        width: 100%;
+
+        &:first-of-type {
+            border-right: 0;
+        }
     }
 }

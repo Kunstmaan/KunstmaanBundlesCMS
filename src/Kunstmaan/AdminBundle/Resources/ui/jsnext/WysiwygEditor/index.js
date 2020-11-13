@@ -1,5 +1,5 @@
+import '@ckeditor/ckeditor5-build-classic/build/translations/nl'; // ?
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 import { defaultConfig } from './config';
 import { wordCountConfig } from './wordCount';
 
@@ -56,7 +56,6 @@ function createEditor({ elementToReplace, config = defaultConfig } = {}) {
         && parseInt(elementToReplace.getAttribute('maxlength'), 10);
 
     if (maxLength) {
-        editorConfig.plugins = [...config.plugins, WordCount];
         editorConfig.wordCount = wordCountConfig({ elementId: elementToReplace.id, maxCharacters: maxLength });
     }
 
