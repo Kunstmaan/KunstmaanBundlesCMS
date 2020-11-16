@@ -79,8 +79,6 @@ class EditImage {
     }
 
     init() {
-        console.log('init');
-
         const viewData = JSON.parse(this.node.dataset.croppingViews);
 
         if (viewData.length > 0) {
