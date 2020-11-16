@@ -18,11 +18,14 @@ class EditImage {
         this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
         this.saveEdit = this.saveEdit.bind(this);
         this.destroy = this.destroy.bind(this);
+        this.changeView = this.changeView.bind(this);
 
         this.init();
     }
 
-    changeView() {
+    changeView(e) {
+        e.preventDefault();
+
         const currentTextContent = this.viewSwitch.textContent;
         const nextTextContent = this.viewSwitch.dataset.booleanText;
 
@@ -75,6 +78,10 @@ class EditImage {
             this.components.focus.component.destroy();
         }
 
+        if (this.hasCropper && this.hasFocusSelect) {
+            this.viewSwitch.removeEventListener('click', this.changeView);
+        }
+
         this.node.removeEventListener('destroy', this.destroy);
     }
 
@@ -122,11 +129,7 @@ class EditImage {
         if (this.hasCropper && this.hasFocusSelect) {
             this.viewSwitch = this.node.querySelector(SELECTORS.SELECT_FOCUS_POINT);
 
-            this.viewSwitch.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                this.changeView();
-            });
+            this.viewSwitch.addEventListener('click', this.changeView);
         }
 
         this.save.addEventListener('click', this.saveEdit);
