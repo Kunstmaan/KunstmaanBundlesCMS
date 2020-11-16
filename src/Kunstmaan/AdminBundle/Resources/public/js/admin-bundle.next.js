@@ -8309,7 +8309,6 @@ var EditImage = /*#__PURE__*/function () {
     value: function init() {
       var _this = this;
 
-      console.log('init');
       var viewData = JSON.parse(this.node.dataset.croppingViews);
 
       if (viewData.length > 0) {
