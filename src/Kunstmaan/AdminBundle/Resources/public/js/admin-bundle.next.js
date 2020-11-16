@@ -8244,12 +8244,14 @@ var EditImage = /*#__PURE__*/function () {
     this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
     this.saveEdit = this.saveEdit.bind(this);
     this.destroy = this.destroy.bind(this);
+    this.changeView = this.changeView.bind(this);
     this.init();
   }
 
   _createClass(EditImage, [{
     key: "changeView",
-    value: function changeView() {
+    value: function changeView(e) {
+      e.preventDefault();
       var currentTextContent = this.viewSwitch.textContent;
       var nextTextContent = this.viewSwitch.dataset.booleanText;
       this.viewSwitch.textContent = nextTextContent;
@@ -8302,6 +8304,10 @@ var EditImage = /*#__PURE__*/function () {
         this.components.focus.component.destroy();
       }
 
+      if (this.hasCropper && this.hasFocusSelect) {
+        this.viewSwitch.removeEventListener('click', this.changeView);
+      }
+
       this.node.removeEventListener('destroy', this.destroy);
     }
   }, {
@@ -8345,11 +8351,7 @@ var EditImage = /*#__PURE__*/function () {
 
       if (this.hasCropper && this.hasFocusSelect) {
         this.viewSwitch = this.node.querySelector(_config__WEBPACK_IMPORTED_MODULE_4__["SELECTORS"].SELECT_FOCUS_POINT);
-        this.viewSwitch.addEventListener('click', function (e) {
-          e.preventDefault();
-
-          _this.changeView();
-        });
+        this.viewSwitch.addEventListener('click', this.changeView);
       }
 
       this.save.addEventListener('click', this.saveEdit);
