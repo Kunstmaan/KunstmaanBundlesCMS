@@ -15,6 +15,7 @@ class Focuspoint {
         this.setEditData = this.setEditData.bind(this);
         this.handleSavedValues = this.handleSavedValues.bind(this);
         this.onSelect = this.onSelect.bind(this);
+        this.destroy = this.destroy.bind(this);
     }
 
     setSelectedFocus(value) {
@@ -83,13 +84,13 @@ class Focuspoint {
         }
     }
 
+    destroy() {
+        this.removeEventListeners();
+    }
+
     init() {
         this.addEventListeners();
         this.handleSavedValues();
-
-        this.EditImage.node.addEventListener('destroy', () => {
-            this.removeEventListeners();
-        })
     }
 }
 

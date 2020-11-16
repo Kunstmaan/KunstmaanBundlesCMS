@@ -13,6 +13,7 @@ class MediaCropper {
 
         this.onCrop = this.onCrop.bind(this);
         this.onViewChange = this.onViewChange.bind(this);
+        this.destroy = this.destroy.bind(this);
     }
 
     getValueNodes() {
@@ -77,6 +78,12 @@ class MediaCropper {
         this.initCropper();
     }
 
+    destroy() {
+        this.cropper.clear();
+        this.cropper.destroy();
+        this.removeEventListeners();
+    }
+
     initCropper() {
         const entries = Object.entries(this.EditImage.viewData[this.EditImage.currentCropView]);
         const config = CROPPER_CONFIG;
@@ -114,14 +121,6 @@ class MediaCropper {
 
         this.initCropper();
         this.addEventListeners();
-
-        this.node.addEventListener('destroy', () => {
-            console.log(this);
-            this.cropper.clear();
-            this.cropper.destroy();
-            this.removeEventListeners();
-            console.log(this);
-        })
     }
 }
 
