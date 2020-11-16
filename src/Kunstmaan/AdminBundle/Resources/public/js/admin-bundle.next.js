@@ -8243,6 +8243,7 @@ var EditImage = /*#__PURE__*/function () {
     this.viewData = {};
     this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
     this.saveEdit = this.saveEdit.bind(this);
+    this.destroy = this.destroy.bind(this);
     this.init();
   }
 
@@ -8287,10 +8288,28 @@ var EditImage = /*#__PURE__*/function () {
       this.input.value = JSON.stringify(this.editData);
     }
   }, {
+    key: "destroy",
+    value: function destroy() {
+      this.initialized = false;
+      this.node.removeAttribute('data-initialized');
+      this.save.removeEventListener('click', this.save);
+
+      if (this.hasCropper) {
+        this.components.cropper.component.destroy();
+      }
+
+      if (this.hasFocusSelect) {
+        this.components.focus.component.destroy();
+      }
+
+      this.node.removeEventListener('destroy', this.destroy);
+    }
+  }, {
     key: "init",
     value: function init() {
       var _this = this;
 
+      console.log('init');
       var viewData = JSON.parse(this.node.dataset.croppingViews);
 
       if (viewData.length > 0) {
@@ -8337,13 +8356,7 @@ var EditImage = /*#__PURE__*/function () {
       this.save.addEventListener('click', this.saveEdit);
       this.initialized = true;
       this.node.dataset.initialized = true;
-      this.node.addEventListener('destroy', function () {
-        _this.initialized = false;
-
-        _this.node.removeAttribute('data-initialized');
-
-        _this.save.removeEventListener('click', _this.save);
-      });
+      this.node.addEventListener('destroy', this.destroy);
     }
   }]);
 
@@ -8441,6 +8454,7 @@ var Focuspoint = /*#__PURE__*/function () {
     this.setEditData = this.setEditData.bind(this);
     this.handleSavedValues = this.handleSavedValues.bind(this);
     this.onSelect = this.onSelect.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   _createClass(Focuspoint, [{
@@ -8523,15 +8537,15 @@ var Focuspoint = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "destroy",
+    value: function destroy() {
+      this.removeEventListeners();
+    }
+  }, {
     key: "init",
     value: function init() {
-      var _this3 = this;
-
       this.addEventListeners();
       this.handleSavedValues();
-      this.EditImage.node.addEventListener('destroy', function () {
-        _this3.removeEventListeners();
-      });
     }
   }]);
 
@@ -8639,6 +8653,7 @@ var MediaCropper = /*#__PURE__*/function () {
     this.cropper = null;
     this.onCrop = this.onCrop.bind(this);
     this.onViewChange = this.onViewChange.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   _createClass(MediaCropper, [{
@@ -8717,6 +8732,13 @@ var MediaCropper = /*#__PURE__*/function () {
       this.initCropper();
     }
   }, {
+    key: "destroy",
+    value: function destroy() {
+      this.cropper.clear();
+      this.cropper.destroy();
+      this.removeEventListeners();
+    }
+  }, {
     key: "initCropper",
     value: function initCropper() {
       var entries = Object.entries(this.EditImage.viewData[this.EditImage.currentCropView]);
@@ -8747,8 +8769,6 @@ var MediaCropper = /*#__PURE__*/function () {
   }, {
     key: "init",
     value: function init() {
-      var _this2 = this;
-
       this.getValueNodes();
 
       if (Object.keys(this.EditImage.viewData).length > 1) {
@@ -8761,17 +8781,6 @@ var MediaCropper = /*#__PURE__*/function () {
 
       this.initCropper();
       this.addEventListeners();
-      this.node.addEventListener('destroy', function () {
-        console.log(_this2);
-
-        _this2.cropper.clear();
-
-        _this2.cropper.destroy();
-
-        _this2.removeEventListeners();
-
-        console.log(_this2);
-      });
     }
   }]);
 
