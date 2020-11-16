@@ -16,6 +16,7 @@ class EditImage {
         this.editData = {};
         this.viewData = {};
         this.savedEditData = this.input.value !== '' ? JSON.parse(this.input.value) : false;
+        this.saveEdit = this.saveEdit.bind(this);
 
         this.init();
     }
@@ -54,6 +55,12 @@ class EditImage {
         }
     }
 
+    saveEdit(e) {
+        e.preventDefault();
+
+        this.input.value = JSON.stringify(this.editData);
+    }
+
     init() {
         const viewData = JSON.parse(this.node.dataset.croppingViews);
 
@@ -82,14 +89,6 @@ class EditImage {
 
             this.currentView = 'cropper';
 
-            this.node.addEventListener('destroy', () => {
-                this.components.cropper.component.cropper.clear();
-                this.components.cropper.component.cropper.destroy();
-                this.components.cropper.component.cropper = null;
-                this.imagePath = this.node.dataset.path;
-                this.components.cropper.component.init();
-            })
-
         } else {
             this.currentView = 'focus';
         }
@@ -111,19 +110,21 @@ class EditImage {
 
                 this.changeView();
             });
-
-
         }
 
-        this.save.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            this.input.value = JSON.stringify(this.editData);
-        });
+        this.save.addEventListener('click', this.saveEdit);
 
         this.initialized = true;
         this.node.dataset.initialized = true;
+
+        this.node.addEventListener('destroy', () => {
+            this.initialized = false;
+            this.node.removeAttribute('data-initialized');
+            this.save.removeEventListener('click', this.save);
+        });
     }
+
+
 }
 
 export { EditImage };
