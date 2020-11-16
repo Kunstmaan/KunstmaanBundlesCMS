@@ -10,6 +10,9 @@ class MediaCropper {
         this.viewSelect = this.EditImage.metaContainer.querySelector(SELECTORS.VIEW_SELECT);
         this.metaValueNodes = {};
         this.cropper = null;
+
+        this.onCrop = this.onCrop.bind(this);
+        this.onViewChange = this.onViewChange.bind(this);
     }
 
     getValueNodes() {
@@ -51,19 +54,27 @@ class MediaCropper {
     }
 
     addEventListeners() {
-        this.image.addEventListener('crop', () => {
-            const data = this.cropper.getData();
-            this.updateValue(data);
-        });
+        this.image.addEventListener('crop', this.onCrop);
+        this.viewSelect.addEventListener('change', this.onViewChange);
+    }
 
-        this.viewSelect.addEventListener('change', () => {
-            this.EditImage.currentCropView = this.viewSelect.value;
-            this.cropper.destroy();
-            if (this.EditImage.hasFocusSelect) {
-                this.EditImage.components.focus.component.reset();
-            }
-            this.initCropper();
-        });
+    removeEventListeners() {
+        this.image.removeEventListener('crop', this.onCrop);
+        this.viewSelect.removeEventListener('change', this.onViewChange);
+    }
+
+    onCrop() {
+        const data = this.cropper.getData();
+        this.updateValue(data);
+    }
+
+    onViewChange() {
+        this.EditImage.currentCropView = this.viewSelect.value;
+        this.cropper.destroy();
+        if (this.EditImage.hasFocusSelect) {
+            this.EditImage.components.focus.component.reset();
+        }
+        this.initCropper();
     }
 
     initCropper() {
@@ -103,6 +114,14 @@ class MediaCropper {
 
         this.initCropper();
         this.addEventListeners();
+
+        this.node.addEventListener('destroy', () => {
+            console.log(this);
+            this.cropper.clear();
+            this.cropper.destroy();
+            this.removeEventListeners();
+            console.log(this);
+        })
     }
 }
 

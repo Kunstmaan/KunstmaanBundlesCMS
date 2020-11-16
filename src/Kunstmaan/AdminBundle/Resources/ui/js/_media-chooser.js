@@ -36,7 +36,14 @@ kunstmaanbundles.mediaChooser = (function (window, undefined) {
                 var linkedID = $this.data('linked-id');
                 var $mediaCropperModal = $('#' + linkedID + '-image-edit-modal');
                 var imageEdit = $mediaCropperModal.find('.js-image-edit');
+                var imageEditImage = $mediaCropperModal.find('.js-image-edit-image');
                 var destroyEvent = new CustomEvent('destroy');
+
+                imageEditImage.attr({
+                    'src': '',
+                    'srcset': '',
+                    'alt': ''
+                });
 
                 imageEdit[0].dispatchEvent(destroyEvent);
             }

@@ -14,6 +14,7 @@ class Focuspoint {
         this.setImage = this.setImage.bind(this);
         this.setEditData = this.setEditData.bind(this);
         this.handleSavedValues = this.handleSavedValues.bind(this);
+        this.onSelect = this.onSelect.bind(this);
     }
 
     setSelectedFocus(value) {
@@ -57,11 +58,20 @@ class Focuspoint {
 
     addEventListeners() {
         this.choices.forEach((choice) => {
-            choice.addEventListener('click', (e) => {
-                this.setSelectedFocus(choice.value);
-                this.setEditData();
-            });
+            choice.addEventListener('click', this.onSelect);
         })
+    }
+
+    removeEventListeners() {
+        this.choices.forEach((choice) => {
+            choice.removeEventListener('click', this.onSelect);
+        })
+    }
+
+    onSelect(e) {
+        const choice = e.currentTarget;
+        this.setSelectedFocus(choice.value);
+        this.setEditData();
     }
 
     handleSavedValues() {
@@ -76,6 +86,10 @@ class Focuspoint {
     init() {
         this.addEventListeners();
         this.handleSavedValues();
+
+        this.EditImage.node.addEventListener('destroy', () => {
+            this.removeEventListeners();
+        })
     }
 }
 
