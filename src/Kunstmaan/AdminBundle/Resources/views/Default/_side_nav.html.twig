@@ -1,6 +1,5 @@
 <header class="kuma-main-app__sidebar__header">
     <div class="kuma-main-app__sidebar__title-holder">
-
         {% if is_multidomain_site() %}
             {% include "@KunstmaanMultiDomain/AdminPanel/_site_switch_action_next.html.twig" %}
         {% else %}
@@ -19,8 +18,6 @@
     {% else %}
         <img class="kuma-main-app__sidebar__cms-logo" src="{{ asset('/bundles/kunstmaanadmin/img/general/cms-logo.svg') }}" alt="Kunstmaan CMS">
     {% endif %}
-
-    
 </header>
 <div class="kuma-main-app__sidebar__content">
     <nav class="kuma-main-nav">

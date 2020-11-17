@@ -110,6 +110,10 @@ kuma_admin:
         error:   Error
         info:    Info
         danger:  Danger
+    main_nav:
+        dashboard: Dashboard
+        keep_open: Keep open
+        log_out: Log out
     dashboard:
         configuration:
             title:
