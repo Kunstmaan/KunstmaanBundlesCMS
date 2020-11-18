@@ -55,7 +55,7 @@ class Redirect extends AbstractEntity
      *
      * @ORM\Column(name="permanent", type="boolean")
      */
-    private $permanent;
+    private $permanent = false;
 
     /**
      * @var bool
