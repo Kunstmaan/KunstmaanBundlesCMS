@@ -1,0 +1,226 @@
+<?php
+
+namespace Kunstmaan\RedirectBundle\EventSubscriber;
+
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Events;
+use Doctrine\ORM\UnitOfWork;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\RedirectBundle\Entity\AutoRedirectInterface;
+use Kunstmaan\RedirectBundle\Entity\Redirect;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+class RedirectSubscriber implements EventSubscriber
+{
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @var array<string,array<int,Redirect>
+     */
+    private $redirects = [];
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
+    public function getSubscribedEvents(): array
+    {
+        return [
+            Events::onFlush,
+        ];
+    }
+
+    public function onFlush(OnFlushEventArgs $onFlushEventArgs): void
+    {
+        $entityManager = $onFlushEventArgs->getEntityManager();
+        $unitOfWork = $entityManager->getUnitOfWork();
+
+        if (!$entityManager instanceof EntityManager) {
+            return;
+        }
+
+        foreach ($unitOfWork->getScheduledEntityUpdates() as $entity) {
+            if (!$entity instanceof NodeTranslation) {
+                continue;
+            }
+
+            $this->createAutoRedirect(
+                $entity,
+                $entityManager,
+                $unitOfWork
+            );
+        }
+
+        $unitOfWork->computeChangeSets();
+    }
+
+    private function createAutoRedirect(
+        NodeTranslation $nodeTranslation,
+        EntityManager $entityManager,
+        UnitOfWork $unitOfWork
+    ): void {
+        $changeSet = $unitOfWork->getEntityChangeSet($nodeTranslation);
+
+        if (!isset($changeSet['slug'])) {
+            return;
+        }
+
+        $page = $nodeTranslation->getRef($entityManager);
+
+        if (!$page instanceof AutoRedirectInterface) {
+            return;
+        }
+
+        $this->processRedirect(
+            $entityManager,
+            $nodeTranslation->getUrl(),
+            $this->getNewUrl($nodeTranslation)
+        );
+    }
+
+    private function getNewUrl(NodeTranslation $nodeTranslation): string
+    {
+        $newUrl = $nodeTranslation->getFullSlug();
+
+        if (!is_string($newUrl)) {
+            return '/';
+        }
+
+        return $this->startWithSlash($newUrl);
+    }
+
+    private function startWithSlash(string $url): string
+    {
+        $firstCharacter = $url[0] ?? '';
+
+        if ($firstCharacter !== '/') {
+            return '/' . $url;
+        }
+
+        return $url;
+    }
+
+    private function removeSlashAtStart(string $url): string
+    {
+        $firstCharacter = $url[0] ?? '';
+
+        if ($firstCharacter !== '/') {
+            return $url;
+        }
+
+        return substr($url, 1);
+    }
+
+    private function processRedirect(
+        EntityManager $entityManager,
+        ?string $oldUrl,
+        string $newUrl
+    ): void {
+        $this->removeOriginRedirects(
+            $newUrl,
+            $entityManager
+        );
+
+        if (!is_string($oldUrl)) {
+            return;
+        }
+
+        $this->updateTargetRedirects(
+            $oldUrl,
+            $newUrl,
+            $entityManager
+        );
+
+        $this->createRedirect(
+            $entityManager,
+            $oldUrl,
+            $newUrl
+        );
+    }
+
+    private function removeOriginRedirects(
+        string $newUrl,
+        EntityManager $entityManager
+    ): void {
+        $origin = $this->removeSlashAtStart($newUrl);
+
+        $redirects = $entityManager->getRepository(Redirect::class)->findBy(
+            [
+                'origin' => $origin,
+            ]
+        );
+
+        /** @var Redirect $redirect */
+        foreach ($redirects as $redirect) {
+            $entityManager->remove($redirect);
+        }
+
+        if (isset($this->redirects[$origin])) {
+            foreach ($this->redirects[$origin] as $redirect) {
+                $entityManager->remove($redirect);
+            }
+        }
+    }
+
+    private function updateTargetRedirects(
+        string $oldUrl,
+        string $newUrl,
+        EntityManager $entityManager
+    ): void {
+        $redirects = $entityManager->getRepository(Redirect::class)->findBy(
+            [
+                'target' => $this->startWithSlash($oldUrl),
+            ]
+        );
+
+        /** @var Redirect $redirect */
+        foreach ($redirects as $redirect) {
+            $redirect->setTarget($newUrl);
+            $redirect->setIsAutoRedirect(true);
+        }
+    }
+
+    private function createRedirect(
+        EntityManager $entityManager,
+        string $oldUrl,
+        string $newUrl
+    ): void {
+        $redirect = new Redirect();
+        $redirect->setOrigin($oldUrl);
+        $redirect->setTarget($newUrl);
+        $redirect->setPermanent(true);
+        $redirect->setDomain($this->getDomain());
+        $redirect->setIsAutoRedirect(true);
+
+        $entityManager->persist($redirect);
+
+        $entityManager->getUnitOfWork()->computeChangeSet(
+            $entityManager->getClassMetadata(Redirect::class),
+            $redirect
+        );
+
+        if (!isset($this->redirects[$oldUrl])) {
+            $this->redirects[$oldUrl] = [];
+        }
+
+        $this->redirects[$oldUrl][] = $redirect;
+    }
+
+    private function getDomain(): ?string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (!$request instanceof Request) {
+            return null;
+        }
+
+        return $request->getHost();
+    }
+}

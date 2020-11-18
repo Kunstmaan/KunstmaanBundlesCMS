@@ -21,14 +21,14 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class Redirect extends AbstractEntity
 {
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="domain", type="string", length=255, nullable=true)
      */
     private $domain;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="origin", type="string", length=255)
      * @Assert\NotBlank()
@@ -36,14 +36,14 @@ class Redirect extends AbstractEntity
     private $origin;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="note", type="string", length=255, nullable=true)
      */
     private $note;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="target", type="text")
      * @Assert\NotBlank()
@@ -55,120 +55,85 @@ class Redirect extends AbstractEntity
      *
      * @ORM\Column(name="permanent", type="boolean")
      */
-    private $permanent;
+    private $permanent = false;
 
     /**
-     * Get domain
+     * @var bool
      *
-     * @return string
+     * @ORM\Column(name="is_auto_redirect", type="boolean", nullable=true)
      */
-    public function getDomain()
+    private $isAutoRedirect = false;
+
+    public function getDomain(): ?string
     {
         return $this->domain;
     }
 
-    /**
-     * Set domain
-     *
-     * @param string $domain
-     *
-     * @return Redirect
-     */
-    public function setDomain($domain)
+    public function setDomain(?string $domain): Redirect
     {
         $this->domain = $domain;
 
         return $this;
     }
 
-    /**
-     * Set origin
-     *
-     * @param string $origin
-     *
-     * @return Redirect
-     */
-    public function setOrigin($origin)
+    public function getOrigin(): ?string
+    {
+        return $this->origin;
+    }
+
+    public function setOrigin(?string $origin): Redirect
     {
         $this->origin = $origin;
 
         return $this;
     }
 
-    /**
-     * Get origin
-     *
-     * @return string
-     */
-    public function getOrigin()
+    public function getNote(): ?string
     {
-        return $this->origin;
+        return $this->note;
     }
 
-    /**
-     * Set target
-     *
-     * @param string $target
-     *
-     * @return Redirect
-     */
-    public function setTarget($target)
+    public function setNote(?string $note): Redirect
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    public function getTarget(): ?string
+    {
+        return $this->target;
+    }
+
+    public function setTarget(?string $target): Redirect
     {
         $this->target = $target;
 
         return $this;
     }
 
-    /**
-     * Get target
-     *
-     * @return string
-     */
-    public function getTarget()
+    public function isPermanent(): bool
     {
-        return $this->target;
+        return $this->permanent;
     }
 
-    /**
-     * Set permanent
-     *
-     * @param bool $permanent
-     *
-     * @return Redirect
-     */
-    public function setPermanent($permanent)
+    public function setPermanent(bool $permanent): Redirect
     {
         $this->permanent = $permanent;
 
         return $this;
     }
 
-    /**
-     * Get permanent
-     *
-     * @return bool
-     */
-    public function isPermanent()
+    public function isAutoRedirect(): ?bool
     {
-        return $this->permanent;
+        return $this->isAutoRedirect;
     }
 
-    /**
-     * @return string
-     */
-    public function getNote()
+    public function setIsAutoRedirect(?bool $isAutoRedirect): Redirect
     {
-        return $this->note;
-    }
+        $this->isAutoRedirect = $isAutoRedirect;
 
-    /**
-     * @param string $note
-     *
-     * @return Redirect
-     */
-    public function setNote($note)
-    {
-        $this->note = $note;
+        return $this;
     }
 
     /**
@@ -176,7 +141,7 @@ class Redirect extends AbstractEntity
      *
      * @param ExecutionContextInterface $context
      */
-    public function validate(ExecutionContextInterface $context)
+    public function validate(ExecutionContextInterface $context): void
     {
         if ($this->getOrigin() === $this->getTarget()) {
             $context->buildViolation('errors.redirect.origin_same_as_target')
