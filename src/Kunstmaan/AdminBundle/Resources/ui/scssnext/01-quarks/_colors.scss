@@ -12,7 +12,7 @@
     --color-greyscale-300: #CDCDCD;
     --color-greyscale-400: #F2F2F2;
     --color-greyscale-500: #FFFFFF;
-    // --color-client-primary: #02A0E6; // has to be set in layout
+    // --highlight-color-bg: #02A0E6; // has to be set in layout
     --color-kuma-primary: #02A0E6;
     --color-kuma-secondary-1: #FA1A57;
     --color-kuma-secondary-2: #08D6E5;
@@ -22,4 +22,6 @@
     --color-error: #FA1A57;
     --color-disabled: #2E2B29;
     --color-text: #2E2B29;
+    --highlight-color-bg: var(--color-kuma-secondary-2);
+    --highlight-color-fg: var(--color-greyscale-000);
 }

@@ -5955,7 +5955,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function SideNav() {
   var navHolder = document.querySelector(_config__WEBPACK_IMPORTED_MODULE_0__["SELECTORS"].NAV_HOLDER);
-  Object(_initSideNav__WEBPACK_IMPORTED_MODULE_1__["initSideNav"])(navHolder);
+
+  if (navHolder) {
+    Object(_initSideNav__WEBPACK_IMPORTED_MODULE_1__["initSideNav"])(navHolder);
+  }
 }
 
 /***/ }),
