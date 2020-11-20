@@ -125,33 +125,7 @@ class AutoSaveController extends AbstractController
             $publicVersion
         );
         $page = $nodeVersion->getRef($this->em);
-        $pagePartRefs = $this->em->getRepository(PagePartRef::class)->getPagePartRefs($page);
-        $pagePartRefIds = array_reduce($pagePartRefs, function($array, $ref) {
-            if($array === null){
-                $array = [];
-            }
-            $array[] = $ref->getId();
-
-            return $array;
-        });
-
-        $request->request->set('main_sequence', $pagePartRefIds);
-        $form = $request->request->get('form');
-        $form['main']['id'] = $page->getId();
-        $formCopy = $form;
-        foreach(array_keys($formCopy) as $key) {
-            $matches = [];
-            if(false !== strpos($key, 'pagepartadmin_')){
-                $pagePartRef = reset($pagePartRefs);
-                $newKey = 'pagepartadmin_'.$pagePartRef->getId();
-                $form[$newKey] = $form[$key];
-                unset($form[$key]);
-                array_shift($pagePartRefs);
-            }
-        }
-        $request->request->set('form', $form);
-        unset($form);
-        unset($formCopy);
+        $this->reverseFormParamsForAutoSave($page, $request);
 
         $tabPane = $this->tabPaneCreator->getDefaultTabPane(
             $request,
@@ -167,7 +141,9 @@ class AutoSaveController extends AbstractController
         }
 
         $nodeVersion->setUpdated(new DateTime());
+        $this->em->persist($nodeTranslation);
         $this->em->persist($nodeVersion);
+        $tabPane->persist($this->em);
         $this->em->flush();
 
         $nodeMenu = $this->nodeMenu;
@@ -231,5 +207,40 @@ class AutoSaveController extends AbstractController
         }
 
         return $eventDispatcher->dispatch($eventName, $event);
+    }
+
+    private function reverseFormParamsForAutoSave(HasNodeInterface $page, Request $request): void
+    {
+        $pagePartRefs = $this->em->getRepository(PagePartRef::class)->getPagePartRefs($page);
+        $pagePartRefIds = array_reduce($pagePartRefs, function ($array, $ref) {
+            if ($array === null) {
+                $array = [];
+            }
+            $array[] = $ref->getId();
+
+            return $array;
+        });
+
+        $mainSequence = $request->request->get('main_sequence');
+        foreach ($mainSequence as $key => $sequence) {
+            if (0 !== strpos($sequence, 'newpp_')) {
+                $mainSequence[$key] = reset($pagePartRefIds);
+                array_shift($pagePartRefIds);
+            }
+        }
+        $request->request->set('main_sequence', $mainSequence);
+        $form = $request->request->get('form');
+        $form['main']['id'] = $page->getId();
+        $formCopy = $form;
+        foreach (array_keys($formCopy) as $key) {
+            $matches = [];
+            if (0 === strpos($key, 'pagepartadmin_') && false === strpos($key, 'pagepartadmin_newpp_')) {
+                $newKey = 'pagepartadmin_' . reset($pagePartRefs)->getId();
+                $form[$newKey] = $form[$key];
+                unset($form[$key]);
+                array_shift($pagePartRefs);
+            }
+        }
+        $request->request->set('form', $form);
     }
 }

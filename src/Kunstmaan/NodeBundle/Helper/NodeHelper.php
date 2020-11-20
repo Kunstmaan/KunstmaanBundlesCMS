@@ -15,6 +15,7 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -114,10 +115,11 @@ class NodeHelper
 
     public function deletePreviousAutoSaves(HasNodeInterface $page, NodeTranslation $nodeTranslation): void
     {
+        $pageClass = get_class($page);
         $versions = $this->em->getRepository(NodeVersion::class)
             ->findBy([
                 'nodeTranslation' => $nodeTranslation,
-                'refEntityName' => get_class($page),
+                'refEntityName' => $pageClass,
                 'type' => NodeVersion::AUTO_SAVE_VERSION,
             ]);
 
@@ -125,6 +127,13 @@ class NodeHelper
         foreach($versions as $version) {
             $page = $this->em->getRepository($version->getRefEntityName())->find($version->getRefId());
             if ($page) {
+                $pagePartRefs = $this->em->getRepository(PagePartRef::class)->findBy([
+                  'pageEntityname' => $pageClass,
+                  'pageId' => $page->getId(),
+                ]);
+                foreach($pagePartRefs as $pagePartRef) {
+                    $this->em->remove($pagePartRef);
+                }
                 $this->em->remove($page);
             }
             $this->em->remove($version);
