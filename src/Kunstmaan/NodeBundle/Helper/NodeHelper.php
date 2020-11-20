@@ -112,6 +112,26 @@ class NodeHelper
         return $nodeVersion;
     }
 
+    public function deletePreviousAutoSaves(HasNodeInterface $page, NodeTranslation $nodeTranslation): void
+    {
+        $versions = $this->em->getRepository(NodeVersion::class)
+            ->findBy([
+                'nodeTranslation' => $nodeTranslation,
+                'refEntityName' => get_class($page),
+                'type' => NodeVersion::AUTO_SAVE_VERSION,
+            ]);
+
+        /** @var NodeVersion $version */
+        foreach($versions as $version) {
+            $page = $this->em->getRepository($version->getRefEntityName())->find($version->getRefId());
+            if ($page) {
+                $this->em->remove($page);
+            }
+            $this->em->remove($version);
+        }
+        $this->em->flush();
+    }
+
     public function createAutoSaveVersion(
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,

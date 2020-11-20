@@ -118,6 +118,7 @@ class AutoSaveController extends AbstractController
             return new Response();
         }
 
+        $this->nodeHelper->deletePreviousAutoSaves($page, $nodeTranslation);
         $nodeVersion = $this->nodeHelper->createAutoSaveVersion(
             $page,
             $nodeTranslation,
