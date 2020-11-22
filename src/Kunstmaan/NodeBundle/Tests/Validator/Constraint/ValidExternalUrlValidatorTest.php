@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests\unit\Validator\Constraint;
+namespace Kunstmaan\NodeBundle\Tests\Validator\Constraint;
 
 use Kunstmaan\NodeBundle\Validator\Constraint\ValidExternalUrl;
 use Kunstmaan\NodeBundle\Validator\Constraint\ValidExternalUrlValidator;

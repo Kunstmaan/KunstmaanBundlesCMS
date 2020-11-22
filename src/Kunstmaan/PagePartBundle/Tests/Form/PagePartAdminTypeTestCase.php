@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\PagePartBundle\Tests\unit\Form;
+namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;

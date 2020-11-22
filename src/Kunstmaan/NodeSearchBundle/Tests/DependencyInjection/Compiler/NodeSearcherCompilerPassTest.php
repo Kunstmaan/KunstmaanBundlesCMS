@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeSearchBundle\Tests\unit\DependencyInjection\Compiler;
+namespace Kunstmaan\NodeSearchBundle\Tests\DependencyInjection\Compiler;
 
 use Kunstmaan\NodeSearchBundle\DependencyInjection\Compiler\NodeSearcherCompilerPass;
 use PHPUnit\Framework\TestCase;

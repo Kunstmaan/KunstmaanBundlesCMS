@@ -3,7 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
-use Kunstmaan\PagePartBundle\Tests\unit\Form\PagePartAdminTypeTestCase;
+use Kunstmaan\PagePartBundle\Tests\Form\PagePartAdminTypeTestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class LinePagePartAdminTypeTest extends PagePartAdminTypeTestCase
