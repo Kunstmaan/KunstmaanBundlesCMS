@@ -1,7 +1,5 @@
-<header class="kuma-main-header">
-    <h1 class="kuma-main-header__title">
-        {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
-    </h1>
+<h1 class="kuma-main-header__title">
+    {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+</h1>
 
-    {% block page_header_extra %}{% endblock %}
-</header>
+{% block page_header_extra %}{% endblock %}

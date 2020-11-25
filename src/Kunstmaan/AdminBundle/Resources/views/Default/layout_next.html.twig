@@ -55,10 +55,12 @@
         <div class="kuma-main-app__content-holder">
             {% block notificatons %}{% endblock %}
             <!-- Header -->
-
-            {% block admin_page_title %}
-                {% include "@KunstmaanAdmin/Default/app_header_next.html.twig" %}
-            {% endblock %}
+            {# @todo: move the header tag to the header file once the old design is completely removed #}
+            <header class="kuma-main-header">
+                {% block admin_page_title %}
+                    {% include "@KunstmaanAdmin/Default/app_header_next.html.twig" %}
+                {% endblock %}
+            </header>
 
             <div class="kuma-main-app__content">
                 {% block subNav %}

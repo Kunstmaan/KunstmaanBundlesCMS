@@ -1,0 +1,24 @@
+/* ==========================================================================
+    Tables
+   ========================================================================== */
+
+table,
+.table-bordered {
+    border: none;
+}
+
+// @todo: symplify this once old design is completely removed
+// had to overwrite old custom and bootstrap styling
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > th,
+.table-bordered > tfoot > tr > td {
+    padding: 15px;
+
+    border: none;
+    border-bottom: 2px solid var(--color-greyscale-500);
+
+    font-size: 15px;
+}
