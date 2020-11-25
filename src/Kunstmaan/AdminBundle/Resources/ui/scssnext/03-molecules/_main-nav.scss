@@ -18,11 +18,11 @@
     &:focus,
     &--active {
         .kuma-main-nav__item__icon {
-            fill: var(--color-client-primary);
+            fill: var(--highlight-color-bg);
         }
 
         .kuma-main-nav__item__text {
-            color: var(--color-client-primary);
+            color: var(--highlight-color-bg);
         }
     }
 

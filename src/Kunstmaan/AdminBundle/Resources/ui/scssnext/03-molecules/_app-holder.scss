@@ -70,7 +70,8 @@ $transition: .6s $snip-ease-sine-in-out;
     margin: 0;
     padding: 20px;
 
-    color: var(--color-client-text-on-bg);
+    color: var(--highlight-color-fg);
+    font-size: 20px;
 }
 
 .kuma-main-app__sidebar__logo {
@@ -114,7 +115,7 @@ $transition: .6s $snip-ease-sine-in-out;
         max-width: 360px;
 
         .kuma-main-app__sidebar__header {
-            background-color: var(--color-client-primary);
+            background-color: var(--highlight-color-bg);
         }
 
         .kuma-main-app__sidebar__language-chooser .kuma-language-nav__active-language {
