@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionFie
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class StringFormSubmissionTypeTest
- */
 class StringFormSubmissionTypeTest extends TypeTestCase
 {
     public function testFormType()

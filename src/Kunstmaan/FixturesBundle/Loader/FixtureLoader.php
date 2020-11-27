@@ -55,8 +55,6 @@ abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterfac
     /**
      * Parse specs and initiate fixtures
      *
-     * @param $data
-     *
      * @return array|mixed
      */
     private function initFixtures($data)

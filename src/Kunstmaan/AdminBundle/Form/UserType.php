@@ -27,8 +27,6 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     /**
      * Setter to check if we can display all form fields
      *
-     * @param $canEditAllFields
-     *
      * @return bool
      */
     public function setCanEditAllFields($canEditAllFields)
@@ -36,9 +34,6 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         $this->canEditAllFields = (bool) $canEditAllFields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $languages = [];
@@ -89,17 +84,11 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'user';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

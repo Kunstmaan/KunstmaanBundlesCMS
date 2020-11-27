@@ -14,9 +14,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class KunstmaanMultiDomainExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -54,8 +51,6 @@ class KunstmaanMultiDomainExtension extends Extension
     /**
      * Convert config hosts array to a usable format
      *
-     * @param $hosts
-     *
      * @return array
      */
     private function getHostConfigurations($hosts)
@@ -82,8 +77,6 @@ class KunstmaanMultiDomainExtension extends Extension
     /**
      * Return uri to actual locale mappings
      *
-     * @param $localeSettings
-     *
      * @return array
      */
     private function getHostLocales($localeSettings)
@@ -98,8 +91,6 @@ class KunstmaanMultiDomainExtension extends Extension
 
     /**
      * Return the extra data configured for each locale
-     *
-     * @param $localeSettings
      *
      * @return array
      */

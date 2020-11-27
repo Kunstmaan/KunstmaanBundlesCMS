@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionFiel
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class EmailFormSubmissionTypeTest
- */
 class EmailFormSubmissionTypeTest extends TypeTestCase
 {
     public function testFormType()

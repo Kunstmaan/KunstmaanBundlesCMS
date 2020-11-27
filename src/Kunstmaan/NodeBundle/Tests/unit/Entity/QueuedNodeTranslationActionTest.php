@@ -8,9 +8,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class NodeVersionLockTest
- */
 class QueuedNodeTranslationActionTest extends TestCase
 {
     public function testGetSet()

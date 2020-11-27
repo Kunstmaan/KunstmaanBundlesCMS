@@ -19,7 +19,6 @@ class RenderService
     }
 
     /**
-     * @param $node
      * @param array $options
      *
      * @return string

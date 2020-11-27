@@ -33,9 +33,6 @@ class TestNode extends AbstractPage
     }
 }
 
-/**
- * Class StructureNodeTest
- */
 class StructureNodeTest extends TestCase
 {
     public function testIsStructureNode()

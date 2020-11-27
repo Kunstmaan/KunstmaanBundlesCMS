@@ -537,9 +537,6 @@ class NodeTranslationRepository extends EntityRepository
      *
      * It'll only return the latest version. It'll also hide deleted & offline
      * nodes.
-     *
-     * @param $language
-     * @param $internalName
      */
     public function getNodeTranslationByLanguageAndInternalName(
         $language,

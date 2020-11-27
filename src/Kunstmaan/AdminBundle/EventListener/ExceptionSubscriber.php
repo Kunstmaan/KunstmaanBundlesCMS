@@ -32,9 +32,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * ExceptionSubscriber constructor.
-     */
     public function __construct(EntityManagerInterface $em, array $excludes = [])
     {
         $this->em = $em;

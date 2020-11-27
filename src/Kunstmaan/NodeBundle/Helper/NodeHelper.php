@@ -19,9 +19,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Class NodeHelper
- */
 class NodeHelper
 {
     /** @var EntityManagerInterface */
@@ -39,9 +36,6 @@ class NodeHelper
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    /**
-     * NodeHelper constructor.
-     */
     public function __construct(
         EntityManagerInterface $em,
         NodeAdminPublisher $nodeAdminPublisher,

@@ -9,11 +9,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class KunstmaanNodeSearchExtension extends Extension implements PrependExtensionInterface
 {
     /**
@@ -21,9 +16,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
      */
     private $useElasticSearchVersion6;
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration($this->useElasticSearchVersion6);

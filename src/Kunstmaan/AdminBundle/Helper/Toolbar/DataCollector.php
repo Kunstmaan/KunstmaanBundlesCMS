@@ -16,9 +16,6 @@ class DataCollector
      */
     protected $urlGenerator;
 
-    /**
-     * DataCollector constructor.
-     */
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;

@@ -4,9 +4,6 @@ namespace Kunstmaan\AdminBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * Class PasswordRestrictions
- */
 class PasswordRestrictions extends Constraint
 {
     const INVALID_MIN_DIGITS_ERROR = 1;
@@ -21,11 +18,6 @@ class PasswordRestrictions extends Constraint
     const MESSAGE_MIN_LENGTH = 'errors.password.minlength';
     const MESSAGE_MAX_LENGTH = 'errors.password.maxlength';
 
-    /**
-     * PasswordRestrictions constructor.
-     *
-     * @param null $options
-     */
     public function __construct($options = null)
     {
         parent::__construct($options);

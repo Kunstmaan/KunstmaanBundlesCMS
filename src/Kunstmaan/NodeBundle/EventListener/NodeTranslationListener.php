@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * Class NodeTranslationListener
  * Listens to doctrine postFlush event and updates the urls if the entities are nodetranslations
  */
 class NodeTranslationListener
@@ -45,8 +44,6 @@ class NodeTranslationListener
     private $pagesConfiguration;
 
     /**
-     * NodeTranslationListener constructor.
-     *
      * @param SessionInterface|FlashBagInterface $session
      */
     public function __construct(

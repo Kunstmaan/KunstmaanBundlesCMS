@@ -54,9 +54,6 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $this->serviceHelper = $serviceHelper;
     }
 
-    /**
-     * Configures the current command.
-     */
     protected function configure()
     {
         $this

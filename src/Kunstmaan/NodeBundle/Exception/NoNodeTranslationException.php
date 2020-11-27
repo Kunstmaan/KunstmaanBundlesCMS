@@ -7,8 +7,6 @@ use Throwable;
 class NoNodeTranslationException extends \Exception
 {
     /**
-     * NoNodeTranslationException constructor.
-     *
      * @param string $message
      * @param int    $code
      */

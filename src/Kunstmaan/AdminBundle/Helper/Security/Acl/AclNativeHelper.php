@@ -38,8 +38,6 @@ class AclNativeHelper
     private $permissionsEnabled;
 
     /**
-     * Constructor.
-     *
      * @param EntityManager          $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security context
      * @param RoleHierarchyInterface $rh           The role hierarchies

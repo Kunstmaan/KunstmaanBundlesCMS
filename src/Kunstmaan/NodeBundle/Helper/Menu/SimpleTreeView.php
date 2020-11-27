@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-/**
- * Class SimpleTreeView
- */
 class SimpleTreeView
 {
     /**

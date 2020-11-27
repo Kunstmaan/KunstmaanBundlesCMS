@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * EntityLockCheckController
- */
 class EntityLockCheckController extends Controller
 {
     /**
@@ -30,9 +27,6 @@ class EntityLockCheckController extends Controller
      *      requirements={"id" = "\d+"},
      *      name="KunstmaanAdminListBundle_entity_lock_check"
      * )
-     *
-     * @param $id
-     * @param $repository
      *
      * @return JsonResponse
      */

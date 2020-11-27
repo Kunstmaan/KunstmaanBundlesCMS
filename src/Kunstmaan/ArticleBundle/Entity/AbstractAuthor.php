@@ -5,14 +5,8 @@ namespace Kunstmaan\ArticleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
-/**
- * Class AbstractAuthor
- */
 class AbstractAuthor extends AbstractEntity
 {
-    /**
-     * AbstractAuthor constructor.
-     */
     public function __construct()
     {
         if (\get_class($this) === AbstractAuthor::class) {
@@ -50,9 +44,6 @@ class AbstractAuthor extends AbstractEntity
         return $this->name;
     }
 
-    /**
-     * @param $link
-     */
     public function setLink($link)
     {
         $this->link = $link;

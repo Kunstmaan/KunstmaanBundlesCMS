@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class UpVoteEventTest
- */
 class UpVoteEventTest extends TestCase
 {
     public function testGetSet()

@@ -1036,8 +1036,6 @@ class NodeAdminController extends Controller
      *      name="KunstmaanNodeBundle_nodes_versionlock_check"
      * )
      *
-     * @param $id
-     *
      * @return JsonResponse
      */
     public function checkNodeVersionLockAction(Request $request, $id, $public)

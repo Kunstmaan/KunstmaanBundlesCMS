@@ -4,9 +4,6 @@ namespace Kunstmaan\NodeBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-/**
- * Class SlugSecurityEvent
- */
 final class SlugSecurityEvent extends Event
 {
     private $node;

@@ -86,8 +86,7 @@ class ACLPermissionCreator
 
     /**
      * @param mixed $object
-     * @param array $map
-     *                      with as key the name of the role you want to set the permissions for
+     * @param array $map    with as key the name of the role you want to set the permissions for
      *                      and as value the mask you want to use
      *                      for example array('ROLE_GUEST' => MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH)
      * @param bool  $force

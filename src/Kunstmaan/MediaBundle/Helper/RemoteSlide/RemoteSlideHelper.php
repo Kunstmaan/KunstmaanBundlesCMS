@@ -8,7 +8,7 @@ use Kunstmaan\MediaBundle\Helper\Remote\RemoteInterface;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Video
- * Class that defines a video in the system
+ * Defines a video in the system
  */
 class RemoteSlideHelper extends AbstractRemoteHelper implements RemoteInterface
 {

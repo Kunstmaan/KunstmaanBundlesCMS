@@ -9,9 +9,6 @@ use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class LinkPagePartTest
- */
 class PageTemplateConfigurationTest extends TestCase
 {
     public function testGetSet()

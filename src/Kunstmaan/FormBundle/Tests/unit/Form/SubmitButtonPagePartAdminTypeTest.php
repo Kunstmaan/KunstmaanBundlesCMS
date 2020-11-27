@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class SubmitButtonPagePartAdminTypeTest
- */
 class SubmitButtonPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()

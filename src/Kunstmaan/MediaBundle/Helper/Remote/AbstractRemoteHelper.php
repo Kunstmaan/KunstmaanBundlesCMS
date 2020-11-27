@@ -7,7 +7,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Abstract
- * Class that defines a remote entity in the system
+ * Defines a remote entity in the system
  */
 abstract class AbstractRemoteHelper
 {

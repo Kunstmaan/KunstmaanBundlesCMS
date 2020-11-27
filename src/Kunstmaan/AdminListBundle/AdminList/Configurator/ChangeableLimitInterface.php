@@ -4,9 +4,6 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Interface ChangeableLimitInterface
- */
 interface ChangeableLimitInterface
 {
     /**

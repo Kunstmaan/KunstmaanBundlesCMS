@@ -4,9 +4,6 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 
-/**
- * Class MappingListener
- */
 class MappingListener
 {
     /**
@@ -15,8 +12,6 @@ class MappingListener
     private $className;
 
     /**
-     * Constructor
-     *
      * @param string $className
      */
     public function __construct($className)

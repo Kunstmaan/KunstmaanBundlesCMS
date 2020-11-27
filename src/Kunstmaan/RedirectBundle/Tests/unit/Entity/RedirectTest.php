@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilder;
 
-/**
- * Class RedirectTest
- */
 class RedirectTest extends TestCase
 {
     /**

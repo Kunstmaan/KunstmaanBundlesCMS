@@ -16,17 +16,6 @@ class LocaleWhiteListAdminType extends AbstractRuleAdminType
         $this->locales = array_combine($locales, $locales);
     }
 
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('locale', ChoiceType::class, [
@@ -38,11 +27,6 @@ class LocaleWhiteListAdminType extends AbstractRuleAdminType
         ]);
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'locale_whitelist_form';

@@ -6,9 +6,6 @@ use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
 use Kunstmaan\PagePartBundle\Tests\unit\Form\PagePartAdminTypeTestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class TextPagePartAdminTypeTest
- */
 class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
 {
     /**

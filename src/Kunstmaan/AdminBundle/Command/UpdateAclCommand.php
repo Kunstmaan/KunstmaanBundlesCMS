@@ -48,9 +48,6 @@ class UpdateAclCommand extends ContainerAwareCommand
         $this->roles = $roles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         parent::configure();
@@ -61,9 +58,6 @@ class UpdateAclCommand extends ContainerAwareCommand
                 'with given role and permissions');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');

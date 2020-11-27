@@ -18,9 +18,6 @@ class VarnishListener
      */
     private $router;
 
-    /**
-     * VarnishListener constructor.
-     */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, RouterInterface $router)
     {
         $this->authorizationChecker = $authorizationChecker;

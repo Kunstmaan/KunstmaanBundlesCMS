@@ -3,8 +3,6 @@
 namespace Kunstmaan\AdminBundle\FlashMessages;
 
 /**
- * Class FlashTypes
- *
  * Enabled flash types.
  */
 class FlashTypes

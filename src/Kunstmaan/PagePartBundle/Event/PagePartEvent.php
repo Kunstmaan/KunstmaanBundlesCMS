@@ -21,9 +21,6 @@ class PagePartEvent extends Event
      */
     private $response = null;
 
-    /**
-     * PagePartEvent constructor.
-     */
     public function __construct(PagePartInterface $pagePart)
     {
         $this->pagePart = $pagePart;

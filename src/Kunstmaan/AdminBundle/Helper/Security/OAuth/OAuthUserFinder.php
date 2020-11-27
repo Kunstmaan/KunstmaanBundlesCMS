@@ -12,20 +12,12 @@ class OAuthUserFinder implements OAuthUserFinderInterface
     /** @var string */
     private $userClass;
 
-    /**
-     * OAuthUserCreator constructor.
-     *
-     * @param $userClass
-     */
     public function __construct(EntityManagerInterface $em, $userClass)
     {
         $this->em = $em;
         $this->userClass = $userClass;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findUserByGoogleSignInData($email, $googleId)
     {
         //Check if already logged in before via Google auth

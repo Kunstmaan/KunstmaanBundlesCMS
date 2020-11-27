@@ -30,8 +30,6 @@ class AdminListEvent extends Event
     protected $response;
 
     /**
-     * AdminListEvent constructor.
-     *
      * @param object $entity
      */
     public function __construct($entity, Request $request, FormInterface $form = null)

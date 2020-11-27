@@ -8,9 +8,6 @@ use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RedirectAdminListConfiguratorTest
- */
 class RedirectAdminListConfiguratorTest extends TestCase
 {
     /**

@@ -8,10 +8,6 @@ use PHPUnit\Framework\TestCase;
 class RemoteVideoHandlerTest extends TestCase
 {
     /**
-     * @param $url
-     * @param $type
-     * @param $code
-     *
      * @dataProvider provider
      */
     public function testYoutubeUrl($url, $type, $code)

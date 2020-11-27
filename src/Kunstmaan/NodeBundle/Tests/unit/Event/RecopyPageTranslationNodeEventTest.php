@@ -9,9 +9,6 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RecopyPageTranslationNodeEventTest
- */
 class RecopyPageTranslationNodeEventTest extends TestCase
 {
     public function testGetSet()

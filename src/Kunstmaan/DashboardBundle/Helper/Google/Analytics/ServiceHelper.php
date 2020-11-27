@@ -13,9 +13,6 @@ class ServiceHelper
     /** @var GoogleClientHelper */
     private $clientHelper;
 
-    /**
-     * constructor
-     */
     public function __construct(ClientHelper $clientHelper)
     {
         $this->clientHelper = $clientHelper;
@@ -23,7 +20,7 @@ class ServiceHelper
     }
 
     /**
-     * @return Google_AnalyticsService $service
+     * @return Google_AnalyticsService
      */
     public function getService()
     {
@@ -31,7 +28,7 @@ class ServiceHelper
     }
 
     /**
-     * @return ClientHelper $clientHelper
+     * @return ClientHelper
      */
     public function getClientHelper()
     {

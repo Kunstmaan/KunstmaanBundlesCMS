@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class CheckboxPagePartAdminTypeTest
- */
 class CheckboxPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()

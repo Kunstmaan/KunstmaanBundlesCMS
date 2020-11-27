@@ -5,9 +5,6 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class LinkPagePartTest
- */
 class LinkPagePartTest extends TestCase
 {
     /**

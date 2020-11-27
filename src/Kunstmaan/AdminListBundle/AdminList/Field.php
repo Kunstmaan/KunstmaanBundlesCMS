@@ -4,9 +4,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-/**
- * Field
- */
 class Field
 {
     /**

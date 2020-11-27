@@ -57,8 +57,6 @@ class FileHandler extends AbstractMediaHandler
     private $slugifier;
 
     /**
-     * Constructor
-     *
      * @param int $priority
      */
     public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)

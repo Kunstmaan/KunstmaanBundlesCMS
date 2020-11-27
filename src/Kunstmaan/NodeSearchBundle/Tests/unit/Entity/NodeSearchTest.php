@@ -6,9 +6,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class NodeSearchTest
- */
 class NodeSearchTest extends TestCase
 {
     public function testGetters()

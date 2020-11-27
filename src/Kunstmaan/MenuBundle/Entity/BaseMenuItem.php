@@ -10,8 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * Class BaseMenuItem
- *
  * @ORM\MappedSuperclass()
  */
 abstract class BaseMenuItem extends AbstractEntity

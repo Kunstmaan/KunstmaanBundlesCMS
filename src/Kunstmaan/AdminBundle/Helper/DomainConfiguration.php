@@ -6,8 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class DomainConfiguration
- *
  * Default (single domain) configuration handling
  */
 class DomainConfiguration implements DomainConfigurationInterface

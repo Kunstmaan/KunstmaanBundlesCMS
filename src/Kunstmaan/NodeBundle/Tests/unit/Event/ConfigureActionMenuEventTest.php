@@ -8,9 +8,6 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class ConfigureActionMenuEventTest
- */
 class ConfigureActionMenuEventTest extends TestCase
 {
     public function testGetSet()

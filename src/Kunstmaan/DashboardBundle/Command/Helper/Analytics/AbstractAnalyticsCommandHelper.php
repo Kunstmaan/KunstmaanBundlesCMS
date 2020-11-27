@@ -20,14 +20,6 @@ abstract class AbstractAnalyticsCommandHelper
     /** @var OutputInterface */
     protected $output;
 
-    /**
-     * Constructor
-     *
-     * @param $configHelper
-     * @param $queryHelper
-     * @param $output
-     * @param $em
-     */
     public function __construct($configHelper, $queryHelper, $output, $em)
     {
         $this->configHelper = $configHelper;
@@ -37,8 +29,6 @@ abstract class AbstractAnalyticsCommandHelper
     }
 
     /**
-     * Constructor
-     *
      * @return array
      */
     protected function getTimestamps(AnalyticsOverview $overview)

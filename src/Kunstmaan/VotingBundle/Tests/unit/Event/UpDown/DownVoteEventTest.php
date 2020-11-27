@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class DownVoteEventTest
- */
 class DownVoteEventTest extends TestCase
 {
     public function testGetSet()

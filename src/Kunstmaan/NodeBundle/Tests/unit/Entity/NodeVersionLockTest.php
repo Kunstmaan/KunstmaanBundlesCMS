@@ -7,9 +7,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersionLock;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class NodeVersionLockTest
- */
 class NodeVersionLockTest extends TestCase
 {
     public function testGetSet()

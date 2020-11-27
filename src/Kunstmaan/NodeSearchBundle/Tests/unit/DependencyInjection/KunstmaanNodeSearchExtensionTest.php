@@ -6,9 +6,6 @@ use Kunstmaan\NodeSearchBundle\DependencyInjection\KunstmaanNodeSearchExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanNodeSearchExtensionTest
- */
 class KunstmaanNodeSearchExtensionTest extends AbstractExtensionTestCase
 {
     /**

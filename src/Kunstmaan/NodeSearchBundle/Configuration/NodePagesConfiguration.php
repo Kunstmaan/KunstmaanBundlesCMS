@@ -663,8 +663,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Removes all HTML markup & decode HTML entities
      *
-     * @param $text
-     *
      * @return string
      */
     protected function removeHtml($text)
@@ -729,8 +727,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * @param $publicNodeVersion
-     *
      * @return mixed
      */
     private function getNodeRefPage(NodeVersion $publicNodeVersion)

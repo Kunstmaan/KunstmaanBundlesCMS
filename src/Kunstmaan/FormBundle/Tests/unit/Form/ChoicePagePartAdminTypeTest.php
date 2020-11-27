@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class ChoicePagePartAdminTypeTest
- */
 class ChoicePagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()

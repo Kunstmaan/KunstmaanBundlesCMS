@@ -7,9 +7,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Event\SubmissionEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class SubmissionEventTest
- */
 class SubmissionEventTest extends TestCase
 {
     public function testEvent()

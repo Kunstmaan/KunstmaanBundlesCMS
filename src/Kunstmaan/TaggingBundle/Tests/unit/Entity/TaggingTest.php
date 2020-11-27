@@ -6,9 +6,6 @@ use Kunstmaan\TaggingBundle\Entity\Tag;
 use Kunstmaan\TaggingBundle\Entity\Tagging;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class TagTest
- */
 class TaggingTest extends TestCase
 {
     public function testGetters()

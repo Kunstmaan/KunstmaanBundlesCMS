@@ -6,9 +6,6 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RedirectAdminTypeTest
- */
 class RedirectAdminTypeTest extends TestCase
 {
     /**

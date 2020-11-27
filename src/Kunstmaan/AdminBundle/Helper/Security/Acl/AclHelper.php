@@ -48,8 +48,6 @@ class AclHelper
     private $permissionsEnabled;
 
     /**
-     * Constructor.
-     *
      * @param EntityManager          $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security token storage
      * @param RoleHierarchyInterface $rh           The role hierarchies

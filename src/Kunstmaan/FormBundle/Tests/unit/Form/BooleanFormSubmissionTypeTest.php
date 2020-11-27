@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class BooleanFormSubmissionTypeTest
- */
 class BooleanFormSubmissionTypeTest extends TypeTestCase
 {
     public function testFormType()

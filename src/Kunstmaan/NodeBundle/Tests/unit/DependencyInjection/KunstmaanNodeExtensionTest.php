@@ -6,9 +6,6 @@ use Kunstmaan\NodeBundle\DependencyInjection\KunstmaanNodeExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanNodeExtensionTest
- */
 class KunstmaanNodeExtensionTest extends AbstractExtensionTestCase
 {
     /**

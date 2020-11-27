@@ -60,9 +60,6 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
     }
 
     /**
-     * @param $metrics
-     * @param $dimensions
-     *
      * @return mixed
      */
     private function requestGoalResults(AnalyticsOverview $overview, $metrics, $dimensions)

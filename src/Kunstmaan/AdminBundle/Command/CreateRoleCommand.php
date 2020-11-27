@@ -40,9 +40,6 @@ class CreateRoleCommand extends ContainerAwareCommand
         $this->em = $em;
     }
 
-    /**
-     * Configures the current command.
-     */
     protected function configure()
     {
         $this->setName('kuma:role:create')
@@ -66,11 +63,6 @@ EOT
     }
 
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

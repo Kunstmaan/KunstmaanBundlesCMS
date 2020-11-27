@@ -5,9 +5,6 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RawHTMLPagePartTest
- */
 class RawHTMLPagePartTest extends TestCase
 {
     /**

@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
- * Class that defines a header page part object to add to a page
+ * Defines a header page part object to add to a page
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_header_page_parts")

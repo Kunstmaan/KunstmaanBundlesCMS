@@ -203,8 +203,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     /**
      * Replaces '\' with '/'.
      *
-     * @param $namespace
-     *
      * @return mixed
      */
     private function fixNamespace($namespace)

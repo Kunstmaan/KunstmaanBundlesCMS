@@ -7,9 +7,6 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AbstractArticleOverviewPageController
- */
 class AbstractArticleOverviewPageController extends Controller
 {
     public function serviceAction(Request $request)

@@ -5,8 +5,6 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DashboardConfiguration
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_dashboard_configurations")
  */

@@ -55,8 +55,6 @@ class AdminLocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * onKernelRequest
-     *
      * @param GetResponseEvent|ResponseEvent $event
      */
     public function onKernelRequest($event)
@@ -84,7 +82,6 @@ class AdminLocaleListener implements EventSubscriberInterface
 
     /**
      * @param TokenInterface $token
-     * @param                $providerKey
      *
      * @return bool
      */
@@ -93,9 +90,6 @@ class AdminLocaleListener implements EventSubscriberInterface
         return \is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
     }
 
-    /**
-     * getSubscribedEvents
-     */
     public static function getSubscribedEvents()
     {
         return [

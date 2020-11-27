@@ -81,8 +81,6 @@ class PermissionAdmin
     protected $shellHelper;
 
     /**
-     * Constructor
-     *
      * @param EntityManager                            $em                   The EntityManager
      * @param TokenStorageInterface                    $tokenStorage         The token storage
      * @param AclProviderInterface                     $aclProvider          The ACL provider

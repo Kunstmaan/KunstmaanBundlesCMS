@@ -48,8 +48,6 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
 
     /**
      * Set the summary of this article
-     *
-     * @param $summary
      */
     public function setSummary($summary)
     {

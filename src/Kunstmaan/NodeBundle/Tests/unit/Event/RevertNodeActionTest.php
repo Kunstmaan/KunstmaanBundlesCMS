@@ -10,9 +10,6 @@ use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class RevertNodeActionTest
- */
 class RevertNodeActionTest extends TestCase
 {
     public function testGetSet()

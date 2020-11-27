@@ -7,9 +7,6 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class SlugEventTest
- */
 class SlugEventTest extends TestCase
 {
     public function testGetSet()

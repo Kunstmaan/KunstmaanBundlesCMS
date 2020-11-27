@@ -10,9 +10,6 @@ use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AdaptFormEventTest
- */
 class AdaptFormEventTest extends TestCase
 {
     public function testGetSet()

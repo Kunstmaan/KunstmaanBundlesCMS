@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\SeoBundle\Helper;
 
-/**
- * Class OrderConverter
- */
 class OrderConverter
 {
     /**

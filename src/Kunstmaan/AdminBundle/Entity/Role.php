@@ -8,8 +8,6 @@ use Symfony\Component\Security\Core\Role\Role as BaseRole;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Role Entity
- *
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
  * @UniqueEntity("role")

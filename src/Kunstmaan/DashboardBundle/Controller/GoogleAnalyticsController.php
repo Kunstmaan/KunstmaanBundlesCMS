@@ -8,7 +8,9 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -86,7 +88,7 @@ class GoogleAnalyticsController extends Controller
      *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @return RedirectResponse
      */
     public function setTokenAction(Request $request)
     {
@@ -113,7 +115,7 @@ class GoogleAnalyticsController extends Controller
      *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @return Response
      */
     public function configAction(Request $request)
     {

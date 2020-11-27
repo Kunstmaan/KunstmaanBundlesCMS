@@ -6,9 +6,6 @@ use Kunstmaan\NodeSearchBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class ConfigurationTest
- */
 class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;

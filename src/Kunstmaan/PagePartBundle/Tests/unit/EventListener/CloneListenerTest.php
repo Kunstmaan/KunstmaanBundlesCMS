@@ -15,9 +15,6 @@ use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class CloneListenerTest
- */
 class CloneListenerTest extends TestCase
 {
     /**

@@ -66,15 +66,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         $this->domainConfiguration = $domainConfiguration;
     }
 
-    /**
-     * In this method you can add children for a specific parent, but also
-     * remove and change the already created children
-     *
-     * @param MenuBuilder $menu      The menu builder
-     * @param MenuItem[]  &$children The children array that may be adapted
-     * @param MenuItem    $parent    The parent menu item
-     * @param Request     $request   The request
-     */
     public function adaptChildren(
         MenuBuilder $menu,
         array &$children,
@@ -172,8 +163,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     /**
      * Get an array with the id's off all nodes in the tree that should be
      * expanded.
-     *
-     * @param $request
      *
      * @return array
      */

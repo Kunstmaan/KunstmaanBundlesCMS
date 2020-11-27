@@ -10,9 +10,6 @@ use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AbstractArticleEntityAdminListController
- */
 abstract class AbstractArticleEntityAdminListController extends AdminListController
 {
     /**

@@ -11,9 +11,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Url;
 
-/**
- * Class URLChooserLinkTypeSubscriber
- */
 class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
 {
     /**

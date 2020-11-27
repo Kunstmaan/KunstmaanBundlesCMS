@@ -46,8 +46,6 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     protected $batchSize;
 
     /**
-     * FormSubmissionExportListConfigurator constructor.
-     *
      * @param int $batchSize
      */
     public function __construct(EntityManagerInterface $em, NodeTranslation $nodeTranslation, TranslatorInterface $translator, $batchSize = 20)

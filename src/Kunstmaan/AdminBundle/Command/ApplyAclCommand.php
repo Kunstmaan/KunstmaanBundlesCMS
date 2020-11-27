@@ -48,9 +48,6 @@ class ApplyAclCommand extends ContainerAwareCommand
         $this->shellHelper = $shellHelper;
     }
 
-    /**
-     * Configures the command.
-     */
     protected function configure()
     {
         parent::configure();

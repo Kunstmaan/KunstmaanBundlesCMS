@@ -82,9 +82,6 @@ class MenuItem
      */
     private $weight = -50;
 
-    /**
-     * Construct the MenuItem
-     */
     public function __construct(MenuBuilder $menu)
     {
         $this->menu = $menu;

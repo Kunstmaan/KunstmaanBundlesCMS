@@ -52,11 +52,6 @@ class TagsAdminType extends AbstractType
         return ChoiceType::class;
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_taggingbundle_tags';

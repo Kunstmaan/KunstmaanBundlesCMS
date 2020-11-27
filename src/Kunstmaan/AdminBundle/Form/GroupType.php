@@ -13,9 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class GroupType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -48,9 +45,6 @@ class GroupType extends AbstractType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'group';

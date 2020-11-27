@@ -80,9 +80,6 @@ class Lazy implements LazyLoadingTaggableInterface
     }
 }
 
-/**
- * Class TagManagerTest
- */
 class TagManagerTest extends TestCase
 {
     /** @var TagManager */

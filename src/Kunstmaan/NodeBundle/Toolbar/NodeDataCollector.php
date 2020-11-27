@@ -20,9 +20,6 @@ class NodeDataCollector extends AbstractDataCollector
      */
     private $urlGenerator;
 
-    /**
-     * NodeDataCollector constructor.
-     */
     public function __construct(NodeMenu $nodeMenu, UrlGeneratorInterface $urlGenerator)
     {
         $this->nodeMenu = $nodeMenu;

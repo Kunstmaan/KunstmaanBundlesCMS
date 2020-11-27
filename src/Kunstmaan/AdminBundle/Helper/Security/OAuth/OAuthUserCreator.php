@@ -22,8 +22,6 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     private $userFinder;
 
     /**
-     * OAuthUserCreator constructor.
-     *
      * @param array  $hostedDomains
      * @param string $userClass
      */
@@ -35,9 +33,6 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
         $this->userFinder = $userFinder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOrCreateUser($email, $googleId)
     {
         if ($this->isConfiguredDomain($email)) {

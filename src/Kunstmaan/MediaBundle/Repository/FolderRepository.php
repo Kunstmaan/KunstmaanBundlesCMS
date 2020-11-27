@@ -326,9 +326,6 @@ class FolderRepository extends NestedTreeRepository
         return $qb;
     }
 
-    /**
-     * @param $parent
-     */
     private function persistInOrderedTree(Folder $folder, $parent)
     {
         // Find where to insert the new item
