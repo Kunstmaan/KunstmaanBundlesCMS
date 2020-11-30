@@ -8,8 +8,6 @@ use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 
 /**
- * Class IndexablePagePartsService
- *
  * Quick & dirty for now, needs to be in a generic PagePartService without static call &
  * without passing EntityManager as param...
  */
@@ -22,9 +20,7 @@ class IndexablePagePartsService
     private $contexts;
 
     /**
-     * IndexablePagePartsService constructor.
-     *
-     * @param [] $contexts
+     * @param array $contexts
      */
     public function __construct(EntityManagerInterface $em, $contexts = [])
     {

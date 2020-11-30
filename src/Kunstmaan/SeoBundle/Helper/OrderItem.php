@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\SeoBundle\Helper;
 
-/**
- * Class OrderItem
- */
 class OrderItem
 {
     /**

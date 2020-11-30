@@ -7,9 +7,6 @@ use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class FileFormSubmissionTypeTest
- */
 class FileFormSubmissionTypeTest extends TypeTestCase
 {
     /**

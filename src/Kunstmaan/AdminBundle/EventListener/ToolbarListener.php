@@ -75,8 +75,6 @@ class ToolbarListener implements EventSubscriberInterface
     protected $adminFirewallName;
 
     /**
-     * ToolbarListener constructor.
-     *
      * @param bool   $enabled
      * @param string $adminFirewallName
      */

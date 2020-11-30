@@ -34,9 +34,6 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
     }
 }
 
-/**
- * Class AbstractArticlePageAdminListConfiguratorTest
- */
 class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 {
     /**

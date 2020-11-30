@@ -7,9 +7,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeIterator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class NodeIteratorTest
- */
 class NodeIteratorTest extends TestCase
 {
     public function testNodeIterator()

@@ -12,9 +12,6 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-/**
- * Class DomainBasedLocaleRouter
- */
 class DomainBasedLocaleRouter extends SlugRouter
 {
     /** @var RouteCollection */

@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * AdminListFilter
- */
 class FilterBuilder
 {
     /**
@@ -26,10 +23,10 @@ class FilterBuilder
     private $currentParameters = [];
 
     /**
-     * @param string              $columnName The column name
-     * @param FilterTypeInterface $type       The filter type
-     * @param string              $filterName The name of the filter
-     * @param array               $options    Options
+     * @param string                   $columnName The column name
+     * @param FilterTypeInterface|null $type       The filter type
+     * @param string|null              $filterName The name of the filter
+     * @param array                    $options    Options
      *
      * @return FilterBuilder
      */

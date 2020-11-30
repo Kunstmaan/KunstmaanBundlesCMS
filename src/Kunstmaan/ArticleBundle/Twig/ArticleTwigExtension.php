@@ -26,9 +26,6 @@ class ArticleTwigExtension extends AbstractExtension
      */
     private $router;
 
-    /**
-     * ArticleTwigExtension constructor.
-     */
     public function __construct(EntityManagerInterface $em, RouterInterface $router)
     {
         $this->em = $em;

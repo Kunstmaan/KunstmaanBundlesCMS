@@ -81,9 +81,6 @@ class NodeVersion extends AbstractEntity
      */
     protected $origin;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->setCreated(new DateTime());

@@ -37,8 +37,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     private $nodeTranslationIds = [];
 
     /**
-     * AbstractPageAdminListConfigurator constructor.
-     *
      * @param string $locale
      */
     public function __construct(EntityManagerInterface $em, $locale)

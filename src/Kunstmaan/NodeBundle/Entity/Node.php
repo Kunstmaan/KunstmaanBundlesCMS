@@ -104,9 +104,6 @@ class Node extends AbstractEntity implements GedmoNode
      */
     protected $internalName;
 
-    /**
-     * constructor
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();

@@ -41,9 +41,6 @@ abstract class BaseUser extends AbstractUser
      */
     protected $googleId;
 
-    /**
-     * Construct a new user
-     */
     public function __construct()
     {
         parent::__construct();

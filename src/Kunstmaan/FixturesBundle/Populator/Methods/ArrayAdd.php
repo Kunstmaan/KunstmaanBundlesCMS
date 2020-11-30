@@ -6,17 +6,11 @@ use Symfony\Component\Inflector\Inflector;
 
 class ArrayAdd implements MethodInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function canSet($object, $property, $value)
     {
         return is_array($value) && $this->findAdderMethod($object, $property) !== null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($object, $property, $value)
     {
         $method = $this->findAdderMethod($object, $property);

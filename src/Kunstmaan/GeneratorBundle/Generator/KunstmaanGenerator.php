@@ -21,7 +21,7 @@ use Twig\Lexer;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * Class that contains all common generator logic.
+ * Contains all common generator logic.
  */
 class KunstmaanGenerator extends Generator
 {

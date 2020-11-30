@@ -26,7 +26,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     protected $configuration = [];
 
     /**
-     * Constructor. Takes the configuration of the RemoveVideoHandler
+     * Takes the configuration of the RemoveVideoHandler
      *
      * @param array $configuration
      */

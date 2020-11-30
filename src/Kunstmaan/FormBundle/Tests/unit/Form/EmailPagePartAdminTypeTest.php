@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class EmailPagePartAdminTypeTest
- */
 class EmailPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()

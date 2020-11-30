@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class MultiLineTextPagePartAdminTypeTest
- */
 class MultiLineTextPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()

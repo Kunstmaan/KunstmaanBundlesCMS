@@ -12,9 +12,6 @@ class LocaleRuleService implements RuleServiceInterface
     /** @var Request */
     private $request;
 
-    /**
-     * LocaleRuleService constructor.
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->request = $requestStack->getCurrentRequest();

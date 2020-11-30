@@ -78,7 +78,7 @@ class AclChangeset extends AbstractEntity
     protected $lastModified;
 
     /**
-     * Constructor, sets default status to STATUS_NEW & timestamps to current datetime
+     * Sets default status to STATUS_NEW & timestamps to current datetime
      */
     public function __construct()
     {

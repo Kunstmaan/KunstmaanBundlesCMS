@@ -6,9 +6,6 @@ use Kunstmaan\UserManagementBundle\DependencyInjection\KunstmaanUserManagementEx
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanUserManagementExtensionTest
- */
 class KunstmaanUserManagementExtensionTest extends AbstractExtensionTestCase
 {
     /**

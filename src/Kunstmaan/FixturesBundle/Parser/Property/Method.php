@@ -23,8 +23,6 @@ class Method implements PropertyParserInterface
     /**
      * Parse provided value into new data
      *
-     * @param $value
-     * @param $providers
      * @param array $references
      * @param array $additional
      *
@@ -92,9 +90,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param $parameters
-     * @param $additional
-     *
      * @return array
      */
     private function findArguments($parameters, $additional)
@@ -122,8 +117,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param $parameters
-     *
      * @return object|null
      */
     private function typeHintChecker(\ReflectionParameter $parameter, $parameters)
@@ -145,8 +138,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param $parameters
-     *
      * @return mixed|null
      */
     private function getArgumentByName(\ReflectionParameter $parameter, $parameters)

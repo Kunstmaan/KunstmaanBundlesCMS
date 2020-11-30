@@ -29,9 +29,6 @@ class Random implements Taggable
     }
 }
 
-/**
- * Class TaggableTraitTest
- */
 class TaggableTraitTest extends TestCase
 {
     public function testGetters()

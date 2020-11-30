@@ -6,9 +6,6 @@ use Kunstmaan\MediaPagePartBundle\DependencyInjection\KunstmaanMediaPagePartExte
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanMediaPagePartExtensionTest
- */
 class KunstmaanMediaPagePartExtensionTest extends AbstractExtensionTestCase
 {
     /**

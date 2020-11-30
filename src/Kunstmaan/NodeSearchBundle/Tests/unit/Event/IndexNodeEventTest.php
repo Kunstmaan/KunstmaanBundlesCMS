@@ -6,9 +6,6 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class IndexNodeEventTest
- */
 class IndexNodeEventTest extends TestCase
 {
     public function testGetSet()

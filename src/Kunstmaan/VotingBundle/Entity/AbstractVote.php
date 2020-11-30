@@ -5,8 +5,6 @@ namespace Kunstmaan\VotingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Abstract Vote class.
- *
  * The default value for a vote is 1 but can be overridden by setting the value before persisting.
  * Timestamp is automatically set to now when no timestamp has been set.
  *

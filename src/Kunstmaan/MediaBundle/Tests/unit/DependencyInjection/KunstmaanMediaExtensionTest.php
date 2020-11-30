@@ -6,9 +6,6 @@ use Kunstmaan\MediaBundle\DependencyInjection\KunstmaanMediaExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanMediaExtensionTest
- */
 class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
 {
     /**

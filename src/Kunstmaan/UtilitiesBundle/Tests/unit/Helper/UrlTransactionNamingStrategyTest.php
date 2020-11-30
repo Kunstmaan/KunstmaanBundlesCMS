@@ -6,9 +6,6 @@ use Kunstmaan\UtilitiesBundle\Helper\UrlTransactionNamingStrategy;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class UrlTransactionNamingStrategyTest
- */
 class UrlTransactionNamingStrategyTest extends TestCase
 {
     public function testGetTransactionName()

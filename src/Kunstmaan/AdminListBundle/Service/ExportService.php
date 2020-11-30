@@ -14,9 +14,6 @@ use Symfony\Component\Translation\TranslatorInterface as LegaceTranslatorInterfa
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-/**
- * class ExportService
- */
 class ExportService
 {
     const SUPPORTED_EXTENSIONS = [

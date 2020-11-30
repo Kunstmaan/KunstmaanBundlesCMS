@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * Class HeaderPagePartTest
- */
 class HeaderPagePartTest extends TestCase
 {
     /**

@@ -6,9 +6,6 @@ use Kunstmaan\DashboardBundle\DependencyInjection\KunstmaanDashboardExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanDashboardExtensionTest
- */
 class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
 {
     /**

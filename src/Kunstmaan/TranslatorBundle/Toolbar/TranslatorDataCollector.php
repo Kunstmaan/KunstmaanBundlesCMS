@@ -19,9 +19,6 @@ class TranslatorDataCollector extends AbstractDataCollector
      */
     private $urlGenerator;
 
-    /**
-     * TranslatorDataCollector constructor.
-     */
     public function __construct(DataCollectorTranslator $translator, UrlGeneratorInterface $urlGenerator)
     {
         $this->translator = $translator;

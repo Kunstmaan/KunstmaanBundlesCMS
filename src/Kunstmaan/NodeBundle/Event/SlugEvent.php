@@ -6,9 +6,6 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class SlugEvent
- */
 class SlugEvent extends Event
 {
     /**

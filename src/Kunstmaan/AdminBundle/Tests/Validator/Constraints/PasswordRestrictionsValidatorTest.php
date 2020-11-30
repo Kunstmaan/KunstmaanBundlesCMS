@@ -7,8 +7,6 @@ use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictionsValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * Class PasswordRestrictionsValidatorTest
- *
  * Unit test for the password restrictions validator, will test with different sets of parameters
  * for the validator is possible.
  */

@@ -47,7 +47,7 @@ class AdminPanel
     /**
      * Get adaptors sorted by priority.
      *
-     * @return \Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelAdaptorInterface[]
+     * @return AdminPanelAdaptorInterface[]
      */
     private function getAdaptors()
     {

@@ -10,9 +10,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
-/**
- * Class hasGuessableExtensionValidator
- */
 class HasGuessableExtensionValidator extends ConstraintValidator
 {
     /**
@@ -26,8 +23,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     private $mimeTypeGuesser;
 
     /**
-     * @param $value
-     *
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
      */

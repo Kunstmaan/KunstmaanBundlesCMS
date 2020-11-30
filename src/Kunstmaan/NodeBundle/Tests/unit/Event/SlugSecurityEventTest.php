@@ -9,9 +9,6 @@ use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class SlugSecurityEventTest
- */
 class SlugSecurityEventTest extends TestCase
 {
     public function testGetSet()

@@ -10,9 +10,6 @@ use Kunstmaan\NodeBundle\Event\NodeEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class NodeEventTest
- */
 class NodeEventTest extends TestCase
 {
     public function testGetSet()

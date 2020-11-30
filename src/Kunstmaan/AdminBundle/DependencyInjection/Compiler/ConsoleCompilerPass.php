@@ -7,9 +7,6 @@ use Kunstmaan\AdminBundle\EventListener\ConsoleExceptionSubscriber;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * Class ConsoleCompilerPass.
- */
 final class ConsoleCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)

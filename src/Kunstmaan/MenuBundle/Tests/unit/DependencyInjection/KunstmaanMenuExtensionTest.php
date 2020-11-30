@@ -6,9 +6,6 @@ use Kunstmaan\MenuBundle\DependencyInjection\KunstmaanMenuExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanMenuExtensionTest
- */
 class KunstmaanMenuExtensionTest extends AbstractExtensionTestCase
 {
     /**

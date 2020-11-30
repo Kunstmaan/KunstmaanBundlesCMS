@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminBundle\Helper;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * Class AdminRouteHelper
- */
 class AdminRouteHelper
 {
     protected static $ADMIN_MATCH_REGEX = '/^\/(app_[a-zA-Z]+\.php\/)?([a-zA-Z_-]{2,5}\/)?%s\/(.*)/';

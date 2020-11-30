@@ -32,13 +32,6 @@ class FormHandler implements FormHandlerInterface
         $this->container = $container;
     }
 
-    /**
-     * @param FormPageInterface $page    The form page
-     * @param Request           $request The request
-     * @param RenderContext     $context The render context
-     *
-     * @return RedirectResponse|void|null
-     */
     public function handleForm(FormPageInterface $page, Request $request, RenderContext $context)
     {
         /* @var EntityManager $em */

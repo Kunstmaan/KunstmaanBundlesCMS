@@ -6,8 +6,6 @@ use Elastica\ResultSet;
 use Kunstmaan\NodeSearchBundle\Search\SearcherInterface;
 
 /**
- * Class SearcherRequestAdapter
- *
  * A Pagerfanta adapter to paginate Elastica search results.
  */
 class SearcherRequestAdapter implements SearcherRequestAdapterInterface

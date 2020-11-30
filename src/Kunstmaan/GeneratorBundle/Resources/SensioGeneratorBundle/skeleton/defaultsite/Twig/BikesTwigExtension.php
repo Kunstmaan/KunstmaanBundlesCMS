@@ -15,8 +15,6 @@ class BikesTwigExtension extends AbstractExtension
     private $em;
 
     /**
-     * Constructor
-     *
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)

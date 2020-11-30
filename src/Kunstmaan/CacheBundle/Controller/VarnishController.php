@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Class VarnishController.
- */
 class VarnishController extends Controller
 {
     /**

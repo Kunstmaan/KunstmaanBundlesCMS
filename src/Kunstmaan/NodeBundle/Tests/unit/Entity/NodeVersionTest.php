@@ -9,9 +9,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class NodeVersionTest
- */
 class NodeVersionTest extends TestCase
 {
     /**

@@ -8,9 +8,6 @@ use Kunstmaan\RedirectBundle\Router\RedirectRouter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RequestContext;
 
-/**
- * Class RedirectRouterTest
- */
 class RedirectRouterTest extends TestCase
 {
     /**

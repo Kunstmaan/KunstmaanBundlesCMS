@@ -6,8 +6,6 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Class GoogleSignInTwigExtension
- *
  * @final since 5.4
  */
 class GoogleSignInTwigExtension extends AbstractExtension

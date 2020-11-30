@@ -25,9 +25,6 @@ class ConfigHelper
     /** @var EntityManager */
     private $em;
 
-    /**
-     * constructor
-     */
     public function __construct(ServiceHelper $serviceHelper, EntityManager $em)
     {
         $this->serviceHelper = $serviceHelper;
@@ -38,7 +35,7 @@ class ConfigHelper
     /**
      * Tries to initialise the Client object
      *
-     * @param int $configId
+     * @param int|bool $configId
      */
     public function init($configId = false)
     {
@@ -63,7 +60,7 @@ class ConfigHelper
     /**
      * Get the token from the database
      *
-     * @return string $token
+     * @return string
      */
     private function getToken($configId = false)
     {
@@ -104,7 +101,7 @@ class ConfigHelper
     /**
      * Get a list of all available accounts
      *
-     * @return array $data A list of all properties
+     * @return array A list of all properties
      */
     public function getAccounts()
     {
@@ -125,7 +122,7 @@ class ConfigHelper
     /**
      * Get the accountId from the database
      *
-     * @return string $accountId
+     * @return string
      */
     public function getAccountId($configId = false)
     {
@@ -154,7 +151,7 @@ class ConfigHelper
     /**
      * Check if token is set
      *
-     * @return bool $result
+     * @return bool
      */
     public function accountIsSet()
     {
@@ -166,7 +163,7 @@ class ConfigHelper
     /**
      * Get a list of all available properties
      *
-     * @return array $data A list of all properties
+     * @return array A list of all properties
      */
     public function getProperties($accountId = false)
     {
@@ -198,7 +195,7 @@ class ConfigHelper
     /**
      * Get the propertyId from the database
      *
-     * @return string $propertyId
+     * @return string
      */
     public function getPropertyId($configId = false)
     {
@@ -227,7 +224,7 @@ class ConfigHelper
     /**
      * Check if propertyId is set
      *
-     * @return bool $result
+     * @return bool
      */
     public function propertyIsSet()
     {
@@ -239,7 +236,7 @@ class ConfigHelper
     /**
      * Get a list of all available profiles
      *
-     * @return array $data A list of all properties
+     * @return array A list of all properties
      */
     public function getProfiles($accountId = false, $propertyId = false)
     {
@@ -278,7 +275,7 @@ class ConfigHelper
     /**
      * Get the propertyId from the database
      *
-     * @return string $propertyId
+     * @return string
      */
     public function getProfileId($configId = false)
     {
@@ -307,7 +304,7 @@ class ConfigHelper
     /**
      * Check if token is set
      *
-     * @return bool $result
+     * @return bool
      */
     public function profileIsSet()
     {
@@ -316,8 +313,6 @@ class ConfigHelper
 
     /**
      * Get the active profile
-     *
-     * @return the profile
      */
     public function getActiveProfile()
     {
@@ -385,7 +380,7 @@ class ConfigHelper
     /**
      * get the authUrl
      *
-     * @return string $authUrl
+     * @return string
      */
     public function getAuthUrl()
     {

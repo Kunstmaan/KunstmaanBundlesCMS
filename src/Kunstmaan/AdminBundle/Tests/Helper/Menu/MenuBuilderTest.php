@@ -10,9 +10,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * Class MenuBuilderTest
- */
 class MenuBuilderTest extends TestCase
 {
     /**

@@ -36,12 +36,6 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     /** @var string */
     private $clientSecret;
 
-    /**
-     * OAuthAuthenticator constructor.
-     *
-     * @param $clientId
-     * @param $clientSecret
-     */
     public function __construct(RouterInterface $router, SessionInterface $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret)
     {
         $this->router = $router;

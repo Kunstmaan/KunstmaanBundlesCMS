@@ -6,9 +6,6 @@ use Kunstmaan\LeadGenerationBundle\DependencyInjection\KunstmaanLeadGenerationEx
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanLeadGenerationExtensionTest
- */
 class KunstmaanLeadGenerationExtensionTest extends AbstractExtensionTestCase
 {
     /**

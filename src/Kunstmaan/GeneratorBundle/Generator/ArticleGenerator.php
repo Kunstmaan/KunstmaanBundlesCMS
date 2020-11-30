@@ -30,8 +30,6 @@ class ArticleGenerator extends KunstmaanGenerator
     private $parentPages = [];
 
     /**
-     * ArticleGenerator constructor.
-     *
      * @param string $skeletonDir
      */
     public function __construct(Filesystem $filesystem, RegistryInterface $registry, $skeletonDir, array $parentPages, CommandAssistant $assistant, ContainerInterface $container)

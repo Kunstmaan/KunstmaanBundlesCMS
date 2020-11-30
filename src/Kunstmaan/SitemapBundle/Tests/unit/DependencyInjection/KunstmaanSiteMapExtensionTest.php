@@ -6,9 +6,6 @@ use Kunstmaan\SitemapBundle\DependencyInjection\KunstmaanSitemapExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-/**
- * Class KunstmaanSiteMapExtensionTest
- */
 class KunstmaanSiteMapExtensionTest extends AbstractExtensionTestCase
 {
     /**

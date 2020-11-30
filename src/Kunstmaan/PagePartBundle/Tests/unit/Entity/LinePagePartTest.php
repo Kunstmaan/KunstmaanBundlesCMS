@@ -5,9 +5,6 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class LinePagePartTest
- */
 class LinePagePartTest extends TestCase
 {
     /**

@@ -7,9 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-/**
- * Class ConfigurationTest
- */
 class ConfigurationTest extends TestCase
 {
     public function testConfiguration()

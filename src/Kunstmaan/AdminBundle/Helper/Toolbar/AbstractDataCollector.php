@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector as BaseDataCollector;
 
-/**
- * AbstractDataCollector.
- */
 abstract class AbstractDataCollector extends BaseDataCollector implements DataCollectionInterface
 {
     /**

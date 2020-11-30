@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
-/**
- * Class TwigExtensionTests
- */
 class TwigExtensionTest extends TestCase
 {
     protected $emMock;

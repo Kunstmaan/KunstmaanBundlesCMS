@@ -40,8 +40,6 @@ trait GroupPropertiesTrait
     protected $roles;
 
     /**
-     * Construct a new group
-     *
      * @param string $name Name of the group
      */
     public function __construct($name = '')

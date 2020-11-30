@@ -16,9 +16,6 @@ class PagePart extends AbstractPagePart
     }
 }
 
-/**
- * Class AbstractPagePartTest
- */
 class AbstractPagePartTest extends TestCase
 {
     public function testGetViews()

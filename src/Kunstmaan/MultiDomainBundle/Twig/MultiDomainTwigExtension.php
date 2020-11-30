@@ -36,9 +36,6 @@ class MultiDomainTwigExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param $key
-     */
     public function getExtraData($key)
     {
         $extraData = $this->domainConfiguration->getExtraData();

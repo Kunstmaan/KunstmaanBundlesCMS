@@ -36,11 +36,6 @@ class TextWithLocaleAdminType extends AbstractType
         );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'text_with_locale';

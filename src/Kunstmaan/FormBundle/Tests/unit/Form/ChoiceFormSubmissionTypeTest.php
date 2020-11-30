@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionFie
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class ChoiceFormSubmissionTypeTest
- */
 class ChoiceFormSubmissionTypeTest extends TypeTestCase
 {
     public function testFormType()

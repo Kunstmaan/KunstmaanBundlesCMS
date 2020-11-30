@@ -32,8 +32,6 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
     /**
      * Return the Article repository
      *
-     * @param $em
-     *
      * @return mixed
      */
     abstract public function getArticleRepository($em);

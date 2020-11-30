@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Version checker
- */
 class VersionChecker
 {
     /**
@@ -50,9 +47,6 @@ class VersionChecker
      */
     private $translator;
 
-    /**
-     * Constructor
-     */
     public function __construct(ContainerInterface $container, Cache $cache, $translator)
     {
         $this->container = $container;

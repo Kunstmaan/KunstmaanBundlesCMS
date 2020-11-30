@@ -5,9 +5,6 @@ namespace Kunstmaan\NodeSearchBundle\Tests\Entity;
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class AbstractSearchPageTest
- */
 class AbstractSearchPageTest extends TestCase
 {
     public function testGetters()

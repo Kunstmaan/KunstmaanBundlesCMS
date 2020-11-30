@@ -11,8 +11,6 @@ class QueryHelper
     private $configHelper;
 
     /**
-     * constructor
-     *
      * @var ServiceHelper
      */
     public function __construct(ServiceHelper $serviceHelper, ConfigHelper $configHelper)
@@ -22,14 +20,12 @@ class QueryHelper
     }
 
     /**
-     * Constructs a Google API query and returns the result
-     *
      * @param int    $timespan    Timespan for the data to query in days
      * @param int    $startOffset An offset in days
      * @param string $metrics     The needed metrics
      * @param array  $extra       Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return \Google_GaData result    A data object containing the queried data
+     * @return \Google_GaData A data object containing the queried data
      */
     public function getResults($timespan, $startOffset, $metrics, $extra = [])
     {
@@ -45,14 +41,12 @@ class QueryHelper
     }
 
     /**
-     * Constructs a Google API query and returns the result
-     *
      * @param string $from    Start date for the data to query
      * @param string $to      End date in the past
      * @param string $metrics The needed metrics
      * @param array  $extra   Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return \Google_GaData result    A data object containing the queried data
+     * @return \Google_GaData A data object containing the queried data
      */
     public function getResultsByDate($from, $to, $metrics, $extra = [])
     {
@@ -70,7 +64,7 @@ class QueryHelper
     /**
      * get the service helper
      *
-     *  @return ServiceHelper $serviceHelper
+     * @return ServiceHelper
      */
     public function getServiceHelper()
     {

@@ -25,9 +25,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-/**
- * AdminListController
- */
 abstract class AdminListController extends Controller
 {
     /**
@@ -495,7 +492,6 @@ abstract class AdminListController extends Controller
      * Sets the sort weight on a new item. Can be overridden if a non-default sorting implementation is being used.
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param $item
      *
      * @return mixed
      */

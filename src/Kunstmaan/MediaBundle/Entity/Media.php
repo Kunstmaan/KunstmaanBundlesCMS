@@ -141,9 +141,6 @@ class Media extends AbstractEntity
      */
     protected $removedFromFileSystem;
 
-    /**
-     * constructor
-     */
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());

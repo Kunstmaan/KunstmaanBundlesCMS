@@ -5,9 +5,6 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class ToTopPagePartTest
- */
 class ToTopPagePartTest extends TestCase
 {
     /**

@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\SearchBundle\Provider;
 
-/**
- * Interface for a SearchProvider
- */
 interface SearchProviderInterface
 {
     /**

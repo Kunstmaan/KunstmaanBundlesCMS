@@ -5,9 +5,6 @@ namespace Tests\Kunstmaan\UtilitiesBundle\Helper\Shell;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class ShellTest
- */
 class ShellTest extends TestCase
 {
     public function testShellFunctionality()

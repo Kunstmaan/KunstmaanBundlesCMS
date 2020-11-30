@@ -21,8 +21,6 @@ class FeatureContext extends MinkContext implements Context
 
     /**
      * Override method to wait for Ajax requests to finish before continuing
-     *
-     * @param $text
      */
     public function assertPageContainsText($text)
     {

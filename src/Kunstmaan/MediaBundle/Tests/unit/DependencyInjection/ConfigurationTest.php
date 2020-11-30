@@ -7,9 +7,6 @@ use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
-/**
- * Class ConfigurationTest
- */
 class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;

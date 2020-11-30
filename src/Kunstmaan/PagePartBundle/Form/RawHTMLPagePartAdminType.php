@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * class to add content to a raw html pagepart
+ * Add content to a raw html pagepart
  */
 class RawHTMLPagePartAdminType extends AbstractType
 {

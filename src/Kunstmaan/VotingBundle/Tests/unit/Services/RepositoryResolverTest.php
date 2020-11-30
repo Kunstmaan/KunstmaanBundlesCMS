@@ -5,9 +5,6 @@ namespace Kunstmaan\VotingBundle\Tests\Services;
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Unit test for repository resolver
- */
 class RepositoryResolverTest extends TestCase
 {
     /**

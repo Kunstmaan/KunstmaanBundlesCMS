@@ -7,9 +7,6 @@ use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\TextWithLocale;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class TranslationTest
- */
 class TranslationTest extends TestCase
 {
     const TEST_DATA_ID = 666;

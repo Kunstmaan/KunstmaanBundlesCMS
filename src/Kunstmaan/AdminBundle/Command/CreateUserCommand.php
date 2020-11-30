@@ -102,11 +102,6 @@ EOT
     }
 
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

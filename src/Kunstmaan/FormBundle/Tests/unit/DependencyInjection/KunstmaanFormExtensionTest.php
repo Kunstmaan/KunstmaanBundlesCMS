@@ -7,9 +7,6 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
-/**
- * Class KunstmaanFormExtensionTest
- */
 class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
 {
     /**

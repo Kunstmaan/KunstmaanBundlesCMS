@@ -6,6 +6,7 @@ use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends Controller
@@ -15,7 +16,7 @@ class DashboardController extends Controller
      *
      * @Route("/", name="kunstmaan_dashboard")
      *
-     * @return array
+     * @return Response
      */
     public function indexAction(Request $request)
     {

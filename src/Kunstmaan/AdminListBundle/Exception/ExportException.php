@@ -2,21 +2,15 @@
 
 namespace Kunstmaan\AdminListBundle\Exception;
 
-/**
- * class ExportException
- */
 class ExportException extends \RuntimeException
 {
     /** @var mixed */
     protected $data;
 
     /**
-     * Construct Exception.
-     *
-     * @param string     $message  Message
-     * @param mixed      $data
-     * @param int        $code
-     * @param \Throwable $previous
+     * @param string $message
+     * @param mixed  $data
+     * @param int    $code
      */
     public function __construct($message = '', $data, $code = 0, \Throwable $previous = null)
     {

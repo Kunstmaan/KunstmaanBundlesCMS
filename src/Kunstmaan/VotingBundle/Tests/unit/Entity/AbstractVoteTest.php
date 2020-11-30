@@ -6,9 +6,6 @@ use DateTime;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class AbstractVoteTest
- */
 class AbstractVoteTest extends TestCase
 {
     public function testGetters()

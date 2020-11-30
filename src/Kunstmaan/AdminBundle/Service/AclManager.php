@@ -10,9 +10,6 @@ use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
-/**
- * Class AclManager
- */
 class AclManager
 {
     /** @var MutableAclProviderInterface */
@@ -35,10 +32,6 @@ class AclManager
         $this->permissionAdmin = $permissionAdmin;
     }
 
-    /**
-     * @param $originalNode
-     * @param $nodeNewPage
-     */
     public function updateNodeAcl(Node $originalNode, Node $nodeNewPage)
     {
         $originalIdentity = $this->objectIdentityRetrievalStrategy->getObjectIdentity($originalNode);

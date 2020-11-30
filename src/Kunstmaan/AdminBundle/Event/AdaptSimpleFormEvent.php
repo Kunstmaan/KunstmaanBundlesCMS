@@ -6,9 +6,6 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AdaptSimpleFormEvent
- */
 class AdaptSimpleFormEvent extends Event
 {
     /**
@@ -38,7 +35,6 @@ class AdaptSimpleFormEvent extends Event
 
     /**
      * @param string $formType
-     * @param $data
      */
     public function __construct(Request $request, $formType, $data, $options = [])
     {
@@ -98,9 +94,6 @@ class AdaptSimpleFormEvent extends Event
         return $this->data;
     }
 
-    /**
-     * @param $data
-     */
     public function setData($data)
     {
         $this->data = $data;
@@ -114,9 +107,6 @@ class AdaptSimpleFormEvent extends Event
         return $this->options;
     }
 
-    /**
-     * @param $options
-     */
     public function setOptions($options)
     {
         $this->options = $options;

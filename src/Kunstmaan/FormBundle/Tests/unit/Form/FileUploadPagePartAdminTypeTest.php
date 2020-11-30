@@ -6,9 +6,6 @@ use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * Class FileUploadPagePartAdminTypeTest
- */
 class FileUploadPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()

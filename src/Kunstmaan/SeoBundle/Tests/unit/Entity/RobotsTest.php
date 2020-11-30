@@ -6,9 +6,6 @@ use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class RobotsTest
- */
 class RobotsTest extends TestCase
 {
     /**

@@ -26,10 +26,6 @@ class ToolbarTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param $template
-     * @param $block
-     * @param $context
-     *
      * @return string
      */
     public function renderBlock(Environment $env, $template, $block, $context)

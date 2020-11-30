@@ -5,9 +5,6 @@ namespace Kunstmaan\NodeSearchBundle\Helper;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
 
-/**
- * Class ElasticSearchUtil
- */
 final class ElasticSearchUtil
 {
     /** @var array */

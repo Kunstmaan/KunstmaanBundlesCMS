@@ -42,9 +42,6 @@ class CreateGroupCommand extends ContainerAwareCommand
         $this->em = $em;
     }
 
-    /**
-     * Configures the current command
-     */
     protected function configure()
     {
         parent::configure();

@@ -4,8 +4,6 @@ namespace Kunstmaan\SeoBundle\Helper;
 
 /**
  * Prepares an order with it's orderitems for conversion.
- *
- * Class OrderPreparer
  */
 class OrderPreparer
 {
