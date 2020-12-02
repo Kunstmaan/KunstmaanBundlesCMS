@@ -69,9 +69,9 @@ class AutoSaveController extends AbstractController
         EntityManager $em,
         NodeAdminPublisher $nodePublisher,
         TranslatorInterface $translator,
-        NodeHelper  $nodeHelper,
+        NodeHelper $nodeHelper,
         NodeMenu $nodeMenu,
-        EventDispatcherInterface  $eventDispatcher,
+        EventDispatcherInterface $eventDispatcher,
         TabPaneCreator $tabPaneCreator
     )
     {
@@ -211,29 +211,47 @@ class AutoSaveController extends AbstractController
 
     private function reverseFormParamsForAutoSave(HasNodeInterface $page, Request $request): void
     {
+        $deleted = [];
+        foreach ($request->request->keys() as $key) {
+            $pos = strpos($key, '_deleted');
+            if (false !== $pos) {
+                $key = substr($key, 0, $pos);
+                $deleted[] = $key;
+
+            }
+        }
+        $pagePartRefIds = [];
         $pagePartRefs = $this->em->getRepository(PagePartRef::class)->getPagePartRefs($page);
-        $pagePartRefIds = array_reduce($pagePartRefs, function ($array, $ref) {
+        $pagePartRefs = array_reduce($pagePartRefs, function ($array, $ref) use ($deleted, $pagePartRefIds) {
             if ($array === null) {
                 $array = [];
             }
-            $array[] = $ref->getId();
+
+            if(!in_array($ref->getId(), $deleted, true)) {
+                $array[] = $ref;
+                $pagePartRefIds[] = $ref->getId();
+            }
 
             return $array;
         });
 
         $mainSequence = $request->request->get('main_sequence');
-        foreach ($mainSequence as $key => $sequence) {
+        $sequenceCopy = $mainSequence;
+        foreach ($sequenceCopy as $key => $sequence) {
             if (0 !== strpos($sequence, 'newpp_')) {
                 $mainSequence[$key] = reset($pagePartRefIds);
                 array_shift($pagePartRefIds);
             }
+            if(in_array($sequence, $deleted, true)) {
+                unset($mainSequence[$key]);
+            }
         }
-        $request->request->set('main_sequence', $mainSequence);
+        unset($sequenceCopy);
+        $mainSequence = array_values($mainSequence);
         $form = $request->request->get('form');
         $form['main']['id'] = $page->getId();
         $formCopy = $form;
         foreach (array_keys($formCopy) as $key) {
-            $matches = [];
             if (0 === strpos($key, 'pagepartadmin_') && false === strpos($key, 'pagepartadmin_newpp_')) {
                 $newKey = 'pagepartadmin_' . reset($pagePartRefs)->getId();
                 $form[$newKey] = $form[$key];
@@ -241,6 +259,7 @@ class AutoSaveController extends AbstractController
                 array_shift($pagePartRefs);
             }
         }
+        $request->request->set('main_sequence', $mainSequence);
         $request->request->set('form', $form);
     }
 }
