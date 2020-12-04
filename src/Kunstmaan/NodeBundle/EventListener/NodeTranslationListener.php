@@ -44,7 +44,7 @@ class NodeTranslationListener
     private $pagesConfiguration;
 
     /**
-     * @param SessionInterface|FlashBagInterface $session
+     * @param SessionInterface|FlashBagInterface $flashBag
      */
     public function __construct(
         /* SessionInterface */ $flashBag,
