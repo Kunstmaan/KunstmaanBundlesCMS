@@ -4,21 +4,12 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\CloneHelper;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPaneCreator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
@@ -28,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -232,15 +222,13 @@ class AutoSaveController extends AbstractController
         unset($requestKeys);
         $pagePartRefs = $this->em->getRepository(PagePartRef::class)->getPagePartRefs($page);
         $pagePartRefsCopy = $pagePartRefs;
-        $pagePartRefIds = [];
         /*** @var PagePartRef $ref */
         foreach($pagePartRefsCopy as $key => $ref) {
-           if(in_array($ref->getSequenceNumber(), $deletedSequenceNumbers, true)) {
-               unset($pagePartRefs[$key]);
-               $request->request->add([$ref->getId().'_deleted' => true]);
-               continue;
-           }
-            $pagePartRefIds[] = $ref->getId();
+            if(in_array($ref->getSequenceNumber(), $deletedSequenceNumbers, true)) {
+                unset($pagePartRefs[$key]);
+                $request->request->add([$ref->getId().'_deleted' => true]);
+                continue;
+            }
         }
         unset($pagePartRefsCopy);
         unset($deletedSequenceNumbers);
@@ -249,8 +237,13 @@ class AutoSaveController extends AbstractController
         $sequenceCopy = $mainSequence;
         foreach ($sequenceCopy as $key => $sequence) {
             if (0 !== strpos($sequence, 'newpp_')) {
-                $mainSequence[$key] = reset($pagePartRefIds);
-                array_shift($pagePartRefIds);
+                $position = $this->em->getRepository(PagePartRef::class)->find($sequence)->getSequencenumber();
+                /** @var PagePartRef $ref */
+                foreach($pagePartRefs as $ref) {
+                    if($ref->getSequencenumber() === $position) {
+                        $mainSequence[$key] = $ref->getId();
+                    }
+                }
             }
         }
         unset($sequenceCopy);
@@ -258,15 +251,25 @@ class AutoSaveController extends AbstractController
         $form = $request->request->get('form');
         $form['main']['id'] = $page->getId();
         $formCopy = $form;
+        $count = 0;
         foreach (array_keys($formCopy) as $key) {
-            if (0 === strpos($key, 'pagepartadmin_') && false === strpos($key, 'pagepartadmin_newpp_')) {
-                $newKey = 'pagepartadmin_' . reset($pagePartRefs)->getId();
-                $form[$newKey] = $form[$key];
-                unset($form[$key]);
-                array_shift($pagePartRefs);
+            if (0 === strpos($key, 'pagepartadmin_')) {
+                $sequence = $mainSequence[$count];
+                if (false === strpos($key, 'pagepartadmin_newpp_')) {
+                    /** @var PagePartRef $ref */
+                    foreach ($pagePartRefs as $ref) {
+                        if ($ref->getId() === $sequence) {
+                            $newKey = 'pagepartadmin_' . $ref->getId();
+                            $form[$newKey] = $form[$key];
+                            unset($form[$key]);
+                        }
+                    }
+                }
+                $count++;
             }
         }
         unset($formCopy);
+        unset($pagePartRefs);
 
         $request->request->set('main_sequence', $mainSequence);
         $request->request->set('form', $form);
