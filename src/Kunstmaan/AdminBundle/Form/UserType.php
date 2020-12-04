@@ -43,44 +43,46 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
 
         $this->canEditAllFields = $options['can_edit_all_fields'];
 
-        $builder->add('username', TextType::class, ['required' => true, 'label' => 'settings.user.username'])
-                ->add('plainPassword', RepeatedType::class, [
-                    'type' => PasswordType::class,
-                    'required' => $options['password_required'],
-                    'invalid_message' => 'errors.password.dontmatch',
-                    'first_options' => [
-                        'label' => 'settings.user.password',
-                    ],
-                    'second_options' => [
-                        'label' => 'settings.user.repeatedpassword',
-                    ],
-                ])
-                ->add('email', EmailType::class, ['required' => true, 'label' => 'settings.user.email'])
-                ->add('adminLocale', ChoiceType::class, [
-                    'choices' => $languages,
-                    'label' => 'settings.user.adminlang',
-                    'required' => true,
-                    'placeholder' => false,
-                ]);
+        $builder
+            ->add('username', TextType::class, ['required' => true, 'label' => 'settings.user.username'])
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'required' => $options['password_required'],
+                'invalid_message' => 'errors.password.dontmatch',
+                'first_options' => [
+                    'label' => 'settings.user.password',
+                ],
+                'second_options' => [
+                    'label' => 'settings.user.repeatedpassword',
+                ],
+            ])
+            ->add('email', EmailType::class, ['required' => true, 'label' => 'settings.user.email'])
+            ->add('adminLocale', ChoiceType::class, [
+                'choices' => $languages,
+                'label' => 'settings.user.adminlang',
+                'required' => true,
+                'placeholder' => false,
+            ]);
 
         if ($this->canEditAllFields) {
-            $builder->add('enabled', CheckboxType::class, ['required' => false, 'label' => 'settings.user.enabled'])
-                    ->add('groups', EntityType::class, [
-                            'label' => 'settings.user.roles',
-                            'class' => 'KunstmaanAdminBundle:Group',
-                            'query_builder' => function (EntityRepository $er) {
-                                return $er->createQueryBuilder('g')
-                                    ->orderBy('g.name', 'ASC');
-                            },
-                            'multiple' => true,
-                            'expanded' => false,
-                            'required' => false,
-                            'attr' => [
-                                'placeholder' => 'settings.user.roles_placeholder',
-                                'class' => 'js-advanced-select form-control advanced-select',
-                            ],
-                        ]
-                    );
+            $builder
+                ->add('enabled', CheckboxType::class, ['required' => false, 'label' => 'settings.user.enabled'])
+                ->add('groups', EntityType::class, [
+                    'label' => 'settings.user.roles',
+                    'class' => 'KunstmaanAdminBundle:Group',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('g')
+                            ->orderBy('g.name', 'ASC');
+                    },
+                    'multiple' => true,
+                    'expanded' => false,
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'settings.user.roles_placeholder',
+                        'class' => 'js-advanced-select form-control advanced-select',
+                    ],
+                ]
+            );
         }
     }
 
@@ -92,13 +94,14 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-          [
-            'password_required' => false,
-            'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
-            'langs' => null,
-            'can_edit_all_fields' => null,
-          ]
+            [
+                'password_required' => false,
+                'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
+                'langs' => null,
+                'can_edit_all_fields' => null,
+            ]
         );
+
         $resolver->addAllowedValues('password_required', [true, false]);
     }
 }
