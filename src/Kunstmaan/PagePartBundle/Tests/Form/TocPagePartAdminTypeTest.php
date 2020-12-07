@@ -3,7 +3,6 @@
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
-use Kunstmaan\PagePartBundle\Tests\Form\PagePartAdminTypeTestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase

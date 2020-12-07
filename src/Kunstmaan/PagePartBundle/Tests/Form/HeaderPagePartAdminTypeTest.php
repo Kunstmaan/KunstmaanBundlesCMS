@@ -3,7 +3,6 @@
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
-use Kunstmaan\PagePartBundle\Tests\Form\PagePartAdminTypeTestCase;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
