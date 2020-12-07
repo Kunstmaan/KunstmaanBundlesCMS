@@ -16,7 +16,7 @@ jobs:
             matrix:
                 php: ['7.1', '7.2', '7.3', '7.4']
                 deps: ['stable']
-                symfony: ['^4.4']
+                symfony: [''] # Don't lock to a specific symfony version by default
                 include:
                     # Test lowest dependencies
                     -   deps: 'lowest'

@@ -55,7 +55,7 @@ class FileFormSubmissionFieldTest extends TestCase
         $object->file = $file;
         $safeName = $object->getSafeFileName();
 
-        $this->assertEquals('the-file-name.jpeg', $safeName);
+        $this->assertStringStartsWith('the-file-name.', $safeName);
     }
 
     public function testGettersAndSetters()
