@@ -32,14 +32,14 @@ class AppKernel extends Kernel
 
     public function __construct($varDir, $testCase, $rootConfig, $environment, $debug)
     {
-        if (!is_dir(__DIR__.'/'.$testCase)) {
+        if (!is_dir(__DIR__ . '/' . $testCase)) {
             throw new \InvalidArgumentException(sprintf('The test case "%s" does not exist.', $testCase));
         }
         $this->varDir = $varDir;
         $this->testCase = $testCase;
 
         $fs = new Filesystem();
-        if (!$fs->isAbsolutePath($rootConfig) && !file_exists($rootConfig = __DIR__.'/'.$testCase.'/'.$rootConfig)) {
+        if (!$fs->isAbsolutePath($rootConfig) && !file_exists($rootConfig = __DIR__ . '/' . $testCase . '/' . $rootConfig)) {
             throw new \InvalidArgumentException(sprintf('The root config "%s" does not exist.', $rootConfig));
         }
         $this->rootConfig = $rootConfig;

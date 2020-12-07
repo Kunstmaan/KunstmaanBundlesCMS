@@ -10,7 +10,7 @@ class CacheValidatorTest extends TestCase
 {
     private $cacheValidator;
 
-    private $cacheDir = __DIR__.'/../../app/cache';
+    private $cacheDir = __DIR__ . '/../../app/cache';
 
     public function setUp()
     {

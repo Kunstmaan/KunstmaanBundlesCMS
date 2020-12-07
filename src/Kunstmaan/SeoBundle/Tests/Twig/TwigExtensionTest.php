@@ -54,7 +54,7 @@ class TwigExtensionTest extends TestCase
     {
         $extension = new SeoTwigExtension($this->emMock);
 
-        $dimensions = $extension->getImageDimensions(__DIR__.'/../files/150.png');
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
 
         $this->assertSame(['width' => 150, 'height' => 150], $dimensions);
     }
@@ -63,7 +63,7 @@ class TwigExtensionTest extends TestCase
     {
         $extension = new SeoTwigExtension($this->emMock);
 
-        $dimensions = $extension->getImageDimensions(__DIR__.'/../files/unkown.png');
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/unkown.png');
 
         $this->assertSame(['width' => null, 'height' => null], $dimensions);
     }
@@ -80,7 +80,7 @@ class TwigExtensionTest extends TestCase
         $extension = new SeoTwigExtension($this->emMock);
         $extension->setRequestCache($cacheMock);
 
-        $dimensions = $extension->getImageDimensions(__DIR__.'/../files/150.png');
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
 
         $this->assertSame(['width' => 151, 'height' => 151], $dimensions);
     }
@@ -99,7 +99,7 @@ class TwigExtensionTest extends TestCase
         $extension = new SeoTwigExtension($this->emMock);
         $extension->setRequestCache($cacheMock);
 
-        $dimensions = $extension->getImageDimensions(__DIR__.'/../files/150.png');
+        $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
 
         $this->assertSame(['width' => 150, 'height' => 150], $dimensions);
     }

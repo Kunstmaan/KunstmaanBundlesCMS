@@ -30,7 +30,7 @@ class PageTemplateConfigurationParserTest extends TestCase
     public function testParseSymfony3Flow()
     {
         $kernel = $this->createMock(KernelInterface::class);
-        $kernel->method('locateResource')->willReturn(__DIR__.'/Resources/config/pagetemplates/test.yml');
+        $kernel->method('locateResource')->willReturn(__DIR__ . '/Resources/config/pagetemplates/test.yml');
 
         $pageTemplateConfigurationParser = new PageTemplateConfigurationParser($kernel, []);
 

@@ -25,7 +25,7 @@ class PdfTransformerTest extends TestCase
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not available.');
         }
-        $this->filesDir = realpath(__DIR__.'/../../Files');
+        $this->filesDir = realpath(__DIR__ . '/../../Files');
         $this->tempDir = str_replace('/', DIRECTORY_SEPARATOR, sys_get_temp_dir() . '/kunstmaan_media_test');
 
         $this->filesystem = new Filesystem();

@@ -32,7 +32,7 @@ class PagePartConfigurationParserTest extends TestCase
     public function testParseSymfony3Flow()
     {
         $kernel = $this->createMock(KernelInterface::class);
-        $kernel->method('locateResource')->willReturn(__DIR__.'/Resources/config/pageparts/main.yml');
+        $kernel->method('locateResource')->willReturn(__DIR__ . '/Resources/config/pageparts/main.yml');
 
         $pagePartConfigurationParser = new PagePartConfigurationParser($kernel, []);
 

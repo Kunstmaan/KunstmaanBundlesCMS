@@ -37,7 +37,7 @@ class WebTestCase extends BaseWebTestCase
 
     protected static function getKernelClass()
     {
-        require_once __DIR__.'/app/AppKernel.php';
+        require_once __DIR__ . '/app/AppKernel.php';
 
         return 'Kunstmaan\TranslatorBundle\Tests\app\AppKernel';
     }
@@ -73,7 +73,7 @@ class WebTestCase extends BaseWebTestCase
         $tool->createSchema($meta);
 
         // insert fixtures
-        $fixtures = __DIR__.'/files/fixtures.yml';
+        $fixtures = __DIR__ . '/files/fixtures.yml';
         $loader = new NativeLoader();
         $objects = $loader->loadFile($fixtures)->getObjects();
         foreach ($objects as $object) {

@@ -23,7 +23,7 @@ class PdfHandlerTest extends TestCase
         $this->pdfTransformer = $this->createMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
         $mockMimeTypeGuesserfactory = $this->createMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
         $mockExtensionGuesserfactory = $this->createMock('Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface');
-        $this->filesDir = realpath(__DIR__.'/../../Files');
+        $this->filesDir = realpath(__DIR__ . '/../../Files');
 
         $this->object = new PdfHandler(1, $mockMimeTypeGuesserfactory, $mockExtensionGuesserfactory);
         $this->object->setPdfTransformer($this->pdfTransformer);

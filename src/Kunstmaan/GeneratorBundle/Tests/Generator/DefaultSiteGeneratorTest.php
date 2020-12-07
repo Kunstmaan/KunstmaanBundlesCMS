@@ -31,13 +31,13 @@ class DefaultSiteGeneratorTest extends TestCase
         ;
 
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
-        $generator->generate($bundle, '', __DIR__.'/../../_data', false);
+        $generator->generate($bundle, '', __DIR__ . '/../../_data', false);
 
         $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/TwigBundle/' : 'app/Resources/TwigBundle/views/';
-        unlink(__DIR__.'/../../_data/'. $basePath . 'Exception/error.html.twig');
-        unlink(__DIR__.'/../../_data/'. $basePath . 'Exception/error404.html.twig');
-        unlink(__DIR__.'/../../_data/'. $basePath . 'Exception/error500.html.twig');
-        unlink(__DIR__.'/../../_data/'. $basePath . 'Exception/error503.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'Exception/error.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'Exception/error404.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'Exception/error500.html.twig');
+        unlink(__DIR__ . '/../../_data/' . $basePath . 'Exception/error503.html.twig');
     }
 
     protected function getBundle($path)
