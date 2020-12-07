@@ -2,19 +2,16 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
-use DateTime;
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPaneCreator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
-use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
+use Kunstmaan\NodeBundle\Helper\AutoSaverInterface;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,7 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AutoSaveController extends AbstractController
 {
@@ -32,16 +28,6 @@ class AutoSaveController extends AbstractController
      * @var EntityManager
      */
     private $em;
-
-    /**
-     * @var NodeAdminPublisher
-     */
-    private $nodePublisher;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
 
     /** @var NodeHelper */
     private $nodeHelper;
@@ -52,26 +38,21 @@ class AutoSaveController extends AbstractController
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    /** @var TabPaneCreator */
-    private $tabPaneCreator;
+    /** @var AutoSaverInterface */
+    private $autoSaver;
 
     public function __construct(
         EntityManager $em,
-        NodeAdminPublisher $nodePublisher,
-        TranslatorInterface $translator,
         NodeHelper $nodeHelper,
         NodeMenu $nodeMenu,
         EventDispatcherInterface $eventDispatcher,
-        TabPaneCreator $tabPaneCreator
-    )
-    {
+        AutoSaverInterface $autoSaver
+    ) {
         $this->em = $em;
-        $this->nodePublisher = $nodePublisher;
-        $this->translator = $translator;
         $this->nodeHelper = $nodeHelper;
         $this->nodeMenu = $nodeMenu;
         $this->eventDispatcher = $eventDispatcher;
-        $this->tabPaneCreator = $tabPaneCreator;
+        $this->autoSaver = $autoSaver;
     }
 
     /**
@@ -81,6 +62,7 @@ class AutoSaveController extends AbstractController
      *      name="KunstmaanNodeBundle_auto_save_node_verison",
      *      methods={"POST"}
      * )
+     *
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
      */
@@ -103,38 +85,21 @@ class AutoSaveController extends AbstractController
         }
         $page = $publicVersion->getRef($this->em);
         $isStructureNode = $page->isStructureNode();
-        /** no need to autosave structurenodes */
+        /* no need to autosave structurenodes */
         if ($isStructureNode) {
             return new Response();
         }
 
-        $this->nodeHelper->deletePreviousAutoSaves($page, $nodeTranslation);
         $nodeVersion = $this->nodeHelper->createAutoSaveVersion(
             $page,
             $nodeTranslation,
             $publicVersion
         );
         $page = $nodeVersion->getRef($this->em);
-        $this->reverseFormParamsForAutoSave($page, $request);
-
-        $tabPane = $this->tabPaneCreator->getDefaultTabPane(
-            $request,
-            $page,
-            $node,
-            $nodeTranslation,
-            $isStructureNode,
-            $nodeVersion
-        );
-
-        if (!$tabPane->isValid()) {
+        $validAutoSave = $this->autoSaver->updateAutoSaveFromInput($page, $request, $node, $nodeTranslation, $isStructureNode, $nodeVersion);
+        if ($validAutoSave) {
             return new Response();
         }
-
-        $nodeVersion->setUpdated(new DateTime());
-        $this->em->persist($nodeTranslation);
-        $this->em->persist($nodeVersion);
-        $tabPane->persist($this->em);
-        $this->em->flush();
 
         $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($locale);
@@ -172,7 +137,7 @@ class AutoSaveController extends AbstractController
             throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', \get_class($page)));
         }
 
-        $template = new Template(array());
+        $template = new Template([]);
         $template->setTemplate($view);
         $template->setOwner([SlugController::class, 'slugAction']);
 
@@ -183,7 +148,6 @@ class AutoSaveController extends AbstractController
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */
@@ -197,81 +161,5 @@ class AutoSaveController extends AbstractController
         }
 
         return $eventDispatcher->dispatch($eventName, $event);
-    }
-
-    private function reverseFormParamsForAutoSave(HasNodeInterface $page, Request $request): void
-    {
-        $deletedIds = [];
-        $deletedSequenceNumbers = [];
-        $requestKeys = $request->request->keys();
-        foreach ($requestKeys as $key) {
-            $pos = strpos($key, '_deleted');
-            if (false !== $pos) {
-                $keyPart = substr($key, 0, $pos);
-                $deletedIds[] = $keyPart;
-                $request->request->remove($key);
-            }
-        }
-        foreach($deletedIds as $id) {
-            $ref = $this->em->getRepository(PagePartRef::class)->find($id);
-            if ($ref !== null) {
-                $deletedSequenceNumbers[] = $ref->getSequencenumber();
-            }
-        }
-        unset($deletedIds);
-        unset($requestKeys);
-        $pagePartRefs = $this->em->getRepository(PagePartRef::class)->getPagePartRefs($page);
-        $pagePartRefsCopy = $pagePartRefs;
-        /*** @var PagePartRef $ref */
-        foreach($pagePartRefsCopy as $key => $ref) {
-            if(in_array($ref->getSequenceNumber(), $deletedSequenceNumbers, true)) {
-                unset($pagePartRefs[$key]);
-                $request->request->add([$ref->getId().'_deleted' => true]);
-                continue;
-            }
-        }
-        unset($pagePartRefsCopy);
-        unset($deletedSequenceNumbers);
-
-        $mainSequence = $request->request->get('main_sequence');
-        $sequenceCopy = $mainSequence;
-        foreach ($sequenceCopy as $key => $sequence) {
-            if (0 !== strpos($sequence, 'newpp_')) {
-                $position = $this->em->getRepository(PagePartRef::class)->find($sequence)->getSequencenumber();
-                /** @var PagePartRef $ref */
-                foreach($pagePartRefs as $ref) {
-                    if($ref->getSequencenumber() === $position) {
-                        $mainSequence[$key] = $ref->getId();
-                    }
-                }
-            }
-        }
-        unset($sequenceCopy);
-        $mainSequence = array_values($mainSequence);
-        $form = $request->request->get('form');
-        $form['main']['id'] = $page->getId();
-        $formCopy = $form;
-        $count = 0;
-        foreach (array_keys($formCopy) as $key) {
-            if (0 === strpos($key, 'pagepartadmin_')) {
-                $sequence = $mainSequence[$count];
-                if (false === strpos($key, 'pagepartadmin_newpp_')) {
-                    /** @var PagePartRef $ref */
-                    foreach ($pagePartRefs as $ref) {
-                        if ($ref->getId() === $sequence) {
-                            $newKey = 'pagepartadmin_' . $ref->getId();
-                            $form[$newKey] = $form[$key];
-                            unset($form[$key]);
-                        }
-                    }
-                }
-                $count++;
-            }
-        }
-        unset($formCopy);
-        unset($pagePartRefs);
-
-        $request->request->set('main_sequence', $mainSequence);
-        $request->request->set('form', $form);
     }
 }

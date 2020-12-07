@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -44,12 +43,6 @@ class NodeHelper
 
     /**
      * NodeHelper constructor.
-     *
-     * @param EntityManagerInterface   $em
-     * @param NodeAdminPublisher       $nodeAdminPublisher
-     * @param TokenStorageInterface    $tokenStorage
-     * @param CloneHelper              $cloneHelper
-     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -113,7 +106,7 @@ class NodeHelper
         return $nodeVersion;
     }
 
-    public function deletePreviousAutoSaves(HasNodeInterface $page, NodeTranslation $nodeTranslation): void
+    private function deletePreviousAutoSaves(HasNodeInterface $page, NodeTranslation $nodeTranslation): void
     {
         $pageClass = get_class($page);
         $versions = $this->em->getRepository(NodeVersion::class)
@@ -124,14 +117,14 @@ class NodeHelper
             ]);
 
         /** @var NodeVersion $version */
-        foreach($versions as $version) {
+        foreach ($versions as $version) {
             $page = $this->em->getRepository($version->getRefEntityName())->find($version->getRefId());
             if ($page) {
                 $pagePartRefs = $this->em->getRepository(PagePartRef::class)->findBy([
                   'pageEntityname' => $pageClass,
                   'pageId' => $page->getId(),
                 ]);
-                foreach($pagePartRefs as $pagePartRef) {
+                foreach ($pagePartRefs as $pagePartRef) {
                     $this->em->remove($pagePartRef);
                 }
                 $this->em->remove($page);
@@ -145,8 +138,8 @@ class NodeHelper
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,
         NodeVersion $nodeVersion
-    ): NodeVersion
-    {
+    ): NodeVersion {
+        $this->deletePreviousAutoSaves($page, $nodeTranslation);
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
 
         /* @var NodeVersion $publicNodeVersion */
@@ -168,10 +161,8 @@ class NodeHelper
     }
 
     /**
-     * @param NodeVersion     $nodeVersion
-     * @param NodeTranslation $nodeTranslation
-     * @param int             $nodeVersionTimeout
-     * @param bool            $nodeVersionIsLocked
+     * @param int  $nodeVersionTimeout
+     * @param bool $nodeVersionIsLocked
      */
     public function prepareNodeVersion(NodeVersion $nodeVersion, NodeTranslation $nodeTranslation, $nodeVersionTimeout, $nodeVersionIsLocked)
     {
@@ -200,12 +191,8 @@ class NodeHelper
     }
 
     /**
-     * @param Node             $node
-     * @param NodeTranslation  $nodeTranslation
-     * @param NodeVersion      $nodeVersion
-     * @param HasNodeInterface $page
-     * @param bool             $isStructureNode
-     * @param TabPane          $tabPane
+     * @param bool    $isStructureNode
+     * @param TabPane $tabPane
      *
      * @return NodeTranslation
      */
@@ -248,10 +235,9 @@ class NodeHelper
     }
 
     /**
-     * @param string    $refEntityType
-     * @param string    $pageTitle
-     * @param string    $locale
-     * @param Node|null $parentNode
+     * @param string $refEntityType
+     * @param string $pageTitle
+     * @param string $locale
      *
      * @return NodeTranslation
      */
@@ -300,7 +286,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      *
      * @return NodeTranslation
@@ -331,7 +316,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      *
      * @return HasNodeInterface
@@ -345,7 +329,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $sourceLocale
      * @param string $locale
      *
@@ -382,7 +365,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      * @param string $title
      *
@@ -419,7 +401,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param int    $sourceNodeTranslationId
      * @param string $locale
      *
@@ -456,7 +437,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      *
      * @return NodeTranslation
@@ -499,7 +479,6 @@ class NodeHelper
     }
 
     /**
-     * @param Node   $node
      * @param string $locale
      */
     protected function deleteNodeChildren(Node $node, $locale)
@@ -570,7 +549,6 @@ class NodeHelper
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */
