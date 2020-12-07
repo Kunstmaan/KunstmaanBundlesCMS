@@ -32,7 +32,7 @@ class AppKernel extends Kernel
 
     public function __construct($varDir, $testCase, $rootConfig, $environment, $debug)
     {
-        if (!is_dir(__DIR__.'AppKernel.php/'. $testCase)) {
+        if (!is_dir(__DIR__.'/'.$testCase)) {
             throw new \InvalidArgumentException(sprintf('The test case "%s" does not exist.', $testCase));
         }
         $this->varDir = $varDir;
