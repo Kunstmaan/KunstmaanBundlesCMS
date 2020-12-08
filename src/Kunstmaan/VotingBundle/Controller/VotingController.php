@@ -8,10 +8,9 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -71,7 +70,6 @@ class VotingController extends Controller
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

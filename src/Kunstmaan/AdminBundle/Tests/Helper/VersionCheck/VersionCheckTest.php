@@ -25,6 +25,7 @@ class VersionCheckTest extends TestCase
 {
     /** @var \PHPUnit\Framework\MockObject\MockObject|LegacyTranslatorInterface|TranslatorInterface */
     private $translator;
+
     /** @var ContainerInterface (mock) */
     private $container;
 

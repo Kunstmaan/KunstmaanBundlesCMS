@@ -84,7 +84,6 @@ class FormHandler implements FormHandlerInterface
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */
