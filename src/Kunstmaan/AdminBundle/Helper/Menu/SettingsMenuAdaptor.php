@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * SettingsMenuAdaptor to add the Settings MenuItem to the top menu and build the Settings tree
@@ -21,10 +21,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     private $isEnabledVersionChecker;
 
     /**
-     * Constructor
-     *
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param bool                          $isEnabledVersionChecker
+     * @param bool $isEnabledVersionChecker
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, $isEnabledVersionChecker)
     {
@@ -32,14 +29,6 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
         $this->isEnabledVersionChecker = (bool) $isEnabledVersionChecker;
     }
 
-    /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
-     *
-     * @param MenuBuilder $menu      The MenuBuilder
-     * @param MenuItem[]  &$children The current children
-     * @param MenuItem    $parent    The parent Menu item
-     * @param Request     $request   The Request
-     */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (\is_null($parent)) {

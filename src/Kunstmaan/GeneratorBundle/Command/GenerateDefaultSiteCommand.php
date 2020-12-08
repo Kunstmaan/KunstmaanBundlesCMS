@@ -66,7 +66,7 @@ EOT
     protected function doExecute()
     {
         $this->assistant->writeSection('Site generation');
-        $this->assistant->writeLine(array("This command helps you to generate a default site setup.\n"));
+        $this->assistant->writeLine(["This command helps you to generate a default site setup.\n"]);
 
         /**
          * Ask for which bundle we need to create the layout
@@ -88,28 +88,28 @@ EOT
 
         // First we generate the layout if it is not yet generated
         $command = $this->getApplication()->find('kuma:generate:layout');
-        $arguments = array(
+        $arguments = [
             'command' => 'kuma:generate:layout',
             '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
             '--demosite' => $this->demosite,
             '--browsersync' => $browserSyncUrl,
             '--subcommand' => true,
-        );
+        ];
         $input = new ArrayInput($arguments);
         $command->run($input, $this->assistant->getOutput());
 
-        $rootDir = $this->getApplication()->getKernel()->getProjectDir().'/';
+        $rootDir = $this->getApplication()->getKernel()->getProjectDir() . '/';
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
 
         // Generate the default pageparts
         $command = $this->getApplication()->find('kuma:generate:default-pageparts');
-        $arguments = array(
+        $arguments = [
             'command' => 'kuma:generate:default-pageparts',
             '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
             '--prefix' => $this->prefix,
             '--contexts' => 'main',
             '--quiet' => true,
-        );
+        ];
         $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
         $input = new ArrayInput($arguments);
         $command->run($input, $output);
@@ -119,7 +119,7 @@ EOT
             // Generate a blog
             $command = $this->getApplication()->find('kuma:generate:article');
             $pages = $this->assistant->getOptionOrDefault('articleoverviewpageparent', null);
-            $arguments = array(
+            $arguments = [
                 'command' => 'kuma:generate:article',
                 '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
                 '--prefix' => $this->prefix,
@@ -129,7 +129,7 @@ EOT
                 '--with-tag' => true,
                 '--dummydata' => true,
                 '--articleoverviewpageparent' => $pages,
-            );
+            ];
             $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_NORMAL);
             $input = new ArrayInput($arguments);
             $command->run($input, $output);

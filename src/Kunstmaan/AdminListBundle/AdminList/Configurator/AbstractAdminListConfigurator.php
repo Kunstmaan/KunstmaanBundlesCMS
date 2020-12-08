@@ -31,27 +31,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var Field[]
      */
-    private $fields = array();
+    private $fields = [];
 
     /**
      * @var Field[]
      */
-    private $exportFields = array();
+    private $exportFields = [];
 
     /**
      * @var ItemActionInterface[]
      */
-    private $itemActions = array();
+    private $itemActions = [];
 
     /**
      * @var ListActionInterface[]
      */
-    private $listActions = array();
+    private $listActions = [];
 
     /**
      * @var BulkActionInterface[]
      */
-    private $bulkActions = array();
+    private $bulkActions = [];
 
     /**
      * @var AbstractType
@@ -61,7 +61,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var array
      */
-    private $typeOptions = array();
+    private $typeOptions = [];
 
     /**
      * @var string
@@ -180,21 +180,19 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function resetBuilds()
     {
-        $this->fields = array();
-        $this->exportFields = array();
+        $this->fields = [];
+        $this->exportFields = [];
         $this->filterBuilder = null;
-        $this->itemActions = array();
-        $this->listActions = array();
+        $this->itemActions = [];
+        $this->listActions = [];
     }
 
     /**
      * Configure the types of items you can add
      *
-     * @param array $params
-     *
      * @return array
      */
-    public function getAddUrlFor(array $params = array())
+    public function getAddUrlFor(array $params = [])
     {
         $params = array_merge($params, $this->getExtraParameters());
 
@@ -204,12 +202,12 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $a = preg_split($re, $friendlyName);
         $superFriendlyName = implode(' ', $a);
 
-        return array(
-            $superFriendlyName => array(
+        return [
+            $superFriendlyName => [
                 'path' => $this->getPathByConvention($this::SUFFIX_ADD),
                 'params' => $params,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -221,10 +219,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = $this->getExtraParameters();
 
-        return array(
+        return [
             'path' => $this->getPathByConvention($this::SUFFIX_EXPORT),
-            'params' => array_merge(array('_format' => 'csv'), $params),
-        );
+            'params' => array_merge(['_format' => 'csv'], $params),
+        ];
     }
 
     /**
@@ -259,10 +257,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = $this->getExtraParameters();
 
-        return array(
+        return [
             'path' => $this->getPathByConvention(),
             'params' => $params,
-        );
+        ];
     }
 
     /**
@@ -282,7 +280,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException('You need to implement the getAdminType method in '. \get_class($this).' or '. \get_class($entity));
+        throw new InvalidArgumentException('You need to implement the getAdminType method in ' . \get_class($this) . ' or ' . \get_class($entity));
     }
 
     /**
@@ -409,7 +407,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $columnName,
         FilterTypeInterface $type = null,
         $filterName = null,
-        array $options = array()
+        array $options = []
     ) {
         $this->getFilterBuilder()->add($columnName, $type, $filterName, $options);
 
@@ -429,7 +427,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getSortFields()
     {
-        $array = array();
+        $array = [];
         foreach ($this->getFields() as $field) {
             if ($field->isSortable()) {
                 $array[] = $field->getName();
@@ -474,8 +472,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param ItemActionInterface $itemAction
-     *
      * @return AbstractAdminListConfigurator
      */
     public function addItemAction(ItemActionInterface $itemAction)
@@ -502,8 +498,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param ListActionInterface $listAction
-     *
      * @return AdminListConfiguratorInterface
      */
     public function addListAction(ListActionInterface $listAction)
@@ -530,8 +524,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param BulkActionInterface $bulkAction
-     *
      * @return AdminListConfiguratorInterface
      */
     public function addBulkAction(BulkActionInterface $bulkAction)
@@ -745,8 +737,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param FilterBuilder $filterBuilder
-     *
      * @return AbstractAdminListConfigurator
      */
     public function setFilterBuilder(FilterBuilder $filterBuilder)
@@ -758,15 +748,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
     /**
      * Bind current request.
-     *
-     * @param Request $request
      */
     public function bindRequest(Request $request)
     {
         $query = $request->query;
         $session = $request->getSession();
 
-        $adminListName = 'listconfig_'.$request->get('_route');
+        $adminListName = 'listconfig_' . $request->get('_route');
 
         $this->page = $request->query->getInt('page', 1);
         // Allow alphanumeric, _ & . in order by parameter!
@@ -792,11 +780,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         // save current parameters
         $session->set(
             $adminListName,
-            array(
+            [
                 'page' => $this->page,
                 'orderBy' => $this->orderBy,
                 'orderDirection' => $this->orderDirection,
-            )
+            ]
         );
 
         $this->getFilterBuilder()->bindRequest($request);
@@ -865,6 +853,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getExtraParameters()
     {
-        return array();
+        return [];
     }
 }

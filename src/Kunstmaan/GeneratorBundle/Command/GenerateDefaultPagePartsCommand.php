@@ -63,7 +63,7 @@ EOT
     {
         $this->assistant->writeSection('Default PageParts generation');
 
-        $pagepartNames = array(
+        $pagepartNames = [
             'AbstractPagePart',
             'AudioPagePart',
             'ButtonPagePart',
@@ -78,17 +78,17 @@ EOT
             'TocPagePart',
             'ToTopPagePart',
             'VideoPagePart',
-        );
+        ];
 
         foreach ($pagepartNames as $pagepartName) {
             $this->createGenerator()->generate($this->bundle, $pagepartName, $this->prefix, $this->sections, $this->behatTest);
         }
 
         $this->assistant->writeSection('PageParts successfully created', 'bg=green;fg=black');
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', )
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', ]
         );
 
         return 0;
@@ -103,7 +103,7 @@ EOT
             $this->assistant->writeError('KunstmaanPagePartBundle not found', true);
         }
 
-        $this->assistant->writeLine(array("This command helps you to generate a new pagepart.\n"));
+        $this->assistant->writeLine(["This command helps you to generate a new pagepart.\n"]);
 
         /**
          * Ask for which bundle we need to create the pagepart
@@ -124,7 +124,7 @@ EOT
             $contexts = explode(',', $contexts);
             array_walk($contexts, 'trim');
 
-            $this->sections = array();
+            $this->sections = [];
             $allSections = $this->getAvailableSections($this->bundle);
             foreach ($allSections as $section) {
                 if (in_array($section['context'], $contexts)) {

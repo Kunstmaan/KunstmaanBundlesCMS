@@ -2,11 +2,11 @@ preset: symfony
 risky: false
 
 disabled:
-    - yoda_style
     - concat_without_spaces
-    - phpdoc_summary
     - no_superfluous_phpdoc_tags_symfony
+    - phpdoc_summary
     - short_array_syntax
+    - yoda_style
 
 finder:
     exclude:

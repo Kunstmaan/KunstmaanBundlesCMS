@@ -86,14 +86,14 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
          * @var EntityManager
          */
         $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findBy(
-            array('contentType' => 'application/pdf', 'deleted' => false)
+            ['contentType' => 'application/pdf', 'deleted' => false]
         );
         /** @var Media $media */
         foreach ($medias as $media) {
             try {
                 $this->pdfTransformer->apply($this->webRoot . $media->getUrl());
             } catch (ImagickException $e) {
-                $output->writeln('<comment>'.$e->getMessage().'</comment>');
+                $output->writeln('<comment>' . $e->getMessage() . '</comment>');
             }
         }
 

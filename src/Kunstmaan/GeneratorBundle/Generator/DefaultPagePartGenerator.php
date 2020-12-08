@@ -64,7 +64,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      */
     private function generatePagePartEntity()
     {
-        $params = array(
+        $params = [
             'bundle' => $this->bundle->getName(),
             'namespace' => $this->bundle->getNamespace(),
             'pagepart' => $this->entity,
@@ -74,7 +74,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
             'prefix' => $this->prefix,
             'isV4' => $this->isSymfony4(),
-        );
+        ];
 
         $this->renderSingleFile(
             $this->skeletonDir . '/Entity/PageParts/' . $this->entity . '/',
@@ -92,13 +92,13 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      */
     private function generateFormType()
     {
-        $params = array(
+        $params = [
             'bundle' => $this->bundle->getName(),
             'namespace' => $this->bundle->getNamespace(),
             'pagepart' => $this->entity,
             'pagepartname' => str_replace('PagePart', '', $this->entity),
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
-        );
+        ];
 
         $this->renderSingleFile(
             $this->skeletonDir . '/Form/PageParts/' . $this->entity . '/',
@@ -116,11 +116,11 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      */
     private function generateResourceTemplate()
     {
-        $params = array(
+        $params = [
             'pagepart' => strtolower(
                     preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
                 ) . '-pp',
-        );
+        ];
 
         $this->renderSingleFile(
             $this->skeletonDir . '/Resources/views/PageParts/' . $this->entity . '/',
@@ -155,7 +155,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
                 }
 
                 if (!array_key_exists('types', $data)) {
-                    $data['types'] = array();
+                    $data['types'] = [];
                 }
                 $class = $this->bundle->getNamespace() . '\\Entity\\PageParts\\' . $this->entity;
                 $found = false;
@@ -166,10 +166,10 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
                 }
 
                 if (!$found) {
-                    $data['types'][] = array(
+                    $data['types'][] = [
                         'name' => str_replace('PagePart', '', $this->entity),
                         'class' => $class,
-                    );
+                    ];
                 }
 
                 if (array_key_exists('kunstmaan_page_part', $originalData)) {

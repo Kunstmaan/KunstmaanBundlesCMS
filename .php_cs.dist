@@ -1,0 +1,18 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(false)
+    ->setRules([
+        '@Symfony' => true,
+        'class_attributes_separation' => ['elements' => ['method', 'property']],
+        'concat_space' => ['spacing' => 'one'],
+        'phpdoc_summary' => false,
+        'yoda_style' => false,
+    ])
+    ->setFinder($finder)
+    ;

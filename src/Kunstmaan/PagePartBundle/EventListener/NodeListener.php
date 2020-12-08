@@ -59,9 +59,6 @@ class NodeListener
         $this->pageTemplateConfiguratiorService = $pageTemplateConfiguratiorService;
     }
 
-    /**
-     * @param AdaptFormEvent $event
-     */
     public function adaptForm(AdaptFormEvent $event)
     {
         $page = $event->getPage();
@@ -75,7 +72,7 @@ class NodeListener
             if (!\is_null($propertiesTab)) {
                 $propertiesWidget = $propertiesTab->getWidget();
                 $tabPane->removeTab($propertiesTab);
-                $tabPane->addTab(new Tab('kuma_pagepart.tab.content.title', new ListWidget(array($propertiesWidget, $pageTemplateWidget))), 0);
+                $tabPane->addTab(new Tab('kuma_pagepart.tab.content.title', new ListWidget([$propertiesWidget, $pageTemplateWidget])), 0);
             } else {
                 $tabPane->addTab(new Tab('kuma_pagepart.tab.content.title', $pageTemplateWidget), 0);
             }
@@ -92,7 +89,7 @@ class NodeListener
                     if (!\is_null($propertiesTab)) {
                         $propertiesWidget = $propertiesTab->getWidget();
                         $tabPane->removeTab($propertiesTab);
-                        $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), new ListWidget(array($propertiesWidget, $pagePartWidget))), 0);
+                        $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), new ListWidget([$propertiesWidget, $pagePartWidget])), 0);
 
                         continue;
                     }

@@ -92,9 +92,9 @@ if (class_exists(\Doctrine\Migrations\Tools\Console\Command\GenerateCommand::cla
         private function buildCodeFromSql(Configuration $configuration, array $sql)
         {
             $currentPlatform = $configuration->getConnection()->getDatabasePlatform()->getName();
-            $code = array(
+            $code = [
                 "\$this->abortIf(\$this->connection->getDatabasePlatform()->getName() != \"$currentPlatform\", \"Migration can only be executed safely on '$currentPlatform'.\");", '',
-            );
+            ];
             foreach ($sql as $query) {
                 if (strpos($query, $configuration->getMigrationsTableName()) !== false) {
                     continue;

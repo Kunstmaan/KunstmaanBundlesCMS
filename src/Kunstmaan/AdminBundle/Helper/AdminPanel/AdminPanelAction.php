@@ -25,10 +25,10 @@ class AdminPanelAction implements AdminPanelActionInterface
     private $template = '@KunstmaanAdmin/AdminPanel/_admin_panel_action.html.twig';
 
     /**
-     * @param array  $url      The url path and parameters
-     * @param string $label    The label
-     * @param string $icon     The icon
-     * @param string $template The template
+     * @param array       $url      The url path and parameters
+     * @param string      $label    The label
+     * @param string|null $icon     The icon
+     * @param string|null $template The template
      */
     public function __construct(
         array $url,
@@ -37,8 +37,8 @@ class AdminPanelAction implements AdminPanelActionInterface
         $template = null
     ) {
         $this->url = $url;
-        $this->icon = $icon;
         $this->label = $label;
+        $this->icon = $icon;
         if (!empty($template)) {
             $this->template = $template;
         }

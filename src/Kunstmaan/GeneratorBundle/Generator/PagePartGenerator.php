@@ -94,17 +94,17 @@ class PagePartGenerator extends KunstmaanGenerator
         );
 
         // Add some extra functions in the generated entity :s
-        $params = array(
+        $params = [
             'bundle' => $this->bundle->getName(),
             'pagepart' => $this->entity,
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
             'isV4' => $this->isSymfony4(),
-        );
+        ];
         $extraCode = $this->render('/Entity/PageParts/ExtraFunctions.php', $params);
 
         $pos = strrpos($entityCode, "\n}");
         $trimmed = substr($entityCode, 0, $pos);
-        $entityCode = $trimmed."\n\n".$extraCode."\n}\n";
+        $entityCode = $trimmed . "\n\n" . $extraCode . "\n}\n";
 
         // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));
@@ -128,14 +128,14 @@ class PagePartGenerator extends KunstmaanGenerator
      */
     private function generateResourceTemplate()
     {
-        $savePath = $this->getTemplateDir($this->bundle) . '/PageParts/'.$this->entity.'/view.html.twig';
+        $savePath = $this->getTemplateDir($this->bundle) . '/PageParts/' . $this->entity . '/view.html.twig';
 
-        $params = array(
+        $params = [
             'pagepart' => strtolower(
                     preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
                 ) . '-pp',
             'fields' => $this->fields,
-        );
+        ];
         $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
 
         $this->assistant->writeLine('Generating template : <info>OK</info>');
@@ -150,7 +150,7 @@ class PagePartGenerator extends KunstmaanGenerator
             if ($this->isSymfony4()) {
                 $dir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
             } else {
-                $dir = $this->bundle->getPath().'/Resources/config/pageparts/';
+                $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
             }
 
             foreach ($this->sections as $section) {
@@ -163,13 +163,13 @@ class PagePartGenerator extends KunstmaanGenerator
                 }
 
                 if (!array_key_exists('types', $data)) {
-                    $data['types'] = array();
+                    $data['types'] = [];
                 }
 
-                $data['types'][] = array(
+                $data['types'][] = [
                     'name' => str_replace('PagePart', '', $this->entity),
                     'class' => $this->bundle->getNamespace() . '\\Entity\\PageParts\\' . $this->entity,
-                );
+                ];
 
                 // restore the sf4 style data
                 if (isset($pagePartKey)) {
@@ -196,11 +196,11 @@ class PagePartGenerator extends KunstmaanGenerator
         $configDir = $this->bundle->getPath() . '/Resources/config';
 
         // Get the context names for each section config file
-        $sectionInfo = array();
+        $sectionInfo = [];
         $dir = $configDir . '/pageparts/';
         foreach ($this->sections as $section) {
             $data = Yaml::parse(file_get_contents($dir . $section));
-            $sectionInfo[basename($section, '.yml')] = array('context' => $data['context'], 'pagetempates' => array());
+            $sectionInfo[basename($section, '.yml')] = ['context' => $data['context'], 'pagetempates' => []];
         }
 
         /*
@@ -221,7 +221,7 @@ class PagePartGenerator extends KunstmaanGenerator
         $templateFinder = new Finder();
         $templateFinder->files()->in($configDir . '/pagetemplates')->name('*.yml');
 
-        $contextTemplates = array();
+        $contextTemplates = [];
         foreach ($templateFinder as $templatePath) {
             $parts = explode('/', $templatePath);
             $fileName = basename($parts[count($parts) - 1], '.yml');
@@ -288,10 +288,10 @@ class PagePartGenerator extends KunstmaanGenerator
             )
         */
 
-        $folder = $this->registry->getRepository(Folder::class)->findOneBy(array('rel' => 'image'));
+        $folder = $this->registry->getRepository(Folder::class)->findOneBy(['rel' => 'image']);
         $images = $this->registry->getRepository(Media::class)->findBy(
-            array('folder' => $folder, 'deleted' => false),
-            array(),
+            ['folder' => $folder, 'deleted' => false],
+            [],
             2
         );
 
@@ -299,7 +299,7 @@ class PagePartGenerator extends KunstmaanGenerator
         $finder = new Finder();
         $finder->files()->in($this->bundle->getPath() . '/Entity/Pages')->name('*.php');
 
-        $pages = array();
+        $pages = [];
         foreach ($finder as $pageFile) {
             $parts = explode('/', $pageFile);
             $className = basename($parts[count($parts) - 1], '.php');
@@ -337,7 +337,7 @@ class PagePartGenerator extends KunstmaanGenerator
                                 $form = $this->container->get('form.factory')->create($entity->getDefaultAdminType());
                                 $children = $form->createView()->children;
 
-                                $pageFields = array();
+                                $pageFields = [];
                                 foreach ($children as $field) {
                                     $name = $field->vars['name'];
                                     $attr = $field->vars['attr'];
@@ -352,59 +352,59 @@ class PagePartGenerator extends KunstmaanGenerator
                                     } elseif ($blocks[1] == 'choice' && $blocks[1] == 'entity') {
                                         // do nothing
                                     } elseif ($blocks[1] == 'datetime') {
-                                        $pageFields[]['datetime'] = array(
+                                        $pageFields[]['datetime'] = [
                                             'label' => $this->labelCase($name),
                                             'date_random' => DateTime::date('d/m/Y'),
                                             'time_random' => DateTime::time('H:i'),
-                                        );
+                                        ];
                                     } elseif ($blocks[1] == 'number') {
-                                        $pageFields[]['decimal'] = array(
+                                        $pageFields[]['decimal'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Base::randomFloat(2, 0, 99999),
-                                        );
+                                        ];
                                     } elseif ($blocks[1] == 'integer') {
-                                        $pageFields[]['integer'] = array(
+                                        $pageFields[]['integer'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Base::randomNumber(3000, 99999),
-                                        );
+                                        ];
                                     } elseif ($blocks[1] == 'checkbox') {
-                                        $pageFields[]['boolean'] = array(
+                                        $pageFields[]['boolean'] = [
                                             'label' => $this->labelCase($name),
-                                        );
+                                        ];
                                     } elseif ($blocks[1] == 'media') {
                                         $id = (count($images) > 0 ? $images[0]->getId() : 1);
-                                        $pageFields[]['media'] = array(
+                                        $pageFields[]['media'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => $id,
-                                        );
+                                        ];
                                     } elseif ($blocks[2] == 'urlchooser') {
-                                        $pageFields[]['link'] = array(
+                                        $pageFields[]['link'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => 'http://www.' . strtolower(Lorem::word()) . '.com',
-                                        );
+                                        ];
                                     } elseif ($blocks[2] == 'textarea' && array_key_exists(
                                             'class',
                                             $attr
                                         ) && $attr['class'] == 'js-rich-editor rich-editor'
                                     ) {
-                                        $pageFields[]['rich_text'] = array(
+                                        $pageFields[]['rich_text'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Lorem::sentence(),
-                                        );
+                                        ];
                                     } elseif ($blocks[2] == 'textarea' || $blocks[1] == 'text') {
-                                        $pageFields[]['text'] = array(
+                                        $pageFields[]['text'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Lorem::word(),
-                                        );
+                                        ];
                                     }
                                 }
 
-                                $pages[] = array(
+                                $pages[] = [
                                     'name' => $className,
                                     'section' => $sectionInfo[$ppConfigFilename]['context'],
                                     'template' => $sectionInfo[$ppConfigFilename]['pagetempates'][$ptConfigFilename],
                                     'fields' => $pageFields,
-                                );
+                                ];
                             }
                         }
                     }
@@ -532,11 +532,11 @@ class PagePartGenerator extends KunstmaanGenerator
             }
         }
 
-        $params = array(
+        $params = [
             'name' => $this->entity,
             'pages' => $pages,
             'fields' => $this->fields,
-        );
+        ];
         $this->renderFile(
             '/Features/PagePart.feature',
             $this->bundle->getPath() . '/Features/Admin' . $this->entity . '.feature',

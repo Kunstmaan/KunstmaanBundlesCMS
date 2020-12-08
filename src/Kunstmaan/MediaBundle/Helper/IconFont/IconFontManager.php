@@ -10,7 +10,7 @@ class IconFontManager
     /**
      * @var IconFontLoaderInterface[]
      */
-    protected $loaders = array();
+    protected $loaders = [];
 
     /**
      * @var IconFontLoaderInterface
@@ -18,17 +18,13 @@ class IconFontManager
     protected $defaultLoader;
 
     /**
-     * @param IconFontLoaderInterface $loader
-     * @param string                  $serviceId
+     * @param string $serviceId
      */
     public function addLoader(IconFontLoaderInterface $loader, $serviceId)
     {
         $this->loaders[$serviceId] = $loader;
     }
 
-    /**
-     * @param IconFontLoaderInterface $loader
-     */
     public function setDefaultLoader(IconFontLoaderInterface $loader)
     {
         $this->defaultLoader = $loader;

@@ -21,8 +21,6 @@ class MaxNumberByIpEventListener
     protected $maxNumber;
 
     /**
-     * Constructor
-     *
      * @param RepositoryResolver $repositoryResolver entity manager
      * @param int                $maxNumber          max number
      */

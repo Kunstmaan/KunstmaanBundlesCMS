@@ -14,10 +14,6 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
 
     private $presets = [];
 
-    /**
-     * @param KernelInterface $kernel
-     * @param array           $presets
-     */
     public function __construct(KernelInterface $kernel, array $presets = [])
     {
         $this->kernel = $kernel;
@@ -123,7 +119,7 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
                 throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
             }
             list($namespace, $name) = $nameParts;
-            $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
+            $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pagetemplates/' . $name . '.yml');
 
             return Yaml::parse(file_get_contents($path));
         }

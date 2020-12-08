@@ -48,7 +48,7 @@ class FormWidget implements FormWidgetInterface
      * @param array $types The types
      * @param array $data  The data attached to the types
      */
-    public function __construct(array $types = array(), array $data = array(), array $options = array())
+    public function __construct(array $types = [], array $data = [], array $options = [])
     {
         $this->types = $types;
         $this->data = $data;
@@ -72,16 +72,10 @@ class FormWidget implements FormWidgetInterface
         $builder->setData($data);
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
     }
 
-    /**
-     * @param EntityManager $em
-     */
     public function persist(EntityManager $em)
     {
         foreach ($this->data as $item) {
@@ -90,13 +84,11 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
     {
-        $formViews = array();
+        $formViews = [];
         foreach ($this->types as $name => $type) {
             $formViews[] = $formView[$name];
         }
@@ -160,7 +152,7 @@ class FormWidget implements FormWidgetInterface
      *
      * @return FormWidget
      */
-    public function addType($name, $type, $data = null, $options = array())
+    public function addType($name, $type, $data = null, $options = [])
     {
         $this->types[$name] = $type;
         $this->data[$name] = $data;
@@ -186,13 +178,11 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)
     {
-        return array();
+        return [];
     }
 
     /**

@@ -730,9 +730,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a video file record in the database.
      *
-     * @param $name
-     * @param $code
-     * @param $folder
      * @return Media
      */
     private function createVideoFile($name, $code, $folder)

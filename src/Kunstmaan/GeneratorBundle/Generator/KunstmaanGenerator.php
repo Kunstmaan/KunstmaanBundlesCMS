@@ -21,7 +21,7 @@ use Twig\Lexer;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * Class that contains all common generator logic.
+ * Contains all common generator logic.
  */
 class KunstmaanGenerator extends Generator
 {
@@ -70,7 +70,7 @@ class KunstmaanGenerator extends Generator
         $this->assistant = $assistant;
         $this->container = $container;
 
-        $this->setSkeletonDirs(array($this->skeletonDir, GeneratorUtils::getFullSkeletonPath('/common')));
+        $this->setSkeletonDirs([$this->skeletonDir, GeneratorUtils::getFullSkeletonPath('/common')]);
     }
 
     /**
@@ -88,13 +88,12 @@ class KunstmaanGenerator extends Generator
     /**
      * Generate the entity PHP code.
      *
-     * @param BundleInterface $bundle
-     * @param string          $name
-     * @param array           $fields
-     * @param string          $namePrefix
-     * @param string          $dbPrefix
-     * @param string|null     $extendClass
-     * @param bool            $withRepository
+     * @param string      $name
+     * @param array       $fields
+     * @param string      $namePrefix
+     * @param string      $dbPrefix
+     * @param string|null $extendClass
+     * @param bool        $withRepository
      *
      * @return array
      *
@@ -113,7 +112,7 @@ class KunstmaanGenerator extends Generator
         $config = $this->registry->getManager(null)->getConfiguration();
         $config->setEntityNamespaces(
             array_merge(
-                array($bundle->getName() => $bundle->getNamespace() . '\\Entity' . ($namePrefix ? '\\' . $namePrefix : '')),
+                [$bundle->getName() => $bundle->getNamespace() . '\\Entity' . ($namePrefix ? '\\' . $namePrefix : '')],
                 $config->getEntityNamespaces()
             )
         );
@@ -132,8 +131,8 @@ class KunstmaanGenerator extends Generator
                 $this->getSymfony4RepositoryGenerator()->writeEntityRepositoryClass($entityClass, $repositoryClass, $bundle->getPath());
             } else {
                 $entityClass = preg_replace('/\\\\Entity\\\\/', '\\Repository\\', $entityClass, 1);
-                $class->customRepositoryClassName = $entityClass.'Repository';
-                $path = $bundle->getPath().str_repeat('/..', substr_count(get_class($bundle), '\\'));
+                $class->customRepositoryClassName = $entityClass . 'Repository';
+                $path = $bundle->getPath() . str_repeat('/..', substr_count(get_class($bundle), '\\'));
                 $this->getRepositoryGenerator()->writeEntityRepositoryClass($class->customRepositoryClassName, $path);
             }
         }
@@ -152,13 +151,13 @@ class KunstmaanGenerator extends Generator
             }
         }
         $class->setPrimaryTable(
-            array(
+            [
                 'name' => strtolower($dbPrefix) . Inflector::tableize(Inflector::pluralize($name)),
-            )
+            ]
         );
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);
 
-        return array($entityCode, $entityPath);
+        return [$entityCode, $entityPath];
     }
 
     /**
@@ -190,7 +189,6 @@ class KunstmaanGenerator extends Generator
      * @param        $bundle
      * @param        $entityName
      * @param        $entityPrefix
-     * @param array  $fields
      * @param string $extendClass
      */
     protected function generateEntityAdminType(
@@ -208,7 +206,7 @@ class KunstmaanGenerator extends Generator
                 strtolower($bundle->getNamespace())
             ) . '_' . strtolower($entityName) . 'type';
 
-        $params = array(
+        $params = [
             'className' => $className,
             'name' => $name,
             'namespace' => $bundle->getNamespace(),
@@ -216,7 +214,7 @@ class KunstmaanGenerator extends Generator
             'fields' => $fields,
             'entity_prefix' => $entityPrefix,
             'extend_class' => $extendClass,
-        );
+        ];
         $this->renderFile('/Form/EntityAdminType.php', $savePath, $params);
     }
 
@@ -238,12 +236,12 @@ class KunstmaanGenerator extends Generator
 
         // Only copy templates over when the folder does not exist yet...
         if (!$this->filesystem->exists($dirPath)) {
-            $files = array(
+            $files = [
                 'default-one-column.yml',
                 'default-two-column-left.yml',
                 'default-two-column-right.yml',
                 'default-three-column.yml',
-            );
+            ];
             foreach ($files as $file) {
                 $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
                 GeneratorUtils::replace('~~~BUNDLE~~~', $bundle->getName(), $dirPath . $file);
@@ -256,12 +254,12 @@ class KunstmaanGenerator extends Generator
         $skeletonDir = sprintf('%s/Resources/views/Pages/Common/', GeneratorUtils::getFullSkeletonPath('/common'));
 
         if (!$this->filesystem->exists($dirPath)) {
-            $files = array(
+            $files = [
                 'one-column-pagetemplate.html.twig',
                 'two-column-left-pagetemplate.html.twig',
                 'two-column-right-pagetemplate.html.twig',
                 'three-column-pagetemplate.html.twig',
-            );
+            ];
             foreach ($files as $file) {
                 $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
             }
@@ -272,7 +270,7 @@ class KunstmaanGenerator extends Generator
 
         $twigFile = $this->isSymfony4() ?
             $twigFile = "{% extends 'Layout/layout.html.twig' %}\n" :
-            $twigFile = "{% extends '".$bundle->getName().":Layout:layout.html.twig' %}\n"
+            $twigFile = "{% extends '" . $bundle->getName() . ":Layout:layout.html.twig' %}\n"
         ;
 
         if (strpos($contents, '{% extends ') === false) {
@@ -301,7 +299,7 @@ class KunstmaanGenerator extends Generator
 
         // Only copy when folder does not exist yet
         if (!$this->filesystem->exists($dirPath)) {
-            $files = array('footer.yml', 'main.yml', 'left-sidebar.yml', 'right-sidebar.yml');
+            $files = ['footer.yml', 'main.yml', 'left-sidebar.yml', 'right-sidebar.yml'];
             foreach ($files as $file) {
                 $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
             }
@@ -323,7 +321,7 @@ class KunstmaanGenerator extends Generator
         $sourceDir = rtrim($sourceDir, '/') . '/';
         $targetDir = rtrim($targetDir, '/') . '/';
 
-        $this->setSkeletonDirs(array($sourceDir));
+        $this->setSkeletonDirs([$sourceDir]);
 
         $finder = new Finder();
         $finder->files()->in($sourceDir);
@@ -366,7 +364,7 @@ class KunstmaanGenerator extends Generator
             $targetFilename = $filename;
         }
 
-        $this->setSkeletonDirs(array($sourceDir));
+        $this->setSkeletonDirs([$sourceDir]);
 
         if (is_file($sourceDir . $filename)) {
             // Check that we are allowed the overwrite the file if it already exists
@@ -413,7 +411,7 @@ class KunstmaanGenerator extends Generator
         $sourceDir = rtrim($sourceDir, '/') . '/';
         $targetDir = rtrim($targetDir, '/') . '/';
 
-        $this->filesystem->mirror($sourceDir, $targetDir, null, array('override' => $override));
+        $this->filesystem->mirror($sourceDir, $targetDir, null, ['override' => $override]);
     }
 
     /**
@@ -443,7 +441,6 @@ class KunstmaanGenerator extends Generator
      * Render a twig file with custom twig tags.
      *
      * @param string $template
-     * @param array  $parameters
      * @param string $sourceDir
      *
      * @return string
@@ -451,21 +448,21 @@ class KunstmaanGenerator extends Generator
     public function renderTwig($template, array $parameters, $sourceDir)
     {
         $twig = new Environment(
-            new FilesystemLoader(array($sourceDir)), array(
+            new FilesystemLoader([$sourceDir]), [
                 'debug' => true,
                 'cache' => false,
                 'strict_variables' => true,
                 'autoescape' => false,
-            )
+            ]
         );
 
         // Ruby erb template syntax
         $lexer = new Lexer(
-            $twig, array(
-                'tag_comment' => array('<%#', '%>'),
-                'tag_block' => array('<%', '%>'),
-                'tag_variable' => array('<%=', '%>'),
-            )
+            $twig, [
+                'tag_comment' => ['<%#', '%>'],
+                'tag_block' => ['<%', '%>'],
+                'tag_variable' => ['<%=', '%>'],
+            ]
         );
 
         $twig->setLexer($lexer);
@@ -478,7 +475,6 @@ class KunstmaanGenerator extends Generator
      *
      * @param string $template
      * @param string $target
-     * @param array  $parameters
      * @param string $sourceDir
      *
      * @return int

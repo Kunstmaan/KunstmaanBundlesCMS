@@ -15,17 +15,11 @@ class PasswordResettingListener
      */
     private $userManager;
 
-    /**
-     * @param UserManager $userManager
-     */
     public function __construct(UserManager $userManager)
     {
         $this->userManager = $userManager;
     }
 
-    /**
-     * @param FilterUserResponseEvent $event
-     */
     public function onPasswordResettingSuccess(FilterUserResponseEvent $event)
     {
         $user = $event->getUser();

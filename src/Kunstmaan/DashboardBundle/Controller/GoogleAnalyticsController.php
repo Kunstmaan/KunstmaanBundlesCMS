@@ -6,10 +6,12 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -21,13 +23,11 @@ class GoogleAnalyticsController extends Controller
      * @Route("/", name="KunstmaanDashboardBundle_widget_googleanalytics")
      * @Template("@KunstmaanDashboard/GoogleAnalytics/widget.html.twig")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
     public function widgetAction(Request $request)
     {
-        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
         // if token not set
@@ -86,11 +86,9 @@ class GoogleAnalyticsController extends Controller
     /**
      * @Route("/setToken/", name="KunstmaanDashboardBundle_setToken")
      *
-     * @param Request $request
-     *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @return RedirectResponse
      */
     public function setTokenAction(Request $request)
     {
@@ -115,17 +113,15 @@ class GoogleAnalyticsController extends Controller
     /**
      * @Route("/config", name="KunstmaanDashboardBundle_Config")
      *
-     * @param Request $request
-     *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @return Response
      */
     public function configAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $params = array();
+        $params = [];
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
         if (null !== $request->request->get('accounts')) {
@@ -138,8 +134,8 @@ class GoogleAnalyticsController extends Controller
         $params['accountId'] = $config->getAccountId();
         $params['propertyId'] = 0;
         $params['profileId'] = 0;
-        $params['properties'] = array();
-        $params['profiles'] = array();
+        $params['properties'] = [];
+        $params['profiles'] = [];
 
         if ($params['accountId']) {
             $params['propertyId'] = $config->getPropertyId();

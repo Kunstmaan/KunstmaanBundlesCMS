@@ -39,7 +39,6 @@ class PagePartAdminTwigExtension extends AbstractExtension
      *
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
-     * @param Environment   $env
      * @param PagePartAdmin $ppAdmin      The pagepart admin to render
      * @param Form          $form         The form
      * @param array         $parameters   Additional variables passed to the template

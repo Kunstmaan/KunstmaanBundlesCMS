@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
@@ -9,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @final since 5.1
@@ -60,9 +60,6 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -85,13 +82,13 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
             }
 
             if (\count($overviews)) {
-                $result = "\t".'<fg=green>' . \count($overviews) . '</fg=green> overviews found:';
+                $result = "\t" . '<fg=green>' . \count($overviews) . '</fg=green> overviews found:';
                 $output->writeln($result);
                 foreach ($overviews as $overview) {
-                    $result = "\t".'(id: <fg=cyan>' .$overview->getId() . '</fg=cyan>)';
-                    $result .= "\t".'(config: <fg=cyan>' .$overview->getconfig()->getId() . '</fg=cyan>)';
+                    $result = "\t" . '(id: <fg=cyan>' . $overview->getId() . '</fg=cyan>)';
+                    $result .= "\t" . '(config: <fg=cyan>' . $overview->getconfig()->getId() . '</fg=cyan>)';
                     if ($overview->getSegment()) {
-                        $result .= "\t".'(segment: <fg=cyan>' .$overview->getSegment()->getId() . '</fg=cyan>)';
+                        $result .= "\t" . '(segment: <fg=cyan>' . $overview->getSegment()->getId() . '</fg=cyan>)';
                     } else {
                         $result .= "\t\t";
                     }
@@ -105,7 +102,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
 
             return 0;
         } catch (\Exception $e) {
-            $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
+            $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
             return 1;
         }

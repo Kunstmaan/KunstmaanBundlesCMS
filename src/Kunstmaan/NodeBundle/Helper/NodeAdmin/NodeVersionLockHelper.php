@@ -35,9 +35,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     }
 
     /**
-     * @param BaseUser        $user
-     * @param NodeTranslation $nodeTranslation
-     * @param bool            $isPublicNodeVersion
+     * @param bool $isPublicNodeVersion
      *
      * @return bool
      */
@@ -55,15 +53,14 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     }
 
     /**
-     * @param NodeTranslation $nodeTranslation
-     * @param BaseUser        $userToExclude
-     * @param bool            $isPublicNodeVersion
+     * @param BaseUser $userToExclude
+     * @param bool     $isPublicNodeVersion
      *
      * @return array
      */
     public function getUsersWithNodeVersionLock(NodeTranslation $nodeTranslation, $isPublicNodeVersion, BaseUser $userToExclude = null)
     {
-        return  array_reduce(
+        return array_reduce(
             $this->getNodeVersionLocksByNodeTranslation($nodeTranslation, $isPublicNodeVersion, $userToExclude),
             function ($return, NodeVersionLock $item) {
                 $return[] = $item->getOwner();
@@ -74,9 +71,6 @@ class NodeVersionLockHelper implements ContainerAwareInterface
         );
     }
 
-    /**
-     * @param NodeTranslation $nodeTranslation
-     */
     protected function removeExpiredLocks(NodeTranslation $nodeTranslation)
     {
         $threshold = $this->container->getParameter('kunstmaan_node.lock_threshold');
@@ -89,9 +83,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     /**
      * When editing the node, create a new node translation lock.
      *
-     * @param BaseUser        $user
-     * @param NodeTranslation $nodeTranslation
-     * @param bool            $isPublicVersion
+     * @param bool $isPublicVersion
      */
     protected function createNodeVersionLock(BaseUser $user, NodeTranslation $nodeTranslation, $isPublicVersion)
     {
@@ -115,9 +107,8 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     /**
      * When editing a node, check if there is a lock for this node translation.
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param bool            $isPublicVersion
-     * @param BaseUser        $userToExclude
+     * @param bool     $isPublicVersion
+     * @param BaseUser $userToExclude
      *
      * @return NodeVersionLock[]
      */

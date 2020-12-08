@@ -218,8 +218,7 @@ class UsersController extends BaseSettingsController
     /**
      * Delete a user
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"POST"})
      *

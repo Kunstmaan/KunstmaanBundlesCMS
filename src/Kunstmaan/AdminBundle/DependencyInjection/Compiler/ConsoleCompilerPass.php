@@ -7,14 +7,8 @@ use Kunstmaan\AdminBundle\EventListener\ConsoleExceptionSubscriber;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * Class ConsoleCompilerPass.
- */
 final class ConsoleCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         // if the old listener is no longer in use

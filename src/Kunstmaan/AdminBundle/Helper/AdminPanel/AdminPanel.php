@@ -7,12 +7,12 @@ class AdminPanel
     /**
      * @var AdminPanelAdaptorInterface[]
      */
-    private $adaptors = array();
+    private $adaptors = [];
 
     /**
      * @var AdminPanelAdaptorInterface[]
      */
-    private $sorted = array();
+    private $sorted = [];
 
     /**
      * @var AdminPanelActionInterface[]
@@ -21,8 +21,6 @@ class AdminPanel
 
     /**
      * Add admin panel adaptor
-     *
-     * @param AdminPanelAdaptorInterface $adaptor
      */
     public function addAdminPanelAdaptor(AdminPanelAdaptorInterface $adaptor, $priority = 0)
     {
@@ -36,7 +34,7 @@ class AdminPanel
     public function getAdminPanelActions()
     {
         if (!$this->actions) {
-            $this->actions = array();
+            $this->actions = [];
             $adaptors = $this->getAdaptors();
             foreach ($adaptors as $adaptor) {
                 $this->actions = array_merge($this->actions, $adaptor->getAdminPanelActions());
@@ -49,7 +47,7 @@ class AdminPanel
     /**
      * Get adaptors sorted by priority.
      *
-     * @return \Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelAdaptorInterface[]
+     * @return AdminPanelAdaptorInterface[]
      */
     private function getAdaptors()
     {
@@ -65,7 +63,7 @@ class AdminPanel
      */
     private function sortAdaptors()
     {
-        $this->sorted = array();
+        $this->sorted = [];
 
         if (isset($this->adaptors)) {
             krsort($this->adaptors);

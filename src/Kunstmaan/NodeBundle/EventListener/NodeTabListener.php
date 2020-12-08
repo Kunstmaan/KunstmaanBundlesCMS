@@ -20,9 +20,6 @@ class NodeTabListener
         }
     }
 
-    /**
-     * @param AdaptFormEvent $event
-     */
     public function adaptForm(AdaptFormEvent $event)
     {
         $page = $event->getPage();

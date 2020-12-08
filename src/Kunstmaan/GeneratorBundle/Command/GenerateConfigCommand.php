@@ -25,9 +25,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     /** @var bool */
     private $overwriteFosUser;
 
-    /**
-     * @param string $projectDir
-     */
     public function __construct(string $projectDir)
     {
         $this->projectDir = $projectDir;

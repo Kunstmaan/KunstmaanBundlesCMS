@@ -11,7 +11,6 @@ use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -20,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TranslatorController extends AdminListController
@@ -32,8 +32,6 @@ class TranslatorController extends AdminListController
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
      * @Template("@KunstmaanTranslator/Translator/list.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -62,10 +60,9 @@ class TranslatorController extends AdminListController
     }
 
     /**
-     * @param Request $request
-     * @param string  $keyword
-     * @param string  $domain
-     * @param string  $locale
+     * @param string $keyword
+     * @param string $domain
+     * @param string $locale
      *
      * @return array|RedirectResponse
      *
@@ -130,7 +127,6 @@ class TranslatorController extends AdminListController
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit", methods={"GET", "POST"})
      * @Template("@KunstmaanTranslator/Translator/editTranslation.html.twig")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param $id
      *
      * @throws \InvalidArgumentException
@@ -198,8 +194,6 @@ class TranslatorController extends AdminListController
     /**
      * @Route("upload", name="KunstmaanTranslatorBundle_settings_translations_upload", methods={"GET", "POST"})
      * @Template("@KunstmaanTranslator/Translator/addTranslation.html.twig")
-     *
-     * @param Request $request
      *
      * @return array
      */
@@ -314,8 +308,6 @@ class TranslatorController extends AdminListController
     }
 
     /**
-     * @param Request $request
-     *
      * @return JsonResponse|Response
      *
      * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit", methods={"POST"})

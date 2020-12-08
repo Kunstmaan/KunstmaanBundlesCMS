@@ -4,13 +4,13 @@ namespace Kunstmaan\LeadGenerationBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
-use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXScrollPercentRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\MaxXTimesRule;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\RecurringEveryXTimeRule;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlWhitelistRule;
-use Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule;
 
 class PopupManager
 {
@@ -24,9 +24,6 @@ class PopupManager
      */
     private $em;
 
-    /**
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -53,7 +50,7 @@ class PopupManager
      */
     public function getUniqueJsIncludes()
     {
-        $includes = array();
+        $includes = [];
         foreach ($this->getPopups() as $popup) {
             foreach ($popup->getRules() as $rule) {
                 $includes[] = $rule->getJsFilePath();
@@ -64,8 +61,6 @@ class PopupManager
     }
 
     /**
-     * @param AbstractPopup $popup
-     *
      * @return array
      */
     public function getAvailableRules(AbstractPopup $popup)
@@ -74,7 +69,7 @@ class PopupManager
             return $popup->getAvailableRules();
         }
 
-        return array(
+        return [
             AfterXSecondsRule::class,
             AfterXScrollPercentRule::class,
             MaxXTimesRule::class,
@@ -82,6 +77,6 @@ class PopupManager
             UrlBlacklistRule::class,
             UrlWhitelistRule::class,
             OnExitIntentRule::class,
-        );
+        ];
     }
 }

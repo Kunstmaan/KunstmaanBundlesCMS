@@ -89,14 +89,14 @@ class ChoicePagePart extends AbstractFormPagePart
         $choices = array_map('trim', $choices);
 
         $cfsf = new ChoiceFormSubmissionField();
-        $cfsf->setFieldName('field_'.$this->getUniqueId());
+        $cfsf->setFieldName('field_' . $this->getUniqueId());
         $cfsf->setLabel($this->getLabel());
         $cfsf->setChoices($choices);
         $cfsf->setRequired($this->required);
         $cfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_'.$this->getUniqueId()] = $cfsf;
+        $data['formwidget_' . $this->getUniqueId()] = $cfsf;
         $constraints = [];
         if ($this->getRequired()) {
             $options = [];
@@ -107,7 +107,7 @@ class ChoicePagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_'.$this->getUniqueId(),
+            'formwidget_' . $this->getUniqueId(),
             ChoiceFormSubmissionType::class,
             [
                 'label' => $this->getLabel(),

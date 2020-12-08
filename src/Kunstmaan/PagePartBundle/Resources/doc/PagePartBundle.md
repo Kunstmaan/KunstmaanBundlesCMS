@@ -180,9 +180,7 @@ public function getPageTemplates()
 ```PHP
 class HomepagePageTemplate extends PageTemplate
 {
-    /**
-     * constructor
-     */
+
     public function __construct()
     {
         $this->setName("Homepage")
@@ -194,9 +192,7 @@ class HomepagePageTemplate extends PageTemplate
 }
 class HomepageExtendedPageTemplate extends PageTemplate
 {
-    /**
-     * constructor
-     */
+
     public function __construct()
     {
         $this->setName("Homepage extended")
@@ -410,17 +406,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
@@ -451,11 +437,7 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
         ));
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
+
     public function getName()
     {
         return 'kunstmaan_websitebundle_contactpageparttype';
@@ -533,17 +515,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
@@ -566,11 +538,7 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
         ));
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
+
     public function getName()
     {
         return 'kunstmaan_websitebundle_contactinfotype';

@@ -15,20 +15,11 @@ class MenuAdaptor implements MenuAdaptorInterface
      */
     private $menuNames;
 
-    /**
-     * @param array $menuNames
-     */
     public function __construct(array $menuNames)
     {
         $this->menuNames = $menuNames;
     }
 
-    /**
-     * @param MenuBuilder $menu
-     * @param array       $children
-     * @param MenuItem    $parent
-     * @param Request     $request
-     */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if ((count($this->menuNames) > 0) && null !== $parent && 'KunstmaanAdminBundle_modules' === $parent->getRoute()) {

@@ -21,17 +21,11 @@ class NodeListener
      */
     private $em;
 
-    /**
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @param AdaptFormEvent $event
-     */
     public function adaptForm(AdaptFormEvent $event)
     {
         if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {

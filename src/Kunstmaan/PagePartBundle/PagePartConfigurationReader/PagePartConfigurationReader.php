@@ -23,15 +23,13 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
     }
 
     /**
-     * @param HasPagePartsInterface $page
-     *
      * @throws \Exception
      *
      * @return PagePartAdminConfiguratorInterface[]
      */
     public function getPagePartAdminConfigurators(HasPagePartsInterface $page)
     {
-        $pagePartAdminConfigurators = array();
+        $pagePartAdminConfigurators = [];
         foreach ($page->getPagePartAdminConfigurations() as $value) {
             if ($value instanceof PagePartAdminConfiguratorInterface) {
                 $pagePartAdminConfigurators[] = $value;
@@ -49,15 +47,13 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
     }
 
     /**
-     * @param HasPagePartsInterface $page
-     *
      * @throws \Exception
      *
      * @return string[]
      */
     public function getPagePartContexts(HasPagePartsInterface $page)
     {
-        $result = array();
+        $result = [];
 
         $pagePartAdminConfigurators = $this->getPagePartAdminConfigurators($page);
         foreach ($pagePartAdminConfigurators as $pagePartAdminConfigurator) {

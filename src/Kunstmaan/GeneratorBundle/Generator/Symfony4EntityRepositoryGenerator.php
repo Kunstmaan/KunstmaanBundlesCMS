@@ -67,8 +67,6 @@ class <repository> extends ServiceEntityRepository
     }
 
     /**
-     * @param string $repositoryClassName
-     *
      * @return bool|string
      */
     private function generateEntityRepositoryNamespace(string $repositoryClassName)
@@ -77,8 +75,6 @@ class <repository> extends ServiceEntityRepository
     }
 
     /**
-     * @param string $entityClassName
-     *
      * @return bool|string
      */
     private function generateEntityName(string $entityClassName)

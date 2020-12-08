@@ -6,9 +6,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-/**
- * Class PasswordRestrictionsValidator
- */
 class PasswordRestrictionsValidator extends ConstraintValidator
 {
     /**
@@ -37,8 +34,6 @@ class PasswordRestrictionsValidator extends ConstraintValidator
     private $maxLength;
 
     /**
-     * PasswordRestrictionsValidator constructor.
-     *
      * @param int $minDigits
      * @param int $minUpperCase
      * @param int $minSpecialCharacters

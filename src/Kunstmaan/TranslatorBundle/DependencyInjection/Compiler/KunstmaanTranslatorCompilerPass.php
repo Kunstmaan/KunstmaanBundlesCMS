@@ -27,7 +27,7 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
             $definition = $container->getDefinition('kunstmaan_translator.service.importer.importer');
             foreach ($loaders as $id => $formats) {
                 foreach ($formats as $format) {
-                    $definition->addMethodCall('addLoader', array($format, $loaderRefs[$id]));
+                    $definition->addMethodCall('addLoader', [$format, $loaderRefs[$id]]);
                 }
             }
         }
@@ -48,7 +48,7 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
         }
 
         if ($container->hasDefinition('kunstmaan_translator.service.exporter.exporter')) {
-            $container->getDefinition('kunstmaan_translator.service.exporter.exporter')->addMethodCall('setExporters', array($exporterRefs));
+            $container->getDefinition('kunstmaan_translator.service.exporter.exporter')->addMethodCall('setExporters', [$exporterRefs]);
         }
 
         if ($container->has('translator.data_collector')) {

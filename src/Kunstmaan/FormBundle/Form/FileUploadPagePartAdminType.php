@@ -20,18 +20,18 @@ class FileUploadPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', TextType::class, array(
+            ->add('label', TextType::class, [
                 'required' => true,
                 'label' => 'kuma_form.form.file_upload_page_part.label.label',
-            ))
-            ->add('required', CheckboxType::class, array(
+            ])
+            ->add('required', CheckboxType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.file_upload_page_part.required.label',
-            ))
-            ->add('errormessage_required', TextType::class, array(
+            ])
+            ->add('errormessage_required', TextType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.file_upload_page_part.errormessage_required.label',
-            ))
+            ])
         ;
     }
 
@@ -43,11 +43,8 @@ class FileUploadPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_fileuploadpageparttype';
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart'));
+        $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart']);
     }
 }

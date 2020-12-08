@@ -25,7 +25,6 @@ class FormMailer implements FormMailerInterface
     private $requestStack;
 
     /**
-     * @param Swift_Mailer                    $mailer
      * @param EngineInterface                 $twig
      * @param ContainerInterface|RequestStack $requestStack
      */
@@ -66,7 +65,7 @@ class FormMailer implements FormMailerInterface
                     '@KunstmaanForm/Mailer/mail.html.twig',
                     [
                         'submission' => $submission,
-                        'host' => $request->getScheme().'://'.$request->getHttpHost(),
+                        'host' => $request->getScheme() . '://' . $request->getHttpHost(),
                     ]
                 ),
                 'text/html'

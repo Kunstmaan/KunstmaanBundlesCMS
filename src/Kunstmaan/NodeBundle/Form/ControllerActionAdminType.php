@@ -13,23 +13,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ControllerActionAdminType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', TextType::class, [
             'label' => 'kuma_node.form.controller_action.title.label',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\NodeBundle\Entity\AbstractControllerAction',
-        ));
+        ]);
     }
 
     /**

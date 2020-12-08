@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Filter
- */
 class Filter
 {
     /**
@@ -28,7 +25,7 @@ class Filter
     /**
      * @var array
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * @param string $columnName       The column name
@@ -42,9 +39,6 @@ class Filter
         $this->uniqueId = $uniqueId;
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         /* @var FilterTypeInterface $type */

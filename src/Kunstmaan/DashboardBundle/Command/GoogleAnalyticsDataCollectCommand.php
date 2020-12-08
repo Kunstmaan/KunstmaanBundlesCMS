@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
@@ -9,12 +10,11 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 
 /**
  * @final since 5.1
@@ -54,9 +54,6 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $this->serviceHelper = $serviceHelper;
     }
 
-    /**
-     * Configures the current command.
-     */
     protected function configure()
     {
         $this
@@ -86,9 +83,6 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -139,7 +133,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
             // update the overviews
             $this->updateData($overviews);
-            $result = '<fg=green>Google Analytics data updated with <fg=red>'.$this->errors.'</fg=red> error';
+            $result = '<fg=green>Google Analytics data updated with <fg=red>' . $this->errors . '</fg=red> error';
             $result .= $this->errors != 1 ? 's</fg=green>' : '</fg=green>';
             $this->output->writeln($result); // done
 
@@ -305,7 +299,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             } catch (\Google_ServiceException $e) {
                 $error = explode(')', $e->getMessage());
                 $error = $error[1];
-                $this->output->writeln("\t" . '<fg=red>Invalid segment: </fg=red>' .$error);
+                $this->output->writeln("\t" . '<fg=red>Invalid segment: </fg=red>' . $error);
                 ++$this->errors;
             }
         }

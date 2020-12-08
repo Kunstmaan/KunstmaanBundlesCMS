@@ -40,9 +40,8 @@ class MultiDomainAdminTwigExtension extends AbstractExtension
     /**
      * Render multidomain switcher widget.
      *
-     * @param Environment $env
-     * @param string      $route      The route
-     * @param array       $parameters The route parameters
+     * @param string $route      The route
+     * @param array  $parameters The route parameters
      *
      * @return string
      */

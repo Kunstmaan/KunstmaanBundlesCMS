@@ -14,12 +14,12 @@ class MenuBuilder
     /**
      * @var MenuAdaptorInterface[]
      */
-    private $adaptors = array();
+    private $adaptors = [];
 
     /**
      * @var MenuAdaptorInterface[]
      */
-    private $sorted = array();
+    private $sorted = [];
 
     /**
      * @var TopMenuItem[]
@@ -58,8 +58,6 @@ class MenuBuilder
 
     /**
      * Add menu adaptor
-     *
-     * @param MenuAdaptorInterface $adaptor
      */
     public function addAdaptMenu(MenuAdaptorInterface $adaptor, $priority = 0)
     {
@@ -104,7 +102,7 @@ class MenuBuilder
      */
     public function getBreadCrumb()
     {
-        $result = array();
+        $result = [];
         $current = $this->getCurrent();
         while (!\is_null($current)) {
             array_unshift($result, $current);
@@ -142,7 +140,7 @@ class MenuBuilder
         if (\is_null($this->topMenuItems)) {
             /* @var $request Request */
             $request = $this->requestStack->getCurrentRequest();
-            $this->topMenuItems = array();
+            $this->topMenuItems = [];
             foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
             }
@@ -165,7 +163,7 @@ class MenuBuilder
         }
         /* @var $request Request */
         $request = $this->requestStack->getCurrentRequest();
-        $result = array();
+        $result = [];
         foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }
@@ -187,7 +185,7 @@ class MenuBuilder
      */
     private function sortAdaptors()
     {
-        $this->sorted = array();
+        $this->sorted = [];
 
         if (isset($this->adaptors)) {
             krsort($this->adaptors);

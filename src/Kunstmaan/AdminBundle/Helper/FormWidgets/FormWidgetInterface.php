@@ -17,9 +17,6 @@ interface FormWidgetInterface
      */
     public function buildForm(FormBuilderInterface $builder);
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request);
 
     /**
@@ -28,8 +25,6 @@ interface FormWidgetInterface
     public function persist(EntityManager $em);
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView);
@@ -52,8 +47,6 @@ interface FormWidgetInterface
     public function getTemplate();
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request);
