@@ -109,7 +109,7 @@ class EntityVersionLockService
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
 
-        return  array_reduce(
+        return array_reduce(
             $this->getEntityVersionLocksByLockableEntity($lockable, $userToExclude),
             function ($return, EntityVersionLock $item) {
                 $return[] = $item->getOwner();

@@ -28,7 +28,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
      */
     public function getUniqueId()
     {
-        return  str_replace('\\', '', ClassLookup::getClass($this)) . $this->id; //TODO
+        return str_replace('\\', '', ClassLookup::getClass($this)) . $this->id; //TODO
     }
 
     /**

@@ -12,10 +12,6 @@ class AbstractEntityTest extends TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $this->object = $this->getMockForAbstractClass('Kunstmaan\AdminBundle\Entity\AbstractEntity');
@@ -27,7 +23,7 @@ class AbstractEntityTest extends TestCase
         $this->assertEquals(5, $this->object->getId());
     }
 
-    public function test__toString()
+    public function testToString()
     {
         $this->object->setId(8);
         $this->assertEquals('8', $this->object->__toString());

@@ -21,7 +21,7 @@ class FilterTest extends TestCase
         $this->object = new Filter('columnName', $filterDef, 'string');
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         $filterDef = ['type' => new StringFilterType('string', 'b'), 'options' => [], 'filtername' => 'filterName'];
         $object = new Filter('columnName', $filterDef, 'string');

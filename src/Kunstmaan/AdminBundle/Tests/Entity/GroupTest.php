@@ -14,10 +14,6 @@ class GroupTest extends TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $this->object = new Group('group');
@@ -28,7 +24,7 @@ class GroupTest extends TestCase
         $this->assertEquals(null, $this->object->getId());
     }
 
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('group', $this->object->__toString());
     }

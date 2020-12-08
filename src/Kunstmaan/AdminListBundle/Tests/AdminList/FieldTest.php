@@ -21,7 +21,7 @@ class FieldTest extends TestCase
         $this->object = new Field('name', 'header', true, 'template.html.twig', $alias);
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         $object = new Field('name', 'header', true, 'template.html.twig');
         $this->assertEquals('name', $object->getName());

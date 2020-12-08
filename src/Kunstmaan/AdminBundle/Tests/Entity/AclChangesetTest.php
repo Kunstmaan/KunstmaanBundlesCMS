@@ -13,16 +13,12 @@ class AclChangesetTest extends TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $this->object = new AclChangeset();
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         $object = new AclChangeset();
         $this->assertEquals(AclChangeset::STATUS_NEW, $object->getStatus());

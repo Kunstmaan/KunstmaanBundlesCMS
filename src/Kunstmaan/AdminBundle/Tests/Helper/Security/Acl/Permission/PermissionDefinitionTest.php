@@ -12,10 +12,6 @@ class PermissionDefinitionTest extends TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $this->object = new PermissionDefinition(['VIEW']);
@@ -24,7 +20,7 @@ class PermissionDefinitionTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function test__constructThrowsExceptionWithInvalidParameters()
+    public function testConstructThrowsExceptionWithInvalidParameters()
     {
         new PermissionDefinition([], null, null);
     }
