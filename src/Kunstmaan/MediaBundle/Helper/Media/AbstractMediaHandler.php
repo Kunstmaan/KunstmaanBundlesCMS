@@ -31,7 +31,7 @@ abstract class AbstractMediaHandler
      */
     public function getFormTypeOptions()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -55,30 +55,16 @@ abstract class AbstractMediaHandler
     abstract public function canHandle($media);
 
     /**
-     * @param Media $media
-     *
      * @return mixed
      */
     abstract public function getFormHelper(Media $media);
 
-    /**
-     * @param Media $media
-     */
     abstract public function prepareMedia(Media $media);
 
-    /**
-     * @param Media $media
-     */
     abstract public function saveMedia(Media $media);
 
-    /**
-     * @param Media $media
-     */
     abstract public function updateMedia(Media $media);
 
-    /**
-     * @param Media $media
-     */
     abstract public function removeMedia(Media $media);
 
     /**

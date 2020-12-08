@@ -18,99 +18,95 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SocialType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // OPEN GRAPH
         $builder->add('id', HiddenType::class)
-            ->add('ogTitle', TextType::class, array(
+            ->add('ogTitle', TextType::class, [
                 'label' => 'seo.form.og.title',
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'info_text' => "Open Graph (OG) is a standard way of representing online objects. It's used, as example, by Facebook or other social media to build share links.",
-                ),
-            ))
-            ->add('ogDescription', TextareaType::class, array(
+                ],
+            ])
+            ->add('ogDescription', TextareaType::class, [
                 'label' => 'seo.form.og.description',
                 'required' => false,
-            ))
-            ->add('ogUrl', URLChooserType::class, array(
+            ])
+            ->add('ogUrl', URLChooserType::class, [
                 'label' => 'seo.form.og.url',
                 'required' => false,
                 'link_types' => [
                     URLChooserType::INTERNAL,
                     URLChooserType::EXTERNAL,
                 ],
-            ))
-            ->add('ogType', ChoiceType::class, array(
+            ])
+            ->add('ogType', ChoiceType::class, [
                 'label' => 'seo.form.og.type',
                 'required' => false,
-                'choices' => array(
+                'choices' => [
                     'Website' => 'website',
                     'Article' => 'article',
                     'Profile' => 'profile',
                     'Book' => 'book',
                     'Video' => 'video.other',
                     'Music' => 'music.song',
-                ),
-            ))
-            ->add('ogImage', MediaType::class, array(
+                ],
+            ])
+            ->add('ogImage', MediaType::class, [
                 'label' => 'seo.form.og.image',
                 'required' => false,
-            ));
+            ]);
         $builder
             ->add('ogArticleAuthor', TextType::class,
-                array(
+                [
                     'label' => 'seo.form.og.article.author',
                     'required' => false,
-                ))
+                ])
             ->add('ogArticlePublisher', TextType::class,
-                array(
+                [
                     'label' => 'seo.form.og.article.publisher',
                     'required' => false,
-                ))
+                ])
             ->add('ogArticleSection', TextType::class,
-                array(
+                [
                     'label' => 'seo.form.og.article.section',
                     'required' => false,
-                ));
+                ]);
 
         // TWITTER
-        $builder->add('twitterTitle', TextType::class, array(
+        $builder->add('twitterTitle', TextType::class, [
             'label' => 'seo.form.twitter.title',
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'info_text' => 'seo.form.twitter.title_info_text',
-            ),
-        ))
-            ->add('twitterDescription', TextareaType::class, array(
+            ],
+        ])
+            ->add('twitterDescription', TextareaType::class, [
                 'label' => 'seo.form.twitter.description',
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'info_text' => 'seo.form.twitter.description_info_text',
-                ),
-            ))
-            ->add('twitterSite', TextType::class, array(
+                ],
+            ])
+            ->add('twitterSite', TextType::class, [
                 'label' => 'seo.form.twitter.sitehandle',
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'info_text' => 'seo.form.twitter.sitehandle_info_text',
-                ),
-            ))
-            ->add('twitterCreator', TextType::class, array(
+                ],
+            ])
+            ->add('twitterCreator', TextType::class, [
                 'label' => 'seo.form.twitter.creatorhandle',
                 'required' => false,
-                'attr' => array(
+                'attr' => [
                     'info_text' => 'Twitter handle of your page publisher.',
-                ),
-            ))
-            ->add('twitterImage', MediaType::class, array(
+                ],
+            ])
+            ->add('twitterImage', MediaType::class, [
                 'label' => 'seo.form.twitter.image',
                 'required' => false,
-            ));
+            ]);
     }
 
     /**
@@ -123,8 +119,8 @@ class SocialType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\SeoBundle\Entity\Seo',
-        ));
+        ]);
     }
 }

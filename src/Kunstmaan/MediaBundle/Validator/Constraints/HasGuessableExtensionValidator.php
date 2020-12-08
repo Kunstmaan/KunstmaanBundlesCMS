@@ -13,9 +13,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
-/**
- * Class hasGuessableExtensionValidator
- */
 class HasGuessableExtensionValidator extends ConstraintValidator
 {
     /**
@@ -41,9 +38,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     }
 
     /**
-     * @param            $value
-     * @param Constraint $constraint
-     *
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
      */
@@ -90,8 +84,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
 
     /**
      * @deprecated This method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0.
-     *
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactory
      */
     public function setExtensionGuesser(ExtensionGuesserFactoryInterface $extensionGuesserFactory)
     {
@@ -102,8 +94,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
 
     /**
      * @deprecated This method is deprecated since KunstmaanMediaBundle 5.7 and will be removed in KunstmaanMediaBundle 6.0.
-     *
-     * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
      */
     public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {

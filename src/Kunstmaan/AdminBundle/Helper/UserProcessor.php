@@ -26,7 +26,7 @@ class UserProcessor
     /**
      * @var array
      */
-    private $record = array();
+    private $record = [];
 
     private $tokenStorage;
 
@@ -48,8 +48,6 @@ class UserProcessor
     }
 
     /**
-     * @param array $record
-     *
      * @return array
      */
     public function processRecord(array $record)

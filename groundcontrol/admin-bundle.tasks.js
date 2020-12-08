@@ -55,7 +55,7 @@ adminBundle.tasks.scripts = createScriptsTask({
         './node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         './node_modules/cargobay/src/toggle/js/jquery.toggle.js',
         './node_modules/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js',
-        './node_modules/sortablejs/dist/sortable.umd.js',
+        './node_modules/sortablejs/Sortable.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
         './node_modules/jquery.typewatch/jquery.typewatch.js',
         './node_modules/ckeditor/ckeditor.js',

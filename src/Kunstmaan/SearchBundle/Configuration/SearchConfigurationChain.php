@@ -14,14 +14,13 @@ class SearchConfigurationChain
 
     public function __construct()
     {
-        $this->searchConfigurations = array();
+        $this->searchConfigurations = [];
     }
 
     /**
      * Add a SearchConfiguration to the chain
      *
-     * @param SearchConfigurationInterface $searchConfiguration
-     * @param string                       $alias
+     * @param string $alias
      */
     public function addConfiguration(SearchConfigurationInterface $searchConfiguration, $alias)
     {

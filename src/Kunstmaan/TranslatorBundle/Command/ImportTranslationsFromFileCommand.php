@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * Class ImportTranslationsFromFileCommand
- */
 final class ImportTranslationsFromFileCommand extends Command
 {
     /** @var Importer */
@@ -27,11 +24,8 @@ final class ImportTranslationsFromFileCommand extends Command
     private $locales;
 
     /**
-     * ImportTranslationsFromFileCommand constructor.
-     *
-     * @param Importer   $importer
      * @param Translator $translator
-     * @param            $locales
+     * @param array      $locales
      */
     public function __construct(Importer $importer, TranslatorInterface $translator, $locales)
     {
@@ -55,9 +49,6 @@ final class ImportTranslationsFromFileCommand extends Command
 
     /**
      * @throws LogicException
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

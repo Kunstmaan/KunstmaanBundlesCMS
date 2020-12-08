@@ -47,7 +47,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->demosite = $demosite;
         $this->browserSyncUrl = $browserSyncUrl;
 
-        $this->shortBundleName = '@'.str_replace('Bundle', '', $bundle->getName());
+        $this->shortBundleName = '@' . str_replace('Bundle', '', $bundle->getName());
 
         $this->generateGroundcontrolFiles();
         $this->generateAssets();
@@ -62,56 +62,56 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $this->skeletonDir . '/groundcontrol/bin/',
             $this->rootDir . '/groundcontrol/',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl, 'isV4' => $this->isSymfony4()),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl, 'isV4' => $this->isSymfony4()],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             '.babelrc',
-            array('bundle' => $this->bundle),
+            ['bundle' => $this->bundle],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             '.eslintrc',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             '.nvmrc',
-            array('bundle' => $this->bundle),
+            ['bundle' => $this->bundle],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             '.stylelintrc',
-            array('bundle' => $this->bundle),
+            ['bundle' => $this->bundle],
             true
         );
         $this->renderExecutableFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             'buildUI.sh',
-            array('bundle' => $this->bundle),
+            ['bundle' => $this->bundle],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             'gulpfile.babel.js',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'isV4' => $this->isSymfony4()),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'isV4' => $this->isSymfony4()],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             'package.json',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
         $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
@@ -129,13 +129,13 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $sourceDir . $relPath . '/js/',
             $this->getAssetsDir($this->bundle) . '/ui/js/',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
         $this->renderFiles(
             $sourceDir . $relPath . '/scss/',
             $this->getAssetsDir($this->bundle) . '/ui/scss/',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
 
@@ -219,7 +219,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $this->skeletonDir . $relPath,
             $this->getTemplateDir($this->bundle),
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'shortBundleName' => $this->shortBundleName, 'isV4' => $this->isSymfony4()),
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'shortBundleName' => $this->shortBundleName, 'isV4' => $this->isSymfony4()],
             true
         );
 

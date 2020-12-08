@@ -5,11 +5,11 @@ namespace Kunstmaan\PagePartBundle\Controller;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller for the pagepart administration
@@ -19,8 +19,6 @@ class PagePartAdminController extends Controller
     /**
      * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
      * @Template("@KunstmaanPagePart/PagePartAdminTwigExtension/pagepart.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

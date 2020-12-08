@@ -27,11 +27,8 @@ class ConfigTwigExtension extends AbstractExtension
     /**
      * @var array
      */
-    private $configs = array();
+    private $configs = [];
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em, $configuration)
     {
         $this->em = $em;
@@ -45,11 +42,11 @@ class ConfigTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
-                'get_config_by_internal_name', array($this, 'getConfigByInternalName')
+                'get_config_by_internal_name', [$this, 'getConfigByInternalName']
             ),
-        );
+        ];
     }
 
     /**
@@ -68,7 +65,7 @@ class ConfigTwigExtension extends AbstractExtension
 
             if ($entity->getInternalName() == $internalName) {
                 $repo = $this->em->getRepository($class);
-                $config = $repo->findOneBy(array());
+                $config = $repo->findOneBy([]);
 
                 $this->configs[$internalName] = $config;
 

@@ -12,14 +12,13 @@ class SearchProviderChain implements SearchProviderChainInterface
 
     public function __construct()
     {
-        $this->providers = array();
+        $this->providers = [];
     }
 
     /**
      * Add a SearchProvider to the chain
      *
-     * @param SearchProviderInterface $provider
-     * @param string                  $alias
+     * @param string $alias
      */
     public function addProvider(SearchProviderInterface $provider, $alias)
     {

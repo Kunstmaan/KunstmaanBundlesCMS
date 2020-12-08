@@ -23,9 +23,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      **/
     private $items;
 
-    /**
-     * Constructor
-     */
+
     public function __construct()
     {
         $this->items = new ArrayCollection();

@@ -5,41 +5,38 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * AdminListFilter
- */
 class FilterBuilder
 {
     /**
      * @var array
      */
-    private $filterDefinitions = array();
+    private $filterDefinitions = [];
 
     /**
      * @var Filter[]
      */
-    private $currentFilters = array();
+    private $currentFilters = [];
 
     /**
      * @var array
      */
-    private $currentParameters = array();
+    private $currentParameters = [];
 
     /**
-     * @param string              $columnName The column name
-     * @param FilterTypeInterface $type       The filter type
-     * @param string              $filterName The name of the filter
-     * @param array               $options    Options
+     * @param string                   $columnName The column name
+     * @param FilterTypeInterface|null $type       The filter type
+     * @param string|null              $filterName The name of the filter
+     * @param array                    $options    Options
      *
      * @return FilterBuilder
      */
-    public function add($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array())
+    public function add($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = [])
     {
-        $this->filterDefinitions[$columnName] = array(
+        $this->filterDefinitions[$columnName] = [
             'type' => $type,
             'options' => $options,
             'filtername' => $filterName,
-        );
+        ];
 
         return $this;
     }
@@ -90,9 +87,6 @@ class FilterBuilder
         return $this->filterDefinitions;
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $filterBuilderName = 'filter_' . $request->get('_route');

@@ -43,12 +43,12 @@ class FileUploadPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $ffsf = new FileFormSubmissionField();
-        $ffsf->setFieldName('field_'.$this->getUniqueId());
+        $ffsf->setFieldName('field_' . $this->getUniqueId());
         $ffsf->setLabel($this->getLabel());
         $ffsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_'.$this->getUniqueId()] = $ffsf;
+        $data['formwidget_' . $this->getUniqueId()] = $ffsf;
 
         $constraints = [];
         if ($this->getRequired()) {
@@ -60,7 +60,7 @@ class FileUploadPagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_'.$this->getUniqueId(),
+            'formwidget_' . $this->getUniqueId(),
             FileFormSubmissionType::class,
             [
                 'label' => $this->getLabel(),

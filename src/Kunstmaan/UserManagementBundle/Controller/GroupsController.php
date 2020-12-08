@@ -9,10 +9,10 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -40,9 +40,9 @@ class GroupsController extends BaseSettingsController
         $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
-        return array(
+        return [
             'adminlist' => $adminlist,
-        );
+        ];
     }
 
     /**
@@ -72,18 +72,18 @@ class GroupsController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->container->get('translator')->trans('kuma_user.group.add.flash.success', array(
+                    $this->container->get('translator')->trans('kuma_user.group.add.flash.success', [
                         '%groupname%' => $group->getName(),
-                    ))
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
             }
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -116,19 +116,19 @@ class GroupsController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->container->get('translator')->trans('kuma_user.group.edit.flash.success', array(
+                    $this->container->get('translator')->trans('kuma_user.group.edit.flash.success', [
                         '%groupname%' => $group->getName(),
-                    ))
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
             }
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'group' => $group,
-        );
+        ];
     }
 
     /**
@@ -155,9 +155,9 @@ class GroupsController extends BaseSettingsController
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->container->get('translator')->trans('kuma_user.group.delete.flash.success', array(
+                $this->container->get('translator')->trans('kuma_user.group.delete.flash.success', [
                     '%groupname%' => $group->getName(),
-                ))
+                ])
             );
         }
 

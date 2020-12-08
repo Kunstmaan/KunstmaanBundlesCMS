@@ -130,9 +130,6 @@ abstract class BaseUser implements UserInterface
      */
     protected $createdBy;
 
-    /**
-     * Construct a new user
-     */
     public function __construct()
     {
         $this->groups = new ArrayCollection();

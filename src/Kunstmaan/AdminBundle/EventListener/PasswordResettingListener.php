@@ -17,9 +17,6 @@ class PasswordResettingListener
      */
     private $userManager;
 
-    /**
-     * @param UserManager $userManager
-     */
     public function __construct(/* UserManager */ $userManager)
     {
         if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
@@ -33,8 +30,6 @@ class PasswordResettingListener
     }
 
     /**
-     * @param FilterUserResponseEvent $event
-     *
      * @deprecated Using the FosUser FilterUserResponseEvent is deprecated in KunstmaanNodeBundle 5.8 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent" instead.
      */
     public function onPasswordResettingSuccess(FilterUserResponseEvent $event)

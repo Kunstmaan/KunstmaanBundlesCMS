@@ -58,9 +58,7 @@ class Importer
     }
 
     /**
-     * @param string $file
-     * @param array  $locales
-     * @param bool   $force
+     * @param bool $force
      *
      * @return int
      *
@@ -70,9 +68,9 @@ class Importer
      */
     public function importFromSpreadsheet(string $file, array $locales, $force = false)
     {
-        $filePath = realpath(\dirname($file)).DIRECTORY_SEPARATOR;
+        $filePath = realpath(\dirname($file)) . DIRECTORY_SEPARATOR;
         $fileName = basename($file);
-        $file = $filePath.$fileName;
+        $file = $filePath . $fileName;
 
         $this->translationGroupManager->pullDBInMemory();
 
@@ -169,8 +167,7 @@ class Importer
     /**
      * Adds a loader to the translation importer.
      *
-     * @param string          $format The format of the loader
-     * @param LoaderInterface $loader
+     * @param string $format The format of the loader
      */
     public function addLoader($format, LoaderInterface $loader)
     {

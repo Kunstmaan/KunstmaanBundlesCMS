@@ -42,19 +42,16 @@ class CreateGroupCommand extends ContainerAwareCommand
         $this->em = $em;
     }
 
-    /**
-     * Configures the current command
-     */
     protected function configure()
     {
         parent::configure();
 
         $this->setName('kuma:group:create')
             ->setDescription('Create a user group.')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('group', InputArgument::REQUIRED, 'The group'),
                 new InputOption('role', null, InputOption::VALUE_OPTIONAL, 'Role(s) (comma separated list if you want to specifiy multiple roles)'),
-            ))
+            ])
             ->setHelp(<<<'EOT'
 The <info>kuma:group:create</info> command creates a group:
 
@@ -98,7 +95,7 @@ EOT
                     $roleName = 'ROLE_' . $roleName;
                 }
                 /* @var Role $role */
-                $role = $this->em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(array('role' => $roleName));
+                $role = $this->em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(['role' => $roleName]);
                 $group->addRole($role);
             }
         }

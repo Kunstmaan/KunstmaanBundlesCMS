@@ -119,10 +119,10 @@ class PageCreatorService
      *
      * @throws \InvalidArgumentException
      */
-    public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = array())
+    public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = [])
     {
         if (\is_null($options)) {
-            $options = array();
+            $options = [];
         }
 
         if (\is_null($translations) || (\count($translations) == 0)) {
@@ -147,7 +147,7 @@ class PageCreatorService
         if ($pagecreator instanceof $this->userEntityClass) {
             $creator = $pagecreator;
         } else {
-            $creator = $userRepo->findOneBy(array('username' => $pagecreator));
+            $creator = $userRepo->findOneBy(['username' => $pagecreator]);
         }
 
         $parent = isset($options['parent']) ? $options['parent'] : null;

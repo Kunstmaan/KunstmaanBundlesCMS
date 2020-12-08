@@ -13,12 +13,10 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class PageTemplateConfigurationRepository extends EntityRepository
 {
     /**
-     * @param HasPageTemplateInterface $page
-     *
      * @return PageTemplateConfiguration
      */
     public function findFor(HasPageTemplateInterface $page)
     {
-        return $this->findOneBy(array('pageId' => $page->getId(), 'pageEntityName' => ClassLookup::getClass($page)));
+        return $this->findOneBy(['pageId' => $page->getId(), 'pageEntityName' => ClassLookup::getClass($page)]);
     }
 }

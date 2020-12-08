@@ -11,10 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TocPagePartAdminType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array                                        $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }
@@ -27,13 +23,10 @@ class TocPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_tocpageparttype';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\PagePartBundle\Entity\TocPagePart',
-        ));
+        ]);
     }
 }

@@ -22,11 +22,9 @@ class PermissionDefinition
     /**
      * @var array
      */
-    private $permissions = array();
+    private $permissions = [];
 
     /**
-     * Construct the PermissionDefinition
-     *
      * @param array       $permissions Set of permissions (strings)
      * @param string|null $entity      Class name of entity for which to check permissions
      * @param string|null $alias       DQL alias of entity table
@@ -82,8 +80,6 @@ class PermissionDefinition
 
     /**
      * Set permissions.
-     *
-     * @param array $permissions
      *
      * @throws InvalidArgumentException
      */

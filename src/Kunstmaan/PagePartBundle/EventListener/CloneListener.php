@@ -41,9 +41,6 @@ class CloneListener
         $this->pageTemplateConfiguratiorService = $pageTemplateConfiguratiorService;
     }
 
-    /**
-     * @param DeepCloneAndSaveEvent $event
-     */
     public function postDeepCloneAndSave(DeepCloneAndSaveEvent $event)
     {
         $originalEntity = $event->getEntity();

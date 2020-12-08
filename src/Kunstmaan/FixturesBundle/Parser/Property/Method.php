@@ -23,8 +23,6 @@ class Method implements PropertyParserInterface
     /**
      * Parse provided value into new data
      *
-     * @param $value
-     * @param $providers
      * @param array $references
      * @param array $additional
      *
@@ -68,7 +66,7 @@ class Method implements PropertyParserInterface
 
                     break;
                 } elseif (is_callable([$provider, $method])) {
-                    $value = $this->processValue($pattern, call_user_func_array(array($provider, $method), $arguments), $value, $matches[0]);
+                    $value = $this->processValue($pattern, call_user_func_array([$provider, $method], $arguments), $value, $matches[0]);
 
                     break;
                 }
@@ -92,9 +90,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param $parameters
-     * @param $additional
-     *
      * @return array
      */
     private function findArguments($parameters, $additional)
@@ -122,9 +117,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param \ReflectionParameter $parameter
-     * @param $parameters
-     *
      * @return object|null
      */
     private function typeHintChecker(\ReflectionParameter $parameter, $parameters)
@@ -146,9 +138,6 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * @param \ReflectionParameter $parameter
-     * @param $parameters
-     *
      * @return mixed|null
      */
     private function getArgumentByName(\ReflectionParameter $parameter, $parameters)

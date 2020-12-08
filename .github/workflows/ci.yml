@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  [push, pull_request]
+
+jobs:
+    test:
+        name: '${{ matrix.deps }} | PHP ${{ matrix.php }} | Symfony ${{ matrix.symfony }}'
+        runs-on: ubuntu-latest
+
+        env:
+            SYMFONY_DEPRECATIONS_HELPER: "max[self]=0"
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php: ['7.2', '7.3', '7.4']
+                deps: ['stable']
+                symfony: [''] # Don't lock to a specific symfony version by default
+                include:
+                    # Test lowest dependencies
+                    -   deps: 'lowest'
+                        php: 7.2
+                        symfony: '^3.4'
+
+                    # Test latest php with LTS versions.
+                    -   deps: 'lts'
+                        php: 7.4
+                        symfony: '^3.4'
+
+                    -   deps: 'lts'
+                        php: 7.4
+                        symfony: '^4.4'
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Set-up env variables
+                run: |
+                    case "${{ matrix.deps }}" in
+                     "lowest")
+                       echo "COMPOSER_FLAGS=--prefer-lowest" >> $GITHUB_ENV
+                       ;;
+                     *)
+                       echo "SYMFONY_REQUIRE=$(echo '${{ matrix.symfony }}')" >> $GITHUB_ENV
+                    esac
+
+            -   name: Get Composer Cache Directory
+                id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   uses: actions/cache@v2
+                with:
+                    path: |
+                        ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+                    tools: pecl
+                    extensions: imagick
+
+            -   name: Require symfony/flex
+                run: composer global require symfony/flex --no-progress --no-scripts --no-plugins
+
+            -   name: Set correct imagick policy
+                run: sudo sed -i -e 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/' /etc/ImageMagick-6/policy.xml
+
+            -   name: Install Composer Dependencies
+                run: composer update --prefer-dist --no-progress $COMPOSER_FLAGS
+
+            -   name: Run phpunit
+                run: vendor/bin/phpunit -v
+
+    validate_composer:
+        name: Validate composer files
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - run: sh ./.build/validate-composer.sh || exit $?

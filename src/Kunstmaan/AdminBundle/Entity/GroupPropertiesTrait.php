@@ -39,8 +39,6 @@ trait GroupPropertiesTrait
     protected $roles;
 
     /**
-     * Construct a new group
-     *
      * @param string $name Name of the group
      */
     public function __construct($name = '')
@@ -76,7 +74,7 @@ trait GroupPropertiesTrait
      */
     public function getRoles()
     {
-        $result = array();
+        $result = [];
         /* @var $role RoleInterface */
         foreach ($this->roles as $role) {
             $result[] = $role->getRole();
@@ -189,8 +187,6 @@ trait GroupPropertiesTrait
     /**
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
      *
-     * @param Collection $collection
-     *
      * @return GroupInterface
      */
     public function setRolesCollection(Collection $collection)
@@ -226,14 +222,12 @@ trait GroupPropertiesTrait
 
     /**
      * @Assert\Callback
-     *
-     * @param ExecutionContextInterface $context
      */
     public function isGroupValid(ExecutionContextInterface $context)
     {
         if (!(\count($this->getRoles()) > 0)) {
             $context
-                ->buildViolation('errors.group.selectone', array())
+                ->buildViolation('errors.group.selectone', [])
                 ->atPath('rolesCollection')
                 ->addViolation();
         }

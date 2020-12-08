@@ -10,6 +10,7 @@ use Kunstmaan\AdminBundle\Service\GroupManager;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -117,11 +118,6 @@ EOT
     }
 
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

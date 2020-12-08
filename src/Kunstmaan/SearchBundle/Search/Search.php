@@ -27,9 +27,8 @@ class Search implements SearchProviderInterface
     private $activeProvider;
 
     /**
-     * @param SearchProviderChainInterface $searchProviderChain
-     * @param string                       $indexNamePrefix
-     * @param string                       $activeProvider
+     * @param string $indexNamePrefix
+     * @param string $activeProvider
      */
     public function __construct(SearchProviderChainInterface $searchProviderChain, $indexNamePrefix, $activeProvider)
     {

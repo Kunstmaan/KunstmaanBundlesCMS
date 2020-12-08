@@ -7,6 +7,7 @@ use FOS\UserBundle\Model\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
+use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository;
 
@@ -35,8 +36,6 @@ class EntityVersionLockService
     }
 
     /**
-     * @param LockableEntityInterface $entity
-     *
      * @return bool
      */
     public function isEntityBelowThreshold(LockableEntityInterface $entity)
@@ -47,7 +46,7 @@ class EntityVersionLockService
         if ($this->lockEnabled && $lockable->getId() !== null) {
             $now = new \DateTime();
             $thresholdDate = clone $lockable->getUpdated();
-            $thresholdDate->add(new \DateInterval('PT'.$this->threshold.'S'));
+            $thresholdDate->add(new \DateInterval('PT' . $this->threshold . 'S'));
 
             return $thresholdDate > $now;
         }
@@ -56,9 +55,6 @@ class EntityVersionLockService
     }
 
     /**
-     * @param User                    $user
-     * @param LockableEntityInterface $entity
-     *
      * @return bool
      */
     public function isEntityLocked(/*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $user, LockableEntityInterface $entity)
@@ -92,9 +88,6 @@ class EntityVersionLockService
 
     /**
      * When editing the entity, create a new entity translation lock.
-     *
-     * @param User           $user
-     * @param LockableEntity $entity
      */
     protected function createEntityVersionLock(/*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $user, LockableEntity $entity)
     {
@@ -119,8 +112,7 @@ class EntityVersionLockService
     }
 
     /**
-     * @param LockableEntityInterface $entity
-     * @param User                    $userToExclude
+     * @param User $userToExclude
      *
      * @return array
      */
@@ -134,7 +126,7 @@ class EntityVersionLockService
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
 
-        return  array_reduce(
+        return array_reduce(
             $this->getEntityVersionLocksByLockableEntity($lockable, $userToExclude),
             function ($return, EntityVersionLock $item) {
                 $return[] = $item->getOwner();
@@ -145,9 +137,6 @@ class EntityVersionLockService
         );
     }
 
-    /**
-     * @param LockableEntity $entity
-     */
     protected function removeExpiredLocks(LockableEntity $entity)
     {
         $locks = $this->objectManager->getRepository(EntityVersionLock::class)->getExpiredLocks($entity, $this->threshold);
@@ -159,8 +148,7 @@ class EntityVersionLockService
     /**
      * When editing an entity, check if there is a lock for this entity.
      *
-     * @param LockableEntity $entity
-     * @param User           $userToExclude
+     * @param User $userToExclude
      *
      * @return EntityVersionLock[]
      */
@@ -179,8 +167,6 @@ class EntityVersionLockService
 
     /**
      * Get or create a LockableEntity for an entity with LockableEntityInterface
-     *
-     * @param LockableEntityInterface $entity
      *
      * @return LockableEntity
      */

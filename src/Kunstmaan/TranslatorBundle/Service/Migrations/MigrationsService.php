@@ -20,7 +20,7 @@ class MigrationsService
 
     public function getDiffSqlArray()
     {
-        $sql = array();
+        $sql = [];
         $inserts = $this->getNewTranslationSql();
         $updates = $this->getUpdatedTranslationSqlArray();
 
@@ -37,13 +37,13 @@ class MigrationsService
 
     public function getUpdatedTranslationSqlArray()
     {
-        $ignoreFields = array('id');
-        $uniqueKeys = array('domain', 'locale', 'keyword');
+        $ignoreFields = ['id'];
+        $uniqueKeys = ['domain', 'locale', 'keyword'];
 
-        $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED));
+        $translations = $this->translationRepository->findBy(['flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED]);
 
         if (\count($translations) <= 0) {
-            return array();
+            return [];
         }
 
         $fieldNames = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
@@ -52,14 +52,14 @@ class MigrationsService
 
         $fieldNames = array_diff($fieldNames, $ignoreFields, $uniqueKeys);
 
-        $sql = array();
+        $sql = [];
 
         foreach ($translations as $translation) {
-            $updateValues = array();
-            $whereValues = array();
+            $updateValues = [];
+            $whereValues = [];
 
             foreach ($fieldNames as $fieldName) {
-                $value = $translation->{'get'.$fieldName}();
+                $value = $translation->{'get' . $fieldName}();
                 $columnName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getColumnName($fieldName);
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
@@ -69,7 +69,7 @@ class MigrationsService
             }
 
             foreach ($uniqueKeys as $uniqueKey) {
-                $value = $translation->{'get'.$uniqueKey}();
+                $value = $translation->{'get' . $uniqueKey}();
 
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
@@ -93,7 +93,7 @@ class MigrationsService
      *
      * @return string an insert sql query, of no result nul
      */
-    public function buildInsertSql($entities, $entityClassName, $ignoreFields = array())
+    public function buildInsertSql($entities, $entityClassName, $ignoreFields = [])
     {
         if (\count($entities) <= 0) {
             return null;
@@ -105,13 +105,13 @@ class MigrationsService
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
         $fieldNames = array_diff($fieldNames, $ignoreFields);
 
-        $values = array();
+        $values = [];
 
         foreach ($entities as $entity) {
-            $insertValues = array();
+            $insertValues = [];
 
             foreach ($fieldNames as $fieldName) {
-                $value = $entity->{'get'.$fieldName}();
+                $value = $entity->{'get' . $fieldName}();
 
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
@@ -140,9 +140,9 @@ class MigrationsService
      */
     public function getNewTranslationSql()
     {
-        $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW));
+        $translations = $this->translationRepository->findBy(['flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW]);
 
-        return $this->buildInsertSql($translations, '\Kunstmaan\TranslatorBundle\Entity\Translation', array('flag', 'id'));
+        return $this->buildInsertSql($translations, '\Kunstmaan\TranslatorBundle\Entity\Translation', ['flag', 'id']);
     }
 
     public function setTranslationRepository($translationRepository)

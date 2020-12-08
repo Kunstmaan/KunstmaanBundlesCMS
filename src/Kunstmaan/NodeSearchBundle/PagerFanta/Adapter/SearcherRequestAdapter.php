@@ -6,8 +6,6 @@ use Elastica\ResultSet;
 use Kunstmaan\NodeSearchBundle\Search\SearcherInterface;
 
 /**
- * Class SearcherRequestAdapter
- *
  * A Pagerfanta adapter to paginate Elastica search results.
  */
 class SearcherRequestAdapter implements SearcherRequestAdapterInterface
@@ -37,14 +35,11 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
      */
     private $aggregations;
 
-    /**
-     * @param SearcherInterface $searcher
-     */
     public function __construct(SearcherInterface $searcher)
     {
         $this->searcher = $searcher;
-        $this->hits = array();
-        $this->aggregations = array();
+        $this->hits = [];
+        $this->aggregations = [];
     }
 
     /**
@@ -93,7 +88,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
      */
     protected function processResponse(ResultSet $result = null)
     {
-        $this->hits = array();
+        $this->hits = [];
         if (\is_null($result)) {
             return null;
         }
@@ -101,14 +96,11 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         $this->collectAggregations($result);
     }
 
-    /**
-     * @param ResultSet $result
-     */
     protected function collectHits(ResultSet $result)
     {
         $data = $result->getResults();
         foreach ($data as $item) {
-            $content = array();
+            $content = [];
             $content['_source'] = $item->getData();
             $highlights = $item->getHighlights();
             if (!empty($highlights)) {
@@ -119,8 +111,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     }
 
     /**
-     * @param ResultSet $result
-     *
      * @return bool
      */
     protected function collectAggregations(ResultSet $result)

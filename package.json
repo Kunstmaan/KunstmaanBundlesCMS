@@ -73,7 +73,7 @@
     "picturefill": "^3.0.2",
     "plupload": "^2.3.6",
     "select2": "^4.0.3",
-    "sortablejs": "^1.5.1",
+    "sortablejs": "1.5.1",
     "velocity-animate": "^1.5.2",
     "x-editable": "^1.5.1"
   }

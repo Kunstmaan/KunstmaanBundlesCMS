@@ -23,10 +23,6 @@ class MenuTwigExtension extends AbstractExtension
      */
     protected $adminPanel;
 
-    /**
-     * @param MenuBuilder $menuBuilder
-     * @param AdminPanel  $adminPanel
-     */
     public function __construct(MenuBuilder $menuBuilder, AdminPanel $adminPanel)
     {
         $this->menuBuilder = $menuBuilder;
@@ -40,10 +36,10 @@ class MenuTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('get_admin_menu', array($this, 'getAdminMenu')),
-            new TwigFunction('get_admin_panel_actions', array($this, 'getAdminPanelActions')),
-        );
+        return [
+            new TwigFunction('get_admin_menu', [$this, 'getAdminMenu']),
+            new TwigFunction('get_admin_panel_actions', [$this, 'getAdminPanelActions']),
+        ];
     }
 
     /**

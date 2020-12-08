@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * IconFontController
@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 class IconFontController extends Controller
 {
     /**
-     * @param Request $request
-     *
      * @Route("/chooser", name="KunstmaanMediaBundle_icon_font_chooser")
      * @Template("@KunstmaanMedia/IconFont/iconFontChooser.html.twig")
      *
@@ -33,8 +31,8 @@ class IconFontController extends Controller
         }
         $loader->setData($loaderData);
 
-        return array(
+        return [
             'loader' => $loader,
-        );
+        ];
     }
 }

@@ -119,8 +119,6 @@ abstract class AbstractPopup implements EntityInterface
     }
 
     /**
-     * @param ArrayCollection $rules
-     *
      * @return AbstractPopup
      */
     public function setRules(ArrayCollection $rules)
@@ -131,8 +129,6 @@ abstract class AbstractPopup implements EntityInterface
     }
 
     /**
-     * @param AbstractRule $rule
-     *
      * @return AbstractPopup
      */
     public function addRule(AbstractRule $rule)
@@ -143,8 +139,6 @@ abstract class AbstractPopup implements EntityInterface
     }
 
     /**
-     * @param AbstractRule $rule
-     *
      * @return AbstractPopup
      */
     public function removeRule(AbstractRule $rule)

@@ -104,9 +104,6 @@ class Node extends AbstractEntity implements GedmoNode
      */
     protected $internalName;
 
-    /**
-     * constructor
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -174,8 +171,6 @@ class Node extends AbstractEntity implements GedmoNode
     /**
      * Add children
      *
-     * @param Node $child
-     *
      * @return Node
      */
     public function addNode(Node $child)
@@ -201,8 +196,6 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @param ArrayCollection $nodeTranslations
-     *
      * @return Node
      */
     public function setNodeTranslations(ArrayCollection $nodeTranslations)
@@ -233,8 +226,6 @@ class Node extends AbstractEntity implements GedmoNode
 
     /**
      * Add nodeTranslation
-     *
-     * @param NodeTranslation $nodeTranslation
      *
      * @return Node
      */
@@ -276,7 +267,7 @@ class Node extends AbstractEntity implements GedmoNode
     public function getParents()
     {
         $parent = $this->getParent();
-        $parents = array();
+        $parents = [];
         while ($parent !== null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
@@ -307,8 +298,6 @@ class Node extends AbstractEntity implements GedmoNode
 
     /**
      * Set referenced entity
-     *
-     * @param HasNodeInterface $entity
      *
      * @return Node
      */

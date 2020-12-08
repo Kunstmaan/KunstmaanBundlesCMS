@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 
-/**
- * AdminListFactory
- */
 class AdminListFactory
 {
     /**
@@ -21,8 +18,6 @@ class AdminListFactory
     }
 
     /**
-     * @param $configurator
-     *
      * @return ExportList
      */
     public function createExportList(ExportListConfiguratorInterface $configurator)

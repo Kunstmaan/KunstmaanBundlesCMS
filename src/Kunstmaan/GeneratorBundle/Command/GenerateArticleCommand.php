@@ -34,7 +34,7 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $parentPages = array();
+    private $parentPages = [];
 
     /**
      * @var bool
@@ -63,7 +63,7 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
     {
         $this
             ->setDefinition(
-                array(
+                [
                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the Article classes in'),
                     new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The article class name ("News", "Press", ..."'),
                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
@@ -73,7 +73,7 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
                     new InputOption('with-category', null, InputOption::VALUE_NONE, 'If set, you can use categories'),
                     new InputOption('with-tag', null, InputOption::VALUE_NONE, 'If set, the you can use tags'),
                     new InputOption('dummydata', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database'),
-                )
+                ]
             )
             ->setDescription('Generates Article classes based on KunstmaanArticleBundle')
             ->setHelp(<<<'EOT'
@@ -121,12 +121,12 @@ EOT
         $this->entity = $this->assistant->getOptionOrDefault('entity', null);
 
         if (is_null($this->entity)) {
-            $this->assistant->writeLine(array(
+            $this->assistant->writeLine([
                 'You must specify a name for the collection of Article entities.',
                 'This name will be prefixed before every new entity.',
                 'For example entering <comment>News</comment> will result in:',
                 '<comment>News</comment>OverviewPage, <comment>News</comment>Page and <comment>News</comment>Author',
-            ));
+            ]);
 
             $generator = $this->getGenerator();
             $this->entity = $this->assistant->askAndValidate(
@@ -215,11 +215,11 @@ EOT
         $this->createGenerator()->generate($this->bundle, $this->entity, $this->prefix, $this->getContainer()->getParameter('kunstmaan_admin.multi_language'), $this->usesAuthor, $this->usesCategories, $this->usesTags, $this->bundleWithHomePage, $this->dummydata);
 
         $this->assistant->writeSection('Article classes successfully created', 'bg=green;fg=black');
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
-        ));
+        ]);
 
         return 0;
     }

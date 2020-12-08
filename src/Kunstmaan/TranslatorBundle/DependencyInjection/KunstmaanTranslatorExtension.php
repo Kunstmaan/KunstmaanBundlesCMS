@@ -10,16 +10,8 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\HttpKernel\Kernel;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class KunstmaanTranslatorExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -45,7 +37,7 @@ class KunstmaanTranslatorExtension extends Extension
         $container->setParameter('kuma_translator.profiler', $container->getParameter('kernel.debug'));
         $container->setParameter('kuma_translator.debug', \is_null($config['debug']) ? $container->getParameter('kernel.debug') : $config['debug']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('repositories.yml');
         $loader->load('commands.yml');
@@ -84,23 +76,23 @@ class KunstmaanTranslatorExtension extends Extension
         if (class_exists('Symfony\Component\Validator\Validation')) {
             $r = new \ReflectionClass('Symfony\Component\Validator\Validation');
 
-            $dirs[] = \dirname($r->getFileName()).'/Resources/translations';
+            $dirs[] = \dirname($r->getFileName()) . '/Resources/translations';
         }
         if (class_exists('Symfony\Component\Form\Form')) {
             $r = new \ReflectionClass('Symfony\Component\Form\Form');
 
-            $dirs[] = \dirname($r->getFileName()).'/Resources/translations';
+            $dirs[] = \dirname($r->getFileName()) . '/Resources/translations';
         }
 
         if (Kernel::VERSION_ID < 4000) {
-            $overridePath = $container->getParameter('kernel.root_dir').'/Resources/%s/translations';
+            $overridePath = $container->getParameter('kernel.root_dir') . '/Resources/%s/translations';
         } else {
-            $overridePath = $container->getParameter('kernel.project_dir').'/translations';
+            $overridePath = $container->getParameter('kernel.project_dir') . '/translations';
         }
 
         foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {
             $reflection = new \ReflectionClass($class);
-            if (is_dir($dir = \dirname($reflection->getFileName()).'/Resources/translations')) {
+            if (is_dir($dir = \dirname($reflection->getFileName()) . '/Resources/translations')) {
                 $dirs[] = $dir;
             }
             if (is_dir($dir = sprintf($overridePath, $bundle))) {
@@ -109,9 +101,9 @@ class KunstmaanTranslatorExtension extends Extension
         }
 
         if (Kernel::VERSION_ID < 4000) {
-            $dir = $container->getParameter('kernel.root_dir').'/Resources/translations';
+            $dir = $container->getParameter('kernel.root_dir') . '/Resources/translations';
         } else {
-            $dir = $container->getParameter('kernel.project_dir').'/translations';
+            $dir = $container->getParameter('kernel.project_dir') . '/translations';
         }
 
         if (is_dir($dir)) {

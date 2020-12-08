@@ -15,18 +15,14 @@ class SeoRepository extends EntityRepository
     /**
      * Find the seo information for the given entity
      *
-     * @param AbstractEntity $entity
-     *
      * @return Seo
      */
     public function findFor(AbstractEntity $entity)
     {
-        return $this->findOneBy(array('refId' => $entity->getId(), 'refEntityName' => ClassLookup::getClass($entity)));
+        return $this->findOneBy(['refId' => $entity->getId(), 'refEntityName' => ClassLookup::getClass($entity)]);
     }
 
     /**
-     * @param AbstractEntity $entity
-     *
      * @return Seo
      */
     public function findOrCreateFor(AbstractEntity $entity)

@@ -16,17 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RangeType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('attr' => array('min' => 0, 'max' => 100, 'step' => 1)));
+        $resolver->setDefaults(['attr' => ['min' => 0, 'max' => 100, 'step' => 1]]);
     }
 
     /**
-     * Get parent
-     *
      * @return string
      */
     public function getParent()
@@ -35,8 +30,6 @@ class RangeType extends AbstractType
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getBlockPrefix()

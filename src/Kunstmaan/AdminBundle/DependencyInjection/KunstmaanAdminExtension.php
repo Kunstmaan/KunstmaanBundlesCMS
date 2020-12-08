@@ -20,11 +20,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Mailer\Mailer;
 use Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class KunstmaanAdminExtension extends Extension implements PrependExtensionInterface
 {
     /**
@@ -125,10 +120,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
         // Manually register the KunstmaanAdminBundle folder as a FosUser override for symfony 4.
-        if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir').'/templates/bundles/KunstmaanAdminBundle')) {
+        if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir') . '/templates/bundles/KunstmaanAdminBundle')) {
             $twigConfig['paths'][] = ['value' => '%kernel.project_dir%/templates/bundles/KunstmaanAdminBundle', 'namespace' => 'FOSUser'];
         }
-        $twigConfig['paths'][] = ['value' => \dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
+        $twigConfig['paths'][] = ['value' => \dirname(__DIR__) . '/Resources/views', 'namespace' => 'FOSUser'];
         $container->prependExtensionConfig('twig', $twigConfig);
 
         // NEXT_MAJOR: Remove templating dependency
@@ -150,7 +145,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function getXsdValidationBasePath()
     {
-        return __DIR__.'/../Resources/config/schema';
+        return __DIR__ . '/../Resources/config/schema';
     }
 
     private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems)

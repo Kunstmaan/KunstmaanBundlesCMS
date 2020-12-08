@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class SearchConfigurationCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_search.search_configuration_chain')) {
@@ -30,7 +27,7 @@ class SearchConfigurationCompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addConfiguration',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }

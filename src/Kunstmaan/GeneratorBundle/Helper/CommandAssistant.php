@@ -32,9 +32,6 @@ class CommandAssistant
      */
     private $kernel;
 
-    /**
-     * @param $input InputInterface
-     */
     public function setInput(InputInterface $input)
     {
         $this->input = $input;
@@ -48,17 +45,11 @@ class CommandAssistant
         return $this->output;
     }
 
-    /**
-     * @param $output OutputInterface
-     */
     public function setOutput(OutputInterface $output)
     {
         $this->output = $output;
     }
 
-    /**
-     * @param $questionHelper QuestionHelper
-     */
     public function setQuestionHelper(QuestionHelper $questionHelper)
     {
         $this->questionHelper = $questionHelper;
@@ -188,7 +179,7 @@ class CommandAssistant
         $bundleQuestion->setErrorMessage($errorMessage);
         $bundleQuestion->setMultiselect($multiSelect);
         if ($multiSelect) {
-            $toReturn = array();
+            $toReturn = [];
             foreach ($this->getQuestionHelper()->ask(
                 $this->input,
                 $this->output,

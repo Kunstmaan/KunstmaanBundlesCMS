@@ -14,9 +14,6 @@ class AdminRouteHelperTwigExtension extends AbstractExtension
     /** @var AdminRouteHelper */
     private $adminRouteHelper;
 
-    /**
-     * @param AdminRouteHelper $adminRouteHelper
-     */
     public function __construct(AdminRouteHelper $adminRouteHelper)
     {
         $this->adminRouteHelper = $adminRouteHelper;
@@ -29,9 +26,9 @@ class AdminRouteHelperTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('is_admin_route', array($this, 'isAdminRoute')),
-        );
+        return [
+            new TwigFunction('is_admin_route', [$this, 'isAdminRoute']),
+        ];
     }
 
     /**

@@ -163,12 +163,12 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $sfsf = new StringFormSubmissionField();
-        $sfsf->setFieldName('field_'.$this->getUniqueId());
+        $sfsf->setFieldName('field_' . $this->getUniqueId());
         $sfsf->setLabel($this->getLabel());
         $sfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_'.$this->getUniqueId()] = $sfsf;
+        $data['formwidget_' . $this->getUniqueId()] = $sfsf;
 
         $constraints = [];
         if ($this->getRequired()) {
@@ -187,7 +187,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_'.$this->getUniqueId(),
+            'formwidget_' . $this->getUniqueId(),
             StringFormSubmissionType::class,
             [
                 'label' => $this->getLabel(),

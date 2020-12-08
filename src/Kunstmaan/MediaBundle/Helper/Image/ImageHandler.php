@@ -96,9 +96,6 @@ class ImageHandler extends FileHandler
         return $basepath.$media->getUrl();
     }
 
-    /**
-     * @param Media $media
-     */
     public function prepareMedia(Media $media)
     {
         parent::prepareMedia($media);

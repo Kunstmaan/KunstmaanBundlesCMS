@@ -131,7 +131,7 @@ class PageBuilder implements BuilderInterface
             $translationNode = $entities['translationNode_' . $language];
 
             $pagecreator = array_key_exists('creator', $fixtureParams) ? $fixtureParams['creator'] : 'pagecreator';
-            $creator = $this->userRepo->findOneBy(array('username' => $pagecreator));
+            $creator = $this->userRepo->findOneBy(['username' => $pagecreator]);
 
             $nodeVersion = new NodeVersion();
             $nodeVersion->setNodeTranslation($translationNode);
@@ -235,7 +235,7 @@ class PageBuilder implements BuilderInterface
     private function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
-        $matches = array();
+        $matches = [];
 
         preg_match($finalDigitGrabberRegex, $string, $matches);
 

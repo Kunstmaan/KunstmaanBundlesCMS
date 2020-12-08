@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use FOS\UserBundle\Model\User;
+use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 
 /**
  * EntityVersionLockRepository
@@ -15,9 +16,8 @@ class EntityVersionLockRepository extends EntityRepository
     /**
      * Check if there is a entity lock that's not passed the threshold.
      *
-     * @param LockableEntity $entity
-     * @param int            $threshold
-     * @param User           $userToExclude
+     * @param int  $threshold
+     * @param User $userToExclude
      *
      * @return EntityVersionLock[]
      */
@@ -49,8 +49,7 @@ class EntityVersionLockRepository extends EntityRepository
     /**
      * Get locks that are passed the threshold.
      *
-     * @param LockableEntity $entity
-     * @param int            $threshold
+     * @param int $threshold
      *
      * @return mixed
      */

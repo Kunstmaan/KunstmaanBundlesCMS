@@ -13,29 +13,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PageAdminType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', TextType::class, [
             'label' => 'kuma_node.form.page.title.label',
-        ));
-        $builder->add('pageTitle', TextType::class, array(
+        ]);
+        $builder->add('pageTitle', TextType::class, [
             'label' => 'kuma_node.form.page.page_title.label',
-            'attr' => array(
+            'attr' => [
                 'info_text' => 'kuma_node.form.page.page_title.info_text',
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\NodeBundle\Entity\AbstractPage',
-        ));
+        ]);
     }
 
     /**

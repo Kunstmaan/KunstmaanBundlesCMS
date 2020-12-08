@@ -84,7 +84,7 @@ EOT
     {
         $this->assistant->writeSection('FormPage generation');
         $this->template = strtolower($this->pageName);
-        $this->sections = array(strtolower($this->pageName));
+        $this->sections = [strtolower($this->pageName)];
 
         // Generate the default form pageparts if requested.
         if ($this->generateFormPageParts) {
@@ -107,22 +107,22 @@ EOT
         $this->assistant->writeSection('FormPage successfully created', 'bg=green;fg=black');
 
         if (count($this->parentPages) == 0) {
-            $this->assistant->writeLine(array(
+            $this->assistant->writeLine([
                 'To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:',
                 '<comment>    array(</comment>',
-                "<comment>        'name' => '".$this->pageName."',</comment>",
-                "<comment>        'class'=> '".$this->bundle->getNamespace().'\\Entity\\Pages\\'.$this->pageName."'</comment>",
+                "<comment>        'name' => '" . $this->pageName . "',</comment>",
+                "<comment>        'class'=> '" . $this->bundle->getNamespace() . '\\Entity\\Pages\\' . $this->pageName . "'</comment>",
                 '<comment>    ),</comment>',
                 '',
-            ));
+            ]);
         }
 
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             'Make sure you update your database first before you use the page:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
             '',
-        ));
+        ]);
 
         return 0;
     }
@@ -136,7 +136,7 @@ EOT
             $this->assistant->writeError('KunstmaanPagePartBundle not found', true);
         }
 
-        $this->assistant->writeLine(array("This command helps you to generate a new formpage.\n"));
+        $this->assistant->writeLine(["This command helps you to generate a new formpage.\n"]);
 
         /*
          * Ask for which bundle we need to create the pagepart
@@ -151,11 +151,11 @@ EOT
         /*
          * Ask the name of the pagepart
          */
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             '',
             'The name of your FormPage: For example: <comment>ContactPage</comment>, <comment>OrderPage</comment>',
             '',
-        ));
+        ]);
         $generator = $this->getGenerator();
         $bundlePath = $this->bundle->getPath();
 
@@ -190,9 +190,9 @@ EOT
         /*
          * Ask which fields need to be present
          */
-        $this->assistant->writeLine(array("\nInstead of starting with a blank page, you can add some fields now.\n"));
-        $fields = $this->askEntityFields($this->bundle, array('title', 'pageTitle', 'parent', 'id', 'thanks', 'subject', 'fromEmail', 'toEmail'));
-        $this->fields = array();
+        $this->assistant->writeLine(["\nInstead of starting with a blank page, you can add some fields now.\n"]);
+        $fields = $this->askEntityFields($this->bundle, ['title', 'pageTitle', 'parent', 'id', 'thanks', 'subject', 'fromEmail', 'toEmail']);
+        $this->fields = [];
         foreach ($fields as $fieldInfo) {
             $this->fields[] = $this->getEntityFields($this->bundle, $this->pageName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
         }

@@ -75,18 +75,8 @@ class ToolbarListener implements EventSubscriberInterface
     protected $adminFirewallName;
 
     /**
-     * ToolbarListener constructor.
-     *
-     * @param Environment           $twig
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param DataCollector         $dataCollector
-     * @param AuthorizationChecker  $authorizationChecker
-     * @param TokenStorageInterface $tokenStorage
-     * @param bool                  $enabled
-     * @param ContainerInterface    $container
-     * @param AdminRouteHelper      $adminRouteHelper
-     * @param array                 $providerKeys
-     * @param string                $adminFirewallName
+     * @param bool   $enabled
+     * @param string $adminFirewallName
      */
     public function __construct(
         Environment $twig,
@@ -197,15 +187,15 @@ class ToolbarListener implements EventSubscriberInterface
         $pos = strripos($content, '</body>');
 
         if (false !== $pos) {
-            $toolbar = "\n".str_replace(
+            $toolbar = "\n" . str_replace(
                     "\n",
                     '',
                     $this->twig->render(
                         '@KunstmaanAdmin/Toolbar/toolbar.html.twig',
                         ['collectors' => $this->dataCollector->getDataCollectors()]
                     )
-                )."\n";
-            $content = substr($content, 0, $pos).$toolbar.substr($content, $pos);
+                ) . "\n";
+            $content = substr($content, 0, $pos) . $toolbar . substr($content, $pos);
             $response->setContent($content);
         }
     }

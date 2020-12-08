@@ -28,7 +28,7 @@ class ExportFile
      *
      * @var array
      */
-    private $array = array();
+    private $array = [];
 
     private $content = '';
 

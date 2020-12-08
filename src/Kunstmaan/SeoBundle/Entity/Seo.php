@@ -529,8 +529,6 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * @param AbstractEntity $entity
-     *
      * @return Seo
      */
     public function setRef(AbstractEntity $entity)
@@ -542,8 +540,6 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * @param EntityManager $em
-     *
      * @return AbstractEntity
      */
     public function getRef(EntityManager $em)

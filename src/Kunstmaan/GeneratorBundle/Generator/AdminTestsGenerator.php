@@ -43,30 +43,21 @@ class AdminTestsGenerator extends Generator
         $this->fullSkeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
     }
 
-    /**
-     * @param BundleInterface $bundle
-     * @param OutputInterface $output
-     */
     public function generate(BundleInterface $bundle, OutputInterface $output)
     {
         // This is needed so the renderFile method will search for the files
         // in the correct location
-        $this->setSkeletonDirs(array($this->fullSkeletonDir));
+        $this->setSkeletonDirs([$this->fullSkeletonDir]);
 
-        $parameters = array(
+        $parameters = [
             'namespace' => $bundle->getNamespace(),
             'bundle' => $bundle,
             'isV4' => Kernel::VERSION_ID >= 40000,
-        );
+        ];
 
         $this->generateBehatTests($bundle, $output, $parameters);
     }
 
-    /**
-     * @param BundleInterface $bundle
-     * @param OutputInterface $output
-     * @param array           $parameters
-     */
     public function generateBehatTests(BundleInterface $bundle, OutputInterface $output, array $parameters)
     {
         $dirPath = Kernel::VERSION_ID >= 40000 ? sprintf('%s/features', $this->container->getParameter('kernel.project_dir')) : sprintf('%s/Features', $bundle->getPath());

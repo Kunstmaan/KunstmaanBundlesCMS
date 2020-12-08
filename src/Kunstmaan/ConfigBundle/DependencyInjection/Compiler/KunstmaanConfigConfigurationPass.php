@@ -15,9 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class KunstmaanConfigConfigurationPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         try {

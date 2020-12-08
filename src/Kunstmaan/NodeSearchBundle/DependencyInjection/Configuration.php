@@ -19,8 +19,6 @@ class Configuration implements ConfigurationInterface
     private $useElasticSearchVersion6;
 
     /**
-     * Configuration constructor.
-     *
      * @param bool $useElasticSearchVersion6
      */
     public function __construct($useElasticSearchVersion6)
@@ -28,9 +26,6 @@ class Configuration implements ConfigurationInterface
         $this->useElasticSearchVersion6 = $useElasticSearchVersion6;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kunstmaan_node_search');
