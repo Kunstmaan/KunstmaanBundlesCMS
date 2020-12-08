@@ -743,7 +743,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */
