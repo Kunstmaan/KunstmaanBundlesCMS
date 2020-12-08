@@ -24,7 +24,7 @@ class GroupTest extends TestCase
         $this->assertEquals(null, $this->object->getId());
     }
 
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('group', $this->object->__toString());
     }

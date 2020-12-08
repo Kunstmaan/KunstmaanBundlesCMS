@@ -18,7 +18,7 @@ class AclChangesetTest extends TestCase
         $this->object = new AclChangeset();
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         $object = new AclChangeset();
         $this->assertEquals(AclChangeset::STATUS_NEW, $object->getStatus());

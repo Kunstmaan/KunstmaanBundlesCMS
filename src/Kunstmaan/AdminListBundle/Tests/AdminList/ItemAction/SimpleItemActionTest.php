@@ -8,7 +8,7 @@ use stdClass;
 
 class SimpleItemActionTest extends TestCase
 {
-    public function test__construct()
+    public function testConstruct()
     {
         $object = new SimpleItemAction(function ($item) {
             return 'http://www.domain.com/action';

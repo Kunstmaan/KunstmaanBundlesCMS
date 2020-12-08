@@ -20,7 +20,7 @@ class PermissionDefinitionTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function test__constructThrowsExceptionWithInvalidParameters()
+    public function testConstructThrowsExceptionWithInvalidParameters()
     {
         new PermissionDefinition([], null, null);
     }

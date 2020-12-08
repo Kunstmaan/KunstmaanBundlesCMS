@@ -23,7 +23,7 @@ class AbstractEntityTest extends TestCase
         $this->assertEquals(5, $this->object->getId());
     }
 
-    public function test__toString()
+    public function testToString()
     {
         $this->object->setId(8);
         $this->assertEquals('8', $this->object->__toString());

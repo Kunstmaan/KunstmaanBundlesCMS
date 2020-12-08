@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleListActionTest extends TestCase
 {
-    public function test__construct()
+    public function testConstruct()
     {
         $object = new SimpleListAction(['http://www.domain.com/action'], 'Label', 'icon.png', 'template.html.twig');
 

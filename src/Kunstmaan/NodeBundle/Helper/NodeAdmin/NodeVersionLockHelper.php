@@ -60,7 +60,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
      */
     public function getUsersWithNodeVersionLock(NodeTranslation $nodeTranslation, $isPublicNodeVersion, BaseUser $userToExclude = null)
     {
-        return  array_reduce(
+        return array_reduce(
             $this->getNodeVersionLocksByNodeTranslation($nodeTranslation, $isPublicNodeVersion, $userToExclude),
             function ($return, NodeVersionLock $item) {
                 $return[] = $item->getOwner();

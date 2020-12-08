@@ -20,7 +20,7 @@ class UserTest extends TestCase
         $this->object = new User();
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         $object = new User();
         $object->setId(1);

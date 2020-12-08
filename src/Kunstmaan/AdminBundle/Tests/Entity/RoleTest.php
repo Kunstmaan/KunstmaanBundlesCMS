@@ -17,7 +17,7 @@ class RoleTest extends TestCase
         $this->object = new Role('ROLE_TEST');
     }
 
-    public function test__construct()
+    public function testConstruct()
     {
         $this->assertEquals('ROLE_TEST', $this->object->getRole());
     }
@@ -28,7 +28,7 @@ class RoleTest extends TestCase
         $this->assertEquals('ROLE_CUSTOM', $this->object->getRole());
     }
 
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('ROLE_TEST', $this->object->__toString());
     }
