@@ -93,7 +93,7 @@ class ImageHandler extends FileHandler
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        return $basepath.$media->getUrl();
+        return $basepath . $media->getUrl();
     }
 
     public function prepareMedia(Media $media)

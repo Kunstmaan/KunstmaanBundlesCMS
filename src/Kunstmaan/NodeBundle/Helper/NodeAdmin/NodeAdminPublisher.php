@@ -309,7 +309,6 @@ class NodeAdminPublisher
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

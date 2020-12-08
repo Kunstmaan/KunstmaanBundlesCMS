@@ -488,7 +488,6 @@ class NodeHelper
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

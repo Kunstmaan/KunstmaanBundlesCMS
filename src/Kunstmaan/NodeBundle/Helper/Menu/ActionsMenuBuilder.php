@@ -528,7 +528,6 @@ class ActionsMenuBuilder
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */
