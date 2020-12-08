@@ -19,10 +19,6 @@ class WysiwygType extends AbstractType
         $this->mediaTokenTransformer = $mediaTokenTransformer;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->mediaTokenTransformer);
