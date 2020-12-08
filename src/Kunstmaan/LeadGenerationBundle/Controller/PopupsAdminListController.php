@@ -7,8 +7,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\PopupAdminListConfigurator;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PopupsAdminListController extends AdminListController
 {
@@ -27,10 +27,10 @@ class PopupsAdminListController extends AdminListController
 
             if ($listAction) {
                 $create_route = function (EntityInterface $item) {
-                    return array(
+                    return [
                         'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail',
-                        'params' => array('popup' => $item->getId()),
-                    );
+                        'params' => ['popup' => $item->getId()],
+                    ];
                 };
                 $this->configurator->addItemAction(new SimpleItemAction($create_route, 'th-list', 'Manage rules'));
             }

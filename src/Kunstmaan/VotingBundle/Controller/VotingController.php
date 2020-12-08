@@ -13,14 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class VotingController extends Controller
 {
     /**
      * @Route("/voting-upvote", name="voting_upvote")
      * @Template("@KunstmaanVoting/UpDown/voted.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function upVoteAction(Request $request)
     {
@@ -32,8 +31,6 @@ class VotingController extends Controller
     /**
      * @Route("/voting-downvote", name="voting_downvote")
      * @Template("@KunstmaanVoting/UpDown/voted.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function downVoteAction(Request $request)
     {
@@ -44,8 +41,6 @@ class VotingController extends Controller
 
     /**
      * @Route("/voting-facebooklike", name="voting_facebooklike")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function facebookLikeAction(Request $request)
     {
@@ -56,8 +51,6 @@ class VotingController extends Controller
 
     /**
      * @Route("/voting-facebooksend", name="voting_facebooksend")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function facebookSendAction(Request $request)
     {
@@ -68,8 +61,6 @@ class VotingController extends Controller
 
     /**
      * @Route("/voting-linkedinshare", name="voting_linkedinshare")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function linkedInShareAction(Request $request)
     {

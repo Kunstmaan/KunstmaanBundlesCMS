@@ -20,8 +20,6 @@ class RepositoryResolver
     protected $em;
 
     /**
-     * Constructor
-     *
      * @param object $em entity manager
      */
     public function __construct(EntityManager $em)

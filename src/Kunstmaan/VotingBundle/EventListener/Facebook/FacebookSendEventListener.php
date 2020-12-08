@@ -8,9 +8,6 @@ use Kunstmaan\VotingBundle\EventListener\AbstractVoteListener;
 
 class FacebookSendEventListener extends AbstractVoteListener
 {
-    /**
-     * @param FacebookSendEvent $event
-     */
     public function onFacebookSend(FacebookSendEvent $event)
     {
         $this->createVote(

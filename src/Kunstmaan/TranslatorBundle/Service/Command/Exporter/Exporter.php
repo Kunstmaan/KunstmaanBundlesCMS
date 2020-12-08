@@ -14,7 +14,7 @@ class Exporter
      *
      * @var array
      */
-    private $exporters = array();
+    private $exporters = [];
 
     public function getExportedContent(ExportFile $exportFile)
     {

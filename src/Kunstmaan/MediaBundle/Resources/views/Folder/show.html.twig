@@ -223,6 +223,8 @@
                     {% if adminlist.count > 0 %}
                         {% if adminlist.pagerfanta.haveToPaginate() %}
                             {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                        {% else %}
+                            <div class="row row--padded"></div>
                         {% endif %}
                         <div class="row">
                             {% for media in adminlist.items %}

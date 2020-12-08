@@ -25,12 +25,6 @@ class ConfigHelper
     /** @var EntityManager */
     private $em;
 
-    /**
-     * constructor
-     *
-     * @param ServiceHelper $serviceHelper
-     * @param EntityManager $em
-     */
     public function __construct(ServiceHelper $serviceHelper, EntityManager $em)
     {
         $this->serviceHelper = $serviceHelper;
@@ -41,7 +35,7 @@ class ConfigHelper
     /**
      * Tries to initialise the Client object
      *
-     * @param int $configId
+     * @param int|bool $configId
      */
     public function init($configId = false)
     {
@@ -66,7 +60,7 @@ class ConfigHelper
     /**
      * Get the token from the database
      *
-     * @return string $token
+     * @return string
      */
     private function getToken($configId = false)
     {
@@ -107,18 +101,18 @@ class ConfigHelper
     /**
      * Get a list of all available accounts
      *
-     * @return array $data A list of all properties
+     * @return array A list of all properties
      */
     public function getAccounts()
     {
         $accounts = $this->serviceHelper->getService()->management_accounts->listManagementAccounts()->getItems();
-        $data = array();
+        $data = [];
 
         foreach ($accounts as $account) {
-            $data[$account->getName()] = array(
+            $data[$account->getName()] = [
                     'accountId' => $account->getId(),
                     'accountName' => $account->getName(),
-                );
+                ];
         }
         ksort($data);
 
@@ -128,7 +122,7 @@ class ConfigHelper
     /**
      * Get the accountId from the database
      *
-     * @return string $accountId
+     * @return string
      */
     public function getAccountId($configId = false)
     {
@@ -157,7 +151,7 @@ class ConfigHelper
     /**
      * Check if token is set
      *
-     * @return bool $result
+     * @return bool
      */
     public function accountIsSet()
     {
@@ -169,7 +163,7 @@ class ConfigHelper
     /**
      * Get a list of all available properties
      *
-     * @return array $data A list of all properties
+     * @return array A list of all properties
      */
     public function getProperties($accountId = false)
     {
@@ -182,15 +176,15 @@ class ConfigHelper
         } else {
             $webproperties = $this->serviceHelper->getService()->management_webproperties->listManagementWebproperties($this->getAccountId());
         }
-        $data = array();
+        $data = [];
 
         foreach ($webproperties->getItems() as $property) {
             $profiles = $this->getProfiles($accountId, $property->getId());
             if (\count($profiles) > 0) {
-                $data[$property->getName()] = array(
+                $data[$property->getName()] = [
                         'propertyId' => $property->getId(),
                         'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
-                    );
+                    ];
             }
         }
         ksort($data);
@@ -201,7 +195,7 @@ class ConfigHelper
     /**
      * Get the propertyId from the database
      *
-     * @return string $propertyId
+     * @return string
      */
     public function getPropertyId($configId = false)
     {
@@ -230,7 +224,7 @@ class ConfigHelper
     /**
      * Check if propertyId is set
      *
-     * @return bool $result
+     * @return bool
      */
     public function propertyIsSet()
     {
@@ -242,7 +236,7 @@ class ConfigHelper
     /**
      * Get a list of all available profiles
      *
-     * @return array $data A list of all properties
+     * @return array A list of all properties
      */
     public function getProfiles($accountId = false, $propertyId = false)
     {
@@ -263,14 +257,14 @@ class ConfigHelper
                 );
         }
 
-        $data = array();
+        $data = [];
         if (\is_array($profiles->getItems())) {
             foreach ($profiles->getItems() as $profile) {
-                $data[$profile->name] = array(
+                $data[$profile->name] = [
                             'profileId' => $profile->id,
                             'profileName' => $profile->name,
                             'created' => $profile->created,
-                        );
+                        ];
             }
         }
         ksort($data);
@@ -281,7 +275,7 @@ class ConfigHelper
     /**
      * Get the propertyId from the database
      *
-     * @return string $propertyId
+     * @return string
      */
     public function getProfileId($configId = false)
     {
@@ -310,7 +304,7 @@ class ConfigHelper
     /**
      * Check if token is set
      *
-     * @return bool $result
+     * @return bool
      */
     public function profileIsSet()
     {
@@ -319,8 +313,6 @@ class ConfigHelper
 
     /**
      * Get the active profile
-     *
-     * @return the profile
      */
     public function getActiveProfile()
     {
@@ -354,23 +346,23 @@ class ConfigHelper
                     ->listManagementSegments()
                     ->items;
 
-        $builtin = array();
-        $own = array();
+        $builtin = [];
+        $own = [];
         foreach ($profileSegments as $segment) {
             if ($segment->type == 'BUILT_IN') {
-                $builtin[] = array(
+                $builtin[] = [
                         'name' => $segment->name,
                         'query' => $segment->segmentId,
-                    );
+                    ];
             } else {
-                $own[] = array(
+                $own[] = [
                         'name' => $segment->name,
                         'query' => $segment->segmentId,
-                    );
+                    ];
             }
         }
 
-        return array('builtin' => $builtin, 'own' => $own);
+        return ['builtin' => $builtin, 'own' => $own];
     }
 
     /* =============================== CONFIG =============================== */
@@ -388,7 +380,7 @@ class ConfigHelper
     /**
      * get the authUrl
      *
-     * @return string $authUrl
+     * @return string
      */
     public function getAuthUrl()
     {

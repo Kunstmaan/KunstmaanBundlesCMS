@@ -18,7 +18,7 @@ class TagCategoryRouter extends SlugRouter
         }
         $this->routeCollection = new RouteCollection();
 
-        $extendParameters = array('category' => null, 'tag' => null);
+        $extendParameters = ['category' => null, 'tag' => null];
         $baseSlugParameters = array_merge($this->getSlugRouteParameters(), $extendParameters);
         $baseSlugPreviewParameters = array_merge($this->getPreviewRouteParameters(), $extendParameters);
 
@@ -30,11 +30,11 @@ class TagCategoryRouter extends SlugRouter
                 $categoryTrans = $translator->trans('article_overview_page.route.category', [], null, $locale);
                 $tagTrans = $translator->trans('article_overview_page.route.tag', [], null, $locale);
 
-                $routePathParts = array(
+                $routePathParts = [
                     '_slug_category_tag' => sprintf('/%s/{category}/%s/{tag}', $categoryTrans, $tagTrans),
                     '_slug_tag' => sprintf('/%s/{tag}', $tagTrans),
                     '_slug_category' => sprintf('/%s/{category}', $categoryTrans),
-                );
+                ];
 
                 foreach ($routePathParts as $routeName => $routePart) {
                     $slugParameters = $baseSlugParameters;
@@ -55,11 +55,11 @@ class TagCategoryRouter extends SlugRouter
             $slugParameters = $baseSlugParameters;
             $slugPreviewParameters = $baseSlugPreviewParameters;
 
-            $routePathParts = array(
+            $routePathParts = [
                 '_slug_category_tag' => sprintf('/%s/{category}/%s/{tag}', $categoryTrans, $tagTrans),
                 '_slug_tag' => sprintf('/%s/{tag}', $tagTrans),
                 '_slug_category' => sprintf('/%s/{category}', $categoryTrans),
-            );
+            ];
 
             foreach ($routePathParts as $routeName => $routePart) {
                 $slugParameters['path'] = '/{url}' . $routePart;

@@ -20,22 +20,22 @@ class EmailPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', TextType::class, array(
+            ->add('label', TextType::class, [
                 'required' => true,
                 'label' => 'kuma_form.form.email_page_part.label.label',
-            ))
-            ->add('required', CheckboxType::class, array(
+            ])
+            ->add('required', CheckboxType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.email_page_part.required.label',
-            ))
-            ->add('errorMessageRequired', TextType::class, array(
+            ])
+            ->add('errorMessageRequired', TextType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.email_page_part.errorMessageRequired.label',
-            ))
-            ->add('errorMessageInvalid', TextType::class, array(
+            ])
+            ->add('errorMessageInvalid', TextType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.email_page_part.errorMessageInvalid.label',
-            ))
+            ])
         ;
     }
 
@@ -47,11 +47,8 @@ class EmailPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_emailpageparttype';
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart'));
+        $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart']);
     }
 }

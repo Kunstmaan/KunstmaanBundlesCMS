@@ -5,9 +5,6 @@ namespace Kunstmaan\NodeSearchBundle\Helper;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
 
-/**
- * Class ElasticSearchUtil
- */
 final class ElasticSearchUtil
 {
     /** @var array */
@@ -18,7 +15,7 @@ final class ElasticSearchUtil
      *
      * @return bool
      */
-    public static function useVersion6($hosts = array())
+    public static function useVersion6($hosts = [])
     {
         if (PHP_MAJOR_VERSION < 7) {
             return false;

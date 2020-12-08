@@ -38,9 +38,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     private $useDistinctCount = true;
 
-    /**
-     * @param Connection $connection
-     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -55,13 +52,13 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function getEditUrlFor($item)
     {
-        $params = array('id' => $item['id']);
+        $params = ['id' => $item['id']];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => $this->getPathByConvention($this::SUFFIX_EDIT),
             'params' => $params,
-        );
+        ];
     }
 
     /**
@@ -73,13 +70,13 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function getDeleteUrlFor($item)
     {
-        $params = array('id' => $item['id']);
+        $params = ['id' => $item['id']];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
             'params' => $params,
-        );
+        ];
     }
 
     /**
@@ -101,12 +98,9 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         return $this->pagerfanta;
     }
 
-    /**
-     * @param array $params
-     */
     public function adaptQueryBuilder(
         QueryBuilder $queryBuilder,
-        array $params = array()
+        array $params = []
     ) {
         $queryBuilder->where('1=1');
     }

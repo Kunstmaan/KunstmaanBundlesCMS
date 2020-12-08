@@ -3,8 +3,6 @@
 namespace Kunstmaan\AdminBundle\Helper\Toolbar;
 
 /**
- * Interface DataCollectionInterface
- *
  * Implement this interface for a new data collector
  */
 interface DataCollectionInterface

@@ -19,9 +19,6 @@ class FormToolsExtension extends AbstractExtension
      */
     private $formHelper;
 
-    /**
-     * @param FormHelper $formHelper
-     */
     public function __construct(FormHelper $formHelper)
     {
         $this->formHelper = $formHelper;
@@ -34,16 +31,14 @@ class FormToolsExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('form_errors_recursive', array($this, 'getErrorMessages')),
-            new TwigFunction('form_has_errors_recursive', array($this, 'hasErrorMessages')),
-        );
+        return [
+            new TwigFunction('form_errors_recursive', [$this, 'getErrorMessages']),
+            new TwigFunction('form_has_errors_recursive', [$this, 'hasErrorMessages']),
+        ];
     }
 
     /**
      * Return if there are error messages.
-     *
-     * @param FormView $formView
      *
      * @return bool
      */
@@ -60,7 +55,7 @@ class FormToolsExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getErrorMessages($formViews, array &$errors = array())
+    public function getErrorMessages($formViews, array &$errors = [])
     {
         return $this->formHelper->getRecursiveErrorMessages($formViews, $errors);
     }

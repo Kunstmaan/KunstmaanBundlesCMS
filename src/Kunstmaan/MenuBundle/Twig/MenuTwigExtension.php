@@ -24,10 +24,6 @@ class MenuTwigExtension extends AbstractExtension
      */
     private $repository;
 
-    /**
-     * @param MenuItemRepositoryInterface $repository
-     * @param RenderService               $renderService
-     */
     public function __construct(MenuItemRepositoryInterface $repository, RenderService $renderService)
     {
         $this->renderService = $renderService;
@@ -41,17 +37,17 @@ class MenuTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
                 'get_menu',
-                array($this, 'getMenu'),
-                array(
-                    'is_safe' => array('html'),
+                [$this, 'getMenu'],
+                [
+                    'is_safe' => ['html'],
                     'needs_environment' => true,
-                )
+                ]
             ),
-            new TwigFunction('get_menu_items', array($this, 'getMenuItems')),
-        );
+            new TwigFunction('get_menu_items', [$this, 'getMenuItems']),
+        ];
     }
 
     /**
@@ -63,7 +59,7 @@ class MenuTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getMenu(Environment $environment, $name, $lang, $options = array())
+    public function getMenu(Environment $environment, $name, $lang, $options = [])
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 
@@ -91,7 +87,7 @@ class MenuTwigExtension extends AbstractExtension
         $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
         // Make sure the parent item is not offline
-        $foundIds = array();
+        $foundIds = [];
         foreach ($arrayResult as $array) {
             $foundIds[] = $array['id'];
         }
@@ -111,12 +107,12 @@ class MenuTwigExtension extends AbstractExtension
      */
     private function getDefaultOptions()
     {
-        return array(
+        return [
             'decorate' => true,
             'rootOpen' => '<ul>',
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-        );
+        ];
     }
 }

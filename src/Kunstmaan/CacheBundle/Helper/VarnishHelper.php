@@ -6,9 +6,6 @@ use FOS\HttpCache\CacheInvalidator;
 use FOS\HttpCacheBundle\CacheManager;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 
-/**
- * Class VarnishHelper.
- */
 class VarnishHelper
 {
     /**
@@ -21,12 +18,6 @@ class VarnishHelper
      */
     private $domainConfiguration;
 
-    /**
-     * VarnishHelper constructor.
-     *
-     * @param CacheManager                 $cacheManager
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
     public function __construct(CacheManager $cacheManager, DomainConfigurationInterface $domainConfiguration)
     {
         $this->cacheManager = $cacheManager;

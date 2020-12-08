@@ -8,25 +8,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 abstract class AbstractPopupAdminType extends AbstractType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'kuma_lead_generation.form.popup.name.label',
-            'attr' => array(
+            'attr' => [
                 'info_text' => 'kuma_lead_generation.form.popup.name.info_text',
-            ),
-        ));
+            ],
+        ]);
         $builder->add('htmlId', TextType::class);
     }
 }

@@ -42,7 +42,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
         $metrics = 'ga:sessions, ga:users, ga:newUsers, ga:pageviews';
         $rows = $this->executeQuery($overview, $metrics);
 
-        $chartData = array();
+        $chartData = [];
         $chartDataMaxValue = 0;
         $timespan = $overview->getTimespan() - $overview->getStartOffset();
         foreach ($rows as $row) {
@@ -74,13 +74,13 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
             }
 
             // add to chart array
-            $chartEntry = array(
+            $chartEntry = [
                 'timestamp' => $timestamp,
                 'sessions' => $sessions,
                 'users' => $users,
                 'newusers' => $newusers,
                 'pageviews' => $pageviews,
-            );
+            ];
             $chartData[] = $chartEntry;
         }
 

@@ -39,12 +39,12 @@ class GeneratePageCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $sections = array();
+    private $sections = [];
 
     /**
      * @var array
      */
-    private $parentPages = array();
+    private $parentPages = [];
 
     /**
      * @see Command
@@ -82,22 +82,22 @@ EOT
         $this->assistant->writeSection('Page successfully created', 'bg=green;fg=black');
 
         if (count($this->parentPages) == 0) {
-            $this->assistant->writeLine(array(
+            $this->assistant->writeLine([
                 'To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:',
                 '<comment>    [</comment>',
-                "<comment>        'name' => '".$this->pageName."',</comment>",
-                "<comment>        'class'=> '".$this->bundle->getNamespace().'\\Entity\\Pages\\'.$this->pageName."'</comment>",
+                "<comment>        'name' => '" . $this->pageName . "',</comment>",
+                "<comment>        'class'=> '" . $this->bundle->getNamespace() . '\\Entity\\Pages\\' . $this->pageName . "'</comment>",
                 '<comment>    ],</comment>',
                 '',
-            ));
+            ]);
         }
 
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             'Make sure you update your database first before you use the page:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
             '',
-        ));
+        ]);
 
         return 0;
     }
@@ -111,7 +111,7 @@ EOT
             $this->assistant->writeError('KunstmaanPagePartBundle not found', true);
         }
 
-        $this->assistant->writeLine(array("This command helps you to generate a new page.\n"));
+        $this->assistant->writeLine(["This command helps you to generate a new page.\n"]);
 
         /*
          * Ask for which bundle we need to create the pagepart
@@ -126,11 +126,11 @@ EOT
         /*
          * Ask the name of the pagepart
          */
-        $this->assistant->writeLine(array(
+        $this->assistant->writeLine([
             '',
             'The name of your Page: For example: <comment>SponsorPage</comment>, <comment>NewsOverviewPage</comment>',
             '',
-        ));
+        ]);
         $generator = $this->getGenerator();
         $bundlePath = $this->bundle->getPath();
 
@@ -165,9 +165,9 @@ EOT
         /*
          * Ask which fields need to be present
          */
-        $this->assistant->writeLine(array("\nInstead of starting with a blank page, you can add some fields now.\n"));
-        $fields = $this->askEntityFields($this->bundle, array('title', 'pageTitle', 'parent', 'id'));
-        $this->fields = array();
+        $this->assistant->writeLine(["\nInstead of starting with a blank page, you can add some fields now.\n"]);
+        $fields = $this->askEntityFields($this->bundle, ['title', 'pageTitle', 'parent', 'id']);
+        $this->fields = [];
         foreach ($fields as $fieldInfo) {
             $this->fields[] = $this->getEntityFields(
                 $this->bundle,
@@ -202,8 +202,8 @@ EOT
         /*
          * Ask for which sections pagepart configuration the end user wants to use for the different sections
          */
-        $this->assistant->writeLine(array("\nThe select page template consists of these contexts: " . implode(', ', $templateConfig['contexts'])));
-        $this->sections = array();
+        $this->assistant->writeLine(["\nThe select page template consists of these contexts: " . implode(', ', $templateConfig['contexts'])]);
+        $this->sections = [];
         foreach ($templateConfig['contexts'] as $context) {
             $question = "Which pagepart configuration would you like to use for the '$context' context";
             $section = $this->askForSections($question, $this->bundle, false, $context);
@@ -251,7 +251,7 @@ EOT
     {
         $templates = $this->getAvailableTemplates($this->bundle);
 
-        $types = array();
+        $types = [];
         foreach ($templates as $key => $template) {
             $types[$key] = $template['name'];
         }

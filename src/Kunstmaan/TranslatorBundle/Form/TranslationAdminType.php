@@ -10,29 +10,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationAdminType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $intention = $options['csrf_token_id'];
-        $options = array();
+        $options = [];
         if ($intention == 'edit') {
-            $options = array('attr' => array('readonly' => true));
+            $options = ['attr' => ['readonly' => true]];
         }
 
         $builder->add('domain', TextType::class, $options);
         $builder->add('keyword', TextType::class, $options);
-        $builder->add('texts', CollectionType::class, array(
+        $builder->add('texts', CollectionType::class, [
             'entry_type' => TextWithLocaleAdminType::class,
             'label' => 'translator.translations',
             'by_reference' => false,
             'required' => false,
-            'attr' => array(
+            'attr' => [
                 'nested_form' => true,
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
@@ -45,8 +41,8 @@ class TranslationAdminType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
-        ));
+        ]);
     }
 }

@@ -18,25 +18,23 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 
     /**
      * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $group1 = $this->createGroup($manager, 'Administrators', array(
+        $group1 = $this->createGroup($manager, 'Administrators', [
             $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
             $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
-        ));
+        ]);
 
-        $group2 = $this->createGroup($manager, 'Guests', array(
+        $group2 = $this->createGroup($manager, 'Guests', [
             $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE),
-        ));
+        ]);
 
-        $group3 = $this->createGroup($manager, 'Super administrators', array(
+        $group3 = $this->createGroup($manager, 'Super administrators', [
             $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
             $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
             $this->getReference(RoleFixtures::REFERENCE_SUPERADMIN_ROLE),
-        ));
+        ]);
 
         $manager->flush();
 
@@ -54,7 +52,7 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return Group
      */
-    private function createGroup(ObjectManager $manager, $name, array $roles = array())
+    private function createGroup(ObjectManager $manager, $name, array $roles = [])
     {
         $group = new Group($name);
         foreach ($roles as $role) {

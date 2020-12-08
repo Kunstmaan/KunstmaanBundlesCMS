@@ -60,7 +60,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::COPY_PAGE_TRANSLATION => 'onCopyPageTranslation',
             Events::RECOPY_PAGE_TRANSLATION => 'onRecopyPageTranslation',
             Events::ADD_EMPTY_PAGE_TRANSLATION => 'onAddEmptyPageTranslation',
@@ -71,7 +71,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
             Events::POST_PERSIST => 'postPersist',
             Events::CREATE_PUBLIC_VERSION => 'onCreatePublicVersion',
             Events::CREATE_DRAFT_VERSION => 'onCreateDraftVersion',
-        );
+        ];
     }
 
     /**
@@ -86,81 +86,51 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
         return $this->user;
     }
 
-    /**
-     * @param CopyPageTranslationNodeEvent $event
-     */
     public function onCopyPageTranslation(CopyPageTranslationNodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just copied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
     }
 
-    /**
-     * @param RecopyPageTranslationNodeEvent $event
-     */
     public function onRecopyPageTranslation(RecopyPageTranslationNodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just recopied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onAddEmptyPageTranslation(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just added an empty page translation (%d) for node with id %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postPublish(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just published the page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postUnPublish(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just unpublished the page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postDelete(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just deleted node with id %d', $this->getUser()->getUsername(), $event->getNode()->getId()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onAddNode(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just added node with id %d in language %s', $this->getUser()->getUsername(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postPersist(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just updated page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onCreatePublicVersion(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just created a new public version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onCreateDraftVersion(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just created a draft version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));

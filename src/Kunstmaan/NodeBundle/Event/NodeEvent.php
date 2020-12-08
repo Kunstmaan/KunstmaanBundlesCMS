@@ -142,8 +142,6 @@ class NodeEvent extends BcEvent
     }
 
     /**
-     * @param Response $response
-     *
      * @return NodeEvent
      */
     public function setResponse(Response $response)

@@ -14,9 +14,6 @@ class NodeChoiceType extends AbstractType
     /** @var RequestStack */
     private $requestStack;
 
-    /**
-     * @param RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
@@ -25,8 +22,8 @@ class NodeChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'page_class' => array(),
+            [
+                'page_class' => [],
                 'locale' => null,
                 'online' => true,
                 'class' => 'Kunstmaan\NodeBundle\Entity\Node',
@@ -34,7 +31,7 @@ class NodeChoiceType extends AbstractType
                 'query_builder' => function (NodeRepository $er) {
                     return $er->createQueryBuilder('n');
                 },
-            )
+            ]
         );
 
         $queryBuilderNormalizer = function (Options $options, $queryBuilder) {
@@ -60,7 +57,7 @@ class NodeChoiceType extends AbstractType
         };
 
         $resolver->setNormalizer('query_builder', $queryBuilderNormalizer);
-        $resolver->setAllowedTypes('query_builder', array('null', 'callable', 'Doctrine\ORM\QueryBuilder'));
+        $resolver->setAllowedTypes('query_builder', ['null', 'callable', 'Doctrine\ORM\QueryBuilder']);
     }
 
     public function getParent()

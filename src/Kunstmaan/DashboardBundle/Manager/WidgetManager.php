@@ -9,11 +9,8 @@ class WidgetManager
     /**
      * @var DashboardWidget[]
      */
-    private $widgets = array();
+    private $widgets = [];
 
-    /**
-     * @param DashboardWidget $widget
-     */
     public function addWidget(DashboardWidget $widget)
     {
         $this->widgets[] = $widget;

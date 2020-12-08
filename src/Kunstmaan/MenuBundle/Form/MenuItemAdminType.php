@@ -14,17 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuItemAdminType extends AbstractType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $entityId = $options['entityId'];
@@ -34,7 +23,7 @@ class MenuItemAdminType extends AbstractType
         $builder->add(
             'parent',
             EntityType::class,
-            array(
+            [
                 'class' => $menuItemclass,
                 'choice_label' => 'displayTitle',
                 'query_builder' => function (EntityRepository $er) use (
@@ -52,20 +41,20 @@ class MenuItemAdminType extends AbstractType
 
                     return $qb;
                 },
-                'attr' => array(
+                'attr' => [
                     'class' => 'js-advanced-select',
                     'placeholder' => 'kuma_menu.form.parent_placeholder',
-                ),
+                ],
                 'multiple' => false,
                 'expanded' => false,
                 'required' => false,
                 'label' => 'kuma_menu.form.parent',
-            )
+            ]
         );
         $builder->add(
             'type',
             ChoiceType::class,
-            array(
+            [
                 'choices' => array_combine(
                     MenuItem::$types,
                     MenuItem::$types
@@ -73,7 +62,7 @@ class MenuItemAdminType extends AbstractType
                 'placeholder' => false,
                 'required' => true,
                 'label' => 'kuma_menu.form.type',
-            )
+            ]
         );
         $locale = $options['locale'];
         $rootNode = $options['rootNode'];
@@ -81,7 +70,7 @@ class MenuItemAdminType extends AbstractType
         $builder->add(
             'nodeTranslation',
             EntityType::class,
-            array(
+            [
                 'class' => 'KunstmaanNodeBundle:NodeTranslation',
                 'choice_label' => 'title',
                 'query_builder' => function (EntityRepository $er) use (
@@ -105,39 +94,39 @@ class MenuItemAdminType extends AbstractType
 
                     return $qb;
                 },
-                'attr' => array(
+                'attr' => [
                     'class' => 'js-advanced-select',
                     'placeholder' => 'kuma_menu.form.node_translation_placeholder',
-                ),
+                ],
                 'multiple' => false,
                 'expanded' => false,
                 'required' => true,
                 'label' => 'kuma_menu.form.node_translation',
-            )
+            ]
         );
         $builder->add(
             'title',
             TextType::class,
-            array(
+            [
                 'required' => false,
                 'label' => 'kuma_menu.form.title',
-            )
+            ]
         );
         $builder->add(
             'url',
             TextType::class,
-            array(
+            [
                 'required' => true,
                 'label' => 'kuma_menu.form.url',
-            )
+            ]
         );
         $builder->add(
             'newWindow',
             CheckboxType::class,
-            array(
+            [
                 'required' => false,
                 'label' => 'kuma_menu.form.new_window',
-            )
+            ]
         );
     }
 
@@ -149,22 +138,17 @@ class MenuItemAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-          array(
+          [
               'data_class' => MenuItem::class,
               'menu' => null,
               'entityId' => null,
               'rootNode' => null,
               'menuItemClass' => null,
               'locale' => null,
-          )
+          ]
         );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'menuitem_form';

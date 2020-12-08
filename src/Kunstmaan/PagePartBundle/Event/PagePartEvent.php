@@ -21,11 +21,6 @@ class PagePartEvent extends BcEvent
      */
     private $response = null;
 
-    /**
-     * PagePartEvent constructor.
-     *
-     * @param PagePartInterface $pagePart
-     */
     public function __construct(PagePartInterface $pagePart)
     {
         $this->pagePart = $pagePart;
@@ -39,9 +34,6 @@ class PagePartEvent extends BcEvent
         return $this->pagePart;
     }
 
-    /**
-     * @param PagePartInterface $pagePart
-     */
     public function setPagePart(PagePartInterface $pagePart)
     {
         $this->pagePart = $pagePart;
@@ -55,9 +47,6 @@ class PagePartEvent extends BcEvent
         return $this->response;
     }
 
-    /**
-     * @param Response $response
-     */
     public function setResponse(Response $response)
     {
         $this->response = $response;

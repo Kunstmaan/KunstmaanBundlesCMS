@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @final since 5.1
@@ -52,9 +52,6 @@ class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -82,7 +79,7 @@ class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
 
             return 0;
         } catch (\Exception $e) {
-            $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
+            $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
             return 1;
         }

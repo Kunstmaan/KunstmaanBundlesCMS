@@ -10,9 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class AbstractCategory extends AbstractEntity implements Translatable
 {
-    /**
-     * AbstractCategory constructor.
-     */
     public function __construct()
     {
         if (\get_class($this) === AbstractCategory::class) {

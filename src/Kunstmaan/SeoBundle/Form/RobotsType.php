@@ -12,18 +12,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RobotsType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('robotsTxt', TextareaType::class, array(
+        $builder->add('robotsTxt', TextareaType::class, [
             'label' => 'robots.txt',
-            'attr' => array(
+            'attr' => [
                 'rows' => 15,
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
@@ -36,8 +32,8 @@ class RobotsType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\SeoBundle\Entity\Robots',
-        ));
+        ]);
     }
 }

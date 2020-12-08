@@ -65,7 +65,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     {
         $nodeTranslation = $this->nodeTranslation;
         $create_route = function (EntityInterface $item) use ($nodeTranslation) {
-            $arr = array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $nodeTranslation->getId(), 'submissionId' => $item->getId()));
+            $arr = ['path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => ['nodeTranslationId' => $nodeTranslation->getId(), 'submissionId' => $item->getId()]];
 
             return $arr;
         };
@@ -87,10 +87,10 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function getEditUrlFor($item)
     {
-        return array(
+        return [
             'path' => 'KunstmaanFormBundle_formsubmissions_list_edit',
-            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()),
-        );
+            'params' => ['nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()],
+        ];
     }
 
     /**
@@ -100,10 +100,10 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function getIndexUrl()
     {
-        return array(
+        return [
             'path' => 'KunstmaanFormBundle_formsubmissions_list',
-            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()),
-        );
+            'params' => ['nodeTranslationId' => $this->nodeTranslation->getId()],
+        ];
     }
 
     /**
@@ -119,11 +119,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     /**
      * Configure the types of items you can add
      *
-     * @param array $params
-     *
      * @return string
      */
-    public function getAddUrlFor(array $params = array())
+    public function getAddUrlFor(array $params = [])
     {
         return '';
     }
@@ -176,7 +174,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function getExportUrl()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
+        return ['path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => ['nodeTranslationId' => $this->nodeTranslation->getId()]];
     }
 
     /**
@@ -201,7 +199,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       The parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = [])
     {
         parent::adaptQueryBuilder($queryBuilder);
         $queryBuilder

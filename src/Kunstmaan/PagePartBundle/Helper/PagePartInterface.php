@@ -26,8 +26,6 @@ interface PagePartInterface extends EntityInterface
     /**
      * This method can be used to override the default view for a specific page type
      *
-     * @param HasPagePartsInterface|null $page
-     *
      * @return string
      */
     public function getView(HasPagePartsInterface $page = null);

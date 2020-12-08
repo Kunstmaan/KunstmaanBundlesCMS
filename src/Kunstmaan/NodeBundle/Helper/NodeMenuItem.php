@@ -191,7 +191,7 @@ class NodeMenuItem
     public function getParents()
     {
         $parent = $this->getParent();
-        $parents = array();
+        $parents = [];
         while ($parent !== null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
@@ -237,7 +237,7 @@ class NodeMenuItem
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
             $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
-        $result = array();
+        $result = [];
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child->getPage() instanceof $class) {

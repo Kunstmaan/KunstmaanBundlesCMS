@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\UtilitiesBundle\Helper;
 
-/**
- * Interface SlugifierInterface
- */
 interface SlugifierInterface
 {
     /**

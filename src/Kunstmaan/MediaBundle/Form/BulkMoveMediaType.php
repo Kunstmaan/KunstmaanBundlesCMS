@@ -9,9 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class BulkMoveMediaType
- */
 class BulkMoveMediaType extends AbstractType
 {
     /**
@@ -47,11 +44,6 @@ class BulkMoveMediaType extends AbstractType
             );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_folder_bulk_move';

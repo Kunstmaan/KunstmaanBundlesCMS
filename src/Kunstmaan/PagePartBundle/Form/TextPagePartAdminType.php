@@ -12,16 +12,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextPagePartAdminType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array                                        $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', WysiwygType::class, array(
+        $builder->add('content', WysiwygType::class, [
             'label' => 'pagepart.text.content',
             'required' => false,
-        ));
+        ]);
     }
 
     /**
@@ -32,13 +28,10 @@ class TextPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_textpageparttype';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\PagePartBundle\Entity\TextPagePart',
-        ));
+        ]);
     }
 }

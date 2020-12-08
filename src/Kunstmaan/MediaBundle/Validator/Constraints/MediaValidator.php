@@ -12,7 +12,6 @@ class MediaValidator extends ConstraintValidator
 {
     /**
      * @param MediaObject $value
-     * @param Constraint  $constraint
      *
      * @throws ConstraintDefinitionException
      */

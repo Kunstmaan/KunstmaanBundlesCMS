@@ -6,10 +6,10 @@ use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SettingsController extends BaseSettingsController
 {
@@ -19,8 +19,6 @@ class SettingsController extends BaseSettingsController
      * @Route(path="/", name="KunstmaanSeoBundle_settings_robots")
      * @Template(template="@KunstmaanSeo/Admin/Settings/robotsSettings.html.twig")
      *
-     * @param Request $request
-     *
      * @return array|RedirectResponse
      */
     public function robotsSettingsAction(Request $request)
@@ -29,7 +27,7 @@ class SettingsController extends BaseSettingsController
 
         $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository(Robots::class);
-        $robot = $repo->findOneBy(array());
+        $robot = $repo->findOneBy([]);
         $default = $this->container->getParameter('robots_default');
         $isSaved = true;
 
@@ -42,9 +40,9 @@ class SettingsController extends BaseSettingsController
             $isSaved = false;
         }
 
-        $form = $this->createForm(RobotsType::class, $robot, array(
+        $form = $this->createForm(RobotsType::class, $robot, [
             'action' => $this->generateUrl('KunstmaanSeoBundle_settings_robots'),
-        ));
+        ]);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -62,8 +60,8 @@ class SettingsController extends BaseSettingsController
             );
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 }

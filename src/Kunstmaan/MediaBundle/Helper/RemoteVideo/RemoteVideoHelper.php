@@ -8,13 +8,10 @@ use Kunstmaan\MediaBundle\Helper\Remote\RemoteInterface;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Video
- * Class that defines a video in the system
+ * Defines a video in the system
  */
 class RemoteVideoHelper extends AbstractRemoteHelper implements RemoteInterface
 {
-    /**
-     * @param Media $media
-     */
     public function __construct(Media $media)
     {
         parent::__construct($media);

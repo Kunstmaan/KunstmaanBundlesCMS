@@ -53,9 +53,6 @@ abstract class BaseUser extends AbstractUser
      */
     protected $createdBy;
 
-    /**
-     * Construct a new user
-     */
     public function __construct()
     {
         parent::__construct();
@@ -96,7 +93,7 @@ abstract class BaseUser extends AbstractUser
     {
         $groups = $this->groups;
 
-        $groupIds = array();
+        $groupIds = [];
         if (\count($groups) > 0) {
             /* @var $group GroupInterface */
             foreach ($groups as $group) {
@@ -181,29 +178,26 @@ abstract class BaseUser extends AbstractUser
         $this->googleId = $googleId;
     }
 
-    /**
-     * @param ClassMetadata $metadata
-     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('username', new NotBlank());
         $metadata->addPropertyConstraints(
             'plainPassword',
-            array(
-                new NotBlank(array('groups' => array('Registration'))),
-                new PasswordRestrictions(array('groups' => array('Registration', 'Default'))),
-            )
+            [
+                new NotBlank(['groups' => ['Registration']]),
+                new PasswordRestrictions(['groups' => ['Registration', 'Default']]),
+            ]
         );
         $metadata->addPropertyConstraint('email', new NotBlank());
         $metadata->addPropertyConstraint('email', new Email());
-        $metadata->addConstraint(new UniqueEntity(array(
+        $metadata->addConstraint(new UniqueEntity([
             'fields' => 'username',
             'message' => 'errors.user.loginexists',
-        )));
-        $metadata->addConstraint(new UniqueEntity(array(
+        ]));
+        $metadata->addConstraint(new UniqueEntity([
             'fields' => 'email',
             'message' => 'errors.user.emailexists',
-        )));
+        ]));
     }
 
     /**

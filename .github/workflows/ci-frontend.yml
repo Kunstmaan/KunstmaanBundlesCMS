@@ -1,0 +1,33 @@
+name: 'CI - Frontend'
+
+on:
+  [push, pull_request]
+
+jobs:
+    test:
+        name: Validate frontend setup
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   uses: actions/setup-node@v2-beta
+                with:
+                    node-version: '12'
+
+            -   uses: actions/cache@v2
+                with:
+                    path: ~/.npm
+                    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                    restore-keys: |
+                        ${{ runner.os }}-node-
+
+            -   name: Remove twig syntax from package.json
+                run: |
+                    sed -i -e 's/{% if demosite %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
+                    sed -i -e 's/{% endif %}//g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
+                    sed -i -e 's/"name".*/"name":"demo",/g' src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/package.json
+
+            -   run: npm install
+            -   run: npm run build -- --continueAfterTestError=true
+            -   run: npm run buildGroundControlSkeleton

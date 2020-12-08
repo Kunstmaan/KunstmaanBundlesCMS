@@ -61,7 +61,7 @@ EOT
             $this->assistant->writeSection('Layout generation');
         }
 
-        $rootDir = $this->getApplication()->getKernel()->getProjectDir().'/';
+        $rootDir = $this->getApplication()->getKernel()->getProjectDir() . '/';
         $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'), $this->browserSyncUrl);
 
         if (!$this->isSubCommand()) {
@@ -77,7 +77,7 @@ EOT
     protected function doInteract()
     {
         if (!$this->isSubCommand()) {
-            $this->assistant->writeLine(array("This command helps you to generate a basic layout for your website.\n"));
+            $this->assistant->writeLine(["This command helps you to generate a basic layout for your website.\n"]);
         }
 
         /**

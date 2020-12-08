@@ -67,11 +67,10 @@ class AdminListTwigExtension extends AbstractExtension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param Environment $env
-     * @param AdminList   $view      The view to render
-     * @param string      $basepath  The base path
-     * @param array       $urlparams Additional url params
-     * @param array       $addparams Add params
+     * @param AdminList $view      The view to render
+     * @param string    $basepath  The base path
+     * @param array     $urlparams Additional url params
+     * @param array     $addparams Add params
      *
      * @return string The html markup
      *
@@ -109,11 +108,10 @@ class AdminListTwigExtension extends AbstractExtension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param Environment $env
-     * @param AdminList   $view      The view to render
-     * @param string      $basepath  The base path
-     * @param array       $urlparams Additional url params
-     * @param array       $addparams Add params
+     * @param AdminList $view      The view to render
+     * @param string    $basepath  The base path
+     * @param array     $urlparams Additional url params
+     * @param array     $addparams Add params
      *
      * @return string The html markup
      *

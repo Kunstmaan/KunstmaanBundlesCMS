@@ -101,8 +101,6 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
      * @return PageInterface
      */
     public function getPage(EntityManager $em)

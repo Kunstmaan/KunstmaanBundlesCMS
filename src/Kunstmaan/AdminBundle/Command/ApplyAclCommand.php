@@ -4,11 +4,11 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
+use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Kunstmaan\AdminBundle\Service\AclManager;
 
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
@@ -48,9 +48,6 @@ class ApplyAclCommand extends ContainerAwareCommand
         $this->shellHelper = $shellHelper;
     }
 
-    /**
-     * Configures the command.
-     */
     protected function configure()
     {
         parent::configure();

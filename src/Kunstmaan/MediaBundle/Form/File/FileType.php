@@ -37,35 +37,35 @@ class FileType extends AbstractType
         $builder->add(
             'name',
             TextType::class,
-            array(
+            [
                 'label' => 'media.form.file.name.label',
                 'required' => false,
-            )
+            ]
         );
         $builder->add(
             'file',
             BaseFileType::class,
-            array(
+            [
                 'label' => 'media.form.file.file.label',
-                'constraints' => array(new File(), new HasGuessableExtension()),
+                'constraints' => [new File(), new HasGuessableExtension()],
                 'required' => false,
-            )
+            ]
         );
         $builder->add(
             'copyright',
             TextType::class,
-            array(
+            [
                 'label' => 'media.form.file.copyright.label',
                 'required' => false,
-            )
+            ]
         );
         $builder->add(
             'description',
             TextareaType::class,
-            array(
+            [
                 'label' => 'media.form.file.description.label',
                 'required' => false,
-            )
+            ]
         );
 
         $builder->addEventListener(
@@ -79,30 +79,30 @@ class FileType extends AbstractType
                     $form->add(
                         'file',
                         BaseFileType::class,
-                        array(
+                        [
                             'label' => 'media.form.file.file.label',
-                            'constraints' => array(new NotBlank(), new File(), new HasGuessableExtension()),
+                            'constraints' => [new NotBlank(), new File(), new HasGuessableExtension()],
                             'required' => true,
-                        )
+                        ]
                     );
                 } else {
                     // Display original filename only for persisted objects
                     $form->add(
                         'originalFilename',
                         TextType::class,
-                        array(
+                        [
                             'label' => 'media.form.file.originalFilename.label',
                             'required' => false,
-                            'attr' => array(
+                            'attr' => [
                                 'readonly' => 'readonly',
-                            ),
-                        )
+                            ],
+                        ]
                     );
                     // Allow changing folder on edit
                     $form->add(
                         'folder',
                         EntityType::class,
-                        array(
+                        [
                             'class' => 'KunstmaanMediaBundle:Folder',
                             'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
@@ -110,18 +110,13 @@ class FileType extends AbstractType
                                     ->andWhere('f.parent IS NOT NULL');
                             },
                             'required' => true,
-                        )
+                        ]
                     );
                 }
             }
         );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_filetype';
@@ -135,9 +130,9 @@ class FileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
-            )
+            ]
         );
     }
 }

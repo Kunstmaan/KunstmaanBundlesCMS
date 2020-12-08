@@ -35,18 +35,18 @@ class GoogleAnalyticsTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
                 'google_analytics_initialize',
-                array($this, 'renderInitialize'),
-                array('is_safe' => array('html'), 'needs_environment' => true)
+                [$this, 'renderInitialize'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
                 'google_analytics_track_order',
-                array($this, 'renderECommerceTracking'),
-                array('is_safe' => array('html'), 'needs_environment' => true)
+                [$this, 'renderECommerceTracking'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
             ),
-        );
+        ];
     }
 
     /**
@@ -78,8 +78,7 @@ class GoogleAnalyticsTwigExtension extends AbstractExtension
      *
      * If the options are not set it'll try and load the account ID from your parameters (google.analytics.account_id)
      *
-     * @param Environment $environment
-     * @param array|null  $options     Example: {account_id: 'UA-XXXXX-Y'}
+     * @param array|null $options Example: {account_id: 'UA-XXXXX-Y'}
      *
      * @return string the HTML rendered
      *
@@ -88,10 +87,10 @@ class GoogleAnalyticsTwigExtension extends AbstractExtension
     public function renderInitialize(Environment $environment, $options = null)
     {
         if (\is_null($options)) {
-            $options = array();
+            $options = [];
         }
 
-        $defaults = array();
+        $defaults = [];
 
         $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->accountId);
 
@@ -108,9 +107,6 @@ class GoogleAnalyticsTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param Environment $environment
-     * @param Order       $order
-     *
      * @return string the HTML rendered
      */
     public function renderECommerceTracking(Environment $environment, Order $order)

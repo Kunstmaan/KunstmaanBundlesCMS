@@ -58,9 +58,6 @@ class AbstractArticleCategoryAdminListConfigurator extends AbstractDoctrineORMAd
         $this->addField('name', 'article.category.list.header.name', true);
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->orderBy('b.name', 'ASC');

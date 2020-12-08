@@ -8,11 +8,11 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * WidgetsController
@@ -22,8 +22,6 @@ class WidgetsController extends Controller
     /**
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
      * @Template("@KunstmaanNode/Widgets/selectLink.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -42,8 +40,6 @@ class WidgetsController extends Controller
      * @Route("/selecturl", name="KunstmaanNodeBundle_selecturl")
      * @Template("@KunstmaanNode/Widgets/selectLink.html.twig")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
     public function selectLinkAction(Request $request)
@@ -59,8 +55,6 @@ class WidgetsController extends Controller
      * Select a link
      *
      * @Route("/select-nodes-lazy_search", name="KunstmaanNodeBundle_nodes_lazy_search")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return JsonResponse
      */
@@ -97,8 +91,6 @@ class WidgetsController extends Controller
      *
      * @Route("/select-nodes-lazy", name="KunstmaanNodeBundle_nodes_lazy")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return JsonResponse
      */
     public function selectNodesLazy(Request $request)
@@ -130,8 +122,6 @@ class WidgetsController extends Controller
     /**
      * Get the parameters needed in the template. This is common for the
      * default link chooser and the cke link chooser.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -200,9 +190,9 @@ class WidgetsController extends Controller
         foreach ($rootNodes as $rootNode) {
             if ($nodeTranslation = $rootNode->getNodeTranslation($locale, true)) {
                 if ($isMultiDomain && !$switched) {
-                    $slug = sprintf('[%s:%s]', $switchedHost['id'], 'NT'.$nodeTranslation->getId());
+                    $slug = sprintf('[%s:%s]', $switchedHost['id'], 'NT' . $nodeTranslation->getId());
                 } else {
-                    $slug = sprintf('[%s]', 'NT'.$nodeTranslation->getId());
+                    $slug = sprintf('[%s]', 'NT' . $nodeTranslation->getId());
                 }
 
                 switch (true) {

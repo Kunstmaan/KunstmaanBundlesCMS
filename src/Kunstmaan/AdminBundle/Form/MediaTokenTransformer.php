@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminBundle\Form;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Form\DataTransformerInterface;
 
-/**
- * Class MediaTokenTransformer.
- */
 class MediaTokenTransformer implements DataTransformerInterface
 {
     /**

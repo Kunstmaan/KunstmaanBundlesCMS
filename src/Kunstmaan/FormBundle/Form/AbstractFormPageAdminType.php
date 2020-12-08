@@ -22,34 +22,32 @@ class AbstractFormPageAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', TextType::class, array(
+        $builder->add('title', TextType::class, [
             'label' => 'kuma_form.form.page_admin.title.label',
-        ));
-        $builder->add('thanks', WysiwygType::class, array(
+        ]);
+        $builder->add('thanks', WysiwygType::class, [
             'label' => 'kuma_form.form.page_admin.thanks.label',
             'required' => false,
-        ));
-        $builder->add('subject', TextType::class, array(
+        ]);
+        $builder->add('subject', TextType::class, [
             'label' => 'kuma_form.form.page_admin.subject.label',
-        ));
-        $builder->add('from_email', EmailType::class, array(
+        ]);
+        $builder->add('from_email', EmailType::class, [
             'label' => 'kuma_form.form.page_admin.from_email.label',
-        ));
-        $builder->add('to_email', TextType::class, array(
+        ]);
+        $builder->add('to_email', TextType::class, [
             'label' => 'kuma_form.form.page_admin.to_email.label',
-        ));
+        ]);
     }
 
     /**
      *  This should also be abstract, it's impossible to instantiate this data_class!
-     *
-     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\FormBundle\Entity\AbstractFormPage',
-        ));
+        ]);
     }
 
     /**

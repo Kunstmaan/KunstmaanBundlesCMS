@@ -12,19 +12,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextWithLocaleAdminType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('locale', HiddenType::class, array(
+        $builder->add('locale', HiddenType::class, [
             'label' => 'kuma_translator.form.text_with_locale.locale.label',
-        ));
-        $builder->add('text', TextareaType::class, array(
+        ]);
+        $builder->add('text', TextareaType::class, [
             'label' => 'kuma_translator.form.text_with_locale.text.label',
             'required' => false,
-        ));
+        ]);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -40,11 +36,6 @@ class TextWithLocaleAdminType extends AbstractType
         );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'text_with_locale';
@@ -52,8 +43,8 @@ class TextWithLocaleAdminType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\TextWithLocale',
-        ));
+        ]);
     }
 }

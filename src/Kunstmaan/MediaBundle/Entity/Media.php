@@ -77,7 +77,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="array")
      */
-    protected $metadata = array();
+    protected $metadata = [];
 
     /**
      * @var \DateTime
@@ -141,9 +141,6 @@ class Media extends AbstractEntity
      */
     protected $removedFromFileSystem;
 
-    /**
-     * constructor
-     */
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -442,8 +439,6 @@ class Media extends AbstractEntity
 
     /**
      * Set folder
-     *
-     * @param Folder $folder
      *
      * @return Media
      */

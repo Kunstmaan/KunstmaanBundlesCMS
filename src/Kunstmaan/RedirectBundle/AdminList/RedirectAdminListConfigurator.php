@@ -17,9 +17,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     private $domainConfiguration;
 
     /**
-     * @param EntityManager                $em                  The entity manager
-     * @param AclHelper                    $aclHelper           The acl helper
-     * @param DomainConfigurationInterface $domainConfiguration
+     * @param EntityManager $em        The entity manager
+     * @param AclHelper     $aclHelper The acl helper
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null, DomainConfigurationInterface $domainConfiguration)
     {
@@ -53,7 +52,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         if ($this->domainConfiguration->isMultiDomainHost()) {
             $hosts = $this->domainConfiguration->getHosts();
             $domains = array_combine($hosts, $hosts);
-            $domains = array_merge(array('' => 'redirect.all'), $domains);
+            $domains = array_merge(['' => 'redirect.all'], $domains);
             $this->addFilter('domain', new ORM\EnumerationFilterType('domain'), 'redirect.adminlist.filter.domain', $domains);
         }
         $this->addFilter('origin', new ORM\StringFilterType('origin'), 'redirect.adminlist.filter.origin');

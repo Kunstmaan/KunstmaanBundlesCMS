@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
  */
 class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
 {
-    private $_MIMETYPE_NAMESPACES = array(
+    private $_MIMETYPE_NAMESPACES = [
         'http://www.w3.org/2000/svg' => 'image/svg+xml',
-    );
+    ];
 
     /**
      * {@inheritdoc}
