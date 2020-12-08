@@ -214,7 +214,7 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setContentType($contentType);
         $media->setFileSize(filesize($media->getContent()));
-        $media->setUrl($this->mediaPath.$this->getFilePath($media));
+        $media->setUrl($this->mediaPath . $this->getFilePath($media));
         $media->setLocation('local');
     }
 

@@ -3,8 +3,8 @@
 namespace Kunstmaan\VotingBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event as LegacyEvent;
-use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 if (!class_exists(Event::class)) {
     /**

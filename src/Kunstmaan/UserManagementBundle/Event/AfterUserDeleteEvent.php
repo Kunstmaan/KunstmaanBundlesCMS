@@ -8,6 +8,7 @@ final class AfterUserDeleteEvent extends Event
 {
     /** @var string */
     private $deletedUser;
+
     /** @var string */
     private $deletedBy;
 

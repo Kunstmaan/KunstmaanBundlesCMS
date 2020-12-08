@@ -17,8 +17,10 @@ class SearchViewRenderer
 {
     /** @var Environment */
     private $twig;
+
     /** @var IndexablePagePartsService */
     private $indexablePagePartsService;
+
     /** @var RequestStack */
     private $requestStack;
 

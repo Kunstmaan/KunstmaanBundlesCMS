@@ -553,7 +553,6 @@ abstract class AdminListController extends Controller
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

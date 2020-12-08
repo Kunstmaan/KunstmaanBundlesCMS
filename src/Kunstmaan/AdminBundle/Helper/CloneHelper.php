@@ -49,7 +49,6 @@ class CloneHelper
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */
