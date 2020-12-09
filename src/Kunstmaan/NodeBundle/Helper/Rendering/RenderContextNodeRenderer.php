@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RenderingContextNodeRenderer implements NodeRenderingInterface
+class RenderContextNodeRenderer implements NodeRenderingInterface
 {
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
