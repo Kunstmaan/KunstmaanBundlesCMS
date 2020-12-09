@@ -13,22 +13,17 @@ class RenderService
      */
     private $router;
 
-    /**
-     * @param RouterInterface $router
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
     /**
-     * @param Environment $environment
-     * @param $node
      * @param array $options
      *
      * @return string
      */
-    public function renderMenuItemTemplate(Environment $environment, $node, $options = array())
+    public function renderMenuItemTemplate(Environment $environment, $node, $options = [])
     {
         $template = isset($options['template']) ? $options['template'] : false;
         if ($template === false) {
@@ -39,7 +34,7 @@ class RenderService
         if ($node['__children']) {
             foreach ($node['__children'] as $childNode) {
                 if ($childNode['type'] == MenuItem::TYPE_PAGE_LINK) {
-                    $childUrl = $this->router->generate('_slug', array('url' => $childNode['nodeTranslation']['url']));
+                    $childUrl = $this->router->generate('_slug', ['url' => $childNode['nodeTranslation']['url']]);
                     if ($this->router->getContext()->getPathInfo() == $childUrl) {
                         $hasActiveChild = true;
 
@@ -51,7 +46,7 @@ class RenderService
 
         $active = false;
         if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
-            $url = $this->router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
+            $url = $this->router->generate('_slug', ['url' => $node['nodeTranslation']['url']]);
 
             if ($this->router->getContext()->getPathInfo() == $url) {
                 $active = true;
@@ -70,13 +65,13 @@ class RenderService
             $title = $node['title'];
         }
 
-        return $environment->render($template, array(
+        return $environment->render($template, [
             'menuItem' => $node,
             'url' => $url,
             'options' => $options,
             'title' => $title,
             'active' => $active,
             'hasActiveChild' => $hasActiveChild,
-        ));
+        ]);
     }
 }

@@ -30,7 +30,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         parent::__construct($em, $aclHelper);
         $this->setPermissionDefinition(
-            new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
+            new PermissionDefinition([$permission], 'Kunstmaan\NodeBundle\Entity\Node', 'n')
         );
     }
 
@@ -60,10 +60,10 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildItemActions()
     {
         $create_route = function (EntityInterface $item) {
-            return array(
+            return [
                 'path' => 'KunstmaanFormBundle_formsubmissions_list',
-                'params' => array('nodeTranslationId' => $item->getId()),
-            );
+                'params' => ['nodeTranslationId' => $item->getId()],
+            ];
         };
         $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
             $create_route,
@@ -82,10 +82,10 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getEditUrlFor($item)
     {
-        return array(
+        return [
             'path' => 'KunstmaanFormBundle_formsubmissions_list',
-            'params' => array('nodeTranslationId' => $item->getId()),
-        );
+            'params' => ['nodeTranslationId' => $item->getId()],
+        ];
     }
 
     /**
@@ -95,7 +95,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getIndexUrl()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions');
+        return ['path' => 'KunstmaanFormBundle_formsubmissions'];
     }
 
     /**
@@ -116,11 +116,9 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     /**
      * Configure the types of items you can add
      *
-     * @param array $params
-     *
      * @return array
      */
-    public function getAddUrlFor(array $params = array())
+    public function getAddUrlFor(array $params = [])
     {
         return '';
     }
@@ -146,7 +144,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getDeleteUrlFor($item)
     {
-        return array();
+        return [];
     }
 
     /**

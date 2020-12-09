@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class AdminPanelCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_admin.admin_panel')) {
@@ -25,7 +22,7 @@ class AdminPanelCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('kunstmaan_admin.admin_panel.adaptor') as $id => $attributes) {
             $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
 
-            $definition->addMethodCall('addAdminPanelAdaptor', array(new Reference($id), $priority));
+            $definition->addMethodCall('addAdminPanelAdaptor', [new Reference($id), $priority]);
         }
     }
 }

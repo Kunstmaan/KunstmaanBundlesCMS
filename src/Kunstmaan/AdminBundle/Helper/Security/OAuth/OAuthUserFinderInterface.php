@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
-/**
- * Interface OAuthUserFinderInterface
- */
 interface OAuthUserFinderInterface
 {
     /**

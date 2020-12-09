@@ -37,7 +37,6 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      * @param BundleInterface $bundle    The bundle
      * @param string          $entity    The entity name
      * @param ClassMetadata   $metadata  The meta data
-     * @param OutputInterface $output
      * @param string          $sortField
      *
      * @internal param bool $generateAdminType True if we need to specify the admin type
@@ -99,18 +98,18 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
-        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->setSkeletonDirs([$this->skeletonDir]);
         $this->renderFile(
             '/AdminList/AdminListConfigurator.php',
             $classPath,
-            array(
+            [
                 'namespace' => $bundle->getNamespace(),
                 'bundle' => $bundle,
                 'entity_class' => $entityName,
                 'fields' => $this->getFieldsWithFilterTypeFromMetadata($metadata),
                 'generate_admin_type' => $generateAdminType,
                 'sortField' => $sortField,
-            )
+            ]
         );
     }
 
@@ -135,18 +134,18 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->setSkeletonDirs([$this->skeletonDir]);
         $this->renderFile(
             '/Controller/EntityAdminListController.php',
             $classPath,
-            array(
+            [
                 'namespace' => $bundle->getNamespace(),
                 'bundle' => $bundle,
                 'entity_class' => $entityName,
                 'export_extensions' => $extensions,
                 'sortField' => $sortField,
                 'isV4' => Kernel::VERSION_ID >= 40000,
-            )
+            ]
         );
     }
 
@@ -167,22 +166,20 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->setSkeletonDirs([$this->skeletonDir]);
         $this->renderFile(
             '/Form/EntityAdminType.php',
             $classPath,
-            array(
+            [
                 'namespace' => $bundle->getNamespace(),
                 'bundle' => $bundle,
                 'entity_class' => $entityName,
                 'fields' => $this->getFieldsFromMetadata($metadata),
-            )
+            ]
         );
     }
 
     /**
-     * @param ClassMetadata $metadata
-     *
      * @return string[]
      */
     private function getFieldsFromMetadata(ClassMetadata $metadata)
@@ -191,13 +188,11 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param ClassMetadata $metadata
-     *
      * @return array
      */
     private function getFieldsWithFilterTypeFromMetadata(ClassMetadata $metadata)
     {
-        $mapping = array(
+        $mapping = [
             'string' => 'ORM\StringFilterType',
             'text' => 'ORM\StringFilterType',
             'integer' => 'ORM\NumberFilterType',
@@ -208,9 +203,9 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             'date' => 'ORM\DateFilterType',
             'datetime' => 'ORM\DateFilterType',
             'time' => 'ORM\DateFilterType',
-        );
+        ];
 
-        $fields = array();
+        $fields = [];
 
         foreach ($this->getFieldsFromMetadata($metadata) as $fieldName) {
             $type = $metadata->getTypeOfField($fieldName);
@@ -220,7 +215,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             $fieldTitle = ucfirst(strtolower(implode(' ', $matches[0])));
 
             if (!is_null($filterType)) {
-                $fields[$fieldName] = array('filterType' => $filterType, 'fieldTitle' => $fieldTitle);
+                $fields[$fieldName] = ['filterType' => $filterType, 'fieldTitle' => $fieldTitle];
             }
         }
 

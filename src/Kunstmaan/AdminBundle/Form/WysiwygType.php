@@ -7,9 +7,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class WysiwygType
- */
 class WysiwygType extends AbstractType
 {
     /**
@@ -22,10 +19,6 @@ class WysiwygType extends AbstractType
         $this->mediaTokenTransformer = $mediaTokenTransformer;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->mediaTokenTransformer);

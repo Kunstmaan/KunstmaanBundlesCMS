@@ -6,9 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\AdminList\ExceptionAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ExceptionController extends AdminListController
 {
@@ -50,16 +50,13 @@ class ExceptionController extends AdminListController
         return new RedirectResponse(
             $this->generateUrl(
                 $indexUrl['path'],
-                isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                isset($indexUrl['params']) ? $indexUrl['params'] : []
             )
         );
     }
 
     /**
      * @Route("/toggle_resolve/{id}", name="kunstmaanadminbundle_admin_exception_toggle_resolve")
-     *
-     * @param Request   $request
-     * @param Exception $model
      *
      * @return RedirectResponse
      *
@@ -84,7 +81,7 @@ class ExceptionController extends AdminListController
         return new RedirectResponse(
             $this->generateUrl(
                 $indexUrl['path'],
-                isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                isset($indexUrl['params']) ? $indexUrl['params'] : []
             )
         );
     }

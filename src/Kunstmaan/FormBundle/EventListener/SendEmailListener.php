@@ -25,8 +25,6 @@ class SendEmailListener
 
     /**
      * Configure the form submissions link on top of the form in the sub action menu
-     *
-     * @param SubmissionEvent $event
      */
     public function onSubmission(SubmissionEvent $event)
     {

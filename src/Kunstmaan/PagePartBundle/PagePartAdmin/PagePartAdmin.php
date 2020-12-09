@@ -50,17 +50,17 @@ class PagePartAdmin
     /**
      * @var PagePartInterface[]
      */
-    protected $pageParts = array();
+    protected $pageParts = [];
 
     /**
      * @var PagePartRef[]
      */
-    protected $pagePartRefs = array();
+    protected $pagePartRefs = [];
 
     /**
      * @var PagePartInterface[]
      */
-    protected $newPageParts = array();
+    protected $newPageParts = [];
 
     /**
      * @param PagePartAdminConfiguratorInterface $configurator The configurator
@@ -104,7 +104,7 @@ class PagePartAdmin
         $ppRefs = $ppRefRepo->getPagePartRefs($this->page, $this->context);
 
         // Group pagepartrefs per type
-        $types = array();
+        $types = [];
         foreach ($ppRefs as $pagePartRef) {
             $types[$pagePartRef->getPagePartEntityname()][] = $pagePartRef->getPagePartId();
             $this->pagePartRefs[$pagePartRef->getId()] = $pagePartRef;
@@ -112,9 +112,9 @@ class PagePartAdmin
 
         // Fetch all the pageparts (only one query per pagepart type)
         /** @var EntityInterface[] $pageParts */
-        $pageParts = array();
+        $pageParts = [];
         foreach ($types as $classname => $ids) {
-            $result = $this->em->getRepository($classname)->findBy(array('id' => $ids));
+            $result = $this->em->getRepository($classname)->findBy(['id' => $ids]);
             $pageParts = array_merge($pageParts, $result);
         }
 
@@ -141,24 +141,21 @@ class PagePartAdmin
         return $this->page;
     }
 
-    /**
-     * @param Request $request
-     */
     public function preBindRequest(Request $request)
     {
         // Fetch all sub-entities that should be removed
-        $subPagePartsToDelete = array();
+        $subPagePartsToDelete = [];
         foreach (array_keys($request->request->all()) as $key) {
             // Example value: delete_pagepartadmin_74_tags_3
             if (preg_match('/^delete_pagepartadmin_(\\d+)_(\\w+)_(\\d+)$/i', $key, $matches)) {
-                $subPagePartsToDelete[$matches[1]][] = array('name' => $matches[2], 'id' => $matches[3]);
+                $subPagePartsToDelete[$matches[1]][] = ['name' => $matches[2], 'id' => $matches[3]];
             }
         }
 
         $doFlush = false;
         foreach ($this->pagePartRefs as $pagePartRef) {
             // Remove pageparts
-            if ('true' == $request->get($pagePartRef->getId().'_deleted')) {
+            if ('true' == $request->get($pagePartRef->getId() . '_deleted')) {
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
                 $this->em->remove($pagePart);
                 $this->em->remove($pagePartRef);
@@ -172,7 +169,7 @@ class PagePartAdmin
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
                 foreach ($subPagePartsToDelete[$pagePartRef->getId()] as $deleteInfo) {
                     /** @var EntityInterface[] $objects */
-                    $objects = \call_user_func(array($pagePart, 'get'.ucfirst($deleteInfo['name'])));
+                    $objects = \call_user_func([$pagePart, 'get' . ucfirst($deleteInfo['name'])]);
 
                     foreach ($objects as $object) {
                         if ($object->getId() == $deleteInfo['id']) {
@@ -189,21 +186,21 @@ class PagePartAdmin
         }
 
         // Create the objects for the new pageparts
-        $this->newPageParts = array();
-        $newRefIds = $request->get($this->context.'_new');
+        $this->newPageParts = [];
+        $newRefIds = $request->get($this->context . '_new');
 
         if (\is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
-                $type = $request->get($this->context.'_type_'.$newId);
+                $type = $request->get($this->context . '_type_' . $newId);
                 $this->newPageParts[$newId] = new $type();
             }
         }
 
         // Sort pageparts again
-        $sequences = $request->get($this->context.'_sequence');
+        $sequences = $request->get($this->context . '_sequence');
         if (!\is_null($sequences)) {
             $tempPageparts = $this->pageParts;
-            $this->pageParts = array();
+            $this->pageParts = [];
             foreach ($sequences as $sequence) {
                 if (\array_key_exists($sequence, $this->newPageParts)) {
                     $this->pageParts[$sequence] = $this->newPageParts[$sequence];
@@ -218,16 +215,10 @@ class PagePartAdmin
         }
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
     }
 
-    /**
-     * @param FormBuilderInterface $formbuilder
-     */
     public function adaptForm(FormBuilderInterface $formbuilder)
     {
         $data = $formbuilder->getData();
@@ -245,16 +236,13 @@ class PagePartAdmin
         $formbuilder->setData($data);
     }
 
-    /**
-     * @param Request $request
-     */
     public function persist(Request $request)
     {
         /** @var PagePartRefRepository $ppRefRepo */
         $ppRefRepo = $this->em->getRepository(PagePartRef::class);
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
-        $sequences = $request->get($this->context.'_sequence', []);
+        $sequences = $request->get($this->context . '_sequence', []);
         $sequencescount = \count($sequences);
         for ($i = 0; $i < $sequencescount; ++$i) {
             $pagePartRefId = $sequences[$i];
@@ -298,7 +286,7 @@ class PagePartAdmin
     public function getPossiblePagePartTypes()
     {
         $possiblePPTypes = $this->configurator->getPossiblePagePartTypes();
-        $result = array();
+        $result = [];
 
         // filter page part types that can only be added x times to the page context.
         // to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
@@ -342,8 +330,6 @@ class PagePartAdmin
     }
 
     /**
-     * @param PagePartInterface $pagepart
-     *
      * @return string
      */
     public function getType(PagePartInterface $pagepart)
@@ -384,7 +370,6 @@ class PagePartAdmin
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

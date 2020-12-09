@@ -4,9 +4,6 @@ namespace Kunstmaan\AdminBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * Class PasswordRestrictions
- */
 class PasswordRestrictions extends Constraint
 {
     public const INVALID_MIN_DIGITS_ERROR = 'af8b48ce-be95-4149-8ab8-f0770536c414';

@@ -39,9 +39,6 @@ class EntityTabListener
         }
     }
 
-    /**
-     * @param AdaptSimpleFormEvent $event
-     */
     public function adaptForm(AdaptSimpleFormEvent $event)
     {
         $entity = $event->getData();

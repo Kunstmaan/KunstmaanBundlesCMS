@@ -42,9 +42,6 @@ class LockableEntity extends AbstractEntity
      */
     protected $entityId;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->setCreated(new \DateTime());
@@ -53,8 +50,6 @@ class LockableEntity extends AbstractEntity
 
     /**
      * Set created
-     *
-     * @param \DateTime $created
      *
      * @return LockableEntity
      */
@@ -77,8 +72,6 @@ class LockableEntity extends AbstractEntity
 
     /**
      * Set updated
-     *
-     * @param \DateTime $updated
      *
      * @return LockableEntity
      */
@@ -110,8 +103,6 @@ class LockableEntity extends AbstractEntity
     }
 
     /**
-     * @param $entityClass
-     *
      * @return LockableEntity
      */
     public function setEntityClass($entityClass)
@@ -133,8 +124,6 @@ class LockableEntity extends AbstractEntity
 
     /**
      * Set integer
-     *
-     * @param $entityId
      *
      * @return LockableEntity
      */

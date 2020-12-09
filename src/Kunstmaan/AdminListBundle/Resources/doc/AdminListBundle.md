@@ -153,8 +153,6 @@ The edit action method will build and process the edit form.
 
 ```PHP
     /**
-     * @param $id
-     *
      * @throws NotFoundHttpException
      * @internal param $eid
      *
@@ -172,8 +170,6 @@ The delete action will handle the deletion of your Entity.
 
 ```PHP
     /**
-     * @param $id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws NotFoundHttpException
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="yourbundle_admin_document_delete", methods={"GET", "POST"})
@@ -189,8 +185,6 @@ To export your Entities, there's the export action method.
 ```PHP
     /**
      * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="yourbundle_document_export", methods={"GET", "POST"})
-     *
-     * @param $_format
      *
      * @return array
      */

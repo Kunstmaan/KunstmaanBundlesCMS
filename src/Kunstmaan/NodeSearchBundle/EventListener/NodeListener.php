@@ -16,17 +16,11 @@ class NodeListener
     /** @var EntityManager */
     private $em;
 
-    /**
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @param AdaptFormEvent $event
-     */
     public function adaptForm(AdaptFormEvent $event)
     {
         $searchWidget = new SearchFormWidget($event->getNode(), $this->em);

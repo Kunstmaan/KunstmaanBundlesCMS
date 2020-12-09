@@ -2,15 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-/**
- * Class SimpleTreeView
- */
 class SimpleTreeView
 {
     /**
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Add an item to the tree array

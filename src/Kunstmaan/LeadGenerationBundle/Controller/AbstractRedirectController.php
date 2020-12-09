@@ -3,8 +3,8 @@
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 abstract class AbstractRedirectController extends Controller
 {
@@ -16,9 +16,9 @@ abstract class AbstractRedirectController extends Controller
         /** @var AbstractPopup $thePopup */
         $thePopup = $this->getDoctrine()->getRepository(AbstractPopup::class)->find($popup);
 
-        return $this->render($this->getIndexTemplate(), array(
+        return $this->render($this->getIndexTemplate(), [
             'popup' => $thePopup,
-        ));
+        ]);
     }
 
     protected function getIndexTemplate()

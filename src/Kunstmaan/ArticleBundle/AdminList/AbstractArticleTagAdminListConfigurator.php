@@ -58,9 +58,6 @@ class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminLi
         $this->addField('name', 'article.tag.list.header.name', true);
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->orderBy('b.name', 'ASC');

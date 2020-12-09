@@ -7,8 +7,7 @@ interface SearchProviderChainInterface
     /**
      * Add a SearchProvider to the chain
      *
-     * @param SearchProviderInterface $provider
-     * @param string                  $alias
+     * @param string $alias
      */
     public function addProvider(SearchProviderInterface $provider, $alias);
 

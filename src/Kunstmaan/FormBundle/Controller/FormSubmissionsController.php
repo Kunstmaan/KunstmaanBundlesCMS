@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\ExportList;
@@ -13,13 +14,12 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * The controller which will handle everything related with form pages and form submissions
@@ -46,7 +46,7 @@ class FormSubmissionsController extends Controller
         );
         $adminList->bindRequest($request);
 
-        return array('adminlist' => $adminList);
+        return ['adminlist' => $adminList];
     }
 
     /**
@@ -71,7 +71,7 @@ class FormSubmissionsController extends Controller
         );
         $adminList->bindRequest($request);
 
-        return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminList);
+        return ['nodetranslation' => $nodeTranslation, 'adminlist' => $adminList];
     }
 
     /**
@@ -139,8 +139,7 @@ class FormSubmissionsController extends Controller
      *      methods={"POST"}
      * )
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return RedirectResponse
      *

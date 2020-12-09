@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminBundle\Event;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AdaptSimpleFormEvent
- */
 class AdaptSimpleFormEvent extends BcEvent
 {
     /**
@@ -33,14 +30,12 @@ class AdaptSimpleFormEvent extends BcEvent
     /**
      * @var array
      */
-    protected $options = array();
+    protected $options = [];
 
     /**
-     * @param Request $request
-     * @param string  $formType
-     * @param $data
+     * @param string $formType
      */
-    public function __construct(Request $request, $formType, $data, $options = array())
+    public function __construct(Request $request, $formType, $data, $options = [])
     {
         $this->request = $request;
         $this->formType = $formType;
@@ -56,9 +51,6 @@ class AdaptSimpleFormEvent extends BcEvent
         return $this->tabPane;
     }
 
-    /**
-     * @param TabPane $tabPane
-     */
     public function setTabPane(TabPane $tabPane)
     {
         $this->tabPane = $tabPane;
@@ -72,9 +64,6 @@ class AdaptSimpleFormEvent extends BcEvent
         return $this->request;
     }
 
-    /**
-     * @param Request $request
-     */
     public function setRequest(Request $request)
     {
         $this->request = $request;
@@ -104,9 +93,6 @@ class AdaptSimpleFormEvent extends BcEvent
         return $this->data;
     }
 
-    /**
-     * @param $data
-     */
     public function setData($data)
     {
         $this->data = $data;
@@ -120,9 +106,6 @@ class AdaptSimpleFormEvent extends BcEvent
         return $this->options;
     }
 
-    /**
-     * @param $options
-     */
     public function setOptions($options)
     {
         $this->options = $options;

@@ -45,7 +45,7 @@ class TagsTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        $result = array();
+        $result = [];
 
         if (!($value instanceof ArrayCollection)) {
             return $result;

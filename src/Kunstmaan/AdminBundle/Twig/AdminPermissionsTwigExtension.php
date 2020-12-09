@@ -22,29 +22,28 @@ class AdminPermissionsTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('permissionsadmin_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('permissionsadmin_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+        ];
     }
 
     /**
      * Renders the permission admin widget.
      *
-     * @param Environment     $env
      * @param PermissionAdmin $permissionAdmin The permission admin
      * @param FormView        $form            The form
      * @param array           $parameters      Extra parameters
      *
      * @return string
      */
-    public function renderWidget(Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = array())
+    public function renderWidget(Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = [])
     {
         $template = $env->load('@KunstmaanAdmin/PermissionsAdminTwigExtension/widget.html.twig');
 
-        return $template->render(array_merge(array(
+        return $template->render(array_merge([
             'form' => $form,
             'permissionadmin' => $permissionAdmin,
             'recursiveSupport' => true,
-        ), $parameters));
+        ], $parameters));
     }
 }

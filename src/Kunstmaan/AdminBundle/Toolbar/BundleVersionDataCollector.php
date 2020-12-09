@@ -19,7 +19,6 @@ class BundleVersionDataCollector extends AbstractDataCollector
     private $cache;
 
     /**
-     * @param VersionChecker                 $versionChecker
      * @param CacheProvider|AdapterInterface $cache
      */
     public function __construct(VersionChecker $versionChecker, /*Logger $logger,*/ /* AdapterInterface */ $cache)

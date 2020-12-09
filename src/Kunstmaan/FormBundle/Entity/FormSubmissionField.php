@@ -147,8 +147,6 @@ abstract class FormSubmissionField
     /**
      * Set the FormSubmission this field is part of
      *
-     * @param FormSubmission $formSubmission
-     *
      * @return FormSubmissionField
      */
     public function setSubmission(FormSubmission $formSubmission)

@@ -63,9 +63,6 @@ class FormSubmission implements EntityInterface
      */
     protected $fields;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->fields = new ArrayCollection();

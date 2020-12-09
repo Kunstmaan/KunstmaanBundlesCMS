@@ -8,9 +8,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class BuilderCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_fixtures.builder.builder')) {
@@ -24,7 +21,7 @@ class BuilderCompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addBuilder',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }

@@ -25,8 +25,6 @@ class PageTab
     private $position;
 
     /**
-     * PageTab constructor.
-     *
      * @param string   $internalName
      * @param string   $tabTitle
      * @param string   $formTypeClass

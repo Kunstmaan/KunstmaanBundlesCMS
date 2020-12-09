@@ -98,7 +98,7 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $this->em->rollback();
             $output->writeln('An error occured while trying to delete Media from the file system:');
-            $output->writeln('<error>'. $e->getMessage() . '</error>');
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
 
             return 1;
         }

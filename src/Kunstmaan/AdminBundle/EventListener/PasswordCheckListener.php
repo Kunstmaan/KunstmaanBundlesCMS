@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -11,7 +12,6 @@ use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 
 /**
  * PasswordCheckListener to check if the user has to change his password
@@ -48,14 +48,6 @@ class PasswordCheckListener
      */
     private $adminRouteHelper;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TokenStorageInterface         $tokenStorage
-     * @param Router                        $router
-     * @param Session                       $session
-     * @param TranslatorInterface           $translator
-     * @param AdminRouteHelper              $adminRouteHelper
-     */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper)
     {
         $this->authorizationChecker = $authorizationChecker;

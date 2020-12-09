@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * Class SearchService
- */
 class SearchService
 {
     /**
@@ -45,10 +42,7 @@ class SearchService
     private $searchers;
 
     /**
-     * @param ContainerInterface $container
-     * @param RequestStack       $requestStack
-     * @param int                $defaultPerPage
-     * @param array              $searchers
+     * @param int $defaultPerPage
      */
     public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10, array $searchers = [])
     {
@@ -156,11 +150,6 @@ class SearchService
         return $pagerfanta;
     }
 
-    /**
-     * @param AbstractElasticaSearcher $searcher
-     * @param Request                  $request
-     * @param RenderContext            $context
-     */
     protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
     {
         // Retrieve the search parameters
@@ -198,8 +187,6 @@ class SearchService
     }
 
     /**
-     * @param Request $request
-     *
      * @return int
      */
     private function getRequestedPage(Request $request)

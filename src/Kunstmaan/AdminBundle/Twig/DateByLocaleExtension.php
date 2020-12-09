@@ -20,9 +20,9 @@ class DateByLocaleExtension extends AbstractExtension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new TwigFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
-        );
+        ];
     }
 
     /**
@@ -38,13 +38,13 @@ class DateByLocaleExtension extends AbstractExtension
      */
     public static function localeDateFilter($date, $locale = 'nl', $dateType = 'medium', $timeType = 'none', $pattern = null)
     {
-        $values = array(
+        $values = [
             'none' => DateFormatter::NONE,
             'short' => DateFormatter::SHORT,
             'medium' => DateFormatter::MEDIUM,
             'long' => DateFormatter::LONG,
             'full' => DateFormatter::FULL,
-        );
+        ];
 
         if (\is_null($pattern)) {
             $dateFormatter = DateFormatter::create(

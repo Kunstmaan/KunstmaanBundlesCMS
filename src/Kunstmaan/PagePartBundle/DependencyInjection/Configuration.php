@@ -7,16 +7,8 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kunstmaan_page_part');
@@ -71,7 +63,7 @@ class Configuration implements ConfigurationInterface
                         return !\is_array($element);
                     })->thenInvalid('The rows element must be an array.')->end()
                     ->validate()->always(function ($children) {
-                        array_walk($children, array($this, 'evaluateRows'));
+                        array_walk($children, [$this, 'evaluateRows']);
 
                         return $children;
                     })->end()
@@ -99,7 +91,7 @@ class Configuration implements ConfigurationInterface
     {
         return $node
                 ->validate()->always(function ($children) {
-                    array_walk($children, array($this, 'evaluateRegions'));
+                    array_walk($children, [$this, 'evaluateRegions']);
 
                     return $children;
                 })
@@ -131,7 +123,7 @@ class Configuration implements ConfigurationInterface
                         return !\is_array($element);
                     })->thenInvalid('The rows element must be an array.')->end()
                     ->validate()->always(function ($children) {
-                        array_walk($children, array($this, 'evaluateRows'));
+                        array_walk($children, [$this, 'evaluateRows']);
 
                         return $children;
                     })->end()

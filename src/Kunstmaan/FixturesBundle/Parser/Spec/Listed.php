@@ -21,10 +21,6 @@ class Listed implements SpecParserInterface
     /**
      * Parse provided value into new data
      *
-     * @param $spec
-     * @param $fixture
-     * @param $fixtures
-     *
      * @return mixed
      *
      * @throws \Exception

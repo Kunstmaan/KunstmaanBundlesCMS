@@ -14,7 +14,7 @@ class MediaManager
     /**
      * @var AbstractMediaHandler[]
      */
-    protected $handlers = array();
+    protected $handlers = [];
 
     /**
      * @var AbstractMediaHandler
@@ -92,8 +92,6 @@ class MediaManager
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     *
      * @return MediaManager
      */
     public function prepareMedia(Media $media)
@@ -119,9 +117,6 @@ class MediaManager
         }
     }
 
-    /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     */
     public function removeMedia(Media $media)
     {
         $handler = $this->getHandler($media);
@@ -150,7 +145,7 @@ class MediaManager
      */
     public function getFolderAddActions()
     {
-        $result = array();
+        $result = [];
         foreach ($this->handlers as $handler) {
             $actions = $handler->getAddFolderActions();
             if ($actions) {

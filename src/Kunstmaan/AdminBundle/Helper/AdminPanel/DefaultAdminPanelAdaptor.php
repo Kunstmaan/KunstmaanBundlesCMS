@@ -11,9 +11,6 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
      */
     protected $tokenStorage;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
@@ -24,17 +21,17 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
      */
     public function getAdminPanelActions()
     {
-        return array(
+        return [
             $this->getLanguageChooserAction(),
             $this->getChangePasswordAction(),
             $this->getLogoutAction(),
-        );
+        ];
     }
 
     protected function getLanguageChooserAction()
     {
         return new AdminPanelAction(
-            array(),
+            [],
             '',
             '',
             '@KunstmaanAdmin/AdminPanel/_language_chooser.html.twig'
@@ -46,10 +43,10 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
         $user = $this->tokenStorage->getToken()->getUser();
 
         return new AdminPanelAction(
-            array(
+            [
                 'path' => 'KunstmaanUserManagementBundle_settings_users_edit',
-                'params' => array('id' => $user->getId()),
-            ),
+                'params' => ['id' => $user->getId()],
+            ],
             ucfirst($user->getUsername()),
             'user'
         );
@@ -58,10 +55,10 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     protected function getLogoutAction()
     {
         return new AdminPanelAction(
-            array(
+            [
                 'path' => 'fos_user_security_logout',
-                'attrs' => array('id' => 'app__logout', 'title' => 'logout'),
-            ),
+                'attrs' => ['id' => 'app__logout', 'title' => 'logout'],
+            ],
             '',
             'sign-out'
         );

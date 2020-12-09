@@ -8,9 +8,6 @@ use Kunstmaan\VotingBundle\EventListener\AbstractVoteListener;
 
 class DownVoteEventListener extends AbstractVoteListener
 {
-    /**
-     * @param DownVoteEvent $event
-     */
     public function onDownVote(DownVoteEvent $event)
     {
         $this->createVote(

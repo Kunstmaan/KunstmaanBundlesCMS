@@ -7,19 +7,11 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * Class ConsoleExceptionSubscriber.
- */
 final class ConsoleExceptionSubscriber implements EventSubscriberInterface
 {
     /** @var LoggerInterface */
     private $logger;
 
-    /**
-     * ConsoleExceptionListener constructor.
-     *
-     * @param LoggerInterface $logger
-     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
@@ -35,9 +27,6 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ConsoleErrorEvent $event
-     */
     public function onConsoleError(ConsoleErrorEvent $event)
     {
         $command = $event->getCommand();
@@ -48,10 +37,6 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param $command
-     * @param $error
-     */
     private function logCommandError($command, $error)
     {
         $message = sprintf(

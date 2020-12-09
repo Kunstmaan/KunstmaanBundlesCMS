@@ -61,16 +61,13 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->authorizationChecker = $authorizationChecker;
         $this->setPermissionDefinition(
             new PermissionDefinition(
-                array($permission),
+                [$permission],
                 'Kunstmaan\NodeBundle\Entity\Node',
                 'n'
             )
         );
     }
 
-    /**
-     * @param \Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface $domainConfiguration
-     */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
     {
         $this->domainConfiguration = $domainConfiguration;
@@ -93,16 +90,16 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
             return;
         }
 
-        $addHomepageRoute = array(
+        $addHomepageRoute = [
             'path' => '',
-            'attributes' => array(
+            'attributes' => [
                 'class' => 'btn btn-default btn--raise-on-hover',
                 'data-target' => '#add-homepage-modal',
                 'data-keyboard' => 'true',
                 'data-toggle' => 'modal',
                 'type' => 'button',
-            ),
-        );
+            ],
+        ];
 
         $this->addListAction(
             new SimpleListAction(
@@ -148,10 +145,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         /* @var Node $node */
         $node = $item->getNode();
 
-        return array(
+        return [
             'path' => 'KunstmaanNodeBundle_nodes_edit',
-            'params' => array('id' => $node->getId()),
-        );
+            'params' => ['id' => $node->getId()],
+        ];
     }
 
     /**
@@ -186,7 +183,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getDeleteUrlFor($item)
     {
-        return array();
+        return [];
     }
 
     /**

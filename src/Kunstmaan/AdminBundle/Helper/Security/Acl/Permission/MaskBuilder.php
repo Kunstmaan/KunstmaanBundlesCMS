@@ -77,7 +77,7 @@ class MaskBuilder extends AbstractMaskBuilder
             }
 
             if ($mask === $cMask) {
-                if (!\defined($cName = 'static::CODE_'.substr($name, 5))) {
+                if (!\defined($cName = 'static::CODE_' . substr($name, 5))) {
                     throw new \RuntimeException('There was no code defined for this mask.');
                 }
 
@@ -99,7 +99,7 @@ class MaskBuilder extends AbstractMaskBuilder
      */
     public function has($mask)
     {
-        if (\is_string($mask) && \defined($name = 'static::MASK_'.strtoupper($mask))) {
+        if (\is_string($mask) && \defined($name = 'static::MASK_' . strtoupper($mask))) {
             $mask = \constant($name);
         } elseif (!\is_int($mask)) {
             throw new InvalidArgumentException('$mask must be an integer.');

@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class AddLogProcessorsCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_admin.logger')) {
@@ -25,12 +22,12 @@ class AddLogProcessorsCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('kunstmaan_admin.logger.processor') as $id => $tags) {
             foreach ($tags as $tag) {
                 if (!empty($tag['method'])) {
-                    $processor = array(new Reference($id), $tag['method']);
+                    $processor = [new Reference($id), $tag['method']];
                 } else {
                     // If no method is defined, fallback to use __invoke
                     $processor = new Reference($id);
                 }
-                $definition->addMethodCall('pushProcessor', array($processor));
+                $definition->addMethodCall('pushProcessor', [$processor]);
             }
         }
     }

@@ -28,9 +28,6 @@ class Row
         return $this->regions;
     }
 
-    /**
-     * @param array $regions
-     */
     public function setRegions(array $regions)
     {
         $this->regions = $regions;

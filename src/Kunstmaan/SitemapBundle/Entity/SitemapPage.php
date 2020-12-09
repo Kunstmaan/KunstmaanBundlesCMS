@@ -21,7 +21,7 @@ class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, Ha
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -57,6 +57,6 @@ class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, Ha
      */
     public function getPagePartAdminConfigurations()
     {
-        return array();
+        return [];
     }
 }

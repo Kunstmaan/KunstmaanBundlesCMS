@@ -10,9 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class AbstractTag extends AbstractEntity implements Translatable
 {
-    /**
-     * AbstractTag constructor.
-     */
     public function __construct()
     {
         if (\get_class($this) === AbstractTag::class) {

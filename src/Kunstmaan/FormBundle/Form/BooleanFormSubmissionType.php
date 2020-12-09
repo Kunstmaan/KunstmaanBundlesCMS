@@ -7,9 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * The type for the BooleanFormSubmissionField
- */
 class BooleanFormSubmissionType extends AbstractType
 {
     /**

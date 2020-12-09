@@ -8,9 +8,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class PopulatorCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_fixtures.builder.builder')) {

@@ -74,13 +74,13 @@ class SlugController extends Controller
 
         //render page
         $renderContext = new RenderContext(
-            array(
+            [
                 'nodetranslation' => $nodeTranslation,
                 'slug' => $url,
                 'page' => $entity,
                 'resource' => $entity,
                 'nodemenu' => $nodeMenu,
-            )
+            ]
         );
         if (method_exists($entity, 'getDefaultView')) {
             $renderContext->setView($entity->getDefaultView());
@@ -106,7 +106,7 @@ class SlugController extends Controller
             throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', \get_class($entity)));
         }
 
-        $template = new Template(array());
+        $template = new Template([]);
         $template->setTemplate($view);
         $template->setOwner([SlugController::class, 'slugAction']);
 
@@ -116,10 +116,7 @@ class SlugController extends Controller
     }
 
     /**
-     * @param Request                $request
-     * @param bool                   $preview
-     * @param EntityManagerInterface $em
-     * @param NodeTranslation        $nodeTranslation
+     * @param bool $preview
      *
      * @return \Kunstmaan\NodeBundle\Entity\HasNodeInterface
      */
@@ -147,7 +144,6 @@ class SlugController extends Controller
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

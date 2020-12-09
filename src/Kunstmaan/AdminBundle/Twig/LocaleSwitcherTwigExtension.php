@@ -19,9 +19,6 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
      */
     private $domainConfiguration;
 
-    /**
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
     public function __construct(DomainConfigurationInterface $domainConfiguration)
     {
         $this->domainConfiguration = $domainConfiguration;
@@ -34,24 +31,23 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('localeswitcher_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
-            new TwigFunction('get_locales', array($this, 'getLocales')),
-            new TwigFunction('get_backend_locales', array($this, 'getBackendLocales')),
-        );
+        return [
+            new TwigFunction('localeswitcher_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('get_locales', [$this, 'getLocales']),
+            new TwigFunction('get_backend_locales', [$this, 'getBackendLocales']),
+        ];
     }
 
     /**
      * Render locale switcher widget.
      *
-     * @param Environment $env
-     * @param array       $locales    The locales
-     * @param string      $route      The route
-     * @param array       $parameters The route parameters
+     * @param array  $locales    The locales
+     * @param string $route      The route
+     * @param array  $parameters The route parameters
      *
      * @return string
      */
-    public function renderWidget(Environment $env, $locales, $route, array $parameters = array())
+    public function renderWidget(Environment $env, $locales, $route, array $parameters = [])
     {
         $template = $env->load(
             '@KunstmaanAdmin/LocaleSwitcherTwigExtension/widget.html.twig'
@@ -60,10 +56,10 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
         return $template->render(
             array_merge(
                 $parameters,
-                array(
+                [
                     'locales' => $locales,
                     'route' => $route,
-                )
+                ]
             )
         );
     }

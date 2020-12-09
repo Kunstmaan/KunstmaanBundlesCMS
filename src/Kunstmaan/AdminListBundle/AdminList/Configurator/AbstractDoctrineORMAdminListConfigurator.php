@@ -44,12 +44,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     protected $aclHelper;
 
-    /**
-     * AbstractDoctrineORMAdminListConfigurator constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param AclHelper|null         $aclHelper
-     */
     public function __construct(EntityManagerInterface $em, AclHelper $aclHelper = null)
     {
         $this->em = $em;
@@ -65,13 +59,13 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function getEditUrlFor($item)
     {
-        $params = array('id' => $item->getId());
+        $params = ['id' => $item->getId()];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => $this->getPathByConvention($this::SUFFIX_EDIT),
             'params' => $params,
-        );
+        ];
     }
 
     /**
@@ -83,13 +77,13 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function getDeleteUrlFor($item)
     {
-        $params = array('id' => $item->getId());
+        $params = ['id' => $item->getId()];
         $params = array_merge($params, $this->getExtraParameters());
 
-        return array(
+        return [
             'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
             'params' => $params,
-        );
+        ];
     }
 
     /**
@@ -108,9 +102,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $this->pagerfanta;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->where('1=1');
@@ -187,9 +178,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $this->query;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {
@@ -222,8 +210,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * Set permission definition.
      *
-     * @param PermissionDefinition $permissionDef
-     *
      * @return AbstractDoctrineORMAdminListConfigurator
      */
     public function setPermissionDefinition(PermissionDefinition $permissionDef)
@@ -234,8 +220,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @param EntityManagerInterface $em
-     *
      * @return AbstractDoctrineORMAdminListConfigurator
      */
     public function setEntityManager(EntityManagerInterface $em)

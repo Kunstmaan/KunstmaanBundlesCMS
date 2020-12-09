@@ -26,10 +26,6 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
      */
     private $indexablePagePartsService;
 
-    /**
-     * @param EntityManager             $em
-     * @param IndexablePagePartsService $indexablePagePartsService
-     */
     public function __construct(EntityManager $em, IndexablePagePartsService $indexablePagePartsService)
     {
         $this->em = $em;
@@ -50,10 +46,6 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param HasNodeInterface $page
-     * @param string           $locale
-     * @param bool             $includeOffline
-     *
      * @return HasNodeInterface
      */
     public function getParentPage(HasNodeInterface $page, string $locale, bool $includeOffline = false)
@@ -67,7 +59,6 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param Environment           $env
      * @param array                 $twigContext The twig context
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context

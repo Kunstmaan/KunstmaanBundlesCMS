@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
 
 /**
- * Class that defines a text page part object to add to a page
+ * Defines a text page part object to add to a page
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_text_page_parts")

@@ -7,8 +7,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurat
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MenuAdminListController extends AdminListController
 {
@@ -18,8 +18,6 @@ class MenuAdminListController extends AdminListController
     private $configurator;
 
     /**
-     * @param Request $request
-     *
      * @return AbstractAdminListConfigurator
      */
     public function getAdminListConfigurator(Request $request)
@@ -31,10 +29,10 @@ class MenuAdminListController extends AdminListController
             );
 
             $create_route = function (EntityInterface $item) {
-                return array(
+                return [
                     'path' => 'kunstmaanmenubundle_admin_menuitem',
-                    'params' => array('menuid' => $item->getId()),
-                );
+                    'params' => ['menuid' => $item->getId()],
+                ];
             };
             $this->configurator->addItemAction(
                 new SimpleItemAction($create_route, 'th-list', 'kuma_menu.menu.adminlist.action.manage')
@@ -47,8 +45,6 @@ class MenuAdminListController extends AdminListController
 
     /**
      * @Route("/", name="kunstmaanmenubundle_admin_menu")
-     *
-     * @param Request $request
      *
      * @return array
      */
