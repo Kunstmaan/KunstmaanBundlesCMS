@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminListBundle\Service;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\UserBundle\Model\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;

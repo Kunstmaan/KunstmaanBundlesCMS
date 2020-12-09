@@ -3,9 +3,8 @@
 namespace Kunstmaan\AdminListBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use FOS\UserBundle\Model\User;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 
 /**
@@ -19,7 +18,7 @@ class EntityVersionLockRepository extends EntityRepository
      * @param int  $threshold
      * @param User $userToExclude
      *
-     * @return EntityVersionLock[]
+     * @return LockableEntity[]
      */
     public function getLocksForLockableEntity(LockableEntity $entity, $threshold, /*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $userToExclude = null)
     {

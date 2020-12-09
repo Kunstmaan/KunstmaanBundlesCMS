@@ -10,7 +10,6 @@ use Kunstmaan\AdminBundle\Service\GroupManager;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
