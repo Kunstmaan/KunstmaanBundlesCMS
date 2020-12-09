@@ -34,7 +34,10 @@ final class PasswordResetController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //TODO: already requested error/message
             $this->passwordResetService->processResetRequest($form->get('email')->getData(), $request->getLocale());
+
+            //TODO: check_email template replacement
 
             $this->addFlash(FlashTypes::SUCCESS, 'security.resetting.send_email_success');
 

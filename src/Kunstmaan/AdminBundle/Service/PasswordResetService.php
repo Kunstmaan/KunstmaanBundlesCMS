@@ -11,6 +11,8 @@ use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class PasswordResetService
 {
@@ -36,8 +38,7 @@ class PasswordResetService
         $user = $this->userManager->findUserByUsernameOrEmail($email);
 
         if (null === $user) {
-            //TODO: throw user not found exception
-            throw new \Exception('User not found');
+            throw new UsernameNotFoundException(sprintf('No user not found with identifier "%s"', $email));
         }
 
         $this->userManager->setResetToken($user);
@@ -46,7 +47,13 @@ class PasswordResetService
 
     public function resetPassword(UserInterface $user, string $newPassword): Response
     {
-        $this->userManager->changePassword($user, $newPassword);
+        $user->setPlainPassword($newPassword);
+        $this->userManager->updateUser($user);
+
+        $token = new UsernamePasswordToken($user, $password, 'main');
+        //TODO: inject required services
+        $this->tokenStorage->setToken($token);
+        $this->session->set('_security_main', serialize($token));
 
         $response = new RedirectResponse($this->urlGenerator->generate('KunstmaanAdminBundle_homepage'));
         $this->dispatch(new ChangePasswordSuccessEvent($user, $response), Events::CHANGE_PASSWORD_COMPLETED);
