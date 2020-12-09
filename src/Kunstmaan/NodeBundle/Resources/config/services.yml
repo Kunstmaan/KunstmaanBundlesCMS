@@ -242,9 +242,8 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_node.helper.node'
-            - '@kunstmaan_node.node_menu'
-            - '@event_dispatcher'
-            - '@Kunstmaan\NodeBundle\Helper\FormDataAutoSaver'
+            - '@Kunstmaan\NodeBundle\Helper\Services\FormDataNodeVersionAutoSaver'
+            - '@Kunstmaan\NodeBundle\Helper\Rendering\RenderingContextNodeRenderer'
         public: true
 
     # Add service alias to use controller as a service with the symfony core route annotation

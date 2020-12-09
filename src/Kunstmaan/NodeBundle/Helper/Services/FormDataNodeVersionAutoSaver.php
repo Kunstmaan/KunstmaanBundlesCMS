@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Helper;
+namespace Kunstmaan\NodeBundle\Helper\Services;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -12,7 +12,7 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Symfony\Component\HttpFoundation\Request;
 
-class FormDataAutoSaver implements AutoSaverInterface
+class FormDataNodeVersionAutoSaver implements NodeVersionAutoSaveInterface
 {
     /**
      * @var EntityManager

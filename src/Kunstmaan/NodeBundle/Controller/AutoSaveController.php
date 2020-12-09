@@ -6,16 +6,10 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\SlugEvent;
-use Kunstmaan\NodeBundle\Helper\AutoSaverInterface;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Kunstmaan\NodeBundle\Helper\Rendering\NodeRenderingInterface;
+use Kunstmaan\NodeBundle\Helper\Services\NodeVersionAutoSaveInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -32,27 +26,22 @@ class AutoSaveController extends AbstractController
     /** @var NodeHelper */
     private $nodeHelper;
 
-    /** @var NodeMenu */
-    private $nodeMenu;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
-
-    /** @var AutoSaverInterface */
+    /** @var NodeVersionAutoSaveInterface */
     private $autoSaver;
+
+    /** @var NodeRenderingInterface */
+    private $nodeRenderer;
 
     public function __construct(
         EntityManager $em,
         NodeHelper $nodeHelper,
-        NodeMenu $nodeMenu,
-        EventDispatcherInterface $eventDispatcher,
-        AutoSaverInterface $autoSaver
+        NodeVersionAutoSaveInterface $autoSaver,
+        NodeRenderingInterface $nodeRenderer
     ) {
         $this->em = $em;
         $this->nodeHelper = $nodeHelper;
-        $this->nodeMenu = $nodeMenu;
-        $this->eventDispatcher = $eventDispatcher;
         $this->autoSaver = $autoSaver;
+        $this->nodeRenderer = $nodeRenderer;
     }
 
     /**
@@ -101,65 +90,6 @@ class AutoSaveController extends AbstractController
             return new Response();
         }
 
-        $nodeMenu = $this->nodeMenu;
-        $nodeMenu->setLocale($locale);
-        $nodeMenu->setCurrentNode($node);
-        $nodeMenu->setIncludeOffline(false);
-
-        $renderContext = new RenderContext(
-            [
-                'nodetranslation' => $nodeTranslation,
-                'slug' => $nodeTranslation->getSlug(),
-                'page' => $page,
-                'resource' => $page,
-                'nodemenu' => $nodeMenu,
-            ]
-        );
-        if (method_exists($page, 'getDefaultView')) {
-            $renderContext->setView($page->getDefaultView());
-        }
-        $preEvent = new SlugEvent(null, $renderContext);
-        $this->dispatch($preEvent, Events::PRE_SLUG_ACTION);
-        $renderContext = $preEvent->getRenderContext();
-
-        $postEvent = new SlugEvent(null, $renderContext);
-        $this->dispatch($postEvent, Events::POST_SLUG_ACTION);
-
-        $response = $postEvent->getResponse();
-        $renderContext = $postEvent->getRenderContext();
-
-        if ($response instanceof Response) {
-            return $response;
-        }
-
-        $view = $renderContext->getView();
-        if (empty($view)) {
-            throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', \get_class($page)));
-        }
-
-        $template = new Template([]);
-        $template->setTemplate($view);
-        $template->setOwner([SlugController::class, 'slugAction']);
-
-        $request->attributes->set('_template', $template);
-
-        return $renderContext->getArrayCopy();
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        $eventDispatcher = $this->eventDispatcher;
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
+        return $this->nodeRenderer->render($locale, $node, $nodeTranslation, $page, $request);
     }
 }
