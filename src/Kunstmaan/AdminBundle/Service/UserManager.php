@@ -14,10 +14,8 @@ class UserManager
 {
     /** @var EntityManagerInterface */
     private $em;
-
     /** @var string */
     private $class;
-
     /** @var string */
     private $encoderFactory;
 
@@ -32,13 +30,13 @@ class UserManager
         $this->encoderFactory = $encoderFactory;
     }
 
-    public function deleteUser(UserInterface $user)
+    public function deleteUser(UserInterface $user): void
     {
         $this->em->remove($user);
         $this->em->flush();
     }
 
-    public function findUsers()
+    public function findUsers(): array
     {
         return $this->getRepository()->findAll();
     }
@@ -48,25 +46,24 @@ class UserManager
         return $this->em->getRepository($this->getClass());
     }
 
-    public function getClass()
+    public function getClass(): string
     {
         //NEXT_MAJOR: remove support for xx:xx user class notation.
         if (false !== strpos($this->class, ':')) {
             $metadata = $this->em->getClassMetadata($this->class);
-            $this->class = $metadata->getName();
+            return $metadata->getName();
         }
 
         return $this->class;
     }
 
-    public function reloadUser(UserInterface $user)
+    public function reloadUser(UserInterface $user): void
     {
         $this->em->refresh($user);
     }
 
-    public function updateUser(UserInterface $user, $andFlush = true)
+    public function updateUser(UserInterface $user, bool $andFlush = true): void
     {
-        //TODO: best setup for save user and change password
         $this->updatePassword($user);
 
         $this->em->persist($user);
@@ -75,9 +72,8 @@ class UserManager
         }
     }
 
-    public function updatePassword(UserInterface $user)
+    public function updatePassword(UserInterface $user, bool $andFlush = true): void
     {
-        //TODO: best setup for save user and change password
         $plainPassword = $user->getPlainPassword();
         if ($plainPassword === '') {
             return;
@@ -99,10 +95,12 @@ class UserManager
         $user->setConfirmationToken(null);
         $user->eraseCredentials();
 
-        $this->em->flush();
+        if ($andFlush) {
+            $this->em->flush();
+        }
     }
 
-    public function createUser()
+    public function createUser(): UserInterface
     {
         $class = $this->getClass();
 
@@ -134,11 +132,6 @@ class UserManager
         return $this->findUserBy(['email' => $email]);
     }
 
-    public function findUserBy(array $criteria): ?UserInterface
-    {
-        return $this->getRepository()->findOneBy($criteria);
-    }
-
     public function findUserByUsername($username): ?UserInterface
     {
         return $this->findUserBy(['username' => $username]);
@@ -147,5 +140,10 @@ class UserManager
     public function findUserByConfirmationToken($token): ?UserInterface
     {
         return $this->findUserBy(['confirmationToken' => $token]);
+    }
+
+    private function findUserBy(array $criteria): ?UserInterface
+    {
+        return $this->getRepository()->findOneBy($criteria);
     }
 }

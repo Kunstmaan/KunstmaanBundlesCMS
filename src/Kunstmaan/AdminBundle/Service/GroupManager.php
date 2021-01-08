@@ -8,42 +8,40 @@ use Kunstmaan\AdminBundle\Entity\GroupInterface;
 
 class GroupManager
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $class;
 
-    /**
-     * @var ObjectRepository
-     */
+    /** @var ObjectRepository */
     private $repository;
 
     public function __construct(EntityManagerInterface $em, string $class)
     {
+        if (false !== strpos($this->class, ':')) {
+            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s"is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the group class instead.', __CLASS__), E_USER_DEPRECATED);
+        }
+
         $this->em = $em;
         $this->repository = $em->getRepository($class);
         $this->class = $class;
     }
 
-    public function createGroup($name)
+    public function createGroup($name): GroupInterface
     {
         $class = $this->getClass();
 
         return new $class($name);
     }
 
-    public function deleteGroup(GroupInterface $group)
+    public function deleteGroup(GroupInterface $group): void
     {
         $this->em->remove($group);
         $this->em->flush();
     }
 
-    public function updateGroup(GroupInterface $group, $andFlush = true)
+    public function updateGroup(GroupInterface $group, $andFlush = true): void
     {
         $this->em->persist($group);
         if ($andFlush) {
@@ -51,24 +49,28 @@ class GroupManager
         }
     }
 
-    public function getClass()
+    public function getClass(): string
     {
-        $metadata = $this->em->getClassMetadata($this->class);
+        //NEXT_MAJOR: remove support for xx:xx group class notation.
+        if (false !== strpos($this->class, ':')) {
+            $metadata = $this->em->getClassMetadata($this->class);
+            return $metadata->getName();
+        }
 
-        return $metadata->getName();
+        return $this->class;
     }
 
-    public function findGroups()
+    public function findGroups(): array
     {
         return $this->repository->findAll();
     }
 
-    public function findGroupByName($name)
+    public function findGroupByName($name): ?GroupInterface
     {
         return $this->findGroupBy(['name' => $name]);
     }
 
-    public function findGroupBy(array $criteria)
+    private function findGroupBy(array $criteria)
     {
         return $this->repository->findOneBy($criteria);
     }

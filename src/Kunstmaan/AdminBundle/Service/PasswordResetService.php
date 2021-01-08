@@ -50,11 +50,6 @@ class PasswordResetService
         $user->setPlainPassword($newPassword);
         $this->userManager->updateUser($user);
 
-        $token = new UsernamePasswordToken($user, $password, 'main');
-        //TODO: inject required services
-        $this->tokenStorage->setToken($token);
-        $this->session->set('_security_main', serialize($token));
-
         $response = new RedirectResponse($this->urlGenerator->generate('KunstmaanAdminBundle_homepage'));
         $this->dispatch(new ChangePasswordSuccessEvent($user, $response), Events::CHANGE_PASSWORD_COMPLETED);
 
