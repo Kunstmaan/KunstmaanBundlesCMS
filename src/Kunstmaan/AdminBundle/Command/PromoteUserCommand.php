@@ -28,7 +28,7 @@ EOT
         $user = $this->userManager->findUserByUsername($username);
 
         if (!$user) {
-            throw new InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
         }
 
         if ($super) {
