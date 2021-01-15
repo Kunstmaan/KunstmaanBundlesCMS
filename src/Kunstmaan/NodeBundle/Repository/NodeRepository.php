@@ -74,7 +74,8 @@ class NodeRepository extends NestedTreeRepository
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('b.deleted = 0')
+            ->where('b.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false)
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
@@ -268,32 +269,42 @@ class NodeRepository extends NestedTreeRepository
         $connection = $this->_em->getConnection();
         $qb = $connection->createQueryBuilder();
         $databasePlatformName = $connection->getDatabasePlatform()->getName();
-        $createIfStatement = function (
-            $expression,
-            $trueValue,
-            $falseValue
-        ) use ($databasePlatformName) {
-            switch ($databasePlatformName) {
-                case 'sqlite':
-                    $statement = 'CASE WHEN %s THEN %s ELSE %s END';
 
-                    break;
 
-                default:
-                    $statement = 'IF(%s, %s, %s)';
-            }
-
-            return sprintf($statement, $expression, $trueValue, $falseValue);
-        };
-
-        $sql = <<<SQL
+        switch ($databasePlatformName){
+            case 'sqlite':
+                $sql = <<<SQL
 n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
-{$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
-{$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
-{$createIfStatement('t.online IS NULL', '0', 't.online')} AS online,
+CASE WHEN t.weight IS NULL THEN v.weight ELSE t.weight END AS weight,
+CASE WHEN t.title IS NULL THEN  v.title ELSE t.title END AS title,
+CASE WHEN t.online IS NULL THEN 0 ELSE t.online END AS online,
 n.hidden_from_nav AS hidden,
 n.ref_entity_name AS ref_entity_name
 SQL;
+                break;
+            case 'postgresql':
+                $sql = <<<SQL
+n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
+CASE WHEN t.weight IS NULL THEN v.weight ELSE t.weight END AS weight,
+CASE WHEN t.title IS NULL THEN  v.title ELSE t.title END AS title,
+CASE WHEN t.online IS NULL THEN false ELSE t.online END AS online,
+n.hidden_from_nav AS hidden,
+n.ref_entity_name AS ref_entity_name
+SQL;
+                break;
+            default:
+                $sql = <<<SQL
+n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
+IF (t.weight IS NULL, v.weight, t.weight) AS weight,
+IF (t.title IS NULL, v.title, t.title) AS title,
+IF (t.online IS NULL, 0, t.online) AS online,
+
+n.hidden_from_nav AS hidden,
+n.ref_entity_name AS ref_entity_name
+SQL;
+
+                break;
+        }
 
         $qb->select($sql)
             ->from('kuma_nodes', 'n')
@@ -309,13 +320,23 @@ SQL;
                 'v',
                 '(v.node_id = n.id AND v.lang <> :lang)'
             )
-            ->where('n.deleted = 0')
-            ->addGroupBy('n.id')
-            ->addOrderBy('t.weight', 'ASC')
+            ->where('n.deleted = false')
+            ->addGroupBy('n.id');
+
+        if ($databasePlatformName=='postgresql'){
+
+            $qb->addGroupBy('t.url')
+                ->addGroupby('t.id')
+                ->addGroupby('v.weight')
+                ->addGroupBy('v.title');
+
+        }
+
+        $qb->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
 
         if (!$includeHiddenFromNav) {
-            $qb->andWhere('n.hidden_from_nav <> 0');
+            $qb->andWhere('n.hidden_from_nav != :hiddenFromNavFalse');
         }
 
         if (!\is_null($rootNode)) {
@@ -329,13 +350,24 @@ SQL;
         $qb = $aclNativeHelper->apply($qb, $permissionDef);
 
         $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
+
+        if (!$includeHiddenFromNav) {
+            $stmt->bindValue(':hiddenFromNavFalse', false);
+        }
         $stmt->bindValue(':lang', $lang);
         if (!\is_null($rootNode)) {
             $stmt->bindValue(':left', $rootNode->getLeft());
             $stmt->bindValue(':right', $rootNode->getRight());
         }
         $stmt->execute();
-
+        if ($databasePlatformName=='postgresql'){
+            $results=$stmt->fetchAll();
+            $uniqueResults=[];
+            foreach ($results as $result){
+                $uniqueResults[$result['id']]=$result;
+            }
+            return $uniqueResults;
+        }
         return $stmt->fetchAll();
     }
 
@@ -364,7 +396,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('node.deleted = 0');
+            ->where('node.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false);
 
         if ($lang) {
             $qb->andWhere('t.lang = :lang')
@@ -408,7 +441,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('node.deleted = 0')
+            ->where('node.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false)
             ->andWhere('node.parent IS NULL');
 
         if ($lang) {
@@ -440,7 +474,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('b.deleted = 0')
+            ->where('b.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false)
             ->andWhere('b.parent IS NULL');
 
         return $qb->getQuery()->getResult();
@@ -471,16 +506,18 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('n.deleted = 0')
+            ->where('n.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false)
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName)
             ->andWhere('t.lang = :lang')
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
-
+        //@todo original 5.7 code states $qb->andWhere('t.online = true');=> strange!
         if (!$includeOffline) {
-            $qb->andWhere('t.online = true');
+            $qb->andWhere('t.online = :onlineTrue')
+                ->setParameter('onlineTrue',true);
         }
 
         if (\is_null($parentId)) {
@@ -508,7 +545,8 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n')
-            ->where('n.deleted = 0')
+            ->where('n.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false)
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName);
 
@@ -524,7 +562,8 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n.refEntityName')
-            ->where('n.deleted = 0')
+            ->where('n.deleted = :deletedFalse')
+            ->setParameter('deletedFalse',false)
             ->distinct(true);
 
         return $qb->getQuery()->getArrayResult();
@@ -541,7 +580,9 @@ SQL;
         $qb->select('COUNT('.$alias.')');
 
         if (false === $includeDeleted) {
-            $qb->andWhere($alias.'.deleted = 0');
+            $qb->andWhere($alias.'.deleted = :deletedFalse')
+                ->setParameter('deletedFalse',false);
+
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult();

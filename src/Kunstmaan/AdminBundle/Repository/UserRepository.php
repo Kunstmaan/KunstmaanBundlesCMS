@@ -29,9 +29,10 @@ class UserRepository extends EntityRepository
             ->from('KunstmaanAdminBundle:User', 'u')
             ->innerJoin('u.groups', 'g')
             ->innerJoin('g.roles', 'r')
-            ->where('u.enabled=1')
+            ->where('u.enabled= :enabledTrue')
             ->andWhere('r.role IN (:roles)')
-            ->setParameter('roles', $roles);
+            ->setParameter('roles', $roles)
+            ->setParameter('enabledTrue', true);
 
         return $qb->getQuery()->getResult();
     }
