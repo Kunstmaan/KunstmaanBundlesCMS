@@ -28,6 +28,11 @@ class AclHelper
     private $em = null;
 
     /**
+     * @var string //the database platform i.e. 'postgresql', 'sqlite'...etc
+     */
+    private $databasePlatform;
+
+    /**
      * @var TokenStorageInterface
      */
     private $tokenStorage = null;
@@ -47,6 +52,7 @@ class AclHelper
      */
     private $permissionsEnabled;
 
+
     /**
      * Constructor.
      *
@@ -57,6 +63,7 @@ class AclHelper
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
+        $this->databasePlatform = $this->em->getConnection()->getDatabasePlatform()->getName();
         $this->tokenStorage = $tokenStorage;
         $this->quoteStrategy = $em->getConfiguration()->getQuoteStrategy();
         $this->roleHierarchy = $rh;
@@ -139,12 +146,23 @@ class AclHelper
      * http://www.scribd.com/doc/14683263/Efficient-Pagination-Using-MySQL
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0
-     *
+     * the function switches between configuration for postgres and other database platforms, by calling the respective private methods
      * @param Query $query
      *
      * @return string
      */
-    private function getPermittedAclIdsSQLForUser(Query $query)
+    private function getPermittedAclIdsSQLForUser(Query $query){
+        if ($this->databasePlatform=='postgresql'){
+            return $this->getPermittedAclIdsSQLForUserPlatformPostgres($query);
+        }
+        return $this->getPermittedAclIdsSQLForUserPlatformOther($query);
+    }
+
+    /**
+     * @param Query $query
+     * @return string
+     */
+    private function getPermittedAclIdsSQLForUserPlatformOther(Query $query)
     {
         $aclConnection = $this->em->getConnection();
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
@@ -210,6 +228,76 @@ SELECTQUERY;
         return $selectQuery;
     }
 
+    /**
+     * @param Query $query
+     * @return string
+     */
+    private function getPermittedAclIdsSQLForUserPlatformPostgres(Query $query)
+    {
+        $aclConnection = $this->em->getConnection();
+        $stringQuoteChar = $aclConnection->getDatabasePlatform()->getStringLiteralQuoteCharacter();
+        $mask = $query->getHint('acl.mask');
+        $rootEntity = $stringQuoteChar . $query->getHint('acl.root.entity') . $stringQuoteChar;
+
+        /* @var $token TokenInterface */
+        $token = $this->tokenStorage->getToken();
+        $userRoles = array();
+        $user = null;
+        if (!\is_null($token)) {
+            $user = $token->getUser();
+            if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
+                $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
+            } else {
+                // Symfony 3.4 compatibility
+                $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+            }
+        }
+
+        // Security context does not provide anonymous role automatically.
+        $uR = array($stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar);
+
+        foreach ($userRoles as $role) {
+            // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
+            if (is_string($role)) {
+                if ($role !== 'ROLE_USER') {
+                    $uR[] = $stringQuoteChar . $role . $stringQuoteChar;
+                }
+            } else {
+                // Symfony 3.4 compatibility
+                if ($role->getRole() !== 'ROLE_USER') {
+                    $uR[] = $stringQuoteChar . $role->getRole() . $stringQuoteChar;
+                }
+            }
+        }
+        $uR = array_unique($uR);
+        $inString = implode(' OR s.identifier = ', $uR);
+
+        if (\is_object($user)) {
+            $inString .= ' OR s.identifier = ' . $stringQuoteChar . get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
+        }
+
+        $objectIdentifierColumn = 'o.object_identifier';
+        if ($aclConnection->getDatabasePlatform()->getName() === 'postgresql') {
+            $objectIdentifierColumn = 'o.object_identifier::BIGINT';
+        }
+
+        $selectQuery = <<<SELECTQUERY
+SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
+INNER JOIN acl_classes c ON c.id = o.class_id
+LEFT JOIN acl_entries e ON (
+    e.class_id = o.class_id AND (e.object_identity_id = o.id
+    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
+)
+LEFT JOIN acl_security_identities s ON (
+s.id = e.security_identity_id
+)
+WHERE c.class_type = {$rootEntity}
+AND (s.identifier = {$inString})
+AND e.mask & {$mask} > 0
+SELECTQUERY;
+
+        return $selectQuery;
+    }
     /**
      * Returns valid IDs for a specific entity with ACL restrictions for current user applied
      *

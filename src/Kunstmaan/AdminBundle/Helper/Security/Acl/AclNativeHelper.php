@@ -23,6 +23,11 @@ class AclNativeHelper
     private $em = null;
 
     /**
+     * @var string //the database platform i.e. 'postgresql', 'sqlite'...etc
+     */
+    private $databasePlatform;
+
+    /**
      * @var TokenStorageInterface
      */
     private $tokenStorage = null;
@@ -47,13 +52,14 @@ class AclNativeHelper
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
+        $this->databasePlatform = $this->em->getConnection()->getDatabasePlatform()->getName();
         $this->tokenStorage = $tokenStorage;
         $this->roleHierarchy = $rh;
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
     /**
-     * Apply the ACL constraints to the specified query builder, using the permission definition
+     * Apply the ACL constraints to the specified query builder, using the permission definition, for all database platforms
      *
      * @param QueryBuilder         $queryBuilder  The query builder
      * @param PermissionDefinition $permissionDef The permission definition
@@ -61,6 +67,112 @@ class AclNativeHelper
      * @return QueryBuilder
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
+    {
+        if ($this->databasePlatform=='postgresql'){
+            return $this->applyPlatformPostgres($queryBuilder,$permissionDef);
+        }
+        return $this->applyPlatformOther($queryBuilder,$permissionDef);
+    }
+
+    /**
+     * Apply the ACL constraints to the specified query builder, using the permission definition for all postgres platform
+     * @param QueryBuilder $queryBuilder
+     * @param PermissionDefinition $permissionDef
+     * @return QueryBuilder
+     */
+    private function applyPlatformPostgres(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
+    {
+        if (!$this->permissionsEnabled) {
+            return $queryBuilder;
+        }
+
+        $aclConnection = $this->em->getConnection();
+        $stringQuoteChar = $aclConnection->getDatabasePlatform()->getStringLiteralQuoteCharacter();
+
+        $rootEntity = $permissionDef->getEntity();
+        $linkAlias = $permissionDef->getAlias();
+        // Only tables with a single ID PK are currently supported
+        $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
+
+        $rootEntity = $stringQuoteChar . $rootEntity . $stringQuoteChar;
+        $query = $queryBuilder;
+
+        $builder = new MaskBuilder();
+        foreach ($permissionDef->getPermissions() as $permission) {
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
+            $builder->add($mask);
+        }
+        $mask = $builder->get();
+
+        /* @var $token TokenInterface */
+        $token = $this->tokenStorage->getToken();
+        $userRoles = array();
+        $user = null;
+        if (!\is_null($token)) {
+            $user = $token->getUser();
+            if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
+                $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
+            } else {
+                // Symfony 3.4 compatibility
+                $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+            }
+        }
+
+        // Security context does not provide anonymous role automatically.
+        $uR = array($stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar);
+
+        foreach ($userRoles as $role) {
+            // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
+            if (is_string($role)) {
+                if ($role !== 'ROLE_USER') {
+                    $uR[] = $stringQuoteChar . $role . $stringQuoteChar;
+                }
+            } else {
+                // Symfony 3.4 compatibility
+                if ($role->getRole() !== 'ROLE_USER') {
+                    $uR[] = $stringQuoteChar . $role->getRole() . $stringQuoteChar;
+                }
+            }
+        }
+        $uR = array_unique($uR);
+        $inString = implode(' OR s.identifier = ', $uR);
+
+        if (\is_object($user)) {
+            $inString .= ' OR s.identifier = ' . $stringQuoteChar . \get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
+        }
+
+        $objectIdentifierColumn = 'o.object_identifier';
+        if ($aclConnection->getDatabasePlatform()->getName() === 'postgresql') {
+            $objectIdentifierColumn = 'o.object_identifier::BIGINT';
+        }
+
+        $joinTableQuery = <<<SELECTQUERY
+SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
+INNER JOIN acl_classes c ON c.id = o.class_id
+LEFT JOIN acl_entries e ON (
+    e.class_id = o.class_id AND (e.object_identity_id = o.id
+    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
+)
+LEFT JOIN acl_security_identities s ON (
+s.id = e.security_identity_id
+)
+WHERE c.class_type = {$rootEntity}
+AND (s.identifier = {$inString})
+AND e.mask & {$mask} > 0
+SELECTQUERY;
+
+        $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
+
+        return $query;
+    }
+
+    /**
+     * Apply the ACL constraints to the specified query builder, using the permission definition for all platforms other than postgres
+     * @param QueryBuilder $queryBuilder
+     * @param PermissionDefinition $permissionDef
+     * @return QueryBuilder
+     */
+    private function applyPlatformOther(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
         if (!$this->permissionsEnabled) {
             return $queryBuilder;
