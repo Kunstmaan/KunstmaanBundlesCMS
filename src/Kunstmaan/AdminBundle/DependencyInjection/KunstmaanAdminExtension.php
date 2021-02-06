@@ -229,11 +229,11 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
     private function configureAuthentication(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
-        $enableCustomLogin = $config['authentication']['enable_new_authentication'];
-        $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableCustomLogin);
+        $enableNewAuthentication = $config['authentication']['enable_new_authentication'];
+        $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableNewAuthentication);
 
-        if (!$enableCustomLogin) {
-            @trigger_error('Not setting "kunstmaan_admin.authentication.enable_new_authentication" to true is deprecated since KunstmaanAdminBundle 5.8, it will always be true in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+        if (!$enableNewAuthentication) {
+            @trigger_error('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.8, it will always be true in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
 
             return;
         }
@@ -241,7 +241,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $loader->load('authentication.yml');
 
         $fosRouteLoaderDefinition = $container->getDefinition(FosRouteLoader::class);
-        $fosRouteLoaderDefinition->setArgument(0, $enableCustomLogin);
+        $fosRouteLoaderDefinition->setArgument(0, $enableNewAuthentication);
 
         $container->setAlias('kunstmaan_admin.authentication.mailer', $config['authentication']['mailer']['service']);
 

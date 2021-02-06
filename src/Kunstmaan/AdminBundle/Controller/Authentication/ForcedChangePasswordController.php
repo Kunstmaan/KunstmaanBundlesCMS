@@ -47,7 +47,7 @@ final class ForcedChangePasswordController extends AbstractController
     }
 
     /**
-     * @Route("/change-password/success", name="kunstmaan_admin_forced_change_password_success", methods={"GET", "POST"})
+     * @Route("/change-password/success", name="kunstmaan_admin_forced_change_password_success", methods={"GET"})
      */
     public function successAction(): Response
     {
