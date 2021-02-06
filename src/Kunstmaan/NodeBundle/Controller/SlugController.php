@@ -144,7 +144,6 @@ class SlugController extends Controller
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

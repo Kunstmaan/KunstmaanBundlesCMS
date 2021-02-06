@@ -310,7 +310,6 @@ class UsersController extends BaseSettingsController
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

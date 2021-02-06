@@ -18,14 +18,16 @@ class MediaBuilder implements BuilderInterface
 {
     /** @var EntityManagerInterface */
     private $em;
+
     /** @var FileHandler */
     private $fileHandler;
+
     /** @var MimeTypes|ExtensionGuesserInterface */
     private $mimeTypeGuesser;
 
     private $folder;
 
-    public function __construct(EntityManager $em, FileHandler $fileHandler, /* MimeTypes */$mimeTypeGuesser)
+    public function __construct(EntityManager $em, FileHandler $fileHandler, /* MimeTypes */ $mimeTypeGuesser)
     {
         $this->em = $em;
         $this->fileHandler = $fileHandler;
@@ -50,7 +52,7 @@ class MediaBuilder implements BuilderInterface
     {
         $properties = $fixture->getProperties();
         if (!isset($properties['folder'])) {
-            throw new \Exception('There is no folder specified for media fixture '.$fixture->getName());
+            throw new \Exception('There is no folder specified for media fixture ' . $fixture->getName());
         }
 
         $this->folder = $this->em->getRepository(Folder::class)->findOneBy(['rel' => $properties['folder']]);
@@ -60,7 +62,7 @@ class MediaBuilder implements BuilderInterface
         }
 
         if (!$this->folder instanceof Folder) {
-            throw new \Exception('Could not find the specified folder for media fixture '.$fixture->getName());
+            throw new \Exception('Could not find the specified folder for media fixture ' . $fixture->getName());
         }
     }
 

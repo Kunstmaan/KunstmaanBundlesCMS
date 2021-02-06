@@ -55,7 +55,7 @@ class VersionChecker
     /**
      * @param CacheProvider|AdapterInterface $cache
      */
-    public function __construct(ContainerInterface $container, /* AdapterInterface */$cache, $translator)
+    public function __construct(ContainerInterface $container, /* AdapterInterface */ $cache, $translator)
     {
         $this->container = $container;
 

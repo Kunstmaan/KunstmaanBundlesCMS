@@ -46,9 +46,6 @@ class KunstmaanNodeSearchTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param string $locale
-     * @param bool             $includeOffline
-     *
      * @return HasNodeInterface
      */
     public function getParentPage(HasNodeInterface $page, string $locale, bool $includeOffline = false)
