@@ -36,7 +36,7 @@ class PasswordResettingListenerTest extends TestCase
         $manager = $this->createMock(UserManager::class);
         $user = $this->createMock(User::class);
 
-        $manager->expects($this->once())->method('updateUser')->willReturn(true);
+        $manager->expects($this->once())->method('updateUser');
         $user->expects($this->once())->method('setPasswordChanged')->willReturn(true);
 
         $event = new ChangePasswordSuccessEvent($user, new Response());
