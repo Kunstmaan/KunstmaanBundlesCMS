@@ -10,10 +10,8 @@ class GroupManager
 {
     /** @var EntityManagerInterface */
     private $em;
-
     /** @var string */
     private $class;
-
     /** @var ObjectRepository */
     private $repository;
 
