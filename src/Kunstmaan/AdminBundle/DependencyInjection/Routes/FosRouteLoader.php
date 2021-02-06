@@ -17,16 +17,16 @@ use Symfony\Component\Routing\RouteCollection;
 final class FosRouteLoader implements RouteLoaderInterface
 {
     /** @var bool */
-    private $enableCustomLogin;
+    private $newAuthenticationEnabled;
 
-    public function __construct(bool $enableCustomLogin = false)
+    public function __construct(bool $newAuthenticationEnabled = false)
     {
-        $this->enableCustomLogin = $enableCustomLogin;
+        $this->newAuthenticationEnabled = $newAuthenticationEnabled;
     }
 
     public function loadRoutes()
     {
-        if ($this->enableCustomLogin) {
+        if ($this->newAuthenticationEnabled) {
             return new RouteCollection();
         }
 
