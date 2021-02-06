@@ -523,10 +523,13 @@ abstract class BaseUser implements UserInterface
      */
     public function isSuperAdmin(/*$triggerDeprecation = true*/)
     {
+        //TODO: check if deprecation is needed?
         if (func_num_args() === 0 || (func_num_args() > 0 && (bool) func_get_arg(0) !== false)) {
             // NEXT_MAJOR remove method
             @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
         }
+
+        //TODO: add original method logic
     }
 
     /**
@@ -536,8 +539,11 @@ abstract class BaseUser implements UserInterface
      */
     public function setSuperAdmin($boolean)
     {
+        //TODO: check if deprecation is needed?
         // NEXT_MAJOR remove method
         @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+
+        //TODO: add original method logic
     }
 
     public function getConfirmationToken()
