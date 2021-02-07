@@ -137,7 +137,7 @@ security:
     username: Gebruikersnaam
     password: Wachtwoord
     submit: Inloggen
-    remember_me: Onthoud mijn gegevens
+    remember_me: 'Ingelogd blijven'
     logged_in_as: 'Ingelogd as %username%'
     logout: 'Uitloggen'
   resetting:

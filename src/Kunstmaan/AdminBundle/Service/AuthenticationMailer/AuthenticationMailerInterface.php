@@ -6,5 +6,5 @@ use Kunstmaan\AdminBundle\Entity\UserInterface;
 
 interface AuthenticationMailerInterface
 {
-    public function sendPasswordResetEmail(UserInterface $user, string $locale);
+    public function sendPasswordResetEmail(UserInterface $user, string $locale): void;
 }

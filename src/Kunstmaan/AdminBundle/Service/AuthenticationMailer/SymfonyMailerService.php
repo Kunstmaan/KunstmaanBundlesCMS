@@ -29,7 +29,7 @@ final class SymfonyMailerService implements AuthenticationMailerInterface
         $this->from = $from;
     }
 
-    public function sendPasswordResetEmail(UserInterface $user, string $locale)
+    public function sendPasswordResetEmail(UserInterface $user, string $locale): void
     {
         $confirmationUrl = $this->urlGenerator->generate('kunstmaan_admin_reset_password_confirm', ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL);
 
