@@ -22,7 +22,7 @@ class UserManager
     public function __construct(EncoderFactoryInterface $encoderFactory, EntityManagerInterface $em, string $class)
     {
         if (false !== strpos($this->class, ':')) {
-            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s"is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the user class instead.', __CLASS__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s" is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the user class instead.', __CLASS__), E_USER_DEPRECATED);
         }
 
         $this->em = $em;
@@ -83,7 +83,7 @@ class UserManager
         if ($encoder instanceof SelfSaltingEncoderInterface) {
             $user->setSalt(null);
         } else {
-            @trigger_error(sprintf('Using a password encoder requiring a salt is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use a password encoder that implements the "%s" interface instead. ', SelfSaltingEncoderInterface::class), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Using a password encoder requiring a salt is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use a password encoder that implements the "%s" interface instead.', SelfSaltingEncoderInterface::class), E_USER_DEPRECATED);
 
             $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
             $user->setSalt($salt);
