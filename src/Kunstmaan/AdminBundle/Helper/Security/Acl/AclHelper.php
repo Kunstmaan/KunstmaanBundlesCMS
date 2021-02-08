@@ -224,7 +224,7 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-
+        //var_dump('ACLHelper::getPermittedAclIdsSQLForUserPlatformOther',$selectQuery);echo"<br/>";
         return $selectQuery;
     }
 
@@ -295,7 +295,7 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-
+        //var_dump('ACLHelper::getPermittedAclIdsSQLForUserPlatformPostgres',$selectQuery);echo "<br />";
         return $selectQuery;
     }
     /**

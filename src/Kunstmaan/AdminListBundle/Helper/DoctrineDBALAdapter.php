@@ -68,9 +68,10 @@ class DoctrineDBALAdapter implements AdapterInterface
         if ($this->useDistinct) {
             $distinctString = 'DISTINCT ';
         }
+        //@todo test this extensively in own and bicycle shop
         $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
-            ->orderBy($this->countField)
-            ->setMaxResults(1)
+            //->orderBy($this->countField)
+            //->setMaxResults(1)
             ->execute();
 
         return ($results = $statement->fetchColumn()) ? $results : 0;

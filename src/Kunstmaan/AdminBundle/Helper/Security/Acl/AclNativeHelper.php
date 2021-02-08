@@ -160,7 +160,7 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-
+        //var_dump('ACLNativeWalker::applyPlatformPostgres',$joinTableQuery); echo"<br/>";
         $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
 
         return $query;
@@ -252,6 +252,7 @@ AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 
+        //var_dump('ACLNativeWalker::applyPlatformOther',$joinTableQuery); echo"<br/>";
         $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
 
         return $query;

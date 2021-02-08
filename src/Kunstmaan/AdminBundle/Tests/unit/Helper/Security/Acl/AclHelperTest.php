@@ -205,9 +205,9 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertStringContainsString('#ROLE_SUBJECT#', $aclQuery);
-        $this->assertStringContainsString('#ROLE_KING#', $aclQuery);
-        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $aclQuery);
+        $this->assertStringContainsString('ROLE_SUBJECT', $aclQuery);
+        $this->assertStringContainsString('ROLE_KING', $aclQuery);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
         $this->assertStringContainsString('MyUser', $aclQuery);
     }
 
@@ -258,7 +258,7 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $aclQuery);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
     }
 
     public function testGetAllowedEntityIds()

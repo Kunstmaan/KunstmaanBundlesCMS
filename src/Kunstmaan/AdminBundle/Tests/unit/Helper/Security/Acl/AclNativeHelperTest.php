@@ -154,9 +154,9 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertStringContainsString('#ROLE_SUBJECT#', $query);
-        $this->assertStringContainsString('#ROLE_KING#', $query);
-        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $query);
+        $this->assertStringContainsString('ROLE_SUBJECT', $query);
+        $this->assertStringContainsString('ROLE_KING', $query);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $query);
         $this->assertStringContainsString('MyUser', $query);
     }
 
@@ -194,7 +194,7 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertStringContainsString('#IS_AUTHENTICATED_ANONYMOUSLY#', $query);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $query);
     }
 
     public function testGetTokenStorage()
