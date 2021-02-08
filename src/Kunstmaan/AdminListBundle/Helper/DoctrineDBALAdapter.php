@@ -22,6 +22,10 @@ class DoctrineDBALAdapter implements AdapterInterface
     private $useDistinct;
 
     /**
+     * @var mixed|string
+     */
+    private $databasePlatform;
+    /**
      * Constructor.
      *
      * @param QueryBuilder $queryBuilder a DBAL query builder
@@ -30,7 +34,7 @@ class DoctrineDBALAdapter implements AdapterInterface
      *
      * @api
      */
-    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct = true)
+    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct = true,$databasePlatform='mysql')
     {
         if (strpos($countField, '.') === false) {
             throw new LogicException('The $countField must contain a table alias in the string.');
@@ -42,8 +46,9 @@ class DoctrineDBALAdapter implements AdapterInterface
 
         $this->queryBuilder = $queryBuilder;
         $this->countField = $countField;
-
         $this->useDistinct = $useDistinct;
+        $this->databasePlatform = $databasePlatform;
+
     }
 
     /**
@@ -64,15 +69,22 @@ class DoctrineDBALAdapter implements AdapterInterface
     public function getNbResults()
     {
         $query = clone $this->queryBuilder;
+
         $distinctString = '';
         if ($this->useDistinct) {
             $distinctString = 'DISTINCT ';
         }
-        //@todo test this extensively in own and bicycle shop
-        $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
-            //->orderBy($this->countField)
-            //->setMaxResults(1)
-            ->execute();
+
+        if ($this->databasePlatform == 'postgresql' ){
+            $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
+                ->execute();
+        } else{
+            $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
+                ->orderBy($this->countField)
+                ->setMaxResults(1)
+                ->execute();
+        }
+
 
         return ($results = $statement->fetchColumn()) ? $results : 0;
     }
