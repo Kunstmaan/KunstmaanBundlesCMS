@@ -514,7 +514,6 @@ SQL;
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
-        //@todo original 5.7 code states $qb->andWhere('t.online = true');=> strange!
         if (!$includeOffline) {
             $qb->andWhere('t.online = :onlineTrue')
                 ->setParameter('onlineTrue',true);
