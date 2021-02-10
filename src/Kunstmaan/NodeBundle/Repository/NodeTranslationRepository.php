@@ -279,7 +279,7 @@ class NodeTranslationRepository extends EntityRepository
                 't.publicNodeVersion = v.id'
             )
             ->where('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue',true)
+            ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL)
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -415,7 +415,7 @@ class NodeTranslationRepository extends EntityRepository
             )
             ->where('n.parent IS NULL')
             ->andWhere('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue',true);
+            ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL);
 
         return $qb->getQuery()->getResult();
     }
@@ -604,7 +604,7 @@ class NodeTranslationRepository extends EntityRepository
                 'nt.publicNodeVersion = v.id'
             )
             ->where('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue',true)
+            ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL)
             ->andWhere('nt.online = :onlineTrue')
             ->setParameter('onlineTrue',true)
             ->setFirstResult(0)
