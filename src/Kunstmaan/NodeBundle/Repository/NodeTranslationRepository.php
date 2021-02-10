@@ -331,7 +331,7 @@ class NodeTranslationRepository extends EntityRepository
                 'WITH',
                 'b.publicNodeVersion = v.id'
             )
-            //@todo check if you can really order by boolean in postgreSql
+
             ->addOrderBy('b.online', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);

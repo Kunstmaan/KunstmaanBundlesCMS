@@ -63,7 +63,6 @@ class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminLi
      */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
-        //@todo postgres need to check this for issues
         $queryBuilder->orderBy('b.name', 'ASC');
     }
 
