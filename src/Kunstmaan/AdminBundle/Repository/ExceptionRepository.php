@@ -25,25 +25,24 @@ class ExceptionRepository extends EntityRepository
      */
     public function markAllAsResolved()
     {
-        if ($this->_em->getConnection()->getDatabasePlatform()->getName()=='postgresql'){
+        if ($this->_em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
             return $this->createQueryBuilder('e')
                 ->update()
-                ->set('e.isResolved',':isResolvedTrue')
+                ->set('e.isResolved', ':isResolvedTrue')
                 ->where('e.isResolved = :isResolvedFalse')
-                ->setParameter('isResolvedTrue',true,\PDO::PARAM_BOOL)
-                ->setParameter('isResolvedFalse',false,\PDO::PARAM_BOOL)
+                ->setParameter('isResolvedTrue', true, \PDO::PARAM_BOOL)
+                ->setParameter('isResolvedFalse', false, \PDO::PARAM_BOOL)
                 ->getQuery()
                 ->getSingleScalarResult();
-        }else{
+        } else {
             return $this->createQueryBuilder('e')
                 ->update()
-                ->set('e.isResolved',1)
+                ->set('e.isResolved', 1)
                 ->where('e.isResolved = :isResolvedFalse')
-                ->setParameter('isResolvedFalse',false)
+                ->setParameter('isResolvedFalse', false)
                 ->getQuery()
                 ->getSingleScalarResult();
         }
-
     }
 
     public function findExceptionStatistics()
@@ -51,7 +50,7 @@ class ExceptionRepository extends EntityRepository
         return $this->createQueryBuilder('e')
             ->select('COUNT(e.id) as cp_all, SUM(e.events) as cp_sum')
             ->where('e.isResolved = :isResolvedFalse')
-            ->setParameter('isResolvedFalse',false)
+            ->setParameter('isResolvedFalse', false)
             ->getQuery()
             ->getOneOrNullResult();
     }

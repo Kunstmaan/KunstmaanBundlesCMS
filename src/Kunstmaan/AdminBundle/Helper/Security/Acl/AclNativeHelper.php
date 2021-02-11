@@ -66,16 +66,16 @@ class AclNativeHelper
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
-        if ($this->databasePlatform=='postgresql'){
-            return $this->applyPlatformPostgres($queryBuilder,$permissionDef);
+        if ($this->databasePlatform == 'postgresql') {
+            return $this->applyPlatformPostgres($queryBuilder, $permissionDef);
         }
-        return $this->applyPlatformOther($queryBuilder,$permissionDef);
+
+        return $this->applyPlatformOther($queryBuilder, $permissionDef);
     }
 
     /**
      * Apply the ACL constraints to the specified query builder, using the permission definition for all postgres platform
-     * @param QueryBuilder $queryBuilder
-     * @param PermissionDefinition $permissionDef
+     *
      * @return QueryBuilder
      */
     private function applyPlatformPostgres(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
@@ -104,7 +104,7 @@ class AclNativeHelper
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
-        $userRoles = array();
+        $userRoles = [];
         $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
@@ -117,7 +117,7 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array($stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar);
+        $uR = [$stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
@@ -166,8 +166,7 @@ SELECTQUERY;
 
     /**
      * Apply the ACL constraints to the specified query builder, using the permission definition for all platforms other than postgres
-     * @param QueryBuilder $queryBuilder
-     * @param PermissionDefinition $permissionDef
+     *
      * @return QueryBuilder
      */
     private function applyPlatformOther(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)

@@ -51,9 +51,9 @@ class NodeTranslationRepository extends EntityRepository
             ->select('nt')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
             ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue',true)
+            ->setParameter('onlineTrue', true)
             ->andWhere('nt.lang = :lang')
             ->setParameter('lang', $lang)
             ->andWhere('n.id = :node_id')
@@ -75,7 +75,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getMaxChildrenWeight(Node $parentNode = null, $lang = null)
     {
-        if ($this->_em->getConnection()->getDatabasePlatform()->getName()=='postgresql'){
+        if ($this->_em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
             $maxWeights = $this->getNodeTranslationsQueryBuilder($lang)
                 ->select('max(nt.weight)')
                 ->andWhere('n.parent = :parentNode')
@@ -84,7 +84,7 @@ class NodeTranslationRepository extends EntityRepository
                 ->getQuery()
                 ->getScalarResult();
             $maxWeight = -1000;
-            foreach ($maxWeights as $entry){
+            foreach ($maxWeights as $entry) {
                 $weight = array_values($entry)[0];
                 if ($weight > $maxWeight) {
                     $maxWeight = $weight;
@@ -98,6 +98,7 @@ class NodeTranslationRepository extends EntityRepository
                 ->getQuery()
                 ->getSingleScalarResult();
         }
+
         return (int) $maxWeight;
     }
 
@@ -122,7 +123,7 @@ class NodeTranslationRepository extends EntityRepository
                 'nt.publicNodeVersion = v.id'
             )
             ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->orderBy('nt.weight')
         ;
 
@@ -148,7 +149,7 @@ class NodeTranslationRepository extends EntityRepository
     {
         return $this->getNodeTranslationsQueryBuilder($lang)
             ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue',true);
+            ->setParameter('onlineTrue', true);
     }
 
     /**
@@ -173,7 +174,7 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineChildrenQueryBuilder(Node $parent, $lang = null)
     {
         return $this->getChildrenQueryBuilder($parent, $lang)
-            ->andWhere('nt.online = :onlineTrue')->setParameter('onlineTrue',true);
+            ->andWhere('nt.online = :onlineTrue')->setParameter('onlineTrue', true);
     }
 
     /**
@@ -276,7 +277,7 @@ class NodeTranslationRepository extends EntityRepository
                 't.publicNodeVersion = v.id'
             )
             ->where('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL)
+            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL)
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -335,7 +336,7 @@ class NodeTranslationRepository extends EntityRepository
 
         if (!$includeDeleted) {
             $qb->andWhere('n.deleted = :deletedFalse')
-                ->setParameter('deletedFalse',false);
+                ->setParameter('deletedFalse', false);
         }
 
         if (!empty($locale)) {
@@ -412,7 +413,7 @@ class NodeTranslationRepository extends EntityRepository
             )
             ->where('n.parent IS NULL')
             ->andWhere('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL);
+            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL);
 
         return $qb->getQuery()->getResult();
     }
@@ -598,9 +599,9 @@ class NodeTranslationRepository extends EntityRepository
                 'nt.publicNodeVersion = v.id'
             )
             ->where('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL)
+            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL)
             ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue',true)
+            ->setParameter('onlineTrue', true)
             ->setFirstResult(0)
             ->setMaxResults(1);
 

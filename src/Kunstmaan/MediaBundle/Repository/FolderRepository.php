@@ -105,19 +105,18 @@ class FolderRepository extends NestedTreeRepository
      */
     public function getAllFolders($limit = null)
     {
-        if ($this->_em->getConnection()->getDatabasePlatform()->getName() == 'postgresql'){
+        if ($this->_em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
             $qb = $this->createQueryBuilder('folder')
                 ->select('folder')
                 ->where('folder.parent is null AND folder.deleted != :deletedTrue')
-                ->setParameter('deletedTrue',true,\PDO::PARAM_BOOL)
+                ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL)
                 ->orderBy('folder.name');
-        }else{
+        } else {
             $qb = $this->createQueryBuilder('folder')
                 ->select('folder')
                 ->where('folder.parent is null AND folder.deleted != true')
                 ->orderBy('folder.name');
         }
-
 
         if (false === \is_null($limit)) {
             $qb->setMaxResults($limit);

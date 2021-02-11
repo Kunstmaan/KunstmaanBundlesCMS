@@ -25,6 +25,7 @@ class DoctrineDBALAdapter implements AdapterInterface
      * @var mixed|string
      */
     private $databasePlatform;
+
     /**
      * @param QueryBuilder $queryBuilder a DBAL query builder
      * @param string       $countField   Primary key for the table in query. Used in count expression. Must include table alias
@@ -32,7 +33,7 @@ class DoctrineDBALAdapter implements AdapterInterface
      *
      * @api
      */
-    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct = true,$databasePlatform='mysql')
+    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct = true, $databasePlatform = 'mysql')
     {
         if (strpos($countField, '.') === false) {
             throw new LogicException('The $countField must contain a table alias in the string.');
@@ -46,7 +47,6 @@ class DoctrineDBALAdapter implements AdapterInterface
         $this->countField = $countField;
         $this->useDistinct = $useDistinct;
         $this->databasePlatform = $databasePlatform;
-
     }
 
     /**
@@ -72,19 +72,18 @@ class DoctrineDBALAdapter implements AdapterInterface
             $distinctString = 'DISTINCT ';
         }
 
-        if ($this->databasePlatform == 'postgresql' ){
+        if ($this->databasePlatform == 'postgresql') {
             //for a count the order of the results  form the original query does does not matter
             // and in postgres it is even detrimental when used in conjunction with other functions such as CONCAT
-            $query -> resetQueryPart('orderBy');
-            $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
+            $query->resetQueryPart('orderBy');
+            $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
                 ->execute();
-        } else{
-            $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
+        } else {
+            $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
                 ->orderBy($this->countField)
                 ->setMaxResults(1)
                 ->execute();
         }
-
 
         return ($results = $statement->fetchColumn()) ? $results : 0;
     }

@@ -142,19 +142,19 @@ class AclHelper
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0
      * the function switches between configuration for postgres and other database platforms, by calling the respective private methods
-     * @param Query $query
      *
      * @return string
      */
-    private function getPermittedAclIdsSQLForUser(Query $query){
-        if ($this->databasePlatform=='postgresql'){
+    private function getPermittedAclIdsSQLForUser(Query $query)
+    {
+        if ($this->databasePlatform == 'postgresql') {
             return $this->getPermittedAclIdsSQLForUserPlatformPostgres($query);
         }
+
         return $this->getPermittedAclIdsSQLForUserPlatformOther($query);
     }
 
     /**
-     * @param Query $query
      * @return string
      */
     private function getPermittedAclIdsSQLForUserPlatformOther(Query $query)
@@ -219,11 +219,11 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
+
         return $selectQuery;
     }
 
     /**
-     * @param Query $query
      * @return string
      */
     private function getPermittedAclIdsSQLForUserPlatformPostgres(Query $query)
@@ -235,7 +235,7 @@ SELECTQUERY;
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
-        $userRoles = array();
+        $userRoles = [];
         $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
@@ -248,7 +248,7 @@ SELECTQUERY;
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array($stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar);
+        $uR = [$stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user

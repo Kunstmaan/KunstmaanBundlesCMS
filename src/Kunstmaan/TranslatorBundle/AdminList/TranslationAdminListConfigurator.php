@@ -229,8 +229,8 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
             // Add join for every locale
             foreach ($this->locales as $locale) {
-                $this->queryBuilder->addSelect('t_'.$locale.'.'.$quotedTextColumnName.' AS '.$locale);
-                $this->queryBuilder->addSelect('t_'.$locale.'.id AS '.$locale.'_id');
+                $this->queryBuilder->addSelect('t_' . $locale . '.' . $quotedTextColumnName . ' AS ' . $locale);
+                $this->queryBuilder->addSelect('t_' . $locale . '.id AS ' . $locale . '_id');
                 $this->queryBuilder->leftJoin(
                     'b',
                     'kuma_translation',
@@ -249,12 +249,12 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                     $expr = null;
                     switch ($textComparator) {
                         case 'equals':
-                            $expr = $this->queryBuilder->expr()->eq('t_' . $locale. '.' .$quotedTextColumnName, ':var_' . $uniqueId);
+                            $expr = $this->queryBuilder->expr()->eq('t_' . $locale . '.' . $quotedTextColumnName, ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue);
 
                             break;
                         case 'notequals':
-                            $expr = $this->queryBuilder->expr()->neq('t_' . $locale. '.' .$quotedTextColumnName, ':var_' . $uniqueId);
+                            $expr = $this->queryBuilder->expr()->neq('t_' . $locale . '.' . $quotedTextColumnName, ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue);
 
                             break;
@@ -264,25 +264,25 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
                             break;
                         case 'doesnotcontain':
-                            $expr = 't_' . $locale . '.' . $quotedTextColumnName . ' NOT LIKE :var_'. $uniqueId;
+                            $expr = 't_' . $locale . '.' . $quotedTextColumnName . ' NOT LIKE :var_' . $uniqueId;
                             $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue . '%');
 
                             break;
                         case 'startswith':
-                            $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.' . $quotedTextColumnName, ':var_'.$uniqueId);
+                            $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.' . $quotedTextColumnName, ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue . '%');
 
                             break;
                         case 'endswith':
-                            $expr = $this->queryBuilder->expr()->like('t_'. $locale . '.' . $quotedTextColumnName, ':var_'.$uniqueId);
+                            $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.' . $quotedTextColumnName, ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue);
 
                             break;
                         case 'empty':
                             $expr = $this->queryBuilder->expr()->orX(
                                 $this->queryBuilder->expr()->isNull('t_' . $locale . '.' . $quotedTextColumnName),
-                                $this->queryBuilder->expr()->eq('t_' . $locale.'.' . $quotedTextColumnName, '\'-\''),
-                                $this->queryBuilder->expr()->eq('t_' . $locale.'.' . $quotedTextColumnName, '\'\'')
+                                $this->queryBuilder->expr()->eq('t_' . $locale . '.' . $quotedTextColumnName, '\'-\''),
+                                $this->queryBuilder->expr()->eq('t_' . $locale . '.' . $quotedTextColumnName, '\'\'')
                             );
 
                             break;

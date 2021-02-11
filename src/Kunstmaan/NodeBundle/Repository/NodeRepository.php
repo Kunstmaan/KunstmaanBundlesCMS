@@ -75,7 +75,7 @@ class NodeRepository extends NestedTreeRepository
                 't.publicNodeVersion = v.id'
             )
             ->where('b.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
@@ -268,8 +268,7 @@ class NodeRepository extends NestedTreeRepository
         $qb = $connection->createQueryBuilder();
         $databasePlatformName = $connection->getDatabasePlatform()->getName();
 
-
-        switch ($databasePlatformName){
+        switch ($databasePlatformName) {
             case 'sqlite':
                 $sql = <<<SQL
 n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
@@ -321,13 +320,11 @@ SQL;
             ->where('n.deleted = false')
             ->addGroupBy('n.id');
 
-        if ($databasePlatformName=='postgresql'){
-
+        if ($databasePlatformName == 'postgresql') {
             $qb->addGroupBy('t.url')
                 ->addGroupby('t.id')
                 ->addGroupby('v.weight')
                 ->addGroupBy('v.title');
-
         }
 
         $qb->addOrderBy('t.weight', 'ASC')
@@ -358,14 +355,16 @@ SQL;
             $stmt->bindValue(':right', $rootNode->getRight());
         }
         $stmt->execute();
-        if ($databasePlatformName=='postgresql'){
-            $results=$stmt->fetchAll();
-            $uniqueResults=[];
-            foreach ($results as $result){
-                $uniqueResults[$result['id']]=$result;
+        if ($databasePlatformName == 'postgresql') {
+            $results = $stmt->fetchAll();
+            $uniqueResults = [];
+            foreach ($results as $result) {
+                $uniqueResults[$result['id']] = $result;
             }
+
             return $uniqueResults;
         }
+
         return $stmt->fetchAll();
     }
 
@@ -395,7 +394,7 @@ SQL;
                 't.publicNodeVersion = v.id'
             )
             ->where('node.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false);
+            ->setParameter('deletedFalse', false);
 
         if ($lang) {
             $qb->andWhere('t.lang = :lang')
@@ -440,7 +439,7 @@ SQL;
                 't.publicNodeVersion = v.id'
             )
             ->where('node.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->andWhere('node.parent IS NULL');
 
         if ($lang) {
@@ -473,7 +472,7 @@ SQL;
                 't.publicNodeVersion = v.id'
             )
             ->where('b.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->andWhere('b.parent IS NULL');
 
         return $qb->getQuery()->getResult();
@@ -505,7 +504,7 @@ SQL;
                 't.publicNodeVersion = v.id'
             )
             ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName)
             ->andWhere('t.lang = :lang')
@@ -514,7 +513,7 @@ SQL;
             ->addOrderBy('t.title', 'ASC');
         if (!$includeOffline) {
             $qb->andWhere('t.online = :onlineTrue')
-                ->setParameter('onlineTrue',true);
+                ->setParameter('onlineTrue', true);
         }
 
         if (\is_null($parentId)) {
@@ -543,7 +542,7 @@ SQL;
         $qb = $this->createQueryBuilder('n')
             ->select('n')
             ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName);
 
@@ -560,7 +559,7 @@ SQL;
         $qb = $this->createQueryBuilder('n')
             ->select('n.refEntityName')
             ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse',false)
+            ->setParameter('deletedFalse', false)
             ->distinct(true);
 
         return $qb->getQuery()->getArrayResult();
@@ -577,9 +576,8 @@ SQL;
         $qb->select('COUNT(' . $alias . ')');
 
         if (false === $includeDeleted) {
-            $qb->andWhere($alias.'.deleted = :deletedFalse')
-                ->setParameter('deletedFalse',false);
-
+            $qb->andWhere($alias . '.deleted = :deletedFalse')
+                ->setParameter('deletedFalse', false);
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult();

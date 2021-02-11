@@ -67,7 +67,7 @@ class DoctrineDBALAdapterTest extends TestCase
         //$qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
-        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield',true,'postgresql');
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield', true, 'postgresql');
         $result = $adapter->getNbResults();
         $this->assertCount(3, $result);
     }
@@ -84,7 +84,7 @@ class DoctrineDBALAdapterTest extends TestCase
         //$qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
-        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield',true,'postgresql');
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield', true, 'postgresql');
         $result = $adapter->getNbResults();
         $this->assertSame(0, $result);
     }

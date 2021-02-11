@@ -39,14 +39,12 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     private $useDistinctCount = true;
 
     private $databasePlatform;
-    /**
-     * @param Connection $connection
-     */
+
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $platform=$connection->getDatabasePlatform();
-        $this->databasePlatform = ($platform)?$platform->getName():'mysql';
+        $platform = $connection->getDatabasePlatform();
+        $this->databasePlatform = ($platform) ? $platform->getName() : 'mysql';
     }
 
     /**
