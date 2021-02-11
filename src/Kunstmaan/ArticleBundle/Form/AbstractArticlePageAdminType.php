@@ -13,35 +13,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AbstractArticlePageAdminType extends PageAdminType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder->add(
             'date',
             DateTimeType::class,
-            array(
+            [
                 'label' => 'article.form.date.label',
                 'required' => true,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
                 'date_format' => 'dd/MM/yyyy',
-            )
+            ]
         );
 
-        $builder->add('summary', TextType::class, array(
+        $builder->add('summary', TextType::class, [
             'label' => 'article.form.summary.label',
-        ));
+        ]);
     }
 
     /**
@@ -51,9 +40,9 @@ class AbstractArticlePageAdminType extends PageAdminType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage',
-        ));
+        ]);
     }
 
     /**

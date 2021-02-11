@@ -12,7 +12,7 @@ class NewTranslation
      *
      * @var array
      */
-    protected $locales = array();
+    protected $locales = [];
 
     /**
      * Keyword of the new translations

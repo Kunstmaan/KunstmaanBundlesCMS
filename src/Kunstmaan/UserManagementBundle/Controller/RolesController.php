@@ -9,10 +9,10 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -39,9 +39,9 @@ class RolesController extends BaseSettingsController
         $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
-        return array(
+        return [
             'adminlist' => $adminlist,
-        );
+        ];
     }
 
     /**
@@ -80,9 +80,9 @@ class RolesController extends BaseSettingsController
             }
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -124,10 +124,10 @@ class RolesController extends BaseSettingsController
             }
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'role' => $role,
-        );
+        ];
     }
 
     /**

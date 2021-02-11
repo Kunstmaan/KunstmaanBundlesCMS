@@ -23,12 +23,6 @@ class LoginListener
      */
     private $versionChecker;
 
-    /**
-     * Constructor
-     *
-     * @param LoggerInterface $logger         The logger
-     * @param VersionChecker  $versionChecker The version checker
-     */
     public function __construct(LoggerInterface $logger, VersionChecker $versionChecker)
     {
         $this->logger = $logger;
@@ -37,8 +31,6 @@ class LoginListener
 
     /**
      * Handle login event.
-     *
-     * @param InteractiveLoginEvent $event
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {

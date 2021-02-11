@@ -39,9 +39,6 @@ class PdfHandler extends FileHandler
         $this->webPath = $webPath;
     }
 
-    /**
-     * @param PreviewTransformerInterface $pdfTransformer
-     */
     public function setPdfTransformer(PreviewTransformerInterface $pdfTransformer)
     {
         $this->pdfTransformer = $pdfTransformer;
@@ -71,9 +68,6 @@ class PdfHandler extends FileHandler
         return false;
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
         parent::saveMedia($media);

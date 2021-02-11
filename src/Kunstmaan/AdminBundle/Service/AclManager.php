@@ -3,16 +3,13 @@
 namespace Kunstmaan\AdminBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Entity\AclChangeset;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\AdminBundle\Entity\AclChangeset;
 
-/**
- * Class AclManager
- */
 class AclManager
 {
     /** @var MutableAclProviderInterface */
@@ -35,10 +32,6 @@ class AclManager
         $this->permissionAdmin = $permissionAdmin;
     }
 
-    /**
-     * @param $originalNode
-     * @param $nodeNewPage
-     */
     public function updateNodeAcl(Node $originalNode, Node $nodeNewPage)
     {
         $originalIdentity = $this->objectIdentityRetrievalStrategy->getObjectIdentity($originalNode);
@@ -59,7 +52,6 @@ class AclManager
     }
 
     /**
-     * @param array  $nodes
      * @param string $role
      * @param int    $mask
      */
@@ -102,9 +94,6 @@ class AclManager
         } while ($hasPending);
     }
 
-    /**
-     * @param AclChangeset $aclChangeset
-     */
     public function applyAclChangeSet(AclChangeset $aclChangeset)
     {
         $aclChangeset->setPid(getmypid());

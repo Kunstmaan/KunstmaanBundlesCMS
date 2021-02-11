@@ -21,7 +21,7 @@ class UserRepository extends EntityRepository
         if (\is_array($role)) {
             $roles = $role;
         } else {
-            $roles = array($role);
+            $roles = [$role];
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();

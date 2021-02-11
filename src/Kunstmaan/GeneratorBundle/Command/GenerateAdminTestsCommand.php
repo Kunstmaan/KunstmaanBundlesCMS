@@ -24,9 +24,9 @@ class GenerateAdminTestsCommand extends GeneratorCommand
     {
         $this
             ->setDefinition(
-                array(
+                [
                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the tests in'),
-                )
+                ]
             )
             ->setDescription('Generates the tests used to test the admin created by the default-site generator')
             ->setHelp(<<<'EOT'
@@ -80,13 +80,13 @@ EOT
 
         $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
 
-        $inputAssistant->askForNamespace(array(
+        $inputAssistant->askForNamespace([
             '',
             'This command helps you to generate tests to test the admin of the default site setup.',
             'You must specify the namespace of the bundle where you want to generate the tests.',
             'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
             '',
-        ));
+        ]);
     }
 
     protected function createGenerator()

@@ -81,8 +81,6 @@ class PermissionAdmin
     protected $shellHelper;
 
     /**
-     * Constructor
-     *
      * @param EntityManager                            $em                   The EntityManager
      * @param TokenStorageInterface                    $tokenStorage         The token storage
      * @param AclProviderInterface                     $aclProvider          The ACL provider
@@ -119,7 +117,7 @@ class PermissionAdmin
     {
         $this->resource = $resource;
         $this->permissionMap = $permissionMap;
-        $this->permissions = array();
+        $this->permissions = [];
 
         // Init permissions
         try {
@@ -209,8 +207,6 @@ class PermissionAdmin
 
     /**
      * Handle form entry of permission changes.
-     *
-     * @param Request $request
      *
      * @return bool
      */

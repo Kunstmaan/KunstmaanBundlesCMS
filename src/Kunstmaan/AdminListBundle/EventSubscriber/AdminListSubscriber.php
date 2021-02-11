@@ -9,9 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class AdminListSubscriber.
- */
 class AdminListSubscriber implements EventSubscriberInterface
 {
     /**
@@ -19,11 +16,6 @@ class AdminListSubscriber implements EventSubscriberInterface
      */
     private $router;
 
-    /**
-     * ArticleSubscriber constructor.
-     *
-     * @param RouterInterface $router
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -39,9 +31,6 @@ class AdminListSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function postDelete(NodeEvent $event)
     {
         $page = $event->getPage();

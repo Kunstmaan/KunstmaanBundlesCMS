@@ -53,9 +53,6 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
         $this->em = $em;
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function preUpdate(LifecycleEventArgs $args)
     {
         if ($args->getObject() instanceof NodeTranslation) {
@@ -67,17 +64,11 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
         }
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onPostPublish(NodeEvent $event)
     {
         $this->index($event);
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onPostPersist(NodeEvent $event)
     {
         $reIndexChildren = (
@@ -89,8 +80,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     }
 
     /**
-     * @param NodeEvent $event
-     * @param bool      $reIndexChildren
+     * @param bool $reIndexChildren
      */
     private function index(NodeEvent $event, $reIndexChildren = false)
     {
@@ -107,25 +97,16 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
         }
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onPostDelete(NodeEvent $event)
     {
         $this->delete($event);
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function onPostUnPublish(NodeEvent $event)
     {
         $this->delete($event);
     }
 
-    /**
-     * @param NodeEvent $event
-     */
     public function delete(NodeEvent $event)
     {
         $this->nodePagesConfiguration->deleteNodeTranslation($event->getNodeTranslation());

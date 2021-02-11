@@ -21,25 +21,24 @@ class TabsTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('tabs_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('tabs_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+        ];
     }
 
     /**
-     * @param Environment $env
-     * @param TabPane     $tabPane  The tab pane
-     * @param array       $options  The extra options
-     * @param string      $template The template
+     * @param TabPane $tabPane  The tab pane
+     * @param array   $options  The extra options
+     * @param string  $template The template
      *
      * @return string
      */
-    public function renderWidget(Environment $env, TabPane $tabPane, $options = array(), $template = '@KunstmaanAdmin/TabsTwigExtension/widget.html.twig')
+    public function renderWidget(Environment $env, TabPane $tabPane, $options = [], $template = '@KunstmaanAdmin/TabsTwigExtension/widget.html.twig')
     {
         $template = $env->load($template);
 
-        return $template->render(array_merge($options, array(
+        return $template->render(array_merge($options, [
             'tabPane' => $tabPane,
-        )));
+        ]));
     }
 }

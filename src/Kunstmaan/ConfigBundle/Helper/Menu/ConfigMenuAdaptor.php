@@ -21,8 +21,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
     private $authorizationChecker;
 
     /**
-     * @param array                         $configuration
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param array $configuration
      */
     public function __construct($configuration, AuthorizationCheckerInterface $authorizationChecker)
     {
@@ -30,14 +29,6 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
-     *
-     * @param MenuBuilder $menu      The MenuBuilder
-     * @param MenuItem[]  &$children The current children
-     * @param MenuItem    $parent    The parent Menu item
-     * @param Request     $request   The Request
-     */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (!\is_null($parent) && 'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
@@ -56,7 +47,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
                     $menuItem = new MenuItem($menu);
                     $menuItem
                       ->setRoute('kunstmaanconfigbundle_default')
-                      ->setRouteParams(array('internalName' => $entity->getInternalName()))
+                      ->setRouteParams(['internalName' => $entity->getInternalName()])
                       ->setLabel($entity->getLabel())
                       ->setUniqueId($entity->getInternalName())
                       ->setParent($parent);

@@ -158,8 +158,6 @@ EOQ;
     }
 
     /**
-     * @param TranslationModel $translationModel
-     *
      * @return bool
      */
     public function isUnique(TranslationModel $translationModel)
@@ -176,9 +174,6 @@ EOQ;
         return $count == 0;
     }
 
-    /**
-     * @param TranslationModel $translationModel
-     */
     public function createTranslations(TranslationModel $translationModel)
     {
         $this->getEntityManager()->beginTransaction();
@@ -211,8 +206,7 @@ EOQ;
     }
 
     /**
-     * @param TranslationModel $translationModel
-     * @param                  $translationId
+     * @param $translationId
      */
     public function updateTranslations(TranslationModel $translationModel, $translationId)
     {
@@ -284,8 +278,7 @@ EOQ;
     }
 
     /**
-     * @param DateTime $date
-     * @param string   $domain
+     * @param string $domain
      *
      * @return mixed
      */

@@ -19,13 +19,12 @@ class TranslationFileExplorer
      *
      * @var array
      */
-    private $fileFormats = array();
+    private $fileFormats = [];
 
     /**
      *  Looks in the path for Resources/translation files and returns a finder object with the result
      *
      * @param string $path
-     * @param array  $locales
      *
      * @return \Symfony\Component\Finder\Finder
      */

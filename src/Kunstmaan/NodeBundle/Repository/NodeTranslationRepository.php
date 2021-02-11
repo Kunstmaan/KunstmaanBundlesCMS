@@ -180,9 +180,8 @@ class NodeTranslationRepository extends EntityRepository
      * Get all online child node translations for a given node and (optional)
      * language
      *
-     * @param Node   $parent
-     * @param string $lang   (optional, if not specified all languages will be
-     *                       returned)
+     * @param string $lang (optional, if not specified all languages will be
+     *                     returned)
      *
      * @return array
      */
@@ -213,8 +212,6 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Get the node translation for a node
-     *
-     * @param HasNodeInterface $hasNode
      *
      * @return NodeTranslation
      */
@@ -586,9 +583,6 @@ class NodeTranslationRepository extends EntityRepository
      *
      * It'll only return the latest version. It'll also hide deleted & offline
      * nodes.
-     *
-     * @param $language
-     * @param $internalName
      */
     public function getNodeTranslationByLanguageAndInternalName(
         $language,

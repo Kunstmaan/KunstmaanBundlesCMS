@@ -8,22 +8,14 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class KunstmaanAdminListExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $container->setParameter('kunstmaan_entity.lock_check_interval', $config['lock']['check_interval']);
         $container->setParameter('kunstmaan_entity.lock_threshold', $config['lock']['threshold']);
@@ -36,7 +28,7 @@ class KunstmaanAdminListExtension extends Extension implements PrependExtensionI
     {
         $parameterName = 'datePicker_startDate';
 
-        $config = array();
+        $config = [];
         $config['globals'][$parameterName] = '01/01/1970';
 
         if ($container->hasParameter($parameterName)) {

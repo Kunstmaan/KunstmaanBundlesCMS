@@ -218,8 +218,6 @@ class PagePartRef
 
     /**
      * Set created
-     *
-     * @param \DateTime $created
      */
     public function setCreated(\DateTime $created)
     {
@@ -238,8 +236,6 @@ class PagePartRef
 
     /**
      * Set updated
-     *
-     * @param \DateTime $updated
      */
     public function setUpdated(\DateTime $updated)
     {
@@ -263,8 +259,6 @@ class PagePartRef
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
      * @return \Kunstmaan\PagePartBundle\Helper\PagePartInterface
      */
     public function getPagePart(EntityManager $em)

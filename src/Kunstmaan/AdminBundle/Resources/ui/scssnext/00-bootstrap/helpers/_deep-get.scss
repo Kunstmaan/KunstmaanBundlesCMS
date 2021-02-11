@@ -1,0 +1,22 @@
+/* ==========================================================================
+   Helper function: deep get
+   itterates over maps with sublevels and returns match
+   ========================================================================== */
+
+@function deep-get($key: null, $level: null, $map: null) {
+    @if ($key != null and $map != null) {
+        $match: null;
+
+        @if ($level != null) {
+            $match: map-get(map-get($map, $level), $key);
+        } @else {
+            $match: map-get($map, $key);
+        }
+
+        @if ($match == null) {
+            @error('Key #{$key} has no match in map');
+        }
+
+        @return $match;
+    }
+}

@@ -16,6 +16,7 @@ class ACLPermissionCreatorService
 {
     /* @var MutableAclProviderInterface $aclProvider */
     protected $aclProvider;
+
     /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
     protected $oidStrategy;
 

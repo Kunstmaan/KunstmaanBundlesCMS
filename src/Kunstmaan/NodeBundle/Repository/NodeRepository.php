@@ -105,15 +105,13 @@ class NodeRepository extends NestedTreeRepository
 
         $query = $aclHelper->apply(
             $qb,
-            new PermissionDefinition(array($permission))
+            new PermissionDefinition([$permission])
         );
 
         return $query->getResult();
     }
 
     /**
-     * @param HasNodeInterface $hasNode
-     *
      * @return Node|null
      */
     public function getNodeFor(HasNodeInterface $hasNode)
@@ -147,7 +145,7 @@ class NodeRepository extends NestedTreeRepository
         $nodeVersion = $this->getEntityManager()->getRepository(
             NodeVersion::class
         )->findOneBy(
-            array('refId' => $id, 'refEntityName' => $entityName)
+            ['refId' => $id, 'refEntityName' => $entityName]
         );
         if ($nodeVersion) {
             return $nodeVersion->getNodeTranslation()->getNode();
@@ -169,10 +167,10 @@ class NodeRepository extends NestedTreeRepository
         foreach ($slugParts as $slugPart) {
             if ($parentNode) {
                 if ($r = $this->findOneBy(
-                    array(
+                    [
                         'slug' => $slugPart,
                         'parent.parent' => $parentNode->getId(),
-                    )
+                    ]
                 )
                 ) {
                     $result = $r;
@@ -205,7 +203,7 @@ class NodeRepository extends NestedTreeRepository
         $node = new Node();
         $node->setRef($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException('the entity of class '. $node->getRefEntityName().' has no id, maybe you forgot to flush first');
+            throw new \InvalidArgumentException('the entity of class ' . $node->getRefEntityName() . ' has no id, maybe you forgot to flush first');
         }
         $node->setDeleted(false);
         $node->setInternalName($internalName);
@@ -215,10 +213,10 @@ class NodeRepository extends NestedTreeRepository
             $parentNodeVersion = $em->getRepository(
                 NodeVersion::class
             )->findOneBy(
-                array(
+                [
                     'refId' => $parent->getId(),
                     'refEntityName' => ClassLookup::getClass($parent),
-                )
+                ]
             );
             if ($parentNodeVersion) {
                 $node->setParent(
@@ -344,7 +342,7 @@ SQL;
                 ->andWhere('n.rgt <= :right');
         }
 
-        $permissionDef = new PermissionDefinition(array($permission));
+        $permissionDef = new PermissionDefinition([$permission]);
         $permissionDef->setEntity('Kunstmaan\NodeBundle\Entity\Node');
         $permissionDef->setAlias('n');
         $qb = $aclNativeHelper->apply($qb, $permissionDef);
@@ -382,7 +380,7 @@ SQL;
     public function getAllParents(Node $node = null, $lang = null)
     {
         if (\is_null($node)) {
-            return array();
+            return [];
         }
 
         $qb = $this->createQueryBuilder('node');
@@ -576,7 +574,7 @@ SQL;
         $aliases = $qb->getRootAliases();
         $alias = $aliases[0];
 
-        $qb->select('COUNT('.$alias.')');
+        $qb->select('COUNT(' . $alias . ')');
 
         if (false === $includeDeleted) {
             $qb->andWhere($alias.'.deleted = :deletedFalse')

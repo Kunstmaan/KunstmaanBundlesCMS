@@ -5,9 +5,9 @@ namespace Kunstmaan\AdminBundle\AdminList;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\Exception;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 

@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-/**
- * FieldAlias
- */
 class FieldAlias
 {
     /** @var string */
@@ -14,10 +11,8 @@ class FieldAlias
     private $relation;
 
     /**
-     * FieldAlias constructor.
-     *
-     * @param $abbr string
-     * @param $relation string
+     * @param string $abbr
+     * @param string $relation
      */
     public function __construct($abbr, $relation)
     {

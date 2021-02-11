@@ -85,10 +85,10 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getIndexUrl()
     {
-        return array(
+        return [
             'path' => $this->request->get('_route'),
-            'params' => array('folderId' => $this->folder->getId()),
-        );
+            'params' => ['folderId' => $this->folder->getId()],
+        ];
     }
 
     /**
@@ -146,9 +146,6 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         return 'Media';
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->andWhere('b.folder = :folder')

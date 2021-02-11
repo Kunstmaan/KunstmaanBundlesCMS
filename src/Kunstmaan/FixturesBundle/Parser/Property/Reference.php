@@ -21,8 +21,6 @@ class Reference implements PropertyParserInterface
     /**
      * Parse provided value into new data
      *
-     * @param $value
-     * @param $providers
      * @param array $references
      *
      * @return mixed

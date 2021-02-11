@@ -24,7 +24,7 @@ class TabPane
     /**
      * @var TabInterface[]
      */
-    protected $tabs = array();
+    protected $tabs = [];
 
     /**
      * @var string
@@ -83,9 +83,6 @@ class TabPane
         return $this->form;
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $this->form->handleRequest($request);
@@ -106,8 +103,6 @@ class TabPane
     }
 
     /**
-     * @param TabInterface $tab
-     *
      * @return string
      */
     private function generateIdentifier(TabInterface $tab)
@@ -129,7 +124,7 @@ class TabPane
         }
 
         if (!\is_null($position) && is_numeric($position) && $position < \count($this->tabs)) {
-            array_splice($this->tabs, $position, 0, array($tab));
+            array_splice($this->tabs, $position, 0, [$tab]);
         } else {
             $this->tabs[] = $tab;
         }
@@ -138,8 +133,6 @@ class TabPane
     }
 
     /**
-     * @param TabInterface $tab
-     *
      * @return TabPane
      */
     public function removeTab(TabInterface $tab)
@@ -268,13 +261,11 @@ class TabPane
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)
     {
-        $extraParams = array();
+        $extraParams = [];
         foreach ($this->getTabs() as $tab) {
             $extraParams = array_merge($extraParams, $tab->getExtraParams($request));
         }

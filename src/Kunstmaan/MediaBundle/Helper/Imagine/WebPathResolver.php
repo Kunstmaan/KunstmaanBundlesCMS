@@ -14,11 +14,8 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     protected $filterConfig;
 
     /**
-     * @param Filesystem          $filesystem
-     * @param RequestContext      $requestContext
-     * @param string              $webRootDir
-     * @param string              $cachePrefix
-     * @param FilterConfiguration $filterConfig
+     * @param string $webRootDir
+     * @param string $cachePrefix
      */
     public function __construct(Filesystem $filesystem, RequestContext $requestContext, $webRootDir, $cachePrefix = 'media/cache', FilterConfiguration $filterConfig)
     {
@@ -44,7 +41,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         $path = $this->changeFileExtension($path, $filterConf['format']);
         $fullPath = $this->getFullPath($path, $filter);
 
-        return $this->webRoot.'/'.$fullPath;
+        return $this->webRoot . '/' . $fullPath;
     }
 
     /**
@@ -81,6 +78,6 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         // crude way of sanitizing URL scheme ("protocol") part
         $path = str_replace('://', '---', $path);
 
-        return $this->cachePrefix.'/'.$filter.'/'.ltrim($path, '/');
+        return $this->cachePrefix . '/' . $filter . '/' . ltrim($path, '/');
     }
 }

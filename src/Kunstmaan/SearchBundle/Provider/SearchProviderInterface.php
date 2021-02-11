@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\SearchBundle\Provider;
 
-/**
- * Interface for a SearchProvider
- */
 interface SearchProviderInterface
 {
     /**
@@ -83,7 +80,6 @@ interface SearchProviderInterface
     /**
      * @param string $indexName
      * @param string $indexType
-     * @param array  $ids
      */
     public function deleteDocuments($indexName, $indexType, array $ids);
 

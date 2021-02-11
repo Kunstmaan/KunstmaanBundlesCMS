@@ -12,10 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class NodeAdminType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
@@ -31,8 +27,8 @@ class NodeAdminType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\NodeBundle\Entity\Node',
-        ));
+        ]);
     }
 }

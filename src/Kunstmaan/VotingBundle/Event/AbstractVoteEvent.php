@@ -3,8 +3,8 @@
 namespace Kunstmaan\VotingBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event as LegacyEvent;
-use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 if (!class_exists(Event::class)) {
     /**
@@ -44,9 +44,8 @@ abstract class AbstractVoteEvent extends BcEvent implements EventInterface
     protected $value;
 
     /**
-     * @param Request $request
-     * @param string  $reference
-     * @param int     $value
+     * @param string $reference
+     * @param int    $value
      */
     public function __construct(Request $request, $reference, $value)
     {

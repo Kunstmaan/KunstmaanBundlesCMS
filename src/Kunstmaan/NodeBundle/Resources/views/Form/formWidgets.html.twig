@@ -83,31 +83,33 @@
             {% set prefix = '/' ~ prefix %}
         {% endif %}
 
-        <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ prefix }}" data-reset="{{ reset }}">
-            <div class="input-group">
-                {% if prefix is not empty %}
-                    <span class="input-group-addon js-slug-chooser__prefix">
-                        {{ prefix }}
+        <div id="{{ id }}-slug-chooser" class="js-slug-chooser slug-chooser" data-url-prefix="{{ prefix }}" data-reset="{{ reset }}">
+            <div>
+                <div class="input-group slug-chooser">
+                    {% if prefix is not empty %}
+                        <span class="input-group-addon js-slug-chooser__prefix" title="{{ prefix }}">
+                            {{ prefix }}
+                        </span>
+                    {% endif %}
+                    <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+                    <span class="input-group-btn">
+                        <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                            Reset
+                        </button>
                     </span>
-                {% endif %}
-                <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
-                <span class="input-group-btn">
-                    <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
-                        Reset
-                    </button>
-                </span>
-            </div>
-            <div>
-                <small>
-                    {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">
-                        {{ url }}
-                    </a>
-                </small>
-            </div>
-            <div>
-                <small class="js-slug-chooser__preview" style="display: none;">
-                    {{ 'kuma_node.form.updated_url' | trans }}: <span></span>
-                </small>
+                </div>
+                <div>
+                    <small>
+                        {{ 'kuma_node.form.current_url' | trans }}: <a href="{{ url }}" target="_blank">
+                            {{ url }}
+                        </a>
+                    </small>
+                </div>
+                <div>
+                    <small class="js-slug-chooser__preview" style="display: none;">
+                        {{ 'kuma_node.form.updated_url' | trans }}: <span></span>
+                    </small>
+                </div>
             </div>
         </div>
     {% endapply %}

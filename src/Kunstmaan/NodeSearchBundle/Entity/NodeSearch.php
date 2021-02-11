@@ -45,9 +45,6 @@ class NodeSearch extends AbstractEntity
         return $this->boost;
     }
 
-    /**
-     * @param Node $node
-     */
     public function setNode(Node $node)
     {
         $this->node = $node;

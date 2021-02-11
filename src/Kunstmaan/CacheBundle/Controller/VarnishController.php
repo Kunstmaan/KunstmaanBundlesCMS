@@ -5,16 +5,13 @@ namespace Kunstmaan\CacheBundle\Controller;
 use Kunstmaan\CacheBundle\Form\Varnish\BanType;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Class VarnishController.
- */
 class VarnishController extends Controller
 {
     /**
@@ -22,8 +19,6 @@ class VarnishController extends Controller
      *
      * @Route("/settings/varnish", name="kunstmaancachebundle_varnish_settings_ban")
      * @Template("KunstmaanCacheBundle:Varnish:ban.html.twig")
-     *
-     * @param Request $request
      *
      * @return array
      */
@@ -54,8 +49,6 @@ class VarnishController extends Controller
      * Ban route from varnish
      *
      * @Route("/varnish/ban/{node}", name="kunstmaancachebundle_varnish_ban")
-     *
-     * @param Node $node
      *
      * @return RedirectResponse
      */

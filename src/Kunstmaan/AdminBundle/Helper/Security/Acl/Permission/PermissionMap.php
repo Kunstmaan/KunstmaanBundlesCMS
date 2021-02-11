@@ -16,26 +16,26 @@ class PermissionMap implements PermissionMapInterface, MaskBuilderRetrievalInter
     const PERMISSION_PUBLISH = 'PUBLISH';
     const PERMISSION_UNPUBLISH = 'UNPUBLISH';
 
-    private $map = array(
-        self::PERMISSION_VIEW => array(
+    private $map = [
+        self::PERMISSION_VIEW => [
             MaskBuilder::MASK_VIEW,
-        ),
+        ],
 
-        self::PERMISSION_EDIT => array(
+        self::PERMISSION_EDIT => [
             MaskBuilder::MASK_EDIT,
-        ),
-        self::PERMISSION_DELETE => array(
+        ],
+        self::PERMISSION_DELETE => [
             MaskBuilder::MASK_DELETE,
-        ),
+        ],
 
-        self::PERMISSION_PUBLISH => array(
+        self::PERMISSION_PUBLISH => [
             MaskBuilder::MASK_PUBLISH,
-        ),
+        ],
 
-        self::PERMISSION_UNPUBLISH => array(
+        self::PERMISSION_UNPUBLISH => [
             MaskBuilder::MASK_UNPUBLISH,
-        ),
-    );
+        ],
+    ];
 
     /**
      * Returns an array of bitmasks.

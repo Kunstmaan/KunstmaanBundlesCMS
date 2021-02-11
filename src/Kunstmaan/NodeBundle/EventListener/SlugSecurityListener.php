@@ -32,11 +32,6 @@ class SlugSecurityListener
      */
     private $permissionsEnabled;
 
-    /**
-     * @param EntityManager                 $entityManager
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param NodeMenu                      $nodeMenu
-     */
     public function __construct(
         EntityManager $entityManager,
         AuthorizationCheckerInterface $authorizationChecker,
@@ -51,8 +46,6 @@ class SlugSecurityListener
 
     /**
      * Perform basic security checks
-     *
-     * @param SlugSecurityEvent $event
      *
      * @throws AccessDeniedException
      * @throws NotFoundHttpException

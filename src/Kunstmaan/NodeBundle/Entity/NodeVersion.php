@@ -81,9 +81,6 @@ class NodeVersion extends AbstractEntity
      */
     protected $origin;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->setCreated(new DateTime());
@@ -92,8 +89,6 @@ class NodeVersion extends AbstractEntity
 
     /**
      * Set nodeTranslation
-     *
-     * @param NodeTranslation $nodeTranslation
      *
      * @return NodeVersion
      */
@@ -175,8 +170,6 @@ class NodeVersion extends AbstractEntity
     /**
      * Set created
      *
-     * @param DateTime $created
-     *
      * @return NodeVersion
      */
     public function setCreated(DateTime $created)
@@ -198,8 +191,6 @@ class NodeVersion extends AbstractEntity
 
     /**
      * Set updated
-     *
-     * @param DateTime $updated
      *
      * @return NodeVersion
      */
@@ -274,8 +265,6 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @param HasNodeInterface $entity
-     *
      * @return NodeVersion
      */
     public function setRef(HasNodeInterface $entity)
@@ -287,8 +276,6 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @param EntityManager $em
-     *
      * @return HasNodeInterface
      */
     public function getRef(EntityManager $em)

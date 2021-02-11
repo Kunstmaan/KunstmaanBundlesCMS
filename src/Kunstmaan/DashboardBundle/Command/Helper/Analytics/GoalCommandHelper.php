@@ -42,7 +42,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             return false;
         }
 
-        $metrics = array();
+        $metrics = [];
         foreach ($goals as $key => $value) {
             $metrics[] = 'ga:goal' . ($key + 1) . 'Completions';
         }
@@ -50,20 +50,16 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         if (\count($metrics) <= 10) {
             $part1 = implode(',', $metrics);
 
-            return array($part1);
+            return [$part1];
         }
 
         $part1 = implode(',', \array_slice($metrics, 0, 10));
         $part2 = implode(',', \array_slice($metrics, 10, 10));
 
-        return array($part1, $part2);
+        return [$part1, $part2];
     }
 
     /**
-     * @param AnalyticsOverview $overview
-     * @param                   $metrics
-     * @param                   $dimensions
-     *
      * @return mixed
      */
     private function requestGoalResults(AnalyticsOverview $overview, $metrics, $dimensions)
@@ -93,16 +89,16 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         // calculate timespan
         $timespan = $overview->getTimespan() - $overview->getStartOffset();
         if ($timespan <= 1) {
-            $extra = array('dimensions' => 'ga:date,ga:hour');
+            $extra = ['dimensions' => 'ga:date,ga:hour'];
             $start = 2;
         } elseif ($timespan <= 7) {
-            $extra = array('dimensions' => 'ga:date,ga:hour');
+            $extra = ['dimensions' => 'ga:date,ga:hour'];
             $start = 2;
         } elseif ($timespan <= 31) {
-            $extra = array('dimensions' => 'ga:week,ga:day,ga:date');
+            $extra = ['dimensions' => 'ga:week,ga:day,ga:date'];
             $start = 3;
         } else {
-            $extra = array('dimensions' => 'ga:isoYearIsoWeek');
+            $extra = ['dimensions' => 'ga:isoYearIsoWeek'];
             $start = 1;
         }
 
@@ -115,12 +111,12 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         if (!$goals) {
             return;
         }
-        $goaldata = array();
+        $goaldata = [];
 
         // Create an array with for each goal an entry to create the metric parameter.
         foreach ($goals as $key => $value) {
             ++$key;
-            $goaldata[] = array('position' => $key, 'name' => $value->name);
+            $goaldata[] = ['position' => $key, 'name' => $value->name];
         }
 
         $metrics = $this->prepareMetrics();
@@ -137,10 +133,10 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         }
 
         // Create a result array to be parsed and create Goal objects from
-        $goalCollection = array();
+        $goalCollection = [];
         $goaldatasize = \count($goaldata);
         for ($i = 0; $i < $goaldatasize; ++$i) {
-            $goalEntry = array();
+            $goalEntry = [];
             foreach ($rows as $row) {
                 // Create a timestamp for each goal visit (this depends on the timespan of the overview: split per hour, day, week, month)
                 if ($timespan <= 1) {
@@ -213,7 +209,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $goal->setName($goalEntry['name']);
             $goal->setPosition($goalEntry['position']);
 
-            $chartData = array();
+            $chartData = [];
             $totalVisits = 0;
             $goalVisits = 0;
             $i = 0;
@@ -223,11 +219,11 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
                 if ($timespan <= 7 && $timespan > 1) {
                     $goalVisits += $visits;
                     if ($i % 5 == 0) {
-                        $chartData[] = array('timestamp' => $timestamp, 'conversions' => $goalVisits);
+                        $chartData[] = ['timestamp' => $timestamp, 'conversions' => $goalVisits];
                         $goalVisits = 0;
                     }
                 } else {
-                    $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
+                    $chartData[] = ['timestamp' => $timestamp, 'conversions' => $visits];
                 }
                 ++$i;
             }

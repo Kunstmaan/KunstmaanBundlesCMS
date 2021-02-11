@@ -162,7 +162,7 @@ class SlugRouter implements RouterInterface
      *
      * @return string|null
      */
-    public function generate($name, $parameters = array(), $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         $this->urlGenerator = new UrlGenerator(
             $this->getRouteCollection(),
@@ -227,15 +227,15 @@ class SlugRouter implements RouterInterface
     protected function getPreviewRouteParameters()
     {
         $previewPath = sprintf('/%s/preview/{url}', $this->adminKey);
-        $previewDefaults = array(
-            '_controller' => SlugController::class.'::slugAction',
+        $previewDefaults = [
+            '_controller' => SlugController::class . '::slugAction',
             'preview' => true,
             'url' => '',
             '_locale' => $this->getDefaultLocale(),
-        );
-        $previewRequirements = array(
+        ];
+        $previewRequirements = [
             'url' => $this->getSlugPattern(),
-        );
+        ];
 
         if ($this->isMultiLanguage()) {
             $previewPath = '/{_locale}' . $previewPath;
@@ -243,11 +243,11 @@ class SlugRouter implements RouterInterface
             $previewRequirements['_locale'] = $this->getEscapedLocales($this->getBackendLocales());
         }
 
-        return array(
+        return [
             'path' => $previewPath,
             'defaults' => $previewDefaults,
             'requirements' => $previewRequirements,
-        );
+        ];
     }
 
     /**
@@ -258,15 +258,15 @@ class SlugRouter implements RouterInterface
     protected function getSlugRouteParameters()
     {
         $slugPath = '/{url}';
-        $slugDefaults = array(
-            '_controller' => SlugController::class.'::slugAction',
+        $slugDefaults = [
+            '_controller' => SlugController::class . '::slugAction',
             'preview' => false,
             'url' => '',
             '_locale' => $this->getDefaultLocale(),
-        );
-        $slugRequirements = array(
+        ];
+        $slugRequirements = [
             'url' => $this->getSlugPattern(),
-        );
+        ];
 
         if ($this->isMultiLanguage()) {
             $slugPath = '/{_locale}' . $slugPath;
@@ -274,11 +274,11 @@ class SlugRouter implements RouterInterface
             $slugRequirements['_locale'] = $this->getEscapedLocales($this->getFrontendLocales());
         }
 
-        return array(
+        return [
             'path' => $slugPath,
             'defaults' => $slugDefaults,
             'requirements' => $slugRequirements,
-        );
+        ];
     }
 
     /**
@@ -331,9 +331,8 @@ class SlugRouter implements RouterInterface
 
     /**
      * @param string $name
-     * @param array  $parameters
      */
-    protected function addRoute($name, array $parameters = array())
+    protected function addRoute($name, array $parameters = [])
     {
         $this->routeCollection->add(
             $name,
@@ -384,7 +383,7 @@ class SlugRouter implements RouterInterface
      */
     protected function getEscapedLocales($locales)
     {
-        $escapedLocales = array();
+        $escapedLocales = [];
         foreach ($locales as $locale) {
             $escapedLocales[] = str_replace('-', '\-', $locale);
         }

@@ -31,22 +31,22 @@ class FolderType extends AbstractType
             ->add(
                 'name',
                 TextType::class,
-                array(
+                [
                     'label' => 'media.folder.addsub.form.name',
-                )
+                ]
             )
             ->add(
                 'rel',
                 ChoiceType::class,
-                array(
+                [
                     'choices' => Folder::allTypes(),
                     'label' => 'media.folder.addsub.form.rel',
-                )
+                ]
             )
             ->add(
                 'parent',
                 EntityType::class,
-                array(
+                [
                     'class' => 'KunstmaanMediaBundle:Folder',
                     'choice_label' => 'optionLabel',
                     'label' => 'media.folder.addsub.form.parent',
@@ -54,23 +54,18 @@ class FolderType extends AbstractType
                     'query_builder' => function (FolderRepository $er) use ($folder) {
                         return $er->selectFolderQueryBuilder($folder);
                     },
-                )
+                ]
             )
             ->add(
                 'internalName',
                 TextType::class,
-                array(
+                [
                     'label' => 'media.folder.addsub.form.internal_name',
                     'required' => false,
-                )
+                ]
             );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_FolderType';
@@ -84,10 +79,10 @@ class FolderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
                 'folder' => null,
-            )
+            ]
         );
     }
 }

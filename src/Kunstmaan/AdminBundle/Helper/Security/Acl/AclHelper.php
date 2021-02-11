@@ -52,10 +52,7 @@ class AclHelper
      */
     private $permissionsEnabled;
 
-
     /**
-     * Constructor.
-     *
      * @param EntityManager          $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security token storage
      * @param RoleHierarchyInterface $rh           The role hierarchies
@@ -72,8 +69,6 @@ class AclHelper
 
     /**
      * Clone specified query with parameters.
-     *
-     * @param Query $query
      *
      * @return Query
      */
@@ -165,13 +160,13 @@ class AclHelper
     private function getPermittedAclIdsSQLForUserPlatformOther(Query $query)
     {
         $aclConnection = $this->em->getConnection();
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
         $mask = $query->getHint('acl.mask');
         $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
-        $userRoles = array();
+        $userRoles = [];
         $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
@@ -184,7 +179,7 @@ class AclHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
@@ -224,7 +219,6 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-        //var_dump('ACLHelper::getPermittedAclIdsSQLForUserPlatformOther',$selectQuery);echo"<br/>";
         return $selectQuery;
     }
 
@@ -298,10 +292,9 @@ SELECTQUERY;
         //var_dump('ACLHelper::getPermittedAclIdsSQLForUserPlatformPostgres',$selectQuery);echo "<br />";
         return $selectQuery;
     }
+
     /**
      * Returns valid IDs for a specific entity with ACL restrictions for current user applied
-     *
-     * @param PermissionDefinition $permissionDef
      *
      * @throws InvalidArgumentException
      *

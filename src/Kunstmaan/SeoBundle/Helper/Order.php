@@ -8,8 +8,6 @@ namespace Kunstmaan\SeoBundle\Helper;
  * It'll create the correct calls to the GA script for you.
  *
  * API: https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce?hl=nl
- *
- * Class Order
  */
 class Order
 {
@@ -106,7 +104,7 @@ class Order
     /**
      * @var array(of OrderItem) An array of OrderItem objects
      */
-    public $orderItems = array();
+    public $orderItems = [];
 
     /**
      * @var string city the order was shipped to

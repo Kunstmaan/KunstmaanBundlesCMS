@@ -29,15 +29,14 @@ class {{ pagepart }}AdminType extends AbstractType
         $builder->add('content', TextareaType::class, array(
             'label' => 'pagepart.html.content',
             'required' => true,
-            'attr' => array('rows' => 5)
+            'attr' => array(
+                'rows' => 5,
+                'no-max-width' => true,
+            )
         ));
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
+
     public function getBlockPrefix()
     {
         return '{{ pagepart|lower }}type';

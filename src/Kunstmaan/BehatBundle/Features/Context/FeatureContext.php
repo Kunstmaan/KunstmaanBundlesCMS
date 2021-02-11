@@ -21,8 +21,6 @@ class FeatureContext extends MinkContext implements Context
 
     /**
      * Override method to wait for Ajax requests to finish before continuing
-     *
-     * @param $text
      */
     public function assertPageContainsText($text)
     {
@@ -79,7 +77,7 @@ class FeatureContext extends MinkContext implements Context
             'xpath',
             strtr(
                 ".//input[./@type = 'hidden'][(./@id = '%locator%' or ./@name = '%locator%')]",
-                array('%locator%' => $field)
+                ['%locator%' => $field]
             )
         );
         if (null === $node) {

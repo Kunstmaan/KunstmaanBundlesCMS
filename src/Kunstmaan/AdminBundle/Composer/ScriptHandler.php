@@ -14,14 +14,11 @@ use Symfony\Component\Yaml\Parser;
  */
 class ScriptHandler
 {
-    protected static $options = array(
+    protected static $options = [
         'symfony-app-dir' => 'app',
         'multi-language-option' => 'multilanguage',
-    );
+    ];
 
-    /**
-     * @param Event $event
-     */
     public static function checkMultiLangConfigs(Event $event)
     {
         $options = static::getOptions($event);
@@ -69,8 +66,6 @@ class ScriptHandler
     }
 
     /**
-     * @param Event $event
-     *
      * @return array
      */
     protected static function getOptions(Event $event)
@@ -88,6 +83,6 @@ class ScriptHandler
         $ymlParser = new Parser();
         $config = $ymlParser->parse(file_get_contents($parametersFile));
 
-        return isset($config['parameters']) ? $config['parameters'] : array();
+        return isset($config['parameters']) ? $config['parameters'] : [];
     }
 }

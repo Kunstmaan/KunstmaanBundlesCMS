@@ -60,9 +60,6 @@ class ChoicePagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_choicepageparttype';
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart']);

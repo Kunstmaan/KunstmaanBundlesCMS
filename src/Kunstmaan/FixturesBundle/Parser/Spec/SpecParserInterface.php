@@ -14,10 +14,6 @@ interface SpecParserInterface
     public function canParse($value);
 
     /**
-     * @param Fixture $fixture
-     * @param array   $fixtures
-     * @param $spec
-     *
      * @return mixed
      */
     public function parse(Fixture $fixture, array $fixtures, $spec);

@@ -30,13 +30,6 @@ class InputAssistant
     /** @var ContainerInterface */
     private $container;
 
-    /**
-     * @param InputInterface     $input
-     * @param OutputInterface    $output
-     * @param QuestionHelper     $questionHelper
-     * @param Kernel             $kernel
-     * @param ContainerInterface $container
-     */
     public function __construct(InputInterface &$input, OutputInterface $output, QuestionHelper $questionHelper, Kernel $kernel, ContainerInterface $container)
     {
         $this->input = $input;
@@ -65,7 +58,7 @@ class InputAssistant
                 return $namespace;
             }
         } catch (\Exception $error) {
-            $this->writeError(array("Namespace '$namespace' is incorrect. Please provide a correct value.", $error->getMessage()));
+            $this->writeError(["Namespace '$namespace' is incorrect. Please provide a correct value.", $error->getMessage()]);
             exit;
         }
 
@@ -88,7 +81,7 @@ class InputAssistant
         }
 
         $question = new Question($this->questionHelper->getQuestion('Bundle Namespace', $namespace), $namespace);
-        $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
+        $question->setValidator(['Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace']);
         $question->setAutocompleterValues($namespaces);
         $namespace = $this->questionHelper->ask($this->input, $this->output, $question);
 
@@ -120,21 +113,21 @@ class InputAssistant
      */
     public function getOwnBundles()
     {
-        $bundles = array();
+        $bundles = [];
         $counter = 1;
 
         $dir = dirname($this->container->getParameter('kernel.root_dir') . '/') . '/src/';
         $files = scandir($dir);
         foreach ($files as $file) {
-            if (is_dir($dir . $file) && !in_array($file, array('.', '..'))) {
+            if (is_dir($dir . $file) && !in_array($file, ['.', '..'])) {
                 $bundleFiles = scandir($dir . $file);
                 foreach ($bundleFiles as $bundleFile) {
-                    if (is_dir($dir . $file . '/' . $bundleFile) && !in_array($bundleFile, array('.', '..'))) {
-                        $bundles[$counter++] = array(
+                    if (is_dir($dir . $file . '/' . $bundleFile) && !in_array($bundleFile, ['.', '..'])) {
+                        $bundles[$counter++] = [
                             'name' => $bundleFile,
                             'namespace' => $file,
                             'dir' => $dir . $file . '/' . $bundleFile,
-                        );
+                        ];
                     }
                 }
             }
@@ -146,13 +139,11 @@ class InputAssistant
     /**
      * Returns a list of namespaces as array with a forward slash to split the namespace & bundle.
      *
-     * @param Kernel $kernel
-     *
      * @return array
      */
     private function getNamespaceAutoComplete(Kernel $kernel)
     {
-        $ret = array();
+        $ret = [];
         foreach ($kernel->getBundles() as $k => $v) {
             $ret[] = $this->fixNamespace($v->getNamespace());
         }
@@ -169,7 +160,7 @@ class InputAssistant
      */
     private function fixNamespace($namespace)
     {
-        return strtr($namespace, array('\\Bundle\\' => '/', '\\' => '/'));
+        return strtr($namespace, ['\\Bundle\\' => '/', '\\' => '/']);
     }
 
     /**
@@ -187,12 +178,12 @@ class InputAssistant
         $prefix = $this->input->hasOption('prefix') ? $this->input->getOption('prefix') : null;
 
         if (is_null($text)) {
-            $text = array(
+            $text = [
                 '',
                 'You can add a prefix to the table names of the generated entities for example: <comment>projectname_bundlename_</comment>',
                 'Enter an underscore \'_\' if you don\'t want a prefix.',
                 '',
-            );
+            ];
         }
 
         while (is_null($prefix)) {

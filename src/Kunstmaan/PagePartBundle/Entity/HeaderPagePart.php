@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
- * Class that defines a header page part object to add to a page
+ * Defines a header page part object to add to a page
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_header_page_parts")
@@ -25,13 +25,10 @@ class HeaderPagePart extends AbstractPagePart
      */
     protected $title;
 
-    /**
-     * @param ClassMetadata $metadata
-     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('niv', new NotBlank(array('message' => 'headerpagepart.niv.not_blank')));
-        $metadata->addPropertyConstraint('title', new NotBlank(array('message' => 'headerpagepart.title.not_blank')));
+        $metadata->addPropertyConstraint('niv', new NotBlank(['message' => 'headerpagepart.niv.not_blank']));
+        $metadata->addPropertyConstraint('title', new NotBlank(['message' => 'headerpagepart.title.not_blank']));
     }
 
     /**

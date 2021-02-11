@@ -45,9 +45,6 @@ class NodeListener
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
-    /**
-     * @param AdaptFormEvent $event
-     */
     public function adaptForm(AdaptFormEvent $event)
     {
         if ($this->permissionsEnabled && $event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode() && $this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {

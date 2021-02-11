@@ -13,17 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class {{ pagepart }}AdminType extends AbstractType
 {
 
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('media', MediaType::class, array(
             'mediatype' => 'audio',
@@ -31,11 +21,7 @@ class {{ pagepart }}AdminType extends AbstractType
         ));
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
+
     public function getBlockPrefix()
     {
         return '{{ pagepart|lower }}type';

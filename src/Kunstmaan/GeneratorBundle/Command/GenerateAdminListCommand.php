@@ -28,7 +28,7 @@ class GenerateAdminListCommand extends GenerateDoctrineCommand
     {
         $this
             ->setDefinition(
-                array(
+                [
                     new InputOption(
                         'entity',
                         '',
@@ -41,7 +41,7 @@ class GenerateAdminListCommand extends GenerateDoctrineCommand
                         InputOption::VALUE_OPTIONAL,
                         'The name of the sort field if entity needs to be sortable'
                     ),
-                )
+                ]
             )
             ->setDescription('Generates a KunstmaanAdminList')
             ->setHelp(
@@ -68,7 +68,7 @@ EOT
     {
         $questionHelper = $this->getQuestionHelper();
 
-        GeneratorUtils::ensureOptionsProvided($input, array('entity'));
+        GeneratorUtils::ensureOptionsProvided($input, ['entity']);
 
         $entity = EntityValidator::validate($input->getOption('entity'));
         if (Kernel::VERSION_ID < 40000) {
@@ -133,13 +133,13 @@ EOT
 
         if (is_null($entity)) {
             $output->writeln(
-                array(
+                [
                     '',
                     'This command helps you to generate an admin list for your entity.',
                     '',
                     $message,
                     '',
-                )
+                ]
             );
 
             if (Kernel::VERSION_ID < 40000) {

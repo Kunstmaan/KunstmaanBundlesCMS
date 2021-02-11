@@ -40,7 +40,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
         $this->setPermissionDefinition(
-            new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
+            new PermissionDefinition([$permission], 'Kunstmaan\NodeBundle\Entity\Node', 'n')
         );
     }
 
@@ -125,10 +125,10 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         /* @var Node $node */
         $node = $item->getNode();
 
-        return array(
+        return [
             'path' => 'KunstmaanNodeBundle_nodes_edit',
-            'params' => array('id' => $node->getId()),
-        );
+            'params' => ['id' => $node->getId()],
+        ];
     }
 
     /**
@@ -143,10 +143,10 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         /* @var Node $node */
         $node = $item->getNode();
 
-        return array(
+        return [
             'path' => 'KunstmaanNodeBundle_nodes_delete',
-            'params' => array('id' => $node->getId()),
-        );
+            'params' => ['id' => $node->getId()],
+        ];
     }
 
     /**

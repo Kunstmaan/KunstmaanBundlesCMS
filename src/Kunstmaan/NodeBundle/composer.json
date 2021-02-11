@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "doctrine/dbal": "^2.9",
         "gedmo/doctrine-extensions": "^2.4.34",
         "kunstmaan/admin-bundle": "^5.7",
         "kunstmaan/adminlist-bundle": "~5.2",
@@ -33,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.6-dev"
+            "dev-master": "5.8-dev"
         }
     }
 }

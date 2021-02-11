@@ -18,10 +18,6 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
 
     private $stack = [];
 
-    /**
-     * @param KernelInterface $kernel
-     * @param array           $presets
-     */
     public function __construct(KernelInterface $kernel, array $presets = [])
     {
         $this->kernel = $kernel;
@@ -100,8 +96,6 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
     }
 
     /**
-     * @param string $name
-     *
      * @return array
      *
      * @throws \Exception

@@ -64,29 +64,21 @@ class PermissionsFormWidget extends FormWidget
         $this->permissionAdmin->initialize($this->node, $this->permissionMap);
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $this->permissionAdmin->bindRequest($request);
     }
 
-    /**
-     * @param EntityManager $em
-     */
     public function persist(EntityManager $em)
     {
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -198,12 +190,10 @@ class PermissionsFormWidget extends FormWidget
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)
     {
-        return array();
+        return [];
     }
 }

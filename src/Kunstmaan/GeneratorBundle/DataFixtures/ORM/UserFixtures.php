@@ -35,8 +35,6 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
 
     /**
      * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -48,8 +46,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             $password,
             'admin@domain.com',
             $this->container->getParameter('kunstmaan_admin.default_admin_locale'),
-            array('ROLE_SUPER_ADMIN'),
-            array($manager->merge($this->getReference(GroupFixtures::REFERENCE_SUPERADMINS_GROUP))),
+            ['ROLE_SUPER_ADMIN'],
+            [$manager->merge($this->getReference(GroupFixtures::REFERENCE_SUPERADMINS_GROUP))],
             true,
             false
         );
@@ -57,9 +55,9 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $manager->flush();
 
         $output = new ConsoleOutput();
-        $output->writeln(array(
+        $output->writeln([
             "<comment>  > User 'admin' created with password '$password'</comment>",
-        ));
+        ]);
 
         if (Kernel::VERSION_ID < 40000) {
             $file = $this->container->get('kernel')->getProjectDir() . '/app/config/config.yml';
@@ -92,8 +90,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $password,
         $email,
         $locale,
-        array $roles = array(),
-        array $groups = array(),
+        array $roles = [],
+        array $groups = [],
         $enabled = false,
         $changed = false
     ) {

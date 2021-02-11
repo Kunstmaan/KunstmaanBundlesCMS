@@ -79,13 +79,13 @@ class RenderContextListener
                 }
             }
 
-            $renderContext = array(
+            $renderContext = [
                 'nodetranslation' => $nodeTranslation,
                 'slug' => $url,
                 'page' => $entity,
                 'resource' => $entity,
                 'nodemenu' => $nodeMenu,
-            );
+            ];
 
             if (\is_array($parameters) || $parameters instanceof \ArrayObject) {
                 $parameters = array_merge($renderContext, (array) $parameters);
@@ -102,7 +102,7 @@ class RenderContextListener
             //the SensioFrameworkExtraBundle kernel.view will handle everything else
             $event->setControllerResult((array) $parameters);
 
-            $template = new Template(array());
+            $template = new Template([]);
             $template->setTemplate($entity->getDefaultView());
 
             $controllerInfo = $this->getControllerInfo($request->attributes->get('_controller'));

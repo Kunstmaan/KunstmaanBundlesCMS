@@ -25,16 +25,11 @@ class SlidePagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', MediaType::class, array(
+        $builder->add('media', MediaType::class, [
             'label' => 'mediapagepart.slide.choose',
-        ));
+        ]);
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_slidepageparttype';
@@ -47,8 +42,8 @@ class SlidePagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart',
-        ));
+        ]);
     }
 }

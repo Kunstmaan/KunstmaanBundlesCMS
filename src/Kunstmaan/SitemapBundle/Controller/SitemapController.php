@@ -3,11 +3,11 @@
 namespace Kunstmaan\SitemapBundle\Controller;
 
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SitemapController extends Controller
 {
@@ -35,11 +35,11 @@ class SitemapController extends Controller
         $event = new PreSitemapRenderEvent($locale);
         $this->dispatch($event, PreSitemapRenderEvent::NAME);
 
-        return array(
+        return [
             'nodemenu' => $nodeMenu,
             'locale' => $locale,
             'extraItems' => $event->getExtraItems(),
-        );
+        ];
     }
 
     /**
@@ -53,8 +53,6 @@ class SitemapController extends Controller
      *                              requirements={"_format" = "xml"})
      * @Template("@KunstmaanSitemap/SitemapIndex/view.xml.twig")
      *
-     * @param Request $request
-     *
      * @return array
      */
     public function sitemapIndexAction(Request $request)
@@ -62,15 +60,14 @@ class SitemapController extends Controller
         $locales = $this->get('kunstmaan_admin.domain_configuration')
             ->getBackendLocales();
 
-        return array(
+        return [
             'locales' => $locales,
             'host' => $request->getSchemeAndHttpHost(),
-        );
+        ];
     }
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

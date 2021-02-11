@@ -38,7 +38,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
      * @param TokenStorage|null           $tokenStorage
      * @param NodeAdminPublisher|null     $nodePublisher
      */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* TokenStorage */$tokenStorage = null, /* NodeAdminPublisher */ $nodePublisher = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* TokenStorage */ $tokenStorage = null, /* NodeAdminPublisher */ $nodePublisher = null)
     {
         parent::__construct();
 

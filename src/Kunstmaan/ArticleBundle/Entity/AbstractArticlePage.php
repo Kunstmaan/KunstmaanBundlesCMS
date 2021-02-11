@@ -48,8 +48,6 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
 
     /**
      * Set the summary of this article
-     *
-     * @param $summary
      */
     public function setSummary($summary)
     {
@@ -71,7 +69,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -92,6 +90,6 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(new AbstractArticlePagePagePartAdminConfigurator());
+        return [new AbstractArticlePagePagePartAdminConfigurator()];
     }
 }

@@ -12,9 +12,6 @@ class TagManager extends BaseTagManager
 {
     const TAGGING_HYDRATOR = 'taggingHydrator';
 
-    /**
-     * @param BaseTaggable $resource
-     */
     public function loadTagging(BaseTaggable $resource)
     {
         if ($resource instanceof LazyLoadingTaggableInterface) {
@@ -28,9 +25,6 @@ class TagManager extends BaseTagManager
         parent::loadTagging($resource);
     }
 
-    /**
-     * @param BaseTaggable $resource
-     */
     public function saveTagging(BaseTaggable $resource)
     {
         $tags = clone $resource->getTags();
@@ -110,7 +104,6 @@ class TagManager extends BaseTagManager
     }
 
     /**
-     * @param Taggable $item
      * @param $class
      * @param $locale
      * @param int $nbOfItems

@@ -6,9 +6,9 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
 use Kunstmaan\TaggingBundle\Entity\Tag;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TagAdminListController extends AdminListController
 {
@@ -71,8 +71,6 @@ class TagAdminListController extends AdminListController
      * @Route("/autocomplete.{_format}", name="kunstmaantaggingbundle_admin_tag_autocomplete", defaults={"_format" = "json"})
      * @Template("@KunstmaanTagging/Tags/autocomplete.json.twig")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
     public function autocompleteAction(Request $request)
@@ -85,6 +83,6 @@ class TagAdminListController extends AdminListController
             ->setParameter('search', '%' . $search . '%');
         $tags = $qb->getQuery()->getResult();
 
-        return array('tags' => $tags);
+        return ['tags' => $tags];
     }
 }

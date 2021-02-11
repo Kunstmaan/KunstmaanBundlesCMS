@@ -146,7 +146,17 @@
 {# Rows #}
 {% block form_row %}
 {% apply spaceless %}
-    <div class="form-group{% if errors|length > 0 %} has-error{% endif %}{% if attr['nested_form'] is defined and attr['nested_form'] == true or 'textarea' in block_prefixes %} form-group--no-max-width{% endif %}">
+    {% set noMaxWidth = false %}
+    {% if
+        (attr['nested_form'] is defined and attr['nested_form'] == true)
+        or 'wysiwyg' in block_prefixes
+        or 'slug' in block_prefixes
+        or (attr['no-max-width'] is defined and attr['no-max-width'])
+    %}
+        {% set noMaxWidth = true %}
+    {% endif %}
+
+    <div class="form-group{% if errors|length > 0 %} has-error{% endif %}{% if noMaxWidth == true %} form-group--no-max-width{% endif %}">
         {{ form_label(form) }}
 
         {% if attr['nested_form'] is defined and attr['nested_form'] == true %}

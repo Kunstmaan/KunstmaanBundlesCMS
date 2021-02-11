@@ -34,8 +34,6 @@ class ConfigureActionsMenuListener
 
     /**
      * Configure the form submissions link on top of the form in the sub action menu
-     *
-     * @param ConfigureActionMenuEvent $event
      */
     public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
     {
@@ -46,7 +44,7 @@ class ConfigureActionsMenuListener
             $page = $activeNodeVersion->getRef($this->em);
             if ($page instanceof AbstractFormPage) {
                 $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
-                $menu->addChild('subaction.formsubmissions', array('uri' => $this->router->generate('KunstmaanFormBundle_formsubmissions_list', array('nodeTranslationId' => $activeNodeTranslation->getId()))));
+                $menu->addChild('subaction.formsubmissions', ['uri' => $this->router->generate('KunstmaanFormBundle_formsubmissions_list', ['nodeTranslationId' => $activeNodeTranslation->getId()])]);
             }
         }
     }

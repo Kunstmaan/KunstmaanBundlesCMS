@@ -9,12 +9,6 @@ class ConfigGenerator extends KunstmaanGenerator
 {
     /**
      * Generate all config files.
-     *
-     * @param string $projectDir
-     * @param bool   $overwriteSecurity
-     * @param bool   $overwriteLiipImagine
-     * @param bool   $overwriteFosHttpCache
-     * @param bool   $overwriteFosUser
      */
     public function generate(string $projectDir, bool $overwriteSecurity, bool $overwriteLiipImagine, bool $overwriteFosHttpCache, bool $overwriteFosUser)
     {

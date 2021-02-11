@@ -6,8 +6,6 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Class GoogleSignInTwigExtension
- *
  * @final since 5.4
  */
 class GoogleSignInTwigExtension extends AbstractExtension
@@ -29,10 +27,10 @@ class GoogleSignInTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('google_signin_enabled', array($this, 'isGoogleSignInEnabled')),
-            new TwigFunction('google_signin_client_id', array($this, 'getClientId')),
-        );
+        return [
+            new TwigFunction('google_signin_enabled', [$this, 'isGoogleSignInEnabled']),
+            new TwigFunction('google_signin_client_id', [$this, 'getClientId']),
+        ];
     }
 
     public function isGoogleSignInEnabled()
