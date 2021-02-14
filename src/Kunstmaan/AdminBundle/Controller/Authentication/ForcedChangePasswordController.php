@@ -35,8 +35,7 @@ final class ForcedChangePasswordController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //TODO: use different method (eg changePassword)?
-            $this->userManager->updateUser($user);
+            $this->userManager->updatePassword($user);
 
             return $this->redirectToRoute('kunstmaan_admin_forced_change_password_success');
         }
