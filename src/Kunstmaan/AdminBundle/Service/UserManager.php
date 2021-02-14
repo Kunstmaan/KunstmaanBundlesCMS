@@ -64,7 +64,7 @@ class UserManager
 
     public function updateUser(UserInterface $user, bool $andFlush = true): void
     {
-        $this->updatePassword($user);
+        $this->updatePassword($user, false);
 
         $this->em->persist($user);
         if ($andFlush) {

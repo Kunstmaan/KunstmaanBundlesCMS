@@ -484,6 +484,9 @@ abstract class BaseUser implements UserInterface
         return (string) $this->getUsername();
     }
 
+    /**
+     * @deprecated since KunstmaanAdminBundle 5.8
+     */
     public function getUsernameCanonical()
     {
         // NEXT_MAJOR remove method
@@ -492,6 +495,9 @@ abstract class BaseUser implements UserInterface
         return $this->usernameCanonical;
     }
 
+    /**
+     * @deprecated since KunstmaanAdminBundle 5.8
+     */
     public function setUsernameCanonical($usernameCanonical)
     {
         // NEXT_MAJOR remove method
@@ -500,6 +506,9 @@ abstract class BaseUser implements UserInterface
         $this->usernameCanonical = $usernameCanonical;
     }
 
+    /**
+     * @deprecated since KunstmaanAdminBundle 5.8
+     */
     public function getEmailCanonical()
     {
         // NEXT_MAJOR remove method
@@ -508,6 +517,9 @@ abstract class BaseUser implements UserInterface
         return $this->emailCanonical;
     }
 
+    /**
+     * @deprecated since KunstmaanAdminBundle 5.8
+     */
     public function setEmailCanonical($emailCanonical)
     {
         // NEXT_MAJOR remove method
@@ -517,33 +529,29 @@ abstract class BaseUser implements UserInterface
     }
 
     /**
-     * NEXT_MAJOR remove method
-     *
-     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     * @return bool
      */
-    public function isSuperAdmin(/*$triggerDeprecation = true*/)
+    public function isSuperAdmin()
     {
-        //TODO: check if deprecation is needed?
-        if (func_num_args() === 0 || (func_num_args() > 0 && (bool) func_get_arg(0) !== false)) {
-            // NEXT_MAJOR remove method
-            @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
-        }
-
-        //TODO: add original method logic
+        return $this->hasRole(self::ROLE_SUPER_ADMIN);
     }
 
     /**
-     * NEXT_MAJOR remove method
+     * Sets the super admin status.
      *
-     * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.
+     * @param bool $boolean
+     *
+     * @return static
      */
     public function setSuperAdmin($boolean)
     {
-        //TODO: check if deprecation is needed?
-        // NEXT_MAJOR remove method
-        @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
+        if (true === $boolean) {
+            $this->addRole(self::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(self::ROLE_SUPER_ADMIN);
+        }
 
-        //TODO: add original method logic
+        return $this;
     }
 
     public function getConfirmationToken()
