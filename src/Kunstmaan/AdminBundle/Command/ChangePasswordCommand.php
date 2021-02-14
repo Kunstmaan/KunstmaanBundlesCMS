@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use FOS\UserBundle\Model\UserManager as FOSUserManager;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Component\Console\Command\Command;
@@ -18,22 +17,14 @@ final class ChangePasswordCommand extends Command
     /** @var UserManager */
     private $userManager;
 
-    public function __construct(/* UserManager */ $userManager)
+    public function __construct(UserManager $userManager)
     {
         parent::__construct();
-
-        if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
-            throw new InvalidArgumentException(sprintf('The "$userManager" argument must be of type "%s" or type "%s"', UserManager::class, FOSUserManager::class));
-        }
-        if ($userManager instanceof FOSUserManager) {
-            // NEXT_MAJOR set the usermanaged typehint to the kunstmaan usermanager.
-            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the new Kunstmaan Usermanager %s.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
-        }
 
         $this->userManager = $userManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Change the password of a user.')
@@ -56,7 +47,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
@@ -75,7 +66,7 @@ EOT
         return 0;
     }
 
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $questions = [];
 

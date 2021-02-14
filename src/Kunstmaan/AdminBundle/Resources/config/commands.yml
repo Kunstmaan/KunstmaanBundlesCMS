@@ -4,16 +4,6 @@ services:
         tags:
             - { name: console.command }
 
-    Kunstmaan\AdminBundle\Command\ChangePasswordCommand:
-        arguments: ['@kunstmaan_admin.user_manager']
-        tags:
-            - { name: console.command }
-
-    Kunstmaan\AdminBundle\Command\PromoteUserCommand:
-        arguments: ['@kunstmaan_admin.user_manager']
-        tags:
-            - { name: console.command }
-
     Kunstmaan\AdminBundle\Command\CreateGroupCommand:
         arguments: ['@doctrine.orm.entity_manager']
         tags:

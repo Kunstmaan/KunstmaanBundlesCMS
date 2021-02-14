@@ -51,3 +51,12 @@ services:
     kunstmaan_admin.mailer.default_sender:
         class: Symfony\Component\Mime\Address
 
+    Kunstmaan\AdminBundle\Command\ChangePasswordCommand:
+        arguments: [ '@kunstmaan_admin.user_manager' ]
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\PromoteUserCommand:
+        arguments: [ '@kunstmaan_admin.user_manager' ]
+        tags:
+            - { name: console.command }
