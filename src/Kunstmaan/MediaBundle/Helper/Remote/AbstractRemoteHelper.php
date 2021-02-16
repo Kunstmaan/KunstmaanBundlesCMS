@@ -7,16 +7,13 @@ use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Abstract
- * Class that defines a remote entity in the system
+ * Defines a remote entity in the system
  */
 abstract class AbstractRemoteHelper
 {
     /** @var Media */
     protected $media;
 
-    /**
-     * @param Media $media
-     */
     public function __construct(Media $media)
     {
         $this->media = $media;
@@ -154,9 +151,6 @@ abstract class AbstractRemoteHelper
         return $this->media->getFolder();
     }
 
-    /**
-     * @param Folder $folder
-     */
     public function setFolder(Folder $folder)
     {
         $this->media->setFolder($folder);

@@ -100,12 +100,12 @@ class CheckboxPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $bfsf = new BooleanFormSubmissionField();
-        $bfsf->setFieldName('field_'.$this->getUniqueId());
+        $bfsf->setFieldName('field_' . $this->getUniqueId());
         $bfsf->setLabel($this->getLabel());
         $bfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_'.$this->getUniqueId()] = $bfsf;
+        $data['formwidget_' . $this->getUniqueId()] = $bfsf;
         $constraints = [];
         if ($this->getRequired()) {
             $options = [];
@@ -115,7 +115,7 @@ class CheckboxPagePart extends AbstractFormPagePart
             $constraints[] = new NotBlank($options);
         }
         $formBuilder->add(
-            'formwidget_'.$this->getUniqueId(),
+            'formwidget_' . $this->getUniqueId(),
             BooleanFormSubmissionType::class,
             [
                 'label' => $this->getLabel(),

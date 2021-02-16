@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * EntityLockCheckController
- */
 class EntityLockCheckController extends Controller
 {
     /**
@@ -31,10 +28,6 @@ class EntityLockCheckController extends Controller
      *      name="KunstmaanAdminListBundle_entity_lock_check"
      * )
      *
-     * @param Request $request
-     * @param $id
-     * @param $repository
-     *
      * @return JsonResponse
      */
     public function checkAction(Request $request, $id, $repository)
@@ -53,7 +46,7 @@ class EntityLockCheckController extends Controller
 
             if ($entityIsLocked) {
                 $user = $entityVersionLockService->getUsersWithEntityVersionLock($entity, $this->getUser());
-                $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', ['%user%' => implode(', ', $user)]);
             }
         } catch (AccessDeniedException $ade) {
         }

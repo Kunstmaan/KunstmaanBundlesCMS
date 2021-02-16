@@ -160,11 +160,11 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
         /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $context['nodetranslation'];
 
-        return $router->generate('_slug', array(
+        return $router->generate('_slug', [
             'url' => $context['slug'],
             '_locale' => $nodeTranslation->getLang(),
             'thanks' => true,
-        ));
+        ]);
     }
 
     /**

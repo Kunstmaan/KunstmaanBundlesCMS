@@ -48,32 +48,23 @@ class PageTemplateWidget extends FormWidget
     /**
      * @var PagePartWidget[]
      */
-    private $widgets = array();
+    private $widgets = [];
 
     /**
      * @var PageTemplateInterface[]
      */
-    private $pageTemplates = array();
+    private $pageTemplates = [];
 
     /**
      * @var PagePartAdminConfiguratorInterface[]
      */
-    private $pagePartAdminConfigurations = array();
+    private $pagePartAdminConfigurations = [];
 
     /**
      * @var PageTemplateConfiguration
      */
     protected $pageTemplateConfiguration;
 
-    /**
-     * @param HasPageTemplateInterface                 $page
-     * @param Request                                  $request
-     * @param EntityManagerInterface                   $em
-     * @param PagePartAdminFactory                     $pagePartAdminFactory
-     * @param PageTemplateConfigurationReaderInterface $templateReader
-     * @param PagePartConfigurationReaderInterface     $pagePartReader
-     * @param PageTemplateConfigurationService         $pageTemplateConfigurationService
-     */
     public function __construct(
         HasPageTemplateInterface $page,
         Request $request,
@@ -167,9 +158,6 @@ class PageTemplateWidget extends FormWidget
         }
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $configurationname = $request->get('pagetemplate_template');
@@ -191,13 +179,11 @@ class PageTemplateWidget extends FormWidget
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
     {
-        $errors = array();
+        $errors = [];
 
         foreach ($this->widgets as $widget) {
             $errors = array_merge($errors, $widget->getFormErrors($formView));
@@ -229,8 +215,6 @@ class PageTemplateWidget extends FormWidget
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)

@@ -78,9 +78,6 @@ class PagePartWidget extends FormWidget
         $this->pagePartAdmin->adaptForm($builder);
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         parent::bindRequest($request);
@@ -99,8 +96,6 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
@@ -125,13 +120,11 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)
     {
-        $params = array();
+        $params = [];
         $editPagePart = $request->get('edit');
         if (isset($editPagePart)) {
             $params['editpagepart'] = $editPagePart;

@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(
  *     name="kuma_node_translations",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="ix_kuma_node_translations_node_lang", columns={"node_id", "lang"})},
- *     indexes={@ORM\Index(name="idx__node_translation_lang_url", columns={"lang", "url"})}
+ *     indexes={@ORM\Index(name="idx__node_translation_lang_url", columns={"lang", "url"}, options={"lengths": {null, 255}})}
  * )
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
@@ -56,13 +56,15 @@ class NodeTranslation extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Regex("/^[a-zA-Z0-9\-_\/]+$/")
+     * @Assert\Length(max="255")
      */
     protected $slug;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(max="1000")
      */
     protected $url;
 
@@ -272,8 +274,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param NodeVersion $publicNodeVersion
-     *
      * @return NodeTranslation
      */
     public function setPublicNodeVersion(NodeVersion $publicNodeVersion)
@@ -308,8 +308,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param ArrayCollection $nodeVersions
-     *
      * @return NodeTranslation
      */
     public function setNodeVersions(ArrayCollection $nodeVersions)
@@ -347,8 +345,6 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * Add nodeVersion
-     *
-     * @param NodeVersion $nodeVersion
      *
      * @return NodeTranslation
      */

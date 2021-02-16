@@ -18,16 +18,14 @@ class SitemapTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('hide_from_sitemap', array($this, 'isHiddenFromSitemap')),
-            new TwigFunction('hide_children_from_sitemap', array($this, 'isHiddenChildrenFromSitemap')),
-        );
+        return [
+            new TwigFunction('hide_from_sitemap', [$this, 'isHiddenFromSitemap']),
+            new TwigFunction('hide_children_from_sitemap', [$this, 'isHiddenChildrenFromSitemap']),
+        ];
     }
 
     /**
      * Returns true when the item should be hidden from the sitemap
-     *
-     * @param NodeMenuItem $item
      *
      * @return \Kunstmaan\NodeBundle\Helper\NodeMenuItem
      */
@@ -44,8 +42,6 @@ class SitemapTwigExtension extends AbstractExtension
 
     /**
      * Returns true when the children of the item should be hidden from the sitemap
-     *
-     * @param NodeMenuItem $item
      *
      * @return bool
      */

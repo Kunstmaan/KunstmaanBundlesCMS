@@ -7,9 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * The type for the EmailFormSubmissionField
- */
 class EmailFormSubmissionType extends AbstractType
 {
     /**

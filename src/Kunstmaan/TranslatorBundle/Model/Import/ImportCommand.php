@@ -6,7 +6,7 @@ class ImportCommand
 {
     private $defaultBundle = false;
 
-    private $bundles = array();
+    private $bundles = [];
 
     private $globals = true;
 

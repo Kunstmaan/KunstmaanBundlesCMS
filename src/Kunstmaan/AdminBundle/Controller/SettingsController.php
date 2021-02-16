@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -25,7 +25,7 @@ class SettingsController extends BaseSettingsController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        return array();
+        return [];
     }
 
     /**
@@ -44,7 +44,7 @@ class SettingsController extends BaseSettingsController
 
         $versionChecker = $this->container->get('kunstmaan_admin.versionchecker');
         if (!$versionChecker->isEnabled()) {
-            return array('data' => null);
+            return ['data' => null];
         }
 
         $data = null;
@@ -54,12 +54,12 @@ class SettingsController extends BaseSettingsController
         } catch (\Exception $e) {
             $this->container->get('logger')->error(
                 $e->getMessage(),
-                array('exception' => $e)
+                ['exception' => $e]
             );
         }
 
-        return array(
+        return [
             'data' => $data,
-        );
+        ];
     }
 }

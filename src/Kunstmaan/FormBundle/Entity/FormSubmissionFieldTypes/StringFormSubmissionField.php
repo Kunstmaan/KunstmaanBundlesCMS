@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The StringFormSubmissionField can be used to store string values to a FormSubmission
@@ -16,6 +17,7 @@ class StringFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="sfsf_value", type="string")
+     * @Assert\Length(max=255)
      */
     protected $value;
 

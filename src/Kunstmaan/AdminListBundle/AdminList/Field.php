@@ -4,9 +4,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-/**
- * Field
- */
 class Field
 {
     /**
@@ -116,12 +113,12 @@ class Field
 
     public function getColumnName($column)
     {
-        $abbr = $this->alias->getAbbr().'.';
+        $abbr = $this->alias->getAbbr() . '.';
 
         if (strpos($column, $abbr) !== false) {
             $column = str_replace($abbr, '', $column);
         } else {
-            throw new \Exception(" '".$abbr."' can not be found in your column name: '".$column."' ");
+            throw new \Exception(" '" . $abbr . "' can not be found in your column name: '" . $column . "' ");
         }
 
         return $column;

@@ -16,8 +16,6 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
     private $cssPath;
 
     /**
-     * @param array $data
-     *
      * @throws MissingOptionsException
      * @throws InvalidOptionsException
      */

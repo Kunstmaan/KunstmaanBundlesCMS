@@ -9,19 +9,11 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
-/**
- * Class PagesConfiguration
- */
 class PagesConfiguration
 {
     /** @var array */
     private $configuration;
 
-    /**
-     * PagesConfiguration constructor.
-     *
-     * @param array $configuration
-     */
     public function __construct(array $configuration)
     {
         $this->configuration = $configuration;

@@ -30,9 +30,6 @@ class MenuItem extends BaseMenuItem
      */
     protected $parent;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();

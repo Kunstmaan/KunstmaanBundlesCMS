@@ -11,18 +11,18 @@ class LanguageAnalysisFactory extends AbstractAnalysisFactory
      */
     public function addIndexAnalyzer($language)
     {
-        $this->analyzers['default'] = array(
+        $this->analyzers['default'] = [
             'type' => $language,
             'tokenizer' => 'standard',
-            'filter' => array(
+            'filter' => [
                 'trim',
                 'lowercase',
                 $language . '_stop',
                 $language . '_stemmer',
                 'asciifolding',
                 'strip_special_chars',
-            ),
-        );
+            ],
+        ];
 
         return $this;
     }
@@ -34,18 +34,18 @@ class LanguageAnalysisFactory extends AbstractAnalysisFactory
      */
     public function addSuggestionAnalyzer($language)
     {
-        $this->analyzers['default_search'] = array(
+        $this->analyzers['default_search'] = [
             'type' => $language,
             'tokenizer' => 'standard',
-            'filter' => array(
+            'filter' => [
                 'trim',
                 'lowercase',
                 $language . '_stop',
                 $language . '_stemmer',
                 'asciifolding',
                 'strip_special_chars',
-            ),
-        );
+            ],
+        ];
 
         return $this;
     }

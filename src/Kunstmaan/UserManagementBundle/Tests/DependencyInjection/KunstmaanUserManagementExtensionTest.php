@@ -1,0 +1,26 @@
+<?php
+
+namespace Kunstmaan\UserManagementBundle\Tests\DependencyInjection;
+
+use Kunstmaan\UserManagementBundle\DependencyInjection\KunstmaanUserManagementExtension;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+
+class KunstmaanUserManagementExtensionTest extends AbstractExtensionTestCase
+{
+    /**
+     * @return ExtensionInterface[]
+     */
+    protected function getContainerExtensions(): array
+    {
+        return [new KunstmaanUserManagementExtension()];
+    }
+
+    public function testCorrectParametersHaveBeenSet()
+    {
+        $this->container->setParameter('empty_extension', true);
+        $this->load();
+
+        $this->assertContainerBuilderHasParameter('empty_extension', true);
+    }
+}

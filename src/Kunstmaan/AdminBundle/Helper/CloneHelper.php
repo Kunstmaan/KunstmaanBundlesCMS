@@ -23,10 +23,6 @@ class CloneHelper
      */
     private $eventDispatcher;
 
-    /**
-     * @param EntityManager            $em              The EntityManager
-     * @param EventDispatcherInterface $eventDispatcher The EventDispatchInterface
-     */
     public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
     {
         $this->em = $em;
@@ -53,7 +49,6 @@ class CloneHelper
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

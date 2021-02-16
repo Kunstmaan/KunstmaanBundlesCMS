@@ -11,9 +11,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Url;
 
-/**
- * Class URLChooserLinkTypeSubscriber
- */
 class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
 {
     /**
@@ -21,16 +18,14 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             FormEvents::POST_SUBMIT => 'postSubmit',
-        );
+        ];
     }
 
     /**
      * When changing the link type, the form get's submitted with an ajax callback in the url_chooser.js;
      * We add the URL field only as an URL Chooser if it's an external link.
-     *
-     * @param FormEvent $event
      */
     public function postSubmit(FormEvent $event)
     {
@@ -62,13 +57,13 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
                     break;
             }
 
-            $form->add('link_url', TextType::class, array(
+            $form->add('link_url', TextType::class, [
                 'label' => 'URL',
                 'required' => true,
                 'attr' => $attributes,
                 'constraints' => $constraints,
                 'error_bubbling' => true,
-            ));
+            ]);
         }
     }
 }

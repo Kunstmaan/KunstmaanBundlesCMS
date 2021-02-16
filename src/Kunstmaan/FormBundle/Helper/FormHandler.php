@@ -28,21 +28,11 @@ class FormHandler implements FormHandlerInterface
      */
     private $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @param FormPageInterface $page    The form page
-     * @param Request           $request The request
-     * @param RenderContext     $context The render context
-     *
-     * @return RedirectResponse|void|null
-     */
     public function handleForm(FormPageInterface $page, Request $request, RenderContext $context)
     {
         /* @var EntityManager $em */
@@ -94,7 +84,6 @@ class FormHandler implements FormHandlerInterface
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

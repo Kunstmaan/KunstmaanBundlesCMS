@@ -11,10 +11,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TranslationsFileUploadType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('file', FileType::class, [
@@ -40,8 +36,8 @@ class TranslationsFileUploadType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => null,
-        ));
+        ]);
     }
 }

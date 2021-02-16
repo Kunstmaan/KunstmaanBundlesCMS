@@ -8,8 +8,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class BaseMenu
- *
  * @ORM\MappedSuperclass()
  */
 class BaseMenu extends AbstractEntity
@@ -37,9 +35,6 @@ class BaseMenu extends AbstractEntity
      */
     protected $items;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -105,9 +100,6 @@ class BaseMenu extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @param MenuItem $item
-     */
     public function addItem(MenuItem $item)
     {
         $item->setMenu($this);
@@ -115,9 +107,6 @@ class BaseMenu extends AbstractEntity
         $this->items->add($item);
     }
 
-    /**
-     * @param MenuItem $item
-     */
     public function removeItem(MenuItem $item)
     {
         $this->items->removeElement($item);

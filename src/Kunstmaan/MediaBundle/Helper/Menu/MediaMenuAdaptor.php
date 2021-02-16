@@ -28,14 +28,6 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
         $this->repo = $repo;
     }
 
-    /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
-     *
-     * @param MenuBuilder $menu      The MenuBuilder
-     * @param MenuItem[]  &$children The current children
-     * @param MenuItem    $parent    The parent Menu item
-     * @param Request     $request   The Request
-     */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (\is_null($parent)) {
@@ -53,7 +45,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuItem = new TopMenuItem($menu);
                 $menuItem
                     ->setRoute('KunstmaanMediaBundle_folder_show')
-                    ->setRouteparams(array('folderId' => $rootFolder->getId()))
+                    ->setRouteparams(['folderId' => $rootFolder->getId()])
                     ->setUniqueId('folder-' . $rootFolder->getId())
                     ->setLabel($rootFolder->getName())
                     ->setParent(null)

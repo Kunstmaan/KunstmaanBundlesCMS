@@ -11,8 +11,8 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\PreNodeDuplicateEvent;
 use Kunstmaan\NodeBundle\Event\PostNodeDuplicateEvent;
+use Kunstmaan\NodeBundle\Event\PreNodeDuplicateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -164,7 +164,6 @@ class PageCloningHelper
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

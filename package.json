@@ -13,7 +13,7 @@
   "author": "Kunstmaan",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "^7.12.10",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/plugin-transform-spread": "^7.2.2",
@@ -48,14 +48,15 @@
     "gulp-uglify": "^2.1.2",
     "gulp-util": "^3.0.8",
     "mime-types": "^2.1.15",
-    "node-notifier": "^5.0.2",
+    "node-notifier": "^9.0.0",
     "postcss-reporter": "^3.0.0",
     "postcss-scss": "^1.0.6",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^4.1.0",
+    "terser-webpack-plugin": "^5.1.1",
     "twig": "^1.10.5",
-    "webpack": "^4.44.1",
+    "webpack": "^5.18.0",
     "yargs": "^15.4.1"
   },
   "dependencies": {

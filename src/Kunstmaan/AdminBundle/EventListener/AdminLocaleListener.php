@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -9,7 +10,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 
 /**
  * AdminLocaleListener to override default locale if user-specific locale is set in database
@@ -42,11 +42,8 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $adminRouteHelper;
 
     /**
-     * @param TokenStorageInterface $tokenStorage
-     * @param TranslatorInterface   $translator
-     * @param string                $defaultAdminLocale
-     * @param AdminRouteHelper      $adminRouteHelper
-     * @param string                $providerKey        Firewall name to check against
+     * @param string $defaultAdminLocale
+     * @param string $providerKey        Firewall name to check against
      */
     public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
     {
@@ -58,8 +55,6 @@ class AdminLocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * onKernelRequest
-     *
      * @param GetResponseEvent|ResponseEvent $event
      */
     public function onKernelRequest($event)
@@ -87,7 +82,6 @@ class AdminLocaleListener implements EventSubscriberInterface
 
     /**
      * @param TokenInterface $token
-     * @param                $providerKey
      *
      * @return bool
      */
@@ -96,9 +90,6 @@ class AdminLocaleListener implements EventSubscriberInterface
         return \is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
     }
 
-    /**
-     * getSubscribedEvents
-     */
     public static function getSubscribedEvents()
     {
         return [

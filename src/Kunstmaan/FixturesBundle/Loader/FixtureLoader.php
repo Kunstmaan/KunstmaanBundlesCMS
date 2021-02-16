@@ -23,8 +23,6 @@ abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterfac
 
     /**
      * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -56,8 +54,6 @@ abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterfac
 
     /**
      * Parse specs and initiate fixtures
-     *
-     * @param $data
      *
      * @return array|mixed
      */

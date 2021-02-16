@@ -23,10 +23,6 @@ class ACLPermissionCreator
      */
     private $objectIdentityRetrievalStrategy;
 
-    /**
-     * @param MutableAclProviderInterface              $aclProvider
-     * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy
-     */
     public function __construct(MutableAclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy)
     {
         $this->aclProvider = $aclProvider;
@@ -46,15 +42,15 @@ class ACLPermissionCreator
         $exampleIdentity = $strategy->getObjectIdentity($example);
         $exampleAcl = $aclProvider->findAcl($exampleIdentity);
 
-        $aces = array();
+        $aces = [];
         /* @var EntryInterface $ace */
         foreach ($exampleAcl->getObjectAces() as $ace) {
             $securityIdentity = $ace->getSecurityIdentity();
             if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $aces[] = array(
+                $aces[] = [
                     'identity' => $securityIdentity,
                     'mask' => $ace->getMask(),
-                );
+                ];
             }
         }
         $this->init($object, $aces, $force);
@@ -90,20 +86,19 @@ class ACLPermissionCreator
 
     /**
      * @param mixed $object
-     * @param array $map
-     *                      with as key the name of the role you want to set the permissions for
+     * @param array $map    with as key the name of the role you want to set the permissions for
      *                      and as value the mask you want to use
      *                      for example array('ROLE_GUEST' => MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH)
      * @param bool  $force
      */
     public function initByMap($object, $map, $force = false)
     {
-        $aces = array();
+        $aces = [];
         foreach ($map as $key => $value) {
-            $aces[] = array(
+            $aces[] = [
                 'identity' => new RoleSecurityIdentity($key),
                 'mask' => $value,
-            );
+            ];
         }
 
         $this->init($object, $aces, $force);

@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Version checker
- */
 class VersionChecker
 {
     public const CACHE_KEY = 'version_check';
@@ -58,7 +55,7 @@ class VersionChecker
     /**
      * @param CacheProvider|AdapterInterface $cache
      */
-    public function __construct(ContainerInterface $container, /* AdapterInterface */$cache, $translator)
+    public function __construct(ContainerInterface $container, /* AdapterInterface */ $cache, $translator)
     {
         $this->container = $container;
 
@@ -127,17 +124,17 @@ class VersionChecker
         }
 
         $host = $this->container->get('request_stack')->getCurrentRequest()->getHttpHost();
-        $console = realpath($this->container->get('kernel')->getProjectDir().'/bin/console');
+        $console = realpath($this->container->get('kernel')->getProjectDir() . '/bin/console');
         $installed = filectime($console);
         $bundles = $this->parseComposer();
         $title = $this->container->getParameter('kunstmaan_admin.website_title');
 
-        $jsonData = json_encode(array(
+        $jsonData = json_encode([
             'host' => $host,
             'installed' => $installed,
             'bundles' => $bundles,
             'project' => $this->translator->trans($title),
-        ));
+        ]);
 
         try {
             $client = $this->getClient();
@@ -169,7 +166,7 @@ class VersionChecker
     public function getClient()
     {
         if (!$this->client) {
-            $this->client = new Client(array('connect_timeout' => 3, 'timeout' => 1));
+            $this->client = new Client(['connect_timeout' => 3, 'timeout' => 1]);
         }
 
         return $this->client;
@@ -193,7 +190,7 @@ class VersionChecker
         $kernel = $this->container->get('kernel');
         $rootPath = $kernel->getProjectDir();
 
-        return $rootPath.'/composer.lock';
+        return $rootPath . '/composer.lock';
     }
 
     /**
@@ -217,7 +214,7 @@ class VersionChecker
         $result = json_decode($json, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new ParseException($errorMessage.' (#'.json_last_error().')');
+            throw new ParseException($errorMessage . ' (#' . json_last_error() . ')');
         }
 
         if (\array_key_exists('packages', $result) && \is_array($result['packages'])) {
@@ -237,14 +234,14 @@ class VersionChecker
      */
     protected function parseComposer()
     {
-        $bundles = array();
+        $bundles = [];
         foreach ($this->getPackages() as $package) {
             if (!strncmp($package['name'], 'kunstmaan/', \strlen('kunstmaan/'))) {
-                $bundles[] = array(
+                $bundles[] = [
                     'name' => $package['name'],
                     'version' => $package['version'],
                     'reference' => $package['source']['reference'],
-                );
+                ];
             }
         }
 

@@ -38,9 +38,8 @@ class SessionSecurityListener
     private $userAgent;
 
     /**
-     * @param bool            $ipCheck
-     * @param bool            $userAgentCheck
-     * @param LoggerInterface $logger
+     * @param bool $ipCheck
+     * @param bool $userAgentCheck
      */
     public function __construct($ipCheck, $userAgentCheck, LoggerInterface $logger)
     {
@@ -75,9 +74,6 @@ class SessionSecurityListener
         }
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         if (!$event instanceof GetResponseEvent && !$event instanceof ResponseEvent) {
@@ -114,10 +110,6 @@ class SessionSecurityListener
         }
     }
 
-    /**
-     * @param SessionInterface $session
-     * @param Request          $request
-     */
     private function invalidateSession(SessionInterface $session, Request $request)
     {
         $session->invalidate();
@@ -126,8 +118,6 @@ class SessionSecurityListener
     }
 
     /**
-     * @param Request $request
-     *
      * @return string
      */
     private function getIp(Request $request)
@@ -152,8 +142,6 @@ class SessionSecurityListener
     }
 
     /**
-     * @param Request $request
-     *
      * @return array|string
      */
     private function getUserAgent(Request $request)

@@ -6,14 +6,8 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class AbstractSearchPageController
- */
 class AbstractSearchPageController extends Controller
 {
-    /**
-     * @param Request $request
-     */
     public function serviceAction(Request $request)
     {
         if ($request->query->has('query')) {

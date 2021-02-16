@@ -10,17 +10,11 @@ namespace Kunstmaan\FixturesBundle\Populator\Methods;
 
 class Setter implements MethodInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function canSet($object, $property, $value)
     {
         return is_callable([$object, $this->setterFor($property)]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($object, $property, $value)
     {
         $setter = $this->setterFor($property);

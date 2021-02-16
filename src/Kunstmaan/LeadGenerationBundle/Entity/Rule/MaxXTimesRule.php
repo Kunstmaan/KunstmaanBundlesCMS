@@ -53,9 +53,9 @@ class MaxXTimesRule extends AbstractRule
      */
     public function getJsProperties()
     {
-        return array(
+        return [
             'times' => $this->getTimes(),
-        );
+        ];
     }
 
     /**

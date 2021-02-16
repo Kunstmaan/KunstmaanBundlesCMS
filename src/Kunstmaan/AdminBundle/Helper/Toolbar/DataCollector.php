@@ -16,19 +16,11 @@ class DataCollector
      */
     protected $urlGenerator;
 
-    /**
-     * DataCollector constructor.
-     *
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
     }
 
-    /**
-     * @param DataCollectionInterface $dataCollectors
-     */
     public function addDataCollector(DataCollectionInterface $dataCollectors)
     {
         $this->dataCollectors[] = $dataCollectors;

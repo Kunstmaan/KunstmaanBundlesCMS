@@ -3,6 +3,8 @@
 import gulp from 'gulp';
 import webpack from 'webpack';
 import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+
 
 import consoleArguments from './console-arguments';
 
@@ -81,7 +83,7 @@ adminBundle.tasks.bundle = createBundleTask({
                     test: /\.js$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
-                    query: getBabelLoaderOptions({
+                    options: getBabelLoaderOptions({
                         transpileOnlyForLastChromes: consoleArguments.speedupLocalDevelopment
                     })
                 }
@@ -100,7 +102,13 @@ adminBundle.tasks.bundleOptimized = createBundleTask({
         },
         devtool: 'source-map',
         optimization: {
-            minimize: true
+            minimize: true,
+            minimizer: [new TerserPlugin({
+                extractComments: false,
+                terserOptions: {
+                    mangle: true
+                }
+            })]
         },
         mode: 'production',
         module: {
@@ -109,7 +117,7 @@ adminBundle.tasks.bundleOptimized = createBundleTask({
                     test: /\.js$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
-                    query: getBabelLoaderOptions({
+                    options: getBabelLoaderOptions({
                         optimize: true
                     })
                 }
@@ -137,7 +145,7 @@ adminBundle.tasks.bundlePolyfills = createBundleTask({
                     test: /\.js$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
-                    query: getBabelLoaderOptions({
+                    options: getBabelLoaderOptions({
                         optimize: true
                     })
                 }

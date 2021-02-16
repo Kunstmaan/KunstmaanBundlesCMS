@@ -43,11 +43,6 @@ class ExceptionDataCollector extends AbstractDataCollector
         }
     }
 
-    /**
-     * @param Request         $request
-     * @param Response        $response
-     * @param \Exception|null $exception
-     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         if (false === $this->isEnabled()) {

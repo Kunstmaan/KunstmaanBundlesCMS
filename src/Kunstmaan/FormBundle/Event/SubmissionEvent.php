@@ -18,10 +18,6 @@ class SubmissionEvent extends BcEvent
      */
     protected $page;
 
-    /**
-     * @param FormSubmission    $submission
-     * @param FormPageInterface $page
-     */
     public function __construct(FormSubmission $submission, FormPageInterface $page)
     {
         $this->submission = $submission;

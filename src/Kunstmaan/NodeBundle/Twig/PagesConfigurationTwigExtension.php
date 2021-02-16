@@ -15,9 +15,6 @@ class PagesConfigurationTwigExtension extends AbstractExtension
     /** @var PagesConfiguration */
     private $pagesConfiguration;
 
-    /**
-     * @param PagesConfiguration $pagesConfiguration
-     */
     public function __construct(PagesConfiguration $pagesConfiguration)
     {
         $this->pagesConfiguration = $pagesConfiguration;

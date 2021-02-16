@@ -16,11 +16,6 @@ class Cipher implements CipherInterface
      */
     private $secret;
 
-    /**
-     * Cipher constructor.
-     *
-     * @param $secret
-     */
     public function __construct($secret)
     {
         if (empty($secret)) {

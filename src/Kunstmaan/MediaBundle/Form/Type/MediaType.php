@@ -73,7 +73,7 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'compound' => false,
                 'chooser' => 'KunstmaanMediaBundle_chooser',
                 'mediatype' => null,
@@ -83,15 +83,10 @@ class MediaType extends AbstractType
                 'use_cropping' => false,
                 'focus_point_classes' => '',
                 'cropping_views' => '',
-            )
+            ]
         );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'media';

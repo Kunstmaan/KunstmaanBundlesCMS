@@ -65,8 +65,6 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     }
 
     /**
-     * @param HasNodeInterface $parent
-     *
      * @return AbstractControllerAction
      */
     public function setParent(HasNodeInterface $parent)

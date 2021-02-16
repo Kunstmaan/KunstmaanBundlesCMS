@@ -32,20 +32,15 @@ class RemoteAudioType extends AbstractRemoteType
             ->add(
                 'type',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'media.form.remote_audio.type.label',
-                    'choices' => array('soundcloud' => 'soundcloud'),
-                    'constraints' => array(new NotBlank()),
+                    'choices' => ['soundcloud' => 'soundcloud'],
+                    'constraints' => [new NotBlank()],
                     'required' => true,
-                )
+                ]
             );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_audiotype';
@@ -59,9 +54,9 @@ class RemoteAudioType extends AbstractRemoteType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHelper',
-            )
+            ]
         );
     }
 }

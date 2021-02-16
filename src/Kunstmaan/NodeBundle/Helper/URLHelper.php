@@ -41,12 +41,6 @@ class URLHelper
      */
     private $domainConfiguration;
 
-    /**
-     * @param EntityManager                $em
-     * @param RouterInterface              $router
-     * @param LoggerInterface              $logger
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
     public function __construct(EntityManager $em, RouterInterface $router, LoggerInterface $logger, DomainConfigurationInterface $domainConfiguration)
     {
         $this->em = $em;

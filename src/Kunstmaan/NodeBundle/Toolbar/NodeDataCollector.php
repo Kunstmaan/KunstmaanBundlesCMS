@@ -20,12 +20,6 @@ class NodeDataCollector extends AbstractDataCollector
      */
     private $urlGenerator;
 
-    /**
-     * NodeDataCollector constructor.
-     *
-     * @param NodeMenu              $nodeMenu
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(NodeMenu $nodeMenu, UrlGeneratorInterface $urlGenerator)
     {
         $this->nodeMenu = $nodeMenu;
@@ -63,11 +57,6 @@ class NodeDataCollector extends AbstractDataCollector
         return [];
     }
 
-    /**
-     * @param Request         $request
-     * @param Response        $response
-     * @param \Exception|null $exception
-     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {

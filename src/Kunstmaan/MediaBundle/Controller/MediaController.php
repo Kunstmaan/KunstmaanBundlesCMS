@@ -23,8 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaController extends Controller
 {
     /**
-     * @param Request $request
-     * @param int     $mediaId
+     * @param int $mediaId
      *
      * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_show")
      *
@@ -76,8 +75,7 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $mediaId
+     * @param int $mediaId
      *
      * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_delete")
      *
@@ -135,8 +133,7 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId
+     * @param int $folderId
      *
      * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit", methods={"POST"})
      *
@@ -150,7 +147,7 @@ class MediaController extends Controller
         } else {
             $tempDir = \sys_get_temp_dir();
         }
-        $targetDir = \rtrim($tempDir, '/').DIRECTORY_SEPARATOR.'plupload';
+        $targetDir = \rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . 'plupload';
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge = 5 * 60 * 60; // Temp file age in seconds
 
@@ -172,7 +169,7 @@ class MediaController extends Controller
         } else {
             $fileName = \uniqid('file_', false);
         }
-        $filePath = $targetDir.DIRECTORY_SEPARATOR.$fileName;
+        $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
         $chunk = 0;
         $chunks = 0;
@@ -191,7 +188,7 @@ class MediaController extends Controller
             }
 
             while (($file = \readdir($dir)) !== false) {
-                $tmpFilePath = $targetDir.DIRECTORY_SEPARATOR.$file;
+                $tmpFilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
@@ -202,7 +199,7 @@ class MediaController extends Controller
                 if (\preg_match('/\.part$/', $file) && (\filemtime($tmpFilePath) < \time() - $maxFileAge)) {
                     $success = @\unlink($tmpFilePath);
                     if ($success !== true) {
-                        return $this->returnJsonError('106', 'Could not remove temp file: '.$filePath);
+                        return $this->returnJsonError('106', 'Could not remove temp file: ' . $filePath);
                     }
                 }
             }
@@ -259,7 +256,7 @@ class MediaController extends Controller
 
         $success = \unlink($filePath);
         if ($success !== true) {
-            return $this->returnJsonError('105', 'Could not remove temp file: '.$filePath);
+            return $this->returnJsonError('105', 'Could not remove temp file: ' . $filePath);
         }
 
         // Send headers making sure that the file is not cached (as it happens for example on iOS devices)
@@ -272,7 +269,7 @@ class MediaController extends Controller
             JsonResponse::HTTP_OK,
             [
                 'Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT',
-                'Last-Modified' => \gmdate('D, d M Y H:i:s').' GMT',
+                'Last-Modified' => \gmdate('D, d M Y H:i:s') . ' GMT',
                 'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
                 'Pragma' => 'no-cache',
             ]
@@ -296,8 +293,7 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId
+     * @param int $folderId
      *
      * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload", methods={"GET", "POST"})
      *
@@ -338,9 +334,8 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
-     * @param string  $type     The type
+     * @param int    $folderId The folder id
+     * @param string $type     The type
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create", methods={"GET", "POST"})
      * @Template("@KunstmaanMedia/Media/create.html.twig")
@@ -353,11 +348,10 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId    The folder Id
-     * @param string  $type        The type
-     * @param string  $redirectUrl The url where we want to redirect to on success
-     * @param array   $extraParams The extra parameters that will be passed wen redirecting
+     * @param int    $folderId    The folder Id
+     * @param string $type        The type
+     * @param string $redirectUrl The url where we want to redirect to on success
+     * @param array  $extraParams The extra parameters that will be passed wen redirecting
      *
      * @return array|RedirectResponse
      */
@@ -423,9 +417,8 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
-     * @param string  $type     The type
+     * @param int    $folderId The folder id
+     * @param string $type     The type
      *
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create", methods={"POST"})
      *
@@ -455,8 +448,6 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
      * @Route("move/", name="KunstmaanMediaBundle_media_move", methods={"POST"})
      *
      * @return string
@@ -486,8 +477,6 @@ class MediaController extends Controller
 
     /**
      * @Route("/bulk-move", name="KunstmaanMediaBundle_media_bulk_move")
-     *
-     * @param Request $request
      *
      * @return JsonResponse|Response
      *

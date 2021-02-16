@@ -51,9 +51,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,9 +62,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
     /**
      * Create the CommandAssistant.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     private function setInputAndOutput(InputInterface $input, OutputInterface $output)
     {
@@ -107,7 +101,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $bundles = [];
         $counter = 1;
-        $dir = dirname($this->getContainer()->getParameter('kernel.root_dir').'/').'/src/';
+        $dir = dirname($this->getContainer()->getParameter('kernel.root_dir') . '/') . '/src/';
         $finder = new Finder();
         $finder->in($dir)->name('*Bundle.php');
 
@@ -152,7 +146,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         if (is_null($text)) {
             $text = [
-                'You can add a prefix to the table names of the generated entities for example: '.
+                'You can add a prefix to the table names of the generated entities for example: ' .
                 '<comment>projectname_bundlename_</comment>',
                 'Enter an underscore \'_\' if you don\'t want a prefix.',
                 '',
@@ -208,8 +202,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
     /**
      * Replaces '\' with '/'.
-     *
-     * @param $namespace
      *
      * @return mixed
      */
@@ -294,11 +286,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     /**
      * Ask the end user to select one (or more) section configuration(s).
      *
-     * @param string          $question
-     * @param BundleInterface $bundle
-     * @param bool            $multiple
-     * @param string|null     $context
-     * @param array           $defaultSections
+     * @param string      $question
+     * @param bool        $multiple
+     * @param string|null $context
+     * @param array       $defaultSections
      *
      * @return array|null
      */
@@ -316,7 +307,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         if (count($allSections) > 0) {
             $sectionSelect = [];
             foreach ($allSections as $key => $sectionInfo) {
-                $sectionSelect[$key] = $sectionInfo['name'].' ('.$sectionInfo['file'].')';
+                $sectionSelect[$key] = $sectionInfo['name'] . ' (' . $sectionInfo['file'] . ')';
             }
             $this->assistant->writeLine('');
             $sectionIds = $this->assistant->askSelect($question, $sectionSelect, null, $multiple);
@@ -353,8 +344,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         // Get the available sections from disc
         $dir = Kernel::VERSION_ID >= 40000 ?
-            $this->getContainer()->getParameter('kernel.project_dir').'/config/kunstmaancms/pageparts/' :
-            $bundle->getPath().'/Resources/config/pageparts/'
+            $this->getContainer()->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/' :
+            $bundle->getPath() . '/Resources/config/pageparts/'
         ;
         if (file_exists($dir) && is_dir($dir)) {
             $finder = new Finder();
@@ -394,7 +385,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $info = null;
 
         try {
-            $data = Yaml::parse(file_get_contents($dir.$file));
+            $data = Yaml::parse(file_get_contents($dir . $file));
 
             if (array_key_exists('kunstmaan_page_part', $data)) {
                 //Get rid of the bundle config lines
@@ -415,9 +406,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
     /**
      * Get an array of fields that need to be added to the entity.
-     *
-     * @param BundleInterface $bundle
-     * @param array           $reservedFields
      *
      * @return array
      */
@@ -669,18 +657,17 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     /**
      * Get all the entity fields for a specific type.
      *
-     * @param BundleInterface $bundle
-     * @param                 $objectName
-     * @param                 $prefix
-     * @param                 $name
-     * @param                 $type
-     * @param null            $extra
-     * @param bool            $allNullable
-     * @param null            $minHeight
-     * @param null            $maxHeight
-     * @param null            $minWidth
-     * @param null            $maxWidth
-     * @param null            $mimeTypes
+     * @param      $objectName
+     * @param      $prefix
+     * @param      $name
+     * @param      $type
+     * @param null $extra
+     * @param bool $allNullable
+     * @param null $minHeight
+     * @param null $maxHeight
+     * @param null $minWidth
+     * @param null $maxWidth
+     * @param null $mimeTypes
      *
      * @return array
      */
@@ -731,14 +718,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             case 'link':
                 foreach (['url', 'text'] as $subField) {
                     $fields[$type][$subField] = [
-                        'fieldName' => lcfirst(Container::camelize($name.'_'.$subField)),
+                        'fieldName' => lcfirst(Container::camelize($name . '_' . $subField)),
                         'type' => 'string',
                         'formType' => $subField == 'url' ? URLChooserType::class : TextType::class,
                         'nullable' => $allNullable,
                     ];
                 }
                 $fields[$type]['new_window'] = [
-                    'fieldName' => lcfirst(Container::camelize($name.'_new_window')),
+                    'fieldName' => lcfirst(Container::camelize($name . '_new_window')),
                     'type' => 'boolean',
                     'nullable' => true,
                     'formType' => CheckboxType::class,
@@ -758,13 +745,13 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'mimeTypes' => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn' => [
-                        'name' => str_replace('.', '_', Container::underscore($name.'_id')),
+                        'name' => str_replace('.', '_', Container::underscore($name . '_id')),
                         'referencedColumnName' => 'id',
                     ],
                     'nullable' => $allNullable,
                 ];
                 $fields[$type]['alt_text'] = [
-                    'fieldName' => lcfirst(Container::camelize($name.'_alt_text')),
+                    'fieldName' => lcfirst(Container::camelize($name . '_alt_text')),
                     'type' => 'text',
                     'nullable' => true,
                     'formType' => TextType::class,
@@ -780,7 +767,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'mimeTypes' => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn' => [
-                        'name' => str_replace('.', '_', Container::underscore($name.'_id')),
+                        'name' => str_replace('.', '_', Container::underscore($name . '_id')),
                         'referencedColumnName' => 'id',
                     ],
                     'nullable' => $allNullable,
@@ -796,7 +783,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'formType' => EntityType::class,
                     'targetEntity' => $entityName,
                     'joinColumn' => [
-                        'name' => str_replace('.', '_', Container::underscore($name.'_id')),
+                        'name' => str_replace('.', '_', Container::underscore($name . '_id')),
                         'referencedColumnName' => 'id',
                     ],
                     'nullable' => $allNullable,
@@ -808,7 +795,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $entityName = $em->getClassMetadata($extra)->getName();
                 $parts = explode('\\', $entityName);
                 $joinTableName = strtolower(
-                    $prefix.Container::underscore($objectName).'_'.Container::underscore(
+                    $prefix . Container::underscore($objectName) . '_' . Container::underscore(
                         $parts[count($parts) - 1]
                     )
                 );
@@ -821,7 +808,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         'name' => $joinTableName,
                         'joinColumns' => [
                             [
-                                'name' => strtolower(Container::underscore($objectName)).'_id',
+                                'name' => strtolower(Container::underscore($objectName)) . '_id',
                                 'referencedColumnName' => 'id',
                             ],
                         ],
@@ -829,7 +816,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                             [
                                 'name' => strtolower(
                                         Container::underscore($parts[count($parts) - 1])
-                                    ).'_id',
+                                    ) . '_id',
                                 'referencedColumnName' => 'id',
                                 'unique' => true,
                             ],
@@ -896,9 +883,9 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         // Get the available sections from disc
         if (Kernel::VERSION_ID >= 40000) {
-            $dir = $this->getContainer()->getParameter('kernel.project_dir').'/config/kunstmaancms/pagetemplates/';
+            $dir = $this->getContainer()->getParameter('kernel.project_dir') . '/config/kunstmaancms/pagetemplates/';
         } else {
-            $dir = $bundle->getPath().'/Resources/config/pagetemplates/';
+            $dir = $bundle->getPath() . '/Resources/config/pagetemplates/';
         }
 
         if (file_exists($dir) && is_dir($dir)) {
@@ -928,7 +915,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $info = null;
 
         try {
-            $data = Yaml::parse(file_get_contents($dir.$file));
+            $data = Yaml::parse(file_get_contents($dir . $file));
 
             if (array_key_exists('kunstmaan_page_part', $data)) {
                 //Get rid of the bundle config lines
@@ -966,7 +953,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $counter = 1;
 
         // Get the available pages from disc
-        $dir = $bundle->getPath().'/Entity/Pages/';
+        $dir = $bundle->getPath() . '/Entity/Pages/';
         if (file_exists($dir) && is_dir($dir)) {
             $finder = new Finder();
             $finder->files()->in($dir)->depth('== 0');
@@ -984,15 +971,13 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     /**
      * Check that it is possible to generate the behat tests.
      *
-     * @param BundleInterface $bundle
-     *
      * @return bool
      */
     protected function canGenerateBehatTests(BundleInterface $bundle)
     {
-        $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/').'/behat.yml';
-        $pagePartContext = $bundle->getPath().'/Features/Context/PagePartContext.php';
-        $behatTestPage = $bundle->getPath().'/Entity/Pages/BehatTestPage.php';
+        $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir') . '/') . '/behat.yml';
+        $pagePartContext = $bundle->getPath() . '/Features/Context/PagePartContext.php';
+        $behatTestPage = $bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
 
         // Make sure behat is configured and the PagePartContext and BehatTestPage exits
         return file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage);

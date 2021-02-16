@@ -10,9 +10,9 @@ class TagAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'kuma_tagging.form.tag.name.label',
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

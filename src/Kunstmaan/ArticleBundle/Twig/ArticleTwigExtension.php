@@ -26,12 +26,6 @@ class ArticleTwigExtension extends AbstractExtension
      */
     private $router;
 
-    /**
-     * ArticleTwigExtension constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param RouterInterface        $router
-     */
     public function __construct(EntityManagerInterface $em, RouterInterface $router)
     {
         $this->em = $em;
@@ -49,36 +43,35 @@ class ArticleTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
-                'get_article_tag_path', array($this, 'getArticleTagRouterPath')
+                'get_article_tag_path', [$this, 'getArticleTagRouterPath']
             ),
             new TwigFunction(
-                'get_article_category_path', array($this, 'getArticleCategoryRouterPath')
+                'get_article_category_path', [$this, 'getArticleCategoryRouterPath']
             ),
             new TwigFunction(
-                'get_article_categories', array($this, 'getCategories')
+                'get_article_categories', [$this, 'getCategories']
             ),
             new TwigFunction(
-                'get_article_tags', array($this, 'getTags')
+                'get_article_tags', [$this, 'getTags']
             ),
-        );
+        ];
     }
 
     /**
      * Get tags array for view.
      *
-     * @param Request $request
-     * @param string  $className
+     * @param string $className
      *
      * @return array
      */
     public function getTags(Request $request, $className)
     {
-        $context = array();
+        $context = [];
 
         $tagRepository = $this->em->getRepository($className);
-        $context['tags'] = $tagRepository->findBy(array(), array('name' => 'ASC'));
+        $context['tags'] = $tagRepository->findBy([], ['name' => 'ASC']);
 
         $searchTag = $request->get('tag') ? explode(',', $request->get('tag')) : null;
         if ($searchTag) {
@@ -92,17 +85,16 @@ class ArticleTwigExtension extends AbstractExtension
     /**
      * Get categories array for view.
      *
-     * @param Request $request
-     * @param string  $className
+     * @param string $className
      *
      * @return array
      */
     public function getCategories(Request $request, $className)
     {
-        $context = array();
+        $context = [];
 
         $categoryRepository = $this->em->getRepository($className);
-        $context['categories'] = $categoryRepository->findBy(array(), array('name' => 'ASC'));
+        $context['categories'] = $categoryRepository->findBy([], ['name' => 'ASC']);
 
         $searchCategory = $request->get('category') ? explode(',', $request->get('category')) : null;
         if ($searchCategory) {

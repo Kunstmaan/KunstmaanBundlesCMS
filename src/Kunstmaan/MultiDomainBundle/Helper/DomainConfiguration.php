@@ -28,7 +28,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @var array
      */
-    protected $aliases = array();
+    protected $aliases = [];
 
     /**
      * @var AdminRouteHelper

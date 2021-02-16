@@ -9,12 +9,12 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class GoogleAnalyticsAJAXController extends Controller
 {
@@ -28,11 +28,11 @@ class GoogleAnalyticsAJAXController extends Controller
 
         $command = new GoogleAnalyticsDataCollectCommand();
         $command->setContainer($this->container);
-        $input = new ArrayInput(array('--config' => $configId, '--segment' => $segmentId));
+        $input = new ArrayInput(['--config' => $configId, '--segment' => $segmentId]);
         $output = new NullOutput();
         $command->run($input, $output);
 
-        return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
+        return new JsonResponse([], 200, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -48,7 +48,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
-        $goals = array();
+        $goals = [];
         foreach ($overview->getActiveGoals() as $key => $goal) {
             /* @var AnalyticsGoal $goal */
             $goals[$key]['name'] = $goal->getName();
@@ -58,7 +58,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         // overview data
-        $overviewData = array(
+        $overviewData = [
             'id' => $overview->getId(),
             'chartData' => json_decode($overview->getChartData(), true),
             'chartDataMaxValue' => $overview->getChartDataMaxValue(),
@@ -74,17 +74,17 @@ class GoogleAnalyticsAJAXController extends Controller
             'pageViews' => number_format($overview->getPageViews()),
             'returningUsersPercentage' => $overview->getReturningUsersPercentage(),
             'newUsersPercentage' => $overview->getNewUsersPercentage(),
-        );
+        ];
 
         // put all data in the return array
-        $return = array(
+        $return = [
             'responseCode' => 200,
             'overview' => $overviewData,
             'goals' => $goals,
-        );
+        ];
 
         // return json response
-        return new JsonResponse($return, 200, array('Content-Type' => 'application/json'));
+        return new JsonResponse($return, 200, ['Content-Type' => 'application/json']);
     }
 
     /* =============================== ACCOUNT =============================== */
@@ -102,7 +102,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
         $accounts = $configHelper->getAccounts();
 
-        return new JsonResponse($accounts, 200, array('Content-Type' => 'application/json'));
+        return new JsonResponse($accounts, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -133,7 +133,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
         $properties = $configHelper->getProperties($accountId);
 
-        return new JsonResponse($properties, 200, array('Content-Type' => 'application/json'));
+        return new JsonResponse($properties, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -165,7 +165,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
         $profiles = $configHelper->getProfiles($accountId, $propertyId);
 
-        return new JsonResponse($profiles, 200, array('Content-Type' => 'application/json'));
+        return new JsonResponse($profiles, 200, ['Content-Type' => 'application/json']);
     }
 
     /**

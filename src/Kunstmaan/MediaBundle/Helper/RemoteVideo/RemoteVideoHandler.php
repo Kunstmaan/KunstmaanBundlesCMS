@@ -23,14 +23,14 @@ class RemoteVideoHandler extends AbstractMediaHandler
     /**
      * @var array
      */
-    protected $configuration = array();
+    protected $configuration = [];
 
     /**
-     * Constructor. Takes the configuration of the RemoveVideoHandler
+     * Takes the configuration of the RemoveVideoHandler
      *
      * @param array $configuration
      */
-    public function __construct($priority, $configuration = array())
+    public function __construct($priority, $configuration = [])
     {
         parent::__construct($priority);
         $this->configuration = $configuration;
@@ -67,7 +67,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getFormTypeOptions()
     {
-        return array('configuration' => $this->configuration);
+        return ['configuration' => $this->configuration];
     }
 
     /**
@@ -88,8 +88,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return RemoteVideoHelper
      */
     public function getFormHelper(Media $media)
@@ -98,8 +96,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
@@ -114,10 +110,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
         switch ($video->getType()) {
             case 'youtube':
                 try {
-                    if (@fopen('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r') === false) {
-                        $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/0.jpg');
+                    if (@fopen('https://img.youtube.com/vi/' . $code . '/maxresdefault.jpg', 'r') === false) {
+                        $video->setThumbnailUrl('https://img.youtube.com/vi/' . $code . '/0.jpg');
                     } else {
-                        $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
+                        $video->setThumbnailUrl('https://img.youtube.com/vi/' . $code . '/maxresdefault.jpg');
                     }
                 } catch (\Exception $e) {
                 }
@@ -162,16 +158,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
         return substr($str, \strlen($str) - \strlen($sub)) === $sub;
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
     }
 
-    /**
-     * @param Media $media
-     */
     public function removeMedia(Media $media)
     {
     }
@@ -184,20 +174,18 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param array $params
-     *
      * @return array
      */
-    public function getAddUrlFor(array $params = array())
+    public function getAddUrlFor(array $params = [])
     {
-        return array(
-            'video' => array(
+        return [
+            'video' => [
                 'path' => 'KunstmaanMediaBundle_folder_videocreate',
-                'params' => array(
+                'params' => [
                     'folderId' => $params['folderId'],
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     /**
@@ -291,11 +279,11 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getAddFolderActions()
     {
-        return array(
-            RemoteVideoHandler::TYPE => array(
+        return [
+            RemoteVideoHandler::TYPE => [
                 'type' => RemoteVideoHandler::TYPE,
                 'name' => 'media.video.add',
-            ),
-        );
+            ],
+        ];
     }
 }

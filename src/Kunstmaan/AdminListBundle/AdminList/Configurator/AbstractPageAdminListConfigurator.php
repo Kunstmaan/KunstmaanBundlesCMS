@@ -37,10 +37,7 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     private $nodeTranslationIds = [];
 
     /**
-     * AbstractPageAdminListConfigurator constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param string                 $locale
+     * @param string $locale
      */
     public function __construct(EntityManagerInterface $em, $locale)
     {
@@ -106,10 +103,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         return $this->em->getClassMetadata($this->getRepositoryName())->getName();
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param array        $params
-     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = [])
     {
         $qbQuery = clone $queryBuilder;
@@ -140,9 +133,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
             ->orderBy('b.updated', 'DESC');
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function getCurrentLocaleResults(QueryBuilder $qb)
     {
         $results = $qb
@@ -157,9 +147,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         }
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function getOtherLocalesResults(QueryBuilder $qb)
     {
         $qb

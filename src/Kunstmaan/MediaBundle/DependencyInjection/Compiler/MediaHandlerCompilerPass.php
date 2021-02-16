@@ -13,8 +13,6 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
 {
     /**
      * You can modify the container here before it is dumped to PHP code.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
@@ -22,7 +20,7 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
             $definition = $container->getDefinition('kunstmaan_media.media_manager');
 
             foreach ($container->findTaggedServiceIds('kunstmaan_media.media_handler') as $id => $attributes) {
-                $definition->addMethodCall('addHandler', array(new Reference($id)));
+                $definition->addMethodCall('addHandler', [new Reference($id)]);
             }
         }
 
@@ -30,7 +28,7 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
             $definition = $container->getDefinition('kunstmaan_media.icon_font_manager');
 
             foreach ($container->findTaggedServiceIds('kunstmaan_media.icon_font.loader') as $id => $attributes) {
-                $definition->addMethodCall('addLoader', array(new Reference($id), $id));
+                $definition->addMethodCall('addLoader', [new Reference($id), $id]);
             }
         }
 

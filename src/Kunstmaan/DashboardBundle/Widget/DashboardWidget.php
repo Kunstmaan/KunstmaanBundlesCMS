@@ -3,9 +3,9 @@
 namespace Kunstmaan\DashboardBundle\Widget;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardWidget
 {
@@ -20,9 +20,8 @@ class DashboardWidget
     private $controller;
 
     /**
-     * @param string                                                    $command
-     * @param string                                                    $controller
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string $command
+     * @param string $controller
      */
     public function __construct($command, $controller, ContainerInterface $container)
     {
