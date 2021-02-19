@@ -44,6 +44,10 @@ class ManipulateImageService
     public function cropImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', string $filter = 'optim'): string
     {
         $media = $editableMediaWrapper->getMedia();
+        if (null === $media) {
+            return '';
+        }
+
         $path = $media->getUrl();
         $path = str_replace('://', '---', $path);
 
