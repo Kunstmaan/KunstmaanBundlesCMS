@@ -107,8 +107,8 @@ class FolderRepository extends NestedTreeRepository
     {
         $qb = $this->createQueryBuilder('folder')
             ->select('folder')
-            ->where('folder.parent is null AND folder.deleted != :deletedTrue')
-            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL)
+            ->where('folder.parent is null AND folder.deleted != :deleted')
+            ->setParameter('deleted', true, \PDO::PARAM_BOOL)
             ->orderBy('folder.name');
 
         if (false === \is_null($limit)) {

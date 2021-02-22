@@ -80,12 +80,12 @@ class MenuItemAdminType extends AbstractType
                     $qb = $er->createQueryBuilder('nt')
                         ->innerJoin('nt.publicNodeVersion', 'nv')
                         ->innerJoin('nt.node', 'n')
-                        ->where('n.deleted = :deletedFalse')
-                        ->setParameter('deletedFalse', false)
+                        ->where('n.deleted = :deleted')
+                        ->setParameter('deleted', false)
                         ->andWhere('nt.lang = :lang')
                         ->setParameter('lang', $locale)
-                        ->andWhere('nt.online = :onlineTrue')
-                        ->setParameter('onlineTrue', true)
+                        ->andWhere('nt.online = :online')
+                        ->setParameter('online', true)
                         ->orderBy('nt.title', 'ASC');
                     if ($rootNode) {
                         $qb->andWhere('n.lft >= :left')

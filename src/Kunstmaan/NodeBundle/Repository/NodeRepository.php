@@ -74,8 +74,8 @@ class NodeRepository extends NestedTreeRepository
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('b.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('b.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
@@ -393,8 +393,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('node.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false);
+            ->where('node.deleted = :deleted')
+            ->setParameter('deleted', false);
 
         if ($lang) {
             $qb->andWhere('t.lang = :lang')
@@ -438,8 +438,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('node.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('node.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->andWhere('node.parent IS NULL');
 
         if ($lang) {
@@ -471,8 +471,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('b.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('b.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->andWhere('b.parent IS NULL');
 
         return $qb->getQuery()->getResult();
@@ -503,8 +503,8 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName)
             ->andWhere('t.lang = :lang')
@@ -512,8 +512,8 @@ SQL;
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
         if (!$includeOffline) {
-            $qb->andWhere('t.online = :onlineTrue')
-                ->setParameter('onlineTrue', true);
+            $qb->andWhere('t.online = :online')
+                ->setParameter('online', true);
         }
 
         if (\is_null($parentId)) {
@@ -541,8 +541,8 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n')
-            ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName);
 
@@ -558,8 +558,8 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n.refEntityName')
-            ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->distinct(true);
 
         return $qb->getQuery()->getArrayResult();
@@ -576,8 +576,8 @@ SQL;
         $qb->select('COUNT(' . $alias . ')');
 
         if (false === $includeDeleted) {
-            $qb->andWhere($alias . '.deleted = :deletedFalse')
-                ->setParameter('deletedFalse', false);
+            $qb->andWhere($alias . '.deleted = :deleted')
+                ->setParameter('deleted', false);
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult();

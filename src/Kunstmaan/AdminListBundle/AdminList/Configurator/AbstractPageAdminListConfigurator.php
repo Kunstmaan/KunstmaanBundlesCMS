@@ -111,8 +111,8 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
             ->select('b.id, b.node_id')
             ->from('kuma_node_translations', 'b')
             ->innerJoin('b', 'kuma_nodes', 'n', 'b.node_id = n.id')
-            ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->andWhere('n.ref_entity_name = :class')
             ->setParameter('class', $this->getPageClass())
             ->addOrderBy('b.updated', 'DESC');

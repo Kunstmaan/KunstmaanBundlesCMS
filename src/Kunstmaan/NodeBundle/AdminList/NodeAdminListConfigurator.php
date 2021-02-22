@@ -240,8 +240,8 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
             ->select('b,n')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
             ->andWhere('b.lang = :lang')
-            ->andWhere('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->andWhere('n.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->addOrderBy('b.updated', 'DESC')
             ->setParameter('lang', $this->locale);
 

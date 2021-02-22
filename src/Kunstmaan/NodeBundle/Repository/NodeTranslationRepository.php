@@ -50,10 +50,10 @@ class NodeTranslationRepository extends EntityRepository
         $qb = $this->createQueryBuilder('nt')
             ->select('nt')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
-            ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
-            ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue', true)
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('nt.online = :online')
+            ->setParameter('online', true)
             ->andWhere('nt.lang = :lang')
             ->setParameter('lang', $lang)
             ->andWhere('n.id = :node_id')
@@ -122,8 +122,8 @@ class NodeTranslationRepository extends EntityRepository
                 'WITH',
                 'nt.publicNodeVersion = v.id'
             )
-            ->where('n.deleted = :deletedFalse')
-            ->setParameter('deletedFalse', false)
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', false)
             ->orderBy('nt.weight')
         ;
 
@@ -148,8 +148,8 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineNodeTranslationsQueryBuilder($lang = null)
     {
         return $this->getNodeTranslationsQueryBuilder($lang)
-            ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue', true);
+            ->andWhere('nt.online = :online')
+            ->setParameter('online', true);
     }
 
     /**
@@ -174,8 +174,8 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineChildrenQueryBuilder(Node $parent, $lang = null)
     {
         return $this->getChildrenQueryBuilder($parent, $lang)
-            ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue', true)
+            ->andWhere('nt.online = :online')
+            ->setParameter('online', true)
         ;
     }
 
@@ -278,8 +278,8 @@ class NodeTranslationRepository extends EntityRepository
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL)
+            ->where('n.deleted != :deleted')
+            ->setParameter('deleted', true, \PDO::PARAM_BOOL)
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -336,8 +336,8 @@ class NodeTranslationRepository extends EntityRepository
             ->setMaxResults(1);
 
         if (!$includeDeleted) {
-            $qb->andWhere('n.deleted = :deletedFalse')
-                ->setParameter('deletedFalse', false);
+            $qb->andWhere('n.deleted = :deleted')
+                ->setParameter('deleted', false);
         }
 
         if (!empty($locale)) {
@@ -413,8 +413,8 @@ class NodeTranslationRepository extends EntityRepository
                 'b.publicNodeVersion = v.id'
             )
             ->where('n.parent IS NULL')
-            ->andWhere('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL);
+            ->andWhere('n.deleted != :deleted')
+            ->setParameter('deleted', true, \PDO::PARAM_BOOL);
 
         return $qb->getQuery()->getResult();
     }
@@ -532,16 +532,16 @@ class NodeTranslationRepository extends EntityRepository
         $query = $em
             ->createNativeQuery(
                 'select nt.*
-                        from kuma_node_translations nt
+                         from kuma_node_translations nt
                         join kuma_nodes n on n.id = nt.node_id
-                        where n.deleted = :deletedFalse and nt.lang = :lang and locate(nt.url, :url) = 1
+                        where n.deleted = :deleted and nt.lang = :lang and locate(nt.url, :url) = 1
                         order by length(nt.url) desc limit 1',
                 $rsm
             );
 
         $query->setParameter('lang', $locale);
         $query->setParameter('url', $urlSlug);
-        $query->setParameter('deletedFalse', false);
+        $query->setParameter('deleted', false);
 
         return $query->getOneOrNullResult();
     }
@@ -599,10 +599,10 @@ class NodeTranslationRepository extends EntityRepository
                 'WITH',
                 'nt.publicNodeVersion = v.id'
             )
-            ->where('n.deleted != :deletedTrue')
-            ->setParameter('deletedTrue', true, \PDO::PARAM_BOOL)
-            ->andWhere('nt.online = :onlineTrue')
-            ->setParameter('onlineTrue', true)
+            ->where('n.deleted != :deleted')
+            ->setParameter('deleted', true, \PDO::PARAM_BOOL)
+            ->andWhere('nt.online = :online')
+            ->setParameter('online', true)
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -639,11 +639,11 @@ class NodeTranslationRepository extends EntityRepository
             ->innerJoin('nt.publicNodeVersion', 'nv')
             ->innerJoin('nt.node', 'n')
             ->where('nt.node = :parent')
-            ->andWhere('n.deleted = :deletedFalse')
+            ->andWhere('n.deleted = :deleted')
             ->andWhere('nt.lang = :lang')
             ->setParameter('parent', $parent)
             ->setParameter('lang', $nodeTranslation->getLang())
-            ->setParameter('deletedFalse', false);
+            ->setParameter('deleted', false);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
