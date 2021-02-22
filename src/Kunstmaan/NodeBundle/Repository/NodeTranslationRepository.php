@@ -329,7 +329,6 @@ class NodeTranslationRepository extends EntityRepository
                 'WITH',
                 'b.publicNodeVersion = v.id'
             )
-
             ->addOrderBy('b.online', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
