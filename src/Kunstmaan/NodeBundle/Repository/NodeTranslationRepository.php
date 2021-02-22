@@ -174,7 +174,9 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineChildrenQueryBuilder(Node $parent, $lang = null)
     {
         return $this->getChildrenQueryBuilder($parent, $lang)
-            ->andWhere('nt.online = :onlineTrue')->setParameter('onlineTrue', true);
+            ->andWhere('nt.online = :onlineTrue')
+            ->setParameter('onlineTrue', true)
+        ;
     }
 
     /**
