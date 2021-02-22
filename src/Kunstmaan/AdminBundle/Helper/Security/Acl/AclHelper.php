@@ -27,10 +27,7 @@ class AclHelper
      */
     private $em = null;
 
-    /**
-     * @var string //the database platform i.e. 'postgresql', 'sqlite'...etc
-     */
-    private $databasePlatform;
+
 
     /**
      * @var TokenStorageInterface
@@ -60,7 +57,6 @@ class AclHelper
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
-        $this->databasePlatform = $this->em->getConnection()->getDatabasePlatform()->getName();
         $this->tokenStorage = $tokenStorage;
         $this->quoteStrategy = $em->getConfiguration()->getQuoteStrategy();
         $this->roleHierarchy = $rh;
@@ -147,7 +143,7 @@ class AclHelper
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
-        if ($this->databasePlatform == 'postgresql') {
+        if ($this->em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
             return $this->getPermittedAclIdsSQLForUserPlatformPostgres($query);
         }
 
