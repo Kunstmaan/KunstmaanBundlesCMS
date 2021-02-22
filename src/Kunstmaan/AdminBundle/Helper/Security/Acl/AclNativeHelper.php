@@ -22,10 +22,7 @@ class AclNativeHelper
      */
     private $em = null;
 
-    /**
-     * @var string //the database platform i.e. 'postgresql', 'sqlite'...etc
-     */
-    private $databasePlatform;
+
 
     /**
      * @var TokenStorageInterface
@@ -50,7 +47,6 @@ class AclNativeHelper
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
-        $this->databasePlatform = $this->em->getConnection()->getDatabasePlatform()->getName();
         $this->tokenStorage = $tokenStorage;
         $this->roleHierarchy = $rh;
         $this->permissionsEnabled = $permissionsEnabled;
@@ -66,7 +62,8 @@ class AclNativeHelper
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
-        if ($this->databasePlatform == 'postgresql') {
+
+        if ($this->em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
             return $this->applyPlatformPostgres($queryBuilder, $permissionDef);
         }
 
@@ -158,8 +155,7 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-        //var_dump('ACLNativeWalker::applyPlatformPostgres',$joinTableQuery); echo"<br/>";
-        $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
+         $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
 
         return $query;
     }
