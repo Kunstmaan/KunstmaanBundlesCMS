@@ -62,7 +62,6 @@ class TranslationRepository extends AbstractTranslatorRepository
         $flagNew = \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW;
         $flagUpdated = \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED;
 
-        //use lowercase variable names for postgress. i.e. : newest_date instead of newestDate
         $sql = <<<EOQ
 SELECT
     MAX(compare) as newest_date,
