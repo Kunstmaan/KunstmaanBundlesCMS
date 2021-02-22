@@ -270,10 +270,8 @@ SELECTQUERY;
             $inString .= ' OR s.identifier = ' . $stringQuoteChar . get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
         }
 
-        $objectIdentifierColumn = 'o.object_identifier';
-        if ($aclConnection->getDatabasePlatform()->getName() === 'postgresql') {
-            $objectIdentifierColumn = 'o.object_identifier::BIGINT';
-        }
+        $objectIdentifierColumn = 'o.object_identifier::BIGINT';
+
 
         $selectQuery = <<<SELECTQUERY
 SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
@@ -289,7 +287,7 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-        //var_dump('ACLHelper::getPermittedAclIdsSQLForUserPlatformPostgres',$selectQuery);echo "<br />";
+
         return $selectQuery;
     }
 
