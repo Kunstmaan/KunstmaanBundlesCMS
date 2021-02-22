@@ -36,7 +36,6 @@ JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
 tempAclView;
                 break;
         }
-        //var_dump('ACLWalker::walkFromClause',$sql);echo"<br/>";
         return $sql . ' ' . $tempAclView;
     }
 }
