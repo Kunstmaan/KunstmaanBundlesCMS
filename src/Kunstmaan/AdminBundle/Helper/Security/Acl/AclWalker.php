@@ -36,6 +36,7 @@ JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
 tempAclView;
                 break;
         }
+
         return $sql . ' ' . $tempAclView;
     }
 }

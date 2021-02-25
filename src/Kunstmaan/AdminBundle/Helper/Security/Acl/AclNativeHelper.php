@@ -22,8 +22,6 @@ class AclNativeHelper
      */
     private $em = null;
 
-
-
     /**
      * @var TokenStorageInterface
      */
@@ -62,7 +60,6 @@ class AclNativeHelper
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
-
         if ($this->em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
             return $this->applyPlatformPostgres($queryBuilder, $permissionDef);
         }
@@ -155,7 +152,7 @@ WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
-         $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
+        $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
 
         return $query;
     }

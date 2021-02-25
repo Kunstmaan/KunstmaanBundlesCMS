@@ -27,8 +27,6 @@ class AclHelper
      */
     private $em = null;
 
-
-
     /**
      * @var TokenStorageInterface
      */
@@ -267,7 +265,6 @@ SELECTQUERY;
         }
 
         $objectIdentifierColumn = 'o.object_identifier::BIGINT';
-
 
         $selectQuery = <<<SELECTQUERY
 SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
