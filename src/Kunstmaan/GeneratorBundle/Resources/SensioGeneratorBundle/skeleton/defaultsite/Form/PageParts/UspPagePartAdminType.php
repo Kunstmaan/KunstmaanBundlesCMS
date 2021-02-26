@@ -10,7 +10,7 @@ use {{ namespace }}\Form\UspItemAdminType;
 
 class UspPagePartAdminType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	parent::buildForm($builder, $options);
 
