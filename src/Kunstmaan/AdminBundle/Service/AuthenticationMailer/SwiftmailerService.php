@@ -36,14 +36,13 @@ final class SwiftmailerService implements AuthenticationMailerInterface
     public function sendPasswordResetEmail(UserInterface $user, string $locale): void
     {
         $confirmationUrl = $this->urlGenerator->generate('kunstmaan_admin_reset_password_confirm', ['token' => $user->getConfirmationToken()], RouterInterface::ABSOLUTE_URL);
-        //TODO: create new email template in new dir structure
-        $body = $this->twig->render('@KunstmaanAdmin/Resetting/email.txt.twig', [
+        $body = $this->twig->render('@KunstmaanAdmin/authentication/email/password_reset.txt.twig', [
             'user' => $user,
             'confirmationUrl' => $confirmationUrl,
         ]);
 
         $message = (new \Swift_Message())
-            ->setSubject($this->translator->trans('Password reset email', [], null, $locale))//TODO: translation key
+            ->setSubject($this->translator->trans('security.resetting.mail.subject', [], null, $locale))
             ->setFrom($this->senderAddress, $this->senderName)
             ->setTo($user->getEmail())
             ->setBody($body)
