@@ -29,7 +29,7 @@ class EditableMediaWrapper extends AbstractEntity
         return $this->media;
     }
 
-    public function setMedia(Media $media): EditableMediaWrapper
+    public function setMedia(?Media $media): EditableMediaWrapper
     {
         $this->media = $media;
 
