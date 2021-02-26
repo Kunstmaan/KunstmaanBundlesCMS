@@ -11,6 +11,7 @@ use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 final class PasswordResetController extends AbstractController
 {
@@ -34,10 +35,11 @@ final class PasswordResetController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //TODO: already requested error/message
-            $this->passwordResetService->processResetRequest($form->get('email')->getData(), $request->getLocale());
-
-            //TODO: check_email template replacement
+            try {
+                $this->passwordResetService->processResetRequest($form->get('email')->getData(), $request->getLocale());
+            } catch (UsernameNotFoundException $e) {
+                // Don't expose if the user was not found to avoid leaking info.
+            }
 
             $this->addFlash(FlashTypes::SUCCESS, 'security.resetting.send_email_success');
 
