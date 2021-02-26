@@ -58,8 +58,6 @@ final class PasswordResetController extends AbstractController
         $user = $this->userManager->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            $this->addFlash(FlashTypes::DANGER, 'security.resetting.user_not_found');
-
             return $this->redirectToRoute('kunstmaan_admin_reset_password');
         }
 

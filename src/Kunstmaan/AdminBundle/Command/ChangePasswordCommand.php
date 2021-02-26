@@ -59,7 +59,7 @@ EOT
         }
 
         $user->setPlainPassword($password);
-        $this->userManager->updateUser($user);
+        $this->userManager->updatePassword($user);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));
 

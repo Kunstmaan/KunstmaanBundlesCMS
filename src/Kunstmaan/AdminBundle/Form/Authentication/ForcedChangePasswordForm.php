@@ -24,7 +24,7 @@ final class ForcedChangePasswordForm extends AbstractType
     {
         $builder
             ->add('current_password', PasswordType::class, [
-                'label' => 'security.change_password.current_password',
+                'label' => 'security.change_password.form.current_password',
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank(),
@@ -42,10 +42,10 @@ final class ForcedChangePasswordForm extends AbstractType
                     ],
                 ],
                 'first_options' => [
-                    'label' => 'security.change_password.new_password',
+                    'label' => 'security.change_password.form.new_password',
                 ],
                 'second_options' => [
-                    'label' => 'security.change_password.new_password_confirmation',
+                    'label' => 'security.change_password.form.new_password_confirmation',
                 ],
             ])
         ;

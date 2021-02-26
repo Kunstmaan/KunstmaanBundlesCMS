@@ -95,7 +95,7 @@ abstract class BaseUser implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string", length=100)
+     * @ORM\Column(name="salt", type="string", length=100, nullable=true)
      */
     protected $salt;
 

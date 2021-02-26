@@ -75,7 +75,7 @@ class UserManager
     public function updatePassword(UserInterface $user, bool $andFlush = true): void
     {
         $plainPassword = $user->getPlainPassword();
-        if ($plainPassword === '') {
+        if ($plainPassword === '' || null === $plainPassword) {
             return;
         }
 
