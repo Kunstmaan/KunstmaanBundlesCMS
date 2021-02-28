@@ -17,6 +17,8 @@ security:
         logged_in_as: 'Logged in as %username%'
         logout: 'Log out'
     resetting:
+        mail:
+            subject: 'Password reset'
         send_email_success: 'An email has been sent to your address'
         user_not_found: 'User not found'
         password_set_success: 'Your password has been changed.'

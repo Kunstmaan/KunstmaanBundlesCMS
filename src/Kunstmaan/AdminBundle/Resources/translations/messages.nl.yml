@@ -148,3 +148,11 @@ security:
     password_set_success: 'Uw wachtwoord is aangepast.'
     email: 'Gebruikersnaam of emailadres'
     reset: 'Reset wachtwoord'
+  change_password:
+    form:
+      current_password: 'Huidig wachtwoord'
+      new_password: 'Nieuw wachtwoord'
+      new_password_confirmation: 'Herhaal nieuw wachtwoord'
+      submit: 'Wachtwoord veranderen'
+    success:
+      flash: 'Het wachtwoord voor "%username%" is aangepast.'
