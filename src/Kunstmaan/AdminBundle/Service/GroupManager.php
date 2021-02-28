@@ -52,6 +52,7 @@ class GroupManager
         //NEXT_MAJOR: remove support for xx:xx group class notation.
         if (false !== strpos($this->class, ':')) {
             $metadata = $this->em->getClassMetadata($this->class);
+
             return $metadata->getName();
         }
 

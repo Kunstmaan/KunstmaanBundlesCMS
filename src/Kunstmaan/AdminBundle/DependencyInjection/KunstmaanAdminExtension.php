@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
+use Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
@@ -18,7 +19,6 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Mailer\Mailer;
-use Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader;
 
 class KunstmaanAdminExtension extends Extension implements PrependExtensionInterface
 {
@@ -32,7 +32,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('commands.yml');
 

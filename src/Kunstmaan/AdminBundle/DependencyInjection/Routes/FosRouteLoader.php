@@ -30,7 +30,7 @@ final class FosRouteLoader implements RouteLoaderInterface
             return new RouteCollection();
         }
 
-        $fileLocator = new FileLocator([__DIR__.'/../../Resources/config']);
+        $fileLocator = new FileLocator([__DIR__ . '/../../Resources/config']);
         $loaderResolver = new LoaderResolver([new XmlFileLoader($fileLocator)]);
         $delegatingLoader = new DelegatingLoader($loaderResolver);
 

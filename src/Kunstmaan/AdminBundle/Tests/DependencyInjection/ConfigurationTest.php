@@ -4,10 +4,10 @@ namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\Configuration;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use Kunstmaan\AdminBundle\Entity\User;
 
 class ConfigurationTest extends TestCase
 {

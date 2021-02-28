@@ -5,8 +5,6 @@ namespace Kunstmaan\AdminBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 
@@ -51,6 +49,7 @@ class UserManager
         //NEXT_MAJOR: remove support for xx:xx user class notation.
         if (false !== strpos($this->class, ':')) {
             $metadata = $this->em->getClassMetadata($this->class);
+
             return $metadata->getName();
         }
 

@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class PasswordResetService
@@ -58,7 +57,6 @@ class PasswordResetService
 
     /**
      * @param object $event
-     * @param string $eventName
      *
      * @return object
      */

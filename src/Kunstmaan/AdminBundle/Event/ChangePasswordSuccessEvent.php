@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Event;
 
 use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ChangePasswordSuccessEvent extends BcEvent
