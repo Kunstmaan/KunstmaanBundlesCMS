@@ -217,7 +217,7 @@ services:
 
     kunstmaan_admin.password_resetting.listener:
         class: '%kunstmaan_admin.password_resetting.listener.class%'
-        arguments: ['@kunstmaan_admin.user_manager']
+        arguments: ['@fos_user.user_manager']
         tags:
             - { name: kernel.event_listener, event: fos_user.change_password.edit.completed, method: onPasswordResettingSuccess }
             - { name: kernel.event_listener, event: kunstmaan_admin.change_password.edit.completed, method: onPasswordResettingSuccessCMS }
