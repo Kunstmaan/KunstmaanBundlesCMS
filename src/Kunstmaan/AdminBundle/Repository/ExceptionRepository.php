@@ -25,7 +25,6 @@ class ExceptionRepository extends EntityRepository
      */
     public function markAllAsResolved()
     {
-
         return $this->createQueryBuilder('e')
             ->update()
             ->set('e.isResolved', ':isResolvedTrue')

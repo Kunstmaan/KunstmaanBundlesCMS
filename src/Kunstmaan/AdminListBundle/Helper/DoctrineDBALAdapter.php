@@ -74,6 +74,7 @@ class DoctrineDBALAdapter implements AdapterInterface
         $query->resetQueryPart('orderBy');
         $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
             ->execute();
+
         return ($results = $statement->fetchColumn()) ? $results : 0;
     }
 
