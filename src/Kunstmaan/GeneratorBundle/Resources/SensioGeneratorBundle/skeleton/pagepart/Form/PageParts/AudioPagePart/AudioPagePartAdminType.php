@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class {{ pagepart }}AdminType extends AbstractType
 {
 
-    public function buildForm(FormBuilderInterface $builder, array $options)public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('media', MediaType::class, array(
             'mediatype' => 'audio',
