@@ -25,12 +25,13 @@ class ExceptionRepository extends EntityRepository
      */
     public function markAllAsResolved()
     {
+
         return $this->createQueryBuilder('e')
             ->update()
             ->set('e.isResolved', ':isResolvedTrue')
             ->where('e.isResolved = :isResolvedFalse')
-            ->setParameter('isResolvedTrue', true, \PDO::PARAM_BOOL)
-            ->setParameter('isResolvedFalse', false, \PDO::PARAM_BOOL)
+            ->setParameter('isResolvedTrue', true)
+            ->setParameter('isResolvedFalse', false)
             ->getQuery()
             ->getSingleScalarResult();
     }
