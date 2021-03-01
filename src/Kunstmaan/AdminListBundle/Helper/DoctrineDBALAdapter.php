@@ -71,20 +71,9 @@ class DoctrineDBALAdapter implements AdapterInterface
         if ($this->useDistinct) {
             $distinctString = 'DISTINCT ';
         }
-
-        if ($this->databasePlatform == 'postgresql') {
-            //for a count the order of the results  form the original query does does not matter
-            // and in postgres it is even detrimental when used in conjunction with other functions such as CONCAT
-            $query->resetQueryPart('orderBy');
-            $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
-                ->execute();
-        } else {
-            $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
-                ->orderBy($this->countField)
-                ->setMaxResults(1)
-                ->execute();
-        }
-
+        $query->resetQueryPart('orderBy');
+        $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
+            ->execute();
         return ($results = $statement->fetchColumn()) ? $results : 0;
     }
 
