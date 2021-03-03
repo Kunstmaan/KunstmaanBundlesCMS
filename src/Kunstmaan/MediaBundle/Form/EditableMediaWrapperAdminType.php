@@ -36,7 +36,7 @@ class EditableMediaWrapperAdminType extends AbstractType
             $useCropper = $this->croppingViews[self::CUSTOM_VIEWS][$croppingViewGroup]['use_cropping'] ?? true;
         }
         $builder->add('media', MediaType::class, [
-            'label' => 'mediapagepart.image.choosefile',
+            'label' => false,
             'mediatype' => 'image',
             'show_image_edit_modal' => true,
             'use_focus_point' => $useFocusPoint,
