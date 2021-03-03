@@ -1,0 +1,99 @@
+/* ==========================================================================
+    image edit | focus
+   ========================================================================== */
+
+.image-edit__focus-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    &--hidden {
+        display: none;
+    }
+
+    .image-edit__crop-wrapper + & {
+        display: none;
+    }
+
+    .image-edit__crop-wrapper--hidden + & {
+        display: flex;
+    }
+}
+
+.image-edit__focus-holder {
+    position: relative;
+
+    display: inline-block;
+}
+
+.image-edit__focus-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.image-edit__focus-item {
+    position: relative;
+
+    margin: 0;
+
+    border-right: 1px dashed $white;
+    border-bottom: 1px dashed $white;
+
+    &:nth-child(3n) {
+        border-right: none;
+    }
+
+    &:nth-child(n+7) {
+        border-bottom: none;
+    }
+
+    + .image-edit__focus-item {
+        margin: 0;
+    }
+}
+
+.image-edit__focus-item__label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+
+    color: $white;
+    font-size: 12px;
+
+    background: rgba($black, .5);
+
+    &:hover,
+    &:active,
+    &:focus {
+        background: transparent;
+    }
+}
+
+.image-edit__focus-item__choice {
+    position: static !important;
+
+    margin: 0 0 10px 0 !important;
+    display: block;
+}
+
+.image-edit__focus-media {
+    img {
+        min-width: 260px;
+    }
+}

@@ -24,6 +24,7 @@ class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_media.remote_video');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.enable_pdf_preview', true);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.blacklisted_extensions');
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.cropping_views');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_manager.class', 'Kunstmaan\MediaBundle\Helper\MediaManager');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.folder_manager.class', 'Kunstmaan\MediaBundle\Helper\FolderManager');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.menu.adaptor.class', 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor');

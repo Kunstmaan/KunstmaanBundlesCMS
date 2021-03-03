@@ -61,7 +61,8 @@
 
     &:hover {
 
-        .media-chooser__preview__del-btn {
+        .media-chooser__preview__del-btn,
+        .media-chooser__preview__crop-btn {
             opacity: 1;
         }
     }
@@ -85,7 +86,8 @@
 
 
 // Del button
-.media-chooser__preview__del-btn {
+.media-chooser__preview__del-btn,
+.media-chooser__preview__crop-btn {
     z-index: 2;
     position: absolute;
     top: 0;
@@ -110,6 +112,18 @@
                 opacity: 1;
             }
         }
+    }
+}
+
+.media-chooser__preview__crop-btn {
+    bottom: 0;
+    top: auto;
+
+    border-radius: $default-border-radius 0 $default-border-radius 0;
+
+    &, &:hover {
+        background: $blue;
+        color: $white;
     }
 }
 

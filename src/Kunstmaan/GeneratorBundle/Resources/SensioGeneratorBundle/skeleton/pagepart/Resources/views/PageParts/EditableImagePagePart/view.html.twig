@@ -1,0 +1,46 @@
+{% import _self as buildImage %}
+
+{% macro setFilters(mediaWrapper, altText, type, originalWidth) %}
+
+    {% set imgUrl = '' %}
+
+    {% set imgUrl_huge = cropped_imagine_filter(mediaWrapper, 'desktop') %}
+    {% set imgUrl_big = cropped_imagine_filter(mediaWrapper, 'desktop') %}
+    {% set imgUrl_medium = cropped_imagine_filter(mediaWrapper, 'tablet') %}
+    {% set imgUrl_small = cropped_imagine_filter(mediaWrapper, 'phone') %}
+    {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
+
+    <img srcset="{{ srcSet }}" sizes="100vw"{% if altText %} alt="{{ altText }}"{% endif %} width="{{ originalWidth }}"/>
+    <noscript>
+        <img src="{{ imgUrl_big }}"{% if altText %} alt="{{ altText }}"{% endif %} />
+    </noscript>
+{% endmacro %}
+
+{% if resource.mediaWrapper is not empty %}
+    {% set image %}
+        {% set imageType = resource.mediaWrapper.media.originalFilename|lower|split('.')|last %}
+        {{ buildImage.setFilters(resource.mediaWrapper, resource.altText is defined ? resource.altText : '', imageType, resource.mediaWrapper.media.metadata.original_width) }}
+    {% endset %}
+
+    {% if resource.mediaWrapper.media is not empty %}
+        {% if app.request %}
+            <figure class="image-pp">
+                {% set imageType = resource.mediaWrapper.media.originalFilename|lower|split('.')|last %}
+
+                {% if resource.link is defined and resource.link != '' %}
+                    <a href="{{ resource.link | replace_url }}" class="{{ get_focus_point_class(resource.mediaWrapper, 'desktop') }}" {% if resource.openInNewWindow %}target="_blank" rel="noopener"{% endif %}>
+                        {{ image }}
+                    </a>
+                {% else %}
+                    {{ image }}
+                {% endif %}
+
+                {% if resource.caption is defined and resource.caption %}
+                    <figcaption>
+                        <p>{{ resource.caption }}</p>
+                    </figcaption>
+                {% endif %}
+            </figure>
+        {% endif %}
+    {% endif %}
+{% endif %}
