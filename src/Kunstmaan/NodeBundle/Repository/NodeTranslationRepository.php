@@ -75,29 +75,13 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getMaxChildrenWeight(Node $parentNode = null, $lang = null)
     {
-        if ($this->_em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
-            $maxWeights = $this->getNodeTranslationsQueryBuilder($lang)
-                ->select('max(nt.weight)')
-                ->andWhere('n.parent = :parentNode')
-                ->setParameter('parentNode', $parentNode)
-                ->groupBy('nt.weight') /// thjis one
-                ->getQuery()
-                ->getScalarResult();
-            $maxWeight = -1000;
-            foreach ($maxWeights as $entry) {
-                $weight = array_values($entry)[0];
-                if ($weight > $maxWeight) {
-                    $maxWeight = $weight;
-                }
-            }
-        } else {
-            $maxWeight = $this->getNodeTranslationsQueryBuilder($lang)
-                ->select('max(nt.weight)')
-                ->andWhere('n.parent = :parentNode')
-                ->setParameter('parentNode', $parentNode)
-                ->getQuery()
-                ->getSingleScalarResult();
-        }
+        $maxWeight = $this->getNodeTranslationsQueryBuilder($lang)
+            ->select('max(nt.weight)')
+            ->andWhere('n.parent = :parentNode')
+            ->setParameter('parentNode', $parentNode)
+            ->resetDQLPart('orderBy')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         return (int) $maxWeight;
     }
