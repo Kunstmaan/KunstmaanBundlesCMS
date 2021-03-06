@@ -9,7 +9,6 @@ use {{ namespace }}\Form\{{ entity_class }}CategoryAdminType;
 
 /**
  * @ORM\Entity()
- * For postgresql compatibility UniqueConstraint names need to be unique
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_categories", uniqueConstraints={@ORM\UniqueConstraint(name="{{ entity_class|lower }}_category_name_idx", columns={"name"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
