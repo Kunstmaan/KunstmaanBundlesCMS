@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -71,15 +72,9 @@ class AclHelperTest extends TestCase
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        /* @var $platform AbstractPlatform */
-        $platform = $this->createMock(AbstractPlatform::class);
-        $platform->expects($this->any())
-            ->method('getStringLiteralQuoteCharacter')
-            ->willReturn($this->returnValue('#'));
-
         $conn->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue($platform));
+            ->willReturn(new MySqlPlatform());
 
         /* @var $stmt Statement */
         $stmt = $this->createMock(Statement::class);
