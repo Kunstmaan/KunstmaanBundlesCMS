@@ -344,9 +344,7 @@ SQL;
         $permissionDef->setEntity('Kunstmaan\NodeBundle\Entity\Node');
         $permissionDef->setAlias('n');
         $qb = $aclNativeHelper->apply($qb, $permissionDef);
-
         $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
-
         if (!$includeHiddenFromNav) {
             $stmt->bindValue(':hiddenFromNav', false);
         }
