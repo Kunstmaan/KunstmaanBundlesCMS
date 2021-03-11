@@ -324,14 +324,15 @@ SQL;
             $qb->addGroupBy('t.url')
                 ->addGroupby('t.id')
                 ->addGroupby('v.weight')
-                ->addGroupBy('v.title');
+                ->addGroupBy('v.title')
+                ->distinct();
         }
 
-        $qb->addOrderBy('t.weight', 'ASC')
-            ->addOrderBy('t.title', 'ASC');
+        $qb->addOrderBy('weight', 'ASC')
+            ->addOrderBy('title', 'ASC');
 
         if (!$includeHiddenFromNav) {
-            $qb->andWhere('n.hidden_from_nav != :hiddenFromNavFalse');
+            $qb->andWhere('n.hidden_from_nav != :hiddenFromNav');
         }
 
         if (!\is_null($rootNode)) {
@@ -347,7 +348,7 @@ SQL;
         $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
 
         if (!$includeHiddenFromNav) {
-            $stmt->bindValue(':hiddenFromNavFalse', false);
+            $stmt->bindValue(':hiddenFromNav', false);
         }
         $stmt->bindValue(':lang', $lang);
         if (!\is_null($rootNode)) {
@@ -355,16 +356,6 @@ SQL;
             $stmt->bindValue(':right', $rootNode->getRight());
         }
         $stmt->execute();
-        if ($databasePlatformName == 'postgresql') {
-            $results = $stmt->fetchAll();
-            $uniqueResults = [];
-            foreach ($results as $result) {
-                $uniqueResults[$result['id']] = $result;
-            }
-
-            return $uniqueResults;
-        }
-
         return $stmt->fetchAll();
     }
 
