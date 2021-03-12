@@ -5,6 +5,9 @@ namespace Kunstmaan\NodeBundle\Form\Type;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
@@ -37,6 +40,19 @@ class SlugType extends AbstractType
     public function getBlockPrefix()
     {
         return 'slug';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $slug = $event->getData();
+            $slug = \rtrim($slug, '/');
+            $event->setData($slug);
+        });
     }
 
     /**
