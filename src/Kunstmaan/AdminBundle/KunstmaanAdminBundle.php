@@ -12,8 +12,11 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\EnablePermissionsPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\InjectUntrackedTokenStorageCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\PagerfantaBridgePass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\VersionCheckerCacheBcPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
+use Kunstmaan\AdminBundle\DependencyInjection\PagerfantaExtension;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -43,5 +46,8 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new VersionCheckerCacheBcPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
+
+        $container->registerExtension(new PagerfantaExtension());
+        $container->addCompilerPass(new PagerfantaBridgePass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1); // Should run after all passes from BabDevPagerfantaBundle
     }
 }

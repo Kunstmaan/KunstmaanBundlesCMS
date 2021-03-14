@@ -14,8 +14,11 @@
     ],
     "require": {
         "php": "^7.2",
+        "box/spout": "^2.5",
         "kunstmaan/admin-bundle": "^5.7",
-        "box/spout": "^2.5"
+        "pagerfanta/core": "^2.4",
+        "pagerfanta/doctrine-orm-adapter": "^2.4",
+        "pagerfanta/twig": "^2.4"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",

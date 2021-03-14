@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "babdev/pagerfanta-bundle": "^2.5",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-bundle": "^1.6.12|^2.0",
@@ -53,8 +54,7 @@
         "symfony/yaml": "^3.4|^4.4",
         "twig/twig": "^1.40|^2.9",
         "twig/extensions": "~1.0",
-        "sensio/framework-extra-bundle": "^5.0",
-        "white-october/pagerfanta-bundle": "~1.0"
+        "sensio/framework-extra-bundle": "^5.0"
     },
     "suggest": {
         "kunstmaan/translator-bundle": "^5.2",

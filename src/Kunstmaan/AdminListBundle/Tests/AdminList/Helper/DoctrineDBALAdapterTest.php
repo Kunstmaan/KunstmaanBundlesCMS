@@ -9,6 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 class DoctrineDBALAdapterTest extends TestCase
 {
+    /**
+     * Mark test as legacy to avoid "\Pagerfanta\Exception\Exception" interface deprecation
+     *
+     * @group legacy
+     */
     public function testConstructorWithIncorrectCountField()
     {
         $this->expectExceptionMessage('The $countField must contain a table alias in the string.');
