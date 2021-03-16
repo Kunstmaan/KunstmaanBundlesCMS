@@ -277,7 +277,7 @@ class NodeRepository extends NestedTreeRepository
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
                     break;
                 case 'postgresql':
-                    return sprintf('COALESCE(%s, %s)', $trueValue, $falseValue);
+                    return sprintf('COALESCE(%s, %s)', $falseValue, $trueValue);
                 default:
                     $statement = 'IF(%s, %s, %s)';
             }
