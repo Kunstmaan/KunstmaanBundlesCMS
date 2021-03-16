@@ -267,41 +267,31 @@ class NodeRepository extends NestedTreeRepository
         $connection = $this->_em->getConnection();
         $qb = $connection->createQueryBuilder();
         $databasePlatformName = $connection->getDatabasePlatform()->getName();
+        $createIfStatement = static function (
+            $expression,
+            $trueValue,
+            $falseValue
+        ) use ($databasePlatformName) {
+            switch ($databasePlatformName) {
+                case 'sqlite':
+                    $statement = 'CASE WHEN %s THEN %s ELSE %s END';
+                    break;
+                case 'postgresql':
+                    return sprintf('COALESCE(%s, %s)', $trueValue, $falseValue);
+                default:
+                    $statement = 'IF(%s, %s, %s)';
+            }
+            return sprintf($statement, $expression, $trueValue, $falseValue);
+        };
 
-        switch ($databasePlatformName) {
-            case 'sqlite':
-                $sql = <<<SQL
-n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
-CASE WHEN t.weight IS NULL THEN v.weight ELSE t.weight END AS weight,
-CASE WHEN t.title IS NULL THEN  v.title ELSE t.title END AS title,
-CASE WHEN t.online IS NULL THEN 0 ELSE t.online END AS online,
-n.hidden_from_nav AS hidden,
-n.ref_entity_name AS ref_entity_name
+        $sql = <<<SQL
+            n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
+            {$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
+            {$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
+            t.online AS online,
+            n.hidden_from_nav AS hidden,
+            n.ref_entity_name AS ref_entity_name
 SQL;
-                break;
-            case 'postgresql':
-                $sql = <<<SQL
-n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
-CASE WHEN t.weight IS NULL THEN v.weight ELSE t.weight END AS weight,
-CASE WHEN t.title IS NULL THEN  v.title ELSE t.title END AS title,
-CASE WHEN t.online IS NULL THEN false ELSE t.online END AS online,
-n.hidden_from_nav AS hidden,
-n.ref_entity_name AS ref_entity_name
-SQL;
-                break;
-            default:
-                $sql = <<<SQL
-n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
-IF (t.weight IS NULL, v.weight, t.weight) AS weight,
-IF (t.title IS NULL, v.title, t.title) AS title,
-IF (t.online IS NULL, 0, t.online) AS online,
-
-n.hidden_from_nav AS hidden,
-n.ref_entity_name AS ref_entity_name
-SQL;
-
-                break;
-        }
 
         $qb->select($sql)
             ->from('kuma_nodes', 'n')
@@ -320,7 +310,7 @@ SQL;
             ->where('n.deleted = false')
             ->addGroupBy('n.id');
 
-        if ($databasePlatformName == 'postgresql') {
+        if ($databasePlatformName === 'postgresql') {
             $qb->addGroupBy('t.url')
                 ->addGroupby('t.id')
                 ->addGroupby('v.weight')

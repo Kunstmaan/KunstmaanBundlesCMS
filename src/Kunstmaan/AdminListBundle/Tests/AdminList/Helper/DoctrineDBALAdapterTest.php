@@ -59,15 +59,11 @@ class DoctrineDBALAdapterTest extends TestCase
         $statement->expects($this->once())->method('fetchColumn')->with(0)->willReturn([1, 2, 3]);
 
         $qb = $this->createMock(QueryBuilder::class);
-
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
         $qb->expects($this->once())->method('select')->willReturn($qb);
-        // these 2 statments are valid for mysql only, not postgres
-        //$qb->expects($this->once())->method('orderBy')->willReturn($qb);
-        //$qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
-        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield', true, 'postgresql');
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
         $result = $adapter->getNbResults();
         $this->assertCount(3, $result);
     }
@@ -79,12 +75,9 @@ class DoctrineDBALAdapterTest extends TestCase
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
         $qb->expects($this->once())->method('select')->willReturn($qb);
-        // these two tests are  only valid for mysql , not for postgresql
-        //$qb->expects($this->once())->method('orderBy')->willReturn($qb);
-        //$qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
-        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield', true, 'postgresql');
+        $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
         $result = $adapter->getNbResults();
         $this->assertSame(0, $result);
     }

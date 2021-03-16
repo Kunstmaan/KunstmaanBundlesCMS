@@ -38,13 +38,9 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     private $useDistinctCount = true;
 
-    private $databasePlatform;
-
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $platform = $connection->getDatabasePlatform();
-        $this->databasePlatform = ($platform) ? $platform->getName() : 'mysql';
     }
 
     /**
@@ -92,8 +88,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
             $adapter = new DoctrineDBALAdapter(
                 $this->getQueryBuilder(),
                 $this->getCountField(),
-                $this->getUseDistinctCount(),
-                $this->databasePlatform
+                $this->getUseDistinctCount()
             );
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setMaxPerPage($this->getLimit());

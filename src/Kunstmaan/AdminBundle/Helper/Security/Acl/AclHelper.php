@@ -135,28 +135,22 @@ class AclHelper
      * http://www.scribd.com/doc/14683263/Efficient-Pagination-Using-MySQL
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0
-     * the function switches between configuration for postgres and other database platforms, by calling the respective private methods
      *
      * @return string
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
-        if ($this->em->getConnection()->getDatabasePlatform()->getName() == 'postgresql') {
-            return $this->getPermittedAclIdsSQLForUserPlatformPostgres($query);
-        }
-
-        return $this->getPermittedAclIdsSQLForUserPlatformOther($query);
+        return $this->getPermittedAclIdsSQLForUserPlatform($query);
     }
 
     /**
      * @return string
      */
-    private function getPermittedAclIdsSQLForUserPlatformOther(Query $query)
+    private function getPermittedAclIdsSQLForUserPlatform(Query $query)
     {
-        $aclConnection = $this->em->getConnection();
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
+        $databasePlatform = $this->em->getConnection()->getDatabasePlatform();
         $mask = $query->getHint('acl.mask');
-        $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
+        $rootEntity = $databasePlatform->quoteStringLiteral($query->getHint('acl.root.entity'));
 
         /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
@@ -173,18 +167,18 @@ class AclHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
+        $uR = [$databasePlatform->quoteStringLiteral('IS_AUTHENTICATED_ANONYMOUSLY')];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if (is_string($role)) {
                 if ($role !== 'ROLE_USER') {
-                    $uR[] = '"' . $role . '"';
+                    $uR[] = $databasePlatform->quoteStringLiteral($role);
                 }
             } else {
                 // Symfony 3.4 compatibility
                 if ($role->getRole() !== 'ROLE_USER') {
-                    $uR[] = '"' . $role->getRole() . '"';
+                    $uR[] = $databasePlatform->quoteStringLiteral($role->getRole());
                 }
             }
         }
@@ -192,86 +186,20 @@ class AclHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = "' . str_replace(
-                '\\',
-                '\\\\',
-                \get_class($user)
-            ) . '-' . $user->getUserName() . '"';
+            $inString .= ' OR s.identifier = '.$databasePlatform->quoteStringLiteral(\get_class($user) . '-' . $user->getUserName());
         }
 
-        $selectQuery = <<<SELECTQUERY
-SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
-INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
-LEFT JOIN {$databasePrefix}acl_entries e ON (
-    e.class_id = o.class_id AND (e.object_identity_id = o.id
-    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
-)
-LEFT JOIN {$databasePrefix}acl_security_identities s ON (
-s.id = e.security_identity_id
-)
-WHERE c.class_type = {$rootEntity}
-AND (s.identifier = {$inString})
-AND e.mask & {$mask} > 0
-SELECTQUERY;
-
-        return $selectQuery;
-    }
-
-    /**
-     * @return string
-     */
-    private function getPermittedAclIdsSQLForUserPlatformPostgres(Query $query)
-    {
-        $aclConnection = $this->em->getConnection();
-        $stringQuoteChar = $aclConnection->getDatabasePlatform()->getStringLiteralQuoteCharacter();
-        $mask = $query->getHint('acl.mask');
-        $rootEntity = $stringQuoteChar . $query->getHint('acl.root.entity') . $stringQuoteChar;
-
-        /* @var $token TokenInterface */
-        $token = $this->tokenStorage->getToken();
-        $userRoles = [];
-        $user = null;
-        if (!\is_null($token)) {
-            $user = $token->getUser();
-            if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
-                $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
-            } else {
-                // Symfony 3.4 compatibility
-                $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
-            }
+        $objectIdentifierColumn = 'o.object_identifier';
+        if ($databasePlatform->getName() === 'postgresql') {
+            $objectIdentifierColumn .= '::BIGINT';
         }
-
-        // Security context does not provide anonymous role automatically.
-        $uR = [$stringQuoteChar . 'IS_AUTHENTICATED_ANONYMOUSLY' . $stringQuoteChar];
-
-        foreach ($userRoles as $role) {
-            // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
-            if (is_string($role)) {
-                if ($role !== 'ROLE_USER') {
-                    $uR[] = $stringQuoteChar . $role . $stringQuoteChar;
-                }
-            } else {
-                // Symfony 3.4 compatibility
-                if ($role->getRole() !== 'ROLE_USER') {
-                    $uR[] = $stringQuoteChar . $role->getRole() . $stringQuoteChar;
-                }
-            }
-        }
-        $uR = array_unique($uR);
-        $inString = implode(' OR s.identifier = ', $uR);
-
-        if (\is_object($user)) {
-            $inString .= ' OR s.identifier = ' . $stringQuoteChar . get_class($user) . '-' . $user->getUserName() . $stringQuoteChar;
-        }
-
-        $objectIdentifierColumn = 'o.object_identifier::BIGINT';
 
         $selectQuery = <<<SELECTQUERY
 SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
 INNER JOIN acl_classes c ON c.id = o.class_id
 LEFT JOIN acl_entries e ON (
     e.class_id = o.class_id AND (e.object_identity_id = o.id
-    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
+    OR {$databasePlatform->getIsNullExpression('e.object_identity_id')})
 )
 LEFT JOIN acl_security_identities s ON (
 s.id = e.security_identity_id
