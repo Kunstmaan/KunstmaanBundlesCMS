@@ -281,6 +281,7 @@ class NodeRepository extends NestedTreeRepository
                 default:
                     $statement = 'IF(%s, %s, %s)';
             }
+
             return sprintf($statement, $expression, $trueValue, $falseValue);
         };
 
@@ -344,6 +345,7 @@ SQL;
             $stmt->bindValue(':right', $rootNode->getRight());
         }
         $stmt->execute();
+
         return $stmt->fetchAll();
     }
 
