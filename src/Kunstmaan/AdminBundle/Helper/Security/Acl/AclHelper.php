@@ -140,14 +140,6 @@ class AclHelper
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
-        return $this->getPermittedAclIdsSQLForUserPlatform($query);
-    }
-
-    /**
-     * @return string
-     */
-    private function getPermittedAclIdsSQLForUserPlatform(Query $query)
-    {
         $databasePlatform = $this->em->getConnection()->getDatabasePlatform();
         $mask = $query->getHint('acl.mask');
         $rootEntity = $databasePlatform->quoteStringLiteral($query->getHint('acl.root.entity'));
