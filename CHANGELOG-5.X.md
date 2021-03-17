@@ -1,5 +1,25 @@
 # Changelog
 
+## 5.6.5 / 2021-03-17
+
+* [GeneratorBundle] Fix php syntax errors in generator skeleton files [#2851](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2851) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] fixed unpublish later [#2845](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2845) ([@puzon](https://github.com/puzon))
+* [AllBundles] Fix test failure for stable deps [#2838](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2838) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Fix: Wrong variable in PHPDoc [#2835](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2835) ([@OskarStark](https://github.com/OskarStark))
+* [AllBundles] Enhancement: Remove .idea/ and .DS_Store from .gitignore files [#2834](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2834) ([@OskarStark](https://github.com/OskarStark))
+* [AllBundles] Switch CI setup from travisci to github actions [#2832](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2832) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Switch from styleci to flintci [#2830](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2830) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Enhancement: Streamline tests [#2827](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2827) ([@OskarStark](https://github.com/OskarStark))
+* [CacheBundle] Enhancement: Streamline tests [#2824](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2824) ([@OskarStark](https://github.com/OskarStark))
+* [BehatBundle] Enhancement: Remove unit folder [#2823](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2823) ([@OskarStark](https://github.com/OskarStark))
+* [ArticleBundle] Enhancement: Streamline tests [#2822](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2822) ([@OskarStark](https://github.com/OskarStark))
+* [AllBundles] Fix: Codestyle [#2821](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2821) ([@OskarStark](https://github.com/OskarStark))
+* [AdminListBundle] Enhancement: Streamline tests [#2818](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2818) ([@OskarStark](https://github.com/OskarStark))
+* [AdminBundle] Enhancement: Streamline tests [#2817](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2817) ([@OskarStark](https://github.com/OskarStark))
+* [AdminBundle] allow slug input-group to use more space if available [#2815](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2815) ([@dbeerten](https://github.com/dbeerten))
+* [NodeBundle] Change nodetranslation slug/url fields to text type to allow long values [#2812](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2812) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] fix max-width textarea/wysiwyg [#2808](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2808) ([@dbeerten](https://github.com/dbeerten))
+
 ## 5.6.4 / 2020-10-28
 
 * [AdminBundle] use kunstmaan bundles logo in toolbar [#2803](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2803) ([@dbeerten](https://github.com/dbeerten)) 
