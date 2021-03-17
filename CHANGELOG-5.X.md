@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.8.0 / 2021-03-17
+
+* [AllBundles] added postgres support [#2849](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2849) ([@IntegraConsult](https://github.com/IntegraConsult))
+* [MediaBundle] Bump imagine dependencies [#2847](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2847) ([@acrobat](https://github.com/acrobat))
+* [FormBundle] Add length validation to string form field [#2843](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2843) ([@dannyvw](https://github.com/dannyvw))
+* [GeneratorBundle] Remove unnecessary form role [#2837](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2837) ([@dannyvw](https://github.com/dannyvw))
+* [LeadGenerationBundle] fixed doc, getAdminType should be string [#2806](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2806) ([@virtualize](https://github.com/virtualize))
+* [AdminBundle] setup CSS Next [#2804](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2804) ([@dbeerten](https://github.com/dbeerten))
+* [AdminBundle] Add media token transformer as service [#2801](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2801) ([@dannyvw](https://github.com/dannyvw))
+* [NodeSearchBundle] Allow include offline option get_parent twig function. [#2800](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2800) ([@Numkil](https://github.com/Numkil))
+* [GeneratorBundle] exit build if a build task throws an error [#2794](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2794) ([@dbeerten](https://github.com/dbeerten))
+* [AdminBundle] Force dropdown to remain open after selection [#2792](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2792) ([@dannyvw](https://github.com/dannyvw))
+
 ## 5.7.2 / 2021-03-17
 
 * [AllBundles] Setup deprecations baseline [#2854](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2854) ([@acrobat](https://github.com/acrobat))
