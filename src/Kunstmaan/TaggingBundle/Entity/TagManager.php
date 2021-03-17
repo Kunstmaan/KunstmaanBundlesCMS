@@ -152,8 +152,8 @@ EOD;
                     INNER JOIN kuma_node_versions as nodeversion
                     ON nodetranslation.publicNodeVersion = nodeversion.id
                     AND nodeversion.refEntityname = '{$escapedClass}'
-                    AND node.deleted = 0
-                    AND nodetranslation.online = 1
+                    AND node.deleted = :deleted
+                    AND nodetranslation.online = :online
                 )
 EOD;
         }
@@ -167,7 +167,13 @@ EOD;
                 number DESC
             LIMIT {$nbOfItems};
 EOD;
+        $query = $em->createNativeQuery($query, $rsm);
 
-        return $em->createNativeQuery($query, $rsm)->getResult();
+        if ($item instanceof AbstractPage) {
+            $query->setParameter('deleted', false);
+            $query->setParameter('online', true);
+        }
+
+        return $query->getResult();
     }
 }

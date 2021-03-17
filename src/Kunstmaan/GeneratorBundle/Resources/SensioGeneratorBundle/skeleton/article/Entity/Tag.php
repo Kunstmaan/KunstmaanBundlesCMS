@@ -9,7 +9,7 @@ use {{ namespace }}\Form\{{ entity_class }}TagAdminType;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_tags", uniqueConstraints={@ORM\UniqueConstraint(name="name_idx", columns={"name"})})
+ * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_tags", uniqueConstraints={@ORM\UniqueConstraint(name="{{ entity_class|lower }}_tag_name_idx", columns={"name"})})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class {{ entity_class }}Tag extends AbstractTag

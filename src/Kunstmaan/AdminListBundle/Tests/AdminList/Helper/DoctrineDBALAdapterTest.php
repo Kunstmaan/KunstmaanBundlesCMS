@@ -57,11 +57,10 @@ class DoctrineDBALAdapterTest extends TestCase
     {
         $statement = $this->createMock(Statement::class);
         $statement->expects($this->once())->method('fetchColumn')->with(0)->willReturn([1, 2, 3]);
+
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
         $qb->expects($this->once())->method('select')->willReturn($qb);
-        $qb->expects($this->once())->method('orderBy')->willReturn($qb);
-        $qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
         $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
@@ -76,8 +75,6 @@ class DoctrineDBALAdapterTest extends TestCase
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
         $qb->expects($this->once())->method('select')->willReturn($qb);
-        $qb->expects($this->once())->method('orderBy')->willReturn($qb);
-        $qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
         $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
