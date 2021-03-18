@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\FormBundle\DependencyInjection;
 
-use Kunstmaan\MediaBundle\Utils\SymfonyVersion;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('deletable_formsubmissions')->defaultFalse()->end()
                 ->scalarNode('web_root')
-                    ->defaultValue(SymfonyVersion::getRootWebPath())
+                    ->defaultValue(version_compare(Kernel::VERSION_ID, 40000, '<') ? 'web' : 'public')
                     ->cannotBeEmpty()
                 ->end()
             ->end()

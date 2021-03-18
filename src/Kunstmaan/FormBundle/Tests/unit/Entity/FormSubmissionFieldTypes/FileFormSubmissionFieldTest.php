@@ -128,7 +128,11 @@ class FileFormSubmissionFieldTest extends TestCase
         $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/', $filesystem);
     }
 
-    public function testUploadBC()
+    /**
+     * @group legacy
+     * @expectedDeprecation Not passing a valid value for the "$filesystem" argument of "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::upload" is deprecated since KunstmaanFormBundle 5.8 and will be required in KunstmaanFormBundle 6.0.
+     */
+    public function testUploadWithoutFilesystemService()
     {
         $object = $this->object;
         $this->assertNull($object->upload('..', '..'));

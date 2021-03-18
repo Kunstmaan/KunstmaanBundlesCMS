@@ -81,7 +81,7 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Move the file to the given uploadDir and save the filename
      */
-    public function upload($uploadDir, $webDir, Filesystem $fileSystem = null)
+    public function upload($uploadDir, $webDir, Filesystem $filesystem = null)
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
@@ -94,13 +94,13 @@ class FileFormSubmissionField extends FormSubmissionField
         $uuid = uniqid();
         $this->setUuid($uuid);
 
-        if ($fileSystem) {
+        if ($filesystem) {
             $url = \sprintf('%s%s/%s', $webDir, $uuid, $safeFileName);
             $content = \file_get_contents($this->file->getPathname());
-            $fileSystem->write($url, $content);
+            $filesystem->write($url, $content);
         } else {
             @trigger_error(
-                    'Not passing the filesystem as the third argument of upload is deprecated since KunstmaanMediaBundle 5.7 and will be required in KunstmaanMediaBundle 6.0.',
+                sprintf('Not passing a valid value for the "$filesystem" argument of "%s" is deprecated since KunstmaanFormBundle 5.8 and will be required in KunstmaanFormBundle 6.0.', __METHOD__),
                 E_USER_DEPRECATED
             );
 
@@ -132,12 +132,12 @@ class FileFormSubmissionField extends FormSubmissionField
         $uploadDir = $container->getParameter('form_submission_rootdir');
         $webDir = $container->getParameter('form_submission_webdir');
 
-        $fileSystem = null;
+        $filesystem = null;
         if ($container->has('kunstmaan_form.filesystem')) {
-            $fileSystem = $container->get('kunstmaan_form.filesystem');
+            $filesystem = $container->get('kunstmaan_form.filesystem');
         }
 
-        $this->upload($uploadDir, $webDir, $fileSystem);
+        $this->upload($uploadDir, $webDir, $filesystem);
     }
 
     /**
