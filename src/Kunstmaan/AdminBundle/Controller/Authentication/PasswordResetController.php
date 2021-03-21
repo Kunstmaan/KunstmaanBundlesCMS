@@ -27,7 +27,7 @@ final class PasswordResetController extends AbstractController
     }
 
     /**
-     * @Route("/resetting/request", name="kunstmaan_admin_reset_password", methods={"GET", "POST"})
+     * @Route("/password-reset/request", name="kunstmaan_admin_reset_password", methods={"GET", "POST"})
      */
     public function requestAction(Request $request)
     {
@@ -50,7 +50,7 @@ final class PasswordResetController extends AbstractController
     }
 
     /**
-     * @Route("/reset_password/confirm/{token}", name="kunstmaan_admin_reset_password_confirm", methods={"GET", "POST"})
+     * @Route("/password-reset/confirm/{token}", name="kunstmaan_admin_reset_password_confirm", methods={"GET", "POST"})
      */
     public function confirmAction(Request $request, string $token)
     {
