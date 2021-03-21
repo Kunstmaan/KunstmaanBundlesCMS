@@ -37,6 +37,8 @@
             </label>
         </div>
 
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
         <button type="submit" id="_submit" name="_submit" class="btn btn-brand btn-block btn--raise-on-hover">
             {{ 'security.login.submit'|trans }}
         </button>
