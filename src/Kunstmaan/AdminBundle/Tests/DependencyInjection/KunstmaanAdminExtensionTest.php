@@ -50,7 +50,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @group legacy
-     * @expectedDeprecation Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.8, it will always be true in KunstmaanAdminBundle 6.0.
+     * @expectedDeprecation Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.
      */
     public function testNotSettingNewAuthenticationConfig()
     {

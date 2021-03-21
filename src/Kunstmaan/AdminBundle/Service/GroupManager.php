@@ -18,7 +18,7 @@ class GroupManager
     public function __construct(EntityManagerInterface $em, string $class)
     {
         if (false !== strpos($this->class, ':')) {
-            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s"is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the group class instead.', __CLASS__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s"is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the group class instead.', __CLASS__), E_USER_DEPRECATED);
         }
 
         $this->em = $em;

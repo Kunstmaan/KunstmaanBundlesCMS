@@ -233,7 +233,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableNewAuthentication);
 
         if (!$enableNewAuthentication) {
-            @trigger_error('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.8, it will always be true in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
+            @trigger_error('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
 
             return;
         }

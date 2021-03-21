@@ -6,7 +6,7 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Model\UserManager;
 
 /**
- * @deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. The listener logic is already executed in the `\Kunstmaan\AdminBundle\Service\UserManager::updatePassword` method.
+ * @deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. The listener logic is already executed in the `\Kunstmaan\AdminBundle\Service\UserManager::updatePassword` method.
  */
 class PasswordResettingListener
 {
@@ -19,7 +19,7 @@ class PasswordResettingListener
     }
 
     /**
-     * @deprecated Using the FosUser FilterUserResponseEvent is deprecated in KunstmaanNodeBundle 5.8 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent" instead.
+     * @deprecated Using the FosUser FilterUserResponseEvent is deprecated in KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use the "Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent" instead.
      */
     public function onPasswordResettingSuccess(FilterUserResponseEvent $event)
     {

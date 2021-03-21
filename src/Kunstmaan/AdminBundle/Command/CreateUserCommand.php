@@ -55,7 +55,7 @@ class CreateUserCommand extends ContainerAwareCommand
         }
         if ($groupManager instanceof FOSGroupManager) {
             // NEXT_MAJOR set the groupmanager typehint to the kunstmaan groupmanager.
-            @trigger_error(sprintf('Passing the groupmanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, GroupManager::class), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing the groupmanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, GroupManager::class), E_USER_DEPRECATED);
         }
 
         if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
@@ -63,7 +63,7 @@ class CreateUserCommand extends ContainerAwareCommand
         }
         if ($userManager instanceof FOSUserManager) {
             // NEXT_MAJOR set the usermanager typehint to the kunstmaan usermanager.
-            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.8 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
         }
 
         $this->em = $em;

@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.2",
         "fzaninotto/faker": "~1.6",
-        "kunstmaan/admin-bundle": "^5.8",
+        "kunstmaan/admin-bundle": "^5.9",
         "kunstmaan/adminlist-bundle": "~5.2",
         "kunstmaan/article-bundle": "~5.2",
         "kunstmaan/form-bundle": "~5.2",

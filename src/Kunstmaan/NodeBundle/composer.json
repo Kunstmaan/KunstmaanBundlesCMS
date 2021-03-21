@@ -16,7 +16,7 @@
         "php": "^7.2",
         "doctrine/dbal": "^2.9",
         "gedmo/doctrine-extensions": "^2.4.34",
-        "kunstmaan/admin-bundle": "^5.8",
+        "kunstmaan/admin-bundle": "^5.9",
         "kunstmaan/adminlist-bundle": "~5.2",
         "stof/doctrine-extensions-bundle": "~1.1",
         "symfony/expression-language": "^3.4|^4.4",

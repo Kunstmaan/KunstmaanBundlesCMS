@@ -105,7 +105,7 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
         $this->assistant->writeLine(["This helps you to set all default config files needed to run KunstmaanCMS.\n"]);
 
         if ($this->assistant->hasOption('overwrite-fosuser')) {
-            @trigger_error(sprintf('Passing the option "overwrite-fosuser" is deprecated since KunstmaanGeneratorBundle 5.8 and will be removed in KunstmaanGeneratorBundle 6.0. Use the new KunstmaanAdminBundle authentication system instead.'), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing the option "overwrite-fosuser" is deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0. Use the new KunstmaanAdminBundle authentication system instead.'), E_USER_DEPRECATED);
         }
 
         $this->overwriteSecurity = $this->assistant->getOptionOrDefault('overwrite-security', null);
