@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
-use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -71,12 +71,9 @@ class AclHelperTest extends TestCase
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        /* @var $platform AbstractPlatform */
-        $platform = $this->getMockForAbstractClass('Doctrine\DBAL\Platforms\AbstractPlatform');
-
         $conn->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue($platform));
+            ->willReturn(new MySqlPlatform());
 
         /* @var $stmt Statement */
         $stmt = $this->createMock(Statement::class);
@@ -198,9 +195,9 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertStringContainsString('"ROLE_SUBJECT"', $aclQuery);
-        $this->assertStringContainsString('"ROLE_KING"', $aclQuery);
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('ROLE_SUBJECT', $aclQuery);
+        $this->assertStringContainsString('ROLE_KING', $aclQuery);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
         $this->assertStringContainsString('MyUser', $aclQuery);
     }
 
@@ -251,7 +248,7 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
     }
 
     public function testGetAllowedEntityIds()
@@ -292,8 +289,8 @@ class AclHelperTest extends TestCase
             ->will($this->returnValue($rows));
 
         $this->em->expects($this->any())
-          ->method('newHydrator') // was ->method('getHydrator')
-          ->will($this->returnValue($hydrator));
+            ->method('newHydrator') // was ->method('getHydrator')
+            ->will($this->returnValue($hydrator));
 
         /* @var $query NativeQuery */
         $query = new NativeQuery($this->em);

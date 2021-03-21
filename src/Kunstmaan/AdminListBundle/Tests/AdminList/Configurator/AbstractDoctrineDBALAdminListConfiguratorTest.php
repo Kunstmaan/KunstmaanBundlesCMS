@@ -56,7 +56,6 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     public function testGetPagerFanta()
     {
         $abstractMock = $this->setUpAbstractMock();
-
         $this->assertInstanceOf(Pagerfanta::class, $abstractMock->getPagerfanta());
     }
 

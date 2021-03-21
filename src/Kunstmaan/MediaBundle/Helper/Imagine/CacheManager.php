@@ -50,11 +50,11 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
     /**
      * {@inheritdoc}
      */
-    public function getBrowserPath($path, $filter, array $runtimeConfig = [], $resolver = null)
+    public function getBrowserPath($path, $filter, array $runtimeConfig = [], $resolver = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_URL)
     {
         $infoPath = parse_url($path, PHP_URL_PATH);
         $info = pathinfo($infoPath);
-        $url = parent::getBrowserPath($path, $filter, $runtimeConfig, $resolver);
+        $url = parent::getBrowserPath($path, $filter, $runtimeConfig, $resolver, $referenceType);
         $newPath = parse_url($url, PHP_URL_PATH);
         $newInfo = pathinfo($newPath);
         if ($info['extension'] != $newInfo['extension']) {

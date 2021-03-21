@@ -16,9 +16,9 @@
         "php": "^7.2",
         "gedmo/doctrine-extensions": "^2.4.34",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "liip/imagine-bundle": "^2.2",
+        "liip/imagine-bundle": "^2.4",
         "symfony/mime": "^4.4",
-        "imagine/imagine": "~0.6",
+        "imagine/imagine": "^1.1",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "kunstmaan/adminlist-bundle": "~5.2"
     },

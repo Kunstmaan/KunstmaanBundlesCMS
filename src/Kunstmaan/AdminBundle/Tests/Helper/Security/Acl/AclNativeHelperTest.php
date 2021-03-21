@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -69,12 +69,9 @@ class AclNativeHelperTest extends TestCase
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        /* @var $platform AbstractPlatform */
-        $platform = $this->getMockForAbstractClass('Doctrine\DBAL\Platforms\AbstractPlatform');
-
         $this->conn->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue($platform));
+            ->willReturn(new MySqlPlatform());
 
         $this->em->expects($this->any())
             ->method('getConnection')
@@ -147,9 +144,9 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertStringContainsString('"ROLE_SUBJECT"', $query);
-        $this->assertStringContainsString('"ROLE_KING"', $query);
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('ROLE_SUBJECT', $query);
+        $this->assertStringContainsString('ROLE_KING', $query);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $query);
         $this->assertStringContainsString('MyUser', $query);
     }
 
@@ -187,7 +184,7 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $query);
     }
 
     public function testGetTokenStorage()

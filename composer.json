@@ -65,8 +65,8 @@
         "gedmo/doctrine-extensions": "^2.4.34",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "liip/imagine-bundle": "^2.2",
-        "imagine/imagine": "~0.6",
+        "liip/imagine-bundle": "^2.4",
+        "imagine/imagine": "^1.1",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~2.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
@@ -87,7 +87,7 @@
         "nelmio/alice": "^3.5",
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "symfony/phpunit-bridge": "^5.1",
+        "symfony/phpunit-bridge": "^5.2",
         "phpunit/phpunit": "^8.5",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.12.18",
@@ -132,7 +132,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.8-dev"
+            "dev-master": "5.9-dev"
         }
     }
 }

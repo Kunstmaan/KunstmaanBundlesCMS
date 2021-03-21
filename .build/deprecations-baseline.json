@@ -1,0 +1,182 @@
+[
+    {
+        "location": "Kunstmaan\\AdminBundle\\Tests\\Entity\\AclChangesetTest::testSetAndGetUser",
+        "message": "The \"FOS\\UserBundle\\Model\\UserInterface\" interface extends \"Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface\" that is deprecated since Symfony 4.1.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminBundle\\Tests\\Entity\\GroupTest::testGetRoles",
+        "message": "The \"Kunstmaan\\AdminBundle\\Entity\\Role\" class extends \"Symfony\\Component\\Security\\Core\\Role\\Role\" that is deprecated since Symfony 4.3, to be removed in 5.0. Use strings as roles instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminBundle\\Tests\\EventListener\\PasswordResettingListenerTest::testListener",
+        "message": "The \"FOS\\UserBundle\\Event\\UserEvent\" class extends \"Symfony\\Component\\EventDispatcher\\Event\" that is deprecated since Symfony 4.3, use \"Symfony\\Contracts\\EventDispatcher\\Event\" instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminBundle\\Tests\\Helper\\VersionCheckTest::testTranslatorConstructorParameterType",
+        "message": "Passing an instance of \"Doctrine\\Common\\Cache\\CacheProvider\" as the second argument in \"Kunstmaan\\AdminBundle\\Helper\\VersionCheck\\VersionChecker::__construct\" is deprecated since KunstmaanAdminBundle 5.7 and an instance of \"Symfony\\Component\\Cache\\Adapter\\AdapterInterface\" will be required in KunstmaanAdminBundle 6.0.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminListBundle\\Tests\\AdminList\\Helper\\DoctrineDBALAdapterTest::testConstructorWithIncorrectCountField",
+        "message": "Since pagerfanta/pagerfanta 2.2: The \"Pagerfanta\\Exception\\Exception\" interface is deprecated and will be removed in 3.0, exceptions should implement \"Pagerfanta\\Exception\\PagerfantaException\" instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminListBundle\\Tests\\AdminList\\Helper\\DoctrineDBALAdapterTest::testGetSlice",
+        "message": "The Doctrine\\DBAL\\Statement::fetchAll method is deprecated (Use fetchAllNumeric(), fetchAllAssociative() or fetchFirstColumn() instead.).",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminListBundle\\Tests\\AdminList\\Helper\\DoctrineDBALAdapterTest::testNbResults",
+        "message": "The Doctrine\\DBAL\\Statement::fetchColumn method is deprecated (Use fetchOne() instead.).",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminListBundle\\Tests\\AdminList\\Helper\\DoctrineDBALAdapterTest::testNbResultsWithZeroResults",
+        "message": "The Doctrine\\DBAL\\Statement::fetchColumn method is deprecated (Use fetchOne() instead.).",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\GeneratorBundle\\Tests\\Generator\\DefaultSiteGeneratorTest::testGenerator",
+        "message": "Using the \"Twig_Loader_Filesystem\" class is deprecated since Twig version 2.7, use \"Twig\\Loader\\FilesystemLoader\" instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\NodeBundle\\Tests\\Helper\\UrlHelperTest::testReplaceUrlWithInternalLink",
+        "message": "The Doctrine\\DBAL\\Driver\\ResultStatement::fetch method is deprecated (Use fetchNumeric(), fetchAssociative() or fetchOne() instead.).",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\NodeBundle\\Tests\\Helper\\UrlHelperTest::testReplaceUrlWithMediaLink",
+        "message": "The Doctrine\\DBAL\\Driver\\ResultStatement::fetch method is deprecated (Use fetchNumeric(), fetchAssociative() or fetchOne() instead.).",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "Translations directory \"/private/var/projects/forks/KunstmaanBundlesCMS/src/Kunstmaan/TranslatorBundle/Tests/app/Resources/translations\" is deprecated since Symfony 4.2, use \"/private/var/projects/forks/KunstmaanBundlesCMS/src/Kunstmaan/TranslatorBundle/Tests/app/translations\" instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "A tree builder without a root node is deprecated since Symfony 4.2 and will not be supported anymore in 5.0.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder::root()\" method called for the \"fos_user\" configuration is deprecated since Symfony 4.3, pass the root name to the constructor instead.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"twig.exception_controller\" configuration key has been deprecated in Symfony 4.4, set it to \"null\" and use \"framework.error_controller\" configuration key instead.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" class is deprecated since Symfony 4.2, use \"Symfony\\Component\\Console\\Command\\Command\" with dependency injection instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\UtilitiesBundle\\Command\\CipherCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Command\\CreateUserCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Command\\CreateGroupCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Command\\CreateRoleCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Command\\ExceptionCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Command\\UpdateAclCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Command\\ApplyAclCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\TranslatorBundle\\Command\\ExportTranslationsCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\TranslatorBundle\\Command\\TranslationCacheCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\TranslationRepositoryTest::setUp",
+        "message": "The \"Kunstmaan\\TranslatorBundle\\Command\\TranslationFlagCommand\" class extends \"Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand\" that is deprecated since Symfony 4.2, use {@see Command} instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImportCommandHandlerTest::setUp",
+        "message": "Translations directory \"/private/var/projects/forks/KunstmaanBundlesCMS/src/Kunstmaan/TranslatorBundle/Tests/app/Resources/translations\" is deprecated since Symfony 4.2, use \"/private/var/projects/forks/KunstmaanBundlesCMS/src/Kunstmaan/TranslatorBundle/Tests/app/translations\" instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImportCommandHandlerTest::setUp",
+        "message": "A tree builder without a root node is deprecated since Symfony 4.2 and will not be supported anymore in 5.0.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImportCommandHandlerTest::setUp",
+        "message": "The \"Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder::root()\" method called for the \"fos_user\" configuration is deprecated since Symfony 4.3, pass the root name to the constructor instead.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImportCommandHandlerTest::setUp",
+        "message": "The \"twig.exception_controller\" configuration key has been deprecated in Symfony 4.4, set it to \"null\" and use \"framework.error_controller\" configuration key instead.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImporterTest::setUp",
+        "message": "Translations directory \"/private/var/projects/forks/KunstmaanBundlesCMS/src/Kunstmaan/TranslatorBundle/Tests/app/Resources/translations\" is deprecated since Symfony 4.2, use \"/private/var/projects/forks/KunstmaanBundlesCMS/src/Kunstmaan/TranslatorBundle/Tests/app/translations\" instead.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImporterTest::setUp",
+        "message": "A tree builder without a root node is deprecated since Symfony 4.2 and will not be supported anymore in 5.0.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImporterTest::setUp",
+        "message": "The \"Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder::root()\" method called for the \"fos_user\" configuration is deprecated since Symfony 4.3, pass the root name to the constructor instead.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\TranslatorBundle\\Tests\\Service\\Importer\\ImporterTest::setUp",
+        "message": "The \"twig.exception_controller\" configuration key has been deprecated in Symfony 4.4, set it to \"null\" and use \"framework.error_controller\" configuration key instead.",
+        "count": 2
+    },
+    {
+        "location": "Kunstmaan\\UtilitiesBundle\\Tests\\Helper\\Cipher\\UrlSafeCipherTest::testHex2bin",
+        "message": "The \"Kunstmaan\\UtilitiesBundle\\Helper\\Cipher\\UrlSafeCipher::hex2bin\" method is deprecated since KunstmaanUtilitiesBundle 5.5 and will be removed in KunstmaanUtilitiesBundle 6.0.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminBundle\\Tests\\Entity\\GroupTest::setUp",
+        "message": "The \"Kunstmaan\\AdminBundle\\Entity\\Group\" class implements \"Symfony\\Component\\Security\\Core\\Role\\RoleInterface\" that is deprecated The RoleInterface is deprecated since version 3.3 and will be removed in 4.0. Extend the Symfony\\Component\\Security\\Core\\Role\\Role class instead.",
+        "count": 1
+    }
+]

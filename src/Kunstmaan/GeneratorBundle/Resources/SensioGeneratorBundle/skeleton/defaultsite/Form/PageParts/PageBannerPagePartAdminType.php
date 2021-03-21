@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	parent::buildForm($builder, $options);
 
