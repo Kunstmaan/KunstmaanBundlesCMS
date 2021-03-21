@@ -245,6 +245,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $container->setAlias('kunstmaan_admin.authentication.mailer', $config['authentication']['mailer']['service']);
 
+        // Only required for fos user setup
+        $container->removeDefinition('kunstmaan_admin.password_resetting.listener');
+
         // Validate mailer config
         if (!class_exists(SwiftmailerBundle::class) && !class_exists(Mailer::class)) {
             throw new LogicException('No mail integration found to enable the authentication mailer. Try running "composer require symfony/mailer" or "composer require symfony/swiftmailer-bundle".');
