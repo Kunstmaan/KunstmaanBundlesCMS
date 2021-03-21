@@ -8,7 +8,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInter
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegaceTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Export list configuration to list all the form submissions for a given NodeTranslation
@@ -46,10 +47,15 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     protected $batchSize;
 
     /**
-     * @param int $batchSize
+     * @param LegaceTranslatorInterface|TranslatorInterface $translator
+     * @param int                                           $batchSize
      */
-    public function __construct(EntityManagerInterface $em, NodeTranslation $nodeTranslation, TranslatorInterface $translator, $batchSize = 20)
+    public function __construct(EntityManagerInterface $em, NodeTranslation $nodeTranslation, /*TranslatorInterface*/ $translator, $batchSize = 20)
     {
+        if (!$translator instanceof LegaceTranslatorInterface && !$translator instanceof TranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('Argument "$translator" passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegaceTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
+        }
+
         $this->nodeTranslation = $nodeTranslation;
         $this->em = $em;
         $this->translator = $translator;

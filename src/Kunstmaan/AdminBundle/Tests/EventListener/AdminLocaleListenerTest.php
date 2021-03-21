@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 class AdminLocaleListenerTest extends TestCase
 {
@@ -22,7 +22,7 @@ class AdminLocaleListenerTest extends TestCase
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => $uri]);
         $storage = $this->createMock(TokenStorageInterface::class);
-        $trans = $this->createMock(TranslatorInterface::class);
+        $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $event = $this->createMock(GetResponseEvent::class);
         $token = $this->createMock(UsernamePasswordToken::class);
