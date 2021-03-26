@@ -213,6 +213,16 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@kunstmaan_admin.acl.helper', '@kunstmaan_admin.domain_configuration']
         public: true
 
+    Kunstmaan\NodeBundle\Helper\Services\FormDataNodeVersionAutoSaver:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPaneCreator"
+
+    Kunstmaan\NodeBundle\Helper\Rendering\RenderContextNodeRenderer:
+        arguments:
+            - "@event_dispatcher"
+            - "@kunstmaan_node.node_menu"
+            -
     kunstmaan_node.node.twig.extension:
         class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
         arguments: ['@doctrine.orm.entity_manager', '@router', '@kunstmaan_node.node_menu', '@request_stack']
@@ -231,6 +241,14 @@ services:
         class: "%kunstmaan_multi_domain.url_replace.controller.class%"
         arguments:
             - "@kunstmaan_node.helper.url"
+        public: true
+
+    Kunstmaan\NodeBundle\Controller\AutoSaveController:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_node.helper.node'
+            - '@Kunstmaan\NodeBundle\Helper\Services\FormDataNodeVersionAutoSaver'
+            - '@Kunstmaan\NodeBundle\Helper\Rendering\RenderContextNodeRenderer'
         public: true
 
     # Add service alias to use controller as a service with the symfony core route annotation

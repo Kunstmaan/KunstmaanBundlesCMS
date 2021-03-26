@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -15,10 +14,12 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class NodeHelper
 {
@@ -97,6 +98,60 @@ class NodeHelper
         );
 
         return $nodeVersion;
+    }
+
+    private function deletePreviousAutoSaves(HasNodeInterface $page, NodeTranslation $nodeTranslation): void
+    {
+        $pageClass = get_class($page);
+        $versions = $this->em->getRepository(NodeVersion::class)
+            ->findBy([
+                'nodeTranslation' => $nodeTranslation,
+                'refEntityName' => $pageClass,
+                'type' => NodeVersion::AUTO_SAVE_VERSION,
+            ]);
+
+        /** @var NodeVersion $version */
+        foreach ($versions as $version) {
+            $page = $this->em->getRepository($version->getRefEntityName())->find($version->getRefId());
+            if ($page) {
+                $pagePartRefs = $this->em->getRepository(PagePartRef::class)->findBy([
+                  'pageEntityname' => $pageClass,
+                  'pageId' => $page->getId(),
+                ]);
+                foreach ($pagePartRefs as $pagePartRef) {
+                    $this->em->remove($pagePartRef);
+                }
+                $this->em->remove($page);
+            }
+            $this->em->remove($version);
+        }
+        $this->em->flush();
+    }
+
+    public function createAutoSaveVersion(
+        HasNodeInterface $page,
+        NodeTranslation $nodeTranslation,
+        NodeVersion $nodeVersion
+    ): NodeVersion {
+        $this->deletePreviousAutoSaves($page, $nodeTranslation);
+        $publicPage = $this->cloneHelper->deepCloneAndSave($page);
+
+        /* @var NodeVersion $publicNodeVersion */
+        $autoSaveVersion = $this->em->getRepository(
+            NodeVersion::class
+        )->createNodeVersionFor(
+            $publicPage,
+            $nodeTranslation,
+            $this->getUser(),
+            $nodeVersion->getOrigin(),
+            NodeVersion::AUTO_SAVE_VERSION
+        );
+
+        $nodeTranslation->addNodeVersion($autoSaveVersion);
+        $this->em->persist($nodeTranslation);
+        $this->em->flush();
+
+        return $autoSaveVersion;
     }
 
     /**
@@ -465,7 +520,7 @@ class NodeHelper
         $token = $this->tokenStorage->getToken();
         if ($token) {
             $user = $token->getUser();
-            if ($user && $user !== 'anon.' && $user instanceof User) {
+            if ($user && $user !== 'anon.' && $user instanceof UserInterface) {
                 return $user;
             }
         }

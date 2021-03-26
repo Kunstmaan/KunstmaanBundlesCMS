@@ -348,3 +348,8 @@ services:
             - '%kunstmaan_admin.required_locales%'
         tags:
             - { name: twig.extension }
+
+    Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPaneCreator:
+        arguments:
+            - '@form.factory'
+            - '@event_dispatcher'

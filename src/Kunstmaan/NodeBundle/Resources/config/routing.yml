@@ -8,6 +8,11 @@ KunstmaanNodeBundle_nodes:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/nodes
 
+KunstmaanNodeBundle_autosave:
+    resource: '@KunstmaanNodeBundle/Controller/AutoSaveController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%/nodes
+
 KunstmaanNodeBundle_urlchooser_replace:
     prefix:   /%kunstmaan_admin.admin_prefix%/url-replace
     path: /replace
