@@ -161,13 +161,10 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             if (isCropable) {
                 cropper = parent.$('#' + linkedInputId + '-image-edit-modal .js-image-edit');
             } else {
-                console.log($mediaChooser);
-
                 const cropButton = $mediaChooser.find('.js-media-chooser-image-edit-btn');
 
                 if (cropButton) {
                     cropButton.prop('disabled', true);
-                    console.log(cropButton);
                 }
             }
 
