@@ -63,7 +63,8 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             // Save
             if (!cke) {
                 var isMediaChooser = $(window.frameElement).closest('.js-ajax-modal').data('media-chooser');
-                var isCropable = $(window.frameElement).closest('.js-ajax-modal').data('cropable');
+                var isSvg = itemUrl.includes('.svg');
+                var isCropable = !isSvg && $(window.frameElement).closest('.js-ajax-modal').data('cropable');
 
                 if (isMediaChooser) {
                     saveMediaChooserModal(false, isCropable);
@@ -159,6 +160,15 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
             if (isCropable) {
                 cropper = parent.$('#' + linkedInputId + '-image-edit-modal .js-image-edit');
+            } else {
+                console.log($mediaChooser);
+
+                const cropButton = $mediaChooser.find('.js-media-chooser-image-edit-btn');
+
+                if (cropButton) {
+                    cropButton.prop('disabled', true);
+                    console.log(cropButton);
+                }
             }
 
             $mediaChooser.addClass('media-chooser--choosen');
