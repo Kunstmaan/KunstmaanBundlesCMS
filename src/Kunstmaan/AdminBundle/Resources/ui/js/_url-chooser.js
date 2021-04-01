@@ -157,12 +157,15 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                 $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
 
             var cropper;
+            var cropButton = $mediaChooser.find('.js-media-chooser-image-edit-btn');
 
             if (isCropable) {
                 cropper = parent.$('#' + linkedInputId + '-image-edit-modal .js-image-edit');
-            } else {
-                const cropButton = $mediaChooser.find('.js-media-chooser-image-edit-btn');
 
+                if (cropButton) {
+                    cropButton.prop('disabled', false);
+                }
+            } else {
                 if (cropButton) {
                     cropButton.prop('disabled', true);
                 }
