@@ -92,9 +92,9 @@
             </figure>
 
             {% if show_image_edit_modal is defined and show_image_edit_modal %}
-            <button type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-image-edit-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
-                <i class="fa fa-crop"></i>
-            </button>
+                <button {% if value.ent is defined and 'svg' in value.ent.contentType %}disabled{% endif %} type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-image-edit-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
+                    <i class="fa fa-crop"></i>
+                </button>
             {% endif %}
 
             <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn  media-chooser__preview__del-btn" data-linked-id="{{ id }}" {% if show_image_edit_modal is defined and show_image_edit_modal %}data-clear-image-edit{% endif %}>
