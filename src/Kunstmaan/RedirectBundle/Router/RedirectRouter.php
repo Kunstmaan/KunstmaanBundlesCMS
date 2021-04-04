@@ -118,7 +118,7 @@ class RedirectRouter implements RouterInterface
             }
 
             // Only add the route when the domain matches or the domain is empty
-            if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
+            if ($redirect->getDomain() === $domain || !$redirect->getDomain()) {
                 $this->routeCollection->add(
                     '_redirect_route_' . $redirect->getId(),
                     $route
@@ -134,7 +134,7 @@ class RedirectRouter implements RouterInterface
     {
         $origin = $redirect->getOrigin();
         $matchSegment = substr($origin, 0, -1);
-        if (substr($origin, -2) == '/*') {
+        if (substr($origin, -2) === '/*') {
             return $this->isPathInfoWildcardMatch($matchSegment);
         }
 
@@ -180,15 +180,15 @@ class RedirectRouter implements RouterInterface
         $url = $this->context->getPathInfo();
         $needsUtf8 = preg_match('/[\x80-\xFF]/', $redirect->getTarget());
 
-        $origin = substr($origin, 0, -1);
-        $target = substr($target, 0, -1);
-        $pathInfo = str_replace($origin, $target, $url);
+        $origin = rtrim($origin, '/*');
+        $target = rtrim($target, '/');
+        $targetPath = str_replace($origin, $target, $url);
 
-        $this->context->setPathInfo($pathInfo);
+        $this->context->setPathInfo($targetPath);
 
         return new Route($url, [
             '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-            'path' => $url,
+            'path' => $targetPath,
             'permanent' => $redirect->isPermanent(),
         ], [], ['utf8' => $needsUtf8]);
     }
