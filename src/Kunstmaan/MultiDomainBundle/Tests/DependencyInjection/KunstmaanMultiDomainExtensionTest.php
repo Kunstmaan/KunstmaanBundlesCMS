@@ -20,7 +20,7 @@ class KunstmaanMultiDomainExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'hosts' => [
-                [
+                'host_one' => [
                     'host' => 'cia.gov',
                     'protocol' => 'https',
                     'aliases' => ['cia.com'],
