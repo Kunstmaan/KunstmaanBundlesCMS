@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('hosts')
                     ->isRequired()
                     ->requiresAtLeastOneElement()
-                    // ->useAttributeAsKey('host')
+                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
                             ->scalarNode('host')

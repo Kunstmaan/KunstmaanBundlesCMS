@@ -27,7 +27,7 @@ class ConfigurationTest extends TestCase
     {
         $array = [
             'hosts' => [
-                [
+                'host_one' => [
                     'host' => 'cia.gov',
                     'protocol' => 'https',
                     'aliases' => ['cia.com'],
