@@ -11,7 +11,7 @@ class KunstmaanMultiDomainExtensionTest extends AbstractExtensionTestCase
     /**
      * @return ExtensionInterface[]
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanMultiDomainExtension()];
     }
@@ -20,7 +20,7 @@ class KunstmaanMultiDomainExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'hosts' => [
-                [
+                'host_one' => [
                     'host' => 'cia.gov',
                     'protocol' => 'https',
                     'aliases' => ['cia.com'],
