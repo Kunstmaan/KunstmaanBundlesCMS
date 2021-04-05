@@ -6,6 +6,12 @@ General
 
 * All event classes are marked as final.
 
+AdminBundle
+------------
+
+* The `kunstmaan_admin.admin_exception_excludes` option is deprecated. Use `kunstmaan_admin.exception_logging.exclude_patterns` instead.
+* Exception logging in by the cms (and the linked exception module) can now be disabled with `kunstmaan_admin.exception_logging: false` or `kunstmaan_admin.exception_logging.enabled: false`.
+
 AdminlistBundle
 ------------
 
