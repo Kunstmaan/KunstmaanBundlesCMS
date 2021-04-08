@@ -4,6 +4,8 @@ namespace Kunstmaan\AdminBundle\Event;
 
 /**
  * AdminBundle events
+ *
+ * @final since 5.9
  */
 class Events
 {

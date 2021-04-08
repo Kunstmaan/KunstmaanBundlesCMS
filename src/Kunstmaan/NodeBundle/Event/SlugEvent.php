@@ -6,6 +6,9 @@ use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @final since 5.9
+ */
 class SlugEvent extends BcEvent
 {
     /**

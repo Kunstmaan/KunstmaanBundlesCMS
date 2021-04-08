@@ -1,6 +1,11 @@
 UPGRADE FROM 5.8 to 5.9
 =======================
 
+General
+-------
+
+* All event classes are marked as final.
+
 AdminlistBundle
 ------------
 

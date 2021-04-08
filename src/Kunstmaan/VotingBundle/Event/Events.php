@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\VotingBundle\Event;
 
+/**
+ * @final since 5.9
+ */
 class Events
 {
     /**
