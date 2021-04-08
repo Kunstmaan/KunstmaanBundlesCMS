@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Tests\DependencyInjection;
 
+use Kunstmaan\UserManagementBundle\AdminList\UserAdminListConfigurator;
 use Kunstmaan\UserManagementBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
@@ -22,6 +23,8 @@ class ConfigurationTest extends TestCase
     {
         $array = [];
 
-        $this->assertProcessedConfigurationEquals([$array], $array);
+        $this->assertProcessedConfigurationEquals([$array], [
+            'user' => ['adminlist_configurator' => UserAdminListConfigurator::class],
+        ]);
     }
 }
