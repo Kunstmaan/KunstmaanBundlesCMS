@@ -3,12 +3,12 @@
 namespace Kunstmaan\DashboardBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -26,11 +26,16 @@ class GoogleAnalyticsAJAXController extends Controller
         $configId = $request->query->get('configId');
         $segmentId = $request->query->get('segmentId');
 
-        $command = new GoogleAnalyticsDataCollectCommand();
-        $command->setContainer($this->container);
-        $input = new ArrayInput(['--config' => $configId, '--segment' => $segmentId]);
-        $output = new NullOutput();
-        $command->run($input, $output);
+        $application = new Application($this->container->get('kernel'));
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'kuma:dashboard:widget:googleanalytics:data:collect',
+            '--config' => $configId,
+            '--segment' => $segmentId,
+        ]);
+
+        $application->run($input, new NullOutput());
 
         return new JsonResponse([], 200, ['Content-Type' => 'application/json']);
     }
