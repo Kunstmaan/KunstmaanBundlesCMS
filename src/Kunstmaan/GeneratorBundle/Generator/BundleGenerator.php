@@ -6,7 +6,7 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
- * Generates a bundle.
+ * @deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0.
  */
 class BundleGenerator extends Generator
 {

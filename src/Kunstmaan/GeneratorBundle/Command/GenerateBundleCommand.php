@@ -17,7 +17,9 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * Generates bundles.
+ * @deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0.
+ *
+ * NEXT_MAJOR Remove command, generator and related skeleton templates
  */
 class GenerateBundleCommand extends GeneratorCommand
 {
@@ -65,6 +67,8 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        @trigger_error(sprintf('The "kuma:generate:bundle" command is deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0.'), E_USER_DEPRECATED);
+
         $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
