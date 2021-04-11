@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\Tools\EntityGenerator;
@@ -150,9 +150,11 @@ class KunstmaanGenerator extends Generator
                 }
             }
         }
+
+        $inflector = InflectorFactory::create()->build();
         $class->setPrimaryTable(
             [
-                'name' => strtolower($dbPrefix) . Inflector::tableize(Inflector::pluralize($name)),
+                'name' => strtolower($dbPrefix) . $inflector->tableize($inflector->pluralize($name)),
             ]
         );
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);
