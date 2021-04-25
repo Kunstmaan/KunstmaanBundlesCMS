@@ -1,4 +1,4 @@
-UPGRADE FROM 5.7 to 5.8
+UPGRADE FROM 5.8 to 5.9
 =======================
 
 AdminBundle
