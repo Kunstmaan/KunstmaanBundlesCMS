@@ -2,15 +2,19 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Kunstmaan\AdminListBundle\Tests\Model\TestLockableEntityInterfaceImplementation;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 class EntityVersionLockServiceTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+
     protected static $TEST_CLASS = 'Kunstmaan\\AdminListBundle\\Tests\\Model\\TestLockableEntityInterfaceImplementation';
 
     protected static $TEST_NEW_ENTITY_ID = '1';
@@ -170,5 +174,22 @@ class EntityVersionLockServiceTest extends TestCase
         $result = $this->object->getUsersWithEntityVersionLock(new TestLockableEntityInterfaceImplementation(self::$TEST_ENTITY_ID), $this->user);
 
         $this->assertContains(self::$ALTERNATIVE_USER, $result);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedMethods()
+    {
+        $this->expectDeprecation('Using the "Kunstmaan\AdminListBundle\Service\EntityVersionLockService::setObjectManager" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.');
+        $this->expectDeprecation('Using the "Kunstmaan\AdminListBundle\Service\EntityVersionLockService::setThreshold" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.');
+        $this->expectDeprecation('Using the "Kunstmaan\AdminListBundle\Service\EntityVersionLockService::setLockEnabled" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.');
+
+        $emMock = $this->createMock(EntityManagerInterface::class);
+
+        $service = new EntityVersionLockService($emMock, self::$THRESHOLD, true);
+        $service->setObjectManager($emMock);
+        $service->setThreshold(self::$THRESHOLD);
+        $service->setLockEnabled(true);
     }
 }
