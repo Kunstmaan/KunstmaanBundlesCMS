@@ -48,6 +48,7 @@
         "symfony/yaml": "^3.4|^4.4",
         "symfony/css-selector": "^3.4|^4.4",
         "symfony/mime": "^4.4",
+        "doctrine/inflector": "^1.4|^2.0",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.9",
         "doctrine/doctrine-bundle": "^1.6.12|^2.0",
