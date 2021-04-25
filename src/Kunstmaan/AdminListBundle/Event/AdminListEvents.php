@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Event;
 
+/**
+ * @final since 5.9
+ */
 class AdminListEvents
 {
     /**

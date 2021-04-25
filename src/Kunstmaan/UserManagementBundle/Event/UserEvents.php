@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\UserManagementBundle\Event;
 
+/**
+ * @final since 5.9
+ */
 class UserEvents
 {
     /**

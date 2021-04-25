@@ -5,6 +5,9 @@ namespace Kunstmaan\NodeSearchBundle\Event;
 use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
+/**
+ * @final since 5.9
+ */
 class IndexNodeEvent extends BcEvent
 {
     const EVENT_INDEX_NODE = 'kunstmaan_node_search.onIndexNode';

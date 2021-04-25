@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 /**
- * ConfigureActionMenuEvent
+ * @final since 5.9
  */
 class ConfigureActionMenuEvent extends BcEvent
 {

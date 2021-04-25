@@ -6,6 +6,9 @@ use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
 
+/**
+ * @final since 5.9
+ */
 class SubmissionEvent extends BcEvent
 {
     /**
