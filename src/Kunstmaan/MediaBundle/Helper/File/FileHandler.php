@@ -214,7 +214,7 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setContentType($contentType);
         $media->setFileSize(filesize($media->getContent()));
-        $media->setUrl($this->mediaPath . $this->getFilePath($media));
+        $media->setUrl($this->getFilePath($media));
         $media->setLocation('local');
     }
 
@@ -334,7 +334,8 @@ class FileHandler extends AbstractMediaHandler
         }
 
         return sprintf(
-            '%s/%s',
+            '%s%s/%s',
+            $this->mediaPath,
             $media->getUuid(),
             $filename
         );
@@ -345,7 +346,9 @@ class FileHandler extends AbstractMediaHandler
      */
     private function getFileFolderPath(Media $media)
     {
-        return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
+        $filePath = $this->getFilePath($media);
+
+        return substr($filePath, 0, strrpos($filePath, $media->getOriginalFilename()));
     }
 
     private function guessMimeType($pathName)
