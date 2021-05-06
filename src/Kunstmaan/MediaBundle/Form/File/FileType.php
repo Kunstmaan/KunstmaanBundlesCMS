@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Form\File;
 
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Kunstmaan\MediaBundle\Validator\Constraints\ExtensionConstraint;
 use Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,26 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class FileType extends AbstractType
 {
+    /**
+     * @var array
+     */
+    private $blacklistedExtensions = [];
+
+    /**
+     * @var array
+     */
+    private $whitelistedExtensions = [];
+
+    public function setBlacklistedExtensions(array $blacklistedExtensions): void
+    {
+        $this->blacklistedExtensions = $blacklistedExtensions;
+    }
+
+    public function setWhitelistedExtensions(array $whitelistedExtensions): void
+    {
+        $this->whitelistedExtensions = $whitelistedExtensions;
+    }
+
     /**
      * Builds the form.
      *
@@ -81,7 +102,17 @@ class FileType extends AbstractType
                         BaseFileType::class,
                         [
                             'label' => 'media.form.file.file.label',
-                            'constraints' => [new NotBlank(), new File(), new HasGuessableExtension()],
+                            'constraints' => [
+                                new NotBlank(),
+                                new File(),
+                                new HasGuessableExtension(),
+                                new ExtensionConstraint(
+                                    [
+                                        'whitelistedExtensions' => $this->whitelistedExtensions,
+                                        'blacklistedExtensions' => $this->blacklistedExtensions,
+                                    ]
+                                )
+                            ],
                             'required' => true,
                         ]
                     );

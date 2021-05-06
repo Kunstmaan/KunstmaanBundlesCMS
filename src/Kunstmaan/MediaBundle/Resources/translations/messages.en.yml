@@ -182,3 +182,5 @@ media:
     flash:
         created: Media %medianame% has been created!
         not_created: Media not created! %mediaerrors%
+extension_is_not_allowed:
+    label: 'File extension is not allowed'

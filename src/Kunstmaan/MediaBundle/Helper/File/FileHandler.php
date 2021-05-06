@@ -25,6 +25,8 @@ class FileHandler extends AbstractMediaHandler
      */
     const TYPE = 'file';
 
+    private const DEFAULT_EXTENSION = 'txt';
+
     /**
      * @var string
      */
@@ -58,6 +60,13 @@ class FileHandler extends AbstractMediaHandler
      * @var array
      */
     private $blacklistedExtensions = [];
+
+    /**
+     * Files with an extension not in the whitelist will be converted to txt
+     *
+     * @var array
+     */
+    private $whitelistedExtensions = [];
 
     /**
      * @var SlugifierInterface
@@ -100,12 +109,14 @@ class FileHandler extends AbstractMediaHandler
         $this->slugifier = $slugifier;
     }
 
-    /**
-     * Inject the blacklisted
-     */
     public function setBlacklistedExtensions(array $blacklistedExtensions)
     {
         $this->blacklistedExtensions = $blacklistedExtensions;
+    }
+
+    public function setWhitelistedExtensions(array $whitelistedExtensions)
+    {
+        $this->whitelistedExtensions = $whitelistedExtensions;
     }
 
     /**
@@ -275,23 +286,24 @@ class FileHandler extends AbstractMediaHandler
      */
     public function createNew($data)
     {
-        if ($data instanceof File) {
-            /** @var $data File */
-            $media = new Media();
-            if (method_exists($data, 'getClientOriginalName')) {
-                $media->setOriginalFilename($data->getClientOriginalName());
-            } else {
-                $media->setOriginalFilename($data->getFilename());
-            }
-            $media->setContent($data);
-
-            $contentType = $this->guessMimeType($media->getContent()->getPathname());
-            $media->setContentType($contentType);
-
-            return $media;
+        if (!$data instanceof File) {
+            return null;
         }
 
-        return null;
+        $fileName = $data->getFilename();
+
+        if (method_exists($data, 'getClientOriginalName')) {
+            $fileName = $data->getClientOriginalName();
+        }
+
+        $media = new Media();
+        $media->setOriginalFilename($fileName);
+        $media->setContent($data);
+
+        $contentType = $this->guessMimeType($media->getContent()->getPathname());
+        $media->setContentType($contentType);
+
+        return $media;
     }
 
     /**
@@ -322,22 +334,49 @@ class FileHandler extends AbstractMediaHandler
     {
         $filename = $media->getOriginalFilename();
         $filename = str_replace(['/', '\\', '%'], '', $filename);
-
-        if (!empty($this->blacklistedExtensions)) {
-            $filename = preg_replace('/\.(' . implode('|', $this->blacklistedExtensions) . ')$/', '.txt', $filename);
-        }
-
-        $parts = pathinfo($filename);
-        $filename = $this->slugifier->slugify($parts['filename']);
-        if (\array_key_exists('extension', $parts)) {
-            $filename .= '.' . strtolower($parts['extension']);
-        }
+        $pathInfo = pathinfo($filename);
+        $filename = $this->slugifier->slugify($pathInfo['filename']);
 
         return sprintf(
-            '%s/%s',
+            '%s/%s.%s',
             $media->getUuid(),
-            $filename
+            $filename,
+            $this->getFilePathExtension($pathInfo['extension'] ?? null)
         );
+    }
+
+    private function getFilePathExtension(?string $extension): string
+    {
+        if (!is_string($extension)) {
+            return static::DEFAULT_EXTENSION;
+        }
+
+        $extension = strtolower($extension);
+        $isBlacklisted = in_array(
+            $extension,
+            $this->blacklistedExtensions,
+            true
+        );
+
+        if ($isBlacklisted) {
+            return static::DEFAULT_EXTENSION;
+        }
+
+        if (!count($this->whitelistedExtensions)) {
+            return $extension;
+        }
+
+        $isWhitelisted = in_array(
+            $extension,
+            $this->whitelistedExtensions,
+            true
+        );
+
+        if (!$isWhitelisted) {
+            return static::DEFAULT_EXTENSION;
+        }
+
+        return $extension;
     }
 
     /**

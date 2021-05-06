@@ -36,7 +36,8 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);
         $container->setParameter('kunstmaan_media.remote_video', $config['remote_video']);
         $container->setParameter('kunstmaan_media.enable_pdf_preview', $config['enable_pdf_preview']);
-        $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
+        $container->setParameter('kunstmaan_media.whitelisted_extensions', $this->getWhitelistedExtensions($config));
+        $container->setParameter('kunstmaan_media.blacklisted_extensions', $this->getBlacklistedExtensions($config));
         $container->setParameter('kunstmaan_media.web_root', $config['web_root']);
         $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'] . '%kunstmaan_media.media_path%');
 
@@ -136,5 +137,32 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         }
 
         $container->setParameter('kunstmaan_media.aviary_api_key', $aviaryApiKey);
+    }
+
+    private function getExtensions(array $config, string $key): array
+    {
+        $extensions = $config[$key];
+
+        foreach ($extensions as &$extension) {
+            $extension = strtolower($extension);
+        }
+
+        return $extensions;
+    }
+
+    private function getWhitelistedExtensions(array $config): array
+    {
+        return $this->getExtensions(
+            $config,
+            'whitelisted_extensions'
+        );
+    }
+
+    private function getBlacklistedExtensions(array $config): array
+    {
+        return $this->getExtensions(
+            $config,
+            'blacklisted_extensions'
+        );
     }
 }
