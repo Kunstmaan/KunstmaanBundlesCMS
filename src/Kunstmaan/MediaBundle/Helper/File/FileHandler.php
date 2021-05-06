@@ -25,7 +25,7 @@ class FileHandler extends AbstractMediaHandler
      */
     const TYPE = 'file';
 
-    private const DEFAULT_EXTENSION = 'txt';
+    const DEFAULT_EXTENSION = 'txt';
 
     /**
      * @var string
