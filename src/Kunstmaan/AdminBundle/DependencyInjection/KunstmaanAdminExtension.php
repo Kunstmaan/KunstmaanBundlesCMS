@@ -77,6 +77,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
 
+        $this->registerExceptionLoggingConfiguration($config['exception_logging'], $container);
+
         $this->addWebsiteTitleParameter($container, $config);
         $this->addMultiLanguageParameter($container, $config);
         $this->addRequiredLocalesParameter($container, $config);
@@ -212,5 +214,18 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         }
 
         $container->setParameter('kunstmaan_admin.default_locale', $defaultLocale);
+    }
+
+    private function registerExceptionLoggingConfiguration(array $config, ContainerBuilder $container)
+    {
+        if ($this->isConfigEnabled($container, $config)) {
+            return;
+        }
+
+        $container->removeDefinition('kunstmaan_admin.exception.listener');
+        $container->removeDefinition('kunstmaan_admin.datacollector.exception');
+
+        $definition = $container->getDefinition('kunstmaan_admin.menu.adaptor.settings');
+        $definition->setArgument(2, false);
     }
 }
