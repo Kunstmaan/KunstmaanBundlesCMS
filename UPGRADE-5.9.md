@@ -43,3 +43,8 @@ UserManagementBundle
 ------------
 
 * Overriding the user adminlist configurator class with `kunstmaan_user_management.user_admin_list_configurator.class` is deprecated, use the `kunstmaan_user_management.user.adminlist_configurator` config instead.
+
+MediaBundle
+----------
+
+* Not passing a value for the "$mediaPath" parameter of "\Kunstmaan\MediaBundle\Helper\File\FileHelper::__construct" is deprecated, a value will be required.
