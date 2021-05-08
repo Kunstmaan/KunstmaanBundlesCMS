@@ -1,7 +1,6 @@
 parameters:
     kunstmaan_redirect.menu.adaptor.class: 'Kunstmaan\RedirectBundle\Helper\Menu\RedirectMenuAdaptor'
     kunstmaan_redirect.redirect_repository.class: 'Kunstmaan\RedirectBundle\Repository\RedirectRepository'
-    kunstmaan_redirect.redirect.class: 'Kunstmaan\RedirectBundle\Entity\Redirect'
 
 services:
     kunstmaan_redirect.menu.adaptor:

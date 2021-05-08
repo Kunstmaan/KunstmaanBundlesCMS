@@ -28,6 +28,11 @@ NodeSearchBundle
 
 * Instantiating the `Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage` class is deprecated and will be made abstract. Extend your implementation from this class instead.
 
+RedirectBundle
+------------
+
+* Overriding the redirect entity class with `kunstmaan_redirect.redirect.class` is deprecated, use the `kunstmaan_redirect.redirect_entity` config instead.
+
 UserManagementBundle
 ------------
 
