@@ -8,6 +8,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionFie
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -30,6 +31,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+     * @Length(max=255)
      */
     protected $errorMessageRequired;
 
@@ -37,6 +39,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      * If set the entered value will be matched with this regular expression
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Length(max=255)
      */
     protected $regex;
 
@@ -44,11 +47,12 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      * If a regular expression is set and it doesn't match with the given value, this error message will be shown
      *
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
+     * @Length(max=255)
      */
     protected $errorMessageRegex;
 
     /**
-     * Sets the required valud of this page part
+     * Sets the required value of this page part
      *
      * @param bool $required
      *

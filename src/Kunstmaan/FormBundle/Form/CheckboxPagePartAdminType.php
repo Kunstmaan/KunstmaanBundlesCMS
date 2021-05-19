@@ -28,7 +28,7 @@ class CheckboxPagePartAdminType extends AbstractType
                 'label' => 'kuma_form.form.checkbox_page_part.required.label',
                 'required' => false,
             ])
-            ->add('errormessage_required', TextType::class, [
+            ->add('errorMessageRequired', TextType::class, [
                 'label' => 'kuma_form.form.checkbox_page_part.errormessage_required.label',
                 'required' => false,
             ])

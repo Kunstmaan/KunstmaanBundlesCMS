@@ -37,7 +37,7 @@ class SingleLineTextPagePartAdminType extends AbstractType
                 ]
             )
             ->add(
-                'errormessage_required',
+                'errorMessageRequired',
                 TextType::class,
                 [
                     'required' => false,
@@ -53,7 +53,7 @@ class SingleLineTextPagePartAdminType extends AbstractType
                 ]
             )
             ->add(
-                'errormessage_regex',
+                'errorMessageRegex',
                 TextType::class,
                 [
                     'required' => false,

@@ -8,6 +8,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionFie
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -49,6 +50,7 @@ class ChoicePagePart extends AbstractFormPagePart
      * multiple options are set to false.
      *
      * @ORM\Column(type="string", name="empty_value", nullable=true)
+     * @Length(max=255)
      */
     protected $emptyValue;
 
@@ -63,6 +65,7 @@ class ChoicePagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+     * @Length(max=255)
      */
     protected $errorMessageRequired;
 
