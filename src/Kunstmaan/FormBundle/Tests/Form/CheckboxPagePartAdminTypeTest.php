@@ -13,7 +13,7 @@ class CheckboxPagePartAdminTypeTest extends TypeTestCase
         $formData = [
             'required' => false,
             'label' => 'check this box!',
-            'errormessage_required' => 'fill in the form',
+            'errorMessageRequired' => 'fill in the form',
         ];
 
         $form = $this->factory->create(CheckboxPagePartAdminType::class);
