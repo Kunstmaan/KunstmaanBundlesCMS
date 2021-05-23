@@ -4,10 +4,13 @@ namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 {
+    use ExpectDeprecationTrait;
+
     /**
      * @return ExtensionInterface[]
      */
@@ -50,10 +53,11 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @group legacy
-     * @expectedDeprecation Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.
      */
     public function testNotSettingNewAuthenticationConfig()
     {
+        $this->expectDeprecation('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.');
+
         $config = $this->getRequiredConfig('authentication');
 
         $this->load($config);
