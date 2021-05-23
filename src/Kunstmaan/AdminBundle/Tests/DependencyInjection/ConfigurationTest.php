@@ -51,6 +51,16 @@ class ConfigurationTest extends TestCase
             'min_length' => null,
             'max_length' => null,
         ],
+        'authentication' => [
+            'enable_new_authentication' => false,
+            'user_class' => User::class,
+            'group_class' => Group::class,
+            'mailer' => [
+                'service' => SwiftmailerService::class,
+                'from_address' => 'kunstmaancms@myproject.dev',
+                'from_name' => 'Kunstmaan CMS',
+            ],
+        ],
     ];
 
     /**
@@ -116,6 +126,7 @@ class ConfigurationTest extends TestCase
                 'max_length' => 26,
             ],
         ]);
+        $expected['authentication']['enable_new_authentication'] = true;
 
         $this->assertProcessedConfigurationEquals([$array], $expected);
 
@@ -143,7 +154,9 @@ class ConfigurationTest extends TestCase
                 'ip_check' => false,
                 'user_agent_check' => false,
             ],
-            'enable_new_cms_authentication' => false,
+            'authentication' => [
+                'enable_new_authentication' => false,
+            ],
             'mail_from_address' => 'kunstmaancms@myproject.dev',
             'mail_from_name' => 'Kunstmaan CMS',
             'default_admin_locale' => 'en',
