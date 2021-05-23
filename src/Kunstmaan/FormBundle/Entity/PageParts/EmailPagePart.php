@@ -9,6 +9,7 @@ use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -30,6 +31,7 @@ class EmailPagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+     * @Length(max=255)
      */
     protected $errorMessageRequired;
 
@@ -37,6 +39,7 @@ class EmailPagePart extends AbstractFormPagePart
      * Error message shows when the value is invalid
      *
      * @ORM\Column(type="string", name="error_message_invalid", nullable=true)
+     * @Length(max=255)
      */
     protected $errorMessageInvalid;
 

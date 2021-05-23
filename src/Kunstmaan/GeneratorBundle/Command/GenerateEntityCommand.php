@@ -7,7 +7,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * GenerateEntityCommand
+ * @deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0.
+ *
+ * NEXT_MAJOR Remove command, generator and related skeleton templates
  */
 class GenerateEntityCommand extends KunstmaanGenerateCommand
 {
@@ -89,6 +91,8 @@ EOT
      */
     protected function doExecute()
     {
+        @trigger_error(sprintf('The "kuma:generate:entity" command is deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0. Use the "make:entity" command of the symfony/maker-bundle instead.'), E_USER_DEPRECATED);
+
         $this->assistant->writeSection('Entity generation');
 
         $this->createGenerator()->generate($this->bundle, $this->entityName, $this->prefix, $this->fields, $this->withRepository);

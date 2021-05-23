@@ -5,6 +5,7 @@ namespace Kunstmaan\DashboardBundle\Command;
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -52,8 +53,14 @@ class DashboardCommand extends ContainerAwareCommand
         /** @var DashboardWidget[] $widgets */
         $widgets = $this->widgetManager->getWidgets();
         foreach ($widgets as $widget) {
-            /* @var DashboardWidget $widget */
-            $widget->getCommand()->execute($input, $output);
+            if (null !== $widget->getCommandName()) {
+                $command = $this->getApplication()->find($widget->getCommandName());
+
+                $command->run(new ArrayInput([]), $output);
+            } else {
+                //NEXT_MAJOR: Remove deprecated logic
+                $widget->getCommand()->execute($input, $output);
+            }
         }
 
         return 0;

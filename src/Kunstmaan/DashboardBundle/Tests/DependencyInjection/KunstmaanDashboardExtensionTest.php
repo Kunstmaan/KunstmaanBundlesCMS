@@ -4,10 +4,13 @@ namespace Kunstmaan\DashboardBundle\Tests\DependencyInjection;
 
 use Kunstmaan\DashboardBundle\DependencyInjection\KunstmaanDashboardExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
 {
+    use ExpectDeprecationTrait;
+
     /**
      * @return ExtensionInterface[]
      */
@@ -20,10 +23,8 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.widget.googleanalytics.command');
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.widget.googleanalytics.controller');
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.googleclient.class');
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.googleclienthelper.class');
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name');
     }
 
@@ -141,5 +142,20 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
         $this->load(['google_analytics' => ['api' => ['app_name' => 'custom_app_name']]]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name', 'custom_app_name');
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testWithDeprecatedWidgetCommandParameter()
+    {
+        $this->expectDeprecation('Using the "kunstmaan_dashboard.widget.googleanalytics.command" parameter to modify the "kunstmaan_dashboard.widget.googleanalytics" service is deprecated since KunstmaanDashboardBundle 5.9 and the parameter will be removed in KunstmaanDashboardBundle 6.0. Use service decoration or a service alias instead.');
+
+        $this->setParameter('kunstmaan_dashboard.widget.googleanalytics.command', 'ExampleCommand');
+
+        $this->load();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('kunstmaan_dashboard.widget.googleanalytics', 0, '%kunstmaan_dashboard.widget.googleanalytics.command%');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('kunstmaan_dashboard.widget.googleanalytics', 2, '@service_container');
     }
 }

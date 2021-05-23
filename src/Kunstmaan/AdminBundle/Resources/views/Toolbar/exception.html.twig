@@ -27,6 +27,6 @@
             </div>
         {% endset %}
 
-        {{ include('@KunstmaanAdmin/Toolbar/toolbar_item.html.twig', { status_color: '#a21919' }) }}
+        {{ include('@KunstmaanAdmin/Toolbar/toolbar_item.html.twig', { link: path('kunstmaanadminbundle_admin_exception'), status_color: '#a21919' }) }}
     {% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 /**
- * Events
+ * @final since 5.9
  */
 class Events
 {

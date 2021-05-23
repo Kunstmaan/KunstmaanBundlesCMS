@@ -34,7 +34,7 @@ We support PHP 7.1 and up, and Symfony 3.4. We constantly test and adapt to be a
 
 # Open Source
 
-We released the entire system as **MIT licensed open-source** in January of 2012. Since it's release we have counted over **~450** websites and counting in production, of which only a fraction built by Kunstmaan.
+We released the entire system as **MIT licensed open-source** in January of 2012. Since its release we have counted over **~450** websites and counting in production, of which only a fraction built by Kunstmaan.
 
 Developers over the **entire world** have started using the CMS, some of which in companies who have built their business on top of this technology.
 
