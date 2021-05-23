@@ -4,11 +4,14 @@ From now on, it is possible to use your own admin User entity that will be used 
 
 To use this new feature, update the Kunstmaan Bundles to the latest version, and make some minor code changes like in the example below.
 
-In config/fos_user.yml add:
+In config/kunstmaan_admin.yml add:
+
 
 ```
-fos_user:
-    user_class: App\Entity\User
+kunstmaan_admin:
+    authentication:
+        user_class: App\Entity\User
+
 parameters:
     kunstmaan_user_management.user_admin_list_configurator.class: App\AdminList\UserAdminListConfigurator
 ```

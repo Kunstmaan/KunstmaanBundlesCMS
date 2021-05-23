@@ -53,7 +53,7 @@ services:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateConfigCommand:
-        arguments: ['%kernel.project_dir%']
+        arguments: ['%kernel.project_dir%', '%kunstmaan_admin.enable_new_cms_authentication%']
         tags:
             - { name: console.command }
 

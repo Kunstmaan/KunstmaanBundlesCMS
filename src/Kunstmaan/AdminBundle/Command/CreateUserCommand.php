@@ -3,12 +3,13 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\GroupManagerInterface;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
+use FOS\UserBundle\Model\GroupManager as FOSGroupManager;
+use FOS\UserBundle\Model\UserManager as FOSUserManager;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Service\GroupManager;
+use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,22 +25,20 @@ use Symfony\Component\Console\Question\Question;
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
+    protected static $defaultName = 'kuma:user:create';
+
+    /** @var array */
+    private $groups = [];
     /** @var EntityManagerInterface */
     private $em;
-
-    /** @var GroupManagerInterface */
+    /** @var GroupManager */
     private $groupManager;
-
-    /** @var string */
-    private $userClassname;
-
+    /** @var UserManager */
+    private $userManager;
     /** @var string */
     private $defaultLocale;
 
-    /** @var array */
-    protected $groups = [];
-
-    public function __construct(/* EntityManagerInterface */ $em = null, GroupManagerInterface $groupManager = null, $userClassname = null, $defaultLocale = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* GroupManager */ $groupManager = null, /* UserManager */ $userManager = null, $defaultLocale = null)
     {
         parent::__construct();
 
@@ -51,9 +50,25 @@ class CreateUserCommand extends ContainerAwareCommand
             return;
         }
 
+        if (!$groupManager instanceof GroupManager && !$groupManager instanceof FOSGroupManager) {
+            throw new \InvalidArgumentException(sprintf('The "$groupManager" argument must be of type "%s" or type "%s"', GroupManager::class, FOSGroupManager::class));
+        }
+        if ($groupManager instanceof FOSGroupManager) {
+            // NEXT_MAJOR set the groupmanager typehint to the kunstmaan groupmanager.
+            @trigger_error(sprintf('Passing the groupmanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, GroupManager::class), E_USER_DEPRECATED);
+        }
+
+        if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
+            throw new \InvalidArgumentException(sprintf('The "$userManager" argument must be of type "%s" or type "%s"', UserManager::class, FOSUserManager::class));
+        }
+        if ($userManager instanceof FOSUserManager) {
+            // NEXT_MAJOR set the usermanager typehint to the kunstmaan usermanager.
+            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
+        }
+
         $this->em = $em;
         $this->groupManager = $groupManager;
-        $this->userClassname = $userClassname;
+        $this->userManager = $userManager;
         $this->defaultLocale = $defaultLocale;
     }
 
@@ -61,8 +76,7 @@ class CreateUserCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:user:create')
-            ->setDescription('Create a user.')
+        $this->setDescription('Create a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
@@ -109,8 +123,8 @@ EOT
     {
         if (null === $this->em) {
             $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-            $this->groupManager = $this->getContainer()->get('fos_user.group_manager');
-            $this->userClassname = $this->getContainer()->getParameter('fos_user.model.user.class');
+            $this->groupManager = $this->getContainer()->get('kunstmaan_admin.group_manager');
+            $this->userManager = $this->getContainer()->get('kunstmaan_admin.user_manager');
             $this->defaultLocale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
         }
 
@@ -125,25 +139,17 @@ EOT
         if (null === $locale) {
             $locale = $this->defaultLocale;
         }
-        $command = $this->getApplication()->find('fos:user:create');
-        $arguments = [
-            'command' => 'fos:user:create',
-            'username' => $username,
-            'email' => $email,
-            'password' => $password,
-            '--super-admin' => $superAdmin,
-            '--inactive' => $inactive,
-        ];
 
-        $input = new ArrayInput($arguments);
-        $command->run($input, $output);
-
-        // Fetch user that was just created
-        /** @var BaseUser $user */
-        $user = $this->em->getRepository($this->userClassname)->findOneBy(['username' => $username]);
-
+        $user = $this->userManager->createUser();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPlainPassword($password);
+        $user->setEnabled(!((bool) $inactive));
+        $user->setSuperAdmin((bool) $superAdmin);
         $user->setCreatedBy('kuma:user:create command');
-        $this->em->flush();
+        $this->userManager->updateUser($user);
+
+        $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
 
         // Attach groups
         $groupOutput = [];
@@ -174,9 +180,7 @@ EOT
         $user->setPasswordChanged(true);
 
         // Persist
-        $this->em->persist($user);
-        $this->em->flush();
-
+        $this->userManager->updateUser($user);
         $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
 
         return 0;

@@ -3,6 +3,9 @@
 namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\Configuration;
+use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
@@ -48,6 +51,16 @@ class ConfigurationTest extends TestCase
             'min_length' => null,
             'max_length' => null,
         ],
+        'authentication' => [
+            'enable_new_authentication' => false,
+            'user_class' => User::class,
+            'group_class' => Group::class,
+            'mailer' => [
+                'service' => SwiftmailerService::class,
+                'from_address' => 'kunstmaancms@myproject.dev',
+                'from_name' => 'Kunstmaan CMS',
+            ],
+        ],
     ];
 
     /**
@@ -65,6 +78,9 @@ class ConfigurationTest extends TestCase
             'multi_language' => null,
             'required_locales' => null,
             'default_locale' => null,
+            'authentication' => [
+                'enable_new_authentication' => true,
+            ],
             'admin_password' => 'l3tM31n!',
             'admin_locales' => ['nl'],
             'session_security' => [
@@ -110,6 +126,7 @@ class ConfigurationTest extends TestCase
                 'max_length' => 26,
             ],
         ]);
+        $expected['authentication']['enable_new_authentication'] = true;
 
         $this->assertProcessedConfigurationEquals([$array], $expected);
 

@@ -56,7 +56,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     {
         return new AdminPanelAction(
             [
-                'path' => 'fos_user_security_logout',
+                'path' => 'kunstmaan_admin_logout',
                 'attrs' => ['id' => 'app__logout', 'title' => 'logout'],
             ],
             '',

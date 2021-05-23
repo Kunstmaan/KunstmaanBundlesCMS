@@ -1,0 +1,22 @@
+{% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
+
+{% block login_content %}
+    <p>{{ 'security.resetting.reset' |trans }}</p>
+
+    {{ form_start(form) }}
+    <div class="form-group form-group--icon-in-control">
+        <label for="password_request_email" class="label--lighter">
+            {{ 'security.resetting.email' |trans }}:
+        </label>
+
+        {{ form_widget(form.email, {'attr': {'placeholder': 'security.resetting.email' | trans} }) }}
+        <i class="fa fa-user form-group--icon-in-control__icon"></i>
+    </div>
+
+    {{ form_widget(form.submit) }}
+    <a href="{{ path('kunstmaan_admin_login' ) }}" class="btn btn-default btn--raise-on-hover">
+        {{ 'form.cancel' | trans }}
+    </a>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock login_content %}

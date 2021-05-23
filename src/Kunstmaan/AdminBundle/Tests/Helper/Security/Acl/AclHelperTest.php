@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use FOS\UserBundle\Model\UserInterface;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -162,7 +162,7 @@ class AclHelperTest extends TestCase
             ->method('getRootAliases')
             ->will($this->returnValue(['n']));
 
-        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+        $user = $this->getMockBuilder(UserInterface::class)
             ->getMock();
 
         $user->expects($this->any())
@@ -264,7 +264,7 @@ class AclHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+        $user = $this->getMockBuilder(UserInterface::class)
             ->getMock();
 
         $user->expects($this->any())

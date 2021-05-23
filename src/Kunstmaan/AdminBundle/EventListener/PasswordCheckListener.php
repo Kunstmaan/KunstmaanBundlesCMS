@@ -72,19 +72,29 @@ class PasswordCheckListener
             return;
         }
 
-        if ($this->tokenStorage->getToken()) {
-            $route = $event->getRequest()->get('_route');
-            if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password') {
-                $user = $this->tokenStorage->getToken()->getUser();
-                if ($user->isPasswordChanged() === false) {
-                    $response = new RedirectResponse($this->router->generate('fos_user_change_password'));
-                    $this->session->getFlashBag()->add(
-                        FlashTypes::DANGER,
-                        $this->translator->trans('kuma_admin.password_check.flash.error')
-                    );
-                    $event->setResponse($response);
-                }
-            }
+        $route = $event->getRequest()->get('_route');
+        if (null === $route || $route === 'kunstmaan_admin_forced_change_password') {
+            return;
         }
+
+        if (null === $this->tokenStorage->getToken()) {
+            return;
+        }
+
+        if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return;
+        }
+
+        $user = $this->tokenStorage->getToken()->getUser();
+        if ($user->isPasswordChanged()) {
+            return;
+        }
+
+        $response = new RedirectResponse($this->router->generate('kunstmaan_admin_forced_change_password'));
+        $this->session->getFlashBag()->add(
+            FlashTypes::DANGER,
+            $this->translator->trans('kuma_admin.password_check.flash.error')
+        );
+        $event->setResponse($response);
     }
 }

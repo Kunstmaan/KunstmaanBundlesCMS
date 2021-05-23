@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection;
 
+use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -38,6 +41,22 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
                 ->scalarNode('admin_password')->end()
+                ->arrayNode('authentication')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enable_new_authentication')->defaultFalse()->end()
+                        ->scalarNode('user_class')->defaultValue(User::class)->end()
+                        ->scalarNode('group_class')->defaultValue(Group::class)->end()
+                        ->arrayNode('mailer')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('service')->defaultValue(SwiftmailerService::class)->end()
+                                ->scalarNode('from_address')->defaultValue('kunstmaancms@myproject.dev')->end()
+                                ->scalarNode('from_name')->defaultValue('Kunstmaan CMS')->end()
+                                ->end()
+                            ->end()
+                    ->end()
+                ->end()
                 ->scalarNode('dashboard_route')->end()
                 ->scalarNode('admin_prefix')->defaultValue('admin')->end()
                 ->arrayNode('admin_locales')

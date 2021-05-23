@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\GroupInterface;
+use Kunstmaan\AdminBundle\Entity\GroupInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -35,13 +35,13 @@ class UserTest extends TestCase
 
     public function testGetGroupIds()
     {
-        $group1 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
+        $group1 = $this->createMock(GroupInterface::class);
         $group1
             ->expects($this->once())
             ->method('getId')
             ->will($this->returnValue(1));
 
-        $group2 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
+        $group2 = $this->createMock(GroupInterface::class);
         $group2
             ->expects($this->once())
             ->method('getId')
@@ -58,9 +58,9 @@ class UserTest extends TestCase
     public function testGetGroups()
     {
         /* @var $group1 GroupInterface */
-        $group1 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
+        $group1 = $this->createMock(GroupInterface::class);
         /* @var $group2 GroupInterface */
-        $group2 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
+        $group2 = $this->createMock(GroupInterface::class);
         $this->object->addGroup($group1);
         $this->object->addGroup($group2);
 

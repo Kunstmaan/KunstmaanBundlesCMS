@@ -4,14 +4,14 @@ namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Event\UserEvent;
-use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Model\UserManager;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
@@ -66,7 +66,7 @@ class UsersController extends BaseSettingsController
      */
     private function getUserClassInstance()
     {
-        $userClassName = $this->container->getParameter('fos_user.model.user.class');
+        $userClassName = $this->container->getParameter('kunstmaan_admin.user_class');
 
         return new $userClassName();
     }
@@ -106,7 +106,7 @@ class UsersController extends BaseSettingsController
                 $user->setPasswordChanged(true);
                 $user->setCreatedBy($this->getUser()->getUsername());
                 /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->container->get('kunstmaan_admin.user_manager');
                 $userManager->updateUser($user, true);
 
                 $this->addFlash(
@@ -151,7 +151,7 @@ class UsersController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
 
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
@@ -184,7 +184,7 @@ class UsersController extends BaseSettingsController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->container->get('kunstmaan_admin.user_manager');
                 $userManager->updateUser($user, true);
 
                 $this->addFlash(
@@ -236,7 +236,7 @@ class UsersController extends BaseSettingsController
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
@@ -270,7 +270,7 @@ class UsersController extends BaseSettingsController
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());

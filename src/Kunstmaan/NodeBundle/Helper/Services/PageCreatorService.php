@@ -87,7 +87,7 @@ class PageCreatorService
 
         $this->setEntityManager($container->get('doctrine.orm.entity_manager'));
         $this->setACLPermissionCreatorService($container->get('kunstmaan_node.acl_permission_creator_service'));
-        $this->setUserEntityClass($container->getParameter('fos_user.model.user.class'));
+        $this->setUserEntityClass($container->getParameter('kunstmaan_admin.user_class'));
     }
 
     /**

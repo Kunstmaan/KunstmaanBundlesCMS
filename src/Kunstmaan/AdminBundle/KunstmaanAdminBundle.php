@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AdminPanelCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\ConsoleCompilerPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\ConvertFosUserParametersCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
@@ -36,6 +37,7 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new ConsoleCompilerPass());
         $container->addCompilerPass(new InjectUntrackedTokenStorageCompilerPass());
         $container->addCompilerPass(new EnablePermissionsPass());
+        $container->addCompilerPass(new ConvertFosUserParametersCompilerPass());
 
         $container->addCompilerPass(new DeprecateClassParametersPass());
         $container->addCompilerPass(new VersionCheckerCacheBcPass());

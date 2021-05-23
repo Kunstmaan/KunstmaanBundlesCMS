@@ -3,8 +3,8 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\GroupInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\GroupInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 
 class OAuthUserCreator implements OAuthUserCreatorInterface

@@ -1,0 +1,62 @@
+services:
+    Kunstmaan\AdminBundle\Controller\Authentication\SecurityController:
+        public: true
+        arguments:
+            - '@security.authentication_utils'
+            - '@twig'
+
+    Kunstmaan\AdminBundle\Controller\Authentication\PasswordResetController:
+        public: true
+        arguments:
+            - '@Kunstmaan\AdminBundle\Service\PasswordResetService'
+            - '@Kunstmaan\AdminBundle\Service\UserManager'
+        calls:
+            - ['setContainer', ['@service_container']]
+
+    Kunstmaan\AdminBundle\Controller\Authentication\ForcedChangePasswordController:
+        public: true
+        arguments:
+            - '@Kunstmaan\AdminBundle\Service\UserManager'
+        calls:
+            - ['setContainer', ['@service_container']]
+
+    Kunstmaan\AdminBundle\Form\Authentication\ForcedChangePasswordForm:
+        arguments:
+            - '%kunstmaan_admin.user_class%'
+        tags: [form.type]
+
+    Kunstmaan\AdminBundle\Service\PasswordResetService:
+        arguments:
+            - '@Kunstmaan\AdminBundle\Service\UserManager'
+            - '@router'
+            - '@event_dispatcher'
+            - '@kunstmaan_admin.authentication.mailer'
+
+    Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService:
+        arguments:
+            - '@mailer'
+            - '@twig'
+            - '@translator'
+            - '@router'
+            - ~ # Will be injected in the KunstmaanAdmin extension class
+            - ~ # Will be injected in the KunstmaanAdmin extension class
+
+    Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService:
+        arguments:
+            - '@mailer.mailer'
+            - '@translator'
+            - '@router'
+            - '@kunstmaan_admin.mailer.default_sender'
+
+    kunstmaan_admin.mailer.default_sender:
+        class: Symfony\Component\Mime\Address
+
+    Kunstmaan\AdminBundle\Command\ChangePasswordCommand:
+        arguments: [ '@kunstmaan_admin.user_manager' ]
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\PromoteUserCommand:
+        arguments: [ '@kunstmaan_admin.user_manager' ]
+        tags:
+            - { name: console.command }

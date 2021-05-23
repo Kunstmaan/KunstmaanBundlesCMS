@@ -23,6 +23,7 @@
         "knplabs/knp-menu-bundle": "^3.0",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/utilities-bundle": "~5.2",
+        "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "symfony/acl-bundle": "^1.0|^2.0",
         "symfony/cache": "^3.4|^4.4",
         "symfony/config": "^3.4|^4.4",
@@ -59,7 +60,8 @@
         "kunstmaan/translator-bundle": "^5.2",
         "kunstmaan/user-management-bundle": "^5.2",
         "kunstmaan/media-bundle": "^5.2",
-        "doctrine/doctrine-migrations-bundle": "^1.3|^2.1"
+        "doctrine/doctrine-migrations-bundle": "^1.3|^2.1",
+        "symfony/mailer": "For symfony mailer support in the authentication mailer (^4.4)"
     },
     "require-dev": {
         "kunstmaan/media-bundle": "^5.2",

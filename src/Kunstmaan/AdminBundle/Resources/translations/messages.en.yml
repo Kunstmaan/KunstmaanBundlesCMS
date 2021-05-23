@@ -8,6 +8,31 @@ pages:
     createemptypage: Create as an empty page
     movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 
+security:
+    login:
+        username: Username
+        password: Password
+        submit: Submit
+        remember_me: Remember me
+        logged_in_as: 'Logged in as %username%'
+        logout: 'Log out'
+    resetting:
+        mail:
+            subject: 'Password reset'
+        send_email_success: 'An email has been sent to your address'
+        user_not_found: 'User not found'
+        password_set_success: 'Your password has been changed.'
+        email: 'Username or email address'
+        reset: 'Reset password'
+    change_password:
+        form:
+            current_password: 'Current password'
+            new_password: 'New password'
+            new_password_confirmation: 'Repeat new password'
+            submit: 'Change password'
+        success:
+            flash: 'The password for "%username%" has been changed.'
+
 # Modules
 modules:
     title: Modules

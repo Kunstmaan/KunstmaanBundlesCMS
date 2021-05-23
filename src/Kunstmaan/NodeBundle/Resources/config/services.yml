@@ -170,7 +170,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_node.acl_permission_creator_service'
-            - '%fos_user.model.user.class%'
+            - '%kunstmaan_admin.user_class%'
         public: true
 
     kunstmaan_node.acl_permission_creator_service:
@@ -182,7 +182,7 @@ services:
 
     kunstmaan_node.doctrine_mapping.listener:
         class: Kunstmaan\NodeBundle\EventListener\MappingListener
-        arguments: ['%fos_user.model.user.class%']
+        arguments: ['%kunstmaan_admin.user_class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 

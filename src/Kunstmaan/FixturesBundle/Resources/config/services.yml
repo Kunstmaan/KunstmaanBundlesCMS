@@ -14,7 +14,7 @@ services:
             - '@kunstmaan_fixtures.populator.populator'
             - '@kunstmaan_utilities.slugifier'
             - '@kunstmaan_node.pages_configuration'
-            - '%fos_user.model.user.class%'
+            - '%kunstmaan_admin.user_class%'
         tags:
             - { name: kunstmaan_fixtures.builder, alias: PageBuilder }
 

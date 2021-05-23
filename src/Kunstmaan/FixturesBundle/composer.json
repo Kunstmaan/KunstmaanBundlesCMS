@@ -21,7 +21,7 @@
         "php": "^7.2",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.6",
-        "kunstmaan/admin-bundle": "~5.2",
+        "kunstmaan/admin-bundle": "^5.9",
         "kunstmaan/media-bundle": "^5.7",
         "kunstmaan/menu-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",

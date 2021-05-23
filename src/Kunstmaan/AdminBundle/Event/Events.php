@@ -31,4 +31,6 @@ class Events
      * @var string
      */
     const ADAPT_SIMPLE_FORM = 'kunstmaan_admin.adaptSimpleForm';
+
+    const CHANGE_PASSWORD_COMPLETED = 'kunstmaan_admin.change_password.edit.completed';
 }
