@@ -13,9 +13,9 @@ class MultiLineTextPagePartAdminTypeTest extends TypeTestCase
         $formData = [
             'required' => false,
             'label' => 'type in this box!',
-            'errormessage_required' => 'fill in the form',
+            'errorMessageRequired' => 'fill in the form',
             'regex' => '#\w+#',
-            'errormessage_regex' => 'oops',
+            'errorMessageRegex' => 'oops',
         ];
 
         $form = $this->factory->create(MultiLineTextPagePartAdminType::class);

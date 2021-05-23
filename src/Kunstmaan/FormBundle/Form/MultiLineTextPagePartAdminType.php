@@ -28,7 +28,7 @@ class MultiLineTextPagePartAdminType extends AbstractType
                 'required' => false,
                 'label' => 'kuma_form.form.multi_line_text_page_part.required.label',
             ])
-            ->add('errormessage_required', TextType::class, [
+            ->add('errorMessageRequired', TextType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.multi_line_text_page_part.errormessage_required.label',
             ])
@@ -36,7 +36,7 @@ class MultiLineTextPagePartAdminType extends AbstractType
                 'required' => false,
                 'label' => 'kuma_form.form.multi_line_text_page_part.regex.label',
             ])
-            ->add('errormessage_regex', TextType::class, [
+            ->add('errorMessageRegex', TextType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.multi_line_text_page_part.errormessage_regex.label',
             ])
