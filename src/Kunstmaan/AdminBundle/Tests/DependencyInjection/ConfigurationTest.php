@@ -154,11 +154,6 @@ class ConfigurationTest extends TestCase
                 'ip_check' => false,
                 'user_agent_check' => false,
             ],
-            'authentication' => [
-                'enable_new_authentication' => false,
-            ],
-            'mail_from_address' => 'kunstmaancms@myproject.dev',
-            'mail_from_name' => 'Kunstmaan CMS',
             'default_admin_locale' => 'en',
             'enable_console_exception_listener' => true,
             'menu_items' => [],
