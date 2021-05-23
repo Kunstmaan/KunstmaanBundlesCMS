@@ -18,6 +18,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
      *
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     protected $label;
 

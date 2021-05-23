@@ -29,7 +29,7 @@ class ChoicePagePartAdminType extends AbstractType
                 'label' => 'kuma_form.form.choice_page_part.required.label',
                 'required' => false,
             ])
-            ->add('errormessage_required', TextType::class, [
+            ->add('errorMessageRequired', TextType::class, [
                 'label' => 'kuma_form.form.choice_page_part.errormessage_required.label',
                 'required' => false,
             ])
@@ -45,7 +45,7 @@ class ChoicePagePartAdminType extends AbstractType
                 'label' => 'kuma_form.form.choice_page_part.choices.label',
                 'required' => false,
             ])
-            ->add('empty_value', TextType::class, [
+            ->add('emptyValue', TextType::class, [
                 'label' => 'kuma_form.form.choice_page_part.empty_value.label',
                 'required' => false,
             ])

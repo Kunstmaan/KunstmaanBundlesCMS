@@ -8,6 +8,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -29,6 +30,7 @@ class CheckboxPagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+     * @Length(max=255)
      */
     protected $errorMessageRequired;
 

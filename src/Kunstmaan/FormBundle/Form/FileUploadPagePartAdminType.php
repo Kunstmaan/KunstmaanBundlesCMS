@@ -28,7 +28,7 @@ class FileUploadPagePartAdminType extends AbstractType
                 'required' => false,
                 'label' => 'kuma_form.form.file_upload_page_part.required.label',
             ])
-            ->add('errormessage_required', TextType::class, [
+            ->add('errorMessageRequired', TextType::class, [
                 'required' => false,
                 'label' => 'kuma_form.form.file_upload_page_part.errormessage_required.label',
             ])
