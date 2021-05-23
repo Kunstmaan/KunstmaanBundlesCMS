@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * This page part adds a submit button to the forms
@@ -18,6 +19,7 @@ class SubmitButtonPagePart extends AbstractPagePart
      * The label on the submit button
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Length(max=255)
      */
     protected $label;
 
