@@ -12,6 +12,7 @@ action:
     delete: "Delete"
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
+    duplicate_with_children: "Duplicate with sub pages"
 
 modal:
     sourcelanguage: "Source language"
@@ -41,6 +42,8 @@ kuma_node:
             page_title:
                 label:  Page title
                 info_text: Used as title inside the page.
+        current_url: Current url
+        updated_url: Updated url
     status:
         "will_be_publish_at.%date%.raw":    This page will be published at %date%
         "will_be_unpublish_at.%date%.raw":  This page will be unpublished at %date%
@@ -166,6 +169,7 @@ kuma_node:
         duplicate_page:
             'title.%page%': Duplicate page '%page%'
             label:
+                childcount_warning: There are currently %count% children for this page. Are you sure you want to copy all of these?
                 new_title:  New title
             button:
                 duplicate:  Duplicate
@@ -177,6 +181,9 @@ kuma_node:
         export_pagetemplate:
             button:
                 title:   Export pagetemplate
+    widget:
+        choose: Choose
+        url_chooser: URL-chooser
 
 toolbar:
     node:
