@@ -17,7 +17,7 @@ settings:
         import_translations: Import
         import_file: Import from spreadsheet
         actions: Actions
-        export_translations: Export to CSV
+        export_translations: Export to
         not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
         choose_language: "Choose a language"
         succesful_added: "Translation succesfully created"
