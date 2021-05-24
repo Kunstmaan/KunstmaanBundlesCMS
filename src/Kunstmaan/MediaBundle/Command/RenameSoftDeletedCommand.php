@@ -6,16 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class RenameSoftDeletedCommand extends ContainerAwareCommand
+final class RenameSoftDeletedCommand extends Command
 {
     /** @var EntityManager */
     protected $em;
@@ -25,21 +22,9 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
      */
     private $mediaManager;
 
-    /**
-     * @param EntityManagerInterface|null $em
-     * @param MediaManager|null           $mediaManager
-     */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* MediaManager */ $mediaManager = null)
+    public function __construct(EntityManagerInterface $em, MediaManager $mediaManager)
     {
         parent::__construct();
-
-        if (!$em instanceof EntityManagerInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $em ? 'kuma:media:rename-soft-deleted' : $em);
-
-            return;
-        }
 
         $this->em = $em;
         $this->mediaManager = $mediaManager;
@@ -65,11 +50,6 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-            $this->mediaManager = $this->getContainer()->get('kunstmaan_media.media_manager');
-        }
-
         $output->writeln('Renaming soft-deleted media...');
 
         $original = $input->getOption('original');
@@ -102,7 +82,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         }
 
         foreach ($fileRenameQueue as $row) {
-            list($oldFileUrl, $newFileUrl, $handler) = $row;
+            [$oldFileUrl, $newFileUrl, $handler] = $row;
             $handler->fileSystem->rename(
                 preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $oldFileUrl),
                 preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $newFileUrl)

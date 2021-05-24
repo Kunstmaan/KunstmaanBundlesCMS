@@ -5,17 +5,13 @@ namespace Kunstmaan\MediaBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class CleanDeletedMediaCommand extends ContainerAwareCommand
+final class CleanDeletedMediaCommand extends Command
 {
     /**
      * @var EntityManager
@@ -27,21 +23,9 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
      */
     private $mediaManager;
 
-    /**
-     * @param EntityManagerInterface|null $em
-     * @param MediaManager|null           $mediaManager
-     */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* MediaManager */ $mediaManager = null)
+    public function __construct(EntityManagerInterface $em, MediaManager $mediaManager)
     {
         parent::__construct();
-
-        if (!$em instanceof EntityManagerInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $em ? 'kuma:media:clean-deleted-media' : $em);
-
-            return;
-        }
 
         $this->em = $em;
         $this->mediaManager = $mediaManager;
@@ -67,11 +51,6 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-            $this->mediaManager = $this->getContainer()->get('kunstmaan_media.media_manager');
-        }
-
         if ($input->getOption('force') !== true) {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion('<question>Are you sure you want to remove all deleted Media from the file system?</question> ', false);
