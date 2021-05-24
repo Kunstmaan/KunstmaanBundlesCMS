@@ -4,38 +4,24 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Role;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Symfony CLI command to create a group using bin/console kuma:role:create <NAME_OF_THE_ROLE>
- *
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
-class CreateRoleCommand extends ContainerAwareCommand
+final class CreateRoleCommand extends Command
 {
     /**
      * @var EntityManagerInterface
      */
     private $em;
 
-    /**
-     * @param EntityManagerInterface|null $em
-     */
-    public function __construct(/* EntityManagerInterface */ $em = null)
+    public function __construct(EntityManagerInterface $em)
     {
         parent::__construct();
-
-        if (!$em instanceof EntityManagerInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $em ? 'kuma:role:create' : $em);
-
-            return;
-        }
 
         $this->em = $em;
     }
@@ -67,10 +53,6 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        }
-
         $roleName = strtoupper($input->getArgument('role'));
         if ('ROLE_' != substr($roleName, 0, 5)) {
             $roleName = 'ROLE_' . $roleName;
