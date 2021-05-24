@@ -6,6 +6,7 @@ use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Translation\Translator;
 
 class HostOverrideListenerTest extends TestCase
 {
@@ -130,7 +131,7 @@ class HostOverrideListenerTest extends TestCase
         $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
-        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock(Translator::class);
         $translator->method('trans')
             ->willReturnArgument(0);
 

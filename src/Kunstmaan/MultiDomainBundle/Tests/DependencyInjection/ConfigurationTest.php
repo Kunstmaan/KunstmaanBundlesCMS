@@ -20,7 +20,7 @@ class ConfigurationTest extends TestCase
 
     public function testInvalidConfiguration()
     {
-        $this->assertConfigurationIsInvalid([[]], 'The child node "hosts" at path "kunstmaan_multi_domain" must be configured.');
+        $this->assertConfigurationIsInvalid([[]], '/The child (node|config) "hosts" (at path|under) "kunstmaan_multi_domain" must be configured./', true);
     }
 
     public function testProcessedValueContainsRequiredValue()

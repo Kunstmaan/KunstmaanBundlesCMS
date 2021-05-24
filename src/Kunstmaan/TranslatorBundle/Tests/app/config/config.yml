@@ -5,7 +5,7 @@ imports:
 framework:
     secret: "%secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.project_dir%/config/routing.yml"
         strict_requirements: "%kernel.debug%"
     form:            ~
     csrf_protection: ~
