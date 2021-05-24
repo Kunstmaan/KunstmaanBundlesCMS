@@ -5,6 +5,10 @@ General
 -------
 
 * All event classes are marked as final.
+* If you still require the `kunstmaan/bundles-cms` package, update you `composer.json` to require `babdev/pagerfanta-bundle`
+  instead of `white-october/pagerfanta-bundle`. All specific bundle packages that use pagerfanta functionality are now requiring
+  the specifc pagerfanta packages. Newer skeleton installs will require the correct pagerfanta bundle package but old projects
+  or projects using the `white-october` package are encouraged to switch their dependencies.
 
 AdminBundle
 ------------
