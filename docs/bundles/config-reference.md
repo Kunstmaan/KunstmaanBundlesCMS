@@ -1,7 +1,7 @@
 # Configuration Options
 
-Ever wondered what configuration options you have available to you in yaml config files? In this section, 
-all the available configurations are broken down for each bundle (e.g. AdminBundle, NodeBundle) that defines each 
+Ever wondered what configuration options you have available to you in yaml config files? In this section,
+all the available configurations are broken down for each bundle (e.g. AdminBundle, NodeBundle) that defines each
 possible section of your Kunstmaan cms configuration.
 
 ## Adminbundle
@@ -89,6 +89,7 @@ kunstmaan_media:
         # Defaults:
         - php
         - htaccess
+    whitelisted_extensions: []
 ```
 
 ## MediaPagePartBundle

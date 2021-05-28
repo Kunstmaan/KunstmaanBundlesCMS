@@ -172,3 +172,10 @@ services:
     Kunstmaan\MediaBundle\DataFixtures\ORM\FolderFixtures:
         tags:
             - { name: doctrine.fixture.orm }
+
+    Kunstmaan\MediaBundle\Form\File\FileType:
+        calls:
+            - [ setBlacklistedExtensions, [ '%kunstmaan_media.blacklisted_extensions%' ] ]
+            - [ setWhitelistedExtensions, [ '%kunstmaan_media.whitelisted_extensions%' ] ]
+        tags:
+          - { name: form.type }

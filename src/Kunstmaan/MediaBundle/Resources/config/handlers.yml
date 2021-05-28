@@ -32,6 +32,7 @@ services:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
             - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%kunstmaan_media.blacklisted_extensions%' ] ]
+            - [ setWhitelistedExtensions, [ '%kunstmaan_media.whitelisted_extensions%' ] ]
             - [ setSlugifier, ['@kunstmaan_utilities.slugifier']]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
@@ -43,6 +44,7 @@ services:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
             - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%kunstmaan_media.blacklisted_extensions%' ] ]
+            - [ setWhitelistedExtensions, [ '%kunstmaan_media.whitelisted_extensions%' ] ]
             - [ setSlugifier, ['@kunstmaan_utilities.slugifier']]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }

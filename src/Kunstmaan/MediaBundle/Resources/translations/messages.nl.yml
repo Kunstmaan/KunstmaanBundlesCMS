@@ -171,3 +171,5 @@ media:
   flash:
     created: Media-item %medianame% is aangemaakt!
     not_created: Media-item is niet aangemaakt! %mediaerrors%
+extension_is_not_allowed:
+  label: 'Bestandsextensie is niet toegestaan'
