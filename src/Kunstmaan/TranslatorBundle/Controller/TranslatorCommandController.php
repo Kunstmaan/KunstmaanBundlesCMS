@@ -3,7 +3,6 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -67,25 +66,5 @@ class TranslatorCommandController extends Controller
         );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
-    }
-
-    /**
-     * @Route("/export", name="KunstmaanTranslatorBundle_command_export")
-     *
-     * @deprecated Using the "KunstmaanTranslatorBundle_command_export" route is deprecated since KunstmaanTranslatorBundle 5.4 and will be removed in KunstmaanTranslatorBundle 6.0. Use the default adminlist bundle export functionality instead.
-     */
-    public function exportAction()
-    {
-        // NEXT_MAJOR this route will be removed because we are now using the common export logic
-        @trigger_error('Using the "KunstmaanTranslatorBundle_command_export" route is deprecated since KunstmaanTranslatorBundle 5.4 and will be removed in KunstmaanTranslatorBundle 6.0. Use the default adminlist bundle export functionality instead.', E_USER_DEPRECATED);
-        $locales = $this->getParameter('kuma_translator.managed_locales');
-        $exportCommand = new ExportCommand();
-        $exportCommand
-            ->setLocales($locales)
-            ->setFormat('csv');
-
-        $response = $this->get('kunstmaan_translator.service.exporter.command_handler')->executeExportCSVCommand($exportCommand);
-
-        return $response;
     }
 }
