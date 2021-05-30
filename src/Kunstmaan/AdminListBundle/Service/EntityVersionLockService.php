@@ -12,26 +12,16 @@ use Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository;
 
 class EntityVersionLockService
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $threshold;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $lockEnabled;
 
-    /**
-     * @param int  $threshold
-     * @param bool $lockEnabled
-     */
-    public function __construct(ObjectManager $em, $threshold, $lockEnabled)
+    public function __construct(ObjectManager $em, int $threshold, bool $lockEnabled)
     {
         $this->objectManager = $em;
         $this->threshold = $threshold;
@@ -184,41 +174,5 @@ class EntityVersionLockService
         }
 
         return $lockable;
-    }
-
-    /**
-     * @deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.
-     *
-     * @param ObjectManager $objectManager
-     */
-    public function setObjectManager($objectManager)
-    {
-        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * @deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.
-     *
-     * @param int $threshold
-     */
-    public function setThreshold($threshold)
-    {
-        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->threshold = $threshold;
-    }
-
-    /**
-     * @deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.
-     *
-     * @param bool lockEnabled
-     */
-    public function setLockEnabled($lockEnabled)
-    {
-        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->lockEnabled = $lockEnabled;
     }
 }
