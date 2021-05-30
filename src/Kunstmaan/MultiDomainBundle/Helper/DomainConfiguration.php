@@ -14,13 +14,6 @@ class DomainConfiguration extends BaseDomainConfiguration
     const SWITCH_HOST = '_switch_host';
 
     /**
-     * @var Node
-     *
-     * @deprecated since KunstmaanMultiDomainBundle 5.7 and will be removed in KunstmaanMultiDomainBundle 6.0. Use the `$rootNodeCache` property instead.
-     */
-    protected $rootNode;
-
-    /**
      * @var array
      */
     protected $hosts;
@@ -190,11 +183,6 @@ class DomainConfiguration extends BaseDomainConfiguration
             $internalName = $this->hosts[$host]['root'];
             $nodeRepo = $this->em->getRepository(Node::class);
             $this->rootNodeCache[$host] = $nodeRepo->getNodeByInternalName($internalName);
-
-            // Keep BC by setting the first node found.
-            if (null === $this->rootNode) {
-                $this->rootNode = $this->rootNodeCache[$host];
-            }
         }
 
         return $this->rootNodeCache[$host];
