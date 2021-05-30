@@ -77,6 +77,7 @@ DashboardBundle
 
 * Passing a command classname for the "$command" argument in `Kunstmaan\DashboardBundle\Widget\DashboardWidget::__construct` is deprecated and will not be allowed 6.0. Pass a command name instead.
 * Using the `kunstmaan_dashboard.widget.googleanalytics.command` parameter to modify the `kunstmaan_dashboard.widget.googleanalytics` service is deprecated and the parameter will be removed in 6.0. Use service decoration or a service alias instead.
+* Not passing a value for the `$configHelper` or `$queryHelper` parameters in `Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand::__construct` is deprecated and the parameters will be required. Inject the required services instead.
 
 GeneratorBundle
 ------------
