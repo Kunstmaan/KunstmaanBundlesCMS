@@ -4,37 +4,22 @@ namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Service\Command\Exporter\ExportCommandHandler;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class ExportTranslationsCommand extends ContainerAwareCommand
+final class ExportTranslationsCommand extends Command
 {
     /**
      * @var ExportCommandHandler
      */
     private $exportCommandHandler;
 
-    /**
-     * @param ExportCommandHandler|null $exportCommandHandler
-     */
-    public function __construct(/* ExportCommandHandler */ $exportCommandHandler = null)
+    public function __construct(ExportCommandHandler $exportCommandHandler)
     {
         parent::__construct();
-
-        if (!$exportCommandHandler instanceof ExportCommandHandler) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $exportCommandHandler ? 'kuma:translator:export' : $exportCommandHandler);
-
-            return;
-        }
 
         $this->exportCommandHandler = $exportCommandHandler;
     }
@@ -58,10 +43,6 @@ class ExportTranslationsCommand extends ContainerAwareCommand
 
         if (null === $format) {
             throw new InvalidArgumentException('A format should be defined, e.g --format yml');
-        }
-
-        if (null === $this->exportCommandHandler) {
-            $this->exportCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.exporter.command_handler');
         }
 
         $exportCommand = new ExportCommand();
