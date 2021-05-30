@@ -3,8 +3,6 @@
 namespace Kunstmaan\DashboardBundle\Widget;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardWidget
@@ -12,48 +10,13 @@ class DashboardWidget
     /** @var string */
     private $commandName;
 
-    /**
-     * @var ContainerAwareCommand
-     */
-    private $command;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $controller;
 
-    /**
-     * @param string $command
-     * @param string $controller
-     */
-    public function __construct($command, $controller, ContainerInterface $container = null)
+    public function __construct(string $commandName, string $controller)
     {
         $this->controller = $controller;
-
-        if ($container instanceof ContainerInterface) {
-            @trigger_error(sprintf('The "$container" argument of "%s" is deprecated since KunstmaanDashboardBundle 5.9 and will be removed in KunstmaanDashboardBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
-        }
-
-        if (class_exists($command, false)) {
-            @trigger_error(sprintf('Passing a command classname for the "$command" argument in "%s" is deprecated since KunstmaanDashboardBundle 5.9 and will not be allowed in KunstmaanDashboardBundle 6.0. Pass a command name instead.', __METHOD__), E_USER_DEPRECATED);
-
-            $this->command = new $command();
-            $this->command->setContainer($container);
-
-            return;
-        }
-
-        $this->commandName = $command;
-    }
-
-    /**
-     * @deprecated since KunstmaanDashboardBundle 5.9. Use `getCommandName` instead.
-     *
-     * @return ContainerAwareCommand
-     */
-    public function getCommand()
-    {
-        return $this->command;
+        $this->commandName = $commandName;
     }
 
     public function getCommandName()
