@@ -10,6 +10,8 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper;
 use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,12 +35,16 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
     /** @var ServiceHelper */
     private $serviceHelper;
+    /** @var ConfigHelper */
+    private $configHelper;
+    /** @var QueryHelper */
+    private $queryHelper;
 
     /**
      * @param EntityManagerInterface|null $em
      * @param ServiceHelper               $serviceHelper
      */
-    public function __construct(/* EntityManagerInterface */ $em = null, ServiceHelper $serviceHelper = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, ServiceHelper $serviceHelper = null, ConfigHelper $configHelper = null, QueryHelper $queryHelper = null)
     {
         parent::__construct();
 
@@ -50,8 +56,18 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             return;
         }
 
+        if (null === $configHelper) {
+            @trigger_error(sprintf('Not passing a value for the "$configHelper" parameter in "%s" is deprecated since KunstmaanDashboardBundle 5.9, the parameter will be required in KunstmaanDashboardBundle 6.0. Inject the required service instead.', __METHOD__), E_USER_DEPRECATED);
+        }
+
+        if (null === $queryHelper) {
+            @trigger_error(sprintf('Not passing a value for the "$queryHelper" parameter in "%s" is deprecated since KunstmaanDashboardBundle 5.9, the parameter will be required in KunstmaanDashboardBundle 6.0. Inject the required service instead.', __METHOD__), E_USER_DEPRECATED);
+        }
+
         $this->em = $em;
         $this->serviceHelper = $serviceHelper;
+        $this->configHelper = $configHelper;
+        $this->queryHelper = $queryHelper;
     }
 
     protected function configure()
@@ -95,11 +111,18 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             $this->serviceHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.service');
         }
 
+        if (null === $this->configHelper) {
+            $this->configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
+        }
+
+        if (null === $this->queryHelper) {
+            $this->queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
+        }
+
         $this->output = $output;
 
         // check if token is set
-        $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
-        if (!$configHelper->tokenIsSet()) {
+        if (!$this->configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
 
             return 0;
@@ -260,16 +283,14 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     public function updateData($overviews)
     {
         // helpers
-        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
-        $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $metrics = new MetricsCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-        $chartData = new ChartDataCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-        $goals = new GoalCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-        $visitors = new UsersCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $metrics = new MetricsCommandHelper($this->configHelper, $this->queryHelper, $this->output, $this->em);
+        $chartData = new ChartDataCommandHelper($this->configHelper, $this->queryHelper, $this->output, $this->em);
+        $goals = new GoalCommandHelper($this->configHelper, $this->queryHelper, $this->output, $this->em);
+        $visitors = new UsersCommandHelper($this->configHelper, $this->queryHelper, $this->output, $this->em);
 
         // get data per overview
         foreach ($overviews as $overview) {
-            $configHelper->init($overview->getConfig()->getId());
+            $this->configHelper->init($overview->getConfig()->getId());
             /* @var AnalyticsOverview $overview */
             $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
 

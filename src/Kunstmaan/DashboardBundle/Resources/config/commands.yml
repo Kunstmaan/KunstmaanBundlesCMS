@@ -15,7 +15,11 @@ services:
             - { name: console.command }
 
     Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand:
-        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_dashboard.helper.google.analytics.service']
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_dashboard.helper.google.analytics.service'
+            - '@kunstmaan_dashboard.helper.google.analytics.config'
+            - '@kunstmaan_dashboard.helper.google.analytics.query'
         tags:
             - { name: console.command }
 
