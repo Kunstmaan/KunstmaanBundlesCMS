@@ -11,11 +11,28 @@
 
     <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
 
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaanadmin/default-theme/ckeditor/plugins/notification/css/notification.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaanadmin/default-theme/ckeditor/plugins/wordcount/css/wordcount.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaanadmin/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaanadmin/cssnext/style.css') }}">
+
+
+    <!-- Customizable Brand Color -->
+    {# <style type="text/css">
+    :root {
+        --highlight-color-bg: #90268E;
+        --highlight-color-fg: #ffffff;
+    }
+</style> #}
+
+{#    {% include "@KunstmaanAdmin/Default/_css_extra.html.twig" %}#}
+
+
     <!-- Favicons -->
     {% include "@KunstmaanAdmin/Default/_favicons.html.twig" %}
 
     <!-- Styles -->
-    {% include "@KunstmaanAdmin/Default/_css.html.twig" %}
+{#    {% include "@KunstmaanAdmin/Default/_css.html.twig" %}#}
 
     <!-- Extra CSS -->
     {% block extracss %}{% endblock %}
