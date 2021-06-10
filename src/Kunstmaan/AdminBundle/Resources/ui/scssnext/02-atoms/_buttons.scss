@@ -1,0 +1,92 @@
+/* ==========================================================================
+    Buttons
+   ========================================================================== */
+
+.btn {
+    padding: 0;
+
+    background: none;
+    box-shadow: none;
+
+    border-radius: 3px;
+    border: none;
+
+    line-height: 1;
+
+    transition: $snip-ease-sine-in-out background-color .3s, $snip-ease-sine-in-out color .3s;
+
+    &:hover,
+    &:focus {
+        outline: none;
+    }
+}
+
+.btn--primary {
+    background-color: var(--highlight-color-bg);
+
+    color: var(--highlight-color-fg);
+
+    &:hover,
+    &:focus {
+        background-color: var(--color-kuma-primary);
+
+        color: var(--highlight-color-fg);
+    }
+}
+
+.btn--secondary {
+    background-color: var(--color-kuma-primary);
+
+    color: var(--color-greyscale-500);
+
+    &:hover,
+    &:focus {
+        background-color: var(--color-kuma-secondary-2);
+
+        color: var(--highlight-color-fg);
+    }
+}
+
+.btn--inverted {
+    background-color: var(--color-greyscale-500);
+
+    color: var(--color-kuma-primary);
+
+    &:hover,
+    &:focus {
+        background-color: var(--color-greyscale-400);
+
+        color: var(--color-kuma-primary);
+    }
+}
+
+.btn--inverted-grey {
+    background-color: var(--color-greyscale-500);
+
+    color: var(--color-greyscale-100);
+
+    &:hover,
+    &:focus {
+        background-color: var(--color-greyscale-400);
+
+        color: var(--color-greyscale-000);
+    }
+}
+
+.btn--lg {
+    padding: 25px 40px;
+
+    font-size: 18px;
+}
+
+.btn--md {
+    padding: 1em 25px;
+
+    font-size: 15px;
+}
+
+.btn--sm {
+    padding: 10px 15px;
+
+    font-size: 14px;
+}
