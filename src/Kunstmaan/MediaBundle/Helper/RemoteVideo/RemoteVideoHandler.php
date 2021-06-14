@@ -121,8 +121,8 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 break;
             case 'vimeo':
                 try {
-                    $xml = simplexml_load_file('https://vimeo.com/api/v2/video/' . $code . '.xml');
-                    $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
+                    $json = json_decode(file_get_contents('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' . $code . '&width=1280'));
+                    $video->setThumbnailUrl($json->thumbnail_url);
                 } catch (\Exception $e) {
                 }
 
