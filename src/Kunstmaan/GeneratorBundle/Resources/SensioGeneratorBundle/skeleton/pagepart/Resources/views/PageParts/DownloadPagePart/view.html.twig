@@ -5,7 +5,7 @@
     {% endif %}
 
     <p class="download-pp">
-        <a href="{{ absolute_url(asset(resource.media.url)) }}" target="_blank" class="download">{{ name }}</a>
+        <a href="{{ absolute_url(asset(resource.media.url, 'media')) }}" target="_blank" class="download">{{ name }}</a>
         <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span>
     </p>
 {% endif %}
