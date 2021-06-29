@@ -26,7 +26,7 @@
 {% endif %}
 {% if seo.getOgTitle() %}
     <meta property="og:title" content="{{ seo.getOgTitle() }}">
-{% else %}
+{% elseif seo.metaTitle %}
     <meta property="og:title" content="{{ seo.metaTitle }}">
 {% endif %}
 {% if seo.getOgDescription() %}
