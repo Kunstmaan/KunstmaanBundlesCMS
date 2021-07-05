@@ -65,7 +65,7 @@
     "plupload": "^2.3.6",
     "ramda": "^0.23.0",
     "select2": "^4.0.3",
-    "sortablejs": "1.5.1",
+    "sortablejs": "^1.8.1",
     "velocity-animate": "^1.5.2",
     "x-editable": "^1.5.1"
   }
