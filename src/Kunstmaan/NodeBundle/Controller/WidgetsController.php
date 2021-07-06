@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
@@ -111,7 +112,8 @@ class WidgetsController extends Controller
                 $rootItems = $em->getRepository(Node::class)->getAllTopNodes();
             }
         } else {
-            $rootItems = $em->getRepository(Node::class)->find($id)->getChildren();
+            $rootNode = $em->getRepository(Node::class)->find($id);
+            $rootItems = $this->getChildren($locale, $rootNode);
         }
 
         $results = $this->nodesToArray($locale, $rootItems, $depth);
@@ -215,9 +217,10 @@ class WidgetsController extends Controller
                     'li_attr' => ['class' => 'js-url-chooser-link-select', 'data-slug' => $slug, 'data-id' => $rootNode->getId()],
                 ];
 
-                if ($rootNode->getChildren()->count()) {
+                $children = $this->getChildren($locale, $rootNode);
+                if ($children) {
                     if ($depth - 1) {
-                        $root['children'] = $this->nodesToArray($locale, $rootNode->getChildren(), --$depth);
+                        $root['children'] = $this->nodesToArray($locale, $children, --$depth);
                     } else {
                         $root['children'] = true;
                     }
@@ -227,5 +230,23 @@ class WidgetsController extends Controller
         }
 
         return $results;
+    }
+
+    private function getChildren(string $locale, Node $rootNode)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nodeRepository = $em->getRepository(Node::class);
+
+        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+
+        return $nodeRepository->getChildNodes(
+            $rootNode->getId(),
+            $locale,
+            PermissionMap::PERMISSION_VIEW,
+            $aclHelper,
+            true,
+            true,
+            $rootNode
+        );
     }
 }
