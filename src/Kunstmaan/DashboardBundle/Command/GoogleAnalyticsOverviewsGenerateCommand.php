@@ -103,11 +103,9 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      *
      * @param int $segmentId
      *
-     * @return array
-     *
      * @throws \InvalidArgumentException
      */
-    private function generateOverviewsOfSegment($segmentId)
+    private function generateOverviewsOfSegment($segmentId): void
     {
         /** @var AnalyticsSegmentRepository $segmentRepository */
         $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
@@ -126,11 +124,9 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      *
      * @param int $configId
      *
-     * @return array
-     *
      * @throws \InvalidArgumentException
      */
-    private function generateOverviewsOfConfig($configId)
+    private function generateOverviewsOfConfig($configId): void
     {
         $configRepository = $this->em->getRepository(AnalyticsConfig::class);
         $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
@@ -156,10 +152,8 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
 
     /**
      * get all overviews
-     *
-     * @return array
      */
-    private function generateAllOverviews()
+    private function generateAllOverviews(): void
     {
         $configRepository = $this->em->getRepository(AnalyticsConfig::class);
         $overviewRepository = $this->em->getRepository(AnalyticsOverview::class);
