@@ -5,7 +5,7 @@ namespace {{ namespace }}\DataFixtures\ORM\SearchPageGenerator;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 

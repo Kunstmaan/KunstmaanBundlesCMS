@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\Router;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Router\RedirectRouter;

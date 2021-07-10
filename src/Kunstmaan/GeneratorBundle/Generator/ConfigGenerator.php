@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -15,7 +15,7 @@ class ConfigGenerator extends KunstmaanGenerator
     /** @var bool */
     private $newAuthentication;
 
-    public function __construct(Filesystem $filesystem, RegistryInterface $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container = null, bool $newAuthentication = false)
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container = null, bool $newAuthentication = false)
     {
         parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
         $this->newAuthentication = $newAuthentication;
