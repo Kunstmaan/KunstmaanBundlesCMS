@@ -64,6 +64,9 @@ jobs:
                     tools: pecl
                     extensions: imagick
 
+            -   name: Install ghostscript
+                run: sudo apt-get install ghostscript -y
+
             -   name: Require symfony/flex
                 run: composer global require symfony/flex --no-progress --no-scripts --no-plugins
 
