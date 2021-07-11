@@ -66,9 +66,12 @@ jobs:
 
             -   name: Install ghostscript
                 run: |
-                    sudo apt-get install ghostscript -y
-                    which gs
-                    which ghostscript
+                    sudo apt-get update
+                    sudo apt-get reinstall ghostscript -y
+                    echo 'gs -- '
+                    gs --version
+                    echo 'ghostscript -- '
+                    ghostscript -v
 
             -   name: Require symfony/flex
                 run: composer global require symfony/flex --no-progress --no-scripts --no-plugins
