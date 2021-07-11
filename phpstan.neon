@@ -17,6 +17,15 @@ parameters:
         # Excluded deprecated classes/files
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
+        - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
 
     ignoreErrors:
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR
+
+        # Incorrect return types. Needs to be deprecated and removed in separate PR's
+        - '#Method Kunstmaan\\AdminBundle\\Form\\UserType\:\:setCanEditAllFields\(\) should return bool but return statement is missing\.#'
+        - '#Method Kunstmaan\\TranslatorBundle\\Service\\Command\\Exporter\\ExportCommandHandler\:\:executeExportCommand\(\) should return int but return statement is missing\.#'
+        - '#Method Kunstmaan\\NodeSearchBundle\\PagerFanta\\Adapter\\SearcherRequestAdapter\:\:processResponse\(\) should return array\|Elastica\\ResultSet but return statement is missing\.#'
+        - '#Method Kunstmaan\\NodeSearchBundle\\Configuration\\NodePagesConfiguration\:\:(addPermissions|addSearchType)\(\) should return array but return statement is missing\.#'
+        - '#Method Kunstmaan\\DashboardBundle\\Repository\\AnalyticsSegmentRepository\:\:deleteSegment\(\) should return bool\|Kunstmaan\\DashboardBundle\\Entity\\AnalyticsOverview but return statement is missing\.#'
+
