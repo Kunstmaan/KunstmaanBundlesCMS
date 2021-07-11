@@ -169,6 +169,8 @@ class Redirect extends AbstractEntity
     public function setNote($note)
     {
         $this->note = $note;
+
+        return $this;
     }
 
     /**
