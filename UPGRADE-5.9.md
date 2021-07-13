@@ -9,6 +9,8 @@ General
   instead of `white-october/pagerfanta-bundle`. All specific bundle packages that use pagerfanta functionality are now requiring
   the specifc pagerfanta packages. Newer skeleton installs will require the correct pagerfanta bundle package but old projects
   or projects using the `white-october` package are encouraged to switch their dependencies.
+* The abandoned package `fzaninotto/faker` is replaced with the `fakerphp/faker` package. If you use the abandoned package
+  in your project, replace it with `fakerphp/faker` to allow upgrading to v5.9.
 
 AdminBundle
 ------------
