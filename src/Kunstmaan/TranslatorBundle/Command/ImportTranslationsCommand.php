@@ -37,7 +37,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
      * @param ImportCommandHandler|null $importCommandHandler
      */
     public function __construct(/* ImportCommandHandler */
-        $importCommandHandler = null,
+        $importCommandHandler,
         string $defaultBundle,
         array $bundles
     ) {

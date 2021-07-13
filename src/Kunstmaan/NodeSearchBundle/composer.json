@@ -19,7 +19,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "kunstmaan/admin-bundle": "^5.7",
         "kunstmaan/pagepart-bundle": "~5.2",
         "kunstmaan/search-bundle": "~5.2",

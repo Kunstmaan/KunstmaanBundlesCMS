@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "symfony/acl-bundle": "^1.0|^2.0",
         "symfony/cache": "^3.4|^4.4",
         "symfony/config": "^3.4|^4.4",
@@ -88,7 +88,7 @@
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "symfony/phpunit-bridge": "^5.2",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^8.5|^9.5",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.12.18",
         "phpstan/phpstan-doctrine": "^0.12.10"
