@@ -29,7 +29,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      *
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return \Doctrine\Persistence\ObjectRepository
      */
     public function getArticleRepository($em)
     {

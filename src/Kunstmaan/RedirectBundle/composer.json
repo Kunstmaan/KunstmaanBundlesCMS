@@ -23,6 +23,9 @@
         "symfony/phpunit-bridge": "^5.1",
         "phpunit/phpunit": "^8.5"
     },
+    "conflict": {
+        "doctrine/persistence": "<1.3"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": { "Kunstmaan\\RedirectBundle\\": "" }
