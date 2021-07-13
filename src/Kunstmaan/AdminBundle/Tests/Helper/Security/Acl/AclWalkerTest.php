@@ -25,6 +25,7 @@ class AclWalkerTest extends TestCase
     {
         $range = new RangeVariableDeclaration('someschema', 's');
         $expr = new PathExpression('int', 'id');
+        $expr->type = PathExpression::TYPE_STATE_FIELD;
         $indexBy = new IndexBy($expr);
         $from = new FromClause([new IdentificationVariableDeclaration($range, $indexBy, [])]);
 
