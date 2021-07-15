@@ -1,22 +1,23 @@
 {% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
 
 {% block login_content %}
-    <p>{{ 'security.resetting.reset' |trans }}</p>
+    <h2 class="app-login__form-title">{{ 'security.resetting.reset' |trans }}</h2>
 
     {{ form_start(form) }}
-    <div class="form-group form-group--icon-in-control">
-        <label for="password_request_email" class="label--lighter">
-            {{ 'security.resetting.email' |trans }}:
-        </label>
-
-        {{ form_widget(form.email, {'attr': {'placeholder': 'security.resetting.email' | trans} }) }}
-        <i class="fa fa-user form-group--icon-in-control__icon"></i>
+    <div class="form-group">
+        {{ form_label(form.email, null, {'label_attr': {'class': 'form-control-label'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
     </div>
 
-    {{ form_widget(form.submit) }}
-    <a href="{{ path('kunstmaan_admin_login' ) }}" class="btn btn-default btn--raise-on-hover">
-        {{ 'form.cancel' | trans }}
-    </a>
+    <div class="form-group app-login__form__submit-holder">
+        <button type="submit" id="_submit" name="_submit" class="btn btn--md btn--inverted">
+            {{ 'security.resetting.reset'|trans }}
+        </button>
+        <a href="{{ path('kunstmaan_admin_login' ) }}" class="btn btn--md btn--inverted-grey">
+            {{ 'form.cancel' | trans }}
+        </a>
+    </div>
+
     {{ form_rest(form) }}
     {{ form_end(form) }}
 {% endblock login_content %}

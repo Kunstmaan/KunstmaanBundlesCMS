@@ -37,7 +37,7 @@ final class SymfonyMailerService implements AuthenticationMailerInterface
             ->from($this->from)
             ->to(new Address($user->getEmail()))
             ->subject($this->translator->trans('security.resetting.mail.subject', [], null, $locale))
-            ->htmlTemplate('@KunstmaanAdmin/authentication/email/password_reset.txt.twig')
+            ->htmlTemplate('@KunstmaanAdmin/authentication/email/password_reset.html.twig')
             ->context([
                 'user' => $user,
                 'confirmationUrl' => $confirmationUrl,
