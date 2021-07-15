@@ -5,4 +5,11 @@
 			<loc>{{ url('KunstmaanSitemapBundle_sitemap', {'locale': locale, '_format': 'xml'}) }}</loc>
 		</sitemap>
     {% endfor %}
+    {% if extraSitemaps is defined and extraSitemaps is not empty %}
+        {% for sitemap in extraSitemaps %}
+            <sitemap>
+                <loc>{{ sitemap.url }}</loc>
+            </sitemap>
+        {% endfor %}
+    {% endif %}
 </sitemapindex>
