@@ -134,6 +134,7 @@ toolbar:
     message: "<strong>%X%</strong> exception(s) veroorzaakt door <strong>%Y%</strong> events"
 security:
   login:
+    title: 'Log in op %websitetitle%'
     username: Gebruikersnaam
     password: Wachtwoord
     submit: Inloggen

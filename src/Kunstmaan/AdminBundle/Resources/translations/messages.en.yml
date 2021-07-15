@@ -10,6 +10,7 @@ pages:
 
 security:
     login:
+        title: 'Log in to %websitetitle%'
         username: Username
         password: Password
         submit: Submit

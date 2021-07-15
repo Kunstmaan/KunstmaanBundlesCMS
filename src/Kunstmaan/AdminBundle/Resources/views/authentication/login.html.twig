@@ -2,7 +2,8 @@
 
 {% block login_content %}
     <h2 class="app-login__form-title">
-        Log in to {{ websitetitle | trans }}
+        {% set translatedWebsiteTitle = websitetitle|trans %}
+        {{ 'security.login.title'|trans({'%websitetitle%': translatedWebsiteTitle}) }}
     </h2>
     <form id="app__login__form" action="" method="post">
         {% if google_signin_enabled() %}
@@ -44,7 +45,6 @@
                 </a>
             </div>
         </div>
-                
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div class="form-group app-login__form__submit-holder">
