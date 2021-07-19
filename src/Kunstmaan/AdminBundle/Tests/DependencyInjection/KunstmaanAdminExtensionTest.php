@@ -180,6 +180,51 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', '');
     }
 
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedExceptionExcludes()
+    {
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'authentication' => [
+                'enable_new_authentication' => true,
+            ],
+            'admin_exception_excludes' => [
+                'test_exclude',
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude']);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedExceptionExcludesWithNewConfig()
+    {
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'admin_exception_excludes' => [
+                'test_exclude',
+            ],
+            'exception_logging' => [
+                'exclude_patterns' => ['test_exclude_new_config'],
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
+    }
+
+    public function testExceptionExcludesFromExceptionLoggingConfig()
+    {
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'exception_logging' => [
+                'exclude_patterns' => ['test_exclude_new_config'],
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
