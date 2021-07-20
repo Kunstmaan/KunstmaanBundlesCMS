@@ -60,7 +60,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('kunstmaan_admin.admin_prefix', $this->normalizeUrlSlice($config['admin_prefix']));
 
-        $container->setParameter('kunstmaan_admin.admin_exception_excludes', $config['admin_exception_excludes']);
+        $exceptionExcludes = !empty($config['exception_logging']['exclude_patterns']) ? $config['exception_logging']['exclude_patterns'] : $config['admin_exception_excludes'];
+        $container->setParameter('kunstmaan_admin.admin_exception_excludes', $exceptionExcludes);
 
         $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
         $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
