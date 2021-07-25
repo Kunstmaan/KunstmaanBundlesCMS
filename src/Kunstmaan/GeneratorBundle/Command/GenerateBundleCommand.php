@@ -199,6 +199,8 @@ EOT
         if (!class_exists($namespace . '\\' . $bundle)) {
             return ['- Edit the <comment>composer.json</comment> file and register the bundle', '  namespace in the "autoload" section:', ''];
         }
+
+        return [];
     }
 
     /**
@@ -231,6 +233,8 @@ EOT
                 return [sprintf('- Edit <comment>%s</comment>', $reflected->getFilename()), '  and add the following bundle in the <comment>AppKernel::registerBundles()</comment> method:', '',
                     sprintf('    <comment>new %s(),</comment>', $namespace . '\\' . $bundle), '', ];
             }
+
+            return [];
         } catch (\RuntimeException $e) {
             return [sprintf('Bundle <comment>%s</comment> is already defined in <comment>AppKernel::registerBundles()</comment>.', $namespace . '\\' . $bundle), ''];
         }
@@ -266,6 +270,8 @@ EOT
 
                 return ['- Import the bundle\'s routing resource in the app main routing file:', '', sprintf('    <comment>%s:</comment>', $bundle), $help, ''];
             }
+
+            return [];
         } catch (\RuntimeException $e) {
             return [sprintf('Bundle <comment>%s</comment> is already imported.', $bundle), ''];
         }
