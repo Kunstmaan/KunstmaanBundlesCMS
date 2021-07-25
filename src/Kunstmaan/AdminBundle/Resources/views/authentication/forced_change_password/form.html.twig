@@ -1,11 +1,11 @@
 {% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block login_content %}
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'fos_user_change_password'}}) }}
-    <div class="form-group form-group--icon-in-control {% if form.current_password.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_label(form.current_password) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-group {% if form.current_password.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.current_password, null, { 'label_attr': {'class': 'form-control-label'} }) }}
         {{ form_widget(form.current_password) }}
-        <i class="fa fa-key form-group--icon-in-control__icon"></i>
         {% if form.current_password.vars.errors|length > 0 %}
             <div class="form__errors text-danger">
                 {{ form_errors(form.current_password) }}
@@ -13,10 +13,9 @@
         {% endif %}
     </div>
 
-    <div class="form-group form-group--icon-in-control {% if form.plainPassword.first.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_label(form.plainPassword.first) }}
+    <div class="form-group {% if form.plainPassword.first.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.plainPassword.first, null, { 'label_attr': {'class': 'form-control-label'} }) }}
         {{ form_widget(form.plainPassword.first) }}
-        <i class="fa fa-key form-group--icon-in-control__icon"></i>
         {% if form.plainPassword.first.vars.errors|length > 0 %}
             <div class="form__errors text-danger">
                 {{ form_errors(form.plainPassword.first) }}
@@ -24,10 +23,9 @@
         {% endif %}
     </div>
 
-    <div class="form-group form-group--icon-in-control {% if form.plainPassword.second.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_label(form.plainPassword.second) }}
+    <div class="form-group {% if form.plainPassword.second.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.plainPassword.second, null, { 'label_attr': {'class': 'form-control-label'} }) }}
         {{ form_widget(form.plainPassword.second) }}
-        <i class="fa fa-key form-group--icon-in-control__icon"></i>
         {% if form.plainPassword.second.vars.errors|length > 0 %}
             <div class="form__errors text-danger">
                 {{ form_errors(form.plainPassword.second) }}
@@ -36,8 +34,11 @@
     </div>
 
     {{ form_rest(form) }}
-    <button type="submit" id="_submit" name="_submit" class="btn btn-brand btn-block btn--raise-on-hover">
-        {{ 'security.change_password.form.submit'|trans }}
-    </button>
+
+    <div class="form-group app-login__form__submit-holder">
+        <button type="submit" id="_submit" name="_submit" class="btn btn--md btn--inverted">
+            {{ 'security.change_password.form.submit'|trans }}
+        </button>
+    </div>
     {{ form_end(form) }}
 {% endblock %}
