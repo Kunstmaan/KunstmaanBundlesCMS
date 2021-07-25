@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Service;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\GroupInterface;
 
 class GroupManager
@@ -12,7 +12,7 @@ class GroupManager
     private $em;
     /** @var string */
     private $class;
-    /** @var ObjectRepository */
+    /** @var EntityRepository */
     private $repository;
 
     public function __construct(EntityManagerInterface $em, string $class)

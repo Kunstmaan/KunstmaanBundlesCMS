@@ -471,7 +471,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         /*
                          * Replace slash to backslash. Eg: CmsBundle:Blog/Comment --> CmsBundle:Blog\Comment
                          *
-                         * @see \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory::getMetadataFor()
+                         * @see \Doctrine\Persistence\Mapping\AbstractClassMetadataFactory::getMetadataFor()
                          * @see \Doctrine\ORM\Mapping\ClassMetadataFactory::getFqcnFromAlias()
                          */
                         if (!$this->isSymfony4()) {

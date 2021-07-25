@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper\NodeAdmin;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersionLock;

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
+use Gedmo\DoctrineExtensions;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -95,13 +96,15 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $container->prependExtensionConfig('stof_doctrine_extensions', $stofDoctrineExtensionsConfig);
 
+        $baseDir = version_compare(DoctrineExtensions::VERSION, '3.0.0', '>=') ? 'src' : 'lib/Gedmo';
+
         $doctrineGedmoEntityConfig = [
             'orm' => [
                 'mappings' => [
                     'gedmo_translatable' => [
                         'type' => 'annotation',
                         'prefix' => 'Gedmo\Translatable\Entity',
-                        'dir' => '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
+                        'dir' => '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/' . $baseDir . '/Translatable/Entity',
                         'alias' => 'GedmoTranslatable',
                         'is_bundle' => false,
                     ],

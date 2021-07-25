@@ -25,6 +25,7 @@ class ACLPermissionCreatorTest extends TestCase
         $mutableAcl = $this->createMock(MutableAclInterface::class);
 
         $entry->expects($this->once())->method('getSecurityIdentity')->willReturn($security);
+        $entry->expects($this->once())->method('getMask')->willReturn(1);
         $mutableAcl->expects($this->once())->method('getObjectAces')->willReturn([$entry]);
         $strategy->expects($this->exactly(2))->method('getObjectIdentity')->willReturn($user);
         $provider->expects($this->once())->method('findAcl')->willReturn($mutableAcl);
@@ -48,6 +49,6 @@ class ACLPermissionCreatorTest extends TestCase
         $provider->expects($this->once())->method('deleteAcl')->willThrowException(new AclNotFoundException());
 
         $aclCreator = new ACLPermissionCreator($provider, $strategy);
-        $aclCreator->initByMap($user, ['key' => 'value'], true);
+        $aclCreator->initByMap($user, ['ROLE' => 1], true);
     }
 }

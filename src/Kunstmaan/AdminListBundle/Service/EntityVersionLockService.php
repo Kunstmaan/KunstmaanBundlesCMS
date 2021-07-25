@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use FOS\UserBundle\Model\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;

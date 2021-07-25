@@ -5,7 +5,7 @@ namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;

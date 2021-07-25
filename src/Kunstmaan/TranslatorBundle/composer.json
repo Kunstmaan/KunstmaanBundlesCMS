@@ -24,9 +24,10 @@
         "box/spout": "^2.5"
     },
     "require-dev": {
+        "doctrine/data-fixtures": "^1.5",
         "matthiasnoback/symfony-config-test": "^4.0",
+        "fakerphp/faker": "^1.15",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "nelmio/alice": "^3.5",
         "symfony/phpunit-bridge": "^5.1" ,
         "phpunit/phpunit": "^8.5"
     },
@@ -40,7 +41,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.8-dev"
+            "dev-master": "5.9-dev"
         }
     }
 }

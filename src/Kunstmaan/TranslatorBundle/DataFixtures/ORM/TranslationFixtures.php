@@ -4,7 +4,7 @@ namespace Kunstmaan\TranslatorBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\TranslatorBundle\Entity\Translation as Entity;
 use Kunstmaan\TranslatorBundle\Model\Translation as Model;
 

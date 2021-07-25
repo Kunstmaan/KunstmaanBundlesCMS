@@ -123,7 +123,7 @@ class EntityVersionLockServiceTest extends TestCase
             [EntityVersionLock::class, $mockLockRepository],
             [LockableEntity::class, $mockLockableRepository],
         ];
-        $mockObjectManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
+        $mockObjectManager = $this->getMockBuilder('Doctrine\Persistence\ObjectManager')
             ->disableOriginalConstructor()
             ->getMock();
         $mockObjectManager

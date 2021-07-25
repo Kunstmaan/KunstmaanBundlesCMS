@@ -73,7 +73,7 @@ class PasswordCheckListener
         }
 
         $route = $event->getRequest()->get('_route');
-        if (null === $route || $route === 'kunstmaan_admin_forced_change_password') {
+        if (null === $route || in_array($route, ['kunstmaan_admin_forced_change_password', 'fos_user_change_password'], true)) {
             return;
         }
 
