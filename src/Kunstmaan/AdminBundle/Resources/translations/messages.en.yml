@@ -9,6 +9,9 @@ pages:
     movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 
 security:
+    general:
+        logged_in_as: 'Logged in as %username%'
+        logout: 'Logout'
     login:
         title: 'Log in to %websitetitle%'
         username: Username
