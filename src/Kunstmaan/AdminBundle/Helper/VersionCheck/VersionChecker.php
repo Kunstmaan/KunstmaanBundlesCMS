@@ -10,17 +10,13 @@ use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\Adapter\DoctrineAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionChecker
 {
     public const CACHE_KEY = 'version_check';
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
     /**
      * @var AdapterInterface
@@ -52,35 +48,86 @@ class VersionChecker
      */
     private $translator;
 
-    /**
-     * @param CacheProvider|AdapterInterface $cache
-     */
-    public function __construct(ContainerInterface $container, /* AdapterInterface */ $cache, $translator)
-    {
-        $this->container = $container;
+    /** @var RequestStack */
+    private $requestStack;
+    /** @var string */
+    private $websiteTitle;
+    /** @var string */
+    private $projectDir;
 
-        if (!$cache instanceof CacheProvider && !$cache instanceof AdapterInterface) {
+    /**
+     * @param CacheProvider|AdapterInterface|ContainerInterface $cache
+     * @param TranslatorInterface|LegacyTranslatorInterface     $translator
+     * @param RequestStack                                      $requestStack
+     */
+    public function __construct(
+        /* ContainerInterface $container, */
+        /* AdapterInterface */ $cache,
+        $translator,
+        /* RequestStack */ $requestStack = null,
+        string $webserviceUrl = null,
+        int $cacheTimeframe = null,
+        bool $enabled = null,
+        string $projectDir = null,
+        string $websiteTitle = null
+    ) {
+        if (func_num_args() === 3 && $cache instanceof ContainerInterface) {
+            @trigger_error(sprintf('Passing an instance of "%s" as the first argument in "%s" is deprecated since KunstmaanAdminBundle 5.9 and the service parameter types will change in KunstmaanAdminBundle 6.0. Check the constructor arguments and inject the required services and parameters instead.', ContainerInterface::class, __METHOD__), E_USER_DEPRECATED);
+        }
+
+        if ((func_num_args() >= 2 && func_num_args() < 4) && !$cache instanceof ContainerInterface) {
+            // NEXT_MAJOR Remove check
+            throw new \InvalidArgumentException(sprintf('The first parameter of "%s" is not of the correct type, inject the correct services and parameters instead.', __METHOD__));
+        }
+
+        if (!$cache instanceof ContainerInterface && (!$cache instanceof CacheProvider && !$cache instanceof AdapterInterface)) {
             // NEXT_MAJOR Add AdapterInterface typehint for the $cache parameter
             throw new \InvalidArgumentException(sprintf('The "$cache" parameter should extend from "%s" or implement "%s"', CacheProvider::class, AdapterInterface::class));
         }
 
-        $this->cache = $cache;
-        if ($cache instanceof CacheProvider) {
+        if ($cache instanceof ContainerInterface && (!$translator instanceof CacheProvider && !$translator instanceof AdapterInterface)) {
+            // NEXT_MAJOR Add AdapterInterface typehint for the $cache parameter
+            throw new \InvalidArgumentException(sprintf('The "$cache" parameter should extend from "%s" or implement "%s"', CacheProvider::class, AdapterInterface::class));
+        }
+
+        $cacheParam = $cache instanceof ContainerInterface ? $translator : $cache;
+        $this->cache = $cacheParam;
+        if ($this->cache instanceof CacheProvider) {
             @trigger_error(sprintf('Passing an instance of "%s" as the second argument in "%s" is deprecated since KunstmaanAdminBundle 5.7 and an instance of "%s" will be required in KunstmaanAdminBundle 6.0.', CacheProvider::class, __METHOD__, AdapterInterface::class), E_USER_DEPRECATED);
 
-            $this->cache = new DoctrineAdapter($cache);
+            $this->cache = new DoctrineAdapter($cacheParam);
         }
 
         // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+        if (!$cache instanceof ContainerInterface && (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface)) {
             throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
         }
 
-        $this->translator = $translator;
+        if ($cache instanceof ContainerInterface && (!$requestStack instanceof TranslatorInterface && !$requestStack instanceof LegacyTranslatorInterface)) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
 
-        $this->webserviceUrl = $this->container->getParameter('version_checker.url');
-        $this->cacheTimeframe = $this->container->getParameter('version_checker.timeframe');
-        $this->enabled = $this->container->getParameter('version_checker.enabled');
+        $translatorParam = $cache instanceof ContainerInterface ? $requestStack : $translator;
+        $this->translator = $translatorParam;
+
+        if (!$cache instanceof ContainerInterface) {
+            $this->requestStack = $requestStack;
+            $this->webserviceUrl = $webserviceUrl;
+            $this->cacheTimeframe = $cacheTimeframe;
+            $this->enabled = $enabled;
+            $this->projectDir = $projectDir;
+            $this->websiteTitle = $websiteTitle;
+
+            return;
+        }
+
+        $container = $cache;
+        $this->requestStack = $container->get('request_stack');
+        $this->webserviceUrl = $container->getParameter('version_checker.url');
+        $this->cacheTimeframe = $container->getParameter('version_checker.timeframe');
+        $this->enabled = $container->getParameter('version_checker.enabled');
+        $this->projectDir = $container->getParameter('kernel.project_dir');
+        $this->websiteTitle = $container->getParameter('kunstmaan_admin.website_title');
     }
 
     /**
@@ -123,17 +170,16 @@ class VersionChecker
             return;
         }
 
-        $host = $this->container->get('request_stack')->getCurrentRequest()->getHttpHost();
-        $console = realpath($this->container->get('kernel')->getProjectDir() . '/bin/console');
+        $host = $this->requestStack->getCurrentRequest()->getHttpHost();
+        $console = realpath($this->projectDir . '/bin/console');
         $installed = filectime($console);
         $bundles = $this->parseComposer();
-        $title = $this->container->getParameter('kunstmaan_admin.website_title');
 
         $jsonData = json_encode([
             'host' => $host,
             'installed' => $installed,
             'bundles' => $bundles,
-            'project' => $this->translator->trans($title),
+            'project' => $this->translator->trans($this->websiteTitle),
         ]);
 
         try {
@@ -187,10 +233,7 @@ class VersionChecker
      */
     protected function getLockPath()
     {
-        $kernel = $this->container->get('kernel');
-        $rootPath = $kernel->getProjectDir();
-
-        return $rootPath . '/composer.lock';
+        return $this->projectDir . '/composer.lock';
     }
 
     /**
@@ -202,17 +245,15 @@ class VersionChecker
      */
     protected function getPackages()
     {
-        $translator = $this->container->get('translator');
-        $errorMessage = $translator->trans('settings.version.error_parsing_composer');
-
         $composerPath = $this->getLockPath();
         if (!file_exists($composerPath)) {
-            throw new ParseException($translator->trans('settings.version.composer_lock_not_found'));
+            throw new ParseException($this->translator->trans('settings.version.composer_lock_not_found'));
         }
 
         $json = file_get_contents($composerPath);
         $result = json_decode($json, true);
 
+        $errorMessage = $this->translator->trans('settings.version.error_parsing_composer');
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new ParseException($errorMessage . ' (#' . json_last_error() . ')');
         }
