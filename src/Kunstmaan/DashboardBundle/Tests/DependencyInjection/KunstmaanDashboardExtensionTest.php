@@ -23,8 +23,6 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.widget.googleanalytics.controller');
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.googleclient.class');
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name');
     }
 

@@ -1,6 +1,5 @@
 parameters:
     kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
-    kunstmaan_dashboard.googleclient.class: 'Google_Client'
 
 services:
     kunstmaan_dashboard.manager.widgets:
@@ -15,7 +14,7 @@ services:
 
     # google client
     kunstmaan_dashboard.googleclient:
-        class: '%kunstmaan_dashboard.googleclient.class%'
+        class: Google_Client
         calls:
           - [ 'setApplicationName', [ '%kunstmaan_dashboard.google_analytics.api.app_name%' ] ]
           - [ 'setClientId', [ '%kunstmaan_dashboard.google_analytics.api.client_id%' ] ]
