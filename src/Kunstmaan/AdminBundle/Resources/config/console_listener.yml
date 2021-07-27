@@ -1,10 +1,6 @@
-parameters:
-    kunstmaan_admin.consoleexception.class: 'Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener'
-
-
 services:
     kunstmaan_admin.consolelogger.listener:
-        class: '%kunstmaan_admin.consoleexception.class%'
+        class: Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener
         arguments:
             - '@logger'
         tags:
