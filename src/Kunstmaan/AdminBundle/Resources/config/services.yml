@@ -171,7 +171,15 @@ services:
 
     kunstmaan_admin.versionchecker:
         class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
-        arguments: ['@service_container', '@cache.kunstmaan_versioncheck', '@translator']
+        arguments:
+            - '@cache.kunstmaan_versioncheck'
+            - '@translator'
+            - '@request_stack'
+            - '%version_checker.url%'
+            - '%version_checker.timeframe%'
+            - '%version_checker.enabled%'
+            - '%kernel.project_dir%'
+            - '%kunstmaan_admin.website_title%'
         public: true
 
     kunstmaan_admin.cache:
