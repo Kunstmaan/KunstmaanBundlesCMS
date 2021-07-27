@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\VersionCheck;
 
-use Doctrine\Common\Cache\ArrayCache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -13,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\Translator;
@@ -26,10 +24,6 @@ class VersionCheckTest extends TestCase
     private $requestStack;
     /** @var \PHPUnit\Framework\MockObject\MockObject|LegacyTranslatorInterface|TranslatorInterface */
     private $translator;
-
-    /** @var ContainerInterface (mock) */
-    private $container;
-
     /** @var ArrayAdapter */
     private $cache;
 
@@ -46,51 +40,6 @@ class VersionCheckTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push(new Request());
         $this->requestStack = $requestStack;
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Passing an instance of "Symfony\Component\DependencyInjection\ContainerInterface" as the first argument in "Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct" is deprecated since KunstmaanAdminBundle 5.9 and the service parameter types will change in KunstmaanAdminBundle 6.0. Check the constructor arguments and inject the required services and parameters instead.
-     * @expectedDeprecation Passing an instance of "Doctrine\Common\Cache\CacheProvider" as the second argument in "Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct" is deprecated since KunstmaanAdminBundle 5.7 and an instance of "Symfony\Component\Cache\Adapter\AdapterInterface" will be required in KunstmaanAdminBundle 6.0.
-     */
-    public function testDeprecatedCacheConstructorParameter()
-    {
-        new VersionChecker($this->createMock(ContainerInterface::class), new ArrayCache(), $this->translator);
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Passing an instance of "Symfony\Component\DependencyInjection\ContainerInterface" as the first argument in "Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct" is deprecated since KunstmaanAdminBundle 5.9 and the service parameter types will change in KunstmaanAdminBundle 6.0. Check the constructor arguments and inject the required services and parameters instead.
-     */
-    public function testCacheConstructorParameterType()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "$cache" parameter should extend from "Doctrine\Common\Cache\CacheProvider" or implement "Symfony\Component\Cache\Adapter\AdapterInterface"');
-
-        new VersionChecker($this->createMock(ContainerInterface::class), new \stdClass(), $this->translator);
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Passing an instance of "Symfony\Component\DependencyInjection\ContainerInterface" as the first argument in "Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct" is deprecated since KunstmaanAdminBundle 5.9 and the service parameter types will change in KunstmaanAdminBundle 6.0. Check the constructor arguments and inject the required services and parameters instead.
-     */
-    public function testTranslatorConstructorParameterType()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The "$translator" parameter should be instance of "Symfony\Contracts\Translation\TranslatorInterface" or "Symfony\Component\Translation\TranslatorInterface"');
-
-        new VersionChecker($this->createMock(ContainerInterface::class), new ArrayCache(), new \stdClass());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testWithoutContainerAndWithoutParamatersConstructorParams()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The first parameter of "Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker::__construct" is not of the correct type, inject the correct services and parameters instead.');
-
-        new VersionChecker(new ArrayCache(), $this->translator);
     }
 
     /**
