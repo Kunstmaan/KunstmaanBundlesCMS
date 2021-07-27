@@ -67,7 +67,7 @@ security:
         - { path: ^/([^/]*)/admin/reset.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         ...
 ```
-
+* The constructor arguments of `Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker` have changed, inject the correct/required services/parameters.
 
 AdminlistBundle
 ------------

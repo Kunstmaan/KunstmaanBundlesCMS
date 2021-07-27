@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminBundle\Form\Authentication;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class NewPasswordType extends AbstractType
@@ -23,10 +22,10 @@ final class NewPasswordType extends AbstractType
                 'second_options' => [
                     'label' => 'settings.user.repeatedpassword',
                 ],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                ],
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'security.resetting.reset',
-                'attr' => ['class' => 'btn btn-primary btn--raise-on-hover'],
-            ]);
+        ;
     }
 }
