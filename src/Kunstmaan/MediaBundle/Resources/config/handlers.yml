@@ -1,32 +1,27 @@
 parameters:
-    kunstmaan_media.media_handler.remote_slide.class: 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler'
-    kunstmaan_media.media_handler.remote_video.class: 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler'
-    kunstmaan_media.media_handler.remote_audio.class: 'Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler'
-    kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
-    kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
     kunstmaan_media.media_path: '/uploads/media/'
 
 services:
     kunstmaan_media.media_handlers.remote_slide:
-        class: '%kunstmaan_media.media_handler.remote_slide.class%'
+        class: Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler
         arguments: [1]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.remote_video:
-        class: '%kunstmaan_media.media_handler.remote_video.class%'
+        class: Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler
         arguments: [1, '%kunstmaan_media.remote_video%']
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.remote_audio:
-        class: '%kunstmaan_media.media_handler.remote_audio.class%'
+        class: Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler
         arguments: [1, '%kunstmaan_media.soundcloud_api_key%']
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.image:
-        class: '%kunstmaan_media.media_handler.image.class%'
+        class: Kunstmaan\MediaBundle\Helper\Image\ImageHandler
         arguments: [1, '@mime_types', null, '%kunstmaan_media.aviary_api_key%']
         calls:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
@@ -37,7 +32,7 @@ services:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.file:
-        class: '%kunstmaan_media.media_handler.file.class%'
+        class: Kunstmaan\MediaBundle\Helper\File\FileHandler
         arguments: [0, '@mime_types']
         calls:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]

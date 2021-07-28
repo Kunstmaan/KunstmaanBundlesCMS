@@ -1,29 +1,15 @@
-parameters:
-    kunstmaan_media.media_manager.class: 'Kunstmaan\MediaBundle\Helper\MediaManager'
-    kunstmaan_media.folder_manager.class: 'Kunstmaan\MediaBundle\Helper\FolderManager'
-    kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
-    kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
-    kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
-    kunstmaan_media.form.type.iconfont.class: 'Kunstmaan\MediaBundle\Form\Type\IconFontType'
-    kunstmaan_media.icon_font_manager.class: 'Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager'
-    kunstmaan_media.icon_font.default_loader.class: 'Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
-    kunstmaan_media.media_creator_service.class: 'Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService'
-    kunstmaan_media.mimetype_guesser.factory.class: 'Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory'
-    kunstmaan_media.extension_guesser.factory.class: 'Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory'
-    kunstmaan_media.validator.has_guessable_extension.class: 'Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator'
-
 services:
     # Autowire aliases
     Kunstmaan\MediaBundle\Helper\MediaManager: '@kunstmaan_media.media_manager'
 
     kunstmaan_media.media_manager:
-        class: '%kunstmaan_media.media_manager.class%'
+        class: Kunstmaan\MediaBundle\Helper\MediaManager
         calls:
             - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
         public: true
 
     kunstmaan_media.listener.doctrine:
-        class: '%kunstmaan_media.listener.doctrine.class%'
+        class: Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener
         arguments: ['@kunstmaan_media.media_manager']
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }
@@ -33,7 +19,7 @@ services:
             - { name: 'doctrine.event_listener', event: 'preRemove' }
 
     form.type.media:
-        class: '%kunstmaan_media.form.type.media.class%'
+        class: Kunstmaan\MediaBundle\Form\Type\MediaType
         arguments:
             - '@kunstmaan_media.media_manager'
             - '@doctrine.orm.entity_manager'
@@ -41,24 +27,24 @@ services:
             - { name: form.type}
 
     form.type.iconfont:
-        class: '%kunstmaan_media.form.type.iconfont.class%'
+        class: Kunstmaan\MediaBundle\Form\Type\IconFontType
         arguments: ['@kunstmaan_media.icon_font_manager']
         tags:
             - { name: form.type }
 
     kunstmaan_media.icon_font_manager:
-        class: '%kunstmaan_media.icon_font_manager.class%'
+        class: Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager
         calls:
             - [ setDefaultLoader, [ '@kunstmaan_media.icon_font.default_loader' ] ]
 
     kunstmaan_media.icon_font.default_loader:
-        class: '%kunstmaan_media.icon_font.default_loader.class%'
+        class: Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader
         arguments: ['@kernel']
         tags:
             -  { name: 'kunstmaan_media.icon_font.loader' }
 
     kunstmaan_media.media_creator_service:
-        class: '%kunstmaan_media.media_creator_service.class%'
+        class: Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService
         arguments: ['@service_container']
         public: true
 
@@ -68,21 +54,21 @@ services:
         arguments:        ['KunstmaanMediaBundle:Folder']
 
     kunstmaan_media.menu.adaptor:
-        class: '%kunstmaan_media.menu.adaptor.class%'
+        class: Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor
         arguments: ['@kunstmaan_media.repository.folder']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 150  }
 
     kunstmaan_media.folder_manager:
-        class: '%kunstmaan_media.folder_manager.class%'
+        class: Kunstmaan\MediaBundle\Helper\FolderManager
         arguments: ['@kunstmaan_media.repository.folder']
         public: true
 
     kunstmaan_media.mimetype_guesser.factory:
-        class: '%kunstmaan_media.mimetype_guesser.factory.class%'
+        class: Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory
 
     kunstmaan_media.extension_guesser.factory:
-        class: '%kunstmaan_media.extension_guesser.factory.class%'
+        class: Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory
 
     kunstmaan_media.command.rebuildfoldertree:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
@@ -123,7 +109,7 @@ services:
             - '@kunstmaan_media.filesystem_adapter'
 
     kunstmaan_media.validator.has_guessable_extension:
-        class: '%kunstmaan_media.validator.has_guessable_extension.class%'
+        class: Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator
         arguments: ['@mime_types']
         tags:
             - { name: validator.constraint_validator, alias: has_guessable_extension }
