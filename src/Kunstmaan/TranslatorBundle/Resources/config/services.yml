@@ -1,11 +1,6 @@
-parameters:
-    kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
-    kunstmaan_translator.service.exporter.csv.class: Kunstmaan\TranslatorBundle\Service\Command\Exporter\CSVFileExporter
-    kunstmaan_translator.toolbar.collector.translator.class: Kunstmaan\TranslatorBundle\Toolbar\TranslatorDataCollector
-
 services:
     kunstmaan_translator.menu.adaptor:
-        class: '%kunstmaan_translator.menu.adaptor.class%'
+        class: Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
@@ -42,7 +37,7 @@ services:
             - { name: 'translation.exporter', alias: 'yml' }
 
     kunstmaan_translator.service.exporter.csv:
-        class: "%kunstmaan_translator.service.exporter.csv.class%"
+        class: Kunstmaan\TranslatorBundle\Service\Command\Exporter\CSVFileExporter
         tags:
             - { name: 'translation.exporter', alias: 'csv' }
 
@@ -118,7 +113,7 @@ services:
             - '@translator.default'
 
     kunstmaan_translator.datacollector.translations:
-        class: '%kunstmaan_translator.toolbar.collector.translator.class%'
+        class: Kunstmaan\TranslatorBundle\Toolbar\TranslatorDataCollector
         parent: Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector
         arguments:
             - '@kunstmaan_translator.datacollector'
