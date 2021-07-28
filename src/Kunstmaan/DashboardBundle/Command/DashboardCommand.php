@@ -53,14 +53,8 @@ class DashboardCommand extends ContainerAwareCommand
         /** @var DashboardWidget[] $widgets */
         $widgets = $this->widgetManager->getWidgets();
         foreach ($widgets as $widget) {
-            if (null !== $widget->getCommandName()) {
-                $command = $this->getApplication()->find($widget->getCommandName());
-
-                $command->run(new ArrayInput([]), $output);
-            } else {
-                //NEXT_MAJOR: Remove deprecated logic
-                $widget->getCommand()->execute($input, $output);
-            }
+            $command = $this->getApplication()->find($widget->getCommandName());
+            $command->run(new ArrayInput([]), $output);
         }
 
         return 0;
