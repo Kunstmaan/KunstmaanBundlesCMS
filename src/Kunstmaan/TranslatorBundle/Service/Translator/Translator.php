@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 
@@ -131,39 +129,7 @@ class Translator extends SymfonyTranslator
             $trans = parent::trans($id, $parameters, $domain, $locale);
         }
 
-        $this->profileTranslation($id, $parameters, $domain, $locale, $trans);
-
         return $trans;
-    }
-
-    /**
-     * @deprecated This method is deprecated since KunstmaanTranslatorBundle version 5.1 and will be removed in KunstmaanTranslatorBundle version 6.0
-     */
-    public function profileTranslation($id, $parameters, $domain, $locale, $trans)
-    {
-        if (!$this->request || $this->profilerEnabled === false) {
-            return;
-        }
-
-        if ($locale === null) {
-            $locale = $this->request->get('_locale');
-        }
-
-        $translation = new Translation();
-        $translation->setKeyword($id);
-        $translation->setDomain($domain);
-        $translation->setLocale($locale);
-        $translation->setText($trans);
-
-        $translationCollection = $this->request->request->get('usedTranslations');
-
-        if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
-            $translationCollection = new ArrayCollection();
-        }
-
-        $translationCollection->set($domain . $id . $locale, $translation);
-
-        $this->request->request->set('usedTranslations', $translationCollection);
     }
 
     public function getTranslationRepository()
