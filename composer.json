@@ -52,7 +52,6 @@
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.9",
         "doctrine/doctrine-bundle": "^1.12.3|^2.0.3",
-        "doctrine/doctrine-cache-bundle": "^1.2",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "sensio/framework-extra-bundle": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",

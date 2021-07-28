@@ -163,11 +163,6 @@ services:
             - '%kunstmaan_admin.website_title%'
         public: true
 
-    kunstmaan_admin.cache:
-        class: Doctrine\Common\Cache\FilesystemCache
-        arguments: ['%kernel.cache_dir%/fcache']
-        deprecated: 'The "%service_id%" service is deprecated since Kunstmaan/AdminBundle 5.7 and will be removed in KunstmaanAdminBundle 6.0.'
-
     cache.kunstmaan_versioncheck:
         parent: cache.adapter.filesystem
         tags:
