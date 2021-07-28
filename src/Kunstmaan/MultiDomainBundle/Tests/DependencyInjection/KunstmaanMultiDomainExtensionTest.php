@@ -39,9 +39,6 @@ class KunstmaanMultiDomainExtensionTest extends AbstractExtensionTestCase
         ]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_multi_domain.hosts');
-        $this->assertContainerBuilderHasParameter('kunstmaan_multi_domain.router.class', 'Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter');
-        $this->assertContainerBuilderHasParameter('kunstmaan_multi_domain.domain_configuration.class', 'Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration');
-        $this->assertContainerBuilderHasParameter('kunstmaan_node.slugrouter.class', 'Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter');
 
         $this->assertContainerBuilderHasAlias('kunstmaan_admin.domain_configuration', 'kunstmaan_multi_domain.domain_configuration');
     }
