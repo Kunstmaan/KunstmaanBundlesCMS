@@ -4,17 +4,13 @@ namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class TranslationCacheCommand extends ContainerAwareCommand
+final class TranslationCacheCommand extends Command
 {
     /**
      * @var ResourceCacher
@@ -26,21 +22,9 @@ class TranslationCacheCommand extends ContainerAwareCommand
      */
     private $cacheValidator;
 
-    /**
-     * @param ResourceCacher|null $resourceCacher
-     * @param CacheValidator|null $cacheValidator
-     */
-    public function __construct(/* ResourceCacher */ $resourceCacher = null, /* CacheValidator */ $cacheValidator = null)
+    public function __construct(ResourceCacher $resourceCacher, CacheValidator $cacheValidator)
     {
         parent::__construct();
-
-        if (!$resourceCacher instanceof ResourceCacher) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $resourceCacher ? 'kuma:translator:cache' : $resourceCacher);
-
-            return;
-        }
 
         $this->resourceCacher = $resourceCacher;
         $this->cacheValidator = $cacheValidator;
@@ -71,10 +55,6 @@ class TranslationCacheCommand extends ContainerAwareCommand
 
     public function flushTranslationCache(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->resourceCacher) {
-            $this->resourceCacher = $this->getContainer()->get('kunstmaan_translator.service.translator.resource_cacher');
-        }
-
         if ($this->resourceCacher->flushCache()) {
             $output->writeln('<info>Translation cache succesfully flushed</info>');
         }
@@ -82,10 +62,6 @@ class TranslationCacheCommand extends ContainerAwareCommand
 
     public function showTranslationCacheStatus(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->cacheValidator) {
-            $this->cacheValidator = $this->getContainer()->get('kunstmaan_translator.service.translator.cache_validator');
-        }
-
         $oldestFile = $this->cacheValidator->getOldestCachefileDate();
         $newestTranslation = $this->cacheValidator->getLastTranslationChangeDate();
         $isFresh = $this->cacheValidator->isCacheFresh();
