@@ -12,7 +12,6 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\EnablePermissionsPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\InjectUntrackedTokenStorageCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\PagerfantaBridgePass;
-use Kunstmaan\AdminBundle\DependencyInjection\Compiler\VersionCheckerCacheBcPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Kunstmaan\AdminBundle\DependencyInjection\PagerfantaExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -40,8 +39,6 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new InjectUntrackedTokenStorageCompilerPass());
         $container->addCompilerPass(new EnablePermissionsPass());
         $container->addCompilerPass(new ConvertFosUserParametersCompilerPass());
-
-        $container->addCompilerPass(new VersionCheckerCacheBcPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
 
