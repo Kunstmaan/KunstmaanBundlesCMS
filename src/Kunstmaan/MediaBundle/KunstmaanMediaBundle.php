@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle;
 
-use Kunstmaan\MediaBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -20,6 +19,5 @@ class KunstmaanMediaBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new MediaHandlerCompilerPass());
-        $container->addCompilerPass(new DeprecateClassParametersPass());
     }
 }

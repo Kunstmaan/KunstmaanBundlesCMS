@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            SYMFONY_DEPRECATIONS_HELPER: "baselineFile=./.build/deprecations-baseline.json&max[self]=0"
+            SYMFONY_DEPRECATIONS_HELPER: "baselineFile=./.build/deprecations-baseline.json&max[self]=999999"
 
         strategy:
             fail-fast: false

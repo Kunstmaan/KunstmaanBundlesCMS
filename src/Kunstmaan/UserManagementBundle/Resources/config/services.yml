@@ -1,9 +1,6 @@
-parameters:
-  kunstmaan_user_management.menu.adaptor.class: Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor
-
 services:
     kunstmaan_user_management.menu.adaptor:
-        class: '%kunstmaan_user_management.menu.adaptor.class%'
+        class: Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor
         arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 250 }

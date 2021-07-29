@@ -1,17 +1,13 @@
-parameters:
-    kunstmaan_redirect.menu.adaptor.class: 'Kunstmaan\RedirectBundle\Helper\Menu\RedirectMenuAdaptor'
-    kunstmaan_redirect.redirect_repository.class: 'Kunstmaan\RedirectBundle\Repository\RedirectRepository'
-
 services:
     kunstmaan_redirect.menu.adaptor:
-        class: '%kunstmaan_redirect.menu.adaptor.class%'
+        class: Kunstmaan\RedirectBundle\Helper\Menu\RedirectMenuAdaptor
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_redirect.repositories.redirect:
-        class:            '%kunstmaan_redirect.redirect_repository.class%'
-        factory:          ['@doctrine.orm.entity_manager', getRepository]
-        arguments:        ['%kunstmaan_redirect.redirect.class%']
+        class: Kunstmaan\RedirectBundle\Repository\RedirectRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['%kunstmaan_redirect.redirect.class%']
 
     kunstmaan_redirect.redirectrouter:
         class: Kunstmaan\RedirectBundle\Router\RedirectRouter

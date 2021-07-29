@@ -1,38 +1,28 @@
-parameters:
-    kunstmaan_pagepart.page_part_configuration_reader.class: 'Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReader'
-    kunstmaan_pagepart.page_part_configuration_parser.class: 'Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser'
-
-    kunstmaan_pagepart.page_template_configuration_reader.class: 'Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReader'
-    kunstmaan_pagepart.page_template_configuration_parser.class: 'Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationParser'
-
-    kunstmaan_page_part.page_template.page_template_configuration_service.class: 'Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService'
-
 services:
     kunstmaan_pagepart.pageparts:
         class: 'Kunstmaan\PagePartBundle\PagePartAdmin\Builder'
 
     kunstmaan_page_part.page_part_configuration_reader:
-        class: '%kunstmaan_pagepart.page_part_configuration_reader.class%'
+        class: Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReader
         arguments: [ '@kunstmaan_page_part.page_part_configuration_parser' ]
         public: true
 
     kunstmaan_page_part.page_part_configuration_parser:
-        class: '%kunstmaan_pagepart.page_part_configuration_parser.class%'
+        class: Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser
         public: false
         arguments: [ '@kernel', '%kunstmaan_page_part.page_parts_presets%' ]
 
     kunstmaan_page_part.page_template_configuration_reader:
-        class: '%kunstmaan_pagepart.page_template_configuration_reader.class%'
+        class: Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReader
         arguments: [ '@kunstmaan_page_part.page_template_configuration_parser' ]
 
     kunstmaan_page_part.page_template_configuration_parser:
-        class: '%kunstmaan_pagepart.page_template_configuration_parser.class%'
+        class: Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationParser
         public: false
         arguments: [ '@kernel', '%kunstmaan_page_part.page_templates_presets%' ]
 
-
     kunstmaan_page_part.page_template.page_template_configuration_service:
-        class: '%kunstmaan_page_part.page_template.page_template_configuration_service.class%'
+        class: Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService
         arguments:
           - '@kunstmaan_page_part.repository.page_template_configuration'
           - '@kunstmaan_page_part.page_template_configuration_reader'

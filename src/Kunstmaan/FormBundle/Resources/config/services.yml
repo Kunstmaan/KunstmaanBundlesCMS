@@ -1,8 +1,3 @@
-parameters:
-  kunstmaan_form.form_mailer.class: 'Kunstmaan\FormBundle\Helper\FormMailer'
-  kunstmaan_form.form_handler.class: 'Kunstmaan\FormBundle\Helper\FormHandler'
-  kunstmaan_form.sendemail_listener.class: 'Kunstmaan\FormBundle\EventListener\SendEmailListener'
-
 services:
     kunstmaan_form.menu.adaptor.forms:
         class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
@@ -10,12 +5,12 @@ services:
             -  { name: kunstmaan_admin.menu.adaptor }
 
     kunstmaan_form.form_mailer:
-        class: '%kunstmaan_form.form_mailer.class%'
+        class: Kunstmaan\FormBundle\Helper\FormMailer
         arguments: ['@mailer', '@twig', '@request_stack']
         public: true
 
     kunstmaan_form.form_handler:
-        class: "%kunstmaan_form.form_handler.class%"
+        class: Kunstmaan\FormBundle\Helper\FormHandler
         arguments: ['@service_container']
         public: true
 
@@ -26,7 +21,7 @@ services:
             - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
 
     kunstmaan_form.send_email_listener:
-        class: "%kunstmaan_form.sendemail_listener.class%"
+        class: Kunstmaan\FormBundle\EventListener\SendEmailListener
         arguments: ['@kunstmaan_form.form_mailer']
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_form.add_submission', method: 'onSubmission' }
