@@ -31,7 +31,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_media.media_handlers.file'
-            - '@kunstmaan_media.mimetype_guesser.factory'
+            - '@mime_types'
         tags:
             - { name: kunstmaan_fixtures.builder, alias: MediaBuilder }
 
