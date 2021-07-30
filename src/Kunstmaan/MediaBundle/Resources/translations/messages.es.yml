@@ -1,8 +1,5 @@
 ---
 media:
-  aviary:
-    title: Aviary
-    nothing: Nothing to see here.
   media:
     no: No files in this folder yet.
     dnd:

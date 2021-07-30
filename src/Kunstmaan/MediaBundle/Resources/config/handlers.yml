@@ -22,7 +22,7 @@ services:
 
     kunstmaan_media.media_handlers.image:
         class: Kunstmaan\MediaBundle\Helper\Image\ImageHandler
-        arguments: [1, '@mime_types', null, '%kunstmaan_media.aviary_api_key%']
+        arguments: [1, '@mime_types']
         calls:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
             - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]
