@@ -18,35 +18,10 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class NodeTranslationRepository extends EntityRepository
 {
     /**
-     * Get the QueryBuilder based on node id and language.
-     *
-     * @deprecated This method is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the renamed method "getNodeTranslationByNodeId" instead.
-     *
-     * @param int    $nodeId
-     * @param string $lang
-     *
      * @return NodeTranslation|null
      */
-    public function getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang)
+    public function getNodeTranslationByNodeId(int $nodeId, string $lang)
     {
-        @trigger_error(sprintf('The method "%s" is deprecated since KunstmaanNodeBundle 5.7 and will be removed in KunstmaanNodeBundle 6.0. Use the renamed method "getNodeTranslationByNodeId" instead.', __METHOD__), E_USER_DEPRECATED);
-
-        return $this->getNodeTranslationByNodeId($nodeId, $lang);
-    }
-
-    /**
-     * NEXT_MAJOR: add int typehint for $nodeId.
-     *
-     * @param int $nodeId
-     *
-     * @return NodeTranslation|null
-     */
-    public function getNodeTranslationByNodeId($nodeId, string $lang)
-    {
-        if (!is_int($nodeId)) {
-            @trigger_error(sprintf('Not passing an integer for the "$nodeId" parameter in "%s" is deprecated since KunstmaanAdminBundle 5.7 and an integer typehint will be added in KunstmaanAdminBundle 6.0."', __METHOD__), E_USER_DEPRECATED);
-        }
-
         $qb = $this->createQueryBuilder('nt')
             ->select('nt')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')

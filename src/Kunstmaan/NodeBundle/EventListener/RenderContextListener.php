@@ -9,36 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
-use Symfony\Component\Templating\EngineInterface;
 
 class RenderContextListener
 {
-    /**
-     * @var EngineInterface
-     */
-    protected $templating;
-
     /**
      * @var EntityManagerInterface
      */
     protected $em;
 
-    /**
-     * @param EngineInterface        $templating
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(/* EngineInterface|EntityManagerInterface */ $em, EntityManagerInterface $emOld = null)
+    public function __construct(EntityManagerInterface $em)
     {
-        if ($em instanceof EngineInterface) {
-            // NEXT_MAJOR Also remove the symfony/templating dependency as it is unused after the removal of the templating parameter.
-            @trigger_error(sprintf('Passing a templating engine as the first argument of "%s" is deprecated since KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Remove the template engine service argument.', __METHOD__), E_USER_DEPRECATED);
-
-            $this->templating = $em;
-            $this->em = $emOld;
-
-            return;
-        }
-
         $this->em = $em;
     }
 
