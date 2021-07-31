@@ -103,10 +103,6 @@ services:
             - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
         public: true
 
-    kunstmaan_translator.service.command.diff:
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\DiffCommand'
-        deprecated: 'The "%service_id%" service is deprecated since KunstmaanTranslatorBundle 5.2 and will be removed in 6.0.'
-
     kunstmaan_translator.datacollector:
         class: Kunstmaan\TranslatorBundle\Toolbar\DataCollectorTranslator
         arguments:
