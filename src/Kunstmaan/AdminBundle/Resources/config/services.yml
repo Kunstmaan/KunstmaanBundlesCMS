@@ -199,13 +199,6 @@ services:
 
     Kunstmaan\AdminBundle\Form\MediaTokenTransformer: ~
 
-    kunstmaan_admin.password_resetting.listener:
-        class: Kunstmaan\AdminBundle\EventListener\PasswordResettingListener
-        arguments: ['@fos_user.user_manager']
-        tags:
-            - { name: kernel.event_listener, event: fos_user.change_password.edit.completed, method: onPasswordResettingSuccess }
-            - { name: kernel.event_listener, event: kunstmaan_admin.change_password.edit.completed, method: onPasswordResettingSuccessCMS }
-
     kunstmaan_admin.password_check.listener:
         class: Kunstmaan\AdminBundle\EventListener\PasswordCheckListener
         arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session', '@translator', '@kunstmaan_admin.adminroute.helper']
@@ -358,9 +351,3 @@ services:
     kunstmaan_admin.group_manager:
         public: true
         alias: Kunstmaan\AdminBundle\Service\GroupManager
-
-    Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:
-        arguments:
-            - false # Correct value will be injected in the KunstmaanAdmin extension class
-        tags:
-            - { name: routing.route_loader }

@@ -3,7 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\Event\UserEvent;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
@@ -156,9 +155,6 @@ class UsersController extends BaseSettingsController
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
 
-        $userEvent = new UserEvent($user, $request);
-        $this->dispatch($userEvent, UserEvents::USER_EDIT_INITIALIZE);
-
         $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
@@ -232,9 +228,7 @@ class UsersController extends BaseSettingsController
         /* @var UserInterface $user */
         $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
-            $userEvent = new UserEvent($user, $request);
             $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());
-            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
 
             $em->remove($user);
             $em->flush();

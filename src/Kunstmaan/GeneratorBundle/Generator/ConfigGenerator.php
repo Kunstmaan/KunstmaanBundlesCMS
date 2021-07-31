@@ -29,7 +29,7 @@ class ConfigGenerator extends KunstmaanGenerator
         $this->renderSingleFile(
             $this->skeletonDir,
             $projectDir . '/config/packages/',
-            $this->newAuthentication ? 'security.yaml' : 'security_fos_user.yaml',
+            'security.yaml',
             [],
             true,
             $overwriteSecurity ? 'security.yaml' : 'security.yaml.example'

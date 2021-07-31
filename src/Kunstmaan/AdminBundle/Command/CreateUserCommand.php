@@ -3,8 +3,6 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\GroupManager as FOSGroupManager;
-use FOS\UserBundle\Model\UserManager as FOSUserManager;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Service\GroupManager;
 use Kunstmaan\AdminBundle\Service\UserManager;
@@ -38,22 +36,6 @@ final class CreateUserCommand extends Command
     public function __construct(EntityManagerInterface $em, GroupManager $groupManager, UserManager $userManager, string $defaultLocale)
     {
         parent::__construct();
-
-        if (!$groupManager instanceof GroupManager && !$groupManager instanceof FOSGroupManager) {
-            throw new \InvalidArgumentException(sprintf('The "$groupManager" argument must be of type "%s" or type "%s"', GroupManager::class, FOSGroupManager::class));
-        }
-        if ($groupManager instanceof FOSGroupManager) {
-            // NEXT_MAJOR set the groupmanager typehint to the kunstmaan groupmanager.
-            @trigger_error(sprintf('Passing the groupmanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, GroupManager::class), E_USER_DEPRECATED);
-        }
-
-        if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
-            throw new \InvalidArgumentException(sprintf('The "$userManager" argument must be of type "%s" or type "%s"', UserManager::class, FOSUserManager::class));
-        }
-        if ($userManager instanceof FOSUserManager) {
-            // NEXT_MAJOR set the usermanager typehint to the kunstmaan usermanager.
-            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
-        }
 
         $this->em = $em;
         $this->groupManager = $groupManager;

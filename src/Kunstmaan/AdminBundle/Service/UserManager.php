@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 
 class UserManager
 {
@@ -19,10 +18,6 @@ class UserManager
 
     public function __construct(EncoderFactoryInterface $encoderFactory, EntityManagerInterface $em, string $class)
     {
-        if (false !== strpos($this->class, ':')) {
-            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the user class instead.', __CLASS__), E_USER_DEPRECATED);
-        }
-
         $this->em = $em;
         $this->class = $class;
         $this->encoderFactory = $encoderFactory;
@@ -46,13 +41,6 @@ class UserManager
 
     public function getClass(): string
     {
-        //NEXT_MAJOR: remove support for xx:xx user class notation.
-        if (false !== strpos($this->class, ':')) {
-            $metadata = $this->em->getClassMetadata($this->class);
-
-            return $metadata->getName();
-        }
-
         return $this->class;
     }
 
@@ -79,14 +67,7 @@ class UserManager
         }
 
         $encoder = $this->encoderFactory->getEncoder($user);
-        if ($encoder instanceof SelfSaltingEncoderInterface) {
-            $user->setSalt(null);
-        } else {
-            @trigger_error(sprintf('Using a password encoder requiring a salt is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use a password encoder that implements the "%s" interface instead.', SelfSaltingEncoderInterface::class), E_USER_DEPRECATED);
-
-            $salt = rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '=');
-            $user->setSalt($salt);
-        }
+        $user->setSalt(null);
 
         $hashedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($hashedPassword);

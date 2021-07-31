@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
@@ -9,7 +10,6 @@ use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class LogPageEventsSubscriber implements EventSubscriberInterface
 {
@@ -75,7 +75,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return \Symfony\Component\Security\Core\User\UserInterface
+     * @return UserInterface
      */
     private function getUser()
     {
