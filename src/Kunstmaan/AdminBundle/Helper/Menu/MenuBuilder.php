@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -27,11 +26,6 @@ class MenuBuilder
     private $topMenuItems = null;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var MenuItem|null
      */
     private $currentCache = null;
@@ -39,20 +33,8 @@ class MenuBuilder
     /** @var RequestStack */
     private $requestStack;
 
-    /**
-     * @param ContainerInterface|RequestStack $requestStack
-     */
-    public function __construct(/* RequestStack */ $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
-        if ($requestStack instanceof ContainerInterface) {
-            @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. Inject the "request_stack" service instead.', __CLASS__), E_USER_DEPRECATED);
-
-            $this->container = $requestStack;
-            $this->requestStack = $this->container->get('request_stack');
-
-            return;
-        }
-
         $this->requestStack = $requestStack;
     }
 

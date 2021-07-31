@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,13 +11,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserProcessor
 {
     /**
-     * Use container else we have a continous loop in our dependency
-     *
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var UserInterface
      */
     private $user;
@@ -27,23 +19,11 @@ class UserProcessor
      * @var array
      */
     private $record = [];
-
+    /** @var TokenStorageInterface */
     private $tokenStorage;
 
-    /**
-     * @param ContainerInterface|TokenStorageInterface $tokenStorage
-     */
-    public function __construct(/*TokenStorageInterface */ $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        if ($tokenStorage instanceof ContainerInterface) {
-            @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. Inject the "security.token_storage" service instead.', __CLASS__), E_USER_DEPRECATED);
-
-            $this->container = $tokenStorage;
-            $this->tokenStorage = $this->container->get('security.token_storage');
-
-            return;
-        }
-
         $this->tokenStorage = $tokenStorage;
     }
 
