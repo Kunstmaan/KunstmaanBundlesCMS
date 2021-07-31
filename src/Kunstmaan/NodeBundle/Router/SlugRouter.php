@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Controller\SlugController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -50,41 +49,16 @@ class SlugRouter implements RouterInterface
     /** @var UrlGenerator */
     protected $urlGenerator;
 
-    /**
-     * @var ContainerInterface
-     *
-     * @deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.
-     */
-    protected $container;
-
     /** @var string */
     protected $slugPattern;
 
-    /**
-     * The constructor for this service
-     *
-     * @param ContainerInterface $container
-     */
     public function __construct(
-        /* DomainConfigurationInterface */ $domainConfiguration,
-        RequestStack $requestStack = null,
-        EntityManagerInterface $em = null,
-        $adminKey = null
+        DomainConfigurationInterface $domainConfiguration,
+        RequestStack $requestStack,
+        EntityManagerInterface $em,
+        string $adminKey
     ) {
         $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
-
-        if ($domainConfiguration instanceof ContainerInterface) {
-            @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
-
-            $this->container = $domainConfiguration;
-            $this->domainConfiguration = $this->container->get('kunstmaan_admin.domain_configuration');
-            $this->adminKey = $this->container->getParameter('kunstmaan_admin.admin_prefix');
-            $this->requestStack = $this->container->get('request_stack');
-            $this->em = $this->container->get('doctrine.orm.entity_manager');
-
-            return;
-        }
-
         $this->domainConfiguration = $domainConfiguration;
         $this->adminKey = $adminKey;
         $this->requestStack = $requestStack;
