@@ -1,8 +1,4 @@
 services:
-    Kunstmaan\GeneratorBundle\Command\GenerateEntityCommand:
-        tags:
-            - { name: console.command }
-
     Kunstmaan\GeneratorBundle\Command\GenerateLayoutCommand:
         tags:
             - { name: console.command }

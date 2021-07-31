@@ -24,7 +24,7 @@ class ConfigGenerator extends KunstmaanGenerator
     /**
      * Generate all config files.
      */
-    public function generate(string $projectDir, bool $overwriteSecurity, bool $overwriteLiipImagine, bool $overwriteFosHttpCache, bool $overwriteFosUser)
+    public function generate(string $projectDir, bool $overwriteSecurity, bool $overwriteLiipImagine, bool $overwriteFosHttpCache)
     {
         $this->renderSingleFile(
             $this->skeletonDir,
@@ -50,17 +50,5 @@ class ConfigGenerator extends KunstmaanGenerator
             true,
             $overwriteFosHttpCache ? 'fos_http_cache.yaml' : 'fos_http_cache.yaml.example'
         );
-
-        // NEXT_MAJOR: remove fos_user config overwrite
-        if (false === $this->newAuthentication) {
-            $this->renderSingleFile(
-                $this->skeletonDir,
-                $projectDir . '/config/packages/',
-                'fos_user.yaml',
-                [],
-                true,
-                $overwriteFosUser ? 'fos_user.yaml' : 'fos_user.yaml.example'
-            );
-        }
     }
 }
