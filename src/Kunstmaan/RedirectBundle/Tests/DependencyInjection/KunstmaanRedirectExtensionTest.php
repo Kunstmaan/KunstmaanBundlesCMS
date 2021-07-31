@@ -20,19 +20,6 @@ class KunstmaanRedirectExtensionTest extends AbstractExtensionTestCase
         return [new KunstmaanRedirectExtension()];
     }
 
-    /**
-     * @group legacy
-     */
-    public function testRedirectClassParameterOverride()
-    {
-        $this->expectDeprecation('Overriding the redirect entity class with the "kunstmaan_redirect.redirect.class" parameter is deprecated since KunstmaanRedirectBundle 5.9 and will not be allowed in KunstmaanRedirectBundle 6.0. Use the "kunstmaan_redirect.redirect_entity" config option instead.');
-
-        $this->setParameter('kunstmaan_redirect.redirect.class', 'RedirectTestEntity');
-        $this->load();
-
-        $this->assertContainerBuilderHasParameter('kunstmaan_redirect.redirect.class', 'RedirectTestEntity');
-    }
-
     public function testRedirectClassParameterWithConfigValue()
     {
         $this->load(['redirect_entity' => 'RedirectTestEntity']);
