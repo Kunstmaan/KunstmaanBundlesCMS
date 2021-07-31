@@ -4,8 +4,6 @@ namespace Kunstmaan\ConfigBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +22,7 @@ class ConfigController
     private $router;
 
     /**
-     * @var EngineInterface|Environment
+     * @var Environment
      */
     private $twig;
 
@@ -48,38 +46,19 @@ class ConfigController
      */
     private $formFactory;
 
-    /**
-     * @param EngineInterface|Environment $twig
-     * @param ContainerInterface          $container
-     * @param FormFactoryInterface        $formFactory
-     */
     public function __construct(
         RouterInterface $router,
-        /* Environment */ $twig,
+        Environment $twig,
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         array $configuration,
-        /* ContainerInterface $container, */
-        /* FormFactoryInterface */ $formFactory
+        FormFactoryInterface $formFactory
     ) {
         $this->router = $router;
         $this->twig = $twig;
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->configuration = $configuration;
-
-        if ($twig instanceof EngineInterface) {
-            @trigger_error('Passing the "@templating" service as the 2nd argument is deprecated since KunstmaanConfigBundle 5.4 and will be replaced by the Twig renderer in KunstmaanConfigBundle 6.0. Injected the "@twig" service instead.', E_USER_DEPRECATED);
-        }
-
-        if (\func_num_args() > 6) {
-            @trigger_error(sprintf('Passing the "container" as the sixth argument in "%s" is deprecated in KunstmaanConfigBundle 5.1 and will be removed in KunstmaanConfigBundle 6.0. Remove the "container" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
-
-            $this->formFactory = func_get_arg(6);
-
-            return;
-        }
-
         $this->formFactory = $formFactory;
     }
 
