@@ -1,8 +1,5 @@
 ---
 media:
-  aviary:
-    title: Aviary
-    nothing: Rien à voir ici.
   media:
     no: Pas encore de fichier dans ce dossier.
     dnd:

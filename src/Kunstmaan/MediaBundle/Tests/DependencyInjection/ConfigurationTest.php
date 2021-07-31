@@ -38,17 +38,7 @@ class ConfigurationTest extends TestCase
         }
 
         $expectedConfig = $array;
-        $expectedConfig['aviary_api_key'] = null;
 
         $this->assertProcessedConfigurationEquals([$array], $expectedConfig);
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation The child node "aviary_api_key" at path "kunstmaan_media" is deprecated. Because the aviary service is discontinued.
-     */
-    public function testDeprecatedAviaryConfig()
-    {
-        $this->assertConfigurationIsValid([['aviary_api_key' => 'deprecated_key']]);
     }
 }

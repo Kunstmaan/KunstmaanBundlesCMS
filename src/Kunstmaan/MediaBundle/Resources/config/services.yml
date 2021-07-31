@@ -64,12 +64,6 @@ services:
         arguments: ['@kunstmaan_media.repository.folder']
         public: true
 
-    kunstmaan_media.mimetype_guesser.factory:
-        class: Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory
-
-    kunstmaan_media.extension_guesser.factory:
-        class: Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory
-
     kunstmaan_media.command.rebuildfoldertree:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
         arguments:
@@ -113,13 +107,6 @@ services:
         arguments: ['@mime_types']
         tags:
             - { name: validator.constraint_validator, alias: has_guessable_extension }
-
-    kunstmaan_media.imagine.filter.loader.background:
-        class: '%liip_imagine.filter.loader.background.class%'
-        arguments:
-            - '@liip_imagine'
-        tags:
-            - { name: 'liip_imagine.filter.loader', loader: 'background' }
 
     Kunstmaan\MediaBundle\Helper\Imagine\ImagineController:
         arguments:
