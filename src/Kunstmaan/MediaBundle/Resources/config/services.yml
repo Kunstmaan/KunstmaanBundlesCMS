@@ -68,8 +68,6 @@ services:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
         arguments:
             - '@doctrine.orm.entity_manager'
-        calls:
-            - [setContainer, ['@service_container'] ]
         tags:
             - { name: console.command }
 
@@ -78,8 +76,6 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_media.media_manager'
-        calls:
-            - [setContainer, ['@service_container'] ]
         tags:
             - { name: console.command }
 
