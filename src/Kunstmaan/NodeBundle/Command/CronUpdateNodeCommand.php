@@ -9,7 +9,7 @@ use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 final class CronUpdateNodeCommand extends Command
@@ -20,7 +20,7 @@ final class CronUpdateNodeCommand extends Command
     private $em;
 
     /**
-     * @var TokenStorage
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
@@ -29,7 +29,7 @@ final class CronUpdateNodeCommand extends Command
      */
     private $nodePublisher;
 
-    public function __construct(EntityManagerInterface $em, TokenStorage $tokenStorage, NodeAdminPublisher $nodePublisher)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, NodeAdminPublisher $nodePublisher)
     {
         parent::__construct();
 
