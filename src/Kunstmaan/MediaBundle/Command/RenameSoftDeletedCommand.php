@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,10 +27,15 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
     private $mediaManager;
 
     /**
+     * @var SlugifierInterface
+     */
+    private $slugifier;
+
+    /**
      * @param EntityManagerInterface|null $em
      * @param MediaManager|null           $mediaManager
      */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* MediaManager */ $mediaManager = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* MediaManager */ $mediaManager = null, $slugifier = null)
     {
         parent::__construct();
 
@@ -43,6 +49,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
 
         $this->em = $em;
         $this->mediaManager = $mediaManager;
+        $this->slugifier = $slugifier;
     }
 
     protected function configure()
@@ -70,12 +77,16 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             $this->mediaManager = $this->getContainer()->get('kunstmaan_media.media_manager');
         }
 
+        if (null === $this->slugifier) {
+            $this->slugifier = $this->getContainer()->get('kunstmaan_utilities.slugifier');
+        }
+
         $output->writeln('Renaming soft-deleted media...');
 
         $original = $input->getOption('original');
         $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAll();
         $updates = 0;
-        $fileRenameQueue = [];
+        $fileRenameQueue = array();
 
         try {
             $this->em->beginTransaction();
@@ -85,8 +96,13 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
                 if ($media->isDeleted() && $media->getLocation() === 'local' && $handler instanceof FileHandler) {
                     $oldFileUrl = $media->getUrl();
                     $newFileName = ($original ? $media->getOriginalFilename() : uniqid() . '.' . pathinfo($oldFileUrl, PATHINFO_EXTENSION));
+                    $parts = pathinfo($newFileName);
+                    $newFileName = $this->slugifier->slugify($parts['filename']);
+                    if (\array_key_exists('extension', $parts)) {
+                        $newFileName .= '.'.strtolower($parts['extension']);
+                    }
                     $newFileUrl = \dirname($oldFileUrl) . '/' . $newFileName;
-                    $fileRenameQueue[] = [$oldFileUrl, $newFileUrl, $handler];
+                    $fileRenameQueue[] = array($oldFileUrl, $newFileUrl, $handler);
                     $media->setUrl($newFileUrl);
                     $this->em->persist($media);
                     ++$updates;
@@ -98,7 +114,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             $this->em->rollback();
             $output->writeln('An error occured while updating soft-deleted media : <error>' . $e->getMessage() . '</error>');
             $updates = 0;
-            $fileRenameQueue = [];
+            $fileRenameQueue = array();
         }
 
         foreach ($fileRenameQueue as $row) {
