@@ -230,7 +230,7 @@ class FileHandler extends AbstractMediaHandler
 
         // Remove the files containing folder if there's nothing left
         $folderPath = $this->getFileFolderPath($media);
-        if ($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
+        if ($adapter->isDirectory($folderPath) && !empty($folderPath)) {
             $allMyKeys = $adapter->keys();
             $everythingfromdir = preg_grep('/' . $folderPath, $allMyKeys);
 
