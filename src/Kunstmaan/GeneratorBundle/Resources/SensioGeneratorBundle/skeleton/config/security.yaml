@@ -17,6 +17,7 @@ security:
     firewalls:
         main:
             pattern: .*
+            user_checker: Kunstmaan\AdminBundle\Security\UserChecker
             form_login:
                 login_path: kunstmaan_admin_login
                 check_path: kunstmaan_admin_login

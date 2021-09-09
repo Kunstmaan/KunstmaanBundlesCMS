@@ -22,25 +22,25 @@
             <label for="username" class="form-control-label">
                 {{ 'security.login.username'|trans }}
             </label>
-            <input class="form-control" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans }}" autocomplete="username" required autofocus>
+            <input class="form-control" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans }}" autocomplete="username" required autofocus tabindex="1">
         </div>
 
         <div class="form-group">
             <label for="password" class="form-control-label">
                 {{ 'security.login.password'|trans }}
             </label>
-            <input class="form-control" id="password" type="password" name="_password" value="" placeholder="{{ 'security.login.password'|trans }}" autocomplete="current-password" required>
+            <input class="form-control" id="password" type="password" name="_password" value="" placeholder="{{ 'security.login.password'|trans }}" autocomplete="current-password" required tabindex="2">
         </div>
 
         <div class="app-login__form__alt">
             <div class="app-login__form__alt__remember-me">
                 <label class="checkbox login__form__remember-me__check">
-                    <input type="checkbox" id="remember_me" name="_remember_me" checked>
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked tabindex="3">
                     {{ 'security.login.remember_me' | trans }}
                 </label>
             </div>
             <div class="app-login__form__alt__forgot-pw">
-                <a href="{{ path('kunstmaan_admin_reset_password') }}" class="login__form__forgot-pw__link">
+                <a href="{{ path('kunstmaan_admin_reset_password') }}" class="login__form__forgot-pw__link" tabindex="5">
                     {{ 'kuma_admin.login.forgot_password'|trans }}
                 </a>
             </div>
@@ -48,7 +48,7 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div class="form-group app-login__form__submit-holder">
-            <button type="submit" id="_submit" name="_submit" class="btn btn--md btn--inverted">
+            <button type="submit" id="_submit" name="_submit" class="btn btn--md btn--inverted" tabindex="4">
                 {{ 'security.login.submit'|trans }}
             </button>
         </div>
