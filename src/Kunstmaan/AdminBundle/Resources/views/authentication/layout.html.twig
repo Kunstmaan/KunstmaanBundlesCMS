@@ -1,76 +1,102 @@
-{% extends '@KunstmaanAdmin/layout.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
 
-{% block extrabodyclasses %}login app-login-page{% endblock %}
+    <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
 
-{% block body %}
-    <div class="app-login">
-        <div class="app-login__title-holder">
-            <header class="app-login__header">
-                {% if login_logo is defined %}
-                    <img class="app-login__brand-logo" src="{{ asset(login_logo) }}" alt="{{ websitetitle | trans }}">
-                {% endif %}
-                <h1 class="app-login__title">
-                    {{ websitetitle | trans }}
-                </h1>
-            </header>
+    <!-- Favicons -->
+    {% include "@KunstmaanAdmin/Default/_favicons.html.twig" %}
 
-            <figure class="app-login__image-holder">
-                {% set login_image_url = asset('/bundles/kunstmaanadmin/default-theme/img/kunstmaan/default-login-bg.jpg') %}
-                {% if custom_login_image_url is defined %}
-                    {% set login_image_url = asset(custom_login_image_url) %}
-                {% endif %}
-                <img src="{{ login_image_url }}" alt="">
-            </figure>
-        </div>
-        <aside class="app-login__aside">
-            <div class="app-login__aside__content">
-                <div class="app-login__alert-holder">
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <div class="alert alert-warning">
-                            <strong>{{ 'form.warning' | trans }}: </strong>
-                            {{ 'security.general.logged_in_as'|trans({'%username%': app.user.username}) }}
-                            <a href="{{ path('kunstmaan_admin_logout') }}" class="btn btn-warning alert__action">
-                                {{ 'security.general.logout'|trans }}
-                            </a>
-                        </div>
+    <!-- Styles -->
+    {% include "@KunstmaanAdmin/Default/_css.html.twig" %}
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaanadmin/cssnext/style.css') }}">
+
+    <!-- Extra CSS -->
+    {% block extracss %}{% endblock %}
+
+    <!-- JS -->
+    {% include "@KunstmaanAdmin/Default/_js_header.html.twig" %}
+
+    {% if google_signin_enabled() %}
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    {% endif %}
+</head>
+
+<body class="app login app-login-page">
+    {% block body %}
+        <div class="app-login">
+            <div class="app-login__title-holder">
+                <header class="app-login__header">
+                    {% if login_logo is defined %}
+                        <img class="app-login__brand-logo" src="{{ asset(login_logo) }}" alt="{{ websitetitle | trans }}">
                     {% endif %}
+                    <h1 class="app-login__title">
+                        {{ websitetitle | trans }}
+                    </h1>
+                </header>
 
-                    {% for key, messages in app.session.flashbag.all() %}
-                        <div class="alert alert-{{ key }} {{ key }}">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <i class="fa fa-times"></i>
-                            </button>
-                            {% for message in messages %}
-                                {{ message|trans }}
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
-                </div>
-                {% block login_content %}{% endblock %}
+                <figure class="app-login__image-holder">
+                    {% set login_image_url = asset('/bundles/kunstmaanadmin/default-theme/img/kunstmaan/default-login-bg.jpg') %}
+                    {% if custom_login_image_url is defined %}
+                        {% set login_image_url = asset(custom_login_image_url) %}
+                    {% endif %}
+                    <img src="{{ login_image_url }}" alt="">
+                </figure>
             </div>
+            <aside class="app-login__aside">
+                <div class="app-login__aside__content">
+                    <div class="app-login__alert-holder">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <div class="alert alert-warning">
+                                <strong>{{ 'form.warning' | trans }}: </strong>
+                                {{ 'security.general.logged_in_as'|trans({'%username%': app.user.username}) }}
+                                <a href="{{ path('kunstmaan_admin_logout') }}" class="btn btn-warning alert__action">
+                                    {{ 'security.general.logout'|trans }}
+                                </a>
+                            </div>
+                        {% endif %}
 
-            {% block login_footer %}
-                <footer class="app-login__footer">
-                    <p class="app-login__footer__text">
-                        <img src="{{ asset('/bundles/kunstmaanadmin/default-theme/img/kunstmaan/logo-cms-color.svg') }}" class="app-login__footer__logo">
-                        Powered by <a href="https://cms.kunstmaan.be" target="_blank" rel="noopener">Kunstmaan CMS</a>
-                    </p>
-                </footer>
-            {% endblock %}
-        </aside>
-    </div>
+                        {% for key, messages in app.session.flashbag.all() %}
+                            <div class="alert alert-{{ key }} {{ key }}">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                {% for message in messages %}
+                                    {{ message|trans }}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% block login_content %}{% endblock %}
+                </div>
 
-    {% block footer %}{% endblock %}
-{% endblock %}
+                {% block login_footer %}
+                    <footer class="app-login__footer">
+                        <p class="app-login__footer__text">
+                            <img src="{{ asset('/bundles/kunstmaanadmin/default-theme/img/kunstmaan/logo-cms-color.svg') }}" width="20px" height="20px" class="app-login__footer__logo">
+                            Powered by <a href="https://cms.kunstmaan.be" target="_blank" rel="noopener">Kunstmaan CMS</a>
+                        </p>
+                    </footer>
+                {% endblock %}
+            </aside>
+        </div>
 
-{% block admin_link %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}
+        {% block footer %}{% endblock %}
+    {% endblock %}
 
-{% block forgot_password_link %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}
+    {% block admin_link %}
+        {# NEXT_MAJOR remove empty block #}
+    {% endblock %}
 
-{% block fos_user_content %}
-    {# NEXT_MAJOR remove empty block #}
-{% endblock %}
+    {% block forgot_password_link %}
+        {# NEXT_MAJOR remove empty block #}
+    {% endblock %}
+
+    {% block fos_user_content %}
+        {# NEXT_MAJOR remove empty block #}
+    {% endblock %}
+</body>

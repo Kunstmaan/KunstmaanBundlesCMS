@@ -60,3 +60,5 @@ services:
         arguments: [ '@kunstmaan_admin.user_manager' ]
         tags:
             - { name: console.command }
+
+    Kunstmaan\AdminBundle\Security\UserChecker: ~
