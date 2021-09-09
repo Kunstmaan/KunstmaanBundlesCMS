@@ -39,3 +39,26 @@ services:
         arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
+
+    kunstmaanseobundle.repository.robots:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments: ['Kunstmaan\SeoBundle\Entity\Robots']
+
+    Kunstmaan\SeoBundle\EventListener\AdminRobotsTxtListener:
+        autoconfigure: true
+        arguments:
+            $repository: '@kunstmaanseobundle.repository.robots'
+
+    Kunstmaan\SeoBundle\EventListener\FileRobotsTxtListener:
+        autoconfigure: true
+        arguments: ["robots.txt", '@request_stack']
+
+    Kunstmaan\SeoBundle\EventListener\ParameterRobotsTxtListener:
+        autoconfigure: true
+        arguments: ['%robots_default%']
+
+    Kunstmaan\SeoBundle\Controller\RobotsController:
+        autowire: true
+        tags: ['controller.service_arguments']
+
