@@ -8,7 +8,7 @@ use Kunstmaan\SeoBundle\Event\RobotsEvent;
 use Kunstmaan\SeoBundle\EventListener\FileRobotsTxtListener;
 use PHPUnit\Framework\TestCase;
 
-class FileRobotsTxtListenerTest extends TestCase
+final class FileRobotsTxtListenerTest extends TestCase
 {
     private const CONTENT = 'User-agent: *
 Allow: /';

@@ -52,7 +52,7 @@ services:
 
     Kunstmaan\SeoBundle\EventListener\FileRobotsTxtListener:
         autoconfigure: true
-        arguments: ["robots.txt", '@request_stack']
+        arguments: ['robots.txt', '@request_stack']
 
     Kunstmaan\SeoBundle\EventListener\ParameterRobotsTxtListener:
         autoconfigure: true

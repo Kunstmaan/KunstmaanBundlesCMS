@@ -10,7 +10,7 @@ use Kunstmaan\SeoBundle\Event\RobotsEvent;
 use Kunstmaan\SeoBundle\EventListener\AdminRobotsTxtListener;
 use PHPUnit\Framework\TestCase;
 
-class AdminRobotsTxtListenerTest extends TestCase
+final class AdminRobotsTxtListenerTest extends TestCase
 {
     private $repoMock;
     private const CONTENT = 'User-agent: *

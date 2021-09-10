@@ -4,12 +4,12 @@ namespace Kunstmaan\SeoBundle\Controller;
 
 use Kunstmaan\SeoBundle\Event\RobotsEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class RobotsController extends AbstractController
+class RobotsController extends Controller
 {
     private $dispatcher;
 
@@ -24,7 +24,7 @@ final class RobotsController extends AbstractController
      *
      * @return array
      */
-    public function __invoke(Request $request)
+    public function indexAction(Request $request)
     {
         $event = new RobotsEvent();
 
