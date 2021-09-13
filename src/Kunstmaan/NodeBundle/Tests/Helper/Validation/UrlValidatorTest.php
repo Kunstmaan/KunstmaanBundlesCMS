@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests\Helper;
+namespace Kunstmaan\NodeBundle\Tests\Helper\Validation;
 
 use Kunstmaan\NodeBundle\Validation\URLValidator;
 use PHPUnit\Framework\MockObject\MockObject;

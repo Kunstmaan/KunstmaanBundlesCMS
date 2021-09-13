@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\SeoBundle\Tests\Entity;
+namespace Kunstmaan\SeoBundle\Tests\Twig;
 
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
