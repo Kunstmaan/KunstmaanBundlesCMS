@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests\Event\Facebook;
+namespace Kunstmaan\VotingBundle\Tests\Event\Facebook;
 
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use PHPUnit\Framework\TestCase;

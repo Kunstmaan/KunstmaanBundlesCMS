@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ConfigBundle\Tests\Entity;
+namespace Kunstmaan\DashboardBundle\Tests\Entity;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use PHPUnit\Framework\TestCase;

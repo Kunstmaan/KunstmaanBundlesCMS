@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests\Event;
+namespace Kunstmaan\NodeSearchBundle\Tests\Event;
 
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
