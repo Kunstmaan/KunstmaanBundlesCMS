@@ -553,8 +553,6 @@ abstract class AdminListController extends Controller
 
     /**
      * @param object $event
-     *
-     * @return object
      */
     private function dispatch($event, string $eventName): object
     {

@@ -22,9 +22,6 @@ class OAuthUserFinderTest extends TestCase
      */
     private $em;
 
-    /**
-     * @return MockObject
-     */
     private function getEm(): MockObject
     {
         if (!isset($this->em)) {

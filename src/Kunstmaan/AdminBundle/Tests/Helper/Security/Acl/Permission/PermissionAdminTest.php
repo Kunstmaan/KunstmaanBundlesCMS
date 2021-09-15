@@ -147,8 +147,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return entity manager mock
-     *
-     * @return EntityManager
      */
     public function getEntityManager(): EntityManager
     {
@@ -159,8 +157,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return alc provider mock
-     *
-     * @return AclProviderInterface
      */
     public function getAclProvider(): AclProviderInterface
     {
@@ -169,8 +165,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return security token storage
-     *
-     * @return TokenStorageInterface
      */
     public function getTokenStorage(): TokenStorageInterface
     {
@@ -179,8 +173,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return oid retrieval strategy mock
-     *
-     * @return ObjectIdentityRetrievalStrategyInterface
      */
     public function getOidRetrievalStrategy(): ObjectIdentityRetrievalStrategyInterface
     {
@@ -189,17 +181,12 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return event dispatcher mock
-     *
-     * @return EventDispatcherInterface
      */
     public function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->createMock('Symfony\Component\EventDispatcher\EventDispatcher');
     }
 
-    /**
-     * @return Shell
-     */
     public function getShell(): Shell
     {
         $mock = $this->createMock(Shell::class);
@@ -210,9 +197,6 @@ class PermissionAdminTest extends TestCase
         return $mock;
     }
 
-    /**
-     * @return KernelInterface
-     */
     public function getKernel(): KernelInterface
     {
         $mock = $this->createMock(Kernel::class);
@@ -224,8 +208,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return permission admin mock
-     *
-     * @return PermissionAdmin
      */
     public function getPermissionAdmin(): PermissionAdmin
     {
@@ -276,8 +258,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return entity mock
-     *
-     * @return AbstractEntity
      */
     public function getEntity(): AbstractEntity
     {
@@ -286,8 +266,6 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return permission admin mock
-     *
-     * @return PermissionAdmin
      */
     public function getInitializedPermissionAdmin(): PermissionAdmin
     {

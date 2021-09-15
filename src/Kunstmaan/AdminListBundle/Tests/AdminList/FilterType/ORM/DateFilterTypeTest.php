@@ -57,9 +57,6 @@ class DateFilterTypeTest extends BaseOrmFilterTest
         $this->assertEquals($testValue, $qb->getParameter('var_date')->getValue());
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

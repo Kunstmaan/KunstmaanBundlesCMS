@@ -51,6 +51,9 @@ class CipherCommand extends ContainerAwareCommand
         $this->setName('kuma:cipher')->setDescription('Cipher utilities commands.');
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (null === $this->cipher) {

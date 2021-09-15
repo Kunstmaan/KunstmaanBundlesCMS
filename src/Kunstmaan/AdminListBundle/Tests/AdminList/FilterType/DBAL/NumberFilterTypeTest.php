@@ -50,9 +50,6 @@ class NumberFilterTypeTest extends BaseDbalFilterTest
         }
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

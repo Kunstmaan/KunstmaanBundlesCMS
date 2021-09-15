@@ -50,9 +50,6 @@ class NumberFilterTypeTest extends BaseOrmFilterTest
         }
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

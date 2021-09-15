@@ -19,9 +19,6 @@ class DateTimeFilterTypeTest extends BaseOrmFilterTest
         $this->object = new DateTimeFilterType('datetime', 'b');
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

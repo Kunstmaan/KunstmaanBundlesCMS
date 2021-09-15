@@ -156,8 +156,6 @@ class GroupTest extends TestCase
 
     /**
      * @param string $name
-     *
-     * @return Role
      */
     protected function getRole($name = 'role1'): Role
     {

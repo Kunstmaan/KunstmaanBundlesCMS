@@ -11,9 +11,6 @@ class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
-    /**
-     * @return ConfigurationInterface
-     */
     protected function getConfiguration(): ConfigurationInterface
     {
         return new Configuration();

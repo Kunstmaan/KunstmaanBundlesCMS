@@ -52,8 +52,6 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
 
     /**
      * @param array $item
-     *
-     * @return bool
      */
     private function parentMatches(?MenuItem $parent, $item): bool
     {

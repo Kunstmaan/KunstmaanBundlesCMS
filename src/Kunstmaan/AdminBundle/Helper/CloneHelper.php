@@ -49,8 +49,6 @@ class CloneHelper
 
     /**
      * @param object $event
-     *
-     * @return object
      */
     private function dispatch($event, string $eventName): object
     {

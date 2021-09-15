@@ -32,6 +32,9 @@ class OnExitIntentAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'on_exit_intent_form';

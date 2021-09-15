@@ -13,6 +13,8 @@ class BackgroundFilterLoader extends \Liip\ImagineBundle\Imagine\Filter\Loader\B
 {
     /**
      * {@inheritdoc}
+     *
+     * @return ImageInterface
      */
     public function load(ImageInterface $image, array $options = [])
     {

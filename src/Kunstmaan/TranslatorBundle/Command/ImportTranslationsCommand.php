@@ -86,6 +86,9 @@ class ImportTranslationsCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $force = $input->getOption('force');

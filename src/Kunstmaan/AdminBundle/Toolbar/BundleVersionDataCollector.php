@@ -83,6 +83,9 @@ class BundleVersionDataCollector extends AbstractDataCollector
         return $this->data;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'kuma_bundle_versions';

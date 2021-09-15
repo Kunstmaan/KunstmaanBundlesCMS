@@ -64,6 +64,8 @@ EOT
      * @param OutputInterface $output An OutputInterface instance
      *
      * @throws \RuntimeException
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

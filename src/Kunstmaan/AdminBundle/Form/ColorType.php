@@ -13,11 +13,17 @@ class ColorType extends AbstractType
         $resolver->setDefaults([TextType::class]);
     }
 
+    /**
+     * @return string|null
+     */
     public function getParent()
     {
         return TextType::class;
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'color';

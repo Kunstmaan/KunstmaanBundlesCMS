@@ -49,6 +49,8 @@ final class ImportTranslationsFromFileCommand extends Command
 
     /**
      * @throws LogicException
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

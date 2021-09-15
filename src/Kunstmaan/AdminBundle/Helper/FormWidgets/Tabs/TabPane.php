@@ -102,9 +102,6 @@ class TabPane
         }
     }
 
-    /**
-     * @return string
-     */
     private function generateIdentifier(TabInterface $tab): string
     {
         return $this->slugifier->slugify($tab->getTitle());

@@ -48,9 +48,6 @@ class StringFilterTypeTest extends BaseDbalFilterTest
         $this->assertEquals($testValue, $qb->getParameter('var_string'));
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

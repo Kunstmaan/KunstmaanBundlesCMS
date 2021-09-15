@@ -64,9 +64,6 @@ class ConfigurationTest extends TestCase
         ],
     ];
 
-    /**
-     * @return ConfigurationInterface
-     */
     protected function getConfiguration(): ConfigurationInterface
     {
         return new Configuration();

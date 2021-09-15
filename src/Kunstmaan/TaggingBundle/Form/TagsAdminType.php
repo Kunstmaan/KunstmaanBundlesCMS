@@ -47,11 +47,17 @@ class TagsAdminType extends AbstractType
         ];
     }
 
+    /**
+     * @return string|null
+     */
     public function getParent()
     {
         return ChoiceType::class;
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_taggingbundle_tags';

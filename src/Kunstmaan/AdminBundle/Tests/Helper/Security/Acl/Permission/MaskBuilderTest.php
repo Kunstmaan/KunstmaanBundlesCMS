@@ -38,8 +38,6 @@ class MaskBuilderTest extends TestCase
 
     /**
      * Provides data to the {@link testSlugify} function
-     *
-     * @return array
      */
     public function getInvalidConstructorData(): array
     {

@@ -65,6 +65,9 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (null === $this->em) {

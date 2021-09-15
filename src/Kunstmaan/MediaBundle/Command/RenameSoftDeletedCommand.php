@@ -63,6 +63,9 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * @return int
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         if (null === $this->em) {

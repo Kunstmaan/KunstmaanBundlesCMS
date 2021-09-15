@@ -19,9 +19,6 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
         $this->object = new DateTimeFilterType('datetime', 'e');
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

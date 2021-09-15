@@ -15,6 +15,9 @@ class AbstractCategoryAdminType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'abstactcategory_form';

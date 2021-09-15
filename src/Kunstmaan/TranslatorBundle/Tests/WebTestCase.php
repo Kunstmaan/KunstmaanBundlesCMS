@@ -10,6 +10,7 @@ use Kunstmaan\TranslatorBundle\Tests\Fixtures\TranslationDataFixture;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class WebTestCase extends BaseWebTestCase
 {
@@ -39,6 +40,9 @@ class WebTestCase extends BaseWebTestCase
         $fs->remove($dir);
     }
 
+    /**
+     * @return string
+     */
     protected static function getKernelClass()
     {
         require_once __DIR__ . '/app/AppKernel.php';
@@ -46,6 +50,9 @@ class WebTestCase extends BaseWebTestCase
         return 'Kunstmaan\TranslatorBundle\Tests\app\AppKernel';
     }
 
+    /**
+     * @return KernelInterface
+     */
     protected static function createKernel(array $options = [])
     {
         $class = self::getKernelClass();

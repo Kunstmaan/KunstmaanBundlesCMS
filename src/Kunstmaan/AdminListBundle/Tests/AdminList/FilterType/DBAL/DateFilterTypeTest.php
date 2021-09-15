@@ -50,9 +50,6 @@ class DateFilterTypeTest extends BaseDbalFilterTest
         $this->assertEquals($testValue, $qb->getParameter('var_date'));
     }
 
-    /**
-     * @return array
-     */
     public static function applyDataProvider(): array
     {
         return [

@@ -14,6 +14,9 @@ class AfterXScrollPercentRuleAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'after_x_percent_form';

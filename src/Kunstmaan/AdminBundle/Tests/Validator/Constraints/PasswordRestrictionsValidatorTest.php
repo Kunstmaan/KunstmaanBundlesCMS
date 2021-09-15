@@ -18,9 +18,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     const PARAMETER_MIN_UPPERCASE = 2;
     const PARAMETER_MIN_SPECIAL_CHARACTERS = 1;
 
-    /**
-     * @return PasswordRestrictionsValidator
-     */
     protected function createValidator(): PasswordRestrictionsValidator
     {
         return new PasswordRestrictionsValidator(self::PARAMETER_MIN_DIGITS, self::PARAMETER_MIN_UPPERCASE, self::PARAMETER_MIN_SPECIAL_CHARACTERS, self::PARAMETER_MIN_LENGTH, self::PARAMETER_MAX_LENGTH);
@@ -154,9 +151,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    /**
-     * @return array
-     */
     public function dataPasswordsWithAllParameters(): array
     {
         return [
@@ -169,9 +163,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     public function dataPasswordsToShort(): array
     {
         return [
@@ -181,9 +172,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     public function dataPasswordsToLong(): array
     {
         return [
@@ -192,9 +180,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     public function dataPasswordsMinimumDigits(): array
     {
         return [
@@ -203,9 +188,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     public function dataPasswordsMinimumUppercase(): array
     {
         return [
@@ -214,9 +196,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
     public function dataPasswordsMinimumSpecialCharacters(): array
     {
         return [
@@ -228,8 +207,6 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * Combine the data of the too long and too short test for an extra length
      * range test.
-     *
-     * @return array
      */
     public function dataPasswordsLengthRange(): array
     {

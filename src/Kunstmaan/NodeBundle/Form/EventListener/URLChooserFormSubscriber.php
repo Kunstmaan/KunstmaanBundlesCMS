@@ -16,6 +16,9 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
 {
     use URLValidator;
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [

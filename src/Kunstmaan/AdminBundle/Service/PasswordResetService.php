@@ -57,8 +57,6 @@ class PasswordResetService
 
     /**
      * @param object $event
-     *
-     * @return object
      */
     private function dispatch($event, string $eventName): object
     {

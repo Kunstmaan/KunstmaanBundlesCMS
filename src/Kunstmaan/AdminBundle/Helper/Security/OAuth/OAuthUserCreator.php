@@ -90,8 +90,6 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
      * This method returns wether a domain for the given email has been configured
      *
      * @param string $email
-     *
-     * @return bool
      */
     private function isConfiguredDomain($email): bool
     {

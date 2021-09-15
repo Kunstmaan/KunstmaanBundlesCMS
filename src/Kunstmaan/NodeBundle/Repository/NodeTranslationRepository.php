@@ -170,7 +170,7 @@ class NodeTranslationRepository extends EntityRepository
      * @param string $lang (optional, if not specified all languages will be
      *                     returned)
      *
-     * @return array
+     * @return NodeTranslation[]
      */
     public function getOnlineChildren(Node $parent, $lang = null)
     {
@@ -182,10 +182,9 @@ class NodeTranslationRepository extends EntityRepository
      * Finds all nodetranslations where title is like the given $title parameter
      *
      * @param string $title
-     * @param string $lang  (optional, if not specified all languages will be
-     *                      returned)
+     * @param string $lang  (optional, if not specified all languages will be returned)
      *
-     * @return array
+     * @return NodeTranslation[]
      */
     public function getNodeTranslationsLikeTitle($title, $lang = null)
     {
@@ -297,7 +296,7 @@ class NodeTranslationRepository extends EntityRepository
      * @param Node            $rootNode       Optional Root node of the tree you
      *                                        wish to use
      *
-     * @return array
+     * @return NodeTranslation[]
      */
     public function getAllNodeTranslationsForUrl(
         $urlSlug,
@@ -501,7 +500,7 @@ class NodeTranslationRepository extends EntityRepository
      * @param string $urlSlug The slug
      * @param string $locale  The locale
      *
-     * @return NodeTranslation
+     * @return NodeTranslation|null
      */
     public function getBestMatchForUrl($urlSlug, $locale)
     {
@@ -569,6 +568,8 @@ class NodeTranslationRepository extends EntityRepository
      *
      * It'll only return the latest version. It'll also hide deleted & offline
      * nodes.
+     *
+     * @return NodeTranslation|null
      */
     public function getNodeTranslationByLanguageAndInternalName(
         $language,
@@ -599,6 +600,9 @@ class NodeTranslationRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @return NodeTranslation[]
+     */
     public function getAllNodeTranslationsByRefEntityName($refEntityName)
     {
         $qb = $this->createQueryBuilder('nt')
@@ -611,6 +615,9 @@ class NodeTranslationRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return NodeTranslation|null
+     */
     public function getParentNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $parent = $nodeTranslation->getNode()->getParent();

@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeSearchBundle\DependencyInjection;
 
 use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -189,6 +190,9 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
         return ElasticSearchUtil::useVersion6($hosts);
     }
 
+    /**
+     * @return ConfigurationInterface|null
+     */
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
         return new Configuration($this->useElasticSearchV6($container));

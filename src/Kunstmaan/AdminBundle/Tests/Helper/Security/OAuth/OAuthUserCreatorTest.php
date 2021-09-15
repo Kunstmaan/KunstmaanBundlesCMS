@@ -30,9 +30,6 @@ class OAuthUserCreatorTest extends TestCase
      */
     private $finder;
 
-    /**
-     * @return MockObject
-     */
     private function getEm(): MockObject
     {
         if (!isset($this->em)) {
@@ -42,9 +39,6 @@ class OAuthUserCreatorTest extends TestCase
         return $this->em;
     }
 
-    /**
-     * @return MockObject
-     */
     private function getFinder(): MockObject
     {
         if (!isset($this->finder)) {
