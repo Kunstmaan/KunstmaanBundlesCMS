@@ -53,7 +53,7 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
     /**
      * @return array
      */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
             ['true'],

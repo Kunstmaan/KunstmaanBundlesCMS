@@ -51,7 +51,7 @@ class StringFilterTypeTest extends BaseOrmFilterTest
     /**
      * @return array
      */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
             ['equals', '= :var_string', 'AStringValue1', 'AStringValue1'],

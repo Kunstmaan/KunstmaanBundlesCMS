@@ -85,7 +85,7 @@ class AdminLocaleListener implements EventSubscriberInterface
      *
      * @return bool
      */
-    private function isAdminToken($providerKey, TokenInterface $token = null)
+    private function isAdminToken($providerKey, TokenInterface $token = null): bool
     {
         return \is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
     }

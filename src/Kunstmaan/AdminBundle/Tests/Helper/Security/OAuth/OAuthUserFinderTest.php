@@ -25,7 +25,7 @@ class OAuthUserFinderTest extends TestCase
     /**
      * @return MockObject
      */
-    private function getEm()
+    private function getEm(): MockObject
     {
         if (!isset($this->em)) {
             $this->em = $this->createMock(EntityManager::class);

@@ -120,7 +120,7 @@ class SessionSecurityListener
     /**
      * @return string
      */
-    private function getIp(Request $request)
+    private function getIp(Request $request): string
     {
         if (!$this->ip) {
             $forwarded = $request->server->get('HTTP_X_FORWARDED_FOR');

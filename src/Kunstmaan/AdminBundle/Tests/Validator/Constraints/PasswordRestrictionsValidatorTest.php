@@ -21,7 +21,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return PasswordRestrictionsValidator
      */
-    protected function createValidator()
+    protected function createValidator(): PasswordRestrictionsValidator
     {
         return new PasswordRestrictionsValidator(self::PARAMETER_MIN_DIGITS, self::PARAMETER_MIN_UPPERCASE, self::PARAMETER_MIN_SPECIAL_CHARACTERS, self::PARAMETER_MIN_LENGTH, self::PARAMETER_MAX_LENGTH);
     }
@@ -157,7 +157,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array
      */
-    public function dataPasswordsWithAllParameters()
+    public function dataPasswordsWithAllParameters(): array
     {
         return [
             ['ABcdef789!'],
@@ -172,7 +172,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array
      */
-    public function dataPasswordsToShort()
+    public function dataPasswordsToShort(): array
     {
         return [
             ['password'],
@@ -184,7 +184,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array
      */
-    public function dataPasswordsToLong()
+    public function dataPasswordsToLong(): array
     {
         return [
             ['correct!'],
@@ -195,7 +195,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array
      */
-    public function dataPasswordsMinimumDigits()
+    public function dataPasswordsMinimumDigits(): array
     {
         return [
             ['withdigits123'],
@@ -206,7 +206,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array
      */
-    public function dataPasswordsMinimumUppercase()
+    public function dataPasswordsMinimumUppercase(): array
     {
         return [
             ['PassworD'],
@@ -217,7 +217,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array
      */
-    public function dataPasswordsMinimumSpecialCharacters()
+    public function dataPasswordsMinimumSpecialCharacters(): array
     {
         return [
             ['password!'],
@@ -231,7 +231,7 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
      *
      * @return array
      */
-    public function dataPasswordsLengthRange()
+    public function dataPasswordsLengthRange(): array
     {
         return $this->dataPasswordsToLong() + $this->dataPasswordsToShort();
     }

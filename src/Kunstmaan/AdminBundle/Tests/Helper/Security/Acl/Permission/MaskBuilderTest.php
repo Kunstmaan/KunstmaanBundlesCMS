@@ -41,7 +41,7 @@ class MaskBuilderTest extends TestCase
      *
      * @return array
      */
-    public function getInvalidConstructorData()
+    public function getInvalidConstructorData(): array
     {
         return [
             [234.463],
