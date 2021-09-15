@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kunstmaan\SeoBundle\Event;
 
-class RobotsEvent
+final class RobotsEvent
 {
     private $content;
 
