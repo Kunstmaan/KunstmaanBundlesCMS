@@ -52,41 +52,29 @@ class RedirectAdminTypeTest extends TestCase
         $builder = $this->createMock('Symfony\Component\Form\Test\FormBuilderInterface');
 
         $builder
-            ->expects($this->at(0))
+            ->expects($this->exactly(5))
             ->method('add')
-            ->with('domain');
-        $builder
-            ->expects($this->at(1))
-            ->method('add')
-            ->with('origin');
-        $builder
-            ->expects($this->at(2))
-            ->method('add')
-            ->with('target');
-        $builder
-            ->expects($this->at(3))
-            ->method('add')
-            ->with('permanent');
+            ->withConsecutive(
+                [$this->equalTo('domain')],
+                [$this->equalTo('origin')],
+                [$this->equalTo('target')],
+                [$this->equalTo('permanent')],
+                [$this->equalTo('note')]
+            );
 
         $this->objectSingleDomain->buildForm($builder, ['domainConfiguration' => $this->singleDomainConfiguration]);
 
         $builder = $this->createMock('Symfony\Component\Form\Test\FormBuilderInterface');
         $builder
-            ->expects($this->at(0))
+            ->expects($this->exactly(5))
             ->method('add')
-            ->with('domain');
-        $builder
-            ->expects($this->at(1))
-            ->method('add')
-            ->with('origin');
-        $builder
-            ->expects($this->at(2))
-            ->method('add')
-            ->with('target');
-        $builder
-            ->expects($this->at(3))
-            ->method('add')
-            ->with('permanent');
+            ->withConsecutive(
+                [$this->equalTo('domain')],
+                [$this->equalTo('origin')],
+                [$this->equalTo('target')],
+                [$this->equalTo('permanent')],
+                [$this->equalTo('note')]
+            );
 
         $this->objectMultiDomain->buildForm($builder, ['domainConfiguration' => $this->multiDomainConfiguration]);
     }
