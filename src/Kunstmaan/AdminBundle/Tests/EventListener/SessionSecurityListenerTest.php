@@ -7,11 +7,15 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class SessionSecurityListenerTest extends TestCase
 {
@@ -22,11 +26,10 @@ class SessionSecurityListenerTest extends TestCase
         $request->server = $this->createMock(ServerBag::class);
         $request->headers = $this->createMock(HeaderBag::class);
 
-        $event = $this->createMock(GetResponseEvent::class);
+        $kernel = $this->createMock(KernelInterface::class);
+        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
         $session = $this->createMock(Session::class);
 
-        $event->expects($this->any())->method('getRequestType')->willReturn(HttpKernelInterface::MASTER_REQUEST);
-        $event->expects($this->any())->method('getRequest')->willReturn($request);
         $request->expects($this->once())->method('hasSession')->willReturn(true);
         $request->expects($this->exactly(2))->method('getSession')->willReturn($session);
         $request->server->expects($this->any())->method('get')->will($this->onConsecutiveCalls('Session ip', 'kuma_ua'));
@@ -37,7 +40,7 @@ class SessionSecurityListenerTest extends TestCase
         $listener = new SessionSecurityListener(true, true, $logger);
         $listener->onKernelRequest($event);
 
-        $event = $this->createMock(GetResponseEvent::class);
+        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST);
         $listener->onKernelRequest($event);
     }
 
@@ -48,11 +51,10 @@ class SessionSecurityListenerTest extends TestCase
         $request->server = $this->createMock(ServerBag::class);
         $request->headers = $this->createMock(HeaderBag::class);
 
-        $event = $this->createMock(FilterResponseEvent::class);
+        $kernel = $this->createMock(KernelInterface::class);
+        $event = class_exists(RequestEvent::class) ? new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response()) : new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response());
         $session = $this->createMock(Session::class);
 
-        $event->expects($this->any())->method('getRequestType')->willReturn(HttpKernelInterface::MASTER_REQUEST);
-        $event->expects($this->any())->method('getRequest')->willReturn($request);
         $request->expects($this->once())->method('hasSession')->willReturn(true);
         $request->expects($this->exactly(2))->method('getSession')->willReturn($session);
         $request->server->expects($this->any())->method('get')->will($this->onConsecutiveCalls('Session ip', 'kuma_ua'));
@@ -63,7 +65,7 @@ class SessionSecurityListenerTest extends TestCase
         $listener = new SessionSecurityListener(true, true, $logger);
         $listener->onKernelResponse($event);
 
-        $event = $this->createMock(FilterResponseEvent::class);
+        $event = class_exists(RequestEvent::class) ? new ResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST, new Response()) : new FilterResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST, new Response());
         $listener->onKernelResponse($event);
     }
 
@@ -74,11 +76,10 @@ class SessionSecurityListenerTest extends TestCase
         $request->server = $this->createMock(ServerBag::class);
         $request->headers = $this->createMock(HeaderBag::class);
 
-        $event = $this->createMock(FilterResponseEvent::class);
+        $kernel = $this->createMock(KernelInterface::class);
+        $event = class_exists(RequestEvent::class) ? new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response()) : new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response());
         $session = $this->createMock(Session::class);
 
-        $event->expects($this->any())->method('getRequestType')->willReturn(HttpKernelInterface::MASTER_REQUEST);
-        $event->expects($this->any())->method('getRequest')->willReturn($request);
         $request->expects($this->once())->method('hasSession')->willReturn(true);
         $request->expects($this->exactly(2))->method('getSession')->willReturn($session);
         $request->expects($this->once())->method('getClientIp')->willReturn('95.154.243.5');
