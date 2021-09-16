@@ -56,7 +56,6 @@
         "sensio/framework-extra-bundle": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "friendsofsymfony/user-bundle": "^2.0",
         "knplabs/knp-menu-bundle": "^3.0",
         "guzzlehttp/guzzle": "~6.1",
         "babdev/pagerfanta-bundle": "^2.5",
@@ -120,7 +119,6 @@
         "kunstmaan/voting-bundle": "self.version"
     },
     "conflict": {
-        "friendsofsymfony/user-bundle": "<2.0.0",
         "doctrine/persistence": "<1.3"
     },
     "autoload": {

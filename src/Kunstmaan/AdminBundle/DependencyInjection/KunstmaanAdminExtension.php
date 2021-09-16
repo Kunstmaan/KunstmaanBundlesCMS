@@ -2,9 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection;
 
-use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
-use Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
@@ -14,13 +12,12 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Mailer\Mailer;
 
-class KunstmaanAdminExtension extends Extension implements PrependExtensionInterface
+class KunstmaanAdminExtension extends Extension
 {
     /**
      * Loads a specific configuration.
@@ -32,6 +29,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        // NEXT_MAJOR: Remove templating dependency
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('commands.yml');
@@ -99,42 +98,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('requiredlocales', $config['required_locales']); //Keep old parameter for to keep BC with routing config
     }
 
-    public function prepend(ContainerBuilder $container)
-    {
-        $fosUserOriginalConfig = $container->getExtensionConfig('fos_user');
-        if (!isset($fosUserOriginalConfig[0]['db_driver'])) {
-            $fosUserConfig['db_driver'] = 'orm'; // other valid values are 'mongodb', 'couchdb'
-        }
-        $fosUserConfig['from_email']['address'] = 'kunstmaancms@myproject.dev';
-        $fosUserConfig['from_email']['sender_name'] = 'KunstmaanCMS';
-        $fosUserConfig['firewall_name'] = 'main';
-        $fosUserConfig['user_class'] = 'Kunstmaan\AdminBundle\Entity\User';
-        $fosUserConfig['group']['group_class'] = 'Kunstmaan\AdminBundle\Entity\Group';
-        $fosUserConfig['resetting']['token_ttl'] = 86400;
-        // Use this node only if you don't want the global email address for the resetting email
-        $fosUserConfig['resetting']['email']['from_email']['address'] = 'kunstmaancms@myproject.dev';
-        $fosUserConfig['resetting']['email']['from_email']['sender_name'] = 'KunstmaanCMS';
-        $fosUserConfig['resetting']['email']['template'] = '@FOSUser/Resetting/email.txt.twig';
-        $fosUserConfig['resetting']['form']['type'] = ResettingFormType::class;
-        $fosUserConfig['resetting']['form']['name'] = 'fos_user_resetting_form';
-        $fosUserConfig['resetting']['form']['validation_groups'] = ['ResetPassword'];
-
-        $fosUserConfig['service']['mailer'] = 'fos_user.mailer.twig_swift';
-        $container->prependExtensionConfig('fos_user', $fosUserConfig);
-
-        // Manually register the KunstmaanAdminBundle folder as a FosUser override for symfony 4.
-        if ($container->hasParameter('kernel.project_dir') && file_exists($container->getParameter('kernel.project_dir') . '/templates/bundles/KunstmaanAdminBundle')) {
-            $twigConfig['paths'][] = ['value' => '%kernel.project_dir%/templates/bundles/KunstmaanAdminBundle', 'namespace' => 'FOSUser'];
-        }
-        $twigConfig['paths'][] = ['value' => \dirname(__DIR__) . '/Resources/views', 'namespace' => 'FOSUser'];
-        $container->prependExtensionConfig('twig', $twigConfig);
-
-        // NEXT_MAJOR: Remove templating dependency
-
-        $configs = $container->getExtensionConfig($this->getAlias());
-        $this->processConfiguration(new Configuration(), $configs);
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -196,24 +159,11 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
     private function configureAuthentication(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
-        $enableNewAuthentication = $config['authentication']['enable_new_authentication'];
-        $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', $enableNewAuthentication);
-
-        if (!$enableNewAuthentication) {
-            @trigger_error('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
-
-            return;
-        }
+        $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', true);
 
         $loader->load('authentication.yml');
 
-        $fosRouteLoaderDefinition = $container->getDefinition(FosRouteLoader::class);
-        $fosRouteLoaderDefinition->setArgument(0, $enableNewAuthentication);
-
         $container->setAlias('kunstmaan_admin.authentication.mailer', $config['authentication']['mailer']['service']);
-
-        // Only required for fos user setup
-        $container->removeDefinition('kunstmaan_admin.password_resetting.listener');
 
         // Validate mailer config
         if (!class_exists(SwiftmailerBundle::class) && !class_exists(Mailer::class)) {
