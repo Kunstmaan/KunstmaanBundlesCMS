@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeSearchBundle\Search;
 use Doctrine\ORM\EntityManager;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Elastica\Query\QueryString;
 use Elastica\Query\Term;
 use Elastica\Util;
@@ -74,13 +74,13 @@ class NodeSearcher extends AbstractElasticaSearcher
     {
         $query = Util::escapeTerm($query);
 
-        $elasticaQueryString = new Match();
+        $elasticaQueryString = new MatchQuery();
         $elasticaQueryString
             ->setFieldMinimumShouldMatch('content', '80%')
             ->setFieldQuery('content', $query);
 
         if ($this->useMatchQueryForTitle) {
-            $elasticaQueryTitle = new Match();
+            $elasticaQueryTitle = new MatchQuery();
             $elasticaQueryTitle
                 ->setFieldQuery('title', $query)
                 ->setFieldMinimumShouldMatch('title', '80%')

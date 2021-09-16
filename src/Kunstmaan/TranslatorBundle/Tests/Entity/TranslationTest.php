@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TranslationBundle\Tests\Entity;
+namespace Kunstmaan\TranslatorBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;

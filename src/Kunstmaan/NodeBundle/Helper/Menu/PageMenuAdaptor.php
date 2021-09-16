@@ -195,7 +195,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         MenuBuilder $menu,
         array &$children,
         array $nodes,
-        MenuItem $parent = null,
+        ?MenuItem $parent,
         array $activeNodeIds
     ) {
         foreach ($nodes as $child) {

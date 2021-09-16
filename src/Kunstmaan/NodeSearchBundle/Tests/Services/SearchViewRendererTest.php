@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeSearchBundle\Tests\unit\Services;
+namespace Kunstmaan\NodeSearchBundle\Tests\Services;
 
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer;

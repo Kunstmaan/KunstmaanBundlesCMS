@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ConfigBundle\Tests\Entity;
+namespace Kunstmaan\DashboardBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;

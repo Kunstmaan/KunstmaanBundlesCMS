@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "kunstmaan/adminlist-bundle": "~5.2",
         "symfony-cmf/routing-bundle": "~2.0"
     },

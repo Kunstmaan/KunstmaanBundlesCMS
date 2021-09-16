@@ -17,11 +17,9 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     protected $popupId;
 
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
-     * @param int           $id        The if of the popup
+     * @param int $id The if of the popup
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null, $id)
+    public function __construct(EntityManager $em, ?AclHelper $aclHelper, $id)
     {
         parent::__construct($em, $aclHelper);
 

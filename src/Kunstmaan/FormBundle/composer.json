@@ -14,7 +14,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "behat/transliterator": "~1.2",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "kunstmaan/admin-bundle": "^5.7",
