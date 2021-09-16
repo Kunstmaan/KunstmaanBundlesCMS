@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller for the pagepart administration
+ * @final since 5.9
  */
 class PagePartAdminController extends Controller
 {

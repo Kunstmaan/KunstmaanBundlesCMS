@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
@@ -15,9 +16,11 @@ use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
+use Kunstmaan\AdminListBundle\Service\ExportService;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +28,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @deprecated sinc KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Extend from "Kunstmaan\AdminListBundle\Controller\AbstractAdminListController" instead.
- */
-abstract class AdminListController extends Controller
+abstract class AbstractAdminListController extends AbstractController
 {
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
@@ -569,5 +571,16 @@ abstract class AdminListController extends Controller
         }
 
         return $eventDispatcher->dispatch($eventName, $event);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            AdminListFactory::class,
+            ExportService::class,
+            EntityVersionLockService::class,
+            interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+            EventDispatcherInterface::class,
+        ]);
     }
 }

@@ -2,6 +2,11 @@ parameters:
     kunstmaan_adminlist.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
 
 services:
+    # Autowire aliases
+    Kunstmaan\AdminListBundle\AdminList\AdminListFactory: '@kunstmaan_adminlist.factory'
+    Kunstmaan\AdminListBundle\Service\ExportService: '@kunstmaan_adminlist.service.export'
+    Kunstmaan\AdminListBundle\Service\EntityVersionLockService: '@kunstmaan_entity.admin_entity.entity_version_lock_service'
+
     kunstmaan_adminlist.factory:
         class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
         public: true

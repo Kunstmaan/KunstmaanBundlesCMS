@@ -9,6 +9,9 @@ use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @final since 5.9
+ */
 class SitemapController extends Controller
 {
     /**

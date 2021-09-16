@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing groups in an admin list
+ *
+ * @final since 5.9
  */
 class GroupsController extends BaseSettingsController
 {

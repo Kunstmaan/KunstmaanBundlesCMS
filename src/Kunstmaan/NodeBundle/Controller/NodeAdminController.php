@@ -47,7 +47,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * NodeAdminController
+ * @final since 5.9
  */
 class NodeAdminController extends Controller
 {

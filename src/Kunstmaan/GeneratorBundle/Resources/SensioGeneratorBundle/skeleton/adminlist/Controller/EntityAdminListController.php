@@ -4,7 +4,7 @@ namespace {{ namespace }}\Controller;
 
 use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}", requirements={"_locale"="%requiredlocales%"})
  */
 {% endif %}
-class {{ entity_class }}AdminListController extends AdminListController
+class {{ entity_class }}AdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface

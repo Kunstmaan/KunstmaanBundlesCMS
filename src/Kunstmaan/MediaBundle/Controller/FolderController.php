@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * FolderController.
+ * @final since 5.9
  */
 class FolderController extends Controller
 {
