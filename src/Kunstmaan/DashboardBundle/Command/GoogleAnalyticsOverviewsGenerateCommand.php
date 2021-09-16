@@ -7,34 +7,19 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsSegmentRepository;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
+final class GoogleAnalyticsOverviewsGenerateCommand extends Command
 {
     /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @param EntityManagerInterface|null $em
-     */
-    public function __construct(/* EntityManagerInterface */ $em = null)
+    public function __construct(EntityManagerInterface $em)
     {
         parent::__construct();
-
-        if (!$em instanceof EntityManagerInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $em ? 'kuma:dashboard:widget:googleanalytics:overviews:generate' : $em);
-
-            return;
-        }
 
         $this->em = $em;
     }
@@ -65,10 +50,6 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        }
-
         // get params
         $configId = false;
         $segmentId = false;

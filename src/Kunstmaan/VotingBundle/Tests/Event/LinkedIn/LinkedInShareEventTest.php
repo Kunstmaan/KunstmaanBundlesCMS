@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests\Event\LinkedIn;
+namespace Kunstmaan\VotingBundle\Tests\Event\LinkedIn;
 
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use PHPUnit\Framework\TestCase;

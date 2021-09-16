@@ -6,19 +6,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration as BaseDomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class DomainConfiguration extends BaseDomainConfiguration
 {
     const OVERRIDE_HOST = '_override_host';
     const SWITCH_HOST = '_switch_host';
-
-    /**
-     * @var Node
-     *
-     * @deprecated since KunstmaanMultiDomainBundle 5.7 and will be removed in KunstmaanMultiDomainBundle 6.0. Use the `$rootNodeCache` property instead.
-     */
-    protected $rootNode;
 
     /**
      * @var array
@@ -41,25 +34,13 @@ class DomainConfiguration extends BaseDomainConfiguration
     /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @param ContainerInterface|string $multilanguage
-     */
-    public function __construct(/*ContainerInterface|RequestStack*/ $requestStack, $multilanguage = null, $defaultLocale = null, $requiredLocales = null, AdminRouteHelper $adminRouteHelper = null, EntityManagerInterface $em = null, array $hosts = null)
+    public function __construct(RequestStack $requestStack, bool $multilanguage, string $defaultLocale, string $requiredLocales, AdminRouteHelper $adminRouteHelper, EntityManagerInterface $em, array $hosts)
     {
         parent::__construct($requestStack, $multilanguage, $defaultLocale, $requiredLocales);
 
-        if ($requestStack instanceof ContainerInterface) {
-            @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
-
-            $this->container = $requestStack;
-            $this->adminRouteHelper = $this->container->get('kunstmaan_admin.adminroute.helper');
-            $this->hosts = $this->container->getParameter('kunstmaan_multi_domain.hosts');
-            $this->em = $this->container->get('doctrine.orm.entity_manager');
-        } else {
-            $this->adminRouteHelper = $adminRouteHelper;
-            $this->hosts = $hosts;
-            $this->em = $em;
-        }
+        $this->adminRouteHelper = $adminRouteHelper;
+        $this->hosts = $hosts;
+        $this->em = $em;
 
         foreach ($this->hosts as $host => $hostInfo) {
             if (isset($hostInfo['aliases'])) {
@@ -190,11 +171,6 @@ class DomainConfiguration extends BaseDomainConfiguration
             $internalName = $this->hosts[$host]['root'];
             $nodeRepo = $this->em->getRepository(Node::class);
             $this->rootNodeCache[$host] = $nodeRepo->getNodeByInternalName($internalName);
-
-            // Keep BC by setting the first node found.
-            if (null === $this->rootNode) {
-                $this->rootNode = $this->rootNodeCache[$host];
-            }
         }
 
         return $this->rootNodeCache[$host];

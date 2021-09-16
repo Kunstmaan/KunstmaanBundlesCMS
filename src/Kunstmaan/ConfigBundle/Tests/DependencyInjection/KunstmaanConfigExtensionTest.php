@@ -21,8 +21,5 @@ class KunstmaanConfigExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_config');
-        $this->assertContainerBuilderHasParameter('kunstmaan_config.menu.adaptor.class');
-        $this->assertContainerBuilderHasParameter('kunstmaan_config.twig.extension.class');
-        $this->assertContainerBuilderHasParameter('kunstmaan_config.controller.config.class');
     }
 }

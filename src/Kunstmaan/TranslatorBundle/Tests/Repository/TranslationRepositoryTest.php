@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
+namespace Kunstmaan\TranslatorBundle\Tests\Repository;
 
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Kunstmaan\TranslatorBundle\Tests\WebTestCase;

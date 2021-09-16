@@ -8,7 +8,6 @@ use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -71,18 +70,5 @@ class StructureNodeTest extends TestCase
     {
         $node = new TestStructureNode();
         $this->assertEquals(PageAdminType::class, $node->getDefaultAdminType());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testService()
-    {
-        $renderContext = new RenderContext();
-
-        $node = new TestStructureNode();
-        $node->service(new Container(), new Request(), $renderContext);
-
-        $this->assertArrayHasKey('test', $renderContext->getArrayCopy());
     }
 }

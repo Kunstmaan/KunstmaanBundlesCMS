@@ -26,7 +26,6 @@ class ConfigurationTest extends TestCase
             'ip_check' => false,
             'user_agent_check' => false,
         ],
-        'admin_exception_excludes' => [],
         'default_admin_locale' => 'en',
         'enable_console_exception_listener' => true,
         'enable_toolbar_helper' => '%kernel.debug%',
@@ -34,7 +33,6 @@ class ConfigurationTest extends TestCase
             'enabled' => true,
             'exclude_patterns' => [],
         ],
-        'provider_keys' => [],
         'toolbar_firewall_names' => ['main'],
         'admin_firewall_name' => 'main',
         'menu_items' => [],
@@ -164,22 +162,5 @@ class ConfigurationTest extends TestCase
         ];
 
         $this->assertPartialConfigurationIsInvalid([$array], 'google_signin');
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDepecratedExceptionExcludes()
-    {
-        $this->expectDeprecation('The "admin_exception_excludes" option is deprecated. Use "kunstmaan_admin.exception_logging.exclude_patterns" instead.');
-
-        $config = [
-            'admin_exception_excludes' => ['404'],
-        ];
-        $expected = array_merge(self::DEFAULT_EXPECTED_CONFIG, [
-            'admin_exception_excludes' => ['404'],
-        ]);
-
-        $this->assertProcessedConfigurationEquals([$config], $expected);
     }
 }

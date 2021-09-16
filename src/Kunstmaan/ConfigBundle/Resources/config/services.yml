@@ -1,24 +1,19 @@
-parameters:
-    kunstmaan_config.menu.adaptor.class: 'Kunstmaan\ConfigBundle\Helper\Menu\ConfigMenuAdaptor'
-    kunstmaan_config.twig.extension.class: 'Kunstmaan\ConfigBundle\Twig\ConfigTwigExtension'
-    kunstmaan_config.controller.config.class: 'Kunstmaan\ConfigBundle\Controller\ConfigController'
-
 services:
   kunstmaan_config.menu.adaptor:
-    class: "%kunstmaan_config.menu.adaptor.class%"
+    class: Kunstmaan\ConfigBundle\Helper\Menu\ConfigMenuAdaptor
     arguments: ["%kunstmaan_config%", "@security.authorization_checker"]
     tags:
       -  { name: "kunstmaan_admin.menu.adaptor" }
 
 
   kunstmaan_config.config.twig.extension:
-    class: "%kunstmaan_config.twig.extension.class%"
+    class: Kunstmaan\ConfigBundle\Twig\ConfigTwigExtension
     arguments: ["@doctrine.orm.entity_manager", "%kunstmaan_config%"]
     tags:
       - { name: twig.extension }
 
   kunstmaan_config.controller.config:
-    class: "%kunstmaan_config.controller.config.class%"
+    class: Kunstmaan\ConfigBundle\Controller\ConfigController
     arguments:
       - "@router"
       - "@twig"

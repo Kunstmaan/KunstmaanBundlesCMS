@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class MenuBuilderTest extends TestCase
@@ -24,16 +23,6 @@ class MenuBuilderTest extends TestCase
         ;
 
         return $menuBuilderMock;
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Passing the container as the first argument of "Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder" is deprecated in KunstmaanAdminBundle 5.4 and will be removed in KunstmaanAdminBundle 6.0. Inject the "request_stack" service instead.
-     */
-    public function testConstructorContainerDeprecation()
-    {
-        $container = $this->createMock(ContainerInterface::class);
-        new MenuBuilder($container);
     }
 
     public function testGetChildrenAndTopChildren()

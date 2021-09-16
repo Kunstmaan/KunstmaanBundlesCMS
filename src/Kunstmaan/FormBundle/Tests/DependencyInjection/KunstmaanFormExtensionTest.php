@@ -22,9 +22,6 @@ class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
         $this->container->setParameter('kernel.project_dir', '/somewhere/over/the/rainbow');
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_form.form_mailer.class');
-        $this->assertContainerBuilderHasParameter('kunstmaan_form.form_handler.class');
-
         $expectedFormSubmissionPath = '/somewhere/over/the/rainbow/web/uploads/formsubmissions';
         if (Kernel::VERSION_ID >= 40000) {
             $expectedFormSubmissionPath = '/somewhere/over/the/rainbow/public/uploads/formsubmissions';

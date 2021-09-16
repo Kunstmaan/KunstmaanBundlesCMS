@@ -60,8 +60,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('kunstmaan_admin.admin_prefix', $this->normalizeUrlSlice($config['admin_prefix']));
 
-        $exceptionExcludes = !empty($config['exception_logging']['exclude_patterns']) ? $config['exception_logging']['exclude_patterns'] : $config['admin_exception_excludes'];
-        $container->setParameter('kunstmaan_admin.admin_exception_excludes', $exceptionExcludes);
+        $container->setParameter('kunstmaan_admin.admin_exception_excludes', $config['exception_logging']['exclude_patterns']);
 
         $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
         $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
@@ -74,7 +73,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.password_restrictions.min_length', $config['password_restrictions']['min_length']);
         $container->setParameter('kunstmaan_admin.password_restrictions.max_length', $config['password_restrictions']['max_length']);
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
-        $container->setParameter('kunstmaan_admin.toolbar_firewall_names', !empty($config['provider_keys']) ? $config['provider_keys'] : $config['toolbar_firewall_names']);
+        $container->setParameter('kunstmaan_admin.toolbar_firewall_names', $config['toolbar_firewall_names']);
         $container->setParameter('kunstmaan_admin.admin_firewall_name', $config['admin_firewall_name']);
 
         $container->setParameter('kunstmaan_admin.user_class', $config['authentication']['user_class']);
@@ -93,10 +92,11 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $this->registerExceptionLoggingConfiguration($config['exception_logging'], $container);
 
-        $this->addWebsiteTitleParameter($container, $config);
-        $this->addMultiLanguageParameter($container, $config);
-        $this->addRequiredLocalesParameter($container, $config);
-        $this->addDefaultLocaleParameter($container, $config);
+        $container->setParameter('kunstmaan_admin.default_locale', $config['default_locale']);
+        $container->setParameter('kunstmaan_admin.website_title', $config['website_title']);
+        $container->setParameter('kunstmaan_admin.multi_language', $config['multi_language']);
+        $container->setParameter('kunstmaan_admin.required_locales', $config['required_locales']);
+        $container->setParameter('requiredlocales', $config['required_locales']); //Keep old parameter for to keep BC with routing config
     }
 
     public function prepend(ContainerBuilder $container)
@@ -179,55 +179,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $urlSlice = preg_quote($urlSlice);
 
         return $urlSlice;
-    }
-
-    private function addWebsiteTitleParameter(ContainerBuilder $container, array $config)
-    {
-        $websiteTitle = $config['website_title'];
-        if (null === $config['website_title']) {
-            @trigger_error('Not providing a value for the "kunstmaan_admin.website_title" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
-
-            $websiteTitle = $container->hasParameter('websitetitle') ? $container->getParameter('websitetitle') : '';
-        }
-
-        $container->setParameter('kunstmaan_admin.website_title', $websiteTitle);
-    }
-
-    private function addMultiLanguageParameter(ContainerBuilder $container, array $config)
-    {
-        $multilanguage = $config['multi_language'];
-        if (null === $multilanguage) {
-            @trigger_error('Not providing a value for the "kunstmaan_admin.multi_language" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
-
-            $multilanguage = $container->hasParameter('multilanguage') ? $container->getParameter('multilanguage') : '';
-        }
-
-        $container->setParameter('kunstmaan_admin.multi_language', $multilanguage);
-    }
-
-    private function addRequiredLocalesParameter(ContainerBuilder $container, array $config)
-    {
-        $requiredLocales = $config['required_locales'];
-        if (null === $config['required_locales']) {
-            @trigger_error('Not providing a value for the "kunstmaan_admin.required_locales" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
-
-            $requiredLocales = $container->hasParameter('requiredlocales') ? $container->getParameter('requiredlocales') : '';
-        }
-
-        $container->setParameter('kunstmaan_admin.required_locales', $requiredLocales);
-        $container->setParameter('requiredlocales', $requiredLocales); //Keep old parameter for to keep BC with routing config
-    }
-
-    private function addDefaultLocaleParameter(ContainerBuilder $container, array $config)
-    {
-        $defaultLocale = $config['default_locale'];
-        if (null === $config['default_locale']) {
-            @trigger_error('Not providing a value for the "kunstmaan_admin.default_locale" config is deprecated since KunstmaanAdminBundle 5.2, this config value will be required in KunstmaanAdminBundle 6.0.', E_USER_DEPRECATED);
-
-            $defaultLocale = $container->hasParameter('defaultlocale') ? $container->getParameter('defaultlocale') : '';
-        }
-
-        $container->setParameter('kunstmaan_admin.default_locale', $defaultLocale);
     }
 
     private function registerExceptionLoggingConfiguration(array $config, ContainerBuilder $container)

@@ -1,6 +1,5 @@
 parameters:
     kunstmaan_multi_domain.router.class: Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter
-    kunstmaan_multi_domain.domain_configuration.class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
 
 services:
     kunstmaan_multi_domain.admin_panel.sites:
@@ -24,6 +23,6 @@ services:
         class: Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler
 
     kunstmaan_multi_domain.domain_configuration:
-        class: '%kunstmaan_multi_domain.domain_configuration.class%'
+        class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
         arguments: ['@request_stack', '%kunstmaan_admin.multi_language%', '%kunstmaan_admin.default_locale%', '%kunstmaan_admin.required_locales%', '@kunstmaan_admin.adminroute.helper', '@doctrine.orm.entity_manager', '%kunstmaan_multi_domain.hosts%']
         public: true

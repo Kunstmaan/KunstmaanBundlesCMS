@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\FormBundle\Tests\Tests\Entity\PageParts;
+namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;

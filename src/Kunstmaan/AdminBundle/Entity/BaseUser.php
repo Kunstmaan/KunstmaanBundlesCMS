@@ -2,16 +2,19 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupInterface;
 use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictions;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
+/**
+ * NEXT_MAJOR implement EquatableInterface
+ */
 abstract class BaseUser implements UserInterface
 {
     /**
@@ -295,7 +298,7 @@ abstract class BaseUser implements UserInterface
         return $this->isEnabled();
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -307,7 +310,7 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -397,7 +400,7 @@ abstract class BaseUser implements UserInterface
     /**
      * @return string The username
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -570,7 +573,7 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
-    public function setPasswordRequestedAt(DateTime $date = null)
+    public function setPasswordRequestedAt(\DateTime $date = null)
     {
         //TODO: check if this propery is usefull?
         // NEXT_MAJOR remove method
@@ -584,7 +587,7 @@ abstract class BaseUser implements UserInterface
         return $this->lastLogin;
     }
 
-    public function setLastLogin(?DateTime $lastLogin = null)
+    public function setLastLogin(?\DateTime $lastLogin = null)
     {
         $this->lastLogin = $lastLogin;
 
@@ -634,6 +637,38 @@ abstract class BaseUser implements UserInterface
     public function isPasswordRequestNonExpired($ttl)
     {
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEqualTo(BaseUserInterface $user): bool
+    {
+        if (!$user instanceof self) {
+            return false;
+        }
+
+        if ($this->id !== $user->getId()) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        if ($this->isEnabled() !== $user->isEnabled()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

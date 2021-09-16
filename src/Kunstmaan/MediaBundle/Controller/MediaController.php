@@ -446,34 +446,6 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("move/", name="KunstmaanMediaBundle_media_move", methods={"POST"})
-     *
-     * @return string
-     */
-    public function moveMedia(Request $request)
-    {
-        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanMediaBundle 5.1 and will be removed in KunstmaanMediaBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
-
-        $mediaId = $request->request->get('mediaId');
-        $folderId = $request->request->get('folderId');
-
-        if (empty($mediaId) || empty($folderId)) {
-            return new JsonResponse(['error' => ['title' => 'Missing media id or folder id']], 400);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository(Media::class);
-
-        $media = $mediaRepo->getMedia($mediaId);
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
-
-        $media->setFolder($folder);
-        $mediaRepo->save($media);
-
-        return new JsonResponse();
-    }
-
-    /**
      * @Route("/bulk-move", name="KunstmaanMediaBundle_media_bulk_move")
      *
      * @return JsonResponse|Response

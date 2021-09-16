@@ -56,21 +56,14 @@ class RedirectAdminListConfiguratorTest extends TestCase
     {
         $filterBuilder = $this->createMock('Kunstmaan\AdminListBundle\AdminList\FilterBuilder');
         $filterBuilder
-            ->expects($this->at(0))
+            ->expects($this->exactly(4))
             ->method('add')
-            ->with('origin');
-        $filterBuilder
-            ->expects($this->at(1))
-            ->method('add')
-            ->with('target');
-        $filterBuilder
-            ->expects($this->at(2))
-            ->method('add')
-            ->with('permanent');
-        $filterBuilder
-            ->expects($this->at(3))
-            ->method('add')
-            ->with('note');
+            ->withConsecutive(
+                [$this->equalTo('origin')],
+                [$this->equalTo('target')],
+                [$this->equalTo('permanent')],
+                [$this->equalTo('note')]
+            );
         $this->object->setFilterBuilder($filterBuilder);
         $this->object->buildFilters();
     }

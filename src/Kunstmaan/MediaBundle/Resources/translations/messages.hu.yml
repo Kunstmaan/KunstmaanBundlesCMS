@@ -1,8 +1,5 @@
 ---
 media:
-  aviary:
-    title: Aviary
-    nothing: Nincs megjeleníthető elem
   media:
     no: Még nincs fájl ebben a könyvtárban.
     dnd:

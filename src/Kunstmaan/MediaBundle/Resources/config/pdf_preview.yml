@@ -1,17 +1,13 @@
-parameters:
-    kunstmaan_media.pdf_transformer.class: 'Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer'
-    kunstmaan_media.media_handler.pdf.class: 'Kunstmaan\MediaBundle\Helper\File\PdfHandler'
-
 services:
     kunstmaan_media.imagick:
         class: 'Imagick'
 
     kunstmaan_media.pdf_transformer:
-        class: '%kunstmaan_media.pdf_transformer.class%'
+        class: Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer
         arguments: ['@kunstmaan_media.imagick']
 
     kunstmaan_media.media_handlers.pdf:
-        class: '%kunstmaan_media.media_handler.pdf.class%'
+        class: Kunstmaan\MediaBundle\Helper\File\PdfHandler
         parent: kunstmaan_media.media_handlers.file
         arguments: [1, '@mime_types']
         calls:

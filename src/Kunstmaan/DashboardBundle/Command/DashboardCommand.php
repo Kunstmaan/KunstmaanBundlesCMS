@@ -4,32 +4,21 @@ namespace Kunstmaan\DashboardBundle\Command;
 
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Symfony CLI command to collect all the widget dashboard data using bin/console kuma:dashboard:collect
- *
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
-class DashboardCommand extends ContainerAwareCommand
+final class DashboardCommand extends Command
 {
     private $widgetManager;
 
-    public function __construct(WidgetManager $widgetManager = null)
+    public function __construct(WidgetManager $widgetManager)
     {
         parent::__construct();
-
-        if (!$widgetManager instanceof WidgetManager) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $widgetManager ? 'kuma:dashboard:collect' : $widgetManager);
-
-            return;
-        }
 
         $this->widgetManager = $widgetManager;
     }
@@ -46,21 +35,11 @@ class DashboardCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->widgetManager) {
-            $this->widgetManager = $this->getContainer()->get('kunstmaan_dashboard.manager.widgets');
-        }
-
         /** @var DashboardWidget[] $widgets */
         $widgets = $this->widgetManager->getWidgets();
         foreach ($widgets as $widget) {
-            if (null !== $widget->getCommandName()) {
-                $command = $this->getApplication()->find($widget->getCommandName());
-
-                $command->run(new ArrayInput([]), $output);
-            } else {
-                //NEXT_MAJOR: Remove deprecated logic
-                $widget->getCommand()->execute($input, $output);
-            }
+            $command = $this->getApplication()->find($widget->getCommandName());
+            $command->run(new ArrayInput([]), $output);
         }
 
         return 0;

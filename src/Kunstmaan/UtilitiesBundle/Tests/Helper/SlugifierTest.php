@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests\Helper;
+namespace Kunstmaan\UtilitiesBundle\Tests\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use PHPUnit\Framework\TestCase;

@@ -23,8 +23,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     private $overwriteFosHttpCache;
 
     /** @var bool */
-    private $overwriteFosUser;
-    /** @var bool */
     private $newAuthentication;
 
     public function __construct(string $projectDir, bool $newAuthentication = false)
@@ -59,13 +57,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
                 InputOption::VALUE_REQUIRED,
                 'Whether the command should generate an example or just overwrite the already existing config file'
             )
-            // NEXT_MAJOR: remove option
-            ->addOption(
-                'overwrite-fosuser',
-                '',
-                InputOption::VALUE_REQUIRED,
-                'DEPRECATED. Whether the command should generate an example or just overwrite the already existing config file'
-            )
             ->setName('kuma:generate:config');
     }
 
@@ -88,8 +79,7 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
             $this->projectDir,
             $this->overwriteSecurity,
             $this->overwriteLiipImagine,
-            $this->overwriteFosHttpCache,
-            $this->newAuthentication ? false : $this->overwriteFosUser
+            $this->overwriteFosHttpCache
         );
 
         $this->assistant->writeSection('Config successfully created', 'bg=green;fg=black');
@@ -104,14 +94,9 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     {
         $this->assistant->writeLine(["This helps you to set all default config files needed to run KunstmaanCMS.\n"]);
 
-        if ($this->assistant->hasOption('overwrite-fosuser')) {
-            @trigger_error(sprintf('Passing the option "overwrite-fosuser" is deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0. Use the new KunstmaanAdminBundle authentication system instead.'), E_USER_DEPRECATED);
-        }
-
         $this->overwriteSecurity = $this->assistant->getOptionOrDefault('overwrite-security', null);
         $this->overwriteLiipImagine = $this->assistant->getOptionOrDefault('overwrite-liipimagine', null);
         $this->overwriteFosHttpCache = $this->assistant->getOptionOrDefault('overwrite-foshttpcache', null);
-        $this->overwriteFosUser = $this->assistant->getOptionOrDefault('overwrite-fosuser', null);
 
         if (null === $this->overwriteSecurity) {
             $this->overwriteSecurity = $this->assistant->askConfirmation(
@@ -128,12 +113,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
         if (null === $this->overwriteFosHttpCache) {
             $this->overwriteFosHttpCache = $this->assistant->askConfirmation(
                 'Do you want to overwrite the production fos_http_cache.yaml configuration file? (y/n)',
-                'y'
-            );
-        }
-        if (null === $this->overwriteFosUser && false === $this->newAuthentication) {
-            $this->overwriteFosUser = $this->assistant->askConfirmation(
-                'Do you want to overwrite the fos_user.yaml configuration file? (y/n)',
                 'y'
             );
         }

@@ -21,6 +21,6 @@ class KunstmaanAdminListExtensionTest extends AbstractExtensionTestCase
         $this->container->setParameter('datePicker_startDate', '2014-09-18 10:00:00');
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_adminlist.service.export.class');
+        $this->assertContainerBuilderHasParameter('kunstmaan_entity.lock_check_interval');
     }
 }

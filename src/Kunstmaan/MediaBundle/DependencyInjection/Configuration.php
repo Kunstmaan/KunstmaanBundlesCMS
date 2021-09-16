@@ -26,7 +26,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('soundcloud_api_key')->defaultValue('YOUR_CLIENT_ID')->end()
-                ->scalarNode('aviary_api_key')->setDeprecated('The child node "%node%" at path "%path%" is deprecated. Because the aviary service is discontinued.')->defaultNull()->end()
                 ->arrayNode('remote_video')
                     ->addDefaultsIfNotSet()
                     ->children()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Oauth;
+namespace Kunstmaan\AdminBundle\Tests\Helper\Security\OAuth;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;

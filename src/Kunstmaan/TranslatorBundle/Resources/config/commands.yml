@@ -22,10 +22,6 @@ services:
         tags:
             - { name: console.command }
 
-    Kunstmaan\TranslatorBundle\Command\MigrationsDiffCommand:
-        tags:
-            - { name: console.command }
-
     Kunstmaan\TranslatorBundle\Command\ImportTranslationsFromFileCommand:
         arguments:
             - '@kunstmaan_translator.service.importer.importer'

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
+namespace Kunstmaan\PagePartBundle\Tests\PageTemplate;
 
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationParser;

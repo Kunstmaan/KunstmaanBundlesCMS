@@ -9,12 +9,12 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            SYMFONY_DEPRECATIONS_HELPER: "baselineFile=./.build/deprecations-baseline.json&max[self]=0"
+            SYMFONY_DEPRECATIONS_HELPER: "baselineFile=./.build/deprecations-baseline.json&max[self]=999999"
 
         strategy:
             fail-fast: false
             matrix:
-                php: ['7.2', '7.3', '7.4']
+                php: ['7.2', '7.3', '7.4', '8.0']
                 deps: ['stable']
                 symfony: [''] # Don't lock to a specific symfony version by default
                 include:

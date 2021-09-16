@@ -16,11 +16,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     private $menu;
 
-    /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
-     */
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null, Menu $menu)
+    public function __construct(EntityManager $em, ?AclHelper $aclHelper, Menu $menu)
     {
         parent::__construct($em, $aclHelper);
 

@@ -31,17 +31,4 @@ class KunstmaanUtilitiesExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter('kunstmaan_utilities.cipher.secret', 'testvalue');
     }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Setting the "kunstmaan_utilities.cipher.secret" parameter is deprecated since KunstmaanUtilitiesBundle 5.2, this value will be ignored/overwritten in KunstmaanUtilitiesBundle 6.0. Use the "kunstmaan_utilities.cipher.secret" config instead if you want to set a different value than the default "%kernel.secret%".
-     */
-    public function testLegacyParameterSecretParameter()
-    {
-        $this->setParameter('kunstmaan_utilities.cipher.secret', 'testvalue');
-
-        $this->load();
-
-        $this->assertContainerBuilderHasParameter('kunstmaan_utilities.cipher.secret', 'testvalue');
-    }
 }

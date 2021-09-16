@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SlugEvent extends BcEvent
 {
     /**
-     * @var Response
+     * @var Response|null
      */
     protected $response;
 
@@ -21,17 +21,14 @@ class SlugEvent extends BcEvent
      */
     protected $renderContext;
 
-    /**
-     * @param Response $response
-     */
-    public function __construct(Response $response = null, RenderContext $renderContext)
+    public function __construct(?Response $response, RenderContext $renderContext)
     {
         $this->response = $response;
         $this->renderContext = $renderContext;
     }
 
     /**
-     * @return Response
+     * @return Response|null
      */
     public function getResponse()
     {
