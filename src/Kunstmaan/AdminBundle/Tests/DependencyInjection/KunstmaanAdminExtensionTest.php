@@ -51,18 +51,6 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.hosted_domains');
     }
 
-    /**
-     * @group legacy
-     */
-    public function testNotSettingNewAuthenticationConfig()
-    {
-        $this->expectDeprecation('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.');
-
-        $config = $this->getRequiredConfig('authentication');
-
-        $this->load($config);
-    }
-
     public function testWebsiteTitleWithParameterAndConfigSet()
     {
         $this->load(array_merge($this->getRequiredConfig(), ['website_title' => 'My real website']));

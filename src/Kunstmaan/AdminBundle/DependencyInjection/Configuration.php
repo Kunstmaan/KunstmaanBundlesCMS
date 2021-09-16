@@ -44,7 +44,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('authentication')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('enable_new_authentication')->defaultFalse()->end()
+                        ->booleanNode('enable_new_authentication')->defaultTrue()->end()
                         ->scalarNode('user_class')->defaultValue(User::class)->end()
                         ->scalarNode('group_class')->defaultValue(Group::class)->end()
                         ->arrayNode('mailer')

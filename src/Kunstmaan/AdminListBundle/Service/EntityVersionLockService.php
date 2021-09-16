@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\Service;
 
 use Doctrine\Persistence\ObjectManager;
-use FOS\UserBundle\Model\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
@@ -50,13 +49,8 @@ class EntityVersionLockService
     /**
      * @return bool
      */
-    public function isEntityLocked(/*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $user, LockableEntityInterface $entity)
+    public function isEntityLocked(UserInterface $user, LockableEntityInterface $entity)
     {
-        // NEXT_MAJOR: remove type check and enable parameter typehint
-        if (!$user instanceof User && !$user instanceof UserInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$user" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
-        }
-
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
 
@@ -82,13 +76,8 @@ class EntityVersionLockService
     /**
      * When editing the entity, create a new entity translation lock.
      */
-    protected function createEntityVersionLock(/*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $user, LockableEntity $entity)
+    protected function createEntityVersionLock(UserInterface $user, LockableEntity $entity)
     {
-        // NEXT_MAJOR: remove type check and enable parameter typehint
-        if (!$user instanceof User && !$user instanceof UserInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$user" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
-        }
-
         /** @var EntityVersionLock $lock */
         $lock = $this->objectManager->getRepository(EntityVersionLock::class)->findOneBy([
             'owner' => $user->getUsername(),
@@ -105,17 +94,10 @@ class EntityVersionLockService
     }
 
     /**
-     * @param User $userToExclude
-     *
      * @return array
      */
-    public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, /*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $userToExclude = null)
+    public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, UserInterface $userToExclude = null)
     {
-        // NEXT_MAJOR: remove type check and enable parameter typehint
-        if (!$userToExclude instanceof User && !$userToExclude instanceof UserInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$userToExclude" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
-        }
-
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
 
@@ -141,17 +123,10 @@ class EntityVersionLockService
     /**
      * When editing an entity, check if there is a lock for this entity.
      *
-     * @param User $userToExclude
-     *
      * @return EntityVersionLock[]
      */
-    protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, /*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $userToExclude = null)
+    protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, UserInterface $userToExclude = null)
     {
-        // NEXT_MAJOR: remove type check and enable parameter typehint
-        if (!$userToExclude instanceof User && !$userToExclude instanceof UserInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$userToExclude" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
-        }
-
         /** @var EntityVersionLockRepository $objectRepository */
         $objectRepository = $this->objectManager->getRepository(EntityVersionLock::class);
 

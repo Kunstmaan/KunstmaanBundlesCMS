@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle;
 
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AdminPanelCompilerPass;
-use Kunstmaan\AdminBundle\DependencyInjection\Compiler\ConvertFosUserParametersCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\EnablePermissionsPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\InjectUntrackedTokenStorageCompilerPass;
@@ -31,7 +30,6 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new DataCollectorPass());
         $container->addCompilerPass(new InjectUntrackedTokenStorageCompilerPass());
         $container->addCompilerPass(new EnablePermissionsPass());
-        $container->addCompilerPass(new ConvertFosUserParametersCompilerPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
     }
