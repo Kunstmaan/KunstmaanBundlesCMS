@@ -8,7 +8,10 @@ use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\Translator;
@@ -24,14 +27,14 @@ class AdminLocaleListenerTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
-        $event = $this->createMock(GetResponseEvent::class);
+        $kernel = $this->createMock(KernelInterface::class);
+        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
         $token = $this->createMock(UsernamePasswordToken::class);
         $user = $this->createMock(User::class);
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
         $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getProviderKey')->willReturn('main');
         $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getUser')->willReturn($user);
-        $event->expects($this->any())->method('getRequest')->willReturn($request);
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getAdminLocale')->willReturn(null);
         $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('setLocale')->willReturn(null);
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);

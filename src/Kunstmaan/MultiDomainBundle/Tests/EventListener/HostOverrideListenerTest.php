@@ -5,7 +5,11 @@ namespace Kunstmaan\MultiDomainBundle\Tests\EventListener;
 use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Translation\Translator;
 
 class HostOverrideListenerTest extends TestCase
@@ -31,7 +35,7 @@ class HostOverrideListenerTest extends TestCase
 
         $object = $this->getHostOverrideListener($flashBag);
 
-        $event = $this->getFilterResponseEvent($this->getAdminRequest(), $this->getResponse());
+        $event = $this->getEvent($this->getAdminRequest(), $this->getResponse());
         $object->onKernelResponse($event);
     }
 
@@ -48,7 +52,7 @@ class HostOverrideListenerTest extends TestCase
 
         $object = $this->getHostOverrideListener($flashBag);
 
-        $event = $this->getFilterResponseEvent($this->getAdminRequest(), $this->getRedirectResponse());
+        $event = $this->getEvent($this->getAdminRequest(), $this->getRedirectResponse());
         $object->onKernelResponse($event);
     }
 
@@ -65,7 +69,7 @@ class HostOverrideListenerTest extends TestCase
 
         $object = $this->getHostOverrideListener($flashBag);
 
-        $event = $this->getFilterResponseEvent($this->getAdminRequest(), $this->getResponse(), HttpKernelInterface::SUB_REQUEST);
+        $event = $this->getEvent($this->getAdminRequest(), $this->getResponse(), HttpKernelInterface::SUB_REQUEST);
         $object->onKernelResponse($event);
     }
 
@@ -82,7 +86,7 @@ class HostOverrideListenerTest extends TestCase
 
         $object = $this->getHostOverrideListener($flashBag);
 
-        $event = $this->getFilterResponseEvent($this->getXmlHttpRequest(), $this->getResponse());
+        $event = $this->getEvent($this->getXmlHttpRequest(), $this->getResponse());
         $object->onKernelResponse($event);
     }
 
@@ -99,7 +103,7 @@ class HostOverrideListenerTest extends TestCase
 
         $object = $this->getHostOverrideListener($flashBag);
 
-        $event = $this->getFilterResponseEvent($this->getAdminPreviewRequest(), $this->getResponse());
+        $event = $this->getEvent($this->getAdminPreviewRequest(), $this->getResponse());
         $object->onKernelResponse($event);
     }
 
@@ -116,7 +120,7 @@ class HostOverrideListenerTest extends TestCase
 
         $object = $this->getHostOverrideListener($flashBag);
 
-        $event = $this->getFilterResponseEvent($this->getFrontendRequest(), $this->getResponse());
+        $event = $this->getEvent($this->getFrontendRequest(), $this->getResponse());
         $object->onKernelResponse($event);
     }
 
@@ -154,21 +158,14 @@ class HostOverrideListenerTest extends TestCase
         return $listener;
     }
 
-    private function getFilterResponseEvent($request, $response, $requestType = HttpKernelInterface::MASTER_REQUEST)
+    private function getEvent($request, $response, $requestType = HttpKernelInterface::MASTER_REQUEST)
     {
-        $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\FilterResponseEvent')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $event->method('getRequestType')
-            ->willReturn($requestType);
+        $kernel = $this->createMock(KernelInterface::class);
 
-        $event->method('getResponse')
-            ->willReturn($response);
-
-        $event->method('getRequest')
-            ->willReturn($request);
-
-        return $event;
+        return class_exists(RequestEvent::class) ?
+            new ResponseEvent($kernel, $request, $requestType, $response) :
+            new FilterResponseEvent($kernel, $request, $requestType, $response)
+        ;
     }
 
     private function getResponse()
