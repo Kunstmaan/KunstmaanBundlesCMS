@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class FolderManagerTest extends TestCase
 {
     /**
-     * @var ObjectRepository
+     * @var EntityRepository
      */
     protected $repository;
 
@@ -29,7 +29,7 @@ class FolderManagerTest extends TestCase
      */
     private $parents;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->repository = $this->getMockBuilder('Kunstmaan\MediaBundle\Repository\FolderRepository')
             ->disableOriginalConstructor()

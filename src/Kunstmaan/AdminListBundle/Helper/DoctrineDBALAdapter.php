@@ -40,7 +40,6 @@ class DoctrineDBALAdapter implements AdapterInterface
 
         $this->queryBuilder = $queryBuilder;
         $this->countField = $countField;
-
         $this->useDistinct = $useDistinct;
     }
 
@@ -66,9 +65,8 @@ class DoctrineDBALAdapter implements AdapterInterface
         if ($this->useDistinct) {
             $distinctString = 'DISTINCT ';
         }
+        $query->resetQueryPart('orderBy');
         $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
-            ->orderBy($this->countField)
-            ->setMaxResults(1)
             ->execute();
 
         return ($results = $statement->fetchColumn()) ? $results : 0;

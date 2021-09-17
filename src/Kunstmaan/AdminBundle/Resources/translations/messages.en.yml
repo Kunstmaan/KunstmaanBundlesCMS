@@ -8,6 +8,42 @@ pages:
     createemptypage: Create as an empty page
     movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 
+security:
+    general:
+        logged_in_as: 'Logged in as %username%'
+        logout: 'Logout'
+    login:
+        title: 'Log in to %websitetitle%'
+        username: Username
+        password: Password
+        submit: Submit
+        remember_me: Remember me
+        logged_in_as: 'Logged in as %username%'
+        logout: 'Log out'
+    resetting:
+        mail:
+            subject: 'Password reset'
+            content:
+                description: If you lost your password or wish to reset it,<br />use the link below to get started
+                footer: If you did not request a password reset, you can safely ignore this email. Only a person with access to your email can reset your account password.
+                link: Reset your password
+                powered_by: Powered by
+                title: Password reset
+        send_email_success: 'An email has been sent to your address'
+        user_not_found: 'User not found'
+        password_set_success: 'Your password has been changed.'
+        email: 'Username or email address'
+        reset: 'Reset password'
+    change_password:
+        form:
+            current_password: 'Current password'
+            new_password: 'New password'
+            new_password_confirmation: 'Repeat new password'
+            submit: 'Change password'
+        success:
+            continue: Login
+            message: 'The password for "%username%" has been changed.'
+
 # Modules
 modules:
     title: Modules

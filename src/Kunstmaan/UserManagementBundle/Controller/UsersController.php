@@ -4,16 +4,19 @@ namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Event\UserEvent;
-use FOS\UserBundle\Model\UserInterface;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -63,7 +66,7 @@ class UsersController extends BaseSettingsController
      */
     private function getUserClassInstance()
     {
-        $userClassName = $this->container->getParameter('fos_user.model.user.class');
+        $userClassName = $this->container->getParameter('kunstmaan_admin.user_class');
 
         return new $userClassName();
     }
@@ -101,8 +104,9 @@ class UsersController extends BaseSettingsController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
+                $user->setCreatedBy($this->getUser()->getUsername());
                 /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->container->get('kunstmaan_admin.user_manager');
                 $userManager->updateUser($user, true);
 
                 $this->addFlash(
@@ -129,9 +133,9 @@ class UsersController extends BaseSettingsController
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit", methods={"GET", "POST"})
      * @Template("@KunstmaanUserManagement/Users/edit.html.twig")
      *
-     * @throws AccessDeniedException
-     *
      * @return array
+     *
+     * @throws AccessDeniedException
      */
     public function editAction(Request $request, $id)
     {
@@ -147,13 +151,13 @@ class UsersController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
 
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
 
         $userEvent = new UserEvent($user, $request);
-        $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
+        $this->dispatch($userEvent, UserEvents::USER_EDIT_INITIALIZE);
 
         $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
@@ -165,7 +169,7 @@ class UsersController extends BaseSettingsController
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $event = $this->dispatch($event, Events::ADAPT_SIMPLE_FORM);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formFqn, $user, $options);
@@ -180,7 +184,7 @@ class UsersController extends BaseSettingsController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager = $this->container->get('kunstmaan_admin.user_manager');
                 $userManager->updateUser($user, true);
 
                 $this->addFlash(
@@ -218,24 +222,64 @@ class UsersController extends BaseSettingsController
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"POST"})
      *
+     * @return array
+     *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @deprecated this method is deprecated since KunstmaanUserManagementBundle 5.6 and will be removed in KunstmaanUserManagementBundle 6.0
      */
     public function deleteAction(Request $request, $id)
     {
+        @trigger_error('Using the deleteAction method from the UsersController is deprecated since KunstmaanUserManagementBundle 5.6 and will be replaced by the method deleteFormAction in KunstmaanUserManagementBundle 6.0. Use the correct method instead.', E_USER_DEPRECATED);
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $userEvent = new UserEvent($user, $request);
-            $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
+            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
 
             $em->remove($user);
             $em->flush();
+
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->container->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
+                    '%username%' => $user->getUsername(),
+                ])
+            );
+        }
+
+        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+    }
+
+    /**
+     * @Route("/form-delete/{id}", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_form_delete", methods={"POST"})
+     */
+    public function deleteFormAction(Request $request, $id)
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('delete-user', $submittedToken)) {
+            return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+        }
+
+        /* @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /* @var UserInterface $user */
+        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
+        if (!\is_null($user)) {
+            $userEvent = new UserEvent($user, $request);
+            $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());
+            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
+
+            $em->remove($user);
+            $em->flush();
+
+            $this->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
@@ -262,5 +306,22 @@ class UsersController extends BaseSettingsController
                 ]
             )
         );
+    }
+
+    /**
+     * @param object $event
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

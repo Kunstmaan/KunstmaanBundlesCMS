@@ -4,7 +4,7 @@ namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\User;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -51,6 +51,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             true,
             false
         );
+        $user1->setCreatedBy('CMS installation');
         $manager->flush();
 
         $output = new ConsoleOutput();
@@ -94,7 +95,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $enabled = false,
         $changed = false
     ) {
-        $user = $this->container->get('fos_user.user_manager')->createUser();
+        $user = $this->container->get('kunstmaan_admin.user_manager')->createUser();
         $user->setUsername($username);
         $user->setPlainPassword($password);
         $user->setRoles($roles);

@@ -12,7 +12,7 @@ class StringFilterTypeTest extends BaseDbalFilterTest
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new StringFilterType('string', 'e');
     }

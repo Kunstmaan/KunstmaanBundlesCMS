@@ -1,3 +1,5 @@
+{% deprecated 'The "@KunstmaanAdmin/Security/login.html.twig" template is deprecated since kunstmaanAdminBundle 5.9 and will be removed in kunstmaanAdminBundle 6.0. Enable the new authentication system and use "@KunstmaanAdmin/authentication/login.html.twig" instead' %}
+
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
@@ -5,7 +7,7 @@
 {% block fos_user_content %}
     <form id="app__login__form" action="{{ path("fos_user_security_check") }}" method="post">
         {% if google_signin_enabled() %}
-        <input id="google_id_token" data-url="{{ path('KunstmaanAdminBundle_oauth_signin') }}" data-clientid="{{ google_signin_client_id() }}" type="hidden" name="_google_id_token">
+            <input id="google_id_token" data-url="{{ path('KunstmaanAdminBundle_oauth_signin') }}" data-clientid="{{ google_signin_client_id() }}" type="hidden" name="_google_id_token">
         {% endif %}
         {% if error %}
             <div class="alert alert-danger">
@@ -45,9 +47,9 @@
     </form>
 
     {% if google_signin_enabled() %}
-    <a href="#" id="app_oauth_signin">
-        <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="Google Sign in">
-    </a>
+        <a href="#" id="app_oauth_signin">
+            <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="Google Sign in">
+        </a>
     {% endif %}
 
 {% endblock fos_user_content %}

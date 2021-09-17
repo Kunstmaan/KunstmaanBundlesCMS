@@ -16,7 +16,7 @@ class EmailFormSubmissionFieldTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EmailFormSubmissionField();
     }
@@ -38,6 +38,6 @@ class EmailFormSubmissionFieldTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 }

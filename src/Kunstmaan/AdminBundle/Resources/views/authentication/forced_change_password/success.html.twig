@@ -1,0 +1,10 @@
+{% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
+
+{% block login_content %}
+    <h2 class="app-login__form-title">
+        {{ 'security.change_password.success.message'|trans({'%username%': user.username}) }}
+    </h2>
+    <a href="{{ path('KunstmaanAdminBundle_homepage') }}" class="btn btn--md btn--inverted">
+        {{ 'security.change_password.success.continue'|trans }}
+    </a>
+{% endblock %}

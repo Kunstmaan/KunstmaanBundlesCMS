@@ -134,6 +134,11 @@ class SearchService
             );
         }
 
+        if (null === $searcher) {
+            //NEXT MAJOR: Throw exception
+            @trigger_error(sprintf('Not having a searcher service registered for the entity searcher id "%s" is deprecated since KunstmaanNodeSearchBundle 5.9 and will throw an exception in KunstmaanNodeSearchBundle 6.0.', $entity->getSearcher()), E_USER_DEPRECATED);
+        }
+
         $this->applySearchParams($searcher, $request, $this->renderContext);
 
         $adapter = new SearcherRequestAdapter($searcher);

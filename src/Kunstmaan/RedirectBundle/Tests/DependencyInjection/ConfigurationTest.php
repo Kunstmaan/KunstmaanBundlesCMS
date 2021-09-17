@@ -3,6 +3,7 @@
 namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
 use Kunstmaan\RedirectBundle\DependencyInjection\Configuration;
+use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -22,6 +23,6 @@ class ConfigurationTest extends TestCase
     {
         $array = [];
 
-        $this->assertProcessedConfigurationEquals([$array], $array);
+        $this->assertProcessedConfigurationEquals([$array], ['redirect_entity' => Redirect::class]);
     }
 }

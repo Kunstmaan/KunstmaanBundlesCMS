@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
+use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
@@ -30,7 +31,7 @@ use {{ namespace }}\Entity\Pages\SearchPage;
 /**
  * DefaultSiteFixtures
  */
-class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface, ORMFixtureInterface
 {
     /**
      * Username that is used for creating pages
@@ -95,23 +96,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->createFormPage();
 	    $this->createSearchPage();
 {% endif %}
-        $this->createDashboard();
-    }
-
-    /**
-     * Create the dashboard
-     */
-    private function createDashboard()
-    {
-        /** @var $dashboard DashboardConfiguration */
-        $dashboard = $this->manager->getRepository("KunstmaanAdminBundle:DashboardConfiguration")->findOneBy(array());
-        if (is_null($dashboard)) {
-            $dashboard = new DashboardConfiguration();
-        }
-        $dashboard->setTitle("Dashboard");
-        $dashboard->setContent('<div class="alert alert-info"><strong>Important: </strong>please change these items to the graphs of your own site!</div><iframe src="https://rpm.newrelic.com/public/charts/jjPIEE7OHz9" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/hmDWR0eUNTo" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/fv7IP1EmbVi" width="100%" height="300" scrolling="no" frameborder="no"></iframe>');
-        $this->manager->persist($dashboard);
-        $this->manager->flush();
     }
 
     /**

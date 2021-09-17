@@ -1,5 +1,4 @@
 parameters:
-  kunstmaan_user_management.user_admin_list_configurator.class: Kunstmaan\UserManagementBundle\AdminList\UserAdminListConfigurator
   kunstmaan_user_management.menu.adaptor.class: Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor
 
 services:
@@ -8,3 +7,9 @@ services:
         arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 250 }
+
+    Kunstmaan\UserManagementBundle\EventSubscriber\UserDeleteEventSubscriber:
+        arguments:
+            - '@kunstmaan_admin.logger'
+        tags:
+            - { name: 'kernel.event_subscriber' }

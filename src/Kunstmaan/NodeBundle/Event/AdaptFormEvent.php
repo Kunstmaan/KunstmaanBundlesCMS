@@ -2,18 +2,20 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
+use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The event to pass metadata if the adaptForm event is triggered
+ *
+ * @final since 5.9
  */
-class AdaptFormEvent extends Event
+class AdaptFormEvent extends BcEvent
 {
     /**
      * @var TabPane

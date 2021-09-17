@@ -12,7 +12,7 @@ class SimpleBulkActionTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new SimpleBulkAction(['https://cia.gov'], 'CIA', 'fa-check', 'some.twig');
     }

@@ -15,7 +15,7 @@ class MultiLineTextPagePartTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new MultiLineTextPagePart();
     }
@@ -40,7 +40,7 @@ class MultiLineTextPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testAdaptForm()
@@ -60,7 +60,7 @@ class MultiLineTextPagePartTest extends TestCase
         $fields = new ArrayObject();
         $object->setErrorMessageRequired('required');
         $object->setErrorMessageRegex('regex');
-        $this->assertEquals(count($fields), 0);
+        $this->assertEquals(0, count($fields));
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);

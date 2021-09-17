@@ -19,7 +19,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     /** @var Connection */
     private $connectionMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->connectionMock = $this->createMock(Connection::class);
         $this->connectionMock
@@ -56,7 +56,6 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     public function testGetPagerFanta()
     {
         $abstractMock = $this->setUpAbstractMock();
-
         $this->assertInstanceOf(Pagerfanta::class, $abstractMock->getPagerfanta());
     }
 

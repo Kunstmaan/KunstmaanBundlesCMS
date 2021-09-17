@@ -1,0 +1,28 @@
+{% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
+
+{% block login_content %}
+    <h2 class="app-login__form-title">{{ 'security.resetting.reset'|trans }}</h2>
+
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.plainPassword.first, null, {'label_attr': {'class': 'form-control-label'} }) }}
+        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.plainPassword.second, null, {'label_attr': {'class': 'form-control-label'} }) }}
+        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div class="form-group app-login__form__submit-holder">
+        <button type="submit" id="_submit" name="_submit" class="btn btn--md btn--inverted">
+            {{ 'security.resetting.reset'|trans }}
+        </button>
+        <a href="{{ path('kunstmaan_admin_login' ) }}" class="btn btn--md btn--inverted">
+            {{ 'form.cancel'|trans }}
+        </a>
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock login_content %}

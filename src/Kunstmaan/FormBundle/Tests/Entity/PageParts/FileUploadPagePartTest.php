@@ -15,7 +15,7 @@ class FileUploadPagePartTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new FileUploadPagePart();
     }
@@ -36,7 +36,7 @@ class FileUploadPagePartTest extends TestCase
         $fields = new ArrayObject();
 
         $object->setErrorMessageRequired('this is required');
-        $this->assertEquals(count($fields), 0);
+        $this->assertEquals(0, count($fields));
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
@@ -47,7 +47,7 @@ class FileUploadPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testGetDefaultAdminType()

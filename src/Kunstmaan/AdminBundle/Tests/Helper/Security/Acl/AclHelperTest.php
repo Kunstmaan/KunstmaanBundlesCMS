@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
-use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use FOS\UserBundle\Model\UserInterface;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -56,7 +56,7 @@ class AclHelperTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
@@ -71,12 +71,9 @@ class AclHelperTest extends TestCase
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        /* @var $platform AbstractPlatform */
-        $platform = $this->getMockForAbstractClass('Doctrine\DBAL\Platforms\AbstractPlatform');
-
         $conn->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue($platform));
+            ->willReturn(new MySqlPlatform());
 
         /* @var $stmt Statement */
         $stmt = $this->createMock(Statement::class);
@@ -165,7 +162,7 @@ class AclHelperTest extends TestCase
             ->method('getRootAliases')
             ->will($this->returnValue(['n']));
 
-        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+        $user = $this->getMockBuilder(UserInterface::class)
             ->getMock();
 
         $user->expects($this->any())
@@ -198,10 +195,10 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertContains('"ROLE_SUBJECT"', $aclQuery);
-        $this->assertContains('"ROLE_KING"', $aclQuery);
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
-        $this->assertContains('MyUser', $aclQuery);
+        $this->assertStringContainsString('ROLE_SUBJECT', $aclQuery);
+        $this->assertStringContainsString('ROLE_KING', $aclQuery);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
+        $this->assertStringContainsString('MyUser', $aclQuery);
     }
 
     public function testApplyAnonymous()
@@ -251,7 +248,7 @@ class AclHelperTest extends TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
     }
 
     public function testGetAllowedEntityIds()
@@ -267,7 +264,7 @@ class AclHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+        $user = $this->getMockBuilder(UserInterface::class)
             ->getMock();
 
         $user->expects($this->any())
@@ -292,8 +289,8 @@ class AclHelperTest extends TestCase
             ->will($this->returnValue($rows));
 
         $this->em->expects($this->any())
-          ->method('newHydrator') // was ->method('getHydrator')
-          ->will($this->returnValue($hydrator));
+            ->method('newHydrator') // was ->method('getHydrator')
+            ->will($this->returnValue($hydrator));
 
         /* @var $query NativeQuery */
         $query = new NativeQuery($this->em);

@@ -129,17 +129,17 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         $el.parents('.js-filter-line').find('input, select').each(function(){
             var fieldName = $(this).attr('name');
 
-            if (fieldName.substr(0, 7) != 'filter_') {
+            if (typeof fieldName === 'string' && fieldName.substr(0, 7) !== 'filter_') {
                 $(this).attr('name', 'filter_' + $(this).attr('name'));
             }
         });
 
         $el.parents('.js-filter-line').find('.js-filter-options').find('input:not(.js-unique-filter-id), select').each(function() {
-            var name = $(this).attr('name'),
-                bracketPos = name.indexOf('[');
+            var name = $(this).attr('name');
 
-            if (bracketPos !== -1) {
-                var arrayName = name.substr(0, bracketPos),
+            if (typeof name === 'string' && name.indexOf('[') !== -1) {
+                var bracketPos = name.indexOf('['),
+                    arrayName = name.substr(0, bracketPos),
                     arrayIndex = name.substr(bracketPos);
 
                 $(this).attr('name', arrayName + '_' + uniqueid + arrayIndex);
@@ -148,12 +148,18 @@ kunstmaanbundles.filter = (function($, window, undefined) {
                 $(this).attr('name', $(this).attr('name') + '_' + uniqueid);
             }
 
+            if($(this).hasClass('js-advanced-select')) {
+                $(this).siblings('.select2').remove();
+                $(this).parent().css('min-width', $(this)[0].scrollWidth);
+            }
+
             if($(this).hasClass('datepick')){
                 $(this).datepicker(new Date());
             }
         });
 
         kunstmaanbundles.datepicker.init();
+        kunstmaanbundles.advancedSelect.init();
     };
 
 

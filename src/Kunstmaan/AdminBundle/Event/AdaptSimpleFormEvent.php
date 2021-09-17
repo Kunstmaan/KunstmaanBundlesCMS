@@ -3,10 +3,12 @@
 namespace Kunstmaan\AdminBundle\Event;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
-class AdaptSimpleFormEvent extends Event
+/**
+ * @final since 5.9
+ */
+class AdaptSimpleFormEvent extends BcEvent
 {
     /**
      * @var Request

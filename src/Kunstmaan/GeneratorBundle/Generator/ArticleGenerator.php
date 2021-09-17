@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -32,7 +32,7 @@ class ArticleGenerator extends KunstmaanGenerator
     /**
      * @param string $skeletonDir
      */
-    public function __construct(Filesystem $filesystem, RegistryInterface $registry, $skeletonDir, array $parentPages, CommandAssistant $assistant, ContainerInterface $container)
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, array $parentPages, CommandAssistant $assistant, ContainerInterface $container)
     {
         parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
         $this->parentPages = $parentPages;

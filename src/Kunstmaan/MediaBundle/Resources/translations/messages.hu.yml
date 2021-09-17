@@ -63,7 +63,7 @@ media:
       modal:
         title: Tömeges média áthelyezés
         text: Válassza ki a mappát, ahová szeretné a kiválasztott file-t áthelyezni.
-        save: "Mozgatás..."
+        save: "Mozgatás"
         form:
           name: Szülő-mappa
       success:

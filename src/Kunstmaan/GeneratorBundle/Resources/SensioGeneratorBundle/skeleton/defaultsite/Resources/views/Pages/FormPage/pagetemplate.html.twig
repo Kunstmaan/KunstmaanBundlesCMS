@@ -4,7 +4,7 @@
     {% else %}
         {% form_theme frontendform '<% if not isV4 %><%= bundle.name %>:<% endif %>Form<% if not isV4 %>:<% else %>/<% endif %>fields.html.twig' %}
 
-        {{ form_start(frontendform, {'method': 'POST', 'action': path('_slug', { 'url' : nodemenu.current.slug }), 'attr': {'novalidate': 'novalidate', 'class': 'form--default', 'role': 'form'}}) }}
+        {{ form_start(frontendform, {'method': 'POST', 'action': path('_slug', { 'url' : nodemenu.current.slug }), 'attr': {'novalidate': 'novalidate', 'class': 'form--default'}}) }}
             {{ render_pageparts(page, 'main') }}
             {{ form_rest(frontendform) }}
         {{ form_end(frontendform) }}

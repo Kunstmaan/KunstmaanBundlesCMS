@@ -1,8 +1,6 @@
 parameters:
-    kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand
     kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
     kunstmaan_dashboard.googleclient.class: 'Google_Client'
-    kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\Google\ClientHelper'
 
 services:
     kunstmaan_dashboard.manager.widgets:
@@ -11,7 +9,7 @@ services:
 
     kunstmaan_dashboard.widget.googleanalytics:
         class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
-        arguments: ['%kunstmaan_dashboard.widget.googleanalytics.command%', '%kunstmaan_dashboard.widget.googleanalytics.controller%', '@service_container']
+        arguments: ['kuma:dashboard:widget:googleanalytics:data:collect', '%kunstmaan_dashboard.widget.googleanalytics.controller%']
         tags:
             - { name: kunstmaan_dashboard.widget, priority: 1 }
 

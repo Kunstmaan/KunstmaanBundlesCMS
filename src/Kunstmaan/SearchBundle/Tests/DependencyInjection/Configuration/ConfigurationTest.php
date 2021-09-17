@@ -32,12 +32,10 @@ class ConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals([$array], $array);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage Invalid configuration for path "kunstmaan_search.connection.driver": Invalid search driver "elasticsearch"
-     */
     public function testConfigWithInvalidConnectionDriver()
     {
+        $this->expectExceptionMessage('Invalid configuration for path "kunstmaan_search.connection.driver": Invalid search driver "elasticsearch"');
+        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
         $array = [
             'connection' => [
                 'driver' => 'elasticsearch',

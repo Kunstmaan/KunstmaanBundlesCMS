@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
     /**
      * @return ExtensionInterface[]
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanSeoExtension()];
     }

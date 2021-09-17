@@ -5,6 +5,7 @@ namespace Kunstmaan\SitemapBundle\Controller;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,7 +33,7 @@ class SitemapController extends Controller
         $nodeMenu->setCurrentNode(null);
 
         $event = new PreSitemapRenderEvent($locale);
-        $this->get('event_dispatcher')->dispatch(PreSitemapRenderEvent::NAME, $event);
+        $this->dispatch($event, PreSitemapRenderEvent::NAME);
 
         return [
             'nodemenu' => $nodeMenu,
@@ -63,5 +64,22 @@ class SitemapController extends Controller
             'locales' => $locales,
             'host' => $request->getSchemeAndHttpHost(),
         ];
+    }
+
+    /**
+     * @param object $event
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

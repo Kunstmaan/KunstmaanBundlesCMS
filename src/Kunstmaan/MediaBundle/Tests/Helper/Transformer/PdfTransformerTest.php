@@ -20,7 +20,7 @@ class PdfTransformerTest extends TestCase
     /** @var string */
     protected $tempDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not available.');
@@ -34,7 +34,7 @@ class PdfTransformerTest extends TestCase
         $this->object = new PdfTransformer(new \Imagick());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (!$this->filesystem) {
             return;

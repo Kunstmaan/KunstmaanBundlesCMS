@@ -81,8 +81,9 @@ class Translation
     protected $text;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\NotBlank()
+     * @Assert\Length(max=60)
      */
     protected $domain;
 

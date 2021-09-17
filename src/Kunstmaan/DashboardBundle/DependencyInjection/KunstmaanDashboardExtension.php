@@ -20,11 +20,21 @@ class KunstmaanDashboardExtension extends Extension implements PrependExtensionI
         $loader->load('commands.yml');
 
         $this->loadGoogleAnalyticsParameters($container, $config);
+
+        if ($container->hasParameter('kunstmaan_dashboard.widget.googleanalytics.command')) {
+            @trigger_error(sprintf('Using the "%s" parameter to modify the "%s" service is deprecated since KunstmaanDashboardBundle 5.9 and the parameter will be removed in KunstmaanDashboardBundle 6.0. Use service decoration or a service alias instead.', 'kunstmaan_dashboard.widget.googleanalytics.command', 'kunstmaan_dashboard.widget.googleanalytics'), E_USER_DEPRECATED);
+
+            $container->getDefinition('kunstmaan_dashboard.widget.googleanalytics')
+                ->setArgument(0, '%kunstmaan_dashboard.widget.googleanalytics.command%')
+                ->setArgument(2, '@service_container')
+            ;
+        }
     }
 
     public function prepend(ContainerBuilder $container)
     {
         $container->prependExtensionConfig('framework', ['esi' => ['enabled' => true]]);
+        $container->prependExtensionConfig('kunstmaan_admin', ['dashboard_route' => 'kunstmaan_dashboard']);
     }
 
     private function loadGoogleAnalyticsParameters(ContainerBuilder $container, array $config)

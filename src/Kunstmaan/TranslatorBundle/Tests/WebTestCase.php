@@ -2,7 +2,11 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests;
 
-use Nelmio\Alice\Loader\NativeLoader;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\Tools\SchemaTool;
+use Kunstmaan\TranslatorBundle\Tests\Fixtures\TranslationDataFixture;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -15,12 +19,12 @@ class WebTestCase extends BaseWebTestCase
         self::assertEquals('http://localhost' . $location, $response->headers->get('Location'));
     }
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         static::deleteTmpDir();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         static::deleteTmpDir();
     }
@@ -68,17 +72,16 @@ class WebTestCase extends BaseWebTestCase
     {
         $em = $container->get('doctrine.orm.default_entity_manager');
         $meta = $em->getMetadataFactory()->getAllMetadata();
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool = new SchemaTool($em);
         $tool->dropSchema($meta);
         $tool->createSchema($meta);
 
         // insert fixtures
-        $fixtures = __DIR__ . '/files/fixtures.yml';
-        $loader = new NativeLoader();
-        $objects = $loader->loadFile($fixtures)->getObjects();
-        foreach ($objects as $object) {
-            $em->persist($object);
-        }
-        $em->flush();
+        $loader = new Loader();
+        $loader->addFixture(new TranslationDataFixture());
+
+        $purger = new ORMPurger($em);
+        $executor = new ORMExecutor($em, $purger);
+        $executor->execute($loader->getFixtures());
     }
 }

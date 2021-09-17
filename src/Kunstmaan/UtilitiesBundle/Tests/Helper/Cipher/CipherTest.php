@@ -21,7 +21,7 @@ class CipherTest extends TestCase
      *
      * @covers \Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::__construct
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->cipher = new Cipher(self::SECRET);
     }
@@ -35,7 +35,7 @@ class CipherTest extends TestCase
         $encryptedValue = $this->cipher->encrypt(self::CONTENT);
         $this->assertNotEquals(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
-        $this->assertEquals($decryptedValue, self::CONTENT);
+        $this->assertEquals(self::CONTENT, $decryptedValue);
     }
 
     public function testException()

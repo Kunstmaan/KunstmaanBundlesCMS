@@ -11,7 +11,7 @@ class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
     /**
      * @return ExtensionInterface[]
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanMediaExtension()];
     }
@@ -55,7 +55,7 @@ class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @group legacy
-     * @expectedDeprecation Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanDashboardBundle 6.0.
+     * @expectedDeprecation Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanMediaBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanMediaBundle 6.0.
      */
     public function testAviaryApiKeyWithParameterSet()
     {
@@ -66,6 +66,10 @@ class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_media.aviary_api_key', 'api_key');
     }
 
+    /**
+     * @group legacy
+     * @expectedDeprecation The child node "aviary_api_key" at path "kunstmaan_media" is deprecated. Because the aviary service is discontinued.
+     */
     public function testAviaryApiKeyWithParameterAndConfigSet()
     {
         $this->setParameter('aviary_api_key', 'api_key');

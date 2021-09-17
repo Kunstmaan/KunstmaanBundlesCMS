@@ -129,7 +129,9 @@ final class InstallCommand extends GeneratorCommand
         $this->initAssistant($input, $output);
 
         $defaultSiteOptions = [];
+        $defaultSiteOptions['--browsersync'] = 'https://myproject.dev';
         if ($input->getOption('demosite') === 'Yes') {
+            $defaultSiteOptions['--articleoverviewpageparent'] = 'HomePage';
             $defaultSiteOptions['--demosite'] = true;
         }
 

@@ -7,6 +7,7 @@ parameters:
         -  src
     scanFiles:
         - .build/stubs/RoleInterface.php
+        - .build/stubs/MailerInterface.php
 
     excludes_analyse:
         - src/Kunstmaan/*/Tests/*
@@ -18,6 +19,10 @@ parameters:
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
         - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
+        - src/Kunstmaan/TranslatorBundle/Command/MigrationsDiffCommand.php
+        - src/Kunstmaan/TranslatorBundle/Service/Command/DiffCommand.php
+        - src/Kunstmaan/*/Event/*.php # Ignore the event classes until we get rid of the BC layer. The BC layer causes a weird phpstan error.
+        - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
 
     ignoreErrors:
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR
@@ -28,4 +33,3 @@ parameters:
         - '#Method Kunstmaan\\NodeSearchBundle\\PagerFanta\\Adapter\\SearcherRequestAdapter\:\:processResponse\(\) should return array\|Elastica\\ResultSet but return statement is missing\.#'
         - '#Method Kunstmaan\\NodeSearchBundle\\Configuration\\NodePagesConfiguration\:\:(addPermissions|addSearchType)\(\) should return array but return statement is missing\.#'
         - '#Method Kunstmaan\\DashboardBundle\\Repository\\AnalyticsSegmentRepository\:\:deleteSegment\(\) should return bool\|Kunstmaan\\DashboardBundle\\Entity\\AnalyticsOverview but return statement is missing\.#'
-

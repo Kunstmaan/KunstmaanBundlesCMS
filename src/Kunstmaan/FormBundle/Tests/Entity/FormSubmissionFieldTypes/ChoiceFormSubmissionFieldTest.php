@@ -16,7 +16,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new ChoiceFormSubmissionField();
     }
@@ -30,7 +30,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
         $object = $this->object;
         $object->setChoices(['delboy1978uk' => 123456789]);
         $object->setValue('delboy1978uk');

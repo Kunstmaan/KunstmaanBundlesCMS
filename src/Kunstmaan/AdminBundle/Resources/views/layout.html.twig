@@ -15,9 +15,9 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="alert alert-warning">
                 <strong>{{ 'form.warning' | trans }}: </strong>
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-warning alert__action">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                {{ 'security.login.logged_in_as'|trans({'%username%': app.user.username}) }}
+                <a href="{{ path('kunstmaan_admin_logout') }}" class="btn btn-warning alert__action">
+                    {{ 'security.login.logout'|trans }}
                 </a>
             </div>
         {% endif %}
@@ -28,14 +28,22 @@
                     <i class="fa fa-times"></i>
                 </button>
                 {% for message in messages %}
-                    {{ message|trans({}, 'FOSUserBundle') }}
+                    {{ message|trans }}
                 {% endfor %}
             </div>
         {% endfor %}
 
-        {% block fos_user_content %}{% endblock fos_user_content %}
+        {% block fos_user_content %}
+            {# NEXT_MAJOR remove block #}
+            {% deprecated 'The "fos_user_content" block is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "login_content" block instead.' %}
+        {% endblock fos_user_content %}
+
+        {% block login_content %}{% endblock login_content %}
 
         {% block admin_link %}
+            {# NEXT_MAJOR remove block #}
+            {% deprecated 'The "admin_link" block is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "login_content" block instead.' %}
+
             {% if 'profile' in app.request.pathInfo and 'change-password' not in app.request.pathInfo %}
                 <a href="{{ path('KunstmaanAdminBundle_homepage') }}" class="btn btn-brand btn-block btn--raise-on-hover">
                     OK
@@ -44,8 +52,11 @@
         {% endblock %}
 
         {% block forgot_password_link %}
-            {% if 'resetting' not in app.request.pathInfo and 'profile' not in app.request.pathInfo %}
-                <a href="{{ path('fos_user_resetting_request') }}" class="login__form__forgot-pw">
+            {# NEXT_MAJOR remove block #}
+            {% deprecated 'The "forgot_password_link" block is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "login_content" block instead.' %}
+
+            {% if 'reset' not in app.request.pathInfo and 'profile' not in app.request.pathInfo %}
+                <a href="{{ path('kunstmaan_admin_reset_password') }}" class="login__form__forgot-pw">
                     {{ 'kuma_admin.login.forgot_password'|trans }}
                 </a>
             {% endif %}

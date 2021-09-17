@@ -6,7 +6,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * DefaultEntityGenerator
+ * @deprecated @deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0.
  */
 class DefaultEntityGenerator extends KunstmaanGenerator
 {

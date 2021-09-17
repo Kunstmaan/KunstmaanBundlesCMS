@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class PasswordResettingListenerTest extends TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testListener()
     {
         $manager = $this->createMock(UserManager::class);

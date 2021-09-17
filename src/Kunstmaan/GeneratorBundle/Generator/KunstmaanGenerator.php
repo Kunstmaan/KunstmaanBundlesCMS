@@ -2,15 +2,15 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\Tools\EntityGenerator;
 use Doctrine\ORM\Tools\EntityRepositoryGenerator;
+use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -31,7 +31,7 @@ class KunstmaanGenerator extends Generator
     protected $filesystem;
 
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     protected $registry;
 
@@ -52,14 +52,14 @@ class KunstmaanGenerator extends Generator
 
     /**
      * @param Filesystem         $filesystem  The filesystem
-     * @param RegistryInterface  $registry    The registry
+     * @param ManagerRegistry    $registry    The registry
      * @param string             $skeletonDir The directory of the skeleton
      * @param CommandAssistant   $assistant   The command assistant
      * @param ContainerInterface $container   The container
      */
     public function __construct(
         Filesystem $filesystem,
-        RegistryInterface $registry,
+        ManagerRegistry $registry,
         $skeletonDir,
         CommandAssistant $assistant,
         ContainerInterface $container = null
@@ -150,9 +150,11 @@ class KunstmaanGenerator extends Generator
                 }
             }
         }
+
+        $inflector = InflectorFactory::create()->build();
         $class->setPrimaryTable(
             [
-                'name' => strtolower($dbPrefix) . Inflector::tableize(Inflector::pluralize($name)),
+                'name' => strtolower($dbPrefix) . $inflector->tableize($inflector->pluralize($name)),
             ]
         );
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);

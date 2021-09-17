@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @final      since 5.1
  *
- * @deprecated since 5.1
  * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  * NEXT_MAJOR file will be renamed
  */

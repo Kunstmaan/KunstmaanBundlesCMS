@@ -15,7 +15,7 @@ class EmailPagePartTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new EmailPagePart();
     }
@@ -46,7 +46,7 @@ class EmailPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testAdaptForm()
@@ -66,7 +66,7 @@ class EmailPagePartTest extends TestCase
 
         $object->setErrorMessageRequired('form error!');
         $object->setErrorMessageInvalid('not valid');
-        $this->assertEquals(count($fields), 0);
+        $this->assertEquals(0, count($fields));
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);

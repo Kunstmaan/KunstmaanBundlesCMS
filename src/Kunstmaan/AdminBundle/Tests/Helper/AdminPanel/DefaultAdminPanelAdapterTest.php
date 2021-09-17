@@ -16,7 +16,7 @@ class DefaultAdminPanelAdapterTest extends TestCase
         $token = $this->createMock(TokenInterface::class);
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
-        $token->expects($this->once())->method('getUser')->willReturn(new User());
+        $token->expects($this->once())->method('getUser')->willReturn((new User())->setUsername('test'));
         $adapter = new DefaultAdminPanelAdaptor($storage);
         $actions = $adapter->getAdminPanelActions();
 

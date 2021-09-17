@@ -132,3 +132,37 @@ toolbar:
   exception:
     title: Exceptions
     message: "<strong>%X%</strong> exception(s) veroorzaakt door <strong>%Y%</strong> events"
+security:
+  general:
+    logged_in_as: 'Ingelogd als %username%'
+    logout: 'Uitloggen'
+  login:
+    title: 'Log in op %websitetitle%'
+    username: Gebruikersnaam
+    password: Wachtwoord
+    submit: Inloggen
+    remember_me: 'Ingelogd blijven'
+    logged_in_as: 'Ingelogd as %username%'
+    logout: 'Uitloggen'
+  resetting:
+    mail:
+      subject: 'Wachtwoord vergeten'
+      content:
+        title: 'Wachtwoord vergeten'
+        description: 'Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.'
+        link: 'Wachtwoord instellen'
+        footer: 'Als u geen nieuw wachtwoord heeft aangevraagd, dan mag u deze email negeren.'
+        powered_by: 'Powered by'
+    send_email_success: 'Een email is verzonden naar jouw emailadres'
+    user_not_found: 'Gebruiker niet gevonden.'
+    password_set_success: 'Uw wachtwoord is aangepast.'
+    email: 'Gebruikersnaam of emailadres'
+    reset: 'Reset wachtwoord'
+  change_password:
+    form:
+      current_password: 'Huidig wachtwoord'
+      new_password: 'Nieuw wachtwoord'
+      new_password_confirmation: 'Herhaal nieuw wachtwoord'
+      submit: 'Wachtwoord veranderen'
+    success:
+      flash: 'Het wachtwoord voor "%username%" is aangepast.'

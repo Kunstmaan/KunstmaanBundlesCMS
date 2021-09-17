@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\Router;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Router\RedirectRouter;
@@ -20,7 +20,7 @@ class RedirectRouterTest extends TestCase
     /** @var RedirectRouter[] */
     private $routers;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $firstDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
         $firstDomainConfiguration->method('getHost')->willReturn('sub.domain.com');

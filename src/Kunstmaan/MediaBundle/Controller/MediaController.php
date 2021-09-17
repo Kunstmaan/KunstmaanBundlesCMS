@@ -135,7 +135,7 @@ class MediaController extends Controller
     /**
      * @param int $folderId
      *
-     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
+     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit", methods={"POST"})
      *
      * @return JsonResponse
      */
@@ -154,6 +154,11 @@ class MediaController extends Controller
         // Create target dir
         if (!\file_exists($targetDir)) {
             @\mkdir($targetDir);
+        }
+
+        $submittedToken = $request->headers->get('x-upload-token');
+        if (!$this->isCsrfTokenValid('bulk-upload-media', $submittedToken)) {
+            return $this->returnJsonError('105', 'Could not verify token');
         }
 
         // Get a file name

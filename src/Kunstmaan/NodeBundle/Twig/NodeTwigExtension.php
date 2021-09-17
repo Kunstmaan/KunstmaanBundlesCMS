@@ -119,7 +119,7 @@ class NodeTwigExtension extends AbstractExtension
     {
         $repo = $this->em->getRepository(NodeTranslation::class);
 
-        return $repo->getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang);
+        return $repo->getNodeTranslationByNodeId($nodeId, $lang);
     }
 
     /**

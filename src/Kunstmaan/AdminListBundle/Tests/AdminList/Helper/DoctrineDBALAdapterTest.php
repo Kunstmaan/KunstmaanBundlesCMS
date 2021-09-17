@@ -10,11 +10,14 @@ use PHPUnit\Framework\TestCase;
 class DoctrineDBALAdapterTest extends TestCase
 {
     /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage The $countField must contain a table alias in the string.
+     * Mark test as legacy to avoid "\Pagerfanta\Exception\Exception" interface deprecation
+     *
+     * @group legacy
      */
     public function testConstructorWithIncorrectCountField()
     {
+        $this->expectExceptionMessage('The $countField must contain a table alias in the string.');
+        $this->expectException(\LogicException::class);
         $qb = $this->createMock(QueryBuilder::class);
         new DoctrineDBALAdapter($qb, 'somefield');
     }
@@ -28,12 +31,10 @@ class DoctrineDBALAdapterTest extends TestCase
         $this->assertInstanceOf(QueryBuilder::class, $adapter->getQueryBuilder());
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Only SELECT queries can be paginated.
-     */
     public function testConstructorThrowsAnotherException()
     {
+        $this->expectExceptionMessage('Only SELECT queries can be paginated.');
+        $this->expectException(\LogicException::class);
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::DELETE);
 
@@ -61,11 +62,10 @@ class DoctrineDBALAdapterTest extends TestCase
     {
         $statement = $this->createMock(Statement::class);
         $statement->expects($this->once())->method('fetchColumn')->with(0)->willReturn([1, 2, 3]);
+
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
         $qb->expects($this->once())->method('select')->willReturn($qb);
-        $qb->expects($this->once())->method('orderBy')->willReturn($qb);
-        $qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
         $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');
@@ -80,8 +80,6 @@ class DoctrineDBALAdapterTest extends TestCase
         $qb = $this->createMock(QueryBuilder::class);
         $qb->expects($this->once())->method('getType')->willReturn(QueryBuilder::SELECT);
         $qb->expects($this->once())->method('select')->willReturn($qb);
-        $qb->expects($this->once())->method('orderBy')->willReturn($qb);
-        $qb->expects($this->once())->method('setMaxResults')->with(1)->willReturn($qb);
         $qb->expects($this->once())->method('execute')->willReturn($statement);
 
         $adapter = new DoctrineDBALAdapter($qb, 'table.somefield');

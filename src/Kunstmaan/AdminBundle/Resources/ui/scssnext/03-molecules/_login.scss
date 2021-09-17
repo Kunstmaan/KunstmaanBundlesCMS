@@ -1,0 +1,218 @@
+/* ==========================================================================
+    app login
+   ========================================================================== */
+
+.app-login-page {
+    background: none;
+}
+
+.app-login {
+    position: relative;
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $break-sm) {
+        flex-direction: row;
+    }
+}
+
+.app-login__alert-holder {
+    width: 100%;
+}
+
+.app-login__title-holder {
+    position: relative;
+
+    padding: 30px;
+    flex: 0 0 auto;
+
+    @media (min-width: $break-sm) {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.app-login__aside {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: 30px;
+    overflow: auto;
+
+    background-color: var(--highlight-color-bg);
+
+    .form-control-label,
+    .login__form__remember-me__check,
+    .login__form__forgot-pw__link {
+        color: var(--color-greyscale-500);
+    }
+
+    .login__form__forgot-pw {
+        bottom: auto;
+    }
+
+    @media (min-width: $break-sm) {
+        flex: 0 0 500px;
+        padding: 60px 60px 20px;
+
+        form {
+            width: 100%;
+        }
+    }
+}
+
+.app-login__aside__content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-login__footer {
+    padding: 30px 0 0 0;
+    flex: 0 0 auto;
+}
+
+.app-login__brand-logo {
+    margin-bottom: 20px;
+    height: auto;
+    max-width: 100px;
+
+    @media (min-width: $break-sm) {
+        max-width: 200px;
+    }
+}
+
+.app-login__image-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    &:after {
+        @include snip-pseudo();
+
+        top: 0;
+        left: 0;
+        z-index: 1;
+
+        height: 100%;
+        width: 100%;
+
+        background-color: var(--color-greyscale-000);
+        opacity: .3;
+    }
+
+    img {
+        @include snip-object-fit();
+
+        position: relative;
+        z-index: 0;
+    }
+}
+
+.app-login__header {
+    position: relative;
+    z-index: 1;
+
+    text-align: center;
+
+    @media (min-width: $break-sm) {
+        max-width: 500px;
+    }
+}
+
+.app-login__title {
+    margin: 0;
+
+    color: var(--color-greyscale-500);
+
+    @media (min-width: $break-md) {
+        font-size: 70px;
+    }
+}
+
+.app-login__form-title {
+    margin: 0 0 20px 0;
+    display: block;
+
+    color: var(--color-greyscale-500);
+    font-size: 20px;
+
+    @media (min-width: $break-md) {
+        width: 100%;
+
+        text-align: left;
+    }
+}
+
+.app-login__forgot-pw {
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.app-login__footer__text {
+    color: var(--color-greyscale-500);
+    font-size: 12px;
+    text-align: center;
+
+    a {
+        color: currentColor;
+    }
+}
+
+.app-login__footer__logo {
+    display: inline-block;
+    margin-right: 10px;
+
+    vertical-align: middle;
+}
+
+.app-login__form__submit-holder {
+    margin-top: 25px;
+
+    text-align: center;
+}
+
+.app-login__form__alt {
+    margin-bottom: 15px;
+
+    text-align: right;
+
+    @media (min-width: $break-sm) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+.app-login__form__alt__forgot-pw,
+.app-login__form__alt__remember-me {
+    flex: 0 0 auto;
+}
+
+.app-login__form__alt__remember-me {
+    margin-bottom: 5px;
+    order: 2;
+
+    .login__form__remember-me__check {
+        float: none;
+
+        padding-left: 20px;
+    }
+}

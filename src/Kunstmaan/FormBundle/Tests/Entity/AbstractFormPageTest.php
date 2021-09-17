@@ -16,7 +16,7 @@ class AbstractFormPageTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = $this->getMockForAbstractClass('Kunstmaan\FormBundle\Entity\AbstractFormPage');
     }
@@ -62,7 +62,7 @@ class AbstractFormPageTest extends TestCase
     {
         $stringValue = $this->object->getFormElementsContext();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testGetControllerAction()

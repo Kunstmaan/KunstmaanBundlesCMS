@@ -12,7 +12,7 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new TocPagePartAdminType();
@@ -30,6 +30,6 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\TocPagePart');
+        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\TocPagePart', $resolve['data_class']);
     }
 }

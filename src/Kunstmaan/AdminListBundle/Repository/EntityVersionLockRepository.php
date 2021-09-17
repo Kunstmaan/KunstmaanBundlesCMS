@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminListBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use FOS\UserBundle\Model\User;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 
 /**
@@ -17,10 +18,15 @@ class EntityVersionLockRepository extends EntityRepository
      * @param int  $threshold
      * @param User $userToExclude
      *
-     * @return EntityVersionLock[]
+     * @return LockableEntity[]
      */
-    public function getLocksForLockableEntity(LockableEntity $entity, $threshold, User $userToExclude = null)
+    public function getLocksForLockableEntity(LockableEntity $entity, $threshold, /*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $userToExclude = null)
     {
+        // NEXT_MAJOR: remove type check and enable parameter typehint
+        if (!$userToExclude instanceof User && !$userToExclude instanceof UserInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$userToExclude" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
+        }
+
         $qb = $this->createQueryBuilder('evl')
             ->select('evl')
             ->join('evl.lockableEntity', 'le')

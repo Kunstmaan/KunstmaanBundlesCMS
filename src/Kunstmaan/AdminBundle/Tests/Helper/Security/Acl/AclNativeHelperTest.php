@@ -3,11 +3,11 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use FOS\UserBundle\Model\UserInterface;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use PHPUnit\Framework\TestCase;
@@ -55,7 +55,7 @@ class AclNativeHelperTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
@@ -69,12 +69,9 @@ class AclNativeHelperTest extends TestCase
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        /* @var $platform AbstractPlatform */
-        $platform = $this->getMockForAbstractClass('Doctrine\DBAL\Platforms\AbstractPlatform');
-
         $this->conn->expects($this->any())
             ->method('getDatabasePlatform')
-            ->will($this->returnValue($platform));
+            ->willReturn(new MySqlPlatform());
 
         $this->em->expects($this->any())
             ->method('getConnection')
@@ -130,7 +127,7 @@ class AclNativeHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+        $user = $this->getMockBuilder(UserInterface::class)
             ->getMock();
 
         $user->expects($this->any())
@@ -147,10 +144,10 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertContains('"ROLE_SUBJECT"', $query);
-        $this->assertContains('"ROLE_KING"', $query);
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
-        $this->assertContains('MyUser', $query);
+        $this->assertStringContainsString('ROLE_SUBJECT', $query);
+        $this->assertStringContainsString('ROLE_KING', $query);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $query);
+        $this->assertStringContainsString('MyUser', $query);
     }
 
     public function testApplyAnonymous()
@@ -187,7 +184,7 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $query);
     }
 
     public function testGetTokenStorage()

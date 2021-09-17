@@ -3,7 +3,7 @@
 namespace Kunstmaan\FixturesBundle\Builder;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\FixturesBundle\Parser\Parser;
 use Kunstmaan\FixturesBundle\Populator\Populator;

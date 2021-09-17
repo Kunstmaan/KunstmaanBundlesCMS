@@ -24,10 +24,13 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
 
     /** @var bool */
     private $overwriteFosUser;
+    /** @var bool */
+    private $newAuthentication;
 
-    public function __construct(string $projectDir)
+    public function __construct(string $projectDir, bool $newAuthentication = false)
     {
         $this->projectDir = $projectDir;
+        $this->newAuthentication = $newAuthentication;
 
         parent::__construct();
     }
@@ -56,11 +59,12 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
                 InputOption::VALUE_REQUIRED,
                 'Whether the command should generate an example or just overwrite the already existing config file'
             )
+            // NEXT_MAJOR: remove option
             ->addOption(
                 'overwrite-fosuser',
                 '',
                 InputOption::VALUE_REQUIRED,
-                'Whether the command should generate an example or just overwrite the already existing config file'
+                'DEPRECATED. Whether the command should generate an example or just overwrite the already existing config file'
             )
             ->setName('kuma:generate:config');
     }
@@ -85,7 +89,7 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
             $this->overwriteSecurity,
             $this->overwriteLiipImagine,
             $this->overwriteFosHttpCache,
-            $this->overwriteFosUser
+            $this->newAuthentication ? false : $this->overwriteFosUser
         );
 
         $this->assistant->writeSection('Config successfully created', 'bg=green;fg=black');
@@ -99,6 +103,10 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     protected function doInteract()
     {
         $this->assistant->writeLine(["This helps you to set all default config files needed to run KunstmaanCMS.\n"]);
+
+        if ($this->assistant->hasOption('overwrite-fosuser')) {
+            @trigger_error(sprintf('Passing the option "overwrite-fosuser" is deprecated since KunstmaanGeneratorBundle 5.9 and will be removed in KunstmaanGeneratorBundle 6.0. Use the new KunstmaanAdminBundle authentication system instead.'), E_USER_DEPRECATED);
+        }
 
         $this->overwriteSecurity = $this->assistant->getOptionOrDefault('overwrite-security', null);
         $this->overwriteLiipImagine = $this->assistant->getOptionOrDefault('overwrite-liipimagine', null);
@@ -123,7 +131,7 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
                 'y'
             );
         }
-        if (null === $this->overwriteFosUser) {
+        if (null === $this->overwriteFosUser && false === $this->newAuthentication) {
             $this->overwriteFosUser = $this->assistant->askConfirmation(
                 'Do you want to overwrite the fos_user.yaml configuration file? (y/n)',
                 'y'
@@ -139,6 +147,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new ConfigGenerator($filesystem, $registry, '/config', $this->assistant, $this->getContainer());
+        return new ConfigGenerator($filesystem, $registry, '/config', $this->assistant, $this->getContainer(), $this->newAuthentication);
     }
 }

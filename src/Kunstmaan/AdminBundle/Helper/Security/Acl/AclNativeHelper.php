@@ -51,10 +51,7 @@ class AclNativeHelper
     }
 
     /**
-     * Apply the ACL constraints to the specified query builder, using the permission definition
-     *
-     * @param QueryBuilder         $queryBuilder  The query builder
-     * @param PermissionDefinition $permissionDef The permission definition
+     * Apply the ACL constraints to the specified query builder, using the permission definition, for all database platforms.
      *
      * @return QueryBuilder
      */
@@ -64,15 +61,13 @@ class AclNativeHelper
             return $queryBuilder;
         }
 
-        $aclConnection = $this->em->getConnection();
-
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
+        $databasePlatform = $this->em->getConnection()->getDatabasePlatform();
         $rootEntity = $permissionDef->getEntity();
         $linkAlias = $permissionDef->getAlias();
         // Only tables with a single ID PK are currently supported
         $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
 
-        $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
+        $rootEntity = $databasePlatform->quoteStringLiteral($rootEntity);
         $query = $queryBuilder;
 
         $builder = new MaskBuilder();
@@ -97,18 +92,18 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
+        $uR = [$databasePlatform->quoteStringLiteral('IS_AUTHENTICATED_ANONYMOUSLY')];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if (is_string($role)) {
                 if ($role !== 'ROLE_USER') {
-                    $uR[] = '"' . $role . '"';
+                    $uR[] = $databasePlatform->quoteStringLiteral($role);
                 }
             } else {
                 // Symfony 3.4 compatibility
                 if ($role->getRole() !== 'ROLE_USER') {
-                    $uR[] = '"' . $role->getRole() . '"';
+                    $uR[] = $databasePlatform->quoteStringLiteral($role->getRole());
                 }
             }
         }
@@ -116,21 +111,22 @@ class AclNativeHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = "' . str_replace(
-                '\\',
-                '\\\\',
-                \get_class($user)
-            ) . '-' . $user->getUserName() . '"';
+            $inString .= ' OR s.identifier = ' . $databasePlatform->quoteStringLiteral(\get_class($user) . '-' . $user->getUserName());
+        }
+
+        $objectIdentifierColumn = 'o.object_identifier';
+        if ($databasePlatform->getName() === 'postgresql') {
+            $objectIdentifierColumn .= '::BIGINT';
         }
 
         $joinTableQuery = <<<SELECTQUERY
-SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
-INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
-LEFT JOIN {$databasePrefix}acl_entries e ON (
+SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
+INNER JOIN acl_classes c ON c.id = o.class_id
+LEFT JOIN acl_entries e ON (
     e.class_id = o.class_id AND (e.object_identity_id = o.id
-    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
+    OR {$databasePlatform->getIsNullExpression('e.object_identity_id')})
 )
-LEFT JOIN {$databasePrefix}acl_security_identities s ON (
+LEFT JOIN acl_security_identities s ON (
 s.id = e.security_identity_id
 )
 WHERE c.class_type = {$rootEntity}

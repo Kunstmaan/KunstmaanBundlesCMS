@@ -24,7 +24,7 @@ class UrlSafeCipherTest extends TestCase
      *
      * @covers \Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher::__construct
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->cipher = new UrlSafeCipher(self::SECRET);
     }
@@ -38,7 +38,7 @@ class UrlSafeCipherTest extends TestCase
         $encryptedValue = $this->cipher->encrypt(self::CONTENT);
         $this->assertNotEquals(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
-        $this->assertEquals($decryptedValue, self::CONTENT);
+        $this->assertEquals(self::CONTENT, $decryptedValue);
     }
 
     /**
@@ -50,7 +50,7 @@ class UrlSafeCipherTest extends TestCase
         $hexValue = bin2hex(self::CONTENT);
         $this->assertNotEquals(self::CONTENT, $hexValue);
         $binValue = $this->cipher->hex2bin($hexValue);
-        $this->assertEquals($binValue, self::CONTENT);
+        $this->assertEquals(self::CONTENT, $binValue);
     }
 
     /**

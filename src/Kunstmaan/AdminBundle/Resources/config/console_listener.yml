@@ -11,7 +11,7 @@ services:
             - { name: kernel.event_listener, event: console.exception }
 
     kunstmaan_admin.consolelogger.subscriber:
-        class: "Kunstmaan\\AdminBundle\\EventListener\\ConsoleExceptionSubscriber"
+        class: 'Kunstmaan\AdminBundle\EventListener\ConsoleExceptionSubscriber'
         arguments:
             - '@logger'
         tags:

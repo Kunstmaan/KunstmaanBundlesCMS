@@ -18,25 +18,25 @@ KunstmaanAdminBundle_settings_exception:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/exception
 
-###########################
-## fos_userbundle routes ##
-###########################
+KunstmaanAdminBundle_security:
+    resource: '@KunstmaanAdminBundle/Controller/Authentication/SecurityController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%
 
-fos_user_security:
-    resource: '@FOSUserBundle/Resources/config/routing/security.xml'
+KunstmaanAdminBundle_resetting:
+    resource: '@KunstmaanAdminBundle/Controller/Authentication/PasswordResetController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%
+
+KunstmaanAdminBundle_change_password:
+    resource: '@KunstmaanAdminBundle/Controller/Authentication/ForcedChangePasswordController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%
+
+fos_routes:
+    resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader::loadRoutes'
+    type: service
     prefix: /%kunstmaan_admin.admin_prefix%
-
-fos_user_profile:
-    resource: '@FOSUserBundle/Resources/config/routing/profile.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%/profile
-
-fos_user_resetting:
-    resource: '@FOSUserBundle/Resources/config/routing/resetting.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%/resetting
-
-fos_user_change_password:
-    resource: '@FOSUserBundle/Resources/config/routing/change_password.xml'
-    prefix: /%kunstmaan_admin.admin_prefix%/profile
 
 ##########################
 ## Google OAuth Sign In ##

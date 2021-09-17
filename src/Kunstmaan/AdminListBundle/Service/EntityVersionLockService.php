@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use FOS\UserBundle\Model\User;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
@@ -26,11 +27,15 @@ class EntityVersionLockService
      */
     private $lockEnabled;
 
+    /**
+     * @param int  $threshold
+     * @param bool $lockEnabled
+     */
     public function __construct(ObjectManager $em, $threshold, $lockEnabled)
     {
-        $this->setObjectManager($em);
-        $this->setThreshold($threshold);
-        $this->setLockEnabled($lockEnabled);
+        $this->objectManager = $em;
+        $this->threshold = $threshold;
+        $this->lockEnabled = $lockEnabled;
     }
 
     /**
@@ -55,8 +60,13 @@ class EntityVersionLockService
     /**
      * @return bool
      */
-    public function isEntityLocked(User $user, LockableEntityInterface $entity)
+    public function isEntityLocked(/*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $user, LockableEntityInterface $entity)
     {
+        // NEXT_MAJOR: remove type check and enable parameter typehint
+        if (!$user instanceof User && !$user instanceof UserInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$user" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
+        }
+
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
 
@@ -82,8 +92,13 @@ class EntityVersionLockService
     /**
      * When editing the entity, create a new entity translation lock.
      */
-    protected function createEntityVersionLock(User $user, LockableEntity $entity)
+    protected function createEntityVersionLock(/*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $user, LockableEntity $entity)
     {
+        // NEXT_MAJOR: remove type check and enable parameter typehint
+        if (!$user instanceof User && !$user instanceof UserInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$user" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
+        }
+
         /** @var EntityVersionLock $lock */
         $lock = $this->objectManager->getRepository(EntityVersionLock::class)->findOneBy([
             'owner' => $user->getUsername(),
@@ -104,8 +119,13 @@ class EntityVersionLockService
      *
      * @return array
      */
-    public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, User $userToExclude = null)
+    public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, /*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $userToExclude = null)
     {
+        // NEXT_MAJOR: remove type check and enable parameter typehint
+        if (!$userToExclude instanceof User && !$userToExclude instanceof UserInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$userToExclude" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
+        }
+
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
 
@@ -135,8 +155,13 @@ class EntityVersionLockService
      *
      * @return EntityVersionLock[]
      */
-    protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, User $userToExclude = null)
+    protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, /*\Kunstmaan\AdminBundle\Entity\UserInterface*/ $userToExclude = null)
     {
+        // NEXT_MAJOR: remove type check and enable parameter typehint
+        if (!$userToExclude instanceof User && !$userToExclude instanceof UserInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$userToExclude" argument must be of type "%s" or implement the "%s" interface', User::class, UserInterface::class));
+        }
+
         /** @var EntityVersionLockRepository $objectRepository */
         $objectRepository = $this->objectManager->getRepository(EntityVersionLock::class);
 
@@ -162,26 +187,38 @@ class EntityVersionLockService
     }
 
     /**
+     * @deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.
+     *
      * @param ObjectManager $objectManager
      */
     public function setObjectManager($objectManager)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.', __METHOD__), E_USER_DEPRECATED);
+
         $this->objectManager = $objectManager;
     }
 
     /**
+     * @deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.
+     *
      * @param int $threshold
      */
     public function setThreshold($threshold)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.', __METHOD__), E_USER_DEPRECATED);
+
         $this->threshold = $threshold;
     }
 
     /**
+     * @deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.
+     *
      * @param bool lockEnabled
      */
     public function setLockEnabled($lockEnabled)
     {
+        @trigger_error(sprintf('Using the "%s" method is deprecated since KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Use the constructor to inject the required values.', __METHOD__), E_USER_DEPRECATED);
+
         $this->lockEnabled = $lockEnabled;
     }
 }

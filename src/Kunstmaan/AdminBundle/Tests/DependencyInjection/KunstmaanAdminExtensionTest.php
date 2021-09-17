@@ -4,14 +4,17 @@ namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 {
+    use ExpectDeprecationTrait;
+
     /**
      * @return ExtensionInterface[]
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanAdminExtension()];
     }
@@ -21,6 +24,9 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->load([
             'dashboard_route' => true,
             'admin_password' => 'omgchangethis',
+            'authentication' => [
+                'enable_new_authentication' => true,
+            ],
             'menu_items' => [
                 [
                     'route' => 'route66',
@@ -43,6 +49,18 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_id');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_secret');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.hosted_domains');
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testNotSettingNewAuthenticationConfig()
+    {
+        $this->expectDeprecation('Not setting the "kunstmaan_admin.authentication.enable_new_authentication" config to true is deprecated since KunstmaanAdminBundle 5.9, it will always be true in KunstmaanAdminBundle 6.0.');
+
+        $config = $this->getRequiredConfig('authentication');
+
+        $this->load($config);
     }
 
     /**
@@ -162,7 +180,52 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_locale', '');
     }
 
-    protected function setUp()
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedExceptionExcludes()
+    {
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'authentication' => [
+                'enable_new_authentication' => true,
+            ],
+            'admin_exception_excludes' => [
+                'test_exclude',
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude']);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedExceptionExcludesWithNewConfig()
+    {
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'admin_exception_excludes' => [
+                'test_exclude',
+            ],
+            'exception_logging' => [
+                'exclude_patterns' => ['test_exclude_new_config'],
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
+    }
+
+    public function testExceptionExcludesFromExceptionLoggingConfig()
+    {
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'exception_logging' => [
+                'exclude_patterns' => ['test_exclude_new_config'],
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
+    }
+
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -178,6 +241,9 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'multi_language' => true,
             'required_locales' => 'nl|fr|en',
             'default_locale' => 'nl',
+            'authentication' => [
+                'enable_new_authentication' => true,
+            ],
         ];
 
         if (array_key_exists($excludeKey, $requiredConfig)) {

@@ -7,7 +7,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 class KunstmaanSearchExtensionTest extends AbstractExtensionTestCase
 {
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [new KunstmaanSearchExtension()];
     }
@@ -24,8 +24,8 @@ class KunstmaanSearchExtensionTest extends AbstractExtensionTestCase
 
         $analyzers = $this->container->getParameter('analyzer_languages');
 
-        $this->assertInternalType('array', $analyzers);
-        $this->assertTrue(\array_key_exists('ar', $analyzers));
+        $this->assertIsArray($analyzers);
+        $this->assertArrayHasKey('ar', $analyzers);
         $this->assertEquals('arabic', $analyzers['ar']['analyzer']);
     }
 

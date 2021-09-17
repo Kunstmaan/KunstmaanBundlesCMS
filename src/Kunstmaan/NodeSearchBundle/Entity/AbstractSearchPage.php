@@ -11,6 +11,13 @@ use Kunstmaan\SearchBundle\Helper\IndexableInterface;
  */
 class AbstractSearchPage extends AbstractPage implements IndexableInterface, SlugActionInterface
 {
+    public function __construct()
+    {
+        if (\get_class($this) === __CLASS__) {
+            @trigger_error(sprintf('Instantiating the "%s" class is deprecated in KunstmaanNodeSearchBundle 5.9 and will be made abstract in KunstmaanNodeSearchBundle 6.0. Extend your implementation from this class instead.', __CLASS__), E_USER_DEPRECATED);
+        }
+    }
+
     /**
      * @return string
      */

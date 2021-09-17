@@ -25,6 +25,7 @@ class AclWalkerTest extends TestCase
     {
         $range = new RangeVariableDeclaration('someschema', 's');
         $expr = new PathExpression('int', 'id');
+        $expr->type = PathExpression::TYPE_STATE_FIELD;
         $indexBy = new IndexBy($expr);
         $from = new FromClause([new IdentificationVariableDeclaration($range, $indexBy, [])]);
 
@@ -36,7 +37,7 @@ class AclWalkerTest extends TestCase
         $platform->expects($this->once())->method('appendLockHint')->willReturn($from);
 
         $conn = $this->createMock(Connection::class);
-        $conn->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
+        $conn->expects($this->any())->method('getDatabasePlatform')->willReturn($platform);
 
         $em = $this->createMock(EntityManager::class);
         $query = $this->createMock(AbstractQuery::class);

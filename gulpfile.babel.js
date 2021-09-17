@@ -1,22 +1,24 @@
 /* eslint-env node */
 
 import gulp from 'gulp';
-import { adminBundle } from './groundcontrol/admin-bundle.tasks';
-import { dashboardBundle } from './groundcontrol/dashboard-bundle.tasks';
-import { mediaBundle } from './groundcontrol/media-bundle.tasks';
-import { translatorBundle } from './groundcontrol/translator-bundle.tasks';
-import startLocalTask, { buildOnChange } from './groundcontrol/start-local.task';
+import {adminBundle} from './groundcontrol/admin-bundle.tasks';
+import {dashboardBundle} from './groundcontrol/dashboard-bundle.tasks';
+import {mediaBundle} from './groundcontrol/media-bundle.tasks';
+import {translatorBundle} from './groundcontrol/translator-bundle.tasks';
+import startLocalTask, { buildOnChange, testOnChange } from './groundcontrol/start-local.task';
 import createBuildGroundControlSkeletonTask from './groundcontrol/tasks/build-gc-skeleton';
 
 
 // AdminBundle Tasks
 const analyzeAdminBundle = gulp.series(
     adminBundle.tasks.eslint,
+    adminBundle.tasks.stylelint,
 );
 
 const buildLocalAdminBundle = gulp.series(
     adminBundle.tasks.copy,
     adminBundle.tasks.cssLocal,
+    adminBundle.tasks.cssNextLocal,
     adminBundle.tasks.scripts,
     adminBundle.tasks.bundle
 );
@@ -24,6 +26,7 @@ const buildLocalAdminBundle = gulp.series(
 const buildOptimizedAdminBundle = gulp.series(
     adminBundle.tasks.copy,
     adminBundle.tasks.cssOptimized,
+    adminBundle.tasks.cssNextOptimized,
     adminBundle.tasks.scripts,
     adminBundle.tasks.bundlePolyfills,
     adminBundle.tasks.bundleOptimized
@@ -95,11 +98,13 @@ const testAndBuildOptimized = gulp.series(
 const startLocal = gulp.series(
     buildLocal,
     startLocalTask,
-    buildOnChange
+    analyze,
+    buildOnChange,
+    testOnChange,
 );
 
 // Development sepcific tasks
 const buildGroundControlSkeleton = gulp.series(createBuildGroundControlSkeletonTask('./src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol'));
 
 // Export public tasks
-export { test, buildOptimized, testAndBuildOptimized, startLocal, buildGroundControlSkeleton };
+export {test, buildOptimized, testAndBuildOptimized, startLocal, buildGroundControlSkeleton};

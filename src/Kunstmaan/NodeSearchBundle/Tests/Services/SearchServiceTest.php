@@ -49,11 +49,9 @@ class SearchServiceTest extends TestCase
         $searcher->search();
     }
 
-    /**
-     * @expectedException \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     */
     public function testUnknownSearcher()
     {
+        $this->expectException(\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException::class);
         $entity = $this->createMock(AbstractSearchPage::class);
         $entity->method('getSearcher')->willReturn('unknown_searcher');
 

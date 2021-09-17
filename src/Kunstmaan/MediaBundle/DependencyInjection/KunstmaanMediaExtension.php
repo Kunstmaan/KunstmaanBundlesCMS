@@ -2,11 +2,14 @@
 
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
+use Gedmo\DoctrineExtensions;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Yaml\Yaml;
 
 class KunstmaanMediaExtension extends Extension implements PrependExtensionInterface
@@ -57,6 +60,12 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setAlias('liip_imagine.filter.loader.background', 'kunstmaan_media.imagine.filter.loader.background')->setPublic(true);
 
         $this->addAvairyApiKeyParameter($container, $config);
+
+        if (!$container->hasDefinition('mime_types')) {
+            $mimeTypes = new Definition(MimeTypes::class);
+            $mimeTypes->setPublic(true);
+            $container->setDefinition('mime_types', $mimeTypes);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
@@ -87,13 +96,15 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $container->prependExtensionConfig('stof_doctrine_extensions', $stofDoctrineExtensionsConfig);
 
+        $baseDir = version_compare(DoctrineExtensions::VERSION, '3.0.0', '>=') ? 'src' : 'lib/Gedmo';
+
         $doctrineGedmoEntityConfig = [
             'orm' => [
                 'mappings' => [
                     'gedmo_translatable' => [
                         'type' => 'annotation',
                         'prefix' => 'Gedmo\Translatable\Entity',
-                        'dir' => '%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity',
+                        'dir' => '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/' . $baseDir . '/Translatable/Entity',
                         'alias' => 'GedmoTranslatable',
                         'is_bundle' => false,
                     ],
@@ -117,9 +128,10 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
     private function addAvairyApiKeyParameter(ContainerBuilder $container, array $config)
     {
+        // NEXT_MAJOR: Remove parameter, config option and all aviary related files (twig, js, etc)
         $aviaryApiKey = $container->hasParameter('aviary_api_key') ? $container->getParameter('aviary_api_key') : null;
         if (null === $config['aviary_api_key'] && null !== $aviaryApiKey) {
-            @trigger_error('Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanDashboardBundle 6.0.', E_USER_DEPRECATED);
+            @trigger_error('Not providing a value for the "kunstmaan_media.aviary_api_key" config while setting the "aviary_api_key" parameter is deprecated since KunstmaanMediaBundle 5.2, this config value will replace the "aviary_api_key" parameter in KunstmaanMediaBundle 6.0.', E_USER_DEPRECATED);
         }
 
         if (null !== $config['aviary_api_key']) {

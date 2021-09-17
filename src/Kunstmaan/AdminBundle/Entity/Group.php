@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\GroupInterface;
 
 // NEXT_MAJOR: BC layer for deprecated RoleInterface on sf 3.4. Remove this if (keep the else) and move the content of the trait back into this class. Trait is final/internal by default so can be removed
 if (interface_exists('\Symfony\Component\Security\Core\Role\RoleInterface')) {

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
+use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,7 +15,7 @@ class EntityLockCheckController extends Controller
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @return \Doctrine\Persistence\ObjectManager|object
      */
     protected function getEntityManager()
     {

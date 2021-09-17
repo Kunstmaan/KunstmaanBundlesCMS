@@ -5,7 +5,7 @@ imports:
 framework:
     secret: "%secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.project_dir%/config/routing.yml"
         strict_requirements: "%kernel.debug%"
     form:            ~
     csrf_protection: ~
@@ -26,6 +26,8 @@ kunstmaan_admin:
     multi_language: true
     required_locales: 'nl|fr|en'
     default_locale: 'nl'
+    authentication:
+        enable_new_authentication: true
 
 kunstmaan_translator:
     managed_locales: ['nl','en','de']
@@ -45,15 +47,6 @@ doctrine:
                 connection:       default
                 mappings:
                     KunstmaanTranslatorBundle: ~
-
-fos_user:
-    firewall_name: main
-    user_class: Kunstmaan\AdminBundle\Entity\User
-    from_email:
-        address:        admin@kunstmaan.be
-        sender_name:    Admin
-    service:
-        mailer: fos_user.mailer.noop
 
 sensio_framework_extra:
     router:

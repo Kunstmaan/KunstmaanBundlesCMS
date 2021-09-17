@@ -1,3 +1,5 @@
+{% deprecated 'The "@KunstmaanAdmin/Resetting/reset_content.html.twig" template is deprecated since kunstmaanAdminBundle 5.9 and will be removed in kunstmaanAdminBundle 6.0. Use "@KunstmaanAdmin/authentication/password_reset/confirm.html.twig" instead' %}
+
 <p>
     {{ 'Choose a new password' |trans }}
 </p>
@@ -14,7 +16,6 @@
         {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control form-group--icon-in-control__form-control'} }) }}
         <i class="fa fa-key form-group--icon-in-control__icon"></i>
     </div>
-
     {{ form_widget(form) }}
 
     <button type="submit" class="btn btn-primary btn--raise-on-hover">

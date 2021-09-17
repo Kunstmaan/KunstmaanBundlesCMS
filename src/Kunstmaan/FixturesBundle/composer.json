@@ -18,21 +18,25 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.1",
-        "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "fzaninotto/faker": "^1.6",
-        "kunstmaan/admin-bundle": "~5.2",
-        "kunstmaan/media-bundle": "~5.2",
+        "php": "^7.2",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "fakerphp/faker": "^1.15",
+        "kunstmaan/admin-bundle": "^5.9",
+        "kunstmaan/media-bundle": "^5.7",
         "kunstmaan/menu-bundle": "~5.2",
         "kunstmaan/node-bundle": "~5.2",
         "kunstmaan/pagepart-bundle": "~5.2",
-        "kunstmaan/utilities-bundle": "~5.2"
+        "kunstmaan/utilities-bundle": "~5.2",
+        "symfony/mime": "^4.4"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^3.1",
-        "symfony/phpunit-bridge": "^4.2",
-        "phpunit/phpunit": "^7.5"
+        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "symfony/phpunit-bridge": "^5.1",
+        "phpunit/phpunit": "^8.5"
+    },
+    "conflict": {
+        "doctrine/persistence": "<1.3"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +45,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.6-dev"
+            "dev-master": "5.9-dev"
         }
     }
 }

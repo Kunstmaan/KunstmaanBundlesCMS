@@ -16,7 +16,7 @@ class TwigExtensionTest extends TestCase
 
     protected $seoRepoMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->emMock = $this->createMock('\Doctrine\ORM\EntityManager');
     }

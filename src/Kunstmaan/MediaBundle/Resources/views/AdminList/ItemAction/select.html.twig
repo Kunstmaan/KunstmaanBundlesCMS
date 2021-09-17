@@ -1,5 +1,5 @@
 {% set mediaHandler = mediamanager.getHandler(item) %}
-{% set thumbnailurl =  mediaHandler.getImageUrl(item, app.request.basePath, 210, 150) %}
+{% set thumbnailurl =  mediaHandler.getImageUrl(item, app.request.basePath) %}
 
 {% set cke = (app.request and app.request.get('CKEditorFuncNum')) %}
 {% set path = "[%s]" | format("M" ~ item.id) %}

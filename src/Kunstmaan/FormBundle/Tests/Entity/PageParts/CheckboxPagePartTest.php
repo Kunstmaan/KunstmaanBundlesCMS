@@ -15,7 +15,7 @@ class CheckboxPagePartTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new CheckboxPagePart();
     }
@@ -24,7 +24,7 @@ class CheckboxPagePartTest extends TestCase
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testAdaptForm()
@@ -42,7 +42,7 @@ class CheckboxPagePartTest extends TestCase
 
         $fields = new ArrayObject();
 
-        $this->assertEquals(count($fields), 0);
+        $this->assertEquals(0, count($fields));
         $object->setErrorMessageRequired('omg sort it out');
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);

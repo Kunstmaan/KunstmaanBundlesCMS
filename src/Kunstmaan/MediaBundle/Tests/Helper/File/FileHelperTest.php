@@ -20,10 +20,10 @@ class FileHelperTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->media = new Media();
-        $this->object = new FileHelper($this->media);
+        $this->object = new FileHelper($this->media, '/uploads/media/');
     }
 
     public function testGetSetName()

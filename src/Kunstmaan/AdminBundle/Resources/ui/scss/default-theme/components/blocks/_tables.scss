@@ -75,4 +75,9 @@
         display: block;
         margin: 0 0 .4rem;
     }
+
+    &.disabled {
+        color: $gray-light;
+        cursor: not-allowed;
+    }
 }

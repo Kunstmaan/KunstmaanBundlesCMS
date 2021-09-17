@@ -8,6 +8,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -72,11 +73,27 @@ class SlugListener
                 ->setRequest($request)
                 ->setNodeTranslation($nodeTranslation);
 
-            $this->eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
+            $this->dispatch($securityEvent, Events::SLUG_SECURITY);
 
             // Set the right controller
             $request->attributes->set('_controller', $entity->getControllerAction());
             $event->setController($this->resolver->getController($request));
         }
+    }
+
+    /**
+     * @param object $event
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

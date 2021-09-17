@@ -35,9 +35,9 @@ security:
                 authenticators:
                     - kunstmaan_admin.oauth_authenticator
             form_login:
-                login_path: fos_user_security_login
-                check_path: fos_user_security_check
-                provider: fos_userbundle
+                login_path: kunstmaan_admin_login
+                check_path: kunstmaan_admin_login
+                provider: cms_users
             ...
 ```
 And that's it! An extra button should now have appeared on your login screen.
