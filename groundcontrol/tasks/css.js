@@ -1,5 +1,6 @@
 import gulp from 'gulp';
-import sass from 'gulp-sass';
+import gulpSass from 'gulp-sass';
+import nodeSass from 'node-sass';
 import notifier from 'node-notifier';
 import sourcemaps from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
@@ -7,6 +8,8 @@ import rev from 'gulp-rev';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
 import debug from 'gulp-debug';
+
+const sass = gulpSass(nodeSass);
 
 export function createCssLocalTask({ src = undefined, dest = undefined }) {
     return function cssLocal() {
@@ -26,7 +29,7 @@ export function createCssOptimizedTask({ src = undefined, dest = undefined, cssn
             .pipe(debug({ title: 'Building' }))
             .pipe(sass().on('error', sassErrorHandler))
             .pipe(postcss([autoprefixer(), cssnano(cssnanoConfig)]))
-            //.pipe(rev())
+            // .pipe(rev())
             .pipe(gulp.dest(dest));
     };
 }
@@ -35,7 +38,7 @@ function sassErrorHandler(error) {
     console.log(`Sass Error:\n${error.messageFormatted}`);
     notifier.notify({
         title: 'Sass',
-        message: `Error in ${error.relativePath} at L${error.line}:C${error.column}`
+        message: `Error in ${error.relativePath} at L${error.line}:C${error.column}`,
     });
     this.emit('end');
 }
