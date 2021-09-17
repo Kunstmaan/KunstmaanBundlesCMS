@@ -5,11 +5,12 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * AdminLocaleListener to override default locale if user-specific locale is set in database
@@ -22,7 +23,7 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $tokenStorage;
 
     /**
-     * @var TranslatorInterface
+     * @var TranslatorInterface|LegacyTranslatorInterface
      */
     private $translator;
 
@@ -42,11 +43,17 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $adminRouteHelper;
 
     /**
-     * @param string $defaultAdminLocale
-     * @param string $providerKey        Firewall name to check against
+     * @param TranslatorInterface|LegacyTranslatorInterface $translator
+     * @param string                                        $defaultAdminLocale
+     * @param string                                        $providerKey        Firewall name to check against
      */
-    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
+    public function __construct(TokenStorageInterface $tokenStorage, /* TranslatorInterface|LegacyTranslatorInterface */ $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
     {
+        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
+        if (!$translator instanceof \Symfony\Contracts\Translation\TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
+
         $this->translator = $translator;
         $this->tokenStorage = $tokenStorage;
         $this->defaultAdminLocale = $defaultAdminLocale;
@@ -55,12 +62,12 @@ class AdminLocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * @param GetResponseEvent|ResponseEvent $event
+     * @param GetResponseEvent|RequestEvent $event
      */
     public function onKernelRequest($event)
     {
-        if (!$event instanceof GetResponseEvent && !$event instanceof ResponseEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
+        if (!$event instanceof GetResponseEvent && !$event instanceof RequestEvent) {
+            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(RequestEvent::class) ? RequestEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
         }
 
         $url = $event->getRequest()->getRequestUri();
