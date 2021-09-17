@@ -7,6 +7,7 @@ use Kunstmaan\AdminBundle\EventListener\LoginListener;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -18,11 +19,10 @@ class LoginListenerTest extends TestCase
         $version = $this->createMock(VersionChecker::class);
         $token = $this->createMock(TokenInterface::class);
         $user = $this->createMock(User::class);
-        $event = $this->createMock(InteractiveLoginEvent::class);
+        $event = new InteractiveLoginEvent(new Request(), $token);
 
         $logger->expects($this->once())->method('info')->willReturn(true);
         $version->expects($this->once())->method('periodicallyCheck')->willReturn(true);
-        $event->expects($this->once())->method('getAuthenticationToken')->willReturn($token);
         $token->expects($this->once())->method('getUser')->willReturn($user);
 
         $listener = new LoginListener($logger, $version);

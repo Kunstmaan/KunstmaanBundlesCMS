@@ -29,7 +29,7 @@ class FormWidgetTest extends TestCase
         $builder->expects($this->atLeastOnce())->method('add');
         $builder->expects($this->once())->method('setData');
 
-        $widget = new FormWidget(['a' => new ColorType()], ['a' => 'data'], ['a' => ['options' => 'here']]);
+        $widget = new FormWidget(['a' => ColorType::class], ['a' => 'data'], ['a' => ['options' => 'here']]);
         $widget->bindRequest(new Request());
         $widget->setIdentifier('id');
         $widget->persist($em);
@@ -42,7 +42,7 @@ class FormWidgetTest extends TestCase
         $this->assertCount(1, $widget->getData());
         $this->assertCount(1, $widget->getTypes());
 
-        $widget->addType('test', new ColorType());
+        $widget->addType('test', ColorType::class);
         $this->assertCount(2, $widget->getTypes());
 
         /* @var FormBuilderInterface $builder*/

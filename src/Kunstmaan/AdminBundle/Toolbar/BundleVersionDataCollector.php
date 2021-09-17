@@ -42,7 +42,10 @@ class BundleVersionDataCollector extends AbstractDataCollector
         ];
     }
 
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    /**
+     * NEXT_MAJOR Add \Throwable $exception typehint when symfony version < 5 support is removed
+     */
+    public function collect(Request $request, Response $response, $exception = null)
     {
         if (!$this->isEnabled()) {
             $this->data = [];

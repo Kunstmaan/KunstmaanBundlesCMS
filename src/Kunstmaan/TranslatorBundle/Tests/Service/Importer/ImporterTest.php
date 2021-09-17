@@ -21,7 +21,7 @@ class ImporterTest extends WebTestCase
 
         $this->translationRepository = $container->get('kunstmaan_translator.repository.translation');
         $this->importer = $container->get('kunstmaan_translator.service.importer.importer');
-        $this->rootDir = $container->getParameter('kernel.root_dir');
+        $this->rootDir = $container->getParameter('kernel.project_dir');
     }
 
     /**
