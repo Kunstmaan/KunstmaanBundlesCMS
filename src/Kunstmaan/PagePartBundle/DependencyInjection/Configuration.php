@@ -83,8 +83,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getRowNode($name = '')
     {
-        $treeBuilder = new TreeBuilder();
-        $definition = $treeBuilder->root($name);
+        $treeBuilder = new TreeBuilder($name);
+        $definition = $treeBuilder->getRootNode();
         $this->buildRowNode($definition);
 
         return $definition->getNode(true);
@@ -108,8 +108,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getRegionNode($name = '')
     {
-        $treeBuilder = new TreeBuilder();
-        $definition = $treeBuilder->root($name);
+        $treeBuilder = new TreeBuilder($name);
+        $definition = $treeBuilder->getRootNode();
         $this->buildRegionNode($definition);
 
         return $definition->getNode(true);

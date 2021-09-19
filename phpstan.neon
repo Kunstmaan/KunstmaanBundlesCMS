@@ -5,6 +5,8 @@ parameters:
     level: 1
     paths:
         -  src
+    scanDirectories:
+        - .build/stubs
 
     excludes_analyse:
         - src/Kunstmaan/*/Tests/*
