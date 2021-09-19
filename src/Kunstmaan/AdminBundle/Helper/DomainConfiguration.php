@@ -128,7 +128,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     protected function getMasterRequest()
     {
-        return $this->requestStack->getMasterRequest();
+        return method_exists($this->requestStack, 'getMainRequest') ? $this->requestStack->getMainRequest() : $this->requestStack->getMasterRequest();
     }
 
     /**

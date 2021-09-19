@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use PHPUnit\Framework\TestCase;
@@ -66,7 +67,7 @@ class DefaultSiteGeneratorTest extends TestCase
 
     protected function getRegistry()
     {
-        return $this->createMock('Symfony\Bridge\Doctrine\RegistryInterface');
+        return $this->createMock(ManagerRegistry::class);
     }
 
     protected function getAssistant()
