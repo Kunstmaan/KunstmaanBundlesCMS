@@ -35,7 +35,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
      * @param EntityManagerInterface|null $em
      * @param MediaManager|null           $mediaManager
      */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* MediaManager */ $mediaManager = null, $slugifier = null)
+    public function __construct(/* EntityManagerInterface */ $em = null, /* MediaManager */ $mediaManager = null, /* SlugifierInterface */ $slugifier = null)
     {
         parent::__construct();
 
@@ -86,7 +86,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         $original = $input->getOption('original');
         $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAll();
         $updates = 0;
-        $fileRenameQueue = array();
+        $fileRenameQueue = [];
 
         try {
             $this->em->beginTransaction();
@@ -102,7 +102,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
                         $newFileName .= '.'.strtolower($parts['extension']);
                     }
                     $newFileUrl = \dirname($oldFileUrl) . '/' . $newFileName;
-                    $fileRenameQueue[] = array($oldFileUrl, $newFileUrl, $handler);
+                    $fileRenameQueue[] = [$oldFileUrl, $newFileUrl, $handler];
                     $media->setUrl($newFileUrl);
                     $this->em->persist($media);
                     ++$updates;
@@ -114,7 +114,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             $this->em->rollback();
             $output->writeln('An error occured while updating soft-deleted media : <error>' . $e->getMessage() . '</error>');
             $updates = 0;
-            $fileRenameQueue = array();
+            $fileRenameQueue = [];
         }
 
         foreach ($fileRenameQueue as $row) {
