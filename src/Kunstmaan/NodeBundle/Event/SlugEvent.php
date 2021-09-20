@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
+use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 
-class SlugEvent extends Event
+class SlugEvent extends BcEvent
 {
     /**
      * @var Response

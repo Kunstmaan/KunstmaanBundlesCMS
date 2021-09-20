@@ -12,7 +12,7 @@ class SlugifierTest extends TestCase
      */
     private $slugifier;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->slugifier = new Slugifier();
     }
@@ -44,10 +44,5 @@ class SlugifierTest extends TestCase
             ['áàäåéèëíìïóòöúùüñßæ', 'aaaaeeeiiiooouuunssae'],
             ['polish-ążśźęćńół', 'polish-azszecnol'],
         ];
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 }

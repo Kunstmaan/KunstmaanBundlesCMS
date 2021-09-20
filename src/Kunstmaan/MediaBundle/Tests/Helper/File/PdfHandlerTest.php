@@ -21,7 +21,7 @@ class PdfHandlerTest extends TestCase
     /** @var string */
     protected $filesDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pdfTransformer = $this->createMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
         $this->filesDir = realpath(__DIR__ . '/../../Files');

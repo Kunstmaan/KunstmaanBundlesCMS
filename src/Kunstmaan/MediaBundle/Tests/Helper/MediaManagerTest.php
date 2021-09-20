@@ -15,7 +15,7 @@ class MediaManagerTest extends TestCase
 
     private $defaultHandler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', [0]);
         $this->defaultHandler

@@ -55,7 +55,7 @@ class AclNativeHelperTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
@@ -147,10 +147,10 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertContains('"ROLE_SUBJECT"', $query);
-        $this->assertContains('"ROLE_KING"', $query);
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
-        $this->assertContains('MyUser', $query);
+        $this->assertStringContainsString('"ROLE_SUBJECT"', $query);
+        $this->assertStringContainsString('"ROLE_KING"', $query);
+        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('MyUser', $query);
     }
 
     public function testApplyAnonymous()
@@ -187,7 +187,7 @@ class AclNativeHelperTest extends TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
+        $this->assertStringContainsString('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
     }
 
     public function testGetTokenStorage()

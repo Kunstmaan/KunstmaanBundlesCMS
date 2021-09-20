@@ -12,16 +12,14 @@ class PermissionDefinitionTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new PermissionDefinition(['VIEW']);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructThrowsExceptionWithInvalidParameters()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new PermissionDefinition([], null, null);
     }
 
@@ -43,11 +41,9 @@ class PermissionDefinitionTest extends TestCase
         $this->assertEquals(['EDIT', 'VIEW', 'DELETE'], $this->object->getPermissions());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSetPermissionsWithInvalidData()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->object->setPermissions([]);
     }
 }

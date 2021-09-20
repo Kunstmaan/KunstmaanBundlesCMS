@@ -14,7 +14,7 @@ class FolderTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Folder();
     }

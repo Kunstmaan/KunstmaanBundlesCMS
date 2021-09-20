@@ -15,7 +15,7 @@ class FormSubmissionTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new FormSubmission();
     }
@@ -73,6 +73,6 @@ class FormSubmissionTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 }

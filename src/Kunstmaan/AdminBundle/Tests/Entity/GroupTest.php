@@ -14,7 +14,7 @@ class GroupTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Group('group');
     }
@@ -84,11 +84,9 @@ class GroupTest extends TestCase
         $this->assertFalse($this->object->hasRole('role1'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testAddRoleWithInvalidParameter()
     {
+        $this->expectException(\InvalidArgumentException::class);
         /* @var $role Role */
         $role = new \StdClass();
         $this->object->addRole($role);
@@ -102,7 +100,7 @@ class GroupTest extends TestCase
         $roles = [$role1, $role2, $role3];
         $this->object->setRoles($roles);
 
-        $this->assertEquals(3, \count($this->object->getRoles()));
+        $this->assertCount(3, $this->object->getRoles());
     }
 
     public function testSetRolesCollection()

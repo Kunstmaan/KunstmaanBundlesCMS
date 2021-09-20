@@ -20,7 +20,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $em = $this->getMockedEntityManager();
         $aclHelper = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper');

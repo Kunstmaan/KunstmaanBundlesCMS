@@ -20,7 +20,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
     /** @var AbstractAdminListConfigurator */
     private $abstractAdminListConfMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->abstractAdminListConfMock = $this->getMockForAbstractClass(AbstractAdminListConfigurator::class);
         $this->abstractAdminListConfMock

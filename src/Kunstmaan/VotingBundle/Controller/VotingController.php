@@ -10,6 +10,7 @@ use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,7 +24,7 @@ class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::VOTE_UP, new UpVoteEvent($request, $reference, $value));
+        $this->dispatch(new UpVoteEvent($request, $reference, $value), Events::VOTE_UP);
     }
 
     /**
@@ -34,7 +35,7 @@ class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::VOTE_DOWN, new DownVoteEvent($request, $reference, $value));
+        $this->dispatch(new DownVoteEvent($request, $reference, $value), Events::VOTE_DOWN);
     }
 
     /**
@@ -44,7 +45,7 @@ class VotingController extends Controller
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($request, $response, $value));
+        $this->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
     }
 
     /**
@@ -54,7 +55,7 @@ class VotingController extends Controller
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_SEND, new FacebookSendEvent($request, $response, $value));
+        $this->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
     }
 
     /**
@@ -64,6 +65,23 @@ class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::LINKEDIN_SHARE, new LinkedInShareEvent($request, $reference, $value));
+        $this->dispatch(new LinkedInShareEvent($request, $reference, $value), Events::LINKEDIN_SHARE);
+    }
+
+    /**
+     * @param object $event
+     *
+     * @return object
+     */
+    private function dispatch($event, string $eventName)
+    {
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+
+            return $eventDispatcher->dispatch($event, $eventName);
+        }
+
+        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

@@ -15,7 +15,7 @@ class FieldTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $alias = new FieldAlias('ALIAS', 'test');
         $this->object = new Field('name', 'header', true, 'template.html.twig', $alias);

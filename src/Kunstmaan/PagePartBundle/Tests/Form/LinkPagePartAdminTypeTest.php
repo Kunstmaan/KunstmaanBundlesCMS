@@ -12,7 +12,7 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new LinkPagePartAdminType();
@@ -30,6 +30,6 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\LinkPagePart');
+        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\LinkPagePart', $resolve['data_class']);
     }
 }

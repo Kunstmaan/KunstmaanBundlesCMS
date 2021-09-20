@@ -46,7 +46,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
      */
     protected $em;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $em = $this->createMock(EntityManager::class);
         $em->expects($this->any())

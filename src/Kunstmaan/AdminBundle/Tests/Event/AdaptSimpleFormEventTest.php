@@ -15,7 +15,7 @@ class AdaptSimpleFormEventTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new AdaptSimpleFormEvent(new Request(), EmailPagePart::class, ['data' => 123], ['data2' => 123]);
     }

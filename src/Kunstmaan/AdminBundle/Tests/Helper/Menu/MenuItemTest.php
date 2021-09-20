@@ -14,7 +14,7 @@ class MenuItemTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
@@ -135,7 +135,7 @@ class MenuItemTest extends TestCase
         /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getChildren();
-        $this->assertEquals(2, \count($result));
+        $this->assertCount(2, $result);
         $this->assertEquals($children, $result);
     }
 
@@ -157,7 +157,7 @@ class MenuItemTest extends TestCase
         /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getNavigationChildren();
-        $this->assertEquals(1, \count($result));
+        $this->assertCount(1, $result);
         $this->assertEquals([$child1], $result);
     }
 
@@ -177,7 +177,7 @@ class MenuItemTest extends TestCase
         /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getTopChildren();
-        $this->assertEquals(1, \count($result));
+        $this->assertCount(1, $result);
         $this->assertEquals([$child2], $result);
     }
 

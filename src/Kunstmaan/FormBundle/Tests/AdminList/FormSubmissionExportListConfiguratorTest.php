@@ -29,7 +29,7 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $em = $this->getMockedEntityManager();
         $node = new Node();

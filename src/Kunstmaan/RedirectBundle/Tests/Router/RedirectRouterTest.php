@@ -20,7 +20,7 @@ class RedirectRouterTest extends TestCase
     /** @var RedirectRouter[] */
     private $routers;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $firstDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
         $firstDomainConfiguration->method('getHost')->willReturn('sub.domain.com');

@@ -18,6 +18,9 @@ parameters:
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
         - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
+        - src/Kunstmaan/TranslatorBundle/Command/MigrationsDiffCommand.php
+        - src/Kunstmaan/TranslatorBundle/Service/Command/DiffCommand.php
+        - src/Kunstmaan/*/Event/*.php # Ignore the event classes until we get rid of the BC layer. The BC layer causes a weird phpstan error.
 
     ignoreErrors:
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR

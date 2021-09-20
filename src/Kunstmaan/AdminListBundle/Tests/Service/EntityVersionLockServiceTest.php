@@ -41,7 +41,7 @@ class EntityVersionLockServiceTest extends TestCase
      */
     protected $user;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $user = new User();
         $user->setId(self::$USER_ID);

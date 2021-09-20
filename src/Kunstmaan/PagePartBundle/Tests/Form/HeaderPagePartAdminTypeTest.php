@@ -12,7 +12,7 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->object = new HeaderPagePartAdminType();
@@ -30,6 +30,6 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart');
+        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\HeaderPagePart', $resolve['data_class']);
     }
 }

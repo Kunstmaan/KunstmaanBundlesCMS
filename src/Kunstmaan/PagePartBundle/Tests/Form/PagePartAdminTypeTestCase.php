@@ -35,7 +35,7 @@ class PagePartAdminTypeTestCase extends WebTestCase
      */
     protected $resolver;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $formFactoryBuilderInterface = Forms::createFormFactoryBuilder();
         $formFactoryBuilderInterface->addType(new URLChooserType());

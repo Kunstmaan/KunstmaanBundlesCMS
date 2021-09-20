@@ -14,7 +14,7 @@ class FilterTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $type = new StringFilterType('string', 'b');
         $filterDef = ['type' => $type, 'options' => ['x' => 'y'], 'filtername' => 'filterName'];

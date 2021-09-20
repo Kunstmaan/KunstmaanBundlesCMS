@@ -23,7 +23,7 @@ class ActionsMenuBuilderTest extends TestCase
      */
     protected $builder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         /* @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->createMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');

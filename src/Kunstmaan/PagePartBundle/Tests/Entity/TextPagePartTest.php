@@ -12,7 +12,7 @@ class TextPagePartTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new TextPagePart();
     }
@@ -20,7 +20,7 @@ class TextPagePartTest extends TestCase
     public function testSetGetContent()
     {
         $this->object->setContent('tèst content with s3ç!àL');
-        $this->assertEquals($this->object->getContent(), 'tèst content with s3ç!àL');
+        $this->assertEquals('tèst content with s3ç!àL', $this->object->getContent());
     }
 
     public function testToString()

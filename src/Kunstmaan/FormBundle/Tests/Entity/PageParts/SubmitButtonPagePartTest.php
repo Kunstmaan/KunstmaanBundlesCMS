@@ -13,7 +13,7 @@ class SubmitButtonPagePartTest extends TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new SubmitButtonPagePart();
     }
@@ -30,21 +30,21 @@ class SubmitButtonPagePartTest extends TestCase
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testGetAdminView()
     {
         $stringValue = $this->object->getAdminView();
         $this->assertNotNull($stringValue);
-        $this->assertInternalType('string', $stringValue);
+        $this->assertIsString($stringValue);
     }
 
     public function testGetDefaultAdminType()

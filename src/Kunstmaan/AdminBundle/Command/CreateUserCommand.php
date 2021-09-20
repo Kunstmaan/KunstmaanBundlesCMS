@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\GroupManagerInterface;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -138,7 +139,11 @@ EOT
         $command->run($input, $output);
 
         // Fetch user that was just created
+        /** @var BaseUser $user */
         $user = $this->em->getRepository($this->userClassname)->findOneBy(['username' => $username]);
+
+        $user->setCreatedBy('kuma:user:create command');
+        $this->em->flush();
 
         // Attach groups
         $groupOutput = [];
