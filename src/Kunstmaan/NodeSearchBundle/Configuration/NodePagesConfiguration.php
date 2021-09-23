@@ -7,11 +7,13 @@ use Elastica\Index;
 use Elastica\Type\Mapping;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
@@ -608,6 +610,18 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         if ($page instanceof PageInterface) {
             $request = $this->container->get('request_stack')->getCurrentRequest();
             $page->service($this->container, $request, $renderContext);
+        }
+
+        if ($page instanceof CustomViewDataProviderInterface) {
+            $serviceId = $page->getViewDataProviderServiceId();
+
+            $pageRenderServiceLocator = $this->container->get('kunstmaan.view_data_provider_locator');
+            if (!$pageRenderServiceLocator->has($serviceId)) {
+                throw new \RuntimeException(sprintf('Missing page renderer service "%s"', $serviceId));
+            }
+            /** @var PageViewDataProviderInterface $service */
+            $service = $pageRenderServiceLocator->get($serviceId);
+            $service->provideViewData($nodeTranslation, $renderContext);
         }
 
         $content = $this->removeHtml(

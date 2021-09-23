@@ -1,8 +1,11 @@
-parameters:
-
 services:
     kunstmaan_articlebundle.twig.extension:
         class: 'Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension'
         arguments: ['@doctrine.orm.entity_manager', '@router']
         tags:
             -  { name: twig.extension }
+
+    Kunstmaan\ArticleBundle\ViewDataProvider\ArticlePageViewDataProvider:
+        arguments: [ '@doctrine.orm.entity_manager', '@request_stack' ]
+        tags:
+            - { name: 'kunstmaan.node.page_view_data_provider' }
