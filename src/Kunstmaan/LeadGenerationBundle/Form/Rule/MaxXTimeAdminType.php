@@ -14,6 +14,9 @@ class MaxXTimeAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'max_x_times_form';

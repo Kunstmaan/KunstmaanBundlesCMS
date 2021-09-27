@@ -13,11 +13,19 @@ class NodeIterator implements \RecursiveIterator
         $this->_data = $data;
     }
 
+    /**
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
     public function hasChildren()
     {
         return !$this->_data->current()->getChildren()->isEmpty();
     }
 
+    /**
+     * @return \?RecursiveIterator
+     */
+    #[\ReturnTypeWillChange]
     public function getChildren()
     {
         return new NodeIterator($this->_data->current()->getChildren());

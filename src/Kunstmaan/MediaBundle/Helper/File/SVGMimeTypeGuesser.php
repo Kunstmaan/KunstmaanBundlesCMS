@@ -21,7 +21,7 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
     ];
 
     /**
-     * {@inheritdoc}
+     * @return string|null
      */
     public function guess($path)
     {
@@ -34,13 +34,13 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
         }
 
         if (!self::isSupported()) {
-            return;
+            return null;
         }
 
         $dom = new \DOMDocument();
         $xml = $dom->load($path, LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE);
         if ($xml === false) {
-            return;
+            return null;
         }
         $xpath = new \DOMXPath($dom);
         foreach ($xpath->query('namespace::*') as $node) {
@@ -49,7 +49,7 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
             }
         }
 
-        return;
+        return null;
     }
 
     /**

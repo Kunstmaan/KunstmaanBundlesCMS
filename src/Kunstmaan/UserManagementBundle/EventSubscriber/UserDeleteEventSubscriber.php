@@ -17,6 +17,9 @@ class UserDeleteEventSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [

@@ -61,6 +61,9 @@ class NodeChoiceType extends AbstractType
         $resolver->setAllowedTypes('query_builder', ['null', 'callable', 'Doctrine\ORM\QueryBuilder']);
     }
 
+    /**
+     * @return string|null
+     */
     public function getParent()
     {
         return EntityType::class;

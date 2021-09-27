@@ -17,6 +17,8 @@ class Loader implements LoaderInterface
 
     /**
      * @{@inheritdoc}
+     *
+     * @return MessageCatalogue
      */
     public function load($resource, $locale, $domain = 'messages')
     {

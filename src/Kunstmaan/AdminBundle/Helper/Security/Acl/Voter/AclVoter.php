@@ -35,6 +35,9 @@ class AclVoter extends BaseAclVoter
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
+    /**
+     * @return int
+     */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         $attributeIsSupported = false;

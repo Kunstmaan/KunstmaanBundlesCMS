@@ -118,6 +118,9 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
+    /**
+     * @return string
+     */
     public function trans($id, array $parameters = [], $domain = 'messages', $locale = null)
     {
         if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {

@@ -53,6 +53,9 @@ class RemoteVideoType extends AbstractRemoteType
         return $choices;
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_videotype';

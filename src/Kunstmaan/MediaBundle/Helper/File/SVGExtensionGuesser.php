@@ -13,6 +13,8 @@ class SVGExtensionGuesser implements ExtensionGuesserInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function guess($mimeType)
     {

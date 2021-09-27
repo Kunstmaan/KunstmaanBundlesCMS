@@ -24,6 +24,9 @@ use PHPUnit\Framework\TestCase;
 
 class Query extends AbstractQuery
 {
+    /**
+     * @return string
+     */
     public function getSQL()
     {
     }
@@ -32,6 +35,9 @@ class Query extends AbstractQuery
     {
     }
 
+    /**
+     * @return mixed
+     */
     public function getResult($hydrationMode = self::HYDRATE_OBJECT)
     {
         return new ArrayCollection();
@@ -47,11 +53,17 @@ class FakePage extends AbstractPage implements Taggable
         return [];
     }
 
+    /**
+     * @return string
+     */
     public function getTaggableId()
     {
         return 777;
     }
 
+    /**
+     * @return string
+     */
     public function getTaggableType()
     {
         return self::class;

@@ -87,10 +87,7 @@ class ApplyAclCommand extends ContainerAwareCommand
         return 0;
     }
 
-    /**
-     * @return bool
-     */
-    private function isRunning()
+    private function isRunning(): bool
     {
         // Check if we have records in running state, if so read PID & check if process is active
         /* @var AclChangeset $runningAclChangeset */

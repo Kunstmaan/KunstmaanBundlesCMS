@@ -553,10 +553,8 @@ abstract class AdminListController extends Controller
 
     /**
      * @param object $event
-     *
-     * @return object
      */
-    private function dispatch($event, string $eventName)
+    private function dispatch($event, string $eventName): object
     {
         $eventDispatcher = $this->container->get('event_dispatcher');
         if (class_exists(LegacyEventDispatcherProxy::class)) {

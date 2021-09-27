@@ -56,6 +56,9 @@ class TranslationCacheCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('flush')) {

@@ -72,6 +72,8 @@ class InitAclCommand extends ContainerAwareCommand
 
     /**
      * {@inheritdoc}
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -50,6 +50,9 @@ class ExportTranslationsCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $domains = $input->getOption('domains');

@@ -137,6 +137,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getNamespace()
     {

@@ -36,6 +36,9 @@ class TextWithLocaleAdminType extends AbstractType
         );
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'text_with_locale';

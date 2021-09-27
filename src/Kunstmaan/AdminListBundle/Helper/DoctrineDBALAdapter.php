@@ -57,6 +57,8 @@ class DoctrineDBALAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return int
      */
     public function getNbResults()
     {
@@ -74,6 +76,8 @@ class DoctrineDBALAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return iterable
      */
     public function getSlice($offset, $length)
     {

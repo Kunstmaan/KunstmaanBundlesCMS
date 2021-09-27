@@ -26,6 +26,9 @@ class AdminBundleTwigExtension extends AbstractExtension implements GlobalsInter
         $this->requiredLocales = $requiredLocales;
     }
 
+    /**
+     * @return array
+     */
     public function getGlobals()
     {
         return [

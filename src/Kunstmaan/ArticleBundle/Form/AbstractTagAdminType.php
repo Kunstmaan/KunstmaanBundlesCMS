@@ -15,6 +15,9 @@ class AbstractTagAdminType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'abstacttag_form';

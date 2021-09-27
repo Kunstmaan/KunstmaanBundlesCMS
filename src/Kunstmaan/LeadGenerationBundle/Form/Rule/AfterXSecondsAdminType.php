@@ -14,6 +14,9 @@ class AfterXSecondsAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'after_x_seconds_form';

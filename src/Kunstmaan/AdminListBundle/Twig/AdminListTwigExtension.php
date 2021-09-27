@@ -35,6 +35,8 @@ class AdminListTwigExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return TwigTest[]
      */
     public function getTests()
     {

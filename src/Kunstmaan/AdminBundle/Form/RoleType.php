@@ -19,6 +19,9 @@ class RoleType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'role';

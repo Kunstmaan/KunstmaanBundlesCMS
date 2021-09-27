@@ -44,10 +44,7 @@ class BooleanFilterTypeTest extends BaseDbalFilterTest
         $this->assertEquals("SELECT * FROM entity e WHERE e.boolean = $value", $qb->getSQL());
     }
 
-    /**
-     * @return array
-     */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
             ['true'],

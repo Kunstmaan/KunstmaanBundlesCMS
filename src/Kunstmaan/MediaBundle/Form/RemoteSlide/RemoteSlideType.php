@@ -40,6 +40,9 @@ class RemoteSlideType extends AbstractRemoteType
             );
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_slidetype';
