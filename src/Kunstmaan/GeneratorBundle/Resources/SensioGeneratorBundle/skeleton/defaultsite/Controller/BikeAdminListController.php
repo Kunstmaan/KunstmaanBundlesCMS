@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Controller;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use {{ namespace }}\AdminList\BikeAdminListConfigurator;
@@ -14,7 +14,7 @@ use {{ namespace }}\AdminList\BikeAdminListConfigurator;
  * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/bike", requirements={"_locale"="%requiredlocales%"})
  */
 {% endif %}
-class BikeAdminListController extends AdminListController
+class BikeAdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface

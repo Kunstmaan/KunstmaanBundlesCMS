@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * This controller is for showing frontend pages based on slugs
+ * @final since 5.9
  */
 class SlugController extends Controller
 {

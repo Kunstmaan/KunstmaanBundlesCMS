@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * IconFontController
+ * @final since 5.9
  */
 class IconFontController extends Controller
 {

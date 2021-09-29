@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * WidgetsController
+ * @final since 5.9
  */
 class WidgetsController extends Controller
 {

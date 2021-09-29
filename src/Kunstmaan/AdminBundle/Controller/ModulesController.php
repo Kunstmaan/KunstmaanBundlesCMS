@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * The modules home controller
+ *
+ * @final since 5.9
  */
 class ModulesController extends Controller
 {

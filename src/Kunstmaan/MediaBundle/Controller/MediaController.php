@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * MediaController
+ * @final since 5.9
  */
 class MediaController extends Controller
 {

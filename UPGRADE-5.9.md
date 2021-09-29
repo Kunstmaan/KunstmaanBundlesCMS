@@ -12,6 +12,66 @@ General
 * The abandoned package `fzaninotto/faker` is replaced with the `fakerphp/faker` package. If you use the abandoned package
   in your project, replace it with `fakerphp/faker` to allow upgrading to v5.9.
 
+### Controllers
+
+Controllers are changing their base class in 6.0 so there a specific changes applied to a set of controllers
+
+#### Final
+
+These controllers are marked as final and will be registered as services in 6.0.
+
+* Kunstmaan\AdminBundle\Controller\DefaultController
+* Kunstmaan\AdminBundle\Controller\ExceptionController
+* Kunstmaan\AdminBundle\Controller\ModulesController
+* Kunstmaan\AdminBundle\Controller\SettingsController
+* Kunstmaan\AdminListBundle\Controller\EntityLockCheckController
+* Kunstmaan\CacheBundle\Controller\VarnishController
+* Kunstmaan\ConfigBundle\Controller\ConfigController
+* Kunstmaan\DashboardBundle\Controller\DashboardController
+* Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsAJAXController
+* Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
+* Kunstmaan\FormBundle\Controller\FormSubmissionsController
+* Kunstmaan\LeadGenerationBundle\Controller\PopupsAdminListController
+* Kunstmaan\LeadGenerationBundle\Controller\RulesAdminListController
+* Kunstmaan\MediaBundle\Controller\ChooserController
+* Kunstmaan\MediaBundle\Controller\FolderController
+* Kunstmaan\MediaBundle\Controller\IconFontController
+* Kunstmaan\MediaBundle\Controller\MediaController
+* Kunstmaan\MenuBundle\Controller\MenuAdminListController
+* Kunstmaan\MenuBundle\Controller\MenuItemAdminListController
+* Kunstmaan\MultiDomainBundle\Controller\SiteSwitchController
+* Kunstmaan\NodeBundle\Controller\NodeAdminController
+* Kunstmaan\NodeBundle\Controller\SlugController
+* Kunstmaan\NodeBundle\Controller\UrlReplaceController
+* Kunstmaan\NodeBundle\Controller\WidgetsController
+* Kunstmaan\PagePartBundle\Controller\PagePartAdminController
+* Kunstmaan\RedirectBundle\Controller\RedirectAdminListController
+* Kunstmaan\SeoBundle\Controller\Admin\SettingsController
+* Kunstmaan\SeoBundle\Controller\RobotsController
+* Kunstmaan\SitemapBundle\Controller\SitemapController
+* Kunstmaan\TaggingBundle\Controller\TagAdminListController
+* Kunstmaan\TranslatorBundle\Controller\TranslatorCommandController
+* Kunstmaan\TranslatorBundle\Controller\TranslatorController
+* Kunstmaan\UserManagementBundle\Controller\GroupsController
+* Kunstmaan\UserManagementBundle\Controller\RolesController
+* Kunstmaan\UserManagementBundle\Controller\UsersController
+* Kunstmaan\VotingBundle\Controller\VotingController
+
+#### Deprecated
+
+* Kunstmaan\AdminBundle\Controller\BaseSettingsController is deprecated with no replacement.
+* Kunstmaan\AdminListBundle\Controller\AdminListController is deprecated and replaced by `Kunstmaan\AdminListBundle\Controller\AbstractAdminListController`. There are
+  no changes in available methods except that the class now extends from `Symfony\Bundle\FrameworkBundle\Controller\AbstractController`.
+  If you use symfony 3.4 make sure to register the controller extending `Kunstmaan\AdminListBundle\Controller\AbstractAdminListController` as a service and add the `container.service_subscriber` tag.
+
+#### Base class switched to AbstractController
+
+These controllers will switch their base class to `Symfony\Bundle\FrameworkBundle\Controller\AbstractController`, inject 
+services you need in your controllers and make sure the controllers are registered as services.
+
+* Kunstmaan\LeadGenerationBundle\Controller\AbstractNewsletterController
+* Kunstmaan\LeadGenerationBundle\Controller\AbstractRedirectController
+
 AdminBundle
 ------------
 
