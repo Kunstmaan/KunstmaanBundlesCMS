@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\DependencyInjection;
 
+use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -22,6 +23,10 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
             $container->getParameter('twig.form.resources'),
             ['@KunstmaanNode/Form/formWidgets.html.twig']
         ));
+
+        $container->registerForAutoconfiguration(PageViewDataProviderInterface::class)
+            ->addTag('kunstmaan.node.page_view_data_provider')
+        ;
 
         $nodePagesDefinition = new Definition('Kunstmaan\NodeBundle\Helper\PagesConfiguration', [$config['pages']]);
         $nodePagesDefinition->setPublic(true);

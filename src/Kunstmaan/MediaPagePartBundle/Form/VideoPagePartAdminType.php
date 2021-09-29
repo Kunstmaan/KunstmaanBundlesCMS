@@ -31,6 +31,9 @@ class VideoPagePartAdminType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_videopageparttype';

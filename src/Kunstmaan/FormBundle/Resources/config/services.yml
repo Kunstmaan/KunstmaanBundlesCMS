@@ -25,3 +25,8 @@ services:
         arguments: ['@kunstmaan_form.form_mailer']
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_form.add_submission', method: 'onSubmission' }
+
+    Kunstmaan\FormBundle\ViewDataProvider\FormPageViewDataProvider:
+        arguments: ['@request_stack', '@kunstmaan_form.form_handler', '@doctrine.orm.entity_manager']
+        tags:
+            - { name: 'kunstmaan.node.page_view_data_provider' }

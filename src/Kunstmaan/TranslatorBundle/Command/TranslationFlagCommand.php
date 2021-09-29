@@ -36,6 +36,9 @@ final class TranslationFlagCommand extends Command
         ;
     }
 
+    /**
+     * @return int
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('reset')) {

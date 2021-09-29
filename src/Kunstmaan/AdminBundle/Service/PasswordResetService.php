@@ -57,10 +57,8 @@ class PasswordResetService
 
     /**
      * @param object $event
-     *
-     * @return object
      */
-    private function dispatch($event, string $eventName)
+    private function dispatch($event, string $eventName): object
     {
         if (class_exists(LegacyEventDispatcherProxy::class)) {
             $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);

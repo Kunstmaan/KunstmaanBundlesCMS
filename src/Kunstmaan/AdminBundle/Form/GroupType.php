@@ -45,6 +45,9 @@ class GroupType extends AbstractType
             );
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'group';

@@ -187,6 +187,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function setEnabled($boolean)
     {
@@ -273,6 +275,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function isAccountNonLocked()
     {
@@ -284,6 +288,9 @@ abstract class BaseUser implements UserInterface
         return $this->email;
     }
 
+    /**
+     * @return static
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -296,6 +303,9 @@ abstract class BaseUser implements UserInterface
         return $this->password;
     }
 
+    /**
+     * @return static
+     */
     public function setPassword($password)
     {
         $this->password = $password;
@@ -308,6 +318,9 @@ abstract class BaseUser implements UserInterface
         return $this->plainPassword;
     }
 
+    /**
+     * @return static
+     */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
@@ -332,6 +345,9 @@ abstract class BaseUser implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @return bool
+     */
     public function hasRole($role)
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
@@ -339,6 +355,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function setRoles(array $roles)
     {
@@ -351,6 +369,9 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
+    /**
+     * @return static
+     */
     public function removeRole($role)
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
@@ -366,6 +387,9 @@ abstract class BaseUser implements UserInterface
         return $this->salt;
     }
 
+    /**
+     * @return static
+     */
     public function setSalt($salt)
     {
         $this->salt = $salt;
@@ -373,6 +397,9 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return $this->enabled;
@@ -386,6 +413,9 @@ abstract class BaseUser implements UserInterface
         return $this->username;
     }
 
+    /**
+     * @return static
+     */
     public function setUsername($username)
     {
         $this->username = $username;
@@ -403,6 +433,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function addRole($role)
     {
@@ -420,6 +452,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function getGroupNames()
     {
@@ -433,6 +467,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function hasGroup($name)
     {
@@ -441,6 +477,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function addGroup(GroupInterface $group)
     {
@@ -453,6 +491,8 @@ abstract class BaseUser implements UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function removeGroup(GroupInterface $group)
     {
@@ -463,6 +503,9 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->getUsername();
@@ -494,11 +537,17 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getConfirmationToken()
     {
         return $this->confirmationToken;
     }
 
+    /**
+     * @return static
+     */
     public function setConfirmationToken($confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
@@ -506,6 +555,9 @@ abstract class BaseUser implements UserInterface
         return $this;
     }
 
+    /**
+     * @return static
+     */
     public function setPasswordRequestedAt(\DateTime $date = null)
     {
         //TODO: check if this propery is usefull?
@@ -520,6 +572,9 @@ abstract class BaseUser implements UserInterface
         return $this->lastLogin;
     }
 
+    /**
+     * @return static
+     */
     public function setLastLogin(?\DateTime $lastLogin = null)
     {
         $this->lastLogin = $lastLogin;

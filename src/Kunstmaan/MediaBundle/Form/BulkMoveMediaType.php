@@ -44,6 +44,9 @@ class BulkMoveMediaType extends AbstractType
             );
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_folder_bulk_move';

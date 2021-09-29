@@ -8,6 +8,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Main settings controller
+ *
+ * @final since 5.9
  */
 class SettingsController extends BaseSettingsController
 {

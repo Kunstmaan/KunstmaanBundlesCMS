@@ -48,6 +48,9 @@ final class RenameSoftDeletedCommand extends Command
             );
     }
 
+    /**
+     * @return int
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Renaming soft-deleted media...');

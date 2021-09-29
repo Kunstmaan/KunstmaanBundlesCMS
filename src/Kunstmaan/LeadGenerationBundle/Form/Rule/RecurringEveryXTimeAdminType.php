@@ -26,6 +26,9 @@ class RecurringEveryXTimeAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'recurring_every_x_time_form';

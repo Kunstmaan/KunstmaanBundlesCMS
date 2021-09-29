@@ -17,6 +17,9 @@ class UrlBlackListAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'url_blacklist_form';

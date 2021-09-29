@@ -49,7 +49,7 @@ class AdminPanel
      *
      * @return AdminPanelAdaptorInterface[]
      */
-    private function getAdaptors()
+    private function getAdaptors(): array
     {
         if (!isset($this->sorted)) {
             $this->sortAdaptors();

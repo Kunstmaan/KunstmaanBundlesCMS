@@ -82,6 +82,9 @@ class MediaType extends AbstractType
         );
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'media';

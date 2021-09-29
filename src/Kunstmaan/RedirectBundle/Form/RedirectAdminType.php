@@ -69,6 +69,9 @@ class RedirectAdminType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'redirect_form';

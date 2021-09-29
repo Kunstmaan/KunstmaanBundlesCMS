@@ -10,6 +10,9 @@ use Kunstmaan\LeadGenerationBundle\AdminList\PopupAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @final since 5.9
+ */
 class PopupsAdminListController extends AdminListController
 {
     /**

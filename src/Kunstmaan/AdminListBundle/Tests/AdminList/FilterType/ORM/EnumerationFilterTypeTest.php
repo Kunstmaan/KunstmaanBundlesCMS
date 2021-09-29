@@ -50,10 +50,7 @@ class EnumerationFilterTypeTest extends BaseOrmFilterTest
         }
     }
 
-    /**
-     * @return array
-     */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
           ['in', 'IN(:var_enumeration)', [1, 2], true],

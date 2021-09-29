@@ -4,9 +4,11 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
@@ -20,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * This controller is for showing frontend pages based on slugs
+ * @final since 5.9
  */
 class SlugController extends Controller
 {
@@ -85,17 +87,37 @@ class SlugController extends Controller
         if (method_exists($entity, 'getDefaultView')) {
             $renderContext->setView($entity->getDefaultView());
         }
-        $preEvent = new SlugEvent(null, $renderContext);
+
+        // NEXT_MAJOR: remove PRE_SLUG_ACTION dispatch
+        $preEvent = new SlugEvent(null, $renderContext, false);
         $this->dispatch($preEvent, Events::PRE_SLUG_ACTION);
         $renderContext = $preEvent->getRenderContext();
+        // NEXT_MAJOR: end remove
 
-        $response = $entity->service($this->container, $request, $renderContext);
+        if ($entity instanceof CustomViewDataProviderInterface) {
+            $serviceId = $entity->getViewDataProviderServiceId();
 
-        $postEvent = new SlugEvent($response, $renderContext);
+            $pageRenderServiceLocator = $this->get('kunstmaan.view_data_provider_locator');
+            if (!$pageRenderServiceLocator->has($serviceId)) {
+                throw new \RuntimeException(sprintf('Missing page renderer service "%s"', $serviceId));
+            }
+
+            /** @var PageViewDataProviderInterface $service */
+            $service = $pageRenderServiceLocator->get($serviceId);
+            $service->provideViewData($nodeTranslation, $renderContext);
+
+            $response = $renderContext->getResponse();
+        } else {
+            $response = $entity->service($this->container, $request, $renderContext);
+        }
+
+        // NEXT_MAJOR: remove POST_SLUG_ACTION dispatch
+        $postEvent = new SlugEvent($response, $renderContext, false);
         $this->dispatch($postEvent, Events::POST_SLUG_ACTION);
 
         $response = $postEvent->getResponse();
         $renderContext = $postEvent->getRenderContext();
+        // NEXT_MAJOR: end remove
 
         if ($response instanceof Response) {
             return $response;

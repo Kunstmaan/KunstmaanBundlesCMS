@@ -100,6 +100,8 @@ class KunstmaanAdminExtension extends Extension
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getNamespace()
     {

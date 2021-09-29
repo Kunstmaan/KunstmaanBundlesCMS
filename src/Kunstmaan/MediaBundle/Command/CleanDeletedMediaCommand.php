@@ -49,6 +49,9 @@ final class CleanDeletedMediaCommand extends Command
             );
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('force') !== true) {

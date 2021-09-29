@@ -48,10 +48,7 @@ class StringFilterTypeTest extends BaseOrmFilterTest
         $this->assertEquals($testValue, $qb->getParameter('var_string')->getValue());
     }
 
-    /**
-     * @return array
-     */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
             ['equals', '= :var_string', 'AStringValue1', 'AStringValue1'],

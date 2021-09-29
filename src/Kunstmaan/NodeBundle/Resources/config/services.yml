@@ -248,3 +248,9 @@ services:
             - '@router'
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: '@KunstmaanNode/Toolbar/node.html.twig', id: kuma_node}
+
+    kunstmaan.view_data_provider_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        public: true
+        tags:
+            - { name: container.service_locator }

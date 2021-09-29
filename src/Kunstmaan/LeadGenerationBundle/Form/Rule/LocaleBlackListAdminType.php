@@ -27,6 +27,9 @@ class LocaleBlackListAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'locale_blacklist_form';

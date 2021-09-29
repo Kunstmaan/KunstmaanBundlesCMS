@@ -61,9 +61,15 @@ services:
             - '@twig'
             - '@kunstmaan_node_search.service.indexable_pageparts'
             - '@request_stack'
+            - '@kunstmaan.view_data_provider_locator'
 
     # Public alias for BC reasons in NodePagesConfiguration class.
     # To be deprecated after a refactor of the NodePagesConfiguration class.
     kunstmaan_node_search.service.search_view_renderer:
         alias: Kunstmaan\NodeSearchBundle\Services\SearchViewRenderer
         public: true
+
+    Kunstmaan\NodeSearchBundle\ViewDataProvider\SearchPageViewDataProvider:
+        arguments: ['@request_stack', '@kunstmaan_node_search.search.service', '@doctrine.orm.entity_manager']
+        tags:
+            - { name: 'kunstmaan.node.page_view_data_provider' }

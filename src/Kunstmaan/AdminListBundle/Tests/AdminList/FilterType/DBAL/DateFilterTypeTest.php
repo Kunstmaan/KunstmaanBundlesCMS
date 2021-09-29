@@ -50,10 +50,7 @@ class DateFilterTypeTest extends BaseDbalFilterTest
         $this->assertEquals($testValue, $qb->getParameter('var_date'));
     }
 
-    /**
-     * @return array
-     */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
             ['before', '<= :var_date', '20/12/2012', '2012-12-20'],
