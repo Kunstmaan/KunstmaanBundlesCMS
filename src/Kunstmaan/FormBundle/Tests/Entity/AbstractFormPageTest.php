@@ -65,12 +65,6 @@ class AbstractFormPageTest extends TestCase
         $this->assertIsString($stringValue);
     }
 
-    public function testGetControllerAction()
-    {
-        $action = $this->object->getControllerAction();
-        $this->assertEquals('KunstmaanFormBundle:AbstractFormPage:service', $action);
-    }
-
     public function testGenerateThankYouUrl()
     {
         $obj = $this->object;

@@ -4,7 +4,6 @@ namespace Kunstmaan\NodeSearchBundle\Services;
 
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
@@ -57,11 +56,6 @@ class SearchViewRenderer
             'indexMode' => true,
             'nodetranslation' => $nodeTranslation,
         ]);
-
-        // NEXT_MAJOR: Remove if and `$page->service` call.
-        if ($page instanceof PageInterface && null !== $container) {
-            $page->service($container, $this->requestStack->getCurrentRequest(), $renderContext);
-        }
 
         if ($page instanceof CustomViewDataProviderInterface) {
             $serviceId = $page->getViewDataProviderServiceId();
