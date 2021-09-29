@@ -21,6 +21,9 @@ class NewsletterSubscriptionType extends AbstractPopupAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'newslettersubscription_form';

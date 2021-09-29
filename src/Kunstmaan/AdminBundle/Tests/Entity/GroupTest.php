@@ -156,10 +156,8 @@ class GroupTest extends TestCase
 
     /**
      * @param string $name
-     *
-     * @return \Kunstmaan\AdminBundle\Entity\Role
      */
-    protected function getRole($name = 'role1')
+    protected function getRole($name = 'role1'): Role
     {
         $role = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\Role')
             ->disableOriginalConstructor()

@@ -17,10 +17,7 @@ final class ConsoleExceptionSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ConsoleEvents::ERROR => 'onConsoleError',

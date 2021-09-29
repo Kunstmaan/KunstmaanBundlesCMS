@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * The default controller is used to render the main screen the users see when they log in to the admin
+ *
+ * @final since 5.9
  */
 class DefaultController extends Controller
 {

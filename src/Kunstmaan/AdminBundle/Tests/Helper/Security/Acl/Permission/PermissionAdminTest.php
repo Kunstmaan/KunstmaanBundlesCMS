@@ -147,10 +147,8 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return entity manager mock
-     *
-     * @return EntityManager
      */
-    public function getEntityManager()
+    public function getEntityManager(): EntityManager
     {
         return $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
@@ -159,48 +157,37 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return alc provider mock
-     *
-     * @return AclProviderInterface
      */
-    public function getAclProvider()
+    public function getAclProvider(): AclProviderInterface
     {
         return $this->createMock('Symfony\Component\Security\Acl\Model\MutableAclProviderInterface');
     }
 
     /**
      * Return security token storage
-     *
-     * @return TokenStorageInterface
      */
-    public function getTokenStorage()
+    public function getTokenStorage(): TokenStorageInterface
     {
         return $this->createMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
     }
 
     /**
      * Return oid retrieval strategy mock
-     *
-     * @return ObjectIdentityRetrievalStrategyInterface
      */
-    public function getOidRetrievalStrategy()
+    public function getOidRetrievalStrategy(): ObjectIdentityRetrievalStrategyInterface
     {
         return $this->createMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
     }
 
     /**
      * Return event dispatcher mock
-     *
-     * @return EventDispatcherInterface
      */
-    public function getEventDispatcher()
+    public function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->createMock('Symfony\Component\EventDispatcher\EventDispatcher');
     }
 
-    /**
-     * @return Shell
-     */
-    public function getShell()
+    public function getShell(): Shell
     {
         $mock = $this->createMock(Shell::class);
         $mock->method('runInBackground')
@@ -210,10 +197,7 @@ class PermissionAdminTest extends TestCase
         return $mock;
     }
 
-    /**
-     * @return KernelInterface
-     */
-    public function getKernel()
+    public function getKernel(): KernelInterface
     {
         $mock = $this->createMock(Kernel::class);
         $mock->method('getProjectDir')->willReturn('/some/project/directory');
@@ -224,10 +208,8 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return permission admin mock
-     *
-     * @return PermissionAdmin
      */
-    public function getPermissionAdmin()
+    public function getPermissionAdmin(): PermissionAdmin
     {
         $em = $this->getEntityManager();
         $context = $this->getTokenStorage();
@@ -276,20 +258,16 @@ class PermissionAdminTest extends TestCase
 
     /**
      * Return entity mock
-     *
-     * @return AbstractEntity
      */
-    public function getEntity()
+    public function getEntity(): AbstractEntity
     {
         return $this->getMockForAbstractClass('Kunstmaan\AdminBundle\Entity\AbstractEntity');
     }
 
     /**
      * Return permission admin mock
-     *
-     * @return PermissionAdmin
      */
-    public function getInitializedPermissionAdmin()
+    public function getInitializedPermissionAdmin(): PermissionAdmin
     {
         $object = $this->getPermissionAdmin();
         $entity = $this->getEntity();

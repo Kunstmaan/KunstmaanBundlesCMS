@@ -22,6 +22,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @final since 5.9
+ */
 class TranslatorController extends AdminListController
 {
     /**

@@ -74,6 +74,7 @@ class ArticleGenerator extends KunstmaanGenerator
         $this->generateRouting($parameters, $multilanguage);
         $this->generateMenu($parameters);
         $this->generateServices($parameters);
+        $this->generateViewDataProvider($parameters);
         $this->updateParentPages();
         if ($dummydata) {
             $this->generateFixtures($parameters);
@@ -242,9 +243,6 @@ class ArticleGenerator extends KunstmaanGenerator
             $filename = 'TagAdminListController.php';
             $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
         }
-
-        $filename = 'ArticleController.php';
-        $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
 
         $this->assistant->writeLine('Generating controllers : <info>OK</info>');
     }
@@ -500,5 +498,17 @@ class ArticleGenerator extends KunstmaanGenerator
             );
             file_put_contents($file, $data);
         }
+    }
+
+    private function generateViewDataProvider(array $parameters): void
+    {
+        $relPath = '/ViewDataProvider/';
+        $sourceDir = $this->skeletonDir . $relPath;
+        $targetDir = $this->bundle->getPath() . $relPath;
+
+        $filename = 'PageViewDataProvider.php';
+        $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);
+
+        $this->assistant->writeLine('Generating page view data provider : <info>OK</info>');
     }
 }

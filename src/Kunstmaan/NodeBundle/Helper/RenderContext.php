@@ -2,19 +2,22 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * A context for rendering pages through service methods
+ *
+ * @final since 5.9
  */
 class RenderContext extends \ArrayObject
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $view;
 
+    /** @var Response|null */
+    private $response;
+
     /**
-     * Get view.
-     *
      * @return string
      */
     public function getView()
@@ -23,12 +26,25 @@ class RenderContext extends \ArrayObject
     }
 
     /**
-     * Set view.
-     *
      * @param string $view
      */
     public function setView($view)
     {
         $this->view = $view;
+    }
+
+    public function getResponse(): ?Response
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?Response $response): void
+    {
+        $this->response = $response;
+    }
+
+    public function hasResponse(): bool
+    {
+        return null !== $this->response;
     }
 }

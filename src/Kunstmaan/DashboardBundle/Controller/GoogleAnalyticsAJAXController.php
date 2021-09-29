@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @final since 5.9
+ */
 class GoogleAnalyticsAJAXController extends Controller
 {
     /**

@@ -55,6 +55,9 @@ final class CreatePdfPreviewCommand extends Command
             );
     }
 
+    /**
+     * @return int
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Creating PDF preview images...');

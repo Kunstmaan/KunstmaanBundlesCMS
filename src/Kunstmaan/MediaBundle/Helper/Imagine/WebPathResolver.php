@@ -46,6 +46,8 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function resolve($path, $filter)
     {

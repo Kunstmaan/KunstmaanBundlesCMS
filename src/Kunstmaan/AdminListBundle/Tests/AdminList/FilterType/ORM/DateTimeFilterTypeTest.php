@@ -19,10 +19,7 @@ class DateTimeFilterTypeTest extends BaseOrmFilterTest
         $this->object = new DateTimeFilterType('datetime', 'b');
     }
 
-    /**
-     * @return array
-     */
-    public static function applyDataProvider()
+    public static function applyDataProvider(): array
     {
         return [
             ['before', '<= :var_datetime', ['date' => '14/04/2014', 'time' => '09:00'], '2014-04-14 09:00'],

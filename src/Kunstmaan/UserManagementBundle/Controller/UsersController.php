@@ -24,6 +24,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
+ *
+ * @final since 5.9
  */
 class UsersController extends BaseSettingsController
 {

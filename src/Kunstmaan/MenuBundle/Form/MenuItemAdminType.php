@@ -151,6 +151,9 @@ class MenuItemAdminType extends AbstractType
         );
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'menuitem_form';

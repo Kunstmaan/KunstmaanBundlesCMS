@@ -26,6 +26,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
+/**
+ * @deprecated sinc KunstmaanAdminListBundle 5.9 and will be removed in KunstmaanAdminListBundle 6.0. Extend from "Kunstmaan\AdminListBundle\Controller\AbstractAdminListController" instead.
+ */
 abstract class AdminListController extends Controller
 {
     /**
@@ -553,10 +556,8 @@ abstract class AdminListController extends Controller
 
     /**
      * @param object $event
-     *
-     * @return object
      */
-    private function dispatch($event, string $eventName)
+    private function dispatch($event, string $eventName): object
     {
         $eventDispatcher = $this->container->get('event_dispatcher');
         if (class_exists(LegacyEventDispatcherProxy::class)) {

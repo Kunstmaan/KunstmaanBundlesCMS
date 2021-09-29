@@ -63,6 +63,9 @@ final class ImportTranslationsCommand extends Command
             );
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $force = $input->getOption('force');

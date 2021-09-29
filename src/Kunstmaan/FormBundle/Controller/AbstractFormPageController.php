@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated since KunstmaanFormBundle 5.9 and will be removed in KunstmaanFormBundle 6.0.
+ */
 class AbstractFormPageController extends Controller
 {
     public function serviceAction(Request $request)

@@ -35,6 +35,9 @@ final class ExportTranslationsCommand extends Command
         ;
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $domains = $input->getOption('domains');

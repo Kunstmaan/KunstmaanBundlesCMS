@@ -36,6 +36,9 @@ final class ExceptionCommand extends Command
             );
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $days = (int) $input->getArgument('days');

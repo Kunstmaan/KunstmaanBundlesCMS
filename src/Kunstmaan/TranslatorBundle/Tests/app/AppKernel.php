@@ -15,6 +15,7 @@ use Psr\Log\NullLogger;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -47,6 +48,9 @@ class AppKernel extends Kernel
         parent::__construct($environment, $debug);
     }
 
+    /**
+     * @return BundleInterface[]
+     */
     public function registerBundles()
     {
         if (!file_exists($filename = $this->getProjectDir() . '/' . $this->testCase . '/bundles.php')) {
@@ -56,16 +60,25 @@ class AppKernel extends Kernel
         return include $filename;
     }
 
+    /**
+     * @return string
+     */
     public function getProjectDir()
     {
         return __DIR__;
     }
 
+    /**
+     * @return string
+     */
     public function getCacheDir()
     {
         return sys_get_temp_dir() . '/' . $this->varDir . '/' . $this->testCase . '/cache/' . $this->environment;
     }
 
+    /**
+     * @return string
+     */
     public function getLogDir()
     {
         return sys_get_temp_dir() . '/' . $this->varDir . '/' . $this->testCase . '/logs';
@@ -92,6 +105,9 @@ class AppKernel extends Kernel
         $this->__construct($a[0], $a[1], $a[2], $a[3], $a[4]);
     }
 
+    /**
+     * @return array
+     */
     protected function getKernelParameters()
     {
         $parameters = parent::getKernelParameters();

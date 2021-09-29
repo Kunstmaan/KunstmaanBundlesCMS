@@ -17,6 +17,9 @@ class UrlWhiteListAdminType extends AbstractRuleAdminType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'url_whitelist_form';

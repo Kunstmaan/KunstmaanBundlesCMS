@@ -75,7 +75,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
      *
      * @return string[]|null
      */
-    private function getAccessLevels($email)
+    private function getAccessLevels($email): ?array
     {
         foreach ($this->hostedDomains as $hostedDomain) {
             if (preg_match('/' . $hostedDomain['domain_name'] . '$/', $email)) {
@@ -90,10 +90,8 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
      * This method returns wether a domain for the given email has been configured
      *
      * @param string $email
-     *
-     * @return bool
      */
-    private function isConfiguredDomain($email)
+    private function isConfiguredDomain($email): bool
     {
         foreach ($this->hostedDomains as $hostedDomain) {
             if (preg_match('/' . $hostedDomain['domain_name'] . '$/', $email)) {

@@ -47,6 +47,9 @@ final class UpdateAclCommand extends Command
                 'with given role and permissions');
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');

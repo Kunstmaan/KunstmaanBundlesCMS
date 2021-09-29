@@ -14,6 +14,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Twig\Environment;
 
+/**
+ * @final since 5.9
+ */
 class ConfigController
 {
     /**

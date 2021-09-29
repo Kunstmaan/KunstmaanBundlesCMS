@@ -12,6 +12,66 @@ General
 * The abandoned package `fzaninotto/faker` is replaced with the `fakerphp/faker` package. If you use the abandoned package
   in your project, replace it with `fakerphp/faker` to allow upgrading to v5.9.
 
+### Controllers
+
+Controllers are changing their base class in 6.0 so there a specific changes applied to a set of controllers
+
+#### Final
+
+These controllers are marked as final and will be registered as services in 6.0.
+
+* Kunstmaan\AdminBundle\Controller\DefaultController
+* Kunstmaan\AdminBundle\Controller\ExceptionController
+* Kunstmaan\AdminBundle\Controller\ModulesController
+* Kunstmaan\AdminBundle\Controller\SettingsController
+* Kunstmaan\AdminListBundle\Controller\EntityLockCheckController
+* Kunstmaan\CacheBundle\Controller\VarnishController
+* Kunstmaan\ConfigBundle\Controller\ConfigController
+* Kunstmaan\DashboardBundle\Controller\DashboardController
+* Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsAJAXController
+* Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
+* Kunstmaan\FormBundle\Controller\FormSubmissionsController
+* Kunstmaan\LeadGenerationBundle\Controller\PopupsAdminListController
+* Kunstmaan\LeadGenerationBundle\Controller\RulesAdminListController
+* Kunstmaan\MediaBundle\Controller\ChooserController
+* Kunstmaan\MediaBundle\Controller\FolderController
+* Kunstmaan\MediaBundle\Controller\IconFontController
+* Kunstmaan\MediaBundle\Controller\MediaController
+* Kunstmaan\MenuBundle\Controller\MenuAdminListController
+* Kunstmaan\MenuBundle\Controller\MenuItemAdminListController
+* Kunstmaan\MultiDomainBundle\Controller\SiteSwitchController
+* Kunstmaan\NodeBundle\Controller\NodeAdminController
+* Kunstmaan\NodeBundle\Controller\SlugController
+* Kunstmaan\NodeBundle\Controller\UrlReplaceController
+* Kunstmaan\NodeBundle\Controller\WidgetsController
+* Kunstmaan\PagePartBundle\Controller\PagePartAdminController
+* Kunstmaan\RedirectBundle\Controller\RedirectAdminListController
+* Kunstmaan\SeoBundle\Controller\Admin\SettingsController
+* Kunstmaan\SeoBundle\Controller\RobotsController
+* Kunstmaan\SitemapBundle\Controller\SitemapController
+* Kunstmaan\TaggingBundle\Controller\TagAdminListController
+* Kunstmaan\TranslatorBundle\Controller\TranslatorCommandController
+* Kunstmaan\TranslatorBundle\Controller\TranslatorController
+* Kunstmaan\UserManagementBundle\Controller\GroupsController
+* Kunstmaan\UserManagementBundle\Controller\RolesController
+* Kunstmaan\UserManagementBundle\Controller\UsersController
+* Kunstmaan\VotingBundle\Controller\VotingController
+
+#### Deprecated
+
+* Kunstmaan\AdminBundle\Controller\BaseSettingsController is deprecated with no replacement.
+* Kunstmaan\AdminListBundle\Controller\AdminListController is deprecated and replaced by `Kunstmaan\AdminListBundle\Controller\AbstractAdminListController`. There are
+  no changes in available methods except that the class now extends from `Symfony\Bundle\FrameworkBundle\Controller\AbstractController`.
+  If you use symfony 3.4 make sure to register the controller extending `Kunstmaan\AdminListBundle\Controller\AbstractAdminListController` as a service and add the `container.service_subscriber` tag.
+
+#### Base class switched to AbstractController
+
+These controllers will switch their base class to `Symfony\Bundle\FrameworkBundle\Controller\AbstractController`, inject 
+services you need in your controllers and make sure the controllers are registered as services.
+
+* Kunstmaan\LeadGenerationBundle\Controller\AbstractNewsletterController
+* Kunstmaan\LeadGenerationBundle\Controller\AbstractRedirectController
+
 AdminBundle
 ------------
 
@@ -86,6 +146,77 @@ GeneratorBundle
 
 * The "kuma:generate:bundle" command and related classes is deprecated and will be removed in 6.0
 * The "kuma:generate:entity" command and related classes is deprecated and will be removed in 6.0, use the "make:entity" command of the symfony/maker-bundle.
+
+NodeBundle
+----------
+
+* `Kunstmaan\NodeBundle\Controller\SlugActionInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface` 
+  interface on your page entity and provide page render service id. That service should implement `Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface` and will allow you to customize the twig view and variables.
+
+Before: 
+
+```php
+<?php
+
+use Kunstmaan\NodeBundle\Controller\SlugActionInterface
+use Kunstmaan\NodeBundle\Entity\AbstractPage
+
+class BlogOverviewPage extends AbstractPage implements SlugActionInterface
+{
+    // ...
+    public function getControllerAction()
+    {
+        return 'App\Controller\BlogOverviewController::serviceAction';
+    }
+
+}
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class BlogOverviewController extends AbstractController
+{
+    public function serviceAction(){
+        // Custom render logic
+    }
+
+}
+```
+
+After:
+
+```php
+<?php
+
+use App\PageRenderer\BlogOverviewPageRenderer;
+use Kunstmaan\NodeBundle\Entity\AbstractPage
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface
+
+class BlogOverviewPage extends AbstractPage implements CustomViewDataProviderInterface
+{
+    // ...
+    public function getViewDataProviderServiceId(): string
+    {
+        return BlogOverviewPageRenderer::class;
+    }
+
+}
+
+use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+class BlogOverviewPageViewDataProvider implements PageViewDataProviderInterface
+{
+    public function provideViewData(RenderContext $renderContext): void
+    {
+        // Set a variable to be used in the twig template
+        $renderContext['custom_var'] = 'text';
+
+        // Or return a response and stop the twig render
+        $renderContext->setResponse(new RedirectResponse('/'));
+    }
+}
+```
 
 NodeSearchBundle
 ------------

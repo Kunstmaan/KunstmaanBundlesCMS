@@ -2,12 +2,15 @@
 
 namespace Kunstmaan\NodeSearchBundle\Services;
 
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,12 +26,19 @@ class SearchViewRenderer
 
     /** @var RequestStack */
     private $requestStack;
+    /** @var PsrContainerInterface|null */
+    private $viewDataProviderServiceLocator;
 
-    public function __construct(Environment $twig, IndexablePagePartsService $indexablePagePartsService, RequestStack $requestStack)
+    public function __construct(Environment $twig, IndexablePagePartsService $indexablePagePartsService, RequestStack $requestStack, PsrContainerInterface $viewDataProviderServiceLocator = null)
     {
+        if (null === $viewDataProviderServiceLocator) {
+            @trigger_error(sprintf('Not passing a service locator of page renderer services to the "$viewDataProviderServiceLocator" parameter of "%s" is deprecated since KunstmaanNodeSearchBundle 5.9 and will be required in KunstmaanNodeSearchBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+        }
+
         $this->twig = $twig;
         $this->indexablePagePartsService = $indexablePagePartsService;
         $this->requestStack = $requestStack;
+        $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
     }
 
     public function renderDefaultSearchView(NodeTranslation $nodeTranslation, HasPagePartsInterface $page, string $defaultView = '@KunstmaanNodeSearch/PagePart/view.html.twig')
@@ -52,8 +62,22 @@ class SearchViewRenderer
             'nodetranslation' => $nodeTranslation,
         ]);
 
+        // NEXT_MAJOR: Remove if and `$page->service` call.
         if ($page instanceof PageInterface && null !== $container) {
             $page->service($container, $this->requestStack->getCurrentRequest(), $renderContext);
+        }
+
+        //NEXT_MAJOR: Remove "null !== $this->viewDataProviderServiceLocator" check
+        if ($page instanceof CustomViewDataProviderInterface && null !== $this->viewDataProviderServiceLocator) {
+            $serviceId = $page->getViewDataProviderServiceId();
+
+            if (!$this->viewDataProviderServiceLocator->has($serviceId)) {
+                throw new \RuntimeException(sprintf('Missing page renderer service "%s"', $serviceId));
+            }
+            /** @var PageViewDataProviderInterface $service */
+            $service = $this->viewDataProviderServiceLocator->get($serviceId);
+
+            $service->provideViewData($nodeTranslation, $renderContext);
         }
 
         $html = $this->twig->render($page->getSearchView(), $renderContext->getArrayCopy());

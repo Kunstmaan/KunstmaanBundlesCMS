@@ -36,6 +36,9 @@ final class CipherCommand extends Command
         $this->setName('kuma:cipher')->setDescription('Cipher utilities commands.');
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');

@@ -3,18 +3,19 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use {{ namespace }}\Form\Pages\{{ entity_class }}OverviewPageAdminType;
+use {{ namespace }}\ViewDataProvider\{{ entity_class }}PageViewDataProvider;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
-use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}OverviewPageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overview_pages")
  */
-class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface, SlugActionInterface
+class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface, CustomViewDataProviderInterface
 {
     public function getPagePartAdminConfigurations(): array
     {
@@ -51,12 +52,8 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
         return {{ entity_class }}OverviewPageAdminType::class;
     }
 
-    public function getControllerAction(): string
+    public function getViewDataProviderServiceId(): string
     {
-        {% if isV4 %}
-        return 'App\Controller\{{ entity_class }}ArticleController::serviceAction';
-        {% else %}
-        return '{{ bundle.getName() }}:{{ entity_class }}Article:service';
-        {% endif %}
+        return {{ entity_class }}PageViewDataProvider::class;
     }
 }

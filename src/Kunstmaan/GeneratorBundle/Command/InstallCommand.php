@@ -120,10 +120,13 @@ final class InstallCommand extends GeneratorCommand
         $output->writeln('<info>Installation start</info>');
     }
 
+    /**
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($this->shouldStop) {
-            return;
+            return 1;
         }
 
         $this->initAssistant($input, $output);

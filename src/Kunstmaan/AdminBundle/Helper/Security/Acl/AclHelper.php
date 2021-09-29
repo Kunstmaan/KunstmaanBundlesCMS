@@ -135,10 +135,8 @@ class AclHelper
      * http://www.scribd.com/doc/14683263/Efficient-Pagination-Using-MySQL
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0
-     *
-     * @return string
      */
-    private function getPermittedAclIdsSQLForUser(Query $query)
+    private function getPermittedAclIdsSQLForUser(Query $query): string
     {
         $databasePlatform = $this->em->getConnection()->getDatabasePlatform();
         $mask = $query->getHint('acl.mask');
