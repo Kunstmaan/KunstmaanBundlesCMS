@@ -87,6 +87,77 @@ GeneratorBundle
 * The "kuma:generate:bundle" command and related classes is deprecated and will be removed in 6.0
 * The "kuma:generate:entity" command and related classes is deprecated and will be removed in 6.0, use the "make:entity" command of the symfony/maker-bundle.
 
+NodeBundle
+----------
+
+* `Kunstmaan\NodeBundle\Controller\SlugActionInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface` 
+  interface on your page entity and provide page render service id. That service should implement `Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface` and will allow you to customize the twig view and variables.
+
+Before: 
+
+```php
+<?php
+
+use Kunstmaan\NodeBundle\Controller\SlugActionInterface
+use Kunstmaan\NodeBundle\Entity\AbstractPage
+
+class BlogOverviewPage extends AbstractPage implements SlugActionInterface
+{
+    // ...
+    public function getControllerAction()
+    {
+        return 'App\Controller\BlogOverviewController::serviceAction';
+    }
+
+}
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class BlogOverviewController extends AbstractController
+{
+    public function serviceAction(){
+        // Custom render logic
+    }
+
+}
+```
+
+After:
+
+```php
+<?php
+
+use App\PageRenderer\BlogOverviewPageRenderer;
+use Kunstmaan\NodeBundle\Entity\AbstractPage
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface
+
+class BlogOverviewPage extends AbstractPage implements CustomViewDataProviderInterface
+{
+    // ...
+    public function getViewDataProviderServiceId(): string
+    {
+        return BlogOverviewPageRenderer::class;
+    }
+
+}
+
+use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+class BlogOverviewPageViewDataProvider implements PageViewDataProviderInterface
+{
+    public function provideViewData(RenderContext $renderContext): void
+    {
+        // Set a variable to be used in the twig template
+        $renderContext['custom_var'] = 'text';
+
+        // Or return a response and stop the twig render
+        $renderContext->setResponse(new RedirectResponse('/'));
+    }
+}
+```
+
 NodeSearchBundle
 ------------
 

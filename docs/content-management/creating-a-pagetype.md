@@ -137,38 +137,53 @@ render it below the page parts.
 {% endblock %}
 ```
 
-Next we'll have to pass the employees to the Twig function. To do that we currently have a to implements the SlugActionInterface.
+Next we'll have to pass the employees to the Twig function. To do that we have to implement the `Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface` interface.
 
 So add the following in `EmployeesPage.php` :
 
 ```php
-    use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
+    use App\PageRenderer\EmployeesPageRenderer;
+    use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 
-    public function getControllerAction()
+    class EmployeesPage /* ... */ implements CustomViewDataProviderInterface
     {
-        return 'MyProjectWebsiteBundle:EmployeesPage:service';
+        public function getViewDataProviderServiceId(): string
+        {
+            return EmployeesPageViewDataProviderr::class;
+        }
     }
 ```
 
-And create a new Controller `EmployeesPageController.php` to handle the logic :
+And create a page viewdata provider `EmployeesPageViewDataProviderr.php` to handle the logic :
 
 ```php
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Request;
-    ...
-
-    public function serviceAction(Request $request)
+    namespace App\ViewDataProvider;
+    
+    use Doctrine\ORM\EntityManagerInterface;use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
+    use Kunstmaan\NodeBundle\Helper\RenderContext;
+    
+    class EmployeesPageRenderer implements PageViewDataProviderInterface
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $employees = $em->getRepository('MyProjectWebsiteBundle:Employee')->findAll();
-
-        $context['employees'] = $employees;
-        $request->attributes->set('_renderContext',$context);
+        /** @var EntityManagerInterface */
+        private $em;
+        
+        public function __construct(EntityManagerInterface $em)
+        {
+            $this->em = $em;
+        }
+    
+        public function provideViewData(RenderContext $renderContext): void
+        {
+            $employees = $this->em->getRepository('MyProjectWebsiteBundle:Employee')->findAll();
+    
+            $renderContext['employees'] = $employees;
+        }
     }
 ```
 
+This class must be a service and tagged with `kunstmaan.node.page_view_data_provider`. If you use service autowiring/autoconfigure then this
+is done automatically. 
 As you can see we just fetch all employees (using Doctrine), and pass them into the RenderContext (which is passed into Twig, so you'll get the list in your Twig template as the `employees` variable).
-
 
 ## Under the hood
 

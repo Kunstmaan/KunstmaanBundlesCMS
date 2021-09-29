@@ -6,6 +6,9 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated since KunstmaanNodeSearchBundle 5.9 and will be removed in KunstmaanNodeSearchBundle 6.0.
+ */
 class AbstractSearchPageController extends Controller
 {
     public function serviceAction(Request $request)

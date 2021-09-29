@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
@@ -13,6 +14,9 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
+/**
+ * @deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0.
+ */
 class SlugListener
 {
     /**
@@ -62,7 +66,9 @@ class SlugListener
         $entity = $nodeTranslation->getRef($this->em);
 
         // If the entity is an instance of the SlugActionInterface, change the controller
-        if ($entity instanceof SlugActionInterface) {
+        if ($entity instanceof SlugActionInterface && !$entity instanceof CustomViewDataProviderInterface) {
+            @trigger_error(sprintf('Using the "%s" to customize the page render is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Implement the "%s" interface and provide a render service instead.', SlugActionInterface::class, CustomViewDataProviderInterface::class), E_USER_DEPRECATED);
+
             $request->attributes->set('_entity', $entity);
 
             // Do security check by firing an event that gets handled by the SlugSecurityListener
