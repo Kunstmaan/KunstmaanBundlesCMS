@@ -19,14 +19,4 @@ class AbstractSearchPageTest extends TestCase
         $this->assertFalse($page->isIndexable());
         $this->assertIsArray($page->getPossibleChildTypes());
     }
-
-    /**
-     * @group legacy
-     */
-    public function testInstantiationDeprecation()
-    {
-        $this->expectDeprecation('Instantiating the "Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage" class is deprecated in KunstmaanNodeSearchBundle 5.9 and will be made abstract in KunstmaanNodeSearchBundle 6.0. Extend your implementation from this class instead.');
-
-        new AbstractSearchPage();
-    }
 }
