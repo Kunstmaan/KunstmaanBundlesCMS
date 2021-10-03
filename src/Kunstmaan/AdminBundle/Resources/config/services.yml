@@ -21,6 +21,9 @@ parameters:
     kunstmaan_admin.toolbar.collector.exception.class: 'Kunstmaan\AdminBundle\Toolbar\ExceptionDataCollector'
 
 services:
+    # Autowire aliases
+    Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper: '@kunstmaan_admin.acl.helper'
+
     kunstmaan_admin.menubuilder:
         class: '%kunstmaan_admin.menubuilder.class%'
         arguments: ['@request_stack']
