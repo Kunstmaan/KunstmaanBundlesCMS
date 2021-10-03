@@ -6,19 +6,22 @@ use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
+use Kunstmaan\MenuBundle\Service\MenuService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class MenuAdminListController extends AdminListController
+final class MenuAdminListController extends AbstractAdminListController
 {
-    /**
-     * @var AdminListConfiguratorInterface
-     */
+    /** @var AdminListConfiguratorInterface */
     private $configurator;
+    /** @var MenuService */
+    private $menuService;
+
+    public function __construct(MenuService $menuService)
+    {
+        $this->menuService = $menuService;
+    }
 
     /**
      * @return AbstractAdminListConfigurator
@@ -26,7 +29,7 @@ class MenuAdminListController extends AdminListController
     public function getAdminListConfigurator(Request $request)
     {
         if (!isset($this->configurator)) {
-            $configuratorClass = $this->container->getParameter('kunstmaan_menu.adminlist.menu_configurator.class');
+            $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menu_configurator.class');
             $this->configurator = new $configuratorClass(
                 $this->getEntityManager()
             );
@@ -54,7 +57,7 @@ class MenuAdminListController extends AdminListController
     public function indexAction(Request $request)
     {
         // Make sure we have a menu for each possible locale
-        $this->container->get('kunstmaan_menu.menu.service')->makeSureMenusExist();
+        $this->menuService->makeSureMenusExist();
 
         return parent::doIndexAction(
             $this->getAdminListConfigurator($request),

@@ -3,15 +3,12 @@
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\RulesAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class RulesAdminListController extends AdminListController
+final class RulesAdminListController extends AbstractAdminListController
 {
     /**
      * @var RulesAdminListConfigurator

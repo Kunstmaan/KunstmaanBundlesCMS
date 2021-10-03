@@ -46,10 +46,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @final since 5.9
- */
-class NodeAdminController extends Controller
+final class NodeAdminController extends Controller
 {
     /**
      * @var EntityManager

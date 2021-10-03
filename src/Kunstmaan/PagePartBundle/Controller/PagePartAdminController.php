@@ -11,10 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class PagePartAdminController extends Controller
+final class PagePartAdminController extends Controller
 {
     /**
      * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
