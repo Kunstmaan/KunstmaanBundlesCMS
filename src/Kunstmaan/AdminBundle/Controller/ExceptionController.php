@@ -5,15 +5,12 @@ namespace Kunstmaan\AdminBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\AdminList\ExceptionAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\Exception;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class ExceptionController extends AdminListController
+final class ExceptionController extends AbstractAdminListController
 {
     /** @var ExceptionAdminListConfigurator */
     private $configurator;

@@ -15,10 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * @final since 5.9
- */
-class GoogleAnalyticsController extends Controller
+final class GoogleAnalyticsController extends Controller
 {
     /**
      * The index action will render the main screen the users see when they log in in to the admin

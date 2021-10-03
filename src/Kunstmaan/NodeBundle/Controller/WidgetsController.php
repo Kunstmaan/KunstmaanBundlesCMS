@@ -13,10 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class WidgetsController extends Controller
+final class WidgetsController extends Controller
 {
     /**
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")

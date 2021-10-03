@@ -8,10 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class TranslatorCommandController extends Controller
+final class TranslatorCommandController extends Controller
 {
     /**
      * @Route("/clear-cache", name="KunstmaanTranslatorBundle_command_clear_cache")
