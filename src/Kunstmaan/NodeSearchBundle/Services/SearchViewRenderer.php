@@ -26,15 +26,11 @@ class SearchViewRenderer
 
     /** @var RequestStack */
     private $requestStack;
-    /** @var PsrContainerInterface|null */
+    /** @var PsrContainerInterface */
     private $viewDataProviderServiceLocator;
 
-    public function __construct(Environment $twig, IndexablePagePartsService $indexablePagePartsService, RequestStack $requestStack, PsrContainerInterface $viewDataProviderServiceLocator = null)
+    public function __construct(Environment $twig, IndexablePagePartsService $indexablePagePartsService, RequestStack $requestStack, PsrContainerInterface $viewDataProviderServiceLocator)
     {
-        if (null === $viewDataProviderServiceLocator) {
-            @trigger_error(sprintf('Not passing a service locator of page renderer services to the "$viewDataProviderServiceLocator" parameter of "%s" is deprecated since KunstmaanNodeSearchBundle 5.9 and will be required in KunstmaanNodeSearchBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
-        }
-
         $this->twig = $twig;
         $this->indexablePagePartsService = $indexablePagePartsService;
         $this->requestStack = $requestStack;
@@ -67,8 +63,7 @@ class SearchViewRenderer
             $page->service($container, $this->requestStack->getCurrentRequest(), $renderContext);
         }
 
-        //NEXT_MAJOR: Remove "null !== $this->viewDataProviderServiceLocator" check
-        if ($page instanceof CustomViewDataProviderInterface && null !== $this->viewDataProviderServiceLocator) {
+        if ($page instanceof CustomViewDataProviderInterface) {
             $serviceId = $page->getViewDataProviderServiceId();
 
             if (!$this->viewDataProviderServiceLocator->has($serviceId)) {
@@ -101,8 +96,7 @@ class SearchViewRenderer
         $text = $crawler->html();
 
         $result = strip_tags($text);
-        $result = trim(html_entity_decode($result, ENT_QUOTES));
 
-        return $result;
+        return trim(html_entity_decode($result, ENT_QUOTES));
     }
 }
