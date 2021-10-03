@@ -33,3 +33,8 @@ services:
             - "@router"
         tags:
             - { name: kernel.event_subscriber }
+
+    Kunstmaan\AdminListBundle\Controller\EntityLockCheckController:
+        calls:
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
+        tags: [ 'controller.service_arguments', 'container.service_subscriber' ]

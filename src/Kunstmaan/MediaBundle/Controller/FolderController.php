@@ -4,21 +4,51 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\FolderType;
+use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class FolderController extends Controller
+final class FolderController extends AbstractController
 {
+    /** @var MediaManager */
+    private $mediaManager;
+    /** @var FolderManager */
+    private $folderManager;
+    /** @var AdminListFactory */
+    private $adminListFactory;
+    /** @var RequestStack */
+    private $requestStack;
+    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    private $translator;
+
+    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, AdminListFactory $adminListFactory, RequestStack $requestStack, $translator)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
+        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
+
+        $this->mediaManager = $mediaManager;
+        $this->folderManager = $folderManager;
+        $this->adminListFactory = $adminListFactory;
+        $this->requestStack = $requestStack;
+        $this->translator = $translator;
+    }
+
     /**
      * @param int $folderId The folder id
      *
@@ -41,14 +71,11 @@ final class FolderController extends Controller
             $session->remove('media-list-view');
         }
 
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
-
         /* @var Folder $folder */
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
-        $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminListConfigurator = new MediaAdminListConfigurator($em, $this->mediaManager, $folder, $request);
+        $adminList = $this->adminListFactory->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
         $sub = new Folder();
@@ -66,7 +93,7 @@ final class FolderController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.show.success.text', [
+                    $this->translator->trans('media.folder.show.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );
@@ -81,8 +108,8 @@ final class FolderController extends Controller
         }
 
         return [
-            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
-            'mediamanager' => $this->get('kunstmaan_media.media_manager'),
+            'foldermanager' => $this->folderManager,
+            'mediamanager' => $this->mediaManager,
             'subform' => $subForm->createView(),
             'emptyform' => $emptyForm->createView(),
             'editform' => $editForm->createView(),
@@ -112,7 +139,7 @@ final class FolderController extends Controller
         if (\is_null($parentFolder)) {
             $this->addFlash(
                 FlashTypes::DANGER,
-                $this->get('translator')->trans('media.folder.delete.failure.text', [
+                $this->translator->trans('media.folder.delete.failure.text', [
                     '%folder%' => $folderName,
                 ])
             );
@@ -120,7 +147,7 @@ final class FolderController extends Controller
             $em->getRepository(Folder::class)->delete($folder);
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('media.folder.delete.success.text', [
+                $this->translator->trans('media.folder.delete.success.text', [
                     '%folder%' => $folderName,
                 ])
             );
@@ -132,7 +159,7 @@ final class FolderController extends Controller
             $redirect = 'KunstmaanMediaBundle_folder_show';
         }
 
-        $type = $this->get('request_stack')->getCurrentRequest()->get('type');
+        $type = $this->requestStack->getCurrentRequest()->get('type');
 
         return new RedirectResponse(
             $this->generateUrl($redirect,
@@ -167,7 +194,7 @@ final class FolderController extends Controller
                 $em->getRepository(Folder::class)->save($folder);
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.addsub.success.text', [
+                    $this->translator->trans('media.folder.addsub.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );
@@ -230,7 +257,7 @@ final class FolderController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.empty.success.text', [
+                    $this->translator->trans('media.folder.empty.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );

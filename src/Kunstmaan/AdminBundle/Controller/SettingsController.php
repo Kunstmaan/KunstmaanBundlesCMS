@@ -2,16 +2,26 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
+use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Main settings controller
- */
-final class SettingsController extends Controller
+final class SettingsController extends AbstractController
 {
+    /** @var VersionChecker */
+    private $versionChecker;
+    /** @var LoggerInterface */
+    private $logger;
+
+    public function __construct(VersionChecker $versionChecker, LoggerInterface $logger)
+    {
+        $this->versionChecker = $versionChecker;
+        $this->logger = $logger;
+    }
+
     /**
      * Index page for the settings
      *
@@ -43,20 +53,15 @@ final class SettingsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $versionChecker = $this->container->get('kunstmaan_admin.versionchecker');
-        if (!$versionChecker->isEnabled()) {
+        if (!$this->versionChecker->isEnabled()) {
             return ['data' => null];
         }
 
         $data = null;
-
         try {
-            $data = $versionChecker->check();
+            $data = $this->versionChecker->check();
         } catch (\Exception $e) {
-            $this->container->get('logger')->error(
-                $e->getMessage(),
-                ['exception' => $e]
-            );
+            $this->logger->error($e->getMessage(), ['exception' => $e]);
         }
 
         return [

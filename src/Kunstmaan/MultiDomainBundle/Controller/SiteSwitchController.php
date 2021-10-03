@@ -2,17 +2,29 @@
 
 namespace Kunstmaan\MultiDomainBundle\Controller;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-final class SiteSwitchController extends Controller
+final class SiteSwitchController
 {
+    /** @var DomainConfigurationInterface */
+    private $domainConfiguration;
+    /** @var UrlGeneratorInterface */
+    private $urlGenerator;
+
+    public function __construct(DomainConfigurationInterface $domainConfiguration, UrlGeneratorInterface $urlGenerator)
+    {
+        $this->domainConfiguration = $domainConfiguration;
+        $this->urlGenerator = $urlGenerator;
+    }
+
     /**
      * @Route("/switch-site", name="KunstmaanMultiDomainBundle_switch_site", methods={"GET"})
      *
@@ -23,14 +35,13 @@ final class SiteSwitchController extends Controller
      */
     public function switchAction(Request $request)
     {
-        $domainConfiguration = $this->get('kunstmaan_admin.domain_configuration');
         $host = $request->query->get('host');
-        $hosts = $domainConfiguration->getFullHostConfig();
+        $hosts = $this->domainConfiguration->getFullHostConfig();
         if (!\array_key_exists($host, $hosts)) {
-            throw $this->createNotFoundException('Invalid host specified');
+            throw new NotFoundHttpException('Invalid host specified');
         }
 
-        $currentHost = $domainConfiguration->getHost();
+        $currentHost = $this->domainConfiguration->getHost();
 
         $session = $request->getSession();
         if ($request->get('from_url_chooser')) {
@@ -45,7 +56,7 @@ final class SiteSwitchController extends Controller
          */
         if ((($hosts[$host]['type'] !== $hosts[$currentHost]['type']) || (!$request->query->has('route'))) && (!$request->get('from_url_chooser'))) {
             $route = 'KunstmaanAdminBundle_homepage';
-            $defaultLocale = $this->get('kunstmaan_admin.domain_configuration')->getDefaultLocale();
+            $defaultLocale = $this->domainConfiguration->getDefaultLocale();
         } else {
             $route = $request->query->get('route');
             $routeParams = $request->query->get('route_params');
@@ -54,10 +65,6 @@ final class SiteSwitchController extends Controller
 
         $routeParams['_locale'] = $defaultLocale;
 
-        $response = new RedirectResponse(
-            $this->get('router')->generate($route, $routeParams)
-        );
-
-        return $response;
+        return new RedirectResponse($this->urlGenerator->generate($route, $routeParams));
     }
 }

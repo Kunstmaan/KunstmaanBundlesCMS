@@ -36,13 +36,11 @@ services:
     Kunstmaan\MenuBundle\Controller\MenuAdminListController:
         arguments: ['@kunstmaan_menu.menu.service']
         calls:
-            - method: setContainer
-              arguments: [ ] # Container service locator will be injected filled by the services from subscribed services
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
         tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
 
     Kunstmaan\MenuBundle\Controller\MenuItemAdminListController:
         arguments: [ '@kunstmaan_admin.domain_configuration' ]
         calls:
-            - method: setContainer
-              arguments: [ ] # Container service locator will be injected filled by the services from subscribed services
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
         tags: [ 'controller.service_arguments', 'container.service_subscriber' ]

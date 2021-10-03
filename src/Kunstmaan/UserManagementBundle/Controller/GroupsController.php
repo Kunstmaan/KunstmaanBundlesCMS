@@ -6,20 +6,39 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing groups in an admin list
  */
-final class GroupsController extends Controller
+final class GroupsController extends AbstractController
 {
+    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    private $translator;
+    /** @var AdminListFactory */
+    private $adminListFactory;
+
+    public function __construct($translator, AdminListFactory $adminListFactory)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
+        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
+
+        $this->translator = $translator;
+        $this->adminListFactory = $adminListFactory;
+    }
+
     /**
      * List groups
      *
@@ -36,8 +55,7 @@ final class GroupsController extends Controller
 
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        /* @var AdminList $adminlist */
-        $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList(new GroupAdminListConfigurator($em));
+        $adminlist = $this->adminListFactory->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return [
@@ -72,7 +90,7 @@ final class GroupsController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->container->get('translator')->trans('kuma_user.group.add.flash.success', [
+                    $this->translator->trans('kuma_user.group.add.flash.success', [
                         '%groupname%' => $group->getName(),
                     ])
                 );
@@ -116,7 +134,7 @@ final class GroupsController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->container->get('translator')->trans('kuma_user.group.edit.flash.success', [
+                    $this->translator->trans('kuma_user.group.edit.flash.success', [
                         '%groupname%' => $group->getName(),
                     ])
                 );
@@ -155,7 +173,7 @@ final class GroupsController extends Controller
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->container->get('translator')->trans('kuma_user.group.delete.flash.success', [
+                $this->translator->trans('kuma_user.group.delete.flash.success', [
                     '%groupname%' => $group->getName(),
                 ])
             );
