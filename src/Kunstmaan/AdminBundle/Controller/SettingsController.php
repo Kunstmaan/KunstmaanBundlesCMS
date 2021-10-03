@@ -3,15 +3,14 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Main settings controller
- *
- * @final since 5.9
  */
-class SettingsController extends BaseSettingsController
+final class SettingsController extends Controller
 {
     /**
      * Index page for the settings

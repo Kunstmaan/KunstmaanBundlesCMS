@@ -576,13 +576,13 @@ abstract class AbstractAdminListController extends AbstractController
 
     public static function getSubscribedServices(): array
     {
-        return array_merge(parent::getSubscribedServices(), [
+        return [
             'doctrine' => ManagerRegistry::class,
             'kunstmaan_adminlist.factory' => AdminListFactory::class,
             'kunstmaan_adminlist.service.export' => ExportService::class,
             'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
             'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
             'event_dispatcher' => EventDispatcherInterface::class,
-        ]);
+        ] + parent::getSubscribedServices();
     }
 }

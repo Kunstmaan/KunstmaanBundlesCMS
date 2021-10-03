@@ -14,10 +14,7 @@ use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class VotingController extends Controller
+final class VotingController extends Controller
 {
     /**
      * @Route("/voting-upvote", name="voting_upvote")

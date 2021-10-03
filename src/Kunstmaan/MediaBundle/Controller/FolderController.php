@@ -17,10 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class FolderController extends Controller
+final class FolderController extends Controller
 {
     /**
      * @param int $folderId The folder id

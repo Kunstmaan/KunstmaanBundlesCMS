@@ -6,11 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
+use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
+use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -22,15 +24,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @final since 5.9
- */
-class TranslatorController extends AdminListController
+final class TranslatorController extends AbstractAdminListController
 {
-    /**
-     * @var AbstractAdminListConfigurator
-     */
+    /** @var AbstractAdminListConfigurator */
     private $adminListConfigurator;
+    /** @var CacheValidator */
+    private $cacheValidator;
+    /** @var Importer */
+    private $importerService;
+
+    public function __construct(CacheValidator $cacheValidator, Importer $importerService)
+    {
+        $this->cacheValidator = $cacheValidator;
+        $this->importerService = $importerService;
+    }
 
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
@@ -46,8 +53,8 @@ class TranslatorController extends AdminListController
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
-        $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-        $debugMode = $this->container->getParameter('kuma_translator.debug') === true;
+        $cacheFresh = $this->cacheValidator->isCacheFresh();
+        $debugMode = $this->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
             $this->addFlash(
@@ -82,7 +89,7 @@ class TranslatorController extends AdminListController
         $translator = $this->container->get('translator');
 
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $managedLocales = $this->container->getParameter('kuma_translator.managed_locales');
+        $managedLocales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($managedLocales as $managedLocale) {
             $translation->addText($managedLocale, '');
         }
@@ -149,7 +156,7 @@ class TranslatorController extends AdminListController
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
         $translation->setDomain($translations[0]->getDomain());
         $translation->setKeyword($translations[0]->getKeyword());
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $found = false;
             foreach ($translations as $t) {
@@ -213,7 +220,7 @@ class TranslatorController extends AdminListController
                 $data = $form->getData();
                 $file = $data['file'];
                 $force = $data['force'];
-                $imported = $this->container->get('kunstmaan_translator.service.importer.importer')->importFromSpreadsheet($file, $locales, $force);
+                $imported = $this->importerService->importFromSpreadsheet($file, $locales, $force);
                 $this->addFlash(FlashTypes::SUCCESS, sprintf('Translation imported: %d', $imported));
             }
         }
@@ -301,7 +308,7 @@ class TranslatorController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
 
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getConnection(), $locales);

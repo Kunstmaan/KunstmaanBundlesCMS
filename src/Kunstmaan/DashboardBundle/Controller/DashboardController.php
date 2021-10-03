@@ -9,10 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class DashboardController extends Controller
+final class DashboardController extends Controller
 {
     /**
      * The index action will render the main screen the users see when they log in in to the admin

@@ -3,7 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -15,6 +14,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +24,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
- *
- * @final since 5.9
  */
-class UsersController extends BaseSettingsController
+class UsersController extends Controller
 {
     /**
      * List users

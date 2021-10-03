@@ -94,14 +94,12 @@ Create your DocumentAdminListController in your Controller folder and import you
 ```PHP
 use Your\Bundle\Form\DocumentType;
 use Your\Bundle\AdminList\DocumentAdminListConfigurator;
-
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
-
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DocumentAdminController extends AdminListController
+class DocumentAdminController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface

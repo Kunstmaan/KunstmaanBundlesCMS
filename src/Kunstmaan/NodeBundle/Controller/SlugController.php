@@ -21,10 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * @final since 5.9
- */
-class SlugController extends Controller
+final class SlugController extends Controller
 {
     /**
      * Handle the page requests

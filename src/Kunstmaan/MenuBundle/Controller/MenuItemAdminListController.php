@@ -3,25 +3,30 @@
 namespace Kunstmaan\MenuBundle\Controller;
 
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\MenuBundle\Entity\BaseMenu;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class MenuItemAdminListController extends AdminListController
+final class MenuItemAdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface
      */
     private $configurator;
+    /** @var DomainConfigurationInterface */
+    private $domainConfiguration;
+
+    public function __construct(DomainConfigurationInterface $domainConfiguration)
+    {
+        $this->domainConfiguration = $domainConfiguration;
+    }
 
     /**
      * @param int $menuid
@@ -33,15 +38,15 @@ class MenuItemAdminListController extends AdminListController
     {
         if (!isset($this->configurator)) {
             $menu = $this->getDoctrine()->getManager()->getRepository(
-                $this->container->getParameter('kunstmaan_menu.entity.menu.class')
+                $this->getParameter('kunstmaan_menu.entity.menu.class')
             )->find($menuid);
-            $rootNode = $this->container->get('kunstmaan_admin.domain_configuration')->getRootNode();
+            $rootNode = $this->domainConfiguration->getRootNode();
 
-            $configuratorClass = $this->container->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
+            $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
             $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
 
-            $adminType = $this->container->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
-            $menuItemClass = $this->container->getParameter('kunstmaan_menu.entity.menuitem.class');
+            $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
+            $menuItemClass = $this->getParameter('kunstmaan_menu.entity.menuitem.class');
             $this->configurator->setAdminType($adminType);
             $this->configurator->setAdminTypeOptions(['menu' => $menu, 'rootNode' => $rootNode, 'menuItemClass' => $menuItemClass, 'entityId' => $entityId, 'locale' => $request->getLocale()]);
         }
@@ -61,7 +66,7 @@ class MenuItemAdminListController extends AdminListController
     public function indexAction(Request $request, $menuid)
     {
         $menuRepo = $this->getDoctrine()->getManager()->getRepository(
-            $this->container->getParameter('kunstmaan_menu.entity.menu.class')
+            $this->getParameter('kunstmaan_menu.entity.menu.class')
         );
 
         /** @var BaseMenu $menu */
@@ -148,7 +153,7 @@ class MenuItemAdminListController extends AdminListController
     public function moveUpAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository($this->container->getParameter('kunstmaan_menu.entity.menuitem.class'));
+        $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {
@@ -170,7 +175,7 @@ class MenuItemAdminListController extends AdminListController
     public function moveDownAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository($this->container->getParameter('kunstmaan_menu.entity.menuitem.class'));
+        $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {

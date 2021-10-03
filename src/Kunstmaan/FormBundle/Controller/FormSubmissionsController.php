@@ -23,10 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * The controller which will handle everything related with form pages and form submissions
- *
- * @final since 5.9
  */
-class FormSubmissionsController extends Controller
+final class FormSubmissionsController extends Controller
 {
     /**
      * The index action will use an admin list to list all the form pages

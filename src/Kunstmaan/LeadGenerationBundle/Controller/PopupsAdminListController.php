@@ -5,15 +5,12 @@ namespace Kunstmaan\LeadGenerationBundle\Controller;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\PopupAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class PopupsAdminListController extends AdminListController
+final class PopupsAdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface
