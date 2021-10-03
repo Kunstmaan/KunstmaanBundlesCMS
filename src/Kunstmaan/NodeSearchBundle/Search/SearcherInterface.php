@@ -83,22 +83,6 @@ interface SearcherInterface
     public function getIndexName();
 
     /**
-     * @deprecated upgrade to ruflin/elastica and elasticsearch v7 and don't set an index type
-     *
-     * @param string $indexType
-     *
-     * @return SearcherInterface
-     */
-    public function setIndexType($indexType);
-
-    /**
-     * @deprecated upgrade to ruflin/elastica and elasticsearch v7 and don't set an index type
-     *
-     * @return string
-     */
-    public function getIndexType();
-
-    /**
      * @param \Kunstmaan\SearchBundle\Search\Search $search
      */
     public function setSearch($search);

@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
@@ -40,7 +41,7 @@ abstract class AbstractAdminListController extends AbstractController
      */
     protected function getEntityManager()
     {
-        return $this->getDoctrine()->getManager();
+        return $this->container->get('doctrine')->getManager();
     }
 
     /**
@@ -294,8 +295,8 @@ abstract class AbstractAdminListController extends AbstractController
         $params = [
             'form' => $form->createView(),
             'entity' => $helper, 'adminlistconfigurator' => $configurator,
-            'entityVersionLockInterval' => $this->container->getParameter('kunstmaan_entity.lock_check_interval'),
-            'entityVersionLockCheck' => $this->container->getParameter('kunstmaan_entity.lock_enabled') && $helper instanceof LockableEntityInterface,
+            'entityVersionLockInterval' => $this->getParameter('kunstmaan_entity.lock_check_interval'),
+            'entityVersionLockCheck' => $this->getParameter('kunstmaan_entity.lock_enabled') && $helper instanceof LockableEntityInterface,
         ];
 
         if ($tabPane) {
@@ -576,11 +577,12 @@ abstract class AbstractAdminListController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
-            AdminListFactory::class,
-            ExportService::class,
-            EntityVersionLockService::class,
-            interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
-            EventDispatcherInterface::class,
+            'doctrine' => ManagerRegistry::class,
+            'kunstmaan_adminlist.factory' => AdminListFactory::class,
+            'kunstmaan_adminlist.service.export' => ExportService::class,
+            'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
+            'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+            'event_dispatcher' => EventDispatcherInterface::class,
         ]);
     }
 }

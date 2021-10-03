@@ -2,6 +2,9 @@ parameters:
     kunstmaan_admin.firewall.provider_key: 'main'
 
 services:
+    # Autowire aliases
+    Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper: '@kunstmaan_admin.acl.helper'
+
     kunstmaan_admin.menubuilder:
         class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
         arguments: ['@request_stack']

@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeSearchBundle\Services;
 
 use Elastica\Aggregation\Terms;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\NodeSearchBundle\Exception\SearcherServiceNotFoundException;
 use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearcherRequestAdapter;
 use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Pagerfanta\Exception\NotValidCurrentPageException;
@@ -122,21 +123,9 @@ class SearchService
         $pageNumber = $this->getRequestedPage($request);
 
         $searcher = $this->searchers[$entity->getSearcher()] ?? null;
-        if (null === $searcher) {
-            $searcher = $this->container->get($entity->getSearcher());
-
-            @trigger_error(
-                sprintf(
-                    'Getting the node searcher "%s" from the container is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Tag your searcher service with the "kunstmaan_node_search.node_searcher" tag to add a searcher.',
-                    $entity->getSearcher()
-                ),
-                E_USER_DEPRECATED
-            );
-        }
 
         if (null === $searcher) {
-            //NEXT MAJOR: Throw exception
-            @trigger_error(sprintf('Not having a searcher service registered for the entity searcher id "%s" is deprecated since KunstmaanNodeSearchBundle 5.9 and will throw an exception in KunstmaanNodeSearchBundle 6.0.', $entity->getSearcher()), E_USER_DEPRECATED);
+            throw SearcherServiceNotFoundException::create($entity->getSearcher());
         }
 
         $this->applySearchParams($searcher, $request, $this->renderContext);
