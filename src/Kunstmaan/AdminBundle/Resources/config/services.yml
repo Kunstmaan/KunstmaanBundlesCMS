@@ -4,6 +4,8 @@ parameters:
 services:
     # Autowire aliases
     Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper: '@kunstmaan_admin.acl.helper'
+    Kunstmaan\AdminBundle\Service\AclManager: '@kunstmaan_admin.acl.manager'
+    Kunstmaan\AdminBundle\Helper\CloneHelper: '@kunstmaan_admin.clone.helper'
 
     kunstmaan_admin.menubuilder:
         class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder

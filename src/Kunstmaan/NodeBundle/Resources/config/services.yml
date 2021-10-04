@@ -6,6 +6,10 @@ services:
     # Autowire aliases
     Kunstmaan\NodeBundle\Helper\Services\PageCreatorService: '@kunstmaan_node.page_creator_service'
     Kunstmaan\NodeBundle\Helper\NodeMenu: '@kunstmaan_node.node_menu'
+    Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService: '@kunstmaan_node.acl_permission_creator_service'
+    Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher: '@kunstmaan_node.admin_node.publisher'
+    Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder: '@kunstmaan_node.actions_menu_builder'
+    Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper: '@kunstmaan_node.admin_node.node_version_lock_helper'
 
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
