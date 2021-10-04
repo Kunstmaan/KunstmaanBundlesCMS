@@ -21,13 +21,9 @@ jobs:
                     # Test lowest dependencies
                     -   deps: 'lowest'
                         php: 7.2
-                        symfony: '^3.4'
+                        symfony: '^4.4'
 
                     # Test latest php with LTS versions.
-                    -   deps: 'lts'
-                        php: 7.4
-                        symfony: '^3.4'
-
                     -   deps: 'lts'
                         php: 7.4
                         symfony: '^4.4'
