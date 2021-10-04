@@ -33,7 +33,7 @@ class AclWalkerTest extends TestCase
         $config = $this->createMock(Configuration::class);
 
         $platform = $this->createMock(AbstractPlatform::class);
-        $platform->expects($this->once())->method('appendLockHint')->willReturn($from);
+        $platform->expects($this->once())->method('appendLockHint')->willReturn('someschema s');
 
         $conn = $this->createMock(Connection::class);
         $conn->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
