@@ -326,7 +326,7 @@ final class NodeAdminController extends AbstractController
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $this->nodePublisher->chooseHowToPublish($request, $nodeTranslation, $this->translator);
+        $this->nodePublisher->handlePublish($request, $nodeTranslation);
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $node->getId()]));
     }
@@ -353,7 +353,7 @@ final class NodeAdminController extends AbstractController
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
+        $this->nodePublisher->handleUnpublish($request, $nodeTranslation);
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $node->getId()]));
     }
@@ -979,9 +979,9 @@ final class NodeAdminController extends AbstractController
                         $this->container->get('translator')->trans('kuma_node.admin.edit.flash.locked_success')
                     );
                 } elseif ($request->request->has('publishing') || $request->request->has('publish_later')) {
-                    $this->nodePublisher->chooseHowToPublish($request, $nodeTranslation, $this->translator);
+                    $this->nodePublisher->handlePublish($request, $nodeTranslation);
                 } elseif ($request->request->has('unpublishing') || $request->request->has('unpublish_later')) {
-                    $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
+                    $this->nodePublisher->handleUnpublish($request, $nodeTranslation);
                 } else {
                     $this->addFlash(
                         FlashTypes::SUCCESS,
