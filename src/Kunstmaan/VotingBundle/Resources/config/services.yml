@@ -80,3 +80,7 @@ services:
     kunstmaan_voting.services.repository_resolver:
         class: Kunstmaan\VotingBundle\Services\RepositoryResolver
         arguments: ['@doctrine.orm.entity_manager']
+
+    Kunstmaan\VotingBundle\Controller\VotingController:
+        arguments: [ '@event_dispatcher' ]
+        tags: [ 'controller.service_arguments' ]

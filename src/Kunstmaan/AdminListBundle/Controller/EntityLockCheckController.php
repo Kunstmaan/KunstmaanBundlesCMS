@@ -4,13 +4,15 @@ namespace Kunstmaan\AdminListBundle\Controller;
 
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class EntityLockCheckController extends Controller
+final class EntityLockCheckController extends AbstractController
 {
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
@@ -53,5 +55,13 @@ final class EntityLockCheckController extends Controller
         }
 
         return new JsonResponse(['lock' => $entityIsLocked, 'message' => $message]);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+                'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
+                'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+            ] + parent::getSubscribedServices();
     }
 }

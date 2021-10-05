@@ -3,10 +3,10 @@
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-abstract class AbstractRedirectController extends Controller
+abstract class AbstractRedirectController extends AbstractController
 {
     /**
      * @Route("/{popup}", name="redirect_index", requirements={"popup": "\d+"})

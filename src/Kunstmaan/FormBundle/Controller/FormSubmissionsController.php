@@ -4,9 +4,12 @@ namespace Kunstmaan\FormBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\ExportList;
+use Kunstmaan\AdminListBundle\Service\ExportService;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
@@ -14,17 +17,23 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The controller which will handle everything related with form pages and form submissions
  */
-final class FormSubmissionsController extends Controller
+final class FormSubmissionsController extends AbstractController
 {
     /**
      * The index action will use an admin list to list all the form pages
@@ -41,7 +50,7 @@ final class FormSubmissionsController extends Controller
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
         /* @var AdminList $adminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
             new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW)
         );
         $adminList->bindRequest($request);
@@ -66,7 +75,7 @@ final class FormSubmissionsController extends Controller
         $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
 
         /** @var AdminList $adminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
             new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $this->getParameter('kunstmaan_form.deletable_formsubmissions'))
         );
         $adminList->bindRequest($request);
@@ -95,7 +104,7 @@ final class FormSubmissionsController extends Controller
         $deletableFormsubmission = $this->getParameter('kunstmaan_form.deletable_formsubmissions');
 
         /** @var AdminList $adminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
             new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $deletableFormsubmission)
         );
         $adminList->bindRequest($request);
@@ -122,13 +131,13 @@ final class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
 
         /** @var ExportList $exportList */
         $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
-        $exportList = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
+        $exportList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator);
 
-        return $this->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
+        return $this->container->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
     }
 
     /**
@@ -155,10 +164,7 @@ final class FormSubmissionsController extends Controller
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
 
-        $url = $this->get('router')->generate(
-            'KunstmaanFormBundle_formsubmissions_list',
-            ['nodeTranslationId' => $nt->getId()]
-        );
+        $url = $this->generateUrl('KunstmaanFormBundle_formsubmissions_list', ['nodeTranslationId' => $nt->getId()]);
 
         $fields = $em->getRepository(FormSubmissionField::class)->findBy(['formSubmission' => $submission]);
 
@@ -172,16 +178,28 @@ final class FormSubmissionsController extends Controller
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('formsubmissions.delete.flash.success')
+                $this->container->get('translator')->trans('formsubmissions.delete.flash.success')
             );
         } catch (\Exception $e) {
-            $this->get('logger')->error($e->getMessage());
+            $this->container->get('logger')->error($e->getMessage());
             $this->addFlash(
                 FlashTypes::DANGER,
-                $this->get('translator')->trans('formsubmissions.delete.flash.error')
+                $this->container->get('translator')->trans('formsubmissions.delete.flash.error')
             );
         }
 
         return new RedirectResponse($url);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+                'kunstmaan_admin.acl.helper' => AclHelper::class,
+                'kunstmaan_adminlist.factory' => AdminListFactory::class,
+                'kunstmaan_adminlist.service.export' => ExportService::class,
+                'request_stack' => RequestStack::class,
+                'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+                'logger' => LoggerInterface::class,
+            ] + parent::getSubscribedServices();
     }
 }

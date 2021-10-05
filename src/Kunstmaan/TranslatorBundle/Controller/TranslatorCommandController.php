@@ -4,21 +4,45 @@ namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler;
+use Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class TranslatorCommandController extends Controller
+final class TranslatorCommandController extends AbstractController
 {
+    /** @var ResourceCacher */
+    private $resourceCacher;
+    /** @var ImportCommandHandler */
+    private $importCommandHandler;
+    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    private $translator;
+
+    public function __construct(ResourceCacher $resourceCacher, ImportCommandHandler $importCommandHandler, $translator)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
+        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
+
+        $this->resourceCacher = $resourceCacher;
+        $this->importCommandHandler = $importCommandHandler;
+        $this->translator = $translator;
+    }
+
     /**
      * @Route("/clear-cache", name="KunstmaanTranslatorBundle_command_clear_cache")
      */
     public function clearCacheAction()
     {
-        $this->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache();
+        $this->resourceCacher->flushCache();
+
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_translator.command.clear.flash.success')
+            $this->translator->trans('kuma_translator.command.clear.flash.success')
         );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
@@ -36,11 +60,11 @@ final class TranslatorCommandController extends Controller
             ->setBundles($this->getParameter('kuma_translator.bundles'))
             ->setGlobals(true);
 
-        $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+        $this->importCommandHandler->executeImportCommand($importCommand);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_translator.command.import.flash.success')
+            $this->translator->trans('kuma_translator.command.import.flash.success')
         );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
@@ -58,11 +82,11 @@ final class TranslatorCommandController extends Controller
             ->setBundles($this->getParameter('kuma_translator.bundles'))
             ->setGlobals(false);
 
-        $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+        $this->importCommandHandler->executeImportCommand($importCommand);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_translator.command.import.flash.force_success')
+            $this->translator->trans('kuma_translator.command.import.flash.force_success')
         );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));

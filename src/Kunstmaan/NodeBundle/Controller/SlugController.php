@@ -11,17 +11,40 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class SlugController extends Controller
+final class SlugController extends AbstractController
 {
+    /** @var NodeMenu */
+    private $nodeMenu;
+    /** @var PsrContainerInterface */
+    private $viewDataProviderServiceLocator;
+    /** @var LegacyEventDispatcherInterface|EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(NodeMenu $nodeMenu, PsrContainerInterface $viewDataProviderServiceLocator, $eventDispatcher)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
+        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
+        }
+
+        $this->nodeMenu = $nodeMenu;
+        $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * Handle the page requests
      *
@@ -63,7 +86,7 @@ final class SlugController extends Controller
             ->setRequest($request)
             ->setNodeTranslation($nodeTranslation);
 
-        $nodeMenu = $this->container->get('kunstmaan_node.node_menu');
+        $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($locale);
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
@@ -88,13 +111,12 @@ final class SlugController extends Controller
         if ($entity instanceof CustomViewDataProviderInterface) {
             $serviceId = $entity->getViewDataProviderServiceId();
 
-            $pageRenderServiceLocator = $this->get('kunstmaan.view_data_provider_locator');
-            if (!$pageRenderServiceLocator->has($serviceId)) {
+            if (!$this->viewDataProviderServiceLocator->has($serviceId)) {
                 throw new \RuntimeException(sprintf('Missing page renderer service "%s"', $serviceId));
             }
 
             /** @var PageViewDataProviderInterface $service */
-            $service = $pageRenderServiceLocator->get($serviceId);
+            $service = $this->viewDataProviderServiceLocator->get($serviceId);
             $service->provideViewData($nodeTranslation, $renderContext);
 
             $response = $renderContext->getResponse();
@@ -152,13 +174,12 @@ final class SlugController extends Controller
      */
     private function dispatch($event, string $eventName)
     {
-        $eventDispatcher = $this->container->get('event_dispatcher');
         if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
 
             return $eventDispatcher->dispatch($event, $eventName);
         }
 
-        return $eventDispatcher->dispatch($eventName, $event);
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

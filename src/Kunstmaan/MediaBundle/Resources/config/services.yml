@@ -141,3 +141,25 @@ services:
     Kunstmaan\MediaBundle\DataFixtures\ORM\FolderFixtures:
         tags:
             - { name: doctrine.fixture.orm }
+
+    Kunstmaan\MediaBundle\Controller\ChooserController:
+        arguments: [ '@kunstmaan_media.media_manager', '@kunstmaan_media.folder_manager', '@kunstmaan_adminlist.factory' ]
+        calls:
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
+        tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
+
+    Kunstmaan\MediaBundle\Controller\FolderController:
+        arguments: [ '@kunstmaan_media.media_manager', '@kunstmaan_media.folder_manager', '@kunstmaan_adminlist.factory', '@request_stack', '@translator' ]
+        calls:
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
+        tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
+
+    Kunstmaan\MediaBundle\Controller\IconFontController:
+        arguments: [ '@kunstmaan_media.icon_font_manager' ]
+        tags: [ 'controller.service_arguments' ]
+
+    Kunstmaan\MediaBundle\Controller\MediaController:
+        arguments: [ '@kunstmaan_media.media_manager', '@kunstmaan_media.folder_manager', '@translator' ]
+        calls:
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
+        tags: [ 'controller.service_arguments', 'container.service_subscriber' ]

@@ -9,13 +9,27 @@ use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class VotingController extends Controller
+final class VotingController
 {
+    /** @var LegacyEventDispatcherInterface|EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct($eventDispatcher)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
+        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
+        }
+
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @Route("/voting-upvote", name="voting_upvote")
      * @Template("@KunstmaanVoting/UpDown/voted.html.twig")
@@ -75,13 +89,12 @@ final class VotingController extends Controller
      */
     private function dispatch($event, string $eventName)
     {
-        $eventDispatcher = $this->container->get('event_dispatcher');
         if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
 
             return $eventDispatcher->dispatch($event, $eventName);
         }
 
-        return $eventDispatcher->dispatch($eventName, $event);
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

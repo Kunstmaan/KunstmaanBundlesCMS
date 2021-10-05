@@ -6,13 +6,28 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class SettingsController extends Controller
+final class SettingsController extends AbstractController
 {
+    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    private $translator;
+
+    public function __construct($translator)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
+        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
+        }
+
+        $this->translator = $translator;
+    }
+
     /**
      * Generates the robots administration form and fills it with a default value if needed.
      *
@@ -28,7 +43,7 @@ final class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository(Robots::class);
         $robot = $repo->findOneBy([]);
-        $default = $this->container->getParameter('robots_default');
+        $default = $this->getParameter('robots_default');
         $isSaved = true;
 
         if (!$robot) {
@@ -56,7 +71,7 @@ final class SettingsController extends Controller
         if (!$isSaved) {
             $this->addFlash(
                 FlashTypes::WARNING,
-                $this->container->get('translator')->trans('seo.robots.warning')
+                $this->translator->trans('seo.robots.warning')
             );
         }
 

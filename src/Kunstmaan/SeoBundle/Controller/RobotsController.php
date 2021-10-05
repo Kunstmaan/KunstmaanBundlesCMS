@@ -2,26 +2,37 @@
 
 namespace Kunstmaan\SeoBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class RobotsController extends Controller
+final class RobotsController
 {
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var string */
+    private $robotsDefault;
+
+    public function __construct(EntityManagerInterface $em, string $robotsDefault)
+    {
+        $this->em = $em;
+        $this->robotsDefault = $robotsDefault;
+    }
+
     /**
      * Generates the robots.txt content when available in the database and falls back to normal robots.txt if exists
      *
      * @Route(path="/robots.txt", name="KunstmaanSeoBundle_robots", defaults={"_format": "txt"})
-     * @Template(template="@KunstmaanSeo/Admin/Robots/index.html.twig")
+     * @Template("@KunstmaanSeo/Admin/Robots/index.html.twig")
      *
      * @return array
      */
     public function indexAction(Request $request)
     {
-        $entity = $this->getDoctrine()->getRepository(Robots::class)->findOneBy([]);
-        $robots = $this->getParameter('robots_default');
+        $entity = $this->em->getRepository(Robots::class)->findOneBy([]);
+        $robots = $this->robotsDefault;
 
         if ($entity && $entity->getRobotsTxt()) {
             $robots = $entity->getRobotsTxt();

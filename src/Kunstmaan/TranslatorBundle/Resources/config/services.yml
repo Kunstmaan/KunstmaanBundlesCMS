@@ -124,6 +124,11 @@ services:
     Kunstmaan\TranslatorBundle\Controller\TranslatorController:
         arguments: ['@kunstmaan_translator.service.translator.cache_validator', '@kunstmaan_translator.service.importer.importer']
         calls:
-            - method: setContainer
-              arguments: [ ] # Container service locator will be injected filled by the services from subscribed services
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
+        tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
+
+    Kunstmaan\TranslatorBundle\Controller\TranslatorCommandController:
+        arguments: [ '@kunstmaan_translator.service.translator.resource_cacher', '@kunstmaan_translator.service.importer.command_handler', '@translator' ]
+        calls:
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
         tags: [ 'controller.service_arguments', 'container.service_subscriber' ]

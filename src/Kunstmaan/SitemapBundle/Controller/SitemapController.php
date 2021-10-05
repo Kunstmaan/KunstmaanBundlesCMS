@@ -2,15 +2,37 @@
 
 namespace Kunstmaan\SitemapBundle\Controller;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class SitemapController extends Controller
+final class SitemapController
 {
+    /** @var NodeMenu */
+    private $nodeMenu;
+    /** @var DomainConfigurationInterface */
+    private $domainConfiguration;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(NodeMenu $nodeMenu, DomainConfigurationInterface $domainConfiguration, $eventDispatcher)
+    {
+        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
+        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
+            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
+        }
+
+        $this->nodeMenu = $nodeMenu;
+        $this->domainConfiguration = $domainConfiguration;
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * This will generate a sitemap for the specified locale.
      * Use the mode parameter to select in which mode the sitemap should be
@@ -26,7 +48,7 @@ final class SitemapController extends Controller
      */
     public function sitemapAction($locale)
     {
-        $nodeMenu = $this->get('kunstmaan_node.node_menu');
+        $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($locale);
         $nodeMenu->setIncludeOffline(false);
         $nodeMenu->setIncludeHiddenFromNav(true);
@@ -57,8 +79,7 @@ final class SitemapController extends Controller
      */
     public function sitemapIndexAction(Request $request)
     {
-        $locales = $this->get('kunstmaan_admin.domain_configuration')
-            ->getBackendLocales();
+        $locales = $this->domainConfiguration->getBackendLocales();
 
         return [
             'locales' => $locales,
@@ -73,13 +94,12 @@ final class SitemapController extends Controller
      */
     private function dispatch($event, string $eventName)
     {
-        $eventDispatcher = $this->container->get('event_dispatcher');
         if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
 
             return $eventDispatcher->dispatch($event, $eventName);
         }
 
-        return $eventDispatcher->dispatch($eventName, $event);
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

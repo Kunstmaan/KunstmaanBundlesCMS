@@ -3,3 +3,7 @@ services:
         class: Kunstmaan\SitemapBundle\Twig\SitemapTwigExtension
         tags:
             - { name: twig.extension }
+
+    Kunstmaan\SitemapBundle\Controller\SitemapController:
+        arguments: [ '@kunstmaan_node.node_menu', '@kunstmaan_admin.domain_configuration', '@event_dispatcher' ]
+        tags: [ 'controller.service_arguments' ]
