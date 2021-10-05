@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class EntityLockCheckController extends AbstractController
@@ -61,7 +60,7 @@ final class EntityLockCheckController extends AbstractController
     {
         return [
                 'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
-                'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+                'translator' => TranslatorInterface::class,
             ] + parent::getSubscribedServices();
     }
 }

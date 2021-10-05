@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TranslatorController extends AbstractAdminListController
 {
@@ -333,9 +333,7 @@ final class TranslatorController extends AbstractAdminListController
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
-        /**
-         * @var TranslatorInterface
-         */
+        /** @var TranslatorInterface */
         $translator = $this->container->get('translator');
 
         try {

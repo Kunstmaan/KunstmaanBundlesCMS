@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\Translation\TranslatorInterface as LegaceTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HostOverrideListener
@@ -37,14 +36,10 @@ class HostOverrideListener
 
     public function __construct(
         Session $session,
-        /*TranslatorInterface*/ $translator,
+        TranslatorInterface $translator,
         DomainConfigurationInterface $domainConfiguration,
         AdminRouteHelper $adminRouteHelper
     ) {
-        if (!$translator instanceof LegaceTranslatorInterface && !$translator instanceof TranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('Argument "$translator" passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegaceTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
-        }
-
         $this->session = $session;
         $this->translator = $translator;
         $this->domainConfiguration = $domainConfiguration;

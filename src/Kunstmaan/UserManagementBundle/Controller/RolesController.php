@@ -10,12 +10,10 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -23,18 +21,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class RolesController extends AbstractController
 {
-    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    /** @var TranslatorInterface */
     private $translator;
     /** @var AdminListFactory */
     private $adminListFactory;
 
-    public function __construct($translator, AdminListFactory $adminListFactory)
+    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         $this->translator = $translator;
         $this->adminListFactory = $adminListFactory;
     }
