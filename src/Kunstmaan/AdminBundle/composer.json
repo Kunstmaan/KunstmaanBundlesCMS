@@ -27,7 +27,7 @@
         "symfony/cache": "^4.4|^5.3",
         "symfony/config": "^4.4|^5.3",
         "symfony/console": "^4.4|^5.3",
-        "symfony/dependency-injection": "^4.4v",
+        "symfony/dependency-injection": "^4.4|^5.3",
         "symfony/dom-crawler": "^4.4|^5.3",
         "symfony/event-dispatcher": "^4.4|^5.3",
         "symfony/filesystem": "^4.4|^5.3",

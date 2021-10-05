@@ -155,9 +155,11 @@ class PermissionAdmin
      */
     public function getPermission($role)
     {
-        if ($role instanceof \Symfony\Component\Security\Core\Role\Role) {
+        // NEXT_MAJOR remove undefined classes from this check
+        if ($role instanceof \Symfony\Component\Security\Core\Role\Role || $role instanceof Role) {
             $role = $role->getRole();
         }
+
         if (isset($this->permissions[$role])) {
             return $this->permissions[$role];
         }

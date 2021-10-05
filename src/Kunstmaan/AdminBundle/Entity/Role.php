@@ -5,77 +5,26 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role as BaseRole;
-use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- * @ORM\Table( name="kuma_roles" )
- * @UniqueEntity("role")
- */
-class Role extends BaseRole
-{
+// NEXT_MAJOR Remove the RolePropertiesTrait when symfony 4 support is removed
+if (class_exists(BaseRole::class)) {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Entity
+     * @ORM\Table( name="kuma_roles" )
+     * @UniqueEntity("role")
      */
-    protected $id;
-
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(type="string", name="role", unique=true, length=70)
-     */
-    protected $role;
-
-    /**
-     * Populate the role field
-     *
-     * @param string $role
-     */
-    public function __construct($role)
+    class Role extends BaseRole
     {
-        $this->role = $role;
+        use RolePropertiesTrait;
     }
-
+} else {
     /**
-     * Return the role field.
-     *
-     * @return string
+     * @ORM\Entity
+     * @ORM\Table( name="kuma_roles" )
+     * @UniqueEntity("role")
      */
-    public function getRole()
+    class Role
     {
-        return $this->role;
-    }
-
-    /**
-     * Return the string representation of the role entity.
-     */
-    public function __toString(): string
-    {
-        return (string) $this->role;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Modify the role field.
-     *
-     * @param string $role ROLE_FOO etc
-     *
-     * @return RoleInterface
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
+        use RolePropertiesTrait;
     }
 }
