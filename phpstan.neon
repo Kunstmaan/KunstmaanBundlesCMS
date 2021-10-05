@@ -5,9 +5,6 @@ parameters:
     level: 1
     paths:
         -  src
-    scanFiles:
-        - .build/stubs/RoleInterface.php
-        - .build/stubs/MailerInterface.php
 
     excludes_analyse:
         - src/Kunstmaan/*/Tests/*

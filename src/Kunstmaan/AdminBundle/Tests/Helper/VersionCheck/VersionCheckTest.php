@@ -30,12 +30,7 @@ class VersionCheckTest extends TestCase
     public function setUp(): void
     {
         $this->cache = $this->createMock(AdapterInterface::class);
-
-        if (\interface_exists(TranslatorInterface::class)) {
-            $this->translator = $this->createMock(TranslatorInterface::class);
-        } else {
-            $this->translator = $this->createMock(LegacyTranslatorInterface::class);
-        }
+        $this->translator = $this->createMock(TranslatorInterface::class);
 
         $requestStack = new RequestStack();
         $requestStack->push(new Request());

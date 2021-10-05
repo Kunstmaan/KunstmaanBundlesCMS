@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractAdminListController extends AbstractController
@@ -581,7 +580,7 @@ abstract class AbstractAdminListController extends AbstractController
             'kunstmaan_adminlist.factory' => AdminListFactory::class,
             'kunstmaan_adminlist.service.export' => ExportService::class,
             'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
-            'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+            'translator' => TranslatorInterface::class,
             'event_dispatcher' => EventDispatcherInterface::class,
         ] + parent::getSubscribedServices();
     }

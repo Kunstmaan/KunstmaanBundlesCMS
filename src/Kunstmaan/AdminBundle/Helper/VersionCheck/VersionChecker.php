@@ -2,13 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Helper\VersionCheck;
 
-use Doctrine\Common\Cache\Cache;
 use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionChecker
@@ -30,7 +28,7 @@ class VersionChecker
     /** @var Client */
     private $client;
 
-    /** @var TranslatorInterface|LegacyTranslatorInterface */
+    /** @var TranslatorInterface */
     private $translator;
 
     /** @var RequestStack */
@@ -42,12 +40,9 @@ class VersionChecker
     /** @var string */
     private $projectDir;
 
-    /**
-     * @param TranslatorInterface|LegacyTranslatorInterface $translator
-     */
     public function __construct(
         AdapterInterface $cache,
-        $translator,
+        TranslatorInterface $translator,
         RequestStack $requestStack,
         string $webserviceUrl,
         int $cacheTimeframe,
@@ -55,11 +50,6 @@ class VersionChecker
         string $projectDir,
         string $websiteTitle
     ) {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         $this->cache = $cache;
         $this->translator = $translator;
         $this->requestStack = $requestStack;

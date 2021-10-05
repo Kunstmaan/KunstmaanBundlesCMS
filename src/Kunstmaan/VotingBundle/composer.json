@@ -19,13 +19,13 @@
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-bundle": "^1.12.3|^2.0.3",
         "sensio/framework-extra-bundle": "^5.0|^6.0",
-        "symfony/config": "^3.4|^4.4",
-        "symfony/dependency-injection": "^3.4|^4.4",
-        "symfony/event-dispatcher": "^3.4|^4.4",
-        "symfony/framework-bundle": "^3.4.31|^4.4",
-        "symfony/http-foundation": "^3.4.16|^4.4",
-        "symfony/http-kernel": "^3.4|^4.4",
-        "symfony/routing": "^3.4|^4.4"
+        "symfony/config": "^4.4",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/event-dispatcher": "^4.4",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/http-foundation": "^4.4",
+        "symfony/http-kernel": "^4.4",
+        "symfony/routing": "^4.4"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
