@@ -21,7 +21,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NodeAdminPublisher
 {
@@ -50,6 +51,9 @@ class NodeAdminPublisher
      */
     private $cloneHelper;
 
+    /** @var LegacyTranslatorInterface|TranslatorInterface|null */
+    private $translator;
+
     /**
      * @param EntityManager                 $em                   The entity manager
      * @param TokenStorageInterface         $tokenStorage         The security token storage
@@ -62,13 +66,23 @@ class NodeAdminPublisher
         TokenStorageInterface $tokenStorage,
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
-        CloneHelper $cloneHelper
+        CloneHelper $cloneHelper,
+        /*TranslatorInterface*/ $translator = null
     ) {
+        if (null !== $translator && (!$translator instanceof LegacyTranslatorInterface && !$translator instanceof TranslatorInterface)) {
+            throw new \InvalidArgumentException(sprintf('Argument 6 passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegacyTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
+        }
+
+        if (null === $translator) {
+            @trigger_error(sprintf('Not passing the "translator" service as the 6th argument of "%s" is deprecated since KunstmaanNodeBundle 5.9 and will be required in KunstmaanNodeBundle 6.0. Injected the required services in the constructor.', __METHOD__), E_USER_DEPRECATED);
+        }
+
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
         $this->eventDispatcher = $eventDispatcher;
         $this->cloneHelper = $cloneHelper;
+        $this->translator = $translator;
     }
 
     /**
@@ -263,7 +277,7 @@ class NodeAdminPublisher
         return $newNodeVersion;
     }
 
-    public function chooseHowToPublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    public function handlePublish(Request $request, NodeTranslation $nodeTranslation)
     {
         /** @var Session $session */
         $session = $request->getSession();
@@ -275,18 +289,20 @@ class NodeAdminPublisher
             $this->publishLater($nodeTranslation, $date);
             $session->getFlashBag()->add(
                 FlashTypes::SUCCESS,
-                $translator->trans('kuma_node.admin.publish.flash.success_scheduled')
+                $this->translator->trans('kuma_node.admin.publish.flash.success_scheduled')
             );
-        } else {
-            $this->publish($nodeTranslation);
-            $session->getFlashBag()->add(
-                FlashTypes::SUCCESS,
-                $translator->trans('kuma_node.admin.publish.flash.success_published')
-            );
+
+            return;
         }
+
+        $this->publish($nodeTranslation);
+        $session->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->translator->trans('kuma_node.admin.publish.flash.success_published')
+        );
     }
 
-    public function chooseHowToUnpublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    public function handleUnpublish(Request $request, NodeTranslation $nodeTranslation)
     {
         /** @var Session $session */
         $session = $request->getSession();
@@ -296,15 +312,37 @@ class NodeAdminPublisher
             $this->unPublishLater($nodeTranslation, $date);
             $session->getFlashBag()->add(
                 FlashTypes::SUCCESS,
-                $translator->trans('kuma_node.admin.unpublish.flash.success_scheduled')
+                $this->translator->trans('kuma_node.admin.unpublish.flash.success_scheduled')
             );
-        } else {
-            $this->unPublish($nodeTranslation);
-            $session->getFlashBag()->add(
-                FlashTypes::SUCCESS,
-                $translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
-            );
+
+            return;
         }
+
+        $this->unPublish($nodeTranslation);
+        $session->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
+        );
+    }
+
+    /**
+     * @deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handlePublish` instead.
+     */
+    public function chooseHowToPublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handlePublish` instead.', __METHOD__), E_USER_DEPRECATED);
+
+        $this->handlePublish($request, $nodeTranslation);
+    }
+
+    /**
+     * @deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handleUnpublish` instead.
+     */
+    public function chooseHowToUnpublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    {
+        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handleUnpublish` instead.', __METHOD__), E_USER_DEPRECATED);
+
+        $this->handleUnpublish($request, $nodeTranslation);
     }
 
     /**
