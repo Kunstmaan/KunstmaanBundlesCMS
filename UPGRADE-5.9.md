@@ -218,6 +218,10 @@ class BlogOverviewPageViewDataProvider implements PageViewDataProviderInterface
 }
 ```
 
+* Not passing the "translator" service as the 6th argument of `Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher::__construct` is deprecated and will be required in KunstmaanNodeBundle 6.0. Injected the required service in the constructor.
+* `Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher::chooseHowToPublish` is deprecated and replaced by `Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher::handlePublish`
+* `Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher::chooseHowToUnpublish` is deprecated and replaced by `Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher::handleUnpublish`
+
 NodeSearchBundle
 ------------
 
