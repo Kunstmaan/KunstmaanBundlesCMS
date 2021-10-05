@@ -184,12 +184,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
-    kunstmaan_node.slug.listener:
-        class: Kunstmaan\NodeBundle\EventListener\SlugListener
-        arguments: ['@doctrine.orm.entity_manager','@controller_resolver', '@event_dispatcher']
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
     kunstmaan_node.slug.security.listener:
         class: Kunstmaan\NodeBundle\EventListener\SlugSecurityListener
         arguments:
