@@ -2,29 +2,232 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-// NEXT_MAJOR: BC layer for deprecated RoleInterface on sf 3.4. Remove this if (keep the else) and move the content of the trait back into this class. Trait is final/internal by default so can be removed
-if (interface_exists('\Symfony\Component\Security\Core\Role\RoleInterface')) {
+/**
+ * Group
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="kuma_groups")
+ */
+class Group implements GroupInterface
+{
     /**
-     * Group
-     *
-     * @ORM\Entity
-     * @ORM\Table(name="kuma_groups")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    class Group implements \Symfony\Component\Security\Core\Role\RoleInterface, GroupInterface
+    protected $id;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="kuma_groups_roles",
+     *      joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     */
+    protected $roles;
+
+    /**
+     * @param string $name Name of the group
+     */
+    public function __construct($name = '')
     {
-        use GroupPropertiesTrait;
+        $this->name = $name;
+        $this->roles = new ArrayCollection();
     }
-} else {
+
     /**
-     * Group
+     * Get id
      *
-     * @ORM\Entity
-     * @ORM\Table(name="kuma_groups")
+     * @return int
      */
-    class Group implements GroupInterface
+    public function getId()
     {
-        use GroupPropertiesTrait;
+        return $this->id;
+    }
+
+    /**
+     * Get string representation of object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Returns an array of strings (needed because Symfony ACL doesn't support using RoleInterface yet)
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        $result = [];
+        foreach ($this->roles as $role) {
+            $result[] = $role->getRole();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the true ArrayCollection of Roles.
+     *
+     * @return ArrayCollection
+     */
+    public function getRolesCollection()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Pass a string, get the desired Role object or null.
+     *
+     * @param string $role
+     *
+     * @return Role|null
+     */
+    public function getRole($role = null)
+    {
+        foreach ($this->roles as $roleItem) {
+            if ($role == $roleItem->getRole()) {
+                return $roleItem;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Pass a string, checks if we have that Role. Same functionality as getRole() except it returns a boolean.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        if ($this->getRole($role)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Adds a Role object to the ArrayCollection. Can't type hint due to interface so throws Exception.
+     *
+     * @param Role $role
+     *
+     * @return GroupInterface
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function addRole($role)
+    {
+        if (!$role instanceof Role) {
+            throw new \InvalidArgumentException('addRole takes a Role object as the parameter');
+        }
+
+        if (!$this->hasRole($role->getRole())) {
+            $this->roles->add($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Pass a string, remove the Role object from collection.
+     *
+     * @param string $role
+     *
+     * @return GroupInterface
+     */
+    public function removeRole($role)
+    {
+        $roleElement = $this->getRole($role);
+        if ($roleElement) {
+            $this->roles->removeElement($roleElement);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
+     *
+     * @param Role[] $roles array of Role objects
+     *
+     * @return GroupInterface
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles->clear();
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
+     *
+     * @return GroupInterface
+     */
+    public function setRolesCollection(Collection $collection)
+    {
+        $this->roles = $collection;
+
+        return $this;
+    }
+
+    /**
+     * Return the name of the group
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the name of the group
+     *
+     * @param string $name New name of the group
+     *
+     * @return GroupInterface
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function isGroupValid(ExecutionContextInterface $context)
+    {
+        if (!(\count($this->getRoles()) > 0)) {
+            $context
+                ->buildViolation('errors.group.selectone', [])
+                ->atPath('rolesCollection')
+                ->addViolation();
+        }
     }
 }

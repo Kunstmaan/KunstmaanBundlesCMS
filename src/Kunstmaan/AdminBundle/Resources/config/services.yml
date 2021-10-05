@@ -128,7 +128,7 @@ services:
 
     kunstmaan_admin.logger.processor.user:
         class: Kunstmaan\AdminBundle\Helper\UserProcessor
-        arguments: [ '@security.token_storage' ]
+        arguments: [ '@security.untracked_token_storage' ]
         tags:
             - { name: monolog.processor, method: processRecord }
             - { name: kunstmaan_admin.logger.processor, method: processRecord }
