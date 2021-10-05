@@ -87,6 +87,7 @@ services:
             - '@security.authorization_checker'
             - '@event_dispatcher'
             - '@kunstmaan_admin.clone.helper'
+            - '@translator'
 
     kunstmaan_node.admin_node.node_version_lock_helper:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper

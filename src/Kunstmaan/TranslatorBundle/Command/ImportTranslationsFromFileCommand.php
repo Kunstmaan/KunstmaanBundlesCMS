@@ -10,25 +10,30 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ImportTranslationsFromFileCommand extends Command
 {
     /** @var Importer */
     private $importer;
 
-    /** @var TranslatorInterface */
+    /** @var TranslatorInterface|LegacyTranslatorInterface */
     private $translator;
 
     /** @var array */
     private $locales;
 
     /**
-     * @param Translator $translator
-     * @param array      $locales
+     * @param Translator|LegacyTranslatorInterface $translator
+     * @param array                                $locales
      */
-    public function __construct(Importer $importer, TranslatorInterface $translator, $locales)
+    public function __construct(Importer $importer, /*TranslatorInterface*/ $translator, $locales)
     {
+        if (null !== $translator && (!$translator instanceof LegacyTranslatorInterface && !$translator instanceof TranslatorInterface)) {
+            throw new \InvalidArgumentException(sprintf('Argument 2 passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegacyTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
+        }
+
         parent::__construct();
         $this->importer = $importer;
         $this->translator = $translator;
