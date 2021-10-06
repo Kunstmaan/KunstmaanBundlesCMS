@@ -2,25 +2,16 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
-use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 
-/**
- * Translator
- *
- * NEXT_MAJOR remove the $profilerEnable constructor parameter en remove the profileTranslation method.
- */
 class Translator extends SymfonyTranslator
 {
-    /** @var bool */
-    private $profilerEnabled;
-
     private $translationRepository;
 
     /**
      * Resource Cacher
      *
-     * @var Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
+     * @var ResourceCacher
      */
     private $resourceCacher;
 
@@ -28,13 +19,6 @@ class Translator extends SymfonyTranslator
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
-
-    public function __construct(ContainerInterface $container, $formatter, $defaultLocale = null, array $loaderIds = [], array $options = [], $profilerEnable = false)
-    {
-        parent::__construct($container, $formatter, $defaultLocale, $loaderIds, $options);
-
-        $this->profilerEnabled = $profilerEnable;
-    }
 
     /**
      * Add resources from the database

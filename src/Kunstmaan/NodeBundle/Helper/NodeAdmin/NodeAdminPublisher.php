@@ -67,14 +67,10 @@ class NodeAdminPublisher
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         CloneHelper $cloneHelper,
-        /*TranslatorInterface*/ $translator = null
+        /*TranslatorInterface*/ $translator
     ) {
         if (null !== $translator && (!$translator instanceof LegacyTranslatorInterface && !$translator instanceof TranslatorInterface)) {
             throw new \InvalidArgumentException(sprintf('Argument 6 passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegacyTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
-        }
-
-        if (null === $translator) {
-            @trigger_error(sprintf('Not passing the "translator" service as the 6th argument of "%s" is deprecated since KunstmaanNodeBundle 5.9 and will be required in KunstmaanNodeBundle 6.0. Injected the required services in the constructor.', __METHOD__), E_USER_DEPRECATED);
         }
 
         $this->em = $em;
@@ -323,26 +319,6 @@ class NodeAdminPublisher
             FlashTypes::SUCCESS,
             $this->translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
         );
-    }
-
-    /**
-     * @deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handlePublish` instead.
-     */
-    public function chooseHowToPublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
-    {
-        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handlePublish` instead.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->handlePublish($request, $nodeTranslation);
-    }
-
-    /**
-     * @deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handleUnpublish` instead.
-     */
-    public function chooseHowToUnpublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
-    {
-        @trigger_error(sprintf('The "%s" method is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Use `handleUnpublish` instead.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->handleUnpublish($request, $nodeTranslation);
     }
 
     /**
