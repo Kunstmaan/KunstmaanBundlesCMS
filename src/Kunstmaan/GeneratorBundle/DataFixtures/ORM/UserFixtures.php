@@ -107,6 +107,10 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             $user->addGroup($group);
         }
 
+        $this->container->get('kunstmaan_admin.user_manager')->updateUser($user);
+
+        $user->setPasswordChanged($changed);
+
         $manager->persist($user);
 
         return $user;

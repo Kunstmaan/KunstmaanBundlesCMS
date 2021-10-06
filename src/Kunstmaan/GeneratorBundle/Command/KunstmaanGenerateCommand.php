@@ -975,7 +975,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      */
     protected function canGenerateBehatTests(BundleInterface $bundle)
     {
-        $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir') . '/') . '/behat.yml';
+        $behatFile = $this->getContainer()->getParameter('kernel.project_dir') . '/behat.yml';
         $pagePartContext = $bundle->getPath() . '/Features/Context/PagePartContext.php';
         $behatTestPage = $bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
 
