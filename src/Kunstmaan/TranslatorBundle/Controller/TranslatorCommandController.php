@@ -9,7 +9,6 @@ use Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TranslatorCommandController extends AbstractController
@@ -18,16 +17,11 @@ final class TranslatorCommandController extends AbstractController
     private $resourceCacher;
     /** @var ImportCommandHandler */
     private $importCommandHandler;
-    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(ResourceCacher $resourceCacher, ImportCommandHandler $importCommandHandler, $translator)
+    public function __construct(ResourceCacher $resourceCacher, ImportCommandHandler $importCommandHandler, TranslatorInterface $translator)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         $this->resourceCacher = $resourceCacher;
         $this->importCommandHandler = $importCommandHandler;
         $this->translator = $translator;

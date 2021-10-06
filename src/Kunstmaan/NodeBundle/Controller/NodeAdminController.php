@@ -51,7 +51,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -93,7 +92,7 @@ final class NodeAdminController extends AbstractController
     protected $nodePublisher;
 
     /**
-     * @var TranslatorInterface|LegacyTranslatorInterface
+     * @var TranslatorInterface
      */
     protected $translator;
 
@@ -1320,7 +1319,7 @@ final class NodeAdminController extends AbstractController
             'request_stack' => RequestStack::class,
             'kunstmaan_node.actions_menu_builder' => ActionsMenuBuilder::class,
             'kunstmaan_node.admin_node.node_version_lock_helper' => NodeVersionLockHelper::class,
-            'translator' => interface_exists(\Symfony\Contracts\Translation\TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+            'translator' => TranslatorInterface::class,
             'event_dispatcher' => EventDispatcherInterface::class,
         ] + parent::getSubscribedServices();
     }

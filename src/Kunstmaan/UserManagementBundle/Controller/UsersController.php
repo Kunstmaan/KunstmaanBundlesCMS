@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -33,7 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class UsersController extends AbstractController
 {
-    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    /** @var TranslatorInterface */
     private $translator;
     /** @var AdminListFactory */
     private $adminListFactory;
@@ -44,13 +43,8 @@ final class UsersController extends AbstractController
     /** @var LegacyEventDispatcherInterface|EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct($translator, AdminListFactory $adminListFactory, ParameterBagInterface $parameterBag, UserManager $userManager, $eventDispatcher)
+    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, ParameterBagInterface $parameterBag, UserManager $userManager, $eventDispatcher)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
         if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
             throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));

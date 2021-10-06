@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NodeAdminPublisher
@@ -51,7 +50,7 @@ class NodeAdminPublisher
      */
     private $cloneHelper;
 
-    /** @var LegacyTranslatorInterface|TranslatorInterface|null */
+    /** @var TranslatorInterface */
     private $translator;
 
     /**
@@ -67,12 +66,8 @@ class NodeAdminPublisher
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         CloneHelper $cloneHelper,
-        /*TranslatorInterface*/ $translator
+        TranslatorInterface $translator
     ) {
-        if (null !== $translator && (!$translator instanceof LegacyTranslatorInterface && !$translator instanceof TranslatorInterface)) {
-            throw new \InvalidArgumentException(sprintf('Argument 6 passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegacyTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
-        }
-
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;

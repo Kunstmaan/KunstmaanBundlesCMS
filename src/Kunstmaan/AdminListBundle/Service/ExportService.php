@@ -8,7 +8,6 @@ use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\Exception\ExportException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Translation\TranslatorInterface as LegaceTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -31,15 +30,11 @@ class ExportService
     /** @var Environment */
     private $twig;
 
-    /** @var LegaceTranslatorInterface|TranslatorInterface */
+    /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(Environment $twig, $translator)
+    public function __construct(Environment $twig, TranslatorInterface $translator)
     {
-        if (null !== $translator && (!$translator instanceof LegaceTranslatorInterface && !$translator instanceof TranslatorInterface)) {
-            throw new \InvalidArgumentException(sprintf('Argument 2 passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegaceTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
-        }
-
         $this->twig = $twig;
         $this->translator = $translator;
     }

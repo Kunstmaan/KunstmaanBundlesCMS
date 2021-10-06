@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class FolderController extends AbstractController
@@ -32,16 +31,11 @@ final class FolderController extends AbstractController
     private $adminListFactory;
     /** @var RequestStack */
     private $requestStack;
-    /** @var LegacyTranslatorInterface|TranslatorInterface */
+    /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, AdminListFactory $adminListFactory, RequestStack $requestStack, $translator)
+    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, AdminListFactory $adminListFactory, RequestStack $requestStack, TranslatorInterface $translator)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         $this->mediaManager = $mediaManager;
         $this->folderManager = $folderManager;
         $this->adminListFactory = $adminListFactory;

@@ -4,7 +4,7 @@ namespace Kunstmaan\ArticleBundle\Router;
 
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TagCategoryRouter extends SlugRouter
 {

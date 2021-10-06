@@ -27,7 +27,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -198,7 +197,7 @@ final class FormSubmissionsController extends AbstractController
                 'kunstmaan_adminlist.factory' => AdminListFactory::class,
                 'kunstmaan_adminlist.service.export' => ExportService::class,
                 'request_stack' => RequestStack::class,
-                'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+                'translator' => TranslatorInterface::class,
                 'logger' => LoggerInterface::class,
             ] + parent::getSubscribedServices();
     }
