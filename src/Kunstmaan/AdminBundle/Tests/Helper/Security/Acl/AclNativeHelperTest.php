@@ -7,6 +7,7 @@ use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -127,12 +128,8 @@ class AclNativeHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $user = $this->getMockBuilder(UserInterface::class)
-            ->getMock();
-
-        $user->expects($this->any())
-            ->method('getUsername')
-            ->will($this->returnValue('MyUser'));
+        $user = new User();
+        $user->setUsername('MyUser');
 
         $this->token->expects($this->any())
             ->method('getUser')

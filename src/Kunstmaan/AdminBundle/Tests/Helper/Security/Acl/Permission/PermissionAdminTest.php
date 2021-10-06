@@ -55,11 +55,7 @@ class PermissionAdminTest extends TestCase
     {
         $object = $this->getInitializedPermissionAdmin();
 
-        $role = $this->createMock('Symfony\Component\Security\Core\Role\Role');
-        $role->expects($this->once())
-            ->method('getRole')
-            ->will($this->returnValue('ROLE_TEST'));
-        $this->assertEquals(new MaskBuilder(1), $object->getPermission($role));
+        $this->assertEquals(new MaskBuilder(1), $object->getPermission(new Role('ROLE_TEST')));
     }
 
     public function testGetPermissionWithUnknownRole()

@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 class GroupTest extends TestCase
 {
@@ -131,10 +132,19 @@ class GroupTest extends TestCase
     {
         $group = new Group('test');
 
-        $validator = Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
-            ->getValidator();
+        $validatorBuilder = Validation::createValidatorBuilder();
+        if (method_exists(ValidatorBuilder::class, 'setDoctrineAnnotationReader')) {
+            $validatorBuilder
+                ->enableAnnotationMapping(true)
+                ->addDefaultDoctrineAnnotationReader()
+            ;
+        } else {
+            $validatorBuilder
+                ->enableAnnotationMapping()
+            ;
+        }
 
+        $validator = $validatorBuilder->getValidator();
         $violations = $validator->validate($group);
 
         $this->assertCount(1, $violations);
@@ -146,7 +156,7 @@ class GroupTest extends TestCase
         $group->addRole(new Role('role'));
 
         $validator = Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
+            ->enableAnnotationMapping(method_exists(ValidatorBuilder::class, 'setDoctrineAnnotationReader') ? true : null)
             ->getValidator();
 
         $violations = $validator->validate($group);
