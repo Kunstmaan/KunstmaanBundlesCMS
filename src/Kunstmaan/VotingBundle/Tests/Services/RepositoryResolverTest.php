@@ -2,19 +2,19 @@
 
 namespace Kunstmaan\VotingBundle\Tests\Services;
 
-use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
-use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
-use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
-use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
-use Kunstmaan\VotingBundle\Services\RepositoryResolver;
-use PHPUnit\Framework\TestCase;
-use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\VotingBundle\Entity\UpDown\DownVote;
-use Kunstmaan\VotingBundle\Entity\UpDown\UpVote;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
 use Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare;
+use Kunstmaan\VotingBundle\Entity\UpDown\DownVote;
+use Kunstmaan\VotingBundle\Entity\UpDown\UpVote;
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
+use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
+use Kunstmaan\VotingBundle\Services\RepositoryResolver;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class RepositoryResolverTest extends TestCase
 {

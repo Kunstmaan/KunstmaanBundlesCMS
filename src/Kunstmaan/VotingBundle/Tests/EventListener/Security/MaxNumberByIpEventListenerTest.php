@@ -5,11 +5,10 @@ namespace Kunstmaan\VotingBundle\Tests\EventListener\Security;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Kunstmaan\VotingBundle\Repository\AbstractVoteRepository;
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class MaxNumberByIpEventListenerTest extends TestCase
 {
