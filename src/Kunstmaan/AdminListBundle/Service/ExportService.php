@@ -97,7 +97,6 @@ class ExportService
                     }
                     $data = $adminList->getStringValue($itemHelper, $columnName);
                     if (null !== $column->getTemplate()) {
-                        // NEXT_MAJOR: Remove `templateExists` private method and call Twig exists check directly.
                         if (!$this->twig->getLoader()->exists($column->getTemplate())) {
                             throw new ExportException('No export template defined for ' . \get_class($data), $data);
                         }

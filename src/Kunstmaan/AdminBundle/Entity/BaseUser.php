@@ -6,15 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictions;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * NEXT_MAJOR implement EquatableInterface
- */
-abstract class BaseUser implements UserInterface
+abstract class BaseUser implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id
