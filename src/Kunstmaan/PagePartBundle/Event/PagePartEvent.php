@@ -6,10 +6,7 @@ use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @final since 5.9
- */
-class PagePartEvent extends BcEvent
+final class PagePartEvent extends BcEvent
 {
     /**
      * @var PagePartInterface

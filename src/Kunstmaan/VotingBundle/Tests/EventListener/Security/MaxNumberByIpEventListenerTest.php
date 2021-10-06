@@ -3,10 +3,13 @@
 namespace Kunstmaan\VotingBundle\Tests\EventListener\Security;
 
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Kunstmaan\VotingBundle\Repository\AbstractVoteRepository;
+use Kunstmaan\VotingBundle\Services\RepositoryResolver;
 
 class MaxNumberByIpEventListenerTest extends TestCase
 {
@@ -20,14 +23,14 @@ class MaxNumberByIpEventListenerTest extends TestCase
         $mockedRepository = null;
 
         if (!$returnNull) {
-            $mockedRepository = $this->createMock('Kunstmaan\VotingBundle\Repository\AbstractVoteRepository'); //, array('countByReferenceAndByIp'), array(), 'MockedRepository', false);
+            $mockedRepository = $this->createMock(AbstractVoteRepository::class);
 
             $mockedRepository->expects($this->any())
              ->method('countByReferenceAndByIp')
              ->willReturn($voteNumber);
         }
 
-        $mockedResolver = $this->createMock('Kunstmaan\VotingBundle\Services\RepositoryResolver'); //, array('getRepositoryForEvent'), array(), 'MockedResolver', false);
+        $mockedResolver = $this->createMock(RepositoryResolver::class);
 
         $mockedResolver->expects($this->any())
              ->method('getRepositoryForEvent')
@@ -42,25 +45,13 @@ class MaxNumberByIpEventListenerTest extends TestCase
      */
     public function testOnVote($maxNumber, $number, $stopPropagation)
     {
-        $mockedEvent = $this->createMock('Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent'); //, array('stopPropagation'), array(new Request(), null, null));
-
-        if ($stopPropagation) {
-            $mockedEvent->expects($this->once())
-                ->method('stopPropagation');
-        } else {
-            $mockedEvent->expects($this->never())
-                ->method('stopPropagation');
-        }
-
-        $mockedEvent->expects($this->any())
-            ->method('getRequest')
-            ->willReturn(new Request());
-
         $resolver = $this->mockRepositoryResolver(false, $number);
 
+        $event = new UpVoteEvent(new Request(), 'xxx', 1);
         $listener = new MaxNumberByIpEventListener($resolver, $maxNumber);
 
-        $listener->onVote($mockedEvent);
+        $listener->onVote($event);
+        $this->assertSame($stopPropagation, $event->isPropagationStopped());
     }
 
     /**
@@ -68,13 +59,13 @@ class MaxNumberByIpEventListenerTest extends TestCase
      */
     public function testOnVoteReturnsNothing($maxNumber, $number, $stopPropagation)
     {
-        $event = new FacebookLikeEvent(new Request(), new Response(), 2);
+        $event = new FacebookLikeEvent(new Request(), 'xxx', 2);
 
         $resolver = $this->mockRepositoryResolver(false, $number);
 
         $listener = new MaxNumberByIpEventListener($resolver, $maxNumber);
 
-        $this->assertNull($listener->onVote($event));
+        $listener->onVote($event);
         $this->assertSame($stopPropagation, $event->isPropagationStopped());
     }
 

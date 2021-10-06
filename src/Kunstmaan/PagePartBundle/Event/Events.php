@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Event;
 
-/**
- * @final since 5.9
- */
-class Events
+final class Events
 {
     /**
      * The postPersist event occurs for a given pagePart, after the pagePart is persisted.

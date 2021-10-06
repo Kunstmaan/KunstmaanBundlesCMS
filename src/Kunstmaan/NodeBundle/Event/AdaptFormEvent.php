@@ -12,10 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The event to pass metadata if the adaptForm event is triggered
- *
- * @final since 5.9
  */
-class AdaptFormEvent extends BcEvent
+final class AdaptFormEvent extends BcEvent
 {
     /**
      * @var TabPane
