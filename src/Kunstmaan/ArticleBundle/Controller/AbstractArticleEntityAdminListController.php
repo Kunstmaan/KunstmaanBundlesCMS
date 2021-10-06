@@ -38,11 +38,9 @@ abstract class AbstractArticleEntityAdminListController extends AbstractAdminLis
     protected $aclHelper;
 
     /**
-     * NEXT_MAJOR: change method visibility from public to protected
-     *
      * @return AdminListConfiguratorInterface
      */
-    public function getAdminListConfigurator(Request $request)
+    protected function getAdminListConfigurator(Request $request)
     {
         $this->initAdminListConfigurator($request);
         if (!isset($this->configurator)) {
@@ -53,11 +51,9 @@ abstract class AbstractArticleEntityAdminListController extends AbstractAdminLis
     }
 
     /**
-     * NEXT_MAJOR: change method visibility from public to protected
-     *
      * @return AbstractArticlePageAdminListConfigurator
      */
-    abstract public function createAdminListConfigurator();
+    abstract protected function createAdminListConfigurator();
 
     protected function initAdminListConfigurator(Request $request)
     {
