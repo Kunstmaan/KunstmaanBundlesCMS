@@ -9,10 +9,8 @@ use Twig\TwigFunction;
 
 /**
  * Extension to render tabs
- *
- * @final since 5.4
  */
-class TabsTwigExtension extends AbstractExtension
+final class TabsTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.

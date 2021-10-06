@@ -11,12 +11,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * PagePartTwigExtension
- *
- * @final since 5.4
- */
-class PagePartTwigExtension extends AbstractExtension
+final class PagePartTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManager

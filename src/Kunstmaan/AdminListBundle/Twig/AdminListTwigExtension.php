@@ -12,12 +12,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
-/**
- * AdminListTwigExtension
- *
- * @final since 5.4
- */
-class AdminListTwigExtension extends AbstractExtension
+final class AdminListTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.

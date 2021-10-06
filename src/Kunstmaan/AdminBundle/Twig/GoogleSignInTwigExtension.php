@@ -5,10 +5,7 @@ namespace Kunstmaan\AdminBundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since 5.4
- */
-class GoogleSignInTwigExtension extends AbstractExtension
+final class GoogleSignInTwigExtension extends AbstractExtension
 {
     private $enabled;
 
