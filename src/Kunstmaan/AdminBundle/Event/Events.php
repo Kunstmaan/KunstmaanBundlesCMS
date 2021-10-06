@@ -4,10 +4,8 @@ namespace Kunstmaan\AdminBundle\Event;
 
 /**
  * AdminBundle events
- *
- * @final since 5.9
  */
-class Events
+final class Events
 {
     /**
      * The onDeepClone event occurs for a given entity while it's being deep cloned. here it's possible to set

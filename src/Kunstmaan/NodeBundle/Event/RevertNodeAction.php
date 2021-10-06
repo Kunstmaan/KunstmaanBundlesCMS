@@ -9,10 +9,8 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 /**
  * This event will pass metadata when a revert event has been triggered
- *
- * @final since 5.9
  */
-class RevertNodeAction extends NodeEvent
+final class RevertNodeAction extends NodeEvent
 {
     /**
      * @var NodeVersion

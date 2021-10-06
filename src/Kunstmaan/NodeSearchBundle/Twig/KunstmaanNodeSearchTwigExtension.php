@@ -11,10 +11,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since 5.4
- */
-class KunstmaanNodeSearchTwigExtension extends AbstractExtension
+final class KunstmaanNodeSearchTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManager

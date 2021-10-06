@@ -8,12 +8,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * PagePartTwigExtension
- *
- * @final since 5.4
- */
-class PageTemplateTwigExtension extends AbstractExtension
+final class PageTemplateTwigExtension extends AbstractExtension
 {
     /**
      * @var PageTemplateConfigurationService

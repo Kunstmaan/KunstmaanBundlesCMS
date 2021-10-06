@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Event;
 
-/**
- * @final since 5.9
- */
-class UserEvents
+final class UserEvents
 {
     /**
      * This event will be triggered on edit, after finding user

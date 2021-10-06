@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-/**
- * @final since 5.9
- */
-class Events
+final class Events
 {
     /**
      * The addNode event occurs for a given node, after it's being created.

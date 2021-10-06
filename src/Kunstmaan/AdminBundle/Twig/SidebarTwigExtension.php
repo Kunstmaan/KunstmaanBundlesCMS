@@ -7,10 +7,7 @@ use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since 5.4
- */
-class SidebarTwigExtension extends AbstractExtension
+final class SidebarTwigExtension extends AbstractExtension
 {
     /**
      * Get Twig functions defined in this extension.
