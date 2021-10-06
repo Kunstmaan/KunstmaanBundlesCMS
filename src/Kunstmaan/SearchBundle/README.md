@@ -5,7 +5,7 @@
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/search-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/search-bundle)
 [![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanSearchBundle)](https://github.com/igrigorik/ga-beacon)
 
-The KunstmaanSearchBundle works with [ElasticSearch](http://www.elasticsearch.org/) and supports different search providers. The bundle currently supports [Sherlock](https://github.com/polyfractal/sherlock) as a provider.
+The KunstmaanSearchBundle works with [ElasticSearch](http://www.elasticsearch.org/) and supports different search providers.
 
 * Add your own objects to index using a tagged service which implements the [SearchConfigurationInterface]()
 * Want to add another search provider ? It's easy, just add a tagged service which implements the [SearchProviderInterface]()
