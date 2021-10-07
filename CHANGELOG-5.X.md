@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.8.1 / 2021-10-07
+
+* [AdminBundle] Fix symfony LdapUser incompatibility [#2973](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2973) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix incorrect class mock in AclWalker test [#2960](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2960) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] fix broken view for urlchooser [#2931](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2931) ([@Numkil](https://github.com/Numkil))
+* [AdminBundle] Fix symfony/security-acl 3.2 test errors [#2910](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2910) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Backport phpstan 0.12.92 fixes [#2904](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2904) ([@acrobat](https://github.com/acrobat))
+* [SeoBundle] Don't render empty og:title [#2894](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2894) ([@dannyvw](https://github.com/dannyvw))
+* [AllBundles] Update sortablejs back to 1.8.1 [#2892](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2892) ([@dannyvw](https://github.com/dannyvw))
+* [MediaBundle] Use oembed url for vimeo thumbnail [#2891](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2891) ([@dannyvw](https://github.com/dannyvw))
+* [FormBundle] Add length validation to form fields [#2875](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2875) ([@dannyvw](https://github.com/dannyvw))
+* [RedirectBundle] Fix broken wildcard redirects [#2856](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2856) ([@acrobat](https://github.com/acrobat))
+* [MultiDomainBundle] Fix keying of host configurations [#2848](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2848) ([@waaghals](https://github.com/waaghals))
+
 ## 5.8.0 / 2021-03-17
 
 * [AllBundles] added postgres support [#2849](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2849) ([@IntegraConsult](https://github.com/IntegraConsult))
@@ -12,6 +26,20 @@
 * [NodeSearchBundle] Allow include offline option get_parent twig function. [#2800](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2800) ([@Numkil](https://github.com/Numkil))
 * [GeneratorBundle] exit build if a build task throws an error [#2794](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2794) ([@dbeerten](https://github.com/dbeerten))
 * [AdminBundle] Force dropdown to remain open after selection [#2792](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2792) ([@dannyvw](https://github.com/dannyvw))
+
+## 5.7.3 / 2021-10-07
+
+* [AdminBundle] Fix symfony LdapUser incompatibility [#2973](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2973) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix incorrect class mock in AclWalker test [#2960](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2960) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] fix broken view for urlchooser [#2931](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2931) ([@Numkil](https://github.com/Numkil))
+* [AdminBundle] Fix symfony/security-acl 3.2 test errors [#2910](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2910) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Backport phpstan 0.12.92 fixes [#2904](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2904) ([@acrobat](https://github.com/acrobat))
+* [SeoBundle] Don't render empty og:title [#2894](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2894) ([@dannyvw](https://github.com/dannyvw))
+* [AllBundles] Update sortablejs back to 1.8.1 [#2892](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2892) ([@dannyvw](https://github.com/dannyvw))
+* [MediaBundle] Use oembed url for vimeo thumbnail [#2891](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2891) ([@dannyvw](https://github.com/dannyvw))
+* [FormBundle] Add length validation to form fields [#2875](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2875) ([@dannyvw](https://github.com/dannyvw))
+* [RedirectBundle] Fix broken wildcard redirects [#2856](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2856) ([@acrobat](https://github.com/acrobat))
+* [MultiDomainBundle] Fix keying of host configurations [#2848](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2848) ([@waaghals](https://github.com/waaghals))
 
 ## 5.7.2 / 2021-03-17
 
@@ -82,6 +110,20 @@
 * [MediaBundle][UserManagementBundle] Improve csrf protection in several calls [#2681](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2681) ([@Numkil](https://github.com/Numkil)) 
 * [AdminBundle, MediaBundle] replace deprecated integer as errorcode in constraints [#2672](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2672) ([@Numkil](https://github.com/Numkil)) 
 * [MediaBundle] Refactor deprecated mimetypeguesser from symfony [#2668](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2668) ([@Numkil](https://github.com/Numkil)) 
+
+## 5.6.6 / 2021-10-07
+
+* [AdminBundle] Fix symfony LdapUser incompatibility [#2973](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2973) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix incorrect class mock in AclWalker test [#2960](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2960) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] fix broken view for urlchooser [#2931](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2931) ([@Numkil](https://github.com/Numkil))
+* [AdminBundle] Fix symfony/security-acl 3.2 test errors [#2910](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2910) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Backport phpstan 0.12.92 fixes [#2904](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2904) ([@acrobat](https://github.com/acrobat))
+* [SeoBundle] Don't render empty og:title [#2894](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2894) ([@dannyvw](https://github.com/dannyvw))
+* [AllBundles] Update sortablejs back to 1.8.1 [#2892](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2892) ([@dannyvw](https://github.com/dannyvw))
+* [MediaBundle] Use oembed url for vimeo thumbnail [#2891](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2891) ([@dannyvw](https://github.com/dannyvw))
+* [FormBundle] Add length validation to form fields [#2875](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2875) ([@dannyvw](https://github.com/dannyvw))
+* [RedirectBundle] Fix broken wildcard redirects [#2856](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2856) ([@acrobat](https://github.com/acrobat))
+* [MultiDomainBundle] Fix keying of host configurations [#2848](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2848) ([@waaghals](https://github.com/waaghals))
 
 ## 5.6.5 / 2021-03-17
 
