@@ -7,12 +7,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * LocaleSwitcherTwigExtension
- *
- * @final since 5.4
- */
-class LocaleSwitcherTwigExtension extends AbstractExtension
+final class LocaleSwitcherTwigExtension extends AbstractExtension
 {
     /**
      * @var DomainConfigurationInterface

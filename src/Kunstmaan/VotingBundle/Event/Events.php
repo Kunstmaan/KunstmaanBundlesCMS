@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Event;
 
-/**
- * @final since 5.9
- */
-class Events
+final class Events
 {
     /**
      * The onFacebookLike will be triggered through a callback from the Facebook API when a Like has been registered

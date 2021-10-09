@@ -7,10 +7,7 @@ use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
-/**
- * @final since 5.9
- */
-class ConfigureActionMenuEvent extends BcEvent
+final class ConfigureActionMenuEvent extends BcEvent
 {
     /**
      * @var FactoryInterface

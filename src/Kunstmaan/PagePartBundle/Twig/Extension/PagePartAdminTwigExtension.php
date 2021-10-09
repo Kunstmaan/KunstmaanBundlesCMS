@@ -7,12 +7,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * PagePartAdminTwigExtension
- *
- * @final since 5.4
- */
-class PagePartAdminTwigExtension extends AbstractExtension
+final class PagePartAdminTwigExtension extends AbstractExtension
 {
     private $usesExtendedPagePartChooser = false;
 

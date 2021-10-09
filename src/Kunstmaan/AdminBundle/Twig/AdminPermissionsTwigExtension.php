@@ -8,12 +8,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * AdminPermissionsTwigExtension
- *
- * @final since 5.4
- */
-class AdminPermissionsTwigExtension extends AbstractExtension
+final class AdminPermissionsTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.

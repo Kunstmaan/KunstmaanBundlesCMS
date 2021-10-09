@@ -8,10 +8,8 @@ use Twig\TwigFunction;
 
 /**
  * Extension to render blocks of twig templates
- *
- * @final since 5.4
  */
-class ToolbarTwigExtension extends AbstractExtension
+final class ToolbarTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.

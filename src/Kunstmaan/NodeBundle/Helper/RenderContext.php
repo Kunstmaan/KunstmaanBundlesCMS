@@ -6,10 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * A context for rendering pages through service methods
- *
- * @final since 5.9
  */
-class RenderContext extends \ArrayObject
+final class RenderContext extends \ArrayObject
 {
     /** @var string */
     private $view;

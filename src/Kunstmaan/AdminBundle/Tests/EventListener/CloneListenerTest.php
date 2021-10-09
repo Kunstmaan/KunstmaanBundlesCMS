@@ -18,8 +18,7 @@ class CloneListenerTest extends TestCase
         $entityMock = $this->getMockForAbstractClass(AbstractEntity::class);
         $entityMock->setId(747);
 
-        $event = $this->createMock(DeepCloneAndSaveEvent::class);
-        $event->expects($this->any())->method('getClonedEntity')->willReturn($entityMock);
+        $event = new DeepCloneAndSaveEvent($entityMock, $entityMock);
 
         $listener->onDeepCloneAndSave($event);
         $this->assertNull($entityMock->getId());
@@ -32,8 +31,7 @@ class CloneListenerTest extends TestCase
         $deepCloneInterfaceMock = $this->createMock(DeepCloneInterface::class);
         $deepCloneInterfaceMock->expects($this->once())->method('deepClone');
 
-        $event = $this->createMock(DeepCloneAndSaveEvent::class);
-        $event->expects($this->any())->method('getClonedEntity')->willReturn($deepCloneInterfaceMock);
+        $event = new DeepCloneAndSaveEvent($deepCloneInterfaceMock, $deepCloneInterfaceMock);
 
         $listener->onDeepCloneAndSave($event);
     }
