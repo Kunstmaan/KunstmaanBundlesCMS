@@ -7,10 +7,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
-/**
- * @final since 5.9
- */
-class RecopyPageTranslationNodeEvent extends NodeEvent
+final class RecopyPageTranslationNodeEvent extends NodeEvent
 {
     /**
      * @var NodeTranslation

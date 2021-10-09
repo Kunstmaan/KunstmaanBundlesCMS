@@ -7,12 +7,7 @@ use Symfony\Component\Form\FormView;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * FormToolsExtension
- *
- * @final since 5.4
- */
-class FormToolsExtension extends AbstractExtension
+final class FormToolsExtension extends AbstractExtension
 {
     /**
      * @var FormHelper

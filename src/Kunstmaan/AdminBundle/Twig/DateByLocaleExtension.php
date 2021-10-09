@@ -6,12 +6,7 @@ use IntlDateFormatter as DateFormatter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-/**
- * DateByLocaleExtension
- *
- * @final since 5.4
- */
-class DateByLocaleExtension extends AbstractExtension
+final class DateByLocaleExtension extends AbstractExtension
 {
     /**
      * Get Twig filters defined in this extension.

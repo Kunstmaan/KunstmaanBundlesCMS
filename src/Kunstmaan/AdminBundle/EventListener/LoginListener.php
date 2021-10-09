@@ -38,7 +38,7 @@ class LoginListener
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            $this->logger->info($user . ' successfully logged in to the cms');
+            $this->logger->info(sprintf('%s successfully logged in to the cms', $user->getUsername()));
             $this->versionChecker->periodicallyCheck();
         }
     }
