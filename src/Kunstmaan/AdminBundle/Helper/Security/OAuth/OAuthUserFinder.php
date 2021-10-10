@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @deprecated since KunstmaanAdminBundle 5.10 and will be removed in KunstmaanAdminBundle 6.0.
+ */
 class OAuthUserFinder implements OAuthUserFinderInterface
 {
     /** @var EntityManager */

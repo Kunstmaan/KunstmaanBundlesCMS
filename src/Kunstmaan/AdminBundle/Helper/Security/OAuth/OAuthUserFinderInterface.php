@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
+/**
+ * @deprecated since KunstmaanAdminBundle 5.10 and will be removed in KunstmaanAdminBundle 6.0.
+ */
 interface OAuthUserFinderInterface
 {
     /**
