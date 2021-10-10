@@ -20,10 +20,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2|^8.0",
-        "kunstmaan/admin-bundle": "^5.7",
-        "kunstmaan/pagepart-bundle": "~5.2",
-        "kunstmaan/node-bundle": "^5.9",
-        "kunstmaan/search-bundle": "~5.2",
+        "kunstmaan/admin-bundle": "^5.9|^6.0",
+        "kunstmaan/pagepart-bundle": "^5.9|^6.0",
+        "kunstmaan/node-bundle": "^5.9|^6.0",
+        "kunstmaan/search-bundle": "^5.9|^6.0",
         "pagerfanta/core": "^2.4",
         "pagerfanta/twig": "^2.4",
         "ruflin/elastica": "^7.0"

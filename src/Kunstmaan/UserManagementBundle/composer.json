@@ -15,8 +15,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2|^8.0",
-        "kunstmaan/admin-bundle": "^5.9",
-        "kunstmaan/adminlist-bundle": "^5.2"
+        "kunstmaan/admin-bundle": "^5.9|^6.0",
+        "kunstmaan/adminlist-bundle": "^5.9|^6.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",

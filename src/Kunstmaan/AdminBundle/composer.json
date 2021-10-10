@@ -20,8 +20,8 @@
         "doctrine/doctrine-bundle": "^1.12.3|^2.0.3",
         "guzzlehttp/guzzle": "~6.1",
         "knplabs/knp-menu-bundle": "^3.0",
-        "kunstmaan/node-bundle": "~5.2",
-        "kunstmaan/utilities-bundle": "~5.2",
+        "kunstmaan/node-bundle": "^5.9|^6.0",
+        "kunstmaan/utilities-bundle": "^5.9|^6.0",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "symfony/acl-bundle": "^1.0|^2.0",
         "symfony/cache": "^3.4|^4.4",
@@ -54,16 +54,16 @@
         "sensio/framework-extra-bundle": "^5.0|^6.0"
     },
     "suggest": {
-        "kunstmaan/translator-bundle": "^5.2",
-        "kunstmaan/user-management-bundle": "^5.2",
-        "kunstmaan/media-bundle": "^5.2",
+        "kunstmaan/translator-bundle": "^5.9|^6.0",
+        "kunstmaan/user-management-bundle": "^5.9|^6.0",
+        "kunstmaan/media-bundle": "^5.9|^6.0",
         "doctrine/doctrine-migrations-bundle": "^1.3|^2.1",
         "symfony/mailer": "For symfony mailer support in the authentication mailer (^4.4)"
     },
     "require-dev": {
-        "kunstmaan/media-bundle": "^5.2",
-        "kunstmaan/menu-bundle": "^5.2",
-        "kunstmaan/translator-bundle": "^5.2",
+        "kunstmaan/media-bundle": "^5.9|^6.0",
+        "kunstmaan/menu-bundle": "^5.9|^6.0",
+        "kunstmaan/translator-bundle": "^5.9|^6.0",
         "symfony/phpunit-bridge": "^5.1",
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",

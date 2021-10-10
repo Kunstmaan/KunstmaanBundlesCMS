@@ -19,7 +19,7 @@
         "liip/imagine-bundle": "^2.4",
         "symfony/mime": "^4.4",
         "knplabs/knp-gaufrette-bundle": "~0.1",
-        "kunstmaan/adminlist-bundle": "~5.2",
+        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
         "pagerfanta/twig": "^2.4"
     },
     "require-dev": {
