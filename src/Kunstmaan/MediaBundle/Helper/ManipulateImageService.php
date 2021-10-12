@@ -47,7 +47,7 @@ class ManipulateImageService
         if (null === $media) {
             return '';
         }
-        if(strpos($media->getContentType(), 'svg') !== false) {
+        if (strpos($media->getContentType(), 'svg') !== false) {
             return $media->getUrl();
         }
 
