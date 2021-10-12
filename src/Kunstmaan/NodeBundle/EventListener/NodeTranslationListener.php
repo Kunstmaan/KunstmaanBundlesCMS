@@ -383,7 +383,7 @@ class NodeTranslationListener
     private function getFlashBag()
     {
         if (null === $this->flashBag) {
-            return $this->requestStack->getCurrentRequest()->getSession();
+            return $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
         }
 
         if ($this->flashBag instanceof SessionInterface) {
