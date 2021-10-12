@@ -52,6 +52,7 @@ final class InstallCommand extends GeneratorCommand
                     [
                         new InputOption('db-installed', '', InputOption::VALUE_NONE, 'Acknowledge that you have setup your database"'),
                         new InputOption('demosite', '', InputOption::VALUE_REQUIRED, 'Do you want to create a "demosite"'),
+                        new InputOption('groundcontrol', '', InputOption::VALUE_REQUIRED, 'Do you want to use Groundcontrol instead of Webpack Encore'),
                         new InputOption('create-tests', '', InputOption::VALUE_REQUIRED, 'Do you want to create tests for you pages/pageparts'),
                         new InputOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle to create (only for SF3)'),
                         new InputOption('dir', '', InputOption::VALUE_OPTIONAL, 'The directory where to create the bundle (only for SF3)'),
@@ -90,8 +91,13 @@ final class InstallCommand extends GeneratorCommand
         }
 
         if (null === $input->getOption('demosite')) {
-            $demoSiteOption = $this->assistant->askConfirmation('Do you want to create a "demosite"? (y/n)', 'n');
+            $demoSiteOption = $this->assistant->askConfirmation('Do you want to create a "demosite"? (y/n)', 'n', '?', false);
             $input->setOption('demosite', $demoSiteOption === true ? 'Yes' : 'No');
+        }
+
+        if (null === $input->getOption('groundcontrol')) {
+            $groundcontrolOption = $this->assistant->askConfirmation('Do you want to use Groundcontrol instead of Webpack Encore? (y/n)', 'n', '?', false);
+            $input->setOption('groundcontrol', $groundcontrolOption === true ? 'Yes' : 'No');
         }
 
         if (null === $input->getOption('create-tests')) {
@@ -118,6 +124,10 @@ final class InstallCommand extends GeneratorCommand
         if ($input->getOption('demosite') === 'Yes') {
             $defaultSiteOptions['--articleoverviewpageparent'] = 'HomePage';
             $defaultSiteOptions['--demosite'] = true;
+        }
+
+        if ($input->getOption('groundcontrol') === 'Yes') {
+            $defaultSiteOptions['--groundcontrol'] = true;
         }
 
         $this->executeCommand($output, 'kuma:generate:config');
@@ -172,14 +182,14 @@ final class InstallCommand extends GeneratorCommand
     protected function getKunstmaanLogo()
     {
         return '
-         /$$   /$$                                 /$$                                                  /$$$$$$                         
-        | $$  /$$/                                | $$                                                 /$$__  $$                        
+         /$$   /$$                                 /$$                                                  /$$$$$$
+        | $$  /$$/                                | $$                                                 /$$__  $$
         | $$ /$$/  /$$   /$$ /$$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$/$$$$   /$$$$$$   /$$$$$$  /$$$$$$$ | $$  \__/ /$$$$$$/$$$$   /$$$$$$$
         | $$$$$/  | $$  | $$| $$__  $$ /$$_____/|_  $$_/  | $$_  $$_  $$ |____  $$ |____  $$| $$__  $$| $$      | $$_  $$_  $$ /$$_____/
-        | $$  $$  | $$  | $$| $$  \ $$|  $$$$$$   | $$    | $$ \ $$ \ $$  /$$$$$$$  /$$$$$$$| $$  \ $$| $$      | $$ \ $$ \ $$|  $$$$$$ 
+        | $$  $$  | $$  | $$| $$  \ $$|  $$$$$$   | $$    | $$ \ $$ \ $$  /$$$$$$$  /$$$$$$$| $$  \ $$| $$      | $$ \ $$ \ $$|  $$$$$$
         | $$\  $$ | $$  | $$| $$  | $$ \____  $$  | $$ /$$| $$ | $$ | $$ /$$__  $$ /$$__  $$| $$  | $$| $$    $$| $$ | $$ | $$ \____  $$
         | $$ \  $$|  $$$$$$/| $$  | $$ /$$$$$$$/  |  $$$$/| $$ | $$ | $$|  $$$$$$$|  $$$$$$$| $$  | $$|  $$$$$$/| $$ | $$ | $$ /$$$$$$$/
-        |__/  \__/ \______/ |__/  |__/|_______/    \___/  |__/ |__/ |__/ \_______/ \_______/|__/  |__/ \______/ |__/ |__/ |__/|_______/ 
+        |__/  \__/ \______/ |__/  |__/|_______/    \___/  |__/ |__/ |__/ \_______/ \_______/|__/  |__/ \______/ |__/ |__/ |__/|_______/
         ';
     }
 

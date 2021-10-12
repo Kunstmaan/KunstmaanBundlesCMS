@@ -1,6 +1,7 @@
 /* ==========================================================================
    Structures - Demosite msg
    ========================================================================== */
+@use "sass:color";
 
 .demosite-msg__wrapper {
     position: relative;
@@ -15,12 +16,12 @@
     &:focus,
     &:active {
         .demosite-msg {
-            background: lighten($brand-primary, 5%);
+            background: color.adjust($brand-primary, $lightness: 5%);
         }
 
         .demosite-msg__btn {
             &:after {
-                border-color: lighten($brand-primary, 5%) transparent transparent transparent;
+                border-color: color.adjust($brand-primary, $lightness: 5%) transparent transparent transparent;
             }
         }
     }
@@ -76,7 +77,7 @@
     text-align: center;
 
     &:after {
-        content: '';
+        content: "";
 
         position: absolute;
         top: 0;

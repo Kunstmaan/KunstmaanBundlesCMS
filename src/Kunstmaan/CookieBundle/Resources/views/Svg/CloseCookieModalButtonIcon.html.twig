@@ -1,4 +1,9 @@
 <svg id="kmcc-cookie-modal__close-button"
      class="icon icon--cross svg-parent kmcc-btn-close-modal">
-    <use xlink:href="/frontend/img/legal/svg/symbol-defs.svg#icon--cross"></use>
+    {% set imgPath = 'build/img/legal/svg/symbol-defs.svg' %}
+    {% if file_exists(imgPath) %}
+        <use xlink:href="/build/img/legal/svg/symbol-defs.svg#icon--cross"></use>
+    {% else %}
+        <use xlink:href="/frontend/img/legal/svg/symbol-defs.svg#icon--cross"></use>
+    {% endif %}
 </svg>

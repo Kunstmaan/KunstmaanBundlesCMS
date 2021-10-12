@@ -1,3 +1,7 @@
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('/frontend/css/style.css') }}" type="text/css" />
+<% if not groundcontrol %>
+    {{ encore_entry_link_tags('app') }}
+<% else %>
+    <link rel="stylesheet" href="{{ asset('/build/css/style.css') }}" type="text/css" />
+<% endif %>
 {% endblock %}

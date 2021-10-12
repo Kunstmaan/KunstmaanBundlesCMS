@@ -1,3 +1,8 @@
 <svg class="icon icon--chevron--down kmcc-btn-close-detail__icon">
-    <use xlink:href="/frontend/img/legal/svg/symbol-defs.svg#icon--chevron--down"></use>
+    {% set imgPath = 'build/img/legal/svg/symbol-defs.svg' %}
+    {% if file_exists(imgPath) %}
+        <use xlink:href="/build/img/legal/svg/symbol-defs.svg#icon--chevron--down"></use>
+    {% else %}
+        <use xlink:href="/frontend/img/legal/svg/symbol-defs.svg#icon--chevron--down"></use>
+    {% endif %}
 </svg>

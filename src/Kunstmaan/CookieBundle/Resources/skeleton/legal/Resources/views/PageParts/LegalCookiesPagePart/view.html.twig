@@ -1,6 +1,6 @@
 {% set cookie = get_legal_cookie(app.request) %}
 
-<div class="kmcc-cookies-toggle-pp"> 
+<div class="kmcc-cookies-toggle-pp">
     {% for type in get_cookie_types() %}
         <strong class="kmcc-cookies-toggle-pp__name">
             {{ type.name }}
@@ -9,7 +9,12 @@
 
             {% if type.alwaysOn %}
                 <div class="kmcc-btn-toggle--always-on">
-                    <img src="/frontend/img/legal/svg/check.svg"/>
+                    {% set imgPath = 'build/img/legal/svg/check.svg' %}
+                    {% if file_exists(imgPath) %}
+                        <img src="/build/img/legal/svg/check.svg"/>
+                    {% else %}
+                        <img src="/frontend/img/legal/svg/check.svg"/>
+                    {% endif %}
                     <span class="kmcc-btn-toggle__text">
                         {{ 'kuma.cookie.cookie_preferences.always_on' | trans }}
                     </span>
@@ -45,4 +50,3 @@
 
 
 {% set cookie = get_legal_cookie(app.request) %}
-

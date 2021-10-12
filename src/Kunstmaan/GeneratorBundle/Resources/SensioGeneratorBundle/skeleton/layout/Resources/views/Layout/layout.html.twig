@@ -38,6 +38,11 @@
 
     {# CSS #}
     {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_css.html.twig' %}
+<% if not groundcontrol %>
+
+    {# JS #}
+    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_js.html.twig' %}
+<% endif %>
 </head>
 {% endapply %}
 
@@ -89,10 +94,12 @@
         {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_cookieconsent.html.twig' %}
     {% endblock %}
 
+<% if groundcontrol %>
     {# JS Footer #}
     {% block jsBundle %}
         {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_js_footer.html.twig' %}
     {% endblock %}
+<% endif %>
 <% if demosite %>
     </div>
 

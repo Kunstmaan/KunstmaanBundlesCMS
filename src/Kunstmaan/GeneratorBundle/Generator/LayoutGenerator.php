@@ -35,21 +35,32 @@ class LayoutGenerator extends KunstmaanGenerator
     private $browserSyncUrl;
 
     /**
+     * @var bool
+     */
+    private $groundcontrol;
+
+    /**
      * Generate the basic layout.
      *
      * @param BundleInterface $bundle  The bundle
      * @param string          $rootDir The root directory of the application
      */
-    public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl)
+    public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl, $groundcontrol)
     {
         $this->bundle = $bundle;
         $this->rootDir = $rootDir;
         $this->demosite = $demosite;
         $this->browserSyncUrl = $browserSyncUrl;
+        $this->groundcontrol = $groundcontrol;
 
         $this->shortBundleName = '@' . str_replace('Bundle', '', $bundle->getName());
 
-        $this->generateGroundcontrolFiles();
+        $this->generateSharedConfigFiles();
+        if ($groundcontrol) {
+            $this->generateGroundcontrolFiles();
+        } else {
+            $this->generateWebpackEncoreFiles();
+        }
         $this->generateAssets();
         $this->generateTemplate();
     }
@@ -68,43 +79,15 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
-            '.babelrc',
-            ['bundle' => $this->bundle],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            '.eslintrc',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            '.nvmrc',
-            ['bundle' => $this->bundle],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            '.stylelintrc',
-            ['bundle' => $this->bundle],
-            true
-        );
-        $this->renderExecutableFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            'buildUI.sh',
-            ['bundle' => $this->bundle],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
             'gulpfile.babel.js',
             ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'isV4' => $this->isSymfony4()],
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/groundcontrol/',
+            $this->rootDir,
+            '.babelrc',
+            [],
             true
         );
         $this->renderSingleFile(
@@ -118,24 +101,105 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
+     * Generate the Webpack Encore configuration files.
+     */
+    private function generateWebpackEncoreFiles()
+    {
+        $this->renderSingleFile(
+            $this->skeletonDir . '/webpack-encore/',
+            $this->rootDir,
+            'package.json',
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/webpack-encore/',
+            $this->rootDir,
+            'postcss.config.js',
+            [],
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/webpack-encore/',
+            $this->rootDir,
+            'webpack.config.js',
+            ['demosite' => $this->demosite],
+            true
+        );
+        $this->assistant->writeLine('Generating webpack encore configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate shared (groundcontrol & webpack encore) configuration files.
+     */
+    private function generateSharedConfigFiles()
+    {
+        $this->renderSingleFile(
+            $this->skeletonDir . '/frontend-config/',
+            $this->rootDir,
+            '.babelrc',
+            ['bundle' => $this->bundle],
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/frontend-config/',
+            $this->rootDir,
+            '.eslintrc',
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/frontend-config/',
+            $this->rootDir,
+            '.nvmrc',
+            ['bundle' => $this->bundle],
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/frontend-config/',
+            $this->rootDir,
+            '.stylelintrc',
+            ['bundle' => $this->bundle],
+            true
+        );
+        $this->renderExecutableFile(
+            $this->skeletonDir . '/frontend-config/',
+            $this->rootDir,
+            'buildUI.sh',
+            ['bundle' => $this->bundle],
+            true
+        );
+    }
+
+    /**
      * Generate the ui asset files.
      */
     private function generateAssets()
     {
         $sourceDir = $this->skeletonDir;
 
+        if (!$this->groundcontrol) {
+            $this->removeDirectory($this->getAssetsDir($this->bundle));
+        }
+
         $relPath = '/Resources/ui/';
         $this->copyFiles($sourceDir . $relPath, $this->getAssetsDir($this->bundle) . '/ui', true);
         $this->renderFiles(
             $sourceDir . $relPath . '/js/',
             $this->getAssetsDir($this->bundle) . '/ui/js/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
             true
         );
         $this->renderFiles(
             $sourceDir . $relPath . '/scss/',
             $this->getAssetsDir($this->bundle) . '/ui/scss/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
+            true
+        );
+        $this->renderFiles(
+            $sourceDir . '/Resources/admin/',
+            $this->getAssetsDir($this->bundle) . '/admin/',
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol, 'isV4' => $this->isSymfony4()],
             true
         );
 
@@ -204,8 +268,16 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/scss/helpers/mixins/');
         }
 
-        $relPath = '/Resources/admin/';
-        $this->copyFiles($sourceDir . $relPath, $this->getAssetsDir($this->bundle) . '/admin', true);
+        if (!$this->groundcontrol) {
+            $this->renderSingleFile(
+                $sourceDir . $relPath . 'js/',
+                $this->getAssetsDir($this->bundle) . '/ui/',
+                'app.js',
+                ['demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
+                true
+            );
+            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/js/app.js');
+        }
 
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
@@ -219,7 +291,13 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $this->skeletonDir . $relPath,
             $this->getTemplateDir($this->bundle),
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'shortBundleName' => $this->shortBundleName, 'isV4' => $this->isSymfony4()],
+            [
+                'bundle' => $this->bundle,
+                'demosite' => $this->demosite,
+                'shortBundleName' => $this->shortBundleName,
+                'isV4' => $this->isSymfony4(),
+                'groundcontrol' => $this->groundcontrol,
+            ],
             true
         );
 
@@ -227,6 +305,12 @@ class LayoutGenerator extends KunstmaanGenerator
             // Layout
             $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_mobile-nav.html.twig');
             $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_demositemessage.html.twig');
+        }
+
+        if ($this->groundcontrol) {
+            $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_js.html.twig');
+        } else {
+            $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_js_footer.html.twig');
         }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');

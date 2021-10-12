@@ -91,7 +91,7 @@ $kmcc-fact__figure-width:          150px;
 
 /* Fact
    ========================================================================== */
-$base-image-path:                  "../../frontend/img/legal/svg/";
+$base-image-path:                  "../../frontend/img/legal/svg/" !default;
 $toggle-check-image:               $base-image-path + "toggle--check.svg" !default;
 $toggle-cross-image:               $base-image-path + "toggle--cross.svg" !default;
 $arrow-up-image:                   $base-image-path + "arrow--up.svg" !default;

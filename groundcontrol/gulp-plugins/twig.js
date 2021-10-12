@@ -17,11 +17,10 @@ export default function twig(options) {
 
         try {
             let contents = file.contents.toString();
-
             // Twig.js uses different escaping compared to the PHP version
             // This line was failing the renderering, as we don't put backlashes in the testdata it could be removed
-            contents = contents.replace(/\|replace\(\{\'\\\\\'\:\'\/\'\}\)/gmi, '');
-            
+            contents = contents.replace(/\|replace\(\{\'\\\\\'\:\'(\/|\-)\'\}\)/gmi, '');
+
             const template = Twig.twig({
                 data: contents
             });

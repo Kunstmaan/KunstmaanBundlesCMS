@@ -24,7 +24,7 @@
     line-height: 1.7;
     text-align: left;
 
-    animation-name: cookieSlide;
+    animation-name: cookie-slide;
     animation-iteration-count: 1;
     animation-timing-function: ease-in-out;
     animation-duration: .8s;
@@ -92,7 +92,7 @@
     display: block;
 }
 
-@keyframes cookieSlide {
+@keyframes cookie-slide {
     0% {
         transform: translate3d(0, 60px, 0);
 
@@ -105,9 +105,3 @@
         opacity: 1;
     }
 }
-
-/**
-* @doc docs/cookie-consent.md
-* @section
-* @sectionof Structures
-*/

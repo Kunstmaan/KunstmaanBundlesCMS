@@ -20,12 +20,12 @@ const runChildProcess = (executable, args, cwd, cb) => {
     });
 };
 
-export default function createBuildGroundControlSkeletonTask(skeletonPath, namespace = 'kuma/my-project') {
+export default function createBuildGroundControlSkeletonTask(skeletonPath, namespace = 'kuma-my-project') {
     const distPath = skeletonPath + '/dist';
-    const appPath = distPath + '/src/' + namespace;
-    const jsPath = appPath + '/Resources/ui/js';
-    const scssPath = appPath + '/Resources/ui/scss';
-    const adminJsPath = appPath + '/Resources/admin/js';
+    const appPath = distPath + '/assets';
+    const jsPath = appPath + '/ui/js';
+    const scssPath = appPath + '/ui/scss';
+    const adminJsPath = appPath + '/admin';
 
     return [
         function cleanGroundControlSkeleton() {
@@ -42,7 +42,8 @@ export default function createBuildGroundControlSkeletonTask(skeletonPath, names
                         getName: () => 'test-bundle',
                         namespace
                     },
-                    demosite: false
+                    demosite: false,
+                    isV4: true
                 }))
                 .pipe(gulp.dest(distPath));
         },
@@ -56,8 +57,6 @@ export default function createBuildGroundControlSkeletonTask(skeletonPath, names
             fs.writeFileSync(adminJsPath + '/admin-bundle-extra.js', 'console.log(\'Hello world from admin\');\n');
             fs.ensureDirSync(scssPath);
             fs.writeFileSync(scssPath + '/style.scss', 'body { font-size: 20px; }\n');
-            // Style guide
-            fs.copySync(skeletonPath + '/../Resources/ui/styleguide', appPath + '/Resources/ui/styleguide');
             // Index.html
             const html = `
                 <!DOCTYPE html>
@@ -69,13 +68,13 @@ export default function createBuildGroundControlSkeletonTask(skeletonPath, names
                     <meta charset="utf-8">
                     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="web/frontend/css/style.css"/>
+                    <link rel="stylesheet" href="public/build/css/style.css"/>
                 </head>
 
                 <body>
                     <h1>Test page</h1>
-                    <script src="web/frontend/js/bundle.js"></script>
-                    <script src="web/frontend/js/admin-bundle-extra.js"></script>
+                    <script src="public/build/js/bundle.js"></script>
+                    <script src="public/build/js/admin-bundle-extra.js"></script>
                 </body>
 
                 </html>`;
@@ -85,7 +84,7 @@ export default function createBuildGroundControlSkeletonTask(skeletonPath, names
         function installGroundControlSkeletonNpmPackages(cb) {
             runChildProcess('npm', ['install'], distPath, cb);
         },
-        function builGroundControlSkeletonExample(cb) {
+        function buildGroundControlSkeletonExample(cb) {
             runChildProcess('npm', ['run', 'build'], distPath, cb);
         }
     ];

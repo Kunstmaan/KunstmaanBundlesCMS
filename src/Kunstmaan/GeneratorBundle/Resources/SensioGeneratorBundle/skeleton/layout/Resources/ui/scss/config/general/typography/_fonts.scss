@@ -8,10 +8,10 @@
 /* Webfonts
    ========================================================================== */
 {% if demosite %}
-$primary-font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$secondary-font: Arial, sans-serif;
+$primary-font: "Lato", "Helvetica Neue", helvetica, arial, sans-serif;
+$secondary-font: arial, sans-serif;
 {% else %}
-$primary-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$primary-font: "Helvetica Neue", helvetica, arial, sans-serif;
 $secondary-font: "Times New Roman", serif;
 {% endif %}
 

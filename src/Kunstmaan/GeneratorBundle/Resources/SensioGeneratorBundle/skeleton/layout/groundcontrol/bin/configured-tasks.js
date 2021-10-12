@@ -10,14 +10,12 @@ import createCopyTask from './tasks/copy';
 import { createCssLocalTask, createCssOptimizedTask } from './tasks/css';
 import createBundleTask from './tasks/bundle';
 import createServerTask from './tasks/server';
-import createStyleguideTask from './tasks/livingcss';
 import webpackConfigApp from './config/webpack.config.app';
 import webpackConfigAdminExtra from './config/webpack.config.admin-extra';
-import webpackConfigStyleguide from './config/webpack.config.styleguide';
 
 export const images = createImagesTask({
     src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/img/**',
-    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/img'
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/build/img'
 });
 
 export const eslint = createEslintTask({
@@ -30,24 +28,24 @@ export const stylelint = createStylelintTask({
 });
 
 export const clean = createCleanTask({
-    target: ['./{% if isV4 %}public{% else %}web{% endif %}/frontend'],
+    target: ['./{% if isV4 %}public{% else %}web{% endif %}/build'],
 });
 
 export const copy = gulp.parallel(
 {% if demosite %}
-    createCopyTask({src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/files/**'], dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/files'}),
+    createCopyTask({src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/files/**'], dest: './{% if isV4 %}public{% else %}web{% endif %}/build/files'}),
 {% endif %}
-    createCopyTask({src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/fonts/**'], dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/fonts'})
+    createCopyTask({src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/fonts/**'], dest: './{% if isV4 %}public{% else %}web{% endif %}/build/fonts'})
 );
 
 export const cssLocal = createCssLocalTask({
-    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/style.scss',
-    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/css',
+    src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/style.scss', './assets/admin/*.scss'],
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/build/css',
 });
 
 export const cssOptimized = createCssOptimizedTask({
-    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/*.scss',
-    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/css',
+    src: ['./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/*.scss', './assets/admin/*.scss'],
+    dest: './{% if isV4 %}public{% else %}web{% endif %}/build/css',
 });
 
 export const bundleLocal = createBundleTask({
@@ -72,10 +70,9 @@ export const server = createServerTask({
         ui: false,
         ghostMode: false,
         files: [
-            '{% if isV4 %}public{% else %}web{% endif %}/frontend/css/*.css',
-            '{% if isV4 %}public{% else %}web{% endif %}/frontend/js/*.js',
-            '{% if isV4 %}public{% else %}web{% endif %}/frontend/img/**/*',
-            '{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide/*.html',
+            '{% if isV4 %}public{% else %}web{% endif %}/build/css/*.css',
+            '{% if isV4 %}public{% else %}web{% endif %}/build/js/*.js',
+            '{% if isV4 %}public{% else %}web{% endif %}/build/img/**/*',
         ],
         open: false,
         reloadOnRestart: true,
@@ -92,37 +89,6 @@ export const server = createServerTask({
     },
 });
 
-export const generateStyleguide = createStyleguideTask({
-    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss',
-    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide',
-    template: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/templates/layout.hbs',
-    partials: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/templates/partials/*.hbs',
-    sortOrder: [
-        {
-            Index: [
-                'Colors',
-                'Typography',
-                'Blocks',
-                'Pageparts',
-            ],
-        },
-    ],
-});
-
-export const copyStyleguide = createCopyTask({
-    src: ['./node_modules/prismjs/themes/prism-okaidia.css'],
-    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide/css',
-});
-
-export const cssStyleguideOptimized = createCssOptimizedTask({
-    src: './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/scss/*.scss',
-    dest: './{% if isV4 %}public{% else %}web{% endif %}/frontend/styleguide/css',
-});
-
-export const bundleStyleguideOptimized = createBundleTask({
-    config: webpackConfigStyleguide(consoleArguments.speedupLocalDevelopment, true),
-});
-
 export function buildOnChange(done) {
     gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/**/!(*.spec).js', bundleLocal);
     gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/admin/js/**/!(*.spec).js', bundleAdminExtraLocal);
@@ -135,10 +101,5 @@ export function testOnChange(done) {
     gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/**/*.js', eslint);
     gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss', stylelint);
     gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.scss', cssLocal);
-    gulp.watch([
-        './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/scss/**/*.md',
-        './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/**/*.hbs',
-    ], generateStyleguide);
-    gulp.watch('./{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/styleguide/scss/**/*.scss', cssStyleguideOptimized);
     done();
 }

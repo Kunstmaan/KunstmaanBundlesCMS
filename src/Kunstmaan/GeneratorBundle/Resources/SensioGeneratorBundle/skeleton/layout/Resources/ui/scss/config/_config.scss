@@ -25,3 +25,6 @@
 @import "vendors/cargobay-vars";
 @import "vendors/cargobay-imports";
 {% endif %}
+
+@import "vendors/cookie-bundle-vars";
+// @import "vendors/cookie-bundle-imports"; // import when cookie-bundle is enabled
