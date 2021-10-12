@@ -107,6 +107,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('google_signin')
+                    ->setDeprecated('The "kunstmaan_admin.%node%" option is deprecated. The google oauth authenication will be removed in KusntmaanAdminBundle 6.0.')
                     ->addDefaultsIfNotSet()
                     ->canBeEnabled()
                     ->beforeNormalization()

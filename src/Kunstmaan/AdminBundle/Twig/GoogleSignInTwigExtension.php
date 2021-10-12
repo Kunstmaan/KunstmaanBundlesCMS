@@ -5,6 +5,9 @@ namespace Kunstmaan\AdminBundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @deprecated since KunstmaanAdminBundle 5.10 and will be removed in KunstmaanAdminBundle 6.0.
+ */
 final class GoogleSignInTwigExtension extends AbstractExtension
 {
     private $enabled;

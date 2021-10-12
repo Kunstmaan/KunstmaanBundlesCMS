@@ -86,6 +86,59 @@ class ConfigurationTest extends TestCase
             'default_admin_locale' => 'en',
             'enable_console_exception_listener' => true,
             'menu_items' => [],
+            'admin_prefix' => 'admin',
+            'enable_toolbar_helper' => false,
+            'admin_firewall_name' => 'main',
+            'password_restrictions' => [
+                'min_digits' => 2,
+                'min_uppercase' => 2,
+                'min_special_characters' => 2,
+                'min_length' => 16,
+                'max_length' => 26,
+            ],
+        ];
+
+        $expected = array_merge(self::DEFAULT_EXPECTED_CONFIG, [
+            'admin_locales' => ['nl'],
+            'admin_password' => 'l3tM31n!',
+            'enable_toolbar_helper' => false,
+            'password_restrictions' => [
+                'min_digits' => 2,
+                'min_uppercase' => 2,
+                'min_special_characters' => 2,
+                'min_length' => 16,
+                'max_length' => 26,
+            ],
+        ]);
+        $expected['authentication']['enable_new_authentication'] = true;
+
+        $this->assertProcessedConfigurationEquals([$array], $expected);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedGoogleSigninConfig()
+    {
+        $this->expectDeprecation('The "kunstmaan_admin.google_signin" option is deprecated. The google oauth authenication will be removed in KusntmaanAdminBundle 6.0.');
+
+        $array = [
+            'website_title' => null,
+            'multi_language' => null,
+            'required_locales' => null,
+            'default_locale' => null,
+            'authentication' => [
+                'enable_new_authentication' => true,
+            ],
+            'admin_password' => 'l3tM31n!',
+            'admin_locales' => ['nl'],
+            'session_security' => [
+                'ip_check' => false,
+                'user_agent_check' => false,
+            ],
+            'default_admin_locale' => 'en',
+            'enable_console_exception_listener' => true,
+            'menu_items' => [],
             'google_signin' => [
                 'client_id' => '7474505B',
                 'client_secret' => '7474505B',
@@ -123,20 +176,6 @@ class ConfigurationTest extends TestCase
             ],
         ]);
         $expected['authentication']['enable_new_authentication'] = true;
-
-        $this->assertProcessedConfigurationEquals([$array], $expected);
-
-        unset($array['google_signin']);
-        $array['google_signin']['enabled'] = false;
-
-        $expected = array_merge($expected, [
-            'google_signin' => [
-                'enabled' => false,
-                'client_id' => null,
-                'client_secret' => null,
-                'hosted_domains' => [],
-            ],
-        ]);
 
         $this->assertProcessedConfigurationEquals([$array], $expected);
     }
