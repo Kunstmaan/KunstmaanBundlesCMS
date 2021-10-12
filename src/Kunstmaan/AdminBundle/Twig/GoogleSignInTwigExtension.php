@@ -7,6 +7,8 @@ use Twig\TwigFunction;
 
 /**
  * @final since 5.4
+ *
+ * @deprecated since KunstmaanAdminBundle 5.10 and will be removed in KunstmaanAdminBundle 6.0.
  */
 class GoogleSignInTwigExtension extends AbstractExtension
 {

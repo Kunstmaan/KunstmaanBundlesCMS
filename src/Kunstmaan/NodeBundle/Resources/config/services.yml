@@ -20,10 +20,9 @@ services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
         arguments:
-          - '@session'
+          - '@request_stack'
           - '@kunstmaan_admin.logger'
           - '@kunstmaan_utilities.slugifier'
-          - '@request_stack'
           - '@kunstmaan_admin.domain_configuration'
           - '@kunstmaan_node.pages_configuration'
         tags:

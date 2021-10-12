@@ -7,6 +7,9 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\GroupInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 
+/**
+ * @deprecated since KunstmaanAdminBundle 5.10 and will be removed in KunstmaanAdminBundle 6.0.
+ */
 class OAuthUserCreator implements OAuthUserCreatorInterface
 {
     /** @var EntityManagerInterface */
