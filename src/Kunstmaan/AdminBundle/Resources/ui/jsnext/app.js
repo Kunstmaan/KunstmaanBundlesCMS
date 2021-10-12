@@ -1,5 +1,4 @@
 import './polyfills';
-
 import 'svgxuse/svgxuse';
 import PagePartChooser from './PagePartChooser';
 import { initMediaCroppers } from './MediaCropper';

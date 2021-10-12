@@ -73,18 +73,10 @@
             <figure class="thumbnail">
                 {% if(value.ent is defined) %}
                     {% set media = value.ent %}
-                    {% set handler = mediamanager.getHandler(media) %}
-                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-                    {% if imageurl is not empty and media.location == 'local' %}
-                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                            {% set imageurlretina = imageurl %}
-                        {% else %}
-                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
-                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
-                        {% endif %}
-                    {% endif %}
-                    {% if imageurl %}
-                        <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x{{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                    {% set imageUrl = _self.getImageUrl(media, 'media_list_thumbnail') %}
+                    {% set retinaImageUrl = _self.getImageUrl(media, 'media_list_thumbnail_retina') %}
+                    {% if imageUrl and retinaImageUrl %}
+                        <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                         <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                             {{ media.name }}
                         </figcaption>
