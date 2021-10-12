@@ -18,15 +18,17 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     protected $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true, name="page_title")
+     * @ORM\Column(type="string", nullable=true, name="page_title", length=255)
+     * @Assert\Length(max=255)
      */
     protected $pageTitle;
 
