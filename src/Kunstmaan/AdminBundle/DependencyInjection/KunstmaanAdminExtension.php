@@ -59,12 +59,6 @@ class KunstmaanAdminExtension extends Extension
 
         $container->setParameter('kunstmaan_admin.admin_exception_excludes', $config['exception_logging']['exclude_patterns']);
 
-        // NEXT_MAJOR remove
-        $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
-        $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
-        $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
-        $container->setParameter('kunstmaan_admin.google_signin.hosted_domains', $config['google_signin']['hosted_domains']);
-
         $container->setParameter('kunstmaan_admin.password_restrictions.min_digits', $config['password_restrictions']['min_digits']);
         $container->setParameter('kunstmaan_admin.password_restrictions.min_uppercase', $config['password_restrictions']['min_uppercase']);
         $container->setParameter('kunstmaan_admin.password_restrictions.min_special_characters', $config['password_restrictions']['min_special_characters']);
