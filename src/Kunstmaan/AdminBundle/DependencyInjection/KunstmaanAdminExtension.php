@@ -132,6 +132,15 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         // NEXT_MAJOR: Remove templating dependency
 
+        $frameworkExtensionConfig = [
+            'assets' => [
+                'packages' => [
+                    'media' => null,
+                ],
+            ],
+        ];
+        $container->prependExtensionConfig('framework', $frameworkExtensionConfig);
+
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }

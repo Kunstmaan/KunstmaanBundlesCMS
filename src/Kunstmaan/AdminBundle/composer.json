@@ -26,6 +26,7 @@
         "kunstmaan/utilities-bundle": "^5.9|^6.0",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
         "symfony/acl-bundle": "^1.0|^2.0",
+        "symfony/asset": "^3.4|^4.4",
         "symfony/cache": "^3.4|^4.4",
         "symfony/config": "^3.4|^4.4",
         "symfony/console": "^3.4|^4.4",
