@@ -6,7 +6,9 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\PasswordCheckListener;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -21,6 +23,8 @@ use Symfony\Component\Translation\Translator;
 
 class PasswordCheckListenerTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+
     /**
      * @dataProvider requestDataProvider
      */
@@ -48,8 +52,12 @@ class PasswordCheckListenerTest extends TestCase
         $flash->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('add')->willReturn(true);
         $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('trans')->willReturn(true);
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);
+        $requestStack = new RequestStack();
+        $request = new Request();
+        $request->setSession($session);
+        $requestStack->push($request);
 
-        $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);
+        $listener = new PasswordCheckListener($auth, $storage, $router, $requestStack, $trans, $adminRouteHelper);
         $listener->onKernelRequest($event);
     }
 

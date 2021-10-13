@@ -37,12 +37,6 @@ class ConfigurationTest extends TestCase
         'toolbar_firewall_names' => ['main'],
         'admin_firewall_name' => 'main',
         'menu_items' => [],
-        'google_signin' => [
-            'enabled' => false,
-            'client_id' => null,
-            'client_secret' => null,
-            'hosted_domains' => [],
-        ],
         'password_restrictions' => [
             'min_digits' => null,
             'min_uppercase' => null,
@@ -86,12 +80,6 @@ class ConfigurationTest extends TestCase
             'default_admin_locale' => 'en',
             'enable_console_exception_listener' => true,
             'menu_items' => [],
-            'google_signin' => [
-                'client_id' => '7474505B',
-                'client_secret' => '7474505B',
-                'enabled' => true,
-                'hosted_domains' => [],
-            ],
             'admin_prefix' => 'admin',
             'enable_toolbar_helper' => false,
             'admin_firewall_name' => 'main',
@@ -108,12 +96,6 @@ class ConfigurationTest extends TestCase
             'admin_locales' => ['nl'],
             'admin_password' => 'l3tM31n!',
             'enable_toolbar_helper' => false,
-            'google_signin' => [
-                'enabled' => true,
-                'client_id' => '7474505B',
-                'client_secret' => '7474505B',
-                'hosted_domains' => [],
-            ],
             'password_restrictions' => [
                 'min_digits' => 2,
                 'min_uppercase' => 2,
@@ -125,40 +107,5 @@ class ConfigurationTest extends TestCase
         $expected['authentication']['enable_new_authentication'] = true;
 
         $this->assertProcessedConfigurationEquals([$array], $expected);
-
-        unset($array['google_signin']);
-        $array['google_signin']['enabled'] = false;
-
-        $expected = array_merge($expected, [
-            'google_signin' => [
-                'enabled' => false,
-                'client_id' => null,
-                'client_secret' => null,
-                'hosted_domains' => [],
-            ],
-        ]);
-
-        $this->assertProcessedConfigurationEquals([$array], $expected);
-    }
-
-    public function testConfigDoesntGenerateAsExpected()
-    {
-        $array = [
-            'admin_password' => 'l3tM31n!',
-            'admin_locales' => [],
-            'session_security' => [
-                'ip_check' => false,
-                'user_agent_check' => false,
-            ],
-            'default_admin_locale' => 'en',
-            'enable_console_exception_listener' => true,
-            'menu_items' => [],
-            'google_signin' => [
-                'enabled' => true,
-                'hosted_domains' => [],
-            ],
-        ];
-
-        $this->assertPartialConfigurationIsInvalid([$array], 'google_signin');
     }
 }

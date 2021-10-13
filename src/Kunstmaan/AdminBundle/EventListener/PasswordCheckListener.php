@@ -5,7 +5,8 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface as Router;
@@ -34,9 +35,9 @@ class PasswordCheckListener
     private $router;
 
     /**
-     * @var Session
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * @var TranslatorInterface
@@ -48,12 +49,12 @@ class PasswordCheckListener
      */
     private $adminRouteHelper;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, RequestStack $requestStack, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->translator = $translator;
         $this->adminRouteHelper = $adminRouteHelper;
     }
@@ -91,10 +92,16 @@ class PasswordCheckListener
         }
 
         $response = new RedirectResponse($this->router->generate('kunstmaan_admin_forced_change_password'));
-        $this->session->getFlashBag()->add(
+        $session = $this->getSession();
+        $session->getFlashBag()->add(
             FlashTypes::DANGER,
             $this->translator->trans('kuma_admin.password_check.flash.error')
         );
         $event->setResponse($response);
+    }
+
+    private function getSession(): SessionInterface
+    {
+        return $this->requestStack->getCurrentRequest()->getSession();
     }
 }

@@ -17,9 +17,6 @@ security:
     firewalls:
         main:
             pattern: .*
-            guard:
-                authenticators:
-                    - kunstmaan_admin.oauth_authenticator
             form_login:
                 login_path: kunstmaan_admin_login
                 check_path: kunstmaan_admin_login
@@ -27,7 +24,6 @@ security:
             logout:
                 path:   kunstmaan_admin_logout
                 target: KunstmaanAdminBundle_homepage
-            anonymous:    true
             remember_me:
                 secret:   "%secret%"
                 lifetime: 604800

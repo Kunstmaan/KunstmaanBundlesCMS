@@ -15,7 +15,7 @@
     "require": {
         "php": "^7.2|^8.0",
         "kunstmaan/adminlist-bundle": "^5.9|^6.0",
-        "symfony-cmf/routing-bundle": "~2.0"
+        "symfony-cmf/routing-bundle": "^2.1"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",

@@ -17,17 +17,12 @@ use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Listens to doctrine postFlush event and updates the urls if the entities are nodetranslations
  */
 class NodeTranslationListener
 {
-    /** @var SessionInterface|FlashBagInterface */
-    private $flashBag;
-
     /** @var LoggerInterface */
     private $logger;
 
@@ -43,21 +38,16 @@ class NodeTranslationListener
     /** @var PagesConfiguration */
     private $pagesConfiguration;
 
-    /**
-     * @param SessionInterface|FlashBagInterface $flashBag
-     */
     public function __construct(
-        SessionInterface $flashBag,
+        RequestStack $requestStack,
         LoggerInterface $logger,
         SlugifierInterface $slugifier,
-        RequestStack $requestStack,
         DomainConfigurationInterface $domainConfiguration,
         PagesConfiguration $pagesConfiguration
     ) {
-        $this->flashBag = $flashBag;
+        $this->requestStack = $requestStack;
         $this->logger = $logger;
         $this->slugifier = $slugifier;
-        $this->requestStack = $requestStack;
         $this->domainConfiguration = $domainConfiguration;
         $this->pagesConfiguration = $pagesConfiguration;
     }
@@ -354,10 +344,6 @@ class NodeTranslationListener
 
     private function getFlashBag()
     {
-        if ($this->flashBag instanceof SessionInterface) {
-            return $this->flashBag->getFlashBag();
-        }
-
-        return $this->flashBag;
+        return $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     }
 }
