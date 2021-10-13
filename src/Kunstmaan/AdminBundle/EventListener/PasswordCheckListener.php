@@ -102,6 +102,6 @@ class PasswordCheckListener
 
     private function getSession(): SessionInterface
     {
-        return $this->requestStack->getCurrentRequest()->getSession();
+        return method_exists($this->requestStack, 'getSession') ? $this->requestStack->getSession() : $this->requestStack->getCurrentRequest()->getSession();
     }
 }
