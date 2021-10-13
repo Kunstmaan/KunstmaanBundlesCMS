@@ -14,7 +14,7 @@
             {# Logo #}
             {% set homepagePageNode = nodemenu.getRootNodeMenuItem() %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
-                <img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
+                <img src="{{ asset('/frontend/img/demosite/logo-thecrew.svg') }}" alt="The Crew" class="main-header__logo__img">
             </a>
 
 
@@ -52,7 +52,7 @@
             {# Logo #}
             {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
-                <img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
+                <img src="{{ asset('/frontend/img/demosite/logo-thecrew.svg') }}" alt="The Crew" class="main-header__logo__img">
             </a>
 
 
@@ -121,7 +121,7 @@
             {# Logo #}
             {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
-                <img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="main-header__logo__img">
+                <img src="{{ asset('/frontend/img/general/logo-kunstmaan.svg') }}" alt="Kunstmaan" class="main-header__logo__img">
             </a>
 
 

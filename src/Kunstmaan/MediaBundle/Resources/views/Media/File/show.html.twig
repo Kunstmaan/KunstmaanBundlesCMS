@@ -1,7 +1,7 @@
 {% extends '@KunstmaanMedia/Media/show.html.twig' %}
 
 {% block extraactions %}
-    <a href="{{ asset(media.url) }}" target="_blank" class="btn btn-primary btn--raise-on-hover">
+    <a href="{{ asset(media.url, 'media') }}" target="_blank" class="btn btn-primary btn--raise-on-hover">
         {{ 'media.media.download.action'|trans }}
     </a>
 {% endblock %}
@@ -14,9 +14,9 @@
         {{ 'media.media.mediainfo.downloadlink'|trans }}:
     </dt>
     <dd>
-        {% set mediaUrl = media.url %}
-        <a href="{{ absolute_url(asset(mediaUrl)) }}" target="_blank">
-            {{ absolute_url(asset(mediaUrl)) }}
+        {% set mediaUrl = absolute_url(asset(media.url, 'media')) %}
+        <a href="{{ mediaUrl }}" target="_blank">
+            {{ mediaUrl }}
         </a>
     </dd>
 {% endblock %}

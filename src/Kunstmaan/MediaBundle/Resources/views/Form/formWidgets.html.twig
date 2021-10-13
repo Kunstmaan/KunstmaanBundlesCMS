@@ -64,8 +64,8 @@
                         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
                             {% set imageurlretina = imageurl %}
                         {% else %}
-                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
-                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
+                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina'), 'media') %}
+                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail'), 'media') %}
                         {% endif %}
                     {% endif %}
                     {% if imageurl %}

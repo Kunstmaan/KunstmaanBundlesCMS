@@ -3,7 +3,7 @@
 
 {% set cke = (app.request and app.request.get('CKEditorFuncNum')) %}
 {% set path = "[%s]" | format("M" ~ item.id) %}
-<a data-thumb-path="{{ thumbnailurl }}" data-path="{{ item.url ~ '?token=' ~ path }}" data-title="{{ item.name|escape('js') }}" data-id="{{ item.id }}" href="javascript:void(0)" class="js-url-chooser-media-select" data-cke="{% if cke %}true{% else %}false{% endif %}">
+<a data-thumb-path="{{ thumbnailurl is not empty ? asset(thumbnailurl, 'media') }}" data-path="{{ asset(item.url ~ '?token=' ~ path , 'media') }}" data-title="{{ item.name|escape('js') }}" data-id="{{ item.id }}" href="javascript:void(0)" class="js-url-chooser-media-select" data-cke="{% if cke %}true{% else %}false{% endif %}">
     Select
 </a>
 
