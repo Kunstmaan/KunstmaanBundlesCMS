@@ -18,6 +18,8 @@ class KunstmaanMultiDomainExtensionTest extends AbstractExtensionTestCase
 
     public function testCorrectParametersHaveBeenSet()
     {
+        $this->setParameter('kunstmaan_admin.admin_firewall_name', 'main');
+
         $this->load([
             'hosts' => [
                 'host_one' => [

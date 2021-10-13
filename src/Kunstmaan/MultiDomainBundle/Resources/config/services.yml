@@ -30,3 +30,5 @@ services:
     Kunstmaan\MultiDomainBundle\Controller\SiteSwitchController:
         arguments: [ '@kunstmaan_admin.domain_configuration', '@router' ]
         tags: [ 'controller.service_arguments' ]
+
+    Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber: ~
