@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -15,7 +16,6 @@ use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -71,7 +71,7 @@ class NodeAdminPublisher
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
         $this->cloneHelper = $cloneHelper;
         $this->translator = $translator;
     }
@@ -107,7 +107,7 @@ class NodeAdminPublisher
 
         $page = $nodeVersion->getRef($this->em);
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::PRE_PUBLISH
         );
@@ -121,7 +121,7 @@ class NodeAdminPublisher
         // Remove scheduled task
         $this->unSchedulePublish($nodeTranslation);
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::POST_PUBLISH
         );
@@ -167,7 +167,7 @@ class NodeAdminPublisher
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::PRE_UNPUBLISH
         );
@@ -178,7 +178,7 @@ class NodeAdminPublisher
         // Remove scheduled task
         $this->unSchedulePublish($nodeTranslation);
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::POST_UNPUBLISH
         );
@@ -260,7 +260,7 @@ class NodeAdminPublisher
         $this->em->persist($nodeVersion);
         $this->em->persist($nodeTranslation);
         $this->em->flush();
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage),
             Events::CREATE_PUBLIC_VERSION
         );
@@ -314,21 +314,5 @@ class NodeAdminPublisher
             FlashTypes::SUCCESS,
             $this->translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
         );
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

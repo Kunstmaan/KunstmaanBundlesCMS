@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Helper;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\DuplicateSubPageInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -14,7 +15,6 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\PostNodeDuplicateEvent;
 use Kunstmaan\NodeBundle\Event\PreNodeDuplicateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
@@ -40,7 +40,7 @@ class PageCloningHelper
     private $authorizationCheckerInterface;
 
     /** @var EventDispatcherInterface */
-    private $eventDispatcherInterface;
+    private $eventDispatcher;
 
     public function __construct(EntityManagerInterface $em, CloneHelper $cloneHelper, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $identityRetrivalStrategy, AuthorizationCheckerInterface $authorizationChecker, EventDispatcherInterface $eventDispatcher)
     {
@@ -49,7 +49,7 @@ class PageCloningHelper
         $this->aclProvider = $aclProvider;
         $this->identityRetrievalStrategy = $identityRetrivalStrategy;
         $this->authorizationCheckerInterface = $authorizationChecker;
-        $this->eventDispatcherInterface = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
     }
 
     /**
@@ -62,12 +62,12 @@ class PageCloningHelper
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
-        $this->dispatch(new PreNodeDuplicateEvent($originalNode), Events::PRE_DUPLICATE_WITH_CHILDREN);
+        $this->eventDispatcher->dispatch(new PreNodeDuplicateEvent($originalNode), Events::PRE_DUPLICATE_WITH_CHILDREN);
 
         $newPage = $this->clonePage($originalNode, $locale, $title);
         $nodeNewPage = $this->createNodeStructureForNewPage($originalNode, $newPage, $user, $locale);
 
-        $this->dispatch(new PostNodeDuplicateEvent($originalNode, $nodeNewPage, $newPage), Events::POST_DUPLICATE_WITH_CHILDREN);
+        $this->eventDispatcher->dispatch(new PostNodeDuplicateEvent($originalNode, $nodeNewPage, $newPage), Events::POST_DUPLICATE_WITH_CHILDREN);
 
         $this->cloneChildren($originalNode, $newPage, $user, $locale);
 
@@ -151,30 +151,14 @@ class PageCloningHelper
             $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
 
             if (!$originalRef instanceof DuplicateSubPageInterface || !$originalRef->skipClone()) {
-                $this->dispatch(new PreNodeDuplicateEvent($originalNodeChild), Events::PRE_DUPLICATE_WITH_CHILDREN);
+                $this->eventDispatcher->dispatch(new PreNodeDuplicateEvent($originalNodeChild), Events::PRE_DUPLICATE_WITH_CHILDREN);
                 $newChildPage = $this->clonePage($originalNodeChild, $locale);
                 $newChildPage->setParent($newPage);
 
                 $newChildNode = $this->createNodeStructureForNewPage($originalNodeChild, $newChildPage, $user, $locale);
-                $this->dispatch(new PostNodeDuplicateEvent($originalNodeChild, $newChildNode, $newChildPage), Events::POST_DUPLICATE_WITH_CHILDREN);
+                $this->eventDispatcher->dispatch(new PostNodeDuplicateEvent($originalNodeChild, $newChildNode, $newChildPage), Events::POST_DUPLICATE_WITH_CHILDREN);
                 $this->cloneChildren($originalNodeChild, $newChildPage, $user, $locale);
             }
         }
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcherInterface);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcherInterface->dispatch($eventName, $event);
     }
 }

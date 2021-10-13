@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Helper;
 
 use ArrayObject;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
@@ -11,7 +12,6 @@ use Kunstmaan\FormBundle\Event\FormEvents;
 use Kunstmaan\FormBundle\Event\SubmissionEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -71,7 +71,9 @@ class FormHandler implements FormHandlerInterface
                 $em->refresh($formSubmission);
 
                 $event = new SubmissionEvent($formSubmission, $page);
-                $this->dispatch($event, FormEvents::ADD_SUBMISSION);
+
+                $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
+                $eventDispatcher->dispatch($event, FormEvents::ADD_SUBMISSION);
 
                 return new RedirectResponse($page->generateThankYouUrl($router, $context));
             }
@@ -80,22 +82,5 @@ class FormHandler implements FormHandlerInterface
         $context['frontendformobject'] = $form;
 
         return null;
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

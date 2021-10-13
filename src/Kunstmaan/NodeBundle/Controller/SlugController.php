@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -17,7 +18,6 @@ use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -42,7 +42,7 @@ final class SlugController extends AbstractController
 
         $this->nodeMenu = $nodeMenu;
         $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
     }
 
     /**
@@ -91,7 +91,7 @@ final class SlugController extends AbstractController
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
 
-        $this->dispatch($securityEvent, Events::SLUG_SECURITY);
+        $this->eventDispatcher->dispatch($securityEvent, Events::SLUG_SECURITY);
 
         //render page
         $renderContext = new RenderContext(
@@ -165,21 +165,5 @@ final class SlugController extends AbstractController
         }
 
         return $entity;
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }
