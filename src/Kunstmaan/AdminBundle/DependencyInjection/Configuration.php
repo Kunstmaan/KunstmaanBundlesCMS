@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {
@@ -103,40 +102,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('role')->defaultNull()->end()
                             ->arrayNode('params')->defaultValue([])->prototype('scalar')->end()->end()
                             ->scalarNode('parent')->defaultValue('KunstmaanAdminBundle_modules')->end()
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('google_signin')
-                    ->setDeprecated('The "kunstmaan_admin.%node%" option is deprecated. The google oauth authenication will be removed in KusntmaanAdminBundle 6.0.')
-                    ->addDefaultsIfNotSet()
-                    ->canBeEnabled()
-                    ->beforeNormalization()
-                        ->always()
-                        ->then(function ($v) {
-                            if ($v === true || (isset($v['enabled']) && $v['enabled'])) {
-                                if (empty($v['client_id']) || empty($v['client_secret'])) {
-                                    throw new InvalidConfigurationException('The "client_id" and "client_secret" settings are required under the "google_signin" group.');
-                                }
-                            } else {
-                                unset($v['client_id'], $v['client_secret'], $v['hosted_domains']);
-                            }
-
-                            return $v;
-                        })
-                    ->end()
-                    ->children()
-                        ->scalarNode('client_id')->defaultNull()->end()
-                        ->scalarNode('client_secret')->defaultNull()->end()
-                        ->arrayNode('hosted_domains')
-                            ->prototype('array')
-                                ->children()
-                                    ->scalarNode('domain_name')->isRequired()->end()
-                                    ->arrayNode('access_levels')
-                                        ->isRequired()
-                                        ->prototype('scalar')->end()
-                                    ->end()
-                                ->end()
-                            ->end()
                         ->end()
                     ->end()
                 ->end()

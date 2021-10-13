@@ -221,38 +221,6 @@ services:
         arguments: ['@request_stack', '%kunstmaan_admin.multi_language%', '%kunstmaan_admin.default_locale%', '%kunstmaan_admin.required_locales%']
         public: true
 
-    kunstmaan_admin.oauth_authenticator:
-        class: Kunstmaan\AdminBundle\Security\OAuthAuthenticator
-        arguments:
-            - '@router'
-            - '@session'
-            - '@translator'
-            - '@kunstmaan_admin.oauth_user_creator'
-            - '%kunstmaan_admin.google_signin.client_id%'
-            - '%kunstmaan_admin.google_signin.client_secret%'
-
-    kunstmaan_admin.oauth_user_creator:
-        class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '%kunstmaan_admin.google_signin.hosted_domains%'
-            - '%kunstmaan_admin.user_class%'
-            - '@kunstmaan_admin.oauth_user_finder'
-
-    kunstmaan_admin.oauth_user_finder:
-        class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinder
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '%kunstmaan_admin.user_class%'
-
-    kunstmaan_admin.google_signin.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension
-        arguments:
-            - '%kunstmaan_admin.google_signin.enabled%'
-            - '%kunstmaan_admin.google_signin.client_id%'
-        tags:
-            - { name: twig.extension }
-
     kunstmaan_admin.sidebar.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\SidebarTwigExtension
         tags:

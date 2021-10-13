@@ -45,10 +45,6 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.default_admin_locale');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.session_security.ip_check');
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.session_security.user_agent_check');
-        $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.enabled');
-        $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_id');
-        $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.client_secret');
-        $this->assertContainerBuilderHasParameter('kunstmaan_admin.google_signin.hosted_domains');
     }
 
     public function testWebsiteTitleWithParameterAndConfigSet()
