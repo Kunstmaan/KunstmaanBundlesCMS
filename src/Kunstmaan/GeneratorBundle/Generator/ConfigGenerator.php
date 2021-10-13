@@ -6,6 +6,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 
 /**
  * Generates all config files
@@ -29,7 +30,7 @@ class ConfigGenerator extends KunstmaanGenerator
         $this->renderSingleFile(
             $this->skeletonDir,
             $projectDir . '/config/packages/',
-            'security.yaml',
+            interface_exists(PassportInterface::class) ? 'security_sf5.yaml' : 'security.yaml',
             [],
             true,
             $overwriteSecurity ? 'security.yaml' : 'security.yaml.example'
