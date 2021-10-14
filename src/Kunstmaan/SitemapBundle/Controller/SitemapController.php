@@ -4,6 +4,7 @@ namespace Kunstmaan\SitemapBundle\Controller;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Kunstmaan\SitemapBundle\Event\PreSitemapIndexRenderEvent;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
@@ -81,9 +82,13 @@ final class SitemapController
     {
         $locales = $this->domainConfiguration->getBackendLocales();
 
+        $event = new PreSitemapIndexRenderEvent($locales);
+        $this->dispatch($event, PreSitemapIndexRenderEvent::NAME);
+
         return [
             'locales' => $locales,
             'host' => $request->getSchemeAndHttpHost(),
+            'extraSitemaps' => $event->getExtraSitemaps(),
         ];
     }
 
