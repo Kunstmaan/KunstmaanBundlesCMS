@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.9.1 / 2021-10-14
+
+* [AdminBundle] fix routeloading for sf3 [#2980](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2980) ([@Numkil](https://github.com/Numkil))
+
 ## 5.9.0 / 2021-10-07
 
 * [AllBundles] Sf5 event forward compatibilty [#2968](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2968) ([@acrobat](https://github.com/acrobat))
