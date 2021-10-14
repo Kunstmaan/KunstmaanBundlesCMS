@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
@@ -14,7 +15,6 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -84,7 +84,7 @@ class ActionsMenuBuilder
         $this->factory = $factory;
         $this->em = $em;
         $this->router = $router;
-        $this->dispatcher = $dispatcher;
+        $this->dispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($dispatcher);
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
@@ -113,7 +113,7 @@ class ActionsMenuBuilder
             );
         }
 
-        $this->dispatch(
+        $this->dispatcher->dispatch(
             new ConfigureActionMenuEvent(
                 $this->factory,
                 $menu,
@@ -151,7 +151,7 @@ class ActionsMenuBuilder
         );
 
         if (null === $activeNodeVersion) {
-            $this->dispatch(
+            $this->dispatcher->dispatch(
                 new ConfigureActionMenuEvent(
                     $this->factory,
                     $menu,
@@ -427,7 +427,7 @@ class ActionsMenuBuilder
             );
         }
 
-        $this->dispatch(
+        $this->dispatcher->dispatch(
             new ConfigureActionMenuEvent(
                 $this->factory,
                 $menu,
@@ -524,21 +524,5 @@ class ActionsMenuBuilder
     public function setEditableNode($value)
     {
         $this->isEditableNode = $value;
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->dispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->dispatcher->dispatch($eventName, $event);
     }
 }

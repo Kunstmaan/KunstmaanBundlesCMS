@@ -29,12 +29,10 @@ class AdminLocaleListenerTest extends TestCase
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $kernel = $this->createMock(KernelInterface::class);
         $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
-        $token = $this->createMock(UsernamePasswordToken::class);
         $user = $this->createMock(User::class);
+        $token = new UsernamePasswordToken($user, 'credentials', 'main');
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
-        $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getProviderKey')->willReturn('main');
-        $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getUser')->willReturn($user);
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getAdminLocale')->willReturn(null);
         $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('setLocale')->willReturn(null);
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);

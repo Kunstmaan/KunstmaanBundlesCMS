@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Helper;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -16,7 +17,6 @@ use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -48,7 +48,7 @@ class NodeHelper
         $this->nodeAdminPublisher = $nodeAdminPublisher;
         $this->tokenStorage = $tokenStorage;
         $this->cloneHelper = $cloneHelper;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
     }
 
     /**
@@ -86,7 +86,7 @@ class NodeHelper
         $this->em->persist($nodeVersion);
         $this->em->flush();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent(
                 $nodeTranslation->getNode(),
                 $nodeTranslation,
@@ -143,7 +143,7 @@ class NodeHelper
         $isStructureNode,
         TabPane $tabPane = null
     ) {
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::PRE_PERSIST
         );
@@ -165,7 +165,7 @@ class NodeHelper
         }
         $this->em->flush();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::POST_PERSIST
         );
@@ -216,7 +216,7 @@ class NodeHelper
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage),
             Events::ADD_NODE
         );
@@ -235,7 +235,7 @@ class NodeHelper
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::PRE_DELETE
         );
@@ -246,7 +246,7 @@ class NodeHelper
         $this->deleteNodeChildren($node, $locale);
         $this->em->flush();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
             Events::POST_DELETE
         );
@@ -286,7 +286,7 @@ class NodeHelper
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new CopyPageTranslationNodeEvent(
                 $node,
                 $nodeTranslation,
@@ -358,7 +358,7 @@ class NodeHelper
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->addDraftNodeVersionFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new RecopyPageTranslationNodeEvent(
                 $node,
                 $nodeTranslation,
@@ -391,7 +391,7 @@ class NodeHelper
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->dispatch(
+        $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $targetPage),
             Events::ADD_EMPTY_PAGE_TRANSLATION
         );
@@ -430,7 +430,7 @@ class NodeHelper
             $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
             $childNodePage = $childNodeVersion->getRef($this->em);
 
-            $this->dispatch(
+            $this->eventDispatcher->dispatch(
                 new NodeEvent(
                     $childNode,
                     $childNodeTranslation,
@@ -445,7 +445,7 @@ class NodeHelper
 
             $this->deleteNodeChildren($childNode, $locale);
 
-            $this->dispatch(
+            $this->eventDispatcher->dispatch(
                 new NodeEvent(
                     $childNode,
                     $childNodeTranslation,
@@ -484,21 +484,5 @@ class NodeHelper
         }
 
         return $user;
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

@@ -9,16 +9,15 @@ use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,7 +39,7 @@ final class UsersController extends AbstractController
     private $parameterBag;
     /** @var UserManager */
     private $userManager;
-    /** @var LegacyEventDispatcherInterface|EventDispatcherInterface */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, ParameterBagInterface $parameterBag, UserManager $userManager, $eventDispatcher)
@@ -54,7 +53,7 @@ final class UsersController extends AbstractController
         $this->adminListFactory = $adminListFactory;
         $this->parameterBag = $parameterBag;
         $this->userManager = $userManager;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
     }
 
     /**
@@ -190,7 +189,7 @@ final class UsersController extends AbstractController
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
-        $event = $this->dispatch($event, Events::ADAPT_SIMPLE_FORM);
+        $event = $this->eventDispatcher->dispatch($event, Events::ADAPT_SIMPLE_FORM);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formFqn, $user, $options);
@@ -251,7 +250,7 @@ final class UsersController extends AbstractController
             $em->remove($user);
             $em->flush();
 
-            $this->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
+            $this->eventDispatcher->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
@@ -271,21 +270,5 @@ final class UsersController extends AbstractController
     {
         // Redirect to current user edit route...
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $this->getUser()->getId()]));
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

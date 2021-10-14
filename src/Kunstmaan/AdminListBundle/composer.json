@@ -15,7 +15,7 @@
     "require": {
         "php": "^7.2|^8.0",
         "box/spout": "^2.5",
-        "kunstmaan/admin-bundle": "^5.9|^6.0",
+        "kunstmaan/admin-bundle": "^6.1",
         "pagerfanta/core": "^2.4",
         "pagerfanta/doctrine-orm-adapter": "^2.4",
         "pagerfanta/twig": "^2.4"

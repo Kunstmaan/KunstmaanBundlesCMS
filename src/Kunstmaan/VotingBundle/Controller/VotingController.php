@@ -10,9 +10,11 @@ use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class VotingController
@@ -27,7 +29,7 @@ final class VotingController
             throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
         }
 
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = $this->upgradeEventDispatcher($eventDispatcher);
     }
 
     /**
@@ -38,7 +40,7 @@ final class VotingController
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->dispatch(new UpVoteEvent($request, $reference, $value), Events::VOTE_UP);
+        $this->eventDispatcher->dispatch(new UpVoteEvent($request, $reference, $value), Events::VOTE_UP);
     }
 
     /**
@@ -49,7 +51,7 @@ final class VotingController
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->dispatch(new DownVoteEvent($request, $reference, $value), Events::VOTE_DOWN);
+        $this->eventDispatcher->dispatch(new DownVoteEvent($request, $reference, $value), Events::VOTE_DOWN);
     }
 
     /**
@@ -59,7 +61,7 @@ final class VotingController
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
+        $this->eventDispatcher->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
     }
 
     /**
@@ -69,7 +71,7 @@ final class VotingController
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
+        $this->eventDispatcher->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
     }
 
     /**
@@ -79,22 +81,21 @@ final class VotingController
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->dispatch(new LinkedInShareEvent($request, $reference, $value), Events::LINKEDIN_SHARE);
+        $this->eventDispatcher->dispatch(new LinkedInShareEvent($request, $reference, $value), Events::LINKEDIN_SHARE);
     }
 
     /**
-     * @param object $event
-     *
-     * @return object
+     * NEXT_MAJOR remove when sf4.4 support is dropped.
      */
-    private function dispatch($event, string $eventName)
+    public function upgradeEventDispatcher(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
     {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
+        // On Symfony 5.0+, the legacy proxy is a no-op and it is deprecated in 5.1+
+        // Detecting the parent class of GenericEvent (which changed in 5.0) allows to avoid using the deprecated no-op API.
+        if (is_subclass_of(GenericEvent::class, Event::class)) {
+            return $eventDispatcher;
         }
 
-        return $this->eventDispatcher->dispatch($eventName, $event);
+        // BC layer for Symfony 4.4 where we need to apply the decorating proxy in case of non-upgraded dispatcher.
+        return LegacyEventDispatcherProxy::decorate($eventDispatcher);
     }
 }

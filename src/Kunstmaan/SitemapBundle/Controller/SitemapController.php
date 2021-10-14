@@ -3,12 +3,12 @@
 namespace Kunstmaan\SitemapBundle\Controller;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\SitemapBundle\Event\PreSitemapIndexRenderEvent;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -31,7 +31,7 @@ final class SitemapController
 
         $this->nodeMenu = $nodeMenu;
         $this->domainConfiguration = $domainConfiguration;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
     }
 
     /**
@@ -56,7 +56,7 @@ final class SitemapController
         $nodeMenu->setCurrentNode(null);
 
         $event = new PreSitemapRenderEvent($locale);
-        $this->dispatch($event, PreSitemapRenderEvent::NAME);
+        $this->eventDispatcher->dispatch($event, PreSitemapRenderEvent::NAME);
 
         return [
             'nodemenu' => $nodeMenu,
@@ -90,21 +90,5 @@ final class SitemapController
             'host' => $request->getSchemeAndHttpHost(),
             'extraSitemaps' => $event->getExtraSitemaps(),
         ];
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

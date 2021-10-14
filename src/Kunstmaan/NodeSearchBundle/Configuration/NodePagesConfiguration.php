@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Elastica\Index;
 use Elastica\Mapping;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -21,7 +22,6 @@ use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -560,7 +560,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
         $event = new IndexNodeEvent($page, $doc);
-        $this->dispatch($event, IndexNodeEvent::EVENT_INDEX_NODE);
+        $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
+        $eventDispatcher->dispatch($event, IndexNodeEvent::EVENT_INDEX_NODE);
 
         $doc = $event->doc;
 
@@ -630,22 +631,5 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         return $this->nodeRefs[$refEntityName];
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

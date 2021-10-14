@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerP
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AdminPanelCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\EnablePermissionsPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\InjectPasswordHasherPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +29,7 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new AddLogProcessorsCompilerPass());
         $container->addCompilerPass(new DataCollectorPass());
         $container->addCompilerPass(new EnablePermissionsPass());
+        $container->addCompilerPass(new InjectPasswordHasherPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
     }
