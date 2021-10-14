@@ -83,7 +83,7 @@ final class SitemapController
         $locales = $this->domainConfiguration->getBackendLocales();
 
         $event = new PreSitemapIndexRenderEvent($locales);
-        $this->dispatch($event, PreSitemapIndexRenderEvent::NAME);
+        $this->eventDispatcher->dispatch($event, PreSitemapIndexRenderEvent::NAME);
 
         return [
             'locales' => $locales,
