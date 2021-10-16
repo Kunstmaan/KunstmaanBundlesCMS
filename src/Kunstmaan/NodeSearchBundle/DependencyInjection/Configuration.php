@@ -14,19 +14,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * @var bool
-     */
-    private $useElasticSearchVersion6;
-
-    /**
-     * @param bool $useElasticSearchVersion6
-     */
-    public function __construct($useElasticSearchVersion6)
-    {
-        $this->useElasticSearchVersion6 = $useElasticSearchVersion6;
-    }
-
-    /**
      * @return TreeBuilder
      */
     public function getConfigTreeBuilder()
@@ -48,28 +35,16 @@ class Configuration implements ConfigurationInterface
             'binary',
             'geo_point',
         ];
-        if (!$this->useElasticSearchVersion6) {
-            $types[] = 'string';
-        }
 
         $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types)->thenInvalid('type must be one of: ' . implode(', ', $types));
 
-        if ($this->useElasticSearchVersion6) {
-            $properties->children()->booleanNode('fielddata');
-            $properties->children()->booleanNode('doc_values');
-            $properties->children()
-                ->scalarNode('index')
-                ->beforeNormalization()
-                ->ifNotInArray(['true', 'false', true, false])
-                ->thenInvalid('index must be one of: true, false');
-        } else {
-            $properties->children()
-                ->scalarNode('index')
-                ->beforeNormalization()
-                ->ifNotInArray(['analyzed', 'not_analyzed', 'no'])
-                ->thenInvalid('index must be one of: analyzed, not_analyzed, no');
-            $properties->children()->booleanNode('include_in_all');
-        }
+        $properties->children()->booleanNode('fielddata');
+        $properties->children()->booleanNode('doc_values');
+        $properties->children()
+            ->scalarNode('index')
+            ->beforeNormalization()
+            ->ifNotInArray(['true', 'false', true, false])
+            ->thenInvalid('index must be one of: true, false');
 
         $properties->children()->booleanNode('store');
         $properties->children()->floatNode('boost');
