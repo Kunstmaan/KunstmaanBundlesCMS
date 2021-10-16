@@ -80,13 +80,13 @@ class EntityVersionLockService
     {
         /** @var EntityVersionLock $lock */
         $lock = $this->objectManager->getRepository(EntityVersionLock::class)->findOneBy([
-            'owner' => $user->getUsername(),
+            'owner' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
             'lockableEntity' => $entity,
         ]);
         if (!$lock) {
             $lock = new EntityVersionLock();
         }
-        $lock->setOwner($user->getUsername());
+        $lock->setOwner(method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername());
         $lock->setLockableEntity($entity);
         $lock->setCreatedAt(new \DateTime());
         $this->objectManager->persist($lock);
