@@ -83,12 +83,7 @@ class KunstmaanTranslatorExtension extends Extension
             $dirs[] = \dirname($r->getFileName()) . '/Resources/translations';
         }
 
-        if (Kernel::VERSION_ID < 4000) {
-            $overridePath = $container->getParameter('kernel.root_dir') . '/Resources/%s/translations';
-        } else {
-            $overridePath = $container->getParameter('kernel.project_dir') . '/translations';
-        }
-
+        $overridePath = $container->getParameter('kernel.project_dir') . '/translations';
         foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {
             $reflection = new \ReflectionClass($class);
             if (is_dir($dir = \dirname($reflection->getFileName()) . '/Resources/translations')) {
@@ -99,12 +94,7 @@ class KunstmaanTranslatorExtension extends Extension
             }
         }
 
-        if (Kernel::VERSION_ID < 4000) {
-            $dir = $container->getParameter('kernel.root_dir') . '/Resources/translations';
-        } else {
-            $dir = $container->getParameter('kernel.project_dir') . '/translations';
-        }
-
+        $dir = $container->getParameter('kernel.project_dir') . '/translations';
         if (is_dir($dir)) {
             $dirs[] = $dir;
         }

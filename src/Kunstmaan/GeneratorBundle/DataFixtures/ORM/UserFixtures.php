@@ -59,13 +59,6 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             "<comment>  > User 'admin' created with password '$password'</comment>",
         ]);
 
-        if (Kernel::VERSION_ID < 40000) {
-            $file = $this->container->get('kernel')->getProjectDir() . '/app/config/config.yml';
-            $contents = file_get_contents($file);
-            $contents = str_replace('-adminpwd-', $password, $contents);
-            file_put_contents($file, $contents);
-        }
-
         $this->setReference(self::REFERENCE_ADMIN_USER, $user1);
     }
 

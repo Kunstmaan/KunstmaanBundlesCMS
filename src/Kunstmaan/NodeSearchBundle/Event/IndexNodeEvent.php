@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\NodeSearchBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class IndexNodeEvent extends BcEvent
+final class IndexNodeEvent extends Event
 {
     const EVENT_INDEX_NODE = 'kunstmaan_node_search.onIndexNode';
 

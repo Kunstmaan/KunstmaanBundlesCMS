@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\AdminListBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class AdminListEvent extends BcEvent
+final class AdminListEvent extends Event
 {
     /**
      * @var object

@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\FormBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class SubmissionEvent extends BcEvent
+final class SubmissionEvent extends Event
 {
     /**
      * @var FormSubmission

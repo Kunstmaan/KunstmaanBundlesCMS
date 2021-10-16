@@ -191,17 +191,10 @@ class AclNativeHelperTest extends TestCase
 
     private function getRoleMockData($anonymous = false)
     {
-        if (Kernel::VERSION_ID >= 40300) {
-            $rolesMethodName = 'getRoleNames';
-            $reachableRolesMethodName = 'getReachableRoleNames';
-            $roles = ['ROLE_KING'];
-            $allRoles = [$roles[0], 'ROLE_SUBJECT'];
-        } else {
-            $rolesMethodName = 'getRoles';
-            $reachableRolesMethodName = 'getReachableRoles';
-            $roles = $anonymous ? [] : [new Role('ROLE_KING')];
-            $allRoles = $anonymous ? [] : [$roles[0], new Role('ROLE_SUBJECT')];
-        }
+        $rolesMethodName = 'getRoleNames';
+        $reachableRolesMethodName = 'getReachableRoleNames';
+        $roles = $anonymous ? [] : ['ROLE_KING'];
+        $allRoles = $anonymous ? [] : [$roles[0], 'ROLE_SUBJECT'];
 
         return [
             $rolesMethodName,

@@ -26,7 +26,7 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
     {
         if (!$container->hasParameter('form_submission_rootdir')) {
             $container->setParameter('form_submission_rootdir',
-                sprintf('%s/%s/uploads/formsubmissions', $container->getParameter('kernel.project_dir'), Kernel::VERSION_ID >= 40000 ? 'public' : 'web'));
+                sprintf('%s/%s/uploads/formsubmissions', $container->getParameter('kernel.project_dir'), 'public'));
         }
 
         if (!$container->hasParameter('form_submission_webdir')) {

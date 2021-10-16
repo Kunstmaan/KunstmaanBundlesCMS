@@ -30,12 +30,8 @@ class ConfigurationTest extends TestCase
             ],
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
-            'web_root' => '%kernel.project_dir%/web',
+            'web_root' => '%kernel.project_dir%/public',
         ];
-
-        if (Kernel::VERSION_ID >= 40000) {
-            $array['web_root'] = '%kernel.project_dir%/public';
-        }
 
         $expectedConfig = $array;
 

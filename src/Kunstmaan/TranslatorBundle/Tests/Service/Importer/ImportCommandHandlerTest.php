@@ -71,31 +71,8 @@ class ImportCommandHandlerTest extends WebTestCase
         $this->assertEquals($expectedArray, $locales);
     }
 
-    /**
-     * @group legacy
-     */
-    public function testImportBundleTranslationFiles()
-    {
-        if (Kernel::VERSION_ID >= 40000) {
-            $this->markTestSkipped('Skip symfony 3 test');
-        }
-
-        $importCommand = new ImportCommand();
-        $importCommand
-            ->setForce(false)
-            ->setLocales(false)
-            ->setGlobals(true)
-            ->setDefaultBundle('own');
-
-        $this->assertEquals(0, $this->importCommandHandler->importBundleTranslationFiles($importCommand));
-    }
-
     public function testImportSf4TranslationFiles()
     {
-        if (Kernel::VERSION_ID < 40000) {
-            $this->markTestSkipped('Skip symfony 4 test');
-        }
-
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)

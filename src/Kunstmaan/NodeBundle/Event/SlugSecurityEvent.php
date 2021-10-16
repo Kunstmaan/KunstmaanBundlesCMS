@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class SlugSecurityEvent extends BcEvent
+final class SlugSecurityEvent extends Event
 {
     private $node;
 

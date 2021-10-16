@@ -13,12 +13,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kuma_translator');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('kuma_translator');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $availableStorageEngines = ['orm'];
         $defaultFileFormats = ['yml', 'yaml', 'xliff'];
