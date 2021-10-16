@@ -18,7 +18,7 @@ class ConfigurationTest extends TestCase
 
     private const DEFAULT_EXPECTED_CONFIG = [
         'website_title' => null,
-        'multi_language' => null,
+        'multi_language' => true,
         'required_locales' => null,
         'default_locale' => null,
         'admin_prefix' => 'admin',
@@ -65,7 +65,7 @@ class ConfigurationTest extends TestCase
     {
         $array = [
             'website_title' => null,
-            'multi_language' => null,
+            'multi_language' => true,
             'required_locales' => null,
             'default_locale' => null,
             'authentication' => [
