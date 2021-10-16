@@ -113,13 +113,6 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setConfirmationToken($confirmationToken);
 
     /**
-     * Sets the timestamp that the user requested a password reset.
-     *
-     * @return static
-     */
-    public function setPasswordRequestedAt(\DateTime $date = null);
-
-    /**
      * Sets the last login time.
      *
      * @return static

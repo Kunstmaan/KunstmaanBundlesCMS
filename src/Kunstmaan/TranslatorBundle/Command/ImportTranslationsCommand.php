@@ -9,9 +9,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * NEXT_MAJOR file will be renamed
- */
 final class ImportTranslationsCommand extends Command
 {
     /**

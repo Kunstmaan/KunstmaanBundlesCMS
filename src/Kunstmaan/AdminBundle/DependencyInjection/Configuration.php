@@ -30,15 +30,9 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('menu_item')
             ->children()
                 ->scalarNode('website_title')->defaultNull()->end()
-                ->scalarNode('multi_language') //NEXT_MAJOR: change type to booleanNode and make required or provide default value
-                    ->defaultNull()
-                    ->beforeNormalization()->ifString()->then(function ($v) {
-                        // Workaroud to allow detecting if value is not provided. Can be removed when type is switched to booleanNode
-                        return (bool) $v;
-                    })->end()
-                ->end()
-                ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
-                ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
+                ->booleanNode('multi_language')->isRequired()->defaultFalse()->end()
+                ->scalarNode('required_locales')->isRequired()->end()
+                ->scalarNode('default_locale')->isRequired()->end()
                 ->scalarNode('admin_password')->end()
                 ->arrayNode('authentication')
                     ->addDefaultsIfNotSet()
