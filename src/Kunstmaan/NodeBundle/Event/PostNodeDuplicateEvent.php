@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class PostNodeDuplicateEvent extends BcEvent
+final class PostNodeDuplicateEvent extends Event
 {
     /**
      * @var Node

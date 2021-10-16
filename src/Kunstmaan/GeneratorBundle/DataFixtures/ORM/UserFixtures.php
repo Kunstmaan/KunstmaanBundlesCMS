@@ -9,7 +9,6 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Fixture for creating the admin and guest user
@@ -58,13 +57,6 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $output->writeln([
             "<comment>  > User 'admin' created with password '$password'</comment>",
         ]);
-
-        if (Kernel::VERSION_ID < 40000) {
-            $file = $this->container->get('kernel')->getProjectDir() . '/app/config/config.yml';
-            $contents = file_get_contents($file);
-            $contents = str_replace('-adminpwd-', $password, $contents);
-            file_put_contents($file, $contents);
-        }
 
         $this->setReference(self::REFERENCE_ADMIN_USER, $user1);
     }

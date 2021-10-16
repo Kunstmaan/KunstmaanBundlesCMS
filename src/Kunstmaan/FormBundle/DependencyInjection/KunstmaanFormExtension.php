@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\HttpKernel\Kernel;
 
 class KunstmaanFormExtension extends Extension implements PrependExtensionInterface
 {
@@ -26,7 +25,7 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
     {
         if (!$container->hasParameter('form_submission_rootdir')) {
             $container->setParameter('form_submission_rootdir',
-                sprintf('%s/%s/uploads/formsubmissions', $container->getParameter('kernel.project_dir'), Kernel::VERSION_ID >= 40000 ? 'public' : 'web'));
+                sprintf('%s/%s/uploads/formsubmissions', $container->getParameter('kernel.project_dir'), 'public'));
         }
 
         if (!$container->hasParameter('form_submission_webdir')) {

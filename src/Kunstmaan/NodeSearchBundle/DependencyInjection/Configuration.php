@@ -32,12 +32,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kunstmaan_node_search');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('kunstmaan_node_search');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode->children()->booleanNode('enable_update_listener')->defaultTrue();
         $rootNode->children()->booleanNode('use_match_query_for_title')->defaultFalse();

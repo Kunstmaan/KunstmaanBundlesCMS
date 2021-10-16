@@ -61,10 +61,9 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     private function importGlobalTranslationFiles(ImportCommand $importCommand)
     {
-        $baseDir = Kernel::VERSION_ID >= 40000 ? $this->kernel->getProjectDir() : $this->kernel->getRootDir();
-        $translationsDir = Kernel::VERSION_ID >= 40000 ? 'translations' : null;
+        $baseDir = $this->kernel->getProjectDir();
         $locales = $this->determineLocalesToImport($importCommand);
-        $finder = $this->translationFileExplorer->find($baseDir, $locales, $translationsDir);
+        $finder = $this->translationFileExplorer->find($baseDir, $locales, 'translations');
 
         return $this->importTranslationFiles($finder, $importCommand->getForce());
     }
@@ -80,10 +79,7 @@ class ImportCommandHandler extends AbstractCommandHandler
 
         if ($importBundle === 'all') {
             $importCount = $this->importAllBundlesTranslationFiles($importCommand);
-
-            if (Kernel::VERSION_ID >= 40000) {
-                $importCount += $this->importSf4TranslationFiles($importCommand);
-            }
+            $importCount += $this->importSf4TranslationFiles($importCommand);
 
             return $importCount;
         }
