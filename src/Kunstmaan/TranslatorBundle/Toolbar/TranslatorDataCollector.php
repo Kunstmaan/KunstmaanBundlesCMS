@@ -72,10 +72,7 @@ class TranslatorDataCollector extends AbstractDataCollector
         return ['data' => $data];
     }
 
-    /**
-     * NEXT_MAJOR Add \Throwable $exception typehint when symfony version < 5 support is removed
-     */
-    public function collect(Request $request, Response $response, $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {
             $this->data = false;

@@ -18,10 +18,8 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 

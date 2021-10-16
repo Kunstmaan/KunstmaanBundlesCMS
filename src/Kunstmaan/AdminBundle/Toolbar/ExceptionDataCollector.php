@@ -43,10 +43,7 @@ class ExceptionDataCollector extends AbstractDataCollector
         }
     }
 
-    /**
-     * NEXT_MAJOR Add \Throwable $exception typehint when symfony version < 5 support is removed
-     */
-    public function collect(Request $request, Response $response, $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         if (false === $this->isEnabled()) {
             $this->data = false;

@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Custom handler for PDF files (display thumbnails if imagemagick is enabled and has PDF support)

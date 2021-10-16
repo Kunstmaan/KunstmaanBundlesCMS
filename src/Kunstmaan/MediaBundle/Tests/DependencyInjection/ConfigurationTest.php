@@ -5,7 +5,6 @@ namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 use Kunstmaan\MediaBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Kernel;
 
 class ConfigurationTest extends TestCase
 {

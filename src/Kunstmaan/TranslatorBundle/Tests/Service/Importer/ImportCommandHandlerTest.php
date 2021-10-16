@@ -4,7 +4,6 @@ namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Kunstmaan\TranslatorBundle\Tests\WebTestCase;
-use Symfony\Component\HttpKernel\Kernel;
 
 class ImportCommandHandlerTest extends WebTestCase
 {

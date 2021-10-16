@@ -9,7 +9,6 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Fixture for creating the admin and guest user

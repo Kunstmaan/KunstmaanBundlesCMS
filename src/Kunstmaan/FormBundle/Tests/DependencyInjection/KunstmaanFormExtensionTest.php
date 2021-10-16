@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\DependencyInjection;
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
 {
