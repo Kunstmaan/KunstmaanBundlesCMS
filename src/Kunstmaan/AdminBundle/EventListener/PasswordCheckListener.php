@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -59,15 +58,8 @@ class PasswordCheckListener
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
-    /**
-     * @param GetResponseEvent|ResponseEvent $event
-     **/
-    public function onKernelRequest($event)
+    public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event instanceof GetResponseEvent && !$event instanceof RequestEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $url = $event->getRequest()->getRequestUri();
         if (!$this->adminRouteHelper->isAdminRoute($url)) {
             return;
