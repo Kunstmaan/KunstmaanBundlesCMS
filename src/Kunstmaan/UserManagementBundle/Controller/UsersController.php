@@ -17,7 +17,6 @@ use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -42,13 +41,8 @@ final class UsersController extends AbstractController
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, ParameterBagInterface $parameterBag, UserManager $userManager, $eventDispatcher)
+    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, ParameterBagInterface $parameterBag, UserManager $userManager, EventDispatcherInterface $eventDispatcher)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
-        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
-        }
-
         $this->translator = $translator;
         $this->adminListFactory = $adminListFactory;
         $this->parameterBag = $parameterBag;

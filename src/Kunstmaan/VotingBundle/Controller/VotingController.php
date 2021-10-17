@@ -9,7 +9,6 @@ use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,16 +18,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class VotingController
 {
-    /** @var LegacyEventDispatcherInterface|EventDispatcherInterface */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct($eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
-        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
-        }
-
         $this->eventDispatcher = $this->upgradeEventDispatcher($eventDispatcher);
     }
 
@@ -87,7 +81,7 @@ final class VotingController
     /**
      * NEXT_MAJOR remove when sf4.4 support is dropped.
      */
-    public function upgradeEventDispatcher(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
+    private function upgradeEventDispatcher(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
     {
         // On Symfony 5.0+, the legacy proxy is a no-op and it is deprecated in 5.1+
         // Detecting the parent class of GenericEvent (which changed in 5.0) allows to avoid using the deprecated no-op API.

@@ -8,7 +8,6 @@ use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\SitemapBundle\Event\PreSitemapIndexRenderEvent;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -22,13 +21,8 @@ final class SitemapController
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct(NodeMenu $nodeMenu, DomainConfigurationInterface $domainConfiguration, $eventDispatcher)
+    public function __construct(NodeMenu $nodeMenu, DomainConfigurationInterface $domainConfiguration, EventDispatcherInterface $eventDispatcher)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
-        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
-        }
-
         $this->nodeMenu = $nodeMenu;
         $this->domainConfiguration = $domainConfiguration;
         $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
