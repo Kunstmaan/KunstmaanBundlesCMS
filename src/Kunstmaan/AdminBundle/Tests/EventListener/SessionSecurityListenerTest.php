@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -27,7 +25,7 @@ class SessionSecurityListenerTest extends TestCase
         $request->headers = $this->createMock(HeaderBag::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
         $session = $this->createMock(Session::class);
 
         $request->expects($this->once())->method('hasSession')->willReturn(true);
@@ -40,7 +38,7 @@ class SessionSecurityListenerTest extends TestCase
         $listener = new SessionSecurityListener(true, true, $logger);
         $listener->onKernelRequest($event);
 
-        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST);
+        $event = new RequestEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST);
         $listener->onKernelRequest($event);
     }
 
@@ -52,7 +50,7 @@ class SessionSecurityListenerTest extends TestCase
         $request->headers = $this->createMock(HeaderBag::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $event = class_exists(RequestEvent::class) ? new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response()) : new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response());
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response());
         $session = $this->createMock(Session::class);
 
         $request->expects($this->once())->method('hasSession')->willReturn(true);
@@ -65,7 +63,7 @@ class SessionSecurityListenerTest extends TestCase
         $listener = new SessionSecurityListener(true, true, $logger);
         $listener->onKernelResponse($event);
 
-        $event = class_exists(RequestEvent::class) ? new ResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST, new Response()) : new FilterResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST, new Response());
+        $event = new ResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST, new Response());
         $listener->onKernelResponse($event);
     }
 
@@ -77,7 +75,7 @@ class SessionSecurityListenerTest extends TestCase
         $request->headers = $this->createMock(HeaderBag::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $event = class_exists(RequestEvent::class) ? new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response()) : new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response());
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, new Response());
         $session = $this->createMock(Session::class);
 
         $request->expects($this->once())->method('hasSession')->willReturn(true);

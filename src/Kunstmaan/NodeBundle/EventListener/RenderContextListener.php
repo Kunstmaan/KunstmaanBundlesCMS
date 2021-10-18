@@ -6,8 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class RenderContextListener
@@ -22,15 +20,8 @@ class RenderContextListener
         $this->em = $em;
     }
 
-    /**
-     * @param GetResponseForControllerResultEvent|ViewEvent $event
-     */
-    public function onKernelView($event)
+    public function onKernelView(ViewEvent $event)
     {
-        if (!$event instanceof GetResponseForControllerResultEvent && !$event instanceof ViewEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(RequestEvent::class) ? ViewEvent::class : GetResponseForControllerResultEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $response = $event->getControllerResult();
         if ($response instanceof Response) {
             // If it's a response, just continue

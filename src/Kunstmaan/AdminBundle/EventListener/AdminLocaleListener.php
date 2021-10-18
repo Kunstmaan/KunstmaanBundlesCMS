@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -54,15 +53,8 @@ class AdminLocaleListener implements EventSubscriberInterface
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
-    /**
-     * @param GetResponseEvent|RequestEvent $event
-     */
-    public function onKernelRequest($event)
+    public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event instanceof GetResponseEvent && !$event instanceof RequestEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(RequestEvent::class) ? RequestEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $url = $event->getRequest()->getRequestUri();
         if (!$this->adminRouteHelper->isAdminRoute($url)) {
             return;

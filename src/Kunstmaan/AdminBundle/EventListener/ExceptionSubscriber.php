@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -38,15 +37,8 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $this->excludes = $excludes;
     }
 
-    /**
-     * @param GetResponseForExceptionEvent|ExceptionEvent $event
-     */
-    public function onKernelException($event)
+    public function onKernelException(ExceptionEvent $event)
     {
-        if (!$event instanceof GetResponseForExceptionEvent && !$event instanceof ExceptionEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ExceptionEvent::class) ? ExceptionEvent::class : GetResponseForExceptionEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $request = $event->getRequest();
         $exception = \method_exists($event, 'getThrowable') ? $event->getThrowable() : $event->getException();
 
