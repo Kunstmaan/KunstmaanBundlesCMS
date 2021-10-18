@@ -2,135 +2,146 @@
 
 namespace Kunstmaan\MultiDomainBundle\Tests\EventListener;
 
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
+use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HostOverrideListenerTest extends TestCase
 {
-    /**
-     * @var HostOverrideListener
-     */
-    protected $object;
-
-    protected $session;
+    use ExpectDeprecationTrait;
 
     /**
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     * @group legacy
      */
+    public function testConstructorDeprecation()
+    {
+        $this->expectDeprecation('Passing 4 arguments and a service instance of "Symfony\Component\HttpFoundation\Session\SessionInterface" as the first argument in "Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct" is deprecated since KunstmaanMultiDomainBundle 5.10 and the constructor signature will change in KunstmaanMultiDomainBundle 6.0. Remove the first argument and inject the required services instead.');
+
+        $requestStack = new RequestStack();
+        new HostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPropertiesWithDeprecatedConstructor()
+    {
+        $requestStack = new RequestStack();
+        $listener = new MockedHostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
+
+        $this->assertInstanceOf(Session::class, $listener->getSession());
+        $this->assertInstanceOf(class_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
+        $this->assertInstanceOf(DomainConfigurationInterface::class, $listener->getDomainConfiguration());
+        $this->assertInstanceOf(AdminRouteHelper::class, $listener->getAdminRouteHelper());
+    }
+
+    public function testPropertiesWithNewConstructor()
+    {
+        $requestStack = new RequestStack();
+        $listener = new MockedHostOverrideListener(new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
+
+        $this->assertNull($listener->getSession());
+        $this->assertInstanceOf(class_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
+        $this->assertInstanceOf(DomainConfigurationInterface::class, $listener->getDomainConfiguration());
+        $this->assertInstanceOf(AdminRouteHelper::class, $listener->getAdminRouteHelper());
+    }
+
     public function testHostOverrideMessageIsSetForAdmin()
     {
-        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        $flashBag
-            ->expects($this->once())
-            ->method('add')
-            ->with('warning', 'multi_domain.host_override_active');
+        $listener = $this->getHostOverrideListener();
 
-        $object = $this->getHostOverrideListener($flashBag);
+        $event = $this->getEvent($this->getAdminRequest(), new Response());
+        $listener->onKernelResponse($event);
 
-        $event = $this->getEvent($this->getAdminRequest(), $this->getResponse());
-        $object->onKernelResponse($event);
+        $flashbag = $event->getRequest()->getSession()->getFlashBag();
+        $this->assertContains('multi_domain.host_override_active', $flashbag->get('warning'));
     }
 
-    /**
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     */
     public function testHostOverrideMessageIsNotSetForAdminRedirectResponse()
     {
-        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        $flashBag
-            ->expects($this->never())
-            ->method('add');
+        $listener = $this->getHostOverrideListener();
 
-        $object = $this->getHostOverrideListener($flashBag);
+        $event = $this->getEvent($this->getAdminRequest(), new RedirectResponse('/redirect'));
+        $listener->onKernelResponse($event);
 
-        $event = $this->getEvent($this->getAdminRequest(), $this->getRedirectResponse());
-        $object->onKernelResponse($event);
+        $flashbag = $event->getRequest()->getSession()->getFlashBag();
+        $this->assertCount(0, $flashbag->all());
     }
 
-    /**
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     */
     public function testHostOverrideMessageIsNotSetForSubRequest()
     {
-        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        $flashBag
-            ->expects($this->never())
-            ->method('add');
+        $listener = $this->getHostOverrideListener();
 
-        $object = $this->getHostOverrideListener($flashBag);
+        $event = $this->getEvent($this->getAdminRequest(), new Response(), HttpKernelInterface::SUB_REQUEST);
+        $listener->onKernelResponse($event);
 
-        $event = $this->getEvent($this->getAdminRequest(), $this->getResponse(), HttpKernelInterface::SUB_REQUEST);
-        $object->onKernelResponse($event);
+        $flashbag = $event->getRequest()->getSession()->getFlashBag();
+        $this->assertCount(0, $flashbag->all());
     }
 
-    /**
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     */
     public function testHostOverrideMessageIsNotSetForXmlRequest()
     {
-        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        $flashBag
-            ->expects($this->never())
-            ->method('add');
+        $listener = $this->getHostOverrideListener();
 
-        $object = $this->getHostOverrideListener($flashBag);
+        $request = Request::create('http://domain.tld/nl/admin/some-admin-uri');
+        $request->headers->set('X-Requested-With', 'XMLHttpRequest');
+        $request->setSession($this->getSession());
 
-        $event = $this->getEvent($this->getXmlHttpRequest(), $this->getResponse());
-        $object->onKernelResponse($event);
+        $event = $this->getEvent($request, new Response());
+        $listener->onKernelResponse($event);
+
+        $flashbag = $event->getRequest()->getSession()->getFlashBag();
+        $this->assertCount(0, $flashbag->all());
     }
 
-    /**
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     */
     public function testHostOverrideMessageIsNotSetForPreview()
     {
-        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        $flashBag
-            ->expects($this->never())
-            ->method('add');
+        $listener = $this->getHostOverrideListener();
 
-        $object = $this->getHostOverrideListener($flashBag);
+        $request = Request::create('http://domain.tld/nl/admin/preview/some-uri');
+        $request->setSession($this->getSession());
 
-        $event = $this->getEvent($this->getAdminPreviewRequest(), $this->getResponse());
-        $object->onKernelResponse($event);
+        $event = $this->getEvent($request, new Response());
+        $listener->onKernelResponse($event);
+
+        $flashbag = $event->getRequest()->getSession()->getFlashBag();
+        $this->assertCount(0, $flashbag->all());
     }
 
-    /**
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
-     * @covers \Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     */
     public function testHostOverrideMessageIsNotSetForFrontend()
     {
-        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        $flashBag
-            ->expects($this->never())
-            ->method('add');
+        $listener = $this->getHostOverrideListener();
 
-        $object = $this->getHostOverrideListener($flashBag);
+        $request = Request::create('http://domain.tld/nl/some-uri');
+        $request->setSession($this->getSession());
 
-        $event = $this->getEvent($this->getFrontendRequest(), $this->getResponse());
-        $object->onKernelResponse($event);
+        $event = $this->getEvent($request, new Response());
+        $listener->onKernelResponse($event);
+
+        $flashbag = $event->getRequest()->getSession()->getFlashBag();
+        $this->assertCount(0, $flashbag->all());
     }
 
-    private function getHostOverrideListener($flashBag)
+    private function getHostOverrideListener()
     {
-        $session = $this->getMockBuilder('Symfony\Component\HttpFoundation\Session\Session')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $session->method('getFlashBag')
-            ->willReturn($flashBag);
-
-        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock(DomainConfigurationInterface::class);
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
         $translator = $this->createMock(Translator::class);
@@ -143,7 +154,7 @@ class HostOverrideListenerTest extends TestCase
             ['/nl/admin/some-admin-uri', true],
         ];
 
-        $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')
+        $adminRouteHelper = $this->getMockBuilder(AdminRouteHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
         $adminRouteHelper
@@ -151,9 +162,7 @@ class HostOverrideListenerTest extends TestCase
             ->method('isAdminRoute')
             ->willReturnMap($adminRouteReturnValueMap);
 
-        $listener = new HostOverrideListener($session, $translator, $domainConfiguration, $adminRouteHelper);
-
-        return $listener;
+        return new HostOverrideListener($translator, $domainConfiguration, $adminRouteHelper);
     }
 
     private function getEvent($request, $response, $requestType = HttpKernelInterface::MASTER_REQUEST)
@@ -163,40 +172,39 @@ class HostOverrideListenerTest extends TestCase
         return new ResponseEvent($kernel, $request, $requestType, $response);
     }
 
-    private function getResponse()
-    {
-        return $this->createMock('Symfony\Component\HttpFoundation\Response');
-    }
-
-    private function getRedirectResponse()
-    {
-        $response = $this->getMockBuilder('Symfony\Component\HttpFoundation\RedirectResponse')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $response;
-    }
-
-    private function getXmlHttpRequest()
+    private function getAdminRequest()
     {
         $request = Request::create('http://domain.tld/nl/admin/some-admin-uri');
-        $request->headers->set('X-Requested-With', 'XMLHttpRequest');
+        $request->setSession($this->getSession());
 
         return $request;
     }
 
-    private function getAdminRequest()
+    private function getSession(): Session
     {
-        return Request::create('http://domain.tld/nl/admin/some-admin-uri');
+        return new Session(new MockArraySessionStorage());
+    }
+}
+
+class MockedHostOverrideListener extends HostOverrideListener
+{
+    public function getSession()
+    {
+        return $this->session;
     }
 
-    private function getAdminPreviewRequest()
+    public function getTranslator()
     {
-        return Request::create('http://domain.tld/nl/admin/preview/some-uri');
+        return $this->translator;
     }
 
-    private function getFrontendRequest()
+    public function getDomainConfiguration()
     {
-        return Request::create('http://domain.tld/nl/some-uri');
+        return $this->domainConfiguration;
+    }
+
+    public function getAdminRouteHelper()
+    {
+        return $this->adminRouteHelper;
     }
 }
