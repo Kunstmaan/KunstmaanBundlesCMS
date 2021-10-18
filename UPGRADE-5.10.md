@@ -8,6 +8,11 @@ AdminBundle
   to login in the admin interface with google, implement the authenticator in your project.
 * Passing a service instance of `Symfony\Component\HttpFoundation\Session\SessionInterface` for the first argument in `Kunstmaan\AdminBundle\EventListener\PasswordCheckListener::__construct` is deprecated and an instance of `Symfony\Component\HttpFoundation\RequestStack` will be required in 6.0.
 
+MultiDomainBundle
+-----------------
+
+* Passing a service instance of `Symfony\Component\HttpFoundation\Session\SessionInterface` for the first argument in `Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct` is deprecated and will be removed required in 6.0. Check the constructor arguments and inject the required services instead.
+
 NodeBundle
 ----------
 
