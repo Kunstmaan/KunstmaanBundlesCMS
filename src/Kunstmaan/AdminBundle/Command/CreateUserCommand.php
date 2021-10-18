@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Service\GroupManager;
 use Kunstmaan\AdminBundle\Service\UserManager;
@@ -24,8 +23,6 @@ final class CreateUserCommand extends Command
 
     /** @var array */
     private $groups = [];
-    /** @var EntityManagerInterface */
-    private $em;
     /** @var GroupManager */
     private $groupManager;
     /** @var UserManager */
@@ -33,11 +30,10 @@ final class CreateUserCommand extends Command
     /** @var string */
     private $defaultLocale;
 
-    public function __construct(EntityManagerInterface $em, GroupManager $groupManager, UserManager $userManager, string $defaultLocale)
+    public function __construct(GroupManager $groupManager, UserManager $userManager, string $defaultLocale)
     {
         parent::__construct();
 
-        $this->em = $em;
         $this->groupManager = $groupManager;
         $this->userManager = $userManager;
         $this->defaultLocale = $defaultLocale;
