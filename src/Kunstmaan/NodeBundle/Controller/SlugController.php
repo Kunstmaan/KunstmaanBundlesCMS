@@ -17,7 +17,6 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as LegacyEventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -30,16 +29,11 @@ final class SlugController extends AbstractController
     private $nodeMenu;
     /** @var PsrContainerInterface */
     private $viewDataProviderServiceLocator;
-    /** @var LegacyEventDispatcherInterface|EventDispatcherInterface */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    public function __construct(NodeMenu $nodeMenu, PsrContainerInterface $viewDataProviderServiceLocator, $eventDispatcher)
+    public function __construct(NodeMenu $nodeMenu, PsrContainerInterface $viewDataProviderServiceLocator, EventDispatcherInterface $eventDispatcher)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\EventDispatcher\EventDispatcherInterface" typehint when sf <4.4 support is removed.
-        if (!$eventDispatcher instanceof EventDispatcherInterface && !$eventDispatcher instanceof LegacyEventDispatcherInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$eventDispatcher" parameter should be instance of "%s" or "%s"', EventDispatcherInterface::class, LegacyEventDispatcherInterface::class));
-        }
-
         $this->nodeMenu = $nodeMenu;
         $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
         $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
