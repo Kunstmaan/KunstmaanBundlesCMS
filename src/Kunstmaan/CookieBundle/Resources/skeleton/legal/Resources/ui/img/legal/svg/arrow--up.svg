@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="19px" viewBox="0 0 17 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 18</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Buttons/BacktoTop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-16.000000, -15.000000)">
+        <g id="Icons/Interface/Arrow-down">
+            <g id="Group-18" transform="translate(16.000000, 15.000000)">
+                <path d="M8.5,3.5 L8.5,17.0092561" id="Line-2" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>
+                <path d="M4,11.5928994 L5.40788744,13 L12.708417,5.70355032 C13.0971943,5.31499021 13.0971943,4.68500979 12.708417,4.29644968 L5.40788744,-3 L4,-1.59289935 L9.30947602,4.29644968 C9.75193236,4.76548323 9.75193236,5.23451677 9.30947602,5.70355032 C8.86701969,6.17258387 7.09719435,8.13570022 4,11.5928994 Z" id="Path-2" fill="#FFFFFF" fill-rule="nonzero" transform="translate(8.500000, 5.000000) scale(1, -1) rotate(-270.000000) translate(-8.500000, -5.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

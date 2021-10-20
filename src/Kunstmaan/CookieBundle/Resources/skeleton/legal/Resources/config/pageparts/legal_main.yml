@@ -1,0 +1,17 @@
+{% if isV4 %}
+kunstmaan_page_part:
+    pageparts:
+        legal_main:
+{% endif %}
+{% if isV4 %}            {%endif%}name: "Main"
+{% if isV4 %}            {%endif%}context: "legal_main"
+{% if isV4 %}            {%endif%}types:
+{% if isV4 %}            {%endif%}    - { name: "Button", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ButtonPagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Header", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\HeaderPagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Image", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ImagePagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Intro Text", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\IntroTextPagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Line", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\LinePagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Text", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\TextPagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Tip", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\LegalTipPagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Icon text", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\LegalIconTextPagePart" }
+{% if isV4 %}            {%endif%}    - { name: "Cookies", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\LegalCookiesPagePart" }

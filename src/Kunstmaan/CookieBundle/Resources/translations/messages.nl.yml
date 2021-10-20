@@ -1,0 +1,237 @@
+kuma:
+  cookie:
+    menu:
+        cookies: Cookies
+        cookie: Cookie lijst
+        cookie_types: Cookie types
+
+    form:
+        domain: Domein
+
+    adminlists:
+        header:
+            domain: 'Domein'
+
+        filter:
+            domain: 'Domein'
+            all: 'Alle domeinen'
+
+        cookie_type:
+            name: Naam
+            short_description: Korte beschrijving
+            long_description: uitgebreide beschrijving
+            internal_name: Interne naam
+            internal_name_with_explanation: Interne naam (gebruikt als cookie naam)
+            always_on: Altijd aan
+
+        cookie:
+            name: Naam
+            type: Type
+            description: Beschrijving
+
+    config:
+        help: "Een komma gescheiden lijst van ip-adressen (wildcards mogelijk). Een datalayer zal worden uitgevoerd als het ip-dres van de bezoeker gelijk is aan een van deze ip's"
+        client_ip: Client ip-adressen
+        internal_ip: Interne ip-adressen
+        enabled: Cookie bundle is geactiveerd
+        version:
+            label: Cookie versie
+            info: Wanneer een nieuwe cookie of cookie type wordt toegevoegd moet deze versie verhoogd worden om de cookie consent terug aan de gebruiker te vragen
+
+    bar:
+      title: Deze website werkt optimaal met cookies
+      cookie_preferences: cookie-voorkeuren
+      privacy_policy: privacybeleid
+      footer: "U kan deze instellingen op elk moment aanpassen in je %preferences%. Bekijk ook ons %privacy_policy%."
+      button: Ik aanvaard al deze cookies
+      change_preferences: ik wil mijn cookie-voorkeuren zelf instellen
+
+    cookie_preferences:
+      on: aan
+      off: uit
+      always_on: altijd aan
+      to_top: Terug naar boven
+      save: voorkeuren opslaan
+      detail:
+        desktop:  Deze cookies in detail
+        mobile: Details
+
+    sidebar:
+      back: terug
+
+    pageparts:
+      optin:
+        policy: Lees onze privacy policy
+
+    notification:
+      text: Cookies opgeslagen
+
+    fixtures:
+      cookie_preferences:
+        title: Cookie voorkeuren
+        text:
+          1: "<p>Wij willen dat uw bezoek aan onze website even indrukwekkend is als onze service. Om uw ervaring te optimaliseren, maken we gebruik van cookies en vergelijkbare technieken. In het kader van gegevensbescherming, laten wij u weten hoe wij cookies gebruiken op onze site en hoe u ze, indien u dat wenst en ondanks de voordelen ervan, kunt deactiveren.</p>"
+          2: "<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>"
+          3: "<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.</p>"
+          4: "<p>Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec id elit non mi porta gravida at eget metus.</p>"
+          5: "<p>Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>"
+          6: "<p>Vestibulum id ligula porta felis euismod semper. Donec sed odio dui. Curabitur blandit tempus porttitor.</p>"
+        tip:
+          1: Meer informatie over hoe cookies werken vindt u op de externe website All about cookies.
+          2: 'U kunt ook de cookies die onze partners gebruiken beheren via deze websites: <br> <a target="_blank" href="http://www.youronlinechoices.eu/">Your Online Choices</a> <br> <a target="_blank" href="http://youradchoices.com/"> Your Ad choices</a>'
+        headers:
+          1: Ligula Lorem Justo Commodo Parturient?
+          2: Sit Fusce Dolor Ultricies Quam
+          3: Ipsum Tristique Lorem Purus Bibendum
+          4: Vulputate Aenean Tristique Sollicitudin Mattis
+          5: Justo Parturient Egestas Sem Elit
+          6: Egestas Sem Risus Cras Bibendum
+        icon_text:
+          1:
+            title: Leuk weetje
+            subtitle: Ook digitale cookies hebben een vervaldatum
+            text: Hoelang je cookies juist geldig zijn, hangt af van hoe ze werden ingesteld bij hun aanmaak.
+          2:
+            title: Leuk weetje
+            subtitle: Waar komt de naam cookie vandaan?
+            text: >
+                  <p>De naam 'cookie' werd uitgevonden door webontwikkelaar Lou Montulli, en komt van 'magic cookie', een term die in UNIXprogrammatie gebruikt wordt om een bepaalde procedure te beschrijven. De term grijpt terug naar het Chinese fortune cookie, een koekje waarin een bestand zit opgenomen.</p>
+
+      privacy_policy:
+        title: Privacy beleid
+        text:
+          1: Sed posuere consectetur est at lobortis. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla.
+          2: >
+             <p>
+             Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas sed diam eget risus varius blandit sit amet non magna. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+             Etiam porta sem malesuada magna mollis euismod. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna.
+             Donec ullamcorper nulla non metus auctor fringilla. Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+             </p>
+          3: >
+             <p>
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum.
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+             </p>
+          4: >
+             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+          5: >
+             <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis. Donec ullamcorper nulla non metus auctor fringilla. Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+             <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Sed posuere consectetur est at lobortis.</p>
+             <p>
+             Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus porttitor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vitae elit libero, a pharetra augue.
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+             </p>
+          6: >
+             <p> Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum. Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          7: >
+             <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean lacinia bibendum nulla sed consectetur.</p>
+          8: >
+             <ul>
+                <li>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</li>
+                <li>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</li>
+                <li>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</li>
+                <li>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</li>
+                <li>Sed posuere consectetur est at lobortis.</li>
+             </ul>
+          9: >
+             <p>
+             Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+             </p>
+          10: >
+              <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+              Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec ullamcorper nulla non metus auctor fringilla. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas faucibus mollis interdum.
+              </p>
+          11: >
+              <p>
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus eget urna mollis ornare vel eu leo.
+              Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum.
+              </p>
+
+        headers:
+          1: Over dit privacybeleid
+          2: Mattis Venenatis Fermentum Fringilla Magna?
+          3: Fringilla Lorem Ipsum Vulputate Etiam?
+          4: Mollis Amet Euismod Condimentum Tristique?
+          5: Condimentum Parturient Vulputate Bibendum Quam?
+          6: Vestibulum Vulputate Pellentesque Sem Lorem
+          7: Cras Ultricies Tortor Euismod Consectetur
+          8: Quam Sit Fermentum Adipiscing Vulputate
+          9: Ipsum Pellentesque Adipiscing Elit Etiam?
+          10: Ultricies Cras Ridiculus Purus Amet?
+          11: Ridiculus Tellus Amet Mattis Fusce
+
+      contact:
+        title: Contacteer ons
+        text:
+          1: Deze website wordt beheerd door XX. Voor alle vragen, opmerkingen of eventuele klachten kan u terecht via onderstaande kanalen.
+          2: >
+            <h4>Via mail:</h4> <br>
+            <a href="mailto:privacy@domeinnaam.be">privacy@domeinnaam.be</a>
+          3: >
+            <h4>Contactgegevens</h4>
+            Bedrijfsnaam <br>
+            Straat nummer, postcode gemeente/stad <br>
+            Telefoonnummer
+
+      cookie_types:
+        functional_cookie:
+          name: Functionele cookies
+          internal_name: functional_cookie
+          short_description: Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          long_description: Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod.
+
+        analyzing_cookie:
+          name: Analyserende cookies
+          internal_name: analyzing_cookie
+          short_description: Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+          long_description: Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.
+
+        marketing_cookie:
+          name: Marketing cookies
+          internal_name: marketing_cookie
+          short_description: Maecenas sed diam eget risus varius blandit sit amet non magna.
+          long_description: Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+      cookies:
+        functional_cookie:
+          1:
+            name: Google Analytics
+            description: >
+                <p>Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod. Vestibulum id ligula porta felis euismod semper.</p>
+          2:
+            name: Google Tag Manager
+            description: >
+                <p>Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui. Donec sed odio dui. Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          3:
+            name: Cookievoorkeuren
+            description: >
+                <p>Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui. Donec sed odio dui. Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        marketing_cookie:
+          1:
+            name: Google Adwords
+            description: >
+                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+          2:
+            name: Sumo
+            description: >
+                <p>Maecenas faucibus mollis interdum. Nulla vitae elit libero, a pharetra augue. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod.</p>
+          3:
+            name: LinkedIn insights tags
+            description: >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Cras mattis consectetur purus sit amet fermentum.</p>
+          4:
+            name: Facebook
+            description: >
+                <p>Etiam porta sem malesuada magna mollis euismod. Donec ullamcorper nulla non metus auctor fringilla. Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          5:
+            name: Twitter
+            description: >
+                <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+
+        analyzing_cookie:
+          1:
+            name: Hotjar
+            description: >
+                <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod.</p>

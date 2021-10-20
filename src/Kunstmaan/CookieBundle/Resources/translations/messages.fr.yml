@@ -1,0 +1,199 @@
+kuma:
+  cookie:
+    bar:
+      title: Ce site web fonctionne de manière optimale avec des cookies
+      cookie_preferences: préférences en matière de cookies
+      privacy_policy: politique de confidentialité
+      footer: "Vous pouvez modifier à tout moment ces paramètres dans vos %preferences%. Consultez aussi notre %privacy_policy%."
+      button: J’accepte tous ces cookies
+      change_preferences: Je veux paramétrer moi-même mes préférences en matière de cookies
+
+    cookie_preferences:
+      on: activé
+      off: désactivé
+      always_on: toujours activé
+      to_top: Retour en haut de la page
+      save: enregistrer les préférences
+      detail:
+        desktop: Ces cookies en détail
+        mobile: "Détails"
+
+    sidebar:
+      back: retour
+
+    pageparts:
+      optin:
+        policy: Consultez aussi notre politique de confidentialité
+
+    notification:
+      text: "Cookies enregistrés"
+
+    fixtures:
+      cookie_preferences:
+        title: Préférences en matière de cookies
+        text:
+          1: "<p>Nous souhaitons que votre visite sur notre site web vous impressionne autant que notre service. Afin d’optimiser votre expérience, nous utilisons des cookies et techniques similaires. Dans le cadre de la protection des données, nous vous informons de la manière dont nous utilisons les cookies sur notre site et de la façon dont vous pouvez, si vous le souhaitez et malgré leurs avantages, les désactiver.</p>"
+          2: "<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>"
+          3: "<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.</p>"
+          4: "<p>Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec id elit non mi porta gravida at eget metus.</p>"
+          5: "<p>Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>"
+          6: "<p>Vestibulum id ligula porta felis euismod semper. Donec sed odio dui. Curabitur blandit tempus porttitor.</p>"
+        tip:
+          1: "<p>Vous trouverez de plus amples informations sur le fonctionnement des cookies sur le site web externe <a target='_blank' href='http://www.allaboutcookies.org/'>All about cookies</a>.</p>"
+          2: '<p>Vous pouvez également gérer les cookies utilisés par nos partenaires via ces sites web: <br> <a target="_blank" href="http://www.youronlinechoices.eu/">Your Online Choices</a> <br> <a target="_blank" href="http://youradchoices.com/"> Your Ad choices</a></p>'
+        headers:
+          1: Ligula Lorem Justo Commodo Parturient?
+          2: Sit Fusce Dolor Ultricies Quam
+          3: Ipsum Tristique Lorem Purus Bibendum
+          4: Vulputate Aenean Tristique Sollicitudin Mattis
+          5: Justo Parturient Egestas Sem Elit
+          6: Egestas Sem Risus Cras Bibendum
+        icon_text:
+          1:
+            title: Bon à savoir
+            subtitle: Les cookies numériques ont aussi une date de validité
+            text: La durée de validité exacte de vos cookies dépend de la manière dont ils ont été paramétrés à leur création.
+          2:
+            title: Bon à savoir
+            subtitle: D’où provient le nom cookie ?
+            text: >
+                  <p>Le nom « cookie » a été inventé par le développeur web Lou Montulli et provient de « magic cookie », un terme utilisé en programmation UNIX pour décrire une procédure donnée. Le terme s’inspire des « fortune cookies » chinois, ces petits biscuits renfermant un petit bout de papier.</p>
+
+      privacy_policy:
+        title: Politique de confidentialité
+        text:
+          1: Sed posuere consectetur est at lobortis. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla.
+          2: >
+             <p>
+             Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas sed diam eget risus varius blandit sit amet non magna. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+             Etiam porta sem malesuada magna mollis euismod. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna.
+             Donec ullamcorper nulla non metus auctor fringilla. Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+             </p>
+          3: >
+             <p>
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum.
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+             </p>
+          4: >
+             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+          5: >
+             <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis. Donec ullamcorper nulla non metus auctor fringilla. Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+             <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Sed posuere consectetur est at lobortis.</p>
+             <p>
+             Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus porttitor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vitae elit libero, a pharetra augue.
+             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+             </p>
+          6: >
+             <p> Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum. Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          7: >
+             <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean lacinia bibendum nulla sed consectetur.</p>
+          8: >
+             <ul>
+                <li>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</li>
+                <li>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</li>
+                <li>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</li>
+                <li>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</li>
+                <li>Sed posuere consectetur est at lobortis.</li>
+             </ul>
+          9: >
+             <p>
+             Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+             </p>
+          10: >
+              <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+              Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec ullamcorper nulla non metus auctor fringilla. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas faucibus mollis interdum.
+              </p>
+          11: >
+              <p>
+              Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus eget urna mollis ornare vel eu leo.
+              Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum.
+              </p>
+
+        headers:
+          1: À propos de cette politique de confidentialité
+          2: Mattis Venenatis Fermentum Fringilla Magna?
+          3: Fringilla Lorem Ipsum Vulputate Etiam?
+          4: Mollis Amet Euismod Condimentum Tristique?
+          5: Condimentum Parturient Vulputate Bibendum Quam?
+          6: Vestibulum Vulputate Pellentesque Sem Lorem
+          7: Cras Ultricies Tortor Euismod Consectetur
+          8: Quam Sit Fermentum Adipiscing Vulputate
+          9: Ipsum Pellentesque Adipiscing Elit Etiam?
+          10: Ultricies Cras Ridiculus Purus Amet?
+          11: Ridiculus Tellus Amet Mattis Fusce
+
+      contact:
+        title: Contactez-nous
+        text:
+          1: Ce site web est géré par XX. En cas de questions, remarques ou plaintes éventuelles, vous pouvez les adresser via les canaux suivants.
+          2: >
+            <h4>Par e-mail:</h4> <br>
+            <a href="mailto:privacy@domeinnaam.be">privacy@domeinnaam.be</a>
+          3: >
+            <h4>Coordonnées </h4>
+            Nom de l’entreprise <br>
+            Rue, numéro, code postal commune/ville <br>
+            Numéro de téléphone
+
+      cookie_types:
+        functional_cookie:
+          name: Functionele cookies
+          internal_name: functional_cookie
+          short_description: Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          long_description: Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod.
+
+        analyzing_cookie:
+          name: Analyserende cookies
+          internal_name: analyzing_cookie
+          short_description: Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+          long_description: Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.
+
+        marketing_cookie:
+          name: Marketing cookies
+          internal_name: marketing_cookie
+          short_description: Maecenas sed diam eget risus varius blandit sit amet non magna.
+          long_description: Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+      cookies:
+        functional_cookie:
+          1:
+            name: Google Analytics
+            description: >
+                <p>Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod. Vestibulum id ligula porta felis euismod semper.</p>
+          2:
+            name: Google Tag Manager
+            description: >
+                <p>Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui. Donec sed odio dui. Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          3:
+            name: Préférences de cookies
+            description: >
+                <p>Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus. Donec sed odio dui. Donec sed odio dui. Donec sed odio dui. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        marketing_cookie:
+          1:
+            name: Google Adwords
+            description: >
+                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+          2:
+            name: Sumo
+            description: >
+                <p>Maecenas faucibus mollis interdum. Nulla vitae elit libero, a pharetra augue. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod.</p>
+          3:
+            name: LinkedIn insights tags
+            description: >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Cras mattis consectetur purus sit amet fermentum.</p>
+          4:
+            name: Facebook
+            description: >
+                <p>Etiam porta sem malesuada magna mollis euismod. Donec ullamcorper nulla non metus auctor fringilla. Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          5:
+            name: Twitter
+            description: >
+                <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+
+        analyzing_cookie:
+          1:
+            name: Hotjar
+            description: >
+                <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod.</p>

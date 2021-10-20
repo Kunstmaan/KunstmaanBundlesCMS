@@ -1,0 +1,30 @@
+{% set first = true %}
+{% for pagepart in getpageparts(page, 'legal_main') %}
+    {% if 'HeaderPagePart' in pagepart.getDefaultView %}
+        {% if pagepart.niv is defined and pagepart.niv == 2 %}
+            {% if not first %}
+                </div></div></div>
+            {% endif %}
+            {% set first = false %}
+            <div class="js-kmcc-collapsible-content">
+                <div class="kmcc-collapsible-content__title js-kmcc-collapsible-content__title">
+                    <svg class="icon icon--chevron--down kmcc-collapsible-content__title__icon">
+                        <use xlink:href="/frontend/img/legal/svg/symbol-defs.svg#icon--chevron--down"></use>
+                    </svg>
+        {% endif %}
+    {% endif %}
+
+    {% include pagepart.defaultView with {'resource': pagepart} %}
+
+    {% if 'HeaderPagePart' in pagepart.getDefaultView %}
+    {% if pagepart.niv is defined and pagepart.niv == 2 %}
+    </div>
+    <div class="kmcc-collapsible-content__content-container">
+        <div class="kmcc-collapsible-content__content js-kmcc-collapsible-content__content">
+    {% endif %}
+    {% endif %}
+
+    {% if loop.last and not first %}
+        </div></div></div>
+    {% endif %}
+{% endfor %}

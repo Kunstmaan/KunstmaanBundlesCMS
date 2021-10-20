@@ -1,0 +1,11 @@
+<!-- START of Kunstmaan cookie bar -->
+
+{% set cookie = get_legal_cookie(app.request) %}
+{% set types = get_cookie_types() %}
+
+
+{% include 'KunstmaanCookieBundle:Components:BackDrop.html.twig' %}
+{% include 'KunstmaanCookieBundle:Components:CookieBar.html.twig' %} {# Bar at the bottom of the page, opens when no cookies have been set. #}
+{% include 'KunstmaanCookieBundle:Components:CookieModal.html.twig' %} {# Modal with extensive info on all the cookies. For more detailed setting of cookie preferences. #}
+{% include 'KunstmaanCookieBundle:Components:Notification.html.twig' %}
+<!-- END of Kunstmaan cookie bar -->

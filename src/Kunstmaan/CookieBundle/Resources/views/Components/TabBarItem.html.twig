@@ -1,0 +1,4 @@
+<input class="kmcc-tabs__item-control" type="radio" name="tabs-state" id="{{ key }}"{% if key == node.internalName %} checked{% endif %}/>
+<label for="{{ key }}" id="{{ key }}-label" class="kmcc-tabs__item">
+    {{ tab.nodeTranslation(app.request.locale, true).title }}
+</label>

@@ -1,0 +1,16 @@
+<div class="kmcc-icon-text-pp">
+    <hgroup class="kmcc-icon-text-pp__header">
+        <p class="kmcc-icon-text-pp__title">{{ resource.title }}</p>
+        <h3 class="kmcc-icon-text-pp__subtitle">{{ resource.subtitle }}</h3>
+    </hgroup>
+
+    {% if resource.icon is not empty %}
+        <figure class="kmcc-icon-text-pp__figure">
+            <img src="{{ asset(resource.icon.url) }}" alt="" class="kmcc-icon-text-pp__figure__image">
+        </figure>
+    {% endif %}
+
+    <div class="kmcc-icon-text-pp__content">
+        {{ resource.content | replace_url | raw }}
+    </div>
+</div>

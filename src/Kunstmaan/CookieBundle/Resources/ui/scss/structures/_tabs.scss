@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Structures - TABS
+   ========================================================================== */
+
+.kmcc-tabs {
+    display: flex;
+
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.kmcc-tabs__panel {
+    display: none;
+    width: 100%;
+    min-height: 300px;
+    padding: 20px 20px;
+
+    flex-basis: auto;
+
+    background-color: $kmcc_white;
+
+    @media (min-width: $kmcc_screen-md) {
+        padding: 20px 40px;
+    }
+}
+
+.kmcc-tabs__item {
+    padding: 10px;
+    flex-grow: 1;
+
+    vertical-align: top;
+
+    background-color: transparent;
+
+    cursor: pointer;
+
+    border-bottom: 1px solid $kmcc_black;
+
+    color: $kmcc_black;
+    text-align: center;
+
+    .kmcc-cookie-modal & {
+        background-color: $kmcc_tabs;
+
+        border: none;
+
+        &:hover {
+            background-color: darken($kmcc_tabs, 15);
+        }
+    }
+}
+
+.kmcc-tabs__item-control {
+    position: absolute;
+    left: -10000px;
+}
+
+
+#legal_privacy_policy:checked ~ #legal_privacy_policy-label,
+#legal_cookie_preferences:checked ~ #legal_cookie_preferences-label,
+#legal_contact:checked ~ #legal_contact-label {
+    background-color: transparent;
+
+    border: 1px solid $kmcc_black;
+    border-bottom: none;
+
+    font-weight: 500;
+
+    cursor: default;
+
+    .kmcc-cookie-modal & {
+        background-color: $kmcc_white;
+
+        border: none;
+    }
+}
+
+#legal_privacy_policy:checked ~ #legal_privacy_policy-panel,
+#legal_cookie_preferences:checked ~ #legal_cookie_preferences-panel,
+#legal_contact:checked ~ #legal_contact-panel {
+    display: block;
+}

@@ -1,0 +1,43 @@
+/* ==========================================================================
+   Cookie Consent Bar & Modal.
+
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Config
+   ========================================================================== */
+// @import "config/variables-default";
+@import "config/variables";
+
+
+/* General
+   ========================================================================== */
+@import "general/scaffolding";
+@import "general/links";
+@import "general/typography";
+
+/* Components
+   ========================================================================== */
+@import "components/to-top-button";
+@import "components/notification";
+@import "components/button";
+@import "components/btn-close-detail";
+@import "components/btn-close-modal";
+@import "components/btn-toggle";
+@import "components/collapsible-content";
+
+/* Structures
+   ========================================================================== */
+@import "structures/tabs";
+@import "structures/cookie-bar";
+@import "structures/cookie-modal";
+@import "structures/cookie-modal-detail-view";
+@import "structures/backdrop";
+
+/* PageParts
+   ========================================================================== */
+@import "pageparts/tip-pp";
+@import "pageparts/icon-text-pp";
+@import "pageparts/cookies-toggle-pp";
+@import "pageparts/centered-icon-pp";
