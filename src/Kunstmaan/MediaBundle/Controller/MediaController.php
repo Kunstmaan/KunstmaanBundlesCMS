@@ -265,9 +265,7 @@ class MediaController extends Controller
                 'jsonrpc' => '2.0',
                 'result' => '',
                 'id' => 'id',
-            ],
-            JsonResponse::HTTP_OK,
-            [
+            ], JsonResponse::HTTP_OK, [
                 'Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT',
                 'Last-Modified' => \gmdate('D, d M Y H:i:s') . ' GMT',
                 'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
