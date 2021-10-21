@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(SymfonyVersion::getRootWebPath())
                     ->cannotBeEmpty()
                 ->end()
+                // @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.
                 ->arrayNode('cropping_views')
                     ->addDefaultsIfNotSet()
                     ->children()

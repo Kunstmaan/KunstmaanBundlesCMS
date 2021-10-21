@@ -7,7 +7,10 @@ use Kunstmaan\MediaBundle\Helper\ManipulateImageService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class MediaTwigExtension extends AbstractExtension
+/**
+ * @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.
+ */
+final class MediaTwigExtension extends AbstractExtension
 {
     /** @var ManipulateImageService */
     private $manipulateImageService;

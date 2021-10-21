@@ -78,6 +78,7 @@ class MediaType extends AbstractType
                 'chooser' => 'KunstmaanMediaBundle_chooser',
                 'mediatype' => null,
                 'current_value_container' => new CurrentValueContainer(),
+                // @experimental The option below are for a feature is experimental and is a subject to change, be advised when using this feature and classes.
                 'show_image_edit_modal' => false,
                 'use_focus_point' => false,
                 'use_cropping' => false,

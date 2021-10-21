@@ -9,7 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditableMediaWrapperAdminType extends AbstractType
+/**
+ * @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.
+ */
+final class EditableMediaWrapperAdminType extends AbstractType
 {
     private const DEFAULT = 'default';
     private const CUSTOM_VIEWS = 'custom_views';

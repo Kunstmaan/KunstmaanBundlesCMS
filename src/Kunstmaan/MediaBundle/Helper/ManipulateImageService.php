@@ -8,7 +8,10 @@ use Liip\ImagineBundle\Exception\Imagine\Filter\NonExistingFilterException;
 use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
 use Liip\ImagineBundle\Service\FilterService;
 
-class ManipulateImageService
+/**
+ * @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.
+ */
+final class ManipulateImageService
 {
     /** @var Slugifier */
     private $slugifier;

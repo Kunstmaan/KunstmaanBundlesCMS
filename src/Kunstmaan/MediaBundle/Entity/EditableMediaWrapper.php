@@ -7,6 +7,8 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.
+ *
  * @ORM\Entity()
  * @ORM\Table(name="kuma_editable_media_wrapper")
  */

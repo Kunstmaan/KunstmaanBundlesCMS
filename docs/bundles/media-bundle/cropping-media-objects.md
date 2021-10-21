@@ -1,5 +1,9 @@
 # Cropping media objects in the bundles
 
+## Stability warning
+
+WARNING: This feature is experimental and is a subject to change, be advised when using this feature and classes/templates.
+
 ## cropping
 
 Oftentimes before this implementation we needed to make pageparts with multiple media object uploads to be able to scale up or down for desktops to mobile phones.
