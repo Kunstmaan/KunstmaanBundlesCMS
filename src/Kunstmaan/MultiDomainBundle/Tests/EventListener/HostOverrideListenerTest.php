@@ -35,7 +35,7 @@ class HostOverrideListenerTest extends TestCase
         $this->expectDeprecation('Passing 4 arguments and a service instance of "Symfony\Component\HttpFoundation\Session\SessionInterface" as the first argument in "Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct" is deprecated since KunstmaanMultiDomainBundle 5.10 and the constructor signature will change in KunstmaanMultiDomainBundle 6.0. Remove the first argument and inject the required services instead.');
 
         $requestStack = new RequestStack();
-        new HostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
+        new HostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack, false, 'en', 'en'), new AdminRouteHelper('admin', $requestStack));
     }
 
     /**
@@ -44,7 +44,7 @@ class HostOverrideListenerTest extends TestCase
     public function testPropertiesWithDeprecatedConstructor()
     {
         $requestStack = new RequestStack();
-        $listener = new MockedHostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
+        $listener = new MockedHostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack, false, 'en', 'en'), new AdminRouteHelper('admin', $requestStack));
 
         $this->assertInstanceOf(Session::class, $listener->getSession());
         $this->assertInstanceOf(class_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
@@ -55,7 +55,7 @@ class HostOverrideListenerTest extends TestCase
     public function testPropertiesWithNewConstructor()
     {
         $requestStack = new RequestStack();
-        $listener = new MockedHostOverrideListener(new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
+        $listener = new MockedHostOverrideListener(new Translator('en'), new DomainConfiguration($requestStack, false, 'en', 'en'), new AdminRouteHelper('admin', $requestStack));
 
         $this->assertNull($listener->getSession());
         $this->assertInstanceOf(class_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
