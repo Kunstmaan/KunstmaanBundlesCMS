@@ -18,11 +18,15 @@ class PageAdminType extends AbstractType
         $builder->add('id', HiddenType::class);
         $builder->add('title', TextType::class, [
             'label' => 'kuma_node.form.page.title.label',
+            'attr' => [
+                'maxlength' => 255,
+            ],
         ]);
         $builder->add('pageTitle', TextType::class, [
             'label' => 'kuma_node.form.page.page_title.label',
             'attr' => [
                 'info_text' => 'kuma_node.form.page.page_title.info_text',
+                'maxlength' => 255,
             ],
         ]);
     }

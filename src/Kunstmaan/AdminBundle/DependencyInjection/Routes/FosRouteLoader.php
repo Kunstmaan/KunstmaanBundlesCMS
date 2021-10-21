@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection\Routes;
 
-use Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader;
-use Symfony\Bundle\FrameworkBundle\Routing\RouteLoaderInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Routing\Loader\XmlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
@@ -14,7 +13,7 @@ use Symfony\Component\Routing\RouteCollection;
  *
  * @internal
  */
-final class FosRouteLoader implements RouteLoaderInterface
+final class FosRouteLoader
 {
     /** @var bool */
     private $newAuthenticationEnabled;

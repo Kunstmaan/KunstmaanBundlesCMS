@@ -25,6 +25,7 @@ class AbstractArticlePageAdminType extends PageAdminType
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
                 'date_format' => 'dd/MM/yyyy',
+                'html5' => false,
             ]
         );
 

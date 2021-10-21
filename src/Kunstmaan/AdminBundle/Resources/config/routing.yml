@@ -34,7 +34,7 @@ KunstmaanAdminBundle_change_password:
     prefix:   /%kunstmaan_admin.admin_prefix%
 
 fos_routes:
-    resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader::loadRoutes'
+    resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:loadRoutes'
     type: service
     prefix: /%kunstmaan_admin.admin_prefix%
 
