@@ -625,14 +625,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      */
     public function serialize()
     {
-        return serialize([
-            $this->password,
-            $this->salt,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
-        ]);
+        return serialize($this->__serialize());
     }
 
     /**
@@ -640,8 +633,23 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      */
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
+        $this->__unserialize(unserialize($serialized));
+    }
 
+    public function __serialize(): array
+    {
+        return [
+            $this->password,
+            $this->salt,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
         [
             $this->password,
             $this->salt,
