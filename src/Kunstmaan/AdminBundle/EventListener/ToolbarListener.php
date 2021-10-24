@@ -131,7 +131,10 @@ class ToolbarListener implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
         $token = $this->tokenStorage->getToken();
 
-        if (null !== $token && method_exists($token, 'getProviderKey')) {
+        if (null !== $token && method_exists($token, 'getFirewallName')) {
+            $key = $token->getFirewallName();
+        } elseif (null !== $token && method_exists($token, 'getProviderKey')) {
+            // NEXT_MAJOR remove check when symfony 4.4 support is removed
             $key = $token->getProviderKey();
         } else {
             $key = $this->adminFirewallName;
