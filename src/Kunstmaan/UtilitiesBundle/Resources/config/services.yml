@@ -4,6 +4,9 @@ parameters:
     kunstmaan_utilities.cipher.class: 'Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher'
 
 services:
+    # Autowire aliases
+    Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface: '@kunstmaan_utilities.slugifier'
+
     kunstmaan_utilities.shell:
         class: '%kunstmaan_utilities.shell.class%'
 

@@ -11,6 +11,7 @@ use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -277,10 +278,29 @@ class TranslatorController extends AdminListController
      */
     public function deleteAction(Request $request, $id)
     {
+        // NEXT_MAJOR: remove check and change methods property in route annotation
+        if ($request->isMethod(Request::METHOD_GET)) {
+            @trigger_error(sprintf('Calling the action "%s" with a GET request is deprecated since KunstmaanTranslatorBundle 5.10 and will only allow a POST request in KunstmaanTranslatorBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+        }
+
+        /** @var SlugifierInterface $slugifier */
+        $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
+        $csrfId = 'delete-' . $slugifier->slugify($this->getAdminListConfigurator()->getEntityName());
+
+        $hasToken = $request->request->has('token');
+        // NEXT_MAJOR remove hasToken check and make csrf token required
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanTranslatorBundle 5.10 and will be required in KunstmaanTranslatorBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
+        }
+
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
         if ($request->isMethod('POST')) {
             $em->getRepository(Translation::class)->removeTranslations($id);
         }

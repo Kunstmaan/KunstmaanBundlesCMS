@@ -19,12 +19,16 @@
 
             <!-- Footer -->
             <div class="modal-footer">
-                <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" class="btn btn-danger btn--raise-on-hover">
-                    {{ 'form.delete' | trans }}
-                </a>
-                <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                    {{ 'form.cancel' | trans }}
-                </button>
+                <form action="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" method="post" novalidate="novalidate">
+                    <input type="hidden" name="token" value="{{ csrf_token('media-delete') }}"/>
+
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                        {{ 'form.delete' | trans }}
+                    </button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' | trans }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>
