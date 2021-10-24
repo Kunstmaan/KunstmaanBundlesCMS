@@ -57,6 +57,8 @@ class AclWalkerTest extends TestCase
 
         $aclWalker = new AclWalker($query, $result, []);
         $sql = $aclWalker->walkFromClause($from);
-        $this->assertRegExp('/(JOIN \(\) ta_ ON s0_\.id = ta_.id)$/', $sql);
+
+        $expectedRegex = '/(JOIN \(\) ta_ ON s0_\.id = ta_.id)$/';
+        method_exists($this, 'assertMatchesRegularExpression') ? $this->assertMatchesRegularExpression($expectedRegex, $sql) : $this->assertRegExp($expectedRegex, $sql);
     }
 }

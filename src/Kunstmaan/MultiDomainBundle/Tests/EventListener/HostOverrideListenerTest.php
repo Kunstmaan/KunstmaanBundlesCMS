@@ -47,7 +47,7 @@ class HostOverrideListenerTest extends TestCase
         $listener = new MockedHostOverrideListener(new Session(), new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
 
         $this->assertInstanceOf(Session::class, $listener->getSession());
-        $this->assertInstanceOf(class_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
+        $this->assertInstanceOf(interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
         $this->assertInstanceOf(DomainConfigurationInterface::class, $listener->getDomainConfiguration());
         $this->assertInstanceOf(AdminRouteHelper::class, $listener->getAdminRouteHelper());
     }
@@ -58,7 +58,7 @@ class HostOverrideListenerTest extends TestCase
         $listener = new MockedHostOverrideListener(new Translator('en'), new DomainConfiguration($requestStack), new AdminRouteHelper('admin', $requestStack));
 
         $this->assertNull($listener->getSession());
-        $this->assertInstanceOf(class_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
+        $this->assertInstanceOf(interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class, $listener->getTranslator());
         $this->assertInstanceOf(DomainConfigurationInterface::class, $listener->getDomainConfiguration());
         $this->assertInstanceOf(AdminRouteHelper::class, $listener->getAdminRouteHelper());
     }

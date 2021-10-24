@@ -26,7 +26,6 @@ class TabPaneTest extends TestCase
         $form = $this->createMock(Form::class);
         $view = $this->createMock(FormView::class);
         $tab = $this->createMock(Tab::class);
-        $tab2 = clone $tab;
 
         $request->expects($this->exactly(2))->method('get')->willReturn($tab);
         $tab->expects($this->any())->method('getExtraParams')->willReturn([1, 2, 3, 4, 5]);
@@ -36,6 +35,7 @@ class TabPaneTest extends TestCase
         $builder->expects($this->once())->method('getForm')->willReturn($form);
         $factory->expects($this->once())->method('createBuilder')->willReturn($builder);
         $em = $this->createMock(EntityManager::class);
+        $tab2 = clone $tab;
 
         $tabPane = new TabPane('Title', $request, $factory);
 
