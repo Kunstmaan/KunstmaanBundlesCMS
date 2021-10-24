@@ -3,19 +3,24 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 use Kunstmaan\AdminBundle\Event\BcEvent;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Symfony\Component\HttpFoundation\Request;
 
 final class SlugSecurityEvent extends BcEvent
 {
+    /** @var Node|null */
     private $node;
-
+    /** @var NodeTranslation|null */
     private $nodeTranslation;
-
+    /** @var HasNodeInterface|null */
     private $entity;
-
+    /** @var Request|null */
     private $request;
 
     /**
-     * @return mixed
+     * @return Node|null
      */
     public function getNode()
     {
@@ -23,7 +28,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @param mixed $node
+     * @param Node $node
      */
     public function setNode($node)
     {
@@ -33,7 +38,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @return mixed
+     * @return NodeTranslation|null
      */
     public function getNodeTranslation()
     {
@@ -41,7 +46,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @param mixed $nodeTranslation
+     * @param NodeTranslation $nodeTranslation
      */
     public function setNodeTranslation($nodeTranslation)
     {
@@ -51,7 +56,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @return mixed
+     * @return HasNodeInterface|null
      */
     public function getEntity()
     {
@@ -59,7 +64,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @param mixed $entity
+     * @param HasNodeInterface $entity
      */
     public function setEntity($entity)
     {
@@ -69,7 +74,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @return mixed
+     * @return Request|null
      */
     public function getRequest()
     {
@@ -77,7 +82,7 @@ final class SlugSecurityEvent extends BcEvent
     }
 
     /**
-     * @param mixed $request
+     * @param Request $request
      */
     public function setRequest($request)
     {
