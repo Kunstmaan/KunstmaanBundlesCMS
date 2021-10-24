@@ -138,7 +138,7 @@ class Tagging extends BaseTagging
     /**
      * Get createdAt
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -158,7 +158,7 @@ class Tagging extends BaseTagging
     /**
      * Get updatedAt
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {

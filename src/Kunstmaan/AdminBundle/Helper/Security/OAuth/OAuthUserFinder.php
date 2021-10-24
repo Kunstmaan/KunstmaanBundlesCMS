@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class OAuthUserFinder implements OAuthUserFinderInterface
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
     /** @var string */

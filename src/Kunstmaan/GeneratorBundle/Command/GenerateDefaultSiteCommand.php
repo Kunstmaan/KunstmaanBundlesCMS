@@ -6,6 +6,7 @@ use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * Generates a default website based on Kunstmaan bundles

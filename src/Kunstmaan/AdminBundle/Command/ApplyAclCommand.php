@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ApplyAclCommand extends ContainerAwareCommand
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em = null;
 

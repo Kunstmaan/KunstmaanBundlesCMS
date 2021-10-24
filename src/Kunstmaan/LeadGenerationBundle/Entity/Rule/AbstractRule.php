@@ -4,7 +4,7 @@ namespace Kunstmaan\LeadGenerationBundle\Entity\Rule;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
-use Kunstmaan\LeadGenerationBundle\Form\AbstractRuleAdminType;
+use Kunstmaan\LeadGenerationBundle\Form\Rule\AbstractRuleAdminType;
 use Kunstmaan\LeadGenerationBundle\Service\RuleServiceInterface;
 
 /**

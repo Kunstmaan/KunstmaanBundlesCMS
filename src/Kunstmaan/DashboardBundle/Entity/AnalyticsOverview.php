@@ -157,7 +157,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @param int $config
      *
-     * @return AnalyticsTopReferrals
+     * @return self
      */
     public function setConfig($config)
     {
@@ -181,7 +181,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @param int $segment
      *
-     * @return AnalyticsTopReferrals
+     * @return self
      */
     public function setSegment($segment)
     {

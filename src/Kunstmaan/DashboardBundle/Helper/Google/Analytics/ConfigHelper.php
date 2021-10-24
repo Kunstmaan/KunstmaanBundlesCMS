@@ -4,6 +4,7 @@ namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 
 class ConfigHelper
 {

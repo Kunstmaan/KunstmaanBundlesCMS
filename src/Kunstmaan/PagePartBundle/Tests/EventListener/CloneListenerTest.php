@@ -29,7 +29,7 @@ class CloneListenerTest extends TestCase
     private $configurator;
 
     /**
-     * @var \Doctrine\ORM\EntityRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Doctrine\ORM\EntityRepository|MockObject
      */
     private $repo;
 
@@ -39,12 +39,12 @@ class CloneListenerTest extends TestCase
     private $object;
 
     /**
-     * @var PagePartConfigurationReaderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var PagePartConfigurationReaderInterface|MockObject
      */
     private $reader;
 
     /**
-     * @var PageTemplateConfigurationService|\PHPUnit_Framework_MockObject_MockObject
+     * @var PageTemplateConfigurationService|MockObject
      */
     private $templateService;
 
@@ -100,7 +100,7 @@ class CloneListenerTest extends TestCase
     {
         $entity = $this->createMock(HasPageTemplateInterface::class);
 
-        /** @var HasPageTemplateInterface|\PHPUnit_Framework_MockObject_MockObject $clone */
+        /** @var HasPageTemplateInterface|MockObject $clone */
         $clone = clone $entity;
 
         $entity->expects($this->any())

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -105,7 +106,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         }
 
         foreach ($fileRenameQueue as $row) {
-            list($oldFileUrl, $newFileUrl, $handler) = $row;
+            [$oldFileUrl, $newFileUrl, $handler] = $row;
             $handler->fileSystem->rename(
                 preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $oldFileUrl),
                 preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $newFileUrl)

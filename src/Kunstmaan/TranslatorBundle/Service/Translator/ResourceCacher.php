@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Finder\Finder;
 
@@ -25,14 +26,14 @@ class ResourceCacher
     /**
      * Logger
      *
-     * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
     /**
      * Retrieve resources from cache file (if any)
      *
-     * @return resources false if empty
+     * @return array|false false if empty
      */
     public function getCachedResources()
     {
