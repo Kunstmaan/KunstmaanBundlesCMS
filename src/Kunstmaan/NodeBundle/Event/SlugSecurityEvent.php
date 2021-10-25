@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-use Symfony\Contracts\EventDispatcher\Event;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 final class SlugSecurityEvent extends Event
 {
