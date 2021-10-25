@@ -93,14 +93,14 @@ abstract class AbstractAdminListController extends AbstractController
      * Creates and processes the form to add a new Entity
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $type         The type to add
+     * @param string|null                   $type         The type to add
      * @param Request|null                  $request
      *
      * @throws AccessDeniedHttpException
      *
      * @return Response
      */
-    protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
+    protected function doAddAction(AbstractAdminListConfigurator $configurator, $type, Request $request)
     {
         if (!$configurator->canAdd()) {
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
