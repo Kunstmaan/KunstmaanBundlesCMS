@@ -19,6 +19,7 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
     {
         $constraint = new Media();
         $media = new MediaObject();
+        $media->setContentType('image/jpeg');
 
         $this->validator->validate($media, $constraint);
 
