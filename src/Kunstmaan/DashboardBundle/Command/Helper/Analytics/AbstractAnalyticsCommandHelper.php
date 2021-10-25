@@ -4,6 +4,8 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractAnalyticsCommandHelper
@@ -11,7 +13,7 @@ abstract class AbstractAnalyticsCommandHelper
     /** @var ConfigHelper */
     protected $configHelper;
 
-    /** @var GooglequeryHelper */
+    /** @var QueryHelper */
     protected $query;
 
     /** @var EntityManager */

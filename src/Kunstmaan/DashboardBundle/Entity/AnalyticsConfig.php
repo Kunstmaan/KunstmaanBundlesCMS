@@ -75,7 +75,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @param array $overviews
      *
-     * @return AnalyticsDailyOverviews
+     * @return self
      */
     public function setOverviews($overviews)
     {
@@ -99,7 +99,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @param array $segments
      *
-     * @return AnalyticsDailysegments
+     * @return self
      */
     public function setSegments($segments)
     {
@@ -133,7 +133,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @param string $name
      *
-     * @return Analyticsname
+     * @return self
      */
     public function setName($name)
     {

@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

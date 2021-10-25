@@ -5,8 +5,10 @@ namespace Kunstmaan\AdminBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
@@ -41,7 +43,6 @@ class AclManager
         $newAcl = $this->aclProvider->createAcl($newIdentity);
 
         $aces = $originalAcl->getObjectAces();
-        /* @var EntryInterface $ace */
         foreach ($aces as $ace) {
             $securityIdentity = $ace->getSecurityIdentity();
             if ($securityIdentity instanceof RoleSecurityIdentity) {
@@ -60,11 +61,10 @@ class AclManager
         foreach ($nodes as $node) {
             $objectIdentity = $this->objectIdentityRetrievalStrategy->getObjectIdentity($node);
 
-            /** @var Acl $acl */
+            /** @var AclInterface $acl */
             $acl = $this->aclProvider->findAcl($objectIdentity);
             $securityIdentity = new RoleSecurityIdentity($role);
 
-            /** @var Entry $ace */
             foreach ($acl->getObjectAces() as $index => $ace) {
                 if (!$ace->getSecurityIdentity()->equals($securityIdentity)) {
                     continue;

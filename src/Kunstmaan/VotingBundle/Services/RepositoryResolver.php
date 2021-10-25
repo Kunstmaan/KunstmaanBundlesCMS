@@ -3,6 +3,8 @@
 namespace Kunstmaan\VotingBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Kunstmaan\VotingBundle\Event\EventInterface;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
@@ -30,9 +32,9 @@ class RepositoryResolver
     /**
      * Return repository for event
      *
-     * @param Event $event event
+     * @param EventInterface $event event
      *
-     * @return Repository
+     * @return EntityRepository
      */
     public function getRepositoryForEvent($event)
     {
@@ -66,7 +68,7 @@ class RepositoryResolver
      *
      * @param string $name name
      *
-     * @return Repository
+     * @return EntityRepository
      */
     protected function getRepository($name)
     {

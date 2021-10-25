@@ -108,7 +108,7 @@ class Tag extends BaseTag implements Translatable
     /**
      * Get createdAt
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {

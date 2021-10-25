@@ -34,7 +34,7 @@ class AfterXScrollPercentRule extends AbstractRule
     /**
      * @param int $percentage
      *
-     * @return AfterXScrollPercent
+     * @return self
      */
     public function setPercentage($percentage)
     {

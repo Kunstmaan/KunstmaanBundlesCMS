@@ -22,7 +22,7 @@ class Translator extends SymfonyTranslator
     /**
      * Resource Cacher
      *
-     * @var Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
+     * @var ResourceCacher
      */
     private $resourceCacher;
 
