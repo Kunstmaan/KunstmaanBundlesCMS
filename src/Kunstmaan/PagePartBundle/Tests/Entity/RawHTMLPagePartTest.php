@@ -15,6 +15,7 @@ class RawHTMLPagePartTest extends TestCase
     protected function setUp(): void
     {
         $this->object = new RawHTMLPagePart();
+        $this->object->setContent('<p>test</p>');
     }
 
     public function testToString()

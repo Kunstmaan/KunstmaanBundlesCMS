@@ -83,6 +83,8 @@ class FileFormSubmissionFieldTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $file->method('getClientOriginalName')->willReturn('example-name.pdf');
+
         $file->expects($this->any())
             ->method('move')
             ->willReturn(true);

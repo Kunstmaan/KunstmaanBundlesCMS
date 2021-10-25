@@ -61,11 +61,8 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: none
-                    tools: pecl
+                    tools: pecl,flex
                     extensions: imagick
-
-            -   name: Require symfony/flex
-                run: composer global require symfony/flex --no-progress --no-scripts --no-plugins
 
             -   name: Set correct imagick policy
                 run: sudo sed -i -e 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/' /etc/ImageMagick-6/policy.xml

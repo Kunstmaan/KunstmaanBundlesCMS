@@ -47,6 +47,7 @@ class PdfHandlerTest extends TestCase
     public function testCannotHandleNonPdfFiles()
     {
         $media = new Media();
+        $media->setContent(new File($this->filesDir . '/sample.jpeg'));
         $media->setContentType('image/jpg');
 
         $this->assertFalse($this->object->canHandle($media));

@@ -28,7 +28,7 @@ class TwigExtensionTest extends TestCase
         $this->entityWithName($name);
         $this->noSeoFound();
 
-        $object = new SeoTwigExtension($this->emMock);
+        $object = $this->getTwigExtension();
 
         $result = $object->getTitleFor($this->entityMock);
 
@@ -43,7 +43,7 @@ class TwigExtensionTest extends TestCase
         $this->entityWithName($nokName);
         $this->seoFoundWithTitle($name);
 
-        $object = new SeoTwigExtension($this->emMock);
+        $object = $this->getTwigExtension();
 
         $result = $object->getTitleFor($this->entityMock);
 
@@ -52,7 +52,7 @@ class TwigExtensionTest extends TestCase
 
     public function testGetImageDimensionsWithValidFile()
     {
-        $extension = new SeoTwigExtension($this->emMock);
+        $extension = $this->getTwigExtension();
 
         $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
 
@@ -61,7 +61,7 @@ class TwigExtensionTest extends TestCase
 
     public function testGetImageDimensionsWithInvalidFile()
     {
-        $extension = new SeoTwigExtension($this->emMock);
+        $extension = $this->getTwigExtension();
 
         $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/unkown.png');
 
@@ -77,7 +77,7 @@ class TwigExtensionTest extends TestCase
 
         $cacheMock->expects($this->once())->method('getItem')->withAnyParameters()->willReturn($cacheItemMock);
 
-        $extension = new SeoTwigExtension($this->emMock);
+        $extension = $this->getTwigExtension();
         $extension->setRequestCache($cacheMock);
 
         $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
@@ -96,7 +96,7 @@ class TwigExtensionTest extends TestCase
         $cacheMock->expects($this->once())->method('getItem')->withAnyParameters()->willReturn($cacheItemMock);
         $cacheMock->expects($this->once())->method('save')->with($cacheItemMock);
 
-        $extension = new SeoTwigExtension($this->emMock);
+        $extension = $this->getTwigExtension();
         $extension->setRequestCache($cacheMock);
 
         $dimensions = $extension->getImageDimensions(__DIR__ . '/../files/150.png');
@@ -154,5 +154,13 @@ class TwigExtensionTest extends TestCase
             ->willReturn($seoMock);
 
         $this->wireUpSeoRepo();
+    }
+
+    private function getTwigExtension(): SeoTwigExtension
+    {
+        $extension = new SeoTwigExtension($this->emMock);
+        $extension->setWebsiteTitle('Example website name');
+
+        return $extension;
     }
 }
