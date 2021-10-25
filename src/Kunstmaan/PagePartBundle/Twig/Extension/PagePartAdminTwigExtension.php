@@ -9,6 +9,7 @@ use Twig\TwigFunction;
 
 final class PagePartAdminTwigExtension extends AbstractExtension
 {
+    /** @var bool */
     private $usesExtendedPagePartChooser = false;
 
     /**
@@ -60,7 +61,7 @@ final class PagePartAdminTwigExtension extends AbstractExtension
     /**
      * Get usesExtendedPagePartChooser.
      *
-     * @return usesExtendedPagePartChooser
+     * @return bool
      */
     public function getUsesExtendedPagePartChooser()
     {
@@ -70,7 +71,7 @@ final class PagePartAdminTwigExtension extends AbstractExtension
     /**
      * Set usesExtendedPagePartChooser.
      *
-     * @param usesExtendedPagePartChooser the value to set
+     * @param bool the value to set
      */
     public function setUsesExtendedPagePartChooser($usesExtendedPagePartChooser)
     {

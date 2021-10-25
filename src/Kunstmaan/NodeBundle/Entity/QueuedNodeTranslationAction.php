@@ -130,7 +130,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
     /**
      * Get date
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDate()
     {
