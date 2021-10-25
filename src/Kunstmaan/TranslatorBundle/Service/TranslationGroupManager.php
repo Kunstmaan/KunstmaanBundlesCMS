@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Service;
 
-use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 
@@ -31,7 +31,7 @@ class TranslationGroupManager
      */
     public function addTranslation(TranslationGroup $translationGroup, $locale, $text, $filename)
     {
-        $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation();
+        $translation = new Translation();
         $translation->setLocale($locale);
         $translation->setText($text);
         $translation->setDomain($translationGroup->getDomain());
@@ -91,7 +91,7 @@ class TranslationGroupManager
     {
         $result = [];
 
-        /** @var \Kunstmaan\TranslatorBundle\Entity\Translation $translation */
+        /** @var Translation $translation */
         foreach ($this->dbCopy as $translation) {
             if ($translation->getKeyword() === $keyword && $translation->getDomain() === $domain) {
                 $result[] = $translation;

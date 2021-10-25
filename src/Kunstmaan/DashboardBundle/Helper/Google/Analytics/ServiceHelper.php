@@ -10,7 +10,7 @@ class ServiceHelper
     /** @var Google_AnalyticsService */
     private $service;
 
-    /** @var GoogleClientHelper */
+    /** @var ClientHelper */
     private $clientHelper;
 
     public function __construct(ClientHelper $clientHelper)

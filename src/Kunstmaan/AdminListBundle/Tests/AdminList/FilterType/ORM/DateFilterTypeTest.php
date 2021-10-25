@@ -4,17 +4,11 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
-use Kunstmaan\AdminListBundle\Tests\UnitTester;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 class DateFilterTypeTest extends BaseOrmFilterTest
 {
-    /**
-     * @var UnitTester
-     */
-    protected $tester;
-
     /**
      * @var DateFilterType
      */

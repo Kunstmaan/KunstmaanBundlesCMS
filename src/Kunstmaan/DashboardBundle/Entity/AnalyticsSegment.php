@@ -100,7 +100,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param int $config
      *
-     * @return AnalyticsTopReferrals
+     * @return self
      */
     public function setConfig($config)
     {

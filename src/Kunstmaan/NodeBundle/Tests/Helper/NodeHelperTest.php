@@ -26,6 +26,7 @@ use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\NodeBundle\ValueObject\PageTab;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\AbstractType;
@@ -85,25 +86,25 @@ class TestType extends AbstractType
 
 class NodeHelperTest extends TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject|EntityManagerInterface */
+    /** @var MockObject|EntityManagerInterface */
     private $em;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|NodeRepository */
+    /** @var MockObject|NodeRepository */
     private $repository;
 
     /** @var NodeHelper */
     private $nodeHelper;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|NodeAdminPublisher */
+    /** @var MockObject|NodeAdminPublisher */
     private $nodeAdminPublisher;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|EventDispatcher */
+    /** @var MockObject|EventDispatcher */
     private $eventDispatcher;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|TokenStorageInterface */
+    /** @var MockObject|TokenStorageInterface */
     private $tokenStorage;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|CloneHelper */
+    /** @var MockObject|CloneHelper */
     private $cloneHelper;
 
     /** @var string */
@@ -317,7 +318,7 @@ class NodeHelperTest extends TestCase
         $nodeTranslation->setLang($this->locale);
         $nodeTranslation->addNodeVersion($nodeVersion);
 
-        /** @var \PHPUnit_Framework_MockObject_MockObject|NodeHelper $nodeHelper */
+        /** @var MockObject|NodeHelper $nodeHelper */
         $nodeHelper = $this->getMockBuilder(NodeHelper::class)
             ->setConstructorArgs([
                 $this->em,

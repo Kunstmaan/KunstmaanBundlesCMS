@@ -4,6 +4,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * Generates a new pagepart

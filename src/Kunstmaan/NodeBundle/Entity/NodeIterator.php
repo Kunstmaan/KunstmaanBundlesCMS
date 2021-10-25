@@ -23,7 +23,7 @@ class NodeIterator implements \RecursiveIterator
     }
 
     /**
-     * @return \?RecursiveIterator
+     * @return \RecursiveIterator
      */
     #[\ReturnTypeWillChange]
     public function getChildren()
@@ -31,26 +31,41 @@ class NodeIterator implements \RecursiveIterator
         return new NodeIterator($this->_data->current()->getChildren());
     }
 
+    /**
+     * @return Node
+     */
     public function current()
     {
         return $this->_data->current();
     }
 
+    /**
+     * @return void
+     */
     public function next()
     {
         $this->_data->next();
     }
 
+    /**
+     * @return int
+     */
     public function key()
     {
         return $this->_data->key();
     }
 
+    /**
+     * @return bool
+     */
     public function valid()
     {
         return $this->_data->current() instanceof Node;
     }
 
+    /**
+     * @return void
+     */
     public function rewind()
     {
         $this->_data->first();

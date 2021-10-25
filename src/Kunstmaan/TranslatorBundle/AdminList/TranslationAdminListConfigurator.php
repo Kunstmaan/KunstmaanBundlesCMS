@@ -8,6 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineDBALAdminLi
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ChangeableLimitInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
 use Kunstmaan\AdminListBundle\Traits\ChangeableLimitTrait;
