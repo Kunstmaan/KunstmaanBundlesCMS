@@ -30,6 +30,7 @@ class ChoicePagePartTest extends TestCase
     public function testAdaptForm()
     {
         $object = $this->object;
+        $object->setChoices('choice1\nchoice2');
         $object->setRequired(true);
 
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
