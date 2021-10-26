@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * App Test Kernel for functional tests.
@@ -87,6 +88,11 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->rootConfig);
+        $loader->load(function (ContainerBuilder $containerBuilder) {
+            if (class_exists(Passport::class)) {
+                $containerBuilder->prependExtensionConfig('security', ['enable_authenticator_manager' => true]);
+            }
+        });
     }
 
     protected function build(ContainerBuilder $container)
