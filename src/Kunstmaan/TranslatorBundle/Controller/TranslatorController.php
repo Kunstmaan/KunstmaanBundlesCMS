@@ -11,6 +11,8 @@ use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
+use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
+use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
 
 final class TranslatorController extends AbstractAdminListController
 {
@@ -352,9 +353,6 @@ final class TranslatorController extends AbstractAdminListController
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
-        /**
-         * @var TranslatorInterface
-         */
         $translator = $this->container->get('translator');
 
         try {
