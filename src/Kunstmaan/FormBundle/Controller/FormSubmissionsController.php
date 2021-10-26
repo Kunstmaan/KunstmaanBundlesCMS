@@ -14,6 +14,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -145,8 +146,6 @@ class FormSubmissionsController extends Controller
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
     public function deleteAction(Request $request, $id)
     {
@@ -155,6 +154,23 @@ class FormSubmissionsController extends Controller
 
         $node = $em->getRepository(Node::class)->find($submission->getNode());
         $nt = $node->getNodeTranslation($request->getLocale());
+
+        $configurator = new FormSubmissionAdminListConfigurator($em, $nt, $this->getParameter('kunstmaan_form.deletable_formsubmissions'));
+
+        /** @var SlugifierInterface $slugifier */
+        $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
+        $csrfId = 'delete-' . $slugifier->slugify($configurator->getEntityName());
+
+        $hasToken = $request->request->has('token');
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanFormBundle 5.10 and will be required in KunstmaanFormBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            $indexUrl = $configurator->getIndexUrl();
+
+            return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
+        }
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
 
