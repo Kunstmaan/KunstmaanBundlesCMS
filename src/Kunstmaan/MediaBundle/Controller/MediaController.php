@@ -88,25 +88,13 @@ final class MediaController extends AbstractController
     /**
      * @param int $mediaId
      *
-     * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_delete", methods={"GET", "POST"})
+     * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_delete", methods={"POST"})
      *
      * @return RedirectResponse
      */
     public function deleteAction(Request $request, $mediaId)
     {
-        // NEXT_MAJOR: remove check and change methods property in route annotation
-        if ($request->isMethod(Request::METHOD_GET)) {
-            @trigger_error(sprintf('Calling the action "%s" with a GET request is deprecated since KunstmaanMediaBundle 5.10 and will only allow a POST request in KunstmaanMediaBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
-        }
-
-        $csrfId = 'media-delete';
-        $hasToken = $request->request->has('token');
-        // NEXT_MAJOR remove hasToken check and make csrf token required
-        if (!$hasToken) {
-            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanMediaBundle 5.10 and will be required in KunstmaanMediaBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
-        }
-
-        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('media-delete', $request->request->get('token'))) {
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
         }
 
