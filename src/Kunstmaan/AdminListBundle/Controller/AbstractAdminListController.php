@@ -21,6 +21,7 @@ use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -352,6 +353,22 @@ abstract class AbstractAdminListController extends AbstractController
      */
     protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
     {
+        /** @var SlugifierInterface $slugifier */
+        $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
+        $csrfId = 'delete-' . $slugifier->slugify($configurator->getEntityName());
+
+        $hasToken = $request->request->has('token');
+        // NEXT_MAJOR remove hasToken check and make csrf token required
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanAdminListBundle 5.10 and will be required in KunstmaanAdminListBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            $indexUrl = $configurator->getIndexUrl();
+
+            return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
+        }
+
         /* @var $em EntityManager */
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
@@ -577,6 +594,7 @@ abstract class AbstractAdminListController extends AbstractController
             'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
             'translator' => TranslatorInterface::class,
             'event_dispatcher' => EventDispatcherInterface::class,
+            'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
         ] + parent::getSubscribedServices();
     }
 }

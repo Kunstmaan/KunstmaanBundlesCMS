@@ -1,4 +1,7 @@
 services:
+    # Autowire aliases
+    Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface: '@kunstmaan_utilities.slugifier'
+
     kunstmaan_utilities.shell:
         class: Kunstmaan\UtilitiesBundle\Helper\Shell\Shell
 

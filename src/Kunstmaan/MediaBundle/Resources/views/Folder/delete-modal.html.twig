@@ -21,12 +21,16 @@
 
             <!-- Footer -->
             <div class="modal-footer">
-                <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id , 'type' : type }) }}" class="js-add-app-loading btn btn-danger btn--raise-on-hover">
-                    {{ 'form.delete' |trans }}
-                </a>
-                <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                    {{ 'form.cancel' |trans }}
-                </button>
+                <form action="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id , 'type' : type }) }}" method="post" novalidate="novalidate">
+                    <input type="hidden" name="token" value="{{ csrf_token('media-folder-delete') }}"/>
+
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                        {{ 'form.delete' | trans }}
+                    </button>
+                    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' |trans }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>

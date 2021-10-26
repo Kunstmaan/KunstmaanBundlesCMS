@@ -18,6 +18,8 @@
             <!-- Footer -->
             <div class="modal-footer">
                 <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+                    <input type="hidden" name="token" value="{{ csrf_token('node-delete') }}"/>
+
                     <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
                         {{ 'kuma_node.modal.delete_page.button.delete'|trans() }}
                     </button>

@@ -11,6 +11,7 @@
             </div>
 
             <form action="{{ path('KunstmaanNodeBundle_nodes_duplicate', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+                <input type="hidden" name="token" value="{{ csrf_token('node-duplicate') }}"/>
 
                 <!-- Body -->
                 <div class="modal-body">

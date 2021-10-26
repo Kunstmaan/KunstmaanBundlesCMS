@@ -1,6 +1,37 @@
 UPGRADE FROM 5.9 to 5.10
 ========================
 
+General
+-------
+
+### CSRF protection
+
+CSRF protection was added to multiple routes in the cms. No passing a csrf token to those routes
+is deprecated and will be required in 6.0. Below is a list of controller actions that will require
+a csrf token. Check the specific twig templates or the deprecation messages for the specific csrf token id that needs to
+be used.
+
+* `Kunstmaan\AdminListBundle\Controller\AdminListController::doDeleteAction`
+* `Kunstmaan\AdminBundle\Controller\ExceptionController::resolveAllAction`
+* `Kunstmaan\AdminBundle\Controller\ExceptionController::toggleResolveAction`
+* `Kunstmaan\MediaBundle\Controller\FolderController::deleteAction`
+* `Kunstmaan\MediaBundle\Controller\MediaController::deleteAction`
+* `Kunstmaan\FormBundle\Controller\FormSubmissionsController::deleteAction`
+* `Kunstmaan\UserManagementBundle\Controller\GroupsController::deleteAction`
+* `Kunstmaan\NodeBundle\Controller\NodeAdminController::recopyFromOtherLanguageAction`
+* `Kunstmaan\NodeBundle\Controller\NodeAdminController::deleteAction`
+* `Kunstmaan\NodeBundle\Controller\NodeAdminController::duplicateAction`
+* `Kunstmaan\NodeBundle\Controller\NodeAdminController::duplicateWithChildrenAction`
+* `Kunstmaan\UserManagementBundle\Controller\RolesController::deleteAction`
+* `Kunstmaan\TranslatorBundle\Controller\TranslatorController::deleteAction`
+
+Together with the CSRF token some of those routes will only be available to post requests in 6.0
+
+* `Kunstmaan\AdminBundle\Controller\ExceptionController::resolveAllAction`
+* `Kunstmaan\AdminBundle\Controller\ExceptionController::toggleResolveAction`
+* `Kunstmaan\MediaBundle\Controller\FolderController::deleteAction`
+* `Kunstmaan\MediaBundle\Controller\MediaController::deleteAction`
+
 AdminBundle
 ------------
 
