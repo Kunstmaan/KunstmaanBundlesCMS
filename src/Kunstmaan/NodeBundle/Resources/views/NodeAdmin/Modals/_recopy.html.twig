@@ -22,6 +22,7 @@
                 </div>
 
                 <form action="{{ path('KunstmaanNodeBundle_nodes_recopyfromotherlanguage', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+                    <input type="hidden" name="token" value="{{ csrf_token('recopy-from-language') }}"/>
 
                     <!-- Body -->
                     <div class="modal-body">

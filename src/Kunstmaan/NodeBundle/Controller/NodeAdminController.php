@@ -215,6 +215,17 @@ final class NodeAdminController extends Controller
      */
     public function recopyFromOtherLanguageAction(Request $request, $id)
     {
+        $csrfId = 'recopy-from-language';
+        $hasToken = $request->request->has('token');
+        // NEXT_MAJOR remove hasToken check and make csrf token required
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanNodeBundle 5.10 and will be required in KunstmaanNodeBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            return new RedirectResponse($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id]));
+        }
+
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
@@ -390,6 +401,17 @@ final class NodeAdminController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $csrfId = 'node-delete';
+        $hasToken = $request->request->has('token');
+        // NEXT_MAJOR remove hasToken check and make csrf token required
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanNodeBundle 5.10 and will be required in KunstmaanNodeBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            return new RedirectResponse($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id]));
+        }
+
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
@@ -454,6 +476,17 @@ final class NodeAdminController extends Controller
      */
     public function duplicateAction(Request $request, $id)
     {
+        $csrfId = 'node-duplicate';
+        $hasToken = $request->request->has('token');
+        // NEXT_MAJOR remove hasToken check and make csrf token required
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanNodeBundle 5.10 and will be required in KunstmaanNodeBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            return new RedirectResponse($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id]));
+        }
+
         $this->init($request);
         /* @var Node $parentNode */
         $originalNode = $this->em->getRepository(Node::class)
@@ -522,6 +555,17 @@ final class NodeAdminController extends Controller
      */
     public function duplicateWithChildrenAction(Request $request, $id)
     {
+        $csrfId = 'node-duplicate-with-children';
+        $hasToken = $request->request->has('token');
+        // NEXT_MAJOR remove hasToken check and make csrf token required
+        if (!$hasToken) {
+            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanNodeBundle 5.10 and will be required in KunstmaanNodeBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
+        }
+
+        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+            return new RedirectResponse($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id]));
+        }
+
         if (!$this->getParameter('kunstmaan_node.show_duplicate_with_children')) {
             return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $id]);
         }
