@@ -107,7 +107,7 @@ final class MediaController extends AbstractController
         }
 
         if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
-            return new RedirectResponse($this->generateUrl(''));
+            return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
         }
 
         $em = $this->getDoctrine()->getManager();
