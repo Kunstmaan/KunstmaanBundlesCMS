@@ -117,7 +117,7 @@ class FolderController extends Controller
         }
 
         if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
-            return new RedirectResponse($this->generateUrl(''));
+            return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', ['folderId' => $folderId]));
         }
 
         /** @var EntityManager $em */
