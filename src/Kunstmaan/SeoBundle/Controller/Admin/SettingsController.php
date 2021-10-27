@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\SeoBundle\Controller\Admin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
@@ -16,10 +17,13 @@ final class SettingsController extends AbstractController
 {
     /** @var TranslatorInterface */
     private $translator;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $em)
     {
         $this->translator = $translator;
+        $this->em = $em;
     }
 
     /**
@@ -34,8 +38,7 @@ final class SettingsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(Robots::class);
+        $repo = $this->em->getRepository(Robots::class);
         $robot = $repo->findOneBy([]);
         $default = $this->getParameter('robots_default');
         $isSaved = true;
@@ -55,8 +58,8 @@ final class SettingsController extends AbstractController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($robot);
-                $em->flush();
+                $this->em->persist($robot);
+                $this->em->flush();
 
                 return new RedirectResponse($this->generateUrl('KunstmaanSeoBundle_settings_robots'));
             }

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
@@ -25,12 +26,15 @@ final class ChooserController extends AbstractController
     private $folderManager;
     /** @var AdminListFactory */
     private $adminListFactory;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, AdminListFactory $adminListFactory)
+    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, AdminListFactory $adminListFactory, EntityManagerInterface $em)
     {
         $this->mediaManager = $mediaManager;
         $this->folderManager = $folderManager;
         $this->adminListFactory = $adminListFactory;
+        $this->em = $em;
     }
 
     private const TYPE_ALL = 'all';
@@ -42,7 +46,6 @@ final class ChooserController extends AbstractController
      */
     public function chooserIndexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $folderId = false;
 
@@ -53,7 +56,7 @@ final class ChooserController extends AbstractController
         // Go to the last visited folder
         if ($session->get('last-media-folder')) {
             try {
-                $em->getRepository(Folder::class)->getFolder($session->get('last-media-folder'));
+                $this->em->getRepository(Folder::class)->getFolder($session->get('last-media-folder'));
                 $folderId = $session->get('last-media-folder');
             } catch (EntityNotFoundException $e) {
                 $folderId = false;
@@ -63,7 +66,7 @@ final class ChooserController extends AbstractController
         if (!$folderId) {
             // Redirect to the first top folder
             /* @var Folder $firstFolder */
-            $firstFolder = $em->getRepository(Folder::class)->getFirstTopFolder();
+            $firstFolder = $this->em->getRepository(Folder::class)->getFirstTopFolder();
             $folderId = $firstFolder->getId();
         }
 
@@ -87,7 +90,6 @@ final class ChooserController extends AbstractController
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {
-        $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
 
         $type = $request->get('type');
@@ -106,7 +108,7 @@ final class ChooserController extends AbstractController
         }
 
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         /** @var AbstractMediaHandler $handler */
         $handler = null;
@@ -114,7 +116,7 @@ final class ChooserController extends AbstractController
             $handler = $this->mediaManager->getHandlerForType($type);
         }
 
-        $adminListConfigurator = new MediaAdminListConfigurator($em, $this->mediaManager, $folder, $request);
+        $adminListConfigurator = new MediaAdminListConfigurator($this->em, $this->mediaManager, $folder, $request);
         $adminList = $this->adminListFactory->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 

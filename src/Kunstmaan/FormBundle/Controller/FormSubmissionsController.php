@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
@@ -33,6 +33,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class FormSubmissionsController extends AbstractController
 {
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * The index action will use an admin list to list all the form pages
      *
@@ -43,13 +51,11 @@ final class FormSubmissionsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
         /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
-            new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW)
+            new FormPageAdminListConfigurator($this->em, $aclHelper, PermissionMap::PERMISSION_VIEW)
         );
         $adminList->bindRequest($request);
 
@@ -69,12 +75,11 @@ final class FormSubmissionsController extends AbstractController
      */
     public function listAction(Request $request, $nodeTranslationId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
 
         /** @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
-            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $this->getParameter('kunstmaan_form.deletable_formsubmissions'))
+            new FormSubmissionAdminListConfigurator($this->em, $nodeTranslation, $this->getParameter('kunstmaan_form.deletable_formsubmissions'))
         );
         $adminList->bindRequest($request);
 
@@ -95,15 +100,14 @@ final class FormSubmissionsController extends AbstractController
      */
     public function editAction($nodeTranslationId, $submissionId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
-        $formSubmission = $em->getRepository(FormSubmission::class)->find($submissionId);
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
+        $formSubmission = $this->em->getRepository(FormSubmission::class)->find($submissionId);
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $deletableFormsubmission = $this->getParameter('kunstmaan_form.deletable_formsubmissions');
 
         /** @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
-            new FormSubmissionAdminListConfigurator($em, $nodeTranslation, $deletableFormsubmission)
+            new FormSubmissionAdminListConfigurator($this->em, $nodeTranslation, $deletableFormsubmission)
         );
         $adminList->bindRequest($request);
 
@@ -126,13 +130,12 @@ final class FormSubmissionsController extends AbstractController
      */
     public function exportAction($nodeTranslationId, $_format)
     {
-        $em = $this->getDoctrine()->getManager();
         /** @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
         $translator = $this->container->get('translator');
 
         /** @var ExportList $exportList */
-        $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
+        $configurator = new FormSubmissionExportListConfigurator($this->em, $nodeTranslation, $translator);
         $exportList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator);
 
         return $this->container->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
@@ -152,13 +155,12 @@ final class FormSubmissionsController extends AbstractController
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $submission = $em->getRepository(FormSubmission::class)->find($id);
+        $submission = $this->em->getRepository(FormSubmission::class)->find($id);
 
-        $node = $em->getRepository(Node::class)->find($submission->getNode());
+        $node = $this->em->getRepository(Node::class)->find($submission->getNode());
         $nt = $node->getNodeTranslation($request->getLocale());
 
-        $configurator = new FormSubmissionAdminListConfigurator($em, $nt, $this->getParameter('kunstmaan_form.deletable_formsubmissions'));
+        $configurator = new FormSubmissionAdminListConfigurator($this->em, $nt, $this->getParameter('kunstmaan_form.deletable_formsubmissions'));
 
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
         $csrfId = 'delete-' . $slugifier->slugify($configurator->getEntityName());
@@ -178,15 +180,15 @@ final class FormSubmissionsController extends AbstractController
 
         $url = $this->generateUrl('KunstmaanFormBundle_formsubmissions_list', ['nodeTranslationId' => $nt->getId()]);
 
-        $fields = $em->getRepository(FormSubmissionField::class)->findBy(['formSubmission' => $submission]);
+        $fields = $this->em->getRepository(FormSubmissionField::class)->findBy(['formSubmission' => $submission]);
 
         try {
             foreach ($fields as $field) {
-                $em->remove($field);
+                $this->em->remove($field);
             }
 
-            $em->remove($submission);
-            $em->flush();
+            $this->em->remove($submission);
+            $this->em->flush();
 
             $this->addFlash(
                 FlashTypes::SUCCESS,

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleType;
@@ -26,11 +26,17 @@ final class RolesController extends AbstractController
     private $translator;
     /** @var AdminListFactory */
     private $adminListFactory;
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var SlugifierInterface */
+    private $slugifier;
 
-    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory)
+    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, EntityManagerInterface $em, SlugifierInterface $slugifier)
     {
         $this->translator = $translator;
         $this->adminListFactory = $adminListFactory;
+        $this->em = $em;
+        $this->slugifier = $slugifier;
     }
 
     /**
@@ -47,8 +53,7 @@ final class RolesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $em = $this->getDoctrine()->getManager();
-        $adminlist = $this->adminListFactory->createList(new RoleAdminListConfigurator($em));
+        $adminlist = $this->adminListFactory->createList(new RoleAdminListConfigurator($this->em));
         $adminlist->bindRequest($request);
 
         return [
@@ -70,16 +75,14 @@ final class RolesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         $role = new Role('');
         $form = $this->createForm(RoleType::class, $role);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($role);
-                $em->flush();
+                $this->em->persist($role);
+                $this->em->flush();
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -113,17 +116,15 @@ final class RolesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
-        $role = $em->getRepository(Role::class)->find($id);
+        $role = $this->em->getRepository(Role::class)->find($id);
         $form = $this->createForm(RoleType::class, $role);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($role);
-                $em->flush();
+                $this->em->persist($role);
+                $this->em->flush();
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -155,13 +156,9 @@ final class RolesController extends AbstractController
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $configurator = new RoleAdminListConfigurator($em);
+        $configurator = new RoleAdminListConfigurator($this->em);
 
-        /** @var SlugifierInterface $slugifier */
-        $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-
-        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
@@ -169,13 +166,11 @@ final class RolesController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
-        $role = $em->getRepository(Role::class)->find($id);
+        $role = $this->em->getRepository(Role::class)->find($id);
         if (!\is_null($role)) {
-            $em->remove($role);
-            $em->flush();
+            $this->em->remove($role);
+            $this->em->flush();
 
             $this->addFlash(
                 FlashTypes::SUCCESS,

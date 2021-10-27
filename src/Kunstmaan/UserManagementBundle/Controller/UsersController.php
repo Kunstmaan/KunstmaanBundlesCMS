@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -40,14 +40,23 @@ final class UsersController extends AbstractController
     private $userManager;
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, ParameterBagInterface $parameterBag, UserManager $userManager, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        AdminListFactory $adminListFactory,
+        ParameterBagInterface $parameterBag,
+        UserManager $userManager,
+        EventDispatcherInterface $eventDispatcher,
+        EntityManagerInterface $em
+    ) {
         $this->translator = $translator;
         $this->adminListFactory = $adminListFactory;
         $this->parameterBag = $parameterBag;
         $this->userManager = $userManager;
         $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->em = $em;
     }
 
     /**
@@ -62,13 +71,12 @@ final class UsersController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $em = $this->getDoctrine()->getManager();
         $configuratorClassName = '';
         if ($this->parameterBag->has('kunstmaan_user_management.user_admin_list_configurator.class')) {
             $configuratorClassName = $this->getParameter('kunstmaan_user_management.user_admin_list_configurator.class');
         }
 
-        $configurator = new $configuratorClassName($em);
+        $configurator = new $configuratorClassName($this->em);
 
         $adminList = $this->adminListFactory->createList($configurator);
         $adminList->bindRequest($request);
@@ -164,11 +172,8 @@ final class UsersController extends AbstractController
         }
         $this->denyAccessUnlessGranted($requiredRole);
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
+        $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
@@ -234,18 +239,16 @@ final class UsersController extends AbstractController
             return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
         }
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
+        $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $deletedUser = method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername();
             $deletedBy = method_exists($this->getUser(), 'getUserIdentifier') ? $this->getUser()->getUserIdentifier() : $this->getUser()->getUsername();
 
             $afterDeleteEvent = new AfterUserDeleteEvent($deletedUser, $deletedBy);
 
-            $em->remove($user);
-            $em->flush();
+            $this->em->remove($user);
+            $this->em->flush();
 
             $this->eventDispatcher->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
 

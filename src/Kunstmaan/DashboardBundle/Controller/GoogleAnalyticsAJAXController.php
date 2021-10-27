@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\DashboardBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class GoogleAnalyticsAJAXController extends AbstractController
 {
@@ -24,11 +26,17 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     private $kernel;
     /** @var ConfigHelper */
     private $analyticsConfig;
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var TranslatorInterface */
+    private $translator;
 
-    public function __construct(KernelInterface $kernel, ConfigHelper $analyticsConfig)
+    public function __construct(KernelInterface $kernel, ConfigHelper $analyticsConfig, EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->kernel = $kernel;
         $this->analyticsConfig = $analyticsConfig;
+        $this->em = $em;
+        $this->translator = $translator;
     }
 
     /**
@@ -60,9 +68,8 @@ final class GoogleAnalyticsAJAXController extends AbstractController
      */
     public function getOverviewAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
-        $analyticsOverviewRepository = $em->getRepository(AnalyticsOverview::class);
+        $analyticsOverviewRepository = $this->em->getRepository(AnalyticsOverview::class);
         $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
@@ -207,16 +214,15 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         $disableGoals = $request->query->get('disableGoals');
 
         // edit the config
-        $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
+        $config = $this->em->getRepository(AnalyticsConfig::class)->find($configId);
         if ($accountId && $propertyId && $profileId) {
             $config->setAccountId($accountId);
             $config->setPropertyId($propertyId);
             $config->setProfileId($profileId);
         }
 
-        $em->persist($config);
-        $em->flush();
+        $this->em->persist($config);
+        $this->em->flush();
 
         // set the config name
         $this->analyticsConfig->init($configId);
@@ -224,12 +230,12 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         $config->setName($profile['profileName']);
         $config->setDisableGoals($disableGoals);
 
-        $em->persist($config);
-        $em->flush();
+        $this->em->persist($config);
+        $this->em->flush();
 
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_admin.ga_ajax_controller.flash.success')
+            $this->translator->trans('kuma_admin.ga_ajax_controller.flash.success')
         );
 
         return new JsonResponse();
@@ -244,10 +250,9 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         $configId = $request->query->get('configId');
 
         // edit the config
-        $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
-        $em->remove($config);
-        $em->flush();
+        $config = $this->em->getRepository(AnalyticsConfig::class)->find($configId);
+        $this->em->remove($config);
+        $this->em->flush();
 
         return new JsonResponse();
     }
@@ -257,8 +262,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
      */
     public function getConfigAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository(AnalyticsConfig::class)->findFirst();
+        $config = $this->em->getRepository(AnalyticsConfig::class)->findFirst();
         $accountId = $config->getAccountId();
 
         if (!$accountId) {
@@ -278,7 +282,6 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     public function addSegmentAction(Request $request)
     {
         $configId = $request->query->get('configId');
-        $em = $this->getDoctrine()->getManager();
 
         // create a new segment
         $segment = new AnalyticsSegment();
@@ -288,14 +291,14 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         $segment->setName($name);
 
         // add the segment to the config
-        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
+        $config = $this->em->getRepository(AnalyticsConfig::class)->find($configId);
         $segment->setConfig($config);
         $segments = $config->getSegments();
         $segments[] = $segment;
         $config->setSegments($segments);
 
-        $em->persist($config);
-        $em->flush();
+        $this->em->persist($config);
+        $this->em->flush();
 
         return new JsonResponse();
     }
@@ -305,10 +308,8 @@ final class GoogleAnalyticsAJAXController extends AbstractController
      */
     public function deleteSegmentAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $id = $request->query->get('id');
-        $em->getRepository(AnalyticsSegment::class)->deleteSegment($id);
+        $this->em->getRepository(AnalyticsSegment::class)->deleteSegment($id);
 
         return new JsonResponse();
     }
@@ -318,16 +319,14 @@ final class GoogleAnalyticsAJAXController extends AbstractController
      */
     public function editSegmentAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $id = $request->query->get('id');
         $query = $request->query->get('query');
         $name = $request->query->get('name');
-        $segment = $em->getRepository(AnalyticsSegment::class)->find($id);
+        $segment = $this->em->getRepository(AnalyticsSegment::class)->find($id);
         $segment->setName($name);
         $segment->setQuery($query);
-        $em->persist($segment);
-        $em->flush();
+        $this->em->persist($segment);
+        $this->em->flush();
 
         return new JsonResponse();
     }

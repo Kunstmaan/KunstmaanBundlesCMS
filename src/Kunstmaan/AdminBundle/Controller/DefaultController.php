@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The default controller is used to render the main screen the users see when they log in to the admin
@@ -23,11 +24,14 @@ final class DefaultController extends AbstractController
     private $parameterBag;
     /** @var ManagerRegistry */
     private $managerRegistry;
+    /** @var TranslatorInterface */
+    private $translator;
 
-    public function __construct(ParameterBagInterface $parameterBag, ManagerRegistry $managerRegistry)
+    public function __construct(ParameterBagInterface $parameterBag, ManagerRegistry $managerRegistry, TranslatorInterface $translator)
     {
         $this->parameterBag = $parameterBag;
         $this->managerRegistry = $managerRegistry;
+        $this->translator = $translator;
     }
 
     /**
@@ -82,10 +86,7 @@ final class DefaultController extends AbstractController
                 $em->persist($dashboardConfiguration);
                 $em->flush($dashboardConfiguration);
 
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_admin.edit.flash.success')
-                );
+                $this->addFlash(FlashTypes::SUCCESS, $this->translator->trans('kuma_admin.edit.flash.success'));
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_homepage'));
             }

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
@@ -26,11 +26,17 @@ final class GroupsController extends AbstractController
     private $translator;
     /** @var AdminListFactory */
     private $adminListFactory;
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var SlugifierInterface */
+    private $slugifier;
 
-    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory)
+    public function __construct(TranslatorInterface $translator, AdminListFactory $adminListFactory, EntityManagerInterface $em, SlugifierInterface $slugifier)
     {
         $this->translator = $translator;
         $this->adminListFactory = $adminListFactory;
+        $this->em = $em;
+        $this->slugifier = $slugifier;
     }
 
     /**
@@ -47,9 +53,7 @@ final class GroupsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $adminlist = $this->adminListFactory->createList(new GroupAdminListConfigurator($em));
+        $adminlist = $this->adminListFactory->createList(new GroupAdminListConfigurator($this->em));
         $adminlist->bindRequest($request);
 
         return [
@@ -71,16 +75,14 @@ final class GroupsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($group);
-                $em->flush();
+                $this->em->persist($group);
+                $this->em->flush();
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -114,17 +116,15 @@ final class GroupsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         /* @var Group $group */
-        $group = $em->getRepository(Group::class)->find($id);
+        $group = $this->em->getRepository(Group::class)->find($id);
         $form = $this->createForm(GroupType::class, $group);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($group);
-                $em->flush();
+                $this->em->persist($group);
+                $this->em->flush();
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -156,13 +156,9 @@ final class GroupsController extends AbstractController
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $configurator = new GroupAdminListConfigurator($em);
+        $configurator = new GroupAdminListConfigurator($this->em);
 
-        /** @var SlugifierInterface $slugifier */
-        $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-
-        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
@@ -170,12 +166,10 @@ final class GroupsController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $group = $em->getRepository(Group::class)->find($id);
+        $group = $this->em->getRepository(Group::class)->find($id);
         if (!\is_null($group)) {
-            $em->remove($group);
-            $em->flush();
+            $this->em->remove($group);
+            $this->em->flush();
 
             $this->addFlash(
                 FlashTypes::SUCCESS,

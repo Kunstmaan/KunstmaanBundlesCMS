@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TaggingBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
@@ -16,6 +17,13 @@ final class TagAdminListController extends AbstractAdminListController
      * @var AdminListConfiguratorInterface
      */
     private $configurator;
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * @return AdminListConfiguratorInterface
@@ -76,8 +84,7 @@ final class TagAdminListController extends AbstractAdminListController
     public function autocompleteAction(Request $request)
     {
         $search = $request->get('term');
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository(Tag::class)->createQueryBuilder('n')
+        $qb = $this->em->getRepository(Tag::class)->createQueryBuilder('n')
             ->where('n.name LIKE :search')
             ->orderBy('n.name', 'ASC')
             ->setParameter('search', '%' . $search . '%');

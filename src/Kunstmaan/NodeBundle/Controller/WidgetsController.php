@@ -17,10 +17,13 @@ final class WidgetsController extends AbstractController
 {
     /** @var DomainConfigurationInterface */
     private $domainConfiguration;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(DomainConfigurationInterface $domainConfiguration)
+    public function __construct(DomainConfigurationInterface $domainConfiguration, EntityManagerInterface $em)
     {
         $this->domainConfiguration = $domainConfiguration;
+        $this->em = $em;
     }
 
     /**
@@ -64,8 +67,6 @@ final class WidgetsController extends AbstractController
      */
     public function selectNodesLazy(Request $request)
     {
-        /* @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
         $id = $request->query->get('id');
         $depth = $this->getParameter('kunstmaan_node.url_chooser.lazy_increment');
@@ -75,10 +76,10 @@ final class WidgetsController extends AbstractController
                 $switchedHost = $this->domainConfiguration->getHostSwitched();
                 $rootItems = [$this->domainConfiguration->getRootNode($switchedHost['host'])];
             } else {
-                $rootItems = $em->getRepository(Node::class)->getAllTopNodes();
+                $rootItems = $this->em->getRepository(Node::class)->getAllTopNodes();
             }
         } else {
-            $rootItems = $em->getRepository(Node::class)->find($id)->getChildren();
+            $rootItems = $this->em->getRepository(Node::class)->find($id)->getChildren();
         }
 
         $results = $this->nodesToArray($locale, $rootItems, $depth);
