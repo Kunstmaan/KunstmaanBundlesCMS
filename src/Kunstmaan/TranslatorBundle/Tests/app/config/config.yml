@@ -1,33 +1,17 @@
 imports:
-    - { resource: parameters.yml }
     - { resource: security.yml }
 
 framework:
-    secret: "%secret%"
+    secret: "secret"
     router:
         resource: "%kernel.project_dir%/config/routing.yml"
-        strict_requirements: "%kernel.debug%"
-    form:            ~
-    csrf_protection: ~
-    validation:      { enable_annotations: true, enabled: true }
-    default_locale:  nl
-    session:         ~
-    fragments:       ~
-    translator: { fallback: "en" }
-
-services:
-    translation.loader.yml:
-        class: Symfony\Component\Translation\Loader\YamlFileLoader
-        tags:
-            - { name: translation.loader, alias: yml }
+        utf8: true
 
 kunstmaan_admin:
     website_title: 'PHPUnit test app'
     multi_language: true
     required_locales: 'nl|fr|en'
     default_locale: 'nl'
-    authentication:
-        enable_new_authentication: true
 
 kunstmaan_translator:
     managed_locales: ['nl','en','de']
@@ -47,10 +31,3 @@ doctrine:
                 connection:       default
                 mappings:
                     KunstmaanTranslatorBundle: ~
-
-sensio_framework_extra:
-    router:
-        annotations: false
-
-twig:
-    strict_variables: '%kernel.debug%'
