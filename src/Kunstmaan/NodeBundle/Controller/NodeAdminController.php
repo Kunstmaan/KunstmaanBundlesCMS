@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
@@ -101,9 +102,10 @@ final class NodeAdminController extends AbstractController
     /** @var DomainConfigurationInterface */
     private $domainConfiguration;
 
-    public function __construct(DomainConfigurationInterface $domainConfiguration)
+    public function __construct(DomainConfigurationInterface $domainConfiguration, EntityManagerInterface $em)
     {
         $this->domainConfiguration = $domainConfiguration;
+        $this->em = $em;
     }
 
     /**
@@ -111,7 +113,6 @@ final class NodeAdminController extends AbstractController
      */
     protected function init(Request $request)
     {
-        $this->em = $this->getDoctrine()->getManager();
         $this->locale = $request->getLocale();
         $this->authorizationChecker = $this->container->get('security.authorization_checker');
         $this->user = $this->getUser();

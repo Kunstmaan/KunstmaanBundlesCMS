@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MenuBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
@@ -22,10 +23,13 @@ final class MenuItemAdminListController extends AbstractAdminListController
     private $configurator;
     /** @var DomainConfigurationInterface */
     private $domainConfiguration;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(DomainConfigurationInterface $domainConfiguration)
+    public function __construct(DomainConfigurationInterface $domainConfiguration, EntityManagerInterface $em)
     {
         $this->domainConfiguration = $domainConfiguration;
+        $this->em = $em;
     }
 
     /**
@@ -37,9 +41,7 @@ final class MenuItemAdminListController extends AbstractAdminListController
     public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
     {
         if (!isset($this->configurator)) {
-            $menu = $this->getDoctrine()->getManager()->getRepository(
-                $this->getParameter('kunstmaan_menu.entity.menu.class')
-            )->find($menuid);
+            $menu = $this->em->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'))->find($menuid);
             $rootNode = $this->domainConfiguration->getRootNode();
 
             $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
@@ -65,9 +67,7 @@ final class MenuItemAdminListController extends AbstractAdminListController
      */
     public function indexAction(Request $request, $menuid)
     {
-        $menuRepo = $this->getDoctrine()->getManager()->getRepository(
-            $this->getParameter('kunstmaan_menu.entity.menu.class')
-        );
+        $menuRepo = $this->em->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'));
 
         /** @var BaseMenu $menu */
         $menu = $menuRepo->find($menuid);

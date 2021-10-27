@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class EntityLockCheckController extends AbstractController
 {
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
      *
@@ -20,7 +29,7 @@ final class EntityLockCheckController extends AbstractController
      */
     protected function getEntityManager()
     {
-        return $this->getDoctrine()->getManager();
+        return $this->em;
     }
 
     /**
@@ -42,13 +51,13 @@ final class EntityLockCheckController extends AbstractController
 
         try {
             /** @var EntityVersionLockService $entityVersionLockservice */
-            $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+            $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
             $entityIsLocked = $entityVersionLockService->isEntityLocked($this->getUser(), $entity);
 
             if ($entityIsLocked) {
                 $user = $entityVersionLockService->getUsersWithEntityVersionLock($entity, $this->getUser());
-                $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', ['%user%' => implode(', ', $user)]);
+                $message = $this->container->get('translator')->trans('kuma_admin_list.edit.flash.locked', ['%user%' => implode(', ', $user)]);
             }
         } catch (AccessDeniedException $ade) {
         }

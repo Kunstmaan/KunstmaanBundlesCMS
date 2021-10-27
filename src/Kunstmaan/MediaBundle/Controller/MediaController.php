@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\Folder;
@@ -27,12 +28,15 @@ final class MediaController extends AbstractController
     private $folderManager;
     /** @var TranslatorInterface */
     private $translator;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, TranslatorInterface $translator)
+    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, TranslatorInterface $translator, EntityManagerInterface $em)
     {
         $this->mediaManager = $mediaManager;
         $this->folderManager = $folderManager;
         $this->translator = $translator;
+        $this->em = $em;
     }
 
     /**
@@ -44,10 +48,8 @@ final class MediaController extends AbstractController
      */
     public function showAction(Request $request, $mediaId)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Media $media */
-        $media = $em->getRepository(Media::class)->getMedia($mediaId);
+        $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $folder = $media->getFolder();
 
         $handler = $this->mediaManager->getHandler($media);
@@ -59,7 +61,7 @@ final class MediaController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
-                $em->getRepository(Media::class)->save($media);
+                $this->em->getRepository(Media::class)->save($media);
 
                 return new RedirectResponse(
                     $this->generateUrl(
@@ -98,14 +100,12 @@ final class MediaController extends AbstractController
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
         }
 
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Media $media */
-        $media = $em->getRepository(Media::class)->getMedia($mediaId);
+        $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
 
-        $em->getRepository(Media::class)->delete($media);
+        $this->em->getRepository(Media::class)->delete($media);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
@@ -139,10 +139,8 @@ final class MediaController extends AbstractController
      */
     public function bulkUploadAction($folderId)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         return ['folder' => $folder];
     }
@@ -255,15 +253,14 @@ final class MediaController extends AbstractController
             \rename("{$filePath}.part", $filePath);
         }
 
-        $em = $this->getDoctrine()->getManager();
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
         try {
             $media = $this->mediaManager->getHandler($file)->createNew($file);
             $media->setFolder($folder);
-            $em->getRepository(Media::class)->save($media);
+            $this->em->getRepository(Media::class)->save($media);
         } catch (Exception $e) {
             return $this->returnJsonError('104', 'Failed performing save on media-manager');
         }
@@ -313,10 +310,8 @@ final class MediaController extends AbstractController
      */
     public function dropAction(Request $request, $folderId)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $drop = null;
 
@@ -332,7 +327,7 @@ final class MediaController extends AbstractController
         $media = $this->mediaManager->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
-            $em->getRepository(Media::class)->save($media);
+            $this->em->getRepository(Media::class)->save($media);
 
             return new JsonResponse(['status' => $this->translator->trans('kuma_admin.media.flash.drop_success')]);
         }
@@ -369,10 +364,8 @@ final class MediaController extends AbstractController
      */
     private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $handler = $this->mediaManager->getHandlerForType($type);
         $media = new Media();
@@ -389,7 +382,7 @@ final class MediaController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);
-                $em->getRepository(Media::class)->save($media);
+                $this->em->getRepository(Media::class)->save($media);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -466,8 +459,7 @@ final class MediaController extends AbstractController
      */
     public function bulkMoveAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository(Media::class);
+        $mediaRepo = $this->em->getRepository(Media::class);
         $form = $this->createForm(BulkMoveMediaType::class);
 
         $form->handleRequest($request);

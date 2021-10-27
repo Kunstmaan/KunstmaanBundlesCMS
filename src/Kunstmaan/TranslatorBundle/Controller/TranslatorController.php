@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
@@ -34,12 +34,15 @@ final class TranslatorController extends AbstractAdminListController
     private $importerService;
     /** @var SlugifierInterface */
     private $slugifier;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(CacheValidator $cacheValidator, Importer $importerService, SlugifierInterface $slugifier)
+    public function __construct(CacheValidator $cacheValidator, Importer $importerService, SlugifierInterface $slugifier, EntityManagerInterface $em)
     {
         $this->cacheValidator = $cacheValidator;
         $this->importerService = $importerService;
         $this->slugifier = $slugifier;
+        $this->em = $em;
     }
 
     /**
@@ -86,8 +89,6 @@ final class TranslatorController extends AbstractAdminListController
      */
     public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
     {
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
         $translator = $this->container->get('translator');
 
@@ -103,7 +104,7 @@ final class TranslatorController extends AbstractAdminListController
 
             // Fetch form data
             $data = $form->getData();
-            if (!$em->getRepository(Translation::class)->isUnique($data)) {
+            if (!$this->em->getRepository(Translation::class)->isUnique($data)) {
                 $error = new FormError($translator->trans('translator.translation_not_unique'));
                 $form->get('domain')->addError($error);
                 $form->get('keyword')->addError($error);
@@ -111,8 +112,8 @@ final class TranslatorController extends AbstractAdminListController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // Create translation
-                $em->getRepository(Translation::class)->createTranslations($data);
-                $em->flush();
+                $this->em->getRepository(Translation::class)->createTranslations($data);
+                $this->em->flush();
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -148,10 +149,9 @@ final class TranslatorController extends AbstractAdminListController
      */
     public function editAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
 
-        $translations = $em->getRepository(Translation::class)->findBy(['translationId' => $id]);
+        $translations = $this->em->getRepository(Translation::class)->findBy(['translationId' => $id]);
         if (\count($translations) < 1) {
             throw new \InvalidArgumentException('No existing translations found for this id');
         }
@@ -180,8 +180,8 @@ final class TranslatorController extends AbstractAdminListController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // Update translations
-                $em->getRepository(Translation::class)->updateTranslations($translation, $id);
-                $em->flush();
+                $this->em->getRepository(Translation::class)->updateTranslations($translation, $id);
+                $this->em->flush();
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -258,8 +258,7 @@ final class TranslatorController extends AbstractAdminListController
     public function editSearchAction($domain, $locale, $keyword)
     {
         $configurator = $this->getAdminListConfigurator();
-        $em = $this->getDoctrine()->getManager();
-        $translation = $em->getRepository(Translation::class)->findOneBy(
+        $translation = $this->em->getRepository(Translation::class)->findOneBy(
             ['domain' => $domain, 'keyword' => $keyword, 'locale' => $locale]
         );
 
@@ -292,11 +291,8 @@ final class TranslatorController extends AbstractAdminListController
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
         }
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
         if ($request->isMethod('POST')) {
-            $em->getRepository(Translation::class)->removeTranslations($id);
+            $this->em->getRepository(Translation::class)->removeTranslations($id);
         }
 
         return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : []));
@@ -318,7 +314,7 @@ final class TranslatorController extends AbstractAdminListController
         $locales = $this->getParameter('kuma_translator.managed_locales');
 
         if (!isset($this->adminListConfigurator)) {
-            $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getConnection(), $locales);
+            $this->adminListConfigurator = new TranslationAdminListConfigurator($this->em->getConnection(), $locales);
         }
 
         return $this->adminListConfigurator;
@@ -339,13 +335,12 @@ final class TranslatorController extends AbstractAdminListController
         }
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
-        $em = $this->getDoctrine()->getManager();
         $translator = $this->container->get('translator');
 
         try {
             if ($id !== 0) {
                 // Find existing translation
-                $translation = $em->getRepository(Translation::class)->find($id);
+                $translation = $this->em->getRepository(Translation::class)->find($id);
 
                 if (\is_null($translation)) {
                     return new Response($translator->trans('translator.translator.invalid_translation'), 500);
@@ -359,8 +354,8 @@ final class TranslatorController extends AbstractAdminListController
                 $translation->setTranslationId($values['translationId']);
             }
             $translation->setText($values['value']);
-            $em->persist($translation);
-            $em->flush();
+            $this->em->persist($translation);
+            $this->em->flush();
 
             return new JsonResponse([
                 'success' => true,

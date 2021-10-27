@@ -75,7 +75,8 @@
         "behat/transliterator": "~1.2",
         "defuse/php-encryption": "^2.2",
         "kunstmaan/sensio-generator-bundle": "^3.2",
-        "doctrine/collections": "^1.6"
+        "doctrine/collections": "^1.6",
+        "symfony/deprecation-contracts": "^2.4"
     },
     "require-dev": {
         "symfony/error-handler": "^4.4|^5.3",

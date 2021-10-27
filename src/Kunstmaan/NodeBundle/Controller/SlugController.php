@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
@@ -31,12 +30,15 @@ final class SlugController extends AbstractController
     private $viewDataProviderServiceLocator;
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(NodeMenu $nodeMenu, PsrContainerInterface $viewDataProviderServiceLocator, EventDispatcherInterface $eventDispatcher)
+    public function __construct(NodeMenu $nodeMenu, PsrContainerInterface $viewDataProviderServiceLocator, EventDispatcherInterface $eventDispatcher, EntityManagerInterface $em)
     {
         $this->nodeMenu = $nodeMenu;
         $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
         $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->em = $em;
     }
 
     /**
@@ -53,8 +55,6 @@ final class SlugController extends AbstractController
      */
     public function slugAction(Request $request, $url = null, $preview = false)
     {
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
 
         /* @var NodeTranslation $nodeTranslation */
@@ -68,7 +68,7 @@ final class SlugController extends AbstractController
         $entity = $this->getPageEntity(
             $request,
             $preview,
-            $em,
+            $this->em,
             $nodeTranslation
         );
         $node = $nodeTranslation->getNode();

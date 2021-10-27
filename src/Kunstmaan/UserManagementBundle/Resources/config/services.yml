@@ -12,19 +12,25 @@ services:
             - { name: 'kernel.event_subscriber' }
 
     Kunstmaan\UserManagementBundle\Controller\GroupsController:
-        arguments: [ '@translator', '@kunstmaan_adminlist.factory' ]
+        arguments: [ '@translator', '@kunstmaan_adminlist.factory', '@doctrine.orm.entity_manager', '@kunstmaan_utilities.slugifier' ]
         calls:
             - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
         tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
 
     Kunstmaan\UserManagementBundle\Controller\RolesController:
-        arguments: [ '@translator', '@kunstmaan_adminlist.factory' ]
+        arguments: [ '@translator', '@kunstmaan_adminlist.factory', '@doctrine.orm.entity_manager', '@kunstmaan_utilities.slugifier' ]
         calls:
             - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
         tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
 
     Kunstmaan\UserManagementBundle\Controller\UsersController:
-        arguments: [ '@translator', '@kunstmaan_adminlist.factory', '@parameter_bag', '@Kunstmaan\AdminBundle\Service\UserManager', '@event_dispatcher' ]
+        arguments:
+            - '@translator'
+            - '@kunstmaan_adminlist.factory'
+            - '@parameter_bag'
+            - '@Kunstmaan\AdminBundle\Service\UserManager'
+            - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'
         calls:
             - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
         tags: [ 'controller.service_arguments', 'container.service_subscriber' ]
