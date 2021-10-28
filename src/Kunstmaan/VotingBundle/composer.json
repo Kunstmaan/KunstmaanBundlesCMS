@@ -24,7 +24,7 @@
         "symfony/dependency-injection": "^3.4|^4.4",
         "symfony/event-dispatcher": "^3.4|^4.4",
         "symfony/framework-bundle": "^3.4.31|^4.4",
-        "symfony/http-foundation": "^3.4.16|^4.4",
+        "symfony/http-foundation": "^3.4.35|^4.4",
         "symfony/http-kernel": "^3.4|^4.4",
         "symfony/routing": "^3.4|^4.4"
     },
