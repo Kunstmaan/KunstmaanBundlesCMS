@@ -147,10 +147,10 @@ class LegalCookieHelper
         if ($request->hasSession()) {
             $session = $request->getSession();
 
-            /* @var PostAuthenticationGuardToken $token */
             if ($session->isStarted() && $session->has(sprintf('_security_%s', $this->adminFirewallName))) {
                 $token = unserialize($session->get(sprintf('_security_%s', $this->adminFirewallName)));
-                $authenticated = $token->isAuthenticated();
+
+                $authenticated = method_exists($token, 'isAuthenticated') ? $token->isAuthenticated(false) : (bool) $token->getUser();
             }
         }
 

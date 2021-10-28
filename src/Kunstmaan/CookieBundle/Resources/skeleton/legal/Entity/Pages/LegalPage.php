@@ -2,20 +2,18 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
-use Kunstmaan\CookieBundle\Controller\LegalController;
 use {{ namespace }}\Form\Pages\LegalPageAdminType;
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\CookieBundle\ViewDataProvider\LegalPageViewDataProvider;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 
 /**
- * LegalFolderPage
- *
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}legal_pages")
  */
-class LegalPage extends AbstractPage implements HasPageTemplateInterface, SlugActionInterface
+class LegalPage extends AbstractPage implements HasPageTemplateInterface, CustomViewDataProviderInterface
 {
     /**
      * Returns the default backend form type for this page
@@ -62,11 +60,8 @@ class LegalPage extends AbstractPage implements HasPageTemplateInterface, SlugAc
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/LegalPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * @return mixed|string
-     */
-    public function getControllerAction()
+    public function getViewDataProviderServiceId(): string
     {
-        {% if not isV4 %}return 'KunstmaanCookieBundle:Legal:legalPage';{% else %}return LegalController::class.'::legalPageAction';{%endif%}
+        return LegalPageViewDataProvider::class;
     }
 }

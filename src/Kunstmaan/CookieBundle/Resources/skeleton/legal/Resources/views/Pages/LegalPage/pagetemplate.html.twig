@@ -17,7 +17,7 @@
         {# TabBarItems #}
         {% for key,tab in tabs %}
             {% if tab is not null %}
-                {% include 'KunstmaanCookieBundle:Components:TabBarItem.html.twig' with {'key':key, 'tab':tab} %}
+                {% include '@KunstmaanCookie/Components/TabBarItem.html.twig' with {'key':key, 'tab':tab} %}
             {% endif %}
         {% endfor %}
 
@@ -38,9 +38,9 @@
 
 
     <div class="kmcc-cookie-modal__footer">
-        {% include 'KunstmaanCookieBundle:Components:AcceptSomeCookiesButton.html.twig' %}
+        {% include '@KunstmaanCookie/Components/AcceptSomeCookiesButton.html.twig' %}
     </div>
 
-    {% include 'KunstmaanCookieBundle:Components:ToTopButton.html.twig' %}
+    {% include '@KunstmaanCookie/Components/ToTopButton.html.twig' %}
 </div>
 

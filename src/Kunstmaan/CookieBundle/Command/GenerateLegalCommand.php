@@ -86,6 +86,8 @@ EOT
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->assistant->getOption('demosite'), $this->assistant->getOption('overrideFiles'));
 
         $this->assistant->writeSection('Legal structure successfully created', 'bg=green;fg=black');
+
+        return 0;
     }
 
     /**

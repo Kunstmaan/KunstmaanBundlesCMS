@@ -43,7 +43,7 @@ Apply all CSS by importing the legal.scss file
 into the vendors file of your project
 
 ```
-@import "vendor/kunstmaan/cookie-bundle/src/Resources/ui/scss/legal";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/legal";
 ``` 
 
 ## CSS: Second method
@@ -107,7 +107,7 @@ php bin/console doctrine:migrations:migrate
 ## Generate fixtures
  
 ```
-php bin/console d:f:l --fixtures src/foo/AppBundle/DataFixtures/ORM/LegalGenerator/DefaultFixtures.php --append
+php bin/console d:f:l --group=cookie-bundle --append
 ``` 
 
 ## Add the optin pagepart to your form pages. 
