@@ -1,3 +1,19 @@
+{% import _self as mediaChooser %}
+{% macro getImageUrl(media, filter) %}
+    {% set handler = mediamanager.getHandler(media) %}
+    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+    {% if imageurl is not empty and media.location == 'local' %}
+        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+            {{ imageurl }}
+        {% else %}
+            {% set imageurl = asset(imageurl | imagine_filter(filter)) %}
+            {{ imageurl }}
+        {% endif %}
+    {% else %}
+        {{ null }}
+    {% endif %}
+{% endmacro %}
+
 {% block iconfont_widget %}
     {% apply spaceless %}
         <!-- Icon Chooser -->
@@ -46,7 +62,6 @@
     {% endapply %}
 {% endblock iconfont_widget %}
 
-
 {% block media_widget %}
 {% apply spaceless %}
     <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
@@ -58,18 +73,10 @@
             <figure class="thumbnail">
                 {% if(value.ent is defined) %}
                     {% set media = value.ent %}
-                    {% set handler = mediamanager.getHandler(media) %}
-                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-                    {% if imageurl is not empty and media.location == 'local' %}
-                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                            {% set imageurlretina = imageurl %}
-                        {% else %}
-                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
-                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
-                        {% endif %}
-                    {% endif %}
-                    {% if imageurl %}
-                        <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x{{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                    {% set imageUrl = _self.getImageUrl(media, 'media_list_thumbnail') %}
+                    {% set retinaImageUrl = _self.getImageUrl(media, 'media_list_thumbnail_retina') %}
+                    {% if imageUrl and retinaImageUrl %}
+                        <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                         <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                             {{ media.name }}
                         </figcaption>
@@ -81,11 +88,16 @@
                     {% endif %}
                 {% else %}
                     <img id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
-                    <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
                 {% endif %}
             </figure>
 
-            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
+            {% if show_image_edit_modal is defined and show_image_edit_modal %}
+                <button {% if value.ent is defined and 'svg' in value.ent.contentType %}disabled{% endif %} type="button" id="{{ id }}__preview__crop-btn" class="js-media-chooser-image-edit-btn btn btn-primary media-chooser__preview__crop-btn" data-linked-id="{{ id }}">
+                    <i class="fa fa-crop"></i>
+                </button>
+            {% endif %}
+
+            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn  media-chooser__preview__del-btn" data-linked-id="{{ id }}" {% if show_image_edit_modal is defined and show_image_edit_modal %}data-clear-image-edit{% endif %}>
                 <i class="fa fa-trash"></i>
             </button>
         </div>
@@ -98,9 +110,133 @@
         </button>
     </div>
 
+    {% if show_image_edit_modal is defined and show_image_edit_modal %}
+    <!-- image edit Modal -->
+    <div class="modal fade" id="{{ id }}-image-edit-modal" role="dialog" aria-labelledby="image-edit-modal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-image-edit="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3 class="modal-title">
+                        {{ 'media.widget.media_cropper.title' | trans }}
+                    </h3>
+                </div>
+
+                <!-- Body -->
+                <div class="image-edit js-image-edit"
+                    data-input-id="{{ form.parent.children.runTimeConfig.vars.id }}"
+                    {% if use_cropping %}
+                        data-use-cropping
+                    {% endif %}
+                    data-cropping-views="{{ cropping_views }}"
+                    {% if use_focus_point %}
+                        data-focus-point-classes="{{ focus_point_classes }}"
+                    {% endif %}
+                >
+                    <div class="image-edit__main">
+                        {% if use_cropping %}
+                            <article class="image-edit__crop-wrapper js-image-edit-crop-wrapper">
+                                <figure class="image-edit__preview js-image-edit-preview">
+                                    {% if (value.ent is defined) %}
+                                        {% set media = value.ent %}
+                                        {% set imageUrl = _self.getImageUrl(media, 'optim') %}
+                                        {% set retinaImageUrl = _self.getImageUrl(media, 'optim') %}
+                                        {% if imageUrl %}
+                                            <div>
+                                                <img src="{{ imageUrl }}" srcset="{{ imageUrl }} 1x, {{ retinaImageUrl is defined ? ', ' ~ retinaImageUrl ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__croppper__img" class="thumbnail-img image-edit__preview__img js-image-edit-image">
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div>
+                                            <img src="" alt="" class="thumbnail-img image-edit__preview__img js-image-edit-image">
+                                        </div>
+                                    {% endif %}
+                                </figure>
+                            </article>
+                        {% endif %}
+
+                        {% if use_focus_point %}
+                            {% set imageUrl = null %}
+                            {% set isHidden = false %}
+                            {% if use_focus_point and not use_cropping and (value.ent is defined) %}
+                                {% set media = value.ent %}
+                                {% set imageUrl = _self.getImageUrl(media, 'optim')  %}
+                            {% endif %}
+                            {% if use_cropping %}
+                                {% set isHidden = true %}
+                                {% set imageUrl = null %}
+                            {% endif %}
+                            {% include '@KunstmaanMedia/Form/_focus-point-block.html.twig' with {imageUrl : imageUrl, isHidden: isHidden } %}
+                        {% endif %}
+
+                    </div>
+
+                    <aside class="image-edit__meta js-image-edit-meta">
+                        {% if use_cropping %}
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_views'|trans }}</h4>
+                                <select name="{{ id }}-image-edit-modal-view-select" id="{{ id }}-image-edit-modal-view-select" class="form-control js-image-edit-view-select image-edit__meta__select" disabled>
+                                    <option value="">{{ 'media.widget.media_cropper.meta_views_placeholder'|trans }}</option>
+                                </select>
+                            </div>
+
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_dimensions' | trans }}</h4>
+                                <dl class="image-edit__meta__list">
+                                    <div class="image-edit__meta__list__row">
+                                        <dt class="image-edit__meta__key">{{ 'media.widget.media_cropper.meta_width' | trans }}</dt>
+                                        <dd class="image-edit__meta__value js-image-edit-meta-value-width"></dd>
+                                    </div>
+                                    <div class="image-edit__meta__list__row">
+                                        <dt class="image-edit__meta__key">{{ 'media.widget.media_cropper.meta_height' | trans }}</dt>
+                                        <dd class="image-edit__meta__value js-image-edit-meta-value-height"></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        {% endif %}
+
+                        {% if use_cropping and use_focus_point %}
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
+                                <p>
+                                    {{ 'media.widget.media_cropper.meta_focus_selected'| trans }}:
+                                    <span class="js-image-edit-meta-value-focus"></span>
+                                </p>
+                                <button class="js-image-edit-choose-focus-point btn btn-default" data-boolean-text="{{ 'media.widget.media_cropper.hide_choose_focus_point'| trans }}">
+                                    {{ 'media.widget.media_cropper.choose_focus_point'| trans }}
+                                </button>
+                            </div>
+                        {% endif %}
+
+                        {% if use_focus_point and not use_cropping %}
+                            <div class="image-edit__meta__item">
+                                <h4>{{ 'media.widget.media_cropper.meta_title_focus' | trans }}</h4>
+                                <p>
+                                    {{ 'media.widget.media_cropper.meta_focus_selected'| trans }}:
+                                    <span class="js-image-edit-meta-value-focus"></span>
+                                </p>
+                            </div>
+                        {% endif %}
+
+                        <div class="image-edit__meta__item image-edit__meta__item--submit">
+                            <button type="button" class="js-image-edit-save btn btn-primary btn-lg" data-dismiss="modal">
+                                {{ 'media.widget.media_cropper.save'|trans }}
+                            </button>
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Media Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true">
+    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true" {% if show_image_edit_modal is defined and show_image_edit_modal %}data-cropable="true"{% endif %}>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 

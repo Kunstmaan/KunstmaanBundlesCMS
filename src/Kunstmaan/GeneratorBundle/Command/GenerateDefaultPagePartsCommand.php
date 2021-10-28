@@ -68,6 +68,9 @@ EOT
             'AbstractPagePart',
             'AudioPagePart',
             'ButtonPagePart',
+            // Temporary disable generating this pagepart on new installations. This feature is experimental and should
+            // not be included in the default install.
+            // 'EditableImagePagePart',
             'DownloadPagePart',
             'HeaderPagePart',
             'ImagePagePart',

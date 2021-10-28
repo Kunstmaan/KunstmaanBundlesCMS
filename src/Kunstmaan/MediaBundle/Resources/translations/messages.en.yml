@@ -130,6 +130,28 @@ media:
         delete: Delete
         media_chooser: Media-chooser
         icon_chooser: Icon-chooser
+        media_cropper:
+            title: Adjust your image
+            meta_title_dimensions: New dimensions
+            meta_width: width
+            meta_height: height
+            meta_title_views: Select your viewport
+            meta_views_placeholder: Only one viewport available
+            save: Save all viewports
+            meta_title_focus: Choose a focus point
+            meta_focus_selected: Selected focus point
+            choose_focus_point: show focus point select
+            hide_choose_focus_point: hide focus point select
+            focus_option:
+                top_left: top left
+                top_center: top center
+                top_right: top right
+                center_left: center left
+                center: center
+                center_right: center right
+                bottom_left: bottom left
+                bottom_center: bottom center
+                bottom_right: bottom right
 
     adminlist:
         configurator:

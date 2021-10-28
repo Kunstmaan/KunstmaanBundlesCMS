@@ -1,0 +1,88 @@
+/* ==========================================================================
+    Cropper overwrites
+   ========================================================================== */
+
+.cropper-point {
+    height: 10px !important;
+    width: 10px !important;
+
+    border-radius: 50%;
+
+    transition: transform .3s ease-in-out;
+
+    &.point-n {
+        top: -5px;
+
+        margin-left: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translateY(-10px);
+        }
+    }
+
+    &.point-e {
+        right: -5px;
+
+        margin-top: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translateX(10px);
+        }
+    }
+
+    &.point-s {
+        bottom: -5px;
+
+        margin-left: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translateY(10px);
+        }
+    }
+
+    &.point-w {
+        left: -5px;
+
+        margin-top: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translateX(-10px);
+        }
+    }
+
+    &.point-nw {
+        left: -5px;
+        top: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translate3d(-10px, -10px, 0);
+        }
+    }
+
+    &.point-ne {
+        right: -5px;
+        top: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translate3d(10px, -10px, 0);
+        }
+    }
+
+    &.point-se {
+        bottom: -5px;
+        right: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translate3d(10px, 10px, 0);
+        }
+    }
+
+    &.point-sw {
+        left: -5px;
+        bottom: -5px;
+
+        .media-cropper--crop-box-expanded & {
+            transform: translate3d(-10px, 10px, 0);
+        }
+    }
+}
