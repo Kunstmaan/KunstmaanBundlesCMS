@@ -40,6 +40,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('kunstmaan_media.web_root', $config['web_root']);
         $container->setParameter('kunstmaan_media.full_media_path', $config['web_root'] . '%kunstmaan_media.media_path%');
+        $container->setParameter('kunstmaan_media.cropping_views', $config['cropping_views']);
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');

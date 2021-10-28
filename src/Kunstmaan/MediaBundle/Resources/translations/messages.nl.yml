@@ -119,6 +119,28 @@ media:
     delete: Verwijder
     media_chooser: Media-keuze
     icon_chooser: Icoon-keuze
+    media_cropper:
+        title: Pas het formaat van je afbeelding aan
+        meta_title: Nieuwe afmetingen
+        meta_width: breedte
+        meta_height: hoogte
+        meta_title_dimensions: Nieuwe dimensies
+        meta_title_views: Kies een view
+        meta_views_placeholder: Maar 1 view beschikbaar
+        meta_title_focus: Choose a focus point
+        meta_focus_selected: Selected focus point
+        choose_focus_point: show focus point select
+        focus_option:
+            top_left: top left
+            top_center: top center
+            top_right: top right
+            center_left: center left
+            center: center
+            center_right: center right
+            bottom_left: bottom left
+            bottom_center: bottom center
+            bottom_right: bottom right
+
   adminlist:
     configurator:
       name: Naam

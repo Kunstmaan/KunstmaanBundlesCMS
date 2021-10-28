@@ -63,9 +63,11 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             // Save
             if (!cke) {
                 var isMediaChooser = $(window.frameElement).closest('.js-ajax-modal').data('media-chooser');
+                var isSvg = itemUrl.includes('.svg');
+                var isCropable = !isSvg && $(window.frameElement).closest('.js-ajax-modal').data('cropable');
 
                 if (isMediaChooser) {
-                    saveMediaChooserModal(false);
+                    saveMediaChooserModal(false, isCropable);
                 } else {
                     // Replace URL
                     $.ajax({
@@ -81,7 +83,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                 }
 
             } else {
-                saveMediaChooserModal(true);
+                saveMediaChooserModal(true, false);
             }
         });
 
@@ -140,7 +142,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
 
 
     // Save for Media-chooser
-    saveMediaChooserModal = function (cke) {
+    saveMediaChooserModal = function (cke, isCropable) {
         if (!cke) {
             var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                 linkedInputId = $parentModal.data('linked-input-id'),
@@ -154,8 +156,24 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                 $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
                 $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
 
+            var cropper;
+            var cropButton = $mediaChooser.find('.js-media-chooser-image-edit-btn');
+
+            if (isCropable) {
+                cropper = parent.$('#' + linkedInputId + '-image-edit-modal .js-image-edit');
+
+                if (cropButton) {
+                    cropButton.prop('disabled', false);
+                }
+            } else {
+                if (cropButton) {
+                    cropButton.prop('disabled', true);
+                }
+            }
+
             $mediaChooser.addClass('media-chooser--choosen');
             $previewTitle.html(itemTitle);
+
 
             if (itemThumbPath === "") {
                 var $parent = $previewTitle.parent();
@@ -163,6 +181,10 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             }
             else {
                 $previewImg.attr('src', itemThumbPath);
+
+                if (isCropable && cropper) {
+                    cropper.attr('data-path', itemUrl);
+                }
             }
 
             // Close modal

@@ -26,6 +26,12 @@ services:
         tags:
             - { name: form.type}
 
+    Kunstmaan\MediaBundle\Form\EditableMediaWrapperAdminType:
+        arguments:
+            - '%kunstmaan_media.cropping_views%'
+        tags:
+            - { name: form.type}
+
     form.type.iconfont:
         class: Kunstmaan\MediaBundle\Form\Type\IconFontType
         arguments: ['@kunstmaan_media.icon_font_manager']
@@ -131,6 +137,19 @@ services:
             - '@liip_imagine.cache.signer'
             - '@event_dispatcher'
             - '%liip_imagine.cache.resolver.default%'
+
+    Kunstmaan\MediaBundle\Helper\ManipulateImageService:
+        arguments:
+            - '@kunstmaan_utilities.slugifier'
+            - '@liip_imagine.service.filter'
+            - '@liip_imagine.filter.configuration'
+        public: true
+
+    Kunstmaan\MediaBundle\Twig\MediaTwigExtension:
+        arguments:
+            - '@Kunstmaan\MediaBundle\Helper\ManipulateImageService'
+        tags:
+            - { name: twig.extension }
 
     Gedmo\Tree\TreeListener:
         tags:

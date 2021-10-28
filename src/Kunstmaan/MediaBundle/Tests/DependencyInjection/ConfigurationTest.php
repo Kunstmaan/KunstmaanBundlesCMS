@@ -30,6 +30,13 @@ class ConfigurationTest extends TestCase
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
             'web_root' => '%kernel.project_dir%/public',
+            'cropping_views' => [
+                'default' => [
+                    ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lock_ratio' => true],
+                ],
+                'custom_views' => [],
+                'focus_point_classes' => [],
+            ],
         ];
 
         $expectedConfig = $array;
