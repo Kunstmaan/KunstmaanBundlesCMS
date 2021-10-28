@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('consent_cookie')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->integerNode('lifetime')->defaultValue(LegalCookieHelper::DEFAULT_COOKIE_LIFETIME)->info('Default lifetime of 10 years')->end()
                     ->end()
