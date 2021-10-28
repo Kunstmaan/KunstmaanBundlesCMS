@@ -1,0 +1,69 @@
+{# @experimental This feature is experimental and is a subject to change, be advised when using this feature and templates. #}
+{% set previewImageUrl = '' %}
+
+{% if imageUrl is defined and imageUrl is not null %}
+    {% set previewImageUrl = imageUrl %}
+{% endif %}
+<article class="js-image-edit-focus-wrapper image-edit__focus-wrapper {% if isHidden is defined and isHidden %}image-edit__focus-wrapper--hidden{% endif %}">
+    <div class="image-edit__focus-holder">
+        <div class="image-edit__focus-grid js-image-edit-focus-grid">
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-1" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="top-left">
+                    {{ 'media.widget.media_cropper.focus_option.top_left'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-2" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="top-center">
+                    {{ 'media.widget.media_cropper.focus_option.top_center'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-3" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="top-right">
+                    {{ 'media.widget.media_cropper.focus_option.top_right'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-4" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="center-left">
+                    {{ 'media.widget.media_cropper.focus_option.center_left'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-5" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="center">
+                    {{ 'media.widget.media_cropper.focus_option.center'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-6" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="center-right">
+                    {{ 'media.widget.media_cropper.focus_option.center_right'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-7" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="bottom-left">
+                    {{ 'media.widget.media_cropper.focus_option.bottom_left'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-8" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="bottom-center">
+                    {{ 'media.widget.media_cropper.focus_option.bottom_center'|trans }}
+                </label>
+            </div>
+            <div class="image-edit__focus-item radio">
+                <label class="image-edit__focus-item__label">
+                    <input type="radio" name="{{ id }}-focus-choice" id="{{ id }}-focus-choice-9" class="image-edit__focus-item__choice js-image-edit-focus-choice" value="bottom-right">
+                    {{ 'media.widget.media_cropper.focus_option.bottom_right'|trans }}
+                </label>
+            </div>
+        </div>
+        <figure class="image-edit__focus-media">
+            <img src="{{ previewImageUrl }}" alt="" class="js-image-edit-focus-media">
+        </figure>
+    </div>
+</article>

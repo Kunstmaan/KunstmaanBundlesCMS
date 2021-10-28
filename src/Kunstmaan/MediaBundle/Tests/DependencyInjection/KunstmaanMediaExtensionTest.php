@@ -24,6 +24,7 @@ class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_media.remote_video');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.enable_pdf_preview', true);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.blacklisted_extensions');
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.cropping_views');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_path', '/uploads/media/');
         $this->assertContainerBuilderHasParameter('liip_imagine.filter.loader.background.class', 'Kunstmaan\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
     }
