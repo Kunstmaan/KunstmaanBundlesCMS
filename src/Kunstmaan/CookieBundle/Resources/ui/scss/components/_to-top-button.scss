@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Componnets - ToTopButton
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.kmcc-to-top-button {
+    position: fixed;
+    left: 0;
+    bottom: 15px;
+
+    z-index: $kmcc_z-totop;
+
+    display: flex;
+    width: 56px;
+    height: 50px;
+    margin: 0;
+
+    justify-content: center;
+
+    transform: translateX(-100%);
+
+    background: $kmcc_primary-color;
+    background-image: url($arrow-up-image);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+    transition: all .2s ease;
+
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        position: absolute;
+    }
+}
+
+.kmcc-to-top-button--shown {
+    transform: translateX(0);
+}

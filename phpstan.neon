@@ -14,6 +14,7 @@ parameters:
         - src/Kunstmaan/*/vendor/*
         - src/Kunstmaan/BehatBundle
         - src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle
+        - src/Kunstmaan/CookieBundle/Resources/skeleton
         - src/Kunstmaan/CacheBundle # Temporary excluded for full rework
         # Excluded deprecated classes/files
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php

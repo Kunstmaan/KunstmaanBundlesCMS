@@ -1,0 +1,11 @@
+{% if isV4 %}
+kunstmaan_page_part:
+    pagetemplates:
+        legalpage:
+{%endif%}
+{% if isV4 %}            {%endif%}name: "Legal page"
+{% if isV4 %}            {%endif%}rows:
+{% if isV4 %}            {%endif%}    - regions:
+{% if isV4 %}            {%endif%}        - { name: "legal_header", span: 12 }
+{% if isV4 %}            {%endif%}        - { name: "legal_main", span: 12 }
+{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\LegalPage\\pagetemplate.html.twig"

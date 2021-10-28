@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Structures - Backdrop
+   ========================================================================== */
+
+.kmcc-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $kmcc_z-modal-backdrop;
+
+    width: 100%;
+    height: 100%;
+    display: none;
+
+    pointer-events: none;
+
+    background-color: $kmcc_grey;
+
+    transition: .2s ease-in-out;
+
+    @media (min-width: $kmcc_screen-lg) {
+        background-color: rgba($kmcc_true-black, .6);
+    }
+}
+
+.kmcc-backdrop--visible {
+    z-index: $kmcc_z-modal-backdrop--visible;
+
+    display: block;
+
+    pointer-events: all;
+}

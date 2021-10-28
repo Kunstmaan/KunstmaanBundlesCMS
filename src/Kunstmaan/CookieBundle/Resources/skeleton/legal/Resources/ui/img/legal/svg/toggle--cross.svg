@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/Interface/Remove</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="16.415 8.414 15 7 11.708 10.293 8.415 7 7 8.414 10.293 11.707 7 15 8.415 16.414 11.708 13.122 15 16.414 16.415 15 13.122 11.707"></polygon>
+    </defs>
+    <g id="Forms/toggle-off" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-16.000000, -15.000000)">
+        <g id="Group" transform="translate(4.000000, 3.000000)">
+            <g id="Icons/Interface/Remove" transform="translate(5.000000, 5.000000)">
+                <rect id="Bounding-Box" x="0" y="0" width="24" height="24"></rect>
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <g id="nested/Color/Functional/Functional-Error" mask="url(#mask-2)" fill="#FF0048" fill-rule="evenodd">
+                    <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

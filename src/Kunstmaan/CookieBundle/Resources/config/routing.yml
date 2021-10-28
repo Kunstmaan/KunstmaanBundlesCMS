@@ -1,0 +1,19 @@
+kunstmaancookiebundle_cookies_menu:
+    resource: "@KunstmaanCookieBundle/Controller/CookieMenuController.php"
+    type:     annotation
+    prefix:   /cookies-menu/
+
+kunstmaancookiebundle_legal:
+    resource: "@KunstmaanCookieBundle/Controller/LegalController.php"
+    type:     annotation
+    prefix:   /legal/
+
+kunstmaancookiebundle_cookietype_admin_list:
+    resource: '@KunstmaanCookieBundle/Controller/CookieTypeAdminListController.php'
+    type:     annotation
+    prefix:   /admin/cookietype/
+
+kunstmaancookiebundle_cookie_admin_list:
+    resource: '@KunstmaanCookieBundle/Controller/CookieAdminListController.php'
+    type:     annotation
+    prefix:   /admin/cookie/

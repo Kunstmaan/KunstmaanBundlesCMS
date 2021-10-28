@@ -1,0 +1,48 @@
+{% set cookie = get_legal_cookie(app.request) %}
+
+<div class="kmcc-cookies-toggle-pp"> 
+    {% for type in get_cookie_types() %}
+        <strong class="kmcc-cookies-toggle-pp__name">
+            {{ type.name }}
+        </strong>
+        <div class="kmcc-cookies-toggle-pp__toggle-container">
+
+            {% if type.alwaysOn %}
+                <div class="kmcc-btn-toggle--always-on">
+                    <img src="/frontend/img/legal/svg/check.svg"/>
+                    <span class="kmcc-btn-toggle__text">
+                        {{ 'kuma.cookie.cookie_preferences.always_on' | trans }}
+                    </span>
+                </div>
+            {% else %}
+                {% set checked = false %}
+                {% if attribute(cookie, type.internalName) is defined and attribute(cookie, type.internalName) == "true" %} {% set checked = true %} {% endif %}
+                <label for="legal_cookie_{{ type.internalName }}" class="kmcc-btn-toggle">
+                    <input type="checkbox" id="legal_cookie_{{ type.internalName }}" class="kmcc-btn-toggle__control js-kmcc-btn-toggle" rel="{{ type.internalName }}"{% if checked %} checked{% endif %}/>
+                    <div class="kmcc-btn-toggle__toggle"></div>
+                    <div class="kmcc-btn-toggle__text">
+                        <span class="kmcc-btn-toggle__text--true">{{ 'kuma.cookie.cookie_preferences.on' | trans }}</span>
+                        <span class="kmcc-btn-toggle__text--false">{{ 'kuma.cookie.cookie_preferences.off' | trans }}</span>
+                    </div>
+                </label>
+            {% endif %}
+            <a href="{{ path('kunstmaancookiebundle_legal_detail', {'internalName': type.internalName}) }}" class="kmcc-cookies-toggle-pp__link js-kmcc-toggle-link">
+                <span class="kmcc-cookies-toggle-pp__link__desktop">
+                    {{ 'kuma.cookie.cookie_preferences.detail.desktop' | trans }}
+                </span>
+                <span class="kmcc-cookies-toggle-pp__link__mobile">
+                    {{ 'kuma.cookie.cookie_preferences.detail.mobile' | trans }}
+                </span>
+            </a>
+        </div>
+        {% if type.longDescription is not empty %}
+            <p>
+                {{ type.longDescription | replace_url | raw }}
+            </p>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+{% set cookie = get_legal_cookie(app.request) %}
+
