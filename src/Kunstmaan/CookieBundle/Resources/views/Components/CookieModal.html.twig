@@ -1,0 +1,30 @@
+<input type="hidden" id="kmcc-modal-content-url" value="{{ path('kunstmaancookiebundle_legal_modal', {'internal_name': 'legal_cookie_preferences'}) }}">
+<div id="kmcc-cookie-modal" class="kmcc-cookie-modal legal-modal--narrow">
+    {# Close button for the modal. #}
+    {% include 'KunstmaanCookieBundle:Components:CloseCookieModalButton.html.twig' %}
+    {# This is the NORMAL content view. #}
+    <div id="kmcc-modal-content" class="kmcc-cookie-modal__content">
+        <div id="kmcc-modal-content-wrapper">
+
+        {# 
+            REGULAR CONTENT GOES HERE
+            see ./_modal.html.twig
+         #}
+
+        </div>
+    </div>
+
+    {# This is the DETAIL content view. #}
+    <div class="kmcc-cookie-modal__detail-view">
+        {# Close button for the detail view. #}
+        {% include 'KunstmaanCookieBundle:Components:CloseDetailButton.html.twig' %}
+        <div id="kmcc-detail-content" class="kmcc-cookie-modal__detail-view__content-wrapper">
+            
+            {# 
+                DETAIL CONTENT GOES HERE 
+                see ./_detail.html.twig
+            #}
+
+        </div>
+    </div>
+</div>

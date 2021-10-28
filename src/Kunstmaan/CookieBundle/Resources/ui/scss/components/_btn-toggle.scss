@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Components - Toggle Button
+   ========================================================================== */
+
+.kmcc-btn-toggle {
+    position: relative;
+
+    display: inline-flex;
+    height: calc(#{$kmcc-toggle-size} - #{floor($kmcc-toggle-size * .2)});
+    margin: 0 10px;
+
+    cursor: pointer;
+
+    align-items: center;
+}
+
+.kmcc-btn-toggle--always-on {
+    display: flex;
+
+    margin-left: 5px;
+
+    align-items: center;
+}
+
+.kmcc-btn-toggle__text {
+    margin: 0 5px;
+}
+
+.kmcc-btn-toggle__control {
+    display: none;
+
+    ~ .kmcc-btn-toggle__text {
+        margin: 0 0 0 10px;
+
+        .kmcc-btn-toggle__text--true {
+            display: none;
+        }
+
+        .kmcc-btn-toggle__text--false {
+            display: inline-block;
+        }
+    }
+
+    &:checked {
+        + .kmcc-btn-toggle__toggle {
+            &:before {
+                left: calc(100% - (#{$kmcc-toggle-size} - #{floor($kmcc-toggle-size * .1)}));
+
+                padding: 0 (($kmcc-toggle-size / 2) - 5);
+
+                background: $kmcc_toggle-button--check url($toggle-check-image) 50% 50% no-repeat;
+            }
+        }
+
+        ~ .kmcc-btn-toggle__text {
+            .kmcc-btn-toggle__text--true {
+                display: inline-block;
+            }
+
+            .kmcc-btn-toggle__text--false {
+                display: none;
+            }
+        }
+    }
+}
+
+.kmcc-btn-toggle__toggle {
+    position: relative;
+
+    width: $kmcc-toggle-slider-range;
+    height: calc(#{$kmcc-toggle-size} - #{floor($kmcc-toggle-size * .2)});
+
+    background-color: $kmcc_grey;
+
+    box-shadow: inset 0 1px 2px rgba($kmcc_true-black, .13);
+
+    border-radius: 25px;
+
+    &:before {
+        content: " ";
+
+        position: absolute;
+        top: ceil(-$kmcc-toggle-size * .1);
+        left: ceil(-$kmcc-toggle-size * .1);
+
+        display: block;
+        width: $kmcc-toggle-size;
+        height: $kmcc-toggle-size;
+
+        background: $kmcc_grey--dark url($toggle-cross-image) 50% 50% no-repeat;
+
+        box-shadow: 1px 1px 1px rgba($kmcc_true-black, .13);
+
+        border-radius: 25px;
+
+        line-height: $kmcc-toggle-size;
+
+        transition: all .2s ease;
+    }
+}

@@ -3,6 +3,7 @@
 import gulp from 'gulp';
 import {adminBundle} from './groundcontrol/admin-bundle.tasks';
 import {dashboardBundle} from './groundcontrol/dashboard-bundle.tasks';
+import {cookieBundle} from './groundcontrol/cookie-bundle.tasks';
 import {mediaBundle} from './groundcontrol/media-bundle.tasks';
 import {translatorBundle} from './groundcontrol/translator-bundle.tasks';
 import startLocalTask, { buildOnChange, testOnChange } from './groundcontrol/start-local.task';
@@ -37,6 +38,10 @@ const buildLocalDashboardBundle = gulp.series(
     dashboardBundle.tasks.cssLocal,
     dashboardBundle.tasks.scripts,
     dashboardBundle.tasks.scriptsSetup
+);
+
+const buildOptimizedCookieBundle = gulp.series(
+    cookieBundle.tasks.bundleOptimized
 );
 
 const buildOptimizedDashboardBundle = gulp.series(
@@ -84,6 +89,7 @@ const buildLocal = gulp.series(
 
 const buildOptimized = gulp.series(
     buildOptimizedAdminBundle,
+    buildOptimizedCookieBundle,
     buildOptimizedDashboardBundle,
     buildOptimizedMediaBundle,
     buildOptimizedTranslatorBundle

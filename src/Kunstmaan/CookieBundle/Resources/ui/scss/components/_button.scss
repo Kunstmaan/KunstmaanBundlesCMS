@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Structures - Button
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.kmcc-btn {
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px !important; // Important to not have buttons too large so to-top-button doesn't overlap
+    padding-right: 15px !important; // Important to not have buttons too large so to-top-button doesn't overlap
+    margin: 0 auto;
+    width: auto !important; // Important to not have buttons too large so to-top-button doesn't overlap
+    max-width: 300px !important; // Important to not have buttons too large so to-top-button doesn't overlap
+
+    background-color: $kmcc_button-background;
+
+    border-radius: 25px;
+
+    border: 2px solid $kmcc_button-border-color--hover;
+
+    outline: 0;
+
+    color: $kmcc_button-color !important;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+
+    transition: all .2s ease;
+
+    &:hover {
+        background: $kmcc_button-background--hover;
+
+        color: $kmcc_button-color--hover !important;
+
+        text-decoration: none !important;
+    }
+
+    &--spaced {
+        margin-bottom: 20px;
+    }
+}

@@ -1,0 +1,5 @@
+{% deprecated 'The "' ~ _self ~ '" template is deprecated since kunstmaanCookieBundle 1.4 and will be removed in kunstmaanAdminBundle 2.0. The content of this file is moved to the generated "Pages/LegalPage/pagetemplate.html.twig" twig file.' %}
+
+<div id="{{ key }}-panel" class="kmcc-tabs__panel{% if key == node.internalName %} active{% endif %}">
+    {% include bundle~':Pages:LegalPage/_content.html.twig' with {'page': pageToRender} %}
+</div>

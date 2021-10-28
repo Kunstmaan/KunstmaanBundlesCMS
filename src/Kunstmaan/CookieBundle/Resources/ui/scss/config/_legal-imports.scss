@@ -1,0 +1,43 @@
+/* ==========================================================================
+   Cookie Consent Bar & Modal.
+
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Config
+   ========================================================================== */
+// @import "config/variables-default";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/config/variables";
+
+
+/* General
+   ========================================================================== */
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/general/scaffolding";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/general/links";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/general/typography";
+
+/* Components
+   ========================================================================== */
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/to-top-button";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/notification";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/button";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/btn-close-detail";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/btn-close-modal";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/btn-toggle";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/components/collapsible-content";
+
+/* Structures
+   ========================================================================== */
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/structures/tabs";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/structures/cookie-bar";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/structures/cookie-modal";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/structures/cookie-modal-detail-view";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/structures/backdrop";
+
+/* PageParts
+   ========================================================================== */
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/pageparts/tip-pp";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/pageparts/icon-text-pp";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/pageparts/cookies-toggle-pp";
+@import "vendor/kunstmaan/cookie-bundle/Resources/ui/scss/pageparts/centered-icon-pp";

@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Components - Cookie modal detail view close button
+   ========================================================================== */
+
+.kmcc-btn-close-detail {
+    display: flex;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    .kmcc-cookie-modal--page & {
+        display: none;
+    }
+}
+
+.kmcc-btn-close-detail__text {
+    margin-left: 15px;
+}
+
+.kmcc-btn-close-detail__icon {
+    width: 17px;
+    height: 17px;
+
+    transform: rotateZ(90deg);
+}

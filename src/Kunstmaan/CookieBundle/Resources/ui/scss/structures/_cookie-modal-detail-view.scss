@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Structures - Cookie modal detail view
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.kmcc-cookie-modal__detail-view {
+    position: absolute;
+    top: 30px;
+    right: 0;
+
+    z-index: $kmcc_z-sidebar;
+
+    width: 100%;
+    height: calc(100% - 30px);
+    padding: 20px;
+
+    transform: translateX(100%);
+
+    background-color: $kmcc_white;
+
+    transition: all .2s ease;
+
+    overflow-y: scroll;
+
+    .kmcc-cookie-modal--detail-open & {
+        transform: translateX(0);
+    }
+
+    .kmcc-cookie-modal--page & {
+        position: static;
+    }
+}
+
+.kmcc-cookie-modal__detail-view__content-wrapper {
+    padding-bottom: 20px;
+
+    > :first-child {
+        margin-top: 60px;
+    }
+
+    @media (min-width: $kmcc_screen-md) {
+        padding: 0 90px;
+    }
+}
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="14px" viewBox="0 0 25 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Path 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M5,22 L7.12132034,24.1213203 L18.1213203,13.1213203 C18.7071068,12.5355339 18.7071068,11.5857864 18.1213203,11 L7.12132034,0 L5,2.12132034 L13,11 C13.6666667,11.7071068 13.6666667,12.4142136 13,13.1213203 C12.3333333,13.8284271 9.66666667,16.787987 5,22 Z" id="path-1"></path>
+    </defs>
+    <g id="Icons/Interface/Arrow-down" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(1.000000, -5.000000)">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Path-2" fill="#979797" fill-rule="nonzero" transform="translate(11.780330, 12.060660) rotate(-270.000000) translate(-11.780330, -12.060660) " xlink:href="#path-1"></use>
+    </g>
+</svg>
