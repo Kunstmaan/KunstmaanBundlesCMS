@@ -17,7 +17,7 @@ use Twig\Environment;
 class CookieBarEventSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
@@ -65,7 +65,8 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
 
         // Do not capture redirects
-        if (!$event->isMasterRequest() || $this->adminRouteHelper->isAdminRoute($url)) {
+        $mainRequest = method_exists($event, 'isMainRequest') ? $event->isMainRequest() : $event->isMasterRequest();
+        if (!$mainRequest || $this->adminRouteHelper->isAdminRoute($url)) {
             return;
         }
 
