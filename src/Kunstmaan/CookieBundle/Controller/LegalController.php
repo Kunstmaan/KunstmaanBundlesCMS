@@ -2,9 +2,11 @@
 
 namespace Kunstmaan\CookieBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\CookieBundle\Helper\LegalCookieHelper;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,28 +18,27 @@ final class LegalController extends AbstractController
 {
     /** @var LegalCookieHelper */
     private $cookieHelper;
+    /** @var EntityManagerInterface */
+    private $em;
 
     /**
      * LegalController constructor.
      */
-    public function __construct(LegalCookieHelper $cookieHelper)
+    public function __construct(LegalCookieHelper $cookieHelper, EntityManagerInterface $em)
     {
         $this->cookieHelper = $cookieHelper;
+        $this->em = $em;
     }
 
     /**
      * @Route("/modal/{internal_name}", name="kunstmaancookiebundle_legal_modal")
-     * @ParamConverter("node", class="Kunstmaan\NodeBundle\Entity\Node", options={
-     *    "repository_method" = "getNodeByInternalName",
-     *    "mapping": {"internal_name": "internalName"},
-     *    "map_method_signature" = true
-     * })
+     * @Entity("node", expr="repository.getNodeByInternalName(internal_name)")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function switchTabAction(Request $request, Node $node)
     {
-        $page = $node->getNodeTranslation($request->getLocale())->getRef($this->getDoctrine()->getManager());
+        $page = $node->getNodeTranslation($request->getLocale())->getRef($this->em);
 
         return $this->render(
             '@KunstmaanCookie/CookieBar/_modal.html.twig',

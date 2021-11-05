@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\LegalGenerator;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\CookieBundle\Entity\Cookie;
 use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
@@ -27,7 +28,7 @@ use {{ namespace }}\Entity\Pages\LegalPage;
 /**
  * Class DefaultFixtures
  */
-class DefaultFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class DefaultFixtures extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface, FixtureGroupInterface
 {
     // Username that is used for creating pages
     const ADMIN_USERNAME = 'pagecreator';
@@ -493,8 +494,17 @@ class DefaultFixtures extends AbstractFixture implements OrderedFixtureInterface
             $user->setEnabled(1);
             $user->setPlainPassword($this->container->getParameter('kernel.secret'));
 
+            $this->container->get('kunstmaan_admin.user_manager')->updateUser($user);
+
+            $user->setPasswordChanged(true);
+
             $this->em->persist($user);
             $this->em->flush();
         }
+    }
+
+    public static function getGroups(): array
+    {
+        return ['cookie-bundle'];
     }
 }
