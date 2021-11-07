@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^7.2|^8.0",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
+        "kunstmaan/adminlist-bundle": "^5.9",
         "symfony-cmf/routing-bundle": "^2.1"
     },
     "require-dev": {

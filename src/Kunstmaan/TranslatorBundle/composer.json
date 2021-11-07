@@ -19,7 +19,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2|^8.0",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
+        "kunstmaan/adminlist-bundle": "^5.9",
         "doctrine/migrations": "^1.8|^2.3",
         "box/spout": "^2.5"
     },

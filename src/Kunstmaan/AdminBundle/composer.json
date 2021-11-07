@@ -22,6 +22,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "guzzlehttp/guzzle": "~6.1",
         "knplabs/knp-menu-bundle": "^3.0",
+        "kunstmaan/adminlist-bundle": "^5.9",
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/utilities-bundle": "^5.9|^6.0",
         "symfony/swiftmailer-bundle": "^2.3|^3.0",
