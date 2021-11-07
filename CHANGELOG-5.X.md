@@ -1,5 +1,24 @@
 # Changelog
 
+## 5.10.0 / 2021-11-8
+
+* [AllBundles] Update adminlist-bundle version constraint to allow only ^5.9 [#3024](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3024) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Bump minimum symfony versions to avoid versions with security issues [#3020](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3020) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Fix incorrect csrf check fallback routes [#3016](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3016) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Add docblock return types for node iterator class [#3010](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3010) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Fixed undefined class warnings in typehints [#3004](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3004) ([@acrobat](https://github.com/acrobat))
+* [AllBundle] Improve tests [#3003](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3003) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Add csrf protection to multiple routes [#3002](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3002) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Set correct typehints on methods and properties [#3000](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3000) ([@acrobat](https://github.com/acrobat))
+* [MultiDomainBundle] Deprecate session argument in HostOverrideListener [#2996](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2996) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Use psr3 logger methods to be compatible with monolog 2.0 [#2988](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2988) ([@acrobat](https://github.com/acrobat))
+* [ArticleBundle] Don't set html5 option on date fields when using custom js datepicker [#2987](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2987) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Helper should return flashbag class [#2983](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2983) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Deprecations to prepare symfony 5 code changes [#2977](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2977) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Open up version constraints for v6 [#2976](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2976) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Bump symfony-cmf/router-bundle and remove compiler pass [#2972](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2972) ([@acrobat](https://github.com/acrobat))
+* [SitemapBundle] Add pre render event for adding sitemap indexes [#2905](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2905) ([@dannyvw](https://github.com/dannyvw))
+
 ## 5.9.1 / 2021-10-14
 
 * [AdminBundle] fix routeloading for sf3 [#2980](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2980) ([@Numkil](https://github.com/Numkil))
