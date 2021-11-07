@@ -6,14 +6,10 @@ use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\CookieBundle\Helper\LegalCookieHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 
-/**
- * Class CookieBarEventSubscriber
- */
 class CookieBarEventSubscriber implements EventSubscriberInterface
 {
     /**
@@ -31,9 +27,6 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
      */
     private $cookieHelper;
 
-    /**
-     * CookieBarEventSubscriber constructor.
-     */
     public function __construct(Environment $twig, AdminRouteHelper $adminRouteHelper, LegalCookieHelper $cookieHelper)
     {
         $this->twig = $twig;
@@ -51,15 +44,8 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FilterResponseEvent|ResponseEvent $event
-     */
-    public function onKernelResponse($event)
+    public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event instanceof FilterResponseEvent && !$event instanceof ResponseEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : FilterResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $response = $event->getResponse();
         $request = $event->getRequest();
         $url = $event->getRequest()->getRequestUri();
