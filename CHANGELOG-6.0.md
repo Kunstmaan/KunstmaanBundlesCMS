@@ -10,6 +10,7 @@ To get the diff between two versions, go to https://github.com/kunstmaan/Kunstma
 
 * [AllBundles] Remove deprecated code [#3023](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3023) ([@acrobat](https://github.com/acrobat))
 * [CookieBundle] Compatibility/bug fixes with newer symfony versions [#3022](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3022) ([@acrobat](https://github.com/acrobat))
+* [CookieBundle] Fixed error with default config [#3021](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3021) ([@acrobat](https://github.com/acrobat))
 * [AllBundles] Cleanup csrf deprecations [#3017](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3017) ([@acrobat](https://github.com/acrobat))
 * [TranslatorBundle] Fix upmerge issue [#3015](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3015) ([@acrobat](https://github.com/acrobat))
 * [AllBundles] Cleanup v5 upgrade/changelog files [#3014](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3014) ([@acrobat](https://github.com/acrobat))
