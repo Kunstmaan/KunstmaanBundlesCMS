@@ -35,7 +35,7 @@ Together with the CSRF token some of those routes will only be available to post
 AdminBundle
 ------------
 
-* The `kunstmaan_admin.google_signin` config and related classes/functionality is deprecated and will be removed in 6.0. If you need the ability 
+* The `kunstmaan_admin.google_signin` config and related classes/functionality is deprecated and will be removed in 6.0. If you need the ability
   to login in the admin interface with google, implement the authenticator in your project.
 * Passing a service instance of `Symfony\Component\HttpFoundation\Session\SessionInterface` for the first argument in `Kunstmaan\AdminBundle\EventListener\PasswordCheckListener::__construct` is deprecated and an instance of `Symfony\Component\HttpFoundation\RequestStack` will be required in 6.0.
 
@@ -49,3 +49,8 @@ NodeBundle
 
 * Passing a service instance of `Symfony\Component\HttpFoundation\Session\SessionInterface` for the first argument in `Kunstmaan\NodeBundle\EventListener\NodeTranslationListener::__construct` is deprecated and an instance of `Symfony\Component\HttpFoundation\RequestStack` will be required in 6.0.
 * The fourth argument of `Kunstmaan\NodeBundle\EventListener\NodeTranslationListener::__construct` is deprecated and will be removed in 6.0. Check the constructor arguments and inject the required services instead.
+
+MediaBundle
+-----------
+
+* Parameter `kunstmaan_media.full_media_path` is deprecated and will be removed in 6.0.
