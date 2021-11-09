@@ -6,6 +6,10 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.0.0...6.0.1
 
+## 6.0.1 / 2021-11-9
+
+* [MultiDomainBundle] fix bug in service definition [#3030](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3030) ([@Numkil](https://github.com/Numkil))
+
 ## 6.0.0 / 2021-11-8
 
 * [AllBundles] Remove deprecated code [#3023](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3023) ([@acrobat](https://github.com/acrobat))
