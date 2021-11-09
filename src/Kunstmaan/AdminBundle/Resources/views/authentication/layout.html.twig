@@ -20,11 +20,6 @@
 
     <!-- JS -->
     {% include "@KunstmaanAdmin/Default/_js_header.html.twig" %}
-
-    {# NEXT_MAJOR remove #}
-    {% if google_signin_enabled() %}
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-    {% endif %}
 </head>
 
 <body class="app login app-login-page">
@@ -87,17 +82,5 @@
         </div>
 
         {% block footer %}{% endblock %}
-    {% endblock %}
-
-    {% block admin_link %}
-        {# NEXT_MAJOR remove empty block #}
-    {% endblock %}
-
-    {% block forgot_password_link %}
-        {# NEXT_MAJOR remove empty block #}
-    {% endblock %}
-
-    {% block fos_user_content %}
-        {# NEXT_MAJOR remove empty block #}
     {% endblock %}
 </body>

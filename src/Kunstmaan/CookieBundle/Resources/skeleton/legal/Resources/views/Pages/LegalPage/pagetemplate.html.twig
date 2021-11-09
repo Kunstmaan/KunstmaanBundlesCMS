@@ -1,0 +1,46 @@
+{% set tabs = {
+    'legal_privacy_policy': 'legal_privacy_policy',
+    'legal_cookie_preferences': 'legal_cookie_preferences',
+    'legal_contact': 'legal_contact'
+} %}
+
+{% for key, tab in tabs %}
+    {% if tab == node.internalName %}
+        {% set tabs = tabs|merge({(tab): node}) %}
+    {% else %}
+        {% set tabs = tabs|merge({(tab): get_node_by_internal_name(tab, app.request.locale)}) %}
+    {% endif %}
+{% endfor %}
+
+<div id="kmcc-content" class="kmcc-container">
+    <div class="kmcc-tabs">
+        {# TabBarItems #}
+        {% for key,tab in tabs %}
+            {% if tab is not null %}
+                {% include '@KunstmaanCookie/Components/TabBarItem.html.twig' with {'key':key, 'tab':tab} %}
+            {% endif %}
+        {% endfor %}
+
+        {# TabBarContentPanels #}
+        {% for key,tab in tabs %}
+            {% if tab is not null %}
+                {% set pageToRender = get_page_by_node_translation(tab.nodeTranslation(app.request.locale, true)) %}
+                <div id="{{ key }}-panel" class="kmcc-tabs__panel{% if key == node.internalName %} active{% endif %}">
+                    <% if not isV4 %>
+                        {% include '<%= bundle.name %>:Pages:LegalPage/_content.html.twig' with {'page': pageToRender} %}
+                    <% else %>
+                        {% include 'Pages/LegalPage/_content.html.twig' with {'page': pageToRender} %}
+                    <% endif %>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <div class="kmcc-cookie-modal__footer">
+        {% include '@KunstmaanCookie/Components/AcceptSomeCookiesButton.html.twig' %}
+    </div>
+
+    {% include '@KunstmaanCookie/Components/ToTopButton.html.twig' %}
+</div>
+

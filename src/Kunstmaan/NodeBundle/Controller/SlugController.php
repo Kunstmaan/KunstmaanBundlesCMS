@@ -10,7 +10,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,10 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * @final since 5.9
- */
-class SlugController extends Controller
+final class SlugController extends Controller
 {
     /**
      * Handle the page requests
@@ -88,12 +84,7 @@ class SlugController extends Controller
             $renderContext->setView($entity->getDefaultView());
         }
 
-        // NEXT_MAJOR: remove PRE_SLUG_ACTION dispatch
-        $preEvent = new SlugEvent(null, $renderContext, false);
-        $this->dispatch($preEvent, Events::PRE_SLUG_ACTION);
-        $renderContext = $preEvent->getRenderContext();
-        // NEXT_MAJOR: end remove
-
+        $response = null;
         if ($entity instanceof CustomViewDataProviderInterface) {
             $serviceId = $entity->getViewDataProviderServiceId();
 
@@ -107,17 +98,7 @@ class SlugController extends Controller
             $service->provideViewData($nodeTranslation, $renderContext);
 
             $response = $renderContext->getResponse();
-        } else {
-            $response = $entity->service($this->container, $request, $renderContext);
         }
-
-        // NEXT_MAJOR: remove POST_SLUG_ACTION dispatch
-        $postEvent = new SlugEvent($response, $renderContext, false);
-        $this->dispatch($postEvent, Events::POST_SLUG_ACTION);
-
-        $response = $postEvent->getResponse();
-        $renderContext = $postEvent->getRenderContext();
-        // NEXT_MAJOR: end remove
 
         if ($response instanceof Response) {
             return $response;

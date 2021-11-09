@@ -32,15 +32,3 @@ KunstmaanAdminBundle_change_password:
     resource: '@KunstmaanAdminBundle/Controller/Authentication/ForcedChangePasswordController.php'
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%
-
-fos_routes:
-    resource: 'Kunstmaan\AdminBundle\DependencyInjection\Routes\FosRouteLoader:loadRoutes'
-    type: service
-    prefix: /%kunstmaan_admin.admin_prefix%
-
-##########################
-## Google OAuth Sign In ##
-##########################
-KunstmaanAdminBundle_oauth_signin:
-    path: /%kunstmaan_admin.admin_prefix%/google_signin_check
-    defaults: { _controller: KunstmaanAdminBundle:OAuth:check }

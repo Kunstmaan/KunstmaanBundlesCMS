@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Event;
 
-/**
- * @final since 5.9
- */
-class AdminListEvents
+final class AdminListEvents
 {
     /**
      * When adding, triggered after the form is validated,

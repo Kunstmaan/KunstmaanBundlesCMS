@@ -1,6 +1,3 @@
-parameters:
-    kunstmaan_adminlist.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
-
 services:
     # Autowire aliases
     Kunstmaan\AdminListBundle\AdminList\AdminListFactory: '@kunstmaan_adminlist.factory'
@@ -12,7 +9,7 @@ services:
         public: true
 
     kunstmaan_adminlist.service.export:
-        class:  '%kunstmaan_adminlist.service.export.class%'
+        class: Kunstmaan\AdminListBundle\Service\ExportService
         arguments:
             - '@twig'
             - '@translator'

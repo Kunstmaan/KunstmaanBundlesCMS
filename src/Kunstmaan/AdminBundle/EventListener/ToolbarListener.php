@@ -159,7 +159,8 @@ class ToolbarListener implements EventSubscriberInterface
         }
 
         // Do not capture redirects or modify XML HTTP Requests
-        if (!$authenticated || !$event->isMasterRequest() || $request->isXmlHttpRequest() || $this->adminRouteHelper->isAdminRoute($url)) {
+        $mainRequest = method_exists($event, 'isMainRequest') ? $event->isMainRequest() : $event->isMasterRequest();
+        if (!$authenticated || !$mainRequest || $request->isXmlHttpRequest() || $this->adminRouteHelper->isAdminRoute($url)) {
             return;
         }
 

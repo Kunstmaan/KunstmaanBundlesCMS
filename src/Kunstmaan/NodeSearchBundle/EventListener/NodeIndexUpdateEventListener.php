@@ -28,27 +28,8 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     /** @var array */
     private $entityChangeSet;
 
-    public function __construct(/* NodePagesConfiguration */
-        $nodePagesConfiguration, /* EntityManagerInterface */
-        $em = null)
+    public function __construct(NodePagesConfiguration $nodePagesConfiguration, EntityManagerInterface $em = null)
     {
-        if ($nodePagesConfiguration instanceof ContainerInterface) {
-            @trigger_error(sprintf('Passing the container as the first argument of "%s" is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Inject the "%s" service instead.', __CLASS__, 'kunstmaan_node_search.search_configuration.node'), E_USER_DEPRECATED);
-
-            $this->container = $nodePagesConfiguration;
-            $this->nodePagesConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
-
-            if (null === $em) {
-                $this->em = $this->container->get('doctrine.orm.default_entity_manager');
-            }
-
-            return;
-        }
-
-        if (!($em instanceof EntityManagerInterface)) {
-            @trigger_error(sprintf('Passing null or something other than an entitymanagerinterface as the second argument of "%s" is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Inject the "%s" service instead.', __CLASS__, 'doctrine.orm.default_entity_manager'), E_USER_DEPRECATED);
-        }
-
         $this->nodePagesConfiguration = $nodePagesConfiguration;
         $this->em = $em;
     }

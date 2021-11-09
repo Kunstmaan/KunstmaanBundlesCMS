@@ -23,8 +23,6 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.widget.googleanalytics.controller');
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.googleclient.class');
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name');
     }
 
@@ -35,23 +33,8 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.client_id', '');
     }
 
-    /**
-     * @group legacy
-     * @expectedDeprecation Not providing a value for the "kunstmaan_dashboard.google_analytics.api.client_id" config while setting the "google.api.client_id" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "google.api.client_id" parameter in KunstmaanDashboardBundle 6.0.
-     */
-    public function testGoogleAnalyticsApiClientIdWithParameterSet()
-    {
-        $this->setParameter('google.api.client_id', 'client_id');
-
-        $this->load();
-
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.client_id', 'client_id');
-    }
-
     public function testGoogleAnalyticsApiClientIdWithParameterAndConfigSet()
     {
-        $this->setParameter('google.api.client_id', 'client_id');
-
         $this->load(['google_analytics' => ['api' => ['client_id' => 'custom_client_id']]]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.client_id', 'custom_client_id');
@@ -64,23 +47,8 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.client_secret', '');
     }
 
-    /**
-     * @group legacy
-     * @expectedDeprecation Not providing a value for the "kunstmaan_dashboard.google_analytics.api.client_secret" config while setting the "google.api.client_secret" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "google.api.client_secret" parameter in KunstmaanDashboardBundle 6.0.
-     */
-    public function testGoogleAnalyticsApiClientSecretWithParameterSet()
-    {
-        $this->setParameter('google.api.client_secret', 'client_secret');
-
-        $this->load();
-
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.client_secret', 'client_secret');
-    }
-
     public function testGoogleAnalyticsApiClientSecretWithParameterAndConfigSet()
     {
-        $this->setParameter('google.api.client_secret', 'client_secret');
-
         $this->load(['google_analytics' => ['api' => ['client_secret' => 'custom_client_secret']]]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.client_secret', 'custom_client_secret');
@@ -93,23 +61,8 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.dev_key', '');
     }
 
-    /**
-     * @group legacy
-     * @expectedDeprecation Not providing a value for the "kunstmaan_dashboard.google_analytics.api.dev_key" config while setting the "google.api.dev_key" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "google.api.dev_key" parameter in KunstmaanDashboardBundle 6.0.
-     */
-    public function testGoogleAnalyticsApiDevKeyWithParameterSet()
-    {
-        $this->setParameter('google.api.dev_key', 'dev_key');
-
-        $this->load();
-
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.dev_key', 'dev_key');
-    }
-
     public function testGoogleAnalyticsApiDevKeyWithParameterAndConfigSet()
     {
-        $this->setParameter('google.api.dev_key', 'dev_key');
-
         $this->load(['google_analytics' => ['api' => ['dev_key' => 'custom_dev_key']]]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.dev_key', 'custom_dev_key');
@@ -122,40 +75,10 @@ class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name', 'Kuma Analytics Dashboard');
     }
 
-    /**
-     * @group legacy
-     * @expectedDeprecation Not providing a value for the "kunstmaan_dashboard.google_analytics.api.app_name" config while setting the "google.api.app_name" parameter is deprecated since KunstmaanDashboardBundle 5.2, this config value will replace the "google.api.app_name" parameter in KunstmaanDashboardBundle 6.0.
-     */
-    public function testGoogleAnalyticsApiAppNameWithParameterSet()
-    {
-        $this->setParameter('google.api.app_name', 'app_name');
-
-        $this->load();
-
-        $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name', 'app_name');
-    }
-
     public function testGoogleAnalyticsApiAppNameWithParameterAndConfigSet()
     {
-        $this->setParameter('google.api.app_name', 'app_name');
-
         $this->load(['google_analytics' => ['api' => ['app_name' => 'custom_app_name']]]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_dashboard.google_analytics.api.app_name', 'custom_app_name');
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testWithDeprecatedWidgetCommandParameter()
-    {
-        $this->expectDeprecation('Using the "kunstmaan_dashboard.widget.googleanalytics.command" parameter to modify the "kunstmaan_dashboard.widget.googleanalytics" service is deprecated since KunstmaanDashboardBundle 5.9 and the parameter will be removed in KunstmaanDashboardBundle 6.0. Use service decoration or a service alias instead.');
-
-        $this->setParameter('kunstmaan_dashboard.widget.googleanalytics.command', 'ExampleCommand');
-
-        $this->load();
-
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('kunstmaan_dashboard.widget.googleanalytics', 0, '%kunstmaan_dashboard.widget.googleanalytics.command%');
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('kunstmaan_dashboard.widget.googleanalytics', 2, '@service_container');
     }
 }

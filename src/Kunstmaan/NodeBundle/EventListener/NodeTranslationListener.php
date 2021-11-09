@@ -17,17 +17,12 @@ use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Listens to doctrine postFlush event and updates the urls if the entities are nodetranslations
  */
 class NodeTranslationListener
 {
-    /** @var SessionInterface|FlashBagInterface|null */
-    private $flashBag;
-
     /** @var LoggerInterface */
     private $logger;
 
@@ -44,48 +39,15 @@ class NodeTranslationListener
     private $pagesConfiguration;
 
     public function __construct(
-        /* RequestStack */ $flashBag,
+        RequestStack $requestStack,
         LoggerInterface $logger,
         SlugifierInterface $slugifier,
-        /* RequestStack $requestStack, */
-        /* DomainConfigurationInterface */ $domainConfiguration,
-        /* PagesConfiguration */ $pagesConfiguration
+        DomainConfigurationInterface $domainConfiguration,
+        PagesConfiguration $pagesConfiguration
     ) {
-        if (!$flashBag instanceof FlashBagInterface && !$flashBag instanceof SessionInterface && !$flashBag instanceof RequestStack) {
-            throw new \InvalidArgumentException(sprintf('The first argument of "%s" should be instance of "%s", "%s" or "%s"', __METHOD__, FlashBagInterface::class, SessionInterface::class, RequestStack::class));
-        }
-
-        if (!$flashBag instanceof RequestStack) {
-            @trigger_error(sprintf('Passing a service instance of "%s" for the first argument in "%s" is deprecated since KunstmaanNodeBundle 5.10 and an instance of "%s" will be required in KunstmaanNodeBundle 6.0.', SessionInterface::class, __METHOD__, RequestStack::class), E_USER_DEPRECATED);
-        }
-
-        if ($flashBag instanceof FlashBagInterface) {
-            @trigger_error('Passing the "@session.flash_bag" service as first argument is deprecated since KunstmaanNodeBundle 5.6 and will be replaced by the session in KunstmaanNodeBundle 6.0. Inject the "@session" service instead.', E_USER_DEPRECATED);
-        }
-
+        $this->requestStack = $requestStack;
         $this->logger = $logger;
         $this->slugifier = $slugifier;
-
-        if (func_num_args() > 5 && $domainConfiguration instanceof RequestStack) {
-            @trigger_error(sprintf('The fourth argument of "%s" is deprecated since KunstmaanNodeBundle 5.10 and will be removed in KunstmaanNodeBundle 6.0. Check the constructor arguments and inject the required services instead.', __METHOD__), E_USER_DEPRECATED);
-
-            $this->flashBag = $flashBag;
-            $this->requestStack = $domainConfiguration;
-            $this->domainConfiguration = $pagesConfiguration;
-            $this->pagesConfiguration = func_get_arg(5);
-
-            return;
-        }
-
-        if (!$domainConfiguration instanceof DomainConfigurationInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$domainConfiguration" argument of "%s" should be an instance of "%s"', __METHOD__, DomainConfigurationInterface::class));
-        }
-
-        if (!$pagesConfiguration instanceof PagesConfiguration) {
-            throw new \InvalidArgumentException(sprintf('The "$pagesConfiguration" argument of "%s" should be an instance of "%s"', __METHOD__, PagesConfiguration::class));
-        }
-
-        $this->requestStack = $flashBag;
         $this->domainConfiguration = $domainConfiguration;
         $this->pagesConfiguration = $pagesConfiguration;
     }
@@ -382,14 +344,6 @@ class NodeTranslationListener
 
     private function getFlashBag()
     {
-        if (null === $this->flashBag) {
-            return $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
-        }
-
-        if ($this->flashBag instanceof SessionInterface) {
-            return $this->flashBag->getFlashBag();
-        }
-
-        return $this->flashBag;
+        return $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     }
 }

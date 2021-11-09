@@ -28,11 +28,6 @@ class KunstmaanNodeExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_node.lock_threshold', 35);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.lock_enabled', false);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.version_timeout', 3600);
-        $this->assertContainerBuilderHasParameter('kunstmaan_node.slugrouter.class', 'Kunstmaan\NodeBundle\Router\SlugRouter');
-        $this->assertContainerBuilderHasParameter('kunstmaan_node.sluglistener.class', 'Kunstmaan\NodeBundle\EventListener\SlugListener');
-        $this->assertContainerBuilderHasParameter('kunstmaan_node.helper.url.class', 'Kunstmaan\NodeBundle\Helper\URLHelper');
-        $this->assertContainerBuilderHasParameter('kunstmaan_node.url_replace.twig.class', 'Kunstmaan\NodeBundle\Twig\UrlReplaceTwigExtension');
         $this->assertContainerBuilderHasParameter('kunstmaan_node.url_chooser.lazy_increment', 2);
-        $this->assertContainerBuilderHasParameter('kunstmaan_multi_domain.url_replace.controller.class', 'Kunstmaan\NodeBundle\Controller\UrlReplaceController');
     }
 }

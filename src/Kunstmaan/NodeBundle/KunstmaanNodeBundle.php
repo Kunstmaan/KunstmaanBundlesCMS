@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle;
 
-use Kunstmaan\NodeBundle\DependencyInjection\Compiler\DeprecateClassParametersPass;
 use Kunstmaan\NodeBundle\DependencyInjection\Compiler\PageRenderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -16,7 +15,6 @@ class KunstmaanNodeBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new DeprecateClassParametersPass());
         $container->addCompilerPass(new PageRenderPass());
     }
 }

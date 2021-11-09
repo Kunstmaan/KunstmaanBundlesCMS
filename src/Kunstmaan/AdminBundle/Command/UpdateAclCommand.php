@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Service\AclManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
@@ -12,11 +12,8 @@ use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 
 /**
  * Permissions update of ACL entries for all nodes for given role.
- *
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
-class UpdateAclCommand extends ContainerAwareCommand
+final class UpdateAclCommand extends Command
 {
     /** @var AclManager */
     private $aclManager;
@@ -30,17 +27,9 @@ class UpdateAclCommand extends ContainerAwareCommand
     /** @var array */
     private $roles;
 
-    public function __construct(/*AclManager*/ $aclManager = null, EntityManagerInterface $em = null, PermissionMapInterface $permissionMap = null, array $roles = null)
+    public function __construct(AclManager $aclManager, EntityManagerInterface $em, PermissionMapInterface $permissionMap, array $roles)
     {
         parent::__construct();
-
-        if (!$aclManager instanceof AclManager) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $aclManager ? 'kuma:acl:update' : $aclManager);
-
-            return;
-        }
 
         $this->aclManager = $aclManager;
         $this->em = $em;
@@ -64,18 +53,6 @@ class UpdateAclCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
-        if (null === $this->aclManager) {
-            $this->aclManager = $this->getContainer()->get('kunstmaan_admin.acl.manager');
-        }
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        }
-        if (null === $this->permissionMap) {
-            $this->permissionMap = $this->getContainer()->get('security.acl.permission.map');
-        }
-        if (null === $this->roles) {
-            $this->roles = $this->getContainer()->getParameter('security.role_hierarchy.roles');
-        }
 
         // Select Role
         $question = new ChoiceQuestion('Select role', array_keys($this->roles));

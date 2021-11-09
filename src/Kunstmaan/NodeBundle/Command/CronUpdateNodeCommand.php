@@ -6,17 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class CronUpdateNodeCommand extends ContainerAwareCommand
+final class CronUpdateNodeCommand extends Command
 {
     /**
      * @var EntityManager
@@ -24,7 +20,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
     private $em;
 
     /**
-     * @var TokenStorage
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
@@ -33,22 +29,9 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
      */
     private $nodePublisher;
 
-    /**
-     * @param EntityManagerInterface|null $em
-     * @param TokenStorage|null           $tokenStorage
-     * @param NodeAdminPublisher|null     $nodePublisher
-     */
-    public function __construct(/* EntityManagerInterface */ $em = null, /* TokenStorage */ $tokenStorage = null, /* NodeAdminPublisher */ $nodePublisher = null)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, NodeAdminPublisher $nodePublisher)
     {
         parent::__construct();
-
-        if (!$em instanceof EntityManagerInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $em ? 'kuma:nodes:cron' : $em);
-
-            return;
-        }
 
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
@@ -74,12 +57,6 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-            $this->tokenStorage = $this->getContainer()->get('security.token_storage');
-            $this->nodePublisher = $this->getContainer()->get('kunstmaan_node.admin_node.publisher');
-        }
-
         $queuedNodeTranslationActions = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findAll();
 
         if (\count($queuedNodeTranslationActions)) {

@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Structures - Tip pagepart
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.kmcc-tip-pp {
+    display: flex;
+
+    flex-direction: row;
+    align-items: flex-start;
+
+    margin: 30px 0;
+
+    svg {
+        display: block;
+        width: 27px;
+        margin-top: 5px !important;
+    }
+}
+
+.kmcc-tip-pp__text {
+    width: calc(100% - 27px);
+
+    margin-left: 20px;
+    margin-top: 0;
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+#kmcc-tip-pp-icon {
+    fill: $kmcc_primary-color;
+}

@@ -7,10 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class IconFontController extends Controller
+final class IconFontController extends Controller
 {
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_icon_font_chooser")

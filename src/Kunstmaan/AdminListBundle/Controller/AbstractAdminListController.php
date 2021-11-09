@@ -356,15 +356,8 @@ abstract class AbstractAdminListController extends AbstractController
     {
         /** @var SlugifierInterface $slugifier */
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-        $csrfId = 'delete-' . $slugifier->slugify($configurator->getEntityName());
 
-        $hasToken = $request->request->has('token');
-        // NEXT_MAJOR remove hasToken check and make csrf token required
-        if (!$hasToken) {
-            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanAdminListBundle 5.10 and will be required in KunstmaanAdminListBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
-        }
-
-        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
@@ -593,7 +586,7 @@ abstract class AbstractAdminListController extends AbstractController
 
     public static function getSubscribedServices(): array
     {
-        return array_merge(parent::getSubscribedServices(), [
+        return [
             'doctrine' => ManagerRegistry::class,
             'kunstmaan_adminlist.factory' => AdminListFactory::class,
             'kunstmaan_adminlist.service.export' => ExportService::class,
@@ -601,6 +594,6 @@ abstract class AbstractAdminListController extends AbstractController
             'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
             'event_dispatcher' => EventDispatcherInterface::class,
             'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
-        ]);
+        ] + parent::getSubscribedServices();
     }
 }

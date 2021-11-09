@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class AbstractArticleEntityAdminListController extends AdminListController
+abstract class AbstractArticleEntityAdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface
@@ -38,11 +38,9 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
     protected $aclHelper;
 
     /**
-     * NEXT_MAJOR: change method visibility from public to protected
-     *
      * @return AdminListConfiguratorInterface
      */
-    public function getAdminListConfigurator(Request $request)
+    protected function getAdminListConfigurator(Request $request)
     {
         $this->initAdminListConfigurator($request);
         if (!isset($this->configurator)) {
@@ -53,11 +51,9 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
     }
 
     /**
-     * NEXT_MAJOR: change method visibility from public to protected
-     *
      * @return AbstractArticlePageAdminListConfigurator
      */
-    abstract public function createAdminListConfigurator();
+    abstract protected function createAdminListConfigurator();
 
     protected function initAdminListConfigurator(Request $request)
     {
@@ -65,5 +61,12 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
         $this->locale = $request->getLocale();
         $this->user = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            'kunstmaan_admin.acl.helper' => AclHelper::class,
+        ] + parent::getSubscribedServices();
     }
 }

@@ -1,9 +1,6 @@
-parameters:
-    kunstmaan_node_search.node_index_update.listener.class: Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener
-
 services:
     kunstmaan_node_search.node_index_update.listener:
-        class: '%kunstmaan_node_search.node_index_update.listener.class%'
+        class: Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener
         arguments: ['@kunstmaan_node_search.search_configuration.node', '@doctrine.orm.default_entity_manager']
         tags:
             - { name: doctrine.event_listener, event: preUpdate,   method: preUpdate }

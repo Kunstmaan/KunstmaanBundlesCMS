@@ -6,10 +6,7 @@ use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since 5.4
- */
-class AdminRouteHelperTwigExtension extends AbstractExtension
+final class AdminRouteHelperTwigExtension extends AbstractExtension
 {
     /** @var AdminRouteHelper */
     private $adminRouteHelper;

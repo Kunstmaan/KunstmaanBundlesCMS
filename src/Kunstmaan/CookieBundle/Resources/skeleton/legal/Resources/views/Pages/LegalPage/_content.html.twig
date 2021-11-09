@@ -1,0 +1,33 @@
+<div class="kmcc-cookie-modal__intro">
+    <h1>{{ page.title }}</h1>
+    {{ render_pageparts(page, 'legal_header') }}
+</div>
+
+<div class="kmcc-cookie-modal__main-wrapper">
+    <div class="kmcc-cookie-modal__aside">
+        {% set tocContent = "" %}
+        {% if page is defined %}
+            {% for pagepart in getpageparts(page, 'legal_main') %}
+                {% if 'HeaderPagePart' in pagepart.getDefaultView %}
+                    {% if pagepart.niv is defined and pagepart.niv == 2 %}
+                        {% set tocContent = tocContent ~ '<li><a href=\"#' ~ pagepart.getTitle|slugify ~ '\">' ~ pagepart.getTitle ~ '</a></li>' %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if tocContent %}
+                <ul class="kmcc-cookie-modal__aside__navigation js-kmcc-cookie-modal__aside__navigation">
+                    {{ tocContent|raw }}
+                </ul>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="kmcc-cookie-modal__main">
+    <% if isV4 %>
+        {% include 'Pages/LegalPage/_main.html.twig' %}
+    <% else %>
+        {% include '<%= bundle.name %>:Pages:LegalPage/_main.html.twig' %}
+    <% endif %>
+    </div>
+</div>

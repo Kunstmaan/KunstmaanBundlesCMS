@@ -3,18 +3,14 @@
 namespace Kunstmaan\UtilitiesBundle\Command;
 
 use Kunstmaan\UtilitiesBundle\Helper\Cipher\CipherInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
- */
-class CipherCommand extends ContainerAwareCommand
+final class CipherCommand extends Command
 {
     /**
      * @var CipherInterface
@@ -28,20 +24,9 @@ class CipherCommand extends ContainerAwareCommand
         3 => 'Decrypt file',
     ];
 
-    /**
-     * @param CipherInterface|null $cipher
-     */
-    public function __construct(/* CipherInterface */ $cipher = null)
+    public function __construct(CipherInterface $cipher)
     {
         parent::__construct();
-
-        if (!$cipher instanceof CipherInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $cipher ? 'kuma:cipher' : $cipher);
-
-            return;
-        }
 
         $this->cipher = $cipher;
     }
@@ -56,9 +41,6 @@ class CipherCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->cipher) {
-            $this->cipher = $this->getContainer()->get('kunstmaan_utilities.cipher');
-        }
         $helper = $this->getHelper('question');
 
         $question = new ChoiceQuestion(

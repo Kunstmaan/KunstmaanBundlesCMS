@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,10 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class WidgetsController extends Controller
+final class WidgetsController extends Controller
 {
     /**
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
@@ -49,41 +45,6 @@ class WidgetsController extends Controller
         $params['multilanguage'] = $this->getParameter('kunstmaan_admin.multi_language');
 
         return $params;
-    }
-
-    /**
-     * Select a link
-     *
-     * @Route("/select-nodes-lazy_search", name="KunstmaanNodeBundle_nodes_lazy_search")
-     *
-     * @return JsonResponse
-     */
-    public function selectNodesLazySearch(Request $request)
-    {
-        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
-
-        /* @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
-        $locale = $request->getLocale();
-        $search = $request->query->get('str');
-
-        $results = [];
-        if ($search) {
-            $nts = $em->getRepository(NodeTranslation::class)->getNodeTranslationsLikeTitle($search, $locale);
-            /** @var NodeTranslation $nt */
-            foreach ($nts as $nt) {
-                $node = $nt->getNode();
-                $results[] = $node->getId();
-                while ($node->getParent()) {
-                    $node = $node->getParent();
-                    $results[] = $node->getId();
-                }
-            }
-            $results = array_unique($results);
-            sort($results);
-        }
-
-        return new JsonResponse($results);
     }
 
     /**

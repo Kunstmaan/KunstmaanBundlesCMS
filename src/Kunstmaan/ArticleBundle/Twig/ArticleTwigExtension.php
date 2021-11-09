@@ -11,10 +11,8 @@ use Twig\TwigFunction;
 
 /**
  * Extension for article bundle.
- *
- * @final since 5.4
  */
-class ArticleTwigExtension extends AbstractExtension
+final class ArticleTwigExtension extends AbstractExtension
 {
     /**
      * @var EntityManagerInterface
@@ -30,10 +28,6 @@ class ArticleTwigExtension extends AbstractExtension
     {
         $this->em = $em;
         $this->router = $router;
-
-        if (\func_num_args() > 2) {
-            @trigger_error(sprintf('Passing the "request_stack" service as the third argument in "%s" is deprecated in KunstmaanArticleBundle 5.1 and will be removed in KunstmaanArticleBundle 6.0. Remove the "request_stack" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
-        }
     }
 
     /**

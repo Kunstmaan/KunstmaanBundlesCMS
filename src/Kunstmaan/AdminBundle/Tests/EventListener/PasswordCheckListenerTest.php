@@ -61,37 +61,6 @@ class PasswordCheckListenerTest extends TestCase
         $listener->onKernelRequest($event);
     }
 
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedSessionConstructorArgument()
-    {
-        $this->expectDeprecation('Passing a service instance of "Symfony\Component\HttpFoundation\Session\SessionInterface" for the first argument in "Kunstmaan\AdminBundle\EventListener\PasswordCheckListener::__construct" is deprecated since KunstmaanAdminBundle 5.10 and an instance of "Symfony\Component\HttpFoundation\RequestStack" will be required in KunstmaanAdminBundle 6.0.');
-
-        $auth = $this->createMock(AuthorizationCheckerInterface::class);
-        $storage = $this->createMock(TokenStorageInterface::class);
-        $router = $this->createMock(RouterInterface::class);
-        $session = $this->createMock(Session::class);
-        $trans = $this->createMock(Translator::class);
-        $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
-
-        new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);
-    }
-
-    public function testInvalidSessionConstructorArgument()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The fourth argument of "Kunstmaan\AdminBundle\EventListener\PasswordCheckListener::__construct" should be instance of "Symfony\Component\HttpFoundation\Session\SessionInterface" or "Symfony\Component\HttpFoundation\RequestStack"');
-
-        $auth = $this->createMock(AuthorizationCheckerInterface::class);
-        $storage = $this->createMock(TokenStorageInterface::class);
-        $router = $this->createMock(RouterInterface::class);
-        $trans = $this->createMock(Translator::class);
-        $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
-
-        new PasswordCheckListener($auth, $storage, $router, new \stdClass(), $trans, $adminRouteHelper);
-    }
-
     public function requestDataProvider()
     {
         return [

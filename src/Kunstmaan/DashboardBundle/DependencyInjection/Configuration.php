@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('client_id')->defaultNull()->end()
                                 ->scalarNode('client_secret')->defaultNull()->end()
                                 ->scalarNode('dev_key')->defaultNull()->end()
-                                ->scalarNode('app_name')->defaultNull()->end() // NEXT_MAJOR: Set default value to "Kuma Analytics Dashboard"
+                                ->scalarNode('app_name')->defaultValue('Kuma Analytics Dashboard')->end()
                             ->end()
                     ->end()
                 ->end()

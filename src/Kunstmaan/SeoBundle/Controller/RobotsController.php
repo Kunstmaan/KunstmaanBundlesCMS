@@ -8,10 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class RobotsController extends Controller
+final class RobotsController extends Controller
 {
     /**
      * Generates the robots.txt content when available in the database and falls back to normal robots.txt if exists

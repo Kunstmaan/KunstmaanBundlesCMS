@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="21.456 5.414 18.627 2.586 12.042 9.172 5.456 2.586 2.627 5.414 9.213 12 2.627 18.586 5.456 21.414 12.042 14.828 18.627 21.414 21.456 18.586 14.87 12"></polygon>
+    </defs>
+    <g id="Icons/Interface/close" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-2.000000, -2.000000)">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Shape" fill="#757575" fill-rule="nonzero" xlink:href="#path-1"></use>
+    </g>
+</svg>

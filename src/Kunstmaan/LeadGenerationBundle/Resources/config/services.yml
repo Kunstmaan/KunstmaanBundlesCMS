@@ -1,15 +1,10 @@
-parameters:
-    kunstmaan_lead_generation.popup.twig.extension.class: Kunstmaan\LeadGenerationBundle\Twig\PopupTwigExtension
-    kunstmaan_lead_generation.popup.manager.class: Kunstmaan\LeadGenerationBundle\Service\PopupManager
-    kunstmaan_lead_generation.menu.adaptor.class: Kunstmaan\LeadGenerationBundle\Service\MenuAdaptor
-
 services:
     kunstmaan_lead_generation.popup.manager:
-        class: '%kunstmaan_lead_generation.popup.manager.class%'
+        class: Kunstmaan\LeadGenerationBundle\Service\PopupManager
         arguments: ['@doctrine.orm.entity_manager']
 
     kunstmaan_lead_generation.popup.twig.extension:
-        class: '%kunstmaan_lead_generation.popup.twig.extension.class%'
+        class: Kunstmaan\LeadGenerationBundle\Twig\PopupTwigExtension
         arguments:
             - '@kunstmaan_lead_generation.popup.manager'
             - '@service_container'
@@ -19,7 +14,7 @@ services:
             - { name: twig.extension }
 
     kunstmaan_lead_generation.menu.adaptor:
-        class: '%kunstmaan_lead_generation.menu.adaptor.class%'
+        class: Kunstmaan\LeadGenerationBundle\Service\MenuAdaptor
         tags:
             - { name: kunstmaan_admin.menu.adaptor }
 

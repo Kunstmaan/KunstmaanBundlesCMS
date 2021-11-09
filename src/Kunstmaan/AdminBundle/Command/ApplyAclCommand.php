@@ -6,42 +6,27 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
- *
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
-class ApplyAclCommand extends ContainerAwareCommand
+final class ApplyAclCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em = null;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    /**
-     * @var Shell
-     */
-    private $shellHelper = null;
+    /** @var Shell */
+    private $shellHelper;
 
     /** @var AclManager */
-    private $aclManager = null;
+    private $aclManager;
 
-    public function __construct(/*AclManager*/ $aclManager = null, EntityManagerInterface $em = null, Shell $shellHelper = null)
+    public function __construct(AclManager $aclManager, EntityManagerInterface $em, Shell $shellHelper)
     {
         parent::__construct();
-
-        if (!$aclManager instanceof AclManager) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $aclManager ? 'kuma:acl:apply' : $aclManager);
-
-            return;
-        }
 
         $this->aclManager = $aclManager;
         $this->em = $em;
@@ -67,16 +52,6 @@ class ApplyAclCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->aclManager) {
-            $this->aclManager = $this->getContainer()->get('kunstmaan_admin.acl.manager');
-        }
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        }
-        if (null === $this->shellHelper) {
-            $this->shellHelper = $this->getContainer()->get('kunstmaan_utilities.shell');
-        }
-
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
             return 0;

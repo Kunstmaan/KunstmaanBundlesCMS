@@ -1,12 +1,6 @@
 parameters:
     kunstmaan_node.version_timeout: 3600
-    kunstmaan_node.slugrouter.class: 'Kunstmaan\NodeBundle\Router\SlugRouter'
-    kunstmaan_node.sluglistener.class: 'Kunstmaan\NodeBundle\EventListener\SlugListener'
-    kunstmaan_node.helper.url.class: Kunstmaan\NodeBundle\Helper\URLHelper
-    kunstmaan_node.url_replace.twig.class: Kunstmaan\NodeBundle\Twig\UrlReplaceTwigExtension
     kunstmaan_node.url_chooser.lazy_increment: 2
-    kunstmaan_multi_domain.url_replace.controller.class: Kunstmaan\NodeBundle\Controller\UrlReplaceController
-    kunstmaan_node.toolbar.collector.node.class: Kunstmaan\NodeBundle\Toolbar\NodeDataCollector
 
 services:
     # Autowire aliases
@@ -146,7 +140,7 @@ services:
             - { name: kernel.event_subscriber }
 
     kunstmaan_node.slugrouter:
-        class: '%kunstmaan_node.slugrouter.class%'
+        class: Kunstmaan\NodeBundle\Router\SlugRouter
         arguments:
             - '@kunstmaan_admin.domain_configuration'
             - '@request_stack'
@@ -163,7 +157,7 @@ services:
             - { name: twig.extension }
 
     kunstmaan_node.url_replace.twig.extension:
-        class: "%kunstmaan_node.url_replace.twig.class%"
+        class: Kunstmaan\NodeBundle\Twig\UrlReplaceTwigExtension
         arguments:
             - "@kunstmaan_node.helper.url"
         tags:
@@ -189,12 +183,6 @@ services:
         arguments: ['%kunstmaan_admin.user_class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
-
-    kunstmaan_node.slug.listener:
-        class: '%kunstmaan_node.sluglistener.class%'
-        arguments: ['@doctrine.orm.entity_manager','@controller_resolver', '@event_dispatcher']
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     kunstmaan_node.slug.security.listener:
         class: Kunstmaan\NodeBundle\EventListener\SlugSecurityListener
@@ -224,7 +212,7 @@ services:
             - { name: twig.extension }
 
     kunstmaan_node.helper.url:
-        class: "%kunstmaan_node.helper.url.class%"
+        class: Kunstmaan\NodeBundle\Helper\URLHelper
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
@@ -232,7 +220,7 @@ services:
             - "@kunstmaan_admin.domain_configuration"
 
     kunstmaan_node.url_replace.controller:
-        class: "%kunstmaan_multi_domain.url_replace.controller.class%"
+        class: Kunstmaan\NodeBundle\Controller\UrlReplaceController
         arguments:
             - "@kunstmaan_node.helper.url"
         public: true
@@ -251,7 +239,7 @@ services:
 
     ### TOOLBAR DATA COLLECTOR ###
     kunstmaan_node.datacollector.node:
-        class: '%kunstmaan_node.toolbar.collector.node.class%'
+        class: Kunstmaan\NodeBundle\Toolbar\NodeDataCollector
         parent: Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector
         arguments:
             - '@kunstmaan_node.node_menu'

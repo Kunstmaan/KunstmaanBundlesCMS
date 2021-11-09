@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Components - Collapsible Content
+   ========================================================================== */
+
+.kmcc-collapsible-content__title {
+    display: flex;
+
+    margin: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    font-size: 18px;
+
+    color: $kmcc_headings;
+
+    cursor: pointer;
+
+    span,
+    h2 {
+        margin: 20px 0;
+        pointer-events: none;
+
+        font-size: 20px;
+    }
+
+    .header-pp {
+        margin: 0;
+    }
+
+    @media (min-width: $kmcc_screen-md) {
+        cursor: default;
+
+        font-size: 1.5em;
+    }
+}
+
+.kmcc-collapsible-content__title__icon {
+    width: 14px;
+    height: 14px;
+    max-width: 14px;
+    margin-right: 20px;
+
+    flex: 1 0 auto;
+
+    fill: $kmcc_primary-color;
+
+    pointer-events: none;
+
+    transition: transform .2s ease;
+
+    .open & {
+        transform: rotateZ(-180deg);
+    }
+
+    @media (min-width: $kmcc_screen-md) {
+        display: none;
+    }
+}
+
+.kmcc-collapsible-content__content-container {
+    position: relative;
+
+    padding: 0;
+    margin-bottom: 5px;
+
+    overflow: hidden;
+
+    border-bottom: 1px solid $kmcc_grey--dark;
+
+    @media (min-width: $kmcc_screen-md) {
+        border-bottom: none;
+    }
+}
+
+.kmcc-collapsible-content__content {
+    padding-bottom: 30px;
+
+    font-size: 16px;
+
+    transition: margin-top .2s ease;
+
+    :first-child {
+        margin-top: 0;
+    }
+
+    > :last-child { // last pp
+        margin-bottom: 0;
+
+        > :last-child { // last element in last pp
+            margin-bottom: 0;
+
+            > :last-child { // and even 1 level deeper :)
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @media (min-width: $kmcc_screen-md) {
+        font-size: 18px;
+    }
+}

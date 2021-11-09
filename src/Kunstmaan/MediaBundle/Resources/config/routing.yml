@@ -3,11 +3,6 @@ KunstmaanMediaBundle_media:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/media
 
-KunstmaanMediaBundle_aviary:
-    resource: '@KunstmaanMediaBundle/Controller/AviaryController.php'
-    type:     annotation
-    prefix:   /
-
 KunstmaanMediaBundle_media_chooser:
     resource: '@KunstmaanMediaBundle/Controller/ChooserController.php'
     type:     annotation

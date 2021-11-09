@@ -1,21 +1,16 @@
-parameters:
-    kunstmaan_utilities.slugifier.class: 'Kunstmaan\UtilitiesBundle\Helper\Slugifier'
-    kunstmaan_utilities.shell.class: 'Kunstmaan\UtilitiesBundle\Helper\Shell\Shell'
-    kunstmaan_utilities.cipher.class: 'Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher'
-
 services:
     # Autowire aliases
     Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface: '@kunstmaan_utilities.slugifier'
 
     kunstmaan_utilities.shell:
-        class: '%kunstmaan_utilities.shell.class%'
+        class: Kunstmaan\UtilitiesBundle\Helper\Shell\Shell
 
     kunstmaan_utilities.cipher:
-        class: '%kunstmaan_utilities.cipher.class%'
+        class: Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher
         arguments: ['%kunstmaan_utilities.cipher.secret%']
 
     kunstmaan_utilities.slugifier:
-        class: '%kunstmaan_utilities.slugifier.class%'
+        class: Kunstmaan\UtilitiesBundle\Helper\Slugifier
         public: true
 
     kunstmaan_utilities.twig.extension:

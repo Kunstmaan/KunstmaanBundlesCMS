@@ -3,13 +3,10 @@
 namespace Kunstmaan\AdminBundle\Helper\VersionCheck;
 
 use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\CacheProvider;
 use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\Adapter\DoctrineAdapter;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -18,116 +15,59 @@ class VersionChecker
 {
     public const CACHE_KEY = 'version_check';
 
-    /**
-     * @var AdapterInterface
-     */
+    /** @var AdapterInterface */
     private $cache;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $webserviceUrl;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $cacheTimeframe;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $enabled;
 
-    /**
-     * @var Client
-     */
+    /** @var Client */
     private $client;
 
-    /**
-     * @var TranslatorInterface|LegacyTranslatorInterface
-     */
+    /** @var TranslatorInterface|LegacyTranslatorInterface */
     private $translator;
 
     /** @var RequestStack */
     private $requestStack;
+
     /** @var string */
     private $websiteTitle;
+
     /** @var string */
     private $projectDir;
 
     /**
-     * @param CacheProvider|AdapterInterface|ContainerInterface $cache
-     * @param TranslatorInterface|LegacyTranslatorInterface     $translator
-     * @param RequestStack                                      $requestStack
+     * @param TranslatorInterface|LegacyTranslatorInterface $translator
      */
     public function __construct(
-        /* ContainerInterface $container, */
-        /* AdapterInterface */ $cache,
+        AdapterInterface $cache,
         $translator,
-        /* RequestStack */ $requestStack = null,
-        string $webserviceUrl = null,
-        int $cacheTimeframe = null,
-        bool $enabled = null,
-        string $projectDir = null,
-        string $websiteTitle = null
+        RequestStack $requestStack,
+        string $webserviceUrl,
+        int $cacheTimeframe,
+        bool $enabled,
+        string $projectDir,
+        string $websiteTitle
     ) {
-        if (func_num_args() === 3 && $cache instanceof ContainerInterface) {
-            @trigger_error(sprintf('Passing an instance of "%s" as the first argument in "%s" is deprecated since KunstmaanAdminBundle 5.9 and the service parameter types will change in KunstmaanAdminBundle 6.0. Check the constructor arguments and inject the required services and parameters instead.', ContainerInterface::class, __METHOD__), E_USER_DEPRECATED);
-        }
-
-        if ((func_num_args() >= 2 && func_num_args() < 4) && !$cache instanceof ContainerInterface) {
-            // NEXT_MAJOR Remove check
-            throw new \InvalidArgumentException(sprintf('The first parameter of "%s" is not of the correct type, inject the correct services and parameters instead.', __METHOD__));
-        }
-
-        if (!$cache instanceof ContainerInterface && (!$cache instanceof CacheProvider && !$cache instanceof AdapterInterface)) {
-            // NEXT_MAJOR Add AdapterInterface typehint for the $cache parameter
-            throw new \InvalidArgumentException(sprintf('The "$cache" parameter should extend from "%s" or implement "%s"', CacheProvider::class, AdapterInterface::class));
-        }
-
-        if ($cache instanceof ContainerInterface && (!$translator instanceof CacheProvider && !$translator instanceof AdapterInterface)) {
-            // NEXT_MAJOR Add AdapterInterface typehint for the $cache parameter
-            throw new \InvalidArgumentException(sprintf('The "$cache" parameter should extend from "%s" or implement "%s"', CacheProvider::class, AdapterInterface::class));
-        }
-
-        $cacheParam = $cache instanceof ContainerInterface ? $translator : $cache;
-        $this->cache = $cacheParam;
-        if ($this->cache instanceof CacheProvider) {
-            @trigger_error(sprintf('Passing an instance of "%s" as the second argument in "%s" is deprecated since KunstmaanAdminBundle 5.7 and an instance of "%s" will be required in KunstmaanAdminBundle 6.0.', CacheProvider::class, __METHOD__, AdapterInterface::class), E_USER_DEPRECATED);
-
-            $this->cache = new DoctrineAdapter($cacheParam);
-        }
-
         // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$cache instanceof ContainerInterface && (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface)) {
+        if (!$translator instanceof TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
             throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
         }
 
-        if ($cache instanceof ContainerInterface && (!$requestStack instanceof TranslatorInterface && !$requestStack instanceof LegacyTranslatorInterface)) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
-        $translatorParam = $cache instanceof ContainerInterface ? $requestStack : $translator;
-        $this->translator = $translatorParam;
-
-        if (!$cache instanceof ContainerInterface) {
-            $this->requestStack = $requestStack;
-            $this->webserviceUrl = $webserviceUrl;
-            $this->cacheTimeframe = $cacheTimeframe;
-            $this->enabled = $enabled;
-            $this->projectDir = $projectDir;
-            $this->websiteTitle = $websiteTitle;
-
-            return;
-        }
-
-        $container = $cache;
-        $this->requestStack = $container->get('request_stack');
-        $this->webserviceUrl = $container->getParameter('version_checker.url');
-        $this->cacheTimeframe = $container->getParameter('version_checker.timeframe');
-        $this->enabled = $container->getParameter('version_checker.enabled');
-        $this->projectDir = $container->getParameter('kernel.project_dir');
-        $this->websiteTitle = $container->getParameter('kunstmaan_admin.website_title');
+        $this->cache = $cache;
+        $this->translator = $translator;
+        $this->requestStack = $requestStack;
+        $this->webserviceUrl = $webserviceUrl;
+        $this->cacheTimeframe = $cacheTimeframe;
+        $this->enabled = $enabled;
+        $this->projectDir = $projectDir;
+        $this->websiteTitle = $websiteTitle;
     }
 
     /**

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="91px" height="83px" viewBox="0 0 91 83" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>onnozelmanneke</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="onnozelmanneke" transform="translate(3.000000, 2.000000)" fill-rule="nonzero">
+            <path d="M32.33,42.61 C32.33,42.61 27,63.29 35.6,77.83 C20.6492715,77.7788408 7.35420951,68.3095981 2.41859637,54.1969576 C-2.51701677,40.0843171 1.97868296,24.393112 13.6388244,15.0353345 C25.2989658,5.67755693 41.5913234,4.68542949 54.3007853,12.5592136 C67.0102472,20.4329977 73.3767077,35.4627486 70.19,50.07 L32.33,42.61 Z" id="Shape" stroke="#181716" stroke-width="5" fill="#2598D5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle id="Oval" stroke="#181716" stroke-width="4" fill="#FFFFFF" cx="20.67" cy="15.17" r="15"></circle>
+            <circle id="Oval" stroke="#181716" stroke-width="4" fill="#FFFFFF" cx="71" cy="25.5" r="15"></circle>
+            <circle id="Oval" fill="#181716" cx="19.17" cy="10.5" r="5.83"></circle>
+            <circle id="Oval" fill="#181716" cx="73.21" cy="29.32" r="5.83"></circle>
+        </g>
+    </g>
+</svg>

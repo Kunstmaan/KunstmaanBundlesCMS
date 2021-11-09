@@ -3,8 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\Event\UserEvent;
-use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -16,6 +14,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +24,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
- *
- * @final since 5.9
  */
-class UsersController extends BaseSettingsController
+final class UsersController extends Controller
 {
     /**
      * List users
@@ -158,9 +155,6 @@ class UsersController extends BaseSettingsController
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
 
-        $userEvent = new UserEvent($user, $request);
-        $this->dispatch($userEvent, UserEvents::USER_EDIT_INITIALIZE);
-
         $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
@@ -218,46 +212,6 @@ class UsersController extends BaseSettingsController
     }
 
     /**
-     * Delete a user
-     *
-     * @param int $id
-     *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete", methods={"POST"})
-     *
-     * @return array
-     *
-     * @throws AccessDeniedException
-     *
-     * @deprecated this method is deprecated since KunstmaanUserManagementBundle 5.6 and will be removed in KunstmaanUserManagementBundle 6.0
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        @trigger_error('Using the deleteAction method from the UsersController is deprecated since KunstmaanUserManagementBundle 5.6 and will be replaced by the method deleteFormAction in KunstmaanUserManagementBundle 6.0. Use the correct method instead.', E_USER_DEPRECATED);
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
-        if (!\is_null($user)) {
-            $userEvent = new UserEvent($user, $request);
-            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
-
-            $em->remove($user);
-            $em->flush();
-
-            $this->addFlash(
-                FlashTypes::SUCCESS,
-                $this->container->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
-                    '%username%' => $user->getUsername(),
-                ])
-            );
-        }
-
-        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
-    }
-
-    /**
      * @Route("/form-delete/{id}", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_form_delete", methods={"POST"})
      */
     public function deleteFormAction(Request $request, $id)
@@ -274,9 +228,7 @@ class UsersController extends BaseSettingsController
         /* @var UserInterface $user */
         $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
-            $userEvent = new UserEvent($user, $request);
             $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());
-            $this->dispatch($userEvent, UserEvents::USER_DELETE_INITIALIZE);
 
             $em->remove($user);
             $em->flush();

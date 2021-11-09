@@ -2,21 +2,10 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\TranslatorBundle\Entity\Translation;
-use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 
-/**
- * Translator
- *
- * NEXT_MAJOR remove the $profilerEnable constructor parameter en remove the profileTranslation method.
- */
 class Translator extends SymfonyTranslator
 {
-    /** @var bool */
-    private $profilerEnabled;
-
     private $translationRepository;
 
     /**
@@ -30,13 +19,6 @@ class Translator extends SymfonyTranslator
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
-
-    public function __construct(ContainerInterface $container, $formatter, $defaultLocale = null, array $loaderIds = [], array $options = [], $profilerEnable = false)
-    {
-        parent::__construct($container, $formatter, $defaultLocale, $loaderIds, $options);
-
-        $this->profilerEnabled = $profilerEnable;
-    }
 
     /**
      * Add resources from the database
@@ -135,39 +117,7 @@ class Translator extends SymfonyTranslator
             $trans = parent::trans($id, $parameters, $domain, $locale);
         }
 
-        $this->profileTranslation($id, $parameters, $domain, $locale, $trans);
-
         return $trans;
-    }
-
-    /**
-     * @deprecated This method is deprecated since KunstmaanTranslatorBundle version 5.1 and will be removed in KunstmaanTranslatorBundle version 6.0
-     */
-    public function profileTranslation($id, $parameters, $domain, $locale, $trans)
-    {
-        if (!$this->request || $this->profilerEnabled === false) {
-            return;
-        }
-
-        if ($locale === null) {
-            $locale = $this->request->get('_locale');
-        }
-
-        $translation = new Translation();
-        $translation->setKeyword($id);
-        $translation->setDomain($domain);
-        $translation->setLocale($locale);
-        $translation->setText($trans);
-
-        $translationCollection = $this->request->request->get('usedTranslations');
-
-        if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
-            $translationCollection = new ArrayCollection();
-        }
-
-        $translationCollection->set($domain . $id . $locale, $translation);
-
-        $this->request->request->set('usedTranslations', $translationCollection);
     }
 
     public function getTranslationRepository()

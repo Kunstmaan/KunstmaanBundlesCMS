@@ -9,10 +9,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since 5.4
- */
-class MenuTwigExtension extends AbstractExtension
+final class MenuTwigExtension extends AbstractExtension
 {
     /**
      * @var RenderService

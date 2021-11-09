@@ -2,8 +2,19 @@
 
 namespace Kunstmaan\VotingBundle\Tests\Services;
 
+use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
+use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
+use Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare;
+use Kunstmaan\VotingBundle\Entity\UpDown\DownVote;
+use Kunstmaan\VotingBundle\Entity\UpDown\UpVote;
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
+use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class RepositoryResolverTest extends TestCase
 {
@@ -25,12 +36,14 @@ class RepositoryResolverTest extends TestCase
 
     public function dataRepositoryEvent()
     {
+        $request = new Request();
+
         return [
-            [$this->createMock('\Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent'), 'Kunstmaan\VotingBundle\Entity\UpDown\DownVote'],
-            [$this->createMock('\Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent'), 'Kunstmaan\VotingBundle\Entity\UpDown\UpVote'],
-            [$this->createMock('\Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent'), 'Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike'],
-            [$this->createMock('\Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent'), 'Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend'],
-            [$this->createMock('\Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent'), 'Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare'],
+            [new DownVoteEvent($request, 'xxx', 1), DownVote::class],
+            [new UpVoteEvent($request, 'xxx', 1), UpVote::class],
+            [new FacebookLikeEvent($request, 'xxx', 1), FacebookLike::class],
+            [new FacebookSendEvent($request, 'xxx', 1), FacebookSend::class],
+            [new LinkedInShareEvent($request, 'xxx', 1), LinkedInShare::class],
         ];
     }
 }

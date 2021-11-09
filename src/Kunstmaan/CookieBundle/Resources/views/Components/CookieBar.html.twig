@@ -1,0 +1,28 @@
+<div id="kmcc-cookie-bar" class="kmcc-cookie-bar{% if cookie is empty %} kmcc-cookie-bar--visible{% endif %}">
+
+    <div class="kmcc-cookie-bar__footer__preferences">
+        {% spaceless %}
+
+            {% set preferences %}
+                <a class="js-kmcc-extended-modal-button" data-url="{{ path('kunstmaancookiebundle_legal_modal', {'internal_name': 'legal_cookie_preferences'}) }}">
+                    {{ 'kuma.cookie.bar.cookie_preferences' | trans }}
+                </a>
+            {% endset %}
+
+            {% set privacy %}
+                <a class="js-kmcc-extended-modal-button" data-target="legal_privacy_policy" data-url="{{ path('kunstmaancookiebundle_legal_modal', {'internal_name': 'legal_privacy_policy'}) }}">
+                    {{ 'kuma.cookie.bar.privacy_policy' | trans }}
+                </a>
+            {% endset %}
+
+            <div class="kmcc-cookie-bar__footer__preferences__first cookie-consent-bar__footer__preferences__first">
+                <p>{{ 'kuma.cookie.bar.footer' | trans({'%preferences%': preferences, '%privacy_policy%': privacy}) | raw }}</p>
+            </div>
+
+            {% include '@KunstmaanCookie/Components/AcceptAllCookiesButton.html.twig' %}
+
+        {% endspaceless %}
+
+    </div>
+
+</div>

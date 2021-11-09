@@ -77,6 +77,7 @@
     "select2": "^4.0.3",
     "sortablejs": "^1.8.1",
     "velocity-animate": "^1.5.2",
-    "x-editable": "^1.5.1"
+    "x-editable": "^1.5.1",
+    "smoothscroll-polyfill": "^0.4.2"
   }
 }

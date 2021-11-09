@@ -15,7 +15,7 @@ class SlugRouterTest extends TestCase
 {
     public function testGenerateMultiLanguage()
     {
-        $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1));
+        $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1), $this->getEntityManager(), 'admin');
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en'], UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/en/some-uri', $url);
 
@@ -25,7 +25,7 @@ class SlugRouterTest extends TestCase
 
     public function testGenerateSingleLanguage()
     {
-        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1));
+        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1), $this->getEntityManager(), 'admin');
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'nl'], UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/some-uri', $url);
 
@@ -36,7 +36,7 @@ class SlugRouterTest extends TestCase
     public function testSetContext()
     {
         $context = $this->createMock(RequestContext::class);
-        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack());
+        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(), $this->getEntityManager(), 'admin');
         $object->setContext($context);
         $this->assertEquals($context, $object->getContext());
     }
@@ -44,7 +44,7 @@ class SlugRouterTest extends TestCase
     public function testMatchWithNodeTranslation()
     {
         $nodeTranslation = new NodeTranslation();
-        $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1), $this->getEntityManager($nodeTranslation));
+        $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1), $this->getEntityManager($nodeTranslation), 'admin');
         $result = $object->match('/en/some-uri');
 
         $this->assertEquals('some-uri', $result['url']);
@@ -56,7 +56,7 @@ class SlugRouterTest extends TestCase
     {
         $this->expectException(ResourceNotFoundException::class);
 
-        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1), $this->getEntityManager());
+        $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1), $this->getEntityManager(), 'admin');
         $object->match('/en/some-uri');
     }
 

@@ -3,7 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
@@ -11,6 +10,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +18,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing groups in an admin list
- *
- * @final since 5.9
  */
-class GroupsController extends BaseSettingsController
+final class GroupsController extends Controller
 {
     /**
      * List groups
@@ -152,15 +150,8 @@ class GroupsController extends BaseSettingsController
 
         /** @var SlugifierInterface $slugifier */
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-        $csrfId = 'delete-' . $slugifier->slugify($configurator->getEntityName());
 
-        $hasToken = $request->request->has('token');
-        // NEXT_MAJOR remove hasToken check and make csrf token required
-        if (!$hasToken) {
-            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanUserManagementBundle 5.10 and will be required in KunstmaanUserManagementBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
-        }
-
-        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));

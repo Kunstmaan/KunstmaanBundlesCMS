@@ -8,65 +8,49 @@ class NodeIterator implements \RecursiveIterator
 {
     private $_data;
 
+    /**
+     * @param Collection<Node> $data
+     */
     public function __construct(Collection $data)
     {
         $this->_data = $data;
     }
 
-    /**
-     * @return bool
-     */
-    #[\ReturnTypeWillChange]
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return !$this->_data->current()->getChildren()->isEmpty();
     }
 
-    /**
-     * @return \RecursiveIterator
-     */
-    #[\ReturnTypeWillChange]
-    public function getChildren()
+    public function getChildren(): \RecursiveIterator
     {
         return new NodeIterator($this->_data->current()->getChildren());
     }
 
     /**
-     * @return Node
+     * @return Node|false
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->_data->current();
     }
 
-    /**
-     * @return void
-     */
-    public function next()
+    public function next(): void
     {
         $this->_data->next();
     }
 
-    /**
-     * @return int
-     */
-    public function key()
+    public function key(): int
     {
         return $this->_data->key();
     }
 
-    /**
-     * @return bool
-     */
-    public function valid()
+    public function valid(): bool
     {
         return $this->_data->current() instanceof Node;
     }
 
-    /**
-     * @return void
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->_data->first();
     }

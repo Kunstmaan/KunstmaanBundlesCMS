@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-/**
- * @final since 5.9
- */
-class Events
+final class Events
 {
     /**
      * The addNode event occurs for a given node, after it's being created.
@@ -155,22 +152,4 @@ class Events
      * @var string
      */
     const SLUG_SECURITY = 'kunstmaan_node.slug.security';
-
-    /**
-     * This event will be triggered before the slugaction is performed
-     *
-     * @deprecated The "Kunstmaan\NodeBundle\Event\Events::PRE_SLUG_ACTION" event/constant is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Implement the "Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface" interface on the page entity and provide a render service instead
-     *
-     * @var string
-     */
-    const PRE_SLUG_ACTION = 'kunstmaan_node.preSlugAction';
-
-    /**
-     * This event will be triggered after the slugaction is performed
-     *
-     * @deprecated The "Kunstmaan\NodeBundle\Event\Events::POST_SLUG_ACTION" event/constant is deprecated since KunstmaanNodeBundle 5.9 and will be removed in KunstmaanNodeBundle 6.0. Implement the "Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface" interface on the page entity and provide a render service instead
-     *
-     * @var string
-     */
-    const POST_SLUG_ACTION = 'kunstmaan_node.postSlugAction';
 }

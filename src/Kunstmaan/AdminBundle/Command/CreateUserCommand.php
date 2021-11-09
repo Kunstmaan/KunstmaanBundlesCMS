@@ -2,13 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\GroupManager as FOSGroupManager;
-use FOS\UserBundle\Model\UserManager as FOSUserManager;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Service\GroupManager;
 use Kunstmaan\AdminBundle\Service\UserManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,18 +16,13 @@ use Symfony\Component\Console\Question\Question;
 
 /**
  * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
- *
- * @final since 5.1
- * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
-class CreateUserCommand extends ContainerAwareCommand
+final class CreateUserCommand extends Command
 {
     protected static $defaultName = 'kuma:user:create';
 
     /** @var array */
     private $groups = [];
-    /** @var EntityManagerInterface */
-    private $em;
     /** @var GroupManager */
     private $groupManager;
     /** @var UserManager */
@@ -38,35 +30,10 @@ class CreateUserCommand extends ContainerAwareCommand
     /** @var string */
     private $defaultLocale;
 
-    public function __construct(/* EntityManagerInterface */ $em = null, /* GroupManager */ $groupManager = null, /* UserManager */ $userManager = null, $defaultLocale = null)
+    public function __construct(GroupManager $groupManager, UserManager $userManager, string $defaultLocale)
     {
         parent::__construct();
 
-        if (!$em instanceof EntityManagerInterface) {
-            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
-
-            $this->setName(null === $em ? 'kuma:user:create' : $em);
-
-            return;
-        }
-
-        if (!$groupManager instanceof GroupManager && !$groupManager instanceof FOSGroupManager) {
-            throw new \InvalidArgumentException(sprintf('The "$groupManager" argument must be of type "%s" or type "%s"', GroupManager::class, FOSGroupManager::class));
-        }
-        if ($groupManager instanceof FOSGroupManager) {
-            // NEXT_MAJOR set the groupmanager typehint to the kunstmaan groupmanager.
-            @trigger_error(sprintf('Passing the groupmanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, GroupManager::class), E_USER_DEPRECATED);
-        }
-
-        if (!$userManager instanceof UserManager && !$userManager instanceof FOSUserManager) {
-            throw new \InvalidArgumentException(sprintf('The "$userManager" argument must be of type "%s" or type "%s"', UserManager::class, FOSUserManager::class));
-        }
-        if ($userManager instanceof FOSUserManager) {
-            // NEXT_MAJOR set the usermanager typehint to the kunstmaan usermanager.
-            @trigger_error(sprintf('Passing the usermanager from FOSUserBundle as the first argument of "%s" is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Use the "%s" class instead.', __METHOD__, UserManager::class), E_USER_DEPRECATED);
-        }
-
-        $this->em = $em;
         $this->groupManager = $groupManager;
         $this->userManager = $userManager;
         $this->defaultLocale = $defaultLocale;
@@ -121,13 +88,6 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null === $this->em) {
-            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-            $this->groupManager = $this->getContainer()->get('kunstmaan_admin.group_manager');
-            $this->userManager = $this->getContainer()->get('kunstmaan_admin.user_manager');
-            $this->defaultLocale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
-        }
-
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');

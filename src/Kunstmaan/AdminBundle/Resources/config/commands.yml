@@ -1,6 +1,6 @@
 services:
     Kunstmaan\AdminBundle\Command\CreateUserCommand:
-        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.group_manager', '@kunstmaan_admin.user_manager', '%kunstmaan_admin.default_admin_locale%']
+        arguments: ['@kunstmaan_admin.group_manager', '@kunstmaan_admin.user_manager', '%kunstmaan_admin.default_admin_locale%']
         tags:
             - { name: console.command }
 

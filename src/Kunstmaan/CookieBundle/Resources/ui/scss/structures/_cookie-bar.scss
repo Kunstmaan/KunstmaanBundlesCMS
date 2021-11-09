@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Structures - Cookiebar
+   ========================================================================== */
+
+.kmcc-cookie-bar {
+    position: fixed;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: $kmcc_z-cookie-bar;
+
+    display: none;
+    padding: 24px;
+    height: auto;
+    overflow: auto;
+
+    background: $kmcc_grey;
+
+    pointer-events: none;
+
+    font-size: 16px;
+
+    h2 {
+        margin: 0 0 30px;
+
+        font-size: 33px;
+        color: $kmcc_headings;
+    }
+
+    .kmcc-collapsible-content__title__icon {
+        margin-left: 10px;
+    }
+
+    @media (min-width: $kmcc_screen-md) {
+        max-width: 488px;
+        height: auto;
+
+        border-bottom: none;
+
+        cursor: default;
+    }
+}
+
+.kmcc-cookie-bar--visible {
+    display: block;
+
+    pointer-events: all;
+}
+
+.kmcc-cookie-bar__footer {
+    margin-top: 5px;
+}
+
+.kmcc-cookie-bar__footer__preferences {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    text-align: center;
+
+    @media (min-width: $kmcc_screen-xs) {
+        margin-top: 0;
+
+        text-align: left;
+    }
+
+    @media (min-width: $kmcc_screen-sm) {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    &__first {
+        margin-bottom: 24px;
+
+        font-size: 14px;
+        line-height: 2;
+
+        p {
+            margin: 0;
+
+            font-size: 14px;
+
+            a {
+                font-size: 14px;
+            }
+        }
+
+        &--mobile {
+            margin-top: 10px;
+
+            font-size: 16px;
+        }
+    }
+
+    &__second {
+        display: flex;
+        width: 100%;
+        margin-top: 20px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 16px;
+
+        @media (min-width: $kmcc_screen-xs) {
+            margin-top: 0;
+        }
+
+        @media (min-width: $kmcc_screen-sm) {
+            width: auto;
+
+            align-items: flex-end;
+        }
+    }
+
+    a {
+        line-height: 1.2;
+    }
+}

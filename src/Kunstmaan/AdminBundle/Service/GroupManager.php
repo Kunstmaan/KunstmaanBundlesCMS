@@ -17,10 +17,6 @@ class GroupManager
 
     public function __construct(EntityManagerInterface $em, string $class)
     {
-        if (false !== strpos($this->class, ':')) {
-            @trigger_error(sprintf('Passing a string with the doctrine colon entity notation as "$class" in "%s"is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0. Pass a FQCN for the group class instead.', __CLASS__), E_USER_DEPRECATED);
-        }
-
         $this->em = $em;
         $this->repository = $em->getRepository($class);
         $this->class = $class;
@@ -49,13 +45,6 @@ class GroupManager
 
     public function getClass(): string
     {
-        //NEXT_MAJOR: remove support for xx:xx group class notation.
-        if (false !== strpos($this->class, ':')) {
-            $metadata = $this->em->getClassMetadata($this->class);
-
-            return $metadata->getName();
-        }
-
         return $this->class;
     }
 

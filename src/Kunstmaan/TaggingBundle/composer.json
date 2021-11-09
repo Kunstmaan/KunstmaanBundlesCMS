@@ -16,7 +16,7 @@
         "php": "^7.2|^8.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
         "kunstmaan/admin-bundle": "^5.9|^6.0",
-        "kunstmaan/adminlist-bundle": "^5.9",
+        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0"
     },
@@ -32,7 +32,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "5.10-dev"
+            "dev-6.0": "6.0-dev"
         }
     }
 }

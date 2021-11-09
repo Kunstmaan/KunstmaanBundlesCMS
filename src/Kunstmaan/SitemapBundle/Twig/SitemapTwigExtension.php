@@ -6,10 +6,7 @@ use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-/**
- * @final since 5.4
- */
-class SitemapTwigExtension extends AbstractExtension
+final class SitemapTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.

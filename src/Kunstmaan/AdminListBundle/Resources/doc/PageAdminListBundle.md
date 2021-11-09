@@ -78,14 +78,14 @@ namespace YourProject\WebsiteBundle\Controller;
 
 use YourProject\WebsiteBundle\AdminList\ProjectPageAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The admin list controller for ProjectPage
  */
-class ProjectPageAdminListController extends AdminListController
+class ProjectPageAdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface

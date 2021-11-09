@@ -5,9 +5,6 @@ namespace Kunstmaan\NodeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -121,15 +118,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     public function getDefaultAdminType()
     {
         return PageAdminType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Using the service method is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Implement SlugActionInterface and use the getControllerAction method to provide custom logic instead.
-     */
-    public function service(ContainerInterface $container, Request $request, RenderContext $context)
-    {
     }
 
     /**

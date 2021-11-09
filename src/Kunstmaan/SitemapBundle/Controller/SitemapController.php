@@ -10,10 +10,7 @@ use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class SitemapController extends Controller
+final class SitemapController extends Controller
 {
     /**
      * This will generate a sitemap for the specified locale.

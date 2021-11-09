@@ -6,7 +6,6 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -37,7 +36,7 @@ class PasswordCheckListener
     private $router;
 
     /**
-     * @var Session|RequestStack
+     * @var RequestStack
      */
     private $requestStack;
 
@@ -54,19 +53,11 @@ class PasswordCheckListener
     /**
      * @param TranslatorInterface|LegacyTranslatorInterface $translator
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, /* RequestStack */ $requestStack, /* TranslatorInterface|LegacyTranslatorInterface */ $translator, AdminRouteHelper $adminRouteHelper)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, RequestStack $requestStack, /* TranslatorInterface|LegacyTranslatorInterface */ $translator, AdminRouteHelper $adminRouteHelper)
     {
         // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
         if (!$translator instanceof \Symfony\Contracts\Translation\TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
             throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', \Symfony\Contracts\Translation\TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
-        if (!$requestStack instanceof SessionInterface && !$requestStack instanceof RequestStack) {
-            throw new \InvalidArgumentException(sprintf('The fourth argument of "%s" should be instance of "%s" or "%s"', __METHOD__, SessionInterface::class, RequestStack::class));
-        }
-
-        if ($requestStack instanceof SessionInterface) {
-            @trigger_error(sprintf('Passing a service instance of "%s" for the first argument in "%s" is deprecated since KunstmaanAdminBundle 5.10 and an instance of "%s" will be required in KunstmaanAdminBundle 6.0.', SessionInterface::class, __METHOD__, RequestStack::class), E_USER_DEPRECATED);
         }
 
         $this->authorizationChecker = $authorizationChecker;
@@ -92,7 +83,7 @@ class PasswordCheckListener
         }
 
         $route = $event->getRequest()->get('_route');
-        if (null === $route || in_array($route, ['kunstmaan_admin_forced_change_password', 'fos_user_change_password'], true)) {
+        if (null === $route || $route === 'kunstmaan_admin_forced_change_password') {
             return;
         }
 
@@ -120,10 +111,6 @@ class PasswordCheckListener
 
     private function getSession(): SessionInterface
     {
-        if ($this->requestStack instanceof SessionInterface) {
-            return $this->requestStack;
-        }
-
         return $this->requestStack->getCurrentRequest()->getSession();
     }
 }

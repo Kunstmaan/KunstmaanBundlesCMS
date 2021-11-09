@@ -6,11 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
+use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
+use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,17 +23,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @final since 5.9
- */
-class TranslatorController extends AdminListController
+final class TranslatorController extends AbstractAdminListController
 {
-    /**
-     * @var AbstractAdminListConfigurator
-     */
+    /** @var AbstractAdminListConfigurator */
     private $adminListConfigurator;
+    /** @var CacheValidator */
+    private $cacheValidator;
+    /** @var Importer */
+    private $importerService;
+    /** @var SlugifierInterface */
+    private $slugifier;
+
+    public function __construct(CacheValidator $cacheValidator, Importer $importerService, SlugifierInterface $slugifier)
+    {
+        $this->cacheValidator = $cacheValidator;
+        $this->importerService = $importerService;
+        $this->slugifier = $slugifier;
+    }
 
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
@@ -47,8 +56,8 @@ class TranslatorController extends AdminListController
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
-        $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-        $debugMode = $this->container->getParameter('kuma_translator.debug') === true;
+        $cacheFresh = $this->cacheValidator->isCacheFresh();
+        $debugMode = $this->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
             $this->addFlash(
@@ -83,7 +92,7 @@ class TranslatorController extends AdminListController
         $translator = $this->container->get('translator');
 
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $managedLocales = $this->container->getParameter('kuma_translator.managed_locales');
+        $managedLocales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($managedLocales as $managedLocale) {
             $translation->addText($managedLocale, '');
         }
@@ -150,7 +159,7 @@ class TranslatorController extends AdminListController
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
         $translation->setDomain($translations[0]->getDomain());
         $translation->setKeyword($translations[0]->getKeyword());
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $found = false;
             foreach ($translations as $t) {
@@ -214,7 +223,7 @@ class TranslatorController extends AdminListController
                 $data = $form->getData();
                 $file = $data['file'];
                 $force = $data['force'];
-                $imported = $this->container->get('kunstmaan_translator.service.importer.importer')->importFromSpreadsheet($file, $locales, $force);
+                $imported = $this->importerService->importFromSpreadsheet($file, $locales, $force);
                 $this->addFlash(FlashTypes::SUCCESS, sprintf('Translation imported: %d', $imported));
             }
         }
@@ -274,27 +283,12 @@ class TranslatorController extends AdminListController
      *
      * @throws NotFoundHttpException
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete", methods={"GET", "POST"})
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete", methods={"POST"})
      */
     public function deleteAction(Request $request, $id)
     {
-        // NEXT_MAJOR: remove check and change methods property in route annotation
-        if ($request->isMethod(Request::METHOD_GET)) {
-            @trigger_error(sprintf('Calling the action "%s" with a GET request is deprecated since KunstmaanTranslatorBundle 5.10 and will only allow a POST request in KunstmaanTranslatorBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
-        }
-
-        /** @var SlugifierInterface $slugifier */
-        $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-        $csrfId = 'delete-' . $slugifier->slugify($this->getAdminListConfigurator()->getEntityName());
-
-        $hasToken = $request->request->has('token');
-        // NEXT_MAJOR remove hasToken check and make csrf token required
-        if (!$hasToken) {
-            @trigger_error(sprintf('Not passing as csrf token with id "%s" in field "token" is deprecated in KunstmaanTranslatorBundle 5.10 and will be required in KunstmaanTranslatorBundle 6.0. If you override the adminlist delete action template make sure to post a csrf token.', $csrfId), E_USER_DEPRECATED);
-        }
-
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
-        if ($hasToken && !$this->isCsrfTokenValid($csrfId, $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($this->getAdminListConfigurator()->getEntityName()), $request->request->get('token'))) {
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
         }
 
@@ -321,7 +315,7 @@ class TranslatorController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
 
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getConnection(), $locales);
@@ -346,9 +340,6 @@ class TranslatorController extends AdminListController
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
-        /**
-         * @var TranslatorInterface
-         */
         $translator = $this->container->get('translator');
 
         try {

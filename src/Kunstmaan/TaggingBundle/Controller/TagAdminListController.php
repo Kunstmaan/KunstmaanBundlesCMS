@@ -3,17 +3,14 @@
 namespace Kunstmaan\TaggingBundle\Controller;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
 use Kunstmaan\TaggingBundle\Entity\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @final since 5.9
- */
-class TagAdminListController extends AdminListController
+final class TagAdminListController extends AbstractAdminListController
 {
     /**
      * @var AdminListConfiguratorInterface

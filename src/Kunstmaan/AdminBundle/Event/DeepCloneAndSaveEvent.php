@@ -4,10 +4,8 @@ namespace Kunstmaan\AdminBundle\Event;
 
 /**
  * This event wil be used to pass metadata when the deep clone event is triggered.
- *
- * @final since 5.9
  */
-class DeepCloneAndSaveEvent extends BcEvent
+final class DeepCloneAndSaveEvent extends BcEvent
 {
     /**
      * @var mixed

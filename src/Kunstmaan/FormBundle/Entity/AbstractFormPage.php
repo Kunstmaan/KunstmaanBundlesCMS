@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
 use Kunstmaan\FormBundle\ViewDataProvider\FormPageViewDataProvider;
-use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -21,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Furthermore it's possible to configure an administrative email to be send when a form is submitted with in it an
  * overview of all the submitted fields.
  */
-abstract class AbstractFormPage extends AbstractPage implements FormPageInterface, HasPagePartsInterface, SlugActionInterface, CustomViewDataProviderInterface
+abstract class AbstractFormPage extends AbstractPage implements FormPageInterface, HasPagePartsInterface, CustomViewDataProviderInterface
 {
     /**
      * The thank you text to be shown when the form was successfully submitted
@@ -185,16 +184,6 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     public function getFormElementsContext()
     {
         return 'main';
-    }
-
-    /**
-     * @deprecated since KunstmaanFormBundle 5.9 and will be removed in KunstmaanFormBundle 6.0. Use the `Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface` and a custom page render service instead.
-     *
-     * @return string
-     */
-    public function getControllerAction()
-    {
-        return 'KunstmaanFormBundle:AbstractFormPage:service';
     }
 
     public function getViewDataProviderServiceId(): string

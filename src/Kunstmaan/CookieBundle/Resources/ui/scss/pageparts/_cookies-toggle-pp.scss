@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Pageparts - Legal cookies pagepart
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.kmcc-cookies-toggle-pp {
+    counter-reset: cookie;
+}
+
+.kmcc-cookies-toggle-pp__name {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-weight: 500;
+    font-size: 24px;
+
+    &:before {
+        counter-increment: cookie;
+
+        content: counter(cookie) ".";
+    }
+}
+
+.kmcc-cookies-toggle-pp__toggle-container {
+    display: flex;
+
+    padding: 10px 20px 10px 10px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid $kmcc_grey--dark;
+
+    border-radius: 25px;
+}
+
+.kmcc-cookies-toggle-pp__link {
+    text-decoration: none;
+}
+
+.kmcc-cookies-toggle-pp__link__desktop {
+    display: none;
+
+    @media (min-width: $kmcc_screen-xs) {
+        display: block;
+    }
+}
+
+.kmcc-cookies-toggle-pp__link__mobile {
+    display: block;
+
+    @media (min-width: $kmcc_screen-xs) {
+        display: none;
+    }
+}

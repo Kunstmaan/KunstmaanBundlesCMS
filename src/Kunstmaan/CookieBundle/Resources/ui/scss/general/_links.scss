@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Genera
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+a {
+    .kmcc-container & {
+
+        color: $kmcc_primary-color;
+
+        text-decoration: none;
+
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+
+            color: $kmcc_primary-color;
+        }
+    }
+}

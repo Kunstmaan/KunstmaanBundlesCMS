@@ -136,30 +136,6 @@ class NodeIndexUpdateEventListenerTest extends TestCase
         $listener->onPostPersist($nodeEvent);
     }
 
-    /**
-     * @group legacy
-     * @expectedDeprecation Passing the container as the first argument of "Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener" is deprecated in KunstmaanNodeSearchBundle 5.2 and will be removed in KunstmaanNodeSearchBundle 6.0. Inject the "kunstmaan_node_search.search_configuration.node" service instead.
-     */
-    public function testContainerDeprecation()
-    {
-        $em = $this->createMock(EntityManager::class);
-        new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)), $em);
-    }
-
-    private function getContainer($searchConfigMock)
-    {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-
-        $container
-            ->expects($this->any())
-            ->method('get')
-            ->with($this->equalTo('kunstmaan_node_search.search_configuration.node'))
-            ->willReturn($searchConfigMock)
-        ;
-
-        return $container;
-    }
-
     private function getSearchConfiguration($expectCall)
     {
         $searchConfig = $this->createMock(NodePagesConfiguration::class);

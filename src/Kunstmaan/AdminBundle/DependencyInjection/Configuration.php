@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {
@@ -31,20 +30,14 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('menu_item')
             ->children()
                 ->scalarNode('website_title')->defaultNull()->end()
-                ->scalarNode('multi_language') //NEXT_MAJOR: change type to booleanNode and make required or provide default value
-                    ->defaultNull()
-                    ->beforeNormalization()->ifString()->then(function ($v) {
-                        // Workaroud to allow detecting if value is not provided. Can be removed when type is switched to booleanNode
-                        return (bool) $v;
-                    })->end()
-                ->end()
-                ->scalarNode('required_locales')->defaultNull()->end() //NEXT_MAJOR: make config required
-                ->scalarNode('default_locale')->defaultNull()->end() //NEXT_MAJOR: make config required
+                ->booleanNode('multi_language')->isRequired()->defaultFalse()->end()
+                ->scalarNode('required_locales')->isRequired()->end()
+                ->scalarNode('default_locale')->isRequired()->end()
                 ->scalarNode('admin_password')->end()
                 ->arrayNode('authentication')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('enable_new_authentication')->defaultFalse()->end()
+                        ->booleanNode('enable_new_authentication')->defaultTrue()->end()
                         ->scalarNode('user_class')->defaultValue(User::class)->end()
                         ->scalarNode('group_class')->defaultValue(Group::class)->end()
                         ->arrayNode('mailer')
@@ -70,11 +63,6 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('user_agent_check')->defaultFalse()->end()
                     ->end()
                 ->end()
-                ->arrayNode('admin_exception_excludes')
-                    ->setDeprecated('The "%node%" option is deprecated. Use "kunstmaan_admin.exception_logging.exclude_patterns" instead.')
-                    ->requiresAtLeastOneElement()
-                    ->prototype('scalar')->end()
-                ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
                 ->booleanNode('enable_console_exception_listener')->defaultTrue()->end()
                 ->booleanNode('enable_toolbar_helper')->defaultValue('%kernel.debug%')->end()
@@ -90,10 +78,6 @@ class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                         ->end()
                     ->end()
-                ->end()
-                ->arrayNode('provider_keys')
-                    ->prototype('array')->end()
-                    ->setDeprecated('The "%provider_keys%" is deprecated. Use "toolbar_firewall_names" instead')
                 ->end()
                 ->arrayNode('toolbar_firewall_names')
                     ->defaultValue(['main'])
@@ -112,40 +96,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('role')->defaultNull()->end()
                             ->arrayNode('params')->defaultValue([])->prototype('scalar')->end()->end()
                             ->scalarNode('parent')->defaultValue('KunstmaanAdminBundle_modules')->end()
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('google_signin')
-                    ->setDeprecated('The "kunstmaan_admin.%node%" option is deprecated. The google oauth authenication will be removed in KusntmaanAdminBundle 6.0.')
-                    ->addDefaultsIfNotSet()
-                    ->canBeEnabled()
-                    ->beforeNormalization()
-                        ->always()
-                        ->then(function ($v) {
-                            if ($v === true || (isset($v['enabled']) && $v['enabled'])) {
-                                if (empty($v['client_id']) || empty($v['client_secret'])) {
-                                    throw new InvalidConfigurationException('The "client_id" and "client_secret" settings are required under the "google_signin" group.');
-                                }
-                            } else {
-                                unset($v['client_id'], $v['client_secret'], $v['hosted_domains']);
-                            }
-
-                            return $v;
-                        })
-                    ->end()
-                    ->children()
-                        ->scalarNode('client_id')->defaultNull()->end()
-                        ->scalarNode('client_secret')->defaultNull()->end()
-                        ->arrayNode('hosted_domains')
-                            ->prototype('array')
-                                ->children()
-                                    ->scalarNode('domain_name')->isRequired()->end()
-                                    ->arrayNode('access_levels')
-                                        ->isRequired()
-                                        ->prototype('scalar')->end()
-                                    ->end()
-                                ->end()
-                            ->end()
                         ->end()
                     ->end()
                 ->end()

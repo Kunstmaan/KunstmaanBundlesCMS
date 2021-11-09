@@ -5,15 +5,8 @@ namespace Kunstmaan\ArticleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
-class AbstractAuthor extends AbstractEntity
+abstract class AbstractAuthor extends AbstractEntity
 {
-    public function __construct()
-    {
-        if (\get_class($this) === AbstractAuthor::class) {
-            @trigger_error(sprintf('Instantiating the "%s" class is deprecated in KunstmaanArticleBundle 5.1 and will be made abstract in KunstmaanArticleBundle 6.0. Extend your implementation from this class instead.', __CLASS__), E_USER_DEPRECATED);
-        }
-    }
-
     /**
      * @var string
      *
