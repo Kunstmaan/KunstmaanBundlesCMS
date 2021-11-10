@@ -10,37 +10,37 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 /**
  * NodeMenuItem
  */
-class NodeMenuItem
+class NodeMenuItem implements NodeMenuItemInterface
 {
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Node
      */
-    private $node;
+    protected $node;
 
     /**
      * @var NodeTranslation
      */
-    private $nodeTranslation;
+    protected $nodeTranslation;
 
     /**
      * @var NodeMenuItem[]
      */
-    private $children;
+    protected $children;
 
     /**
      * @var NodeMenuItem
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @var NodeMenu
      */
-    private $menu;
+    protected $menu;
 
     /**
      * @param Node                    $node            The node
