@@ -49,9 +49,9 @@ final class ChooserController extends AbstractController
         $session = $request->getSession();
         $folderId = false;
 
-        $type = $request->get('type', self::TYPE_ALL);
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser = $request->get('linkChooser');
+        $type = $request->query->get('type', self::TYPE_ALL);
+        $cKEditorFuncNum = $request->query->get('CKEditorFuncNum');
+        $linkChooser = $request->query->get('linkChooser');
 
         // Go to the last visited folder
         if ($session->get('last-media-folder')) {
@@ -92,9 +92,9 @@ final class ChooserController extends AbstractController
     {
         $session = $request->getSession();
 
-        $type = $request->get('type');
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser = $request->get('linkChooser');
+        $type = $request->query->get('type');
+        $cKEditorFuncNum = $request->query->get('CKEditorFuncNum');
+        $linkChooser = $request->query->get('linkChooser');
 
         // Remember the last visited folder in the session
         $session->set('last-media-folder', $folderId);

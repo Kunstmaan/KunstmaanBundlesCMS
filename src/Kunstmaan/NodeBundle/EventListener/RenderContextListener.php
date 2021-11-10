@@ -40,8 +40,8 @@ class RenderContextListener
             $nodeMenu = $request->attributes->get('_nodeMenu');
             $parameters = $request->attributes->get('_renderContext');
 
-            if ($request->get('preview') === true) {
-                $version = $request->get('version');
+            if ($request->attributes->get('preview') === true) {
+                $version = $request->query->get('version');
                 if (!empty($version) && is_numeric($version)) {
                     $nodeVersion = $this->em->getRepository(NodeVersion::class)->find($version);
                     if (!\is_null($nodeVersion)) {

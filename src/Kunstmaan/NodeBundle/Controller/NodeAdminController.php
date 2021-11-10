@@ -186,7 +186,7 @@ final class NodeAdminController extends AbstractController
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
-        $originalLanguage = $request->get('originallanguage');
+        $originalLanguage = $request->query->get('originallanguage');
         $otherLanguageNodeTranslation = $node->getNodeTranslation($originalLanguage, true);
         $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
         $otherLanguagePage = $otherLanguageNodeNodeVersion->getRef($this->em);
@@ -241,7 +241,7 @@ final class NodeAdminController extends AbstractController
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
-        $otherLanguageNodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($request->get('source'));
+        $otherLanguageNodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($request->request->get('source'));
         $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
         $otherLanguagePage = $otherLanguageNodeNodeVersion->getRef($this->em);
         $myLanguagePage = $this->container->get('kunstmaan_admin.clone.helper')
@@ -493,7 +493,7 @@ final class NodeAdminController extends AbstractController
             ->deepCloneAndSave($originalRef);
 
         //set the title
-        $title = $request->get('title');
+        $title = $request->request->get('title');
         if (\is_string($title) && !empty($title)) {
             $newPage->setTitle($title);
         } else {
@@ -554,7 +554,7 @@ final class NodeAdminController extends AbstractController
         }
 
         $this->init($request);
-        $title = $request->get('title', null);
+        $title = $request->request->get('title');
 
         $nodeNewPage = $this->pageCloningHelper->duplicateWithChildren($id, $this->locale, $this->user, $title);
 
@@ -587,7 +587,7 @@ final class NodeAdminController extends AbstractController
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
-        $version = $request->get('version');
+        $version = $request->query->get('version');
 
         if (empty($version) || !is_numeric($version)) {
             throw new InvalidArgumentException('No version was specified');
@@ -777,8 +777,8 @@ final class NodeAdminController extends AbstractController
     {
         $this->init($request);
         $nodes = [];
-        $nodeIds = $request->get('nodes');
-        $changeParents = $request->get('parent');
+        $nodeIds = $request->request->get('nodes');
+        $changeParents = $request->request->get('parent');
 
         foreach ($nodeIds as $id) {
             /* @var Node $node */
@@ -873,7 +873,7 @@ final class NodeAdminController extends AbstractController
         /* @var HasNodeInterface $page */
         $page = null;
         $draft = ($subaction == 'draft');
-        $saveAsDraft = $request->get('saveasdraft');
+        $saveAsDraft = $request->request->get('saveasdraft');
         if ((!$draft && !empty($saveAsDraft)) || ($draft && \is_null($draftNodeVersion))) {
             // Create a new draft version
             $draft = true;
@@ -1233,7 +1233,7 @@ final class NodeAdminController extends AbstractController
         /* @var HasNodeInterface $newPage */
         $newPage = new $type();
 
-        $title = $request->get('title');
+        $title = $request->request->get('title');
         if (\is_string($title) && !empty($title)) {
             $newPage->setTitle($title);
         } else {
@@ -1253,7 +1253,7 @@ final class NodeAdminController extends AbstractController
      */
     private function validatePageType($request)
     {
-        $type = $request->get('type');
+        $type = $request->request->get('type');
 
         if (empty($type)) {
             throw new InvalidArgumentException('Please specify a type of page you want to create');

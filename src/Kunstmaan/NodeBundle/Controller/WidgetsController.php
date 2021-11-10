@@ -101,7 +101,7 @@ final class WidgetsController extends AbstractController
 
         if (\array_key_exists('KunstmaanMediaBundle', $allBundles)) {
             $params = ['linkChooser' => 1];
-            $cKEditorFuncNum = $request->get('CKEditorFuncNum');
+            $cKEditorFuncNum = $request->query->get('CKEditorFuncNum');
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
             }

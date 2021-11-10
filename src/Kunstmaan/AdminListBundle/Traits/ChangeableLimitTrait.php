@@ -19,7 +19,7 @@ trait ChangeableLimitTrait
         $query = $request->query;
         $session = $request->getSession();
 
-        $adminListName = 'listconfig_' . $request->get('_route');
+        $adminListName = 'listconfig_' . $request->attributes->get('_route');
 
         $this->page = $request->query->getInt('page', 1);
         $this->limit = $request->query->getInt('limit', $this->getLimitOptions()[0]);

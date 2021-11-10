@@ -40,7 +40,7 @@ final class ArticlePageViewDataProvider implements PageViewDataProviderInterface
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage(5);
 
-        $pagenumber = $request->get('page');
+        $pagenumber = $request->query->get('page');
         if (!$pagenumber || $pagenumber < 1) {
             $pagenumber = 1;
         }

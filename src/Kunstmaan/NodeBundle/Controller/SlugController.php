@@ -144,7 +144,7 @@ final class SlugController extends AbstractController
         /* @var HasNodeInterface $entity */
         $entity = null;
         if ($preview) {
-            $version = $request->get('version');
+            $version = $request->query->get('version');
             if (!empty($version) && is_numeric($version)) {
                 $nodeVersion = $em->getRepository(NodeVersion::class)->find($version);
                 if (!\is_null($nodeVersion)) {

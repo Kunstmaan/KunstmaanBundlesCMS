@@ -42,10 +42,10 @@ final class PagePartAdminController extends AbstractController
      */
     public function newPagePartAction(Request $request)
     {
-        $pageId = $request->get('pageid');
-        $pageClassName = $request->get('pageclassname');
-        $context = $request->get('context');
-        $pagePartClass = $request->get('type');
+        $pageId = $request->query->get('pageid');
+        $pageClassName = $request->query->get('pageclassname');
+        $context = $request->query->get('context');
+        $pagePartClass = $request->query->get('type');
 
         /** @var HasPagePartsInterface $page */
         $page = $this->em->getRepository($pageClassName)->find($pageId);

@@ -203,7 +203,7 @@ final class FolderController extends AbstractController
                     $redirect = 'KunstmaanMediaBundle_folder_show';
                 }
 
-                $type = $request->get('type');
+                $type = $request->query->get('type');
 
                 return new RedirectResponse(
                     $this->generateUrl($redirect,
@@ -290,7 +290,7 @@ final class FolderController extends AbstractController
     public function reorderAction(Request $request)
     {
         $folders = [];
-        $nodeIds = $request->get('nodes');
+        $nodeIds = $request->request->get('nodes');
 
         $repository = $this->em->getRepository(Folder::class);
 

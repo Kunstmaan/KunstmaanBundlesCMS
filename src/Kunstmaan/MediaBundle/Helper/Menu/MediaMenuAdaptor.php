@@ -33,7 +33,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
         if (\is_null($parent)) {
             // Add menu item for root gallery
             $rootFolders = $this->repo->getRootNodes();
-            $currentId = $request->get('folderId');
+            $currentId = $request->attributes->get('folderId');
             $currentFolder = null;
             if (isset($currentId)) {
                 /* @var Folder $currentFolder */

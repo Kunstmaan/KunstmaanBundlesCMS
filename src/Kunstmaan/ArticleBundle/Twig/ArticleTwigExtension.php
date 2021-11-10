@@ -67,7 +67,7 @@ final class ArticleTwigExtension extends AbstractExtension
         $tagRepository = $this->em->getRepository($className);
         $context['tags'] = $tagRepository->findBy([], ['name' => 'ASC']);
 
-        $searchTag = $request->get('tag') ? explode(',', $request->get('tag')) : null;
+        $searchTag = $request->query->get('tag') ? explode(',', $request->query->get('tag')) : null;
         if ($searchTag) {
             $context['activeTag'] = true;
             $context['activeTags'] = $searchTag;
@@ -90,7 +90,7 @@ final class ArticleTwigExtension extends AbstractExtension
         $categoryRepository = $this->em->getRepository($className);
         $context['categories'] = $categoryRepository->findBy([], ['name' => 'ASC']);
 
-        $searchCategory = $request->get('category') ? explode(',', $request->get('category')) : null;
+        $searchCategory = $request->query->get('category') ? explode(',', $request->query->get('category')) : null;
         if ($searchCategory) {
             $context['activeCategory'] = true;
             $context['activeCategories'] = $searchCategory;

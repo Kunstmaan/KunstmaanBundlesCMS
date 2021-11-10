@@ -45,8 +45,8 @@ $request = $this->requestStack->getMasterRequest();
             return;
         }
 
-        $searchCategory = $request->get('category') ? explode(',', $request->get('category')) : null;
-        $searchTag = $request->get('tag') ? explode(',', $request->get('tag')) : null;
+        $searchCategory = $request->query->get('category') ? explode(',', $request->query->get('category')) : null;
+        $searchTag = $request->query->get('tag') ? explode(',', $request->query->get('tag')) : null;
 
         $pageRepository = $this->em->getRepository({% if isV4 %}{{ entity_class }}Page::class{%else%}'{{ bundle.getName() }}:Pages\{{ entity_class }}Page'{%endif%});
         $result = $pageRepository->getArticles($request->getLocale(), null, null, $searchCategory, $searchTag);
