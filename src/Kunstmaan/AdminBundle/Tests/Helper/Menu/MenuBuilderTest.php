@@ -18,7 +18,7 @@ class MenuBuilderTest extends TestCase
     {
         $menuBuilderMock = $this->getMockBuilder(MenuBuilder::class)
             ->setConstructorArgs([$this->createMock(RequestStack::class)])
-            ->setMethods($methods)
+            ->onlyMethods($methods ?? [])
             ->getMock()
         ;
 

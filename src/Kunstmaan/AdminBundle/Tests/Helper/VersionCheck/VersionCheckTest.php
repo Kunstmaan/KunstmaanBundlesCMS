@@ -43,7 +43,7 @@ class VersionCheckTest extends TestCase
     {
         $versionCheckerMock = $this->getMockBuilder(VersionChecker::class)
             ->setConstructorArgs([$this->cache, $this->translator, $this->requestStack, 'url', 300, true, $projectDir ?? 'project_dir', 'website_title'])
-            ->setMethods($methods)
+            ->onlyMethods($methods ?? [])
             ->getMock()
         ;
 

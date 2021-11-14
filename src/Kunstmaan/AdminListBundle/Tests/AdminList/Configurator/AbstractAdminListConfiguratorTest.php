@@ -400,7 +400,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->setConstructorArgs([['page' => 1], [], ['_route' => 'testroute']])
-            ->setMethods(['getSession'])
+            ->onlyMethods(['getSession'])
             ->getMock()
         ;
         $sessionMock = $this->createMock(Session::class);
@@ -432,7 +432,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->setConstructorArgs([[], [], ['_route' => 'testroute']])
-            ->setMethods(['getSession'])
+            ->onlyMethods(['getSession'])
             ->getMock()
         ;
         $sessionMock = $this->createMock(Session::class);
