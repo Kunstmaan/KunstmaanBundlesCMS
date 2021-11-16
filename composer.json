@@ -79,7 +79,7 @@
     "require-dev": {
         "symfony/debug": "^3.4.21|^4.4",
         "fakerphp/faker": "^1.15",
-        "ekino/newrelic-bundle": "^1.4",
+        "ekino/newrelic-bundle": "^2.3",
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "symfony/phpunit-bridge": "^5.2",
