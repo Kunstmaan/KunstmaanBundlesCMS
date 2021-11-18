@@ -273,9 +273,9 @@ class NodeAdminPublisher
         /** @var Session $session */
         $session = $request->getSession();
 
-        if ($request->request->has('publish_later') && $request->get('pub_date')) {
+        if ($request->request->has('publish_later') && $request->request->get('pub_date')) {
             $date = new \DateTime(
-                $request->get('pub_date') . ' ' . $request->get('pub_time')
+                $request->request->get('pub_date') . ' ' . $request->request->get('pub_time')
             );
             $this->publishLater($nodeTranslation, $date);
             $session->getFlashBag()->add(
@@ -298,8 +298,8 @@ class NodeAdminPublisher
         /** @var Session $session */
         $session = $request->getSession();
 
-        if ($request->request->has('unpublish_later') && $request->get('unpub_date')) {
-            $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
+        if ($request->request->has('unpublish_later') && $request->request->get('unpub_date')) {
+            $date = new \DateTime($request->request->get('unpub_date') . ' ' . $request->request->get('unpub_time'));
             $this->unPublishLater($nodeTranslation, $date);
             $session->getFlashBag()->add(
                 FlashTypes::SUCCESS,

@@ -35,7 +35,7 @@ final class FormPageViewDataProvider implements PageViewDataProviderInterface
             return;
         }
 
-        $thanksParam = $request->get('thanks');
+        $thanksParam = $request->query->get('thanks');
         $entity = $nodeTranslation->getRef($this->em);
         $renderContext['nodetranslation'] = $nodeTranslation;
         $renderContext['slug'] = $request->attributes->get('url');

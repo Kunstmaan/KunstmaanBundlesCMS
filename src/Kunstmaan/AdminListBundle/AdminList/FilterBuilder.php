@@ -89,7 +89,7 @@ class FilterBuilder
 
     public function bindRequest(Request $request)
     {
-        $filterBuilderName = 'filter_' . $request->get('_route');
+        $filterBuilderName = 'filter_' . $request->attributes->get('_route');
 
         $this->currentParameters = $request->query->all();
         if (\count($this->currentParameters) === 0) {

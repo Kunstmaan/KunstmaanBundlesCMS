@@ -429,8 +429,8 @@ final class MediaController extends AbstractController
      */
     public function createModalAction(Request $request, $folderId, $type)
     {
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser = $request->get('linkChooser');
+        $cKEditorFuncNum = $request->query->get('CKEditorFuncNum');
+        $linkChooser = $request->query->get('linkChooser');
 
         $extraParams = [];
         if (!empty($cKEditorFuncNum)) {

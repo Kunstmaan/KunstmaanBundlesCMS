@@ -28,7 +28,7 @@ final class UrlReplaceController
     {
         $response = new JsonResponse();
 
-        $response->setData(['text' => $this->urlHelper->replaceUrl($request->get('text'))]);
+        $response->setData(['text' => $this->urlHelper->replaceUrl($request->query->get('text'))]);
 
         return $response;
     }
