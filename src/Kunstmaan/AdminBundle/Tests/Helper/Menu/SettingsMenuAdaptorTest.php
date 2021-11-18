@@ -59,7 +59,7 @@ class SettingsMenuAdaptorTest extends TestCase
     {
         $simpleMenuAdaptorMock = $this->getMockBuilder(SettingsMenuAdaptor::class)
             ->setConstructorArgs([$this->authorizationCheckerInterface, $this->isEnabledVersionChecker])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock()
         ;
 

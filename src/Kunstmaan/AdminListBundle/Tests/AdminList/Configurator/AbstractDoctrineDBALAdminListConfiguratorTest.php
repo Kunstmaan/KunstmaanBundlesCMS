@@ -82,7 +82,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->setConstructorArgs([['page' => 1], [], ['_route' => 'testroute']])
-            ->setMethods(['getSession'])
+            ->onlyMethods(['getSession'])
             ->getMock()
         ;
 

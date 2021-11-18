@@ -327,7 +327,7 @@ class NodeHelperTest extends TestCase
                 $this->cloneHelper,
                 $this->eventDispatcher,
             ])
-            ->setMethods(['createDraftVersion'])
+            ->onlyMethods(['createDraftVersion'])
             ->getMock();
         $nodeHelper
             ->expects($this->once())

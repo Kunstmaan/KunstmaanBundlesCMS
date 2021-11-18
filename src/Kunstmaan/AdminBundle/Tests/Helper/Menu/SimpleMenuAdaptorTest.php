@@ -31,7 +31,7 @@ class SimpleMenuAdaptorTest extends TestCase
     {
         $simpleMenuAdaptorMock = $this->getMockBuilder(SimpleMenuAdaptor::class)
             ->setConstructorArgs([$this->authorizationCheckerInterface, $this->menuItems])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock()
         ;
 
