@@ -9,7 +9,7 @@ parameters:
         - .build/stubs/RoleInterface.php
         - .build/stubs/MailerInterface.php
 
-    excludes_analyse:
+    excludePaths:
         - src/Kunstmaan/*/Tests/*
         - src/Kunstmaan/*/vendor/*
         - src/Kunstmaan/BehatBundle
