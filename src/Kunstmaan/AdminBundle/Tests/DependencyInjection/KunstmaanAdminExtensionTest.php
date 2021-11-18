@@ -11,6 +11,15 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 {
     use ExpectDeprecationTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Some parameters required for the admin extension
+        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
+        $this->container->setParameter('kernel.environment', 'staging');
+    }
+
     /**
      * @return ExtensionInterface[]
      */
@@ -24,9 +33,6 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->load([
             'dashboard_route' => true,
             'admin_password' => 'omgchangethis',
-            'authentication' => [
-                'enable_new_authentication' => true,
-            ],
             'menu_items' => [
                 [
                     'route' => 'route66',
@@ -86,13 +92,14 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
     }
 
-    protected function setUp(): void
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedAuthenticationEnableParameter()
     {
-        parent::setUp();
+        $this->expectDeprecation('%SThe "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
 
-        // Some parameters required for the admin extension
-        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
-        $this->container->setParameter('kernel.environment', 'staging');
+        $this->load(array_merge($this->getRequiredConfig(), ['authentication' => ['enable_new_authentication' => true]]));
     }
 
     private function getRequiredConfig(string $excludeKey = null)
@@ -102,9 +109,6 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'multi_language' => true,
             'required_locales' => 'nl|fr|en',
             'default_locale' => 'nl',
-            'authentication' => [
-                'enable_new_authentication' => true,
-            ],
         ];
 
         if (array_key_exists($excludeKey, $requiredConfig)) {
