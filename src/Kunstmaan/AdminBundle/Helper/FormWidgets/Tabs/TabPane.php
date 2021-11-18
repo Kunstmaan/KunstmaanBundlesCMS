@@ -116,7 +116,7 @@ class TabPane
     public function addTab(TabInterface $tab, $position = null)
     {
         $identifier = $tab->getIdentifier();
-        if (!$identifier || empty($identifier)) {
+        if (empty($identifier)) {
             $tab->setIdentifier($this->generateIdentifier($tab));
         }
 

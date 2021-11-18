@@ -68,7 +68,7 @@ class DashboardWidget
         $methodAnnotations = $annotationReader->getMethodAnnotations($reflectionMethod);
         foreach ($methodAnnotations as $annotation) {
             if ($annotation instanceof Route) {
-                if (empty($annotation)) {
+                if (null === $annotation->getName()) {
                     throw new \Exception('The name is not configured in the annotation');
                 }
 
