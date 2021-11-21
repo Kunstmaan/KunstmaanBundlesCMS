@@ -30,6 +30,7 @@ class ConfigurationTest extends TestCase
             ],
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
+            'whitelisted_extensions' => [],
             'web_root' => '%kernel.project_dir%/web',
             'cropping_views' => [
                 'default' => [
