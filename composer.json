@@ -81,14 +81,14 @@
     "require-dev": {
         "symfony/error-handler": "^4.4|^5.3",
         "fakerphp/faker": "^1.15",
-        "ekino/newrelic-bundle": "^1.4",
+        "ekino/newrelic-bundle": "^2.3",
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "symfony/phpunit-bridge": "^5.3",
         "phpunit/phpunit": "^8.5|^9.5",
         "friendsofphp/php-cs-fixer": "^2.13",
-        "phpstan/phpstan": "^0.12.18",
-        "phpstan/phpstan-doctrine": "^0.12.10"
+        "phpstan/phpstan": "^1.1",
+        "phpstan/phpstan-doctrine": "^1.0"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",

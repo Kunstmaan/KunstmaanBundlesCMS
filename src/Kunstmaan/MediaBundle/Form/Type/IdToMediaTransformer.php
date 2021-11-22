@@ -44,7 +44,7 @@ class IdToMediaTransformer implements DataTransformerInterface
      */
     public function transform($entity)
     {
-        if (empty($entity)) {
+        if (null === $entity) {
             return '';
         }
         if (!\is_object($entity)) {

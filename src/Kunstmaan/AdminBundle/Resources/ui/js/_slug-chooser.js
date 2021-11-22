@@ -47,7 +47,8 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
             return;
         }
 
-        $preview.find('span').html(updatedUrl);
+        // Use jquery .text to escape user input value to avoid potential xss
+        $preview.find('span').text(updatedUrl);
         $preview.show();
     };
 

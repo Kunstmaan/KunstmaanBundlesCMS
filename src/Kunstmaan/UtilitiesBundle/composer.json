@@ -36,10 +36,10 @@
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "symfony/phpunit-bridge": "^5.3",
         "phpunit/phpunit": "^8.5",
-        "ekino/newrelic-bundle": "^1.4"
+        "ekino/newrelic-bundle": "^2.3"
     },
     "suggest": {
-        "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
+        "ekino/newrelic-bundle": "Require ^2.0 to use the UrlTransactionNamingStrategy"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\UtilitiesBundle\\": "" }

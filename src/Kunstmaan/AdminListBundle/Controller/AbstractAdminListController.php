@@ -109,7 +109,7 @@ abstract class AbstractAdminListController extends AbstractController
 
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
-        $entityName = isset($type) ? $type : $configurator->getRepositoryName();
+        $entityName = $type ?? $configurator->getRepositoryName();
 
         $classMetaData = $em->getClassMetadata($entityName);
         // Creates a new instance of the mapped class, without invoking the constructor.
