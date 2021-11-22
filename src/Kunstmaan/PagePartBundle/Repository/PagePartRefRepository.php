@@ -185,9 +185,9 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param int    $id             The id
-     * @param string $context        The context
-     * @param int    $sequenceNumber The sequence number
+     * @param int         $id             The id
+     * @param string|null $context        The context
+     * @param int         $sequenceNumber The sequence number
      *
      * @return PagePartInterface
      */

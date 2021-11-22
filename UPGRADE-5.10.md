@@ -32,6 +32,8 @@ Together with the CSRF token some of those routes will only be available to post
 * `Kunstmaan\MediaBundle\Controller\FolderController::deleteAction`
 * `Kunstmaan\MediaBundle\Controller\MediaController::deleteAction`
 
+* We have updated the `\Kunstmaan\UtilitiesBundle\Helper\UrlTransactionNamingStrategy` class to be compatible with `ekino/newrelic-bundle` 2.0. If you use this class upgrade the newrelic bundle in your project.
+
 AdminBundle
 ------------
 

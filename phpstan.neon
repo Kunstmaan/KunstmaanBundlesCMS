@@ -8,7 +8,7 @@ parameters:
     scanDirectories:
         - .build/stubs
 
-    excludes_analyse:
+    excludePaths:
         - src/Kunstmaan/*/Tests/*
         - src/Kunstmaan/*/vendor/*
         - src/Kunstmaan/BehatBundle
