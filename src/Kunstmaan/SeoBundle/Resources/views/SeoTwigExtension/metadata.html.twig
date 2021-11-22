@@ -110,5 +110,5 @@
 {% endif %}
 
 {% if seo.getExtraMetadata() %}
-    {{ seo.getExtraMetadata() | raw }}
+    {{ seo.getExtraMetadata()|escape('html')|raw }}
 {% endif %}
