@@ -85,8 +85,8 @@
         "symfony/phpunit-bridge": "^5.2",
         "phpunit/phpunit": "^8.5|^9.5",
         "friendsofphp/php-cs-fixer": "^2.13",
-        "phpstan/phpstan": "^0.12.18",
-        "phpstan/phpstan-doctrine": "^0.12.10"
+        "phpstan/phpstan": "^1.1",
+        "phpstan/phpstan-doctrine": "^1.0"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",
