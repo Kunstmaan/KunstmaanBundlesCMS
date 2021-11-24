@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\AdminPanel;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Logout\LogoutUrlGenerator;
 
 class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
 {
@@ -10,10 +11,17 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
      * @var TokenStorageInterface
      */
     protected $tokenStorage;
+    /** @var LogoutUrlGenerator|null */
+    private $logoutUrlGenerator;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, LogoutUrlGenerator $logoutUrlGenerator = null)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->logoutUrlGenerator = $logoutUrlGenerator;
+
+        if (null === $logoutUrlGenerator) {
+            trigger_deprecation('kunstmaan/admin-bundle', '6.2', 'Not passing a value for "$logoutUrlGenerator" in "%s" is deprecated and will be required in 7.0.', __METHOD__);
+        }
     }
 
     /**
@@ -54,11 +62,20 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
 
     protected function getLogoutAction()
     {
-        return new AdminPanelAction(
-            [
-                'path' => 'kunstmaan_admin_logout',
-                'attrs' => ['id' => 'app__logout', 'title' => 'logout'],
-            ],
+        // NEXT_MAJOR remove check
+        if (null === $this->logoutUrlGenerator) {
+            return new AdminPanelAction(
+                [
+                    'path' => 'kunstmaan_admin_logout',
+                    'attrs' => ['id' => 'app__logout', 'title' => 'logout'],
+                ],
+                '',
+                'sign-out'
+            );
+        }
+
+        return new AdminPanelLogoutAction(
+            $this->logoutUrlGenerator->getLogoutUrl(),
             '',
             'sign-out'
         );

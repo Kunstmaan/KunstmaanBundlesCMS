@@ -1,0 +1,11 @@
+<li>
+    <a href="{{ action.getLogoutUrl() }}">
+    {% if action.getIcon() is not null %}
+        <i class="fa fa-{{ action.getIcon() }}"></i>
+    {% endif %}
+    {% if (action.getLabel()) is not empty %}
+        &nbsp;
+        {{ action.getLabel() }}
+    {% endif %}
+    </a>
+</li>
