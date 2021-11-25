@@ -212,7 +212,7 @@ services:
 
     kunstmaan_admin.admin_panel.adaptor:
         class: Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor
-        arguments: ['@security.token_storage']
+        arguments: ['@security.token_storage', '@security.logout_url_generator']
         tags:
             -  { name: 'kunstmaan_admin.admin_panel.adaptor' }
 

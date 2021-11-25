@@ -25,6 +25,7 @@ security:
             logout:
                 path: kunstmaan_admin_logout
                 target: KunstmaanAdminBundle_homepage
+                csrf_token_generator: 'security.csrf.token_manager'
             anonymous: true
             remember_me:
                 secret:   "%kernel.secret%"

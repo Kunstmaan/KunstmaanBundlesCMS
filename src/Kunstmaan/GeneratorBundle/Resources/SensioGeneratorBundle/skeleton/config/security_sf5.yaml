@@ -27,6 +27,7 @@ security:
             logout:
                 path: kunstmaan_admin_logout
                 target: KunstmaanAdminBundle_homepage
+                csrf_token_generator: 'security.csrf.token_manager'
             remember_me:
                 secret:   "%kernel.secret%"
                 lifetime: 604800
