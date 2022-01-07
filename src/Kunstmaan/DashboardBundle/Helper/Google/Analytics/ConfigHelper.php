@@ -66,6 +66,10 @@ class ConfigHelper
      */
     private function assertTableExists(): bool
     {
+        if (is_string($this->token)) {
+            return true;
+        }
+
         $tableName = $this->em->getClassMetadata(AnalyticsConfig::class)->getTableName();
 
         return $this->em->getConnection()->getSchemaManager()->tablesExist($tableName);
