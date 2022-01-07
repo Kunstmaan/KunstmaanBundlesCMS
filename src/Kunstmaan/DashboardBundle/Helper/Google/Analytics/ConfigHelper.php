@@ -40,6 +40,11 @@ class ConfigHelper
      */
     public function init($configId = false)
     {
+        // check if table exists before moving on
+        if (!$this->assertTableExists()) {
+            return;
+        }
+
         // if token is already saved in the database
         if ($this->getToken($configId) && '' !== $this->getToken($configId)) {
             $this
@@ -54,6 +59,16 @@ class ConfigHelper
             $this->getPropertyId($configId);
             $this->getProfileId($configId);
         }
+    }
+
+    /**
+     * Check if table exists
+     */
+    private function assertTableExists(): bool
+    {
+        $tableName = $this->em->getClassMetadata(AnalyticsConfig::class)->getTableName();
+
+        return $this->em->getConnection()->getSchemaManager()->tablesExist($tableName);
     }
 
     /* =============================== TOKEN =============================== */
