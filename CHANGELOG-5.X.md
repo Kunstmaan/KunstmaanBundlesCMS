@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.10.1 / 2022-01-10
+
+* [NodeBundle] Improve performance of NodeMenu class [#3046](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3046) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Escape user input to avoid xss issues [#3038](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3038) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Upgrade phpstan to stable release [#3037](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3037) ([@acrobat](https://github.com/acrobat))
+
 ## 5.10.0 / 2021-11-8
 
 * [AllBundles] Update adminlist-bundle version constraint to allow only ^5.9 [#3024](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3024) ([@acrobat](https://github.com/acrobat))
