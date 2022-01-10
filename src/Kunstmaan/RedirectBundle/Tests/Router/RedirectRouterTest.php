@@ -72,7 +72,7 @@ class RedirectRouterTest extends TestCase
 
         if (null !== $expectedRedirectUrl) {
             $this->assertSame($expectedRedirectUrl, $redirect['path']);
-            $this->assertSame('FrameworkBundle:Redirect:urlRedirect', $redirect['_controller']);
+            $this->assertSame('Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction', $redirect['_controller']);
         }
     }
 

@@ -164,7 +164,7 @@ class RedirectRouter implements RouterInterface
 
         return new Route(
             $redirect->getOrigin(), [
-                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
                 'path' => $redirect->getTarget(),
                 'permanent' => $redirect->isPermanent(),
             ], [], ['utf8' => $needsUtf8]);
@@ -187,7 +187,7 @@ class RedirectRouter implements RouterInterface
         $this->context->setPathInfo($targetPath);
 
         return new Route($url, [
-            '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'path' => $targetPath,
             'permanent' => $redirect->isPermanent(),
         ], [], ['utf8' => $needsUtf8]);
