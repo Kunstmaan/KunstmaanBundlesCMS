@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.9.2 / 2022-01-10
+
+* [NodeBundle] Improve performance of NodeMenu class [#3046](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3046) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Escape user input to avoid xss issues [#3038](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3038) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Upgrade phpstan to stable release [#3037](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3037) ([@acrobat](https://github.com/acrobat))
+
 ## 5.9.1 / 2021-10-14
 
 * [AdminBundle] fix routeloading for sf3 [#2980](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2980) ([@Numkil](https://github.com/Numkil))
