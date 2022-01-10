@@ -6,6 +6,17 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.1.0...6.1.1
 
+## 6.1.2 / 2022-01-10
+
+* [AdminBundle] Remove self-deprecation in tests and add missing deprecation test [#3034](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3034) ([@acrobat](https://github.com/acrobat))
+* [RedirectBundle] Fix redirect route controller notation [#3042](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3042) ([@acrobat](https://github.com/acrobat))
+* [CookieBundle] Add missing view data provider service [#3039](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3039) ([@acrobat](https://github.com/acrobat))
+* [UtilitiesBundle] Fix deprecated urltransationnamingstrategy [#3036](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3036) ([@Numkil](https://github.com/Numkil))
+* [MultiDomainBundle] fix bug in service definition [#3030](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3030) ([@Numkil](https://github.com/Numkil))
+* [NodeBundle] Improve performance of NodeMenu class [#3046](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3046) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Escape user input to avoid xss issues [#3038](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3038) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Upgrade phpstan to stable release [#3037](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3037) ([@acrobat](https://github.com/acrobat))
+
 ## 6.1.1 / 2021-11-9
 
 * [MultiDomainBundle] fix bug in service definition [#3030](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3030) ([@Numkil](https://github.com/Numkil))
