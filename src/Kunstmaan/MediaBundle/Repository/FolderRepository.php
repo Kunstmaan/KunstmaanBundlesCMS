@@ -187,6 +187,8 @@ class FolderRepository extends NestedTreeRepository
 
     /**
      * {@inheritdoc}
+     *
+     * @return QueryBuilder
      */
     public function childrenQueryBuilder(
         $node = null,

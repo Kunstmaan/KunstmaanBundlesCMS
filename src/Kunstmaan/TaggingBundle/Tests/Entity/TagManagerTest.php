@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Result;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
@@ -31,6 +32,9 @@ class Query extends AbstractQuery
     {
     }
 
+    /**
+     * @return Result|int
+     */
     protected function _doExecute()
     {
     }
