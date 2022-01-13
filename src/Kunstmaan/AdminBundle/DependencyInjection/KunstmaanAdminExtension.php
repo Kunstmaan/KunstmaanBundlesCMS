@@ -103,6 +103,8 @@ class KunstmaanAdminExtension extends Extension
 
     /**
      * {@inheritdoc}
+     *
+     * @return string|false
      */
     public function getXsdValidationBasePath()
     {
