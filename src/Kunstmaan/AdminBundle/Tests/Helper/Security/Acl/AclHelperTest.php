@@ -287,6 +287,7 @@ class AclHelperTest extends TestCase
 
         /* @var $query NativeQuery */
         $query = new NativeQuery($this->em);
+        $query->setResultSetMapping(new Query\ResultSetMapping());
 
         $this->em->expects($this->once())
             ->method('createNativeQuery')
