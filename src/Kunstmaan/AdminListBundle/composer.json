@@ -19,6 +19,7 @@
         "kunstmaan/utilities-bundle": "^5.10|^6.0",
         "pagerfanta/core": "^2.4",
         "pagerfanta/doctrine-orm-adapter": "^2.4",
+        "pagerfanta/doctrine-dbal-adapter": "^2.7",
         "pagerfanta/twig": "^2.4"
     },
     "require-dev": {

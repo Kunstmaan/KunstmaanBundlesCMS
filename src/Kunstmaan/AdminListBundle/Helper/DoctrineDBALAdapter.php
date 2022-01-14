@@ -12,6 +12,7 @@ use Pagerfanta\Exception\LogicException;
  * @author Michael Williams <michael@whizdevelopment.com>
  *
  * @api
+ * @deprecated since KunstmaanAdminListBundle 6.2 and will be removed in KunstmaanAdminListBundle 7.0. Use the dbal query adapter of "pagerfanta/doctrine-dbal-adapter" instead.
  */
 class DoctrineDBALAdapter implements AdapterInterface
 {
@@ -30,6 +31,8 @@ class DoctrineDBALAdapter implements AdapterInterface
      */
     public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct = true)
     {
+        trigger_deprecation('kunstmaan/adminlist-bundle', '6.2', 'Class "%s" is deprecated, Use the dbal query adapter of "pagerfanta/doctrine-dbal-adapter" instead.', __CLASS__);
+
         if (strpos($countField, '.') === false) {
             throw new LogicException('The $countField must contain a table alias in the string.');
         }
