@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelLogoutAction;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
+use Symfony\Bundle\SecurityBundle\Security\FirewallConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -24,7 +25,13 @@ class DefaultAdminPanelAdapterTest extends TestCase
         $requestStack->push(new Request());
 
         $storage = new TokenStorage();
-        $storage->setToken(new UsernamePasswordToken((new User())->setUsername('test'), 'password', 'main'));
+        // NEXT_MAJOR: Remove check when symfony <5.4 support is dropped.
+        if (method_exists(FirewallConfig::class, 'getAuthenticators')) {
+            $token = new UsernamePasswordToken((new User())->setUsername('test'), 'main');
+        } else {
+            $token = new UsernamePasswordToken((new User())->setUsername('test'), null, 'main');
+        }
+        $storage->setToken($token);
 
         $logoutUrlGenerator = new LogoutUrlGenerator($requestStack, null, $storage);
         $logoutUrlGenerator->registerListener('main', '/logout', 'logout', '_token');
