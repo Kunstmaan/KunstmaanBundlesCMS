@@ -30,7 +30,7 @@ final class RenameSoftDeletedCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -48,15 +48,12 @@ final class RenameSoftDeletedCommand extends Command
             );
     }
 
-    /**
-     * @return int
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Renaming soft-deleted media...');
 
         $original = $input->getOption('original');
-        $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAll();
+        $medias = $this->em->getRepository(Media::class)->findAll();
         $updates = 0;
         $fileRenameQueue = [];
 
@@ -95,6 +92,6 @@ final class RenameSoftDeletedCommand extends Command
 
         $output->writeln('<info>' . $updates . ' soft-deleted media files have been renamed.</info>');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

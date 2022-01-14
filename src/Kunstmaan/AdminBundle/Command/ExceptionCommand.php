@@ -23,7 +23,7 @@ final class ExceptionCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -36,10 +36,7 @@ final class ExceptionCommand extends Command
             );
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $days = (int) $input->getArgument('days');
         if ($days <= 0) {
@@ -63,6 +60,6 @@ final class ExceptionCommand extends Command
 
         $output->writeln(sprintf('Removed exceptions <comment>%s</comment>', $cp));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

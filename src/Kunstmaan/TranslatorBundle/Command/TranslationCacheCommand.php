@@ -30,7 +30,7 @@ final class TranslationCacheCommand extends Command
         $this->cacheValidator = $cacheValidator;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
         ->setName('kuma:translator:cache')
@@ -40,10 +40,7 @@ final class TranslationCacheCommand extends Command
         ;
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('flush')) {
             return $this->flushTranslationCache($input, $output);
@@ -56,14 +53,16 @@ final class TranslationCacheCommand extends Command
         throw new InvalidArgumentException('No or invalid option provided');
     }
 
-    public function flushTranslationCache(InputInterface $input, OutputInterface $output)
+    public function flushTranslationCache(InputInterface $input, OutputInterface $output): int
     {
         if ($this->resourceCacher->flushCache()) {
             $output->writeln('<info>Translation cache succesfully flushed</info>');
         }
+
+        return Command::SUCCESS;
     }
 
-    public function showTranslationCacheStatus(InputInterface $input, OutputInterface $output)
+    public function showTranslationCacheStatus(InputInterface $input, OutputInterface $output): int
     {
         $oldestFile = $this->cacheValidator->getOldestCachefileDate();
         $newestTranslation = $this->cacheValidator->getLastTranslationChangeDate();
@@ -73,6 +72,6 @@ final class TranslationCacheCommand extends Command
         $output->writeln(sprintf('Newest translation (in stash): <info>%s</info>', $newestTranslation instanceof \DateTime ? $newestTranslation->format('Y-m-d H:i:s') : 'none found'));
         $output->writeln(sprintf('Status: <info>%s</info>', $isFresh ? 'fresh' : 'outdated'));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

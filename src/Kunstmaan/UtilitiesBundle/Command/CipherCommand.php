@@ -31,15 +31,12 @@ final class CipherCommand extends Command
         $this->cipher = $cipher;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('kuma:cipher')->setDescription('Cipher utilities commands.');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -121,6 +118,6 @@ final class CipherCommand extends Command
                 break;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -35,10 +35,7 @@ final class ImportTranslationsCommand extends Command
         $this->bundles = $bundles;
     }
 
-    /**
-     * Configures this command.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:translator:import')
@@ -60,10 +57,7 @@ final class ImportTranslationsCommand extends Command
             );
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $force = $input->getOption('force');
         $locales = $input->getOption('locales');
@@ -83,6 +77,6 @@ final class ImportTranslationsCommand extends Command
 
         $output->writeln(sprintf('Translation imported: %d', $imported));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

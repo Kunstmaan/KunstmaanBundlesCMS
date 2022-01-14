@@ -24,7 +24,7 @@ final class GoogleAnalyticsOverviewsGenerateCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics:overviews:generate')
@@ -45,10 +45,7 @@ final class GoogleAnalyticsOverviewsGenerateCommand extends Command
             );
     }
 
-    /**
-     * @return int|void|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // get params
         $configId = false;
@@ -71,11 +68,11 @@ final class GoogleAnalyticsOverviewsGenerateCommand extends Command
 
             $output->writeln('<fg=green>Overviews succesfully generated</fg=green>');
 
-            return 0;
+            return Command::SUCCESS;
         } catch (\InvalidArgumentException $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return 1;
+            return Command::FAILURE;
         }
     }
 

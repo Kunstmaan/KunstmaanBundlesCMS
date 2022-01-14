@@ -63,7 +63,7 @@ EOT
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output): void

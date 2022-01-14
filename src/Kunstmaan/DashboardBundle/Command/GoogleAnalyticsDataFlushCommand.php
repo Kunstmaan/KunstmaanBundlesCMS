@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +21,7 @@ final class GoogleAnalyticsDataFlushCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics:data:flush')
@@ -32,12 +33,9 @@ final class GoogleAnalyticsDataFlushCommand extends Command
             );
     }
 
-    /**
-     * @return int|void|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $configRepository = $this->em->getRepository(AnalyticsConfig::class);
 
         $configId = $input->getArgument('config') ? $input->getArgument('config') : false;
 
@@ -45,11 +43,11 @@ final class GoogleAnalyticsDataFlushCommand extends Command
             $configRepository->flushConfig($configId);
             $output->writeln('<fg=green>Data flushed</fg=green>');
 
-            return 0;
+            return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return 1;
+            return Command::FAILURE;
         }
     }
 }

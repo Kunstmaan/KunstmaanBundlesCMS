@@ -29,7 +29,7 @@ final class PopulateIndexCommand extends Command
         $this->configurationChain = $configurationChain;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:search:populate')
@@ -37,12 +37,7 @@ final class PopulateIndexCommand extends Command
             ->setDescription('Populate the index(es)');
     }
 
-    /**
-     * @return int|null null or 0 if everything went fine, or an error code
-     *
-     * @throws \LogicException
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getArgument('full')) {
             $deleteCommand = $this->getApplication()->find('kuma:search:delete');
@@ -53,15 +48,11 @@ final class PopulateIndexCommand extends Command
             $setupCommand->run(new ArrayInput([]), $output);
         }
 
-        /**
-         * @var string
-         * @var SearchConfigurationInterface $searchConfiguration
-         */
         foreach ($this->configurationChain->getConfigurations() as $alias => $searchConfiguration) {
             $searchConfiguration->populateIndex();
             $output->writeln('Index populated : ' . $alias);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
