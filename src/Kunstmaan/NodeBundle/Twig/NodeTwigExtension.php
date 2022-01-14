@@ -70,6 +70,7 @@ final class NodeTwigExtension extends AbstractExtension
                 'get_node_by_internal_name',
                 [$this, 'getNodeByInternalName']
             ),
+            new TwigFunction('get_node_translation_by_internal_name', [$this, 'getNodeTranslationByInternalName']),
             new TwigFunction(
                 'get_url_by_internal_name',
                 [$this, 'getUrlByInternalName']
@@ -159,6 +160,11 @@ final class NodeTwigExtension extends AbstractExtension
         }
 
         return null;
+    }
+
+    public function getNodeTranslationByInternalName(string $internalName, string $locale): ?NodeTranslation
+    {
+        return $this->em->getRepository(NodeTranslation::class)->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
     }
 
     /**
