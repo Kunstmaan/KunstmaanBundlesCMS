@@ -41,6 +41,8 @@ services:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@doctrine.orm.entity_manager']
         public: true
+        # This is needed to avoid db queries in the service constructor (init()). Can be removed after refactor.
+        lazy: true
 
     # query helper
     kunstmaan_dashboard.helper.google.analytics.query:
