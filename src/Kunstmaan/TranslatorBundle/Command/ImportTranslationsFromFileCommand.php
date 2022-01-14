@@ -33,10 +33,7 @@ final class ImportTranslationsFromFileCommand extends Command
         $this->locales = $locales;
     }
 
-    /**
-     * Configures this command
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:translator:import-file')
@@ -45,12 +42,7 @@ final class ImportTranslationsFromFileCommand extends Command
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries');
     }
 
-    /**
-     * @throws LogicException
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $file = $input->getArgument('file');
         $force = $input->getOption('force');
@@ -63,6 +55,6 @@ final class ImportTranslationsFromFileCommand extends Command
         }
         $output->writeln($confirmation);
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

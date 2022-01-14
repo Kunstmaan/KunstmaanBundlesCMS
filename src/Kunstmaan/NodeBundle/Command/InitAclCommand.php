@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,10 +43,7 @@ final class InitAclCommand extends Command
         $this->oidStrategy = $oidStrategy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -54,15 +52,10 @@ final class InitAclCommand extends Command
             ->setHelp('The <info>kuma:init:acl</info> will create basic ACL entries for the nodes of the current project');
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Fetch all nodes & grant access
-        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAll();
+        $nodes = $this->em->getRepository(Node::class)->findAll();
         $count = 0;
         foreach ($nodes as $node) {
             ++$count;
@@ -90,6 +83,6 @@ final class InitAclCommand extends Command
         }
         $output->writeln("{$count} nodes processed.");
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

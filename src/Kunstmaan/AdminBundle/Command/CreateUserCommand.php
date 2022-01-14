@@ -39,7 +39,7 @@ final class CreateUserCommand extends Command
         $this->defaultLocale = $defaultLocale;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -78,15 +78,12 @@ EOT
             );
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->groups = $this->getGroups();
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
@@ -143,7 +140,7 @@ EOT
         $this->userManager->updateUser($user);
         $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**

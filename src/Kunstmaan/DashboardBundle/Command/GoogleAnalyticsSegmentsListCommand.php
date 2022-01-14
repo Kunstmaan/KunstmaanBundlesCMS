@@ -22,7 +22,7 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics:segments:list')
@@ -36,10 +36,7 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
             );
     }
 
-    /**
-     * @return int|void|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // get params
         $configId = $input->getOption('config');
@@ -65,11 +62,11 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
                 $output->writeln('No segments found');
             }
 
-            return 0;
+            return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return 1;
+            return Command::FAILURE;
         }
     }
 
@@ -77,10 +74,8 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
      * get all segments of a config
      *
      * @param int $configId
-     *
-     * @return array
      */
-    private function getSegmentsOfConfig($configId)
+    private function getSegmentsOfConfig($configId): array
     {
         // get specified config
         $configRepository = $this->em->getRepository(AnalyticsConfig::class);
@@ -94,12 +89,7 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
         return $config->getSegments();
     }
 
-    /**
-     * get all segments
-     *
-     * @return array
-     */
-    private function getAllSegments()
+    private function getAllSegments(): array
     {
         // get all segments
         $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);

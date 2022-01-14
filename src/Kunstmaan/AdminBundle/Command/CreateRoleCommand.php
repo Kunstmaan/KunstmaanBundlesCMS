@@ -26,7 +26,7 @@ final class CreateRoleCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('kuma:role:create')
             ->setDescription('Create a role.')
@@ -48,10 +48,7 @@ EOT
             );
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $roleName = strtoupper($input->getArgument('role'));
         if ('ROLE_' != substr($roleName, 0, 5)) {
@@ -64,6 +61,6 @@ EOT
 
         $output->writeln(sprintf('Created role <comment>%s</comment>', $roleName));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

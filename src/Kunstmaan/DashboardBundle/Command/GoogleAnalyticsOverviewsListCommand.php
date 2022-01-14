@@ -23,7 +23,7 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics:overviews:list')
@@ -44,10 +44,7 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
             );
     }
 
-    /**
-     * @return int|void|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // get params
         $configId = $input->getOption('config');
@@ -81,11 +78,11 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
                 $output->writeln('No overviews found');
             }
 
-            return 0;
+            return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return 1;
+            return Command::FAILURE;
         }
     }
 

@@ -28,7 +28,7 @@ final class CreateGroupCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -55,15 +55,7 @@ EOT
             );
     }
 
-    /**
-     * Executes the current command
-     *
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $groupName = $input->getArgument('group');
         $roleNames = $input->getOption('role');
@@ -77,7 +69,7 @@ EOT
                     $roleName = 'ROLE_' . $roleName;
                 }
                 /* @var Role $role */
-                $role = $this->em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(['role' => $roleName]);
+                $role = $this->em->getRepository(Role::class)->findOneBy(['role' => $roleName]);
                 $group->addRole($role);
             }
         }
@@ -86,6 +78,6 @@ EOT
 
         $output->writeln(sprintf('Created group <comment>%s</comment>', $groupName));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

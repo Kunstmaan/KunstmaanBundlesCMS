@@ -38,10 +38,7 @@ final class CronUpdateNodeCommand extends Command
         $this->nodePublisher = $nodePublisher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -50,14 +47,9 @@ final class CronUpdateNodeCommand extends Command
             ->setHelp('The <info>kuma:nodes:cron</info> will loop over all queued node translation action entries and update the nodetranslations if needed.');
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $queuedNodeTranslationActions = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findAll();
+        $queuedNodeTranslationActions = $this->em->getRepository(QueuedNodeTranslationAction::class)->findAll();
 
         if (\count($queuedNodeTranslationActions)) {
             foreach ($queuedNodeTranslationActions as $queuedNodeTranslationAction) {
@@ -92,6 +84,6 @@ final class CronUpdateNodeCommand extends Command
             $output->writeln('No queued jobs');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

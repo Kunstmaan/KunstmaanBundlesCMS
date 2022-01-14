@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +32,7 @@ final class CleanDeletedMediaCommand extends Command
         $this->mediaManager = $mediaManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -49,23 +50,20 @@ final class CleanDeletedMediaCommand extends Command
             );
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('force') !== true) {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion('<question>Are you sure you want to remove all deleted Media from the file system?</question> ', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return 0;
+                return Command::SUCCESS;
             }
         }
 
         $output->writeln('<info>Removing all Media from the file system that have their status set to deleted in the database.</info>');
 
-        $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAllDeleted();
+        $medias = $this->em->getRepository(Media::class)->findAllDeleted();
 
         try {
             $this->em->beginTransaction();
@@ -76,13 +74,13 @@ final class CleanDeletedMediaCommand extends Command
             $this->em->commit();
             $output->writeln('<info>All Media flagged as deleted, have now been removed from the file system.<info>');
 
-            return 0;
+            return Command::SUCCESS;
         } catch (\Exception $e) {
             $this->em->rollback();
             $output->writeln('An error occured while trying to delete Media from the file system:');
             $output->writeln('<error>' . $e->getMessage() . '</error>');
 
-            return 1;
+            return Command::FAILURE;
         }
     }
 }

@@ -33,7 +33,7 @@ final class ApplyAclCommand extends Command
         $this->shellHelper = $shellHelper;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -44,22 +44,17 @@ final class ApplyAclCommand extends Command
 
     /**
      * Apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
-     *
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     *
-     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
-            return 0;
+            return Command::SUCCESS;
         }
 
         $this->aclManager->applyAclChangesets();
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function isRunning(): bool

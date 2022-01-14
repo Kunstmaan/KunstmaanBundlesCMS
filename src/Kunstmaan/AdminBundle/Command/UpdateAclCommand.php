@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Service\AclManager;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,7 +38,7 @@ final class UpdateAclCommand extends Command
         $this->roles = $roles;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -47,10 +48,7 @@ final class UpdateAclCommand extends Command
                 'with given role and permissions');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -69,12 +67,12 @@ final class UpdateAclCommand extends Command
         }, 0);
 
         // Fetch all nodes & grant access
-        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAll();
+        $nodes = $this->em->getRepository(Node::class)->findAll();
 
         $this->aclManager->updateNodesAclToRole($nodes, $role, $mask);
 
         $output->writeln(\count($nodes) . ' nodes processed.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

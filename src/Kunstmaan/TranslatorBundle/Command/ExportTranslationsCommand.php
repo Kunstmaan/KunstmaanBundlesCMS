@@ -24,7 +24,7 @@ final class ExportTranslationsCommand extends Command
         $this->exportCommandHandler = $exportCommandHandler;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:translator:export')
@@ -35,10 +35,7 @@ final class ExportTranslationsCommand extends Command
         ;
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $domains = $input->getOption('domains');
         $format = $input->getOption('format');
@@ -56,6 +53,6 @@ final class ExportTranslationsCommand extends Command
 
         $this->exportCommandHandler->executeExportCommand($exportCommand);
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

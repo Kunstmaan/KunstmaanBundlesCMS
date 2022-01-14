@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,10 +23,7 @@ final class RebuildFolderTreeCommand extends Command
         $this->em = $em;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -34,16 +32,11 @@ final class RebuildFolderTreeCommand extends Command
             ->setHelp('The <info>kuma:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.');
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->em->getRepository('KunstmaanMediaBundle:Folder')->rebuildTree();
+        $this->em->getRepository(Folder::class)->rebuildTree();
         $output->writeln('Updated all folders');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
