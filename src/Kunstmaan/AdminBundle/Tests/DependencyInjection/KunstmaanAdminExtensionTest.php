@@ -32,7 +32,6 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'dashboard_route' => true,
-            'admin_password' => 'omgchangethis',
             'menu_items' => [
                 [
                     'route' => 'route66',

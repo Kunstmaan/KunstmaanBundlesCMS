@@ -69,7 +69,6 @@ class ConfigurationTest extends TestCase
             'multi_language' => true,
             'required_locales' => null,
             'default_locale' => null,
-            'admin_password' => 'l3tM31n!',
             'admin_locales' => ['nl'],
             'session_security' => [
                 'ip_check' => false,
@@ -92,7 +91,6 @@ class ConfigurationTest extends TestCase
 
         $expected = array_merge(self::DEFAULT_EXPECTED_CONFIG, [
             'admin_locales' => ['nl'],
-            'admin_password' => 'l3tM31n!',
             'enable_toolbar_helper' => false,
             'password_restrictions' => [
                 'min_digits' => 2,
@@ -139,5 +137,32 @@ class ConfigurationTest extends TestCase
         ];
 
         $this->assertProcessedConfigurationEquals([$array], self::DEFAULT_EXPECTED_CONFIG);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedAdminPasswordConfig()
+    {
+        $this->expectDeprecation('%SThe "kunstmaan_admin.admin_password" configuration key has been deprecated, remove it from your config.');
+
+        $array = [
+            'website_title' => null,
+            'admin_password' => 'l3tM31n!',
+            'multi_language' => true,
+            'required_locales' => null,
+            'default_locale' => null,
+            'session_security' => [
+                'ip_check' => false,
+                'user_agent_check' => false,
+            ],
+            'default_admin_locale' => 'en',
+            'enable_console_exception_listener' => true,
+            'menu_items' => [],
+            'admin_prefix' => 'admin',
+            'admin_firewall_name' => 'main',
+        ];
+
+        $this->assertProcessedConfigurationEquals([$array], array_merge(self::DEFAULT_EXPECTED_CONFIG, ['admin_password' => 'l3tM31n!']));
     }
 }
