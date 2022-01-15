@@ -40,7 +40,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
     {
         parent::__construct($connection);
         $this->locales = $locales;
-        $this->setCountField('CONCAT(b.translation_id)');
+        $this->setCountField('b.translation_id');
     }
 
     /**
