@@ -83,7 +83,7 @@ final class TagAdminListController extends AbstractAdminListController
      */
     public function autocompleteAction(Request $request)
     {
-        $search = $request->get('term');
+        $search = $request->query->get('term');
         $qb = $this->em->getRepository(Tag::class)->createQueryBuilder('n')
             ->where('n.name LIKE :search')
             ->orderBy('n.name', 'ASC')

@@ -32,8 +32,8 @@ final class VotingController
      */
     public function upVoteAction(Request $request)
     {
-        $reference = $request->get('reference');
-        $value = $request->get('value');
+        $reference = $request->query->get('reference');
+        $value = $request->query->get('value');
         $this->eventDispatcher->dispatch(new UpVoteEvent($request, $reference, $value), Events::VOTE_UP);
     }
 
@@ -43,8 +43,8 @@ final class VotingController
      */
     public function downVoteAction(Request $request)
     {
-        $reference = $request->get('reference');
-        $value = $request->get('value');
+        $reference = $request->query->get('reference');
+        $value = $request->query->get('value');
         $this->eventDispatcher->dispatch(new DownVoteEvent($request, $reference, $value), Events::VOTE_DOWN);
     }
 
@@ -53,8 +53,8 @@ final class VotingController
      */
     public function facebookLikeAction(Request $request)
     {
-        $response = $request->get('response');
-        $value = $request->get('value');
+        $response = $request->query->get('response');
+        $value = $request->query->get('value');
         $this->eventDispatcher->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
     }
 
@@ -63,8 +63,8 @@ final class VotingController
      */
     public function facebookSendAction(Request $request)
     {
-        $response = $request->get('response');
-        $value = $request->get('value');
+        $response = $request->query->get('response');
+        $value = $request->query->get('value');
         $this->eventDispatcher->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
     }
 
@@ -73,8 +73,8 @@ final class VotingController
      */
     public function linkedInShareAction(Request $request)
     {
-        $reference = $request->get('reference');
-        $value = $request->get('value');
+        $reference = $request->query->get('reference');
+        $value = $request->query->get('value');
         $this->eventDispatcher->dispatch(new LinkedInShareEvent($request, $reference, $value), Events::LINKEDIN_SHARE);
     }
 
