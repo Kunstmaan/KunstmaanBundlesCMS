@@ -1,5 +1,6 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
+// NEXT_MAJOR: Remove JS and releted SCSS/CSS when deprecate ColorType is removed
 kunstmaanbundles.colorpicker = (function(window, undefined) {
 
     var init, reInit, initColorpicker;
