@@ -44,7 +44,7 @@ final class SiteSwitchController
         $currentHost = $this->domainConfiguration->getHost();
 
         $session = $request->getSession();
-        if ($request->get('from_url_chooser')) {
+        if ($request->query->get('from_url_chooser')) {
             $session->set(DomainConfiguration::SWITCH_HOST, $host);
         } else {
             $session->set(DomainConfiguration::OVERRIDE_HOST, $host);
@@ -54,7 +54,7 @@ final class SiteSwitchController
          * If current host type is different then the host going to, redirect to it's homepage.
          * If coming from url chooser, don't redirect to homepage if other host.
          */
-        if ((($hosts[$host]['type'] !== $hosts[$currentHost]['type']) || (!$request->query->has('route'))) && (!$request->get('from_url_chooser'))) {
+        if ((($hosts[$host]['type'] !== $hosts[$currentHost]['type']) || (!$request->query->has('route'))) && (!$request->query->get('from_url_chooser'))) {
             $route = 'KunstmaanAdminBundle_homepage';
             $defaultLocale = $this->domainConfiguration->getDefaultLocale();
         } else {

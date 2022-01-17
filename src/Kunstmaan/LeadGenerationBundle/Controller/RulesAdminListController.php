@@ -46,7 +46,7 @@ final class RulesAdminListController extends AbstractAdminListController
      */
     public function addAction(Request $request, $popup)
     {
-        $type = $request->get('type');
+        $type = $request->query->get('type');
 
         return parent::doAddAction($this->getAdminListConfigurator($popup), $type, $request);
     }

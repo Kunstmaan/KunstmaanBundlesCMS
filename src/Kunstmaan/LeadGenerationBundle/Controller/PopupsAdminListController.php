@@ -86,7 +86,7 @@ final class PopupsAdminListController extends AbstractAdminListController
      */
     public function addAction(Request $request)
     {
-        $type = $request->get('type');
+        $type = $request->query->get('type');
 
         return parent::doAddAction($this->getAdminListConfigurator(), $type, $request);
     }
