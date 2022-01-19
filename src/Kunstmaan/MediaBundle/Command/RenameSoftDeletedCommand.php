@@ -83,7 +83,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         $output->writeln('Renaming soft-deleted media...');
 
         $original = $input->getOption('original');
-        $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAll();
+        $medias = $this->em->getRepository('KunstmaanMediaBundle:Media')->findAllDeleted();
         $updates = 0;
         $fileRenameQueue = [];
 
