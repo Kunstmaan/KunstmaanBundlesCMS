@@ -198,7 +198,6 @@ class FileHandler extends AbstractMediaHandler
         if ($adapter->exists($fileKey)) {
             $adapter->delete($fileKey);
         }
-
         // Remove the files containing folder if there's nothing left
         $folderPath = $this->getFileFolderPath($media);
         if ($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
