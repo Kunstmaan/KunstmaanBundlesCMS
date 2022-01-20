@@ -68,11 +68,11 @@ final class GoogleAnalyticsOverviewsGenerateCommand extends Command
 
             $output->writeln('<fg=green>Overviews succesfully generated</fg=green>');
 
-            return Command::SUCCESS;
+            return 0;
         } catch (\InvalidArgumentException $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return Command::FAILURE;
+            return 1;
         }
     }
 

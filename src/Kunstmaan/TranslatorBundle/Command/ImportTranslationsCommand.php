@@ -77,6 +77,6 @@ final class ImportTranslationsCommand extends Command
 
         $output->writeln(sprintf('Translation imported: %d', $imported));
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

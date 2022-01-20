@@ -46,7 +46,7 @@ final class GoogleAnalyticsConfigsListCommand extends Command
             $output->writeln('No configs found');
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     /**

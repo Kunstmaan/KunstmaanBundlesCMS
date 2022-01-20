@@ -73,7 +73,7 @@ final class CreatePdfPreviewCommand extends Command
 
         $output->writeln('<info>PDF preview images have been created.</info>');
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     /**

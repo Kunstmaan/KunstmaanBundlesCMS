@@ -82,7 +82,7 @@ final class GoogleAnalyticsDataCollectCommand extends Command
         if (!$this->configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
 
-            return Command::SUCCESS;
+            return 0;
         }
 
         // get params
@@ -117,11 +117,11 @@ final class GoogleAnalyticsDataCollectCommand extends Command
             $result .= $this->errors != 1 ? 's</fg=green>' : '</fg=green>';
             $this->output->writeln($result); // done
 
-            return Command::SUCCESS;
+            return 0;
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
 
-            return Command::FAILURE;
+            return 1;
         }
     }
 

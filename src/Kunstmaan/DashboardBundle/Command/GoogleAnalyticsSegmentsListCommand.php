@@ -62,11 +62,11 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
                 $output->writeln('No segments found');
             }
 
-            return Command::SUCCESS;
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return Command::FAILURE;
+            return 1;
         }
     }
 

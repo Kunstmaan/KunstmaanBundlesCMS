@@ -37,6 +37,6 @@ final class RebuildFolderTreeCommand extends Command
         $this->em->getRepository(Folder::class)->rebuildTree();
         $output->writeln('Updated all folders');
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

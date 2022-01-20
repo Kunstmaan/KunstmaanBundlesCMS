@@ -39,6 +39,6 @@ final class DashboardCommand extends Command
             $command->run(new ArrayInput([]), $output);
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

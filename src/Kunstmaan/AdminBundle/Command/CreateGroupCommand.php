@@ -78,6 +78,6 @@ EOT
 
         $output->writeln(sprintf('Created group <comment>%s</comment>', $groupName));
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

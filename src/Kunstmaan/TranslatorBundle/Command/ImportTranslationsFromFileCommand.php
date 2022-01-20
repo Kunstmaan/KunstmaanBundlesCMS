@@ -55,6 +55,6 @@ final class ImportTranslationsFromFileCommand extends Command
         }
         $output->writeln($confirmation);
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

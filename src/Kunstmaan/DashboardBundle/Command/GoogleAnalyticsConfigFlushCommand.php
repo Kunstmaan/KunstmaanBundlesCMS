@@ -56,11 +56,11 @@ final class GoogleAnalyticsConfigFlushCommand extends Command
             $this->em->flush();
             $output->writeln('<fg=green>Config flushed</fg=green>');
 
-            return Command::SUCCESS;
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return Command::FAILURE;
+            return 1;
         }
     }
 }

@@ -83,6 +83,6 @@ final class InitAclCommand extends Command
         }
         $output->writeln("{$count} nodes processed.");
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

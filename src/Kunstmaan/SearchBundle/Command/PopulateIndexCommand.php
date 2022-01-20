@@ -53,6 +53,6 @@ final class PopulateIndexCommand extends Command
             $output->writeln('Index populated : ' . $alias);
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

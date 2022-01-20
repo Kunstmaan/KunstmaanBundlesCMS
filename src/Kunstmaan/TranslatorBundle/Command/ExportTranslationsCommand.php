@@ -53,6 +53,6 @@ final class ExportTranslationsCommand extends Command
 
         $this->exportCommandHandler->executeExportCommand($exportCommand);
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

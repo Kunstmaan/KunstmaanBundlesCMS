@@ -41,6 +41,6 @@ final class DeleteIndexCommand extends Command
             $output->writeln('Index deleted : ' . $alias);
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

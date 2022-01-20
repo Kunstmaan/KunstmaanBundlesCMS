@@ -59,7 +59,7 @@ final class TranslationCacheCommand extends Command
             $output->writeln('<info>Translation cache succesfully flushed</info>');
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     public function showTranslationCacheStatus(InputInterface $input, OutputInterface $output): int
@@ -72,6 +72,6 @@ final class TranslationCacheCommand extends Command
         $output->writeln(sprintf('Newest translation (in stash): <info>%s</info>', $newestTranslation instanceof \DateTime ? $newestTranslation->format('Y-m-d H:i:s') : 'none found'));
         $output->writeln(sprintf('Status: <info>%s</info>', $isFresh ? 'fresh' : 'outdated'));
 
-        return Command::SUCCESS;
+        return 0;
     }
 }
