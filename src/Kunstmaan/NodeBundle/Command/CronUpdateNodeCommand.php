@@ -84,6 +84,6 @@ final class CronUpdateNodeCommand extends Command
             $output->writeln('No queued jobs');
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

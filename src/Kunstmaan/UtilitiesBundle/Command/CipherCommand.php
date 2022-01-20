@@ -118,6 +118,6 @@ final class CipherCommand extends Command
                 break;
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

@@ -73,6 +73,6 @@ final class UpdateAclCommand extends Command
 
         $output->writeln(\count($nodes) . ' nodes processed.');
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

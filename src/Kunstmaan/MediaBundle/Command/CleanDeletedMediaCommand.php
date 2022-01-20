@@ -57,7 +57,7 @@ final class CleanDeletedMediaCommand extends Command
             $question = new ConfirmationQuestion('<question>Are you sure you want to remove all deleted Media from the file system?</question> ', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return Command::SUCCESS;
+                return 0;
             }
         }
 
@@ -74,13 +74,13 @@ final class CleanDeletedMediaCommand extends Command
             $this->em->commit();
             $output->writeln('<info>All Media flagged as deleted, have now been removed from the file system.<info>');
 
-            return Command::SUCCESS;
+            return 0;
         } catch (\Exception $e) {
             $this->em->rollback();
             $output->writeln('An error occured while trying to delete Media from the file system:');
             $output->writeln('<error>' . $e->getMessage() . '</error>');
 
-            return Command::FAILURE;
+            return 1;
         }
     }
 }

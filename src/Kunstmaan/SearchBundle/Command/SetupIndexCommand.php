@@ -48,7 +48,7 @@ final class SetupIndexCommand extends Command
                 );
                 $question->setErrorMessage('Answer %s is invalid.');
                 if ($helper->ask($input, $output, $question) === 'No') {
-                    return Command::SUCCESS;
+                    return 0;
                 }
             }
 
@@ -56,6 +56,6 @@ final class SetupIndexCommand extends Command
             $output->writeln('Index created : ' . $alias);
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

@@ -140,7 +140,7 @@ EOT
         $this->userManager->updateUser($user);
         $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     /**

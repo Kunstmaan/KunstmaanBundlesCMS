@@ -43,11 +43,11 @@ final class GoogleAnalyticsDataFlushCommand extends Command
             $configRepository->flushConfig($configId);
             $output->writeln('<fg=green>Data flushed</fg=green>');
 
-            return Command::SUCCESS;
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<fg=red>' . $e->getMessage() . '</fg=red>');
 
-            return Command::FAILURE;
+            return 1;
         }
     }
 }

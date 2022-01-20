@@ -69,7 +69,7 @@ EOT
             if ($user->hasRole($role)) {
                 $output->writeln(sprintf('User "%s" did already have "%s" role.', $username, $role));
 
-                return Command::FAILURE;
+                return 1;
             }
 
             $user->addRole($role);
@@ -78,7 +78,7 @@ EOT
 
         $this->userManager->updateUser($user);
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output): void

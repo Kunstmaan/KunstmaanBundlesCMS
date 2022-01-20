@@ -60,6 +60,6 @@ final class ExceptionCommand extends Command
 
         $output->writeln(sprintf('Removed exceptions <comment>%s</comment>', $cp));
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

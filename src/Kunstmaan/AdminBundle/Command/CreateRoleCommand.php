@@ -61,6 +61,6 @@ EOT
 
         $output->writeln(sprintf('Created role <comment>%s</comment>', $roleName));
 
-        return Command::SUCCESS;
+        return 0;
     }
 }

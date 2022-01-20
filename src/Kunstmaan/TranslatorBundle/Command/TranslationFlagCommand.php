@@ -43,7 +43,7 @@ final class TranslationFlagCommand extends Command
             $output->writeln('<info>All translation and translation domain flags are reset.</info>');
         }
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     /**

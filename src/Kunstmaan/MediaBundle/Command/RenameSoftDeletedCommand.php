@@ -92,6 +92,6 @@ final class RenameSoftDeletedCommand extends Command
 
         $output->writeln('<info>' . $updates . ' soft-deleted media files have been renamed.</info>');
 
-        return Command::SUCCESS;
+        return 0;
     }
 }
