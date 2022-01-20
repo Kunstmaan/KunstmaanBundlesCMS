@@ -102,17 +102,15 @@ class FilterBuilder
             $request->getSession()->set($filterBuilderName, $this->currentParameters);
         }
 
-        $filterColumnNames = $request->query->get('filter_columnname');
-        if (isset($filterColumnNames)) {
-            $uniqueIds = $request->query->get('filter_uniquefilterid');
-            $index = 0;
-            foreach ($filterColumnNames as $filterColumnName) {
-                $uniqueId = $uniqueIds[$index];
-                $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
-                $this->currentFilters[] = $filter;
-                $filter->bindRequest($request);
-                ++$index;
-            }
+        $filterColumnNames = $request->query->all('filter_columnname');
+        $uniqueIds = $request->query->all('filter_uniquefilterid');
+        $index = 0;
+        foreach ($filterColumnNames as $filterColumnName) {
+            $uniqueId = $uniqueIds[$index];
+            $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
+            $this->currentFilters[] = $filter;
+            $filter->bindRequest($request);
+            ++$index;
         }
     }
 

@@ -86,4 +86,38 @@ class FilterBuilderTest extends TestCase
 
         $this->assertEquals($filterDef, $this->object->getFilterDefinitions());
     }
+
+    public function testBindRequestFromQuery()
+    {
+        $queryData = [
+            'filter_columnname' => [
+                'column1',
+                'column2',
+            ],
+            'filter_uniquefilterid' => [
+                '1',
+                '2',
+            ],
+            'filter_value_1' => 'value_1',
+            'filter_value_2' => 'value_2',
+            'filter_comparator_2' => 'equals',
+        ];
+
+        $request = new Request($queryData);
+        $request->setSession($this->createMock(Session::class));
+
+        $filter1 = new StringFilterType('col1', 'e');
+        $filter2 = new StringFilterType('col2', 'e');
+        $filterDef = [
+            'column1' => ['type' => $filter1, 'options' => ['option1' => 'value1'], 'filtername' => 'filter1Name'],
+            'column2' => ['type' => $filter2, 'options' => ['option1' => 'value1'], 'filtername' => 'filter2Name'],
+        ];
+        $this->object->add('column1', $filter1, 'filter1Name', ['option1' => 'value1']);
+        $this->object->add('column2', $filter2, 'filter2Name', ['option1' => 'value1']);
+
+        $this->object->bindRequest($request);
+
+        $this->assertEquals($filterDef, $this->object->getFilterDefinitions());
+        $this->assertCount(2, $this->object->getCurrentFilters());
+    }
 }
