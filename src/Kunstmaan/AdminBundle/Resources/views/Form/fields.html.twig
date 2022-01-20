@@ -1,11 +1,12 @@
 {# Widgets #}
 {% block color_widget %}
-{% apply spaceless %}
-    <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]' data-format="hex"{%- if attr['data-colors'] is defined %} data-color-selectors="{{ attr['data-colors']}}"{% endif %}>
-        <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
-        <span class="input-group-addon"><i></i></span>
-    </div>
-{% endapply %}
+    {% deprecated 'The "color_widget" block is deprecated since KunstmaanAdminBundle 6.2 and will be removed in KunstmaanAdminBundle 7.0. Use the symfony Color form type and twig block instead.' %}
+    {% apply spaceless %}
+        <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]' data-format="hex"{%- if attr['data-colors'] is defined %} data-color-selectors="{{ attr['data-colors']}}"{% endif %}>
+            <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
+            <span class="input-group-addon"><i></i></span>
+        </div>
+    {% endapply %}
 {% endblock %}
 
 
@@ -306,10 +307,11 @@
 
 
 {% block range_widget %}
-{% apply spaceless %}
-    <div class="range">
-        {{ form_widget(form, {'type' : 'range', 'attr' : attr }) }}
-        <span class="range--value"></span>
-    </div>
-{% endapply %}
+    {% deprecated 'The "range_widget" block is deprecated since KunstmaanAdminBundle 6.2 and will be removed in KunstmaanAdminBundle 7.0. Use the symfony Range form type and twig block instead.' %}
+    {% apply spaceless %}
+        <div class="range">
+            {{ form_widget(form, {'type' : 'range', 'attr' : attr }) }}
+            <span class="range--value"></span>
+        </div>
+    {% endapply %}
 {% endblock %}

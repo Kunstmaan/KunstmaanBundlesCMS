@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @group legacy
+ */
 class RangeTypeTest extends TestCase
 {
     public function testMethods()

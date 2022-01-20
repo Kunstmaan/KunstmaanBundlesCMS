@@ -1,5 +1,6 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
+// NEXT_MAJOR: Remove JS and releted SCSS/CSS when deprecate RangeType is removed
 kunstmaanbundles.rangeslider = (function(window, undefined) {
 
     var init, reInit, initRangePercentage;

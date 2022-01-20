@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @group legacy
+ */
 class ColorTypeTest extends TestCase
 {
     public function testMethods()
