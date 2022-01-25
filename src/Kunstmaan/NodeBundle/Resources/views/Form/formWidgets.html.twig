@@ -76,7 +76,7 @@
 {% block slug_widget %}
     {% apply spaceless %}
         {% set url = path('_slug', {
-            url: prefix ~ value
+            url: (prefix ~ value | slugify)
         }) %}
 
         {% if prefix|first != '/' %}
