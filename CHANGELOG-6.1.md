@@ -6,6 +6,15 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.1.0...6.1.1
 
+## 6.1.3 / 2022-01-28
+
+* [LeadGenerationBundle] Add missing controller services [#3060](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3060) ([@acrobat](https://github.com/acrobat))
+* [LeadGenerationBundle] Allow symfony/deprecation-contracts v3 [#3049](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3049) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Only apply login subscriber to users of cms admin [#3069](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3069) ([@acrobat](https://github.com/acrobat))
+* [GeneratorBundle] Fix php8 incompatibility in article generator repository [#3057](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3057) ([@acrobat](https://github.com/acrobat))
+* [Dashboardbundle] Make ConfigHelper service lazy to avoid constructor queries [#3056](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3056) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix test incompatibility with doctrine/orm 2.11.0 [#3047](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3047) ([@acrobat](https://github.com/acrobat))
+
 ## 6.1.2 / 2022-01-10
 
 * [AdminBundle] Remove self-deprecation in tests and add missing deprecation test [#3034](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3034) ([@acrobat](https://github.com/acrobat))
