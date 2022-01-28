@@ -25,6 +25,13 @@
 * [NodeBundle] Bump symfony-cmf/router-bundle and remove compiler pass [#2972](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2972) ([@acrobat](https://github.com/acrobat))
 * [SitemapBundle] Add pre render event for adding sitemap indexes [#2905](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2905) ([@dannyvw](https://github.com/dannyvw))
 
+## 5.9.3 / 2022-01-28
+
+* [AdminBundle] Only apply login subscriber to users of cms admin [#3069](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3069) ([@acrobat](https://github.com/acrobat))
+* [GeneratorBundle] Fix php8 incompatibility in article generator repository [#3057](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3057) ([@acrobat](https://github.com/acrobat))
+* [Dashboardbundle] Make ConfigHelper service lazy to avoid constructor queries [#3056](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3056) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix test incompatibility with doctrine/orm 2.11.0 [#3047](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3047) ([@acrobat](https://github.com/acrobat))
+
 ## 5.9.2 / 2022-01-10
 
 * [NodeBundle] Improve performance of NodeMenu class [#3046](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3046) ([@acrobat](https://github.com/acrobat))
