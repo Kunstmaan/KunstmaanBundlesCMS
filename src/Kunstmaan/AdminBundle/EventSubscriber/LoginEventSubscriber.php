@@ -3,8 +3,8 @@
 namespace Kunstmaan\AdminBundle\EventSubscriber;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
@@ -27,7 +27,6 @@ final class LoginEventSubscriber implements EventSubscriberInterface
 
     public function setLastLoginDate(InteractiveLoginEvent $event)
     {
-        /* @var UserInterface $user */
         $user = $event->getAuthenticationToken()->getUser();
 
         if (!$user instanceof UserInterface) {
