@@ -27,7 +27,6 @@ final class LoginEventSubscriber implements EventSubscriberInterface
 
     public function setLastLoginDate(InteractiveLoginEvent $event)
     {
-        /* @var UserInterface $user */
         $user = $event->getAuthenticationToken()->getUser();
 
         if (!$user instanceof UserInterface) {
