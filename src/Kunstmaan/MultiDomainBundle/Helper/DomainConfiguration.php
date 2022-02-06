@@ -327,11 +327,15 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @param string|null $host
      *
-     * @return string
+     * @return string|null
      */
     public function getHostBaseUrl($host = null)
     {
         $config = $this->getFullHost($host);
+
+        if (!is_array($config)) {
+            return null;
+        }
 
         return sprintf('%s://%s', $config['protocol'], $config['host']);
     }
