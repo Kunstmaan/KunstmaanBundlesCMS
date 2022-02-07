@@ -185,6 +185,18 @@ class DomainConfigurationTest extends TestCase
         $this->assertEquals('http://multilangdomain.tld', $object->getHostBaseUrl('multilangdomain.tld'));
     }
 
+    public function testGetHostBaseUrlWithEmptyRequestUrl()
+    {
+        $object = $this->getDomainConfiguration(Request::create(''));
+        $this->assertNull($object->getHostBaseUrl());
+    }
+
+    public function testGetHostBaseUrlWithUnkownHost()
+    {
+        $object = $this->getDomainConfiguration(Request::create('unkowndomain.tld'));
+        $this->assertNull($object->getHostBaseUrl());
+    }
+
     public function testGetFullHost()
     {
         $request = $this->getSingleLanguageRequest();
