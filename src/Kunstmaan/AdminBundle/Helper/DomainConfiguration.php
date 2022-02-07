@@ -162,6 +162,8 @@ class DomainConfiguration implements DomainConfigurationInterface
 
     /**
      * @param string|null $host
+     *
+     * @return string|null
      */
     public function getHostBaseUrl($host = null)
     {
