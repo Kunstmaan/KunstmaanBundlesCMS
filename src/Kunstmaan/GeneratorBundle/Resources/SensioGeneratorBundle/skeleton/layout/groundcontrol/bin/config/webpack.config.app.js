@@ -8,7 +8,7 @@ export default function webpackConfigApp(speedupLocalDevelopment, optimize = fal
 
     config.entry = './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/app.js';
     config.output = {
-        path: path.resolve(__dirname, '../../{% if isV4 %}public{% else %}web{% endif %}/frontend/js'),
+        path: path.resolve(__dirname, '../../{% if isV4 %}public{% else %}web{% endif %}/build/js'),
         filename: 'bundle.js',
     };
 {% if demosite %}

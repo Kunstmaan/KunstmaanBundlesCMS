@@ -1,0 +1,55 @@
+{
+    "author": "Kunstmaan",
+    "license": "ISC",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "eslint": "eslint --ext .js,.jsx assets",
+        "eslint:fix": "npm run eslint -- --fix",
+        "start": "npm run dev-server",
+        "stylelint": "stylelint assets/**/*.scss",
+        "stylelint:fix": "npm run stylelint -- --fix",
+        "test": "npm run stylelint && npm run eslint",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 Chrome major versions",
+        "last 2 Firefox major versions",
+        "last 2 Safari major versions",
+        "last 2 Edge major versions",
+        "not dead",
+        "not IE 11"
+    ],
+    "dependencies": {
+        "bootstrap-sass": "^3.3.7",
+        "picturefill": "^3.0.3"{% if demosite %},
+        "cargobay": "Kunstmaan/cargobay#0.8.6-support",
+        "jquery": "^3.1.1",
+        "velocity-animate": "1.2.3"{% endif %}
+
+    },
+    "devDependencies": {
+        "@kunstmaan/eslint-config": "^3.0.0",
+        "@kunstmaan/stylelint-config": "^3.0.0",
+        "@symfony/webpack-encore": "^1.7.0",
+        "autoprefixer": "^10.4.2",
+        "core-js": "^3.19.2",
+        "eslint": "^8.8.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-webpack-plugin": "^2.6.0",
+        {% if demosite %}"exports-loader": "^0.7.0",
+        {% endif %}"file-loader": "^6.2.0",
+        "postcss": "^8.3.7",
+        "postcss-loader": "^6.1.1",
+        "regenerator-runtime": "^0.13.2",
+        "sass": "^1.42.0",
+        "sass-loader": "^12.1.0",
+        "stylelint": "^14.4.0",
+        "stylelint-webpack-plugin": "^2.2.2",
+        "webpack-notifier": "^1.6.0"
+    }
+}

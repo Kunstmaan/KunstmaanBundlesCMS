@@ -24,7 +24,7 @@
 
 {% if resource.video is defined and resource.video %}
     <div class="video-pp">
-        {% set videoImage = asset('frontend/img/general/video-pp--default.svg') %}
+        {% set videoImage = asset('build/img/general/video-pp--default.svg') %}
         {% set imageType = 'jpg' %}
         {% if resource.thumbnail is not empty %}
             {% set videoImage = asset(resource.thumbnail.url|imagine_filter('optim')) %}

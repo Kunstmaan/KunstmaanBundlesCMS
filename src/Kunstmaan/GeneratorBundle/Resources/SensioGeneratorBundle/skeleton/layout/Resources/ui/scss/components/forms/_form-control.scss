@@ -66,8 +66,7 @@
     border: none;
     border-radius: 0;
 
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    appearance: none;
 
     font-size: 13px;
 
@@ -77,27 +76,3 @@
     }
 {% endif %}
 }
-
-
-/**
- * @section Form control
- * @sectionof Forms
- */
-
-/**
- * @doc docs/input-text.md
- * @section
- * @sectionof Forms.Form control
- */
-
-/**
- * @doc docs/input-textarea.md
- * @section
- * @sectionof Forms.Form control
- */
-
-/**
- * @doc docs/input-select.md
- * @section
- * @sectionof Forms.Form control
- */

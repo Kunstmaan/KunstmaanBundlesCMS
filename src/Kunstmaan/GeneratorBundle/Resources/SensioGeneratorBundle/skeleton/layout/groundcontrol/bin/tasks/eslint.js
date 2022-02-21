@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import eslintPlugin from 'gulp-eslint';
+import eslintPlugin from 'gulp-eslint-new';
 import cache from 'gulp-cached';
 import path from 'path';
 import gulpif from 'gulp-if';

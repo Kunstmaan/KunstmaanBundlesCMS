@@ -8,6 +8,7 @@ function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes =
             presets: [
                 ['@babel/preset-env', {
                     useBuiltIns: 'usage',
+                    corejs: '3.19',
                     modules: false,
                 }],
             ],
@@ -19,6 +20,7 @@ function getBabelLoaderOptions({ optimize = false, transpileOnlyForLastChromes =
         presets: [
             ['@babel/preset-env', {
                 useBuiltIns: 'usage',
+                corejs: '3.19',
                 targets: {
                     browsers: ['last 2 Chrome versions'],
                 },

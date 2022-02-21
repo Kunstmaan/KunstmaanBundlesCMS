@@ -1,0 +1,73 @@
+{% set pathPrefix = '../ui/scss/' %}
+{% if not groundcontrol -%}
+{% set pathPrefix = '~scssRootDir/' %}
+{% endif %}
+@charset "UTF-8";
+
+/* ==========================================================================
+   Extra Stylesheet for admin
+   ========================================================================== */
+
+/* Config (necessary only)
+   ========================================================================== */
+@import "{{ pathPrefix }}config/general/colors";
+@import "{{ pathPrefix }}config/general/typography/fonts";
+@import "{{ pathPrefix }}config/general/typography/bodycopy";
+@import "{{ pathPrefix }}config/general/sizes";
+@import "{{ pathPrefix }}config/general/paths";
+
+/* Vendors - only vars!
+   ========================================================================== */
+@import "{{ pathPrefix }}config/vendors/bootstrap-vars"{% if demosite %};
+@import "{{ pathPrefix }}config/vendors/cargobay-vars"{% endif %};
+
+/* General
+   ========================================================================== */
+@import "{{ pathPrefix }}general/typography/iconfont";
+
+/* Helpers
+   ========================================================================== */
+@import "{{ pathPrefix }}helpers/helpers";
+
+
+/* Use these styling only in the pagepart previews
+   ========================================================================== */
+.page-template__region .admin-region,
+.pp__view .pp__view__block:first-child {
+    /* stylelint-disable no-invalid-position-at-import-rule */
+    /* General
+       ========================================================================== */
+    @import "{{ pathPrefix }}general/typography/bodycopy";
+
+    /* Blocks
+       ========================================================================== */
+    @import "{{ pathPrefix }}components/blocks/img";
+    @import "{{ pathPrefix }}components/blocks/hr";
+    @import "{{ pathPrefix }}components/blocks/lists";
+    @import "{{ pathPrefix }}components/blocks/links";
+    @import "{{ pathPrefix }}components/blocks/buttons";
+    @import "{{ pathPrefix }}components/blocks/tables";
+
+    /* Structures
+       ========================================================================== */
+{% if demosite %}
+    @import "{{ pathPrefix }}components/structures/header-visual";
+    @import "{{ pathPrefix }}components/structures/submenu";
+{% endif %}
+
+    /* Pageparts
+       ========================================================================== */
+    @import "{{ pathPrefix }}components/pageparts/button-pp";
+    @import "{{ pathPrefix }}components/pageparts/download-pp";
+    @import "{{ pathPrefix }}components/pageparts/header-pp";
+    @import "{{ pathPrefix }}components/pageparts/image-pp";
+    @import "{{ pathPrefix }}components/pageparts/introtext-pp";
+    @import "{{ pathPrefix }}components/pageparts/link-pp";
+{% if demosite %}
+    @import "{{ pathPrefix }}components/pageparts/service-pp";
+{% endif %}
+    @import "{{ pathPrefix }}components/pageparts/text-pp";
+    @import "{{ pathPrefix }}components/pageparts/totop-pp";
+    @import "{{ pathPrefix }}components/pageparts/video-pp";
+    /* stylelint-enable no-invalid-position-at-import-rule */
+}

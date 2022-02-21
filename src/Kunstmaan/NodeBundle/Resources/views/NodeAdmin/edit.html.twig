@@ -124,4 +124,13 @@
     {% if file_exists(cssPath) %}
         <link rel="stylesheet" href="{{ asset('/' ~ cssPath) }}">
     {% endif %}
+
+    {% set cssPath = 'build/css/admin-style.css' %}
+    {% if file_exists(cssPath) %}
+        <link rel="stylesheet" href="{{ asset('/' ~ cssPath) }}">
+    {% endif %}
+
+    {% if encore_entry_exists('admin') %}
+        {{ encore_entry_link_tags('admin') }}
+    {% endif %}
 {% endblock %}

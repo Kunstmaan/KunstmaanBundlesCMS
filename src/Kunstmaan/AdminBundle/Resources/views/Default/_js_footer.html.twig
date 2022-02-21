@@ -16,6 +16,9 @@
 
         {%- set jsPath = 'frontend/js/admin-bundle-extra.js' -%}
         {% if file_exists(jsPath) %}'{{ asset('/' ~ jsPath) }}'{% endif %}
+
+        {%- set jsPath = 'build/js/admin-bundle-extra.js' -%}
+        {% if file_exists(jsPath) %}'{{ asset('/' ~ jsPath) }}'{% endif %}
     ];
 
     if (!('fetch' in window &&

@@ -32,18 +32,24 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     private $demosite;
 
     /**
+     * @var bool
+     */
+    private $groundControl;
+
+    /**
      * Generate the website.
      *
      * @param string $prefix
      * @param string $rootDir
      * @param bool   $demosite
      */
-    public function generate(BundleInterface $bundle, $prefix, $rootDir, $demosite = false)
+    public function generate(BundleInterface $bundle, $prefix, $rootDir, $demosite = false, $groundControl = false)
     {
         $this->bundle = $bundle;
         $this->prefix = GeneratorUtils::cleanPrefix($prefix);
         $this->rootDir = $rootDir;
         $this->demosite = $demosite;
+        $this->groundControl = $groundControl;
 
         $parameters = [
             'namespace' => $this->bundle->getNamespace(),
@@ -53,6 +59,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             'demosite' => $this->demosite,
             'multilanguage' => $this->isMultiLangEnvironment(),
             'isV4' => $this->isSymfony4(),
+            'groundcontrol' => $this->groundControl,
         ];
 
         $this->generateControllers($parameters);
