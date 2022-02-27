@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 
 /**
  * An Acl changeset will be added to the queue whenever a change is made to the permissions. The {@link ApplyAclCommand}
@@ -15,6 +16,11 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
+#[ORM\Entity(repositoryClass: AclChangesetRepository::class)]
+#[ORM\Table(name: 'kuma_acl_changesets')]
+#[ORM\Index(name: 'idx_acl_changeset_ref', columns: ['ref_id', 'ref_entity_name'])]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class AclChangeset extends AbstractEntity
 {
     /**
@@ -40,11 +46,13 @@ class AclChangeset extends AbstractEntity
     /**
      * @ORM\Column(type="bigint", name="ref_id")
      */
+    #[ORM\Column(name: 'ref_id', type: 'bigint')]
     protected $refId;
 
     /**
      * @ORM\Column(type="string", name="ref_entity_name")
      */
+    #[ORM\Column(name: 'ref_entity_name', type: 'string')]
     protected $refEntityName;
 
     /**
@@ -55,26 +63,31 @@ class AclChangeset extends AbstractEntity
     /**
      * @ORM\Column(type="array")
      */
+    #[ORM\Column(name: 'changeset', type: 'array')]
     protected $changeset;
 
     /**
      * @ORM\Column(type="integer", name="pid", nullable=true)
      */
+    #[ORM\Column(name: 'pid', type: 'integer', nullable: true)]
     protected $pid;
 
     /**
      * @ORM\Column(type="integer", name="status")
      */
+    #[ORM\Column(name: 'status', type: 'integer')]
     protected $status;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'created', type: 'datetime', nullable: true)]
     protected $created;
 
     /**
      * @ORM\Column(name="last_modified", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'last_modified', type: 'datetime', nullable: true)]
     protected $lastModified;
 
     /**

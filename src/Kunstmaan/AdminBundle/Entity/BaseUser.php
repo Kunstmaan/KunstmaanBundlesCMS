@@ -19,6 +19,9 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
@@ -26,6 +29,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(type="string", length=180, unique=true)
      */
+    #[ORM\Column(name: 'username', type: 'string', length: 180, unique: true)]
     protected $username;
 
     /**
@@ -36,16 +40,19 @@ abstract class BaseUser implements UserInterface, EquatableInterface
     /**
      * @ORM\Column(type="string", name="admin_locale", length=5, nullable=true)
      */
+    #[ORM\Column(name: 'admin_locale', type: 'string', length: 5, nullable: true)]
     protected $adminLocale;
 
     /**
      * @ORM\Column(type="boolean", name="password_changed", nullable=true)
      */
+    #[ORM\Column(name: 'password_changed', type: 'boolean', nullable: true)]
     protected $passwordChanged;
 
     /**
      * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'google_id', type: 'string', length: 255, nullable: true)]
     protected $googleId;
 
     /**
@@ -53,6 +60,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(type="string", length=180, unique=true)
      */
+    #[ORM\Column(name: 'email', type: 'string', length: 180, unique: true)]
     protected $email;
 
     /**
@@ -60,6 +68,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(name="password", type="string", length=100)
      */
+    #[ORM\Column(name: 'password', type: 'string', length: 100)]
     protected $password;
 
     /**
@@ -72,6 +81,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'confirmation_token', type: 'string', length: 255, nullable: true)]
     protected $confirmationToken;
 
     /**
@@ -79,6 +89,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(name="salt", type="string", length=100, nullable=true)
      */
+    #[ORM\Column(name: 'salt', type: 'string', length: 100, nullable: true)]
     protected $salt;
 
     /**
@@ -86,6 +97,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
     protected $lastLogin;
 
     /**
@@ -93,23 +105,27 @@ abstract class BaseUser implements UserInterface, EquatableInterface
      *
      * @ORM\Column(name="roles", type="array")
      */
+    #[ORM\Column(name: 'roles', type: 'array')]
     protected $roles;
 
     /**
      * @ORM\Column(name="enabled", type="boolean")
      */
+    #[ORM\Column(name: 'enabled', type: 'boolean')]
     protected $enabled;
 
     /**
      * @var \DateTimeImmutable|null
      * @ORM\Column(name="created_at", type="datetime_immutable", nullable=true)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime_immutable', nullable: true)]
     protected $createdAt;
 
     /**
      * @var string|null
      * @ORM\Column(name="created_by", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'created_by', type: 'string', nullable: true)]
     protected $createdBy;
 
     public function __construct()

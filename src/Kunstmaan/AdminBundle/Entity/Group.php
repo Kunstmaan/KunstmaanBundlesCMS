@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * Group
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_groups')]
 class Group implements GroupInterface
 {
     /**
@@ -21,12 +21,16 @@ class Group implements GroupInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'name', type: 'string')]
     protected $name;
 
     /**
@@ -36,6 +40,10 @@ class Group implements GroupInterface
      *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
      * )
      */
+    #[ORM\ManyToMany(targetEntity: Role::class)]
+    #[ORM\JoinTable(name: 'kuma_groups_roles')]
+    #[ORM\JoinColumn(name: 'group_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'role_id', referencedColumnName: 'id')]
     protected $roles;
 
     /**

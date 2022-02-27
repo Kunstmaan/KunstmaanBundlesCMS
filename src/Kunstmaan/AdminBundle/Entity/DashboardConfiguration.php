@@ -8,16 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="kuma_dashboard_configurations")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_dashboard_configurations')]
 class DashboardConfiguration extends AbstractEntity
 {
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'title', type: 'string', nullable: true)]
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(name: 'content', type: 'text', nullable: true)]
     protected $content;
 
     /**

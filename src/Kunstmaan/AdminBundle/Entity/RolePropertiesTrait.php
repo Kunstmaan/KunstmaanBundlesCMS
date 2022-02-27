@@ -17,12 +17,16 @@ trait RolePropertiesTrait
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", name="role", unique=true, length=70)
      */
+    #[ORM\Column(name: 'role', type: 'string', unique: true, length: 70)]
     protected $role;
 
     /**
