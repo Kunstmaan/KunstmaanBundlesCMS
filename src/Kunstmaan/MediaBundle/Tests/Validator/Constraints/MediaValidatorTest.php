@@ -111,9 +111,4 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
             ['maxHeight', 50, 'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.', ['{{ height }}' => 100, '{{ max_height }}' => 50], Media::TOO_HIGH_ERROR],
         ];
     }
-
-    protected function getApiVersion()
-    {
-        return Validation::API_VERSION_2_5;
-    }
 }
