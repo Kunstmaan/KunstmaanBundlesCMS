@@ -17,11 +17,14 @@ abstract class AbstractTag extends AbstractEntity implements Translatable
      * @Assert\NotBlank()
      * @Gedmo\Translatable
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255)]
+    #[Gedmo\Translatable]
     protected $name;
 
     /**
      * @Gedmo\Locale
      */
+    #[Gedmo\Locale]
     protected $locale;
 
     /**
@@ -29,6 +32,7 @@ abstract class AbstractTag extends AbstractEntity implements Translatable
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'deleted_at', type: 'datetime', nullable: true)]
     protected $deletedAt;
 
     /**
