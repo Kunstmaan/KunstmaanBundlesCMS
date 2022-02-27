@@ -12,6 +12,8 @@ use Kunstmaan\SeoBundle\Form\RobotsType;
  * @ORM\Entity
  * @ORM\Table(name="kuma_robots")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_robots')]
 class Robots extends AbstractEntity
 {
     /**
@@ -19,6 +21,7 @@ class Robots extends AbstractEntity
      *
      * @ORM\Column(name="robots_txt", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'robots_txt', type: 'text', nullable: true)]
     protected $robotsTxt;
 
     /**

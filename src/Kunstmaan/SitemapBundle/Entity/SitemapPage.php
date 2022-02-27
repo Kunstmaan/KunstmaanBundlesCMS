@@ -9,11 +9,11 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemapInterface;
 
 /**
- * ContentPage
- *
  * @ORM\Entity()
  * @ORM\Table(name="kuma_sitemap_pages")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_sitemap_pages')]
 class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, HasPagePartsInterface
 {
     /**

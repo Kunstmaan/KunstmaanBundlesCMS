@@ -7,6 +7,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Kunstmaan\RedirectBundle\Repository\RedirectRepository;
 
 /**
  * @ORM\Table(
@@ -18,6 +19,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
  * @UniqueEntity(fields={"origin", "domain"})
  */
+#[ORM\Table(name: 'kuma_redirects')]
+#[ORM\UniqueConstraint(name: 'kuma_redirects_idx_domain_origin', columns: ['domain', 'origin'])]
+#[ORM\Entity(repositoryClass: RedirectRepository::class)]
+#[UniqueEntity(fields: ['origin', 'domain'])]
 class Redirect extends AbstractEntity
 {
     /**
@@ -25,6 +30,7 @@ class Redirect extends AbstractEntity
      *
      * @ORM\Column(name="domain", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'domain', type: 'string', length: 255, nullable: true)]
     private $domain;
 
     /**
@@ -33,6 +39,7 @@ class Redirect extends AbstractEntity
      * @ORM\Column(name="origin", type="string", length=255)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'origin', type: 'string', length: 255)]
     private $origin;
 
     /**
@@ -40,6 +47,7 @@ class Redirect extends AbstractEntity
      *
      * @ORM\Column(name="note", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'note', type: 'string', length: 255, nullable: true)]
     private $note;
 
     /**
@@ -48,6 +56,7 @@ class Redirect extends AbstractEntity
      * @ORM\Column(name="target", type="text")
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'target', type: 'text')]
     private $target;
 
     /**
@@ -55,6 +64,7 @@ class Redirect extends AbstractEntity
      *
      * @ORM\Column(name="permanent", type="boolean")
      */
+    #[ORM\Column(name: 'permanent', type: 'boolean')]
     private $permanent;
 
     /**
