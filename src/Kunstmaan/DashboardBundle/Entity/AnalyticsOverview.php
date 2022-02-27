@@ -4,31 +4,38 @@ namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 
 /**
- * AnalyticsOverview
- *
  * @ORM\Table(name="kuma_analytics_overview")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository")
  */
+#[ORM\Table(name: 'kuma_analytics_overview')]
+#[ORM\Entity(repositoryClass: AnalyticsOverviewRepository::class)]
 class AnalyticsOverview extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="overviews")
      * @ORM\JoinColumn(name="config_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: AnalyticsConfig::class, inversedBy: 'overviews')]
+    #[ORM\JoinColumn(name: 'config_id', referencedColumnName: 'id')]
     private $config;
 
     /**
      * @ORM\ManyToOne(targetEntity="AnalyticsSegment", inversedBy="overviews")
      * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", nullable=true)
      */
+    #[ORM\ManyToOne(targetEntity: AnalyticsSegment::class, inversedBy: 'overviews')]
+    #[ORM\JoinColumn(name: 'segment_id', referencedColumnName: 'id', nullable: true)]
     private $segment;
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist", "remove"})
      * @ORM\OrderBy({"name" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: AnalyticsGoal::class, mappedBy: 'overview', cascade: ['persist', 'remove'])]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     private $goals;
 
     /**
@@ -36,6 +43,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
+    #[ORM\Column(name: 'title', type: 'string', length: 255)]
     private $title;
 
     /**
@@ -43,6 +51,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="timespan", type="integer")
      */
+    #[ORM\Column(name: 'timespan', type: 'integer')]
     private $timespan;
 
     /**
@@ -50,6 +59,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="start_days_ago", type="integer")
      */
+    #[ORM\Column(name: 'start_days_ago', type: 'integer')]
     private $startOffset = 0;
 
     /**
@@ -57,6 +67,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="use_year", type="boolean")
      */
+    #[ORM\Column(name: 'use_year', type: 'boolean')]
     private $useYear = false;
 
     /**
@@ -64,6 +75,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="sessions", type="integer")
      */
+    #[ORM\Column(name: 'sessions', type: 'integer')]
     private $sessions = 0;
 
     /**
@@ -71,6 +83,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="users", type="integer")
      */
+    #[ORM\Column(name: 'users', type: 'integer')]
     private $users = 0;
 
     /**
@@ -78,6 +91,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="returning_users", type="integer")
      */
+    #[ORM\Column(name: 'returning_users', type: 'integer')]
     private $returningUsers = 0;
 
     /**
@@ -85,6 +99,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="new_users", type="float")
      */
+    #[ORM\Column(name: 'new_users', type: 'float')]
     private $newUsers = 0;
 
     /**
@@ -92,6 +107,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="pageviews", type="integer")
      */
+    #[ORM\Column(name: 'pageviews', type: 'integer')]
     private $pageviews = 0;
 
     /**
@@ -99,6 +115,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="pages_per_session", type="float")
      */
+    #[ORM\Column(name: 'pages_per_session', type: 'float')]
     private $pagesPerSession = 0;
 
     /**
@@ -106,6 +123,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="chart_data_max_value", type="integer")
      */
+    #[ORM\Column(name: 'chart_data_max_value', type: 'integer')]
     private $chartDataMaxValue = 0;
 
     /**
@@ -113,6 +131,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="avg_session_duration", type="string")
      */
+    #[ORM\Column(name: 'avg_session_duration', type: 'string')]
     private $avgSessionDuration = 0;
 
     /**
@@ -120,6 +139,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="chart_data", type="text")
      */
+    #[ORM\Column(name: 'chart_data', type: 'text')]
     private $chartData = '';
 
     /**
