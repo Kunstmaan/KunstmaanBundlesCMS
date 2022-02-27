@@ -4,6 +4,7 @@ namespace Kunstmaan\PagePartBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
 /**
  * Reference between a page and a pagepart
@@ -12,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_page_part_refs", indexes={@ORM\Index(name="idx_page_part_search", columns={"pageId", "pageEntityname", "context"})})
  * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: PagePartRefRepository::class)]
+#[ORM\Table(name: 'kuma_page_part_refs')]
+#[ORM\Index(name: 'idx_page_part_search', columns: ['pageId', 'pageEntityname', 'context'])]
+#[ORM\HasLifecycleCallbacks]
 class PagePartRef
 {
     /**
@@ -19,51 +24,59 @@ class PagePartRef
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @ORM\Column(name="pageId", type="bigint")
      */
+    #[ORM\Column(name: 'pageId', type: 'bigint')]
     protected $pageId;
 
     /**
      * @ORM\Column(name="pageEntityname", type="string")
      */
+    #[ORM\Column(name: 'pageEntityname', type: 'string')]
     protected $pageEntityname;
 
     /**
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'context', type: 'string')]
     protected $context;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(name: 'sequencenumber', type: 'integer')]
     protected $sequencenumber;
 
     /**
      * @ORM\Column(type="bigint")
      */
+    #[ORM\Column(type: 'bigint')]
     protected $pagePartId;
 
     /**
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $pagePartEntityname;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'created', type: 'datetime')]
     protected $created;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'updated', type: 'datetime')]
     protected $updated;
 
-    /**
-     * The constructor
-     */
     public function __construct()
     {
         $this->setCreated(new \DateTime());
@@ -245,6 +258,7 @@ class PagePartRef
     /**
      * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function setUpdatedValue()
     {
         $this->setUpdated(new \DateTime());

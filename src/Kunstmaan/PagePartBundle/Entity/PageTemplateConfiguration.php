@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\PagePartBundle\Repository\PageTemplateConfigurationRepository;
 
 /**
  * Configuration for page templates
@@ -13,21 +14,27 @@ use Kunstmaan\NodeBundle\Entity\PageInterface;
  * @ORM\Entity(repositoryClass="Kunstmaan\PagePartBundle\Repository\PageTemplateConfigurationRepository")
  * @ORM\Table(name="kuma_page_template_configuration", indexes={@ORM\Index(name="idx_page_template_config_search", columns={"page_id", "page_entity_name"})})
  */
+#[ORM\Entity(repositoryClass: PageTemplateConfigurationRepository::class)]
+#[ORM\Table(name: 'kuma_page_template_configuration')]
+#[ORM\Index(name: 'idx_page_template_config_search', columns: ['page_id', 'page_entity_name'])]
 class PageTemplateConfiguration extends AbstractEntity
 {
     /**
      * @ORM\Column(type="bigint", name="page_id")
      */
+    #[ORM\Column(name: 'page_id', type: 'bigint')]
     protected $pageId;
 
     /**
      * @ORM\Column(type="string", name="page_entity_name")
      */
+    #[ORM\Column(name: 'page_entity_name', type: 'string')]
     protected $pageEntityName;
 
     /**
      * @ORM\Column(type="string", name="page_template")
      */
+    #[ORM\Column(name: 'page_template', type: 'string')]
     protected $pageTemplate;
 
     /**

@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 
 /**
- * TocPagePart
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_toc_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_toc_page_parts')]
 class TocPagePart extends AbstractPagePart
 {
     /**
