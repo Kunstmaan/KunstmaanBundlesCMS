@@ -9,13 +9,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\CookieBundle\Repository\CookieTypeRepository;
+use Kunstmaan\CookieBundle\Entity\Cookie;
 
 /**
- * CookieType
- *
  * @ORM\Table(name="kuma_cookie_types")
  * @ORM\Entity(repositoryClass="Kunstmaan\CookieBundle\Repository\CookieTypeRepository")
  */
+#[ORM\Table(name: 'kuma_cookie_types')]
+#[ORM\Entity(repositoryClass: CookieTypeRepository::class)]
 class CookieType extends AbstractEntity implements OverviewNavigationInterface
 {
     /**
@@ -25,6 +27,8 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
+    #[Gedmo\Translatable]
     private $name;
 
     /**
@@ -33,6 +37,8 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      *
      * @ORM\Column(name="short_description", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'short_description', type: 'text', nullable: true)]
+    #[Gedmo\Translatable]
     private $shortDescription;
 
     /**
@@ -41,6 +47,8 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      *
      * @ORM\Column(name="long_description", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'long_description', type: 'text', nullable: true)]
+    #[Gedmo\Translatable]
     private $longDescription;
 
     /**
@@ -49,6 +57,7 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      *
      * @ORM\Column(name="internal_name", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'internal_name', type: 'string', length: 255, nullable: true)]
     private $internalName;
 
     /**
@@ -56,6 +65,7 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      *
      * @ORM\Column(name="weight", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'weight', type: 'integer', nullable: true)]
     private $weight = 0;
 
     /**
@@ -63,16 +73,15 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      *
      * @ORM\Column(name="always_on", type="boolean")
      */
+    #[ORM\Column(name: 'always_on', type: 'boolean')]
     private $alwaysOn = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Kunstmaan\CookieBundle\Entity\Cookie", mappedBy="type", cascade={"ALL"})
      */
+    #[ORM\OneToMany(targetEntity: Cookie::class, mappedBy: 'type', cascade: ['ALL'])]
     private $cookies;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->cookies = new ArrayCollection();

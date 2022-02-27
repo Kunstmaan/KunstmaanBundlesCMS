@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * CookieLog
- *
  * @ORM\Table(name="kuma_cookie_logs")
  * @ORM\Entity()
  */
+#[ORM\Table(name: 'kuma_cookie_logs')]
+#[ORM\Entity]
 class CookieLog extends AbstractEntity
 {
     /**
@@ -18,6 +18,7 @@ class CookieLog extends AbstractEntity
      *
      * @ORM\Column(name="ip_address", type="string", length=255, nullable=false)
      */
+    #[ORM\Column(name: 'ip_address', type: 'string', length: 255, nullable: false)]
     private $ipAddress;
 
     /**
@@ -25,6 +26,7 @@ class CookieLog extends AbstractEntity
      *
      * @ORM\Column(name="created", type="datetime")
      */
+    #[ORM\Column(name: 'created', type: 'datetime')]
     private $created;
 
     /**
