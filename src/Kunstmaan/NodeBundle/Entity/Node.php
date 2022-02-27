@@ -10,10 +10,9 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\NodeAdminType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\NodeBundle\Repository\NodeRepository;
 
 /**
- * Node
- *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeRepository")
  * @ORM\Table(
  *      name="kuma_nodes",
@@ -27,6 +26,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @Gedmo\Tree(type="nested")
  */
+#[ORM\Entity(repositoryClass: NodeRepository::class)]
+#[ORM\Table(name: 'kuma_nodes')]
+#[ORM\Index(name: 'idx_node_internal_name', columns: ['internal_name'])]
+#[ORM\Index(name: 'idx_node_ref_entity_name', columns: ['ref_entity_name'])]
+#[ORM\Index(name: 'idx_node_tree', columns: ['deleted', 'hidden_from_nav', 'lft', 'rgt'])]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Gedmo\Tree(type: 'nested')]
 class Node extends AbstractEntity implements GedmoNode
 {
     /**
@@ -36,6 +43,9 @@ class Node extends AbstractEntity implements GedmoNode
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      * @Gedmo\TreeParent
      */
+    #[ORM\ManyToOne(targetEntity: Node::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
+    #[Gedmo\TreeParent]
     protected $parent;
 
     /**
@@ -43,6 +53,7 @@ class Node extends AbstractEntity implements GedmoNode
      *
      * @ORM\OneToMany(targetEntity="Node", mappedBy="parent")
      */
+    #[ORM\OneToMany(targetEntity: Node::class, mappedBy: 'parent')]
     protected $children;
 
     /**
@@ -51,6 +62,8 @@ class Node extends AbstractEntity implements GedmoNode
      * @ORM\Column(name="lft", type="integer", nullable=true)
      * @Gedmo\TreeLeft
      */
+    #[ORM\Column(name: 'lft', type: 'integer', nullable: true)]
+    #[Gedmo\TreeLeft]
     protected $lft;
 
     /**
@@ -59,6 +72,8 @@ class Node extends AbstractEntity implements GedmoNode
      * @ORM\Column(name="lvl", type="integer", nullable=true)
      * @Gedmo\TreeLevel
      */
+    #[ORM\Column(name: 'lvl', type: 'integer', nullable: true)]
+    #[Gedmo\TreeLevel]
     protected $lvl;
 
     /**
@@ -67,6 +82,8 @@ class Node extends AbstractEntity implements GedmoNode
      * @ORM\Column(name="rgt", type="integer", nullable=true)
      * @Gedmo\TreeRight
      */
+    #[ORM\Column(name: 'rgt', type: 'integer', nullable: true)]
+    #[Gedmo\TreeRight]
     protected $rgt;
 
     /**
@@ -74,6 +91,7 @@ class Node extends AbstractEntity implements GedmoNode
      * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */
+    #[ORM\OneToMany(targetEntity: NodeTranslation::class, mappedBy: 'node')]
     protected $nodeTranslations;
 
     /**
@@ -81,6 +99,7 @@ class Node extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(name: 'deleted', type: 'boolean')]
     protected $deleted;
 
     /**
@@ -88,6 +107,7 @@ class Node extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="boolean", name="hidden_from_nav")
      */
+    #[ORM\Column(name: 'hidden_from_nav', type: 'boolean')]
     protected $hiddenFromNav;
 
     /**
@@ -95,6 +115,7 @@ class Node extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="string", nullable=false, name="ref_entity_name")
      */
+    #[ORM\Column(name: 'ref_entity_name', type: 'string', nullable: false)]
     protected $refEntityName;
 
     /**
@@ -102,6 +123,7 @@ class Node extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="string", nullable=true, name="internal_name")
      */
+    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
     protected $internalName;
 
     public function __construct()

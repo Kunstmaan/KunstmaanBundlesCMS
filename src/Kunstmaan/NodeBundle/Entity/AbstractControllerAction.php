@@ -18,6 +18,7 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'title', type: 'string')]
     protected $title;
 
     /**
@@ -25,6 +26,7 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
      *
      * @ORM\Column(type="string", nullable=true, name="page_title")
      */
+    #[ORM\Column(name: 'page_title', type: 'string', nullable: true)]
     protected $pageTitle;
 
     /**
