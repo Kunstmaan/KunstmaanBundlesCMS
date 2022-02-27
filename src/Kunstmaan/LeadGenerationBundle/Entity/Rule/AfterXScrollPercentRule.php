@@ -10,17 +10,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_rule_after_x_scroll_percent")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_rule_after_x_scroll_percent')]
 class AfterXScrollPercentRule extends AbstractRule
 {
     /**
      * @var int
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
-     * @Assert\Range(
-     *      min = 0,
-     *      max = 100
-     * )
+     * @Assert\Range(min = 0, max = 100)
      */
+    #[ORM\Column(name: 'percentage', type: 'integer')]
     private $percentage;
 
     /**

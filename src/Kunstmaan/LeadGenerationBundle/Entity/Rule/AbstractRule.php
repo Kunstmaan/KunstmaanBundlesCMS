@@ -13,6 +13,10 @@ use Kunstmaan\LeadGenerationBundle\Service\RuleServiceInterface;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_popup_rules')]
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 abstract class AbstractRule
 {
     /**
@@ -20,12 +24,17 @@ abstract class AbstractRule
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup", inversedBy="rules")
      * @ORM\JoinColumn(name="popup_id", referencedColumnName="id")
      **/
+    #[ORM\ManyToOne(targetEntity: AbstractPopup::class, inversedBy: 'rules')]
+    #[ORM\JoinColumn(name: 'popup_id', referencedColumnName: 'id')]
     protected $popup;
 
     /**
