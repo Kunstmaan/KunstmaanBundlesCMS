@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The email page part can be used to create forms with email input fields
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\Entity
  * @ORM\Table(name="kuma_email_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_email_page_parts')]
 class EmailPagePart extends AbstractFormPagePart
 {
     /**
@@ -25,6 +28,7 @@ class EmailPagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'required', type: 'boolean', nullable: true)]
     protected $required = false;
 
     /**
@@ -33,6 +37,7 @@ class EmailPagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
     protected $errorMessageRequired;
 
     /**
@@ -41,6 +46,7 @@ class EmailPagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", name="error_message_invalid", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'error_message_invalid', type: 'string', nullable: true)]
     protected $errorMessageInvalid;
 
     /**

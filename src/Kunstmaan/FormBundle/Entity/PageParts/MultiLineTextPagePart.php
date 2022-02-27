@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The multi-line text page part can be used to create forms with multi-line text fields
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @ORM\Entity
  * @ORM\Table(name="kuma_multi_line_text_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_multi_line_text_page_parts')]
 class MultiLineTextPagePart extends AbstractFormPagePart
 {
     /**
@@ -25,6 +28,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'required', type: 'boolean', nullable: true)]
     protected $required = false;
 
     /**
@@ -33,6 +37,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
     protected $errorMessageRequired;
 
     /**
@@ -41,6 +46,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'regex', type: 'string', nullable: true)]
     protected $regex;
 
     /**
@@ -49,6 +55,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'error_message_regex', type: 'string', nullable: true)]
     protected $errorMessageRegex;
 
     /**

@@ -10,6 +10,7 @@ use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The choice page part can be used to create forms with single or multiple choices. This can be
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\Entity
  * @ORM\Table(name="kuma_choice_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_choice_page_parts')]
 class ChoicePagePart extends AbstractFormPagePart
 {
     /**
@@ -26,6 +29,7 @@ class ChoicePagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'expanded', type: 'boolean', nullable: true)]
     protected $expanded = false;
 
     /**
@@ -35,6 +39,7 @@ class ChoicePagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'multiple', type: 'boolean', nullable: true)]
     protected $multiple = false;
 
     /**
@@ -42,6 +47,7 @@ class ChoicePagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(name: 'choices', type: 'text', nullable: true)]
     protected $choices;
 
     /**
@@ -52,6 +58,7 @@ class ChoicePagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", name="empty_value", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'empty_value', type: 'string', nullable: true)]
     protected $emptyValue;
 
     /**
@@ -59,6 +66,7 @@ class ChoicePagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'required', type: 'boolean', nullable: true)]
     protected $required = false;
 
     /**
@@ -67,6 +75,7 @@ class ChoicePagePart extends AbstractFormPagePart
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      * @Length(max=255)
      */
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
     protected $errorMessageRequired;
 
     /**

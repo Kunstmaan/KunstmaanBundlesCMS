@@ -12,11 +12,14 @@ use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
  * @ORM\Entity
  * @ORM\Table(name="kuma_email_form_submission_fields")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_email_form_submission_fields')]
 class EmailFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="efsf_value", type="string")
      */
+    #[ORM\Column(name: 'efsf_value', type: 'string')]
     protected $value;
 
     /**

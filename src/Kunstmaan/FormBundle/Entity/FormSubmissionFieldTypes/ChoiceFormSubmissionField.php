@@ -12,11 +12,14 @@ use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
  * @ORM\Entity
  * @ORM\Table(name="kuma_choice_form_submission_fields")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_choice_form_submission_fields')]
 class ChoiceFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="cfsf_value", type="array", nullable=true)
      */
+    #[ORM\Column(name: 'cfsf_value', type: 'array', nullable: true)]
     protected $value;
 
     /**
@@ -25,6 +28,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'expanded', type: 'boolean', nullable: true)]
     protected $expanded = false;
 
     /**
@@ -34,6 +38,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'multiple', type: 'boolean', nullable: true)]
     protected $multiple = false;
 
     /**
@@ -42,6 +47,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      *
      * @ORM\Column(type="array", nullable=true)
      */
+    #[ORM\Column(name: 'choices', type: 'array', nullable: true)]
     protected $choices = [];
 
     /**
@@ -49,6 +55,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'required', type: 'boolean', nullable: true)]
     protected $required = false;
 
     /**

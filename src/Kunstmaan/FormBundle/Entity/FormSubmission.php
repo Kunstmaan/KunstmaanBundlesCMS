@@ -15,6 +15,9 @@ use Kunstmaan\NodeBundle\Entity\Node;
  * @ORM\Table(name="kuma_form_submissions")
  * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_form_submissions')]
+#[ORM\HasLifecycleCallbacks]
 class FormSubmission implements EntityInterface
 {
     /**
@@ -24,6 +27,9 @@ class FormSubmission implements EntityInterface
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
@@ -31,6 +37,7 @@ class FormSubmission implements EntityInterface
      *
      * @ORM\Column(type="string", name="ip_address")
      */
+    #[ORM\Column(name: 'ip_address', type: 'string')]
     protected $ipAddress;
 
     /**
@@ -39,6 +46,8 @@ class FormSubmission implements EntityInterface
      * @ORM\ManyToOne(targetEntity="Kunstmaan\NodeBundle\Entity\Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: Node::class)]
+    #[ORM\JoinColumn(name: 'node_id', referencedColumnName: 'id')]
     protected $node;
 
     /**
@@ -46,6 +55,7 @@ class FormSubmission implements EntityInterface
      *
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'lang', type: 'string')]
     protected $lang;
 
     /**
@@ -53,6 +63,7 @@ class FormSubmission implements EntityInterface
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'created', type: 'datetime')]
     protected $created;
 
     /**
@@ -61,6 +72,8 @@ class FormSubmission implements EntityInterface
      * @ORM\OneToMany(targetEntity="FormSubmissionField", mappedBy="formSubmission", cascade={"persist", "remove"})
      * @ORM\OrderBy({"sequence" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: FormSubmissionField::class, mappedBy: 'formSubmission', cascade: ['persist', 'remove'])]
+    #[ORM\OrderBy(['sequence' => 'ASC'])]
     protected $fields;
 
     public function __construct()

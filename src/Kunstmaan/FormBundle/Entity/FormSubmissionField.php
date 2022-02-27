@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_form_submission_fields')]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 abstract class FormSubmissionField
 {
     /**
@@ -26,6 +30,9 @@ abstract class FormSubmissionField
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
@@ -33,6 +40,7 @@ abstract class FormSubmissionField
      *
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'field_name', type: 'string')]
     protected $fieldName;
 
     /**
@@ -40,6 +48,7 @@ abstract class FormSubmissionField
      *
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'label', type: 'string')]
     protected $label;
 
     /**
@@ -48,11 +57,14 @@ abstract class FormSubmissionField
      * @ORM\ManyToOne(targetEntity="FormSubmission", inversedBy="fields")
      * @ORM\JoinColumn(name="form_submission_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\ManyToOne(targetEntity: FormSubmission::class, inversedBy: 'fields')]
+    #[ORM\JoinColumn(name: 'form_submission_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $formSubmission;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'sequence', type: 'integer', nullable: true)]
     protected $sequence;
 
     /**
@@ -60,6 +72,7 @@ abstract class FormSubmissionField
      *
      * @ORM\Column(name="internal_name", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
     protected $internalName;
 
     /**
