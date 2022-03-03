@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kunstmaan\AdminBundle\Repository\ExceptionRepository;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\ExceptionRepository")
@@ -17,6 +18,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("hash")
  * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: ExceptionRepository::class)]
+#[ORM\Table(name: 'kuma_exception')]
+#[ORM\Index(name: 'idx_exception_is_resolved', columns: ['is_resolved'])]
+#[UniqueEntity('hash')]
+#[ORM\HasLifecycleCallbacks]
 class Exception extends AbstractEntity
 {
     /**
@@ -24,6 +30,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="string", length=3)
      */
+    #[ORM\Column(name: 'code', type: 'string', length: 3)]
     private $code;
 
     /**
@@ -31,6 +38,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="text")
      */
+    #[ORM\Column(name: 'url', type: 'text')]
     private $url;
 
     /**
@@ -38,6 +46,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(name: 'url_referer', type: 'text', nullable: true)]
     private $urlReferer;
 
     /**
@@ -45,6 +54,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=false, unique=true, length=32)
      */
+    #[ORM\Column(name: 'hash', type: 'string', nullable: false, unique: true, length: 32)]
     private $hash;
 
     /**
@@ -52,6 +62,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="integer", nullable=false)
      */
+    #[ORM\Column(name: 'events', type: 'integer', nullable: false)]
     private $events;
 
     /**
@@ -59,6 +70,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="boolean", name="is_resolved")
      */
+    #[ORM\Column(name: 'is_resolved', type: 'boolean')]
     private $isResolved;
 
     /**
@@ -66,6 +78,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     private $createdAt;
 
     /**
@@ -73,6 +86,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime')]
     private $updatedAt;
 
     public function __construct()
@@ -219,6 +233,7 @@ class Exception extends AbstractEntity
     /**
      * @ORM\PreUpdate()
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->setUpdatedAt(new \DateTime());

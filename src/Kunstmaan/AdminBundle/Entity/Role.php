@@ -13,6 +13,9 @@ if (class_exists(BaseRole::class)) {
      * @ORM\Table( name="kuma_roles" )
      * @UniqueEntity("role")
      */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'kuma_roles')]
+    #[UniqueEntity('role')]
     class Role extends BaseRole
     {
         use RolePropertiesTrait;
@@ -23,6 +26,9 @@ if (class_exists(BaseRole::class)) {
      * @ORM\Table( name="kuma_roles" )
      * @UniqueEntity("role")
      */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'kuma_roles')]
+    #[UniqueEntity('role')]
     class Role
     {
         use RolePropertiesTrait;
