@@ -13,16 +13,20 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  * @ORM\Entity
  * @ORM\Table(name="kuma_header_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_header_page_parts')]
 class HeaderPagePart extends AbstractPagePart
 {
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'niv', type: 'integer', nullable: true)]
     protected $niv;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'title', type: 'string', nullable: true)]
     protected $title;
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)

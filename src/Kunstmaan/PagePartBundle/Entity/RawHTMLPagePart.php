@@ -11,11 +11,14 @@ use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="kuma_raw_html_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_raw_html_page_parts')]
 class RawHTMLPagePart extends AbstractPagePart
 {
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(name: 'content', type: 'text', nullable: true)]
     protected $content;
 
     /**

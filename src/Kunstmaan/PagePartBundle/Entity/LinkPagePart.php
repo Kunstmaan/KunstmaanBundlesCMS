@@ -6,26 +6,29 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 
 /**
- * LinkPagePart
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_link_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_link_page_parts')]
 class LinkPagePart extends AbstractPagePart
 {
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'url', type: 'string', nullable: true)]
     protected $url;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'openinnewwindow', type: 'boolean', nullable: true)]
     protected $openinnewwindow;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'text', type: 'string', nullable: true)]
     protected $text;
 
     /**
