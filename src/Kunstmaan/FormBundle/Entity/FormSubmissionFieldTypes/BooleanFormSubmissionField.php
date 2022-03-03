@@ -12,11 +12,14 @@ use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
  * @ORM\Entity
  * @ORM\Table(name="kuma_boolean_form_submission_fields")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_boolean_form_submission_fields')]
 class BooleanFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="bfsf_value", type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'bfsf_value', type: 'boolean', nullable: true)]
     protected $value;
 
     /**

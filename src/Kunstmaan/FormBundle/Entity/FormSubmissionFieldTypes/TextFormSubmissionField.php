@@ -12,11 +12,14 @@ use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
  * @ORM\Entity
  * @ORM\Table(name="kuma_text_form_submission_fields")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_text_form_submission_fields')]
 class TextFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="tfsf_value", type="text")
      */
+    #[ORM\Column(name: 'tfsf_value', type: 'text')]
     protected $value;
 
     /**

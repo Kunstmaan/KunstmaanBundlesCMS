@@ -13,12 +13,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_string_form_submission_fields")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_string_form_submission_fields')]
 class StringFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="sfsf_value", type="string")
      * @Assert\Length(max=255)
      */
+    #[ORM\Column(name: 'sfsf_value', type: 'string')]
     protected $value;
 
     /**

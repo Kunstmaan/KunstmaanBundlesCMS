@@ -28,6 +28,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
      */
+    #[ORM\Column(name: 'thanks', type: 'text', nullable: true)]
     protected $thanks;
 
     /**
@@ -35,6 +36,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'subject', type: 'string', nullable: true)]
     protected $subject;
 
     /**
@@ -43,6 +45,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * @ORM\Column(type="string", name="from_email", nullable=true)
      * @Assert\Email()
      */
+    #[ORM\Column(name: 'from_email', type: 'string', nullable: true)]
     protected $fromEmail;
 
     /**
@@ -50,6 +53,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      *
      * @ORM\Column(type="string", name="to_email", nullable=true)
      */
+    #[ORM\Column(name: 'to_email', type: 'string', nullable: true)]
     protected $toEmail;
 
     /**
