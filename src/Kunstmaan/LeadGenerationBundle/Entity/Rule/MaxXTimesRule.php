@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_rule_max_x_times")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_rule_max_x_times')]
 class MaxXTimesRule extends AbstractRule
 {
     /**
@@ -18,6 +20,7 @@ class MaxXTimesRule extends AbstractRule
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(0)
      */
+    #[ORM\Column(name: 'times', type: 'integer', nullable: true)]
     private $times;
 
     /**

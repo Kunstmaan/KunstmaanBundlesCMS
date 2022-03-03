@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_rule_locale_blacklist")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_rule_locale_blacklist')]
 class LocaleBlacklistRule extends AbstractRule
 {
     /**
@@ -17,6 +19,7 @@ class LocaleBlacklistRule extends AbstractRule
      * @ORM\Column(name="locale", type="text", nullable=true)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'locale', type: 'text', nullable: true)]
     private $locale;
 
     /**

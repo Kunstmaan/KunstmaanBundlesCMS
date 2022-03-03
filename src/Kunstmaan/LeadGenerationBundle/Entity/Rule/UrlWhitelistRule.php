@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_rule_url_whitelist")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_rule_url_whitelist')]
 class UrlWhitelistRule extends AbstractRule
 {
     /**
@@ -17,6 +19,7 @@ class UrlWhitelistRule extends AbstractRule
      * @ORM\Column(name="urls", type="text", nullable=true)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'urls', type: 'text', nullable: true)]
     private $urls;
 
     /**

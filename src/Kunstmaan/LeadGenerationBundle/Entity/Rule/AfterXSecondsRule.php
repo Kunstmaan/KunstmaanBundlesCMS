@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_rule_after_x_seconds")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_rule_after_x_seconds')]
 class AfterXSecondsRule extends AbstractRule
 {
     /**
@@ -18,6 +20,7 @@ class AfterXSecondsRule extends AbstractRule
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(0)
      */
+    #[ORM\Column(name: 'seconds', type: 'integer')]
     private $seconds;
 
     /**

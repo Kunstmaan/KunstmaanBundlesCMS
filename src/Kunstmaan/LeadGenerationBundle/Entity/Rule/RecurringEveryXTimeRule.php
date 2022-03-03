@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="kuma_rule_recurring_every_x_time")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_rule_recurring_every_x_time')]
 class RecurringEveryXTimeRule extends AbstractRule
 {
     /**
@@ -17,6 +19,7 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
+    #[ORM\Column(name: 'minutes', type: 'integer', nullable: true)]
     private $minutes;
 
     /**
@@ -24,6 +27,7 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
+    #[ORM\Column(name: 'hours', type: 'integer', nullable: true)]
     private $hours;
 
     /**
@@ -31,6 +35,7 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
+    #[ORM\Column(name: 'days', type: 'integer', nullable: true)]
     private $days;
 
     /**
@@ -39,6 +44,7 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @Assert\GreaterThanOrEqual(0)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'times', type: 'integer', nullable: true)]
     private $times;
 
     /**
