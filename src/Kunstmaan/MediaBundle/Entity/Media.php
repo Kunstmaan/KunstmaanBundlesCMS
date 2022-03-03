@@ -5,10 +5,9 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\MediaBundle\Repository\MediaRepository;
 
 /**
- * Media
- *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="kuma_media", indexes={
  *      @ORM\Index(name="idx_media_name", columns={"name"}),
@@ -16,6 +15,11 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  * })
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\Entity(repositoryClass: MediaRepository::class)]
+#[ORM\Table(name: 'kuma_media')]
+#[ORM\Index(name: 'idx_media_name', columns: ['name'])]
+#[ORM\Index(name: 'idx_media_deleted', columns: ['deleted'])]
+#[ORM\HasLifecycleCallbacks]
 class Media extends AbstractEntity
 {
     /**
@@ -25,6 +29,7 @@ class Media extends AbstractEntity
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
+    #[Gedmo\Locale]
     protected $locale;
 
     /**
@@ -33,6 +38,8 @@ class Media extends AbstractEntity
      * @ORM\Column(type="string", unique=true, length=255)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Column(name: 'uuid', type: 'string', unique: true, length: 255)]
+    #[ORM\GeneratedValue('AUTO')]
     protected $uuid;
 
     /**
@@ -40,6 +47,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', nullable: true)]
     protected $name;
 
     /**
@@ -48,6 +56,8 @@ class Media extends AbstractEntity
      * @ORM\Column(name="description", type="text", nullable=true)
      * @Gedmo\Translatable
      */
+    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+    #[Gedmo\Translatable]
     protected $description;
 
     /**
@@ -56,6 +66,8 @@ class Media extends AbstractEntity
      * @ORM\Column(name="copyright", type="string", nullable=true)
      * @Gedmo\Translatable
      */
+    #[ORM\Column(name: 'copyright', type: 'string', nullable: true)]
+    #[Gedmo\Translatable]
     protected $copyright;
 
     /**
@@ -63,6 +75,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="string", name="location", nullable=true)
      */
+    #[ORM\Column(name: 'location', type: 'string', nullable: true)]
     protected $location;
 
     /**
@@ -70,6 +83,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="string", name="content_type")
      */
+    #[ORM\Column(name: 'content_type', type: 'string')]
     protected $contentType;
 
     /**
@@ -77,6 +91,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="array")
      */
+    #[ORM\Column(name: 'metadata', type: 'array')]
     protected $metadata = [];
 
     /**
@@ -84,6 +99,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     protected $createdAt;
 
     /**
@@ -91,6 +107,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime')]
     protected $updatedAt;
 
     /**
@@ -99,6 +116,8 @@ class Media extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="Folder", inversedBy="media")
      * @ORM\JoinColumn(name="folder_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: Folder::class, inversedBy: 'media')]
+    #[ORM\JoinColumn(name: 'folder_id', referencedColumnName: 'id')]
     protected $folder;
 
     /**
@@ -111,6 +130,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'filesize', type: 'integer', nullable: true)]
     protected $filesize;
 
     /**
@@ -118,6 +138,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'url', type: 'string', nullable: true)]
     protected $url;
 
     /**
@@ -125,6 +146,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=true, name="original_filename")
      */
+    #[ORM\Column(name: 'original_filename', type: 'string', nullable: true)]
     protected $originalFilename;
 
     /**
@@ -132,6 +154,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(name: 'deleted', type: 'boolean')]
     protected $deleted;
 
     /**
@@ -139,6 +162,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="boolean", name="removed_from_file_system")
      */
+    #[ORM\Column(name: 'removed_from_file_system', type: 'boolean')]
     protected $removedFromFileSystem;
 
     public function __construct()
@@ -578,6 +602,7 @@ class Media extends AbstractEntity
     /**
      * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->setUpdatedAt(new \DateTime());
@@ -586,6 +611,7 @@ class Media extends AbstractEntity
     /**
      * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         if (empty($this->name)) {

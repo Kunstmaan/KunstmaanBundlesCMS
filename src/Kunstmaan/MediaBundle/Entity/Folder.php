@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 
 /**
  * Defines a folder from the MediaBundle in the database
@@ -21,6 +22,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\Tree(type="nested")
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\Entity(repositoryClass: FolderRepository::class)]
+#[ORM\Table(name: 'kuma_folders')]
+#[ORM\Index(name: 'idx_folder_internal_name', columns: ['internal_name'])]
+#[ORM\Index(name: 'idx_folder_name', columns: ['name'])]
+#[ORM\Index(name: 'idx_folder_deleted', columns: ['deleted'])]
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\HasLifecycleCallbacks]
 class Folder extends AbstractEntity implements GedmoNode
 {
     const TYPE_FILES = 'files';
@@ -36,6 +44,8 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'name', type: 'string')]
+    #[Gedmo\Translatable]
     protected $name;
 
     /**
@@ -45,6 +55,7 @@ class Folder extends AbstractEntity implements GedmoNode
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
+    #[Gedmo\Locale]
     protected $locale;
 
     /**
@@ -54,6 +65,9 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * @Gedmo\TreeParent
      */
+    #[ORM\ManyToOne(targetEntity: Folder::class, inversedBy: 'children', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
+    #[Gedmo\TreeParent]
     protected $parent;
 
     /**
@@ -62,6 +76,8 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: Folder::class, mappedBy: 'parent', fetch: 'LAZY')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     protected $children;
 
     /**
@@ -70,6 +86,8 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\OneToMany(targetEntity="Media", mappedBy="folder", fetch="LAZY")
      * @ORM\OrderBy({"name" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'folder', fetch: 'LAZY')]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     protected $media;
 
     /**
@@ -77,6 +95,7 @@ class Folder extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="datetime", name="created_at")
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     protected $createdAt;
 
     /**
@@ -84,6 +103,7 @@ class Folder extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="datetime", name="updated_at")
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime')]
     protected $updatedAt;
 
     /**
@@ -91,6 +111,7 @@ class Folder extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'rel', type: 'string', nullable: true)]
     protected $rel;
 
     /**
@@ -98,6 +119,7 @@ class Folder extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="string", name="internal_name", nullable=true)
      */
+    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
     protected $internalName;
 
     /**
@@ -106,6 +128,8 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\Column(name="lft", type="integer", nullable=true)
      * @Gedmo\TreeLeft
      */
+    #[ORM\Column(name: 'lft', type: 'integer', nullable: true)]
+    #[Gedmo\TreeLeft]
     protected $lft;
 
     /**
@@ -114,6 +138,8 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\Column(name="lvl", type="integer", nullable=true)
      * @Gedmo\TreeLevel
      */
+    #[ORM\Column(name: 'lvl', type: 'integer', nullable: true)]
+    #[Gedmo\TreeLevel]
     protected $lvl;
 
     /**
@@ -122,6 +148,8 @@ class Folder extends AbstractEntity implements GedmoNode
      * @ORM\Column(name="rgt", type="integer", nullable=true)
      * @Gedmo\TreeRight
      */
+    #[ORM\Column(name: 'rgt', type: 'integer', nullable: true)]
+    #[Gedmo\TreeRight]
     protected $rgt;
 
     /**
@@ -129,6 +157,7 @@ class Folder extends AbstractEntity implements GedmoNode
      *
      * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(name: 'deleted', type: 'boolean')]
     protected $deleted;
 
     public function __construct()
@@ -524,6 +553,7 @@ class Folder extends AbstractEntity implements GedmoNode
     /**
      * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->setUpdatedAt(new \DateTime());

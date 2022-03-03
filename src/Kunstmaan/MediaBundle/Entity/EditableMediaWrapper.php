@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.
@@ -12,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_editable_media_wrapper")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_editable_media_wrapper')]
 class EditableMediaWrapper extends AbstractEntity
 {
     /**
@@ -19,11 +22,14 @@ class EditableMediaWrapper extends AbstractEntity
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * @Assert\NotNull()
      */
+    #[ORM\ManyToOne(targetEntity: Media::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
     private $media;
 
     /**
      * @ORM\Column(name="runtime_config", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'runtime_config', type: 'text', nullable: true)]
     private $runTimeConfig;
 
     public function getMedia(): ?Media
