@@ -131,5 +131,10 @@
         "branch-alias": {
             "dev-6.x": "6.1-dev"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     }
 }
