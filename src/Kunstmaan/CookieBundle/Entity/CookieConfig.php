@@ -5,13 +5,14 @@ namespace Kunstmaan\CookieBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
 use Kunstmaan\CookieBundle\Form\CookieConfigType;
+use Kunstmaan\CookieBundle\Repository\CookieConfigRepository;
 
 /**
- * CookieConfig
- *
  * @ORM\Table(name="kuma_cookie_configs")
  * @ORM\Entity(repositoryClass="Kunstmaan\CookieBundle\Repository\CookieConfigRepository")
  */
+#[ORM\Table(name: 'kuma_cookie_configs')]
+#[ORM\Entity(repositoryClass: CookieConfigRepository::class)]
 class CookieConfig extends AbstractConfig
 {
     const VISITOR_TYPE_INTERNAL = 'internal traffic';
@@ -25,6 +26,7 @@ class CookieConfig extends AbstractConfig
      *
      * @ORM\Column(name="client_ip_addresses", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'client_ip_addresses', type: 'string', length: 255, nullable: true)]
     private $clientIpAddresses;
 
     /**
@@ -32,6 +34,7 @@ class CookieConfig extends AbstractConfig
      *
      * @ORM\Column(name="internal_ip_addresses", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'internal_ip_addresses', type: 'string', length: 255, nullable: true)]
     private $internalIpAddresses;
 
     /**
@@ -39,6 +42,7 @@ class CookieConfig extends AbstractConfig
      *
      * @ORM\Column(name="cookie_bundle_enabled", type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'cookie_bundle_enabled', type: 'boolean', nullable: true)]
     private $cookieBundleEnabled = false;
 
     /**
@@ -46,6 +50,7 @@ class CookieConfig extends AbstractConfig
      *
      * @ORM\Column(name="cookie_version", type="integer", nullable=false)
      */
+    #[ORM\Column(name: 'cookie_version', type: 'integer', nullable: false)]
     private $cookieVersion = 1;
 
     /**
