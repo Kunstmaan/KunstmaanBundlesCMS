@@ -12,6 +12,8 @@ use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
+use Kunstmaan\UserManagementBundle\Event\DeleteUserInitializeEvent;
+use Kunstmaan\UserManagementBundle\Event\EditUserInitializeEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -155,6 +157,8 @@ final class UsersController extends Controller
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
 
+        $this->dispatch(new EditUserInitializeEvent($user, $request), UserEvents::USER_EDIT_INITIALIZE);
+
         $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
@@ -228,6 +232,8 @@ final class UsersController extends Controller
         /* @var UserInterface $user */
         $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
+            $this->dispatch(new DeleteUserInitializeEvent($user, $request), UserEvents::USER_DELETE_INITIALIZE);
+
             $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());
 
             $em->remove($user);
