@@ -79,7 +79,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="confirmation_token", type="string", length=255, nullable=true, unique="true")
      */
     #[ORM\Column(name: 'confirmation_token', type: 'string', length: 255, nullable: true)]
     protected $confirmationToken;

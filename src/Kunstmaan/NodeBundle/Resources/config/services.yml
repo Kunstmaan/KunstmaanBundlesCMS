@@ -1,4 +1,5 @@
 parameters:
+    kunstmaan_node.slugrouter.class: Kunstmaan\NodeBundle\Router\SlugRouter
     kunstmaan_node.version_timeout: 3600
     kunstmaan_node.url_chooser.lazy_increment: 2
 
@@ -140,7 +141,7 @@ services:
             - { name: kernel.event_subscriber }
 
     kunstmaan_node.slugrouter:
-        class: Kunstmaan\NodeBundle\Router\SlugRouter
+        class: '%kunstmaan_node.slugrouter.class%'
         arguments:
             - '@kunstmaan_admin.domain_configuration'
             - '@request_stack'
