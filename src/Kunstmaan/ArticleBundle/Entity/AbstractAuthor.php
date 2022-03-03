@@ -12,6 +12,7 @@ abstract class AbstractAuthor extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=false, name="name")
      */
+    #[ORM\Column(name: 'name', type: 'string', nullable: false)]
     protected $name;
 
     /**
@@ -19,6 +20,7 @@ abstract class AbstractAuthor extends AbstractEntity
      *
      * @ORM\Column(type="string", nullable=true, name="link")
      */
+    #[ORM\Column(name: 'link', type: 'string', nullable: true)]
     protected $link;
 
     /**

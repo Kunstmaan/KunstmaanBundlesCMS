@@ -17,6 +17,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'date', type: 'datetime')]
     protected $date;
 
     /**
@@ -24,6 +25,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'summary', type: 'text', nullable: true)]
     protected $summary;
 
     /**
