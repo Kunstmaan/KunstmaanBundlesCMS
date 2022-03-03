@@ -13,6 +13,8 @@ use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
+use Kunstmaan\UserManagementBundle\Event\DeleteUserInitializeEvent;
+use Kunstmaan\UserManagementBundle\Event\EditUserInitializeEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -178,6 +180,8 @@ final class UsersController extends AbstractController
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
 
+        $this->eventDispatcher->dispatch(new EditUserInitializeEvent($user, $request), UserEvents::USER_EDIT_INITIALIZE);
+
         $options = ['password_required' => false, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
@@ -242,6 +246,8 @@ final class UsersController extends AbstractController
         /* @var UserInterface $user */
         $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
+            $this->eventDispatcher->dispatch(new DeleteUserInitializeEvent($user, $request), UserEvents::USER_DELETE_INITIALIZE);
+
             $deletedUser = method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername();
             $deletedBy = method_exists($this->getUser(), 'getUserIdentifier') ? $this->getUser()->getUserIdentifier() : $this->getUser()->getUsername();
 
