@@ -36,7 +36,7 @@ abstract class BaseUser implements UserInterface
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(name="username_canonical", type="string", length=180, unique=true)
      */
     protected $usernameCanonical;
 
@@ -72,7 +72,7 @@ abstract class BaseUser implements UserInterface
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(name="email_canonical", type="string", length=180, unique=true)
      */
     protected $emailCanonical;
 
@@ -91,7 +91,7 @@ abstract class BaseUser implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="confirmation_token", type="string", length=255, nullable=true, unique="true")
      */
     protected $confirmationToken;
 
@@ -132,6 +132,12 @@ abstract class BaseUser implements UserInterface
      * @ORM\Column(name="created_by", type="string", nullable=true)
      */
     protected $createdBy;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
+     */
+    protected $passwordRequestedAt;
 
     public function __construct()
     {
@@ -633,6 +639,8 @@ abstract class BaseUser implements UserInterface
         // NEXT_MAJOR remove method
         @trigger_error(sprintf('Using method %s from class %s is deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0.', __METHOD__, BaseUser::class), E_USER_DEPRECATED);
 
+        $this->passwordRequestedAt = $date;
+
         return $this;
     }
 
@@ -687,13 +695,26 @@ abstract class BaseUser implements UserInterface
     }
 
     /**
+     * Gets the timestamp that the user requested a password reset.
+     *
+     * @deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0.
+     *
+     * @return \DateTime|null
+     */
+    public function getPasswordRequestedAt()
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    /**
      * NEXT_MAJOR remove method
      *
      * @deprecated since KunstmaanAdminBundle 5.9 and will be removed in KunstmaanAdminBundle 6.0.
      */
     public function isPasswordRequestNonExpired($ttl)
     {
-        return false;
+        return $this->getPasswordRequestedAt() instanceof \DateTime &&
+            $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
     }
 
     /**
