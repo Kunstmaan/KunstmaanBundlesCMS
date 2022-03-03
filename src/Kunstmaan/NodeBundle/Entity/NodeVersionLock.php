@@ -3,15 +3,17 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeBundle\Repository\NodeVersionLockRepository;
 
 /**
- * NodeVersionLock
- *
  * @ORM\Table(name="kuma_node_version_lock", indexes={
  *     @ORM\Index(name="nt_owner_public_idx", columns={"owner", "node_translation_id", "public_version"}),
  * })
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionLockRepository")
  */
+#[ORM\Table(name: 'kuma_node_version_lock')]
+#[ORM\Index(name: 'nt_owner_public_idx', columns: ['owner', 'node_translation_id', 'public_version'])]
+#[ORM\Entity(repositoryClass: NodeVersionLockRepository::class)]
 class NodeVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
     /**
@@ -19,6 +21,7 @@ class NodeVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @ORM\Column(name="owner", type="string", length=255)
      */
+    #[ORM\Column(name: 'owner', type: 'string', length: 255)]
     private $owner;
 
     /**
@@ -27,6 +30,8 @@ class NodeVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * @ORM\ManyToOne(targetEntity="Kunstmaan\NodeBundle\Entity\NodeTranslation")
      * @ORM\JoinColumn(name="node_translation_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: NodeTranslation::class)]
+    #[ORM\JoinColumn(name: 'node_translation_id', referencedColumnName: 'id')]
     private $nodeTranslation;
 
     /**
@@ -34,11 +39,13 @@ class NodeVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @ORM\Column(name="public_version", type="boolean")
      */
+    #[ORM\Column(name: 'public_version', type: 'boolean')]
     private $publicVersion;
 
     /**
      * @ORM\Column(name="created_at", type="datetime")
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     private $createdAt;
 
     /**

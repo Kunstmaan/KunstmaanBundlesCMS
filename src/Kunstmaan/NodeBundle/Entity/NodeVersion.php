@@ -6,16 +6,20 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
- * NodeVersion
- *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionRepository")
  * @ORM\Table(name="kuma_node_versions", indexes={@ORM\Index(name="idx_node_version_lookup", columns={"ref_id", "ref_entity_name"})})
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
+#[ORM\Entity(repositoryClass: NodeVersionRepository::class)]
+#[ORM\Table(name: 'kuma_node_versions')]
+#[ORM\Index(name: 'idx_node_version_lookup', columns: ['ref_id', 'ref_entity_name'])]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class NodeVersion extends AbstractEntity
 {
     const DRAFT_VERSION = 'draft';
@@ -27,6 +31,8 @@ class NodeVersion extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="NodeTranslation", inversedBy="nodeVersions")
      * @ORM\JoinColumn(name="node_translation_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: NodeTranslation::class, inversedBy: 'nodeVersions')]
+    #[ORM\JoinColumn(name: 'node_translation_id', referencedColumnName: 'id')]
     protected $nodeTranslation;
 
     /**
@@ -34,6 +40,7 @@ class NodeVersion extends AbstractEntity
      *
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'type', type: 'string')]
     protected $type;
 
     /**
@@ -41,6 +48,7 @@ class NodeVersion extends AbstractEntity
      *
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'owner', type: 'string')]
     protected $owner;
 
     /**
@@ -48,6 +56,7 @@ class NodeVersion extends AbstractEntity
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'created', type: 'datetime')]
     protected $created;
 
     /**
@@ -55,6 +64,7 @@ class NodeVersion extends AbstractEntity
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'updated', type: 'datetime')]
     protected $updated;
 
     /**
@@ -62,6 +72,7 @@ class NodeVersion extends AbstractEntity
      *
      * @ORM\Column(type="bigint", name="ref_id")
      */
+    #[ORM\Column(name: 'ref_id', type: 'bigint')]
     protected $refId;
 
     /**
@@ -69,6 +80,7 @@ class NodeVersion extends AbstractEntity
      *
      * @ORM\Column(type="string", name="ref_entity_name")
      */
+    #[ORM\Column(name: 'ref_entity_name', type: 'string')]
     protected $refEntityName;
 
     /**
@@ -79,6 +91,8 @@ class NodeVersion extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="NodeVersion")
      * @ORM\JoinColumn(name="origin_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: NodeVersion::class)]
+    #[ORM\JoinColumn(name: 'origin_id', referencedColumnName: 'id')]
     protected $origin;
 
     public function __construct()

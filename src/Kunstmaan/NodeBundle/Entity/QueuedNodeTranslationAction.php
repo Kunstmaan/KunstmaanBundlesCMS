@@ -7,12 +7,13 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 
 /**
- * QueuedNodeTranslationAction
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_node_queued_node_translation_actions")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_node_queued_node_translation_actions')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class QueuedNodeTranslationAction extends AbstractEntity
 {
     const ACTION_PUBLISH = 'publish';
@@ -24,6 +25,8 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="NodeTranslation")
      * @ORM\JoinColumn(name="node_translation_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: NodeTranslation::class)]
+    #[ORM\JoinColumn(name: 'node_translation_id', referencedColumnName: 'id')]
     protected $nodeTranslation;
 
     /**
@@ -31,6 +34,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
      *
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(name: 'action', type: 'string')]
     protected $action;
 
     /**
@@ -45,6 +49,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'date', type: 'datetime')]
     protected $date;
 
     /**

@@ -19,6 +19,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
      */
+    #[ORM\Column(name: 'title', type: 'string', length: 255)]
     protected $title;
 
     /**
@@ -27,6 +28,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
      * @ORM\Column(type="string", nullable=true, name="page_title", length=255)
      * @Assert\Length(max=255)
      */
+    #[ORM\Column(name: 'page_title', type: 'string', nullable: true, length: 255)]
     protected $pageTitle;
 
     /**
