@@ -3,20 +3,23 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsSegmentRepository;
 
 /**
- * AnalyticsSegment
- *
  * @ORM\Table(name="kuma_analytics_segment")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsSegmentRepository")
  */
-class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+#[ORM\Table(name: 'kuma_analytics_segment')]
+#[ORM\Entity(repositoryClass: AnalyticsSegmentRepository::class)]
+class AnalyticsSegment extends AbstractEntity
 {
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 255)]
     private $name;
 
     /**
@@ -24,17 +27,21 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @ORM\Column(name="query", type="string", length=1000)
      */
+    #[ORM\Column(name: 'query', type: 'string', length: 1000)]
     private $query;
 
     /**
      * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="segments")
      * @ORM\JoinColumn(name="config", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: AnalyticsConfig::class, inversedBy: 'segments')]
+    #[ORM\JoinColumn(name: 'config', referencedColumnName: 'id')]
     private $config;
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="segment", cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: AnalyticsOverview::class, mappedBy: 'segment', cascade: ['persist', 'remove'])]
     private $overviews;
 
     /**

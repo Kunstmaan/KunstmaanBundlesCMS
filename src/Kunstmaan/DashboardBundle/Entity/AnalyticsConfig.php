@@ -4,21 +4,26 @@ namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 
 /**
  * @ORM\Table(name="kuma_analytics_config")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository")
  */
+#[ORM\Table(name: 'kuma_analytics_config')]
+#[ORM\Entity(repositoryClass: AnalyticsConfigRepository::class)]
 class AnalyticsConfig extends AbstractEntity
 {
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: AnalyticsOverview::class, mappedBy: 'config', cascade: ['persist', 'remove'])]
     private $overviews;
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsSegment", mappedBy="config", cascade={"persist", "remove"})
      */
+    #[ORM\OneToMany(targetEntity: AnalyticsSegment::class, mappedBy: 'config', cascade: ['persist', 'remove'])]
     private $segments;
 
     /**
@@ -26,6 +31,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="name", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'name', type: 'text', nullable: true)]
     private $name;
 
     /**
@@ -33,6 +39,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="token", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'token', type: 'text', nullable: true)]
     private $token;
 
     /**
@@ -40,6 +47,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="account_id", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'account_id', type: 'string', nullable: true)]
     private $accountId;
 
     /**
@@ -47,6 +55,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="property_id", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'property_id', type: 'string', nullable: true)]
     private $propertyId;
 
     /**
@@ -54,6 +63,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="profile_id", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'profile_id', type: 'string', nullable: true)]
     private $profileId;
 
     /**
@@ -61,6 +71,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'last_update', type: 'datetime', nullable: true)]
     private $lastUpdate;
 
     /**
@@ -68,6 +79,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="disable_goals", type="boolean")
      */
+    #[ORM\Column(name: 'disable_goals', type: 'boolean')]
     private $disableGoals = false;
 
     /**
