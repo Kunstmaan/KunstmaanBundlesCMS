@@ -7,11 +7,11 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\Node;
 
 /**
- * Node
- *
  * @ORM\Entity()
  * @ORM\Table(name="kuma_nodes_search")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_nodes_search')]
 class NodeSearch extends AbstractEntity
 {
     /**
@@ -20,6 +20,8 @@ class NodeSearch extends AbstractEntity
      * @ORM\OneToOne(targetEntity="Kunstmaan\NodeBundle\Entity\Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
+    #[ORM\OneToOne(targetEntity: Node::class)]
+    #[ORM\JoinColumn(name: 'node_id', referencedColumnName: 'id')]
     protected $node;
 
     /**
@@ -27,6 +29,7 @@ class NodeSearch extends AbstractEntity
      *
      * @ORM\Column(name="boost", type="float", nullable=true)
      */
+    #[ORM\Column(name: 'boost', type: 'float', nullable: true)]
     protected $boost;
 
     /**
