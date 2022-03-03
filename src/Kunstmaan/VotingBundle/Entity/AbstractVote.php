@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\MappedSuperclass]
+#[ORM\HasLifecycleCallbacks]
 class AbstractVote
 {
     /**
@@ -25,6 +27,9 @@ class AbstractVote
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
@@ -32,6 +37,7 @@ class AbstractVote
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'timestamp', type: 'datetime')]
     protected $timestamp;
 
     /**
@@ -42,6 +48,7 @@ class AbstractVote
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'reference', type: 'string', nullable: true)]
     protected $reference;
 
     /**
@@ -51,6 +58,7 @@ class AbstractVote
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'meta', type: 'string', nullable: true)]
     protected $meta;
 
     /**
@@ -58,6 +66,7 @@ class AbstractVote
      *
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'ip', type: 'string', nullable: true)]
     protected $ip;
 
     /**
@@ -65,6 +74,7 @@ class AbstractVote
      *
      * @ORM\Column(type="integer")
      */
+    #[ORM\Column(name: 'value', type: 'integer')]
     protected $value;
 
     /**
@@ -140,6 +150,7 @@ class AbstractVote
     /**
      * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         // Set timestamp to now when none is set
