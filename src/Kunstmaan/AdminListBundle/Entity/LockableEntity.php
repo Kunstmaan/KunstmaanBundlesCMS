@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminListBundle\Repository\LockableEntityRepository;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminListBundle\Repository\LockableEntityRepository")
@@ -12,6 +13,10 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  *    indexes={@ORM\Index(name="idx__lockable_entity_id_class", columns={"entity_id", "entity_class"})}
  * )
  */
+#[ORM\Entity(repositoryClass: LockableEntityRepository::class)]
+#[ORM\Table(name: 'kuma_lockable_entity')]
+#[ORM\UniqueConstraint(name: 'ix_kuma_lockable_entity_id_class', columns: ['entity_id', 'entity_class'])]
+#[ORM\Index(name: 'idx__lockable_entity_id_class', columns: ['entity_id', 'entity_class'])]
 class LockableEntity extends AbstractEntity
 {
     /**
@@ -19,6 +24,7 @@ class LockableEntity extends AbstractEntity
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'created', type: 'datetime')]
     protected $created;
 
     /**
@@ -26,6 +32,7 @@ class LockableEntity extends AbstractEntity
      *
      * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(name: 'updated', type: 'datetime')]
     protected $updated;
 
     /**
@@ -33,6 +40,7 @@ class LockableEntity extends AbstractEntity
      *
      * @ORM\Column(type="string", name="entity_class")
      */
+    #[ORM\Column(name: 'entity_class', type: 'string')]
     protected $entityClass;
 
     /**
@@ -40,6 +48,7 @@ class LockableEntity extends AbstractEntity
      *
      * @ORM\Column(type="bigint", name="entity_id")
      */
+    #[ORM\Column(name: 'entity_id', type: 'bigint')]
     protected $entityId;
 
     public function __construct()

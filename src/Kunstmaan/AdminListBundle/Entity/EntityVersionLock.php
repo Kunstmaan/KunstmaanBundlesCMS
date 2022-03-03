@@ -3,15 +3,18 @@
 namespace Kunstmaan\AdminListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository;
+use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 
 /**
- * EntityVersionLock
- *
  * @ORM\Table(name="kuma_entity_version_lock", indexes={
  *     @ORM\Index(name="evl_owner_entity_idx", columns={"owner", "lockable_entity_id"}),
  * })
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository")
  */
+#[ORM\Table(name: 'kuma_entity_version_lock')]
+#[ORM\Index(name: 'evl_owner_entity_idx', columns: ['owner', 'lockable_entity_id'])]
+#[ORM\Entity(repositoryClass: EntityVersionLockRepository::class)]
 class EntityVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
     /**
@@ -19,11 +22,13 @@ class EntityVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @ORM\Column(name="owner", type="string", length=255)
      */
+    #[ORM\Column(name: 'owner', type: 'string', length: 255)]
     private $owner;
 
     /**
      * @ORM\Column(name="created_at", type="datetime")
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     private $createdAt;
 
     /**
@@ -32,6 +37,8 @@ class EntityVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminListBundle\Entity\LockableEntity")
      * @ORM\JoinColumn(name="lockable_entity_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: LockableEntity::class)]
+    #[ORM\JoinColumn(name: 'lockable_entity_id', referencedColumnName: 'id')]
     private $lockableEntity;
 
     /**
