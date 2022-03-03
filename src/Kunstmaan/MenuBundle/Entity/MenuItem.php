@@ -5,12 +5,16 @@ namespace Kunstmaan\MenuBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kunstmaan\MenuBundle\Repository\MenuItemRepository;
 
 /**
  * @ORM\Table(name="kuma_menu_item")
  * @ORM\Entity(repositoryClass="Kunstmaan\MenuBundle\Repository\MenuItemRepository")
  * @Gedmo\Tree(type="nested")
  */
+#[ORM\Table(name: 'kuma_menu_item')]
+#[ORM\Entity(repositoryClass: MenuItemRepository::class)]
+#[Gedmo\Tree(type: 'nested')]
 class MenuItem extends BaseMenuItem
 {
     /**
@@ -19,6 +23,8 @@ class MenuItem extends BaseMenuItem
      * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: MenuItem::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     protected $children;
 
     /**
@@ -28,6 +34,9 @@ class MenuItem extends BaseMenuItem
      * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[Gedmo\TreeParent]
+    #[ORM\ManyToOne(targetEntity: MenuItem::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $parent;
 
     public function __construct()
