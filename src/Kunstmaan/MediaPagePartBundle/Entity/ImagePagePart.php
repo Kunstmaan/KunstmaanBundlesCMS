@@ -8,32 +8,37 @@ use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
- * ImagePagePart
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_image_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_image_page_parts')]
 class ImagePagePart extends AbstractPagePart
 {
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(name: 'link', type: 'string', nullable: true)]
     protected $link;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, name="open_in_new_window")
      */
+    #[ORM\Column(name: 'open_in_new_window', type: 'boolean', nullable: true)]
     protected $openInNewWindow;
 
     /**
      * @ORM\Column(type="string", nullable=true, name="alt_text")
      */
+    #[ORM\Column(name: 'alt_text', type: 'string', nullable: true)]
     protected $altText;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
     protected $media;
 
     /**

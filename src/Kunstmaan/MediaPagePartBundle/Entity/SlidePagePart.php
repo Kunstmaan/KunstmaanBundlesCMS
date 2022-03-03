@@ -8,17 +8,19 @@ use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
- * SlidePagePart
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_slide_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_slide_page_parts')]
 class SlidePagePart extends AbstractPagePart
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
     protected $media;
 
     /**

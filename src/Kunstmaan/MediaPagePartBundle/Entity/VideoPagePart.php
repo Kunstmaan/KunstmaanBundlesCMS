@@ -8,17 +8,19 @@ use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
- * VideoPagePart
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_video_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_video_page_parts')]
 class VideoPagePart extends AbstractPagePart
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
     protected $media;
 
     /**

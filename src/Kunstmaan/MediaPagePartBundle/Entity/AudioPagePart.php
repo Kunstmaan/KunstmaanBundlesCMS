@@ -8,17 +8,19 @@ use Kunstmaan\MediaPagePartBundle\Form\AudioPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
- * AudioPagePart
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_audio_page_parts")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_audio_page_parts')]
 class AudioPagePart extends AbstractPagePart
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
     protected $media;
 
     /**
