@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
 use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
@@ -19,6 +20,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\HasLifecycleCallbacks
  */
+#[ORM\Entity(repositoryClass: TranslationRepository::class)]
+#[ORM\Table(name: 'kuma_translation')]
+#[ORM\UniqueConstraint(name: 'keyword_per_locale', columns: ['keyword', 'locale', 'domain'])]
+#[ORM\UniqueConstraint(name: 'translation_id_per_locale', columns: ['translation_id', 'locale'])]
+#[ORM\Index(name: 'idx_translation_locale_domain', columns: ['locale', 'domain'])]
+#[ORM\HasLifecycleCallbacks]
 class Translation
 {
     const FLAG_NEW = 'new';
@@ -32,12 +39,16 @@ class Translation
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @ORM\Column(type="integer", name="translation_id", nullable=true)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'translation_id', type: 'integer', nullable: true)]
     protected $translationId;
 
     /**
@@ -46,6 +57,7 @@ class Translation
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'keyword', type: 'string', nullable: true)]
     protected $keyword;
 
     /**
@@ -54,14 +66,15 @@ class Translation
      * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'locale', type: 'string', length: 5, nullable: true)]
     protected $locale;
 
     /**
      * @var string
-     *             The translations deprecation date
      *
      * @ORM\column(type="string", length=10, options={"default" : "enabled"})
      */
+    #[ORM\Column(name: 'status', type: 'string', length: 10, options: ['default' => self::STATUS_ENABLED])]
     protected $status = self::STATUS_ENABLED;
 
     /**
@@ -69,6 +82,7 @@ class Translation
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
+    #[ORM\Column(name: 'file', type: 'string', length: 50, nullable: true)]
     protected $file;
 
     /**
@@ -78,6 +92,7 @@ class Translation
      * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
+    #[ORM\Column(name: 'text', type: 'text', nullable: true)]
     protected $text;
 
     /**
@@ -85,6 +100,7 @@ class Translation
      * @Assert\NotBlank()
      * @Assert\Length(max=60)
      */
+    #[ORM\Column(name: 'domain', type: 'string', length: 60, nullable: true)]
     protected $domain;
 
     /**
@@ -92,6 +108,7 @@ class Translation
      *
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: true)]
     protected $createdAt;
 
     /**
@@ -99,6 +116,7 @@ class Translation
      *
      * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: true)]
     protected $updatedAt;
 
     /**
@@ -108,11 +126,13 @@ class Translation
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
+    #[ORM\Column(name: 'flag', type: 'string', length: 20, nullable: true)]
     protected $flag;
 
     /**
      * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         $this->createdAt = new DateTime();
@@ -125,6 +145,7 @@ class Translation
     /**
      * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->updatedAt = new DateTime();

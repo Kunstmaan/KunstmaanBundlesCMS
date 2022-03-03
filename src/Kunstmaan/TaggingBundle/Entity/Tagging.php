@@ -10,6 +10,9 @@ use DoctrineExtensions\Taggable\Entity\Tagging as BaseTagging;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_taggings",indexes={@ORM\Index(name="kuma_taggings_type_index", columns={"resource_type"})})
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'kuma_taggings')]
+#[ORM\Index(name: 'kuma_taggings_type_index', columns: ['resource_type'])]
 class Tagging extends BaseTagging
 {
     /**
@@ -17,32 +20,41 @@ class Tagging extends BaseTagging
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\TaggingBundle\Entity\Tag", inversedBy="tagging")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      */
+    #[ORM\ManyToOne(targetEntity: Tag::class, inversedBy: 'tagging')]
+    #[ORM\JoinColumn(name: 'tag_id', referencedColumnName: 'id', onDelete: "CASCADE")]
     protected $tag;
 
     /**
      * @ORM\Column(name="resource_type", type="string")
      */
+    #[ORM\Column(name: 'resource_type', type: 'string')]
     protected $resourceType;
 
     /**
      * @ORM\Column(name="resource_id", type="string")
      */
+    #[ORM\Column(name: 'resource_id', type: 'string')]
     protected $resourceId;
 
     /**
      * @ORM\Column(name="created_at", type="datetime")
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     protected $createdAt;
 
     /**
      * @ORM\Column(name="updated_at", type="datetime")
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime')]
     protected $updatedAt;
 
     /**

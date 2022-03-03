@@ -8,12 +8,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kunstmaan\TaggingBundle\Repository\TagRepository;
+use Kunstmaan\TaggingBundle\Entity\Tagging;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TaggingBundle\Repository\TagRepository")
  * @ORM\Table(name="kuma_tags")
  * @UniqueEntity("name")
  */
+#[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ORM\Table(name: 'kuma_tags')]
+#[UniqueEntity('name')]
 class Tag extends BaseTag implements Translatable
 {
     /**
@@ -21,29 +26,39 @@ class Tag extends BaseTag implements Translatable
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
     protected $id;
 
     /**
      * @Gedmo\Translatable()
      * @ORM\Column(name="name", type="string", unique=true)
      */
+    #[ORM\Column(name: 'name', type: 'string', unique: true)]
+    #[Gedmo\Translatable]
     protected $name;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     protected $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(name: 'updated_at', type: 'datetime')]
     protected $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Kunstmaan\TaggingBundle\Entity\Tagging", mappedBy="tag", fetch="LAZY")
      */
+    #[ORM\OneToMany(targetEntity: Tagging::class, mappedBy: 'tag', fetch: 'LAZY')]
     protected $tagging;
 
     /**
@@ -53,6 +68,7 @@ class Tag extends BaseTag implements Translatable
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
+    #[Gedmo\Locale]
     protected $locale;
 
     /**
