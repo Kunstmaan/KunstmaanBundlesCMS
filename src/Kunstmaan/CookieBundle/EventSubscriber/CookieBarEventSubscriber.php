@@ -76,7 +76,7 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
                 ))
             || 'html' !== $request->getRequestFormat()
             || !$this->cookieHelper->isGrantedForCookieBundle($request)
-            || false !== stripos($response->headers->get('Content-Disposition'), 'attachment;')
+            || false !== stripos($response->headers->get('Content-Disposition', ''), 'attachment;')
         ) {
             return;
         }
