@@ -26,22 +26,26 @@
     {% block body %}
         <div class="app-login">
             <div class="app-login__title-holder">
-                <header class="app-login__header">
-                    {% if login_logo is defined %}
-                        <img class="app-login__brand-logo" src="{{ asset(login_logo) }}" alt="{{ websitetitle | trans }}">
-                    {% endif %}
-                    <h1 class="app-login__title">
-                        {{ websitetitle | trans }}
-                    </h1>
-                </header>
+                {% block login_header %}
+                    <header class="app-login__header">
+                        {% if login_logo is defined %}
+                            <img class="app-login__brand-logo" src="{{ asset(login_logo) }}" alt="{{ websitetitle | trans }}">
+                        {% endif %}
+                        <h1 class="app-login__title">
+                            {{ websitetitle | trans }}
+                        </h1>
+                    </header>
+                {% endblock %}
 
-                <figure class="app-login__image-holder">
-                    {% set login_image_url = asset('/bundles/kunstmaanadmin/default-theme/img/kunstmaan/default-login-bg.jpg') %}
-                    {% if custom_login_image_url is defined %}
-                        {% set login_image_url = asset(custom_login_image_url) %}
-                    {% endif %}
-                    <img src="{{ login_image_url }}" alt="">
-                </figure>
+                {% block login_background %}
+                    <figure class="app-login__image-holder">
+                        {% set login_image_url = asset('/bundles/kunstmaanadmin/default-theme/img/kunstmaan/default-login-bg.jpg') %}
+                        {% if custom_login_image_url is defined %}
+                            {% set login_image_url = asset(custom_login_image_url) %}
+                        {% endif %}
+                        <img src="{{ login_image_url }}" alt="">
+                    </figure>
+                {% endblock %}
             </div>
             <aside class="app-login__aside">
                 <div class="app-login__aside__content">
