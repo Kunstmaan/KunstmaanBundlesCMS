@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Kunstmaan\UserManagementBundle\Event;
 
 use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class EditUserInitializeEvent extends BcEvent
+final class EditUserInitializeEvent extends Event
 {
     /** @var Request */
     private $request;
