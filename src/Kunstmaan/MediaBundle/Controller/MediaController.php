@@ -3,14 +3,12 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,28 +61,20 @@ final class MediaController extends AbstractController
                 $media = $helper->getMedia();
                 $this->em->getRepository(Media::class)->save($media);
 
-                return new RedirectResponse(
-                    $this->generateUrl(
-                        'KunstmaanMediaBundle_media_show',
-                        ['mediaId' => $media->getId()]
-                    )
-                );
+                return $this->redirectToRoute('KunstmaanMediaBundle_media_show', ['mediaId' => $media->getId()]);
             }
         }
         $showTemplate = $this->mediaManager->getHandler($media)->getShowTemplate($media);
 
-        return $this->render(
-            $showTemplate,
-            [
-                'handler' => $handler,
-                'foldermanager' => $this->folderManager,
-                'mediamanager' => $this->mediaManager,
-                'editform' => $form->createView(),
-                'media' => $media,
-                'helper' => $helper,
-                'folder' => $folder,
-            ]
-        );
+        return $this->render($showTemplate, [
+            'handler' => $handler,
+            'foldermanager' => $this->folderManager,
+            'mediamanager' => $this->mediaManager,
+            'editform' => $form->createView(),
+            'media' => $media,
+            'helper' => $helper,
+            'folder' => $folder,
+        ]);
     }
 
     /**
@@ -120,10 +110,7 @@ final class MediaController extends AbstractController
         // If the redirect url is passed via the url we use it
         $redirectUrl = $request->query->get('redirectUrl');
         if (empty($redirectUrl) || (\strpos($redirectUrl, $request->getSchemeAndHttpHost()) !== 0 && strncmp($redirectUrl, '/', 1) !== 0)) {
-            $redirectUrl = $this->generateUrl(
-                'KunstmaanMediaBundle_folder_show',
-                ['folderId' => $folder->getId()]
-            );
+            $redirectUrl = $this->generateUrl('KunstmaanMediaBundle_folder_show', ['folderId' => $folder->getId()]);
         }
 
         return new RedirectResponse($redirectUrl);
@@ -133,16 +120,13 @@ final class MediaController extends AbstractController
      * @param int $folderId
      *
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload")
-     * @Template("@KunstmaanMedia/Media/bulkUpload.html.twig")
-     *
-     * @return array|RedirectResponse
      */
-    public function bulkUploadAction($folderId)
+    public function bulkUploadAction($folderId): Response
     {
         /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
-        return ['folder' => $folder];
+        return $this->render('@KunstmaanMedia/Media/bulkUpload.html.twig', ['folder' => $folder]);
     }
 
     /**
@@ -261,7 +245,7 @@ final class MediaController extends AbstractController
             $media = $this->mediaManager->getHandler($file)->createNew($file);
             $media->setFolder($folder);
             $this->em->getRepository(Media::class)->save($media);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->returnJsonError('104', 'Failed performing save on media-manager');
         }
 
@@ -345,13 +329,15 @@ final class MediaController extends AbstractController
      * @param string $type     The type
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create", methods={"GET", "POST"})
-     * @Template("@KunstmaanMedia/Media/create.html.twig")
-     *
-     * @return array|RedirectResponse
      */
-    public function createAction(Request $request, $folderId, $type)
+    public function createAction(Request $request, $folderId, $type): Response
     {
-        return $this->createAndRedirect($request, $folderId, $type, 'KunstmaanMediaBundle_folder_show');
+        $responseOrData = $this->createAndRedirect($request, $folderId, $type, 'KunstmaanMediaBundle_folder_show');
+        if ($responseOrData instanceof Response) {
+            return $responseOrData;
+        }
+
+        return $this->render('@KunstmaanMedia/Media/create.html.twig', $responseOrData);
     }
 
     /**
@@ -454,8 +440,6 @@ final class MediaController extends AbstractController
      * @Route("/bulk-move", name="KunstmaanMediaBundle_media_bulk_move")
      *
      * @return JsonResponse|Response
-     *
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function bulkMoveAction(Request $request)
     {

@@ -6,4 +6,6 @@ services:
 
     Kunstmaan\SitemapBundle\Controller\SitemapController:
         arguments: [ '@kunstmaan_node.node_menu', '@kunstmaan_admin.domain_configuration', '@event_dispatcher' ]
-        tags: [ 'controller.service_arguments' ]
+        calls:
+            - setContainer: [ ] # Container service locator will be injected filled by the services from subscribed services
+        tags: [ 'controller.service_arguments', 'container.service_subscriber' ]

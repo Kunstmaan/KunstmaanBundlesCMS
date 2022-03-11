@@ -9,7 +9,6 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
 use Kunstmaan\DashboardBundle\Helper\Google\ClientHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,11 +37,8 @@ final class GoogleAnalyticsController extends AbstractController
      * The index action will render the main screen the users see when they log in in to the admin
      *
      * @Route("/", name="KunstmaanDashboardBundle_widget_googleanalytics")
-     * @Template("@KunstmaanDashboard/GoogleAnalytics/widget.html.twig")
-     *
-     * @return array
      */
-    public function widgetAction(Request $request)
+    public function widgetAction(Request $request): Response
     {
         $params['redirect_uri'] = $this->container->get('router')->generate('KunstmaanDashboardBundle_setToken', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -57,17 +53,17 @@ final class GoogleAnalyticsController extends AbstractController
 
         // if propertyId not set
         if (!$this->analyticsConfig->accountIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
+            return $this->redirectToRoute('KunstmaanDashboardBundle_Config');
         }
 
         // if propertyId not set
         if (!$this->analyticsConfig->propertyIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
+            return $this->redirectToRoute('KunstmaanDashboardBundle_PropertySelection');
         }
 
         // if profileId not set
         if (!$this->analyticsConfig->profileIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
+            return $this->redirectToRoute('KunstmaanDashboardBundle_ProfileSelection');
         }
 
         // get the segment id
@@ -94,17 +90,15 @@ final class GoogleAnalyticsController extends AbstractController
             $params['last_update'] = 'never';
         }
 
-        return $params;
+        return $this->render('@KunstmaanDashboard/GoogleAnalytics/widget.html.twig', $params);
     }
 
     /**
      * @Route("/setToken/", name="KunstmaanDashboardBundle_setToken")
      *
      * @throws AccessDeniedException
-     *
-     * @return RedirectResponse
      */
-    public function setTokenAction(Request $request)
+    public function setTokenAction(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
@@ -116,27 +110,25 @@ final class GoogleAnalyticsController extends AbstractController
             $this->clientHelper->getClient()->authenticate($code);
             $this->analyticsConfig->saveToken($this->clientHelper->getClient()->getAccessToken());
 
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
+            return $this->redirectToRoute('KunstmaanDashboardBundle_Config');
         }
 
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
+        return $this->redirectToRoute('KunstmaanDashboardBundle_widget_googleanalytics');
     }
 
     /**
      * @Route("/config", name="KunstmaanDashboardBundle_Config")
      *
      * @throws AccessDeniedException
-     *
-     * @return Response
      */
-    public function configAction(Request $request)
+    public function configAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $params = [];
 
         if (null !== $request->request->get('accounts')) {
-            return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
+            return $this->redirectToRoute('kunstmaan_dashboard');
         }
 
         $config = $this->em->getRepository(AnalyticsConfig::class)->findFirst();
@@ -162,10 +154,7 @@ final class GoogleAnalyticsController extends AbstractController
 
         $params['profileSegments'] = $this->analyticsConfig->getProfileSegments();
 
-        return $this->render(
-            '@KunstmaanDashboard/GoogleAnalytics/setupcontainer.html.twig',
-            $params
-        );
+        return $this->render('@KunstmaanDashboard/GoogleAnalytics/setupcontainer.html.twig', $params);
     }
 
     /**
@@ -173,13 +162,13 @@ final class GoogleAnalyticsController extends AbstractController
      *
      * @throws AccessDeniedException
      */
-    public function resetProfileAction()
+    public function resetProfileAction(): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $this->em->getRepository(AnalyticsConfig::class)->resetProfileId();
 
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
+        return $this->redirectToRoute('KunstmaanDashboardBundle_ProfileSelection');
     }
 
     /**
@@ -187,12 +176,12 @@ final class GoogleAnalyticsController extends AbstractController
      *
      * @throws AccessDeniedException
      */
-    public function resetPropertyAction()
+    public function resetPropertyAction(): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $this->em->getRepository(AnalyticsConfig::class)->resetPropertyId();
 
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
+        return $this->redirectToRoute('KunstmaanDashboardBundle_Config');
     }
 }

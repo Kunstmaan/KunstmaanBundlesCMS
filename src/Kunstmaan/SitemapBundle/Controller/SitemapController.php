@@ -7,12 +7,13 @@ use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\SitemapBundle\Event\PreSitemapIndexRenderEvent;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class SitemapController
+final class SitemapController extends AbstractController
 {
     /** @var NodeMenu */
     private $nodeMenu;
@@ -33,15 +34,11 @@ final class SitemapController
      * Use the mode parameter to select in which mode the sitemap should be
      * generated. At this moment only XML is supported
      *
-     * @Route("/sitemap-{locale}.{_format}", name="KunstmaanSitemapBundle_sitemap",
-     *                                       requirements={"_format" = "xml"})
-     * @Template("@KunstmaanSitemap/Sitemap/view.xml.twig")
+     * @Route("/sitemap-{locale}.{_format}", name="KunstmaanSitemapBundle_sitemap", requirements={"_format" = "xml"})
      *
      * @param $locale
-     *
-     * @return array
      */
-    public function sitemapAction($locale)
+    public function sitemapAction($locale): Response
     {
         $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($locale);
@@ -52,11 +49,11 @@ final class SitemapController
         $event = new PreSitemapRenderEvent($locale);
         $this->eventDispatcher->dispatch($event, PreSitemapRenderEvent::NAME);
 
-        return [
+        return $this->render('@KunstmaanSitemap/Sitemap/view.xml.twig', [
             'nodemenu' => $nodeMenu,
             'locale' => $locale,
             'extraItems' => $event->getExtraItems(),
-        ];
+        ]);
     }
 
     /**
@@ -66,23 +63,19 @@ final class SitemapController
      * parameter to select in which mode the sitemap should be generated. At
      * this moment only XML is supported
      *
-     * @Route("/sitemap.{_format}", name="KunstmaanSitemapBundle_sitemapindex",
-     *                              requirements={"_format" = "xml"})
-     * @Template("@KunstmaanSitemap/SitemapIndex/view.xml.twig")
-     *
-     * @return array
+     * @Route("/sitemap.{_format}", name="KunstmaanSitemapBundle_sitemapindex", requirements={"_format" = "xml"})
      */
-    public function sitemapIndexAction(Request $request)
+    public function sitemapIndexAction(Request $request): Response
     {
         $locales = $this->domainConfiguration->getBackendLocales();
 
         $event = new PreSitemapIndexRenderEvent($locales);
         $this->eventDispatcher->dispatch($event, PreSitemapIndexRenderEvent::NAME);
 
-        return [
+        return $this->render('@KunstmaanSitemap/SitemapIndex/view.xml.twig', [
             'locales' => $locales,
             'host' => $request->getSchemeAndHttpHost(),
             'extraSitemaps' => $event->getExtraSitemaps(),
-        ];
+        ]);
     }
 }

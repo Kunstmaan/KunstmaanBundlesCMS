@@ -6,10 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,11 +29,8 @@ final class SettingsController extends AbstractController
      * Generates the robots administration form and fills it with a default value if needed.
      *
      * @Route(path="/", name="KunstmaanSeoBundle_settings_robots")
-     * @Template(template="@KunstmaanSeo/Admin/Settings/robotsSettings.html.twig")
-     *
-     * @return array|RedirectResponse
      */
-    public function robotsSettingsAction(Request $request)
+    public function robotsSettingsAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
@@ -52,16 +48,14 @@ final class SettingsController extends AbstractController
             $isSaved = false;
         }
 
-        $form = $this->createForm(RobotsType::class, $robot, [
-            'action' => $this->generateUrl('KunstmaanSeoBundle_settings_robots'),
-        ]);
+        $form = $this->createForm(RobotsType::class, $robot, ['action' => $this->generateUrl('KunstmaanSeoBundle_settings_robots')]);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->em->persist($robot);
                 $this->em->flush();
 
-                return new RedirectResponse($this->generateUrl('KunstmaanSeoBundle_settings_robots'));
+                return $this->redirectToRoute($this->generateUrl('KunstmaanSeoBundle_settings_robots'));
             }
         }
 
@@ -72,8 +66,8 @@ final class SettingsController extends AbstractController
             );
         }
 
-        return [
+        return $this->render('@KunstmaanSeo/Admin/Settings/robotsSettings.html.twig', [
             'form' => $form->createView(),
-        ];
+        ]);
     }
 }

@@ -10,7 +10,6 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -56,11 +55,8 @@ final class FolderController extends AbstractController
      * @param int $folderId The folder id
      *
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_show")
-     * @Template("@KunstmaanMedia/Folder/show.html.twig")
-     *
-     * @return array
      */
-    public function showAction(Request $request, $folderId)
+    public function showAction(Request $request, $folderId): Response
     {
         $session = $request->getSession();
 
@@ -99,16 +95,11 @@ final class FolderController extends AbstractController
                     ])
                 );
 
-                return new RedirectResponse(
-                    $this->generateUrl(
-                        'KunstmaanMediaBundle_folder_show',
-                        ['folderId' => $folderId]
-                    )
-                );
+                return $this->redirectToRoute('KunstmaanMediaBundle_folder_show', ['folderId' => $folderId]);
             }
         }
 
-        return [
+        return $this->render('@KunstmaanMedia/Folder/show.html.twig', [
             'foldermanager' => $this->folderManager,
             'mediamanager' => $this->mediaManager,
             'subform' => $subForm->createView(),
@@ -117,7 +108,7 @@ final class FolderController extends AbstractController
             'folder' => $folder,
             'adminlist' => $adminList,
             'type' => null,
-        ];
+        ]);
     }
 
     /**
@@ -163,14 +154,10 @@ final class FolderController extends AbstractController
 
         $type = $this->requestStack->getCurrentRequest()->get('type');
 
-        return new RedirectResponse(
-            $this->generateUrl($redirect,
-                [
-                    'folderId' => $folderId,
-                    'type' => $type,
-                ]
-            )
-        );
+        return $this->redirectToRoute($redirect, [
+            'folderId' => $folderId,
+            'type' => $type,
+        ]);
     }
 
     /**
@@ -205,28 +192,21 @@ final class FolderController extends AbstractController
 
                 $type = $request->query->get('type');
 
-                return new RedirectResponse(
-                    $this->generateUrl($redirect,
-                        [
-                            'folderId' => $folder->getId(),
-                            'type' => $type,
-                        ]
-                    )
-                );
+                return $this->redirectToRoute($redirect, [
+                    'folderId' => $folder->getId(),
+                    'type' => $type,
+                ]);
             }
         }
 
         $galleries = $this->em->getRepository(Folder::class)->getAllFolders();
 
-        return $this->render(
-            '@KunstmaanMedia/Folder/addsub-modal.html.twig',
-            [
-                'subform' => $form->createView(),
-                'galleries' => $galleries,
-                'folder' => $folder,
-                'parent' => $parent,
-            ]
-        );
+        return $this->render('@KunstmaanMedia/Folder/addsub-modal.html.twig', [
+            'subform' => $form->createView(),
+            'galleries' => $galleries,
+            'folder' => $folder,
+            'parent' => $parent,
+        ]);
     }
 
     /**
@@ -263,23 +243,16 @@ final class FolderController extends AbstractController
                     $redirect = 'KunstmaanMediaBundle_folder_show';
                 }
 
-                return new RedirectResponse(
-                    $this->generateUrl($redirect,
-                        [
-                            'folderId' => $folder->getId(),
-                            'folder' => $folder,
-                        ]
-                    )
-                );
+                return $this->redirectToRoute($redirect, [
+                    'folderId' => $folder->getId(),
+                    'folder' => $folder,
+                ]);
             }
         }
 
-        return $this->render(
-            '@KunstmaanMedia/Folder/empty-modal.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('@KunstmaanMedia/Folder/empty-modal.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -306,11 +279,9 @@ final class FolderController extends AbstractController
 
         $this->em->flush();
 
-        return new JsonResponse(
-            [
-                'Success' => 'The node-translations for have got new weight values',
-            ]
-        );
+        return new JsonResponse([
+            'Success' => 'The node-translations for have got new weight values',
+        ]);
     }
 
     private function createEmptyForm()

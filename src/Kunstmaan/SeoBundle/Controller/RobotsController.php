@@ -4,11 +4,12 @@ namespace Kunstmaan\SeoBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\SeoBundle\Entity\Robots;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class RobotsController
+final class RobotsController extends AbstractController
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -25,11 +26,8 @@ final class RobotsController
      * Generates the robots.txt content when available in the database and falls back to normal robots.txt if exists
      *
      * @Route(path="/robots.txt", name="KunstmaanSeoBundle_robots", defaults={"_format": "txt"})
-     * @Template("@KunstmaanSeo/Admin/Robots/index.html.twig")
-     *
-     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $entity = $this->em->getRepository(Robots::class)->findOneBy([]);
         $robots = $this->robotsDefault;
@@ -43,6 +41,6 @@ final class RobotsController
             }
         }
 
-        return ['robots' => $robots];
+        return $this->render('@KunstmaanSeo/Admin/Robots/index.html.twig', ['robots' => $robots]);
     }
 }

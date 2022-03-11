@@ -9,10 +9,10 @@ use Kunstmaan\AdminBundle\Form\RoleType;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,38 +40,28 @@ final class RolesController extends AbstractController
     }
 
     /**
-     * List roles
-     *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_roles")
-     * @Template("@KunstmaanAdminList/Default/list.html.twig")
      *
      * @throws AccessDeniedException
-     *
-     * @return array
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $adminlist = $this->adminListFactory->createList(new RoleAdminListConfigurator($this->em));
         $adminlist->bindRequest($request);
 
-        return [
+        return $this->render('@KunstmaanAdminList/Default/list.html.twig', [
             'adminlist' => $adminlist,
-        ];
+        ]);
     }
 
     /**
-     * Add a role
-     *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add", methods={"GET", "POST"})
-     * @Template("@KunstmaanUserManagement/Roles/add.html.twig")
      *
      * @throws AccessDeniedException
-     *
-     * @return array|RedirectResponse
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
@@ -91,28 +81,23 @@ final class RolesController extends AbstractController
                     ])
                 );
 
-                return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
+                return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_roles');
             }
         }
 
-        return [
+        return $this->render('@KunstmaanUserManagement/Roles/add.html.twig', [
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     /**
-     * Edit a role
-     *
      * @param int $id
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_edit", methods={"GET", "POST"})
-     * @Template("@KunstmaanUserManagement/Roles/edit.html.twig")
      *
      * @throws AccessDeniedException
-     *
-     * @return array|RedirectResponse
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
@@ -133,35 +118,31 @@ final class RolesController extends AbstractController
                     ])
                 );
 
-                return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
+                return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_roles');
             }
         }
 
-        return [
+        return $this->render('@KunstmaanUserManagement/Roles/edit.html.twig', [
             'form' => $form->createView(),
             'role' => $role,
-        ];
+        ]);
     }
 
     /**
-     * Delete a role
-     *
      * @param int $id
      *
      * @Route ("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_delete", methods={"POST"})
      *
      * @throws AccessDeniedException
-     *
-     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $configurator = new RoleAdminListConfigurator($this->em);
 
         if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
-            return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
+            return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
         }
 
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -180,6 +161,6 @@ final class RolesController extends AbstractController
             );
         }
 
-        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
+        return$this->redirectToRoute('KunstmaanUserManagementBundle_settings_roles');
     }
 }

@@ -2,19 +2,17 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class ModulesController
+final class ModulesController extends AbstractController
 {
     /**
      * @Route("/", name="KunstmaanAdminBundle_modules")
-     * @Template("@KunstmaanAdmin/Modules/index.html.twig")
-     *
-     * @return array
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
-        return [];
+        return $this->render('@KunstmaanAdmin/Modules/index.html.twig');
     }
 }

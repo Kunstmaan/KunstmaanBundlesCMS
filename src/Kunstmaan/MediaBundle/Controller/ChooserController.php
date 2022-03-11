@@ -12,10 +12,10 @@ use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class ChooserController extends AbstractController
@@ -41,10 +41,8 @@ final class ChooserController extends AbstractController
 
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
-     *
-     * @return RedirectResponse
      */
-    public function chooserIndexAction(Request $request)
+    public function chooserIndexAction(Request $request): RedirectResponse
     {
         $session = $request->getSession();
         $folderId = false;
@@ -77,18 +75,15 @@ final class ChooserController extends AbstractController
             'linkChooser' => $linkChooser,
         ];
 
-        return $this->redirect($this->generateUrl('KunstmaanMediaBundle_chooser_show_folder', $params));
+        return $this->redirectToRoute('KunstmaanMediaBundle_chooser_show_folder', $params);
     }
 
     /**
      * @param int $folderId The folder id
      *
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
-     * @Template("@KunstmaanMedia/Chooser/chooserShowFolder.html.twig")
-     *
-     * @return array
      */
-    public function chooserShowFolderAction(Request $request, $folderId)
+    public function chooserShowFolderAction(Request $request, $folderId): Response
     {
         $session = $request->getSession();
 
@@ -136,7 +131,7 @@ final class ChooserController extends AbstractController
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
 
-        $viewVariabels = [
+        $viewVars = [
             'cKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser' => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
@@ -149,16 +144,14 @@ final class ChooserController extends AbstractController
             'subform' => $subForm->createView(),
         ];
 
-        /* generate all forms */
         $forms = [];
-
         foreach ($this->mediaManager->getFolderAddActions()  as $addAction) {
             $forms[$addAction['type']] = $this->createTypeFormView($this->mediaManager, $addAction['type']);
         }
 
-        $viewVariabels['forms'] = $forms;
+        $viewVars['forms'] = $forms;
 
-        return $viewVariabels;
+        return $this->render('@KunstmaanMedia/Chooser/chooserShowFolder.html.twig', $viewVars);
     }
 
     /**

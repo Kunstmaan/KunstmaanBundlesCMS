@@ -19,7 +19,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,11 +44,8 @@ final class FormSubmissionsController extends AbstractController
      * The index action will use an admin list to list all the form pages
      *
      * @Route("/", name="KunstmaanFormBundle_formsubmissions")
-     * @Template("@KunstmaanAdminList/Default/list.html.twig")
-     *
-     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
@@ -59,7 +55,7 @@ final class FormSubmissionsController extends AbstractController
         );
         $adminList->bindRequest($request);
 
-        return ['adminlist' => $adminList];
+        return $this->render('@KunstmaanAdminList/Default/list.html.twig', ['adminlist' => $adminList]);
     }
 
     /**
@@ -67,13 +63,9 @@ final class FormSubmissionsController extends AbstractController
      *
      * @param int $nodeTranslationId
      *
-     * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"},
-     *                                     name="KunstmaanFormBundle_formsubmissions_list", methods={"GET", "POST"})
-     * @Template("@KunstmaanForm/FormSubmissions/list.html.twig")
-     *
-     * @return array
+     * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list", methods={"GET", "POST"})
      */
-    public function listAction(Request $request, $nodeTranslationId)
+    public function listAction(Request $request, $nodeTranslationId): Response
     {
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
 
@@ -83,7 +75,10 @@ final class FormSubmissionsController extends AbstractController
         );
         $adminList->bindRequest($request);
 
-        return ['nodetranslation' => $nodeTranslation, 'adminlist' => $adminList];
+        return $this->render('@KunstmaanForm/FormSubmissions/list.html.twig', [
+            'nodetranslation' => $nodeTranslation,
+            'adminlist' => $adminList,
+        ]);
     }
 
     /**
@@ -94,11 +89,8 @@ final class FormSubmissionsController extends AbstractController
      *
      * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" =
      *                                                    "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit", methods={"GET", "POST"})
-     * @Template("@KunstmaanForm/FormSubmissions/edit.html.twig")
-     *
-     * @return array
      */
-    public function editAction($nodeTranslationId, $submissionId)
+    public function editAction($nodeTranslationId, $submissionId): Response
     {
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
         $formSubmission = $this->em->getRepository(FormSubmission::class)->find($submissionId);
@@ -111,11 +103,11 @@ final class FormSubmissionsController extends AbstractController
         );
         $adminList->bindRequest($request);
 
-        return [
+        return $this->render('@KunstmaanForm/FormSubmissions/edit.html.twig', [
             'nodetranslation' => $nodeTranslation,
             'formsubmission' => $formSubmission,
             'adminlist' => $adminList,
-        ];
+        ]);
     }
 
     /**

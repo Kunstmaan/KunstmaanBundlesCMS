@@ -5,10 +5,11 @@ namespace Kunstmaan\LeadGenerationBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 use Kunstmaan\LeadGenerationBundle\Form\NewsletterSubscriptionType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 abstract class AbstractNewsletterController extends AbstractController
@@ -44,7 +45,8 @@ abstract class AbstractNewsletterController extends AbstractController
 
     /**
      * @Route("/{popup}/subscribe", name="popup_newsletter_subscribe", requirements={"popup": "\d+"}, methods={"POST"})
-     * @Template()
+     *
+     * @return Response
      */
     public function subscribeAction(Request $request, $popup)
     {
@@ -70,7 +72,7 @@ abstract class AbstractNewsletterController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\Form\Form
+     * @return FormInterface
      */
     protected function createSubscriptionForm(AbstractPopup $popup)
     {
