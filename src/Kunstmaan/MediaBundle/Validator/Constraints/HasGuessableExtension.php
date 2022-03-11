@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class HasGuessableExtension extends Constraint
 {
     public const NOT_GUESSABLE_ERROR = '496c3e10-17a0-4bb0-b3ad-c2bf99731703';

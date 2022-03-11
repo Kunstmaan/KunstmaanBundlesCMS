@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class Media extends Constraint
 {
     public const NOT_FOUND_ERROR = 'b707694b-ff60-4f3f-a1bb-22ecae5b6e0d';
@@ -68,4 +69,37 @@ class Media extends Constraint
     public $uploadExtensionErrorMessage = 'A PHP extension caused the upload to fail.';
 
     public $uploadErrorMessage = 'The file could not be uploaded.';
+
+    /**
+     * @param array<string,mixed> $options
+     */
+    public function __construct(
+        array $options = [],
+        array $groups = null,
+        $payload = null,
+        int $minHeight = null,
+        int $maxHeight = null,
+        int $minWidth = null,
+        int $maxWidth = null,
+        array $mimeTypes = null,
+        string $minHeightMessage = null,
+        string $maxHeightMessage = null,
+        string $minWidthMessage = null,
+        string $maxWidthMessage = null,
+        string $mimeTypesMessage = null
+    ) {
+
+        parent::__construct($options, $groups, $payload);
+
+        $this->minHeight = $minHeight ?? $this->minHeight;
+        $this->maxHeight = $maxHeight ?? $this->maxHeight;
+        $this->minWidth = $minWidth ?? $this->minWidth;
+        $this->maxWidth = $maxWidth ?? $this->maxWidth;
+        $this->mimeTypes = $mimeTypes ?? $this->mimeTypes;
+        $this->mimeTypesMessage = $mimeTypesMessage ?? $this->mimeTypesMessage;
+        $this->maxWidthMessage = $maxWidthMessage ?? $this->maxWidthMessage;
+        $this->minWidthMessage = $minWidthMessage ?? $this->minWidthMessage;
+        $this->maxHeightMessage = $maxHeightMessage ?? $this->maxHeightMessage;
+        $this->minHeightMessage = $minHeightMessage ?? $this->minHeightMessage;
+    }
 }
