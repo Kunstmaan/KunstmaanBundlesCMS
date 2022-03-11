@@ -1,6 +1,14 @@
 UPGRADE FROM 6.1 to 6.2
 ========================
 
+General
+-------
+
+- We've deprecated our GroundControl FE build setup, this setup will be replaced by the default symfony webpack encore setup. 
+  If you generate a new project the new webpack setup will be used by default. Projects using GroundControl should replace this 
+  setup by symfony webpack encore. See the [related PR](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2981) for more information on this change.
+  In Kunstmaan CMS 7.O all GroundControl related files and support in templates will be removed.
+
 AdminBundle
 -----------
 
