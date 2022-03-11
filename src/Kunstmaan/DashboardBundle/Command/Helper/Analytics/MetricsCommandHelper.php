@@ -20,23 +20,23 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
         $rows = $this->executeQuery($overview, $metrics);
 
         // sessions metric
-        $visits = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+        $visits = \is_array($rows) && is_numeric($rows[0][0]) ? $rows[0][0] : 0;
         $overview->setSessions($visits);
 
         // users metric
-        $visitors = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
+        $visitors = \is_array($rows) && is_numeric($rows[0][1]) ? $rows[0][1] : 0;
         $overview->setUsers($visitors);
 
         // pageviews metric
-        $pageviews = is_numeric($rows[0][2]) ? $rows[0][2] : 0;
+        $pageviews = \is_array($rows) && is_numeric($rows[0][2]) ? $rows[0][2] : 0;
         $overview->setPageviews($pageviews);
 
         // pages per visit metric
-        $pagesPerVisit = is_numeric($rows[0][3]) ? $rows[0][3] : 0;
+        $pagesPerVisit = \is_array($rows) && is_numeric($rows[0][3]) ? $rows[0][3] : 0;
         $overview->setPagesPerSession($pagesPerVisit);
 
         // avg visit duration metric
-        $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
+        $avgVisitDuration = \is_array($rows) && is_numeric($rows[0][4]) ? $rows[0][4] : 0;
         $overview->setAvgSessionDuration(gmdate('H:i:s', $avgVisitDuration));
     }
 }

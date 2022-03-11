@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Kunstmaan\UserManagementBundle\Event;
 
 use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 final class DeleteUserInitializeEvent extends Event
 {
