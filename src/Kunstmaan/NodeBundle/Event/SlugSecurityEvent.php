@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class SlugSecurityEvent extends BcEvent
+final class SlugSecurityEvent extends Event
 {
     /** @var Node|null */
     private $node;

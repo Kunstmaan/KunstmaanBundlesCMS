@@ -9,13 +9,23 @@ use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class VotingController extends Controller
+final class VotingController
 {
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $this->upgradeEventDispatcher($eventDispatcher);
+    }
+
     /**
      * @Route("/voting-upvote", name="voting_upvote")
      * @Template("@KunstmaanVoting/UpDown/voted.html.twig")
@@ -24,7 +34,7 @@ final class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->dispatch(new UpVoteEvent($request, $reference, $value), Events::VOTE_UP);
+        $this->eventDispatcher->dispatch(new UpVoteEvent($request, $reference, $value), Events::VOTE_UP);
     }
 
     /**
@@ -35,7 +45,7 @@ final class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->dispatch(new DownVoteEvent($request, $reference, $value), Events::VOTE_DOWN);
+        $this->eventDispatcher->dispatch(new DownVoteEvent($request, $reference, $value), Events::VOTE_DOWN);
     }
 
     /**
@@ -45,7 +55,7 @@ final class VotingController extends Controller
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
+        $this->eventDispatcher->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
     }
 
     /**
@@ -55,7 +65,7 @@ final class VotingController extends Controller
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
+        $this->eventDispatcher->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
     }
 
     /**
@@ -65,23 +75,21 @@ final class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->dispatch(new LinkedInShareEvent($request, $reference, $value), Events::LINKEDIN_SHARE);
+        $this->eventDispatcher->dispatch(new LinkedInShareEvent($request, $reference, $value), Events::LINKEDIN_SHARE);
     }
 
     /**
-     * @param object $event
-     *
-     * @return object
+     * NEXT_MAJOR remove when sf4.4 support is dropped.
      */
-    private function dispatch($event, string $eventName)
+    private function upgradeEventDispatcher(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
     {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
+        // On Symfony 5.0+, the legacy proxy is a no-op and it is deprecated in 5.1+
+        // Detecting the parent class of GenericEvent (which changed in 5.0) allows to avoid using the deprecated no-op API.
+        if (is_subclass_of(GenericEvent::class, Event::class)) {
+            return $eventDispatcher;
         }
 
-        return $eventDispatcher->dispatch($eventName, $event);
+        // BC layer for Symfony 4.4 where we need to apply the decorating proxy in case of non-upgraded dispatcher.
+        return LegacyEventDispatcherProxy::decorate($eventDispatcher);
     }
 }

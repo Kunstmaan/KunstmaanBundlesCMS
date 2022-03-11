@@ -4,10 +4,10 @@ namespace Kunstmaan\NodeBundle\Event;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Kunstmaan\AdminBundle\Event\BcEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class ConfigureActionMenuEvent extends BcEvent
+final class ConfigureActionMenuEvent extends Event
 {
     /**
      * @var FactoryInterface

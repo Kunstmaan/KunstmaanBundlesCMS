@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\DependencyInjection;
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
 {
@@ -22,10 +21,6 @@ class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
         $this->container->setParameter('kernel.project_dir', '/somewhere/over/the/rainbow');
         $this->load();
 
-        $expectedFormSubmissionPath = '/somewhere/over/the/rainbow/web/uploads/formsubmissions';
-        if (Kernel::VERSION_ID >= 40000) {
-            $expectedFormSubmissionPath = '/somewhere/over/the/rainbow/public/uploads/formsubmissions';
-        }
-        $this->assertContainerBuilderHasParameter('form_submission_rootdir', $expectedFormSubmissionPath);
+        $this->assertContainerBuilderHasParameter('form_submission_rootdir', '/somewhere/over/the/rainbow/public/uploads/formsubmissions');
     }
 }

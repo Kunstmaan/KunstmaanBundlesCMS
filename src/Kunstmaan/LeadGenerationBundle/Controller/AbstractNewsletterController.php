@@ -2,23 +2,38 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 use Kunstmaan\LeadGenerationBundle\Form\NewsletterSubscriptionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-abstract class AbstractNewsletterController extends Controller
+abstract class AbstractNewsletterController extends AbstractController
 {
+    /** @var EntityManagerInterface|null */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em = null)
+    {
+        if (null === $em) {
+            trigger_deprecation('kunstmaan/lead-generation-bundle', '6.1', 'To passing an instance of "%s" to "%s" is deprecated and will be required in 6.0.', EntityManagerInterface::class, __METHOD__);
+        }
+
+        $this->em = $em;
+    }
+
     /**
      * @Route("/{popup}", name="popup_newsletter_index", requirements={"popup": "\d+"})
      */
     public function indexAction($popup)
     {
+        // NEXT_MAJOR remove getDoctrine fallback
+        $em = $this->em ?? $this->getDoctrine();
         /** @var AbstractPopup $thePopup */
-        $thePopup = $this->getDoctrine()->getRepository(AbstractPopup::class)->find($popup);
+        $thePopup = $em->getRepository(AbstractPopup::class)->find($popup);
         $form = $this->createSubscriptionForm($thePopup);
 
         return $this->render($this->getIndexTemplate(), [
@@ -33,8 +48,10 @@ abstract class AbstractNewsletterController extends Controller
      */
     public function subscribeAction(Request $request, $popup)
     {
+        // NEXT_MAJOR remove getDoctrine fallback
+        $em = $this->em ?? $this->getDoctrine();
         /** @var AbstractPopup $thePopup */
-        $thePopup = $this->getDoctrine()->getRepository(AbstractPopup::class)->find($popup);
+        $thePopup = $em->getRepository(AbstractPopup::class)->find($popup);
         $form = $this->createSubscriptionForm($thePopup);
 
         $form->handleRequest($request);

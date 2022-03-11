@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
-use Kunstmaan\MediaBundle\Utils\SymfonyVersion;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -23,12 +22,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kunstmaan_media');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('kunstmaan_media');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -47,7 +41,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                 ->end()
                 ->scalarNode('web_root')
-                    ->defaultValue(SymfonyVersion::getRootWebPath())
+                    ->defaultValue('%kernel.project_dir%/public')
                     ->cannotBeEmpty()
                 ->end()
                 // @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.

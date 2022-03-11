@@ -27,7 +27,7 @@
         "matthiasnoback/symfony-config-test": "^4.0",
         "fakerphp/faker": "^1.15",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "symfony/phpunit-bridge": "^5.1" ,
+        "symfony/phpunit-bridge": "^5.3" ,
         "phpunit/phpunit": "^8.5"
     },
     "config": {
@@ -40,7 +40,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-6.0": "6.0-dev"
+            "dev-6.x": "6.1-dev"
         }
     }
 }

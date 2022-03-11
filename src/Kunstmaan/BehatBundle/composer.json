@@ -16,7 +16,7 @@
         "php": "^7.2"
     },
     "require-dev": {
-        "symfony/http-kernel": "^3.4|^4.4",
+        "symfony/http-kernel": "^4.4|^5.3",
         "behat/behat": "3.1.0rc1",
         "behat/symfony2-extension": "~2.1.1",
         "behat/mink": "dev-master",
@@ -26,7 +26,7 @@
         "behat/mink-sahi-driver": "dev-master",
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "symfony/phpunit-bridge": "^5.1",
+        "symfony/phpunit-bridge": "^5.3",
         "phpunit/phpunit": "^8.5"
     },
     "autoload": {
@@ -35,7 +35,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-6.0": "6.0-dev"
+            "dev-6.x": "6.1-dev"
         }
     }
 }

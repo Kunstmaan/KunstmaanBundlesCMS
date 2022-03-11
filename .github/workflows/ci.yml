@@ -9,27 +9,23 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            SYMFONY_DEPRECATIONS_HELPER: "baselineFile=./.build/deprecations-baseline.json&max[self]=999999"
+            SYMFONY_DEPRECATIONS_HELPER: "baselineFile=./.build/deprecations-baseline.json&max[self]=0"
 
         strategy:
             fail-fast: false
             matrix:
-                php: ['7.2', '7.3', '7.4', '8.0']
+                php: ['7.2', '7.3', '7.4', '8.0', '8.1']
                 deps: ['stable']
                 symfony: [''] # Don't lock to a specific symfony version by default
                 include:
                     # Test lowest dependencies
                     -   deps: 'lowest'
                         php: 7.2
-                        symfony: '^3.4'
+                        symfony: '^4.4'
 
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
-                        php: 7.4
-                        symfony: '^3.4'
-
-                    -   deps: 'lts'
-                        php: 7.4
+                        php: 8.0
                         symfony: '^4.4'
 
         steps:

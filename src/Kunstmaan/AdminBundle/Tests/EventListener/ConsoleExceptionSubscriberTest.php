@@ -14,12 +14,6 @@ class ConsoleExceptionSubscriberTest extends TestCase
 {
     public function testListener()
     {
-        // Remove when sf3.4 support is removed
-        if (!class_exists(ConsoleErrorEvent::class)) {
-            // Nothing to test
-            return;
-        }
-
         $error = new \TypeError('An error occurred');
         $output = $this->createMock(OutputInterface::class);
         $logger = $this->createMock(LoggerInterface::class);

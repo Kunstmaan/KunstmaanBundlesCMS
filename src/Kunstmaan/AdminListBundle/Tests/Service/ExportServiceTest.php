@@ -21,14 +21,6 @@ class ExportServiceTest extends TestCase
         $this->object = new ExportService($this->createMock(Environment::class), new Translator('nl'));
     }
 
-    public function testConstructorInvalidTranslatorlass()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Argument 2 passed to "Kunstmaan\AdminListBundle\Service\ExportService::__construct" must be of the type "Symfony\Component\Translation\TranslatorInterface" or "Symfony\Contracts\Translation\TranslatorInterface", "stdClass" given');
-
-        new ExportService($this->createMock(Environment::class), new \stdClass());
-    }
-
     public function testGetSupportedExtensions()
     {
         $extensions = ExportService::getSupportedExtensions();

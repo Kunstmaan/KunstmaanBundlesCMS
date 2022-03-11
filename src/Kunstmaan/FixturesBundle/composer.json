@@ -27,12 +27,12 @@
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
         "kunstmaan/utilities-bundle": "^5.9|^6.0",
-        "symfony/mime": "^4.4"
+        "symfony/mime": "^4.4|^5.3"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "symfony/phpunit-bridge": "^5.1",
+        "symfony/phpunit-bridge": "^5.3",
         "phpunit/phpunit": "^8.5"
     },
     "conflict": {
@@ -45,7 +45,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-6.0": "6.0-dev"
+            "dev-6.x": "6.1-dev"
         }
     }
 }

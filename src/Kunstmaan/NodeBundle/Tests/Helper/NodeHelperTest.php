@@ -29,7 +29,6 @@ use Kunstmaan\NodeBundle\ValueObject\PageTab;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -141,10 +140,10 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->exactly(2))
             ->method('dispatch')
-            ->withConsecutive(...$this->getEventDispatcherArgument(
+            ->withConsecutive(
                 [$this->equalTo(new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)), $this->equalTo(Events::PRE_PERSIST)],
                 [$this->equalTo(new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)), $this->equalTo(Events::POST_PERSIST)]
-            ));
+            );
 
         $this->nodeHelper->updatePage(
             $node,
@@ -210,7 +209,7 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with(...$this->getEventDispatcherArgument([$this->equalTo($expectedEvent), $this->equalTo(Events::ADD_NODE)]))
+            ->with($this->equalTo($expectedEvent), $this->equalTo(Events::ADD_NODE))
         ;
 
         $result = $this->nodeHelper->createPage(TestPage::class, $title, $this->locale, $nodeHomePage);
@@ -240,12 +239,12 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->exactly(4))
             ->method('dispatch')
-            ->withConsecutive(...$this->getEventDispatcherArgument(
+            ->withConsecutive(
                 [$this->equalTo(new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage)), $this->equalTo(Events::PRE_DELETE)],
                 [$this->equalTo(new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page)), $this->equalTo(Events::PRE_DELETE)],
                 [$this->equalTo(new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page)), $this->equalTo(Events::POST_DELETE)],
                 [$this->equalTo(new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage)), $this->equalTo(Events::POST_DELETE)]
-            ));
+            );
 
         $result = $this->nodeHelper->deletePage($nodeHomePage, $this->locale);
 
@@ -370,7 +369,7 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with(...$this->getEventDispatcherArgument([$this->equalTo(new NodeEvent($node, $nodeTranslation, $originalNodeVersion, $page)), $this->equalTo(Events::CREATE_DRAFT_VERSION)]));
+            ->with($this->equalTo(new NodeEvent($node, $nodeTranslation, $originalNodeVersion, $page)), $this->equalTo(Events::CREATE_DRAFT_VERSION));
 
         $result = $this->nodeHelper->createDraftVersion($page, $nodeTranslation, $originalNodeVersion);
 
@@ -459,15 +458,19 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with(...$this->getEventDispatcherArgument([$this->equalTo(new CopyPageTranslationNodeEvent(
-                $node,
-                $expectedNodeTranslation,
-                $expectedNodeVersion,
-                $targetPage,
-                $sourceNodeTranslation,
-                $sourceNodeNodeVersion,
-                $sourcePage,
-                $this->locale)), $this->equalTo(Events::COPY_PAGE_TRANSLATION)]));
+            ->with(
+                $this->equalTo(new CopyPageTranslationNodeEvent(
+                    $node,
+                    $expectedNodeTranslation,
+                    $expectedNodeVersion,
+                    $targetPage,
+                    $sourceNodeTranslation,
+                    $sourceNodeNodeVersion,
+                    $sourcePage,
+                    $this->locale
+                )),
+                $this->equalTo(Events::COPY_PAGE_TRANSLATION)
+            );
 
         $result = $this->nodeHelper->copyPageFromOtherLanguage($node, $this->locale, $targetLocale);
 
@@ -570,15 +573,19 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with(...$this->getEventDispatcherArgument([$this->equalTo(new RecopyPageTranslationNodeEvent(
-                $node,
-                $expectedNodeTranslation,
-                $expectedNodeVersion,
-                $targetPage,
-                $sourceNodeTranslation,
-                $sourceNodeNodeVersion,
-                $sourcePage,
-                $this->locale)), $this->equalTo(Events::RECOPY_PAGE_TRANSLATION)]));
+            ->with(
+                $this->equalTo(new RecopyPageTranslationNodeEvent(
+                    $node,
+                    $expectedNodeTranslation,
+                    $expectedNodeVersion,
+                    $targetPage,
+                    $sourceNodeTranslation,
+                    $sourceNodeNodeVersion,
+                    $sourcePage,
+                    $this->locale
+                )),
+                $this->equalTo(Events::RECOPY_PAGE_TRANSLATION)
+            );
 
         $result = $this->nodeHelper->createPageDraftFromOtherLanguage($node, 1, $targetLocale);
 
@@ -620,11 +627,15 @@ class NodeHelperTest extends TestCase
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with(...$this->getEventDispatcherArgument([$this->equalTo(new NodeEvent(
-                $node,
-                $expectedNodeTranslation,
-                $expectedNodeVersion,
-                $targetPage)), $this->equalTo(Events::ADD_EMPTY_PAGE_TRANSLATION)]));
+            ->with(
+                $this->equalTo(new NodeEvent(
+                    $node,
+                    $expectedNodeTranslation,
+                    $expectedNodeVersion,
+                    $targetPage
+                )),
+                $this->equalTo(Events::ADD_EMPTY_PAGE_TRANSLATION)
+            );
 
         $result = $this->nodeHelper->createEmptyPage($node, $this->locale);
 
@@ -733,28 +744,5 @@ class NodeHelperTest extends TestCase
         }
 
         $this->assertEquals('tab1_title', $title);
-    }
-
-    /**
-     * function to flip expected argument order for 3.4 event dispatcher instances.
-     */
-    private function getEventDispatcherArgument(...$arguments)
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            if (\count($arguments) === 1) {
-                return $arguments[0];
-            }
-
-            return $arguments;
-        }
-
-        $newArguments = [];
-        foreach ($arguments as $key => $args) {
-            $newArgs = $args;
-            array_splice($newArgs, 0, 2, array_reverse(array_slice($args, 0, 2)));
-            $newArguments[$key] = $newArgs;
-        }
-
-        return \count($newArguments) === 1 ? $newArguments[0] : $newArguments;
     }
 }

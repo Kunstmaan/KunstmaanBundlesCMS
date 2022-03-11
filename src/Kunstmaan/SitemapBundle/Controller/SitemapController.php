@@ -2,16 +2,32 @@
 
 namespace Kunstmaan\SitemapBundle\Controller;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\SitemapBundle\Event\PreSitemapIndexRenderEvent;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class SitemapController extends Controller
+final class SitemapController
 {
+    /** @var NodeMenu */
+    private $nodeMenu;
+    /** @var DomainConfigurationInterface */
+    private $domainConfiguration;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(NodeMenu $nodeMenu, DomainConfigurationInterface $domainConfiguration, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->nodeMenu = $nodeMenu;
+        $this->domainConfiguration = $domainConfiguration;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+    }
+
     /**
      * This will generate a sitemap for the specified locale.
      * Use the mode parameter to select in which mode the sitemap should be
@@ -27,14 +43,14 @@ final class SitemapController extends Controller
      */
     public function sitemapAction($locale)
     {
-        $nodeMenu = $this->get('kunstmaan_node.node_menu');
+        $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($locale);
         $nodeMenu->setIncludeOffline(false);
         $nodeMenu->setIncludeHiddenFromNav(true);
         $nodeMenu->setCurrentNode(null);
 
         $event = new PreSitemapRenderEvent($locale);
-        $this->dispatch($event, PreSitemapRenderEvent::NAME);
+        $this->eventDispatcher->dispatch($event, PreSitemapRenderEvent::NAME);
 
         return [
             'nodemenu' => $nodeMenu,
@@ -58,33 +74,15 @@ final class SitemapController extends Controller
      */
     public function sitemapIndexAction(Request $request)
     {
-        $locales = $this->get('kunstmaan_admin.domain_configuration')
-            ->getBackendLocales();
+        $locales = $this->domainConfiguration->getBackendLocales();
 
         $event = new PreSitemapIndexRenderEvent($locales);
-        $this->dispatch($event, PreSitemapIndexRenderEvent::NAME);
+        $this->eventDispatcher->dispatch($event, PreSitemapIndexRenderEvent::NAME);
 
         return [
             'locales' => $locales,
             'host' => $request->getSchemeAndHttpHost(),
             'extraSitemaps' => $event->getExtraSitemaps(),
         ];
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

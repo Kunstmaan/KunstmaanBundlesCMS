@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -129,10 +127,7 @@ class HostOverrideListenerTest extends TestCase
     {
         $kernel = $this->createMock(KernelInterface::class);
 
-        return class_exists(RequestEvent::class) ?
-            new ResponseEvent($kernel, $request, $requestType, $response) :
-            new FilterResponseEvent($kernel, $request, $requestType, $response)
-        ;
+        return new ResponseEvent($kernel, $request, $requestType, $response);
     }
 
     private function getAdminRequest()

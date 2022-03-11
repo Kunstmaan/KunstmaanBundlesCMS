@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Tests\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class MediaManagerTest extends TestCase
@@ -201,7 +202,7 @@ class MediaManagerTest extends TestCase
      * @param object $media
      * @param string $name
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getCustomHandler($media = null, $name = null)
     {

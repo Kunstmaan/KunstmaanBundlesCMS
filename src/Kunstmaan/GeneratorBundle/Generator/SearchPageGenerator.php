@@ -78,7 +78,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $rootDir,
         OutputInterface $output
     ) {
-        $dirPath = Kernel::VERSION_ID >= 40000 ? $this->rootDir . '/templates' : $bundle->getPath() . '/Resources/views';
+        $dirPath = $this->rootDir . '/templates';
         $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
 
         $this->filesystem->copy(

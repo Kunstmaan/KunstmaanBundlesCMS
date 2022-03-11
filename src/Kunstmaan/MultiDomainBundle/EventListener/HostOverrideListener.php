@@ -6,16 +6,14 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HostOverrideListener
 {
     /**
-     * @var LegacyTranslatorInterface|TranslatorInterface
+     * @var TranslatorInterface
      */
     protected $translator;
 
@@ -29,29 +27,15 @@ class HostOverrideListener
      */
     protected $adminRouteHelper;
 
-    public function __construct(
-        /* TranslatorInterface */ $translator,
-        DomainConfigurationInterface $domainConfiguration,
-        AdminRouteHelper $adminRouteHelper
-    ) {
-        if (!$translator instanceof LegacyTranslatorInterface && !$translator instanceof TranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('Argument "$translator" passed to "%s" must be of the type "%s" or "%s", "%s" given', __METHOD__, LegacyTranslatorInterface::class, TranslatorInterface::class, get_class($translator)));
-        }
-
+    public function __construct(TranslatorInterface $translator, DomainConfigurationInterface $domainConfiguration, AdminRouteHelper $adminRouteHelper)
+    {
         $this->translator = $translator;
         $this->domainConfiguration = $domainConfiguration;
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
-    /**
-     * @param FilterResponseEvent|ResponseEvent $event
-     */
-    public function onKernelResponse($event)
+    public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event instanceof FilterResponseEvent && !$event instanceof ResponseEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : FilterResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }

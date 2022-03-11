@@ -148,12 +148,7 @@ class AclHelper
         $user = null;
         if (!\is_null($token)) {
             $user = $token->getUser();
-            if (method_exists($this->roleHierarchy, 'getReachableRoleNames')) {
-                $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
-            } else {
-                // Symfony 3.4 compatibility
-                $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
-            }
+            $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
         }
 
         // Security context does not provide anonymous role automatically.
@@ -161,22 +156,15 @@ class AclHelper
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
-            if (is_string($role)) {
-                if ($role !== 'ROLE_USER') {
-                    $uR[] = $databasePlatform->quoteStringLiteral($role);
-                }
-            } else {
-                // Symfony 3.4 compatibility
-                if ($role->getRole() !== 'ROLE_USER') {
-                    $uR[] = $databasePlatform->quoteStringLiteral($role->getRole());
-                }
+            if ($role !== 'ROLE_USER') {
+                $uR[] = $databasePlatform->quoteStringLiteral($role);
             }
         }
         $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = ' . $databasePlatform->quoteStringLiteral(\get_class($user) . '-' . $user->getUserName());
+            $inString .= ' OR s.identifier = ' . $databasePlatform->quoteStringLiteral(\get_class($user) . '-' . method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername());
         }
 
         $objectIdentifierColumn = 'o.object_identifier';

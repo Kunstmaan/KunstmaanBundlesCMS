@@ -4,12 +4,10 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -23,7 +21,7 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $tokenStorage;
 
     /**
-     * @var TranslatorInterface|LegacyTranslatorInterface
+     * @var TranslatorInterface
      */
     private $translator;
 
@@ -43,17 +41,11 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $adminRouteHelper;
 
     /**
-     * @param TranslatorInterface|LegacyTranslatorInterface $translator
-     * @param string                                        $defaultAdminLocale
-     * @param string                                        $providerKey        Firewall name to check against
+     * @param string $defaultAdminLocale
+     * @param string $providerKey        Firewall name to check against
      */
-    public function __construct(TokenStorageInterface $tokenStorage, /* TranslatorInterface|LegacyTranslatorInterface */ $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
+    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof \Symfony\Contracts\Translation\TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         $this->translator = $translator;
         $this->tokenStorage = $tokenStorage;
         $this->defaultAdminLocale = $defaultAdminLocale;
@@ -61,15 +53,8 @@ class AdminLocaleListener implements EventSubscriberInterface
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
-    /**
-     * @param GetResponseEvent|RequestEvent $event
-     */
-    public function onKernelRequest($event)
+    public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event instanceof GetResponseEvent && !$event instanceof RequestEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(RequestEvent::class) ? RequestEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $url = $event->getRequest()->getRequestUri();
         if (!$this->adminRouteHelper->isAdminRoute($url)) {
             return;
@@ -92,7 +77,20 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     private function isAdminToken($providerKey, TokenInterface $token = null): bool
     {
-        return \is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
+        if (null === $token) {
+            return false;
+        }
+
+        if (\is_callable([$token, 'getFirewallName'])) {
+            return $token->getFirewallName() === $providerKey;
+        }
+
+        // NEXT_MAJOR remove check when symfony 4.4 support is removed
+        if (\is_callable([$token, 'getProviderKey'])) {
+            return $token->getProviderKey() === $providerKey;
+        }
+
+        return false;
     }
 
     /**

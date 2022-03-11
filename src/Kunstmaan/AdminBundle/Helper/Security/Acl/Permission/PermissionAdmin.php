@@ -21,7 +21,6 @@ use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * Helper to manage the permissions on a certain entity
@@ -151,15 +150,17 @@ class PermissionAdmin
     /**
      * Get permission for specified role.
      *
-     * @param RoleInterface|string $role
+     * @param \Symfony\Component\Security\Core\Role\Role|string $role
      *
      * @return MaskBuilder|null
      */
     public function getPermission($role)
     {
-        if ($role instanceof RoleInterface || $role instanceof \Symfony\Component\Security\Core\Role\Role) {
+        // NEXT_MAJOR remove undefined classes from this check
+        if ($role instanceof \Symfony\Component\Security\Core\Role\Role || $role instanceof Role) {
             $role = $role->getRole();
         }
+
         if (isset($this->permissions[$role])) {
             return $this->permissions[$role];
         }

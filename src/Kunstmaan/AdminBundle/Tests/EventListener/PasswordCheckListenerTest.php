@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -41,7 +40,7 @@ class PasswordCheckListenerTest extends TestCase
         $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $kernel = $this->createMock(KernelInterface::class);
-        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
         $auth->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isGranted')->willReturn(true);

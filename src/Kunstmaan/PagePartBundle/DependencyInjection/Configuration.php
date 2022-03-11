@@ -15,12 +15,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kunstmaan_page_part');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('kunstmaan_page_part');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode->children()
             ->booleanNode('extended_pagepart_chooser')
@@ -83,8 +78,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getRowNode($name = '')
     {
-        $treeBuilder = new TreeBuilder();
-        $definition = $treeBuilder->root($name);
+        $treeBuilder = new TreeBuilder($name);
+        $definition = $treeBuilder->getRootNode();
         $this->buildRowNode($definition);
 
         return $definition->getNode(true);
@@ -108,8 +103,8 @@ class Configuration implements ConfigurationInterface
 
     protected function getRegionNode($name = '')
     {
-        $treeBuilder = new TreeBuilder();
-        $definition = $treeBuilder->root($name);
+        $treeBuilder = new TreeBuilder($name);
+        $definition = $treeBuilder->getRootNode();
         $this->buildRegionNode($definition);
 
         return $definition->getNode(true);

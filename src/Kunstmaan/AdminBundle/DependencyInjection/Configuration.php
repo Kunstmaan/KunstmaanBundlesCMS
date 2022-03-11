@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
+use Symfony\Component\Config\Definition\BaseNode;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,12 +19,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('kunstmaan_admin');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('kunstmaan_admin');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->fixXmlConfig('admin_locale')
@@ -37,7 +33,11 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('authentication')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('enable_new_authentication')->defaultTrue()->end()
+                        ->booleanNode('enable_new_authentication')
+                            ->info('When true, the new authentication system will be used. Note: No-Op option since KunstmaanAdminBundle 6.0. Will always be true.')
+                            ->setDeprecated(...$this->getDeprecationParameters('The "%path%.%node%" configuration key has been deprecated, remove it from your config.', '6.1'))
+                            ->defaultTrue()
+                        ->end()
                         ->scalarNode('user_class')->defaultValue(User::class)->end()
                         ->scalarNode('group_class')->defaultValue(Group::class)->end()
                         ->arrayNode('mailer')
@@ -111,5 +111,22 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         return $treeBuilder;
+    }
+
+    /**
+     * Returns the correct deprecation parameters for setDeprecated.
+     *
+     * @param string $message
+     * @param string $version
+     *
+     * @return string[]
+     */
+    private function getDeprecationParameters($message, $version): array
+    {
+        if (method_exists(BaseNode::class, 'getDeprecation')) {
+            return ['kunstmaan/admin-bundle', $version, $message];
+        }
+
+        return [$message];
     }
 }

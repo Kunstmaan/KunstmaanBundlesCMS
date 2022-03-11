@@ -7,14 +7,13 @@ use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
@@ -127,12 +126,8 @@ class AclNativeHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $user = $this->getMockBuilder(UserInterface::class)
-            ->getMock();
-
-        $user->expects($this->any())
-            ->method('getUsername')
-            ->will($this->returnValue('MyUser'));
+        $user = new User();
+        $user->setUsername('MyUser');
 
         $this->token->expects($this->any())
             ->method('getUser')
@@ -194,17 +189,10 @@ class AclNativeHelperTest extends TestCase
 
     private function getRoleMockData($anonymous = false)
     {
-        if (Kernel::VERSION_ID >= 40300) {
-            $rolesMethodName = 'getRoleNames';
-            $reachableRolesMethodName = 'getReachableRoleNames';
-            $roles = ['ROLE_KING'];
-            $allRoles = [$roles[0], 'ROLE_SUBJECT'];
-        } else {
-            $rolesMethodName = 'getRoles';
-            $reachableRolesMethodName = 'getReachableRoles';
-            $roles = $anonymous ? [] : [new Role('ROLE_KING')];
-            $allRoles = $anonymous ? [] : [$roles[0], new Role('ROLE_SUBJECT')];
-        }
+        $rolesMethodName = 'getRoleNames';
+        $reachableRolesMethodName = 'getReachableRoleNames';
+        $roles = $anonymous ? [] : ['ROLE_KING'];
+        $allRoles = $anonymous ? [] : [$roles[0], 'ROLE_SUBJECT'];
 
         return [
             $rolesMethodName,

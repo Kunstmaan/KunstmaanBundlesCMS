@@ -15,14 +15,13 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionCheckTest extends TestCase
 {
     /** @var \PHPUnit\Framework\MockObject\MockObject|RequestStack */
     private $requestStack;
-    /** @var \PHPUnit\Framework\MockObject\MockObject|LegacyTranslatorInterface|TranslatorInterface */
+    /** @var \PHPUnit\Framework\MockObject\MockObject|TranslatorInterface */
     private $translator;
     /** @var ArrayAdapter */
     private $cache;
@@ -30,12 +29,7 @@ class VersionCheckTest extends TestCase
     public function setUp(): void
     {
         $this->cache = $this->createMock(AdapterInterface::class);
-
-        if (\interface_exists(TranslatorInterface::class)) {
-            $this->translator = $this->createMock(TranslatorInterface::class);
-        } else {
-            $this->translator = $this->createMock(LegacyTranslatorInterface::class);
-        }
+        $this->translator = $this->createMock(TranslatorInterface::class);
 
         $requestStack = new RequestStack();
         $requestStack->push(new Request());

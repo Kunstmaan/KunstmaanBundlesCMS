@@ -5,9 +5,9 @@ namespace Kunstmaan\AdminBundle\Service;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent;
 use Kunstmaan\AdminBundle\Event\Events;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\AuthenticationMailerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -28,7 +28,7 @@ class PasswordResetService
     {
         $this->userManager = $userManager;
         $this->urlGenerator = $urlGenerator;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
         $this->authenticationMailer = $authenticationMailer;
     }
 
@@ -50,22 +50,8 @@ class PasswordResetService
         $this->userManager->updatePassword($user);
 
         $response = new RedirectResponse($this->urlGenerator->generate('KunstmaanAdminBundle_homepage'));
-        $this->dispatch(new ChangePasswordSuccessEvent($user, $response), Events::CHANGE_PASSWORD_COMPLETED);
+        $this->eventDispatcher->dispatch(new ChangePasswordSuccessEvent($user, $response), Events::CHANGE_PASSWORD_COMPLETED);
 
         return $response;
-    }
-
-    /**
-     * @param object $event
-     */
-    private function dispatch($event, string $eventName): object
-    {
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($this->eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

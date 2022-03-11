@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
@@ -23,14 +24,12 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractAdminListController extends AbstractController
@@ -574,14 +573,9 @@ abstract class AbstractAdminListController extends AbstractController
      */
     private function dispatch($event, string $eventName)
     {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
+        $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
 
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
+        return $eventDispatcher->dispatch($event, $eventName);
     }
 
     public static function getSubscribedServices(): array
@@ -591,7 +585,7 @@ abstract class AbstractAdminListController extends AbstractController
             'kunstmaan_adminlist.factory' => AdminListFactory::class,
             'kunstmaan_adminlist.service.export' => ExportService::class,
             'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
-            'translator' => interface_exists(TranslatorInterface::class) ? TranslatorInterface::class : LegacyTranslatorInterface::class,
+            'translator' => TranslatorInterface::class,
             'event_dispatcher' => EventDispatcherInterface::class,
             'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
         ] + parent::getSubscribedServices();

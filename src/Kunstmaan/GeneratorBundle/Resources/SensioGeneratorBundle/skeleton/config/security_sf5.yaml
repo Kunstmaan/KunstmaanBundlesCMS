@@ -1,0 +1,42 @@
+acl:
+    connection: default
+
+security:
+    enable_authenticator_manager: true
+
+    password_hashers:
+        Kunstmaan\AdminBundle\Entity\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_NEWS:        ROLE_USER
+
+    providers:
+        cms_users:
+          entity: { class: Kunstmaan\AdminBundle\Entity\User, property: username }
+
+    firewalls:
+        main:
+            pattern: .*
+            user_checker: Kunstmaan\AdminBundle\Security\UserChecker
+            form_login:
+                login_path: kunstmaan_admin_login
+                check_path: kunstmaan_admin_login
+                provider: cms_users
+            logout:
+                path: kunstmaan_admin_logout
+                target: KunstmaanAdminBundle_homepage
+            remember_me:
+                secret:   "%kernel.secret%"
+                lifetime: 604800
+                path:     /
+                domain:   ~
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+    access_control:
+        - { path: ^/([^/]*)/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/([^/]*)/admin/password-reset, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }

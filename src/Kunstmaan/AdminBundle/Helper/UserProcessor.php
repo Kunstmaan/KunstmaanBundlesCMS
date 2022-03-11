@@ -35,7 +35,7 @@ class UserProcessor
         if (\is_null($this->user)) {
             if (($this->tokenStorage !== null) && ($this->tokenStorage->getToken() !== null) && ($this->tokenStorage->getToken()->getUser() instanceof UserInterface)) {
                 $this->user = $this->tokenStorage->getToken()->getUser();
-                $this->record['extra']['user']['username'] = $this->user->getUsername();
+                $this->record['extra']['user']['username'] = method_exists($this->user, 'getUserIdentifier') ? $this->user->getUserIdentifier() : $this->user->getUsername();
                 $this->record['extra']['user']['roles'] = $this->user->getRoles();
                 $this->record['extra']['user']['is_account_non_locked'] = $this->user->isAccountNonLocked();
                 $this->record['extra']['user']['is_enabled'] = $this->user->isEnabled();

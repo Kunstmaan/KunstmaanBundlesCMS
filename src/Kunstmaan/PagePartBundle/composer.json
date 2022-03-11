@@ -14,14 +14,14 @@
     ],
     "require": {
         "php": "^7.2|^8.0",
-        "kunstmaan/admin-bundle": "^5.9|^6.0",
+        "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/utilities-bundle": "^5.9|^6.0",
         "kunstmaan/node-bundle": "^5.9|^6.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "symfony/phpunit-bridge": "^5.1",
+        "symfony/phpunit-bridge": "^5.3",
         "phpunit/phpunit": "^8.5"
     },
     "minimum-stability": "dev",
@@ -30,7 +30,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-6.0": "6.0-dev"
+            "dev-6.x": "6.1-dev"
         }
     }
 }

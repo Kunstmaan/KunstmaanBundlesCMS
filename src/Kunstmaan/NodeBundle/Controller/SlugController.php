@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -11,17 +11,36 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class SlugController extends Controller
+final class SlugController extends AbstractController
 {
+    /** @var NodeMenu */
+    private $nodeMenu;
+    /** @var PsrContainerInterface */
+    private $viewDataProviderServiceLocator;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(NodeMenu $nodeMenu, PsrContainerInterface $viewDataProviderServiceLocator, EventDispatcherInterface $eventDispatcher, EntityManagerInterface $em)
+    {
+        $this->nodeMenu = $nodeMenu;
+        $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->em = $em;
+    }
+
     /**
      * Handle the page requests
      *
@@ -36,8 +55,6 @@ final class SlugController extends Controller
      */
     public function slugAction(Request $request, $url = null, $preview = false)
     {
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
 
         /* @var NodeTranslation $nodeTranslation */
@@ -51,7 +68,7 @@ final class SlugController extends Controller
         $entity = $this->getPageEntity(
             $request,
             $preview,
-            $em,
+            $this->em,
             $nodeTranslation
         );
         $node = $nodeTranslation->getNode();
@@ -63,12 +80,12 @@ final class SlugController extends Controller
             ->setRequest($request)
             ->setNodeTranslation($nodeTranslation);
 
-        $nodeMenu = $this->container->get('kunstmaan_node.node_menu');
+        $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($locale);
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
 
-        $this->dispatch($securityEvent, Events::SLUG_SECURITY);
+        $this->eventDispatcher->dispatch($securityEvent, Events::SLUG_SECURITY);
 
         //render page
         $renderContext = new RenderContext(
@@ -88,13 +105,12 @@ final class SlugController extends Controller
         if ($entity instanceof CustomViewDataProviderInterface) {
             $serviceId = $entity->getViewDataProviderServiceId();
 
-            $pageRenderServiceLocator = $this->get('kunstmaan.view_data_provider_locator');
-            if (!$pageRenderServiceLocator->has($serviceId)) {
+            if (!$this->viewDataProviderServiceLocator->has($serviceId)) {
                 throw new \RuntimeException(sprintf('Missing page renderer service "%s"', $serviceId));
             }
 
             /** @var PageViewDataProviderInterface $service */
-            $service = $pageRenderServiceLocator->get($serviceId);
+            $service = $this->viewDataProviderServiceLocator->get($serviceId);
             $service->provideViewData($nodeTranslation, $renderContext);
 
             $response = $renderContext->getResponse();
@@ -143,22 +159,5 @@ final class SlugController extends Controller
         }
 
         return $entity;
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
     }
 }

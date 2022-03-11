@@ -5,7 +5,6 @@ namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 use Kunstmaan\MediaBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Kernel;
 
 class ConfigurationTest extends TestCase
 {
@@ -30,7 +29,7 @@ class ConfigurationTest extends TestCase
             ],
             'enable_pdf_preview' => true,
             'blacklisted_extensions' => [],
-            'web_root' => '%kernel.project_dir%/web',
+            'web_root' => '%kernel.project_dir%/public',
             'cropping_views' => [
                 'default' => [
                     ['name' => 'desktop', 'width' => 1, 'height' => 1, 'lock_ratio' => true],
@@ -39,10 +38,6 @@ class ConfigurationTest extends TestCase
                 'focus_point_classes' => [],
             ],
         ];
-
-        if (Kernel::VERSION_ID >= 40000) {
-            $array['web_root'] = '%kernel.project_dir%/public';
-        }
 
         $expectedConfig = $array;
 

@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
 {
@@ -20,6 +21,7 @@ class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
         $this->registerService('doctrine.orm.entity_manager', EntityManager::class);
         $this->registerService('kunstmaan_admin.clone.helper', CloneHelper::class);
         $this->registerService('security.authorization_checker', AuthorizationChecker::class);
+        $this->registerService('translator', TranslatorInterface::class);
     }
 
     /**

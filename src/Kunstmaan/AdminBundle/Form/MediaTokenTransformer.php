@@ -61,12 +61,21 @@ class MediaTokenTransformer implements DataTransformerInterface
                 $attribute = $element->nodeName === 'img' ? 'src' : 'href';
                 $attributeValue = $element->getAttribute($attribute);
                 $parsed = parse_url($attributeValue, PHP_URL_QUERY);
-                parse_str($parsed, $query);
 
-                if (isset($query['token'])) {
-                    $element->setAttribute($attribute, $query['token']);
+                if (null === $parsed) {
+                    $element->setAttribute('data-' . $attribute, $attributeValue);
+
+                    return;
                 }
-                $element->setAttribute('data-' . $attribute, $attributeValue);
+
+                parse_str($parsed, $query);
+                if (!isset($query['token'])) {
+                    $element->setAttribute('data-' . $attribute, $attributeValue);
+
+                    return;
+                }
+
+                $element->setAttribute($attribute, $query['token']);
             }
         );
 

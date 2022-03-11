@@ -15,7 +15,7 @@
                 <button class="close" data-dismiss="modal">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>{{ 'settings.user.delete' | trans }}: {{ item.username }}</h3>
+                <h3>{{ 'settings.user.delete' | trans }}: {{ attribute(item, 'userIdentifier') is defined ? item.userIdentifier : item.username }}</h3>
             </div>
 
             <!-- Body -->

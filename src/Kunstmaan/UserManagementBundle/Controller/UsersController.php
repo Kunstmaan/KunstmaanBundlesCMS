@@ -2,33 +2,65 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Service\UserManager;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\DeleteUserInitializeEvent;
 use Kunstmaan\UserManagementBundle\Event\EditUserInitializeEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
  */
-final class UsersController extends Controller
+final class UsersController extends AbstractController
 {
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var AdminListFactory */
+    private $adminListFactory;
+    /** @var ParameterBagInterface */
+    private $parameterBag;
+    /** @var UserManager */
+    private $userManager;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(
+        TranslatorInterface $translator,
+        AdminListFactory $adminListFactory,
+        ParameterBagInterface $parameterBag,
+        UserManager $userManager,
+        EventDispatcherInterface $eventDispatcher,
+        EntityManagerInterface $em
+    ) {
+        $this->translator = $translator;
+        $this->adminListFactory = $adminListFactory;
+        $this->parameterBag = $parameterBag;
+        $this->userManager = $userManager;
+        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->em = $em;
+    }
+
     /**
      * List users
      *
@@ -41,18 +73,14 @@ final class UsersController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $em = $this->getDoctrine()->getManager();
         $configuratorClassName = '';
-        if ($this->container->hasParameter('kunstmaan_user_management.user_admin_list_configurator.class')) {
-            $configuratorClassName = $this->container->getParameter(
-                'kunstmaan_user_management.user_admin_list_configurator.class'
-            );
+        if ($this->parameterBag->has('kunstmaan_user_management.user_admin_list_configurator.class')) {
+            $configuratorClassName = $this->getParameter('kunstmaan_user_management.user_admin_list_configurator.class');
         }
 
-        $configurator = new $configuratorClassName($em);
+        $configurator = new $configuratorClassName($this->em);
 
-        /* @var AdminList $adminList */
-        $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
+        $adminList = $this->adminListFactory->createList($configurator);
         $adminList->bindRequest($request);
 
         return [
@@ -67,7 +95,7 @@ final class UsersController extends Controller
      */
     private function getUserClassInstance()
     {
-        $userClassName = $this->container->getParameter('kunstmaan_admin.user_class');
+        $userClassName = $this->getParameter('kunstmaan_admin.user_class');
 
         return new $userClassName();
     }
@@ -86,7 +114,7 @@ final class UsersController extends Controller
 
         $user = $this->getUserClassInstance();
 
-        $options = ['password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => ['Registration'], 'data_class' => \get_class($user)];
+        $options = ['password_required' => true, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => ['Registration'], 'data_class' => \get_class($user)];
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
 
@@ -105,15 +133,13 @@ final class UsersController extends Controller
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
-                $user->setCreatedBy($this->getUser()->getUsername());
-                /* @var UserManager $userManager */
-                $userManager = $this->container->get('kunstmaan_admin.user_manager');
-                $userManager->updateUser($user, true);
+                $user->setCreatedBy(method_exists($this->getUser(), 'getUserIdentifier') ? $this->getUser()->getUserIdentifier() : $this->getUser()->getUsername());
+                $this->userManager->updateUser($user, true);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->container->get('translator')->trans('kuma_user.users.add.flash.success.%username%', [
-                        '%username%' => $user->getUsername(),
+                    $this->translator->trans('kuma_user.users.add.flash.success.%username%', [
+                        '%username%' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
                     ])
                 );
 
@@ -141,25 +167,22 @@ final class UsersController extends Controller
     public function editAction(Request $request, $id)
     {
         // The logged in user should be able to change his own password/username/email and not for other users
-        if ($id == $this->container->get('security.token_storage')->getToken()->getUser()->getId()) {
+        if ($id == $this->getUser()->getId()) {
             $requiredRole = 'ROLE_ADMIN';
         } else {
             $requiredRole = 'ROLE_SUPER_ADMIN';
         }
         $this->denyAccessUnlessGranted($requiredRole);
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
+        $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
 
-        $this->dispatch(new EditUserInitializeEvent($user, $request), UserEvents::USER_EDIT_INITIALIZE);
+        $this->eventDispatcher->dispatch(new EditUserInitializeEvent($user, $request), UserEvents::USER_EDIT_INITIALIZE);
 
-        $options = ['password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
+        $options = ['password_required' => false, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => \get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
 
@@ -169,7 +192,7 @@ final class UsersController extends Controller
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
-        $event = $this->dispatch($event, Events::ADAPT_SIMPLE_FORM);
+        $event = $this->eventDispatcher->dispatch($event, Events::ADAPT_SIMPLE_FORM);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formFqn, $user, $options);
@@ -183,23 +206,16 @@ final class UsersController extends Controller
             }
 
             if ($form->isSubmitted() && $form->isValid()) {
-                /* @var UserManager $userManager */
-                $userManager = $this->container->get('kunstmaan_admin.user_manager');
-                $userManager->updateUser($user, true);
+                $this->userManager->updateUser($user, true);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->container->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
-                        '%username%' => $user->getUsername(),
+                    $this->translator->trans('kuma_user.users.edit.flash.success.%username%', [
+                        '%username%' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
                     ])
                 );
 
-                return new RedirectResponse(
-                    $this->generateUrl(
-                        'KunstmaanUserManagementBundle_settings_users_edit',
-                        ['id' => $id]
-                    )
-                );
+                return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $id]));
             }
         }
 
@@ -227,24 +243,25 @@ final class UsersController extends Controller
             return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
         }
 
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('kunstmaan_admin.user_class'))->find($id);
+        $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
-            $this->dispatch(new DeleteUserInitializeEvent($user, $request), UserEvents::USER_DELETE_INITIALIZE);
+            $this->eventDispatcher->dispatch(new DeleteUserInitializeEvent($user, $request), UserEvents::USER_DELETE_INITIALIZE);
 
-            $afterDeleteEvent = new AfterUserDeleteEvent($user->getUsername(), $this->getUser()->getUsername());
+            $deletedUser = method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername();
+            $deletedBy = method_exists($this->getUser(), 'getUserIdentifier') ? $this->getUser()->getUserIdentifier() : $this->getUser()->getUsername();
 
-            $em->remove($user);
-            $em->flush();
+            $afterDeleteEvent = new AfterUserDeleteEvent($deletedUser, $deletedBy);
 
-            $this->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
+            $this->em->remove($user);
+            $this->em->flush();
+
+            $this->eventDispatcher->dispatch($afterDeleteEvent, UserEvents::AFTER_USER_DELETE);
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->container->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
-                    '%username%' => $user->getUsername(),
+                $this->translator->trans('kuma_user.users.delete.flash.success.%username%', [
+                    '%username%' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
                 ])
             );
         }
@@ -258,30 +275,6 @@ final class UsersController extends Controller
     public function changePasswordAction()
     {
         // Redirect to current user edit route...
-        return new RedirectResponse(
-            $this->generateUrl(
-                'KunstmaanUserManagementBundle_settings_users_edit',
-                [
-                    'id' => $this->container->get('security.token_storage')->getToken()->getUser()->getId(),
-                ]
-            )
-        );
-    }
-
-    /**
-     * @param object $event
-     *
-     * @return object
-     */
-    private function dispatch($event, string $eventName)
-    {
-        $eventDispatcher = $this->container->get('event_dispatcher');
-        if (class_exists(LegacyEventDispatcherProxy::class)) {
-            $eventDispatcher = LegacyEventDispatcherProxy::decorate($eventDispatcher);
-
-            return $eventDispatcher->dispatch($event, $eventName);
-        }
-
-        return $eventDispatcher->dispatch($eventName, $event);
+        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $this->getUser()->getId()]));
     }
 }

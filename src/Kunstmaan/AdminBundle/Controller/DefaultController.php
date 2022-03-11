@@ -3,20 +3,37 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The default controller is used to render the main screen the users see when they log in to the admin
  */
-final class DefaultController extends Controller
+final class DefaultController extends AbstractController
 {
+    /** @var ParameterBagInterface */
+    private $parameterBag;
+    /** @var ManagerRegistry */
+    private $managerRegistry;
+    /** @var TranslatorInterface */
+    private $translator;
+
+    public function __construct(ParameterBagInterface $parameterBag, ManagerRegistry $managerRegistry, TranslatorInterface $translator)
+    {
+        $this->parameterBag = $parameterBag;
+        $this->managerRegistry = $managerRegistry;
+        $this->translator = $translator;
+    }
+
     /**
      * The index action will render the main screen the users see when they log in in to the admin
      *
@@ -27,12 +44,12 @@ final class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->container->hasParameter('kunstmaan_admin.dashboard_route')) {
+        if ($this->parameterBag->has('kunstmaan_admin.dashboard_route')) {
             return $this->redirect($this->generateUrl($this->getParameter('kunstmaan_admin.dashboard_route')));
         }
 
         /* @var DashboardConfiguration $dashboardConfiguration */
-        $dashboardConfiguration = $this->getDoctrine()
+        $dashboardConfiguration = $this->managerRegistry
             ->getManager()
             ->getRepository(DashboardConfiguration::class)
             ->findOneBy([]);
@@ -51,7 +68,7 @@ final class DefaultController extends Controller
     public function editIndexAction(Request $request)
     {
         /* @var $em EntityManager */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
 
         /* @var DashboardConfiguration $dashboardConfiguration */
         $dashboardConfiguration = $em
@@ -69,10 +86,7 @@ final class DefaultController extends Controller
                 $em->persist($dashboardConfiguration);
                 $em->flush($dashboardConfiguration);
 
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_admin.edit.flash.success')
-                );
+                $this->addFlash(FlashTypes::SUCCESS, $this->translator->trans('kuma_admin.edit.flash.success'));
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_homepage'));
             }

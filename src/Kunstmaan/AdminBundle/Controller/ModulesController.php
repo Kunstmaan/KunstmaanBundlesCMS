@@ -3,13 +3,9 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * The modules home controller
- */
-final class ModulesController extends Controller
+final class ModulesController
 {
     /**
      * @Route("/", name="KunstmaanAdminBundle_modules")

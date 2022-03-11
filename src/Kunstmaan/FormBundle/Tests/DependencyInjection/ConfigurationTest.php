@@ -16,12 +16,7 @@ class ConfigurationTest extends TestCase
 
         $this->assertInstanceOf(TreeBuilder::class, $tree);
 
-        if (method_exists($tree, 'getRootNode')) {
-            $node = $tree->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $node = $tree->root('kunstmaan_form');
-        }
+        $node = $tree->getRootNode();
         $this->assertInstanceOf(ArrayNodeDefinition::class, $node);
     }
 }

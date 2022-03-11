@@ -27,7 +27,7 @@ final class ArticlePageViewDataProvider implements PageViewDataProviderInterface
 
     public function provideViewData(NodeTranslation $nodeTranslation, RenderContext $renderContext): void
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = method_exists($this->requestStack, 'getMainRequest') ? $this->requestStack->getMainRequest() : $this->requestStack->getMasterRequest();
         if (null === $request) {
             return;
         }

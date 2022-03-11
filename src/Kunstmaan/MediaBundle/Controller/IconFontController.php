@@ -2,13 +2,21 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class IconFontController extends Controller
+final class IconFontController
 {
+    /** @var IconFontManager */
+    private $iconFontManager;
+
+    public function __construct(IconFontManager $iconFontManager)
+    {
+        $this->iconFontManager = $iconFontManager;
+    }
+
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_icon_font_chooser")
      * @Template("@KunstmaanMedia/IconFont/iconFontChooser.html.twig")
@@ -20,11 +28,10 @@ final class IconFontController extends Controller
         $loader = $request->query->get('loader');
         $loaderData = json_decode($request->query->get('loader_data'), true);
 
-        $iconFontManager = $this->get('kunstmaan_media.icon_font_manager');
         if (empty($loader)) {
-            $loader = $iconFontManager->getDefaultLoader();
+            $loader = $this->iconFontManager->getDefaultLoader();
         } else {
-            $loader = $iconFontManager->getLoader($loader);
+            $loader = $this->iconFontManager->getLoader($loader);
         }
         $loader->setData($loaderData);
 

@@ -7,12 +7,10 @@ use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -41,7 +39,7 @@ class PasswordCheckListener
     private $requestStack;
 
     /**
-     * @var TranslatorInterface|LegacyTranslatorInterface
+     * @var TranslatorInterface
      */
     private $translator;
 
@@ -50,16 +48,8 @@ class PasswordCheckListener
      */
     private $adminRouteHelper;
 
-    /**
-     * @param TranslatorInterface|LegacyTranslatorInterface $translator
-     */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, RequestStack $requestStack, /* TranslatorInterface|LegacyTranslatorInterface */ $translator, AdminRouteHelper $adminRouteHelper)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, RequestStack $requestStack, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper)
     {
-        // NEXT_MAJOR Add "Symfony\Contracts\Translation\TranslatorInterface" typehint when sf <4.4 support is removed.
-        if (!$translator instanceof \Symfony\Contracts\Translation\TranslatorInterface && !$translator instanceof LegacyTranslatorInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$translator" parameter should be instance of "%s" or "%s"', \Symfony\Contracts\Translation\TranslatorInterface::class, LegacyTranslatorInterface::class));
-        }
-
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
@@ -68,15 +58,8 @@ class PasswordCheckListener
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
-    /**
-     * @param GetResponseEvent|ResponseEvent $event
-     **/
-    public function onKernelRequest($event)
+    public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event instanceof GetResponseEvent && !$event instanceof RequestEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : GetResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         $url = $event->getRequest()->getRequestUri();
         if (!$this->adminRouteHelper->isAdminRoute($url)) {
             return;
@@ -111,6 +94,6 @@ class PasswordCheckListener
 
     private function getSession(): SessionInterface
     {
-        return $this->requestStack->getCurrentRequest()->getSession();
+        return method_exists($this->requestStack, 'getSession') ? $this->requestStack->getSession() : $this->requestStack->getCurrentRequest()->getSession();
     }
 }

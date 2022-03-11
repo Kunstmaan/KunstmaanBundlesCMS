@@ -8,7 +8,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -120,15 +119,8 @@ class ToolbarListener implements EventSubscriberInterface
         return !$this->container->has('profiler') && $this->enabled;
     }
 
-    /**
-     * @param FilterResponseEvent|ResponseEvent $event
-     */
-    public function onKernelResponse($event)
+    public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event instanceof FilterResponseEvent && !$event instanceof ResponseEvent) {
-            throw new \InvalidArgumentException(\sprintf('Expected instance of type %s, %s given', \class_exists(ResponseEvent::class) ? ResponseEvent::class : FilterResponseEvent::class, \is_object($event) ? \get_class($event) : \gettype($event)));
-        }
-
         if (!$this->isEnabled() || HttpKernel::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
@@ -139,7 +131,10 @@ class ToolbarListener implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
         $token = $this->tokenStorage->getToken();
 
-        if (null !== $token && method_exists($token, 'getProviderKey')) {
+        if (null !== $token && method_exists($token, 'getFirewallName')) {
+            $key = $token->getFirewallName();
+        } elseif (null !== $token && method_exists($token, 'getProviderKey')) {
+            // NEXT_MAJOR remove check when symfony 4.4 support is removed
             $key = $token->getProviderKey();
         } else {
             $key = $this->adminFirewallName;

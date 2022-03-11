@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\UserManagementBundle\Event;
 
-use Kunstmaan\AdminBundle\Event\BcEvent;
+use Symfony\Contracts\EventDispatcher\Event;
 
-final class AfterUserDeleteEvent extends BcEvent
+final class AfterUserDeleteEvent extends Event
 {
     /** @var string */
     private $deletedUser;

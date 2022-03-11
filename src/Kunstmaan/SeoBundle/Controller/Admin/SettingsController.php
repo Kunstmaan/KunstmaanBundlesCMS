@@ -2,17 +2,30 @@
 
 namespace Kunstmaan\SeoBundle\Controller\Admin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class SettingsController extends Controller
+final class SettingsController extends AbstractController
 {
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(TranslatorInterface $translator, EntityManagerInterface $em)
+    {
+        $this->translator = $translator;
+        $this->em = $em;
+    }
+
     /**
      * Generates the robots administration form and fills it with a default value if needed.
      *
@@ -25,10 +38,9 @@ final class SettingsController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(Robots::class);
+        $repo = $this->em->getRepository(Robots::class);
         $robot = $repo->findOneBy([]);
-        $default = $this->container->getParameter('robots_default');
+        $default = $this->getParameter('robots_default');
         $isSaved = true;
 
         if (!$robot) {
@@ -46,8 +58,8 @@ final class SettingsController extends Controller
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($robot);
-                $em->flush();
+                $this->em->persist($robot);
+                $this->em->flush();
 
                 return new RedirectResponse($this->generateUrl('KunstmaanSeoBundle_settings_robots'));
             }
@@ -56,7 +68,7 @@ final class SettingsController extends Controller
         if (!$isSaved) {
             $this->addFlash(
                 FlashTypes::WARNING,
-                $this->container->get('translator')->trans('seo.robots.warning')
+                $this->translator->trans('seo.robots.warning')
             );
         }
 

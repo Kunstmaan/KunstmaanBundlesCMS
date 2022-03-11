@@ -3,17 +3,26 @@
 namespace Kunstmaan\CacheBundle\Controller;
 
 use Kunstmaan\CacheBundle\Form\Varnish\BanType;
+use Kunstmaan\CacheBundle\Helper\VarnishHelper;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-final class VarnishController extends Controller
+final class VarnishController extends AbstractController
 {
+    /** @var VarnishHelper */
+    private $varnishHelper;
+
+    public function __construct(VarnishHelper $varnishHelper)
+    {
+        $this->varnishHelper = $varnishHelper;
+    }
+
     /**
      * Generates the varnish ban form.
      *
@@ -34,7 +43,7 @@ final class VarnishController extends Controller
             if ($form->isValid()) {
                 $path = $form['path']->getData();
 
-                $this->get('kunstmaan_cache.helper.varnish')->banPath($path, $form['allDomains']->getData());
+                $this->varnishHelper->banPath($path, $form['allDomains']->getData());
 
                 $this->addFlash('success', 'kunstmaan_cache.varnish.ban.success');
             }
@@ -59,7 +68,7 @@ final class VarnishController extends Controller
         /** @var NodeTranslation $nodeTranslation */
         foreach ($node->getNodeTranslations() as $nodeTranslation) {
             $route = $this->generateUrl('_slug', ['url' => $nodeTranslation->getUrl(), '_locale' => $nodeTranslation->getLang()]);
-            $this->get('kunstmaan_cache.helper.varnish')->banPath($route);
+            $this->varnishHelper->banPath($route);
         }
         $this->addFlash('success', 'kunstmaan_cache.varnish.ban.success');
 

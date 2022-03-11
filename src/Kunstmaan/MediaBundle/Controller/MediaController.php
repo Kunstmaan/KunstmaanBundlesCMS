@@ -2,23 +2,43 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
+use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class MediaController extends Controller
+final class MediaController extends AbstractController
 {
+    /** @var MediaManager */
+    private $mediaManager;
+    /** @var FolderManager */
+    private $folderManager;
+    /** @var TranslatorInterface */
+    private $translator;
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(MediaManager $mediaManager, FolderManager $folderManager, TranslatorInterface $translator, EntityManagerInterface $em)
+    {
+        $this->mediaManager = $mediaManager;
+        $this->folderManager = $folderManager;
+        $this->translator = $translator;
+        $this->em = $em;
+    }
+
     /**
      * @param int $mediaId
      *
@@ -28,15 +48,11 @@ final class MediaController extends Controller
      */
     public function showAction(Request $request, $mediaId)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Media $media */
-        $media = $em->getRepository(Media::class)->getMedia($mediaId);
+        $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $folder = $media->getFolder();
 
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
-        $handler = $mediaManager->getHandler($media);
+        $handler = $this->mediaManager->getHandler($media);
         $helper = $handler->getFormHelper($media);
 
         $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
@@ -45,7 +61,7 @@ final class MediaController extends Controller
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
-                $em->getRepository(Media::class)->save($media);
+                $this->em->getRepository(Media::class)->save($media);
 
                 return new RedirectResponse(
                     $this->generateUrl(
@@ -55,14 +71,14 @@ final class MediaController extends Controller
                 );
             }
         }
-        $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
+        $showTemplate = $this->mediaManager->getHandler($media)->getShowTemplate($media);
 
         return $this->render(
             $showTemplate,
             [
                 'handler' => $handler,
-                'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
-                'mediamanager' => $this->get('kunstmaan_media.media_manager'),
+                'foldermanager' => $this->folderManager,
+                'mediamanager' => $this->mediaManager,
                 'editform' => $form->createView(),
                 'media' => $media,
                 'helper' => $helper,
@@ -84,18 +100,16 @@ final class MediaController extends Controller
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
         }
 
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Media $media */
-        $media = $em->getRepository(Media::class)->getMedia($mediaId);
+        $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
 
-        $em->getRepository(Media::class)->delete($media);
+        $this->em->getRepository(Media::class)->delete($media);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans(
+            $this->translator->trans(
                 'kuma_admin.media.flash.deleted_success.%medianame%',
                 [
                     '%medianame%' => $medianame,
@@ -125,10 +139,8 @@ final class MediaController extends Controller
      */
     public function bulkUploadAction($folderId)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         return ['folder' => $folder];
     }
@@ -241,16 +253,14 @@ final class MediaController extends Controller
             \rename("{$filePath}.part", $filePath);
         }
 
-        $em = $this->getDoctrine()->getManager();
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
         try {
-            /* @var Media $media */
-            $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
+            $media = $this->mediaManager->getHandler($file)->createNew($file);
             $media->setFolder($folder);
-            $em->getRepository(Media::class)->save($media);
+            $this->em->getRepository(Media::class)->save($media);
         } catch (Exception $e) {
             return $this->returnJsonError('104', 'Failed performing save on media-manager');
         }
@@ -300,10 +310,8 @@ final class MediaController extends Controller
      */
     public function dropAction(Request $request, $folderId)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $drop = null;
 
@@ -316,20 +324,20 @@ final class MediaController extends Controller
                 $drop = $request->get('text');
             }
         }
-        $media = $this->get('kunstmaan_media.media_manager')->createNew($drop);
+        $media = $this->mediaManager->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
-            $em->getRepository(Media::class)->save($media);
+            $this->em->getRepository(Media::class)->save($media);
 
-            return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success')]);
+            return new JsonResponse(['status' => $this->translator->trans('kuma_admin.media.flash.drop_success')]);
         }
 
         $request->getSession()->getFlashBag()->add(
             FlashTypes::DANGER,
-            $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')
+            $this->translator->trans('kuma_admin.media.flash.drop_unrecognized')
         );
 
-        return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]);
+        return new JsonResponse(['status' => $this->translator->trans('kuma_admin.media.flash.drop_unrecognized')]);
     }
 
     /**
@@ -356,14 +364,10 @@ final class MediaController extends Controller
      */
     private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /* @var Folder $folder */
-        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
+        $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
-        $handler = $mediaManager->getHandlerForType($type);
+        $handler = $this->mediaManager->getHandlerForType($type);
         $media = new Media();
         $helper = $handler->getFormHelper($media);
 
@@ -378,11 +382,11 @@ final class MediaController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);
-                $em->getRepository(Media::class)->save($media);
+                $this->em->getRepository(Media::class)->save($media);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans(
+                    $this->translator->trans(
                         'media.flash.created',
                         [
                             '%medianame%' => $media->getName(),
@@ -396,7 +400,7 @@ final class MediaController extends Controller
             if ($isInModal) {
                 $this->addFlash(
                     FlashTypes::DANGER,
-                    $this->get('translator')->trans(
+                    $this->translator->trans(
                         'media.flash.not_created',
                         [
                             '%mediaerrors%' => $form->getErrors(true, true),
@@ -455,8 +459,7 @@ final class MediaController extends Controller
      */
     public function bulkMoveAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository(Media::class);
+        $mediaRepo = $this->em->getRepository(Media::class);
         $form = $this->createForm(BulkMoveMediaType::class);
 
         $form->handleRequest($request);
@@ -474,7 +477,7 @@ final class MediaController extends Controller
                 ->getQuery()
                 ->execute();
 
-            $this->addFlash(FlashTypes::SUCCESS, $this->get('translator')->trans('media.folder.bulk_move.success.text'));
+            $this->addFlash(FlashTypes::SUCCESS, $this->translator->trans('media.folder.bulk_move.success.text'));
 
             return new JsonResponse(
                 [

@@ -26,3 +26,9 @@ services:
         class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
         arguments: ['@request_stack', '%kunstmaan_admin.multi_language%', '%kunstmaan_admin.default_locale%', '%kunstmaan_admin.required_locales%', '@kunstmaan_admin.adminroute.helper', '@doctrine.orm.entity_manager', '%kunstmaan_multi_domain.hosts%']
         public: true
+
+    Kunstmaan\MultiDomainBundle\Controller\SiteSwitchController:
+        arguments: [ '@kunstmaan_admin.domain_configuration', '@router' ]
+        tags: [ 'controller.service_arguments' ]
+
+    Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber: ~

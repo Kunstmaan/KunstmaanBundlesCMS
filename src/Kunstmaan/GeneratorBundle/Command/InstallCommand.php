@@ -5,15 +5,12 @@ namespace Kunstmaan\GeneratorBundle\Command;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Process\Process;
 
 /**
@@ -85,26 +82,11 @@ final class InstallCommand extends GeneratorCommand
         $outputStyle->writeln('<info>Installing KunstmaanCms...</info>');
         $outputStyle->writeln($this->getKunstmaanLogo());
 
-        if (Kernel::VERSION_ID >= 40000 && true !== $input->getOption('db-installed')) {
+        if (true !== $input->getOption('db-installed')) {
             $this->shouldStop = !$this->assistant->askConfirmation('We need access to your database. Are the database credentials setup properly? (y/n)', 'y');
             if ($this->shouldStop) {
                 return;
             }
-        }
-
-        // Only ask namespace for Symfony 3
-        if (Kernel::VERSION_ID < 40000 && null === $input->getOption('namespace')) {
-            $question = new Question(
-                $questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')),
-                $input->getOption('namespace')
-            );
-            $question->setValidator([Validators::class, 'validateBundleNamespace']);
-            $namespace = $questionHelper->ask($input, $output, $question);
-            $input->setOption('namespace', $namespace);
-            $input->setOption('bundle-name', strtr($namespace, ['\\Bundle\\' => '', '\\' => '']));
-
-            $dir = $input->getOption('dir') ?: $this->projectDir . '/src';
-            $input->setOption('dir', $dir);
         }
 
         if (null === $input->getOption('demosite')) {
@@ -138,19 +120,7 @@ final class InstallCommand extends GeneratorCommand
             $defaultSiteOptions['--demosite'] = true;
         }
 
-        if (Kernel::VERSION_ID < 40000) {
-            $defaultSiteOptions = ['--namespace' => $input->getOption('namespace')];
-
-            $this->executeCommand($output, 'kuma:generate:bundle', [
-                '--namespace' => $input->getOption('namespace'),
-                '--dir' => $input->getOption('dir'),
-                '--bundle-name' => $input->getOption('bundle-name'),
-            ]);
-        }
-
-        if (Kernel::VERSION_ID >= 40000) {
-            $this->executeCommand($output, 'kuma:generate:config');
-        }
+        $this->executeCommand($output, 'kuma:generate:config');
 
         $this
             ->executeCommand($output, 'kuma:generate:default-site', $defaultSiteOptions)
@@ -162,12 +132,7 @@ final class InstallCommand extends GeneratorCommand
         ;
 
         if ($input->getOption('create-tests') === 'Yes') {
-            $adminTestOptions = [];
-            if (Kernel::VERSION_ID < 40000) {
-                $adminTestOptions = ['--namespace' => $input->getOption('namespace')];
-            }
-
-            $this->executeCommand($output, 'kuma:generate:admin-tests', $adminTestOptions);
+            $this->executeCommand($output, 'kuma:generate:admin-tests', []);
         }
 
         $this->assistant->writeSection('Installation done. Enjoy your KunstmaanCMS', 'bg=green;fg=black');

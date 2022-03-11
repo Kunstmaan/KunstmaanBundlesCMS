@@ -7,6 +7,7 @@ use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -505,6 +506,8 @@ class ArticleGenerator extends KunstmaanGenerator
         $relPath = '/ViewDataProvider/';
         $sourceDir = $this->skeletonDir . $relPath;
         $targetDir = $this->bundle->getPath() . $relPath;
+
+        $parameters['useMainRequest'] = method_exists(RequestStack::class, 'getMainRequest');
 
         $filename = 'PageViewDataProvider.php';
         $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, false, $this->entity . $filename);

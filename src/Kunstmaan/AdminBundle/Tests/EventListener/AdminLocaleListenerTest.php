@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\EventListener\AdminLocaleListener;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -28,13 +27,14 @@ class AdminLocaleListenerTest extends TestCase
         $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $kernel = $this->createMock(KernelInterface::class);
-        $event = class_exists(RequestEvent::class) ? new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST) : new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
-        $token = $this->createMock(UsernamePasswordToken::class);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
         $user = $this->createMock(User::class);
+        //NEXT_MAJOR remove reflection parameter count when sf4.4 support is removed
+        $method = new \ReflectionMethod(UsernamePasswordToken::class, '__construct');
+        $arguments = $method->getNumberOfParameters() > 3 ? [$user, 'password', 'main'] : [$user, 'main'];
+        $token = new UsernamePasswordToken(...$arguments);
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
-        $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getProviderKey')->willReturn('main');
-        $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getUser')->willReturn($user);
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getAdminLocale')->willReturn(null);
         $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('setLocale')->willReturn(null);
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);

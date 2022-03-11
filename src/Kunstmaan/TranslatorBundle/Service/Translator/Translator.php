@@ -34,6 +34,8 @@ class Translator extends SymfonyTranslator
 
     /**
      * {@inheritdoc}
+     *
+     * @return string[]
      */
     public function warmUp($cacheDir)
     {

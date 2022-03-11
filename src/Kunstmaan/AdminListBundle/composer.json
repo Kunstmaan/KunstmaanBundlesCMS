@@ -15,7 +15,7 @@
     "require": {
         "php": "^7.2|^8.0",
         "box/spout": "^2.5",
-        "kunstmaan/admin-bundle": "^5.9|^6.0",
+        "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/utilities-bundle": "^5.10|^6.0",
         "pagerfanta/core": "^2.4",
         "pagerfanta/doctrine-orm-adapter": "^2.4",
@@ -25,7 +25,7 @@
         "matthiasnoback/symfony-config-test": "^4.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "phpunit/phpunit": "^8.5",
-        "symfony/phpunit-bridge": "^5.1",
+        "symfony/phpunit-bridge": "^5.3",
         "kunstmaan/form-bundle": "^5.9|^6.0",
         "kunstmaan/menu-bundle": "^5.9|^6.0",
         "kunstmaan/translator-bundle": "^5.9|^6.0"
@@ -39,7 +39,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-6.0": "6.0-dev"
+            "dev-6.x": "6.1-dev"
         }
     }
 }

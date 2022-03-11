@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,7 +18,8 @@ class EnumerationFilterType extends AbstractORMFilterType
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
-        $data['value'] = $request->query->get('filter_value_' . $uniqueId);
+        $valueId = 'filter_value_' . $uniqueId;
+        $data['value'] = class_exists(InputBag::class) ? $request->query->all($valueId) : $request->query->get($valueId);
     }
 
     /**

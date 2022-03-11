@@ -2,22 +2,43 @@
 
 namespace Kunstmaan\DashboardBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class GoogleAnalyticsAJAXController extends Controller
+final class GoogleAnalyticsAJAXController extends AbstractController
 {
+    /** @var KernelInterface */
+    private $kernel;
+    /** @var ConfigHelper */
+    private $analyticsConfig;
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var TranslatorInterface */
+    private $translator;
+
+    public function __construct(KernelInterface $kernel, ConfigHelper $analyticsConfig, EntityManagerInterface $em, TranslatorInterface $translator)
+    {
+        $this->kernel = $kernel;
+        $this->analyticsConfig = $analyticsConfig;
+        $this->em = $em;
+        $this->translator = $translator;
+    }
+
     /**
      * @Route("/updateData", name="KunstmaanDashboardBundle_analytics_update")
      */
@@ -26,7 +47,7 @@ final class GoogleAnalyticsAJAXController extends Controller
         $configId = $request->query->get('configId');
         $segmentId = $request->query->get('segmentId');
 
-        $application = new Application($this->container->get('kernel'));
+        $application = new Application($this->kernel);
         $application->setAutoExit(false);
 
         $input = new ArrayInput([
@@ -47,9 +68,8 @@ final class GoogleAnalyticsAJAXController extends Controller
      */
     public function getOverviewAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
-        $analyticsOverviewRepository = $em->getRepository(AnalyticsOverview::class);
+        $analyticsOverviewRepository = $this->em->getRepository(AnalyticsOverview::class);
         $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
@@ -99,13 +119,12 @@ final class GoogleAnalyticsAJAXController extends Controller
      */
     public function getAccountsAction(Request $request)
     {
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configId = $request->query->get('configId');
         if ($configId) {
-            $configHelper->init($configId);
+            $this->analyticsConfig->init($configId);
         }
 
-        $accounts = $configHelper->getAccounts();
+        $accounts = $this->analyticsConfig->getAccounts();
 
         return new JsonResponse($accounts, 200, ['Content-Type' => 'application/json']);
     }
@@ -116,8 +135,7 @@ final class GoogleAnalyticsAJAXController extends Controller
     public function saveAccountAction(Request $request)
     {
         $accountId = $request->query->get('id');
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configHelper->saveAccountId($accountId);
+        $this->analyticsConfig->saveAccountId($accountId);
 
         return new JsonResponse();
     }
@@ -130,13 +148,12 @@ final class GoogleAnalyticsAJAXController extends Controller
     public function getPropertiesAction(Request $request)
     {
         $accountId = $request->query->get('accountId');
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configId = $request->query->get('configId');
         if ($configId) {
-            $configHelper->init($configId);
+            $this->analyticsConfig->init($configId);
         }
 
-        $properties = $configHelper->getProperties($accountId);
+        $properties = $this->analyticsConfig->getProperties($accountId);
 
         return new JsonResponse($properties, 200, ['Content-Type' => 'application/json']);
     }
@@ -147,8 +164,7 @@ final class GoogleAnalyticsAJAXController extends Controller
     public function savePropertyAction(Request $request)
     {
         $propertyId = $request->query->get('id');
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configHelper->savePropertyId($propertyId);
+        $this->analyticsConfig->savePropertyId($propertyId);
 
         return new JsonResponse();
     }
@@ -162,13 +178,12 @@ final class GoogleAnalyticsAJAXController extends Controller
     {
         $accountId = $request->query->get('accountId');
         $propertyId = $request->query->get('propertyId');
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configId = $request->query->get('configId');
         if ($configId) {
-            $configHelper->init($configId);
+            $this->analyticsConfig->init($configId);
         }
 
-        $profiles = $configHelper->getProfiles($accountId, $propertyId);
+        $profiles = $this->analyticsConfig->getProfiles($accountId, $propertyId);
 
         return new JsonResponse($profiles, 200, ['Content-Type' => 'application/json']);
     }
@@ -179,8 +194,7 @@ final class GoogleAnalyticsAJAXController extends Controller
     public function saveProfileAction(Request $request)
     {
         $propertyId = $request->query->get('id');
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configHelper->saveProfileId($propertyId);
+        $this->analyticsConfig->saveProfileId($propertyId);
 
         return new JsonResponse();
     }
@@ -200,30 +214,28 @@ final class GoogleAnalyticsAJAXController extends Controller
         $disableGoals = $request->query->get('disableGoals');
 
         // edit the config
-        $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
+        $config = $this->em->getRepository(AnalyticsConfig::class)->find($configId);
         if ($accountId && $propertyId && $profileId) {
             $config->setAccountId($accountId);
             $config->setPropertyId($propertyId);
             $config->setProfileId($profileId);
         }
 
-        $em->persist($config);
-        $em->flush();
+        $this->em->persist($config);
+        $this->em->flush();
 
         // set the config name
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configHelper->init($configId);
-        $profile = $configHelper->getActiveProfile();
+        $this->analyticsConfig->init($configId);
+        $profile = $this->analyticsConfig->getActiveProfile();
         $config->setName($profile['profileName']);
         $config->setDisableGoals($disableGoals);
 
-        $em->persist($config);
-        $em->flush();
+        $this->em->persist($config);
+        $this->em->flush();
 
         $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_admin.ga_ajax_controller.flash.success')
+            $this->translator->trans('kuma_admin.ga_ajax_controller.flash.success')
         );
 
         return new JsonResponse();
@@ -238,10 +250,9 @@ final class GoogleAnalyticsAJAXController extends Controller
         $configId = $request->query->get('configId');
 
         // edit the config
-        $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
-        $em->remove($config);
-        $em->flush();
+        $config = $this->em->getRepository(AnalyticsConfig::class)->find($configId);
+        $this->em->remove($config);
+        $this->em->flush();
 
         return new JsonResponse();
     }
@@ -251,18 +262,16 @@ final class GoogleAnalyticsAJAXController extends Controller
      */
     public function getConfigAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository(AnalyticsConfig::class)->findFirst();
+        $config = $this->em->getRepository(AnalyticsConfig::class)->findFirst();
         $accountId = $config->getAccountId();
 
         if (!$accountId) {
             return new JsonResponse();
         }
 
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $configHelper->getAccounts();
-        $configHelper->getProperties();
-        $configHelper->getProfiles();
+        $this->analyticsConfig->getAccounts();
+        $this->analyticsConfig->getProperties();
+        $this->analyticsConfig->getProfiles();
     }
 
     /* =============================== SEGMENT =============================== */
@@ -273,7 +282,6 @@ final class GoogleAnalyticsAJAXController extends Controller
     public function addSegmentAction(Request $request)
     {
         $configId = $request->query->get('configId');
-        $em = $this->getDoctrine()->getManager();
 
         // create a new segment
         $segment = new AnalyticsSegment();
@@ -283,14 +291,14 @@ final class GoogleAnalyticsAJAXController extends Controller
         $segment->setName($name);
 
         // add the segment to the config
-        $config = $em->getRepository(AnalyticsConfig::class)->find($configId);
+        $config = $this->em->getRepository(AnalyticsConfig::class)->find($configId);
         $segment->setConfig($config);
         $segments = $config->getSegments();
         $segments[] = $segment;
         $config->setSegments($segments);
 
-        $em->persist($config);
-        $em->flush();
+        $this->em->persist($config);
+        $this->em->flush();
 
         return new JsonResponse();
     }
@@ -300,10 +308,8 @@ final class GoogleAnalyticsAJAXController extends Controller
      */
     public function deleteSegmentAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $id = $request->query->get('id');
-        $em->getRepository(AnalyticsSegment::class)->deleteSegment($id);
+        $this->em->getRepository(AnalyticsSegment::class)->deleteSegment($id);
 
         return new JsonResponse();
     }
@@ -313,16 +319,14 @@ final class GoogleAnalyticsAJAXController extends Controller
      */
     public function editSegmentAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $id = $request->query->get('id');
         $query = $request->query->get('query');
         $name = $request->query->get('name');
-        $segment = $em->getRepository(AnalyticsSegment::class)->find($id);
+        $segment = $this->em->getRepository(AnalyticsSegment::class)->find($id);
         $segment->setName($name);
         $segment->setQuery($query);
-        $em->persist($segment);
-        $em->flush();
+        $this->em->persist($segment);
+        $this->em->flush();
 
         return new JsonResponse();
     }
