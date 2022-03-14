@@ -15,6 +15,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Default node searcher implementation
@@ -154,7 +155,8 @@ class NodeSearcher extends AbstractElasticaSearcher
     {
         $roles = [];
         if (!\is_null($this->tokenStorage)) {
-            $user = $this->tokenStorage->getToken()->getUser();
+            $token = $this->tokenStorage->getToken();
+            $user = $token instanceof TokenInterface ? $token->getUser() : null;
             if ($user instanceof BaseUser) {
                 $roles = $user->getRoles();
             }
