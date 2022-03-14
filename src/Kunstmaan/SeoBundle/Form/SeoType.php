@@ -74,11 +74,9 @@ class SeoType extends AbstractType
             ->addModelTransformer(new CallbackTransformer(
                 function ($original) {
                     // string to array
-                    $array = explode(',', $original);
+                    $array = explode(',', $original ?? '');
                     // trim all the values
-                    $array = array_map('trim', $array);
-
-                    return $array;
+                    return array_map('trim', $array);
                 },
                 function ($submitted) {
                     // trim all the values
