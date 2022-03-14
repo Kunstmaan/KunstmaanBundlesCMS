@@ -17,6 +17,10 @@ trait URLValidator
      */
     public function isInternalLink($link)
     {
+        if (null === $link) {
+            return false;
+        }
+
         preg_match_all("/\[(([a-z_A-Z\.]+):)?NT(\d+)\]/", $link, $matches, PREG_SET_ORDER);
 
         return \count($matches) > 0;
@@ -27,6 +31,10 @@ trait URLValidator
      */
     public function isInternalMediaLink($link)
     {
+        if (null === $link) {
+            return false;
+        }
+
         preg_match_all("/\[(([a-z_A-Z]+):)?M(\d+)\]/", $link, $matches, PREG_SET_ORDER);
 
         return \count($matches) > 0;
