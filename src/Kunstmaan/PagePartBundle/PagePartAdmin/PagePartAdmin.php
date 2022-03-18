@@ -250,7 +250,7 @@ class PagePartAdmin
             if (\array_key_exists($pagePartRefId, $this->newPageParts)) {
                 $pagePart = $this->newPageParts[$pagePartRefId];
                 $this->em->persist($pagePart);
-                $this->em->flush($pagePart);
+                $this->em->flush();
 
                 $ppRefRepo->addPagePart($this->page, $pagePart, $i + 1, $this->context, false);
             } elseif (\array_key_exists($pagePartRefId, $this->pagePartRefs)) {

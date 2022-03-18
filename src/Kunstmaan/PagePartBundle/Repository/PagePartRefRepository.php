@@ -129,7 +129,7 @@ class PagePartRefRepository extends EntityRepository
                 $toPagePart->deepClone();
             }
             $em->persist($toPagePart);
-            $em->flush($toPagePart);
+            $em->flush();
             $this->addPagePart($toPage, $toPagePart, $sequenceNumber, $context, false);
             ++$sequenceNumber;
         }
@@ -198,7 +198,7 @@ class PagePartRefRepository extends EntityRepository
         $ppRef->setContext($context);
         $ppRef->setSequenceNumber($sequenceNumber);
         $this->getEntityManager()->persist($ppRef);
-        $this->getEntityManager()->flush($ppRef);
+        $this->getEntityManager()->flush();
 
         return $this->getEntityManager()->getRepository($ppRef->getPagePartEntityName())->find($ppRef->getPagePartId());
     }

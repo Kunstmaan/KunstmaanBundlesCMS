@@ -795,7 +795,7 @@ final class NodeAdminController extends AbstractController
                 $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $parent);
                 $node->setParent($parent);
                 $this->em->persist($node);
-                $this->em->flush($node);
+                $this->em->flush();
             }
 
             /* @var NodeTranslation $nodeTranslation */
@@ -812,7 +812,7 @@ final class NodeAdminController extends AbstractController
 
                 $nodeTranslation->setWeight($weight);
                 $this->em->persist($nodeTranslation);
-                $this->em->flush($nodeTranslation);
+                $this->em->flush();
 
                 $this->dispatch(
                     new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
