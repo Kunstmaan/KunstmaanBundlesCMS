@@ -47,7 +47,7 @@ class CloneListener
                 $clonedSeo->setRef($event->getClonedEntity());
 
                 $this->em->persist($clonedSeo);
-                $this->em->flush($clonedSeo);
+                $this->em->flush();
             }
         }
     }

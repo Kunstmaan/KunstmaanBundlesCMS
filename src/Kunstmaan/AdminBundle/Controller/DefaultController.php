@@ -84,7 +84,7 @@ final class DefaultController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($dashboardConfiguration);
-                $em->flush($dashboardConfiguration);
+                $em->flush();
 
                 $this->addFlash(FlashTypes::SUCCESS, $this->translator->trans('kuma_admin.edit.flash.success'));
 
