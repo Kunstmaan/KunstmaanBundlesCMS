@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class SearchPageViewDataProvider implements PageViewDataProviderInterface
 {
+    public const MAX_QUERY_INPUT_LENGTH = 100;
+
     /** @var RequestStack */
     private $requestStack;
     /** @var SearchService */
@@ -37,6 +39,7 @@ final class SearchPageViewDataProvider implements PageViewDataProviderInterface
         if (!$request->query->has('query')) {
             return;
         }
+        $request->query->set('query', substr($request->query->get('query'), 0, self::MAX_QUERY_INPUT_LENGTH));
 
         // The search service needs the page entity to be set on the request
         $request->attributes->set('_entity', $nodeTranslation->getRef($this->em));
