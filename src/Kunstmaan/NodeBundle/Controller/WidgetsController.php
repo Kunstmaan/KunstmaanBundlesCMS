@@ -5,6 +5,8 @@ namespace Kunstmaan\NodeBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -19,11 +21,14 @@ final class WidgetsController extends AbstractController
     private $domainConfiguration;
     /** @var EntityManagerInterface */
     private $em;
+    /** @var AclHelper */
+    private $aclHelper;
 
-    public function __construct(DomainConfigurationInterface $domainConfiguration, EntityManagerInterface $em)
+    public function __construct(DomainConfigurationInterface $domainConfiguration, EntityManagerInterface $em, AclHelper $aclHelper)
     {
         $this->domainConfiguration = $domainConfiguration;
         $this->em = $em;
+        $this->aclHelper = $aclHelper;
     }
 
     /**
@@ -79,7 +84,8 @@ final class WidgetsController extends AbstractController
                 $rootItems = $this->em->getRepository(Node::class)->getAllTopNodes();
             }
         } else {
-            $rootItems = $this->em->getRepository(Node::class)->find($id)->getChildren();
+            $rootNode = $this->em->getRepository(Node::class)->find($id);
+            $rootItems = $this->getChildren($locale, $rootNode);
         }
 
         $results = $this->nodesToArray($locale, $rootItems, $depth);
@@ -181,9 +187,10 @@ final class WidgetsController extends AbstractController
                     'li_attr' => ['class' => 'js-url-chooser-link-select', 'data-slug' => $slug, 'data-id' => $rootNode->getId()],
                 ];
 
-                if ($rootNode->getChildren()->count()) {
+                $children = $this->getChildren($locale, $rootNode);
+                if ($children) {
                     if ($depth - 1) {
-                        $root['children'] = $this->nodesToArray($locale, $rootNode->getChildren(), --$depth);
+                        $root['children'] = $this->nodesToArray($locale, $children, --$depth);
                     } else {
                         $root['children'] = true;
                     }
@@ -193,5 +200,20 @@ final class WidgetsController extends AbstractController
         }
 
         return $results;
+    }
+
+    private function getChildren(string $locale, Node $rootNode)
+    {
+        $nodeRepository = $this->em->getRepository(Node::class);
+
+        return $nodeRepository->getChildNodes(
+            $rootNode->getId(),
+            $locale,
+            PermissionMap::PERMISSION_VIEW,
+            $this->aclHelper,
+            true,
+            true,
+            $rootNode
+        );
     }
 }
