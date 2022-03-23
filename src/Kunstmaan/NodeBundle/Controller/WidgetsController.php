@@ -7,10 +7,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class WidgetsController extends AbstractController
@@ -28,44 +28,36 @@ final class WidgetsController extends AbstractController
 
     /**
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
-     * @Template("@KunstmaanNode/Widgets/selectLink.html.twig")
-     *
-     * @return array
      */
-    public function ckSelectLinkAction(Request $request)
+    public function ckSelectLinkAction(Request $request): Response
     {
         $params = $this->getTemplateParameters($request);
         $params['cke'] = true;
         $params['multilanguage'] = $this->getParameter('kunstmaan_admin.multi_language');
 
-        return $params;
+        return $this->render('@KunstmaanNode/Widgets/selectLink.html.twig', $params);
     }
 
     /**
      * Select a link
      *
      * @Route("/selecturl", name="KunstmaanNodeBundle_selecturl")
-     * @Template("@KunstmaanNode/Widgets/selectLink.html.twig")
-     *
-     * @return array
      */
-    public function selectLinkAction(Request $request)
+    public function selectLinkAction(Request $request): Response
     {
         $params = $this->getTemplateParameters($request);
         $params['cke'] = false;
         $params['multilanguage'] = $this->getParameter('kunstmaan_admin.multi_language');
 
-        return $params;
+        return $this->render('@KunstmaanNode/Widgets/selectLink.html.twig', $params);
     }
 
     /**
      * Select a link
      *
      * @Route("/select-nodes-lazy", name="KunstmaanNodeBundle_nodes_lazy")
-     *
-     * @return JsonResponse
      */
-    public function selectNodesLazy(Request $request)
+    public function selectNodesLazy(Request $request): JsonResponse
     {
         $locale = $request->getLocale();
         $id = $request->query->get('id');
@@ -105,10 +97,7 @@ final class WidgetsController extends AbstractController
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
             }
-            $mediaChooserLink = $this->generateUrl(
-                'KunstmaanMediaBundle_chooser',
-                $params
-            );
+            $mediaChooserLink = $this->generateUrl('KunstmaanMediaBundle_chooser', $params);
         }
 
         return [

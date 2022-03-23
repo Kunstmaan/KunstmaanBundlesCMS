@@ -16,11 +16,11 @@ use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
 use Kunstmaan\UserManagementBundle\Event\DeleteUserInitializeEvent;
 use Kunstmaan\UserManagementBundle\Event\EditUserInitializeEvent;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -62,14 +62,9 @@ final class UsersController extends AbstractController
     }
 
     /**
-     * List users
-     *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_users")
-     * @Template("@KunstmaanAdminList/Default/list.html.twig")
-     *
-     * @return array
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
@@ -83,9 +78,9 @@ final class UsersController extends AbstractController
         $adminList = $this->adminListFactory->createList($configurator);
         $adminList->bindRequest($request);
 
-        return [
+        return $this->render('@KunstmaanAdminList/Default/list.html.twig', [
             'adminlist' => $adminList,
-        ];
+        ]);
     }
 
     /**
@@ -101,14 +96,9 @@ final class UsersController extends AbstractController
     }
 
     /**
-     * Add a user
-     *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add", methods={"GET", "POST"})
-     * @Template("@KunstmaanUserManagement/Users/add.html.twig")
-     *
-     * @return array
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
@@ -143,28 +133,23 @@ final class UsersController extends AbstractController
                     ])
                 );
 
-                return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+                return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users');
             }
         }
 
-        return [
+        return $this->render('@KunstmaanUserManagement/Users/add.html.twig', [
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     /**
-     * Edit a user
-     *
      * @param int $id
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit", methods={"GET", "POST"})
-     * @Template("@KunstmaanUserManagement/Users/edit.html.twig")
-     *
-     * @return array
      *
      * @throws AccessDeniedException
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): Response
     {
         // The logged in user should be able to change his own password/username/email and not for other users
         if ($id == $this->getUser()->getId()) {
@@ -215,7 +200,7 @@ final class UsersController extends AbstractController
                     ])
                 );
 
-                return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $id]));
+                return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $id]);
             }
         }
 
@@ -228,19 +213,19 @@ final class UsersController extends AbstractController
             $params = array_merge($params, ['tabPane' => $tabPane]);
         }
 
-        return $params;
+        return $this->render('@KunstmaanUserManagement/Users/edit.html.twig', $params);
     }
 
     /**
      * @Route("/form-delete/{id}", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_form_delete", methods={"POST"})
      */
-    public function deleteFormAction(Request $request, $id)
+    public function deleteFormAction(Request $request, $id): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $submittedToken = $request->request->get('token');
         if (!$this->isCsrfTokenValid('delete-user', $submittedToken)) {
-            return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+            return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users');
         }
 
         /* @var UserInterface $user */
@@ -266,15 +251,12 @@ final class UsersController extends AbstractController
             );
         }
 
-        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
+        return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function changePasswordAction()
+    public function changePasswordAction(): RedirectResponse
     {
         // Redirect to current user edit route...
-        return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $this->getUser()->getId()]));
+        return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $this->getUser()->getId()]);
     }
 }

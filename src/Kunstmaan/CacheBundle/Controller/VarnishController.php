@@ -6,10 +6,10 @@ use Kunstmaan\CacheBundle\Form\Varnish\BanType;
 use Kunstmaan\CacheBundle\Helper\VarnishHelper;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -27,11 +27,8 @@ final class VarnishController extends AbstractController
      * Generates the varnish ban form.
      *
      * @Route("/settings/varnish", name="kunstmaancachebundle_varnish_settings_ban")
-     * @Template("KunstmaanCacheBundle:Varnish:ban.html.twig")
-     *
-     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $this->checkPermission();
 
@@ -49,9 +46,9 @@ final class VarnishController extends AbstractController
             }
         }
 
-        return [
+        return $this->render('@KunstmaanCache/Varnish/ban.html.twig', [
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     /**

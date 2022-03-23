@@ -7,7 +7,6 @@ use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler;
 use Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -39,7 +38,7 @@ final class TranslatorCommandController extends AbstractController
             $this->translator->trans('kuma_translator.command.clear.flash.success')
         );
 
-        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+        return $this->redirectToRoute('KunstmaanTranslatorBundle_settings_translations');
     }
 
     /**
@@ -61,7 +60,7 @@ final class TranslatorCommandController extends AbstractController
             $this->translator->trans('kuma_translator.command.import.flash.success')
         );
 
-        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+        return $this->redirectToRoute('KunstmaanTranslatorBundle_settings_translations');
     }
 
     /**
@@ -83,6 +82,6 @@ final class TranslatorCommandController extends AbstractController
             $this->translator->trans('kuma_translator.command.import.flash.force_success')
         );
 
-        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+        return $this->redirectToRoute('KunstmaanTranslatorBundle_settings_translations');
     }
 }

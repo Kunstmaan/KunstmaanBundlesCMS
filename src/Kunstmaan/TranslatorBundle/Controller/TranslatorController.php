@@ -14,14 +14,12 @@ use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
 use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
 use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class TranslatorController extends AbstractAdminListController
@@ -47,11 +45,8 @@ final class TranslatorController extends AbstractAdminListController
 
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
-     * @Template("@KunstmaanTranslator/Translator/list.html.twig")
-     *
-     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $configurator = $this->getAdminListConfigurator();
 
@@ -69,10 +64,10 @@ final class TranslatorController extends AbstractAdminListController
             );
         }
 
-        return [
+        return $this->render('@KunstmaanTranslator/Translator/list.html.twig', [
             'adminlist' => $adminList,
             'adminlistconfigurator' => $configurator,
-        ];
+        ]);
     }
 
     /**
@@ -80,14 +75,11 @@ final class TranslatorController extends AbstractAdminListController
      * @param string $domain
      * @param string $locale
      *
-     * @return array|RedirectResponse
-     *
      * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add", methods={"GET", "POST"})
-     * @Template("@KunstmaanTranslator/Translator/addTranslation.html.twig")
      */
-    public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
+    public function addAction(Request $request, $keyword = '', $domain = '', $locale = ''): Response
     {
         $configurator = $this->getAdminListConfigurator();
         $translator = $this->container->get('translator');
@@ -122,32 +114,26 @@ final class TranslatorController extends AbstractAdminListController
 
                 $indexUrl = $configurator->getIndexUrl();
 
-                return new RedirectResponse($this->generateUrl(
-                    $indexUrl['path'],
-                    isset($indexUrl['params']) ? $indexUrl['params'] : []
-                ));
+                return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
             }
         }
 
-        return [
+        return $this->render('@KunstmaanTranslator/Translator/addTranslation.html.twig', [
             'form' => $form->createView(),
             'adminlistconfigurator' => $configurator,
-        ];
+        ]);
     }
 
     /**
      * The edit action
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit", methods={"GET", "POST"})
-     * @Template("@KunstmaanTranslator/Translator/editTranslation.html.twig")
      *
      * @param $id
      *
      * @throws \InvalidArgumentException
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): Response
     {
         $configurator = $this->getAdminListConfigurator();
 
@@ -190,27 +176,21 @@ final class TranslatorController extends AbstractAdminListController
 
                 $indexUrl = $configurator->getIndexUrl();
 
-                return new RedirectResponse($this->generateUrl(
-                    $indexUrl['path'],
-                    isset($indexUrl['params']) ? $indexUrl['params'] : []
-                ));
+                return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
             }
         }
 
-        return [
+        return $this->render('@KunstmaanTranslator/Translator/editTranslation.html.twig', [
             'form' => $form->createView(),
             'translation' => $translation,
             'adminlistconfigurator' => $configurator,
-        ];
+        ]);
     }
 
     /**
      * @Route("upload", name="KunstmaanTranslatorBundle_settings_translations_upload", methods={"GET", "POST"})
-     * @Template("@KunstmaanTranslator/Translator/addTranslation.html.twig")
-     *
-     * @return array
      */
-    public function uploadFileAction(Request $request)
+    public function uploadFileAction(Request $request): Response
     {
         /** @var FormBuilderInterface $uploadForm */
         $form = $this->createForm(TranslationsFileUploadType::class);
@@ -228,22 +208,18 @@ final class TranslatorController extends AbstractAdminListController
             }
         }
 
-        return [
+        return $this->render('@KunstmaanTranslator/Translator/addTranslation.html.twig', [
             'form' => $form->createView(),
             'adminlistconfigurator' => $configurator,
-        ];
+        ]);
     }
 
     /**
-     * The export action
-     *
      * @param string $_format
      *
      * @Route("/export.{_format}", requirements={"_format" = "csv|ods|xlsx"}, name="KunstmaanTranslatorBundle_settings_translations_export", methods={"GET", "POST"})
-     *
-     * @return array
      */
-    public function exportAction(Request $request, $_format)
+    public function exportAction(Request $request, $_format): Response
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
@@ -252,10 +228,8 @@ final class TranslatorController extends AbstractAdminListController
      * @param $domain
      * @param $locale
      * @param $keyword
-     *
-     * @return RedirectResponse
      */
-    public function editSearchAction($domain, $locale, $keyword)
+    public function editSearchAction($domain, $locale, $keyword): RedirectResponse
     {
         $configurator = $this->getAdminListConfigurator();
         $translation = $this->em->getRepository(Translation::class)->findOneBy(
@@ -267,35 +241,31 @@ final class TranslatorController extends AbstractAdminListController
                 ['domain' => $domain, 'keyword' => $keyword, 'locale' => $locale]
             );
 
-            return new RedirectResponse($this->generateUrl($addUrl['path'], $addUrl['params']));
+            return $this->redirectToRoute($addUrl['path'], $addUrl['params']);
         }
 
         $editUrl = $configurator->getEditUrlFor(['id' => $translation->getId()]);
 
-        return new RedirectResponse($this->generateUrl($editUrl['path'], $editUrl['params']));
+        return $this->redirectToRoute($editUrl['path'], $editUrl['params']);
     }
 
     /**
      * @param $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws NotFoundHttpException
-     *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete", methods={"POST"})
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
         if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($this->getAdminListConfigurator()->getEntityName()), $request->request->get('token'))) {
-            return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
+            return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
         }
 
         if ($request->isMethod('POST')) {
             $this->em->getRepository(Translation::class)->removeTranslations($id);
         }
 
-        return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : []));
+        return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
     }
 
     /**
@@ -321,9 +291,9 @@ final class TranslatorController extends AbstractAdminListController
     }
 
     /**
-     * @return JsonResponse|Response
-     *
      * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit", methods={"POST"})
+     *
+     * @return JsonResponse|Response
      */
     public function inlineEditAction(Request $request)
     {
@@ -357,10 +327,7 @@ final class TranslatorController extends AbstractAdminListController
             $this->em->persist($translation);
             $this->em->flush();
 
-            return new JsonResponse([
-                'success' => true,
-                'uid' => $translation->getId(),
-            ], 200);
+            return new JsonResponse(['success' => true, 'uid' => $translation->getId()], 200);
         } catch (\Exception $e) {
             return new Response($translator->trans('translator.translator.fatal_error_occurred'), 500);
         }

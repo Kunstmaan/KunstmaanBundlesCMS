@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminBundle\Controller;
 
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -26,35 +26,29 @@ final class SettingsController extends AbstractController
      * Index page for the settings
      *
      * @Route("/", name="KunstmaanAdminBundle_settings")
-     * @Template("@KunstmaanAdmin/Settings/index.html.twig")
      *
      * @throws AccessDeniedException
-     *
-     * @return array
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        return [];
+        return $this->render('@KunstmaanAdmin/Settings/index.html.twig');
     }
 
     /**
      * Show bundles version update information
      *
      * @Route("/bundle-version", name="KunstmaanAdminBundle_settings_bundle_version")
-     * @Template("@KunstmaanAdmin/Settings/bundleVersion.html.twig")
      *
      * @throws AccessDeniedException
-     *
-     * @return array
      */
-    public function bundleVersionAction()
+    public function bundleVersionAction(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         if (!$this->versionChecker->isEnabled()) {
-            return ['data' => null];
+            return $this->render('@KunstmaanAdmin/Settings/bundleVersion.html.twig', ['data' => null]);
         }
 
         $data = null;
@@ -64,8 +58,8 @@ final class SettingsController extends AbstractController
             $this->logger->error($e->getMessage(), ['exception' => $e]);
         }
 
-        return [
+        return $this->render('@KunstmaanAdmin/Settings/bundleVersion.html.twig', [
             'data' => $data,
-        ];
+        ]);
     }
 }

@@ -7,8 +7,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
 use Kunstmaan\TaggingBundle\Entity\Tag;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class TagAdminListController extends AbstractAdminListController
@@ -39,49 +39,40 @@ final class TagAdminListController extends AbstractAdminListController
 
     /**
      * @Route("/", name="kunstmaantaggingbundle_admin_tag")
-     * @Template("@KunstmaanAdminList/Default/list.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
      * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add", methods={"GET", "POST"})
-     * @Template("@KunstmaanAdminList/Default/add.html.twig")
-     *
-     * @return array
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request): Response
     {
         return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
     /**
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_edit", methods={"GET", "POST"})
-     * @Template("@KunstmaanAdminList/Default/edit.html.twig")
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_delete", methods={"GET", "POST"})
-     * @Template("@KunstmaanAdminList/Default/delete.html.twig")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * @Route("/autocomplete.{_format}", name="kunstmaantaggingbundle_admin_tag_autocomplete", defaults={"_format" = "json"})
-     * @Template("@KunstmaanTagging/Tags/autocomplete.json.twig")
-     *
-     * @return array
      */
-    public function autocompleteAction(Request $request)
+    public function autocompleteAction(Request $request): Response
     {
         $search = $request->query->get('term');
         $qb = $this->em->getRepository(Tag::class)->createQueryBuilder('n')
@@ -90,6 +81,6 @@ final class TagAdminListController extends AbstractAdminListController
             ->setParameter('search', '%' . $search . '%');
         $tags = $qb->getQuery()->getResult();
 
-        return ['tags' => $tags];
+        return $this->render('@KunstmaanTagging/Tags/autocomplete.json.twig', ['tags' => $tags]);
     }
 }
