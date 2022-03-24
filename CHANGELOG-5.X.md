@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.10.3 / 2022-03-24
+
+* [NodeBundle] NodetranslationListener should use masterrequest to set … [#3117](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3117) ([@Numkil](https://github.com/Numkil))
+* [NodeSearchBundle] Check if tokenstorage has valid token before retrieving user [#3113](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3113) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle][SeoBundle] Fix php8 deprecation `Passing null to parameter #1 xxxx is deprecated` [#3112](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3112) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Unique must be a boolean [#3104](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3104) ([@dannyvw](https://github.com/dannyvw))
+* [AdminBundle] Fix user entity BC break [#3097](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3097) ([@acrobat](https://github.com/acrobat))
+* [MultidomainBundle] Fix issues with empty host in multidomain config [#3071](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3071) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Add missing validation groups to re-enable user object constraints [#3070](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3070) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Fix node order in url chooser [#2890](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2890) ([@dannyvw](https://github.com/dannyvw))
+
 ## 5.10.2 / 2022-01-28
 
 * [AdminBundle] Only apply login subscriber to users of cms admin [#3069](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3069) ([@acrobat](https://github.com/acrobat))
