@@ -31,4 +31,5 @@ services:
         arguments: [ '@kunstmaan_admin.domain_configuration', '@router' ]
         tags: [ 'controller.service_arguments' ]
 
-    Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber: ~
+    Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber:
+        tags: [ 'event_subscriber' ]
