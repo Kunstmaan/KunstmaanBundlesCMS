@@ -339,12 +339,12 @@ class NodeTranslationListener
      */
     private function isInRequestScope()
     {
-        return $this->requestStack && $this->requestStack->getCurrentRequest();
+        return $this->requestStack && $this->requestStack->getMasterRequest();
     }
 
     private function getFlashBag()
     {
-        $session = method_exists($this->requestStack, 'getSession') ? $this->requestStack->getSession() : $this->requestStack->getCurrentRequest()->getSession();
+        $session = method_exists($this->requestStack, 'getSession') ? $this->requestStack->getSession() : $this->requestStack->getMasterRequest()->getSession();
 
         return $session->getFlashBag();
     }
