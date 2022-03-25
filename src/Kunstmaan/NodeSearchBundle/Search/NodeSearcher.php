@@ -16,6 +16,7 @@ use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Default node searcher implementation
@@ -162,8 +163,13 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         // Anonymous access should always be available for both anonymous & logged in users
+        // NEXT_MAJOR cleanup old security role
         if (!\in_array('IS_AUTHENTICATED_ANONYMOUSLY', $roles, true)) {
             $roles[] = 'IS_AUTHENTICATED_ANONYMOUSLY';
+        }
+
+        if (defined(AuthenticatedVoter::PUBLIC_ACCESS) && !\in_array(AuthenticatedVoter::PUBLIC_ACCESS, $roles, true)) {
+            $roles[] = AuthenticatedVoter::PUBLIC_ACCESS;
         }
 
         // Return a re-indexed array to make sure the array keys are incremental and don't skip a number. Otherwise

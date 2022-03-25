@@ -151,7 +151,7 @@ class AclHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = [$databasePlatform->quoteStringLiteral('IS_AUTHENTICATED_ANONYMOUSLY')];
+        $uR = [$databasePlatform->quoteStringLiteral('IS_AUTHENTICATED_ANONYMOUSLY'), $databasePlatform->quoteStringLiteral('PUBLIC_ACCESS')];
 
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
