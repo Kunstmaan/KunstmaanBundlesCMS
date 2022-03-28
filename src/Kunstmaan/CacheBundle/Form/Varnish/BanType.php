@@ -14,12 +14,14 @@ class BanType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('path', TextType::class, [
-            'label' => 'kunstmaan_cache.varnish.ban.path',
-        ]);
-        $builder->add('allDomains', CheckboxType::class, [
-            'label' => 'kunstmaan_cache.varnish.ban.all_domains',
-        ]);
+        $builder
+            ->add('path', TextType::class, [
+                'label' => 'kunstmaan_cache.varnish.ban.path',
+            ])
+            ->add('allDomains', CheckboxType::class, [
+                'label' => 'kunstmaan_cache.varnish.ban.all_domains',
+            ])
+        ;
     }
 
     /**
