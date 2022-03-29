@@ -1,0 +1,139 @@
+{
+    "subtree-splits": [
+        {
+            "name": "admin-bundle",
+            "directory": "src/Kunstmaan/AdminBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanAdminBundle.git"
+        },
+        {
+            "name": "adminlist-bundle",
+            "directory": "src/Kunstmaan/AdminListBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanAdminListBundle.git"
+        },
+        {
+            "name": "article-bundle",
+            "directory": "src/Kunstmaan/ArticleBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanArticleBundle.git"
+        },
+        {
+            "name": "behat-bundle",
+            "directory": "src/Kunstmaan/BehatBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanBehatBundle.git"
+        },
+        {
+            "name": "cache-bundle",
+            "directory": "src/Kunstmaan/CacheBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanCacheBundle.git"
+        },
+        {
+            "name": "config-bundle",
+            "directory": "src/Kunstmaan/ConfigBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanConfigBundle.git"
+        },
+        {
+            "name": "dashboard-bundle",
+            "directory": "src/Kunstmaan/DashboardBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanDashboardBundle.git"
+        },
+        {
+            "name": "fixtures-bundle",
+            "directory": "src/Kunstmaan/FixturesBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanFixturesBundle.git"
+        },
+        {
+            "name": "form-bundle",
+            "directory": "src/Kunstmaan/FormBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanFormBundle.git"
+        },
+        {
+            "name": "generator-bundle",
+            "directory": "src/Kunstmaan/GeneratorBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanGeneratorBundle.git"
+        },
+        {
+            "name": "lead-generation-bundle",
+            "directory": "src/Kunstmaan/LeadGenerationBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanLeadGenerationBundle.git"
+        },
+        {
+            "name": "media-bundle",
+            "directory": "src/Kunstmaan/MediaBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanMediaBundle.git"
+        },
+        {
+            "name": "media-pagepart-bundle",
+            "directory": "src/Kunstmaan/MediaPagePartBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanMediaPagePartBundle.git"
+        },
+        {
+            "name": "menu-bundle",
+            "directory": "src/Kunstmaan/MenuBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanMenuBundle.git"
+        },
+        {
+            "name": "multidomain-bundle",
+            "directory": "src/Kunstmaan/MultiDomainBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanMultiDomainBundle.git"
+        },
+        {
+            "name": "node-bundle",
+            "directory": "src/Kunstmaan/NodeBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanNodeBundle.git"
+        },
+        {
+            "name": "node-search-bundle",
+            "directory": "src/Kunstmaan/NodeSearchBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanNodeSearchBundle.git"
+        },
+        {
+            "name": "pagepart-bundle",
+            "directory": "src/Kunstmaan/PagePartBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanPagePartBundle.git"
+        },
+        {
+            "name": "redirect-bundle",
+            "directory": "src/Kunstmaan/RedirectBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanRedirectBundle.git"
+        },
+        {
+            "name": "search-bundle",
+            "directory": "src/Kunstmaan/SearchBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanSearchBundle.git"
+        },
+        {
+            "name": "seo-bundle",
+            "directory": "src/Kunstmaan/SeoBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanSeoBundle.git"
+        },
+        {
+            "name": "sitemap-bundle",
+            "directory": "src/Kunstmaan/SitemapBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanSitemapBundle.git"
+        },
+        {
+            "name": "tagging-bundle",
+            "directory": "src/Kunstmaan/TaggingBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanTaggingBundle.git"
+        },
+        {
+            "name": "translator-bundle",
+            "directory": "src/Kunstmaan/TranslatorBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanTranslatorBundle.git"
+        },
+        {
+            "name": "user-management-bundle",
+            "directory": "src/Kunstmaan/UserManagementBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanUserManagementBundle.git"
+        },
+        {
+            "name": "utilities-bundle",
+            "directory": "src/Kunstmaan/UtilitiesBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanUtilitiesBundle.git"
+        },
+        {
+            "name": "voting-bundle",
+            "directory": "src/Kunstmaan/VotingBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanVotingBundle.git"
+        }
+    ]
+}
