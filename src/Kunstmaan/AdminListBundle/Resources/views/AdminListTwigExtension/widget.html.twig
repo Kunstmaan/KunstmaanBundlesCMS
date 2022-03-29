@@ -115,12 +115,16 @@
                                         <span class="table__actions__item disabled" title="{{ itemAction.getLabelFor(item) | trans }}">
                                             {% if itemAction.getIconFor(item) is not null %}
                                                 <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
+                                            {% else %}
+                                                {{ itemAction.getLabelFor(item) }}
                                             {% endif %}
                                         </span>
                                     {% else %}
                                         <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item" title="{{ itemAction.getLabelFor(item) | trans }}">
                                             {% if itemAction.getIconFor(item) is not null %}
                                                 <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
+                                            {% else %}
+                                                {{ itemAction.getLabelFor(item) }}
                                             {% endif %}
                                         </a>
                                     {% endif %}

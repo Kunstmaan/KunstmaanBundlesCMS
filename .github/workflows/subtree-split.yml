@@ -43,3 +43,4 @@ jobs:
                 uses: acrobat/subtree-splitter@batch-process-splits
                 with:
                     config-path: .build/subtree-splitter-config.json
+                    batch-size: 1
