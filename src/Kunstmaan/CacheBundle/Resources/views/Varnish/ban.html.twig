@@ -1,4 +1,5 @@
 {% extends '@KunstmaanAdmin/Settings/index.html.twig' %}
+
 {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block header %}{% endblock %}
@@ -21,7 +22,6 @@
     <!-- Scroll-actions -->
     <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
         <div class="btn-group">
-            {{ block('actions') }}
             <button type="button" class="js-scroll-to-top btn btn-default btn--raise-on-hover">
                 <i class="fa fa-caret-up"></i>
             </button>

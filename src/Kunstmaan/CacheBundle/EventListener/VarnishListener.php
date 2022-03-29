@@ -32,20 +32,12 @@ class VarnishListener
         if ($activeNodeVersion !== null && $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $activeNode = $activeNodeVersion->getNodeTranslation()->getNode();
 
-            $menu->addChild(
-                'kunstmaan_cache.varnish.ban.menu',
-                [
-                    'uri' => $this->router->generate(
-                        'kunstmaancachebundle_varnish_ban',
-                        [
-                            'node' => $activeNode->getId(),
-                        ]
-                    ),
-                    'linkAttributes' => [
-                        'class' => 'btn btn-default btn--raise-on-hover',
-                    ],
-                ]
-            );
+            $menu->addChild('kunstmaan_cache.varnish.ban.menu', [
+                'uri' => $this->router->generate('kunstmaancachebundle_varnish_ban', ['node' => $activeNode->getId()]),
+                'linkAttributes' => [
+                    'class' => 'btn btn-default btn--raise-on-hover',
+                ],
+            ]);
         }
     }
 }
