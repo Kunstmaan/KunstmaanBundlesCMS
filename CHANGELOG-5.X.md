@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.10.4 / 1970-01-01
+
+* [NodeBundle] Only sluggify url/slug part instead of full url [#3125](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3125) ([@acrobat](https://github.com/acrobat))
+* [AdminListBundle] Use label for item action when icon is null [#3124](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3124) ([@acrobat](https://github.com/acrobat))
+
 ## 5.10.3 / 2022-03-24
 
 * [NodeBundle] NodetranslationListener should use masterrequest to set … [#3117](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3117) ([@Numkil](https://github.com/Numkil))
