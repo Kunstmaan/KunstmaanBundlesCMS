@@ -31,6 +31,11 @@
             "target": "git@github.com:Kunstmaan/KunstmaanConfigBundle.git"
         },
         {
+            "name": "cookie-bundle",
+            "directory": "src/Kunstmaan/CookieBundle",
+            "target": "git@github.com:Kunstmaan/KunstmaanCookieBundle.git"
+        },
+        {
             "name": "dashboard-bundle",
             "directory": "src/Kunstmaan/DashboardBundle",
             "target": "git@github.com:Kunstmaan/KunstmaanDashboardBundle.git"
