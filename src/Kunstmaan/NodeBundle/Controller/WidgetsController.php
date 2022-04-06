@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -81,6 +82,35 @@ final class WidgetsController extends AbstractController
         }
 
         $results = $this->nodesToArray($locale, $rootItems, $depth);
+
+        return new JsonResponse($results);
+    }
+
+    /**
+     * Search action in url chooser popup
+     *
+     * @Route("/select-nodes-lazy_search", name="KunstmaanNodeBundle_nodes_lazy_search")
+     */
+    public function selectNodesLazySearch(Request $request): JsonResponse
+    {
+        $locale = $request->getLocale();
+        $search = $request->query->get('str');
+
+        $results = [];
+        if ($search) {
+            $em = $this->getDoctrine()->getManager();
+            $nts = $em->getRepository(NodeTranslation::class)->getNodeTranslationsLikeTitle($search, $locale);
+            foreach ($nts as $nt) {
+                $node = $nt->getNode();
+                $results[] = $node->getId();
+                while ($node->getParent()) {
+                    $node = $node->getParent();
+                    $results[] = $node->getId();
+                }
+            }
+            $results = array_unique($results);
+            sort($results);
+        }
 
         return new JsonResponse($results);
     }
