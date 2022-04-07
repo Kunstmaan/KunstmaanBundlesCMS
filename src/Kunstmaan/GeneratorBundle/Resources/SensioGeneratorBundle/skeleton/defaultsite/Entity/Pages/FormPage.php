@@ -9,25 +9,17 @@ use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\Pages\FormPageAdminType;
 
 /**
- * FormPage
- *
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}form_pages")
  */
 class FormPage extends AbstractFormPage implements HasPageTemplateInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return FormPageAdminType::class;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [
             [
@@ -41,26 +33,17 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
         ];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}form'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}formpage'];
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/FormPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }

@@ -15,27 +15,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
 {
-    /**
-     * return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/SearchPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}searchpage');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}searchpage'];
     }
 }
