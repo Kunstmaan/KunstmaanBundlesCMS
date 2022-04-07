@@ -47,12 +47,6 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
 	));
     }
 
-
-    public function getBlockPrefix()
-    {
-	return 'servicepageparttype';
-    }
-
     /**
      * Sets the default options for this type.
      *

@@ -38,12 +38,6 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	));
     }
 
-
-    public function getBlockPrefix()
-    {
-	return 'pagebannerpageparttype';
-    }
-
     /**
      * Sets the default options for this type.
      *

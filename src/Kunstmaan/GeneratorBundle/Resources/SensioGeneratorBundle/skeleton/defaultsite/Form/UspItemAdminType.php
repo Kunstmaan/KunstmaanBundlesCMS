@@ -44,10 +44,4 @@ class UspItemAdminType extends AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\UspItem'
 	));
     }
-
-
-    public function getBlockPrefix()
-    {
-	return 'uspitemtype';
-    }
 }

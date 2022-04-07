@@ -40,12 +40,4 @@ class HomePageAdminType extends PageAdminType
             'data_class' => '{{ namespace }}\Entity\Pages\HomePage'
         ));
     }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'homepage';
-    }
 }

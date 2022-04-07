@@ -39,10 +39,4 @@ class UspPagePartAdminType extends AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\UspPagePart',
 	));
     }
-
-
-    public function getBlockPrefix()
-    {
-	return 'usppageparttype';
-    }
 }

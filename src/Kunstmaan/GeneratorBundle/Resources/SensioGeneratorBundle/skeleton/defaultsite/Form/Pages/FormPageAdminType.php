@@ -56,12 +56,4 @@ class FormPageAdminType extends PageAdminType
             'data_class' => '{{ namespace }}\Entity\Pages\FormPage'
         ));
     }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'formpage';
-    }
 }

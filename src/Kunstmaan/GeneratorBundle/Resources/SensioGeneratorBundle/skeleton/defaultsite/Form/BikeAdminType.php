@@ -29,10 +29,4 @@ class BikeAdminType extends AbstractType
 	    'required' => true
 	));
     }
-
-
-    public function getBlockPrefix()
-    {
-	return 'bike';
-    }
 }
