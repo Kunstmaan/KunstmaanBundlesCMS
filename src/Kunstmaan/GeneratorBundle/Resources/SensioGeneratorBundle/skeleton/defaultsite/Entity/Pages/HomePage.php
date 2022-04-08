@@ -11,83 +11,63 @@ use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\Pages\HomePageAdminType;
 
 /**
- * HomePage
- *
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}home_pages")
  */
 class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface, HomePageInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return HomePageAdminType::class;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
-        return array(
-            array(
+        return [
+            [
                 'name'  => 'ContentPage',
                 'class' => '{{ namespace }}\Entity\Pages\ContentPage'
-            ),
+            ],
 {% if demosite %}
-            array(
+            [
                 'name'  => 'FormPage',
                 'class' => '{{ namespace }}\Entity\Pages\FormPage'
-            ),
+            ],
 {% endif %}
-            array(
+            [
                 'name'  => 'BehatTestPage',
                 'class' => '{{ namespace }}\Entity\Pages\BehatTestPage'
-            )
-        );
+            ]
+        ];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
 {% if demosite %}
-	    return array(
+	    return [
 		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}header',
 		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section1',
 		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section2',
 		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section3',
 		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section4',
 		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section5'
-	    );
+        ];
 {% else %}
-	    return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main');
+	    return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main'];
 {% endif %}
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
-    	return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}homepage');
+    	return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}homepage'];
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/HomePage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSearchType()
+    public function getSearchType(): string
     {
 	    return 'Home';
     }

@@ -22,14 +22,4 @@ class BehatTestPageAdminType extends PageAdminType
             'data_class' => '{{ namespace }}\Entity\Pages\BehatTestPage'
         ));
     }
-
-    /**
-     * @assert () == 'behat_test_page'
-     *
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'behat_test_page';
-    }
 }

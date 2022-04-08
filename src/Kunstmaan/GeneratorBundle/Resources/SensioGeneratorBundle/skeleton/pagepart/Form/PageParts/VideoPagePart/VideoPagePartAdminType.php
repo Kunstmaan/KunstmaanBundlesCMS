@@ -25,12 +25,6 @@ class {{ pagepart }}AdminType extends AbstractType
         ));
     }
 
-
-    public function getBlockPrefix()
-    {
-        return '{{ pagepart|lower }}type';
-    }
-
     /**
      * Sets the default options for this type.
      *

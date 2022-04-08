@@ -12,12 +12,6 @@ class BikesListPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	parent::buildForm($builder, $options);
     }
 
-
-    public function getBlockPrefix()
-    {
-	return 'bikeslistpageparttype';
-    }
-
     /**
      * Sets the default options for this type.
      *

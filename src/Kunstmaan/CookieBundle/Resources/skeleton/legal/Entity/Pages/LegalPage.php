@@ -15,28 +15,17 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
  */
 class LegalPage extends AbstractPage implements HasPageTemplateInterface, CustomViewDataProviderInterface
 {
-    /**
-     * Returns the default backend form type for this page
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return LegalPageAdminType::class;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
         return [
             '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}legal_header',
@@ -44,18 +33,12 @@ class LegalPage extends AbstractPage implements HasPageTemplateInterface, Custom
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
         return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}legalpage'];
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/LegalPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }

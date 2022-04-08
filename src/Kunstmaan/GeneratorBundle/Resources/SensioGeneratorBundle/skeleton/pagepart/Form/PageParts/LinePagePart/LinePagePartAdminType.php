@@ -26,12 +26,6 @@ class {{ pagepart }}AdminType extends AbstractType
         parent::buildForm($builder, $options);
     }
 
-
-    public function getBlockPrefix()
-    {
-        return '{{ pagepart|lower }}type';
-    }
-
     /**
      * Sets the default options for this type.
      *

@@ -52,10 +52,4 @@ class ContentPageAdminType extends PageAdminType
             'data_class' => '{{ namespace }}\Entity\Pages\ContentPage'
         ));
     }
-
-
-    public function getBlockPrefix()
-    {
-	return 'contentpage';
-    }
 }
