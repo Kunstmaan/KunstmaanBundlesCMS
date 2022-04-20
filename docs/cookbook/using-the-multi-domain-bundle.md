@@ -85,6 +85,22 @@ The first tree is mapped to 2 single language domains, the second is mapped as a
 
 *Note*: You will not be able to use a locale as both single and multi language for the same root.
 
+#### Add DomainBasedLocaleRouter as a service
+
+Set higher priority then basic router.
+
+```yml
+  kunstmaan_node.multi_slugrouter:
+    class: Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter
+    arguments:
+      - '@kunstmaan_admin.domain_configuration'
+      - '@request_stack'
+      - '@doctrine.orm.entity_manager'
+      - '%kunstmaan_admin.admin_prefix%'
+    tags:
+      - { name: router, priority: 2 }
+```
+
 
 ### Enable the multi domain logout handler in security.yml
 
