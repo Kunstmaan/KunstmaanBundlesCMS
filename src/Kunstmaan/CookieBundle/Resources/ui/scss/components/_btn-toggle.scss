@@ -46,7 +46,7 @@
             &:before {
                 left: calc(100% - (#{$kmcc-toggle-size} - #{floor($kmcc-toggle-size * .1)}));
 
-                padding: 0 (($kmcc-toggle-size / 2) - 5);
+                padding: 0 calc(($kmcc-toggle-size / 2) - 5px);
 
                 background: $kmcc_toggle-button--check url($toggle-check-image) 50% 50% no-repeat;
             }
