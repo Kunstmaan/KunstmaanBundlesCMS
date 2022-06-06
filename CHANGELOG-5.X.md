@@ -1,6 +1,11 @@
 # Changelog
 
-## 5.10.4 / 1970-01-01
+## 5.10.5 / 2022-06-06
+
+* [MediaPagePartBundle] Fix nullable url [#3135](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3135) ([@dannyvw](https://github.com/dannyvw))
+* [SeoBundle] Revert espacing extra metatags string to avoid render issue [#3133](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3133) ([@acrobat](https://github.com/acrobat))
+
+## 5.10.4 / 2022-04-04
 
 * [NodeBundle] Only sluggify url/slug part instead of full url [#3125](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3125) ([@acrobat](https://github.com/acrobat))
 * [AdminListBundle] Use label for item action when icon is null [#3124](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3124) ([@acrobat](https://github.com/acrobat))
