@@ -36,7 +36,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     /**
      * Set the label used for this page part
      *
-     * @param int $label
+     * @param string $label
      *
      * @return AbstractFormPagePart
      */

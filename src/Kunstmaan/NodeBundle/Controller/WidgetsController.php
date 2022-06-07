@@ -98,8 +98,7 @@ final class WidgetsController extends AbstractController
 
         $results = [];
         if ($search) {
-            $em = $this->getDoctrine()->getManager();
-            $nts = $em->getRepository(NodeTranslation::class)->getNodeTranslationsLikeTitle($search, $locale);
+            $nts = $this->em->getRepository(NodeTranslation::class)->getNodeTranslationsLikeTitle($search, $locale);
             foreach ($nts as $nt) {
                 $node = $nt->getNode();
                 $results[] = $node->getId();
