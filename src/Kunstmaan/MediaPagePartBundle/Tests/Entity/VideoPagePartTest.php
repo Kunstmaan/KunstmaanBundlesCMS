@@ -41,4 +41,11 @@ class VideoPagePartTest extends TestCase
     {
         $this->assertEquals(VideoPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
+
+    public function testEmptyMediaUrl()
+    {
+        $media = new Media();
+        $this->object->setMedia($media);
+        $this->assertEquals('', $this->object->__toString());
+    }
 }
