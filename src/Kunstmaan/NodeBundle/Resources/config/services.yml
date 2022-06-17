@@ -59,6 +59,12 @@ services:
         tags:
             - { name: 'form.type' }
 
+    Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'form.type' }
+
     kunstmaan_node.form.type.slug:
         class: Kunstmaan\NodeBundle\Form\Type\SlugType
         arguments: ['@kunstmaan_utilities.slugifier']
