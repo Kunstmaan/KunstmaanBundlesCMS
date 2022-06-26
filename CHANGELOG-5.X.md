@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.10.6 / 2022-06-26
+
+* [NodeBundle] issue where max weight could be exceeded and cause irregular behaviour with sorting [#3143](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3143) ([@Numkil](https://github.com/Numkil))
+* [AdminBundle] Limit doctrine/persistence to 2.x to avoid issues with deprecated entity notation [#3142](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3142) ([@acrobat](https://github.com/acrobat))
+
 ## 5.10.5 / 2022-06-06
 
 * [MediaPagePartBundle] Fix nullable url [#3135](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3135) ([@dannyvw](https://github.com/dannyvw))
