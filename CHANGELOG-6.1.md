@@ -6,6 +6,11 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.1.0...6.1.1
 
+## 6.1.5 / 2022-06-26
+
+* [NodeBundle] issue where max weight could be exceeded and cause irregular behaviour with sorting [#3143](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3143) ([@Numkil](https://github.com/Numkil))
+* [AdminBundle] Limit doctrine/persistence to 2.x to avoid issues with deprecated entity notation [#3142](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3142) ([@acrobat](https://github.com/acrobat))
+
 ## 6.1.4 / 2022-06-07
 
 * [FormBundle] Fix label docblock [#3132](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3132) ([@dannyvw](https://github.com/dannyvw))
