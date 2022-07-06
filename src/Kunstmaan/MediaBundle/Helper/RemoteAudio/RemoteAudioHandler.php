@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Helper\RemoteAudio;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\RemoteAudio\RemoteAudioType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
+use function is_string;
 
 /**
  * RemoteAudioStrategy
@@ -64,15 +65,10 @@ class RemoteAudioHandler extends AbstractMediaHandler
         return $this->soundcloudApiKey;
     }
 
-    /**
-     * @param mixed $object
-     *
-     * @return bool
-     */
-    public function canHandle($object)
+    public function canHandle($object): bool
     {
         if (
-            (\is_string($object)) ||
+            (is_string($object)) ||
             ($object instanceof Media && $object->getContentType() == RemoteAudioHandler::CONTENT_TYPE)
         ) {
             return true;

@@ -52,7 +52,7 @@ abstract class AbstractMediaHandler
     /**
      * @param mixed $media
      */
-    abstract public function canHandle($media);
+    abstract public function canHandle($media): bool;
 
     /**
      * @return mixed

@@ -27,14 +27,12 @@ class ImageHandler extends FileHandler
         return 'image';
     }
 
-    /**
-     * @param mixed $object
-     *
-     * @return bool
-     */
-    public function canHandle($object)
+    public function canHandle($object): bool
     {
-        if (parent::canHandle($object) && ($object instanceof File || strncmp($object->getContentType(), 'image', 5) === 0)) {
+        if (
+            parent::canHandle($object) && (
+                $object instanceof File || strncmp($object->getContentType(), 'image', 5) === 0)
+        ) {
             return true;
         }
 

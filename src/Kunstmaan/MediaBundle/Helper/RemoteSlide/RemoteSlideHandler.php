@@ -42,12 +42,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
         return RemoteSlideType::class;
     }
 
-    /**
-     * @param mixed $object
-     *
-     * @return bool
-     */
-    public function canHandle($object)
+    public function canHandle($object): bool
     {
         if (
             (\is_string($object)) ||
