@@ -68,7 +68,6 @@
         "twig/extra-bundle": "^3.0",
         "twig/string-extra": "^2.12|^3.0",
         "twig/intl-extra": "^2.12|^3.0",
-        "twig/html-extra": "^2.12|^3.0",
         "egulias/email-validator": "^1.2.8|^2.0",
         "box/spout": "^2.5",
         "ruflin/elastica": "^7.0",
