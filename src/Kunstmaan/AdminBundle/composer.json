@@ -50,7 +50,6 @@
         "symfony/translation": "^4.4|^5.3",
         "symfony/validator": "^4.4|^5.3",
         "symfony/yaml": "^4.4|^5.3",
-        "twig/extensions": "~1.0",
         "twig/extra-bundle": "^3.0",
         "twig/string-extra": "^2.12|^3.0",
         "twig/intl-extra": "^2.12|^3.0",
