@@ -1,0 +1,107 @@
+/* ==========================================================================
+   IMG
+   ========================================================================== */
+
+img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+figure img {
+    margin: 0 auto;
+}
+
+.img--full-width {
+    width: 100%;
+    max-width: none;
+}
+
+.img__caption {
+    padding: $spacing-mobile-xs;
+
+    text-align: center;
+    font-size: $font-size-desktop-small;
+    font-family: font-family(null, primary);
+    font-weight: $font-weight-normal;
+    font-style: italic;
+}
+
+// image card
+
+.image-card {
+    position: relative;
+
+    display: inline-block;
+    width: auto;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: $z-base;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(to bottom, rgba($color-greyscale-black, .25), transparent);
+    }
+}
+
+.image-card__image {
+    position: relative;
+    z-index: $z-base;
+}
+
+.image-card__title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: $z-middle;
+
+    width: 100%;
+    padding: $spacing-mobile-xs;
+
+    color: $color-greyscale-white;
+    text-shadow: 0 2px 2px rgba($color-greyscale-black, .5);
+    font-family: font-family(null, primary);
+    font-size: 18px;
+
+    @media (min-width: $break-sm) {
+        padding: $spacing-desktop-xs;
+
+        font-size: 24px;
+    }
+}
+
+.author-img {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    @media (min-width: $break-sm) {
+        width: 90px;
+        height: 90px;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &--sm {
+        width: 30px;
+        height: 30px;
+
+        @media (min-width: $break-sm) {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}

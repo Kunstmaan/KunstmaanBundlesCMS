@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Media object helpers
+   ========================================================================== */
+
+@mixin media-object-base($type: null, $spacing: null) {
+    margin-top: $spacing-mobile-sm;
+    margin-right: 0;
+    margin-bottom: $spacing-mobile-sm;
+    margin-left: 0;
+
+    @media (min-width: $break-sm) {
+        display: flex;
+        align-items: flex-start;
+        margin-top: $spacing-desktop-md;
+        margin-right: 0;
+        margin-bottom: $spacing-desktop-md;
+        margin-left: 0;
+    }
+
+    .media-object__media,
+    > *:first-child {
+        margin-top: 0;
+        margin-right: 0;
+        margin-bottom: $spacing-mobile-sm;
+        margin-left: 0;
+
+        @media (min-width: $break-sm) {
+            @if $type == reversed {
+                order: 1;
+
+                margin-top: 0;
+                margin-right: 0;
+                margin-bottom: 0;
+                margin-left: $spacing-desktop-sm;
+            } @else {
+                margin-top: 0;
+                margin-right: $spacing-desktop-sm;
+                margin-bottom: 0;
+                margin-left: 0;
+            }
+
+            @if $spacing == evenly {
+                flex: 1;
+            }
+        }
+    }
+
+    .media-object__body,
+    > *:last-child {
+        flex: 1;
+    }
+}
+
+
+/* ==========================================================================
+   Media object
+   ========================================================================== */
+
+.media-object {
+    @include media-object-base($type: null, $spacing: null);
+
+    &--reversed {
+        @include media-object-base($type: reversed);
+
+        &--evenly {
+            @include media-object-base($type: reversed, $spacing: evenly);
+        }
+    }
+
+    &--evenly {
+        @include media-object-base($type: null, $spacing: evenly);
+    }
+}

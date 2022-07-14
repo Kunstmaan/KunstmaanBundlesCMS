@@ -1,0 +1,67 @@
+/* ==========================================================================
+   Videolink
+   ========================================================================== */
+
+.videolink {
+    position: relative;
+    z-index: $z-base;
+}
+
+.videolink__link {
+    position: relative;
+    z-index: $z-show;
+
+    display: block;
+
+    opacity: 1;
+
+    transition: all .3s cubic-bezier(0, 0, .58, 1);
+
+    &--hidden {
+        z-index: $z-hide;
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+}
+
+.videolink__image {
+    position: relative;
+    z-index: $z-base;
+
+    display: block;
+    width: 100%;
+    max-width: none;
+}
+
+.videolink__video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: $z-middle;
+
+    width: 100%;
+    height: 100%;
+
+    background: $color-greyscale-light;
+}
+
+.videolink__link__btn-like {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: $z-show + 1;
+
+    transform: translate3d(-50%, -50%, 0);
+
+    .icon-btn__icon {
+        fill: $color-primary;
+    }
+}
+
+/**
+ * @doc docs/video-link.md
+ * @section Videolink
+ * @sectionof Molecules
+ */

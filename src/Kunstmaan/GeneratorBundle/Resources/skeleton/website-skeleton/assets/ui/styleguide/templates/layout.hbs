@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="sg-styleguide">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Kuma Design System</title>
+
+    <link rel="stylesheet" href="{{ version '/frontend/styleguide/css/styleguide.css'}}">
+    <link rel="stylesheet" href="{{ version '/frontend/styleguide/css/prism-okaidia.css'}}">
+    <link rel="stylesheet" href="{{ version '/frontend/css/style.css'}}">
+
+    {{~> webfonts}}
+</head>
+
+<body>
+    <header class="sg-header">
+        <div class="sg-header__brand">
+            <a href="/">
+                {{!-- <img class="sg-header__brand__logo" src="/public/frontend/img/styleguide/logo.svg" alt="Zorgbedrijf Antwerpen"> --}}
+            </a>
+        </div>
+
+        <button class="sg-header__nav__btn js-mobile-nav-btn">
+            <div class="sg-header__nav__btn__icon">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <div class="sg-header__nav js-mobile-nav" id="navbar">
+            <ul class="sg-header__nav__list" id="subnav">
+                {{#each sections}}
+                    <li class="sg-header__nav__list__item">
+                        <a href="#{{id}}">{{name}}</a>
+                        {{#if children}}
+                            <ul>
+                                {{#each children}}
+                                    <li {{#if children}}class="children"{{/if}}>
+                                        <a href="#{{ clean id }}" tabindex="-1">{{ clean name }}</a>
+                                        {{#if children}}
+                                            <ul>
+                                                {{#each children}}
+                                                    <li>
+                                                        <a href="#{{ clean id }}" tabindex="-1">{{ clean name }}</a>
+                                                    </li>
+                                                {{/each}}
+                                            </ul>
+                                        {{/if}}
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        {{/if}}
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </header>
+
+    <div class="sg-content" id="spy-content">
+        {{#each sections}}
+            <section class="section" id="{{ clean id }}">
+                <h2 class="section__title">{{ clean name }}</h2>
+                {{~> section}}
+
+                {{#children}}
+                    {{~> childSection}}
+                {{/children}}
+            </section>
+        {{/each}}
+    </div>
+
+
+    <script src="{{ version '/frontend/styleguide/js/styleguide.js'}}"></script>
+    <script src="{{ version '/frontend/js/bundle.js'}}"></script>
+</body>
+</html>

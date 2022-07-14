@@ -76,9 +76,10 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
             'name' => null,
             'span' => 12,
             'template' => null,
+            'auto_spacer' => false,
         ], $rawRegion);
 
-        return new Region($rawRegion['name'], $rawRegion['span'], $rawRegion['template'], $children, $rows);
+        return new Region($rawRegion['name'], $rawRegion['span'], $rawRegion['template'], $children, $rows, $rawRegion['auto_spacer']);
     }
 
     /**

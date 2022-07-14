@@ -1,0 +1,80 @@
+/* ==========================================================================
+   INTERNAL Variables
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   These variables should not be overriden.
+   Those should go in ./_variables-default.scss
+   ========================================================================== */
+
+/* Screen sizes
+   ========================================================================== */
+$kmcc_screen-xs:                   $break-xs;
+$kmcc_screen-sm:                   $break-sm;
+$kmcc_screen-md:                   $break-md;
+$kmcc_screen-lg:                   $break-lg;
+
+$kmcc_screen-sm-max:               $kmcc_screen-md - 1px;
+$kmcc_screen-md-max:               $kmcc_screen-lg - 1px;
+
+/* Margins and paddings
+    ========================================================================== */
+$kmcc_container-padding:           $spacing-desktop-xs;
+$kmcc_container-padding--md:       $spacing-desktop-md;
+$kmcc_container-padding--lg:       $spacing-desktop-lg;
+
+/* Widths
+    ========================================================================== */
+$kmcc_container-width:             1200px;
+
+/* Colors
+    ========================================================================== */
+
+// Main colors
+$kmcc_primary-color:               $color-primary;
+$kmcc_secondary-color:             $color-secondary;
+
+// Button colors
+$kmcc_button-background:           $kmcc_secondary-color !default;
+$kmcc_button-background--hover:    $kmcc_white !default;
+$kmcc_button-color:                $kmcc_white !default;
+$kmcc_button-color--hover:         $kmcc_secondary-color !default;
+$kmcc_button-border-color--hover:  $kmcc_secondary-color !default;
+
+$kmcc_toggle-button--check:        $kmcc_green !default;
+
+// Heading colors
+$kmcc_headings:                    $kmcc_black !default;
+
+// Tab colors
+$kmcc_tabs:                        $kmcc_grey--dark !default;
+
+/* Z-index
+    ========================================================================== */
+// This is a base value used internally by the Kunstmaan Cookie Consent (KMCC).
+// All the internal z-indices will be matched to this one. This way it is easy
+// to add the highest z-index of your application, KMCC will basically +1 this value
+// so it always ends up on top.
+$kmcc-base-z-index:                $z-show + 100 !default;
+
+$kmcc_z-cookie-bar:                $kmcc-base-z-index;
+
+$kmcc_z-modal-backdrop:            -1;
+$kmcc_z-modal-backdrop--visible:   $kmcc-base-z-index;
+
+$kmcc_z-modal:                     -1;
+$kmcc_z-modal--visible:            $kmcc-base-z-index + 1;
+$kmcc_z-sticky-footer:             $kmcc-base-z-index + 2;
+$kmcc_z-sidebar:                   $kmcc-base-z-index + 3;
+$kmcc_z-totop:                     $kmcc-base-z-index + 4;
+
+$kmcc_z-notification:              $kmcc-base-z-index + 10;
+
+/* Toggle
+    ========================================================================== */
+$kmcc-toggle-size:                 33px;
+$kmcc-toggle-slider-range:         50px;
+
+/* Fact
+    ========================================================================== */
+$kmcc-fact__figure-width:          150px;

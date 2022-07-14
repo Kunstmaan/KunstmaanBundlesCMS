@@ -1,0 +1,72 @@
+/* ==========================================================================
+Forms - checkbox
+========================================================================== */
+
+@import 'config';
+
+.checkbox {
+    display: block;
+
+    input[type="checkbox"] {
+        @extend %radio-checkbox-base;
+
+        + label {
+            &:before {
+                content: '';
+
+                position: absolute;
+                top: 50%;
+                left: 3px;
+                z-index: $z-base + 1;
+
+                width: 20px;
+                height: 20px;
+                margin: -10px 0 0 0;
+
+                transform: scale(0);
+
+                background-image: url('#{$icons}/svg/check.svg');
+                background-size: 100%;
+                background-repeat: no-repeat;
+
+                transition: transform .2s ease-in-out;
+            }
+
+            &:after {
+                content: ' ';
+
+                position: absolute;
+                top: 50%;
+                left: 0;
+                z-index: $z-base;
+
+                width: 26px;
+                height: 26px;
+
+                transform: translateY(-50%);
+
+                border: 1px solid $color-greyscale-light;
+                border-radius: 3px;
+            }
+        }
+
+        &:checked + label {
+            &:before {
+                transform: scale(1);
+            }
+        }
+    }
+
+    @media (min-width: $break-sm) {
+        display: inline-block;
+    }
+
+    + .radio {
+        margin-top: $spacing-mobile-sm;
+
+        @media (min-width: $break-sm) {
+            margin-top: 0;
+            margin-left: $spacing-desktop-sm;
+        }
+    }
+}

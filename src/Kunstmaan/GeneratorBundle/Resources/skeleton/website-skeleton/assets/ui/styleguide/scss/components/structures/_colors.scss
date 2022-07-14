@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Structures - Color cards
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.kds-color {
+    display: inline-block;
+    width: calc((100% - 60px) / 3);
+    max-width: 240px;
+    margin: 10px;
+
+    border-radius: 4px;
+
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .35), 0 3px 2px 0 rgba(0, 0, 0, .18);
+}
+
+/* Color
+   ========================================================================== */
+.kds-color__color {
+    display: block;
+    height: 100px;
+
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid $grey;
+
+    color: $white;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.kds-color__color__text {
+    position: relative;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+/* Description
+   ========================================================================== */
+.kds-color__description {
+    padding: 0 8px 8px;
+}
+
+.kds-color__description__title {
+    margin-top: 10px;
+
+    color: $black;
+    font-size: 14px;
+    font-family: $primary-font;
+    font-weight: bold;
+}
+
+.kds-color__description__value {
+    margin-bottom: 5px;
+
+    color: $grey--dark;
+    font-size: 15px;
+}

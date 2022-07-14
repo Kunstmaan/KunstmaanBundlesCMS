@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   Extra Stylesheet for admin
+   ========================================================================== */
+
+/* Use these styling only in the pagepart previews
+   ========================================================================== */
+.page-template__region .admin-region,
+.pp__view .pp__view__block:first-child {
+    @import "00-bootstrap/all";
+    @import '01-quarks/all';
+
+    @import "02-atoms/all";
+    @import "03-molecules/all";
+    @import "04-organisms/all";
+}

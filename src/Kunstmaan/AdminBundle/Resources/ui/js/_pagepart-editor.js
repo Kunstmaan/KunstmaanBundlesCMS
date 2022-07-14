@@ -66,13 +66,17 @@ kunstmaanbundles.pagepartEditor = function (window) {
         }
 
         var $targetContainer = $select.closest('.js-pp-container'),
-            requestUrl = $select.data('url');
+            requestUrl = $select.data('url'),
+            spacerPagePart = $('body').data('spacer-pp');
 
         // Get necessary data
         var pageClassName = $targetContainer.data('pageclassname'),
             pageId = $targetContainer.data('pageid'),
             context = $targetContainer.data('context'),
             ppType = $select.val();
+
+        const allowAutoSpacer = $targetContainer.parent().parent().hasClass('js-auto-spacer');
+        var spacerAdded = false;
 
         // Set Loading
         kunstmaanbundles.appLoading.addLoading();
@@ -100,6 +104,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 // Create a temporary node of the new PP
                 var $temp = $('<div>');
                 $temp.append(data);
+                const ppScope = $temp[0].lastElementChild.dataset.scope;
 
                 // Check if some javascript needs to be reinitialised for this PP
                 reInit($temp);
@@ -116,6 +121,13 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 // Reset ajax-modals
                 kunstmaanbundles.ajaxModal.resetAjaxModals();
 
+                events.add.push(function() {
+                    if (allowAutoSpacer && ppScope !== spacerPagePart.replace('\\', '') && !spacerAdded) {
+                        addSpacer(requestUrl, pageClassName, pageId, context, spacerPagePart, $select);
+                        spacerAdded = true;
+                    }
+                });
+
                 executeEvent('add');
             }
         });
@@ -127,13 +139,17 @@ kunstmaanbundles.pagepartEditor = function (window) {
     // Add
     addPagePartExtended = function ($select) {
         var $targetContainer = target.closest('.js-pp-container'),
-            requestUrl = target.data('url');
+            requestUrl = target.data('url'),
+            spacerPagePart = $('body').data('spacer-pp');
 
         // Get necessary data
         var pageClassName = $targetContainer.data('pageclassname'),
             pageId = $targetContainer.data('pageid'),
             context = $targetContainer.data('context'),
             ppType = $select.data('pagepartclass');
+
+        const allowAutoSpacer = $targetContainer.parent().parent().hasClass('js-auto-spacer');
+        var spacerAdded = false;
 
         // Set Loading
         kunstmaanbundles.appLoading.addLoading();
@@ -161,6 +177,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 // Create a temporary node of the new PP
                 var $temp = $('<div>');
                 $temp.append(data);
+                const ppScope = $temp[0].lastElementChild.dataset.scope;
 
                 // Check if some javascript needs to be reinitialised for this PP
                 reInit($temp);
@@ -177,6 +194,13 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 // Reset ajax-modals
                 kunstmaanbundles.ajaxModal.resetAjaxModals();
 
+                events.add.push(function() {
+                    if (allowAutoSpacer && ppScope !== spacerPagePart.replace('\\', '') && !spacerAdded) {
+                        addSpacer(requestUrl, pageClassName, pageId, context, spacerPagePart, target);
+                        spacerAdded = true;
+                    }
+                });
+
                 executeEvent('add');
             }
         });
@@ -184,6 +208,41 @@ kunstmaanbundles.pagepartEditor = function (window) {
         $('#' + $select.data('pagepartmodalname')).modal('hide');
     };
 
+    addSpacer = function addSpacer(requestUrl, pageClassName, pageId, context, spacerPagePart, $select) {
+        $.ajax({
+            url: requestUrl,
+            data: {
+                'pageclassname': pageClassName,
+                'pageid': pageId,
+                'context': context,
+                'type': spacerPagePart,
+            },
+            async: true,
+            success: function (data) {
+                // Add PP
+                const elem = $select.closest('.js-sortable-item').after(data);
+
+                // Create a temporary node of the new PP
+                const $temp = $('<div>');
+                $temp.append(data);
+
+                // Check if some javascript needs to be reinitialised for this PP
+                reInit($temp);
+
+                // Remove Loading
+                kunstmaanbundles.appLoading.removeLoading();
+
+                // Enable leave-page modal
+                kunstmaanbundles.checkIfEdited.edited();
+
+                // Reinit custom selects
+                kunstmaanbundles.advancedSelect.init();
+
+                // Reset ajax-modals
+                kunstmaanbundles.ajaxModal.resetAjaxModals();
+            },
+        });
+    };
 
     // Edit
     editPagePart = function ($btn) {

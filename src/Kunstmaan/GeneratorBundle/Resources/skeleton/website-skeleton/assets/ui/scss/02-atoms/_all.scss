@@ -1,0 +1,181 @@
+/* ==========================================================================
+   Atoms
+
+   This file is exclusively intended for aggregating helper functions
+   Never add styles directly to this file
+   ========================================================================== */
+
+@import "spacers/spacers";
+
+@import "typography/bodycopy";
+@import "typography/headings";
+
+@import "buttons/button";
+@import "buttons/nav-toggle";
+
+@import "containers/containers";
+@import "media/media-object";
+
+@import "loader/loader";
+@import "img/img";
+@import "divider/divider";
+@import "tables/tables";
+@import "links/links";
+@import "tags/tags";
+
+@import "form/form-control";
+@import "form/form-control-label";
+@import "form/form-control-error";
+@import "form/form-group";
+@import "form/datepicker/all";
+@import "form/checkbox-radiobtn/radio-btn";
+@import "form/checkbox-radiobtn/checkbox";
+@import "form/checkbox-radiobtn/toggle-switch";
+
+@import "label/label";
+
+/**
+ * @section Atoms
+ * @page Index
+ */
+
+/**
+ * @section Forms
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc form/docs/form-control.md
+ * @section Form control
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @doc form/docs/form-control-label.md
+ * @section Form control label
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @doc form/docs/datepicker.md
+ * @section Datepicker
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @doc form/docs/form-group.md
+ * @section Form group
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @doc form/docs/checkbox.md
+ * @section Checkbox
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @doc form/docs/radio-button.md
+ * @section Radio button
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @doc form/docs/toggle-switch.md
+ * @section Toggle switch
+ * @sectionof Atoms.Forms
+ */
+
+/**
+ * @section Images
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc img/docs/img.md
+ * @section Default
+ * @sectionof Atoms.Images
+ */
+
+/**
+ * @doc img/docs/card.md
+ * @section Card
+ * @sectionof Atoms.Images
+ */
+
+/**
+ * @section Buttons
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc buttons/docs/buttons.md
+ * @section Default
+ * @sectionof Atoms.Buttons
+ */
+
+/**
+ * @doc buttons/docs/nav-toggle.md
+ * @section Nav toggle
+ * @sectionof Atoms.Buttons
+ */
+
+/**
+ * @doc loader/docs/loader.md
+ * @section Loader
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc tables/docs/tables.md
+ * @section Tables
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc links/docs/links.md
+ * @section Links
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc tags/docs/tags.md
+ * @section Tags
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc divider/docs/divider.md
+ * @section Divider
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc containers/docs/containers.md
+ * @section Containers
+ * @sectionof Atoms
+ */
+
+
+/**
+ * @section Typography
+ * @sectionof Atoms
+ */
+
+/**
+ * @doc typography/docs/copy.md
+ * @section Body copy
+ * @sectionof Atoms.Typography
+ */
+
+/**
+ * @doc typography/docs/headings.md
+ * @section Headings
+ * @sectionof Atoms.Typography
+ */
+
+/**
+ * @doc label/docs/label.md
+ * @section Label
+ * @sectionof Atoms
+ */

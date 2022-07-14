@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Atoms - typography - bodycopy
+   ========================================================================== */
+
+@mixin paragraphStyles($color, $size, $size-mobile) {
+    font-size: $size-mobile;
+    font-weight: 400;
+    font-family: $font-family-primary;
+    color: $color;
+    line-height: 1.4;
+
+    @media (min-width: $break-sm) {
+        font-size: $size;
+        line-height: 1.3;
+    }
+}
+
+body,
+table,
+th,
+td {
+    @include paragraphStyles($color: $color-text, $size: 18px, $size-mobile: 15px);
+}
+
+p {
+    margin: $spacing-mobile-sm 0;
+
+    @include paragraphStyles($color: $color-text, $size: 18px, $size-mobile: 15px);
+
+    @media (min-width: $break-md) {
+        margin: $spacing-desktop-xs 0;
+    }
+}
+
+.intro-text,
+.intro-text p {
+    width: 100%;
+
+    @include paragraphStyles($color: $color-text, $size: 24px, $size-mobile: 20px);
+}
+
+
+.small-text {
+    @include paragraphStyles($color: $color-text, $size: 15px, $size-mobile: 12px);
+}
+
+.legal-text {
+    @include paragraphStyles($color: $color-greyscale-dark, $size: 12px, $size-mobile: 11px);
+}
+
+.text--inverted {
+    color: $color-greyscale-white;
+}

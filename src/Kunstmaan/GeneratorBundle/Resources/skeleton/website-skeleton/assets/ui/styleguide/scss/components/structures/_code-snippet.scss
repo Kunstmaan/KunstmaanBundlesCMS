@@ -1,0 +1,116 @@
+$code-block-gutter: 2px;
+
+.code-snippet-container {
+    display: flex;
+    margin: -#{$code-block-gutter / 2};
+}
+
+.code-snippet {
+    position: relative;
+
+    display: flex;
+    flex: 1 1 0;
+    padding: 0 #{$code-block-gutter / 2};
+    max-height: 500px;
+    min-width: 0;
+}
+
+pre.code-snippet__code-block {
+    width: 100%;
+    margin: 0;
+
+    background: $primary-color--dark;//#192E47;
+
+    font-size: 13px;
+}
+
+/* Clipboard
+   ========================================================================== */
+.code-snippet__copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    > button {
+        position: relative;
+        z-index: 1;
+
+        display: inline-block;
+        padding: .15em .5em;
+
+        background: $primary-color--dark;
+
+        border: 0;
+        border-radius: 8px;
+
+        color: $grey;
+        font-size: 14px;
+
+        appearance: none;
+
+        transition: background-color .3s ease, color .3s ease;
+
+        &:hover {
+            background: $white;
+
+            color: $primary-color--dark;
+
+            .tooltip--info {
+                transform: translate3d(-50%, 0, 0);
+
+                opacity: 1;
+            }
+        }
+
+        &:focus {
+            outline: none;
+
+            .tooltip--success {
+                transform: translate3d(-50%, 0, 0);
+
+                opacity: 1;
+            }
+
+            .tooltip--info {
+                opacity: 0;
+            }
+        }
+    }
+
+    .tooltip {
+        position: absolute;
+        bottom: -50px;
+        left: 50%;
+        z-index: -1;
+
+        display: inline-block;
+        padding: .5em 1em;
+        transform: translate3d(-50%, -20px, 0);
+
+        background: $primary-color;
+        opacity: 0;
+
+        border-radius: 3px;
+
+        color: $white;
+        font-weight: bold;
+        white-space: nowrap;
+
+        transition: opacity .2s ease, transform .3s ease;
+
+        &:after {
+            content: ' ';
+
+            position: absolute;
+            top: -6px;
+            left: calc(50% - 6px);
+
+            display: block;
+            width: 12px;
+            height: 12px;
+            transform: rotate3d(0, 0, 1, 45deg);
+
+            background: $primary-color;
+        }
+    }
+}

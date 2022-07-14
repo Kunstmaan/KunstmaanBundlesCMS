@@ -1,0 +1,106 @@
+
+{{#xif depth '==' '1'}}
+    {{#xif example '||' description}}
+        <div id="{{clean id}}" class="kds-card__anchor"></div>
+        <div class="kds-card">
+    {{/xif}}
+{{/xif}}
+
+
+    <div class="kds-card__body {{#if colors}}kds-card__body--full-width{{/if}}">
+        {{#if example}}
+            <div class="kds-card__example">
+                {{#if example}}
+                    {{{ example.description }}}
+                {{/if}}
+            </div>
+        {{/if}}
+
+        {{#if colors}}
+            <div class="kds-card__example">
+                {{#each colors}}
+                    {{~> color}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if spacings}}
+            <div class="kds-card__example">
+                {{#each spacings}}
+                    {{~> spacing}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if fonts}}
+            <div class="kds-card__example">
+                {{#each fonts}}
+                    {{~> font}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if fontSizes}}
+            <div class="kds-card__example">
+                {{#each fontSizes}}
+                    {{~> fontSize}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if fontWeights}}
+            <div class="kds-card__example">
+                {{#each fontWeights}}
+                    {{~> fontWeight}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if shadows}}
+            <div class="kds-card__example">
+                {{#each shadows}}
+                    {{~> shadow}}
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if description}}
+            <div class="kds-card__description">
+                <div class="kds-card__description__inner">
+                    {{{description}}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
+{{#if code}}
+        <div class="kds-card__footer">
+            <div class="kds-card__footer__toggle">
+                <button class="js-sg-toggle-trigger kds-card__footer__toggle__button" data-target="#markup-{{clean id}}">
+                    <span class="show-code">Show code sample</span>
+                    <span class="hide-code">Hide code s</span>
+                </button>
+            </div>
+            <div class="kds-card__footer__toggle__content" id="markup-{{clean id}}">
+                <div class="js-sg-toggle-content">
+                    <div class="code-snippet-container">
+                        <div class="kds-card__footer__toggle__content__code-snippet code-snippet">
+                            <div class="code-snippet__copy">
+                                <button class="js-clipboard-code" data-clipboard-action="copy" data-clipboard-target="#copy-{{clean id}}">
+                                    <span class="btn-copy">Copy</span>
+                                    <span class="tooltip tooltip--info">Copy to clipboard</span>
+                                    <span class="tooltip tooltip--success">Copied!</span>
+                                </button>
+                            </div>
+                            <pre class="collapse kds-card__footer__markup code-snippet__code-block"><code id="copy-{{clean id}}" class="kds-code language-{{code.type}}">{{code.description}}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{{/if}}
+
+{{#xif depth '==' '1'}}
+    {{#xif example '||' description}}
+        </div>
+    {{/xif}}
+{{/xif}}

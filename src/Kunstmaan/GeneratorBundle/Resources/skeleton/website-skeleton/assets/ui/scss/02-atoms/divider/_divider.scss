@@ -1,0 +1,17 @@
+hr {
+    display: block;
+    width: 100%;
+    margin: $spacing-mobile-sm 0;
+
+    border: 1px solid $color-greyscale-grey;
+
+    @media (min-width: $break-md) {
+        margin: $spacing-desktop-sm 0;
+    }
+}
+
+/*
+ * @doc docs/divider.md
+ * @section Divider
+ * @sectionof Atoms
+ */

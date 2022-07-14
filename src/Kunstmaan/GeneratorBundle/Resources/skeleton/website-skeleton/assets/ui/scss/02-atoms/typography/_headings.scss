@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Atoms - typography - headings
+   ========================================================================== */
+
+@mixin header($size, $size-mobile, $line-height, $line-height-mobile, $weight) {
+    font-size: $size-mobile;
+    font-weight: $weight;
+    font-family: $font-family-primary;
+    color: $color-text;
+    line-height: $line-height-mobile;
+
+    @media (min-width: $break-sm) {
+        font-size: $size;
+        line-height: $line-height;
+    }
+}
+
+h1 {
+    @include header($size: 70px, $size-mobile: 35px, $line-height: 1.5, $line-height-mobile: 1.2, $weight: $font-weight-normal);
+}
+
+h2 {
+    @include header($size: 44px, $size-mobile: 32px, $line-height: 1.3, $line-height-mobile: 1.1, $weight: $font-weight-normal);
+}
+
+h3 {
+    @include header($size: 34px, $size-mobile: 24px, $line-height: 1.5, $line-height-mobile: 1.3, $weight: $font-weight-normal);
+}
+
+h4 {
+    @include header($size: 24px, $size-mobile: 20px, $line-height: 1.5, $line-height-mobile: 1.2, $weight: $font-weight-medium);
+}
+
+h5 {
+    @include header($size: 20px, $size-mobile: 16px, $line-height: 1.6, $line-height-mobile: 1.2, $weight: $font-weight-medium);
+}
+
+h6 {
+    @include header($size: 16px, $size-mobile: 12px, $line-height: 1.5, $line-height-mobile: 1.3, $weight: $font-weight-bold);
+}

@@ -1,3 +1,7 @@
 headerpagepart:
   niv.not_blank: Niv is required.
   title.not_blank: Title is required.
+
+pageparts:
+    audio:
+      invalid_file: 'Invalid audio file selected. Supported formats are .aac and mp3'

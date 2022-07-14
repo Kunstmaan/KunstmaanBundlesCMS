@@ -1,0 +1,21 @@
+{% if resource.media is not empty and app.request is defined %}
+    {% set name = resource.media.name %}
+    {% if name is empty %}
+        {% set name = "Download"|trans %}
+    {% endif %}
+
+    <div class="download-pp">
+        <div class="container container--full-width">
+            <div class="download">
+                <div class="download__info">
+                    <svg class="download__icon"><use xlink:href="/frontend/icons/symbol-defs.svg#icon--download"></use></svg>
+                    <div class="download__info__copy">
+                        <h5>{{ name }}</h5>
+                        <p class="download__info__name">{{ resource.media.contentTypeShort }} ({{ resource.media.getFileSize() }})</p>
+                    </div>
+                </div>
+                <a href="{{ app.request.schemeandhttphost ~ app.request.basePath ~ asset(resource.media.url) }}" target="_blank" class="download__cta btn--primary--md">Download</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
