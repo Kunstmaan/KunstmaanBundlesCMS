@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\GeneratorBundle\Helper;
 
-use Doctrine\Common\Inflector\Inflector;
+
+use Doctrine\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 /**
  * @internal
@@ -11,6 +13,7 @@ final class DoctrineHelper
 {
     public static function convertToTableName(string $className): string
     {
-        return Inflector::tableize(Inflector::pluralize($className));
+        $inflector = InflectorFactory::create()->build();
+        return $inflector->tableize($inflector->pluralize($className));
     }
 }
