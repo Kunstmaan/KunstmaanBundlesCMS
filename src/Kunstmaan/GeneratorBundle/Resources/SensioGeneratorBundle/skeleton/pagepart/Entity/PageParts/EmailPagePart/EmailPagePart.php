@@ -11,40 +11,71 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
  * @ORM\Entity
  * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractFormPagePart
 {
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
+     *
+     * @var bool
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'boolean', nullable: true)]
+{% endif %}
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+{% endif %}
     protected $errorMessageRequired;
 
     /**
-     * Error message shows when the value is invalid
+     * Error message shows when the value is invalid.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_invalid", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+{% endif %}
     protected $errorMessageInvalid;
 
     /**
      * Internal name that can be used with form submission subscribers.
      *
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="string", name="internal_name", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
+{% endif %}
     protected $internalName;
 
     /**

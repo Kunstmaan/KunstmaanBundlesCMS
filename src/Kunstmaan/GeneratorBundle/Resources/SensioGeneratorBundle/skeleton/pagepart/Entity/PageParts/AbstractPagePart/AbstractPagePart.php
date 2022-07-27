@@ -2,10 +2,9 @@
 
 namespace {{ namespace }}\Entity\PageParts;
 
-/**
- * {{ pagepart }}
- */
-abstract class {{ pagepart }} extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart as BaseAbstractPagePart;
+
+abstract class {{ pagepart }} extends BaseAbstractPagePart
 {
 
 }

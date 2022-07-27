@@ -5,18 +5,29 @@ namespace {{ namespace }}\Entity\PageParts;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 
+
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
  * @ORM\Entity
  * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
+     * @var Media
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+{% endif %}
     protected $media;
 
     /**

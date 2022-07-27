@@ -5,59 +5,117 @@ namespace {{ namespace }}\Entity\PageParts;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
- * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  * @ORM\Entity
+ * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_text", type="string", length=255, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link_text', type: 'string', length: 255, nullable: true)]
+{% endif %}
     private $linkText;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_url", type="string", nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link_url', type: 'string', nullable: true)]
+{% endif %}
     private $linkUrl;
 
     /**
-     * @var boolean
+     * @var bool
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_new_window", type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link_new_window', type: 'boolean', nullable: true)]
+{% endif %}
     private $linkNewWindow;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="type", type="string", length=15, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'type', type: 'string', length: 15, nullable: true)]
+{% endif %}
     private $type;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="size", type="string", length=15, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'size', type: 'string', length: 15, nullable: true)]
+{% endif %}
     private $size;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="position", type="string", length=15, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'position', type: 'string', length: 15, nullable: true)]
+{% endif %}
     private $position;
 
     const TYPE_PRIMARY = 'primary';
@@ -80,34 +138,34 @@ class {{ pagepart }} extends AbstractPagePart
     /**
      * @var array Supported types
      */
-    public static $types = array(
+    public static $types = [
         self::TYPE_PRIMARY,
         self::TYPE_SECONDARY,
         self::TYPE_TERTIARY,
         self::TYPE_QUATERNARY,
-        self::TYPE_LINK
-    );
+        self::TYPE_LINK,
+    ];
 
     /**
      * @var array Supported sizes
      */
-    public static $sizes = array(
+    public static $sizes = [
         self::SIZE_EXTRA_LARGE,
         self::SIZE_LARGE,
         self::SIZE_DEFAULT,
         self::SIZE_SMALL,
-        self::SIZE_EXTRA_SMALL
-    );
+        self::SIZE_EXTRA_SMALL,
+    ];
 
     /**
      * @var array Supported positions
      */
-    public static $positions = array(
+    public static $positions = [
         self::POSITION_LEFT,
         self::POSITION_CENTER,
         self::POSITION_RIGHT,
-        self::POSITION_BLOCK
-    );
+        self::POSITION_BLOCK,
+    ];
 
     public function __construct()
     {

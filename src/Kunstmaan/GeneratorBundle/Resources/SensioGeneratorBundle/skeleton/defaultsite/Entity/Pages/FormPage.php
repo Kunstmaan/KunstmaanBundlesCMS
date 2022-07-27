@@ -8,10 +8,15 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\Pages\FormPageAdminType;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity()]
+#[ORM\Table(name: '{{ prefix }}form_pages')]
+{% else %}
 /**
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}form_pages")
  */
+{% endif %}
 class FormPage extends AbstractFormPage implements HasPageTemplateInterface
 {
     public function getDefaultAdminType(): string

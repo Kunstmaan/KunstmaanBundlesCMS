@@ -9,10 +9,15 @@ use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity()]
+#[ORM\Table(name: '{{ prefix }}search_pages')]
+{% else %}
 /**
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}search_pages")
  */
+{% endif %}
 class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
 {
     public function getDefaultView(): string

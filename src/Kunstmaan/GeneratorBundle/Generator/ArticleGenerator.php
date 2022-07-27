@@ -5,10 +5,12 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates an Article section
@@ -29,14 +31,17 @@ class ArticleGenerator extends KunstmaanGenerator
      * @var array
      */
     private $parentPages = [];
+    /** @var DoctrineHelper */
+    private $doctrineHelper;
 
     /**
      * @param string $skeletonDir
      */
-    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, array $parentPages, CommandAssistant $assistant, ContainerInterface $container)
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, array $parentPages, CommandAssistant $assistant, ContainerInterface $container, DoctrineHelper $doctrineHelper)
     {
         parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
         $this->parentPages = $parentPages;
+        $this->doctrineHelper = $doctrineHelper;
     }
 
     /**
@@ -63,6 +68,8 @@ class ArticleGenerator extends KunstmaanGenerator
             'uses_category' => $usesCategories,
             'uses_tag' => $usesTags,
             'isV4' => $this->isSymfony4(),
+            'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
+            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
 
         $this->generateEntities($parameters);
@@ -442,7 +449,7 @@ class ArticleGenerator extends KunstmaanGenerator
             $twigParameters['pluralType'] = 'categories';
             $partial .= $this->render('/PagePartial.php.twig', $twigParameters);
             $partialFunctions .= $this->render('/PagePartialFunctions.php.twig', $twigParameters);
-            $constructor .= '$this->categories = new ArrayCollection();' . "\n";
+            $constructor .= '$this->categories = new ArrayCollection();' . "\n        ";
         }
 
         if ($parameters['uses_tag']) {

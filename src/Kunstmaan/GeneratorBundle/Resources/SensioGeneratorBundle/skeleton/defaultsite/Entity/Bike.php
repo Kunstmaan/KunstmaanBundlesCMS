@@ -5,64 +5,112 @@ namespace {{ namespace }}\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}bike')]
+{% else %}
 /**
- * Bike
- *
  * @ORM\Table(name="{{ prefix }}bike")
  * @ORM\Entity
  */
+{% endif %}
 class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
-    const TYPE_CITY_BIKE = 'city_bike';
-    const TYPE_MOUNTAIN_BIKE = 'mountain_bike';
-    const TYPE_RACING_BIKE = 'racing_bike';
+    public const TYPE_CITY_BIKE = 'city_bike';
+    public const TYPE_MOUNTAIN_BIKE = 'mountain_bike';
+    public const TYPE_RACING_BIKE = 'racing_bike';
 
     /**
      * @var array Supported bike types
      */
-    public static $types = array(
-	self::TYPE_CITY_BIKE,
-	self::TYPE_MOUNTAIN_BIKE,
-	self::TYPE_RACING_BIKE
-    );
+    public static $types = [
+        self::TYPE_CITY_BIKE,
+        self::TYPE_MOUNTAIN_BIKE,
+        self::TYPE_RACING_BIKE,
+    ];
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="type", type="string", length=20, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'type', type: 'string', length: 20, nullable: true)]
+{% endif %}
     private $type;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="model", type="string", length=100, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'model', type: 'string', length: 100, nullable: true)]
+{% endif %}
     private $model;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="brand", type="string", length=100, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'brand', type: 'string', length: 100, nullable: true)]
+{% endif %}
     private $brand;
 
     /**
-     * @var double
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="price", type="decimal", precision=8, scale=2, nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'price', type: 'decimal', precision: 8, scale: 2, nullable: true)]
+{% endif %}
     private $price;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @Assert\Type(type = "numeric")
-     *
      * @var integer
+{% if canUseEntityAttributes == false %}
+     *
+     * @ORM\Column(type="smallint", nullable=true)
+{% if canUseAttributes == false %}
+     * @Assert\Type(type = "numeric")
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\Type(type: 'numeric')]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'weight', type: 'smallint', nullable: true)]
+{% endif %}
     private $weight;
 
     /**

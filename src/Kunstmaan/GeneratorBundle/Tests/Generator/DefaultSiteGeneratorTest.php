@@ -2,10 +2,15 @@
 
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
+use Symfony\Bundle\MakerBundle\FileManager;
+use Symfony\Bundle\MakerBundle\Util\PhpCompatUtil;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -31,7 +36,25 @@ class DefaultSiteGeneratorTest extends TestCase
             ->will($this->returnValue(true))
         ;
 
-        $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
+        $entityPrefixMapping = ['default' => [
+            ['App\\Entity', $this->createMock(MappingDriver::class)]
+        ]];
+
+        $registry = $this->createMock(ManagerRegistry::class);
+        $registry
+            ->method('getManagerForClass')
+            ->willThrowException(new \ReflectionException())
+        ;
+
+        // NEXT_MAJOR: Check can be remove when maker bundle minimum version is updated to 1.44
+        $class = new \ReflectionClass(DoctrineHelper::class);
+        if ($class->getConstructor()->getNumberOfParameters() > 3) {
+            $doctrineHelperArgs = ['App\\Entity', $this->createMock(PhpCompatUtil::class), $registry, true, $entityPrefixMapping];
+        } else {
+            $doctrineHelperArgs = ['App\\Entity', $registry, $entityPrefixMapping];
+        }
+
+        $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container, new DoctrineHelper(...$doctrineHelperArgs));
         $generator->generate($bundle, '', __DIR__ . '/../_data', false);
 
         $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/TwigBundle/' : 'app/Resources/TwigBundle/views/';

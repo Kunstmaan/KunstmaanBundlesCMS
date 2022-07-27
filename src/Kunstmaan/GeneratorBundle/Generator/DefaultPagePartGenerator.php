@@ -2,7 +2,13 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -29,6 +35,14 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      * @var array
      */
     private $sections;
+    /** @var DoctrineHelper */
+    private $doctrineHelper;
+
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container, DoctrineHelper $doctrineHelper)
+    {
+        parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
+        $this->doctrineHelper = $doctrineHelper;
+    }
 
     /**
      * Generate the pagepart.
@@ -74,6 +88,8 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
             'prefix' => $this->prefix,
             'isV4' => $this->isSymfony4(),
+            'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
+            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
 
         $this->renderSingleFile(

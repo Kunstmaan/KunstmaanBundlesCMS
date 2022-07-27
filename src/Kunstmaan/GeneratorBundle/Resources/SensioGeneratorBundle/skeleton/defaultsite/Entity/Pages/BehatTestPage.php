@@ -9,12 +9,15 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity()]
+#[ORM\Table(name: '{{ prefix }}behat_test_pages')]
+{% else %}
 /**
- * BehatTestPage
- *
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}behat_test_pages")
  */
+{% endif %}
 class BehatTestPage extends AbstractPage implements HasPageTemplateInterface
 {
 

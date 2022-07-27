@@ -8,21 +8,36 @@ use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use {{ namespace }}\Entity\UspItem;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}usp_page_parts')]
+{% else %}
 /**
  * @ORM\Table(name="{{ prefix }}usp_page_parts")
  * @ORM\Entity
  */
+{% endif %}
 class UspPagePart extends AbstractPagePart implements DeepCloneInterface
 {
     /**
      * @var ArrayCollection
+{% if canUseEntityAttributes == false %}
      *
+{% if canUseAttributes == false %}
      * @Assert\Valid()
+{% endif %}
      * @ORM\OneToMany(targetEntity="\{{ namespace }}\Entity\UspItem", mappedBy="uspPagePart", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"weight" = "ASC"})
-     **/
+{% endif %}
+     */
+{% if canUseAttributes %}
+    #[Assert\Valid]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\OneToMany(targetEntity: UspItem::class, mappedBy: 'uspPagePart', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['weight' => 'ASC'])]
+{% endif %}
     private $items;
-
 
     public function __construct()
     {

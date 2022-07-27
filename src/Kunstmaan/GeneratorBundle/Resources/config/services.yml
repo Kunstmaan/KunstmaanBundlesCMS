@@ -4,14 +4,20 @@ services:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateDefaultSiteCommand:
+        arguments:
+            - '@maker.doctrine_helper'
         tags:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateDefaultPagePartsCommand:
+        arguments:
+            - '@maker.doctrine_helper'
         tags:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateArticleCommand:
+        arguments:
+            - '@maker.doctrine_helper'
         tags:
             - { name: console.command }
 
@@ -28,10 +34,14 @@ services:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateFormPagePartsCommand:
+        arguments:
+            - '@maker.doctrine_helper'
         tags:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\Command\GenerateSearchPageCommand:
+        arguments:
+            - '@maker.doctrine_helper'
         tags:
             - { name: console.command }
 

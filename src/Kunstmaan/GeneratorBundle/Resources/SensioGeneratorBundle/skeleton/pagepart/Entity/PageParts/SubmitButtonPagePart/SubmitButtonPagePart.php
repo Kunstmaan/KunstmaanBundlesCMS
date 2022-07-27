@@ -5,20 +5,30 @@ namespace {{ namespace }}\Entity\PageParts;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
  * @ORM\Entity
  * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractPagePart
 {
 
     /**
-     * The label on the submit button
+     * The label on the submit button.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'string', nullable: true)]
+{% endif %}
     protected $label;
 
     /**

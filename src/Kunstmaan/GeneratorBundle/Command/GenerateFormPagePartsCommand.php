@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultPagePartGenerator;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
@@ -20,6 +21,15 @@ class GenerateFormPagePartsCommand extends KunstmaanGenerateCommand
      * @var string
      */
     private $prefix;
+    /** @var DoctrineHelper */
+    private $doctrineHelper;
+
+    public function __construct(DoctrineHelper $doctrineHelper)
+    {
+        parent::__construct();
+
+        $this->doctrineHelper = $doctrineHelper;
+    }
 
     /**
      * @see Command
@@ -114,6 +124,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new DefaultPagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer());
+        return new DefaultPagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer(), $this->doctrineHelper);
     }
 }

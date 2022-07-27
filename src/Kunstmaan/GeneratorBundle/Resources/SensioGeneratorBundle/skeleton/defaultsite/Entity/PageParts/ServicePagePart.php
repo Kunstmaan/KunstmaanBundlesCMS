@@ -6,16 +6,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}service_page_parts')]
+{% else %}
 /**
- * ServicePagePart
- *
  * @ORM\Table(name="{{ prefix }}service_page_parts")
  * @ORM\Entity
  */
+{% endif %}
 class ServicePagePart extends AbstractPagePart
 {
-    const IMAGE_POSITION_LEFT = 'left';
-    const IMAGE_POSITION_RIGHT = 'right';
+    public const IMAGE_POSITION_LEFT = 'left';
+    public const IMAGE_POSITION_RIGHT = 'right';
 
     /**
      * @var array Supported positions
@@ -27,56 +31,102 @@ class ServicePagePart extends AbstractPagePart
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'title', type: 'string', length: 255, nullable: true)]
+{% endif %}
     private $title;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+{% endif %}
     private $description;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_url", type="string", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link_url', type: 'string', nullable: true)]
+{% endif %}
     private $linkUrl;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_text", type="string", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link_text', type: 'string', nullable: true)]
+{% endif %}
     private $linkText;
 
     /**
      * @var boolean
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_new_window", type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link_new_window', type: 'boolean', nullable: true)]
+{% endif %}
     private $linkNewWindow;
 
     /**
-     * @var \Kunstmaan\MediaBundle\Entity\Media
+     * @var Media
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      * })
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'image_id', referencedColumnName: 'id')]
+{% endif %}
     private $image;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="image_position", type="string", length=15, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'image_position', type: 'string', length: 15, nullable: true)]
+{% endif %}
     private $imagePosition;
 
     /**

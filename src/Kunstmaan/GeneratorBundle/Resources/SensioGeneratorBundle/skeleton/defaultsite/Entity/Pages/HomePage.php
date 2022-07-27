@@ -10,10 +10,15 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\Pages\HomePageAdminType;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity()]
+#[ORM\Table(name: '{{ prefix }}home_pages')]
+{% else %}
 /**
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}home_pages")
  */
+{% endif %}
 class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface, HomePageInterface
 {
     public function getDefaultAdminType(): string

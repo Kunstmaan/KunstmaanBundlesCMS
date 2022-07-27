@@ -4,12 +4,15 @@ namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity()]
+#[ORM\Table(name: '{{ prefix }}bikes_list_page_parts')]
+{% else %}
 /**
- * BikesListPagePart
- *
  * @ORM\Table(name="{{ prefix }}bikes_list_page_parts")
  * @ORM\Entity
  */
+{% endif %}
 class BikesListPagePart extends AbstractPagePart
 {
     /**

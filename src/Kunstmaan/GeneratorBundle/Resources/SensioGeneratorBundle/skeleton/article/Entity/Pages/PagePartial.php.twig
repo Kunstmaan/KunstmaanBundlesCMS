@@ -1,20 +1,35 @@
-    {% if type == 'Author' %}
-    /**
+{% if type == 'Author' %}
+/**
      * @var \{{ namespace }}\Entity\{{ entity_class }}{{ type }}
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="{{ namespace }}\Entity\{{ entity_class }}{{ type }}")
      * @ORM\JoinColumn(name="{{ entity_class|lower }}_{{ type|lower }}_id", referencedColumnName="id")
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToOne(targetEntity: '{{ namespace }}\Entity\{{ entity_class }}{{ type }}')]
+    #[ORM\JoinColumn(name: '{{ entity_class|lower }}_{{ type|lower }}_id', referencedColumnName: 'id')]
+{% endif %}
     protected ${{ type|lower }};
-    {% else %}
+
+{% else %}
     /**
      * @var ArrayCollection
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToMany(targetEntity="{{ namespace }}\Entity\{{ entity_class }}{{ type }}")
      * @ORM\JoinTable(name="{{ prefix }}{{ entity_class|lower }}_{{ type|lower }}_page_{{ pluralType }}",
      *     joinColumns={@ORM\JoinColumn(name="{{ entity_class|lower }}_page_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="{{ entity_class|lower }}_{{ type|lower }}_id", referencedColumnName="id")}
      * )
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToMany(targetEntity: '{{ namespace }}\Entity\{{ entity_class }}{{ type }}')]
+    #[ORM\JoinTable(name: '{{ prefix }}{{ entity_class|lower }}_{{ type|lower }}_page_{{ pluralType }}')]
+    #[ORM\JoinColumn(name: '{{ entity_class|lower }}_page_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: '{{ entity_class|lower }}_{{ type|lower }}_id', referencedColumnName: 'id')]
+{% endif %}
     protected ${{ pluralType }};
-    {% endif %}
+{% endif %}
