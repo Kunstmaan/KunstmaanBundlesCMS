@@ -92,7 +92,7 @@ EOT
         $generator->generate($bundle, $entityClass, $metadata, $output, $input->getOption('sortfield'));
 
         if (Kernel::VERSION_ID >= 40000) {
-            return;
+            return 0;
         }
 
         $parts = explode('\\', $entity);
