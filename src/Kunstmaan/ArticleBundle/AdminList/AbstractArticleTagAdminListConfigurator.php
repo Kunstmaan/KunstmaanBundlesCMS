@@ -13,10 +13,6 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
  */
 class AbstractArticleTagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-    /**
-     * @param EntityManagerInterface $em        The entity manager
-     * @param AclHelper              $aclHelper The ACL helper
-     */
     public function __construct(EntityManagerInterface $em, AclHelper $aclHelper)
     {
         parent::__construct($em, $aclHelper);

@@ -180,9 +180,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Set sequence
-     *
-     * @param string $sequence
+     * @param int $sequence
      *
      * @return FormSubmissionField
      */

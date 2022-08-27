@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\ArticleBundle\Entity;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticleOverviewPagePagePartAdminConfigurator;
 use Kunstmaan\ArticleBundle\ViewDataProvider\ArticlePageViewDataProvider;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
@@ -23,7 +24,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
     }
 
     /**
-     * @return AbstractPagePartAdminConfigurator[]
+     * {@inheritdoc}
      */
     public function getPagePartAdminConfigurations()
     {
@@ -35,7 +36,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      *
      * @return mixed
      */
-    abstract public function getArticleRepository($em);
+    abstract public function getArticleRepository(EntityManagerInterface $em);
 
     /**
      * @return string

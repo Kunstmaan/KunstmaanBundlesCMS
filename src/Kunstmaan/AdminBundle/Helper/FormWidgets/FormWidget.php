@@ -147,7 +147,7 @@ class FormWidget implements FormWidgetInterface
     /**
      * @param string $name
      * @param string $type
-     * @param null   $data
+     * @param mixed  $data
      * @param array  $options
      *
      * @return FormWidget

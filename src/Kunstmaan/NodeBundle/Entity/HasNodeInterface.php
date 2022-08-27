@@ -38,7 +38,7 @@ interface HasNodeInterface extends EntityInterface
     public function getDefaultAdminType();
 
     /**
-     * @return array
+     * @return array<int, array{name: string, class: class-string}>
      */
     public function getPossibleChildTypes();
 

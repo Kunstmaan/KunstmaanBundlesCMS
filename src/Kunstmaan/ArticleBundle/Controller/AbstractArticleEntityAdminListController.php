@@ -51,7 +51,7 @@ abstract class AbstractArticleEntityAdminListController extends AbstractAdminLis
     }
 
     /**
-     * @return AbstractArticlePageAdminListConfigurator
+     * @return AbstractArticlePageAdminListConfigurator|AdminListConfiguratorInterface
      */
     abstract protected function createAdminListConfigurator();
 
