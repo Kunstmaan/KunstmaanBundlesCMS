@@ -74,7 +74,7 @@ class DoctrineDBALAdapter implements AdapterInterface
         $statement = $query->select('COUNT(' . $distinctString . $this->countField . ') AS total_results')
             ->execute();
 
-        return ($results = $statement->fetchColumn()) ? $results : 0;
+        return ($results = $statement->fetchOne()) ? (int) $results : 0;
     }
 
     /**
@@ -90,6 +90,6 @@ class DoctrineDBALAdapter implements AdapterInterface
             ->setFirstResult($offset)
             ->execute();
 
-        return $result->fetchAll();
+        return $result->fetchAllAssociative();
     }
 }

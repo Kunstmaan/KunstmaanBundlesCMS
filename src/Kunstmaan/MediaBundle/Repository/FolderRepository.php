@@ -290,7 +290,7 @@ class FolderRepository extends NestedTreeRepository
         // Reset tree...
         $sql = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
         $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
+        $stmt->executeStatement();
 
         $folders = $this->findBy([], ['parent' => 'ASC', 'name' => 'asc']);
 

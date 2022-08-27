@@ -79,8 +79,7 @@ EOQ;
         $table = $em->getClassMetadata('KunstmaanTranslatorBundle:Translation')->getTableName();
 
         $stmt = $em->getConnection()->prepare(sprintf($sql, $table, $table));
-        $stmt->execute();
-        $result = $stmt->fetch();
+        $result = $stmt->executeQuery()->fetchAssociative();
 
         if (\is_array($result) && \count($result) > 0) {
             return new \DateTime($result['newest_date']);

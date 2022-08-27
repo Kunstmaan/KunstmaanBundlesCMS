@@ -130,7 +130,7 @@ class URLHelper
             'SELECT url, lang FROM kuma_node_translations WHERE id = :nodeTranslationId',
             ['nodeTranslationId' => $nodeTranslationId]
         );
-        $nodeTranslation = $stmt->fetch();
+        $nodeTranslation = $stmt->fetchAssociative();
 
         $this->nodeTranslationCache[$nodeTranslationId] = $nodeTranslation;
 
@@ -147,7 +147,7 @@ class URLHelper
             'SELECT url FROM kuma_media WHERE id = :mediaId',
             ['mediaId' => $mediaId]
         );
-        $media = $stmt->fetch();
+        $media = $stmt->fetchAssociative();
 
         $this->mediaCache[$mediaId] = $media;
 

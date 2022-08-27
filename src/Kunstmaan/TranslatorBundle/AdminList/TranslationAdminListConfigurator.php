@@ -243,8 +243,6 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
             // Apply text filter
             if (!\is_null($textValue) && !\is_null($textComparator)) {
-                $orX = $this->queryBuilder->expr()->orX();
-
                 foreach ($this->locales as $key => $locale) {
                     $uniqueId = 'txt_' . $key;
                     $expr = null;
@@ -280,7 +278,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
                             break;
                         case 'empty':
-                            $expr = $this->queryBuilder->expr()->orX(
+                            $expr = $this->queryBuilder->expr()->or(
                                 $this->queryBuilder->expr()->isNull('t_' . $locale . '.' . $quotedTextColumnName),
                                 $this->queryBuilder->expr()->eq('t_' . $locale . '.' . $quotedTextColumnName, '\'-\''),
                                 $this->queryBuilder->expr()->eq('t_' . $locale . '.' . $quotedTextColumnName, '\'\'')
@@ -290,11 +288,10 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                     }
 
                     if (null !== $expr) {
-                        $orX->add($expr);
+                        $this->queryBuilder->andWhere($this->queryBuilder->expr()->or($expr));
                     }
                 }
 
-                $this->queryBuilder->andWhere($orX);
             }
 
             // Apply sorting
