@@ -139,8 +139,8 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         $results = $qb
             ->andWhere('b.lang = :lang')
             ->setParameter('lang', $this->locale)
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($results as $result) {
             $this->nodeIds[] = $result['node_id'];
@@ -162,8 +162,8 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
 
         $results = $qb
             ->groupBy('b.node_id')
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($results as $result) {
             $this->nodeTranslationIds[] = $result['id'];

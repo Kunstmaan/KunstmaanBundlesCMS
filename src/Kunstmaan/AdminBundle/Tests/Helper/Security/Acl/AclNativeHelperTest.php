@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -70,7 +70,7 @@ class AclNativeHelperTest extends TestCase
 
         $this->conn->expects($this->any())
             ->method('getDatabasePlatform')
-            ->willReturn(new MySqlPlatform());
+            ->willReturn(new MySQL57Platform());
 
         $this->em->expects($this->any())
             ->method('getConnection')

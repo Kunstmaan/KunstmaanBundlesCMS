@@ -57,7 +57,7 @@ class StringFilterType extends AbstractDBALFilterType
 
                     break;
                 case 'empty':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->orX(
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->or(
                         $this->queryBuilder->expr()->isNull($this->getAlias() . $this->columnName),
                         $this->queryBuilder->expr()->eq($this->getAlias() . $this->columnName, '\'-\''),
                         $this->queryBuilder->expr()->eq($this->getAlias() . $this->columnName, ':var_empty_' . $uniqueId)

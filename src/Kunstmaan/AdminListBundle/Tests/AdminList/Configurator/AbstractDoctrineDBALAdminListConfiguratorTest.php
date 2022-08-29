@@ -3,7 +3,9 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\Configurator;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ForwardCompatibility\DriverStatement;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Statement;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineDBALAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
@@ -25,7 +27,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         $this->connectionMock
             ->expects($this->any())
             ->method('executeQuery')
-            ->willReturn($this->createMock(Statement::class))
+            ->willReturn(interface_exists(DriverStatement::class) ? $this->createMock(Statement::class) : $this->createMock(Result::class))
         ;
     }
 
