@@ -115,10 +115,19 @@ class FileHandler extends AbstractMediaHandler
      */
     public function canHandle($object)
     {
-        if ($object instanceof File ||
-            ($object instanceof Media &&
-            (is_file($object->getContent()) || $object->getLocation() == 'local'))
-        ) {
+        if ($object instanceof File) {
+            return true;
+        }
+
+        if (!$object instanceof Media) {
+            return false;
+        }
+
+        if ($object->getLocation() === 'local') {
+            return true;
+        }
+
+        if ($object->getContent() !== null && is_file($object->getContent())) {
             return true;
         }
 
