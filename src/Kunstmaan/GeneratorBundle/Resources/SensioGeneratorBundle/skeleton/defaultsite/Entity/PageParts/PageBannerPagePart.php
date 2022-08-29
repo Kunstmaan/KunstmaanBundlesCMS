@@ -6,58 +6,97 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\Validator\Constraints as Assert;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}page_banner_page_parts')]
+{% else %}
 /**
- * PageBannerPagePart
- *
  * @ORM\Table(name="{{ prefix }}page_banner_page_parts")
  * @ORM\Entity
  */
+{% endif %}
 class PageBannerPagePart extends AbstractPagePart
 {
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+{% if canUseAttributes == false %}
      * @Assert\NotBlank()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotBlank]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'title', type: 'string', length: 255, nullable: true)]
+{% endif %}
     private $title;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+{% endif %}
     private $description;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="button_url", type="string", nullable=true)
-     */
+{% if canUseEntityAttributes == false %}
+    *
+    * @ORM\Column(name="button_url", type="string", nullable=true)
+{% endif %}
+    */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'button_url', type: 'string', nullable: true)]
+{% endif %}
     private $buttonUrl;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="button_text", type="string", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'button_text', type: 'string', nullable: true)]
+{% endif %}
     private $buttonText;
 
     /**
      * @var boolean
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="button_new_window", type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'button_new_window', type: 'boolean', nullable: true)]
+{% endif %}
     private $buttonNewWindow;
 
     /**
-     * @var \Kunstmaan\MediaBundle\Entity\Media
+     * @var Media
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="background_id", referencedColumnName="id")
      * })
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'background_id', referencedColumnName: 'id')]
+{% endif %}
     private $backgroundImage;
 
     /**

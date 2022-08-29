@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -32,6 +33,16 @@ class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
      * @var bool
      */
     private $groundcontrol;
+
+    /** @var DoctrineHelper */
+    private $doctrineHelper;
+
+    public function __construct(DoctrineHelper $doctrineHelper)
+    {
+        parent::__construct();
+
+        $this->doctrineHelper = $doctrineHelper;
+    }
 
     /**
      * @see Command
@@ -172,6 +183,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant, $this->getContainer());
+        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant, $this->getContainer(), $this->doctrineHelper);
     }
 }

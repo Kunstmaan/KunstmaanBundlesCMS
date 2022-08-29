@@ -2,8 +2,14 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -35,6 +41,14 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      * @var bool
      */
     private $groundControl;
+    /** @var DoctrineHelper */
+    private $doctrineHelper;
+
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container, DoctrineHelper $doctrineHelper)
+    {
+        parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
+        $this->doctrineHelper = $doctrineHelper;
+    }
 
     /**
      * Generate the website.
@@ -60,6 +74,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             'multilanguage' => $this->isMultiLangEnvironment(),
             'isV4' => $this->isSymfony4(),
             'groundcontrol' => $this->groundControl,
+            'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
+            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
 
         $this->generateControllers($parameters);

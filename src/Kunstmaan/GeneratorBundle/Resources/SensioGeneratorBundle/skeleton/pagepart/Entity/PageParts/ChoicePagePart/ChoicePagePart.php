@@ -10,20 +10,30 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
  * @ORM\Entity
  * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractFormPagePart
 {
     /**
      * If set to true, radio buttons or checkboxes will be rendered (depending on the multiple value). If false,
      * a select element will be rendered.
      *
+     * @var bool
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'boolean', nullable: true)]
+{% endif %}
     protected $expanded = false;
 
     /**
@@ -31,15 +41,29 @@ class {{ pagepart }} extends AbstractFormPagePart
      * Depending on the value of the expanded option, this will render either a select tag or checkboxes
      * if true and a select tag or radio buttons if false. The returned value will be an array.
      *
+     * @var bool
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'boolean', nullable: true)]
+{% endif %}
     protected $multiple = false;
 
     /**
      * The choices that should be used by this field. The choices can be entered separated by a new line.
      *
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="text", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'text', nullable: true)]
+{% endif %}
     protected $choices;
 
     /**
@@ -47,29 +71,57 @@ class {{ pagepart }} extends AbstractFormPagePart
      * will appear at the top of a select widget. This option only applies if both the expanded and
      * multiple options are set to false.
      *
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="string", name="empty_value", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'empty_value', type: 'string', nullable: true)]
+{% endif %}
     protected $emptyValue;
 
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
+     *
+     * @var bool
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'boolean', nullable: true)]
+{% endif %}
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+{% endif %}
     protected $errorMessageRequired;
 
     /**
      * Internal name that can be used with form submission subscribers.
      *
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="string", name="internal_name", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
+{% endif %}
     protected $internalName;
 
     /**

@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\ArticleGenerator;
+use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
@@ -55,6 +56,15 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
      * @var bool
      */
     private $dummydata;
+    /** @var DoctrineHelper */
+    private $doctrineHelper;
+
+    public function __construct(DoctrineHelper $doctrineHelper)
+    {
+        parent::__construct();
+
+        $this->doctrineHelper = $doctrineHelper;
+    }
 
     /**
      * @see Command
@@ -101,7 +111,7 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new ArticleGenerator($filesystem, $registry, '/article', $this->parentPages, $this->assistant, $this->getContainer());
+        return new ArticleGenerator($filesystem, $registry, '/article', $this->parentPages, $this->assistant, $this->getContainer(), $this->doctrineHelper);
     }
 
     /**

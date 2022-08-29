@@ -9,14 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController
 {
-    {% if multilanguage %}
-    /**
+{% if multilanguage %}
+{% if canUseAttributes %}
+    #[Route('/')]
+{% else %}/**
      * @Route("/")
-     * @param Request $request
-     * @return RedirectResponse
-     * @throws \InvalidArgumentException
      */
-    public function indexAction(Request $request)
+{% endif %}
+    public function indexAction(Request $request): RedirectResponse
     {
         return $this->redirectToRoute('_slug', array_merge($request->query->all(), [
             'url' => '',
@@ -24,18 +24,12 @@ class DefaultController extends AbstractController
         ]));
     }
 
-    /**
-     * @param Request $request
-     * @return string
-     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
-     */
-    private function getLocale(Request $request)
+    private function getLocale(Request $request): ?string
     {
         $locales = array_filter(
             explode('|', $this->getParameter('requiredlocales'))
         );
         return $request->getPreferredLanguage($locales);
     }
-    {% endif %}
-
+{% endif %}
 }

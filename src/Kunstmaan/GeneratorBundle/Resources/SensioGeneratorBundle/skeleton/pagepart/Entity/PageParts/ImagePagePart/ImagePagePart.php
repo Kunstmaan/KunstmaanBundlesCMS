@@ -6,39 +6,83 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\Validator\Constraints as Assert;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
  * @ORM\Entity
  * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
+     * @var Media
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+{% if canUseAttributes == false %}
      * @Assert\NotNull()
+{% endif %}
+{% endif %}
      */
+{% if canUseAttributes %}
+    #[Assert\NotNull]
+{% endif %}
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
+{% endif %}
     private $media;
 
     /**
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="string", name="caption", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'caption', type: 'string', nullable: true)]
+{% endif %}
     private $caption;
 
     /**
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="string", name="alt_text", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'alt_text', type: 'string', nullable: true)]
+{% endif %}
     private $altText;
 
     /**
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(name="link", type="string", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'link', type: 'string', nullable: true)]
+{% endif %}
     private $link;
 
     /**
+     * @var bool
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(name="open_in_new_window", type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'open_in_new_window', type: 'boolean', nullable: true)]
+{% endif %}
     private $openInNewWindow;
 
     /**

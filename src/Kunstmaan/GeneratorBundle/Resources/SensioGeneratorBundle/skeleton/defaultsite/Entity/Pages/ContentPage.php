@@ -2,39 +2,55 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Form\Pages\ContentPageAdminType;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity()]
+#[ORM\Table(name: '{{ prefix }}content_pages')]
+{% else %}
 /**
- * ContentPage
- *
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}content_pages")
  */
+{% endif %}
 class ContentPage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface
 {
 {% if demosite %}
     /**
-     * @var \Kunstmaan\MediaBundle\Entity\Media
+     * @var Media
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="menu_image_id", referencedColumnName="id")
      * })
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\ManyToOne(targetEntity: Media::class)]
+{% endif %}
     private $menuImage;
 
     /**
      * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="menu_description", type="text", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'menu_description', type: Types::TEXT, nullable: true)]
+{% endif %}
     private $menuDescription;
 {% endif %}
+
     /**
      * Returns the default backend form type for this page
      *
@@ -60,7 +76,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
 
 {% if demosite %}
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $icon
+     * @param Media $icon
      */
     public function setMenuImage($image)
     {
@@ -68,7 +84,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
     public function getMenuImage()
     {

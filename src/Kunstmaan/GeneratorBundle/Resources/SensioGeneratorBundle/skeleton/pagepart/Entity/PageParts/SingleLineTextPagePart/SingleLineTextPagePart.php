@@ -11,47 +11,85 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 
+{% if canUseEntityAttributes %}
+#[ORM\Entity]
+#[ORM\Table(name: '{{ prefix }}{{ underscoreName }}s')]
+{% else %}
 /**
- * {{ pagepart }}
- *
  * @ORM\Entity
  * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  */
+{% endif %}
 class {{ pagepart }} extends AbstractFormPagePart
 {
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
+     *
+     * @var bool
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="boolean", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'boolean', nullable: true)]
+{% endif %}
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+{% endif %}
     protected $errorMessageRequired;
 
     /**
-     * If set the entered value will be matched with this regular expression
+     * If set the entered value will be matched with this regular expression.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(type: 'string', nullable: true)]
+{% endif %}
     protected $regex;
 
     /**
-     * If a regular expression is set and it doesn't match with the given value, this error message will be shown
+     * If a regular expression is set and it doesn't match with the given value, this error message will be shown.
+     *
+     * @var string
+{% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'error_message_regex', type: 'string', nullable: true)]
+{% endif %}
     protected $errorMessageRegex;
 
     /**
      * Internal name that can be used with form submission subscribers.
      *
+     * @var string
+{% if canUseEntityAttributes == false %}
+     *
      * @ORM\Column(type="string", name="internal_name", nullable=true)
+{% endif %}
      */
+{% if canUseEntityAttributes %}
+    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
+{% endif %}
     protected $internalName;
 
     /**
