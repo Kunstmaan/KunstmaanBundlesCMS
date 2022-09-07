@@ -12,7 +12,7 @@ interface HasPagePartsInterface
     public function getId();
 
     /**
-     * @return PagePartAdminConfiguratorInterface[]
+     * @return PagePartAdminConfiguratorInterface[]|string[]
      */
     public function getPagePartAdminConfigurations();
 }

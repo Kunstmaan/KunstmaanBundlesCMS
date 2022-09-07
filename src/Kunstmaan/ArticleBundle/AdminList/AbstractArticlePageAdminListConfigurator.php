@@ -3,6 +3,7 @@
 namespace Kunstmaan\ArticleBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -30,12 +31,10 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     protected $permission;
 
     /**
-     * @param EntityManager $em         The entity manager
-     * @param AclHelper     $aclHelper  The ACL helper
-     * @param string        $locale     The current locale
-     * @param string        $permission The permission
+     * @param string $locale     The current locale
+     * @param string $permission The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
+    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper, $locale, $permission)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;

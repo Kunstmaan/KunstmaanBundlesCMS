@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -11,7 +12,7 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
@@ -37,21 +38,19 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
      *
-     * @return \Doctrine\Persistence\ObjectManager|object
+     * @return EntityManagerInterface
      */
     protected function getEntityManager()
     {
-        return $this->container->get('doctrine')->getManager();
+        return $this->container->get('doctrine.orm.entity_manager');
     }
 
     /**
      * Shows the list of entities
      *
-     * @param Request|null $request
-     *
      * @return Response
      */
-    protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
+    protected function doIndexAction(AdminListConfiguratorInterface $configurator, Request $request)
     {
         /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
@@ -70,14 +69,13 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * Export a list of Entities
      *
-     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $_format      The format to export to
+     * @param string $_format The format to export to
      *
      * @throws AccessDeniedHttpException
      *
      * @return Response
      */
-    protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
+    protected function doExportAction(AdminListConfiguratorInterface $configurator, $_format, Request $request = null)
     {
         if (!$configurator->canExport()) {
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
@@ -93,15 +91,13 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * Creates and processes the form to add a new Entity
      *
-     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string|null                   $type         The type to add
-     * @param Request|null                  $request
+     * @param string|null $type The type to add
      *
      * @throws AccessDeniedHttpException
      *
      * @return Response
      */
-    protected function doAddAction(AbstractAdminListConfigurator $configurator, $type, Request $request)
+    protected function doAddAction(AdminListConfiguratorInterface $configurator, $type, Request $request)
     {
         if (!$configurator->canAdd()) {
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
@@ -188,16 +184,14 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * Creates and processes the edit form for an Entity using its ID
      *
-     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $entityId     The id of the entity that will be edited
-     * @param Request|null                  $request
+     * @param int|string $entityId The id of the entity that will be edited
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
      *
      * @return Response
      */
-    protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    protected function doEditAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -311,7 +305,7 @@ abstract class AbstractAdminListController extends AbstractController
         );
     }
 
-    protected function doViewAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    protected function doViewAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -340,18 +334,14 @@ abstract class AbstractAdminListController extends AbstractController
     }
 
     /**
-     * Delete the Entity using its ID
-     *
-     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param int                           $entityId     The id to delete
-     * @param Request|null                  $request
+     * @param int $entityId The id to delete
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
      *
      * @return Response
      */
-    protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    protected function doDeleteAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
         /** @var SlugifierInterface $slugifier */
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
@@ -408,7 +398,7 @@ abstract class AbstractAdminListController extends AbstractController
      *
      * @return RedirectResponse
      */
-    protected function doMoveUpAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    protected function doMoveUpAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
@@ -444,7 +434,7 @@ abstract class AbstractAdminListController extends AbstractController
         );
     }
 
-    protected function doMoveDownAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    protected function doMoveDownAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
@@ -507,11 +497,9 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * Sets the sort weight on a new item. Can be overridden if a non-default sorting implementation is being used.
      *
-     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     *
      * @return mixed
      */
-    protected function setSortWeightOnNewItem(AbstractAdminListConfigurator $configurator, $item)
+    protected function setSortWeightOnNewItem(AdminListConfiguratorInterface $configurator, $item)
     {
         if ($configurator instanceof SortableInterface) {
             $repo = $this->getEntityManager()->getRepository($configurator->getRepositoryName());
@@ -524,7 +512,7 @@ abstract class AbstractAdminListController extends AbstractController
         return $item;
     }
 
-    protected function buildSortableFieldActions(AbstractAdminListConfigurator $configurator)
+    protected function buildSortableFieldActions(AdminListConfiguratorInterface $configurator)
     {
         // Check if Sortable interface is implemented
         if ($configurator instanceof SortableInterface) {
@@ -553,7 +541,7 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * @return string
      */
-    protected function getAdminListRepositoryName(AbstractAdminListConfigurator $configurator)
+    protected function getAdminListRepositoryName(AdminListConfiguratorInterface $configurator)
     {
         $em = $this->getEntityManager();
         $className = $em->getClassMetadata($configurator->getRepositoryName())->getName();
@@ -582,6 +570,7 @@ abstract class AbstractAdminListController extends AbstractController
     {
         return [
             'doctrine' => ManagerRegistry::class,
+            'doctrine.orm.entity_manager' => EntityManagerInterface::class,
             'kunstmaan_adminlist.factory' => AdminListFactory::class,
             'kunstmaan_adminlist.service.export' => ExportService::class,
             'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
