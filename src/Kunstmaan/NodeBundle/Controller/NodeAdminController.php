@@ -407,10 +407,6 @@ final class NodeAdminController extends AbstractController
      */
     public function deleteAction(Request $request, $id)
     {
-        if (!$this->isCsrfTokenValid('node-delete', $request->request->get('token'))) {
-            return $this->redirectToRoute($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id]));
-        }
-
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
