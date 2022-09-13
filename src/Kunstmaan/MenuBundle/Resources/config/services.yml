@@ -24,6 +24,9 @@ services:
         class: Kunstmaan\MenuBundle\Repository\MenuItemRepository
         factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['%kunstmaan_menu.entity.menuitem.class%']
+        # This is needed to avoid triggering acl listeners that need a db connection,
+        # this caused by \Gedmo\Tree\Entity\Repository\AbstractTreeRepository::__constructor.
+        lazy: true
 
     kunstmaan_menu.menu.twig.extension:
         class: Kunstmaan\MenuBundle\Twig\MenuTwigExtension
