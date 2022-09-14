@@ -2,16 +2,19 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
-use Box\Spout\Common\Type;
-use Box\Spout\Reader\ODS\Sheet;
-use Box\Spout\Reader\ReaderFactory;
 use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
+use OpenSpout\Common\Entity\Row;
+use OpenSpout\Reader\Common\Creator\ReaderFactory;
+use OpenSpout\Reader\SheetInterface;
 use Symfony\Component\Console\Exception\LogicException;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class Importer
 {
+    const CSV = 'csv';
+    const XLSX = 'xlsx';
+    const ODS = 'ods';
+
     /**
      * @var array
      */
@@ -61,10 +64,6 @@ class Importer
      * @param bool $force
      *
      * @return int
-     *
-     * @throws \Box\Spout\Common\Exception\IOException
-     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
-     * @throws \Box\Spout\Reader\Exception\ReaderNotOpenedException
      */
     public function importFromSpreadsheet(string $file, array $locales, $force = false)
     {
@@ -78,31 +77,27 @@ class Importer
             throw new LogicException(sprintf('Can not find file in %s', $file));
         }
 
-        $format = (new File($file))->guessExtension();
-        if (!\in_array($format, [Type::CSV, Type::ODS, Type::XLSX], true)) {
-            $format = Type::CSV;
-        }
-
         $headers = ['domain', 'keyword'];
         $locales = array_map('strtolower', $locales);
         $requiredHeaders = array_merge($headers, $locales);
 
         try {
-            $reader = ReaderFactory::create($format);
+            $reader = ReaderFactory::createFromFileByMimeType($file);
             $reader->open($file);
         } catch (\Exception $e) {
             throw new LogicException('Format has to be either xlsx, ods or cvs');
         }
         $sheets = $reader->getSheetIterator();
 
-        /** @var Sheet $sheet */
+        /** @var SheetInterface $sheet */
         $importedTranslations = 0;
         foreach ($sheets as $sheet) {
             $rows = $sheet->getRowIterator();
             $headers = [];
 
-            /** @var array $row */
+            /** @var Row $row */
             foreach ($rows as $row) {
+                $row = $row->toArray();
                 if (empty($headers)) {
                     $headers = $row;
                     $headers = array_map('strtolower', $headers);

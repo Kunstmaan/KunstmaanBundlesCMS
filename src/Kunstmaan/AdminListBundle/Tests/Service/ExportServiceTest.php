@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\Service;
 
-use Box\Spout\Common\Type;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +31,7 @@ class ExportServiceTest extends TestCase
         /** @var ExportableInterface $adminList */
         $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
 
-        $response = $this->object->getDownloadableResponse($adminList, Type::XLSX);
+        $response = $this->object->getDownloadableResponse($adminList, ExportService::XLSX);
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
@@ -42,7 +41,7 @@ class ExportServiceTest extends TestCase
         /** @var ExportableInterface $adminList */
         $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
 
-        $response = $this->object->getDownloadableResponse($adminList, Type::ODS);
+        $response = $this->object->getDownloadableResponse($adminList, ExportService::ODS);
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
@@ -52,7 +51,7 @@ class ExportServiceTest extends TestCase
         /** @var ExportableInterface $adminList */
         $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
 
-        $response = $this->object->getDownloadableResponse($adminList, Type::CSV);
+        $response = $this->object->getDownloadableResponse($adminList, ExportService::CSV);
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
