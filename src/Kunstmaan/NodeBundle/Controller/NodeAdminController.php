@@ -1277,7 +1277,7 @@ final class NodeAdminController extends AbstractController
         return $eventDispatcher->dispatch($event, $eventName);
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             'security.authorization_checker' => AuthorizationCheckerInterface::class,

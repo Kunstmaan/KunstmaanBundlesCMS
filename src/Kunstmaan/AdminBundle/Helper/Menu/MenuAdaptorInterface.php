@@ -17,6 +17,8 @@ interface MenuAdaptorInterface
      * @param MenuItem[]    $children The current children
      * @param MenuItem|null $parent   The parent Menu item
      * @param Request|null  $request  The Request
+     *
+     * @return void
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null);
 }

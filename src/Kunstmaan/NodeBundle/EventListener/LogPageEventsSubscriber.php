@@ -38,6 +38,9 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents()
     {
         return [

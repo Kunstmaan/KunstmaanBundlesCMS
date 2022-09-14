@@ -16,6 +16,8 @@ interface FormAdaptorInterface
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
      * @param int                  $sequence    The sequence of the form field
+     *
+     * @return void
      */
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence);
 

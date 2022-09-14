@@ -38,7 +38,7 @@ class LegalOptInPagePart extends AbstractFormPagePart
      *
      * @param bool $required
      *
-     * @return CheckboxPagePart
+     * @return LegalOptInPagePart
      */
     public function setRequired($required)
     {
@@ -62,7 +62,7 @@ class LegalOptInPagePart extends AbstractFormPagePart
      *
      * @param string $errorMessageRequired
      *
-     * @return CheckboxPagePart
+     * @return LegalOptInPagePart
      */
     public function setErrorMessageRequired($errorMessageRequired)
     {
