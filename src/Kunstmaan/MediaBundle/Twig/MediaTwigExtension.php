@@ -20,7 +20,7 @@ final class MediaTwigExtension extends AbstractExtension
         $this->manipulateImageService = $manipulateImageService;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('cropped_imagine_filter', [$this, 'getCroppedImage']),

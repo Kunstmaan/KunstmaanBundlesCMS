@@ -33,6 +33,7 @@ interface PagePartInterface extends EntityInterface
     /**
      * Returns the default backend form type for the page part.
      *
+     * @phpstan-return class-string
      * @return string fully qualified class name of a form
      */
     public function getDefaultAdminType();

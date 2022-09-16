@@ -100,10 +100,12 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         return $this->pagerfanta;
     }
 
-    public function adaptQueryBuilder(
-        QueryBuilder $queryBuilder,
-        array $params = []
-    ) {
+    /**
+     * @param array<int|string, mixed> $params
+     *
+     * @return void
+     */
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = []) {
         $queryBuilder->where('1=1');
     }
 
@@ -134,7 +136,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * @return QueryBuilder|null
+     * @return QueryBuilder
      */
     public function getQueryBuilder()
     {
