@@ -24,10 +24,10 @@
         "behat/mink-selenium2-driver": "dev-master",
         "behat/mink-goutte-driver": "dev-master",
         "behat/mink-sahi-driver": "dev-master",
-        "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "matthiasnoback/symfony-config-test": "^4.2.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
         "symfony/phpunit-bridge": "^5.3",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^9.5.5"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\BehatBundle\\": "" }

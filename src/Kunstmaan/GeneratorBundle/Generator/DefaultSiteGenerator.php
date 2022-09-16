@@ -73,7 +73,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             'demosite' => $this->demosite,
             'multilanguage' => $this->isMultiLangEnvironment(),
             'groundcontrol' => $this->groundControl,
-            'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
+            'canUseAttributes' => Kernel::VERSION_ID >= 50200,
             'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
 

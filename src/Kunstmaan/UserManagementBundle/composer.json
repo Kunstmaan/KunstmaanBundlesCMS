@@ -14,15 +14,15 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^8.0",
         "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/adminlist-bundle": "^5.9|^6.0"
     },
     "require-dev": {
-        "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "matthiasnoback/symfony-config-test": "^4.2.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
         "symfony/phpunit-bridge": "^5.3",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^9.5.5"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\UserManagementBundle\\": "" }

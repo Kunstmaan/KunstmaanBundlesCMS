@@ -67,7 +67,7 @@ class ArticleGenerator extends KunstmaanGenerator
             'uses_author' => $usesAuthor,
             'uses_category' => $usesCategories,
             'uses_tag' => $usesTags,
-            'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
+            'canUseAttributes' => Kernel::VERSION_ID >= 50200,
             'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
 

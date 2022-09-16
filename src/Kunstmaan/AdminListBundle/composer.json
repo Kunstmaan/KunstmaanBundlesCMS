@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^8.0",
         "box/spout": "^2.5",
         "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/utilities-bundle": "^5.10|^6.0",
@@ -23,9 +23,9 @@
         "pagerfanta/twig": "^2.4"
     },
     "require-dev": {
-        "matthiasnoback/symfony-config-test": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "phpunit/phpunit": "^8.5",
+        "matthiasnoback/symfony-config-test": "^4.2.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
+        "phpunit/phpunit": "^9.5.5",
         "symfony/phpunit-bridge": "^5.3",
         "kunstmaan/form-bundle": "^5.9|^6.0",
         "kunstmaan/menu-bundle": "^5.9|^6.0",
