@@ -21,7 +21,11 @@ jobs:
                     # Test lowest dependencies
                     -   deps: 'lowest'
                         php: 8.0
-                        symfony: '^4.4'
+
+                    # Test lowest dependencies with symfony 5.4
+                    -   deps: 'lowest'
+                        php: 8.0
+                        symfony: '^5.4'
 
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
@@ -36,6 +40,7 @@ jobs:
                     case "${{ matrix.deps }}" in
                      "lowest")
                        echo "COMPOSER_FLAGS=--prefer-lowest" >> $GITHUB_ENV
+                       echo "SYMFONY_REQUIRE=$(echo '${{ matrix.symfony }}')" >> $GITHUB_ENV
                        ;;
                      *)
                        echo "SYMFONY_REQUIRE=$(echo '${{ matrix.symfony }}')" >> $GITHUB_ENV

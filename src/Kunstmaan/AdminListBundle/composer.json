@@ -26,7 +26,7 @@
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
         "phpunit/phpunit": "^9.5.5",
-        "symfony/phpunit-bridge": "^5.3",
+        "symfony/phpunit-bridge": "^6.1",
         "kunstmaan/form-bundle": "^5.9|^6.0",
         "kunstmaan/menu-bundle": "^5.9|^6.0",
         "kunstmaan/translator-bundle": "^5.9|^6.0"
