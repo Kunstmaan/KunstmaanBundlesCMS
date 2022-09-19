@@ -13,10 +13,7 @@ class DashboardConfigurationTypeTest extends TestCase
         $type = new DashboardConfigurationType();
 
         $builder = $this->createMock(FormBuilder::class);
-
-        $builder->expects($this->exactly(2))
-            ->method('add')
-            ->willReturn(true);
+        $builder->expects($this->exactly(2))->method('add')->willReturn($builder);
 
         /* @var FormBuilder $builder */
         $type->buildForm($builder, []);

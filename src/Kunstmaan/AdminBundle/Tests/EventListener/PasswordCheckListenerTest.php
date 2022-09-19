@@ -46,10 +46,10 @@ class PasswordCheckListenerTest extends TestCase
         $auth->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isGranted')->willReturn(true);
         $token->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getUser')->willReturn($user);
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isPasswordChanged')->willReturn(false);
-        $router->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('generate')->willReturn(true);
+        $router->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('generate')->willReturn('/url');
         $session->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getFlashBag')->willReturn($flash);
         $flash->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('add')->willReturn(true);
-        $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('trans')->willReturn(true);
+        $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('trans')->willReturn('translated-text');
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);
         $requestStack = new RequestStack();
         $request = new Request();

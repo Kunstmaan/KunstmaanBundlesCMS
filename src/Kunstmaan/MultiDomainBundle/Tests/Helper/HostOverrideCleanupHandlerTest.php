@@ -15,23 +15,18 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  */
 class HostOverrideCleanupHandlerTest extends TestCase
 {
-    /**
-     * @var HostOverrideCleanupHandler
-     */
-    protected $object;
-
-    protected function setUp(): void
-    {
-        $this->object = new HostOverrideCleanupHandler();
-    }
-
     public function testLogoutWithoutOverride()
     {
+        if (!interface_exists(\Symfony\Component\Security\Http\Logout\LogoutHandlerInterface::class)) {
+            $this->markTestSkipped('This test should only run on symfony 5.4 and lower');
+        }
+
+        $object = new HostOverrideCleanupHandler();
         $request = Request::create('/');
         $response = new Response();
         $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
-        $this->object->logout($request, $response, $token);
+        $object->logout($request, $response, $token);
 
         $this->assertFalse($request->hasSession());
     }
@@ -41,6 +36,11 @@ class HostOverrideCleanupHandlerTest extends TestCase
      */
     public function testLogoutWithOverride()
     {
+        if (!interface_exists(\Symfony\Component\Security\Http\Logout\LogoutHandlerInterface::class)) {
+            $this->markTestSkipped('This test should only run on symfony 5.4 and lower');
+        }
+
+        $object = new HostOverrideCleanupHandler();
         $session = new Session(new MockArraySessionStorage());
         $session->set(DomainConfiguration::OVERRIDE_HOST, 'domain.tld');
 
@@ -51,7 +51,7 @@ class HostOverrideCleanupHandlerTest extends TestCase
         $response = new Response();
         $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
-        $this->object->logout($request, $response, $token);
+        $object->logout($request, $response, $token);
 
         $this->assertNull($session->get(DomainConfiguration::OVERRIDE_HOST));
     }
