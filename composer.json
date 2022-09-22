@@ -3,13 +3,13 @@
     "type": "library",
     "description": "The Kunstmaan CMS is an advanced yet user-friendly content management system, based on the full stack Symfony framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much more.",
     "keywords": ["cms"],
-    "homepage": "https://cms.kunstmaan.be",
+    "homepage": "https://kunstmaancms.be",
     "license": "MIT",
     "authors": [
         {
-            "name": "Kunstmaan Team",
-            "homepage": "https://cms.kunstmaan.be",
-            "email": "bundles@kunstmaan.be"
+            "name": "Kunstmaan CMS Team",
+            "homepage": "https://kunstmaancms.be",
+            "email": "cms@kunstmaan.be"
         },
         {
             "name": "The Community",

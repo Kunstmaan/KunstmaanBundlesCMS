@@ -7,9 +7,9 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Kunstmaan Team",
-            "homepage": "http://www.kunstmaan.be/",
-            "email": "support@kunstmaan.be"
+            "name": "Kunstmaan CMS Team",
+            "homepage": "https://kunstmaancms.be",
+            "email": "cms@kunstmaan.be"
         }
     ],
     "minimum-stability": "dev",

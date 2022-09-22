@@ -1,6 +1,6 @@
 # KunstmaanUserManagementBundle
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanUserManagementBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanUserManagementBundle)
+[![Build Status](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions/workflows/ci.yml/badge.svg)](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/user-management-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/user-management-bundle)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/user-management-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/user-management-bundle)
 
@@ -8,7 +8,7 @@
 The Kunstmaan User Management bundle supplies your project with a basic, elegant backend interface to manage users,
 groups and roles.
 
-View screenshots and more information [https://cms.kunstmaan.be](https://cms.kunstmaan.be).
+View screenshots and more information [https://kunstmaancms.be](https://kunstmaancms.be).
 
 ## Installation
 
