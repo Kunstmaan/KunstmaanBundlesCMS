@@ -1,11 +1,10 @@
 # KunstmaanFormBundle
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanFormBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanFormBundle)
+[![Build Status](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions/workflows/ci.yml/badge.svg)](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/form-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/form-bundle)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/form-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/form-bundle)
-[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanFormBundle)](https://github.com/igrigorik/ga-beacon)
 
-Managing forms, fields and their submissions by the user is a key functionality missing in most platforms. By leveraging the KunstmaanPagePartBundle system in the KunstmaanFormBundle users gain an easy way to create and manage the form on their website, again without having to worry about the technical side of things. View screenshots and more information [https://cms.kunstmaan.be](https://cms.kunstmaan.be).
+Managing forms, fields and their submissions by the user is a key functionality missing in most platforms. By leveraging the KunstmaanPagePartBundle system in the KunstmaanFormBundle users gain an easy way to create and manage the form on their website, again without having to worry about the technical side of things. View screenshots and more information [https://kunstmaancms.be](https://kunstmaancms.be).
 
 ## Installation
 

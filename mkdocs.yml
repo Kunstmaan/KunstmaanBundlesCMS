@@ -1,7 +1,7 @@
 site_name: KunstmaanBundlesCMS
 site_description: The Kunstmaan CMS is an advanced yet user-friendly content management system, based on the full stack Symfony framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much much more.
 site_author: Kunstmaan
-site_url: https://cms.kunstmaan.be/
+site_url: https://kunstmaancms.be/
 copyright: MIT
 repo_url: https://github.com/Kunstmaan/KunstmaanBundlesCMS
 docs_dir: 'docs'
