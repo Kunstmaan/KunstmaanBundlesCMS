@@ -1,14 +1,13 @@
 # KunstmaanSeoBundle 
 
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanSeoBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanSeoBundle)
+[![Build Status](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions/workflows/ci.yml/badge.svg)](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/seo-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/seo-bundle)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/seo-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/seo-bundle)
-[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanSeoBundle)](https://github.com/igrigorik/ga-beacon)
 
 Annotating content with metadata for social sharing and seo purposes cannot be overlooked nowadays. The KunstmaanSeoBundle contains default editing functionality for OpenGraph data, meta descriptions, keywords and titles and Metriweb tags. Because the metatagging and tracking options are always changing, a free field to add custom header information is provided as well.
 
-View more screenshots and information [https://cms.kunstmaan.be](https://cms.kunstmaan.be).
+View more screenshots and information [https://kunstmaancms.be](https://kunstmaancms.be).
 
 ## Installation
 

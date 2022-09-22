@@ -36,7 +36,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $loader->load('services.yml');
         $loader->load('commands.yml');
 
-        $container->setParameter('version_checker.url', 'https://cms.kunstmaan.be/version-check');
+        $container->setParameter('version_checker.url', 'https://kunstmaancms.be/version-check');
         $container->setParameter('version_checker.timeframe', 60 * 60 * 24);
         $container->setParameter('version_checker.enabled', true);
 
@@ -143,7 +143,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function getNamespace()
     {
-        return 'http://bundles.kunstmaan.be/schema/dic/admin';
+        return 'https://kunstmaancms.be/schema/dic/admin';
     }
 
     /**
