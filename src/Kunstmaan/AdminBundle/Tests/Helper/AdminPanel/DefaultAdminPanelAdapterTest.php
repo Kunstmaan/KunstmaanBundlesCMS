@@ -53,7 +53,12 @@ class DefaultAdminPanelAdapterTest extends TestCase
         $this->expectDeprecation('Since kunstmaan/admin-bundle 6.2: Not passing a value for "$logoutUrlGenerator" in "Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor::__construct" is deprecated and will be required in 7.0.');
 
         $storage = new TokenStorage();
-        $storage->setToken(new UsernamePasswordToken((new User())->setUsername('test'), 'password', 'main'));
+        if (method_exists(FirewallConfig::class, 'getAuthenticators')) {
+            $token = new UsernamePasswordToken((new User())->setUsername('test'), 'main');
+        } else {
+            $token = new UsernamePasswordToken((new User())->setUsername('test'), 'password', 'main');
+        }
+        $storage->setToken($token);
 
         $adapter = new DefaultAdminPanelAdaptor($storage);
         $actions = $adapter->getAdminPanelActions();

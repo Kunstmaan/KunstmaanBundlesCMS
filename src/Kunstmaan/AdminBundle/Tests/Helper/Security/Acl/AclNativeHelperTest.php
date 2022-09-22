@@ -12,6 +12,7 @@ use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\SecurityBundle\Security\FirewallConfig;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
@@ -171,7 +172,7 @@ class AclNativeHelperTest extends TestCase
 
         $this->token->expects($this->any())
             ->method('getUser')
-            ->will($this->returnValue('anon.'));
+            ->will($this->returnValue(method_exists(FirewallConfig::class, 'getAuthenticators') ? null : 'anon.'));
 
         $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 

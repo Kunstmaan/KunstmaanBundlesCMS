@@ -17,9 +17,7 @@ class RangeTypeTest extends TestCase
         $colorType = new RangeType();
 
         $resolver = $this->createMock(OptionsResolver::class);
-        $resolver->expects($this->once())
-            ->method('setDefaults')
-            ->willReturn(true);
+        $resolver->expects($this->once())->method('setDefaults')->willReturn($resolver);
 
         /* @var OptionsResolver $resolver */
         $colorType->configureOptions($resolver);

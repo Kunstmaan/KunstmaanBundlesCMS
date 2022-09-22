@@ -15,12 +15,8 @@ class UserTypeTest extends TestCase
         $type = new UserType();
 
         $resolver = $this->createMock(OptionsResolver::class);
-        $resolver->expects($this->once())
-            ->method('setDefaults')
-            ->willReturn(true);
-        $resolver->expects($this->once())
-            ->method('addAllowedValues')
-            ->willReturn(true);
+        $resolver->expects($this->once())->method('setDefaults')->willReturn($resolver);
+        $resolver->expects($this->once())->method('addAllowedValues')->willReturn($resolver);
 
         /* @var OptionsResolver $resolver */
         $type->configureOptions($resolver);

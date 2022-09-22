@@ -13,10 +13,7 @@ class RoleTypeTest extends TestCase
         $type = new RoleType();
 
         $builder = $this->createMock(FormBuilder::class);
-
-        $builder->expects($this->once())
-            ->method('add')
-            ->willReturn(true);
+        $builder->expects($this->once())->method('add')->willReturn($builder);
 
         /* @var FormBuilder $builder */
         $type->buildForm($builder, []);

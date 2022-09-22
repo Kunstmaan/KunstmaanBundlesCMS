@@ -52,7 +52,7 @@ class AppKernel extends Kernel
     /**
      * @return BundleInterface[]
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         if (!file_exists($filename = $this->getProjectDir() . '/' . $this->testCase . '/bundles.php')) {
             throw new \RuntimeException(sprintf('The bundles file "%s" does not exist.', $filename));
@@ -61,31 +61,22 @@ class AppKernel extends Kernel
         return include $filename;
     }
 
-    /**
-     * @return string
-     */
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return __DIR__;
     }
 
-    /**
-     * @return string
-     */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return sys_get_temp_dir() . '/' . $this->varDir . '/' . $this->testCase . '/cache/' . $this->environment;
     }
 
-    /**
-     * @return string
-     */
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return sys_get_temp_dir() . '/' . $this->varDir . '/' . $this->testCase . '/logs';
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load($this->rootConfig);
         $loader->load(function (ContainerBuilder $containerBuilder) {
@@ -95,7 +86,7 @@ class AppKernel extends Kernel
         });
     }
 
-    protected function build(ContainerBuilder $container)
+    protected function build(ContainerBuilder $container): void
     {
         $container->register('logger', NullLogger::class);
     }
@@ -111,10 +102,7 @@ class AppKernel extends Kernel
         $this->__construct($a[0], $a[1], $a[2], $a[3], $a[4]);
     }
 
-    /**
-     * @return array
-     */
-    protected function getKernelParameters()
+    protected function getKernelParameters(): array
     {
         $parameters = parent::getKernelParameters();
         $parameters['kernel.test_case'] = $this->testCase;

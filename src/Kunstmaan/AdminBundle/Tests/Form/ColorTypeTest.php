@@ -16,9 +16,7 @@ class ColorTypeTest extends TestCase
     {
         $colorType = new ColorType();
         $resolver = $this->createMock(OptionsResolver::class);
-        $resolver->expects($this->once())
-            ->method('setDefaults')
-            ->willReturn(true);
+        $resolver->expects($this->once())->method('setDefaults')->willReturn($resolver);
         /* @var OptionsResolver $resolver */
         $colorType->configureOptions($resolver);
         $this->assertEquals(TextType::class, $colorType->getParent());

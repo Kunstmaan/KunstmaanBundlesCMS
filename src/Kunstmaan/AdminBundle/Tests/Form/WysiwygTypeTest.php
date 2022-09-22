@@ -17,9 +17,7 @@ class WysiwygTypeTest extends TypeTestCase
         $wysiwygType = new WysiwygType($mediaTokenTransformer);
 
         $builder = $this->createMock(FormBuilder::class);
-        $builder->expects($this->once())
-            ->method('addModelTransformer')
-            ->willReturn(true);
+        $builder->expects($this->once())->method('addModelTransformer')->willReturn($builder);
 
         /* @var FormBuilder $builder */
         $wysiwygType->buildForm($builder, []);
