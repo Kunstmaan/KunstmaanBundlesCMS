@@ -1,12 +1,10 @@
 # KunstmaanAdminBundle 
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanAdminBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminBundle)
+[![Build Status](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions/workflows/ci.yml/badge.svg)](https://github.com/Kunstmaan/KunstmaanBundlesCMS/actions)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/admin-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/admin-bundle)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/admin-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/admin-bundle)
-[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanAdminBundle)](https://github.com/igrigorik/ga-beacon)
 
-
-The Kunstmaan Admin bundle supplies your project with a basic, elegant backend interface you can modify and extend so you can make your perfect admin module. The clean interface makes it straightforward for you and the people working with it to change settings and modify content. View screenshots and more information [https://cms.kunstmaan.be](https://cms.kunstmaan.be).
+The Kunstmaan Admin bundle supplies your project with a basic, elegant backend interface you can modify and extend so you can make your perfect admin module. The clean interface makes it straightforward for you and the people working with it to change settings and modify content. View screenshots and more information [https://kunstmaancms.be](https://kunstmaancms.be).
 
 ## Installation
 
