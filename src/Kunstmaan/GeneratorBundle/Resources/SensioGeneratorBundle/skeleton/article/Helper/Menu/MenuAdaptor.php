@@ -20,7 +20,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 	    $this->em = $em;
     }
 
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null): void
     {
         if (null === $this->overviewpageIds) {
             $overviewPageNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\Pages\\{{ entity_class }}OverviewPage');
