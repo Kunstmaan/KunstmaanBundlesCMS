@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use DateTime;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
@@ -292,7 +292,7 @@ class NodeVersion extends AbstractEntity
     /**
      * @return HasNodeInterface
      */
-    public function getRef(EntityManager $em)
+    public function getRef(EntityManagerInterface $em)
     {
         return $em->getRepository($this->getRefEntityName())->find($this->getRefId());
     }

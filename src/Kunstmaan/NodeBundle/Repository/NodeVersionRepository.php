@@ -16,7 +16,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class NodeVersionRepository extends EntityRepository
 {
     /**
-     * @return NodeVersion
+     * @return NodeVersion|null
      */
     public function getNodeVersionFor(HasNodeInterface $hasNode)
     {
