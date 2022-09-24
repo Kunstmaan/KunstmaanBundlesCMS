@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="url", type="string", nullable=true)
@@ -35,7 +35,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $url;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="text", type="string", nullable=true)
@@ -62,84 +62,50 @@ class {{ pagepart }} extends AbstractPagePart
 {% if canUseEntityAttributes %}
     #[ORM\Column(name: 'open_in_new_window', type: 'boolean', nullable: true)]
 {% endif %}
-    private $openInNewWindow;
+    private $openInNewWindow = false;
 
-    /**
-     * @param string $url
-     *
-     * @return {{ pagepart }}
-     */
-    public function setUrl($url)
+    public function setUrl(?string $url): LinkPagePart
     {
         $this->url = $url;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * @return boolean
-     */
-    public function getOpenInNewWindow()
+    public function getOpenInNewWindow(): bool
     {
         return $this->openInNewWindow;
     }
 
-    /**
-     * @param boolean $openInNewWindow
-     *
-     * @return {{ pagepart }}
-     */
-    public function setOpenInNewWindow($openInNewWindow)
+    public function setOpenInNewWindow(bool $openInNewWindow): LinkPagePart
     {
         $this->openInNewWindow = $openInNewWindow;
 
         return $this;
     }
 
-    /**
-     * @param string $text
-     *
-     * @return {{ pagepart }}
-     */
-    public function setText($text)
+    public function setText(?string $text): LinkPagePart
     {
         $this->text = $text;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Get the admin form type.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

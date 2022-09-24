@@ -1,6 +1,7 @@
 {% if type == 'Author' %}
-/**
-     * @var \{{ namespace }}\Entity\{{ entity_class }}{{ type }}
+
+    /**
+     * @var \{{ namespace }}\Entity\{{ entity_class }}{{ type }}|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="{{ namespace }}\Entity\{{ entity_class }}{{ type }}")
@@ -14,8 +15,9 @@
     protected ${{ type|lower }};
 
 {% else %}
+
     /**
-     * @var ArrayCollection
+     * @var Collection<\{{ namespace }}\Entity\{{ entity_class }}{{ type }}>
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToMany(targetEntity="{{ namespace }}\Entity\{{ entity_class }}{{ type }}")

@@ -2,55 +2,37 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
+use {{ namespace }}\Entity\PageParts\{{ pagepart }};
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use {{ namespace }}\Entity\PageParts\{{ pagepart }};
 
-/**
- * {{ pagepart }}AdminType
- */
 class {{ pagepart }}AdminType extends AbstractType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
         $names = {{ pagepart }}::$supportedHeaders;
-        array_walk($names, function(&$item) { $item = 'Header ' . $item; });
+        array_walk($names, function (&$item) { $item = 'Header '.$item; });
 
-        $builder->add('niv', ChoiceType::class, array(
+        $builder->add('niv', ChoiceType::class, [
             'label' => 'pagepart.header.type',
             'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
             'required' => true,
-        ));
-        $builder->add('title', TextType::class, array(
+        ]);
+        $builder->add('title', TextType::class, [
             'label' => 'pagepart.header.title',
-            'required' => true
-        ));
+            'required' => true,
+        ]);
     }
 
-    /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options.
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
-            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
-        ));
+        $resolver->setDefaults([
+            'data_class' => {{ pagepart }}::class,
+        ]);
     }
 }

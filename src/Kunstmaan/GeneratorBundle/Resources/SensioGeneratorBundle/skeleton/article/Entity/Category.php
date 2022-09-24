@@ -2,10 +2,10 @@
 
 namespace {{ namespace }}\Entity;
 
+use {{ namespace }}\Form\{{ entity_class }}CategoryAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\ArticleBundle\Entity\AbstractCategory;
-use {{ namespace }}\Form\{{ entity_class }}CategoryAdminType;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity]

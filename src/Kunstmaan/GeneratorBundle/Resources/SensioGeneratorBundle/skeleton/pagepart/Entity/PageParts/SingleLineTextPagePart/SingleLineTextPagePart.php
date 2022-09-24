@@ -5,11 +5,11 @@ namespace {{ namespace }}\Entity\PageParts;
 use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
+use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity]
@@ -39,7 +39,7 @@ class {{ pagepart }} extends AbstractFormPagePart
     /**
      * Error message shows when the page part is required and nothing is filled in.
      *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
@@ -53,7 +53,7 @@ class {{ pagepart }} extends AbstractFormPagePart
     /**
      * If set the entered value will be matched with this regular expression.
      *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", nullable=true)
@@ -67,7 +67,7 @@ class {{ pagepart }} extends AbstractFormPagePart
     /**
      * If a regular expression is set and it doesn't match with the given value, this error message will be shown.
      *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
@@ -81,7 +81,7 @@ class {{ pagepart }} extends AbstractFormPagePart
     /**
      * Internal name that can be used with form submission subscribers.
      *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="internal_name", nullable=true)
@@ -92,185 +92,109 @@ class {{ pagepart }} extends AbstractFormPagePart
 {% endif %}
     protected $internalName;
 
-    /**
-     * Sets the required valud of this page part
-     *
-     * @param bool $required
-     *
-     * @return SingleLineTextPagePart
-     */
-    public function setRequired($required)
+    public function setRequired(bool $required): SingleLineTextPagePart
     {
         $this->required = $required;
 
         return $this;
     }
 
-    /**
-     * Check if the page part is required
-     *
-     * @return bool
-     */
-    public function getRequired()
+    public function getRequired(): bool
     {
         return $this->required;
     }
 
-    /**
-     * Sets the message shown when the page part is required and no value was entered
-     *
-     * @param string $errorMessageRequired
-     *
-     * @return SingleLineTextPagePart
-     */
-    public function setErrorMessageRequired($errorMessageRequired)
+    public function setErrorMessageRequired(?string $errorMessageRequired): SingleLineTextPagePart
     {
         $this->errorMessageRequired = $errorMessageRequired;
 
         return $this;
     }
 
-    /**
-     * Get the error message that will be shown when the page part is required and no value was entered
-     *
-     * @return string
-     */
-    public function getErrorMessageRequired()
+    public function getErrorMessageRequired(): ?string
     {
         return $this->errorMessageRequired;
     }
 
-    /**
-     * Set the regular expression to match the entered value against
-     *
-     * @param string $regex
-     *
-     * @return SingleLineTextPagePart
-     */
-    public function setRegex($regex)
+    public function setRegex(?string $regex): SingleLineTextPagePart
     {
         $this->regex = $regex;
 
         return $this;
     }
 
-    /**
-     * Get the current regular expression
-     *
-     * @return string
-     */
-    public function getRegex()
+    public function getRegex(): ?string
     {
         return $this->regex;
     }
 
-    /**
-     * Set the error message which will be shown when the entered value doesn't match the regular expression
-     *
-     * @param string $errorMessageRegex
-     *
-     * @return SingleLineTextPagePart
-     */
-    public function setErrorMessageRegex($errorMessageRegex)
+    public function setErrorMessageRegex(?string $errorMessageRegex): SingleLineTextPagePart
     {
         $this->errorMessageRegex = $errorMessageRegex;
 
         return $this;
     }
 
-    /**
-     * Get the current error message which will be shown when the entered value doesn't match the regular expression
-     *
-     * @return string
-     */
-    public function getErrorMessageRegex()
+    public function getErrorMessageRegex(): ?string
     {
         return $this->errorMessageRegex;
     }
 
-    /**
-     * @param string $internalName
-     *
-     * @return self
-     */
-    public function setInternalName($internalName)
+    public function setInternalName(?string $internalName): SingleLineTextPagePart
     {
         $this->internalName = $internalName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getInternalName()
+    public function getInternalName(): ?string
     {
         return $this->internalName;
     }
 
-    /**
-     * Returns the frontend view
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Modify the form with the fields of the current page part
-     *
-     * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
-     * @param int                  $sequence    The sequence of the form field
-     */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence): void
     {
         $sfsf = new StringFormSubmissionField();
-        $sfsf->setFieldName('field_' . $this->getUniqueId());
+        $sfsf->setFieldName('field_'.$this->getUniqueId());
         $sfsf->setLabel($this->getLabel());
         $sfsf->setInternalName($this->getInternalName());
         $sfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $sfsf;
+        $data['formwidget_'.$this->getUniqueId()] = $sfsf;
 
-        $constraints = array();
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
             $constraints[] = new NotBlank($options);
         }
         if ($this->getRegex()) {
-            $options = array('pattern' => $this->getRegex());
+            $options = ['pattern' => $this->getRegex()];
             if (!empty($this->errorMessageRegex)) {
                 $options['message'] = $this->errorMessageRegex;
             }
             $constraints[] = new Regex($options);
         }
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            StringFormSubmissionType::class,
-            array(
-                'label'       => $this->getLabel(),
-                'value_constraints' => $constraints,
-                'required'    => $this->getRequired()
-            )
-        );
+        $formBuilder->add('formwidget_'.$this->getUniqueId(), StringFormSubmissionType::class, [
+            'label' => $this->getLabel(),
+            'value_constraints' => $constraints,
+            'required' => $this->getRequired(),
+        ]);
         $formBuilder->setData($data);
 
         $fields->append($sfsf);
     }
 
-    /**
-     * Returns the default backend form type for this page part
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

@@ -6,5 +6,4 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart as BaseAbstractPagePart;
 
 abstract class {{ pagepart }} extends BaseAbstractPagePart
 {
-
 }

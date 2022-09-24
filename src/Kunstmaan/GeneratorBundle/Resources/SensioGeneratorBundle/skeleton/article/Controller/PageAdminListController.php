@@ -2,17 +2,17 @@
 
 namespace {{ namespace }}\Controller;
 
+use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticlePageAdminListController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
 {% if isV4 %}
 
 {% if canUseAttributes %}
-    #[Route('/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-page', requirements: ['_locale' => '%requiredlocales%'])]
+#[Route('/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-page', requirements: ['_locale' => '%requiredlocales%'])]
 {% else %}
 /**
  * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-page", requirements={"_locale"="%requiredlocales%"})

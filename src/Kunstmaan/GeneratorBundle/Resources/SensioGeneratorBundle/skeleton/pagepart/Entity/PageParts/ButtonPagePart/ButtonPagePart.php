@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_text", type="string", length=255, nullable=true)
@@ -35,7 +35,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $linkText;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_url", type="string", nullable=true)
@@ -62,10 +62,10 @@ class {{ pagepart }} extends AbstractPagePart
 {% if canUseEntityAttributes %}
     #[ORM\Column(name: 'link_new_window', type: 'boolean', nullable: true)]
 {% endif %}
-    private $linkNewWindow;
+    private $linkNewWindow = false;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="type", type="string", length=15, nullable=true)
@@ -83,7 +83,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $type;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="size", type="string", length=15, nullable=true)
@@ -101,7 +101,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $size;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="position", type="string", length=15, nullable=true)
@@ -118,22 +118,22 @@ class {{ pagepart }} extends AbstractPagePart
 {% endif %}
     private $position;
 
-    const TYPE_PRIMARY = 'primary';
-    const TYPE_SECONDARY = 'secondary';
-    const TYPE_TERTIARY = 'tertiary';
-    const TYPE_QUATERNARY = 'quaternary';
-    const TYPE_LINK = 'link';
+    public const TYPE_PRIMARY = 'primary';
+    public const TYPE_SECONDARY = 'secondary';
+    public const TYPE_TERTIARY = 'tertiary';
+    public const TYPE_QUATERNARY = 'quaternary';
+    public const TYPE_LINK = 'link';
 
-    const SIZE_EXTRA_LARGE = 'xl';
-    const SIZE_LARGE = 'lg';
-    const SIZE_DEFAULT = 'default';
-    const SIZE_SMALL = 'sm';
-    const SIZE_EXTRA_SMALL = 'xs';
+    public const SIZE_EXTRA_LARGE = 'xl';
+    public const SIZE_LARGE = 'lg';
+    public const SIZE_DEFAULT = 'default';
+    public const SIZE_SMALL = 'sm';
+    public const SIZE_EXTRA_SMALL = 'xs';
 
-    const POSITION_LEFT = 'left';
-    const POSITION_CENTER = 'center';
-    const POSITION_RIGHT = 'right';
-    const POSITION_BLOCK = 'block';
+    public const POSITION_LEFT = 'left';
+    public const POSITION_CENTER = 'center';
+    public const POSITION_RIGHT = 'right';
+    public const POSITION_BLOCK = 'block';
 
     /**
      * @var array Supported types
@@ -174,131 +174,75 @@ class {{ pagepart }} extends AbstractPagePart
         $this->position = self::POSITION_LEFT;
     }
 
-    /**
-     * @param boolean $linkNewWindow
-     *
-     * @return {{ pagepart }}
-     */
-    public function setLinkNewWindow($linkNewWindow)
+    public function setLinkNewWindow(bool $linkNewWindow): ButtonPagePart
     {
         $this->linkNewWindow = $linkNewWindow;
 
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isLinkNewWindow()
+    public function isLinkNewWindow(): bool
     {
         return $this->linkNewWindow;
     }
 
-    /**
-     * @param string $linkText
-     *
-     * @return {{ pagepart }}
-     */
-    public function setLinkText($linkText)
+    public function setLinkText(?string $linkText): ButtonPagePart
     {
         $this->linkText = $linkText;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLinkText()
+    public function getLinkText(): ?string
     {
         return $this->linkText;
     }
 
-    /**
-     * @param string $linkUrl
-     *
-     * @return {{ pagepart }}
-     */
-    public function setLinkUrl($linkUrl)
+    public function setLinkUrl(?string $linkUrl): ButtonPagePart
     {
         $this->linkUrl = $linkUrl;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLinkUrl()
+    public function getLinkUrl(): ?string
     {
         return $this->linkUrl;
     }
 
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return {{ pagepart }}
-     * @throws \InvalidArgumentException
-     */
-    public function setType($type)
+    public function setType(?string $type): ButtonPagePart
     {
-        if (!in_array($type, self::$types)) {
+        if (!in_array($type, self::$types, true)) {
             throw new \InvalidArgumentException("Type $type not supported");
-    }
-
+        }
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * Set size
-     *
-     * @param string $size
-     * @return {{ pagepart }}
-     * @throws \InvalidArgumentException
-     */
-    public function setSize($size)
+    public function setSize(?string $size): ButtonPagePart
     {
-        if (!in_array($size, self::$sizes)) {
+        if (!in_array($size, self::$sizes, true)) {
             throw new \InvalidArgumentException("Size $size not supported");
-    }
+        }
         $this->size = $size;
 
         return $this;
     }
 
-    /**
-     * Get size
-     *
-     * @return string
-     */
-    public function getSize()
+    public function getSize(): ?string
     {
         return $this->size;
     }
 
-    /**
-     * Set position
-     *
-     * @param string $position
-     * @return {{ pagepart }}
-     * @throws \InvalidArgumentException
-     */
-    public function setPosition($position)
+    public function setPosition(?string $position): ButtonPagePart
     {
-        if (!in_array($position, self::$positions)) {
+        if (!in_array($position, self::$positions, true)) {
             throw new \InvalidArgumentException("Position $position not supported");
         }
         $this->position = $position;
@@ -306,32 +250,17 @@ class {{ pagepart }} extends AbstractPagePart
         return $this;
     }
 
-    /**
-     * Get position
-     *
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): ?string
     {
         return $this->position;
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Get the admin form type.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

@@ -2,10 +2,10 @@
 
 namespace {{ namespace }}\Entity\PageParts;
 
+use {{ namespace }}\Form\PageParts\ServicePagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity]
@@ -24,13 +24,13 @@ class ServicePagePart extends AbstractPagePart
     /**
      * @var array Supported positions
      */
-    public static $imagePositions = array(
+    public static $imagePositions = [
         self::IMAGE_POSITION_LEFT,
-        self::IMAGE_POSITION_RIGHT
-    );
+        self::IMAGE_POSITION_RIGHT,
+    ];
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
@@ -48,7 +48,7 @@ class ServicePagePart extends AbstractPagePart
     private $title;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -60,7 +60,7 @@ class ServicePagePart extends AbstractPagePart
     private $description;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_url", type="string", nullable=true)
@@ -72,7 +72,7 @@ class ServicePagePart extends AbstractPagePart
     private $linkUrl;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_text", type="string", nullable=true)
@@ -84,7 +84,7 @@ class ServicePagePart extends AbstractPagePart
     private $linkText;
 
     /**
-     * @var boolean
+     * @var bool
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link_new_window", type="boolean", nullable=true)
@@ -93,10 +93,10 @@ class ServicePagePart extends AbstractPagePart
 {% if canUseEntityAttributes %}
     #[ORM\Column(name: 'link_new_window', type: 'boolean', nullable: true)]
 {% endif %}
-    private $linkNewWindow;
+    private $linkNewWindow = false;
 
     /**
-     * @var Media
+     * @var Media|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
@@ -112,7 +112,7 @@ class ServicePagePart extends AbstractPagePart
     private $image;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="image_position", type="string", length=15, nullable=true)
@@ -129,181 +129,97 @@ class ServicePagePart extends AbstractPagePart
 {% endif %}
     private $imagePosition;
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return ServicePagePart
-     */
-    public function setTitle($title)
+    public function setTitle(?string $title): ServicePagePart
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return ServicePagePart
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): ServicePagePart
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set linkUrl
-     *
-     * @param string $linkUrl
-     * @return ServicePagePart
-     */
-    public function setLinkUrl($linkUrl)
+    public function setLinkUrl(?string $linkUrl): ServicePagePart
     {
         $this->linkUrl = $linkUrl;
 
         return $this;
     }
 
-    /**
-     * Get linkUrl
-     *
-     * @return string
-     */
-    public function getLinkUrl()
+    public function getLinkUrl(): ?string
     {
         return $this->linkUrl;
     }
 
-    /**
-     * Set linkText
-     *
-     * @param string $linkText
-     * @return ServicePagePart
-     */
-    public function setLinkText($linkText)
+    public function setLinkText(?string $linkText): ServicePagePart
     {
         $this->linkText = $linkText;
 
         return $this;
     }
 
-    /**
-     * Get linkText
-     *
-     * @return string
-     */
-    public function getLinkText()
+    public function getLinkText(): ?string
     {
         return $this->linkText;
     }
 
-    /**
-     * Set linkNewWindow
-     *
-     * @param boolean $linkNewWindow
-     * @return ServicePagePart
-     */
-    public function setLinkNewWindow($linkNewWindow)
+    public function setLinkNewWindow(bool $linkNewWindow): ServicePagePart
     {
         $this->linkNewWindow = $linkNewWindow;
 
         return $this;
     }
 
-    /**
-     * Get linkNewWindow
-     *
-     * @return boolean
-     */
-    public function getLinkNewWindow()
+    public function getLinkNewWindow(): bool
     {
         return $this->linkNewWindow;
     }
 
-    /**
-     * Set image
-     *
-     * @param Media $image
-     * @return ServicePagePart
-     */
-    public function setImage(Media $image = null)
+    public function setImage(?Media $image): ServicePagePart
     {
         $this->image = $image;
 
         return $this;
     }
 
-    /**
-     * Get image
-     *
-     * @return Media
-     */
-    public function getImage()
+    public function getImage(): ?Media
     {
         return $this->image;
     }
 
-    /**
-     * @return string
-     */
-    public function getImagePosition()
+    public function getImagePosition(): ?string
     {
         return $this->imagePosition;
     }
 
-    /**
-     * @param string $imagePosition
-     *
-     * @return ServicePagePart
-     */
-    public function setImagePosition($imagePosition)
+    public function setImagePosition(?string $imagePosition): ServicePagePart
     {
         $this->imagePosition = $imagePosition;
 
         return $this;
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/ServicePagePart{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Get the admin form type.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
-        return \{{ namespace }}\Form\PageParts\ServicePagePartAdminType::class;
+        return ServicePagePartAdminType::class;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace {{ namespace }}\Entity;
 
+use {{ namespace }}\Form\{{ entity_class }}TagAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\ArticleBundle\Entity\AbstractTag;
-use {{ namespace }}\Form\{{ entity_class }}TagAdminType;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity]

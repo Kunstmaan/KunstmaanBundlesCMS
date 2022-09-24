@@ -5,11 +5,12 @@ namespace {{ namespace }}\Entity\Pages;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
 use {{ namespace }}\Repository\{{ entity_class }}PageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
+use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity(repositoryClass: {{ entity_class }}PageRepository::class)]
@@ -25,14 +26,12 @@ use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTemplateInterface, SearchTypeInterface, HideSidebarInNodeEditInterface
 {
     //%PagePartial.php.twig%
-
     public function __construct()
     {
         //%constructor%
     }
 
     //%PagePartialFunctions.php.twig%
-
     public function getDefaultAdminType(): string
     {
         return {{ entity_class }}PageAdminType::class;
@@ -69,10 +68,10 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
 {% if canUseEntityAttributes %}
     #[ORM\PrePersist]
 {% endif %}
-    public function _prePersist()
+    public function _prePersist(): void
     {
         // Set date to now when none is set
-        if ($this->date == null) {
+        if (null === $this->date) {
             $this->setDate(new \DateTime());
         }
     }

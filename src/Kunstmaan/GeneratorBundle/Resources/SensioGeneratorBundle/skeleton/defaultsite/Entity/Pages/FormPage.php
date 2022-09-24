@@ -2,11 +2,10 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
+use {{ namespace }}\Form\Pages\FormPageAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Symfony\Component\Form\AbstractType;
-use {{ namespace }}\Form\Pages\FormPageAdminType;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity()]
@@ -28,13 +27,13 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
     {
         return [
             [
-                'name'  => 'ContentPage',
-                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
+                'name' => 'ContentPage',
+                'class' => '{{ namespace }}\Entity\Pages\ContentPage',
             ],
             [
-                'name'  => 'FormPage',
-                'class' => '{{ namespace }}\Entity\Pages\FormPage'
-            ]
+                'name' => 'FormPage',
+                'class' => '{{ namespace }}\Entity\Pages\FormPage',
+            ],
         ];
     }
 

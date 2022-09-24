@@ -1,20 +1,20 @@
-        {% if type == 'Author' %}
+{% if type == 'Author' %}
         $builder->add('author');
-        {% else %}
+{% else %}
         $builder->add('{{ pluralType }}', EntityType::class, [
             'class' => '{{ bundle.name }}:{{ entity_class }}{{ type }}',
             'choice_label' => 'name',
-            'query_builder' => function(EntityRepository $er) {
-                 return $er->createQueryBuilder('t')
-                           ->orderBy('t.name', 'ASC')
-                 ;
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('t')
+                    ->orderBy('t.name', 'ASC')
+                ;
             },
             'multiple' => true,
             'expanded' => false,
             'attr' => [
                  'class' => 'js-advanced-select',
-                 'data-placeholder' => 'Choose the related {{ pluralType }}'
+                 'data-placeholder' => 'Choose the related {{ pluralType }}',
             ],
-            'required' => false
+            'required' => false,
         ]);
-        {% endif %}
+{% endif %}

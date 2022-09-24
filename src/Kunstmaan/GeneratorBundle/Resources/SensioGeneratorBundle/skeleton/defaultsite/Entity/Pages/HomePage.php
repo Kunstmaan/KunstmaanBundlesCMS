@@ -2,13 +2,12 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
+use {{ namespace }}\Form\Pages\HomePageAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HomePageInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Symfony\Component\Form\AbstractType;
-use {{ namespace }}\Form\Pages\HomePageAdminType;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity()]
@@ -30,32 +29,32 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
     {
         return [
             [
-                'name'  => 'ContentPage',
-                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
+                'name' => 'ContentPage',
+                'class' => '{{ namespace }}\Entity\Pages\ContentPage',
             ],
 {% if demosite %}
             [
-                'name'  => 'FormPage',
-                'class' => '{{ namespace }}\Entity\Pages\FormPage'
+                'name' => 'FormPage',
+                'class' => '{{ namespace }}\Entity\Pages\FormPage',
             ],
 {% endif %}
             [
-                'name'  => 'BehatTestPage',
-                'class' => '{{ namespace }}\Entity\Pages\BehatTestPage'
-            ]
+                'name' => 'BehatTestPage',
+                'class' => '{{ namespace }}\Entity\Pages\BehatTestPage',
+            ],
         ];
     }
 
     public function getPagePartAdminConfigurations(): array
     {
 {% if demosite %}
-	    return [
-		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}header',
-		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section1',
-		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section2',
-		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section3',
-		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section4',
-		'{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section5'
+        return [
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}header',
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section1',
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section2',
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section3',
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section4',
+            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section5',
         ];
 {% else %}
 	    return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main'];
@@ -64,7 +63,7 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
 
     public function getPageTemplates(): array
     {
-    	return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}homepage'];
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}homepage'];
     }
 
     public function getDefaultView(): string
@@ -74,6 +73,6 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
 
     public function getSearchType(): string
     {
-	    return 'Home';
+        return 'Home';
     }
 }

@@ -16,11 +16,8 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 {% endif %}
 class {{ pagepart }} extends AbstractPagePart
 {
-
     /**
-     * The label on the submit button.
-     *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", nullable=true)
@@ -31,66 +28,34 @@ class {{ pagepart }} extends AbstractPagePart
 {% endif %}
     protected $label;
 
-    /**
-     * Set the label
-     *
-     * @param int $label
-     *
-     * @return SubmitButtonPagePart
-     */
-    public function setLabel($label)
+    public function setLabel(?string $label): SubmitButtonPagePart
     {
         $this->label = $label;
 
         return $this;
     }
 
-    /**
-     * Get the label
-     *
-     * @return string
-     */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * Return a string representation of this page part
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return "SubmitButtonPagePart";
+        return 'SubmitButtonPagePart';
     }
 
-    /**
-     * Return the frontend view
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Return the backend view
-     *
-     * @return string
-     */
-    public function getAdminView()
+    public function getAdminView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}admin-view.html.twig';
     }
 
-    /**
-     * Returns the default form type for this FormSubmissionField
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

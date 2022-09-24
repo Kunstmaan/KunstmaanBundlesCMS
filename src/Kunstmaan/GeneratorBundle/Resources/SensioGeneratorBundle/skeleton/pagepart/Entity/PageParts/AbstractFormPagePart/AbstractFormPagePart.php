@@ -8,9 +8,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Abstract version of a form page part
- */
 abstract class {{ pagepart }} extends AbstractPagePart implements FormAdaptorInterface
 {
     /**
@@ -31,20 +28,15 @@ abstract class {{ pagepart }} extends AbstractPagePart implements FormAdaptorInt
 {% endif %}
     protected $label;
 
-    /**
-     * Returns a unique id for the current page part
-     *
-     * @return string
-     */
-    public function getUniqueId()
+    public function getUniqueId(): string
     {
-        return  str_replace('\\', '', ClassLookup::getClass($this)) . $this->id; //TODO
+        return str_replace('\\', '', ClassLookup::getClass($this)).$this->id;
     }
 
     /**
-     * Set the label used for this page part
+     * Set the label used for this page part.
      *
-     * @param int $label
+     * @param string $label
      *
      * @return AbstractFormPagePart
      */
@@ -56,7 +48,7 @@ abstract class {{ pagepart }} extends AbstractPagePart implements FormAdaptorInt
     }
 
     /**
-     * Get the label used for this page part
+     * Get the label used for this page part.
      *
      * @return string
      */
@@ -65,12 +57,7 @@ abstract class {{ pagepart }} extends AbstractPagePart implements FormAdaptorInt
         return $this->label;
     }
 
-    /**
-     * Returns the view used in the backend
-     *
-     * @return string
-     */
-    public function getAdminView()
+    public function getAdminView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}admin-view.html.twig';
     }

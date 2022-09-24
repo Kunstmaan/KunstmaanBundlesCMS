@@ -2,12 +2,10 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
+use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Symfony\Component\Form\AbstractType;
-use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity()]
@@ -20,58 +18,42 @@ use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
 {% endif %}
 class BehatTestPage extends AbstractPage implements HasPageTemplateInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return BehatTestPageAdminType::class;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
-        return array(
-            array(
-                'name'  => 'HomePage',
-                'class' => '{{ namespace }}\Entity\Pages\HomePage'
-            ),
-            array(
-                'name'  => 'ContentPage',
-                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
-            ),
+        return [
+            [
+                'name' => 'HomePage',
+                'class' => '{{ namespace }}\Entity\Pages\HomePage',
+            ],
+            [
+                'name' => 'ContentPage',
+                'class' => '{{ namespace }}\Entity\Pages\ContentPage',
+            ],
 {% if demosite %}
-            array(
-                'name'  => 'FormPage',
-                'class' => '{{ namespace }}\Entity\Pages\FormPage'
-            ),
+            [
+                'name' => 'FormPage',
+                'class' => '{{ namespace }}\Entity\Pages\FormPage',
+            ],
 {% endif %}
-        );
+        ];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
-        return array();
+        return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPageTemplates()
+    public function getPageTemplates(): array
     {
-        return array('{% if not isV4 %}{{ bundle.getName() }}:{%endif%}behat-test-page');
+        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}behat-test-page'];
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '';
     }

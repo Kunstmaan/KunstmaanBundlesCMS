@@ -2,13 +2,12 @@
 
 namespace {{ namespace }}\Controller;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use {{ namespace }}\AdminList\{{ entity_class }}AuthorAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticleAuthorAdminListController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use {{ namespace }}\AdminList\{{ entity_class }}AuthorAdminListConfigurator;
+use Symfony\Component\Routing\Annotation\Route;
 {% if isV4 %}
 
 {% if canUseAttributes %}
@@ -23,7 +22,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
 {
     public function createAdminListConfigurator(): AdminListConfiguratorInterface
     {
-        return new {{ entity_class }}AuthorAdminListConfigurator($this->getEntityManager(), $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
+        return new {{ entity_class }}AuthorAdminListConfigurator($this->getEntityManager(), $this->aclHelper, $this->locale);
     }
 
 {% if canUseAttributes %}

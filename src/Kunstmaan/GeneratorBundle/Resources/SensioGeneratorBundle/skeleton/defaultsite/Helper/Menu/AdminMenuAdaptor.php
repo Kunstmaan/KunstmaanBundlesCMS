@@ -12,7 +12,7 @@ class AdminMenuAdaptor implements MenuAdaptorInterface
 {
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null): void
     {
-        if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
+        if (null !== $request && null !== $parent && $parent->getRoute() === 'KunstmaanAdminBundle_modules') {
             $menuitem = new TopMenuItem($menu);
             $menuitem
                 ->setRoute('{{ bundle_name|lower }}_admin_bike')

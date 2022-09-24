@@ -3,11 +3,8 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
-use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity()]

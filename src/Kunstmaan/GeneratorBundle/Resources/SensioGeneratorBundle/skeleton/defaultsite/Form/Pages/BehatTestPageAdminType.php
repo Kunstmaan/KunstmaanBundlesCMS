@@ -2,24 +2,16 @@
 
 namespace {{ namespace }}\Form\Pages;
 
+use {{ namespace }}\Entity\Pages\BehatTestPage;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * The admin type for behat test pages
- */
 class BehatTestPageAdminType extends PageAdminType
 {
-    /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options.
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\Pages\BehatTestPage'
-        ));
+        $resolver->setDefaults([
+            'data_class' => BehatTestPage::class,
+        ]);
     }
 }

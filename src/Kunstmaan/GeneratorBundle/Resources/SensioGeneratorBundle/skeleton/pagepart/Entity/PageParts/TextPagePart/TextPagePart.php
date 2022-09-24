@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="text", nullable=true)
@@ -34,42 +34,24 @@ class {{ pagepart }} extends AbstractPagePart
 {% endif %}
     private $content;
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     *
-     * @return {{ pagepart }}
-     */
-    public function setContent($content)
+    public function setContent(?string $content): TextPagePart
     {
         $this->content = $content;
 
         return $this;
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Get the admin form type.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

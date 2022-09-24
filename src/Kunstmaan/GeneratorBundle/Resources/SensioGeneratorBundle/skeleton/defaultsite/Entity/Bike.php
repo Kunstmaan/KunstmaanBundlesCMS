@@ -30,7 +30,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     ];
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="type", type="string", length=20, nullable=true)
@@ -48,7 +48,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $type;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="model", type="string", length=100, nullable=true)
@@ -66,7 +66,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $model;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="brand", type="string", length=100, nullable=true)
@@ -84,7 +84,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $brand;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="price", type="decimal", precision=8, scale=2, nullable=true)
@@ -96,7 +96,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $price;
 
     /**
-     * @var integer
+     * @var int|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="smallint", nullable=true)
@@ -113,106 +113,62 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {% endif %}
     private $weight;
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): ?string
     {
-	return $this->type;
+        return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return Bike
-     */
-    public function setType($type)
+    public function setType(?string $type): Bike
     {
-	$this->type = $type;
+        $this->type = $type;
 
-	return $this;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getModel()
+    public function getModel(): ?string
     {
-	return $this->model;
+        return $this->model;
     }
 
-    /**
-     * @param string $model
-     *
-     * @return Bike
-     */
-    public function setModel($model)
+    public function setModel(?string $model): Bike
     {
-	$this->model = $model;
+        $this->model = $model;
 
-	return $this;
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBrand()
+    public function getBrand(): ?string
     {
-	return $this->brand;
+        return $this->brand;
     }
 
-    /**
-     * @param string $brand
-     *
-     * @return Bike
-     */
-    public function setBrand($brand)
+    public function setBrand(?string $brand): Bike
     {
-	$this->brand = $brand;
+        $this->brand = $brand;
 
-	return $this;
+        return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getPrice()
+    public function getPrice(): ?string
     {
-	return $this->price;
+        return $this->price;
     }
 
-    /**
-     * @param float $price
-     *
-     * @return Bike
-     */
-    public function setPrice($price)
+    public function setPrice(?string $price): Bike
     {
-	$this->price = $price;
+        $this->price = $price;
 
-	return $this;
+        return $this;
     }
 
-    /**
-     * Set weight
-     *
-     * @param integer $weight
-     *
-     * @return Bike
-     */
-    public function setWeight($weight)
+    public function setWeight(int $weight): Bike
     {
         $this->weight = $weight;
 
         return $this;
     }
 
-    /**
-     * Get weight
-     *
-     * @return integer
-     */
-    public function getWeight()
+    public function getWeight(): ?int
     {
         return $this->weight;
     }

@@ -2,6 +2,7 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
+use {{ namespace }}\Entity\PageParts\{{ pagepart }};
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,30 +11,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class {{ pagepart }}AdminType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('video', MediaType::class, array(
+        $builder->add('video', MediaType::class, [
             'mediatype' => 'video',
-            'required' => true
-        ));
-        $builder->add('thumbnail', MediaType::class, array(
+            'required' => true,
+        ]);
+        $builder->add('thumbnail', MediaType::class, [
             'mediatype' => 'image',
-            'required' => false
-        ));
-        $builder->add('caption', TextType::class, array(
-            'required' => false
-        ));
+            'required' => false,
+        ]);
+        $builder->add('caption', TextType::class, [
+            'required' => false,
+        ]);
     }
 
-    /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options.
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\PageParts\{{ pagepart }}',
-        ));
+        $resolver->setDefaults([
+            'data_class' => {{ pagepart }}::class,
+        ]);
     }
 }

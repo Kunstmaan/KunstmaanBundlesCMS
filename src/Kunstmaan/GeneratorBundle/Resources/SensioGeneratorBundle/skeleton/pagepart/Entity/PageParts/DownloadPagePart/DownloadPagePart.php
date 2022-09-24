@@ -17,7 +17,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var Media
+     * @var Media|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
@@ -30,42 +30,24 @@ class {{ pagepart }} extends AbstractPagePart
 {% endif %}
     protected $media;
 
-    /**
-     * Get media
-     *
-     * @return Media
-     */
-    public function getMedia()
+    public function getMedia(): ?Media
     {
         return $this->media;
     }
 
-    /**
-     * Set media
-     *
-     * @param Media $media
-     *
-     * @return {{ pagepart }}
-     */
-    public function setMedia($media)
+    public function setMedia(?Media $media): DownloadPagePart
     {
         $this->media = $media;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
-        return "{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig";
+        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }
