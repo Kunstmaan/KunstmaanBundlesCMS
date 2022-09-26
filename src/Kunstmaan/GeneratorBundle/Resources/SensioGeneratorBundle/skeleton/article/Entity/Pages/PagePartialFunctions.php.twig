@@ -1,38 +1,26 @@
 {% if type != 'Author' %}
-    /**
-     * @param \{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}
-     * @return $this
-     */
-    public function set{{ pluralType|capitalize }}(${{ type|lower }})
+
+    public function set{{ pluralType|capitalize }}(Collection ${{ type|lower }}): self
     {
         $this->{{ pluralType }} = ${{ type|lower }};
 
         return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function get{{ pluralType|capitalize }}()
+    public function get{{ pluralType|capitalize }}(): Collection
     {
         return $this->{{ pluralType }};
     }
 {% else %}
-    /**
-     * @param \{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}
-     * @return $this
-     */
-     public function set{{ type|capitalize }}(${{ type|lower }})
+
+     public function set{{ type|capitalize }}(?\{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}): self
      {
          $this->{{ type|lower }} = ${{ type|lower }};
 
          return $this;
      }
 
-     /**
-      * @return \{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}
-      */
-      public function get{{ type|capitalize }}()
+      public function get{{ type|capitalize }}(): ?\{{ namespace }}\Entity\{{ entity_class }}{{ type }}
       {
           return $this->{{ type|lower }};
       }

@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var EditableMediaWrapper
+     * @var EditableMediaWrapper|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\EditableMediaWrapper", cascade={"persist"})
@@ -38,7 +38,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $mediaWrapper;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="caption", nullable=true)
@@ -50,7 +50,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $caption;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(type="string", name="alt_text", nullable=true)
@@ -62,7 +62,7 @@ class {{ pagepart }} extends AbstractPagePart
     private $altText;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="link", type="string", nullable=true)
@@ -83,132 +83,74 @@ class {{ pagepart }} extends AbstractPagePart
 {% if canUseEntityAttributes %}
     #[ORM\Column(name: 'open_in_new_window', type: 'boolean', nullable: true)]
 {% endif %}
-    private $openInNewWindow;
+    private $openInNewWindow = false;
 
-    /**
-     * Get open in new window
-     *
-     * @return bool
-     */
-    public function getOpenInNewWindow()
+    public function getOpenInNewWindow(): bool
     {
         return $this->openInNewWindow;
     }
 
-    /**
-     * Set open in new window
-     *
-     * @param bool $openInNewWindow
-     *
-     * @return {{ pagepart }}
-     */
-    public function setOpenInNewWindow($openInNewWindow)
+    public function setOpenInNewWindow(bool $openInNewWindow): EditableImagePagePart
     {
         $this->openInNewWindow = $openInNewWindow;
 
         return $this;
     }
 
-    /**
-     * Set link
-     *
-     * @param string $link
-     *
-     * @return {{ pagepart }}
-     */
-    public function setLink($link)
+    public function setLink(?string $link): EditableImagePagePart
     {
         $this->link = $link;
 
         return $this;
     }
 
-    /**
-     * Get link
-     *
-     * @return string
-     */
-    public function getLink()
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
-    /**
-     * Set alt text
-     *
-     * @param string $altText
-     *
-     * @return {{ pagepart }}
-     */
-    public function setAltText($altText)
+    public function setAltText(?string $altText): EditableImagePagePart
     {
         $this->altText = $altText;
 
         return $this;
     }
 
-    /**
-     * Get alt text
-     *
-     * @return string
-     */
-    public function getAltText()
+    public function getAltText(): ?string
     {
         return $this->altText;
     }
 
-    public function getMediaWrapper()
+    public function getMediaWrapper(): ?EditableMediaWrapper
     {
         return $this->mediaWrapper;
     }
 
-    public function setMediaWrapper(EditableMediaWrapper $mediaWrapper)
+    public function setMediaWrapper(?EditableMediaWrapper $mediaWrapper): EditableImagePagePart
     {
         $this->mediaWrapper = $mediaWrapper;
 
         return $this;
     }
 
-    /**
-     * Set caption
-     *
-     * @param string $caption
-     *
-     * @return {{ pagepart }}
-     */
-    public function setCaption($caption)
+    public function setCaption(?string $caption): EditableImagePagePart
     {
         $this->caption = $caption;
 
         return $this;
     }
 
-    /**
-     * Get caption
-     *
-     * @return string
-     */
-    public function getCaption()
+    public function getCaption(): ?string
     {
         return $this->caption;
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Get the admin form type.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

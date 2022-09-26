@@ -5,10 +5,10 @@ namespace {{ namespace }}\Entity\PageParts;
 use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
+use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity]
@@ -38,7 +38,7 @@ class {{ pagepart }} extends AbstractFormPagePart
     /**
      * Error message shows when the page part is required and nothing is filled in.
      *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="error_message_required", type="string", nullable=true)
@@ -52,7 +52,7 @@ class {{ pagepart }} extends AbstractFormPagePart
     /**
      * Internal name that can be used with form submission subscribers.
      *
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="internal_name", type="string", nullable=true)
@@ -63,128 +63,76 @@ class {{ pagepart }} extends AbstractFormPagePart
 {% endif %}
     protected $internalName;
 
-    /**
-     * Sets the required valud of this page part
-     *
-     * @param bool $required
-     *
-     * @return CheckboxPagePart
-     */
-    public function setRequired($required)
+    public function setRequired(bool $required): CheckboxPagePart
     {
         $this->required = $required;
 
         return $this;
     }
 
-    /**
-     * Check if the page part is required
-     *
-     * @return bool
-     */
-    public function getRequired()
+    public function getRequired(): bool
     {
         return $this->required;
     }
 
-    /**
-     * Sets the message shown when the page part is required and no value was entered
-     *
-     * @param string $errorMessageRequired
-     *
-     * @return CheckboxPagePart
-     */
-    public function setErrorMessageRequired($errorMessageRequired)
+    public function setErrorMessageRequired(?string $errorMessageRequired): CheckboxPagePart
     {
         $this->errorMessageRequired = $errorMessageRequired;
 
         return $this;
     }
 
-    /**
-     * Get the error message that will be shown when the page part is required and no value was entered
-     *
-     * @return string
-     */
-    public function getErrorMessageRequired()
+    public function getErrorMessageRequired(): ?string
     {
         return $this->errorMessageRequired;
     }
 
-    /**
-     * @param string $internalName
-     *
-     * @return self
-     */
-    public function setInternalName($internalName)
+    public function setInternalName(?string $internalName): CheckboxPagePart
     {
         $this->internalName = $internalName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getInternalName()
+    public function getInternalName(): ?string
     {
         return $this->internalName;
     }
 
-    /**
-     * Returns the frontend view
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Modify the form with the fields of the current page part
-     *
-     * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
-     * @param int                  $sequence    The sequence of the form field
-     */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence): void
     {
         $bfsf = new BooleanFormSubmissionField();
-        $bfsf->setFieldName('field_' . $this->getUniqueId());
+        $bfsf->setFieldName('field_'.$this->getUniqueId());
         $bfsf->setLabel($this->getLabel());
         $bfsf->setInternalName($this->getInternalName());
         $bfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $bfsf;
-        $constraints = array();
+        $data['formwidget_'.$this->getUniqueId()] = $bfsf;
+        $constraints = [];
         if ($this->getRequired()) {
-            $options = array();
+            $options = [];
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
             $constraints[] = new NotBlank($options);
         }
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            BooleanFormSubmissionType::class,
-            array(
-                'label'       => $this->getLabel(),
-                'value_constraints' => $constraints,
-                'required'    => $this->getRequired()
-            )
-        );
+        $formBuilder->add('formwidget_'.$this->getUniqueId(), BooleanFormSubmissionType::class, [
+            'label' => $this->getLabel(),
+            'value_constraints' => $constraints,
+            'required' => $this->getRequired(),
+        ]);
         $formBuilder->setData($data);
 
         $fields->append($bfsf);
     }
 
-    /**
-     * Returns the default backend form type for this page part
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

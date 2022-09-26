@@ -2,9 +2,9 @@
 
 namespace {{ namespace }}\Entity;
 
+use {{ namespace }}\Form\{{ entity_class }}AuthorAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractAuthor;
-use {{ namespace }}\Form\{{ entity_class }}AuthorAdminType;
 
 {% if canUseEntityAttributes %}
 #[ORM\Entity]

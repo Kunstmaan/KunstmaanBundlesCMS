@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var Media
+     * @var Media|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
@@ -38,7 +38,7 @@ class {{ pagepart }} extends AbstractPagePart
     protected $video;
 
     /**
-     * @var string
+     * @var string|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="caption", type="string", nullable=true)
@@ -50,7 +50,7 @@ class {{ pagepart }} extends AbstractPagePart
     protected $caption;
 
     /**
-     * @var Media
+     * @var Media|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
@@ -65,66 +65,42 @@ class {{ pagepart }} extends AbstractPagePart
 {% endif %}
     protected $thumbnail;
 
-    /**
-     * @param string $caption
-     */
-    public function setCaption($caption)
+    public function setCaption(?string $caption): void
     {
         $this->caption = $caption;
     }
 
-    /**
-     * @return string
-     */
-    public function getCaption()
+    public function getCaption(): ?string
     {
         return $this->caption;
     }
 
-    /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $thumbnail
-     */
-    public function setThumbnail($thumbnail)
+    public function setThumbnail(?Media $thumbnail): void
     {
         $this->thumbnail = $thumbnail;
     }
 
-    /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
-     */
-    public function getThumbnail()
+    public function getThumbnail(): ?Media
     {
         return $this->thumbnail;
     }
 
-    /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $video
-     */
-    public function setVideo($video)
+    public function setVideo(?Media $video): void
     {
         $this->video = $video;
     }
 
-    /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
-     */
-    public function getVideo()
+    public function getVideo(): ?Media
     {
         return $this->video;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
-        return "{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig";
+        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

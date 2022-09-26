@@ -2,8 +2,8 @@
 
 namespace {{ namespace }}\AdminList;
 
-use Doctrine\ORM\EntityManagerInterface;
 use {{ namespace }}\Form\{{ entity_class }}TagAdminType;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleTagAdminListConfigurator;
 

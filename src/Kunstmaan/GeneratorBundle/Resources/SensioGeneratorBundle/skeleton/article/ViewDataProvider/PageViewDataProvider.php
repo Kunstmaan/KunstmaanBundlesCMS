@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace {{ namespace }}\ViewDataProvider;
 
-{%if isV4%}use App\Entity\Pages\{{ entity_class }}Page;
-{%endif%}
+use App\Entity\Pages\{{ entity_class }}Page;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
@@ -48,7 +47,7 @@ $request = $this->requestStack->getMasterRequest();
         $searchCategory = $request->query->get('category') ? explode(',', $request->query->get('category')) : null;
         $searchTag = $request->query->get('tag') ? explode(',', $request->query->get('tag')) : null;
 
-        $pageRepository = $this->em->getRepository({% if isV4 %}{{ entity_class }}Page::class{%else%}'{{ bundle.getName() }}:Pages\{{ entity_class }}Page'{%endif%});
+        $pageRepository = $this->em->getRepository({{ entity_class }}Page::class);
         $result = $pageRepository->getArticles($request->getLocale(), null, null, $searchCategory, $searchTag);
 
         // Filter the results for this page
@@ -63,7 +62,7 @@ $request = $this->requestStack->getMasterRequest();
         } catch (OutOfRangeCurrentPageException $oore) {
             $repo = $this->em->getRepository(NodeTranslation::class);
             $nt = $repo->getNodeTranslationByLanguageAndInternalName($request->getLocale(), '{{ entity_class|lower }}');
-            $url = $this->urlGenerator->generate('_slug', array('url' => $nt ? $nt->getUrl() : '', '_locale' => $request->getLocale()));
+            $url = $this->urlGenerator->generate('_slug', ['url' => $nt ? $nt->getUrl() : '', '_locale' => $request->getLocale()]);
 
             $renderContext->setResponse(new RedirectResponse($url));
 

@@ -8,7 +8,7 @@ use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
 class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
 {
     /**
-     * Returns an array of all {{ entity_class }}Pages
+     * Returns an array of all {{ entity_class }}Pages.
      *
      * @param string $lang
      * @param int    $offset
@@ -20,19 +20,20 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
      */
     public function getArticles($lang = null, $offset = null, $limit = null{% if uses_category %}, array $category = null{% endif %}{% if uses_tag %}, array $tag = null{% endif %})
     {
-        $q = $this->getArticlesQuery($lang, $offset, $limit{% if uses_category %}, $category{% endif %}{% if uses_tag %}, $tag{% endif %});
+        $q = $this->getArticlesQuery($lang, $offset ?? 0, $limit ?? 10{% if uses_category %}, $category{% endif %}{% if uses_tag %}, $tag{% endif %});
 
         return $q->getResult();
     }
 
     /**
-     * Returns the article query
+     * Returns the article query.
      *
      * @param string|null $lang
      * @param int         $offset
      * @param int         $limit
      * @param array       $category
      * @param array       $tag
+     *
      * @return Query
      */
     public function getArticlesQuery($lang, $offset, $limit{% if uses_category %}, array $category = null{% endif %}{% if uses_tag %}, array $tag = null{% endif %})
@@ -42,15 +43,15 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
             ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
             ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
             ->where('t.online = :online')
-            ->setParameter('online',true)
+            ->setParameter('online', true)
             ->andWhere('n.deleted = :deleted')
-            ->setParameter('deleted',false)
+            ->setParameter('deleted', false)
             ->andWhere('v.refEntityName = :refname')
             ->orderBy('a.date', 'DESC')
-            ->setParameter('refname', "{{ namespace | replace({'\\': '\\\\'}) }}\\Entity\\Pages\\{{ entity_class }}Page");
+            ->setParameter('refname', '{{ namespace | replace({'\\': '\\\\'}) }}\\Entity\\Pages\\{{ entity_class }}Page');
 
         {% if uses_tag %}
-        if (! is_null($tag) && count($tag)) {
+if (null !== $tag && count($tag)) {
             $qb->leftJoin('a.tags', 'tag')
                 ->andWhere('tag.name IN (?1)')
                 ->setParameter(1, $tag)
@@ -59,7 +60,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         {% endif %}
 
         {% if uses_category %}
-        if (! is_null($category) && count($category)) {
+if (null !== $category && count($category)) {
             $qb->leftJoin('a.categories', 'cat')
                 ->andWhere('cat.name IN (?2)')
                 ->setParameter(2, $category)
@@ -67,7 +68,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         }
         {% endif %}
 
-        if (!is_null($lang)) {
+        if (null !== $lang) {
             $qb
                 ->andWhere('t.lang = :lang')
                 ->setParameter('lang', $lang)

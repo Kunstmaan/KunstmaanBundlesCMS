@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @var string
+     * @var int|null
 {% if canUseEntityAttributes == false %}
      *
      * @ORM\Column(name="niv", type="integer", nullable=true)
@@ -57,66 +57,36 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public static $supportedHeaders = [1, 2, 3, 4, 5, 6];
 
-    /**
-     * Set niv
-     *
-     * @param int $niv
-     *
-     * @return {{ pagepart }}
-     */
-    public function setNiv($niv)
+    public function setNiv(?int $niv): HeaderPagePart
     {
         $this->niv = $niv;
 
         return $this;
     }
 
-    /**
-     * Get niv
-     *
-     * @return int
-     */
-    public function getNiv()
+    public function getNiv(): ?int
     {
         return $this->niv;
     }
 
-    /**
-     * @param string $title
-     *
-     * @return {{ pagepart }}
-     */
-    public function setTitle($title)
+    public function setTitle(?string $title): HeaderPagePart
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Get the twig view.
-     *
-     * @return string
-     */
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
-    /**
-     * Get the admin form type.
-     *
-     * @return string
-     */
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return {{ adminType }}::class;
     }

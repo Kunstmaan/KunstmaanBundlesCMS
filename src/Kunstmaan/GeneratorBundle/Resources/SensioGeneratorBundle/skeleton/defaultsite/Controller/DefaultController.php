@@ -4,8 +4,8 @@ namespace {{ namespace }}\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
@@ -29,6 +29,7 @@ class DefaultController extends AbstractController
         $locales = array_filter(
             explode('|', $this->getParameter('requiredlocales'))
         );
+
         return $request->getPreferredLanguage($locales);
     }
 {% endif %}

@@ -5,9 +5,9 @@ namespace {{ namespace }}\Controller;
 use {{ namespace }}\AdminList\BikeAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 {% if isV4 %}
 {% if canUseAttributes %}#[Route('/{_locale}/%kunstmaan_admin.admin_prefix%/bike', requirements: ['_locale' => '%requiredlocales%'])]
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 {% endif %}
 class BikeAdminListController extends AbstractAdminListController
 {
-    /** @var BikeAdminListConfigurator */
+    /** @var BikeAdminListConfigurator|null */
     private $configurator;
 
     public function getAdminListConfigurator(): BikeAdminListConfigurator
@@ -39,7 +39,7 @@ class BikeAdminListController extends AbstractAdminListController
 {% endif %}
     public function indexAction(Request $request): Response
     {
-	    return parent::doIndexAction($this->getAdminListConfigurator(), $request);
+        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
 {% if canUseAttributes %}
@@ -51,7 +51,7 @@ class BikeAdminListController extends AbstractAdminListController
 {% endif %}
     public function addAction(Request $request): Response
     {
-	    return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
+        return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
 {% if canUseAttributes %}
@@ -63,7 +63,7 @@ class BikeAdminListController extends AbstractAdminListController
 {% endif %}
     public function editAction(Request $request, int $id): Response
     {
-	    return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
 {% if canUseAttributes %}
@@ -75,7 +75,7 @@ class BikeAdminListController extends AbstractAdminListController
 {% endif %}
     public function deleteAction(Request $request, int $id): Response
     {
-	    return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
 {% if canUseAttributes %}
@@ -85,9 +85,9 @@ class BikeAdminListController extends AbstractAdminListController
      * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle_name|lower }}_admin_bike_export", methods={"GET", "POST"})
      */
 {% endif %}
-    public function exportAction(Request $request, $_format): Response
+    public function exportAction(Request $request, string $_format): Response
     {
-	    return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
 
 {% if canUseAttributes %}
