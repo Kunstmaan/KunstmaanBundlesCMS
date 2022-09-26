@@ -1,8 +1,6 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pagetemplates:
         behat-test-page:
-{%endif%}
-{% if isV4 %}            {%endif%}name: "Behat test page"
-{% if isV4 %}            {%endif%}rows: []
-{% if isV4 %}            {%endif%}template: ""
+            name: "Behat test page"
+            rows: []
+            template: ""

@@ -2,7 +2,7 @@
     {% if thanks is defined and thanks %}
         {{ page.thanks|raw }}
     {% else %}
-        {% form_theme frontendform '<% if not isV4 %><%= bundle.name %>:<% endif %>Form<% if not isV4 %>:<% else %>/<% endif %>fields.html.twig' %}
+        {% form_theme frontendform 'Form/fields.html.twig' %}
 
         {{ form_start(frontendform, {'method': 'POST', 'action': path('_slug', { 'url' : nodemenu.current.slug }), 'attr': {'novalidate': 'novalidate', 'class': 'form--default'}}) }}
             {{ render_pageparts(page, 'main') }}

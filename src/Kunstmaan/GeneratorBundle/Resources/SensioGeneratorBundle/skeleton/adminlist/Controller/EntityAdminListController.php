@@ -9,14 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-{% if isV4 %}
 {% if canUseAttributes %}
 #[Route('/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}', requirements: ['_locale' => '%requiredlocales%'])]
 {% else %}
 /**
  * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}", requirements={"_locale"="%requiredlocales%"})
  */
-{% endif %}
 {% endif %}
 class {{ entity_class }}AdminListController extends AbstractAdminListController
 {

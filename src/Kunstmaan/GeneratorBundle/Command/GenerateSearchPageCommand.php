@@ -74,19 +74,7 @@ EOT
 
         $prefix = $input->getOption('prefix');
         $createPage = $input->getOption('createpage');
-        if (Kernel::VERSION_ID < 40000) {
-            GeneratorUtils::ensureOptionsProvided($input, ['namespace']);
-
-            $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-            $bundle = strtr($namespace, ['\\' => '']);
-
-            $bundle = $this
-                ->getApplication()
-                ->getKernel()
-                ->getBundle($bundle);
-        } else {
-            $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
-        }
+        $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
 
         $rootDir = $this->getApplication()->getKernel()->getProjectDir();
 
@@ -114,21 +102,6 @@ EOT
         $questionHelper->writeSection($output, 'Welcome to the SearchPage generator');
 
         $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
-
-        if (Kernel::VERSION_ID >= 40000) {
-            $inputAssistant->askForPrefix();
-
-            return;
-        }
-
-        $inputAssistant->askForNamespace([
-            '',
-            'This command helps you to generate a SearchPage.',
-            'You must specify the namespace of the bundle where you want to generate the SearchPage in.',
-            'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
-            '',
-        ]);
-
         $inputAssistant->askForPrefix();
     }
 

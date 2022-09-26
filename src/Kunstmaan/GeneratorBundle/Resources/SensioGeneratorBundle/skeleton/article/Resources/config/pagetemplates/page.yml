@@ -1,10 +1,8 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pagetemplates:
       {{ entity_class|lower }}page:
-{%endif%}
-{% if isV4 %}            {%endif%}name: "{{ entity_class }} page"
-{% if isV4 %}            {%endif%}rows:
-{% if isV4 %}            {%endif%}    - regions:
-{% if isV4 %}            {%endif%}        - { name: "{{ entity_class|lower }}main", span: 12 }
-{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\{{ entity_class }}Page\\pagetemplate.html.twig"
+            name: "{{ entity_class }} page"
+            rows:
+                - regions:
+                    - { name: "{{ entity_class|lower }}main", span: 12 }
+            template: "Pages\\{{ entity_class }}Page\\pagetemplate.html.twig"

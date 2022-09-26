@@ -4,7 +4,7 @@
 
     <% if demosite %>
     <div class="submenu">
-        {% include '<% if not isV4 %><%= bundle.name %>:<% endif %>Layout<% if not isV4 %>:<% else %>/<% endif %>submenu.html.twig' with {'page': page} %}
+        {% include 'Layout/submenu.html.twig' with {'page': page} %}
     </div>
     <% endif %>
 </div>

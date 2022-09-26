@@ -31,17 +31,17 @@
     {% endif %}
 
     {# Favicons #}
-    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_favicons.html.twig' %}
+    {% include 'Layout/_favicons.html.twig' %}
 
     {# Webfonts #}
-    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_webfonts.html.twig' %}
+    {% include 'Layout/_webfonts.html.twig' %}
 
     {# CSS #}
-    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_css.html.twig' %}
+    {% include 'Layout/_css.html.twig' %}
 <% if not groundcontrol %>
 
     {# JS #}
-    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_js.html.twig' %}
+    {% include 'Layout/_js.html.twig' %}
 <% endif %>
 </head>
 {% endapply %}
@@ -51,15 +51,15 @@
 <div class="emulate-pulldown">
 <% endif %>
     {# Google Tagmanager #}
-    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_googletagmanager.html.twig' %}
+    {% include 'Layout/_googletagmanager.html.twig' %}
 
     {# Outdated browser message #}
-    {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_outdatedbrowser.html.twig' %}
+    {% include 'Layout/_outdatedbrowser.html.twig' %}
 
 <% if demosite %>
     <div id="sidebar-toggle__sidebar" class="sidebar-toggle__sidebar sidebar-toggle__sidebar--left main-nav main-nav--mobile">
         {# Mobile nav #}
-        {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_mobile-nav.html.twig' %}
+        {% include 'Layout/_mobile-nav.html.twig' %}
     </div>
 
     <div id="sidebar-toggle__content" class="sidebar-toggle__content">
@@ -67,12 +67,12 @@
 
     {# Header #}
     {% block header %}
-        {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_header.html.twig' %}
+        {% include 'Layout/_header.html.twig' %}
     {% endblock %}
 
     {# Breadcrumbs #}
     {% block breadcrumbs %}
-        {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_breadcrumbs.html.twig' %}
+        {% include 'Layout/_breadcrumbs.html.twig' %}
     {% endblock %}
 
     {# Content #}
@@ -82,7 +82,7 @@
 
     {# Footer #}
     {% block footer %}
-        {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_footer.html.twig' %}
+        {% include 'Layout/_footer.html.twig' %}
     {% endblock %}
 
 <% if demosite %>
@@ -91,13 +91,13 @@
 
     {# Cookieconsent #}
     {% block cookieconsent %}
-        {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_cookieconsent.html.twig' %}
+        {% include 'Layout/_cookieconsent.html.twig' %}
     {% endblock %}
 
 <% if groundcontrol %>
     {# JS Footer #}
     {% block jsBundle %}
-        {% include '<% if not isV4 %><%= shortBundleName %>/<% endif %>Layout/_js_footer.html.twig' %}
+        {% include 'Layout/_js_footer.html.twig' %}
     {% endblock %}
 <% endif %>
 <% if demosite %>

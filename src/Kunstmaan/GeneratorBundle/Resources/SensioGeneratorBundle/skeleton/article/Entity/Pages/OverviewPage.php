@@ -24,12 +24,12 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
 {
     public function getPagePartAdminConfigurations(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
+        return ['{{ entity_class|lower }}main'];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}overviewpage'];
+        return ['{{ entity_class|lower }}overviewpage'];
     }
 
     /**
@@ -44,7 +44,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}OverviewPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/{{ entity_class }}OverviewPage/view.html.twig';
     }
 
     public function getSearchType(): string

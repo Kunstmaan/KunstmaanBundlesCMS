@@ -130,7 +130,7 @@ class {{ pagepart }} extends AbstractFormPagePart
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle }}:{%endif%}PageParts/{{ pagepart }}{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'PageParts/{{ pagepart }}/view.html.twig';
     }
 
     public function setRequired(bool $required): MultiLineTextPagePart

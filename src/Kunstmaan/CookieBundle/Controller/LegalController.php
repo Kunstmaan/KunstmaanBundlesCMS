@@ -45,7 +45,6 @@ final class LegalController extends AbstractController
             [
                 'node' => $node,
                 'page' => $page,
-                'isV4' => Kernel::VERSION_ID >= 40000,
             ]
         );
     }

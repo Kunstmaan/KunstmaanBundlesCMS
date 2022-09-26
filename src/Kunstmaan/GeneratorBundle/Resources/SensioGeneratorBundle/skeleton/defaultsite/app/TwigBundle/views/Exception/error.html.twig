@@ -1,3 +1,3 @@
-{% extends '<% if not isV4 %><%= bundle.name %>:<% endif %>Error<% if not isV4 %>:<% else %>/<% endif %>error.html.twig' %}
+{% extends 'Error/error.html.twig' %}
 
 {% set status_code = 'other' %}

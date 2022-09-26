@@ -1,8 +1,6 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pageparts:
         section1:
-{% endif %}
-{% if isV4 %}            {%endif%}name: "Section 1"
-{% if isV4 %}            {%endif%}context: "section1"
-{% if isV4 %}            {%endif%}extends: "main"
+            name: "Section 1"
+            context: "section1"
+            extends: "main"

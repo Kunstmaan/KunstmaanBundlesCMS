@@ -1,21 +1,19 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pageparts:
         {{ entity_class|lower }}main:
-{% endif %}
-{% if isV4 %}            {%endif%}name: "{{ entity_class }} Main"
-{% if isV4 %}            {%endif%}context: "{{ entity_class|lower }}main"
-{% if isV4 %}            {%endif%}types:
-{% if isV4 %}            {%endif%}    - { name: Audio, class: {{ bundle.namespace }}\Entity\PageParts\AudioPagePart }
-{% if isV4 %}            {%endif%}    - { name: Button, class: {{ bundle.namespace }}\Entity\PageParts\ButtonPagePart }
-{% if isV4 %}            {%endif%}    - { name: Download, class: {{ bundle.namespace }}\Entity\PageParts\DownloadPagePart }
-{% if isV4 %}            {%endif%}    - { name: Header, class: {{ bundle.namespace }}\Entity\PageParts\HeaderPagePart }
-{% if isV4 %}            {%endif%}    - { name: Image, class: {{ bundle.namespace }}\Entity\PageParts\ImagePagePart }
-{% if isV4 %}            {%endif%}    - { name: IntroText, class: {{ bundle.namespace }}\Entity\PageParts\IntroTextPagePart }
-{% if isV4 %}            {%endif%}    - { name: Line, class: {{ bundle.namespace }}\Entity\PageParts\LinePagePart }
-{% if isV4 %}            {%endif%}    - { name: Link, class: {{ bundle.namespace }}\Entity\PageParts\LinkPagePart }
-{% if isV4 %}            {%endif%}    - { name: RawHtml, class: {{ bundle.namespace }}\Entity\PageParts\RawHtmlPagePart }
-{% if isV4 %}            {%endif%}    - { name: Text, class: {{ bundle.namespace }}\Entity\PageParts\TextPagePart }
-{% if isV4 %}            {%endif%}    - { name: Toc, class: {{ bundle.namespace }}\Entity\PageParts\TocPagePart }
-{% if isV4 %}            {%endif%}    - { name: ToTop, class: {{ bundle.namespace }}\Entity\PageParts\ToTopPagePart }
-{% if isV4 %}            {%endif%}    - { name: Video, class: {{ bundle.namespace }}\Entity\PageParts\VideoPagePart }
+            name: "{{ entity_class }} Main"
+            context: "{{ entity_class|lower }}main"
+            types:
+                - { name: Audio, class: {{ bundle.namespace }}\Entity\PageParts\AudioPagePart }
+                - { name: Button, class: {{ bundle.namespace }}\Entity\PageParts\ButtonPagePart }
+                - { name: Download, class: {{ bundle.namespace }}\Entity\PageParts\DownloadPagePart }
+                - { name: Header, class: {{ bundle.namespace }}\Entity\PageParts\HeaderPagePart }
+                - { name: Image, class: {{ bundle.namespace }}\Entity\PageParts\ImagePagePart }
+                - { name: IntroText, class: {{ bundle.namespace }}\Entity\PageParts\IntroTextPagePart }
+                - { name: Line, class: {{ bundle.namespace }}\Entity\PageParts\LinePagePart }
+                - { name: Link, class: {{ bundle.namespace }}\Entity\PageParts\LinkPagePart }
+                - { name: RawHtml, class: {{ bundle.namespace }}\Entity\PageParts\RawHtmlPagePart }
+                - { name: Text, class: {{ bundle.namespace }}\Entity\PageParts\TextPagePart }
+                - { name: Toc, class: {{ bundle.namespace }}\Entity\PageParts\TocPagePart }
+                - { name: ToTop, class: {{ bundle.namespace }}\Entity\PageParts\ToTopPagePart }
+                - { name: Video, class: {{ bundle.namespace }}\Entity\PageParts\VideoPagePart }

@@ -1,8 +1,6 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pagetemplates:
         {{ entity_class|lower }}overviewpage:
-{%endif%}
-{% if isV4 %}            {%endif%}name: "{{ entity_class }} overview page"
-{% if isV4 %}            {%endif%}rows: []
-{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\{{ entity_class }}OverviewPage\\pagetemplate.html.twig"
+            name: "{{ entity_class }} overview page"
+            rows: []
+            template: "Pages\\{{ entity_class }}OverviewPage\\pagetemplate.html.twig"

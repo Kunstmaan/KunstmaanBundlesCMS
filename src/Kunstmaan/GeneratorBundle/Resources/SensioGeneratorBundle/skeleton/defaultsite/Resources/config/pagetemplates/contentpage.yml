@@ -1,10 +1,8 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pagetemplates:
         contentpage:
-{%endif%}
-{% if isV4 %}            {%endif%}name: "Content page"
-{% if isV4 %}            {%endif%}rows:
-{% if isV4 %}            {%endif%}    - regions:
-{% if isV4 %}            {%endif%}        - { name: "main", span: 12 }
-{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\ContentPage\\pagetemplate.html.twig"
+            name: "Content page"
+            rows:
+                - regions:
+                    - { name: "main", span: 12 }
+            template: "Pages\\ContentPage\\pagetemplate.html.twig"

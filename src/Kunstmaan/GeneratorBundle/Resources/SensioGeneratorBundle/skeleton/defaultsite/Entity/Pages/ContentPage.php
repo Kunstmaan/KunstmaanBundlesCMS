@@ -96,16 +96,16 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
 
     public function getPagePartAdminConfigurations(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main'];
+        return ['main'];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}contentpage'{% if demosite %}, '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}contentpage{% if isV4 %}_{% else %}-{% endif %}with{% if isV4 %}_{% else %}-{% endif %}submenu'{% endif %}];
+        return ['contentpage'{% if demosite %}, 'contentpage_with_submenu'{% endif %}];
     }
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/ContentPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/ContentPage/view.html.twig';
     }
 }

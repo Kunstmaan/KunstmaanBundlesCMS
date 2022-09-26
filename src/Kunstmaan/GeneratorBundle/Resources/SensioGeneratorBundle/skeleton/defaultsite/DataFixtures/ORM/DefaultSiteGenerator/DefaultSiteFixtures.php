@@ -168,7 +168,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $contentPage->setTitle('Our bikes');
 
         $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-        $basePath = Kernel::VERSION_ID >= 40000 ? '/../../../../assets/' : '/../../../Resources/';
+        $basePath = '/../../../../assets/';
         $imgDir = dirname(__FILE__).$basePath.'ui/img/demosite/';
         $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock1.jpg', $folder->getId());
 
@@ -714,7 +714,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Add images to database
         $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
-        $basePath = Kernel::VERSION_ID >= 40000 ? '/../../../../assets/' : '/../../../Resources/';
+        $basePath = '/../../../../assets/';
         $publicDir = dirname(__FILE__). $basePath . 'ui/';
         $this->mediaCreator->createFile($publicDir.'img/general/logo-kunstmaan.svg', $imageFolder->getId());
 	{% if demosite %}
@@ -736,8 +736,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         // Hack for media bundle issue
         $dir = $this->container->get('kernel')->getProjectDir();
-        $publicDir = Kernel::VERSION_ID >= 40000 ? '/public' : '/web';
-        chdir($dir . $publicDir);
+        chdir($dir . '/public');
         $media = new Media();
         $media->setFolder($folder);
         $media->setName($name);
@@ -786,7 +785,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts = array();
 
             $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-            $basePath = Kernel::VERSION_ID >= 40000 ? '/../../../../assets/' : '/../../../Resources/';
+            $basePath = '/../../../../assets/';
             $imgDir = dirname(__FILE__). $basePath . 'ui/img/demosite/';
 
             $headerMedia = $this->mediaCreator->createFile($imgDir.'stocks/homepage__header.jpg', $folder->getId());

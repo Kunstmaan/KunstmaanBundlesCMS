@@ -67,7 +67,6 @@ class ArticleGenerator extends KunstmaanGenerator
             'uses_author' => $usesAuthor,
             'uses_category' => $usesCategories,
             'uses_tag' => $usesTags,
-            'isV4' => $this->isSymfony4(),
             'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
             'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
@@ -79,9 +78,7 @@ class ArticleGenerator extends KunstmaanGenerator
         $this->generateController($parameters);
         $this->generatePageTemplateConfigs($parameters);
         $this->generateTemplates($parameters, $bundleWithHomePage);
-        $this->generateRouting($parameters, $multilanguage);
         $this->generateMenu($parameters);
-        $this->generateServices($parameters);
         $this->generateViewDataProvider($parameters);
         $this->updateParentPages();
         if ($dummydata) {
@@ -94,6 +91,8 @@ class ArticleGenerator extends KunstmaanGenerator
      */
     public function generateServices(array $parameters)
     {
+        trigger_deprecation('kunstmaan/generator-bundle', '6.2', 'Method "%s" is deprecated and will be removed.', __METHOD__);
+
         if ($this->isSymfony4()) {
             return;
         }
@@ -149,6 +148,8 @@ class ArticleGenerator extends KunstmaanGenerator
      */
     public function generateRouting(array $parameters, $multilanguage)
     {
+        trigger_deprecation('kunstmaan/generator-bundle', '6.2', 'Method "%s" is deprecated and will be removed.', __METHOD__);
+
         if ($this->isSymfony4()) {
             return;
         }
@@ -260,16 +261,16 @@ class ArticleGenerator extends KunstmaanGenerator
      */
     public function generatePageTemplateConfigs(array $parameters)
     {
-        $basePath = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') : $this->bundle->getPath();
-        $relPath = $this->isSymfony4() ? '/config/kunstmaancms/pagetemplates/' : '/Resources/config/pagetemplates/';
+        $basePath = $this->container->getParameter('kernel.project_dir');
+        $relPath = '/config/kunstmaancms/pagetemplates/';
         $sourceDir = $this->skeletonDir . '/Resources/config/pagetemplates/';
         $targetDir = $basePath . $relPath;
 
         $this->renderSingleFile($sourceDir, $targetDir, 'page.yml', $parameters, false, strtolower($this->entity) . 'page.yml');
         $this->renderSingleFile($sourceDir, $targetDir, 'overviewpage.yml', $parameters, false, strtolower($this->entity) . 'overviewpage.yml');
 
-        $basePath = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') : $this->bundle->getPath();
-        $relPath = $this->isSymfony4() ? '/config/kunstmaancms/pageparts/' : '/Resources/config/pageparts/';
+        $basePath = $this->container->getParameter('kernel.project_dir');
+        $relPath = '/config/kunstmaancms/pageparts/';
         $sourceDir = $this->skeletonDir . '/Resources/config/pageparts/';
         $targetDir = $basePath . $relPath;
 

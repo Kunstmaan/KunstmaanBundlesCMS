@@ -26,11 +26,7 @@
             {% if tab is not null %}
                 {% set pageToRender = get_page_by_node_translation(tab.nodeTranslation(app.request.locale, true)) %}
                 <div id="{{ key }}-panel" class="kmcc-tabs__panel{% if key == node.internalName %} active{% endif %}">
-                    <% if not isV4 %>
-                        {% include '<%= bundle.name %>:Pages:LegalPage/_content.html.twig' with {'page': pageToRender} %}
-                    <% else %>
-                        {% include 'Pages/LegalPage/_content.html.twig' with {'page': pageToRender} %}
-                    <% endif %>
+                    {% include 'Pages/LegalPage/_content.html.twig' with {'page': pageToRender} %}
                 </div>
             {% endif %}
         {% endfor %}

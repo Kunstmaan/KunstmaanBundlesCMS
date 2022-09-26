@@ -1,14 +1,12 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pageparts:
         form:
-{% endif %}
-{% if isV4 %}            {%endif%}name: "Form"
-{% if isV4 %}            {%endif%}context: "main"
-{% if isV4 %}            {%endif%}types:
-{% if isV4 %}            {%endif%}    - { name: "Single Line text input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\SingleLineTextPagePart" }
-{% if isV4 %}            {%endif%}    - { name: "Multi Line text input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\MultiLineTextPagePart" }
-{% if isV4 %}            {%endif%}    - { name: "Email input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\EmailPagePart" }
-{% if isV4 %}            {%endif%}    - { name: "File upload", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\FileUploadPagePart" }
-{% if isV4 %}            {%endif%}    - { name: "Choice input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\ChoicePagePart" }
-{% if isV4 %}            {%endif%}    - { name: "Submit button", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\SubmitButtonPagePart" }
+            name: "Form"
+            context: "main"
+            types:
+                - { name: "Single Line text input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\SingleLineTextPagePart" }
+                - { name: "Multi Line text input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\MultiLineTextPagePart" }
+                - { name: "Email input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\EmailPagePart" }
+                - { name: "File upload", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\FileUploadPagePart" }
+                - { name: "Choice input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\ChoicePagePart" }
+                - { name: "Submit button", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\SubmitButtonPagePart" }

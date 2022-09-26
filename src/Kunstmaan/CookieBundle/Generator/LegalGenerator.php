@@ -46,7 +46,6 @@ class LegalGenerator extends KunstmaanGenerator
             'bundle_name' => $this->bundle->getName(),
             'prefix' => $this->prefix,
             'demosite' => $this->demosite,
-            'isV4' => $this->isSymfony4(),
         ];
 
         $this->generateAssets();
@@ -67,12 +66,7 @@ class LegalGenerator extends KunstmaanGenerator
     private function generateAssets()
     {
         $sourceDir = $this->skeletonDir . '/Resources/ui/';
-
-        if ($this->isSymfony4()) {
-            $targetDir = $this->container->getParameter('kernel.project_dir') . '/assets/ui/';
-        } else {
-            $targetDir = $this->bundle->getPath() . '/Resources/ui/';
-        }
+        $targetDir = $this->container->getParameter('kernel.project_dir') . '/assets/ui/';
 
         $this->copyFiles($sourceDir, $targetDir, true);
     }
@@ -162,12 +156,7 @@ class LegalGenerator extends KunstmaanGenerator
     public function generatePagepartConfigs(array $parameters)
     {
         // Configuration pageparts
-        if ($this->isSymfony4()) {
-            $targetDir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
-        } else {
-            $targetDir = sprintf('%s/Resources/config/pageparts/', $this->bundle->getPath());
-        }
-
+        $targetDir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
         $sourceDir = sprintf('%s/Resources/config/pageparts/', $this->skeletonDir);
 
         $this->renderSingleFile($sourceDir, $targetDir, 'legal_header.yml', $parameters, $this->overrideFiles);
@@ -184,12 +173,7 @@ class LegalGenerator extends KunstmaanGenerator
     public function generatePagetemplateConfigs(array $parameters)
     {
         // Configuration templates
-        if ($this->isSymfony4()) {
-            $targetDir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pagetemplates/';
-        } else {
-            $targetDir = sprintf('%s/Resources/config/pagetemplates/', $this->bundle->getPath());
-        }
-
+        $targetDir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pagetemplates/';
         $sourceDir = sprintf('%s/Resources/config/pagetemplates/', $this->skeletonDir);
 
         $this->renderSingleFile($sourceDir, $targetDir, 'legalpage.yml', $parameters, $this->overrideFiles);

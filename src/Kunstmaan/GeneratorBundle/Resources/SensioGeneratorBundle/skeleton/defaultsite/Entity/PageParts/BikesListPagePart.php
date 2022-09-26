@@ -18,7 +18,7 @@ class BikesListPagePart extends AbstractPagePart
 {
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/BikesListPagePart{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'PageParts/BikesListPagePart/view.html.twig';
     }
 
     public function getDefaultAdminType(): string

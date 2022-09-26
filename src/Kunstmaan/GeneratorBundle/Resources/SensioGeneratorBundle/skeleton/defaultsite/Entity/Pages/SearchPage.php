@@ -19,16 +19,16 @@ class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
 {
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/SearchPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/SearchPage/view.html.twig';
     }
 
     public function getPagePartAdminConfigurations(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main'];
+        return ['main'];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}searchpage'];
+        return ['searchpage'];
     }
 }

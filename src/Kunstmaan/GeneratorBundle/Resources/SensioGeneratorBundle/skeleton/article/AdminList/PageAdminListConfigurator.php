@@ -36,6 +36,6 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
 
     public function getListTemplate(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}AdminList/{{ entity_class }}PageAdminList{% if not isV4 %}:{% else %}/{% endif %}list.html.twig';
+        return 'AdminList/{{ entity_class }}PageAdminList/list.html.twig';
     }
 }

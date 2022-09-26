@@ -1,20 +1,18 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pagetemplates:
         homepage:
-{%endif%}
-{% if isV4 %}            {%endif%}name: "Home page"
-{% if isV4 %}            {%endif%}rows:
+            name: "Home page"
+            rows:
 {% if demosite %}
-{% if isV4 %}            {%endif%}    - regions:
-{% if isV4 %}            {%endif%}        - { name: "header", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "section1", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "section2", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "section3", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "section4", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "section5", span: 12 }
+                - regions:
+                    - { name: "header", span: 12 }
+                    - { name: "section1", span: 12 }
+                    - { name: "section2", span: 12 }
+                    - { name: "section3", span: 12 }
+                    - { name: "section4", span: 12 }
+                    - { name: "section5", span: 12 }
 {% else %}
-{% if isV4 %}            {%endif%}    - regions:
-{% if isV4 %}            {%endif%}        - { name: "main", span: 12 }
+                - regions:
+                    - { name: "main", span: 12 }
 {% endif %}
-{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\HomePage\\pagetemplate.html.twig"
+            template: "Pages\\HomePage\\pagetemplate.html.twig"

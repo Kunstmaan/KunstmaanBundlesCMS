@@ -50,45 +50,10 @@ EOT
         $questionHelper->writeSection($output, 'Admin Tests Generation');
 
         $bundle = new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
-        if (Kernel::VERSION_ID < 40000) {
-            GeneratorUtils::ensureOptionsProvided($input, ['namespace']);
-
-            $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-            $bundle = strtr($namespace, ['\\Bundle\\' => '', '\\' => '']);
-
-            $bundle = $this
-                ->getApplication()
-                ->getKernel()
-                ->getBundle($bundle);
-        }
-
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $output);
 
         return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        if (Kernel::VERSION_ID >= 40000) {
-            return;
-        }
-
-        $questionHelper = $this->getQuestionHelper();
-        $questionHelper->writeSection($output, 'Welcome to the Kunstmaan default site generator');
-
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
-
-        $inputAssistant->askForNamespace([
-            '',
-            'This command helps you to generate tests to test the admin of the default site setup.',
-            'You must specify the namespace of the bundle where you want to generate the tests.',
-            'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
-            '',
-        ]);
     }
 
     protected function createGenerator()

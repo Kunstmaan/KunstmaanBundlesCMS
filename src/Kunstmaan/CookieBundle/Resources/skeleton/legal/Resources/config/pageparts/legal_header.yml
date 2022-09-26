@@ -1,11 +1,9 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pageparts:
         legal_header:
-{% endif %}
-{% if isV4 %}            {%endif%}name: "Header"
-{% if isV4 %}            {%endif%}context: "legal_header"
-{% if isV4 %}            {%endif%}types:
-{% if isV4 %}            {%endif%}    - { name: "Centered Icon", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\LegalCenteredIconPagePart" }
-{% if isV4 %}            {%endif%}    - { name: "Image", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ImagePagePart" }
-{% if isV4 %}            {%endif%}    - { name: "Text", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\TextPagePart" }
+            name: "Header"
+            context: "legal_header"
+            types:
+                - { name: "Centered Icon", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\LegalCenteredIconPagePart" }
+                - { name: "Image", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ImagePagePart" }
+                - { name: "Text", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\TextPagePart" }

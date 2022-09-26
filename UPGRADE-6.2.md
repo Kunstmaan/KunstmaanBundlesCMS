@@ -21,3 +21,10 @@ AdminListBundle
 -----------
 
 * The `Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter` class is deprecated and will be removed in 7.0. Use `Pagerfanta\Doctrine\DBAL\QueryAdapter` of the `pagerfanta/doctrine-dbal-adapter` package instead.
+
+GeneratorBundle
+---------------
+
+* The following methods are deprecated and will be removed in 7.0. `Kunstmaan\GeneratorBundle\Generator\ArticleGenerator::generateServices`, 
+  `Kunstmaan\GeneratorBundle\Generator\ArticleGenerator::generateRouting`, `Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator::generateRouting`
+  and `Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator::generateConfig`

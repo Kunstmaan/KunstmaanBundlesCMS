@@ -1,4 +1,4 @@
-{% extends '<% if not isV4 %><%= bundle.name %>:Page:layout.html.twig<% else %>Page/layout.html.twig<% endif %>' %}
+{% extends 'Page/layout.html.twig' %}
 
 {% block content %}
     <input type="hidden" id="kmcc-page" /> {# To identify that we're on the cookie content page. #}
