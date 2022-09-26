@@ -128,7 +128,7 @@ class LegalIconTextPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts{% if not isV4 %}:{% else %}/{% endif %}LegalIconTextPagePart/view.html.twig';
+        return 'PageParts{% if not isV4 %}:{% else %}/{% endif %}LegalIconTextPagePart/view.html.twig';
     }
 
     /**

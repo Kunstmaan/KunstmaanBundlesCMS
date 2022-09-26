@@ -57,7 +57,7 @@ class DefaultSiteGeneratorTest extends TestCase
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container, new DoctrineHelper(...$doctrineHelperArgs));
         $generator->generate($bundle, '', __DIR__ . '/../_data', false);
 
-        $basePath = Kernel::VERSION_ID >= 40000 ? 'templates/bundles/TwigBundle/' : 'app/Resources/TwigBundle/views/';
+        $basePath = 'templates/bundles/TwigBundle/';
         unlink(__DIR__ . '/../_data/' . $basePath . 'Exception/error.html.twig');
         unlink(__DIR__ . '/../_data/' . $basePath . 'Exception/error404.html.twig');
         unlink(__DIR__ . '/../_data/' . $basePath . 'Exception/error500.html.twig');

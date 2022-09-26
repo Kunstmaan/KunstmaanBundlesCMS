@@ -49,26 +49,26 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
     {
 {% if demosite %}
         return [
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}header',
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section1',
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section2',
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section3',
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section4',
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}section5',
+            'header',
+            'section1',
+            'section2',
+            'section3',
+            'section4',
+            'section5',
         ];
 {% else %}
-	    return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}main'];
+	    return ['main'];
 {% endif %}
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}homepage'];
+        return ['homepage'];
     }
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/HomePage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/HomePage/view.html.twig';
     }
 
     public function getSearchType(): string

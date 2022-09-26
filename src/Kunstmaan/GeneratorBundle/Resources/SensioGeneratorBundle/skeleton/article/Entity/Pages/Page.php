@@ -44,17 +44,17 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
 
     public function getPagePartAdminConfigurations(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}main'];
+        return ['{{ entity_class|lower }}main'];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}{{ entity_class|lower }}page'];
+        return ['{{ entity_class|lower }}page'];
     }
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/{{ entity_class }}Page{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/{{ entity_class }}Page/view.html.twig';
     }
 
     /**

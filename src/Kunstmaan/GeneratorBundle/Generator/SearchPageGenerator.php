@@ -61,7 +61,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
             'namespace' => $bundle->getNamespace(),
             'bundle' => $bundle,
             'prefix' => GeneratorUtils::cleanPrefix($prefix),
-            'isV4' => Kernel::VERSION_ID >= 40000,
             'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
             'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
@@ -93,7 +92,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
             true
         );
 
-        $twigFile = Kernel::VERSION_ID >= 40000 ? "{% extends 'Page/layout.html.twig' %}\n" : "{% extends '" . $bundle->getName() . ":Page:layout.html.twig' %}\n";
+        $twigFile = "{% extends 'Page/layout.html.twig' %}\n";
         GeneratorUtils::prepend($twigFile, $dirPath . '/Pages/SearchPage/view.html.twig');
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');

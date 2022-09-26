@@ -7,7 +7,6 @@ use Kunstmaan\ArticleBundle\Controller\AbstractArticleTagAdminListController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-{% if isV4 %}
 
 {% if canUseAttributes %}
 #[Route('/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-tag', requirements: ['_locale' => '%requiredlocales%'])]
@@ -15,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower}}-tag", requirements={"_locale"="%requiredlocales%"})
  */
-{% endif %}
 {% endif %}
 class {{ entity_class }}TagAdminListController extends AbstractArticleTagAdminListController
 {

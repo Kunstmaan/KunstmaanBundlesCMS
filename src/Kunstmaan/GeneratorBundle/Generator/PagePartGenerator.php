@@ -98,7 +98,6 @@ class PagePartGenerator extends KunstmaanGenerator
             'bundle' => $this->bundle->getName(),
             'pagepart' => $this->entity,
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
-            'isV4' => $this->isSymfony4(),
         ];
         $extraCode = $this->render('/Entity/PageParts/ExtraFunctions.php', $params);
 
@@ -147,11 +146,7 @@ class PagePartGenerator extends KunstmaanGenerator
     private function generateSectionConfig()
     {
         if (count($this->sections) > 0) {
-            if ($this->isSymfony4()) {
-                $dir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
-            } else {
-                $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
-            }
+            $dir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
 
             foreach ($this->sections as $section) {
                 $data = Yaml::parse(file_get_contents($dir . $section));

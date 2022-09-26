@@ -6,9 +6,9 @@ import defaultConfig from './webpack.config.default';
 export default function webpackConfigApp(speedupLocalDevelopment, optimize = false) {
     const config = defaultConfig(speedupLocalDevelopment, optimize);
 
-    config.entry = './{% if isV4 %}assets{% else %}src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources{% endif %}/ui/js/app.js';
+    config.entry = './assets/ui/js/app.js';
     config.output = {
-        path: path.resolve(__dirname, '../../{% if isV4 %}public{% else %}web{% endif %}/build/js'),
+        path: path.resolve(__dirname, '../../public/build/js'),
         filename: 'bundle.js',
     };
 {% if demosite %}

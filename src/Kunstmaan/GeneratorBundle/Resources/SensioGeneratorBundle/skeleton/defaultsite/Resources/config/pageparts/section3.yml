@@ -1,10 +1,8 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pageparts:
         section3:
-{% endif %}
-{% if isV4 %}            {%endif%}name: "Section 3"
-{% if isV4 %}            {%endif%}context: "section3"
-{% if isV4 %}            {%endif%}extends: "main"
-{% if isV4 %}            {%endif%}types:
-{% if isV4 %}            {%endif%}    - { name: "Service", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ServicePagePart" }
+            name: "Section 3"
+            context: "section3"
+            extends: "main"
+            types:
+                - { name: "Service", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ServicePagePart" }

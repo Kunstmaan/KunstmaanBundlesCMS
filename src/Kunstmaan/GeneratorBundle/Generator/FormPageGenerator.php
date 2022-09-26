@@ -127,7 +127,6 @@ class FormPageGenerator extends KunstmaanGenerator
             'sections' => $this->sections,
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\Pages\\' . $this->entity . 'AdminType',
             'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity,
-            'isV4' => $this->isSymfony4(),
         ];
 
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);

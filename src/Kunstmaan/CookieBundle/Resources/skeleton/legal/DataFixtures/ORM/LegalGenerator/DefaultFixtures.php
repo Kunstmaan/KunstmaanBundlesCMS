@@ -270,12 +270,7 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
             $pageparts = [];
 
             $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(['rel' => 'image']);
-
-            if (Kernel::VERSION_ID < 40000 ) {
-                $imgDir = __DIR__ . '/../../../Resources/ui/img/legal/';
-            } else {
-                $imgDir = $this->container->getParameter('kernel.project_dir').'/assets/ui/img/legal/';
-            }
+            $imgDir = $this->container->getParameter('kernel.project_dir').'/assets/ui/img/legal/';
 
             $icon = $this->mediaCreator->createFile($imgDir.'cookie.svg', $folder->getId());
             $pageparts['legal_header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(

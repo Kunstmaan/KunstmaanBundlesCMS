@@ -87,7 +87,6 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
                 ) . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
             'prefix' => $this->prefix,
-            'isV4' => $this->isSymfony4(),
             'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
             'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
         ];
@@ -163,7 +162,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generateSectionConfig()
     {
         if (count($this->sections) > 0) {
-            $dir = $this->isSymfony4() ? $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/' : $this->bundle->getPath() . '/Resources/config/pageparts/';
+            $dir = $this->container->getParameter('kernel.project_dir') . '/config/kunstmaancms/pageparts/';
             foreach ($this->sections as $section) {
                 $data = $originalData = Yaml::parse(file_get_contents($dir . $section));
                 if (array_key_exists('kunstmaan_page_part', $data)) {
@@ -193,8 +192,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
                     $data = $originalData;
                 }
 
-                //Sf4 structure of the config file is nested deeper, increase the level when values are inlined
-                $ymlData = Yaml::dump($data, $this->isSymfony4() ? 5 : 2);
+                $ymlData = Yaml::dump($data, 5);
                 file_put_contents($dir . $section, $ymlData);
             }
 

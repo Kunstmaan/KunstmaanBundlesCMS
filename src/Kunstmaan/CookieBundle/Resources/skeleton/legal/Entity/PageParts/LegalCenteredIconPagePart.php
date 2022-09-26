@@ -58,7 +58,7 @@ class LegalCenteredIconPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts{% if not isV4 %}:{% else %}/{% endif %}LegalCenteredIconPagePart/view.html.twig';
+        return 'PageParts{% if not isV4 %}:{% else %}/{% endif %}LegalCenteredIconPagePart/view.html.twig';
     }
 
     /**

@@ -1,11 +1,9 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pagetemplates:
         contentpage_with_submenu:
-{%endif%}
-{% if isV4 %}            {%endif%}name: "Content page with submenu"
-{% if isV4 %}            {%endif%}rows:
-{% if isV4 %}            {%endif%}    - regions:
-{% if isV4 %}            {%endif%}        - { name: "main", span: 12 }
-{% if isV4 %}            {%endif%}        - { name: "submenu", span: 12, template: "{% if not isV4 %}{{ bundle.name }}:{% endif %}Layout{% if not isV4 %}:{% else %}/{% endif %}submenu.html.twig" }
-{% if isV4 %}            {%endif%}template: "{% if not isV4 %}{{ bundle.name }}::{% endif %}Pages\\ContentPage\\pagetemplate.html.twig"
+            name: "Content page with submenu"
+            rows:
+                - regions:
+                    - { name: "main", span: 12 }
+                    - { name: "submenu", span: 12, template: "Layout/submenu.html.twig" }
+            template: "Pages\\ContentPage\\pagetemplate.html.twig"

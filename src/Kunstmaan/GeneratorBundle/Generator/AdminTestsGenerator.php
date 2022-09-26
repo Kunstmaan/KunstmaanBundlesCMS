@@ -52,7 +52,6 @@ class AdminTestsGenerator extends Generator
         $parameters = [
             'namespace' => $bundle->getNamespace(),
             'bundle' => $bundle,
-            'isV4' => Kernel::VERSION_ID >= 40000,
         ];
 
         $this->generateBehatTests($bundle, $output, $parameters);
@@ -60,7 +59,7 @@ class AdminTestsGenerator extends Generator
 
     public function generateBehatTests(BundleInterface $bundle, OutputInterface $output, array $parameters)
     {
-        $dirPath = Kernel::VERSION_ID >= 40000 ? sprintf('%s/features', $this->container->getParameter('kernel.project_dir')) : sprintf('%s/Features', $bundle->getPath());
+        $dirPath = sprintf('%s/features', $this->container->getParameter('kernel.project_dir'));
         $skeletonDir = sprintf('%s/Features', $this->fullSkeletonDir);
 
         // Copy all default feature files
@@ -81,7 +80,7 @@ class AdminTestsGenerator extends Generator
 
         // Render the Context files to replace the namespace etc.
         if ($handle = opendir($skeletonDir . '/Context')) {
-            $targetPath = Kernel::VERSION_ID >= 40000 ? $dirPath . '/bootstrap/' : $dirPath . '/Context/';
+            $targetPath = $dirPath . '/bootstrap/';
             while (false !== ($entry = readdir($handle))) {
                 // Check to make sure we skip hidden folders
                 // And we render the files ending in .php
@@ -94,7 +93,7 @@ class AdminTestsGenerator extends Generator
         }
 
         // Replace admin password
-        $contextPath = Kernel::VERSION_ID >= 40000 ? $dirPath . '/bootstrap/FeatureContext.php' : $dirPath . '/Context/FeatureContext.php';
+        $contextPath = $dirPath . '/bootstrap/FeatureContext.php';
         $featureContext = $contextPath . '/FeatureContext.php';
         if ($this->filesystem->exists($featureContext)) {
             $contents = file_get_contents($featureContext);

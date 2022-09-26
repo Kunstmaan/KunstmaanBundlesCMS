@@ -39,16 +39,16 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
 
     public function getPagePartAdminConfigurations(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}form'];
+        return ['form'];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}formpage'];
+        return ['formpage'];
     }
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/FormPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/FormPage/view.html.twig';
     }
 }

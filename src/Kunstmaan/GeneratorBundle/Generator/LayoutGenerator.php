@@ -73,14 +73,14 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $this->skeletonDir . '/groundcontrol/bin/',
             $this->rootDir . '/groundcontrol/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl, 'isV4' => $this->isSymfony4()],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl],
             true
         );
         $this->renderSingleFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             'gulpfile.babel.js',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'isV4' => $this->isSymfony4()],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
         $this->renderSingleFile(
@@ -199,7 +199,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $sourceDir . '/Resources/admin/',
             $this->getAssetsDir($this->bundle) . '/admin/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol, 'isV4' => $this->isSymfony4()],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
             true
         );
 
@@ -295,7 +295,6 @@ class LayoutGenerator extends KunstmaanGenerator
                 'bundle' => $this->bundle,
                 'demosite' => $this->demosite,
                 'shortBundleName' => $this->shortBundleName,
-                'isV4' => $this->isSymfony4(),
                 'groundcontrol' => $this->groundcontrol,
             ],
             true

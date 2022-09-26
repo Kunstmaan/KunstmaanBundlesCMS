@@ -28,19 +28,19 @@ class LegalPage extends AbstractPage implements HasPageTemplateInterface, Custom
     public function getPagePartAdminConfigurations(): array
     {
         return [
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}legal_header',
-            '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}legal_main',
+            'legal_header',
+            'legal_main',
         ];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}legalpage'];
+        return ['legalpage'];
     }
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/LegalPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/LegalPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
     }
 
     public function getViewDataProviderServiceId(): string

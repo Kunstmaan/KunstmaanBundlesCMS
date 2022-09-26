@@ -1,4 +1,4 @@
-{% extends '<% if not isV4 %><%= bundle.name %>:<% endif %>Error<% if not isV4 %>:<% else %>/<% endif %>layout.html.twig' %}
+{% extends 'Error/layout.html.twig' %}
 
 {% block title %} - {{ status_code }} - {{ status_text }} - {{ websitetitle }}{% endblock %}
 

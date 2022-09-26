@@ -18,6 +18,6 @@ class SearchPage extends AbstractSearchPage
 {
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}Pages/SearchPage{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/SearchPage/view.html.twig';
     }
 }

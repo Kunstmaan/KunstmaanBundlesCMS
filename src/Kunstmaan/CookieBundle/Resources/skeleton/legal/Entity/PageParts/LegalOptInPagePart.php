@@ -126,7 +126,7 @@ class LegalOptInPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts{% if not isV4 %}:{% else %}/{% endif %}LegalOptInPagePart/view.html.twig';
+        return 'PageParts{% if not isV4 %}:{% else %}/{% endif %}LegalOptInPagePart/view.html.twig';
     }
 
     /**

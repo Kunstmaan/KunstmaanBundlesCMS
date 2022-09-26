@@ -12,17 +12,17 @@
     {
         return [
 {% for section in sections %}
-            '{% if not isV4 %}{{ bundle }}:{%endif%}{{ section }}',
+            '{{ section }}',
 {% endfor %}
         ];
     }
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle }}:{%endif%}{{ template }}'];
+        return ['{{ template }}'];
     }
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle }}:{%endif%}Pages/Common{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'Pages/Common/view.html.twig';
     }

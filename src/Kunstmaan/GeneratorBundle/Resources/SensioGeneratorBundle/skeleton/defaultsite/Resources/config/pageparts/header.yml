@@ -1,9 +1,7 @@
-{% if isV4 %}
 kunstmaan_page_part:
     pageparts:
         header:
-{% endif %}
-{% if isV4 %}            {%endif%}name: "Header"
-{% if isV4 %}            {%endif%}context: "header"
-{% if isV4 %}            {%endif%}types:
-{% if isV4 %}            {%endif%}    - { name: "PageBanner", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\PageBannerPagePart" }
+            name: "Header"
+            context: "header"
+            types:
+                - { name: "PageBanner", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\PageBannerPagePart" }

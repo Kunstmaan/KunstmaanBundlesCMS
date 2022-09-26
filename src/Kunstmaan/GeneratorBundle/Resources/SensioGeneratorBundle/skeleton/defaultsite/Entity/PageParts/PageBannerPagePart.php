@@ -174,7 +174,7 @@ class PageBannerPagePart extends AbstractPagePart
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/PageBannerPagePart{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'PageParts/PageBannerPagePart/view.html.twig';
     }
 
     public function getDefaultAdminType(): string

@@ -50,7 +50,7 @@ class BehatTestPage extends AbstractPage implements HasPageTemplateInterface
 
     public function getPageTemplates(): array
     {
-        return ['{% if not isV4 %}{{ bundle.getName() }}:{%endif%}behat-test-page'];
+        return ['behat-test-page'];
     }
 
     public function getDefaultView(): string

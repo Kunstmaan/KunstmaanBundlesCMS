@@ -215,7 +215,7 @@ class ServicePagePart extends AbstractPagePart
 
     public function getDefaultView(): string
     {
-        return '{% if not isV4 %}{{ bundle.getName() }}:{%endif%}PageParts/ServicePagePart{% if not isV4 %}:{% else %}/{% endif %}view.html.twig';
+        return 'PageParts/ServicePagePart/view.html.twig';
     }
 
     public function getDefaultAdminType(): string
