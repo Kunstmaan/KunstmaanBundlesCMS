@@ -1,8 +1,8 @@
 {% set currentUrl = app.request.attributes.get('_nodeTranslation').url %}
 {% set baseRoute = '_slug' ~ (app.request.attributes.get('preview') ? '_preview' : '') %}
 {% set basePath = path(baseRoute, { 'url': currentUrl, '_locale': app.request.locale }) %}
-<% if uses_category %>{% set categoryContext = get_article_categories(app.request, '<%= bundle.name %>:<%= entity_class %>Category') %}<% endif %>
-<% if uses_tag %>{% set tagContext = get_article_tags(app.request, '<%= bundle.name %>:<%= entity_class %>Tag') %}<% endif %>
+<% if uses_category %>{% set categoryContext = get_article_categories(app.request, '<%= bundle.name %>\\Entity\\<%= entity_class %>Category') %}<% endif %>
+<% if uses_tag %>{% set tagContext = get_article_tags(app.request, '<%= bundle.name %>\\Entity\\<%= entity_class %>Tag') %}<% endif %>
 
 <div class="container">
     <div class="row">
