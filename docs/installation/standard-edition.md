@@ -82,7 +82,7 @@ This generates:
 * A barebones selection of controllers, entities, twig files, pageparts, etc
 * The needed fixtures to setup the CMS
 
-> This is the best starting point for a real website. If you add `--demosite` to the command above, this generator will generate more styling and fixtures so that the result ends up exactly like [the demo site](http://demo.bundles.kunstmaan.be).
+> This is the best starting point for a real website. If you add `--demosite` to the command above, this generator will generate more styling and fixtures so that the result ends up exactly like [the demo site](https://demo.kunstmaancms.be).
 
 ## Initialising the database
 
