@@ -14,18 +14,22 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ['7.2', '7.3', '7.4', '8.0', '8.1']
+                php: ['8.0', '8.1']
                 deps: ['stable']
                 symfony: [''] # Don't lock to a specific symfony version by default
                 include:
                     # Test lowest dependencies
                     -   deps: 'lowest'
-                        php: 7.2
-                        symfony: '^4.4'
+                        php: 8.0
+
+                    # Test lowest dependencies with symfony 5.4
+                    -   deps: 'lowest'
+                        php: 8.0
+                        symfony: '^5.4'
 
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
-                        php: 8.0
+                        php: 8.1
                         symfony: '^4.4'
 
         steps:
@@ -36,6 +40,7 @@ jobs:
                     case "${{ matrix.deps }}" in
                      "lowest")
                        echo "COMPOSER_FLAGS=--prefer-lowest" >> $GITHUB_ENV
+                       echo "SYMFONY_REQUIRE=$(echo '${{ matrix.symfony }}')" >> $GITHUB_ENV
                        ;;
                      *)
                        echo "SYMFONY_REQUIRE=$(echo '${{ matrix.symfony }}')" >> $GITHUB_ENV

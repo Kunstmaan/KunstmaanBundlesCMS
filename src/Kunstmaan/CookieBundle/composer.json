@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "php": "^7.2|^8.0",
-        "doctrine/orm": "^2.9",
+        "php": "^8.0",
+        "doctrine/orm": "^2.13",
         "kunstmaan/admin-bundle": "^5.9|^6.0",
         "kunstmaan/adminlist-bundle": "^5.9|^6.0",
         "kunstmaan/generator-bundle": "^5.9|^6.0",

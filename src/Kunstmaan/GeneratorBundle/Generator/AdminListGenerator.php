@@ -144,7 +144,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
                 'entity_class' => $entityName,
                 'export_extensions' => $extensions,
                 'sortField' => $sortField,
-                'canUseAttributes' => version_compare(\PHP_VERSION, '8alpha', '>=') && Kernel::VERSION_ID >= 50200,
+                'canUseAttributes' => Kernel::VERSION_ID >= 50200,
             ]
         );
     }

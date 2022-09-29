@@ -8,6 +8,8 @@ General
   If you generate a new project the new webpack setup will be used by default. Projects using GroundControl should replace this 
   setup by symfony webpack encore. See the [related PR](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2981) for more information on this change.
   In Kunstmaan CMS 7.O all GroundControl related files and support in templates will be removed.
+- The minimum supported PHP version is 8.0.
+- The supported Symfony versions are 4.4 and 5.4.
 
 AdminBundle
 -----------
