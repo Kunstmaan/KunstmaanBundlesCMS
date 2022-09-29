@@ -98,7 +98,7 @@ After that it will start the generation of all the necessary files. Here is a su
 
 ![installer start](../images/site-generator.png)
 
-> Since we answered `yes` to the question `demosite`, the subcommand will be run with the option `--demosite`. This will result in a replica of our [demo site](http://demo.bundles.kunstmaan.be).
+> Since we answered `yes` to the question `demosite`, the subcommand will be run with the option `--demosite`. This will result in a replica of our [demo site](https://demo.kunstmaancms.be).
 
 ## Initialising the database
 
