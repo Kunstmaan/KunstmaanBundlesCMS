@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Service\Migrations;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 class MigrationsService
 {
@@ -46,8 +47,8 @@ class MigrationsService
             return [];
         }
 
-        $fieldNames = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
-        $tableName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getTableName();
+        $fieldNames = $this->entityManager->getClassMetadata(Translation::class)->getFieldNames();
+        $tableName = $this->entityManager->getClassMetadata(Translation::class)->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
 
         $fieldNames = array_diff($fieldNames, $ignoreFields, $uniqueKeys);
@@ -60,7 +61,7 @@ class MigrationsService
 
             foreach ($fieldNames as $fieldName) {
                 $value = $translation->{'get' . $fieldName}();
-                $columnName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getColumnName($fieldName);
+                $columnName = $this->entityManager->getClassMetadata(Translation::class)->getColumnName($fieldName);
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }

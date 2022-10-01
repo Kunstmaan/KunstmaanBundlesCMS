@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\SitemapBundle\Entity\SitemapPage;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,7 +32,7 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
 
-        $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $em->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $sitemapPage = new SitemapPage();

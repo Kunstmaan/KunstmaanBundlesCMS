@@ -143,7 +143,7 @@ you could use :
 $aclHelper = $this->get('kunstmaan_admin.acl.helper');
 $em = $this->getDoctrine()->getManager();
 $permissionDef = new PermissionDefinition(array('view'));
-$items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, $permissionDef);
+$items = $em->getRepository(AclClass::class)->findAllWithPermission($aclHelper, $permissionDef);
 ```
 
 ## PermissionDefinition

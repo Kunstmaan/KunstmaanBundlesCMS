@@ -9,6 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Provider\DateTime;
 use Faker\Provider\Lorem;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -47,7 +48,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
     $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 
     // Create article overview page
-    $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+    $nodeRepo = $em->getRepository(Node::class);
     $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
     $overviewPage = new {{ entity_class }}OverviewPage();

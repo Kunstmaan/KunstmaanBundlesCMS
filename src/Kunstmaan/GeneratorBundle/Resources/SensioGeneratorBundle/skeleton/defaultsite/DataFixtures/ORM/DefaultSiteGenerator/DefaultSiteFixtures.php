@@ -7,9 +7,11 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
@@ -133,7 +135,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createContentPages()
     {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $this->manager->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $contentPage = new ContentPage();
@@ -167,7 +169,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $contentPage = new ContentPage();
         $contentPage->setTitle('Our bikes');
 
-        $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+        $folder = $this->manager->getRepository(Folder::class)->findOneBy(array('rel' => 'image'));
         $basePath = '/../../../../assets/';
         $imgDir = dirname(__FILE__).$basePath.'ui/img/demosite/';
         $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock1.jpg', $folder->getId());
@@ -421,7 +423,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 )
             );
             $media = $this->mediaCreator->createFile($imgDir.'stocks/videothumb.png', $folder->getId());
-            $video = $this->manager->getRepository('KunstmaanMediaBundle:Media')->findOneBy(array('contentType' => 'remote/video'));
+            $video = $this->manager->getRepository(Media::class)->findOneBy(array('contentType' => 'remote/video'));
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\VideoPagePart',
                 array(
@@ -468,7 +470,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createFormPage()
     {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $this->manager->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $formPage = new FormPage();
@@ -554,7 +556,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createSearchPage()
     {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $this->manager->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $searchPage = new SearchPage();
@@ -686,7 +688,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['cookieconsent.confirm']['fr'] = 'Continuer';
         $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
 
-        $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
+        $translationId = $this->manager->getRepository(Translation::class)->getUniqueTranslationId();
         foreach ($trans as $key => $array) {
             foreach ($array as $lang => $value) {
                 $t = new Translation();
@@ -712,8 +714,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createMedia()
     {
         // Add images to database
-        $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-        $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
+        $imageFolder = $this->manager->getRepository(Folder::class)->findOneBy(array('rel' => 'image'));
+        $filesFolder = $this->manager->getRepository(Folder::class)->findOneBy(array('rel' => 'files'));
         $basePath = '/../../../../assets/';
         $publicDir = dirname(__FILE__). $basePath . 'ui/';
         $this->mediaCreator->createFile($publicDir.'img/general/logo-kunstmaan.svg', $imageFolder->getId());
@@ -723,7 +725,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	{% endif %}
 
         // Create dummy video folder and add dummy videos
-        $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
+        $videoFolder = $this->manager->getRepository(Folder::class)->findOneBy(array('rel' => 'video'));
         $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
     }
 
@@ -743,7 +745,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $helper = new RemoteVideoHelper($media);
         $helper->setCode($code);
         $helper->setType('youtube');
-        $this->manager->getRepository('KunstmaanMediaBundle:Media')->save($media);
+        $this->manager->getRepository(Media::class)->save($media);
         chdir($dir);
 
         return $media;
@@ -784,7 +786,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->requiredLocales as $locale) {
             $pageparts = array();
 
-            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+            $folder = $this->manager->getRepository(Folder::class)->findOneBy(array('rel' => 'image'));
             $basePath = '/../../../../assets/';
             $imgDir = dirname(__FILE__). $basePath . 'ui/img/demosite/';
 

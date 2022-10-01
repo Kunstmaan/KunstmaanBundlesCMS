@@ -7,6 +7,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use DoctrineExtensions\Taggable\Taggable as BaseTaggable;
 use DoctrineExtensions\Taggable\TagManager as BaseTagManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\TaggingBundle\Entity\Tag;
 
 class TagManager extends BaseTagManager
 {
@@ -98,7 +99,7 @@ class TagManager extends BaseTagManager
      */
     public function findAll()
     {
-        $tagsRepo = $this->em->getRepository('KunstmaanTaggingBundle:Tag');
+        $tagsRepo = $this->em->getRepository(Tag::class);
 
         return $tagsRepo->findAll();
     }
