@@ -76,7 +76,7 @@ WHERE
     HAVING MAX(compare) IS NOT NULL
     ORDER BY newest_date DESC
 EOQ;
-        $table = $em->getClassMetadata('KunstmaanTranslatorBundle:Translation')->getTableName();
+        $table = $em->getClassMetadata(Translation::class)->getTableName();
 
         $stmt = $em->getConnection()->prepare(sprintf($sql, $table, $table));
         $result = $stmt->executeQuery()->fetchAssociative();

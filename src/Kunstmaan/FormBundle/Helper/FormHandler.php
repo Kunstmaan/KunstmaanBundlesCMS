@@ -10,7 +10,9 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Event\FormEvents;
 use Kunstmaan\FormBundle\Event\SubmissionEvent;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,7 +45,7 @@ class FormHandler implements FormHandlerInterface
         $router = $this->container->get('router');
         /* @var ArrayObject $fields */
         $fields = new ArrayObject();
-        $pageParts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $page->getFormElementsContext());
+        $pageParts = $em->getRepository(PagePartRef::class)->getPageParts($page, $page->getFormElementsContext());
         foreach ($pageParts as $sequence => $pagePart) {
             if ($pagePart instanceof FormAdaptorInterface) {
                 $pagePart->adaptForm($formBuilder, $fields, $sequence);
@@ -56,7 +58,7 @@ class FormHandler implements FormHandlerInterface
             if ($form->isSubmitted() && $form->isValid()) {
                 $formSubmission = new FormSubmission();
                 $formSubmission->setIpAddress($request->getClientIp());
-                $formSubmission->setNode($em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page));
+                $formSubmission->setNode($em->getRepository(Node::class)->getNodeFor($page));
                 $formSubmission->setLang($request->getLocale());
                 $em->persist($formSubmission);
 

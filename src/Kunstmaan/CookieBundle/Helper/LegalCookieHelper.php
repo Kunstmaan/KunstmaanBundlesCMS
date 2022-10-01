@@ -3,7 +3,9 @@
 namespace Kunstmaan\CookieBundle\Helper;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\CookieBundle\Entity\CookieConfig;
 use Kunstmaan\CookieBundle\Entity\CookieLog;
+use Kunstmaan\CookieBundle\Entity\CookieType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +50,7 @@ class LegalCookieHelper
         if (null === $this->legalCookie) {
             $cookies = [];
             if (!$request->cookies->has(self::LEGAL_COOKIE_NAME)) {
-                $types = $this->em->getRepository('KunstmaanCookieBundle:CookieType')->findAll();
+                $types = $this->em->getRepository(CookieType::class)->findAll();
                 foreach ($types as $type) {
                     if ($type->isAlwaysOn()) {
                         $cookies['cookies'][$type->getInternalName()] = 'true';
@@ -84,7 +86,7 @@ class LegalCookieHelper
     {
         $cookie = $this->getLegalCookie($request);
 
-        $cookieConfig = $this->em->getRepository('KunstmaanCookieBundle:CookieConfig')->findLatestConfig();
+        $cookieConfig = $this->em->getRepository(CookieConfig::class)->findLatestConfig();
 
         if (null !== $cookieConfig) {
             // If version is different, expire cookie.
@@ -102,7 +104,7 @@ class LegalCookieHelper
     public function saveLegalCookie(Request $request, array $legalCookie)
     {
         // Get cookie version.
-        $cookieConfig = $this->em->getRepository('KunstmaanCookieBundle:CookieConfig')->findLatestConfig();
+        $cookieConfig = $this->em->getRepository(CookieConfig::class)->findLatestConfig();
 
         $log = new CookieLog();
         $log->setIpAddress($request->getClientIp());
@@ -137,7 +139,7 @@ class LegalCookieHelper
     {
         $authenticated = false;
 
-        $cookieConfig = $this->em->getRepository('KunstmaanCookieBundle:CookieConfig')->findLatestConfig();
+        $cookieConfig = $this->em->getRepository(CookieConfig::class)->findLatestConfig();
         if (null !== $cookieConfig) {
             if ($cookieConfig->isCookieBundleEnabled()) {
                 return true;

@@ -24,7 +24,7 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     public function load(ObjectManager $manager)
     {
-        $this->repo = $manager->getRepository('Kunstmaan\TranslatorBundle\Entity\Translation');
+        $this->repo = $manager->getRepository(Entity::class);
 
         $helloWorld = new Model();
         $helloWorld->setKeyword('heading.hello_world');

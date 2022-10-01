@@ -34,7 +34,7 @@ class MediaCreatorService
     {
         $this->container = $container;
         $this->em = $container->get('doctrine')->getManager();
-        $this->folderRepository = $this->em->getRepository('KunstmaanMediaBundle:Folder');
+        $this->folderRepository = $this->em->getRepository(Folder::class);
     }
 
     /**

@@ -10,6 +10,11 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
+use Kunstmaan\VotingBundle\Entity\UpDown\DownVote;
+use Kunstmaan\VotingBundle\Entity\UpDown\UpVote;
+use Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare;
+use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
+use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
 
 /**
  * Helper class get repository for an event
@@ -41,23 +46,23 @@ class RepositoryResolver
         $repository = null;
 
         if ($event instanceof DownVoteEvent) {
-            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\DownVote');
+            $repository = $this->getRepository(DownVote::class);
         }
 
         if ($event instanceof UpVoteEvent) {
-            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\UpVote');
+            $repository = $this->getRepository(UpVote::class);
         }
 
         if ($event instanceof LinkedInShareEvent) {
-            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare');
+            $repository = $this->getRepository(LinkedInShare::class);
         }
 
         if ($event instanceof FacebookLikeEvent) {
-            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike');
+            $repository = $this->getRepository(FacebookLike::class);
         }
 
         if ($event instanceof FacebookSendEvent) {
-            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend');
+            $repository = $this->getRepository(FacebookSend::class);
         }
 
         return $repository;

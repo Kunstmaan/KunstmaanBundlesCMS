@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
+use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\CookieBundle\Form\CookieAdminType;
 
 /**
@@ -78,7 +79,7 @@ class CookieAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurat
     private function getCookieTypes()
     {
         $cookieTypes = [];
-        foreach ($this->em->getRepository('KunstmaanCookieBundle:CookieType')->findAll() as $cookieType) {
+        foreach ($this->em->getRepository(CookieType::class)->findAll() as $cookieType) {
             $cookieTypes[$cookieType->getId()] = $cookieType->getName();
         }
 

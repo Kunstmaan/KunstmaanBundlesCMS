@@ -1013,7 +1013,7 @@ final class NodeAdminController extends AbstractController
             'subaction' => $subaction,
             'tabPane' => $tabPane,
             'editmode' => true,
-            'childCount' => $this->em->getRepository('KunstmaanNodeBundle:Node')->getChildCount($node),
+            'childCount' => $this->em->getRepository(Node::class)->getChildCount($node),
             'queuedNodeTranslationAction' => $queuedNodeTranslationAction,
             'nodeVersionLockCheck' => $this->getParameter('kunstmaan_node.lock_enabled'),
             'nodeVersionLockInterval' => $this->getParameter('kunstmaan_node.lock_check_interval'),

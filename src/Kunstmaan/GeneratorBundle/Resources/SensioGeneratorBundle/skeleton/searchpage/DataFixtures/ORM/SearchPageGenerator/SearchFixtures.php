@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -43,7 +44,7 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
 
         // Create article overview page
-        $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $em->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $searchPage = new SearchPage();

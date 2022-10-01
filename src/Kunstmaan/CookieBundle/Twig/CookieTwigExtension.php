@@ -65,7 +65,7 @@ final class CookieTwigExtension extends AbstractExtension
      */
     public function getCookieTypes()
     {
-        return $this->em->getRepository('KunstmaanCookieBundle:CookieType')->findAll();
+        return $this->em->getRepository(CookieType::class)->findAll();
     }
 
     /**
@@ -83,7 +83,7 @@ final class CookieTwigExtension extends AbstractExtension
      */
     public function getVisitorType(Request $request)
     {
-        $cookieConfig = $this->em->getRepository('KunstmaanCookieBundle:CookieConfig')->findLatestConfig();
+        $cookieConfig = $this->em->getRepository(CookieConfig::class)->findLatestConfig();
 
         if (null === $cookieConfig) {
             return CookieConfig::VISITOR_TYPE_NORMAL;

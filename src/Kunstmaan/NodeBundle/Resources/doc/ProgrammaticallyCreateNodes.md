@@ -8,7 +8,7 @@ A sample of how you would create a page with an internal name, hooked right unde
 for dutch and english and publish it immediately.
 
 ```
-        $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+        $nodeRepo = $em->getRepository(\Kunstmaan\NodeBundle\Entity\Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $overviewPage = new ContentPage();

@@ -5,6 +5,7 @@ namespace Kunstmaan\TaggingBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
+use Kunstmaan\TaggingBundle\Entity\Tag;
 
 /**
  * This listener will make sure the tags are copied as well
@@ -24,7 +25,7 @@ class CloneListener
 
         if ($originalEntity instanceof Taggable) {
             $targetEntity = $event->getClonedEntity();
-            $this->em->getRepository('KunstmaanTaggingBundle:Tag')->copyTags($originalEntity, $targetEntity);
+            $this->em->getRepository(Tag::class)->copyTags($originalEntity, $targetEntity);
         }
     }
 }

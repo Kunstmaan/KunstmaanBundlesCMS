@@ -8,6 +8,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\CookieBundle\Entity\Cookie;
 use Kunstmaan\CookieBundle\Entity\CookieType;
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\AdminBundle\Entity\User;
@@ -111,7 +112,7 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
         }
 
         $options = [
-            'parent' => $this->manager->getRepository('KunstmaanNodeBundle:Node')->findOneBy(['internalName' => 'homepage']),
+            'parent' => $this->manager->getRepository(Node::class)->findOneBy(['internalName' => 'homepage']),
             'page_internal_name' => 'legal',
             'set_online' => false,
             'hidden_from_nav' => true,
@@ -269,7 +270,7 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
         foreach ($this->requiredLocales as $locale) {
             $pageparts = [];
 
-            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(['rel' => 'image']);
+            $folder = $this->manager->getRepository(Folder::class)->findOneBy(['rel' => 'image']);
             $imgDir = $this->container->getParameter('kernel.project_dir').'/assets/ui/img/legal/';
 
             $icon = $this->mediaCreator->createFile($imgDir.'cookie.svg', $folder->getId());
@@ -480,7 +481,7 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
      */
     private function checkPageCreator()
     {
-        $creator = $this->em->getRepository('KunstmaanAdminBundle:User')->findOneBy(['username' => self::ADMIN_USERNAME]);
+        $creator = $this->em->getRepository(User::class)->findOneBy(['username' => self::ADMIN_USERNAME]);
 
         if (null === $creator) {
             $user = new User();

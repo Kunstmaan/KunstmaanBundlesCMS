@@ -58,7 +58,7 @@ class PageCloningHelper
     public function duplicateWithChildren($id, string $locale, BaseUser $user, string $title = null): Node
     {
         /* @var Node $parentNode */
-        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $originalNode = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
@@ -110,7 +110,7 @@ class PageCloningHelper
     private function createNodeStructureForNewPage(Node $originalNode, HasNodeInterface $newPage, BaseUser $user, string $locale): Node
     {
         /* @var Node $nodeNewPage */
-        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $locale, $user);
+        $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($newPage, $locale, $user);
 
         if ($newPage->isStructureNode()) {
             $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
