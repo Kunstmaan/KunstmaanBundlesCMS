@@ -14,7 +14,7 @@ npm-debug.log
 .vscode
 src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/dist
 .idea
-.php_cs
-.php_cs.cache
+.php-cs-fixer.php
+.php-cs-fixer.cache
 .phpunit.result.cache
 !src/Kunstmaan/AdminBundle/Tests/Helper/VersionCheck/testdata/composer_*/composer.lock
