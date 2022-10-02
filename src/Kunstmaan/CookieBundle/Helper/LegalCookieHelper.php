@@ -124,7 +124,7 @@ class LegalCookieHelper
         return new Cookie(
             self::LEGAL_COOKIE_NAME,
             json_encode($legalCookie),
-            time() + ($this->cookieLifetime),
+            time() + $this->cookieLifetime,
             '/',
             null,
             $request->isSecure(),

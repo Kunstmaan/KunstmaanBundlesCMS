@@ -23,9 +23,9 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
     }
 
     /**
-     * @throws \Exception
-     *
      * @return PagePartAdminConfiguratorInterface[]
+     *
+     * @throws \Exception
      */
     public function getPagePartAdminConfigurators(HasPagePartsInterface $page)
     {
@@ -47,9 +47,9 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
     }
 
     /**
-     * @throws \Exception
-     *
      * @return string[]
+     *
+     * @throws \Exception
      */
     public function getPagePartContexts(HasPagePartsInterface $page)
     {

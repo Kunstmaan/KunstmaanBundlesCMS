@@ -50,7 +50,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     public function canHandle($object)
     {
         if (
-            (\is_string($object)) ||
+            \is_string($object) ||
             ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)
         ) {
             return true;

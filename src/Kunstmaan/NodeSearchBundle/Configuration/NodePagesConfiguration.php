@@ -147,7 +147,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function createIndex()
     {
-        //create analysis
+        // create analysis
         $analysis = $this->container->get(
             'kunstmaan_search.search.factory.analysis'
         );

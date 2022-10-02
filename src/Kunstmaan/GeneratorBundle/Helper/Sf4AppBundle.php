@@ -24,7 +24,7 @@ final class Sf4AppBundle implements BundleInterface
      */
     public function boot()
     {
-        //no-op
+        // no-op
     }
 
     /**
@@ -32,7 +32,7 @@ final class Sf4AppBundle implements BundleInterface
      */
     public function shutdown()
     {
-        //no-op
+        // no-op
     }
 
     /**
@@ -42,7 +42,7 @@ final class Sf4AppBundle implements BundleInterface
      */
     public function build(ContainerBuilder $container)
     {
-        //no-op
+        // no-op
     }
 
     /**
@@ -52,7 +52,7 @@ final class Sf4AppBundle implements BundleInterface
      */
     public function getContainerExtension()
     {
-        //no-op
+        // no-op
     }
 
     /**
@@ -92,7 +92,7 @@ final class Sf4AppBundle implements BundleInterface
      */
     public function setContainer(ContainerInterface $container = null)
     {
-        //no-op
+        // no-op
     }
 
     /**
@@ -108,6 +108,6 @@ final class Sf4AppBundle implements BundleInterface
      */
     public function getParent()
     {
-        //no-op
+        // no-op
     }
 }

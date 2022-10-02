@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository;
-use Kunstmaan\AdminListBundle\Entity\LockableEntity;
 
 /**
  * @ORM\Table(name="kuma_entity_version_lock", indexes={

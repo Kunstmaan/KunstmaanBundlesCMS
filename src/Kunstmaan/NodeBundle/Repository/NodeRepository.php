@@ -189,9 +189,9 @@ class NodeRepository extends NestedTreeRepository
      * @param BaseUser         $owner        The user
      * @param string           $internalName The internal name (may be null)
      *
-     * @throws \InvalidArgumentException
-     *
      * @return Node
+     *
+     * @throws \InvalidArgumentException
      */
     public function createNodeFor(
         HasNodeInterface $hasNode,

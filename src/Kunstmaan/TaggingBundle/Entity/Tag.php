@@ -7,9 +7,8 @@ use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kunstmaan\TaggingBundle\Repository\TagRepository;
-use Kunstmaan\TaggingBundle\Entity\Tagging;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TaggingBundle\Repository\TagRepository")

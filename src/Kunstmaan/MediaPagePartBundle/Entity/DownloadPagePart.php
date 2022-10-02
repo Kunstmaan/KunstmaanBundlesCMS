@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\MediaPagePartBundle\Entity;
+namespace Kunstmaan\MediaPagePartBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;

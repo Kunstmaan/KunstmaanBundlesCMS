@@ -8,9 +8,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\NodeAdminType;
+use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Component\Validator\Constraints as Assert;
-use Kunstmaan\NodeBundle\Repository\NodeRepository;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeRepository")
@@ -88,6 +88,7 @@ class Node extends AbstractEntity implements GedmoNode
 
     /**
      * @var ArrayCollection
+     *
      * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */

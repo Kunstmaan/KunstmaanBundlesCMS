@@ -44,9 +44,9 @@ class ActionsMenuBuilderTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Doctrine\ORM\EntityManager
+     *
+     * @throws \Exception
      */
     protected function getMockedEntityManager()
     {

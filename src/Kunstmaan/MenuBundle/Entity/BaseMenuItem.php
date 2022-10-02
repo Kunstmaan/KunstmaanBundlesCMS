@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Kunstmaan\MenuBundle\Entity\Menu;
 
 /**
  * @ORM\MappedSuperclass()

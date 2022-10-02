@@ -89,7 +89,7 @@ class GroupTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         /* @var $role Role */
-        $role = new \StdClass();
+        $role = new \stdClass();
         $this->object->addRole($role);
     }
 

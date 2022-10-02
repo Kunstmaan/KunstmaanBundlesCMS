@@ -40,7 +40,6 @@ class AclWalkerTest extends TestCase
         $conn = $this->createMock(Connection::class);
         $conn->expects($this->any())->method('getDatabasePlatform')->willReturn($platform);
 
-
         $em = $this->createMock(EntityManager::class);
         $query = $this->createMock(AbstractQuery::class);
         $mapping = $this->createMock(ResultSetMapping::class);

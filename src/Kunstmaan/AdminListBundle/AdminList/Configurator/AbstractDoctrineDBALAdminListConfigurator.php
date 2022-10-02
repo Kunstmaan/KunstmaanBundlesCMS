@@ -105,7 +105,8 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      *
      * @return void
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = []) {
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = [])
+    {
         $queryBuilder->where('1=1');
     }
 
@@ -156,7 +157,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
             // Apply sorting
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
-                $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
+                $this->queryBuilder->orderBy($orderBy, $this->orderDirection == 'DESC' ? 'DESC' : 'ASC');
             }
         }
 

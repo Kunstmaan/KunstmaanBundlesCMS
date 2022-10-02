@@ -152,7 +152,7 @@ final class WidgetsController extends AbstractController
         $structureNode = false;
         if (class_exists($refEntityName)) {
             $page = new $refEntityName();
-            $structureNode = ($page instanceof StructureNode);
+            $structureNode = $page instanceof StructureNode;
             unset($page);
         }
 

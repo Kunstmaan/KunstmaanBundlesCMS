@@ -17,9 +17,9 @@ class PageTemplateConfigurationReader implements PageTemplateConfigurationReader
     }
 
     /**
-     * @throws \Exception
-     *
      * @return PageTemplateInterface[]
+     *
+     * @throws \Exception
      */
     public function getPageTemplates(HasPageTemplateInterface $page)
     {

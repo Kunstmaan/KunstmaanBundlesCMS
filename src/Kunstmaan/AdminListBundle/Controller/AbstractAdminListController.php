@@ -71,9 +71,9 @@ abstract class AbstractAdminListController extends AbstractController
      *
      * @param string $_format The format to export to
      *
-     * @throws AccessDeniedHttpException
-     *
      * @return Response
+     *
+     * @throws AccessDeniedHttpException
      */
     protected function doExportAction(AdminListConfiguratorInterface $configurator, $_format, Request $request = null)
     {
@@ -93,9 +93,9 @@ abstract class AbstractAdminListController extends AbstractController
      *
      * @param string|null $type The type to add
      *
-     * @throws AccessDeniedHttpException
-     *
      * @return Response
+     *
+     * @throws AccessDeniedHttpException
      */
     protected function doAddAction(AdminListConfiguratorInterface $configurator, $type, Request $request)
     {
@@ -186,10 +186,10 @@ abstract class AbstractAdminListController extends AbstractController
      *
      * @param int|string $entityId The id of the entity that will be edited
      *
+     * @return Response
+     *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
-     *
-     * @return Response
      */
     protected function doEditAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
@@ -336,10 +336,10 @@ abstract class AbstractAdminListController extends AbstractController
     /**
      * @param int $entityId The id to delete
      *
+     * @return Response
+     *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
-     *
-     * @return Response
      */
     protected function doDeleteAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
@@ -489,9 +489,9 @@ abstract class AbstractAdminListController extends AbstractController
         $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
         return $entityVersionLockService->isEntityBelowThreshold($entity) && $entityVersionLockService->isEntityLocked(
-                $this->getUser(),
-                $entity
-            );
+            $this->getUser(),
+            $entity
+        );
     }
 
     /**

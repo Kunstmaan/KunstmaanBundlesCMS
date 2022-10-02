@@ -163,7 +163,7 @@ class AclHelperTest extends TestCase
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData();
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles] = $this->getRoleMockData();
 
         $this->token->expects($this->once())
             ->method($rolesMethodName)
@@ -212,7 +212,7 @@ class AclHelperTest extends TestCase
             ->method('getRootAliases')
             ->will($this->returnValue(['n']));
 
-        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData(true);
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles] = $this->getRoleMockData(true);
 
         $this->token->expects($this->once())
             ->method($rolesMethodName)
@@ -243,7 +243,7 @@ class AclHelperTest extends TestCase
 
     public function testGetAllowedEntityIds()
     {
-        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData();
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles] = $this->getRoleMockData();
 
         $this->token->expects($this->once())
             ->method($rolesMethodName)

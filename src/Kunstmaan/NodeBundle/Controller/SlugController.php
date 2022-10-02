@@ -48,10 +48,10 @@ final class SlugController extends AbstractController
      * @param string  $url     The url
      * @param bool    $preview Show in preview mode
      *
+     * @return Response|array
+     *
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
-     *
-     * @return Response|array
      */
     public function slugAction(Request $request, $url = null, $preview = false)
     {
@@ -87,7 +87,7 @@ final class SlugController extends AbstractController
 
         $this->eventDispatcher->dispatch($securityEvent, Events::SLUG_SECURITY);
 
-        //render page
+        // render page
         $renderContext = new RenderContext(
             [
                 'nodetranslation' => $nodeTranslation,

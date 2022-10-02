@@ -131,8 +131,8 @@ class PagePartGenerator extends KunstmaanGenerator
 
         $params = [
             'pagepart' => strtolower(
-                    preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
-                ) . '-pp',
+                preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
+            ) . '-pp',
             'fields' => $this->fields,
         ];
         $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
@@ -305,9 +305,9 @@ class PagePartGenerator extends KunstmaanGenerator
                 $entity = new $classNamespace();
 
                 if (!method_exists($entity, 'getPagePartAdminConfigurations') || !method_exists(
-                        $entity,
-                        'getPageTemplates'
-                    )
+                    $entity,
+                    'getPageTemplates'
+                )
                 ) {
                     continue;
                 }
@@ -378,9 +378,9 @@ class PagePartGenerator extends KunstmaanGenerator
                                             'random' => 'http://www.' . strtolower(Lorem::word()) . '.com',
                                         ];
                                     } elseif ($blocks[2] == 'textarea' && array_key_exists(
-                                            'class',
-                                            $attr
-                                        ) && $attr['class'] == 'js-rich-editor rich-editor'
+                                        'class',
+                                        $attr
+                                    ) && $attr['class'] == 'js-rich-editor rich-editor'
                                     ) {
                                         $pageFields[]['rich_text'] = [
                                             'label' => $this->labelCase($name),

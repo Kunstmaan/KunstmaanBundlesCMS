@@ -8,16 +8,16 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 interface PagePartConfigurationReaderInterface
 {
     /**
-     * @throws \Exception
-     *
      * @return AbstractPagePartAdminConfigurator[]
+     *
+     * @throws \Exception
      */
     public function getPagePartAdminConfigurators(HasPagePartsInterface $page);
 
     /**
-     * @throws \Exception
-     *
      * @return string[]
+     *
+     * @throws \Exception
      */
     public function getPagePartContexts(HasPagePartsInterface $page);
 }

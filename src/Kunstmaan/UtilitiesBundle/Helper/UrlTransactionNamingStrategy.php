@@ -12,4 +12,3 @@ class UrlTransactionNamingStrategy implements TransactionNamingStrategyInterface
         return $request->getPathInfo();
     }
 }
-

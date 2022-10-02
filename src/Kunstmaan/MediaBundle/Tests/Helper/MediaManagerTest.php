@@ -161,7 +161,7 @@ class MediaManagerTest extends TestCase
     public function testCreateNew()
     {
         $media = new Media();
-        $data = new \StdClass();
+        $data = new \stdClass();
         $this->assertNull($this->object->createNew($data));
 
         $handler1 = $this->getCustomHandler(null, 'CustomHandler1');

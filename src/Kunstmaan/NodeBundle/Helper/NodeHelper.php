@@ -201,9 +201,9 @@ class NodeHelper
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
         if (null !== $parentNode) {
             $weight = $this->em->getRepository(NodeTranslation::class)->getMaxChildrenWeight(
-                    $parentNode,
-                    $locale
-                ) + 1;
+                $parentNode,
+                $locale
+            ) + 1;
             $nodeTranslation->setWeight($weight);
         }
 

@@ -78,7 +78,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function canHandle($object)
     {
         if (
-            (\is_string($object)) ||
+            \is_string($object) ||
             ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)
         ) {
             return true;
@@ -106,7 +106,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         }
         $video = new RemoteVideoHelper($media);
         $code = $video->getCode();
-        //update thumbnail
+        // update thumbnail
         switch ($video->getType()) {
             case 'youtube':
                 try {

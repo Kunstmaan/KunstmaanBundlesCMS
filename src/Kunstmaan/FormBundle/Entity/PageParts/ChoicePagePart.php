@@ -10,7 +10,6 @@ use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The choice page part can be used to create forms with single or multiple choices. This can be

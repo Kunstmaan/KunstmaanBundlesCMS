@@ -80,7 +80,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetViewUrlFor()
     {
-        //from array
+        // from array
         $item = ['id' => 999];
         $viewUrl = $this->abstractAdminListConfMock->getViewUrlFor($item);
         $this->assertArrayHasKey('path', $viewUrl);

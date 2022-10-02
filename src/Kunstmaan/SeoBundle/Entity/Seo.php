@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\SeoBundle\Form\SeoType;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\SeoBundle\Repository\SeoRepository;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * Seo metadata for entities

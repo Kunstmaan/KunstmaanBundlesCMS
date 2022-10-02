@@ -62,7 +62,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
             'bundle' => $bundle,
             'prefix' => GeneratorUtils::cleanPrefix($prefix),
             'canUseAttributes' => Kernel::VERSION_ID >= 50200,
-            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
+            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown' . uniqid()),
         ];
 
         $this->generateEntities($bundle, $parameters, $output);

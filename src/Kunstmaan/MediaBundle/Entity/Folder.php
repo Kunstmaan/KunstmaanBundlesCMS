@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Defines a folder from the MediaBundle in the database

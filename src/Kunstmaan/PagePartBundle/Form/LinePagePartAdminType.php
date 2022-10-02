@@ -26,9 +26,9 @@ class LinePagePartAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-          [
-            'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
-          ]
+            [
+              'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
+            ]
         );
     }
 }

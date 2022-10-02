@@ -59,10 +59,10 @@ class MaskBuilder extends AbstractMaskBuilder
      *
      * @param int|null $mask
      *
+     * @return string
+     *
      * @throws InvalidArgumentException
      * @throws \RuntimeException
-     *
-     * @return string
      */
     public static function getCode($mask)
     {
@@ -93,9 +93,9 @@ class MaskBuilder extends AbstractMaskBuilder
      *
      * @param string|int $mask
      *
-     * @throws InvalidArgumentException
-     *
      * @return bool
+     *
+     * @throws InvalidArgumentException
      */
     public function has($mask)
     {

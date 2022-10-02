@@ -16,13 +16,13 @@ class HeaderPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-          'niv',
-          ChoiceType::class,
-          [
-            'label' => 'pagepart.header.type',
-            'choices' => ['Header 1' => '1', 'Header 2' => '2', 'Header 3' => '3', 'Header 4' => '4', 'Header 5' => '5', 'Header 6' => '6'],
-            'required' => true,
-          ]
+            'niv',
+            ChoiceType::class,
+            [
+              'label' => 'pagepart.header.type',
+              'choices' => ['Header 1' => '1', 'Header 2' => '2', 'Header 3' => '3', 'Header 4' => '4', 'Header 5' => '5', 'Header 6' => '6'],
+              'required' => true,
+            ]
         );
         $builder->add('title', TextType::class, [
             'label' => 'pagepart.header.title',
@@ -41,9 +41,9 @@ class HeaderPagePartAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-          [
-            'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-          ]
+            [
+              'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            ]
         );
     }
 }

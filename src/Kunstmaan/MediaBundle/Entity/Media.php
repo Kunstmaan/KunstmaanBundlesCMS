@@ -202,7 +202,7 @@ class Media extends AbstractEntity
             if ($help < 1024) {
                 return round($help, 1) . 'kb';
             } else {
-                return round(($help / 1024), 1) . 'mb';
+                return round($help / 1024, 1) . 'mb';
             }
         }
     }

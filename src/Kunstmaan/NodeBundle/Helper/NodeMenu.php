@@ -404,8 +404,8 @@ class NodeMenu
 
             foreach ($siblings as $index => $child) {
                 if ($child->getNode() === $node && (($index + 1) < \count(
-                            $siblings
-                        ))
+                    $siblings
+                ))
                 ) {
                     return $siblings[$index + 1];
                 }
@@ -422,9 +422,9 @@ class NodeMenu
     {
         $this->init();
         if ($node->getParent() && \array_key_exists(
-                $node->getParent()->getId(),
-                $this->allNodes
-            )
+            $node->getParent()->getId(),
+            $this->allNodes
+        )
         ) {
             return $this->allNodes[$node->getParent()->getId()];
         }
@@ -509,8 +509,8 @@ class NodeMenu
                     foreach ($nodes as $node) {
                         $tempNode = $node;
                         while (\is_null($resultNode) && !\is_null(
-                                $tempNode->getParent()
-                            )) {
+                            $tempNode->getParent()
+                        )) {
                             $tempParent = $tempNode->getParent();
                             if ($parentNode && $tempParent->getId() == $parentNode->getId()) {
                                 $resultNode = $node;

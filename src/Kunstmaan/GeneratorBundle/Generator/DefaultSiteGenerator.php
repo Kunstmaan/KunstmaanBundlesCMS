@@ -74,7 +74,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             'multilanguage' => $this->isMultiLangEnvironment(),
             'groundcontrol' => $this->groundControl,
             'canUseAttributes' => Kernel::VERSION_ID >= 50200,
-            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
+            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown' . uniqid()),
         ];
 
         $this->generateControllers($parameters);

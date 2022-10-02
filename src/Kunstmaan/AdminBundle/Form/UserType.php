@@ -82,7 +82,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                         'class' => 'js-advanced-select form-control advanced-select',
                     ],
                 ]
-            );
+                );
         }
     }
 

@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This page part adds a submit button to the forms

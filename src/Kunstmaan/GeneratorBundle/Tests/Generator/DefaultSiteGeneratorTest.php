@@ -2,17 +2,14 @@
 
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
-use Symfony\Bundle\MakerBundle\FileManager;
 use Symfony\Bundle\MakerBundle\Util\PhpCompatUtil;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\Kernel;
 
 class DefaultSiteGeneratorTest extends TestCase
 {
@@ -37,7 +34,7 @@ class DefaultSiteGeneratorTest extends TestCase
         ;
 
         $entityPrefixMapping = ['default' => [
-            ['App\\Entity', $this->createMock(MappingDriver::class)]
+            ['App\\Entity', $this->createMock(MappingDriver::class)],
         ]];
 
         $registry = $this->createMock(ManagerRegistry::class);

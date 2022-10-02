@@ -5,7 +5,6 @@ namespace Kunstmaan\DashboardBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsGoalRepository;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 /**
  * @ORM\Table(name="kuma_analytics_goal")

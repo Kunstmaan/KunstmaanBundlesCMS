@@ -16,6 +16,7 @@ class MaxXTimesRule extends AbstractRule
 {
     /**
      * @var int
+     *
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(0)
