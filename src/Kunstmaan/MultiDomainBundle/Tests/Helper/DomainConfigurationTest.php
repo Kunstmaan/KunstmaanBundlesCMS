@@ -7,7 +7,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -393,8 +392,7 @@ class DomainConfigurationTest extends TestCase
         ];
 
         $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-        $method = method_exists(RequestStack::class, 'getMainRequest') ? 'getMainRequest' : 'getMasterRequest';
-        $requestStack->method($method)->willReturn($request);
+        $requestStack->method('getMainRequest')->willReturn($request);
 
         return new DomainConfiguration($requestStack, false, 'en', 'en', $this->getAdminRouteHelper(), $this->getEntityManager(), $hostMap);
     }

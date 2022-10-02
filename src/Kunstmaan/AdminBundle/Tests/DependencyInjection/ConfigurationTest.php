@@ -9,7 +9,6 @@ use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
-use Symfony\Component\Config\Definition\BaseNode;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class ConfigurationTest extends TestCase
@@ -110,12 +109,7 @@ class ConfigurationTest extends TestCase
      */
     public function testDeprecatedAuthenticationConfig()
     {
-        if (method_exists(BaseNode::class, 'getDeprecation')) {
-            $this->expectDeprecation('Since kunstmaan/admin-bundle 6.1: The "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
-        } else {
-            // NEXT_MAJOR remove else when symfony 4.4 support is removed
-            $this->expectDeprecation('The "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
-        }
+        $this->expectDeprecation('Since kunstmaan/admin-bundle 6.1: The "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
 
         $array = [
             'website_title' => null,

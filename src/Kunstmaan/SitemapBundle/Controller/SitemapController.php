@@ -3,7 +3,6 @@
 namespace Kunstmaan\SitemapBundle\Controller;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\SitemapBundle\Event\PreSitemapIndexRenderEvent;
 use Kunstmaan\SitemapBundle\Event\PreSitemapRenderEvent;
@@ -26,7 +25,7 @@ final class SitemapController extends AbstractController
     {
         $this->nodeMenu = $nodeMenu;
         $this->domainConfiguration = $domainConfiguration;
-        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

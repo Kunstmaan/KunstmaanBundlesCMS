@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminBundle\Service;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Event\ChangePasswordSuccessEvent;
 use Kunstmaan\AdminBundle\Event\Events;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\AuthenticationMailerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,7 +27,7 @@ class PasswordResetService
     {
         $this->userManager = $userManager;
         $this->urlGenerator = $urlGenerator;
-        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->eventDispatcher = $eventDispatcher;
         $this->authenticationMailer = $authenticationMailer;
     }
 

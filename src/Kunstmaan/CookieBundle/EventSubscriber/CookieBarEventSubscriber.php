@@ -51,7 +51,7 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
 
         // Do not capture redirects
-        $mainRequest = method_exists($event, 'isMainRequest') ? $event->isMainRequest() : $event->isMasterRequest();
+        $mainRequest = $event->isMainRequest();
         if (!$mainRequest || $this->adminRouteHelper->isAdminRoute($url)) {
             return;
         }

@@ -25,12 +25,7 @@ class DefaultAdminPanelAdapterTest extends TestCase
         $requestStack->push(new Request());
 
         $storage = new TokenStorage();
-        // NEXT_MAJOR: Remove check when symfony <5.4 support is dropped.
-        if (method_exists(FirewallConfig::class, 'getAuthenticators')) {
-            $token = new UsernamePasswordToken((new User())->setUsername('test'), 'main');
-        } else {
-            $token = new UsernamePasswordToken((new User())->setUsername('test'), null, 'main');
-        }
+        $token = new UsernamePasswordToken((new User())->setUsername('test'), 'main');
         $storage->setToken($token);
 
         $logoutUrlGenerator = new LogoutUrlGenerator($requestStack, null, $storage);

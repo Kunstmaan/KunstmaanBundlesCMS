@@ -22,7 +22,7 @@
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
         "stof/doctrine-extensions-bundle": "^1.3",
-        "symfony/css-selector": "^4.4|^5.4"
+        "symfony/css-selector": "^5.4"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",

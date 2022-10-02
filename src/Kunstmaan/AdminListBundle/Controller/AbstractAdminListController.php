@@ -9,7 +9,6 @@ use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
@@ -561,9 +560,7 @@ abstract class AbstractAdminListController extends AbstractController
      */
     private function dispatch($event, string $eventName)
     {
-        $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
-
-        return $eventDispatcher->dispatch($event, $eventName);
+        return $this->container->get('event_dispatcher')->dispatch($event, $eventName);
     }
 
     public static function getSubscribedServices(): array

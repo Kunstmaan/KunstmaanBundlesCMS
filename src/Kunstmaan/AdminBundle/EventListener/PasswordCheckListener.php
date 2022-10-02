@@ -6,7 +6,6 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -84,16 +83,10 @@ class PasswordCheckListener
         }
 
         $response = new RedirectResponse($this->router->generate('kunstmaan_admin_forced_change_password'));
-        $session = $this->getSession();
-        $session->getFlashBag()->add(
+        $this->requestStack->getSession()->getFlashBag()->add(
             FlashTypes::DANGER,
             $this->translator->trans('kuma_admin.password_check.flash.error')
         );
         $event->setResponse($response);
-    }
-
-    private function getSession(): SessionInterface
-    {
-        return method_exists($this->requestStack, 'getSession') ? $this->requestStack->getSession() : $this->requestStack->getCurrentRequest()->getSession();
     }
 }

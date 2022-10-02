@@ -12,7 +12,6 @@ use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
@@ -1273,9 +1272,7 @@ final class NodeAdminController extends AbstractController
      */
     private function dispatch($event, string $eventName)
     {
-        $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
-
-        return $eventDispatcher->dispatch($event, $eventName);
+        return $this->container->get('event_dispatcher')->dispatch($event, $eventName);
     }
 
     public static function getSubscribedServices(): array
