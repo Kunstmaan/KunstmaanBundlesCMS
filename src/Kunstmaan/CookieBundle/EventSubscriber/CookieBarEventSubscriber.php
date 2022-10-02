@@ -57,9 +57,9 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
         }
 
         if ($response->isRedirection() || ($response->headers->has('Content-Type') && false === strpos(
-                    $response->headers->get('Content-Type'),
-                    'html'
-                ))
+            $response->headers->get('Content-Type'),
+            'html'
+        ))
             || 'html' !== $request->getRequestFormat()
             || !$this->cookieHelper->isGrantedForCookieBundle($request)
             || false !== stripos($response->headers->get('Content-Disposition', ''), 'attachment;')
@@ -79,10 +79,10 @@ class CookieBarEventSubscriber implements EventSubscriberInterface
 
         if (false !== $pos) {
             $toolbar = "\n" . str_replace(
-                    "\n",
-                    '',
-                    $this->twig->render('@KunstmaanCookie/CookieBar/view.html.twig')
-                ) . "\n";
+                "\n",
+                '',
+                $this->twig->render('@KunstmaanCookie/CookieBar/view.html.twig')
+            ) . "\n";
             $content = substr($content, 0, $pos) . $toolbar . substr($content, $pos);
             $response->setContent($content);
         }

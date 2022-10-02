@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * An Acl changeset will be added to the queue whenever a change is made to the permissions. The {@link ApplyAclCommand}

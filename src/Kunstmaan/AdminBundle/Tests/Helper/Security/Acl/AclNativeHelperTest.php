@@ -116,7 +116,7 @@ class AclNativeHelperTest extends TestCase
             ]
         );
 
-        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData();
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles] = $this->getRoleMockData();
 
         $this->token->expects($this->once())
             ->method($rolesMethodName)
@@ -159,7 +159,7 @@ class AclNativeHelperTest extends TestCase
             ]
         );
 
-        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles,] = $this->getRoleMockData(true);
+        [$rolesMethodName, $roles, $reachableRolesMethodName, $allRoles] = $this->getRoleMockData(true);
 
         $this->token->expects($this->once())
             ->method($rolesMethodName)

@@ -16,6 +16,7 @@ class AfterXScrollPercentRule extends AbstractRule
 {
     /**
      * @var int
+     *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\Range(min = 0, max = 100)

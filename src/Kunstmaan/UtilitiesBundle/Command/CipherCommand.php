@@ -68,9 +68,9 @@ final class CipherCommand extends Command
                 break;
             case 2:
             case 3:
-            $fs = new Filesystem();
+                $fs = new Filesystem();
 
-            $question = new Question('Please enter the input file path: ');
+                $question = new Question('Please enter the input file path: ');
                 $question->setValidator(function ($value) use ($fs) {
                     if (trim($value) === '') {
                         throw new \Exception('The input file path cannot be empty');

@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Kunstmaan\MenuBundle\Entity\MenuItem;
 
 /**
  * @ORM\MappedSuperclass()

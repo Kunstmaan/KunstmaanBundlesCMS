@@ -7,8 +7,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeTranslationRepository")
@@ -21,7 +21,7 @@ use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
  */
 #[ORM\Entity(repositoryClass: NodeTranslationRepository::class)]
 #[ORM\Table(name: 'kuma_node_translations')]
-#[ORM\UniqueConstraint(name: "ix_kuma_node_translations_node_lang", columns: ["node_id", "lang"])]
+#[ORM\UniqueConstraint(name: 'ix_kuma_node_translations_node_lang', columns: ['node_id', 'lang'])]
 #[ORM\Index(name: 'idx__node_translation_lang_url', columns: ['lang', 'url'], options: ['lengths' => [null, 255]])]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class NodeTranslation extends AbstractEntity
@@ -91,6 +91,7 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @var ArrayCollection
+     *
      * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"created" = "ASC"})

@@ -407,9 +407,9 @@ class NodeTranslationRepository extends EntityRepository
      * @param Node             $node    The node
      * @param BaseUser         $owner   The user
      *
-     * @throws \InvalidArgumentException
-     *
      * @return NodeTranslation
+     *
+     * @throws \InvalidArgumentException
      */
     public function createNodeTranslationFor(
         HasNodeInterface $hasNode,
@@ -458,9 +458,9 @@ class NodeTranslationRepository extends EntityRepository
      * @param Node             $node    The node
      * @param BaseUser         $owner   The user
      *
-     * @throws \InvalidArgumentException
-     *
      * @return NodeTranslation
+     *
+     * @throws \InvalidArgumentException
      */
     public function addDraftNodeVersionFor(
         HasNodeInterface $hasNode,

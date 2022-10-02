@@ -6,7 +6,6 @@ use Kunstmaan\MediaBundle\Entity\Media as MediaObject;
 use Kunstmaan\MediaBundle\Validator\Constraints\Media;
 use Kunstmaan\MediaBundle\Validator\Constraints\MediaValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
-use Symfony\Component\Validator\Validation;
 
 class MediaValidatorTest extends ConstraintValidatorTestCase
 {

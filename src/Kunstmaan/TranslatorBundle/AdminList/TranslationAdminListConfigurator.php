@@ -291,13 +291,12 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                         $this->queryBuilder->andWhere($this->queryBuilder->expr()->or($expr));
                     }
                 }
-
             }
 
             // Apply sorting
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
-                $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
+                $this->queryBuilder->orderBy($orderBy, $this->orderDirection == 'DESC' ? 'DESC' : 'ASC');
             }
         }
 

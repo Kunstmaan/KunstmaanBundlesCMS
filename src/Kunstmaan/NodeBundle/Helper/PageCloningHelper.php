@@ -96,7 +96,7 @@ class PageCloningHelper
             $newPage->setTitle($title);
         }
 
-        //set the parent
+        // set the parent
         $parentNodeTranslation = $originalNode->getParent()->getNodeTranslation($locale, true);
         $parent = $parentNodeTranslation->getPublicNodeVersion()->getRef($this->em);
         $newPage->setParent($parent);

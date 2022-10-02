@@ -30,7 +30,7 @@ class Tagging extends BaseTagging
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      */
     #[ORM\ManyToOne(targetEntity: Tag::class, inversedBy: 'tagging')]
-    #[ORM\JoinColumn(name: 'tag_id', referencedColumnName: 'id', onDelete: "CASCADE")]
+    #[ORM\JoinColumn(name: 'tag_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $tag;
 
     /**

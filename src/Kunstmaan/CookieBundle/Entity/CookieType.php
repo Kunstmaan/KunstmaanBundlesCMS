@@ -8,9 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\CookieBundle\Repository\CookieTypeRepository;
-use Kunstmaan\CookieBundle\Entity\Cookie;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="kuma_cookie_types")
@@ -22,9 +21,9 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
 {
     /**
      * @var string
+     *
      * @Gedmo\Translatable()
      * @Assert\NotBlank()
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
@@ -33,8 +32,8 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
 
     /**
      * @var string
-     * @Gedmo\Translatable()
      *
+     * @Gedmo\Translatable()
      * @ORM\Column(name="short_description", type="text", nullable=true)
      */
     #[ORM\Column(name: 'short_description', type: 'text', nullable: true)]
@@ -43,8 +42,8 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
 
     /**
      * @var string
-     * @Gedmo\Translatable()
      *
+     * @Gedmo\Translatable()
      * @ORM\Column(name="long_description", type="text", nullable=true)
      */
     #[ORM\Column(name: 'long_description', type: 'text', nullable: true)]
@@ -53,8 +52,8 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
 
     /**
      * @var string
-     * @Assert\NotBlank()
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="internal_name", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'internal_name', type: 'string', length: 255, nullable: true)]

@@ -113,7 +113,7 @@ class ConfigurationTest extends TestCase
         if (method_exists(BaseNode::class, 'getDeprecation')) {
             $this->expectDeprecation('Since kunstmaan/admin-bundle 6.1: The "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
         } else {
-            //NEXT_MAJOR remove else when symfony 4.4 support is removed
+            // NEXT_MAJOR remove else when symfony 4.4 support is removed
             $this->expectDeprecation('The "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
         }
 

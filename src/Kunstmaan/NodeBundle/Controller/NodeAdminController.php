@@ -485,7 +485,7 @@ final class NodeAdminController extends AbstractController
         $newPage = $this->container->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($originalRef);
 
-        //set the title
+        // set the title
         $title = $request->request->get('title');
         if (\is_string($title) && !empty($title)) {
             $newPage->setTitle($title);
@@ -493,7 +493,7 @@ final class NodeAdminController extends AbstractController
             $newPage->setTitle('New page');
         }
 
-        //set the parent
+        // set the parent
         $parentNodeTranslation = $originalNode->getParent()->getNodeTranslation($this->locale, true);
         $parent = $parentNodeTranslation->getPublicNodeVersion()->getRef($this->em);
         $newPage->setParent($parent);
@@ -863,7 +863,7 @@ final class NodeAdminController extends AbstractController
             if ($request->getMethod() == 'POST') {
                 $nodeVersionIsLocked = $this->isNodeVersionLocked($nodeTranslation, true);
 
-                //Check the version timeout and make a new nodeversion if the timeout is passed
+                // Check the version timeout and make a new nodeversion if the timeout is passed
                 $thresholdDate = date(
                     'Y-m-d H:i:s',
                     time() - $this->getParameter(
@@ -1215,6 +1215,7 @@ final class NodeAdminController extends AbstractController
      * @param Request $request
      *
      * @return string
+     *
      * @throw InvalidArgumentException
      */
     private function validatePageType($request)
@@ -1233,8 +1234,8 @@ final class NodeAdminController extends AbstractController
      */
     private function renderNodeNotTranslatedPage(Node $node)
     {
-        //try to find a parent node with the correct translation, if there is none allow copy.
-        //if there is a parent but it doesn't have the language to copy to don't allow it
+        // try to find a parent node with the correct translation, if there is none allow copy.
+        // if there is a parent but it doesn't have the language to copy to don't allow it
         $parentNode = $node->getParent();
         if ($parentNode) {
             $parentNodeTranslation = $parentNode->getNodeTranslation(

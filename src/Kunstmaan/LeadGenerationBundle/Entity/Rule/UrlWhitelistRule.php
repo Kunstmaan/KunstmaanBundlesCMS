@@ -16,6 +16,7 @@ class UrlWhitelistRule extends AbstractRule
 {
     /**
      * @var string
+     *
      * @ORM\Column(name="urls", type="text", nullable=true)
      * @Assert\NotBlank()
      */

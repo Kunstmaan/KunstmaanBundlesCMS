@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\HttpKernel\Kernel;
 use Twig\Environment;
 use Twig\Lexer;
 use Twig\Loader\FilesystemLoader;
@@ -196,10 +195,10 @@ class KunstmaanGenerator extends Generator
         $className = $entityName . 'AdminType';
         $savePath = $bundle->getPath() . '/Form/' . $entityPrefix . '/' . $className . '.php';
         $name = str_replace(
-                '\\',
-                '_',
-                strtolower($bundle->getNamespace())
-            ) . '_' . strtolower($entityName) . 'type';
+            '\\',
+            '_',
+            strtolower($bundle->getNamespace())
+        ) . '_' . strtolower($entityName) . 'type';
 
         $params = [
             'className' => $className,

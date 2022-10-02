@@ -72,9 +72,9 @@ class SlugRouter implements RouterInterface
      *
      * @param string $pathinfo
      *
-     * @throws ResourceNotFoundException
-     *
      * @return array
+     *
+     * @throws ResourceNotFoundException
      */
     public function match($pathinfo)
     {

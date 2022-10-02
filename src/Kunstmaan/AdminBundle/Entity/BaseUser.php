@@ -116,6 +116,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
 
     /**
      * @var \DateTimeImmutable|null
+     *
      * @ORM\Column(name="created_at", type="datetime_immutable", nullable=true)
      */
     #[ORM\Column(name: 'created_at', type: 'datetime_immutable', nullable: true)]
@@ -123,6 +124,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface
 
     /**
      * @var string|null
+     *
      * @ORM\Column(name="created_by", type="string", nullable=true)
      */
     #[ORM\Column(name: 'created_by', type: 'string', nullable: true)]
@@ -273,12 +275,12 @@ abstract class BaseUser implements UserInterface, EquatableInterface
         $metadata->addConstraint(new UniqueEntity([
             'fields' => 'username',
             'message' => 'errors.user.loginexists',
-            'groups' => ['Registration', 'Default']
+            'groups' => ['Registration', 'Default'],
         ]));
         $metadata->addConstraint(new UniqueEntity([
             'fields' => 'email',
             'message' => 'errors.user.emailexists',
-            'groups' => ['Registration', 'Default']
+            'groups' => ['Registration', 'Default'],
         ]));
     }
 

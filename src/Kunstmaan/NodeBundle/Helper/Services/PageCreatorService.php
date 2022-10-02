@@ -105,7 +105,7 @@ class PageCreatorService
         $first = true;
         $rootNode = null;
 
-        /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo*/
+        /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo */
         $nodeTranslationRepo = $em->getRepository(NodeTranslation::class);
 
         foreach ($translations as $translation) {

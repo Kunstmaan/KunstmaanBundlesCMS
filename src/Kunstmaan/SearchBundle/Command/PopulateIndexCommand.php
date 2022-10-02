@@ -3,7 +3,6 @@
 namespace Kunstmaan\SearchBundle\Command;
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
-use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;

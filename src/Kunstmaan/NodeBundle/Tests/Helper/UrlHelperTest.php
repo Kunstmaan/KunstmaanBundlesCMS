@@ -26,8 +26,8 @@ class UrlHelperTest extends TestCase
         $this->connection->transactional(
             static function (Connection $connection): void {
                 for ($i = 1; $i <= 5; ++$i) {
-                    $connection->insert('kuma_node_translations', ['url' => 'abc-'.$i, 'lang' => 'en']);
-                    $connection->insert('kuma_media', ['url' => '/uploads/media/'.$i.'/test.svg']);
+                    $connection->insert('kuma_node_translations', ['url' => 'abc-' . $i, 'lang' => 'en']);
+                    $connection->insert('kuma_media', ['url' => '/uploads/media/' . $i . '/test.svg']);
                 }
             }
         );
@@ -59,7 +59,7 @@ class UrlHelperTest extends TestCase
         // Remove all records to test cached result on second call
         $this->connection->executeStatement('DELETE FROM kuma_node_translations');
 
-        //Second call to replaceUrl should not execute query again
+        // Second call to replaceUrl should not execute query again
         $this->assertEquals('/abc-3', $urlHelper->replaceUrl('[NT3]'));
     }
 
@@ -77,7 +77,7 @@ class UrlHelperTest extends TestCase
         // Remove all records to test cached result on second call
         $this->connection->executeStatement('DELETE FROM kuma_media');
 
-        //Second call to replaceUrl should not execute query again
+        // Second call to replaceUrl should not execute query again
         $this->assertEquals('/uploads/media/3/test.svg', $urlHelper->replaceUrl('[M3]'));
     }
 

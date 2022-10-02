@@ -19,7 +19,7 @@ class UserManager
 
     public function __construct($hasherFactory, EntityManagerInterface $em, string $class)
     {
-        //NEXT_MAJOR When symfony <5.3 is removed, add PasswordHasherFactoryInterface typehint and remove BC layer and compiler pass
+        // NEXT_MAJOR When symfony <5.3 is removed, add PasswordHasherFactoryInterface typehint and remove BC layer and compiler pass
         if (!$hasherFactory instanceof EncoderFactoryInterface && !$hasherFactory instanceof PasswordHasherFactoryInterface) {
             throw new \InvalidArgumentException(sprintf('The "$hasherFactory" parameter should be instance of "%s" or "%s"', EncoderFactoryInterface::class, PasswordHasherFactoryInterface::class));
         }

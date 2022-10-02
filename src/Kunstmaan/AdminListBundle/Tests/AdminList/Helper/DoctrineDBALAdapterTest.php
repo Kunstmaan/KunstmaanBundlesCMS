@@ -51,7 +51,7 @@ class DoctrineDBALAdapterTest extends TestCase
         $this->connection->transactional(
             static function (Connection $connection): void {
                 for ($i = 1; $i <= 50; ++$i) {
-                    $connection->insert('posts', ['username' => 'Jon Doe', 'post_content' => 'Post #'.$i]);
+                    $connection->insert('posts', ['username' => 'Jon Doe', 'post_content' => 'Post #' . $i]);
                 }
             }
         );

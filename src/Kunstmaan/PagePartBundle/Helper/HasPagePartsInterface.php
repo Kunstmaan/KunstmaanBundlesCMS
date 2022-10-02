@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\PagePartBundle\Helper;
+namespace Kunstmaan\PagePartBundle\Helper;
 
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 

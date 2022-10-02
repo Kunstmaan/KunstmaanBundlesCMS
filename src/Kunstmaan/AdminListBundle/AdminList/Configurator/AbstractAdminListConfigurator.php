@@ -266,9 +266,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @param object $entity
      *
-     * @throws InvalidArgumentException
-     *
      * @return string
+     *
+     * @throws InvalidArgumentException
      */
     public function getAdminType($entity)
     {

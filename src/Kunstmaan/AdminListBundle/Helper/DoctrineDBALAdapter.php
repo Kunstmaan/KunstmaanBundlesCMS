@@ -12,6 +12,7 @@ use Pagerfanta\Exception\LogicException;
  * @author Michael Williams <michael@whizdevelopment.com>
  *
  * @api
+ *
  * @deprecated since KunstmaanAdminListBundle 6.2 and will be removed in KunstmaanAdminListBundle 7.0. Use the dbal query adapter of "pagerfanta/doctrine-dbal-adapter" instead.
  */
 class DoctrineDBALAdapter implements AdapterInterface

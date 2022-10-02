@@ -33,7 +33,7 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
         }
 
         if ($container->hasDefinition('kunstmaan_translator.service.translator.translator')) {
-            //Create custom ServiceLocator to inject in the translator
+            // Create custom ServiceLocator to inject in the translator
             $serviceIds = array_merge($loaderRefs, ['request_stack' => new Reference('request_stack')]);
             $serviceLocator = ServiceLocatorTagPass::register($container, $serviceIds);
 

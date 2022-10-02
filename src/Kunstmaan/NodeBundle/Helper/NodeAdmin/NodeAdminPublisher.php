@@ -140,7 +140,7 @@ class NodeAdminPublisher
             throw new AccessDeniedException();
         }
 
-        //remove existing first
+        // remove existing first
         $this->unSchedulePublish($nodeTranslation);
 
         $user = $this->tokenStorage->getToken()->getUser();
@@ -197,7 +197,7 @@ class NodeAdminPublisher
             throw new AccessDeniedException();
         }
 
-        //remove existing first
+        // remove existing first
         $this->unSchedulePublish($nodeTranslation);
         $user = $this->tokenStorage->getToken()->getUser();
         $queuedNodeTranslationAction = new QueuedNodeTranslationAction();

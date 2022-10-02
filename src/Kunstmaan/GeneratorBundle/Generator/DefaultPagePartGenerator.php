@@ -84,11 +84,11 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
             'pagepart' => $this->entity,
             'pagepartname' => str_replace('PagePart', '', $this->entity),
             'adminType' => '\\' . $this->bundle->getNamespace(
-                ) . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
+            ) . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
             'prefix' => $this->prefix,
             'canUseAttributes' => Kernel::VERSION_ID >= 50200,
-            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown'.uniqid()),
+            'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown' . uniqid()),
         ];
 
         $this->renderSingleFile(
@@ -133,8 +133,8 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     {
         $params = [
             'pagepart' => strtolower(
-                    preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
-                ) . '-pp',
+                preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
+            ) . '-pp',
         ];
 
         $this->renderSingleFile(

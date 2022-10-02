@@ -37,7 +37,7 @@ class FormWidgetTest extends TestCase
         $widget->addType('test', TextType::class);
         $this->assertCount(2, $widget->getTypes());
 
-        /* @var FormBuilderInterface $builder*/
+        /* @var FormBuilderInterface $builder */
         $widget->buildForm($builder);
     }
 }

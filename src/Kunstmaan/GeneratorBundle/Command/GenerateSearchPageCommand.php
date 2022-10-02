@@ -6,12 +6,10 @@ use Kunstmaan\GeneratorBundle\Generator\SearchPageGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a SearchPage based on the KunstmaanNodeSearchBundle

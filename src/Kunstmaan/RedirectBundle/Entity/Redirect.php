@@ -4,10 +4,10 @@ namespace Kunstmaan\RedirectBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\RedirectBundle\Repository\RedirectRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Kunstmaan\RedirectBundle\Repository\RedirectRepository;
 
 /**
  * @ORM\Table(

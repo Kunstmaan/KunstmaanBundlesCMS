@@ -5,8 +5,8 @@ namespace Kunstmaan\TranslatorBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
@@ -89,6 +89,7 @@ class Translation
      * Translation
      *
      * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */

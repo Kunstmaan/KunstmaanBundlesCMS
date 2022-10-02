@@ -248,14 +248,14 @@ class ConfigHelper
         // get views
         if ($accountId && $propertyId) {
             $profiles = $this->serviceHelper->getService()->management_profiles->listManagementProfiles(
-                    $accountId,
-                    $propertyId
-                );
+                $accountId,
+                $propertyId
+            );
         } else {
             $profiles = $this->serviceHelper->getService()->management_profiles->listManagementProfiles(
-                    $this->getAccountId(),
-                    $this->getPropertyId()
-                );
+                $this->getAccountId(),
+                $this->getPropertyId()
+            );
         }
 
         $data = [];

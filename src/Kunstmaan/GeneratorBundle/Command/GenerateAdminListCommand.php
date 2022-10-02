@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a KunstmaanAdminList
@@ -60,9 +59,9 @@ EOT
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
-     * @throws \RuntimeException
-     *
      * @return int|void|null
+     *
+     * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

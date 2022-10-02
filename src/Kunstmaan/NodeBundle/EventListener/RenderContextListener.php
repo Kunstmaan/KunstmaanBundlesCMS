@@ -29,7 +29,7 @@ class RenderContextListener
         }
 
         $request = $event->getRequest();
-        if ($request->attributes->has('_template')) { //template is already set
+        if ($request->attributes->has('_template')) { // template is already set
             return;
         }
 
@@ -69,8 +69,8 @@ class RenderContextListener
                 $parameters = array_merge($parameters, $response);
             }
 
-            //set the rendercontext with all params as response, plus the template in the request attribs
-            //the SensioFrameworkExtraBundle kernel.view will handle everything else
+            // set the rendercontext with all params as response, plus the template in the request attribs
+            // the SensioFrameworkExtraBundle kernel.view will handle everything else
             $event->setControllerResult((array) $parameters);
 
             $template = new Template([]);

@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 class StringFilterType extends AbstractORMFilterType
 {
     /**
-     * @param array  &$data
      * @param string $uniqueId
      */
     public function bindRequest(Request $request, array &$data, $uniqueId)

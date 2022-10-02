@@ -5,9 +5,8 @@ namespace Kunstmaan\CookieBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\CookieBundle\Repository\CookieRepository;
-use Kunstmaan\CookieBundle\Entity\CookieType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="kuma_cookies")
@@ -19,9 +18,9 @@ class Cookie extends AbstractEntity
 {
     /**
      * @var string
+     *
      * @Gedmo\Translatable()
      * @Assert\NotBlank()
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
@@ -30,8 +29,8 @@ class Cookie extends AbstractEntity
 
     /**
      * @var string
-     * @Gedmo\Translatable()
      *
+     * @Gedmo\Translatable()
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     #[ORM\Column(name: 'description', type: 'text', nullable: true)]
@@ -40,7 +39,6 @@ class Cookie extends AbstractEntity
 
     /**
      * @Assert\NotBlank()
-     *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\CookieBundle\Entity\CookieType", inversedBy="cookies")
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
      */
@@ -50,8 +48,8 @@ class Cookie extends AbstractEntity
 
     /**
      * @var string
-     * @Assert\NotNull()
      *
+     * @Assert\NotNull()
      * @ORM\Column(name="domain", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'domain', type: 'string', length: 255, nullable: true)]

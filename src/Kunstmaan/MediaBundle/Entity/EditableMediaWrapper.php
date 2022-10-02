@@ -5,7 +5,6 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * @experimental This feature is experimental and is a subject to change, be advised when using this feature and classes.

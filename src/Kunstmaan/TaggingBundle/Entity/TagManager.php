@@ -7,7 +7,6 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use DoctrineExtensions\Taggable\Taggable as BaseTaggable;
 use DoctrineExtensions\Taggable\TagManager as BaseTagManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\TaggingBundle\Entity\Tag;
 
 class TagManager extends BaseTagManager
 {

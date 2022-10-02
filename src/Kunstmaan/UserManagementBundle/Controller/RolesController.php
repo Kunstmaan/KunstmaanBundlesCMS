@@ -161,6 +161,6 @@ final class RolesController extends AbstractController
             );
         }
 
-        return$this->redirectToRoute('KunstmaanUserManagementBundle_settings_roles');
+        return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_roles');
     }
 }

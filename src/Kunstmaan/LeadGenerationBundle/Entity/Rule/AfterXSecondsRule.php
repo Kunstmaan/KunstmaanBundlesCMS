@@ -16,6 +16,7 @@ class AfterXSecondsRule extends AbstractRule
 {
     /**
      * @var int
+     *
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(0)

@@ -8,7 +8,6 @@ use Kunstmaan\ArticleBundle\ViewDataProvider\ArticlePageViewDataProvider;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 /**
  * The article overview page which shows its articles

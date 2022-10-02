@@ -72,4 +72,3 @@ class NodeMenuTabTranslationAdminType extends AbstractType
         ]);
     }
 }
-

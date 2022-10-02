@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\GeneratorBundle\Helper;
 
-use Symfony\Component\HttpKernel\Kernel;
-
 /**
  * @internal
  */

@@ -13,7 +13,9 @@ class Random implements Taggable
 
     /**
      * @Id
+     *
      * @GeneratedValue
+     *
      * @Column(type="integer")
      */
     public $id;

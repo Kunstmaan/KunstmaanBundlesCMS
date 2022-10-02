@@ -10,7 +10,6 @@ use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The file upload page part can be used to create forms with the possibility to upload files

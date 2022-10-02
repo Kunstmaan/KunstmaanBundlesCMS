@@ -161,7 +161,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
                 } elseif (!strpos($orderBy, '.')) {
                     $orderBy = 'b.' . $orderBy;
                 }
-                $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
+                $queryBuilder->orderBy($orderBy, $this->orderDirection == 'DESC' ? 'DESC' : 'ASC');
             }
 
             // Apply other changes

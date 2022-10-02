@@ -21,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
@@ -333,7 +332,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $data = Yaml::parse(file_get_contents($dir . $file));
 
             if (array_key_exists('kunstmaan_page_part', $data)) {
-                //Get rid of the bundle config lines
+                // Get rid of the bundle config lines
                 $data = array_values(array_values(array_values($data)[0])[0])[0];
             }
 
@@ -341,7 +340,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 'name' => $data['name'],
                 'context' => $data['context'],
                 'file' => $file,
-                //'file_clean' => substr($file, 0, strlen($file)-4)
+                // 'file_clean' => substr($file, 0, strlen($file)-4)
             ];
         } catch (ParseException $e) {
         }
@@ -498,7 +497,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                             $lengthValidation
                         );
 
-                        //Ask the maximum width allowed for the image
+                        // Ask the maximum width allowed for the image
                         $maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)',
                             $lengthValidation
                         );
@@ -742,8 +741,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         'inverseJoinColumns' => [
                             [
                                 'name' => strtolower(
-                                        Container::underscore($parts[count($parts) - 1])
-                                    ) . '_id',
+                                    Container::underscore($parts[count($parts) - 1])
+                                ) . '_id',
                                 'referencedColumnName' => 'id',
                                 'unique' => true,
                             ],
@@ -841,7 +840,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $data = Yaml::parse(file_get_contents($dir . $file));
 
             if (array_key_exists('kunstmaan_page_part', $data)) {
-                //Get rid of the bundle config lines
+                // Get rid of the bundle config lines
                 $data = array_values(array_values(array_values($data)[0])[0])[0];
             }
 

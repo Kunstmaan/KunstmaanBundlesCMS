@@ -193,9 +193,9 @@ SELECTQUERY;
     /**
      * Returns valid IDs for a specific entity with ACL restrictions for current user applied
      *
-     * @throws InvalidArgumentException
-     *
      * @return array
+     *
+     * @throws InvalidArgumentException
      */
     public function getAllowedEntityIds(PermissionDefinition $permissionDef)
     {
