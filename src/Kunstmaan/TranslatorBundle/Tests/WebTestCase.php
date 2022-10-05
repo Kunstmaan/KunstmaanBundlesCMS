@@ -80,7 +80,7 @@ class WebTestCase extends BaseWebTestCase
         $em = $container->get('doctrine.orm.default_entity_manager');
         $meta = $em->getMetadataFactory()->getAllMetadata();
         $tool = new SchemaTool($em);
-        $tool->dropSchema($meta);
+        $tool->dropDatabase();
         $tool->createSchema($meta);
 
         // insert fixtures

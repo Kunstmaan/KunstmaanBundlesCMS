@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xsd:schema xmlns="https://cms.kunstmaan.be/schema/dic/admin"
+<xsd:schema xmlns="https://kunstmaancms.be/schema/dic/admin"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="https://cms.kunstmaan.be/schema/dic/admin"
+    targetNamespace="https://kunstmaancms.be/schema/dic/admin"
     elementFormDefault="qualified">
 
     <xsd:element name="config" type="config" />
