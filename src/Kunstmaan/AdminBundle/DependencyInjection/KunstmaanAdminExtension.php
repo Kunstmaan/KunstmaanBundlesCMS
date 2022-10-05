@@ -3,12 +3,14 @@
 namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use InvalidArgumentException;
+use Kunstmaan\AdminBundle\Attribute\AsMenuAdaptor;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
@@ -73,6 +75,11 @@ class KunstmaanAdminExtension extends Extension
 
         $container->registerForAutoconfiguration(MenuAdaptorInterface::class)
             ->addTag('kunstmaan_admin.menu.adaptor');
+
+        $container->registerAttributeForAutoconfiguration(AsMenuAdaptor::class, static function (ChildDefinition $definition, AsMenuAdaptor $attribute, \Reflector $reflector) {
+            $tagAttributes = get_object_vars($attribute);
+            $definition->addTag('kunstmaan_admin.menu.adaptor', $tagAttributes);
+        });
 
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
             $loader->load('console_listener.yml');
