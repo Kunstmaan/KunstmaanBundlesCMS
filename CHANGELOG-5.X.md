@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.10.7 / 2022-10-05
+
+* [AllBundles] Update demo site url [#3168](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3168) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Update cms website urls to new domain + update doc urls [#3161](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3161) ([@acrobat](https://github.com/acrobat))
+* [RedirectBundle] Save empty domain so redirect router catches all incoming domains for project [#3160](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3160) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Update setup-node action to latest version [#3151](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3151) ([@acrobat](https://github.com/acrobat))
+* [TranslatorBundle] Fix sqlite error in translator tests with doctrine/dbal v2.10+ [#3150](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3150) ([@acrobat](https://github.com/acrobat))
+
 ## 5.10.6 / 2022-06-26
 
 * [NodeBundle] issue where max weight could be exceeded and cause irregular behaviour with sorting [#3143](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3143) ([@Numkil](https://github.com/Numkil))
