@@ -58,7 +58,12 @@ class AdminRouteHelper
      */
     protected function matchesPreviewRoute()
     {
-        $routeName = $this->requestStack->getCurrentRequest()->get('_route');
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return false;
+        }
+
+        $routeName = $request->get('_route');
 
         return $routeName === SlugRouter::$SLUG_PREVIEW;
     }
