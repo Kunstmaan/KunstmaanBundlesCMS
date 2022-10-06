@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class {{ entity_class }}AdminType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 {% for field in fields %}
         $builder->add('{{ field }}');
