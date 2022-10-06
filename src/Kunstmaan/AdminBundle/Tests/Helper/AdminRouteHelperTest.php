@@ -65,6 +65,20 @@ class AdminRouteHelperTest extends TestCase
         $this->assertFalse($result);
     }
 
+    public function testIsAdminRouteWorksWhenNoRequestInRequeststack()
+    {
+        $adminRouteHelper = new AdminRouteHelper(self::$ADMIN_KEY, new RequestStack());
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$PREVIEW_ADMIN_URL, self::$ADMIN_KEY));
+        $this->assertTrue($result);
+
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$NON_ADMIN_URL, self::$ALTERNATIVE_ADMIN_KEY));
+        $this->assertFalse($result);
+
+        $adminRouteHelper = new AdminRouteHelper(self::$ALTERNATIVE_ADMIN_KEY, new RequestStack());
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$PREVIEW_ADMIN_URL, self::$ALTERNATIVE_ADMIN_KEY));
+        $this->assertTrue($result);
+    }
+
     private function getAdminRouteHelper($adminKey)
     {
         return new AdminRouteHelper($adminKey, $this->getRequestStack());
