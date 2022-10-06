@@ -5,8 +5,6 @@ on:
         branches:
             - '5.*'
             - '6.*'
-        paths:
-            - src/**
     create:
         tags:
             - '*'
@@ -40,7 +38,7 @@ jobs:
                     key: '${{ runner.os }}-splitsh-v101'
 
             -   name: Subtree split
-                uses: acrobat/subtree-splitter@batch-process-splits
+                uses: acrobat/subtree-splitter@v1
                 with:
                     config-path: .build/subtree-splitter-config.json
                     batch-size: 1
