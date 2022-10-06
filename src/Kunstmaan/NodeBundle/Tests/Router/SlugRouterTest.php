@@ -63,8 +63,7 @@ class SlugRouterTest extends TestCase
     private function getRequestStack($callCount = 0)
     {
         $requestStack = $this->createMock(RequestStack::class);
-        $method = method_exists(RequestStack::class, 'getMainRequest') ? 'getMainRequest' : 'getMasterRequest';
-        $requestStack->expects($this->exactly($callCount))->method($method)->willReturn(Request::create('http://domain.tld/'));
+        $requestStack->expects($this->exactly($callCount))->method('getMainRequest')->willReturn(Request::create('http://domain.tld/'));
 
         return $requestStack;
     }

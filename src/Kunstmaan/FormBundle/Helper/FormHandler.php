@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\Helper;
 
 use ArrayObject;
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
@@ -73,9 +72,7 @@ class FormHandler implements FormHandlerInterface
                 $em->refresh($formSubmission);
 
                 $event = new SubmissionEvent($formSubmission, $page);
-
-                $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
-                $eventDispatcher->dispatch($event, FormEvents::ADD_SUBMISSION);
+                $this->container->get('event_dispatcher')->dispatch($event, FormEvents::ADD_SUBMISSION);
 
                 return new RedirectResponse($page->generateThankYouUrl($router, $context));
             }

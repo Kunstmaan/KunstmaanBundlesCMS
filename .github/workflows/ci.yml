@@ -22,15 +22,10 @@ jobs:
                     -   deps: 'lowest'
                         php: 8.0
 
-                    # Test lowest dependencies with symfony 5.4
-                    -   deps: 'lowest'
-                        php: 8.0
-                        symfony: '^5.4'
-
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
                         php: 8.1
-                        symfony: '^4.4'
+                        symfony: '^5.4'
 
         steps:
             -   uses: actions/checkout@v2

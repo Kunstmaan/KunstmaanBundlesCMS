@@ -40,7 +40,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function onKernelException(ExceptionEvent $event)
     {
         $request = $event->getRequest();
-        $exception = \method_exists($event, 'getThrowable') ? $event->getThrowable() : $event->getException();
+        $exception = $event->getThrowable();
 
         if ($exception instanceof HttpExceptionInterface) {
             $uri = $request->getUri();

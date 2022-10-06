@@ -344,8 +344,6 @@ class NodeTranslationListener
 
     private function getFlashBag()
     {
-        $session = method_exists($this->requestStack, 'getSession') ? $this->requestStack->getSession() : $this->requestStack->getMasterRequest()->getSession();
-
-        return $session->getFlashBag();
+        return $this->requestStack->getSession()->getFlashBag();
     }
 }

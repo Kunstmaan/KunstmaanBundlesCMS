@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -37,7 +36,7 @@ final class SlugController extends AbstractController
     {
         $this->nodeMenu = $nodeMenu;
         $this->viewDataProviderServiceLocator = $viewDataProviderServiceLocator;
-        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->eventDispatcher = $eventDispatcher;
         $this->em = $em;
     }
 

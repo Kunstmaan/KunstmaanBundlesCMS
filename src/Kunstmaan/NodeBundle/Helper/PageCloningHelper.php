@@ -5,7 +5,6 @@ namespace Kunstmaan\NodeBundle\Helper;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\DuplicateSubPageInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -49,7 +48,7 @@ class PageCloningHelper
         $this->aclProvider = $aclProvider;
         $this->identityRetrievalStrategy = $identityRetrivalStrategy;
         $this->authorizationCheckerInterface = $authorizationChecker;
-        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

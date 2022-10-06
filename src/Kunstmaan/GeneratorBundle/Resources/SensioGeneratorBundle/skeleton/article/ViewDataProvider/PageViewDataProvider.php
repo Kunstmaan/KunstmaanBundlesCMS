@@ -34,12 +34,7 @@ class {{ entity_class }}PageViewDataProvider implements PageViewDataProviderInte
 
     public function provideViewData(NodeTranslation $nodeTranslation, RenderContext $renderContext): void
     {
-        {% if useMainRequest %}
-$request = $this->requestStack->getMainRequest();
-        {% else %}
-$request = $this->requestStack->getMasterRequest();
-        {% endif %}
-
+        $request = $this->requestStack->getMainRequest();
         if (null === $request) {
             return;
         }

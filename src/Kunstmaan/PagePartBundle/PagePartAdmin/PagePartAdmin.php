@@ -5,7 +5,6 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Event\Events;
 use Kunstmaan\PagePartBundle\Event\PagePartEvent;
@@ -264,8 +263,7 @@ class PagePartAdmin
             }
 
             if (isset($pagePart)) {
-                $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
-                $eventDispatcher->dispatch(new PagePartEvent($pagePart), Events::POST_PERSIST);
+                $this->container->get('event_dispatcher')->dispatch(new PagePartEvent($pagePart), Events::POST_PERSIST);
             }
         }
     }

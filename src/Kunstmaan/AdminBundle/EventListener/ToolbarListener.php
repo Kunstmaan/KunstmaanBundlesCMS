@@ -121,7 +121,7 @@ class ToolbarListener implements EventSubscriberInterface
 
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$this->isEnabled() || HttpKernel::MASTER_REQUEST !== $event->getRequestType()) {
+        if (!$this->isEnabled() || HttpKernel::MAIN_REQUEST !== $event->getRequestType()) {
             return;
         }
 
@@ -133,9 +133,6 @@ class ToolbarListener implements EventSubscriberInterface
 
         if (null !== $token && method_exists($token, 'getFirewallName')) {
             $key = $token->getFirewallName();
-        } elseif (null !== $token && method_exists($token, 'getProviderKey')) {
-            // NEXT_MAJOR remove check when symfony 4.4 support is removed
-            $key = $token->getProviderKey();
         } else {
             $key = $this->adminFirewallName;
         }
@@ -154,8 +151,7 @@ class ToolbarListener implements EventSubscriberInterface
         }
 
         // Do not capture redirects or modify XML HTTP Requests
-        $mainRequest = method_exists($event, 'isMainRequest') ? $event->isMainRequest() : $event->isMasterRequest();
-        if (!$authenticated || !$mainRequest || $request->isXmlHttpRequest() || $this->adminRouteHelper->isAdminRoute($url)) {
+        if (!$authenticated || !$event->isMainRequest() || $request->isXmlHttpRequest() || $this->adminRouteHelper->isAdminRoute($url)) {
             return;
         }
 

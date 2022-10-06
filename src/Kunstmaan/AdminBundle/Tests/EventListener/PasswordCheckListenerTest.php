@@ -40,7 +40,7 @@ class PasswordCheckListenerTest extends TestCase
         $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $kernel = $this->createMock(KernelInterface::class);
-        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
         $auth->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isGranted')->willReturn(true);

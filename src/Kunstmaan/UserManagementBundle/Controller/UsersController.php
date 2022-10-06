@@ -9,7 +9,6 @@ use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\UserManagementBundle\Event\AfterUserDeleteEvent;
@@ -57,7 +56,7 @@ final class UsersController extends AbstractController
         $this->adminListFactory = $adminListFactory;
         $this->parameterBag = $parameterBag;
         $this->userManager = $userManager;
-        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->eventDispatcher = $eventDispatcher;
         $this->em = $em;
     }
 

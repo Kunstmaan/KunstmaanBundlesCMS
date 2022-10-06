@@ -172,7 +172,7 @@ class SlugRouter implements RouterInterface
             return null;
         }
 
-        return method_exists($this->requestStack, 'getMainRequest') ? $this->requestStack->getMainRequest() : $this->requestStack->getMasterRequest();
+        return $this->requestStack->getMainRequest();
     }
 
     /**

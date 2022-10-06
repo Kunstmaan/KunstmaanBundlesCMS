@@ -85,11 +85,6 @@ class AdminLocaleListener implements EventSubscriberInterface
             return $token->getFirewallName() === $providerKey;
         }
 
-        // NEXT_MAJOR remove check when symfony 4.4 support is removed
-        if (\is_callable([$token, 'getProviderKey'])) {
-            return $token->getProviderKey() === $providerKey;
-        }
-
         return false;
     }
 

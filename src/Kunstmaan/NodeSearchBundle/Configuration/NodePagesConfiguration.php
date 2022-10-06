@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Elastica\Index;
 use Elastica\Mapping;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -560,8 +559,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
         $event = new IndexNodeEvent($page, $doc);
-        $eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($this->container->get('event_dispatcher'));
-        $eventDispatcher->dispatch($event, IndexNodeEvent::EVENT_INDEX_NODE);
+        $this->container->get('event_dispatcher')->dispatch($event, IndexNodeEvent::EVENT_INDEX_NODE);
 
         $doc = $event->doc;
 

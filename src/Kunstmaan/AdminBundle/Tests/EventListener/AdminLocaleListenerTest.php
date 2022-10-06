@@ -27,12 +27,9 @@ class AdminLocaleListenerTest extends TestCase
         $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $kernel = $this->createMock(KernelInterface::class);
-        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+        $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
         $user = $this->createMock(User::class);
-        // NEXT_MAJOR remove reflection parameter count when sf4.4 support is removed
-        $method = new \ReflectionMethod(UsernamePasswordToken::class, '__construct');
-        $arguments = $method->getNumberOfParameters() > 3 ? [$user, 'password', 'main'] : [$user, 'main'];
-        $token = new UsernamePasswordToken(...$arguments);
+        $token = new UsernamePasswordToken($user, 'main');
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getAdminLocale')->willReturn(null);

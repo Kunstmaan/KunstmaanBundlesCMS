@@ -7,7 +7,6 @@ use Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler;
 use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
 use Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Parses an ImportCommand
@@ -79,7 +78,7 @@ class ImportCommandHandler extends AbstractCommandHandler
 
         if ($importBundle === 'all') {
             $importCount = $this->importAllBundlesTranslationFiles($importCommand);
-            $importCount += $this->importSf4TranslationFiles($importCommand);
+            $importCount += $this->importApplicationTranslationFiles($importCommand);
 
             return $importCount;
         }
@@ -88,11 +87,7 @@ class ImportCommandHandler extends AbstractCommandHandler
             return $this->importCustomBundlesTranslationFiles($importCommand);
         }
 
-        if (Kernel::VERSION_ID >= 40000) {
-            return $this->importSf4TranslationFiles($importCommand);
-        }
-
-        return $this->importOwnBundlesTranslationFiles($importCommand);
+        return $this->importApplicationTranslationFiles($importCommand);
     }
 
     /**
@@ -112,31 +107,6 @@ class ImportCommandHandler extends AbstractCommandHandler
                 $imported += $this->importSingleBundleTranslationFiles($importCommand);
             } catch (TranslationsNotFoundException $e) {
                 continue;
-            }
-        }
-
-        return $imported;
-    }
-
-    /**
-     * Import all translation files from your own registered bundles (in src/ directory)
-     *
-     * @return int The total number of imported files
-     */
-    private function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
-    {
-        $imported = 0;
-        $srcDir = $this->kernel->getProjectDir() . '/src';
-
-        foreach ($this->kernel->getBundles() as $name => $bundle) {
-            if (strpos($bundle->getPath(), $srcDir) !== false) {
-                $importCommand->setDefaultBundle(strtolower($name));
-
-                try {
-                    $imported += $this->importSingleBundleTranslationFiles($importCommand);
-                } catch (TranslationsNotFoundException $e) {
-                    continue;
-                }
             }
         }
 
@@ -253,7 +223,7 @@ class ImportCommandHandler extends AbstractCommandHandler
         $this->importer = $importer;
     }
 
-    private function importSf4TranslationFiles($importCommand)
+    private function importApplicationTranslationFiles($importCommand)
     {
         $finder = $this->translationFileExplorer->find($this->kernel->getProjectDir(), $this->determineLocalesToImport($importCommand), 'translations');
 

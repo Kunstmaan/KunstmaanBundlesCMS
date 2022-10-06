@@ -123,7 +123,7 @@ class HostOverrideListenerTest extends TestCase
         return new HostOverrideListener($translator, $domainConfiguration, $adminRouteHelper);
     }
 
-    private function getEvent($request, $response, $requestType = HttpKernelInterface::MASTER_REQUEST)
+    private function getEvent($request, $response, $requestType = HttpKernelInterface::MAIN_REQUEST)
     {
         $kernel = $this->createMock(KernelInterface::class);
 

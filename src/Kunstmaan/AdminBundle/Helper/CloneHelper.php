@@ -25,7 +25,7 @@ class CloneHelper
     public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
     {
         $this->em = $em;
-        $this->eventDispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($eventDispatcher);
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

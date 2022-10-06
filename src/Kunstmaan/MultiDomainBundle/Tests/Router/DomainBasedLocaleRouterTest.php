@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -155,8 +154,7 @@ class DomainBasedLocaleRouterTest extends TestCase
     private function getRequestStack($request)
     {
         $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-        $method = method_exists(RequestStack::class, 'getMainRequest') ? 'getMainRequest' : 'getMasterRequest';
-        $requestStack->expects($this->any())->method($method)->willReturn($request);
+        $requestStack->expects($this->any())->method('getMainRequest')->willReturn($request);
 
         return $requestStack;
     }

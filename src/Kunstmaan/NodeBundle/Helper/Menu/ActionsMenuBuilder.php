@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
-use Kunstmaan\AdminBundle\Helper\EventdispatcherCompatibilityUtil;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
@@ -84,7 +83,7 @@ class ActionsMenuBuilder
         $this->factory = $factory;
         $this->em = $em;
         $this->router = $router;
-        $this->dispatcher = EventdispatcherCompatibilityUtil::upgradeEventDispatcher($dispatcher);
+        $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
         $this->pagesConfiguration = $pagesConfiguration;
         $this->enableExportPageTemplate = $enableExportPageTemplate;
