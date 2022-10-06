@@ -22,14 +22,14 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
 {% endif %}
     }
 
-    public function buildFields()
+    public function buildFields(): void
     {
 {% for fieldName, data in fields %}
         $this->addField('{{ fieldName }}', '{{ data.fieldTitle }}', true);
 {% endfor %}
     }
 
-    public function buildFilters()
+    public function buildFilters(): void
     {
 {% for fieldName, data in fields %}
         $this->addFilter('{{ fieldName }}', new {{ data.filterType }}('{{ fieldName }}'), '{{ data.fieldTitle }}');
