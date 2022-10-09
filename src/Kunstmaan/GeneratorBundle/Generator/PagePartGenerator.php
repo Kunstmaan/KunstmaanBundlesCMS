@@ -5,8 +5,6 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Faker\Provider\Base;
 use Faker\Provider\DateTime;
 use Faker\Provider\Lorem;
-use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -283,8 +281,8 @@ class PagePartGenerator extends KunstmaanGenerator
             )
         */
 
-        $folder = $this->registry->getRepository(Folder::class)->findOneBy(['rel' => 'image']);
-        $images = $this->registry->getRepository(Media::class)->findBy(
+        $folder = $this->registry->getRepository('Kunstmaan\MediaBundle\Entity\Folder')->findOneBy(['rel' => 'image']);
+        $images = $this->registry->getRepository('Kunstmaan\MediaBundle\Entity\Media')->findBy(
             ['folder' => $folder, 'deleted' => false],
             [],
             2

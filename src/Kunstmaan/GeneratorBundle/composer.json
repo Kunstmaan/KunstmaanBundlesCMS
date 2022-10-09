@@ -18,6 +18,10 @@
         "doctrine/inflector": "^1.4|^2.0",
         "doctrine/data-fixtures": "^1.5",
         "fakerphp/faker": "^1.15",
+        "kunstmaan/sensio-generator-bundle": "^3.2",
+        "symfony/maker-bundle": "^1.39"
+    },
+    "require-dev": {
         "kunstmaan/admin-bundle": "^5.9|^6.0",
         "kunstmaan/adminlist-bundle": "^5.9|^6.0",
         "kunstmaan/article-bundle": "^5.9|^6.0",
@@ -26,10 +30,6 @@
         "kunstmaan/media-pagepart-bundle": "^5.9|^6.0",
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
-        "kunstmaan/sensio-generator-bundle": "^3.2",
-        "symfony/maker-bundle": "^1.39"
-    },
-    "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
         "symfony/phpunit-bridge": "^6.1",
