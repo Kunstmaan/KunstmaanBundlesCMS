@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Kunstmaan\AdminBundle\Entity\Group;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -69,7 +70,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                 ->add('enabled', CheckboxType::class, ['required' => false, 'label' => 'settings.user.enabled'])
                 ->add('groups', EntityType::class, [
                     'label' => 'settings.user.roles',
-                    'class' => 'KunstmaanAdminBundle:Group',
+                    'class' => Group::class,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('g')
                             ->orderBy('g.name', 'ASC');

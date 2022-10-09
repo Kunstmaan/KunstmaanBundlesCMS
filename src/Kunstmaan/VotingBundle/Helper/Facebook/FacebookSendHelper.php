@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Helper\Facebook;
 
+use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
 use Kunstmaan\VotingBundle\Helper\AbstractVotingHelper;
 
 /**
@@ -12,5 +13,5 @@ class FacebookSendHelper extends AbstractVotingHelper
     /**
      * @var string
      */
-    protected $repository = 'KunstmaanVotingBundle:Facebook\FacebookSend';
+    protected $repository = FacebookSend::class;
 }

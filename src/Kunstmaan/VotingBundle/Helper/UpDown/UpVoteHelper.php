@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Helper\UpDown;
 
+use Kunstmaan\VotingBundle\Entity\UpDown\UpVote;
 use Kunstmaan\VotingBundle\Helper\AbstractVotingHelper;
 
 /**
@@ -12,5 +13,5 @@ class UpVoteHelper extends AbstractVotingHelper
     /**
      * @var string
      */
-    protected $repository = 'KunstmaanVotingBundle:UpDown\UpVote';
+    protected $repository = UpVote::class;
 }

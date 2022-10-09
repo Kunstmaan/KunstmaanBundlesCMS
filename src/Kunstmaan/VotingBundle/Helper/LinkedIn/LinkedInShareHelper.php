@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Helper\LinkedIn;
 
+use Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare;
 use Kunstmaan\VotingBundle\Helper\AbstractVotingHelper;
 
 /**
@@ -12,5 +13,5 @@ class LinkedInShareHelper extends AbstractVotingHelper
     /**
      * @var string
      */
-    protected $repository = 'KunstmaanVotingBundle:LinkedIn\LinkedInShare';
+    protected $repository = LinkedInShare::class;
 }

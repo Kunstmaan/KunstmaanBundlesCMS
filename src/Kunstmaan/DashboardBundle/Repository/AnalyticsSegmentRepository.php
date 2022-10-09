@@ -21,7 +21,7 @@ class AnalyticsSegmentRepository extends EntityRepository
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb->select('s')
-            ->from('KunstmaanDashboardBundle:AnalyticsSegment', 's')
+            ->from(AnalyticsSegment::class, 's')
             ->where('s.id = :id')
             ->setParameter('id', $id);
 

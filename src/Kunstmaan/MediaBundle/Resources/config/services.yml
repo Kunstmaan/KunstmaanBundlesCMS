@@ -57,7 +57,7 @@ services:
     kunstmaan_media.repository.folder:
         class:            Kunstmaan\MediaBundle\Repository\FolderRepository
         factory:          ['@doctrine.orm.entity_manager', getRepository]
-        arguments:        ['KunstmaanMediaBundle:Folder']
+        arguments:        ['Kunstmaan\MediaBundle\Entity\Folder']
         # This is needed to avoid triggering acl listeners that need a db connection,
         # this caused by \Gedmo\Tree\Entity\Repository\AbstractTreeRepository::__constructor.
         lazy: true

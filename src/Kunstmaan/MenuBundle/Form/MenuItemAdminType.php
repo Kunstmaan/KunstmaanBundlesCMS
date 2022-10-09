@@ -5,6 +5,7 @@ namespace Kunstmaan\MenuBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -72,7 +73,7 @@ class MenuItemAdminType extends AbstractType
             'nodeTranslation',
             EntityType::class,
             [
-                'class' => 'KunstmaanNodeBundle:NodeTranslation',
+                'class' => NodeTranslation::class,
                 'choice_label' => 'title',
                 'query_builder' => function (EntityRepository $er) use (
                     $locale,
