@@ -37,6 +37,6 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
 
         // avg visit duration metric
         $avgVisitDuration = \is_array($rows) && is_numeric($rows[0][4]) ? $rows[0][4] : 0;
-        $overview->setAvgSessionDuration(gmdate('H:i:s', $avgVisitDuration));
+        $overview->setAvgSessionDuration(gmdate('H:i:s', (int) $avgVisitDuration));
     }
 }
