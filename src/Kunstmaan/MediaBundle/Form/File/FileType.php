@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Form\File;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -103,7 +104,7 @@ class FileType extends AbstractType
                         'folder',
                         EntityType::class,
                         [
-                            'class' => 'KunstmaanMediaBundle:Folder',
+                            'class' => Folder::class,
                             'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
                                 return $er->selectFolderQueryBuilder()

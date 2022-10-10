@@ -94,7 +94,7 @@ EOQ;
     public function resetAllFlags()
     {
         return $this->createQueryBuilder('t')
-            ->update('KunstmaanTranslatorBundle:Translation', 't')
+            ->update(Translation::class, 't')
             ->set('t.flag', 'NULL')
             ->getQuery()
             ->execute();
@@ -112,7 +112,7 @@ EOQ;
         $qb = $em->createQueryBuilder();
         $qb
             ->select('t')
-            ->from('KunstmaanTranslatorBundle:Translation', 't')
+            ->from(Translation::class, 't')
             ->andWhere('t.status != :statusstring')
             ->setParameter('statusstring', Translation::STATUS_DISABLED)
             ->orderBy('t.domain', 'ASC')

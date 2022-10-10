@@ -112,7 +112,7 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('fs')
-            ->from('KunstmaanFormBundle:FormSubmission', 'fs')
+            ->from(FormSubmission::class, 'fs')
             ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
             ->andWhere('n.id = :node')
             // only export the requested language, bc headers aren't translated correctly

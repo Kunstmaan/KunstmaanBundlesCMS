@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Kunstmaan\AdminBundle\Entity\User;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
@@ -28,7 +29,7 @@ class UserRepository extends EntityRepository implements PasswordUpgraderInterfa
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u')
-            ->from('KunstmaanAdminBundle:User', 'u')
+            ->from(User::class, 'u')
             ->innerJoin('u.groups', 'g')
             ->innerJoin('g.roles', 'r')
             ->where('u.enabled= :enabled')

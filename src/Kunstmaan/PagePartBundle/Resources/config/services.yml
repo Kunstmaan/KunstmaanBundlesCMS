@@ -32,7 +32,7 @@ services:
         public: false
         factory: [ '@doctrine.orm.entity_manager', 'getRepository' ]
         arguments:
-          - 'KunstmaanPagePartBundle:PageTemplateConfiguration'
+          - 'Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration'
 
     kunstmaan_pagepartadmin.factory:
         class: 'Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory'

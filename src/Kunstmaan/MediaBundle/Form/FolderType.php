@@ -47,7 +47,7 @@ class FolderType extends AbstractType
                 'parent',
                 EntityType::class,
                 [
-                    'class' => 'KunstmaanMediaBundle:Folder',
+                    'class' => Folder::class,
                     'choice_label' => 'optionLabel',
                     'label' => 'media.folder.addsub.form.parent',
                     'required' => true,

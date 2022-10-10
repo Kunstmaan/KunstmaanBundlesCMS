@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Helper\Facebook;
 
+use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 use Kunstmaan\VotingBundle\Helper\AbstractVotingHelper;
 
 /**
@@ -12,5 +13,5 @@ class FacebookLikeHelper extends AbstractVotingHelper
     /**
      * @var string
      */
-    protected $repository = 'KunstmaanVotingBundle:Facebook\FacebookLike';
+    protected $repository = FacebookLike::class;
 }
