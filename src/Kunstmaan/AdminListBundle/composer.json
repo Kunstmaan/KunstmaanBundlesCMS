@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "box/spout": "^2.5",
+        "openspout/openspout": "^4.0",
         "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/utilities-bundle": "^5.10|^6.0",
         "pagerfanta/core": "^2.4",
