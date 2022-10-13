@@ -141,17 +141,11 @@ class ExportCommandHandler extends AbstractCommandHandler
         return $this->parseRequestedDomains($exportCommand->getDomains());
     }
 
-    /**
-     * @param $exporter
-     */
     public function setExporter($exporter)
     {
         $this->exporter = $exporter;
     }
 
-    /**
-     * @param $translationRepository
-     */
     public function setTranslationRepository($translationRepository)
     {
         $this->translationRepository = $translationRepository;

@@ -20,9 +20,6 @@ final class AdaptFormEvent extends Event
      */
     private $tabPane;
 
-    /**
-     * @var
-     */
     private $page;
 
     /**
@@ -86,9 +83,6 @@ final class AdaptFormEvent extends Event
         return $this->nodeVersion;
     }
 
-    /**
-     * @return
-     */
     public function getPage()
     {
         return $this->page;

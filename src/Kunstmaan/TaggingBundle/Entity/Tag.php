@@ -112,8 +112,6 @@ class Tag extends BaseTag implements Translatable
 
     /**
      * set createdAt
-     *
-     * @param $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt)
     {
@@ -132,8 +130,6 @@ class Tag extends BaseTag implements Translatable
 
     /**
      * Set UpdatedAt
-     *
-     * @param $updatedAt
      */
     public function setUpdatedAt(\DateTime $updatedAt)
     {

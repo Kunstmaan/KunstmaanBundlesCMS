@@ -95,7 +95,6 @@ class InputAssistant
     /**
      * Helper function to display errors in the console.
      *
-     * @param $message
      * @param bool $exit
      */
     private function writeError($message, $exit = false)
@@ -153,8 +152,6 @@ class InputAssistant
 
     /**
      * Replaces '\' with '/'.
-     *
-     * @param $namespace
      *
      * @return mixed
      */

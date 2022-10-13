@@ -35,8 +35,6 @@ class OrderItem
     protected $name = '';
 
     /**
-     * @param $name
-     *
      * @return $this
      */
     public function setName($name)
@@ -114,8 +112,6 @@ class OrderItem
     /**
      * REQUIRED!
      *
-     * @param $quantity
-     *
      * @return $this
      */
     public function setQuantity($quantity)
@@ -149,8 +145,6 @@ class OrderItem
     protected $taxes;
 
     /**
-     * @param $taxes
-     *
      * @return $this
      */
     public function setTaxes($taxes)

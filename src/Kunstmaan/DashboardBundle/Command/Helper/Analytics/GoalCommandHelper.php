@@ -187,8 +187,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
     /**
      * Fetch a specific goals
      *
-     * @param AnalyticsOverview $overview       The overview
-     * @param                   $goalCollection
+     * @param AnalyticsOverview $overview The overview
      */
     private function parseGoals(&$overview, $goalCollection)
     {

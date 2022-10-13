@@ -251,7 +251,6 @@ EOT
     {
         $dummydataOption = $this->assistant->getOption('dummydata');
         if ($dummydataOption != 'y' && $dummydataOption != 'n') {
-            /** @var $question */
             $dummydataOption = $this->assistant->askConfirmation("\nDo you want to generate data fixtures to populate your database ? (y/n)\n", 'n', '?', false);
         }
 
@@ -265,7 +264,6 @@ EOT
     {
         $categoryOption = $this->assistant->getOption('with-category');
         if ($categoryOption != 'y' && $categoryOption != 'n') {
-            /** @var $question */
             $categoryOption = $this->assistant->askConfirmation("\nDo you want to use categories ? (y/n)\n", 'y', '?', true);
         }
 
@@ -279,7 +277,6 @@ EOT
     {
         $tagOption = $this->assistant->getOption('with-tag');
         if ($tagOption != 'y' && $tagOption != 'n') {
-            /** @var $question */
             $tagOption = $this->assistant->askConfirmation("\nDo you want to use tags ? (y/n)\n", 'y', '?', true);
         }
 
@@ -293,7 +290,6 @@ EOT
     {
         $authorOption = $this->assistant->getOption('with-author');
         if ($authorOption != 'y' && $authorOption != 'n') {
-            /** @var $question */
             $authorOption = $this->assistant->askConfirmation("\nDo you want to use authors ? (y/n)\n", 'y', '?', true);
         }
 
