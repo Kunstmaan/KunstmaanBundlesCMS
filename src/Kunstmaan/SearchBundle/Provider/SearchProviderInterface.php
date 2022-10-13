@@ -28,8 +28,6 @@ interface SearchProviderInterface
     /**
      * Return the index object
      *
-     * @param $indexName
-     *
      * @return mixed
      */
     public function getIndex($indexName);

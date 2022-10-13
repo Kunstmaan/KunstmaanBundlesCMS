@@ -228,8 +228,6 @@ final class SeoTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param $src
-     *
      * @return array
      */
     public function getImageDimensions($src)

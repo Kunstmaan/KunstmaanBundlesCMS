@@ -35,8 +35,6 @@ final class SitemapController extends AbstractController
      * generated. At this moment only XML is supported
      *
      * @Route("/sitemap-{locale}.{_format}", name="KunstmaanSitemapBundle_sitemap", requirements={"_format" = "xml"})
-     *
-     * @param $locale
      */
     public function sitemapAction($locale): Response
     {

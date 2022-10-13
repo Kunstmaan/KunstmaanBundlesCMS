@@ -17,8 +17,6 @@ class GeneratorUtils
     /**
      * Cleans the prefix. Prevents a double underscore from happening.
      *
-     * @param $prefixString
-     *
      * @return string
      */
     public static function cleanPrefix($prefixString)
@@ -141,8 +139,6 @@ class GeneratorUtils
 
     /**
      * Replaces '\' with '/'.
-     *
-     * @param $namespace
      *
      * @return string
      */

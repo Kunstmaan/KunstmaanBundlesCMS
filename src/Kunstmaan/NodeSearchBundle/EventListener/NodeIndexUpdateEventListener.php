@@ -94,8 +94,6 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     }
 
     /**
-     * @param $nodeTranslation
-     *
      * @return bool
      */
     private function hasOfflineParents(NodeTranslation $nodeTranslation)

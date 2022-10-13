@@ -583,10 +583,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     /**
      * Get all the entity fields for a specific type.
      *
-     * @param      $objectName
-     * @param      $prefix
-     * @param      $name
-     * @param      $type
      * @param null $extra
      * @param bool $allNullable
      * @param null $minHeight
