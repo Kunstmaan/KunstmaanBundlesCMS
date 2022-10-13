@@ -180,9 +180,6 @@ class KunstmaanGenerator extends Generator
     /**
      * Generate the entity admin type.
      *
-     * @param        $bundle
-     * @param        $entityName
-     * @param        $entityPrefix
      * @param string $extendClass
      */
     protected function generateEntityAdminType(

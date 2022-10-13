@@ -184,8 +184,6 @@ class Order
     /**
      * Loops over the OrderItems and accumulates the value of the given property. Can also be a getter.
      *
-     * @param $property
-     *
      * @return int|string
      */
     private function accumulatePropertyOnOrderItems($property)

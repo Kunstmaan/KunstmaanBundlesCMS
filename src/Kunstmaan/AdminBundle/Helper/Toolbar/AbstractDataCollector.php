@@ -33,8 +33,6 @@ abstract class AbstractDataCollector extends BaseDataCollector implements DataCo
     }
 
     /**
-     * @param $template
-     *
      * @return $this
      */
     public function setTemplate($template)

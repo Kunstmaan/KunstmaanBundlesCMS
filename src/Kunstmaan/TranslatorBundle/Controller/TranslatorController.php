@@ -129,8 +129,6 @@ final class TranslatorController extends AbstractAdminListController
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit", methods={"GET", "POST"})
      *
-     * @param $id
-     *
      * @throws \InvalidArgumentException
      */
     public function editAction(Request $request, $id): Response
@@ -224,11 +222,6 @@ final class TranslatorController extends AbstractAdminListController
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
 
-    /**
-     * @param $domain
-     * @param $locale
-     * @param $keyword
-     */
     public function editSearchAction($domain, $locale, $keyword): RedirectResponse
     {
         $configurator = $this->getAdminListConfigurator();
@@ -250,8 +243,6 @@ final class TranslatorController extends AbstractAdminListController
     }
 
     /**
-     * @param $id
-     *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete", methods={"POST"})
      */
     public function deleteAction(Request $request, $id): RedirectResponse
@@ -268,9 +259,6 @@ final class TranslatorController extends AbstractAdminListController
         return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
     }
 
-    /**
-     * @param $adminListConfigurator
-     */
     public function setAdminListConfigurator($adminListConfigurator)
     {
         $this->adminListConfigurator = $adminListConfigurator;

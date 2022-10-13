@@ -68,8 +68,6 @@ class TagManager extends BaseTagManager
     }
 
     /**
-     * @param $id
-     *
      * @return mixed|null
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -104,8 +102,6 @@ class TagManager extends BaseTagManager
     }
 
     /**
-     * @param $class
-     * @param $locale
      * @param int $nbOfItems
      *
      * @return array|null

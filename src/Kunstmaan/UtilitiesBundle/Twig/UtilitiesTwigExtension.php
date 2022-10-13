@@ -13,9 +13,6 @@ final class UtilitiesTwigExtension extends AbstractExtension
      */
     private $slugifier;
 
-    /**
-     * @param $slugifier
-     */
     public function __construct($slugifier)
     {
         $this->slugifier = $slugifier;

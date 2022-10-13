@@ -23,9 +23,6 @@ final class AdaptSimpleFormEvent extends Event
      */
     protected $tabPane;
 
-    /**
-     * @var
-     */
     protected $data;
 
     /**

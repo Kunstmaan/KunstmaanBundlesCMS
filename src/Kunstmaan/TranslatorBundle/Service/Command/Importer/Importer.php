@@ -132,11 +132,6 @@ class Importer
     }
 
     /**
-     * @param      $keyword
-     * @param      $text
-     * @param      $locale
-     * @param      $filename
-     * @param      $domain
      * @param bool $force
      *
      * @return bool
