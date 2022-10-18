@@ -40,7 +40,7 @@ abstract class FormSubmissionField
      *
      * @ORM\Column(type="string")
      */
-    #[ORM\Column(name: 'fieldName', type: 'string')]
+    #[ORM\Column(name: 'field_name', type: 'string')]
     protected $fieldName;
 
     /**

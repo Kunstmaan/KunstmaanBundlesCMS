@@ -10,6 +10,8 @@ General
   In Kunstmaan CMS 7.O all GroundControl related files and support in templates will be removed.
 - The minimum supported PHP version is 8.0.
 - The supported Symfony versions are 4.4 and 5.4.
+- The column names of `\Kunstmaan\FormBundle\Entity\FormSubmissionField::$fieldName` and `\Kunstmaan\AdminBundle\Entity\Exception::$urlReferer" 
+  now are defined with snake case instead of camel case. Doctrine migrations should generate a rename query but check the generated sql after upgrading.
 
 AdminBundle
 -----------
