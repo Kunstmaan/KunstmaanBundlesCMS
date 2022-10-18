@@ -14,9 +14,6 @@ class LoaderTest extends TestCase
     const TEST_DATA_KEYWORD = 'validation.ok';
     const TEST_DATA_TEXT = 'Everything ok';
 
-    /** @var Loader */
-    private $loader;
-
     public function setUp(): void
     {
         $translation = new Translation();
