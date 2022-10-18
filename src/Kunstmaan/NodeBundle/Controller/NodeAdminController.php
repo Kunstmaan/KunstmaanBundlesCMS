@@ -1220,7 +1220,7 @@ final class NodeAdminController extends AbstractController
      */
     private function validatePageType($request)
     {
-        $type = $request->request->get('type');
+        $type = $request->request->get('type') ?? $request->query->get('type');
 
         if (empty($type)) {
             throw new InvalidArgumentException('Please specify a type of page you want to create');
