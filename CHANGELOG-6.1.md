@@ -6,6 +6,13 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.1.0...6.1.1
 
+## 6.1.7 / 2022-10-19
+
+* [AllBundles] Enable dependabot to update the used github action versions [#3186](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3186) ([@acrobat](https://github.com/acrobat))
+* [Dashboardbundle] Explicit int cast to avoid php 8.1 warning [#3181](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3181) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix current request check for forwarded error page requests [#3178](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3178) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Use stable version of subtree splitter and don't limit on path to allow splitting of newly pushed branches [#3174](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3174) ([@acrobat](https://github.com/acrobat))
+
 ## 6.1.6 / 2022-10-05
 
 * [NodeBundle] Temporary disable csrf check on delete because conflict with other page types [#3153](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3153) ([@acrobat](https://github.com/acrobat))
