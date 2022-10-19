@@ -6,6 +6,19 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.2.0...6.2.1
 
+## 6.2.1 / 2022-10-19
+
+* [AllBundles] Revert: "Add php 8.2 to build matrix" [#3195](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3195) ([@acrobat](https://github.com/acrobat))
+* [FormBundle] Revert fieldname change and add info to upgrade file [#3194](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3194) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Add php 8.2 to build matrix [#3193](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3193) ([@acrobat](https://github.com/acrobat))
+* [NodeBundle] Fix retreiving the page type for both post and get requests with query string [#3192](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3192) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Codestyle fixes [#3185](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3185) ([@acrobat](https://github.com/acrobat))
+* [FormBundle] Fix incorrect field name in column attribute [#3184](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3184) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Enable dependabot to update the used github action versions [#3186](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3186) ([@acrobat](https://github.com/acrobat))
+* [Dashboardbundle] Explicit int cast to avoid php 8.1 warning [#3181](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3181) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix current request check for forwarded error page requests [#3178](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3178) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Use stable version of subtree splitter and don't limit on path to allow splitting of newly pushed branches [#3174](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3174) ([@acrobat](https://github.com/acrobat))
+
 ## 6.2.0 / 2022-10-02
 
 * [AllBundles] Setup php-cs-fixer and add CI check [#3170](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3170) ([@acrobat](https://github.com/acrobat))
