@@ -23,7 +23,7 @@ jobs:
                     persist-credentials: false
                     fetch-depth: 0
 
-            -   uses: frankdejonge/use-github-token@1.0.1
+            -   uses: frankdejonge/use-github-token@1.0.2
                 with:
                     authentication: 'kunstmaanlabs:${{ secrets.SPLITTER_TOKEN }}'
                     user_name: 'Kunstmaan CMS'
