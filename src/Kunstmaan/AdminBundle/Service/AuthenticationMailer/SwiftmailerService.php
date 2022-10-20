@@ -8,6 +8,10 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
+/**
+ * @deprecated since 6.3, use \Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService instead.
+ * NEXT_MAJOR remove swiftmailer composer dependency.
+ */
 final class SwiftmailerService implements AuthenticationMailerInterface
 {
     /** @var \Swift_Mailer */

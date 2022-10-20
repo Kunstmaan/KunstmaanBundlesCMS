@@ -5,6 +5,16 @@ General
 -------
 
 - The supported Symfony version is 5.4.
+- Make sure to switch your swiftmailer email config to symfony mailer config after upgrading to avoid breaking email sending from the CMS. 
+  To avoid any BC breaks the `Kunstmaan\FormBundle\Helper\FormMailer` still uses swiftmailer as the default mailer. 
+  If you want to supress the deprecation warning, alias `@kunstmaan_mailer` to the symfony mailer service. 
+  In 7.0 `@kunstmaan_mailer` will be removed and the symfony mailer will be used by default.
+
+AdminBundle
+-----------
+
+- The `Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService` authentication mailer service is deprecated, use `Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService` instead.
+- The default value of `kunstmaan_admin.authentication.mailer.service` will change to `Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService` in 7.0.
 
 RedirectBundle
 --------------

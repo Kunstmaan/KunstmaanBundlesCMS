@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
@@ -42,6 +44,11 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'multi_language' => true,
             'required_locales' => 'nl|fr|en',
             'default_locale' => 'nl',
+            'authentication' => [
+                'mailer' => [
+                    'service' => SymfonyMailerService::class, // NEXT_MAJOR remove this config as it will be the default
+                ],
+            ],
         ]);
 
         $this->assertContainerBuilderHasParameter('version_checker.url', 'https://kunstmaancms.be/version-check');
@@ -101,6 +108,27 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->load(array_merge($this->getRequiredConfig(), ['authentication' => ['enable_new_authentication' => true]]));
     }
 
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedDefaultValueForAuthenticationMailerService()
+    {
+        $this->expectDeprecation('Since kunstmaan/admin-bundle 6.3: The default value of "kunstmaan_admin.authentication.mailer.service" will change from "Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService" to "Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService" in 7.0, set the config to "Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService" to avoid issues when upgrading to 7.0.');
+        $this->expectDeprecation('Since kunstmaan/admin-bundle 6.3: The swiftmailer service for config "kunstmaan_admin.authentication.mailer.service" is deprecated, use "Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService" service instead.');
+
+        $this->load(array_merge($this->getRequiredConfig('authentication')));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedValueForAuthenticationMailerService()
+    {
+        $this->expectDeprecation('Since kunstmaan/admin-bundle 6.3: The swiftmailer service for config "kunstmaan_admin.authentication.mailer.service" is deprecated, use "Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService" service instead.');
+
+        $this->load(array_merge($this->getRequiredConfig(), ['authentication' => ['mailer' => ['service' => SwiftmailerService::class]]]));
+    }
+
     private function getRequiredConfig(string $excludeKey = null)
     {
         $requiredConfig = [
@@ -108,6 +136,11 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'multi_language' => true,
             'required_locales' => 'nl|fr|en',
             'default_locale' => 'nl',
+            'authentication' => [
+                'mailer' => [
+                    'service' => SymfonyMailerService::class, // NEXT_MAJOR remove this config as it will be the default
+                ],
+            ],
         ];
 
         if (array_key_exists($excludeKey, $requiredConfig)) {
