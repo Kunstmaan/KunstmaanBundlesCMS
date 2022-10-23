@@ -9,9 +9,10 @@ services:
     kunstmaan_media.media_handlers.pdf:
         class: Kunstmaan\MediaBundle\Helper\File\PdfHandler
         parent: kunstmaan_media.media_handlers.file
-        arguments: [1, '@mime_types']
+        arguments:
+            index_0: 1 # Override the priority value of the parent service
         calls:
-            - [ setMediaPath, [ '%kernel.project_dir%' ] ]
+            - [ setWebPath, [ '%kernel.project_dir%/public' ] ]
             - [ setPdfTransformer, [ '@kunstmaan_media.pdf_transformer' ]]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
