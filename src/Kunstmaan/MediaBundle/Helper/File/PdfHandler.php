@@ -19,18 +19,6 @@ class PdfHandler extends FileHandler
     protected $pdfTransformer;
 
     /**
-     * Inject the root dir so we know the full path where we need to store the file.
-     *
-     * @param string $kernelRootDir
-     */
-    public function setMediaPath($kernelRootDir)
-    {
-        parent::setMediaPath($kernelRootDir);
-
-        $this->setWebPath(realpath(str_replace('/', DIRECTORY_SEPARATOR, $kernelRootDir . '/public/') . DIRECTORY_SEPARATOR));
-    }
-
-    /**
      * @param string $webPath
      */
     public function setWebPath($webPath)
