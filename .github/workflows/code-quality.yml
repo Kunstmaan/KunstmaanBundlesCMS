@@ -17,7 +17,7 @@ jobs:
                     coverage: none
 
             -   name: Install Composer Dependencies
-                uses: ramsey/composer-install@v1
+                run: composer update --prefer-dist --no-progress
 
             -   name: Run phpstan
                 run: vendor/bin/phpstan analyse --no-progress
@@ -27,7 +27,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
 
             -   uses: shivammathur/setup-php@v2
                 with:
@@ -35,7 +35,7 @@ jobs:
                     coverage: none
 
             -   name: Install Composer Dependencies
-                uses: ramsey/composer-install@v1
+                run: composer update --prefer-dist --no-progress
 
             -   name: Run php-cs-fixer
                 run: vendor/bin/php-cs-fixer fix --dry-run --diff
