@@ -8,6 +8,8 @@ import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
 import debug from 'gulp-debug';
 
+const sass = require('gulp-sass')(require('sass'));
+
 export function createCssLocalTask({ src = undefined, dest = undefined }) {
     return function cssLocal() {
         return gulp.src(src)
