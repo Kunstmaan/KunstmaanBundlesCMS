@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-import sass from 'gulp-sass';
 import notifier from 'node-notifier';
 import sourcemaps from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
