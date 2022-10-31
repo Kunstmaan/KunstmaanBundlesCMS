@@ -6,11 +6,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:dashboard:widget:googleanalytics:overviews:list', description: 'List available overviews')]
 final class GoogleAnalyticsOverviewsListCommand extends Command
 {
     /** @var EntityManagerInterface */
@@ -26,22 +28,9 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:dashboard:widget:googleanalytics:overviews:list')
-            ->setDescription('List available overviews')
-            ->addOption(
-                'config',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only list overviews of one config',
-                false
-            )
-            ->addOption(
-                'segment',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only list overviews of one segment',
-                false
-            );
+            ->addOption('config', null, InputOption::VALUE_OPTIONAL, 'Specify to only list overviews of one config', false)
+            ->addOption('segment', null, InputOption::VALUE_OPTIONAL, 'Specify to only list overviews of one segment', false)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

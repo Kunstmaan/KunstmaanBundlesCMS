@@ -3,6 +3,7 @@
 namespace Kunstmaan\SearchBundle\Command;
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * It will load the SearchConfigurationChain and call the populateIndex() method on each SearchConfiguration
  */
+#[AsCommand(name: 'kuma:search:populate', description: 'Populate the index(es)')]
 final class PopulateIndexCommand extends Command
 {
     /**
@@ -31,9 +33,8 @@ final class PopulateIndexCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:search:populate')
             ->addArgument('full', InputArgument::OPTIONAL, 'Delete and create new index(es) before populating')
-            ->setDescription('Populate the index(es)');
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

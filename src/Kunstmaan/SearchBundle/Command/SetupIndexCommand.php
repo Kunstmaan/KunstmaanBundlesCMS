@@ -3,6 +3,7 @@
 namespace Kunstmaan\SearchBundle\Command;
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
  *
  * It will load the SearchConfigurationChain and call the createIndex() method on each SearchConfiguration
  */
+#[AsCommand(name: 'kuma:search:setup', description: 'Set up the index(es)')]
 final class SetupIndexCommand extends Command
 {
     /**
@@ -25,13 +27,6 @@ final class SetupIndexCommand extends Command
         parent::__construct();
 
         $this->configurationChain = $configurationChain;
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setName('kuma:search:setup')
-            ->setDescription('Set up the index(es)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

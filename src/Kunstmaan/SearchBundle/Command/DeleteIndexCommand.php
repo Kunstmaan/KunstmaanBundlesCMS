@@ -3,6 +3,7 @@
 namespace Kunstmaan\SearchBundle\Command;
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * It will load the SearchConfigurationChain and call the deleteIndex() method on each SearchConfiguration
  */
+#[AsCommand(name: 'kuma:search:delete', description: 'Delete the index(es)')]
 final class DeleteIndexCommand extends Command
 {
     /**
@@ -24,13 +26,6 @@ final class DeleteIndexCommand extends Command
         parent::__construct();
 
         $this->configurationChain = $configurationChain;
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setName('kuma:search:delete')
-            ->setDescription('Delete the index(es)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

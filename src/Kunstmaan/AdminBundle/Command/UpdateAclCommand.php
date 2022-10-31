@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,6 +15,7 @@ use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 /**
  * Permissions update of ACL entries for all nodes for given role.
  */
+#[AsCommand(name: 'kuma:acl:update', description: 'Permissions update of ACL entries for all nodes for given role')]
 final class UpdateAclCommand extends Command
 {
     /** @var AclManager */
@@ -40,12 +42,9 @@ final class UpdateAclCommand extends Command
 
     protected function configure(): void
     {
-        parent::configure();
-
-        $this->setName('kuma:acl:update')
-            ->setDescription('Permissions update of ACL entries for all nodes for given role')
-            ->setHelp('The <info>kuma:acl:update</info> will update ACL entries for the nodes of the current project' .
-                'with given role and permissions');
+        $this
+            ->setHelp('The <info>kuma:acl:update</info> will update ACL entries for the nodes of the current project with given role and permissions')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

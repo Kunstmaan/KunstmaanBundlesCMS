@@ -13,11 +13,13 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
 use Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper;
 use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:dashboard:widget:googleanalytics:data:collect', description: 'Collect the Google Analytics dashboard widget data')]
 final class GoogleAnalyticsDataCollectCommand extends Command
 {
     /** @var EntityManagerInterface */
@@ -49,29 +51,10 @@ final class GoogleAnalyticsDataCollectCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:dashboard:widget:googleanalytics:data:collect')
-            ->setDescription('Collect the Google Analytics dashboard widget data')
-            ->addOption(
-                'config',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only update one config',
-                false
-            )
-            ->addOption(
-                'segment',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only update one segment',
-                false
-            )
-            ->addOption(
-                'overview',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only update one overview',
-                false
-            );
+            ->addOption('config', null, InputOption::VALUE_OPTIONAL, 'Specify to only update one config', false)
+            ->addOption('segment', null, InputOption::VALUE_OPTIONAL, 'Specify to only update one segment', false)
+            ->addOption('overview', null, InputOption::VALUE_OPTIONAL, 'Specify to only update one overview', false)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -4,10 +4,12 @@ namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:dashboard:widget:googleanalytics:configs:list', description: 'List available configs')]
 final class GoogleAnalyticsConfigsListCommand extends Command
 {
     /**
@@ -20,13 +22,6 @@ final class GoogleAnalyticsConfigsListCommand extends Command
         parent::__construct();
 
         $this->em = $em;
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setName('kuma:dashboard:widget:googleanalytics:configs:list')
-            ->setDescription('List available configs');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

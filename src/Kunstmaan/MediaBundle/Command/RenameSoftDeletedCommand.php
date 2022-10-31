@@ -7,11 +7,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:media:rename-soft-deleted', description: 'Rename physical files for soft-deleted media.')]
 final class RenameSoftDeletedCommand extends Command
 {
     /** @var EntityManager */
@@ -32,20 +34,10 @@ final class RenameSoftDeletedCommand extends Command
 
     protected function configure(): void
     {
-        parent::configure();
-
         $this
-            ->setName('kuma:media:rename-soft-deleted')
-            ->setDescription('Rename physical files for soft-deleted media.')
-            ->setHelp(
-                'The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
-            )
-            ->addOption(
-                'original',
-                'o',
-                InputOption::VALUE_NONE,
-                'If set renames soft-deleted media to its original filename'
-            );
+            ->setHelp('The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.')
+            ->addOption('original', 'o', InputOption::VALUE_NONE, 'If set renames soft-deleted media to its original filename')
+        ;
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int

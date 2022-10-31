@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AsCommand(name: 'kuma:translator:import-file', description: 'Import file with translations, supported formats are xlsx, ods, csv')]
 final class ImportTranslationsFromFileCommand extends Command
 {
     /** @var Importer */
@@ -35,10 +37,9 @@ final class ImportTranslationsFromFileCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:translator:import-file')
-            ->setDescription('Import file with translations, supported formats are xlsx, ods, csv')
             ->addArgument('file', InputArgument::REQUIRED, 'The full path of the file')
-            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries');
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

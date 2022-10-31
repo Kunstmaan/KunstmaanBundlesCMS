@@ -6,12 +6,14 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
+#[AsCommand(name: 'kuma:media:clean-deleted-media', description: 'Throw away all files from the file system that have been deleted in the database')]
 final class CleanDeletedMediaCommand extends Command
 {
     /**
@@ -37,8 +39,6 @@ final class CleanDeletedMediaCommand extends Command
         parent::configure();
 
         $this
-            ->setName('kuma:media:clean-deleted-media')
-            ->setDescription('Throw away all files from the file system that have been deleted in the database')
             ->setHelp(
                 'The <info>kuma:media:clean-deleted-media</info> command can be used to clean up your file system after having deleted Media items using the backend.'
             )

@@ -4,14 +4,13 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Role;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony CLI command to create a group using bin/console kuma:role:create <NAME_OF_THE_ROLE>
- */
+#[AsCommand(name: 'kuma:role:create', description: 'Create a role.')]
 final class CreateRoleCommand extends Command
 {
     /**
@@ -28,8 +27,7 @@ final class CreateRoleCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('kuma:role:create')
-            ->setDescription('Create a role.')
+        $this
             ->setDefinition([
                 new InputArgument('role', InputArgument::REQUIRED, 'The role'),
             ])

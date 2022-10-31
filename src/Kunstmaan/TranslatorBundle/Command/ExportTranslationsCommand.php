@@ -4,12 +4,14 @@ namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Service\Command\Exporter\ExportCommandHandler;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
+#[AsCommand(name: 'kuma:translator:export', description: 'Export stashed translations into files (gzip compressed)')]
 final class ExportTranslationsCommand extends Command
 {
     /**
@@ -27,8 +29,6 @@ final class ExportTranslationsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:translator:export')
-            ->setDescription('Export stashed translations into files (gzip compressed)')
             ->addOption('domains', 'd', InputOption::VALUE_REQUIRED, 'Specify which domains to export, default all domains in the stash')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Specify which format files should be, default is yaml')
             ->addOption('locales', 'l', InputOption::VALUE_REQUIRED, 'Specifiy which locales to export, default all in the stash')

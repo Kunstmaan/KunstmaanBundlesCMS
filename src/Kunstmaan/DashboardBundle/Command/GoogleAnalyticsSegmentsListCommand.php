@@ -5,11 +5,13 @@ namespace Kunstmaan\DashboardBundle\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:dashboard:widget:googleanalytics:segments:list', description: 'List available segments')]
 final class GoogleAnalyticsSegmentsListCommand extends Command
 {
     /** @var EntityManagerInterface */
@@ -25,15 +27,8 @@ final class GoogleAnalyticsSegmentsListCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:dashboard:widget:googleanalytics:segments:list')
-            ->setDescription('List available segments')
-            ->addOption(
-                'config',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only list overviews of one config',
-                false
-            );
+            ->addOption('config', null, InputOption::VALUE_OPTIONAL, 'Specify to only list overviews of one config', false)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

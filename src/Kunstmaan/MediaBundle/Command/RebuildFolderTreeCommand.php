@@ -5,10 +5,12 @@ namespace Kunstmaan\MediaBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:media:rebuild-folder-tree', description: 'Rebuild the media folder tree.')]
 final class RebuildFolderTreeCommand extends Command
 {
     /**
@@ -25,11 +27,9 @@ final class RebuildFolderTreeCommand extends Command
 
     protected function configure(): void
     {
-        parent::configure();
-
-        $this->setName('kuma:media:rebuild-folder-tree')
-            ->setDescription('Rebuild the media folder tree.')
-            ->setHelp('The <info>kuma:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.');
+        $this
+            ->setHelp('The <info>kuma:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

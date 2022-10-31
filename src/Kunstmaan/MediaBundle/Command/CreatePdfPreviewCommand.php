@@ -7,10 +7,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use ImagickException;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:media:create-pdf-previews', description: 'Create preview images for PDFs that have already been uploaded')]
 final class CreatePdfPreviewCommand extends Command
 {
     /**
@@ -48,8 +50,6 @@ final class CreatePdfPreviewCommand extends Command
         parent::configure();
 
         $this
-            ->setName('kuma:media:create-pdf-previews')
-            ->setDescription('Create preview images for PDFs that have already been uploaded')
             ->setHelp(
                 'The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded.'
             );
