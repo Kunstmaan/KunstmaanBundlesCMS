@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FixturesBundle\Populator\Methods;
 
-use Symfony\Component\Inflector\Inflector;
+use Symfony\Component\String\Inflector\EnglishInflector;
 
 class ArrayAdd implements MethodInterface
 {
@@ -32,13 +32,14 @@ class ArrayAdd implements MethodInterface
         if (is_callable([$object, $method = 'add' . $property])) {
             return $method;
         }
-        if (class_exists('Symfony\Component\PropertyAccess\StringUtil') && method_exists('Symfony\Component\PropertyAccess\StringUtil', 'singularify')) {
-            foreach ((array) Inflector::singularize($property) as $singularForm) {
-                if (is_callable([$object, $method = 'add' . $singularForm])) {
-                    return $method;
-                }
+
+        $inflector = new EnglishInflector();
+        foreach ($inflector->singularize($property) as $singularForm) {
+            if (is_callable([$object, $method = 'add' . $singularForm])) {
+                return $method;
             }
         }
+
         if (is_callable([$object, $method = 'add' . rtrim($property, 's')])) {
             return $method;
         }
