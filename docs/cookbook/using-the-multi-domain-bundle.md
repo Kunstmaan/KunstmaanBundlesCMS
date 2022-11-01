@@ -12,23 +12,15 @@ of the page).
 Your site *has* to be defined as a multilanguage site in parameters.yml.
 
 
-### Modify app/AppKernel.php
+### Modify config/bundles.php
 
-You have to add the MultiDomainBundle in the registerBundles function :
+You have to add the MultiDomainBundle in the returned array :
 
 ```php
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            ...
-            new Kunstmaan\MultiDomainBundle\KunstmaanMultiDomainBundle(),
-        );
-        ...
-    }
+return [
     ...
-}
+    Kunstmaan\MultiDomainBundle\KunstmaanMultiDomainBundle::class => ['all' => true],
+]
 ```
 
 ### Include the routing configuration in your main routing.yml
