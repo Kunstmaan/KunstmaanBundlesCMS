@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
-use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -40,7 +39,7 @@ class CheckboxPagePartTest extends TestCase
             ->method('getData')
             ->willReturn([]);
 
-        $fields = new ArrayObject();
+        $fields = new \ArrayObject();
 
         $this->assertEquals(0, count($fields));
         $object->setErrorMessageRequired('omg sort it out');

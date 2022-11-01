@@ -96,7 +96,7 @@ class AclChangeset extends AbstractEntity
     public function __construct()
     {
         $this->status = self::STATUS_NEW;
-        $this->lastModified = $this->created = new DateTime('now');
+        $this->lastModified = $this->created = new \DateTime('now');
     }
 
     /**
@@ -126,7 +126,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of creation
      *
-     * @param DateTime $created
+     * @param \DateTime $created
      *
      * @return AclChangeset
      */
@@ -140,7 +140,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get timestamp of creation
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -150,7 +150,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of last modification
      *
-     * @param DateTime $lastModified
+     * @param \DateTime $lastModified
      *
      * @return AclChangeset
      */
@@ -164,7 +164,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get timestamp of last modification
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastModified()
     {
@@ -242,7 +242,7 @@ class AclChangeset extends AbstractEntity
     public function setStatus($status)
     {
         $this->status = $status;
-        $this->setLastModified(new DateTime('now'));
+        $this->setLastModified(new \DateTime('now'));
 
         return $this;
     }

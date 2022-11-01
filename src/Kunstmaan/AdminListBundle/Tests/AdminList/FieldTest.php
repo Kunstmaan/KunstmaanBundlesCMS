@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
-use Exception;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 class FieldTest extends TestCase
 {
@@ -74,7 +72,7 @@ class FieldTest extends TestCase
 
     public function testGetAliasObject()
     {
-        $item = new stdClass();
+        $item = new \stdClass();
         $item->test = 123;
         $val = $this->object->getAliasObj($item);
         $this->assertEquals(123, $val);
@@ -87,7 +85,7 @@ class FieldTest extends TestCase
     {
         $column = $this->object->getColumnName('ALIAS.ABCDEF');
         $this->assertEquals('ABCDEF', $column);
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $this->object->getColumnName('OMG.CRASH');
     }
 }

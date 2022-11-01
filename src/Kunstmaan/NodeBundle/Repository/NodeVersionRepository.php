@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Repository;
 
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -34,7 +33,7 @@ class NodeVersionRepository extends EntityRepository
      * @param BaseUser         $owner           The user
      * @param NodeVersion      $origin          The nodeVersion this nodeVersion originated from
      * @param string           $type            (public|draft)
-     * @param DateTime         $created         The date this node version is created
+     * @param \DateTime        $created         The date this node version is created
      *
      * @return NodeVersion
      */

@@ -3,8 +3,6 @@
 namespace Kunstmaan\FormBundle\Helper;
 
 use Kunstmaan\FormBundle\Entity\FormSubmission;
-use Swift_Mailer;
-use Swift_Message;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
@@ -22,7 +20,7 @@ class FormMailer implements FormMailerInterface
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(Swift_Mailer $mailer, Environment $twig, RequestStack $requestStack)
+    public function __construct(\Swift_Mailer $mailer, Environment $twig, RequestStack $requestStack)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -41,7 +39,7 @@ class FormMailer implements FormMailerInterface
 
         $toArr = explode("\r\n", $to);
 
-        $message = (new Swift_Message($subject))
+        $message = (new \Swift_Message($subject))
             ->setFrom($from)
             ->setTo($toArr)
             ->setBody(

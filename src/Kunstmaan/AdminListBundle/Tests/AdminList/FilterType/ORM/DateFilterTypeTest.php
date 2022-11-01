@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 class DateFilterTypeTest extends BaseOrmFilterTest
@@ -70,13 +69,13 @@ class DateFilterTypeTest extends BaseOrmFilterTest
     public function testGetAlias()
     {
         $this->object = new DateFilterType('date', null);
-        $mirror = new ReflectionClass(DateFilterType::class);
+        $mirror = new \ReflectionClass(DateFilterType::class);
         $method = $mirror->getMethod('getAlias');
         $method->setAccessible(true);
         $alias = $method->invoke($this->object);
         $this->assertEquals('', $alias);
         $this->object = new DateFilterType('date', 'hello.');
-        $mirror = new ReflectionClass(DateFilterType::class);
+        $mirror = new \ReflectionClass(DateFilterType::class);
         $method = $mirror->getMethod('getAlias');
         $method->setAccessible(true);
         $alias = $method->invoke($this->object);
@@ -90,7 +89,7 @@ class DateFilterTypeTest extends BaseOrmFilterTest
     {
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $queryBuilder->expects($this->never())->method('setParameter');
-        $mirror = new ReflectionClass(DateFilterType::class);
+        $mirror = new \ReflectionClass(DateFilterType::class);
         $property = $mirror->getProperty('queryBuilder');
         $property->setAccessible(true);
         $property->setValue($this->object, $queryBuilder);

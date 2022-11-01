@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use DateTime;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersionLock;
 use PHPUnit\Framework\TestCase;
@@ -13,8 +12,8 @@ class NodeVersionLockTest extends TestCase
     {
         $nodeVersionLock = new NodeVersionLock();
 
-        $nodeVersionLock->setCreatedAt(new DateTime());
-        $this->assertInstanceOf(DateTime::class, $nodeVersionLock->getCreatedAt());
+        $nodeVersionLock->setCreatedAt(new \DateTime());
+        $this->assertInstanceOf(\DateTime::class, $nodeVersionLock->getCreatedAt());
 
         $nodeVersionLock->setPublicVersion(true);
         $this->assertTrue($nodeVersionLock->isPublicVersion());

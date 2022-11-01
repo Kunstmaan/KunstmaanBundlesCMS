@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\DBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 class DateFilterTypeTest extends BaseDbalFilterTest
@@ -70,7 +69,7 @@ class DateFilterTypeTest extends BaseDbalFilterTest
     {
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $queryBuilder->expects($this->never())->method('setParameter');
-        $mirror = new ReflectionClass(DateFilterType::class);
+        $mirror = new \ReflectionClass(DateFilterType::class);
         $property = $mirror->getProperty('queryBuilder');
         $property->setAccessible(true);
         $property->setValue($this->object, $queryBuilder);

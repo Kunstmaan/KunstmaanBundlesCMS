@@ -12,7 +12,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 class Configurator extends AbstractArticlePageAdminListConfigurator
 {
@@ -128,11 +127,11 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
         $this->em = $em;
 
-        $mirror = new ReflectionClass(Configurator::class);
+        $mirror = new \ReflectionClass(Configurator::class);
         $method = $mirror->getMethod('getQueryBuilder');
         $method->setAccessible(true);
 
-        $mirror = new ReflectionClass(Configurator::class);
+        $mirror = new \ReflectionClass(Configurator::class);
         $prop = $mirror->getProperty('em');
         $prop->setAccessible(true);
         $prop->setValue($this->object, $em);
@@ -161,11 +160,11 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
         $this->em = $em;
 
-        $mirror = new ReflectionClass(Configurator::class);
+        $mirror = new \ReflectionClass(Configurator::class);
         $method = $mirror->getMethod('getQueryBuilder');
         $method->setAccessible(true);
 
-        $mirror = new ReflectionClass(Configurator::class);
+        $mirror = new \ReflectionClass(Configurator::class);
         $prop = $mirror->getProperty('em');
         $prop->setAccessible(true);
         $prop->setValue($this->object, $em);
@@ -180,7 +179,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $this->assertCount(1, $this->object->getOverviewPages());
         $this->assertCount(1, $this->object->getOverviewPage());
 
-        $mirror = new ReflectionClass(Configurator::class);
+        $mirror = new \ReflectionClass(Configurator::class);
         $prop = $mirror->getProperty('repo');
         $prop->setAccessible(true);
 

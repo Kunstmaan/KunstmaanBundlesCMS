@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\TaggingBundle\Tests\Entity;
 
-use Closure;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
@@ -80,7 +78,7 @@ class Lazy implements LazyLoadingTaggableInterface
 
     private $loader;
 
-    public function setTagLoader(Closure $loader)
+    public function setTagLoader(\Closure $loader)
     {
         $this->loader = $loader;
     }
@@ -261,7 +259,7 @@ class TagManagerTest extends TestCase
     public function testFindRelatedItemsReturnsNull()
     {
         $item = new Random();
-        $results = $this->object->findRelatedItems($item, DateTime::class, 'en');
+        $results = $this->object->findRelatedItems($item, \DateTime::class, 'en');
         $this->assertNull($results);
     }
 

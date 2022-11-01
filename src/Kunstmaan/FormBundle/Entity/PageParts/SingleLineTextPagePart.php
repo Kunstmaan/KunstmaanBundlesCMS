@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
@@ -167,10 +166,10 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      * Modify the form with the fields of the current page part
      *
      * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
+     * @param \ArrayObject         $fields      The fields
      * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
+    public function adaptForm(FormBuilderInterface $formBuilder, \ArrayObject $fields, $sequence)
     {
         $sfsf = new StringFormSubmissionField();
         $sfsf->setFieldName('field_' . $this->getUniqueId());

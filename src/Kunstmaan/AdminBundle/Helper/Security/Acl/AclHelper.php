@@ -8,7 +8,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
-use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -195,13 +194,13 @@ SELECTQUERY;
      *
      * @return array
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getAllowedEntityIds(PermissionDefinition $permissionDef)
     {
         $rootEntity = $permissionDef->getEntity();
         if (empty($rootEntity)) {
-            throw new InvalidArgumentException('You have to provide an entity class name!');
+            throw new \InvalidArgumentException('You have to provide an entity class name!');
         }
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\FormWidgets;
 
-use ArrayIterator;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\ListWidget;
@@ -15,7 +14,7 @@ class ListWidgetTest extends TestCase
 {
     public function testWidget()
     {
-        $views = new ArrayIterator();
+        $views = new \ArrayIterator();
         $views->vars = ['errors' => [new FormError('bang')]];
         $view = new FakeView();
         $view->offsetSet('a', $views);
