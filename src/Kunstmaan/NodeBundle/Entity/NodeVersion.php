@@ -97,8 +97,8 @@ class NodeVersion extends AbstractEntity
 
     public function __construct()
     {
-        $this->setCreated(new DateTime());
-        $this->setUpdated(new DateTime());
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
     }
 
     /**
@@ -186,7 +186,7 @@ class NodeVersion extends AbstractEntity
      *
      * @return NodeVersion
      */
-    public function setCreated(DateTime $created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
 
@@ -196,7 +196,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get created
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -208,7 +208,7 @@ class NodeVersion extends AbstractEntity
      *
      * @return NodeVersion
      */
-    public function setUpdated(DateTime $updated)
+    public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
 
@@ -218,7 +218,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get updated
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getUpdated()
     {

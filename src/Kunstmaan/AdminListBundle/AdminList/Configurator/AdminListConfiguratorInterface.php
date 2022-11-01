@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
-use InvalidArgumentException;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
@@ -89,7 +88,7 @@ interface AdminListConfiguratorInterface
      *
      * @return string FQCN of form type
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getAdminType($entity);
 

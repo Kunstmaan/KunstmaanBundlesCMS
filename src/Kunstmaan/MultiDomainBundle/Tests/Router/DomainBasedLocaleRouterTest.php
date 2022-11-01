@@ -5,7 +5,6 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Router;
 use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -100,7 +99,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $object = new DomainBasedLocaleRouter($domainConfiguration, $this->getRequestStack($request), $this->getEntityManager(new NodeTranslation()), 'admin');
 
-        $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
+        $mirror = new \ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
         $property->setAccessible(true);
         $property->setValue($object, ['host' => 'https://cia.gov']);
@@ -142,7 +141,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         /** @var Container $container */
         $object = new DomainBasedLocaleRouter($domainConfiguration, $this->getRequestStack($request), $this->getEntityManager(new NodeTranslation()), 'admin');
-        $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
+        $mirror = new \ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
         $property->setAccessible(true);
         $property->setValue($object, ['host' => 'https://cia.gov']);

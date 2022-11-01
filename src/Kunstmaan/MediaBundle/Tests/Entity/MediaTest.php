@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
-use DateTime;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use PHPUnit\Framework\TestCase;
@@ -143,7 +142,7 @@ class MediaTest extends TestCase
     public function testPreUpdate()
     {
         $this->object->preUpdate();
-        $this->assertInstanceOf(DateTime::class, $this->object->getUpdatedAt());
+        $this->assertInstanceOf(\DateTime::class, $this->object->getUpdatedAt());
     }
 
     public function testPrePersist()

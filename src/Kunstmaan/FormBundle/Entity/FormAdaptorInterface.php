@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use ArrayObject;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -14,12 +13,12 @@ interface FormAdaptorInterface
      * Modify the given FormBuilderInterface
      *
      * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
+     * @param \ArrayObject         $fields      The fields
      * @param int                  $sequence    The sequence of the form field
      *
      * @return void
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence);
+    public function adaptForm(FormBuilderInterface $formBuilder, \ArrayObject $fields, $sequence);
 
     /**
      * Returns a unique id

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -55,7 +54,7 @@ EOT
         $user = $this->userManager->findUserByUsername($username);
 
         if (!$user) {
-            throw new InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
         }
 
         $user->setPlainPassword($password);
@@ -74,7 +73,7 @@ EOT
             $question = new Question('Please give the username:');
             $question->setValidator(function ($username) {
                 if (empty($username)) {
-                    throw new InvalidArgumentException('Username can not be empty');
+                    throw new \InvalidArgumentException('Username can not be empty');
                 }
 
                 return $username;
@@ -86,7 +85,7 @@ EOT
             $question = new Question('Please enter the new password:');
             $question->setValidator(function ($password) {
                 if (empty($password)) {
-                    throw new InvalidArgumentException('Password can not be empty');
+                    throw new \InvalidArgumentException('Password can not be empty');
                 }
 
                 return $password;

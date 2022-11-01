@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\DashboardBundle\Tests\Entity;
 
-use DateTime;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +18,7 @@ class AnalyticsConfigTest extends TestCase
         $entity->setPropertyId('blahblah2');
         $entity->setAccountId('blahblah3');
         $entity->setProfileId('blahblah4');
-        $entity->setLastUpdate(new DateTime());
+        $entity->setLastUpdate(new \DateTime());
         $entity->setDisableGoals(true);
 
         $this->assertEquals(666, $entity->getId());
@@ -30,7 +29,7 @@ class AnalyticsConfigTest extends TestCase
         $this->assertEquals('blahblah2', $entity->getPropertyId());
         $this->assertEquals('blahblah3', $entity->getAccountId());
         $this->assertEquals('blahblah4', $entity->getProfileId());
-        $this->assertInstanceOf(DateTime::class, $entity->getLastUpdate());
+        $this->assertInstanceOf(\DateTime::class, $entity->getLastUpdate());
         $this->assertTrue($entity->getDisableGoals());
     }
 }

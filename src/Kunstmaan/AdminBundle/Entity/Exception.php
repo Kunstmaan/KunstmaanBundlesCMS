@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Repository\ExceptionRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -209,7 +208,7 @@ class Exception extends AbstractEntity
     /**
      * @param \DateTime $createdAt
      */
-    public function setCreatedAt(DateTimeInterface $createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt)
     {
         $this->createdAt = $createdAt;
     }
@@ -225,7 +224,7 @@ class Exception extends AbstractEntity
     /**
      * @param \DateTime $updatedAt
      */
-    public function setUpdatedAt(DateTimeInterface $updatedAt)
+    public function setUpdatedAt(\DateTimeInterface $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }

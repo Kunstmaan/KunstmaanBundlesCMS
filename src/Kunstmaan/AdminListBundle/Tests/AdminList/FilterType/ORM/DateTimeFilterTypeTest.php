@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateTimeFilterType;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 class DateTimeFilterTypeTest extends BaseOrmFilterTest
@@ -79,7 +78,7 @@ class DateTimeFilterTypeTest extends BaseOrmFilterTest
     {
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $queryBuilder->expects($this->never())->method('setParameter');
-        $mirror = new ReflectionClass(DateTimeFilterType::class);
+        $mirror = new \ReflectionClass(DateTimeFilterType::class);
         $property = $mirror->getProperty('queryBuilder');
         $property->setAccessible(true);
         $property->setValue($this->object, $queryBuilder);

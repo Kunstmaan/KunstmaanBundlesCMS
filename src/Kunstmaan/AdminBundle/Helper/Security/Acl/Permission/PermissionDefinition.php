@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use InvalidArgumentException;
-
 /**
  * The PermissionDefinition object allows you to define the settings to be used by the ACL helper
  */
@@ -29,7 +27,7 @@ class PermissionDefinition
      * @param string|null $entity      Class name of entity for which to check permissions
      * @param string|null $alias       DQL alias of entity table
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct(array $permissions, $entity = null, $alias = null)
     {
@@ -81,12 +79,12 @@ class PermissionDefinition
     /**
      * Set permissions.
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setPermissions(array $permissions)
     {
         if (!\is_array($permissions) || empty($permissions)) {
-            throw new InvalidArgumentException('You have to provide at least one permission!');
+            throw new \InvalidArgumentException('You have to provide at least one permission!');
         }
         $this->permissions = $permissions;
     }

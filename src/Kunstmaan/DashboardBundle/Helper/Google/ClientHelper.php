@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\DashboardBundle\Helper\Google;
 
-use Exception;
 use Google_Client as Client;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -24,7 +23,7 @@ class ClientHelper
         try {
             $uri = $router->generate($routeName, [], UrlGeneratorInterface::ABSOLUTE_URL);
             $this->client->setRedirectUri($uri);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->client->setRedirectUri('');
         }
     }

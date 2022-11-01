@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use ImagickException;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer;
 use Symfony\Component\Console\Command\Command;
@@ -66,7 +65,7 @@ final class CreatePdfPreviewCommand extends Command
         foreach ($medias as $media) {
             try {
                 $this->pdfTransformer->apply($this->webRoot . $media->getUrl());
-            } catch (ImagickException $e) {
+            } catch (\ImagickException $e) {
                 $output->writeln('<comment>' . $e->getMessage() . '</comment>');
             }
         }

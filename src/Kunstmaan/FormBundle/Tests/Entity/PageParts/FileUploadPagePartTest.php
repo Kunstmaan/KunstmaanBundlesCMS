@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
-use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +32,7 @@ class FileUploadPagePartTest extends TestCase
             ->method('getData')
             ->willReturn([]);
 
-        $fields = new ArrayObject();
+        $fields = new \ArrayObject();
 
         $object->setErrorMessageRequired('this is required');
         $this->assertEquals(0, count($fields));
