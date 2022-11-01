@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
-use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
@@ -16,8 +15,8 @@ class PagePartRefTest extends TestCase
         $part->setId(1);
         $part->setPageId(2);
         $part->setPageEntityname(PagePartRef::class);
-        $part->setCreated(new DateTime());
-        $part->setUpdated(new DateTime());
+        $part->setCreated(new \DateTime());
+        $part->setUpdated(new \DateTime());
         $part->setUpdatedValue();
         $part->setContext('a string');
         $part->setSequencenumber(3);
@@ -43,8 +42,8 @@ class PagePartRefTest extends TestCase
         $this->assertEquals(1, $part->getId());
         $this->assertEquals(2, $part->getPageId());
         $this->assertEquals(PagePartRef::class, $part->getPageEntityname());
-        $this->assertInstanceOf(DateTime::class, $part->getCreated());
-        $this->assertInstanceOf(DateTime::class, $part->getUpdated());
+        $this->assertInstanceOf(\DateTime::class, $part->getCreated());
+        $this->assertInstanceOf(\DateTime::class, $part->getUpdated());
         $this->assertEquals('a string', $part->getContext());
         $this->assertEquals(3, $part->getSequencenumber());
         $this->assertEquals('4', $part->getPagePartId());

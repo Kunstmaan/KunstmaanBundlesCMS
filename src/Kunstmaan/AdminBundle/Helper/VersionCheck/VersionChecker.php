@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\VersionCheck;
 
-use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -130,7 +129,7 @@ class VersionChecker
             $this->cache->save($cacheItem);
 
             return $data;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // We did not receive valid json
             return false;
         }

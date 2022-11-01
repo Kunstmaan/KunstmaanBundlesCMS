@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\FormHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +46,7 @@ class TabTest extends TestCase
         $this->assertCount(5, $tab->getExtraParams(new Request()));
         $this->assertCount(5, $tab->getFormErrors($view));
 
-        $mirror = new ReflectionClass(Tab::class);
+        $mirror = new \ReflectionClass(Tab::class);
         $method = $mirror->getMethod('getFormHelper');
         $method->setAccessible(true);
         $helper = $method->invoke($tab);

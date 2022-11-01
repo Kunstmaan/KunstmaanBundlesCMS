@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
-use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -57,7 +56,7 @@ class MultiLineTextPagePartTest extends TestCase
             ->method('getData')
             ->willReturn([]);
 
-        $fields = new ArrayObject();
+        $fields = new \ArrayObject();
         $object->setErrorMessageRequired('required');
         $object->setErrorMessageRegex('regex');
         $this->assertEquals(0, count($fields));

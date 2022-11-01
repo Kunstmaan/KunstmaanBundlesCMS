@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
@@ -44,10 +43,10 @@ class FileUploadPagePart extends AbstractFormPagePart
      * Modify the form with the fields of the current page part
      *
      * @param FormBuilderInterface $formBuilder The form builder
-     * @param ArrayObject          $fields      The fields
+     * @param \ArrayObject         $fields      The fields
      * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
+    public function adaptForm(FormBuilderInterface $formBuilder, \ArrayObject $fields, $sequence)
     {
         $ffsf = new FileFormSubmissionField();
         $ffsf->setFieldName('field_' . $this->getUniqueId());

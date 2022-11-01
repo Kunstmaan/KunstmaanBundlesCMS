@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\ORM\PersistentCollection;
-use InvalidArgumentException;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
@@ -268,7 +267,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return string
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getAdminType($entity)
     {
@@ -280,7 +279,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException('You need to implement the getAdminType method in ' . \get_class($this) . ' or ' . \get_class($entity));
+        throw new \InvalidArgumentException('You need to implement the getAdminType method in ' . \get_class($this) . ' or ' . \get_class($entity));
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use DateTime;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
@@ -15,8 +14,8 @@ class QueuedNodeTranslationActionTest extends TestCase
         $queuedNodeTranslationAction = new QueuedNodeTranslationAction();
         $user = new User();
 
-        $queuedNodeTranslationAction->setDate(new DateTime());
-        $this->assertInstanceOf(DateTime::class, $queuedNodeTranslationAction->getDate());
+        $queuedNodeTranslationAction->setDate(new \DateTime());
+        $this->assertInstanceOf(\DateTime::class, $queuedNodeTranslationAction->getDate());
 
         $queuedNodeTranslationAction->setAction('some-action');
         $this->assertEquals('some-action', $queuedNodeTranslationAction->getAction());

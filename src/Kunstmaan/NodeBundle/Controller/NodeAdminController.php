@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -567,7 +566,7 @@ final class NodeAdminController extends AbstractController
      * @return RedirectResponse
      *
      * @throws AccessDeniedException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function revertAction(Request $request, $id)
     {
@@ -580,7 +579,7 @@ final class NodeAdminController extends AbstractController
         $version = $request->query->get('version');
 
         if (empty($version) || !is_numeric($version)) {
-            throw new InvalidArgumentException('No version was specified');
+            throw new \InvalidArgumentException('No version was specified');
         }
 
         /* @var NodeVersionRepository $nodeVersionRepo */
@@ -589,7 +588,7 @@ final class NodeAdminController extends AbstractController
         $nodeVersion = $nodeVersionRepo->find($version);
 
         if (\is_null($nodeVersion)) {
-            throw new InvalidArgumentException('Version does not exist');
+            throw new \InvalidArgumentException('Version does not exist');
         }
 
         /* @var NodeTranslation $nodeTranslation */
@@ -646,7 +645,7 @@ final class NodeAdminController extends AbstractController
      * @return RedirectResponse
      *
      * @throws AccessDeniedException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function addAction(Request $request, $id)
     {
@@ -703,7 +702,7 @@ final class NodeAdminController extends AbstractController
      * @return RedirectResponse
      *
      * @throws AccessDeniedException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function addHomepageAction(Request $request)
     {
@@ -945,7 +944,7 @@ final class NodeAdminController extends AbstractController
                 if ($isStructureNode) {
                     $nodeTranslation->setSlug('');
                 }
-                $nodeVersion->setUpdated(new DateTime());
+                $nodeVersion->setUpdated(new \DateTime());
                 if ($nodeVersion->getType() == 'public') {
                     $nodeTranslation->setUpdated($nodeVersion->getUpdated());
                 }
@@ -1106,7 +1105,7 @@ final class NodeAdminController extends AbstractController
         $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
         $nodeVersion->setType('draft');
         $nodeVersion->setOrigin($publicNodeVersion);
-        $nodeVersion->setCreated(new DateTime());
+        $nodeVersion->setCreated(new \DateTime());
 
         $this->em->persist($nodeTranslation);
         $this->em->persist($nodeVersion);
@@ -1222,7 +1221,7 @@ final class NodeAdminController extends AbstractController
         $type = $request->request->get('type') ?? $request->query->get('type');
 
         if (empty($type)) {
-            throw new InvalidArgumentException('Please specify a type of page you want to create');
+            throw new \InvalidArgumentException('Please specify a type of page you want to create');
         }
 
         return $type;

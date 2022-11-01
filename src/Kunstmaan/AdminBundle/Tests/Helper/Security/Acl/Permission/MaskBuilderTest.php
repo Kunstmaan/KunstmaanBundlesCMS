@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
-use Exception;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use PHPUnit\Framework\TestCase;
 
@@ -24,14 +23,14 @@ class MaskBuilderTest extends TestCase
 
     public function testGetCodeThrowsException()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $builder = new MaskBuilder();
         $builder->getCode(MaskBuilder::MASK_IDDQD);
     }
 
     public function testResolveMaskThrowsException()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $builder = new MaskBuilder();
         $builder->resolveMask('fail!');
     }

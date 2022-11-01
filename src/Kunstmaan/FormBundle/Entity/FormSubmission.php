@@ -79,7 +79,7 @@ class FormSubmission implements EntityInterface
     public function __construct()
     {
         $this->fields = new ArrayCollection();
-        $this->setCreated(new DateTime());
+        $this->setCreated(new \DateTime());
     }
 
     /**
@@ -181,7 +181,7 @@ class FormSubmission implements EntityInterface
     /**
      * Set the date when the form submission was created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      *
      * @return FormSubmission
      */
@@ -195,7 +195,7 @@ class FormSubmission implements EntityInterface
     /**
      * Get the date when this form submission was created
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreated()
     {

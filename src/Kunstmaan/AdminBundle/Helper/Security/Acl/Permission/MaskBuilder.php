@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use InvalidArgumentException;
 use Symfony\Component\Security\Acl\Permission\AbstractMaskBuilder;
 
 /**
@@ -61,13 +60,13 @@ class MaskBuilder extends AbstractMaskBuilder
      *
      * @return string
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public static function getCode($mask)
     {
         if (!\is_int($mask)) {
-            throw new InvalidArgumentException('$mask must be an integer.');
+            throw new \InvalidArgumentException('$mask must be an integer.');
         }
 
         $reflection = new \ReflectionClass(\get_called_class());
@@ -85,7 +84,7 @@ class MaskBuilder extends AbstractMaskBuilder
             }
         }
 
-        throw new InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
+        throw new \InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
     }
 
     /**
@@ -95,14 +94,14 @@ class MaskBuilder extends AbstractMaskBuilder
      *
      * @return bool
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function has($mask)
     {
         if (\is_string($mask) && \defined($name = 'static::MASK_' . strtoupper($mask))) {
             $mask = \constant($name);
         } elseif (!\is_int($mask)) {
-            throw new InvalidArgumentException('$mask must be an integer.');
+            throw new \InvalidArgumentException('$mask must be an integer.');
         }
 
         return ($this->mask & $mask) != 0;

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection;
 
-use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Attribute\AsMenuAdaptor;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
@@ -27,7 +26,7 @@ class KunstmaanAdminExtension extends Extension
      * @param array            $configs   An array of configuration values
      * @param ContainerBuilder $container A ContainerBuilder instance
      *
-     * @throws InvalidArgumentException When provided tag is not defined in this extension
+     * @throws \InvalidArgumentException When provided tag is not defined in this extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {

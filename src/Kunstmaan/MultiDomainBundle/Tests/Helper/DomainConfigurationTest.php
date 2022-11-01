@@ -5,7 +5,6 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -73,7 +72,7 @@ class DomainConfigurationTest extends TestCase
     {
         $request = new Request();
         $object = $this->getDomainConfiguration($request);
-        $reflection = new ReflectionClass(DomainConfiguration::class);
+        $reflection = new \ReflectionClass(DomainConfiguration::class);
         $method = $reflection->getMethod('getHostOverride');
         $method->setAccessible(true);
 

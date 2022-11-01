@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Repository;
 
-use DateTime;
-use Exception;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
 
@@ -53,7 +51,7 @@ class TranslationRepository extends AbstractTranslatorRepository
     }
 
     /**
-     * @return DateTime|null
+     * @return \DateTime|null
      */
     public function getLastChangedTranslationDate()
     {
@@ -193,7 +191,7 @@ EOQ;
                 $this->getEntityManager()->persist($translation);
             }
             $this->getEntityManager()->commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->getEntityManager()->rollback();
         }
     }
@@ -229,7 +227,7 @@ EOQ;
                 }
             }
             $this->getEntityManager()->commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->getEntityManager()->rollback();
         }
     }
@@ -272,7 +270,7 @@ EOQ;
      *
      * @return mixed
      */
-    public function findDeprecatedTranslationsBeforeDate(DateTime $date, $domain)
+    public function findDeprecatedTranslationsBeforeDate(\DateTime $date, $domain)
     {
         $qb = $this->createQueryBuilder('t');
         $result = $qb->select('t')

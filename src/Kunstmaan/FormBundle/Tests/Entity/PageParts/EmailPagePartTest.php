@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
-use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -62,7 +61,7 @@ class EmailPagePartTest extends TestCase
             ->method('getData')
             ->willReturn([]);
 
-        $fields = new ArrayObject();
+        $fields = new \ArrayObject();
 
         $object->setErrorMessageRequired('form error!');
         $object->setErrorMessageInvalid('not valid');

@@ -43,7 +43,7 @@ class FormHandler implements FormHandlerInterface
         /* @var RouterInterface $router */
         $router = $this->container->get('router');
         /* @var ArrayObject $fields */
-        $fields = new ArrayObject();
+        $fields = new \ArrayObject();
         $pageParts = $em->getRepository(PagePartRef::class)->getPageParts($page, $page->getFormElementsContext());
         foreach ($pageParts as $sequence => $pagePart) {
             if ($pagePart instanceof FormAdaptorInterface) {

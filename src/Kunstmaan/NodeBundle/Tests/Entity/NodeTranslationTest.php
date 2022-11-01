@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -160,13 +159,13 @@ class NodeTranslationTest extends TestCase
 
     public function testGetSetCreatedUpdated()
     {
-        $date = new DateTime('2014-09-18');
+        $date = new \DateTime('2014-09-18');
         $tomorrow = clone $date;
         $tomorrow->modify('+1 day');
         $this->object->setCreated($date);
         $this->object->setUpdated($tomorrow);
-        $this->assertInstanceOf(DateTime::class, $this->object->getCreated());
-        $this->assertInstanceOf(DateTime::class, $this->object->getUpdated());
+        $this->assertInstanceOf(\DateTime::class, $this->object->getCreated());
+        $this->assertInstanceOf(\DateTime::class, $this->object->getUpdated());
         $this->assertEquals('2014-09-18', $this->object->getCreated()->format('Y-m-d'));
         $this->assertEquals('2014-09-19', $this->object->getUpdated()->format('Y-m-d'));
     }

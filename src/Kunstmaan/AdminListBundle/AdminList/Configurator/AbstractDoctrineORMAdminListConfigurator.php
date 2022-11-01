@@ -12,7 +12,6 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter as OrmQueryAdapter;
 use Pagerfanta\Pagerfanta;
-use Traversable;
 
 /**
  * An abstract admin list configurator that can be used with the orm query builder
@@ -116,7 +115,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @return array|Traversable
+     * @return array|\Traversable
      */
     public function getItems()
     {

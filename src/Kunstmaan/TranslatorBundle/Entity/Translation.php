@@ -136,8 +136,8 @@ class Translation
     #[ORM\PrePersist]
     public function prePersist()
     {
-        $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->flag = self::FLAG_NEW;
 
         return $this->id;
@@ -149,7 +149,7 @@ class Translation
     #[ORM\PreUpdate]
     public function preUpdate()
     {
-        $this->updatedAt = new DateTime();
+        $this->updatedAt = new \DateTime();
 
         if ($this->flag === null) {
             $this->flag = self::FLAG_UPDATED;
@@ -287,7 +287,7 @@ class Translation
     /**
      * @return Translation
      */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -305,7 +305,7 @@ class Translation
     /**
      * @return Translation
      */
-    public function setUpdatedAt(DateTime $updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
 

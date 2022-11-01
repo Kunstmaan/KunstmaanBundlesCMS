@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -58,7 +57,7 @@ class FormSubmissionTest extends TestCase
     public function testSetGetCreated()
     {
         $object = $this->object;
-        $now = new DateTime();
+        $now = new \DateTime();
         $object->setCreated($now);
         $this->assertEquals($now, $object->getCreated());
     }

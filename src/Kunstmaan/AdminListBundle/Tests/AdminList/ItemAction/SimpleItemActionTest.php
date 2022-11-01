@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\ItemAction;
 
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 class SimpleItemActionTest extends TestCase
 {
@@ -14,7 +13,7 @@ class SimpleItemActionTest extends TestCase
             return 'http://www.domain.com/action';
         }, 'icon.png', 'Label', 'template.html.twig');
 
-        $item = new stdClass();
+        $item = new \stdClass();
         $this->assertEquals('http://www.domain.com/action', $object->getUrlFor($item));
         $this->assertEquals('icon.png', $object->getIconFor($item));
         $this->assertEquals('Label', $object->getLabelFor($item));
