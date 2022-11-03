@@ -19,7 +19,7 @@ class Media extends Constraint
     public const TOO_HIGH_ERROR = '9de7ece8-7837-4a6a-9602-6d0f4d2bd5fb';
     public const TOO_LOW_ERROR = '8833baac-1c7f-402c-96b5-1cf7ac2eb955';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::NOT_FOUND_ERROR => 'NOT_FOUND_ERROR',
         self::NOT_READABLE_ERROR => 'NOT_READABLE_ERROR',
         self::EMPTY_ERROR => 'EMPTY_ERROR',
