@@ -6,12 +6,14 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+#[AsCommand(name: 'kuma:nodes:cron', description: 'Do everything that needs to be run in a cron job.')]
 final class CronUpdateNodeCommand extends Command
 {
     /**
@@ -42,9 +44,9 @@ final class CronUpdateNodeCommand extends Command
     {
         parent::configure();
 
-        $this->setName('kuma:nodes:cron')
-            ->setDescription('Do everything that needs to be run in a cron job.')
-            ->setHelp('The <info>kuma:nodes:cron</info> will loop over all queued node translation action entries and update the nodetranslations if needed.');
+        $this
+            ->setHelp('The <info>kuma:nodes:cron</info> will loop over all queued node translation action entries and update the nodetranslations if needed.')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

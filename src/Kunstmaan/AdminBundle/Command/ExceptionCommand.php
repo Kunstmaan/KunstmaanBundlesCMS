@@ -4,11 +4,13 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:exception:clear', description: 'Remove resolved exceptions based on days.')]
 final class ExceptionCommand extends Command
 {
     /**
@@ -27,13 +29,11 @@ final class ExceptionCommand extends Command
     {
         parent::configure();
 
-        $this->setName('kuma:exception:clear')
-            ->setDescription('Remove resolved exceptions based on days.')
-            ->setDefinition(
-                [
-                    new InputArgument('days', InputArgument::OPTIONAL, 'Days', 7),
-                ]
-            );
+        $this
+            ->setDefinition([
+                new InputArgument('days', InputArgument::OPTIONAL, 'Days', 7),
+            ])
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

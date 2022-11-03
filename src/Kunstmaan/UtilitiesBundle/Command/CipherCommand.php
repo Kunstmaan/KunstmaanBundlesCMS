@@ -3,6 +3,7 @@
 namespace Kunstmaan\UtilitiesBundle\Command;
 
 use Kunstmaan\UtilitiesBundle\Helper\Cipher\CipherInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 
+#[AsCommand(name: 'kuma:cipher', description: 'Cipher utilities commands.')]
 final class CipherCommand extends Command
 {
     /**
@@ -29,11 +31,6 @@ final class CipherCommand extends Command
         parent::__construct();
 
         $this->cipher = $cipher;
-    }
-
-    protected function configure(): void
-    {
-        $this->setName('kuma:cipher')->setDescription('Cipher utilities commands.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

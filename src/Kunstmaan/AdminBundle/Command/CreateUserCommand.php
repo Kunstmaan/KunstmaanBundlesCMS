@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Command;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Service\GroupManager;
 use Kunstmaan\AdminBundle\Service\UserManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,13 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
-/**
- * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
- */
+#[AsCommand(name: 'kuma:user:create', description: 'Create a user.')]
 final class CreateUserCommand extends Command
 {
-    protected static $defaultName = 'kuma:user:create';
-
     /** @var array */
     private $groups = [];
     /** @var GroupManager */
@@ -43,7 +40,7 @@ final class CreateUserCommand extends Command
     {
         parent::configure();
 
-        $this->setDescription('Create a user.')
+        $this
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),

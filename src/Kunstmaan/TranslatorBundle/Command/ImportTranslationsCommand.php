@@ -4,11 +4,13 @@ namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:translator:import', description: 'Import translation files into database')]
 final class ImportTranslationsCommand extends Command
 {
     /**
@@ -38,23 +40,12 @@ final class ImportTranslationsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:translator:import')
-            ->setDescription('Import translation files into database')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries')
             ->addOption('locales', 'l', InputOption::VALUE_REQUIRED, 'Language import, only import a specific locale')
             ->addOption('globals', 'g', InputOption::VALUE_NONE, 'Global app import, import the global translations of your app')
-            ->addOption(
-                'defaultbundle',
-                'd',
-                InputOption::VALUE_REQUIRED,
-                'Import the translations for specific bundles, use "own", "all" or "custom"'
-            )
-            ->addOption(
-                'bundles',
-                'b',
-                InputOption::VALUE_OPTIONAL,
-                'A list of bundle names that need to be imported (comma delimited) , only used When "defaultbundle" is set to "custom"'
-            );
+            ->addOption('defaultbundle', 'd', InputOption::VALUE_REQUIRED, 'Import the translations for specific bundles, use "own", "all" or "custom"')
+            ->addOption('bundles', 'b', InputOption::VALUE_OPTIONAL, 'A list of bundle names that need to be imported (comma delimited) , only used When "defaultbundle" is set to "custom"')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

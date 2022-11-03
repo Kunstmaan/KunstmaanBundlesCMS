@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -11,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to reset/request translation flags from the stash
  */
+#[AsCommand(name: 'kuma:translator:flag', description: 'Reset translation flags')]
 final class TranslationFlagCommand extends Command
 {
     /**
@@ -27,11 +29,7 @@ final class TranslationFlagCommand extends Command
 
     protected function configure(): void
     {
-        parent::configure();
-
         $this
-            ->setName('kuma:translator:flag')
-            ->setDescription('Reset translation flags')
             ->addOption('reset', 'r', InputOption::VALUE_NONE, 'Reset all flags to null in stash')
         ;
     }

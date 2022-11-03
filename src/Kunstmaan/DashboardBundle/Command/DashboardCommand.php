@@ -4,14 +4,13 @@ namespace Kunstmaan\DashboardBundle\Command;
 
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony CLI command to collect all the widget dashboard data using bin/console kuma:dashboard:collect
- */
+#[AsCommand(name: 'kuma:dashboard:collect', description: 'Collect all the widget dashboard data')]
 final class DashboardCommand extends Command
 {
     private $widgetManager;
@@ -21,13 +20,6 @@ final class DashboardCommand extends Command
         parent::__construct();
 
         $this->widgetManager = $widgetManager;
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setName('kuma:dashboard:collect')
-            ->setDescription('Collect all the widget dashboard data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

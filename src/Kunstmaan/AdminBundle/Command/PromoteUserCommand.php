@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Kunstmaan\AdminBundle\Service\UserManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,10 +11,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(name: 'kuma:user:promote', description: 'Promotes a user by adding a role')]
 final class PromoteUserCommand extends Command
 {
-    protected static $defaultName = 'kuma:user:promote';
-
     /** @var UserManager */
     private $userManager;
 
@@ -27,7 +27,6 @@ final class PromoteUserCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Promotes a user by adding a role')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
@@ -39,7 +38,8 @@ The <info>kuma:user:promote</info> command promotes a user by adding a role
   <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
   <info>php %command.full_name% --super matthieu</info>
 EOT
-            );
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

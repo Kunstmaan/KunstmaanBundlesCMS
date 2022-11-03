@@ -4,12 +4,14 @@ namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
+#[AsCommand(name: 'kuma:translator:cache', description: 'Request cache status and flush cache')]
 final class TranslationCacheCommand extends Command
 {
     /**
@@ -33,10 +35,8 @@ final class TranslationCacheCommand extends Command
     protected function configure(): void
     {
         $this
-        ->setName('kuma:translator:cache')
-        ->setDescription('Request cache status and flush cache')
-        ->addOption('flush', 'f', InputOption::VALUE_NONE, 'Flush translation cache (if any)')
-        ->addOption('status', null, InputOption::VALUE_NONE, 'Request cache status')
+            ->addOption('flush', 'f', InputOption::VALUE_NONE, 'Flush translation cache (if any)')
+            ->addOption('status', null, InputOption::VALUE_NONE, 'Request cache status')
         ;
     }
 

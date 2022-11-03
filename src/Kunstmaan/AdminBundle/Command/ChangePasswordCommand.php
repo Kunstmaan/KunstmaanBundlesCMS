@@ -3,16 +3,16 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Kunstmaan\AdminBundle\Service\UserManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(name: 'kuma:user:change-password', description: 'Change the password of a user.')]
 final class ChangePasswordCommand extends Command
 {
-    protected static $defaultName = 'kuma:user:change-password';
-
     /** @var UserManager */
     private $userManager;
 
@@ -26,7 +26,6 @@ final class ChangePasswordCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),

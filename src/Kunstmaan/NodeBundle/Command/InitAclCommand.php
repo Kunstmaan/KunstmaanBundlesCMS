@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,6 +18,7 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 /**
  * Basic initialization of ACL entries for all nodes.
  */
+#[AsCommand(name: 'kuma:init:acl', description: 'Basic initialization of ACL for projects')]
 final class InitAclCommand extends Command
 {
     /**
@@ -45,11 +47,9 @@ final class InitAclCommand extends Command
 
     protected function configure(): void
     {
-        parent::configure();
-
-        $this->setName('kuma:init:acl')
-            ->setDescription('Basic initialization of ACL for projects')
-            ->setHelp('The <info>kuma:init:acl</info> will create basic ACL entries for the nodes of the current project');
+        $this
+            ->setHelp('The <info>kuma:init:acl</info> will create basic ACL entries for the nodes of the current project')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -4,11 +4,13 @@ namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kuma:dashboard:widget:googleanalytics:config:flush', description: 'Flush configs')]
 final class GoogleAnalyticsConfigFlushCommand extends Command
 {
     /**
@@ -26,15 +28,8 @@ final class GoogleAnalyticsConfigFlushCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('kuma:dashboard:widget:googleanalytics:config:flush')
-            ->setDescription('Flush configs')
-            ->addOption(
-                'config',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Specify to only flush one config',
-                false
-            );
+            ->addOption('config', null, InputOption::VALUE_OPTIONAL, 'Specify to only flush one config', false)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

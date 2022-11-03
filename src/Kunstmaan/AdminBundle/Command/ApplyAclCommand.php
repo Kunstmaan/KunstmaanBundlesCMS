@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
  */
+#[AsCommand(name: 'kuma:acl:apply', description: 'Apply ACL changeset.')]
 final class ApplyAclCommand extends Command
 {
     /** @var EntityManagerInterface */
@@ -37,9 +39,9 @@ final class ApplyAclCommand extends Command
     {
         parent::configure();
 
-        $this->setName('kuma:acl:apply')
-             ->setDescription('Apply ACL changeset.')
-             ->setHelp('The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.');
+        $this
+             ->setHelp('The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.')
+        ;
     }
 
     /**
