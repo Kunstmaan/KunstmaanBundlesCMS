@@ -10,11 +10,6 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector as BaseDataCollecto
 abstract class AbstractDataCollector extends BaseDataCollector implements DataCollectionInterface
 {
     /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
      * @var string
      */
     private $template;
