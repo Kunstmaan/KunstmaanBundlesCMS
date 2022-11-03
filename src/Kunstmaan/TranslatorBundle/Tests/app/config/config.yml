@@ -3,6 +3,7 @@ imports:
 
 framework:
     secret: "secret"
+    http_method_override: false
     router:
         resource: "%kernel.project_dir%/config/routing.yml"
         utf8: true
