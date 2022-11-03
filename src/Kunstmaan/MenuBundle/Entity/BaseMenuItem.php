@@ -44,6 +44,7 @@ abstract class BaseMenuItem extends AbstractEntity
      *
      * @ORM\Column(name="type", type="string", length=15, nullable=true)
      * @Assert\NotBlank()
+     * @Assert\Length(max=15)
      */
     #[ORM\Column(name: 'type', type: 'string', length: 15, nullable: true)]
     protected $type;
@@ -62,6 +63,7 @@ abstract class BaseMenuItem extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="title", type="string", nullable=true)
+     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'title', type: 'string', nullable: true)]
     protected $title;
@@ -70,6 +72,7 @@ abstract class BaseMenuItem extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="url", type="string", nullable=true)
+     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'url', type: 'string', nullable: true)]
     protected $url;
