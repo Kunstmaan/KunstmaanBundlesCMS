@@ -20,19 +20,19 @@
     "require": {
         "php": "^8.1",
         "ruflin/elastica": "^7.0",
-        "symfony/config": "^5.4",
-        "symfony/console": "^5.4",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/framework-bundle": "^5.4",
-        "symfony/http-kernel": "^5.4",
-        "symfony/yaml": "^5.4",
+        "symfony/config": "^5.4|^6.2",
+        "symfony/console": "^5.4|^6.2",
+        "symfony/dependency-injection": "^5.4|^6.2",
+        "symfony/framework-bundle": "^5.4|^6.2",
+        "symfony/http-kernel": "^5.4|^6.2",
+        "symfony/yaml": "^5.4|^6.2",
         "twig/extra-bundle": "^3.6",
         "twig/string-extra": "^3.6"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^6.1",
+        "symfony/phpunit-bridge": "^6.2",
         "phpunit/phpunit": "^9.5.5"
     },
     "suggest": {

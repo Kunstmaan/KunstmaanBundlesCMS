@@ -21,7 +21,7 @@
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^6.1",
+        "symfony/phpunit-bridge": "^6.2",
         "phpunit/phpunit": "^9.5.5"
     },
     "autoload": {
