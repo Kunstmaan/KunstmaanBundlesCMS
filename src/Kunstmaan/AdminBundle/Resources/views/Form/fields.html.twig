@@ -248,8 +248,7 @@
             {{ widget }}
         {% endif %}
 
-        {% if attr['title'] is defined %}{% endif %}
-
+        {{- form_help(form) -}}
         {{ form_errors(form) }}
     </div>
 {% endapply %}
