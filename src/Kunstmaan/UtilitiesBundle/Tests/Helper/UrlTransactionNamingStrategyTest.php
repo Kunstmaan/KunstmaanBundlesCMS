@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UrlTransactionNamingStrategyTest extends TestCase
 {
+    /**
+     * @group legacy
+     */
     public function testGetTransactionName()
     {
         $request = new Request();
