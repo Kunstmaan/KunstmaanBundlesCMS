@@ -55,7 +55,7 @@ final class SettingsController extends AbstractController
                 $this->em->persist($robot);
                 $this->em->flush();
 
-                return $this->redirectToRoute($this->generateUrl('KunstmaanSeoBundle_settings_robots'));
+                return $this->redirectToRoute('KunstmaanSeoBundle_settings_robots');
             }
         }
 
