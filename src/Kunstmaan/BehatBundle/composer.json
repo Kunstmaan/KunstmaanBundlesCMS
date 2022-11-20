@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.2"
+        "php": "^7.2|^8.0"
     },
     "require-dev": {
         "symfony/http-kernel": "^4.4|^5.4",
