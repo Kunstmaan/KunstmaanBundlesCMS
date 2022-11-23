@@ -74,7 +74,8 @@ class MediaTokenTransformer implements DataTransformerInterface
 
                     return;
                 }
-
+                // keep url for reverse transform.
+                $element->setAttribute('data-' . $attribute, $attributeValue);
                 $element->setAttribute($attribute, $query['token']);
             }
         );
