@@ -6,6 +6,12 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.1.0...6.1.1
 
+## 6.1.8 / 2022-11-28
+
+* [AdminBundle] Store original url so images have the correct url when previewing in editor [#3225](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3225) ([@tarjei](https://github.com/tarjei))
+* [BehatBundle] Fix php version requirement [#3222](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3222) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Fix pdf handler priority override of parent service value [#3201](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3201) ([@acrobat](https://github.com/acrobat))
+
 ## 6.1.7 / 2022-10-19
 
 * [AllBundles] Enable dependabot to update the used github action versions [#3186](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3186) ([@acrobat](https://github.com/acrobat))
