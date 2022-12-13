@@ -301,11 +301,13 @@ SQL;
             ->where('n.deleted = false')
             ->addGroupBy('n.id');
 
-        $qb->addGroupBy('t.url')
-            ->addGroupby('t.id')
-            ->addGroupby('v.weight')
-            ->addGroupBy('v.title')
-            ->distinct();
+        if ($databasePlatformName === 'postgresql') {
+            $qb->addGroupBy('t.url')
+                ->addGroupby('t.id')
+                ->addGroupby('v.weight')
+                ->addGroupBy('v.title')
+                ->distinct();
+        }
 
         $qb->addOrderBy('weight', 'ASC')
             ->addOrderBy('title', 'ASC');
