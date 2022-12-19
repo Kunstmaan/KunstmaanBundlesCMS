@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Form;
 
+use Kunstmaan\RedirectBundle\Form\EventSubscriber\RedirectPathNormalizerFormEventSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -54,6 +55,9 @@ class RedirectAdminType extends AbstractType
             'label' => 'redirect.form.redirect.note.label',
             'required' => false,
         ]);
+
+        $builder->get('origin')->addEventSubscriber(new RedirectPathNormalizerFormEventSubscriber());
+        $builder->get('target')->addEventSubscriber(new RedirectPathNormalizerFormEventSubscriber());
     }
 
     /**

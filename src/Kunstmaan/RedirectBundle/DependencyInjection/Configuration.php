@@ -19,6 +19,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('redirect_entity')->defaultValue(Redirect::class)->end()
+                ->booleanNode('enable_improved_router')->defaultFalse()->end()
             ->end()
         ;
 

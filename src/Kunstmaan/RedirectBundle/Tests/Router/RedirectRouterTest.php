@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\Router;
 
-use Doctrine\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
+use Kunstmaan\RedirectBundle\Repository\RedirectRepository;
 use Kunstmaan\RedirectBundle\Router\RedirectRouter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ class RedirectRouterTest extends TestCase
         $secondDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
         $secondDomainConfiguration->method('getHost')->willReturn('other.domain.com');
 
-        $repository = $this->createMock(ObjectRepository::class);
+        $repository = $this->createMock(RedirectRepository::class);
         $repository->method('findAll')->willReturn([
             $this->getRedirect(1, 'test1', '/target1', false, null),
             $this->getRedirect(2, 'test2', '/target2', true, null),
@@ -41,6 +41,9 @@ class RedirectRouterTest extends TestCase
 
         $this->routers[self::MAIN_ROUTER] = new RedirectRouter($repository, $firstDomainConfiguration);
         $this->routers[self::OTHER_DOMAIN_ROUTER] = new RedirectRouter($repository, $secondDomainConfiguration);
+
+        $this->routers[self::MAIN_ROUTER]->enableImprovedRouter(true);
+        $this->routers[self::OTHER_DOMAIN_ROUTER]->enableImprovedRouter(true);
     }
 
     public function testGetRouteCollection()
@@ -56,6 +59,7 @@ class RedirectRouterTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @dataProvider urlProvider
      */
     public function testRedirects(string $requestUrl, ?string $expectedRedirectUrl, string $routerType = self::MAIN_ROUTER)
@@ -66,6 +70,7 @@ class RedirectRouterTest extends TestCase
 
         $context = new RequestContext();
         $router = $this->routers[$routerType];
+        $router->enableImprovedRouter(false);
 
         $router->setContext($context->fromRequest(Request::create($requestUrl)));
         $redirect = $router->match($requestUrl);
@@ -73,6 +78,36 @@ class RedirectRouterTest extends TestCase
         if (null !== $expectedRedirectUrl) {
             $this->assertSame($expectedRedirectUrl, $redirect['path']);
             $this->assertSame('Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction', $redirect['_controller']);
+        }
+    }
+
+    /**
+     * @dataProvider urlProviderForImprovedRouter
+     */
+    public function testRedirectsForImprovedRouter(string $requestUrl, ?string $expectedRedirectUrl, ?Redirect $redirect)
+    {
+        if (null === $expectedRedirectUrl) {
+            $this->expectException(ResourceNotFoundException::class);
+        }
+
+        $firstDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
+        $firstDomainConfiguration->method('getHost')->willReturn('');
+
+        $repository = $this->createMock(RedirectRepository::class);
+        $repository
+            ->method('findByRequestPathAndDomain')
+            ->with($requestUrl, '')
+            ->willReturn($redirect);
+
+        $router = new RedirectRouter($repository, $firstDomainConfiguration);
+        $router->enableImprovedRouter(true);
+
+        $context = new RequestContext();
+        $router->setContext($context->fromRequest(Request::create($requestUrl)));
+        $redirectResult = $router->match($requestUrl);
+
+        if (null !== $expectedRedirectUrl) {
+            $this->assertSame($expectedRedirectUrl, $redirectResult['path']);
         }
     }
 
@@ -91,7 +126,20 @@ class RedirectRouterTest extends TestCase
         ];
     }
 
-    private function getRedirect(int $id, string $origin, string $target, bool $permanent, ?string $domain): Redirect
+    public function urlProviderForImprovedRouter(): iterable
+    {
+        yield 'Standard redirect' => ['/test1', '/target1', $this->getRedirect(1, '/test1', '/target1')];
+        yield 'Redirect with utf8 target path' => ['/test2', '/targét2', $this->getRedirect(2, '/test2', '/targét2')];
+        yield 'Redirect with utf8 origin path' => ['/tést3', '/target3', $this->getRedirect(3, '/tést3', '/target3')];
+        yield 'Catch-all wildcard origin redirect' => ['/wildcard/abc', '/target', $this->getRedirect(4, '/wildcard/*', '/target')];
+        yield 'Wildcard origin and target redirect' => ['/wildcard/abc/def', '/target/abc/def', $this->getRedirect(5, '/wildcard/*', '/target/*')];
+        yield 'Wildcard origin and target redirect with utf8' => ['/wildcard/tést', '/target/tést', $this->getRedirect(6, '/wildcard/*', '/target/*')];
+        yield 'Wildcard origin to external target' => ['/wildcard/test', 'https://www.google.com', $this->getRedirect(6, '/wildcard/*', 'https://www.google.com')];
+        yield 'Fixed origin to external target' => ['/fixed', 'https://www.google.com', $this->getRedirect(6, '/wildcard/*', 'https://www.google.com')];
+        yield 'Unknown redirect' => ['/unkown-redirect', null, null];
+    }
+
+    private function getRedirect(int $id, string $origin, string $target, bool $permanent = false, ?string $domain = null): Redirect
     {
         $redirect = new Redirect();
         $redirect

@@ -21,8 +21,13 @@ class ConfigurationTest extends TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = [
+            'enable_improved_router' => true,
+        ];
 
-        $this->assertProcessedConfigurationEquals([$array], ['redirect_entity' => Redirect::class]);
+        $this->assertProcessedConfigurationEquals([$array], [
+            'redirect_entity' => Redirect::class,
+            'enable_improved_router' => true,
+        ]);
     }
 }

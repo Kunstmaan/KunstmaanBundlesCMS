@@ -22,15 +22,28 @@ class KunstmaanRedirectExtensionTest extends AbstractExtensionTestCase
 
     public function testRedirectClassParameterWithConfigValue()
     {
-        $this->load(['redirect_entity' => 'RedirectTestEntity']);
+        $this->load([
+            'redirect_entity' => 'RedirectTestEntity',
+            'enable_improved_router' => true,
+        ]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_redirect.redirect.class', 'RedirectTestEntity');
     }
 
     public function testDefaultRedirectClassParameter()
     {
-        $this->load();
+        $this->load(['enable_improved_router' => true]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_redirect.redirect.class', Redirect::class);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testImprovedRouterConfigDeprecation()
+    {
+        $this->expectDeprecation('Since kunstmaan/redirect-bundle 6.3: Not setting the "kunstmaan_redirect.enable_improved_router" config to true is deprecated, it will always be true in 7.0.');
+
+        $this->load();
     }
 }

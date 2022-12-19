@@ -5,6 +5,7 @@ namespace Kunstmaan\RedirectBundle\Router;
 use Doctrine\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
+use Kunstmaan\RedirectBundle\Repository\RedirectRepository;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -20,11 +21,17 @@ class RedirectRouter implements RouterInterface
     /** @var RouteCollection */
     private $routeCollection;
 
-    /** @var ObjectRepository */
+    /** @var RedirectRepository */
     private $redirectRepository;
 
     /** @var DomainConfigurationInterface */
     private $domainConfiguration;
+
+    /**
+     * @internal
+     * @var bool
+     */
+    private $enableImprovedRouter = false;
 
     public function __construct(ObjectRepository $redirectRepository, DomainConfigurationInterface $domainConfiguration)
     {
@@ -83,6 +90,8 @@ class RedirectRouter implements RouterInterface
      */
     public function match($pathinfo)
     {
+        $this->initRouteCollection($pathinfo);
+
         $urlMatcher = new UrlMatcher($this->getRouteCollection(), $this->getContext());
 
         return $urlMatcher->match($pathinfo);
@@ -96,6 +105,7 @@ class RedirectRouter implements RouterInterface
     public function getRouteCollection()
     {
         if (\is_null($this->routeCollection)) {
+            // NEXT_MAJOR: Remove initRoutes logic
             $this->routeCollection = new RouteCollection();
             $this->initRoutes();
         }
@@ -215,5 +225,61 @@ class RedirectRouter implements RouterInterface
     public function setContext(RequestContext $context)
     {
         $this->context = $context;
+    }
+
+    private function initRouteCollection(string $pathInfo): void
+    {
+        if (false === $this->enableImprovedRouter) {
+            trigger_deprecation('kunstmaan/redirect-bundle', '6.3', 'Not enabling the improved router is deprecated and the changed and improved redirect logic will be the default in 7.0. Set the "kunstmaan_redirect.enable_improved_router" config to true.');
+
+            return;
+        }
+
+        if (null !== $this->routeCollection) {
+            return;
+        }
+
+        $this->routeCollection = new RouteCollection();
+
+        $domain = $this->domainConfiguration->getHost();
+        $redirect = $this->redirectRepository->findByRequestPathAndDomain($pathInfo, $domain);
+        if (null === $redirect) {
+            return;
+        }
+
+        $routePath = str_contains($redirect->getOrigin(), '/*') ? $pathInfo : $redirect->getOrigin();
+        $targetPath = $redirect->getTarget();
+        if (str_contains($redirect->getOrigin(), '/*') && str_contains($redirect->getTarget(), '/*')) {
+            $origin = rtrim($redirect->getOrigin(), '/*');
+            $target = rtrim($redirect->getTarget(), '/*');
+            $targetPath = str_replace($origin, $target, $pathInfo);
+        }
+
+        $needsUtf8 = false;
+        foreach ([$routePath, $targetPath] as $item) {
+            if (preg_match('/[\x80-\xFF]/', $item)) {
+                $needsUtf8 = true;
+
+                break;
+            }
+        }
+
+        $route = new Route($routePath, [
+            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
+            'path' => $targetPath,
+            'permanent' => $redirect->isPermanent(),
+        ], [], ['utf8' => $needsUtf8]);
+
+        $this->routeCollection->add('_redirect_route_' . $redirect->getId(), $route);
+    }
+
+    /**
+     * NEXT_MAJOR: Remove method/property
+     *
+     * @interal
+     */
+    public function enableImprovedRouter(bool $enabled): void
+    {
+        $this->enableImprovedRouter = $enabled;
     }
 }
