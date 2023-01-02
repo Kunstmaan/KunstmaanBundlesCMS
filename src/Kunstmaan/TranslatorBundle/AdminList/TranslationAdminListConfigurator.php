@@ -243,6 +243,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
             // Apply text filter
             if (!\is_null($textValue) && !\is_null($textComparator)) {
+                $orExpressions = [];
                 foreach ($this->locales as $key => $locale) {
                     $uniqueId = 'txt_' . $key;
                     $expr = null;
@@ -287,9 +288,13 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                             break;
                     }
 
-                    if (null !== $expr) {
-                        $this->queryBuilder->andWhere($this->queryBuilder->expr()->or($expr));
+                    if ($expr !== null) {
+                        $orExpressions[] = $expr;
                     }
+                }
+
+                if ($orExpressions !== []) {
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->or(...$orExpressions));
                 }
             }
 
