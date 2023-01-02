@@ -288,7 +288,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                             break;
                     }
 
-                    if ($expr !== null) {
+                    if (null !== $expr) {
                         $orExpressions[] = $expr;
                     }
                 }
