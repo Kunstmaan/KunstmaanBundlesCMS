@@ -20,7 +20,7 @@ class KunstmaanMediaExtensionTest extends AbstractExtensionTestCase
     {
         $this->load(['enable_pdf_preview' => true]);
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_media.soundcloud_api_key', 'YOUR_CLIENT_ID');
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.soundcloud_api_key', null);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.remote_video');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.enable_pdf_preview', true);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.blacklisted_extensions');
