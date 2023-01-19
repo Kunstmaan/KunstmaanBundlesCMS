@@ -43,4 +43,11 @@ class AudioPagePartTest extends TestCase
         $defaultAdminType = $this->object->getDefaultAdminType();
         $this->assertEquals(AudioPagePartAdminType::class, $defaultAdminType);
     }
+
+    public function testEmptyUrl()
+    {
+        $media = new Media();
+        $this->object->setMedia($media);
+        $this->assertEquals('', $this->object->__toString());
+    }
 }

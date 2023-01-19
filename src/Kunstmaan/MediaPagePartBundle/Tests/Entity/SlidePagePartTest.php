@@ -46,4 +46,11 @@ class SlidePagePartTest extends TestCase
         $this->object->setMedia($media);
         $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
     }
+
+    public function testEmptyUrl()
+    {
+        $media = new Media();
+        $this->object->setMedia($media);
+        $this->assertEquals('', $this->object->__toString());
+    }
 }
