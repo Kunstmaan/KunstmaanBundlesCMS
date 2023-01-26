@@ -103,7 +103,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
         // update thumbnail
         switch ($audio->getType()) {
             case 'soundcloud':
-                if ($this->getSoundcloudApiKey()) {
+                if (null !== $this->getSoundcloudApiKey()) {
                     $scData = json_decode(
                         file_get_contents(
                             'http://api.soundcloud.com/tracks/' . $code . '.json?client_id=' . $this->getSoundcloudApiKey()
