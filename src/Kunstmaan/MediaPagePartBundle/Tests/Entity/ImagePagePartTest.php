@@ -62,4 +62,11 @@ class ImagePagePartTest extends TestCase
     {
         $this->assertEquals(ImagePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
+
+    public function testEmptyUrl()
+    {
+        $media = new Media();
+        $this->object->setMedia($media);
+        $this->assertEquals('', $this->object->__toString());
+    }
 }
