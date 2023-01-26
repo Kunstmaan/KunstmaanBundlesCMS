@@ -68,6 +68,14 @@ class AudioPagePart extends AbstractPagePart
     }
 
     /**
+     * @return string
+     */
+    public function getAdminView()
+    {
+        return '@KunstmaanMediaPagePart/AudioPagePart/admin-view.html.twig';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDefaultAdminType()

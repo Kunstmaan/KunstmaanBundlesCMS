@@ -68,6 +68,14 @@ class SlidePagePart extends AbstractPagePart
     }
 
     /**
+     * @return string
+     */
+    public function getAdminView()
+    {
+        return '@KunstmaanMediaPagePart/SlidePagePart/admin-view.html.twig';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDefaultAdminType()
