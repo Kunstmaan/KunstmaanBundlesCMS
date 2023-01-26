@@ -68,6 +68,14 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
+     * @return string
+     */
+    public function getAdminView()
+    {
+        return '@KunstmaanMediaPagePart/VideoPagePart/admin-view.html.twig';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDefaultAdminType()
