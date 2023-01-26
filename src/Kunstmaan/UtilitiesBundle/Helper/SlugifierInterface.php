@@ -8,7 +8,7 @@ interface SlugifierInterface
      * @param string $text
      * @param string $delimiter
      *
-     * @return mixed
+     * @return string
      */
     public function slugify($text, $delimiter = '-');
 }
