@@ -53,7 +53,7 @@ class DownloadPagePart extends AbstractPagePart
     public function __toString()
     {
         if ($this->getMedia()) {
-            return $this->getMedia()->getUrl();
+            return $this->getMedia()->getUrl() ?? '';
         }
 
         return '';
