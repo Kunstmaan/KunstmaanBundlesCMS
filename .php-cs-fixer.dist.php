@@ -18,5 +18,6 @@ return (new PhpCsFixer\Config())
         'phpdoc_summary' => false,
         'yoda_style' => false,
         'visibility_required' => ['elements' => ['property', 'method']],
+        'phpdoc_separation' =>  ['skip_unlisted_annotations' => true],
     ])
     ->setFinder($finder);
