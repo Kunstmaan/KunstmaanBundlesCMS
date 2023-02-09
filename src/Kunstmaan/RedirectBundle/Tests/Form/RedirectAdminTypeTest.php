@@ -3,79 +3,75 @@
 namespace Kunstmaan\RedirectBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Test\TypeTestCase;
 
-class RedirectAdminTypeTest extends TestCase
+class RedirectAdminTypeTest extends TypeTestCase
 {
     /**
-     * @var RedirectAdminType
+     * @dataProvider domainFormFieldProvider
+     * @param MockObject|DomainConfigurationInterface
      */
-    protected $objectMultiDomain;
-
-    /**
-     * @var RedirectAdminType
-     */
-    protected $objectSingleDomain;
-
-    /**
-     * @var DomainConfigurationInterface
-     */
-    protected $multiDomainConfiguration;
-
-    /**
-     * @var DomainConfigurationInterface
-     */
-    protected $singleDomainConfiguration;
-
-    protected function setUp(): void
+    public function testDomainFormField(string $expectedFormType, MockObject $domainConfig)
     {
-        $multiDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
-            ->disableOriginalConstructor()->getMock();
-        $multiDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->willReturn(true);
-        $multiDomainConfiguration->expects($this->any())->method('getHosts')->willReturn(['domain.com', 'domain.be']);
+        $form = $this->factory->create(RedirectAdminType::class, null, [
+            'domainConfiguration' => $domainConfig,
+        ]);
 
-        $singleDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
-            ->disableOriginalConstructor()->getMock();
-        $singleDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->willReturn(false);
-        $singleDomainConfiguration->expects($this->any())->method('getHosts')->willReturn([]);
-
-        $this->multiDomainConfiguration = $multiDomainConfiguration;
-        $this->singleDomainConfiguration = $singleDomainConfiguration;
-
-        $this->objectMultiDomain = new RedirectAdminType();
-        $this->objectSingleDomain = new RedirectAdminType();
+        $this->assertInstanceOf(
+            $expectedFormType,
+            $form->get('domain')->getConfig()->getType()->getInnerType()
+        );
     }
 
-    public function testBuildForm()
+    /**
+     * @dataProvider pathNormalizerProvider
+     */
+    public function testRedirectPathNormalizer(array $formData, Redirect $expectedData)
     {
-        $builder = $this->createMock('Symfony\Component\Form\Test\FormBuilderInterface');
+        $domainConfig = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
+        $domainConfig->method('isMultiDomainHost')->willReturn(false);
+        $domainConfig->method('getHosts')->willReturn([]);
 
-        $builder
-            ->expects($this->exactly(5))
-            ->method('add')
-            ->withConsecutive(
-                [$this->equalTo('domain')],
-                [$this->equalTo('origin')],
-                [$this->equalTo('target')],
-                [$this->equalTo('permanent')],
-                [$this->equalTo('note')]
-            );
+        $model = new Redirect();
+        $form = $this->factory->create(RedirectAdminType::class, $model, ['domainConfiguration' => $domainConfig]);
 
-        $this->objectSingleDomain->buildForm($builder, ['domainConfiguration' => $this->singleDomainConfiguration]);
+        $form->submit($formData);
 
-        $builder = $this->createMock('Symfony\Component\Form\Test\FormBuilderInterface');
-        $builder
-            ->expects($this->exactly(5))
-            ->method('add')
-            ->withConsecutive(
-                [$this->equalTo('domain')],
-                [$this->equalTo('origin')],
-                [$this->equalTo('target')],
-                [$this->equalTo('permanent')],
-                [$this->equalTo('note')]
-            );
+        $this->assertTrue($form->isSynchronized());
 
-        $this->objectMultiDomain->buildForm($builder, ['domainConfiguration' => $this->multiDomainConfiguration]);
+        $this->assertSame($expectedData->getOrigin(), $model->getOrigin());
+        $this->assertSame($expectedData->getTarget(), $model->getTarget());
+    }
+
+    public function domainFormFieldProvider(): iterable
+    {
+        $multiDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
+        $multiDomainConfiguration->method('isMultiDomainHost')->willReturn(true);
+        $multiDomainConfiguration->method('getHosts')->willReturn(['domain.com', 'domain.be']);
+
+        $singleDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
+        $singleDomainConfiguration->method('isMultiDomainHost')->willReturn(false);
+        $singleDomainConfiguration->method('getHosts')->willReturn([]);
+
+        yield 'Single domain' => [HiddenType::class, $singleDomainConfiguration];
+        yield 'Multi domain' => [ChoiceType::class, $multiDomainConfiguration];
+    }
+
+    public function pathNormalizerProvider(): iterable
+    {
+        yield 'Path without prefix slash' => [
+            ['origin' => 'origin1', 'target' => 'target1'], (new Redirect())->setOrigin('/origin1')->setTarget('/target1'),
+        ];
+        yield 'Path with prefix slash' => [
+            ['origin' => '/origin1', 'target' => '/target1'], (new Redirect())->setOrigin('/origin1')->setTarget('/target1'),
+        ];
+        yield 'Path without prefix slash and external url target' => [
+            ['origin' => '/origin1', 'target' => 'https://www.google.com'], (new Redirect())->setOrigin('/origin1')->setTarget('https://www.google.com'),
+        ];
     }
 }
