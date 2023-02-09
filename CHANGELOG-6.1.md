@@ -6,6 +6,10 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.1.0...6.1.1
 
+## 6.1.9 / 2023-02-09
+
+* [MediaPagePartBundle] Fix empty urls [#3240](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3240) ([@dannyvw](https://github.com/dannyvw))
+
 ## 6.1.8 / 2022-11-28
 
 * [AdminBundle] Store original url so images have the correct url when previewing in editor [#3225](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3225) ([@tarjei](https://github.com/tarjei))
