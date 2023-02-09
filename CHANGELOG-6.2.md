@@ -6,6 +6,12 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.2.0...6.2.1
 
+## 6.2.4 / 2023-02-09
+
+* [AllBundles] Update default php-cs-fixer config for v3.14 [#3248](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3248) ([@acrobat](https://github.com/acrobat))
+* [TranslatorBundle] change in doctrine querybuilder on php8 systems caused our faulty expression to generate a non working query [#3236](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3236) ([@Numkil](https://github.com/Numkil))
+* [MediaPagePartBundle] Fix empty urls [#3240](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3240) ([@dannyvw](https://github.com/dannyvw))
+
 ## 6.2.3 / 2022-12-15
 
 * [NodeBundle] Revert mysql groupby query change because of performance issues [#3230](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3230) ([@acrobat](https://github.com/acrobat))
