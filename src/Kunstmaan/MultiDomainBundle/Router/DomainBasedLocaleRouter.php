@@ -34,7 +34,7 @@ class DomainBasedLocaleRouter extends SlugRouter
      * @param array    $parameters    The route parameters
      * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
-     * @return string|null
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
