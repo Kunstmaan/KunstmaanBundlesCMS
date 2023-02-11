@@ -16,7 +16,7 @@ class Loader implements LoaderInterface
     private $catalogues = [];
 
     /**
-     * @{@inheritdoc}
+     * {@inheritdoc}
      *
      * @return MessageCatalogue
      */
