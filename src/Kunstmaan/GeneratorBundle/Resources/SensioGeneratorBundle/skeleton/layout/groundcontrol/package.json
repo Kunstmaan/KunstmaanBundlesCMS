@@ -51,7 +51,7 @@
     "yargs": "^7.0.2"
   },
   "dependencies": {
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap-sass": "^3.4.3",
     "core-js": "^3.19.2",
     "picturefill": "^3.0.3"{% if demosite %},
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
