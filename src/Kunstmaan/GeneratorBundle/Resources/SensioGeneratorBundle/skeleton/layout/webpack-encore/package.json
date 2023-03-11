@@ -24,7 +24,7 @@
         "not IE 11"
     ],
     "dependencies": {
-        "bootstrap-sass": "^3.3.7",
+        "bootstrap-sass": "^3.4.3",
         "picturefill": "^3.0.3"{% if demosite %},
         "cargobay": "Kunstmaan/cargobay#0.8.6-support",
         "jquery": "^3.1.1",
