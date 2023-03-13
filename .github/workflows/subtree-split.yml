@@ -30,7 +30,7 @@ jobs:
                     user_email: 'cms@kunstmaan.be'
 
             -   name: Cache splitsh-lite
-                uses: actions/cache@v3.3.0
+                uses: actions/cache@v3.3.1
                 with:
                     path: |
                         ./splitsh
