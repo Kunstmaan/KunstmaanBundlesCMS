@@ -823,7 +823,7 @@ final class NodeAdminController extends AbstractController
         /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
         if (!$node) {
-            throw $this->createNotFoundException('No node found for id ' . $id);
+            throw $this->createNotFoundException(sprintf('No node found for id "%s"', $id));
         }
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
