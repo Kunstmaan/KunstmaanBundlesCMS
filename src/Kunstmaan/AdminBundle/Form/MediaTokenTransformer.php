@@ -14,7 +14,7 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function transform($content)
     {
-        if (!trim($content)) {
+        if (!$content || !trim($content)) {
             return '';
         }
 
