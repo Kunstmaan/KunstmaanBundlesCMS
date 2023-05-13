@@ -160,7 +160,9 @@ final class InstallCommand extends GeneratorCommand
         try {
             if ($separateProcess) {
                 $process = new Process(array_merge(['bin/console', $command], array_keys($options)));
-                $process->setTty(true);
+                if (Process::isTtySupported()) {
+                    $process->setTty(true);
+                }
                 $process->run();
 
                 if (!$process->isSuccessful()) {

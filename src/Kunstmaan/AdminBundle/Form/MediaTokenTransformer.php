@@ -14,7 +14,7 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function transform($content)
     {
-        if (!trim($content)) {
+        if ($content === null || !$content || !trim($content)) {
             return '';
         }
 
@@ -47,7 +47,7 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function reverseTransform($content)
     {
-        if (!trim($content)) {
+        if ($content === null || !trim($content)) {
             return '';
         }
 
