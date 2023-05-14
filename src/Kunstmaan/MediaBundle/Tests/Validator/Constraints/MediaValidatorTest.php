@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class MediaValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): MediaValidator
     {
         return new MediaValidator();
     }

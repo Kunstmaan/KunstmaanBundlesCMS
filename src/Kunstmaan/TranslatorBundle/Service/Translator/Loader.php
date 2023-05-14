@@ -17,10 +17,8 @@ class Loader implements LoaderInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return MessageCatalogue
      */
-    public function load($resource, $locale, $domain = 'messages')
+    public function load($resource, $locale, $domain = 'messages'): MessageCatalogue
     {
         if (!isset($this->catalogues[$locale])) {
             $catalogue = new MessageCatalogue($locale);

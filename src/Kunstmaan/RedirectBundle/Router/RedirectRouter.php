@@ -59,8 +59,6 @@ class RedirectRouter implements RouterInterface
      * @param mixed       $parameters    An array of parameters
      * @param bool|string $referenceType The type of reference to be generated (one of the constants)
      *
-     * @return string The generated URL
-     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException              If the named route doesn't exist
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException When some parameters are missing that are mandatory for the route
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException           When a parameter value for a placeholder is not correct because
@@ -68,7 +66,7 @@ class RedirectRouter implements RouterInterface
      *
      * @api
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         throw new RouteNotFoundException('You cannot generate a url from a redirect');
     }
@@ -81,14 +79,12 @@ class RedirectRouter implements RouterInterface
      *
      * @param string $pathinfo The path info to be parsed (raw format, i.e. not urldecoded)
      *
-     * @return array An array of parameters
-     *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException If the resource could not be found
      * @throws \Symfony\Component\Routing\Exception\MethodNotAllowedException If the resource was found but the request method is not allowed
      *
      * @api
      */
-    public function match($pathinfo)
+    public function match($pathinfo): array
     {
         $this->initRouteCollection($pathinfo);
 
@@ -203,14 +199,7 @@ class RedirectRouter implements RouterInterface
         ], [], ['utf8' => $needsUtf8]);
     }
 
-    /**
-     * Gets the request context.
-     *
-     * @return \Symfony\Component\Routing\RequestContext The context
-     *
-     * @api
-     */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class ValidExternalUrlValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): ValidExternalUrlValidator
     {
         return new ValidExternalUrlValidator();
     }
