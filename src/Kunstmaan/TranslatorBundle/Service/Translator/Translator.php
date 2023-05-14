@@ -34,10 +34,8 @@ class Translator extends SymfonyTranslator
 
     /**
      * {@inheritdoc}
-     *
-     * @return string[]
      */
-    public function warmUp($cacheDir)
+    public function warmUp($cacheDir): array
     {
         return [];
     }
@@ -103,10 +101,7 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
-    /**
-     * @return string
-     */
-    public function trans($id, array $parameters = [], $domain = 'messages', $locale = null)
+    public function trans($id, array $parameters = [], $domain = 'messages', $locale = null): string
     {
         if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             return parent::trans($id, $parameters, $domain, $locale);
