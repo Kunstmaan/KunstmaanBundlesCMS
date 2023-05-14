@@ -88,27 +88,6 @@ class ArticleGenerator extends KunstmaanGenerator
     /**
      * @param array $parameters The template parameters
      */
-    public function generateServices(array $parameters)
-    {
-        trigger_deprecation('kunstmaan/generator-bundle', '6.2', 'Method "%s" is deprecated and will be removed.', __METHOD__);
-
-        if ($this->isSymfony4()) {
-            return;
-        }
-
-        $dirPath = sprintf('%s/Resources/config', $this->bundle->getPath());
-        $skeletonDir = sprintf('%s/Resources/config', $this->skeletonDir);
-        $this->setSkeletonDirs([$skeletonDir]);
-
-        $routing = $this->render('/services.yml', $parameters);
-        GeneratorUtils::append($routing, $dirPath . '/services.yml');
-
-        $this->assistant->writeLine('Generating services : <info>OK</info>');
-    }
-
-    /**
-     * @param array $parameters The template parameters
-     */
     public function generateMenu(array $parameters)
     {
         $relPath = '/Helper/Menu/';
@@ -139,49 +118,6 @@ class ArticleGenerator extends KunstmaanGenerator
         GeneratorUtils::replace('//%menuAdaptorPartial.php.twig%', $partial, $dirPath . '/' . $this->entity . $filename);
 
         $this->assistant->writeLine('Generating menu : <info>OK</info>');
-    }
-
-    /**
-     * @param array $parameters    The template parameters
-     * @param bool  $multilanguage
-     */
-    public function generateRouting(array $parameters, $multilanguage)
-    {
-        trigger_deprecation('kunstmaan/generator-bundle', '6.2', 'Method "%s" is deprecated and will be removed.', __METHOD__);
-
-        if ($this->isSymfony4()) {
-            return;
-        }
-
-        $dirPath = sprintf('%s/Resources/config', $this->bundle->getPath());
-        $skeletonDir = sprintf('%s/Resources/config', $this->skeletonDir);
-        $this->setSkeletonDirs([$skeletonDir]);
-
-        $routingSource = $multilanguage ? 'routing_multilanguage' : 'routing_singlelanguage';
-        $routing = $this->render('/' . $routingSource . '.yml', $parameters);
-
-        GeneratorUtils::append($routing, $dirPath . '/routing.yml');
-
-        $twigParameters = $parameters;
-
-        if ($parameters['uses_author']) {
-            $twigParameters['type'] = 'Author';
-            $routing = $this->render('/routing_partial.yml', $twigParameters);
-            GeneratorUtils::append($routing, $dirPath . '/routing.yml');
-        }
-
-        if ($parameters['uses_category']) {
-            $twigParameters['type'] = 'Category';
-            $routing = $this->render('/routing_partial.yml', $twigParameters);
-            GeneratorUtils::append($routing, $dirPath . '/routing.yml');
-        }
-        if ($parameters['uses_tag']) {
-            $twigParameters['type'] = 'Tag';
-            $routing = $this->render('/routing_partial.yml', $twigParameters);
-            GeneratorUtils::append($routing, $dirPath . '/routing.yml');
-        }
-
-        $this->assistant->writeLine('Generating routing : <info>OK</info>');
     }
 
     /**

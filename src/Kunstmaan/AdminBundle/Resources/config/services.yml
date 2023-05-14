@@ -308,7 +308,7 @@ services:
 
     Kunstmaan\AdminBundle\Service\UserManager:
         arguments:
-            - '@security.encoder_factory'
+            - '@security.password_hasher_factory'
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.user_class%'
 

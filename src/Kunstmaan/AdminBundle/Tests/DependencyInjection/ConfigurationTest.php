@@ -8,12 +8,10 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class ConfigurationTest extends TestCase
 {
-    use ExpectDeprecationTrait;
     use ConfigurationTestCaseTrait;
 
     private const DEFAULT_EXPECTED_CONFIG = [
@@ -45,7 +43,6 @@ class ConfigurationTest extends TestCase
             'max_length' => null,
         ],
         'authentication' => [
-            'enable_new_authentication' => true,
             'user_class' => User::class,
             'group_class' => Group::class,
             'mailer' => [
@@ -99,64 +96,7 @@ class ConfigurationTest extends TestCase
                 'max_length' => 26,
             ],
         ]);
-        $expected['authentication']['enable_new_authentication'] = true;
 
         $this->assertProcessedConfigurationEquals([$array], $expected);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedAuthenticationConfig()
-    {
-        $this->expectDeprecation('Since kunstmaan/admin-bundle 6.1: The "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
-
-        $array = [
-            'website_title' => null,
-            'multi_language' => true,
-            'required_locales' => null,
-            'default_locale' => null,
-            'session_security' => [
-                'ip_check' => false,
-                'user_agent_check' => false,
-            ],
-            'authentication' => [
-                'enable_new_authentication' => true,
-            ],
-            'default_admin_locale' => 'en',
-            'enable_console_exception_listener' => true,
-            'menu_items' => [],
-            'admin_prefix' => 'admin',
-            'admin_firewall_name' => 'main',
-        ];
-
-        $this->assertProcessedConfigurationEquals([$array], self::DEFAULT_EXPECTED_CONFIG);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedAdminPasswordConfig()
-    {
-        $this->expectDeprecation('%SThe "kunstmaan_admin.admin_password" configuration key has been deprecated, remove it from your config.');
-
-        $array = [
-            'website_title' => null,
-            'admin_password' => 'l3tM31n!',
-            'multi_language' => true,
-            'required_locales' => null,
-            'default_locale' => null,
-            'session_security' => [
-                'ip_check' => false,
-                'user_agent_check' => false,
-            ],
-            'default_admin_locale' => 'en',
-            'enable_console_exception_listener' => true,
-            'menu_items' => [],
-            'admin_prefix' => 'admin',
-            'admin_firewall_name' => 'main',
-        ];
-
-        $this->assertProcessedConfigurationEquals([$array], array_merge(self::DEFAULT_EXPECTED_CONFIG, ['admin_password' => 'l3tM31n!']));
     }
 }

@@ -10,7 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Generates a default website using several Kunstmaan bundles using default templates and assets
@@ -292,50 +291,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         }
 
         $this->assistant->writeLine('Generating pagetemplate configuration : <info>OK</info>');
-    }
-
-    /**
-     * Append to the application config file.
-     */
-    public function generateConfig()
-    {
-        trigger_deprecation('kunstmaan/generator-bundle', '6.2', 'Method "%s" is deprecated and will be removed.', __METHOD__);
-
-        if ($this->isSymfony4()) {
-            return;
-        }
-
-        $configFile = $this->rootDir . '/app/config/config.yml';
-        $config = file_get_contents($configFile);
-
-        $data = Yaml::parse($config);
-        if (!array_key_exists('white_october_pagerfanta', $data)) {
-            $ymlData = "\n\nwhite_october_pagerfanta:";
-            $ymlData .= "\n    default_view: twitter_bootstrap\n";
-            file_put_contents($configFile, $ymlData, FILE_APPEND);
-        }
-    }
-
-    /**
-     * Generate bundle routing configuration.
-     *
-     * @param array $parameters The template parameters
-     */
-    public function generateRouting(array $parameters)
-    {
-        trigger_deprecation('kunstmaan/generator-bundle', '6.2', 'Method "%s" is deprecated and will be removed.', __METHOD__);
-
-        if ($this->isSymfony4()) {
-            return;
-        }
-
-        $relPath = '/Resources/config/';
-        $sourceDir = $this->skeletonDir . $relPath;
-        $targetDir = $this->bundle->getPath() . $relPath;
-
-        $this->renderSingleFile($sourceDir, $targetDir, 'routing.yml', $parameters, true);
-
-        $this->assistant->writeLine('Generating routing : <info>OK</info>');
     }
 
     /**

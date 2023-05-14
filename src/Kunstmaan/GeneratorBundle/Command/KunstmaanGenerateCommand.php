@@ -897,14 +897,4 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         // Make sure behat is configured and the PagePartContext and BehatTestPage exits
         return file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage);
     }
-
-    /**
-     * NEXT_MAJOR: remove method.
-     *
-     * @internal
-     */
-    protected function isSymfony4()
-    {
-        return true;
-    }
 }
