@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
         $loaderRefs = [];

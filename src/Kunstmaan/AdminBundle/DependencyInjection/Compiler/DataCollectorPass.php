@@ -11,6 +11,9 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class DataCollectorPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_admin.toolbar.datacollector')) {
