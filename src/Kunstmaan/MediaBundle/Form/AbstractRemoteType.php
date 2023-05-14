@@ -29,6 +29,8 @@ abstract class AbstractRemoteType extends AbstractType
      * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

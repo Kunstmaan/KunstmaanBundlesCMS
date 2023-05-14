@@ -16,6 +16,8 @@ class FileUploadPagePartAdminType extends AbstractType
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,6 +45,9 @@ class FileUploadPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_fileuploadpageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart']);

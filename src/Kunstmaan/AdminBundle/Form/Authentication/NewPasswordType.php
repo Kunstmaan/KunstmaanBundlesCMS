@@ -9,6 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class NewPasswordType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

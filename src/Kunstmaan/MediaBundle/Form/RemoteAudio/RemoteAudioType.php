@@ -23,6 +23,8 @@ class RemoteAudioType extends AbstractRemoteType
      * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -53,6 +55,8 @@ class RemoteAudioType extends AbstractRemoteType
      * Sets the default options for this type.
      *
      * @param OptionsResolver $resolver the resolver for the options
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

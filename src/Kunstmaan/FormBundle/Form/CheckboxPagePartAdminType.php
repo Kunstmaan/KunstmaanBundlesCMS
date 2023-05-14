@@ -16,6 +16,8 @@ class CheckboxPagePartAdminType extends AbstractType
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,6 +45,9 @@ class CheckboxPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_checkboxpageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart']);

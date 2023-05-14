@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RangeType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['attr' => ['min' => 0, 'max' => 100, 'step' => 1]]);

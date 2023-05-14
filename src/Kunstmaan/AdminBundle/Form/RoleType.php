@@ -11,6 +11,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class RoleType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('role', TextType::class, [

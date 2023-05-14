@@ -15,6 +15,8 @@ class FileFormSubmissionType extends AbstractType
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options An array with options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -33,6 +35,9 @@ class FileFormSubmissionType extends AbstractType
         $builder->add('file', FileType::class, $fieldOptions);
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ColorType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([TextType::class]);

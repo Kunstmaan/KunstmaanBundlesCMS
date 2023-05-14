@@ -57,8 +57,7 @@ class RedirectTest extends TestCase
             ->willReturn($violationBuilder);
 
         $violationBuilder->expects($this->once())
-            ->method('addViolation')
-            ->willReturn(true);
+            ->method('addViolation');
 
         $context = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
@@ -84,8 +83,7 @@ class RedirectTest extends TestCase
             ->willReturn($violationBuilder);
 
         $violationBuilder->expects($this->never())
-            ->method('addViolation')
-            ->willReturn(true);
+            ->method('addViolation');
 
         $context = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()

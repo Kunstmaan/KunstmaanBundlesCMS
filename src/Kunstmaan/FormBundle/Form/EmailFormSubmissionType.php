@@ -12,6 +12,8 @@ class EmailFormSubmissionType extends AbstractType
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -29,6 +31,9 @@ class EmailFormSubmissionType extends AbstractType
         $builder->add('value', EmailType::class, $fieldOptions);
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

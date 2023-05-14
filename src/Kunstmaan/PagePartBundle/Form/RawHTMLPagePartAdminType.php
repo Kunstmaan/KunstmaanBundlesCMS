@@ -12,6 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RawHTMLPagePartAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', TextareaType::class, [
@@ -32,6 +35,9 @@ class RawHTMLPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_rawhtmlpageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

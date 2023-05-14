@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ControllerActionAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
@@ -21,6 +24,9 @@ class ControllerActionAdminType extends AbstractType
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -26,6 +26,9 @@ final class EditableMediaWrapperAdminType extends AbstractType
         $this->croppingViews = $croppingViews;
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $croppingViewGroup = $options['cropping_views_group'];
@@ -52,6 +55,9 @@ final class EditableMediaWrapperAdminType extends AbstractType
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

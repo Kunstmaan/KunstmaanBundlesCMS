@@ -7,6 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AbstractCategoryAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', null, [
