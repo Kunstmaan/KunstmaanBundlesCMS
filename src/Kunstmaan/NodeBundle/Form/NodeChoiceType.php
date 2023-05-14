@@ -19,6 +19,9 @@ class NodeChoiceType extends AbstractType
         $this->requestStack = $requestStack;
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

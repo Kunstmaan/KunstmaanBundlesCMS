@@ -12,6 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SubmitButtonPagePartAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,6 +32,9 @@ class SubmitButtonPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_singlelinetextpageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart']);

@@ -15,6 +15,8 @@ class TextFormSubmissionType extends AbstractType
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -34,6 +36,9 @@ class TextFormSubmissionType extends AbstractType
         $builder->add('value', TextareaType::class, $fieldOptions);
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

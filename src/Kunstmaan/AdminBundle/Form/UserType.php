@@ -35,6 +35,9 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         $this->canEditAllFields = (bool) $canEditAllFields;
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $languages = [];
@@ -95,6 +98,9 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         return 'user';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

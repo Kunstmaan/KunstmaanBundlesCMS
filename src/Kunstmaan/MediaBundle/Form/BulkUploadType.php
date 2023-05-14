@@ -11,6 +11,8 @@ class BulkUploadType extends AbstractType
 {
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,6 +33,8 @@ class BulkUploadType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

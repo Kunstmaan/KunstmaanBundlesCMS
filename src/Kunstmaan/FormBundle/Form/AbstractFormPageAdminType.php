@@ -19,6 +19,8 @@ class AbstractFormPageAdminType extends AbstractType
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,6 +44,8 @@ class AbstractFormPageAdminType extends AbstractType
 
     /**
      *  This should also be abstract, it's impossible to instantiate this data_class!
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

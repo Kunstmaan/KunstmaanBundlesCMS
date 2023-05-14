@@ -22,11 +22,17 @@ class WysiwygType extends AbstractType
         $this->mediaTokenTransformer = $mediaTokenTransformer;
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->mediaTokenTransformer);
     }
 
+    /**
+     * @return void
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (isset($options['editor-mode'])) {
@@ -34,6 +40,9 @@ class WysiwygType extends AbstractType
         }
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined('editor-mode');

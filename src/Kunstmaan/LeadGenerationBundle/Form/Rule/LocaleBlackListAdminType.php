@@ -16,6 +16,9 @@ class LocaleBlackListAdminType extends AbstractRuleAdminType
         $this->locales = array_combine($locales, $locales);
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('locale', ChoiceType::class, [

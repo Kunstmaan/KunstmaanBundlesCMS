@@ -21,6 +21,9 @@ class SeoType extends AbstractType
     const ROBOTS_NOTRANSLATE = 'notranslate';
     const ROBOTS_NOIMAGEINDEX = 'noimageindex';
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class)
@@ -99,6 +102,9 @@ class SeoType extends AbstractType
         return 'seo';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
