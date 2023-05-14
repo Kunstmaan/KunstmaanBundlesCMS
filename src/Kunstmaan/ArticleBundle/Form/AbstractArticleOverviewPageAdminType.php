@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AbstractArticleOverviewPageAdminType extends PageAdminType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -20,6 +23,8 @@ class AbstractArticleOverviewPageAdminType extends PageAdminType
      * Sets the default options for this type.
      *
      * @param OptionsResolver $resolver the resolver for the options
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

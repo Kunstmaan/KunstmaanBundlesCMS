@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuItemAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $entityId = $options['entityId'];
@@ -138,6 +141,8 @@ class MenuItemAdminType extends AbstractType
      * Configures the options for this type.
      *
      * @param OptionsResolver $resolver the resolver for the options
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

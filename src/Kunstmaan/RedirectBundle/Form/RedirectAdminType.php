@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RedirectAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['domainConfiguration']->isMultiDomainHost()) {
@@ -64,6 +67,8 @@ class RedirectAdminType extends AbstractType
      * Configures the options for this type.
      *
      * @param OptionsResolver $resolver the resolver for the options
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class HeaderPagePartAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
@@ -38,6 +41,9 @@ class HeaderPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_headerpageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

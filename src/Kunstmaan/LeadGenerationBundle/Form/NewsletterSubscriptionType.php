@@ -10,6 +10,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterSubscriptionType extends AbstractPopupAdminType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', EmailType::class, [

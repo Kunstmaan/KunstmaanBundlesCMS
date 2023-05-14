@@ -45,6 +45,8 @@ class IconFontType extends AbstractType
      * Sets the default options for this type.
      *
      * @param OptionsResolver $resolver the resolver for the options
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -66,6 +68,8 @@ class IconFontType extends AbstractType
      * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -83,6 +87,8 @@ class IconFontType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

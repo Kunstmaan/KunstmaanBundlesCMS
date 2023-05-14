@@ -22,6 +22,8 @@ class SlidePagePartAdminType extends AbstractType
      * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,6 +44,8 @@ class SlidePagePartAdminType extends AbstractType
      * Sets the default options for this type.
      *
      * @param OptionsResolver $resolver the resolver for the options
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -14,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LinkPagePartAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -39,6 +42,9 @@ class LinkPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_linkpageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

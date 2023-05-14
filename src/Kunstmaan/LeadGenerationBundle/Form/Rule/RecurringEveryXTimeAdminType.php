@@ -7,6 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class RecurringEveryXTimeAdminType extends AbstractRuleAdminType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('days', IntegerType::class, [

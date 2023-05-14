@@ -18,12 +18,18 @@ class TagsAdminType extends AbstractType
         $this->tagManager = $tagManager;
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new TagsTransformer($this->tagManager);
         $builder->addViewTransformer($transformer, true);
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults($this->getDefaultOptions([]));

@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LinePagePartAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }
@@ -23,6 +26,9 @@ class LinePagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_linepageparttype';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

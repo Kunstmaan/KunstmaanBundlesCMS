@@ -9,6 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class DashboardConfigurationType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', TextType::class, [

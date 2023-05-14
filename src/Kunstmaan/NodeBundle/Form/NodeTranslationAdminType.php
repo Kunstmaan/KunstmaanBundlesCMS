@@ -12,6 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class NodeTranslationAdminType extends AbstractType
 {
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
@@ -25,6 +28,9 @@ class NodeTranslationAdminType extends AbstractType
         return 'nodetranslation';
     }
 
+    /**
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

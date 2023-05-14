@@ -11,6 +11,8 @@ class BanType extends AbstractType
 {
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
