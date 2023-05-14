@@ -91,16 +91,6 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
     }
 
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedAuthenticationEnableParameter()
-    {
-        $this->expectDeprecation('%SThe "kunstmaan_admin.authentication.enable_new_authentication" configuration key has been deprecated, remove it from your config.');
-
-        $this->load(array_merge($this->getRequiredConfig(), ['authentication' => ['enable_new_authentication' => true]]));
-    }
-
     private function getRequiredConfig(string $excludeKey = null)
     {
         $requiredConfig = [

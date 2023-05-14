@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager
 {
@@ -14,16 +13,11 @@ class UserManager
     private $em;
     /** @var string */
     private $class;
-    /** @var EncoderFactoryInterface|PasswordHasherFactoryInterface */
+    /** @var PasswordHasherFactoryInterface */
     private $encoderFactory;
 
-    public function __construct($hasherFactory, EntityManagerInterface $em, string $class)
+    public function __construct(PasswordHasherFactoryInterface $hasherFactory, EntityManagerInterface $em, string $class)
     {
-        // NEXT_MAJOR When symfony <5.3 is removed, add PasswordHasherFactoryInterface typehint and remove BC layer and compiler pass
-        if (!$hasherFactory instanceof EncoderFactoryInterface && !$hasherFactory instanceof PasswordHasherFactoryInterface) {
-            throw new \InvalidArgumentException(sprintf('The "$hasherFactory" parameter should be instance of "%s" or "%s"', EncoderFactoryInterface::class, PasswordHasherFactoryInterface::class));
-        }
-
         $this->em = $em;
         $this->class = $class;
         $this->encoderFactory = $hasherFactory;
@@ -72,15 +66,8 @@ class UserManager
             return;
         }
 
-        if ($this->encoderFactory instanceof EncoderFactoryInterface) {
-            $encoder = $this->encoderFactory->getEncoder($user);
-            $user->setSalt(null);
-
-            $hashedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
-        } else {
-            $hasher = $this->encoderFactory->getPasswordHasher($user);
-            $hashedPassword = $hasher->hash($plainPassword);
-        }
+        $hasher = $this->encoderFactory->getPasswordHasher($user);
+        $hashedPassword = $hasher->hash($plainPassword);
 
         $user->setPassword($hashedPassword);
         $user->setPasswordChanged(true);

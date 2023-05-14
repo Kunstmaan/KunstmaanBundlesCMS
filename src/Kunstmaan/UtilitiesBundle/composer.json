@@ -35,8 +35,7 @@
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
         "symfony/phpunit-bridge": "^6.1",
-        "phpunit/phpunit": "^9.5.5",
-        "ekino/newrelic-bundle": "^2.3"
+        "phpunit/phpunit": "^9.5.5"
     },
     "suggest": {
         "ekino/newrelic-bundle": "Require ^2.0 to use the UrlTransactionNamingStrategy"
