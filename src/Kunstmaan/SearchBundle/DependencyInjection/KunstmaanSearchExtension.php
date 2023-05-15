@@ -10,6 +10,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class KunstmaanSearchExtension extends Extension
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();

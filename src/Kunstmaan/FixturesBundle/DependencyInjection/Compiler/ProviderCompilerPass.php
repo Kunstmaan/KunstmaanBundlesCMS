@@ -8,6 +8,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ProviderCompilerPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_fixtures.builder.builder')) {

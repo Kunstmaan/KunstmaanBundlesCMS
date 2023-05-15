@@ -12,6 +12,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanNodeExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -44,6 +47,9 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $loader->load('commands.yml');
     }
 
+    /**
+     * @return void
+     */
     public function prepend(ContainerBuilder $container)
     {
         $cmfRoutingExtraConfig['chain']['routers_by_id']['router.default'] = 100;

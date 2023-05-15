@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanNodeSearchExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -35,6 +38,8 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
 
     /**
      * Allow an extension to prepend the extension configurations.
+     *
+     * @return void
      */
     public function prepend(ContainerBuilder $container)
     {

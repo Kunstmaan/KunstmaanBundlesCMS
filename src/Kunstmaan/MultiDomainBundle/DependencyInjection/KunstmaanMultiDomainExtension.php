@@ -15,6 +15,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class KunstmaanMultiDomainExtension extends Extension
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
