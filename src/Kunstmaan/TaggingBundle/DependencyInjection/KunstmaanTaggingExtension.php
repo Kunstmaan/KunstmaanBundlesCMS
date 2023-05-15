@@ -18,10 +18,7 @@ class KunstmaanTaggingExtension extends Extension
         $loader->load('services.yml');
     }
 
-    /**
-     * @return string
-     */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'kunstmaan_tagging';
     }

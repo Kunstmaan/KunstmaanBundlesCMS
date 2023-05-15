@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Routing;
 
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
@@ -30,15 +31,13 @@ class DynamicUrlMatcher extends UrlMatcher
      * Check if url exists
      *
      * @param string $pathInfo
-     *
-     * @return bool
      */
-    public function match($pathInfo)
+    public function match($pathinfo): array
     {
-        if ($ret = $this->matchCollection($pathInfo, $this->routesCopy)) {
+        if ($ret = $this->matchCollection($pathinfo, $this->routesCopy)) {
             return $ret;
         }
 
-        return false;
+        throw new ResourceNotFoundException(sprintf('No routes found for "%s".', $pathinfo));
     }
 }
