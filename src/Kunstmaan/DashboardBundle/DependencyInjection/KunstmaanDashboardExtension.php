@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanDashboardExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -25,6 +28,9 @@ class KunstmaanDashboardExtension extends Extension implements PrependExtensionI
         $container->setParameter('kunstmaan_dashboard.google_analytics.api.app_name', $config['google_analytics']['api']['app_name']);
     }
 
+    /**
+     * @return void
+     */
     public function prepend(ContainerBuilder $container)
     {
         $container->prependExtensionConfig('framework', ['esi' => ['enabled' => true]]);

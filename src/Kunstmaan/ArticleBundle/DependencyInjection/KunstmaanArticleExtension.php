@@ -9,6 +9,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanArticleExtension extends Extension
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();

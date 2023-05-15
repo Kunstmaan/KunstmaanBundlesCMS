@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanAdminListExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -24,6 +27,9 @@ class KunstmaanAdminListExtension extends Extension implements PrependExtensionI
         $loader->load('services.yml');
     }
 
+    /**
+     * @return void
+     */
     public function prepend(ContainerBuilder $container)
     {
         $parameterName = 'datePicker_startDate';
