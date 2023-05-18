@@ -5,6 +5,7 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -15,11 +16,15 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  */
 class HostOverrideCleanupHandlerTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+
     public function testLogoutWithoutOverride()
     {
         if (!interface_exists(\Symfony\Component\Security\Http\Logout\LogoutHandlerInterface::class)) {
             $this->markTestSkipped('This test should only run on symfony 5.4 and lower');
         }
+
+        $this->expectDeprecation('Since kunstmaan/multidomain-bundle 6.3: The "Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler" class is deprecated and is replaced by the "Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber" subscriber with the new authentication system.');
 
         $object = new HostOverrideCleanupHandler();
         $request = Request::create('/');
@@ -39,6 +44,8 @@ class HostOverrideCleanupHandlerTest extends TestCase
         if (!interface_exists(\Symfony\Component\Security\Http\Logout\LogoutHandlerInterface::class)) {
             $this->markTestSkipped('This test should only run on symfony 5.4 and lower');
         }
+
+        $this->expectDeprecation('Since kunstmaan/multidomain-bundle 6.3: The "Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler" class is deprecated and is replaced by the "Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber" subscriber with the new authentication system.');
 
         $object = new HostOverrideCleanupHandler();
         $session = new Session(new MockArraySessionStorage());

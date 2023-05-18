@@ -6,6 +6,11 @@ General
 
 - The supported Symfony version is 5.4.
 
+MultidomainBundle
+-----------------
+
+- The `Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler` class is deprecated and is replaced by the `Kunstmaan\MultiDomainBundle\EventSubscriber\LogoutHostOverrideCleanupEventSubscriber` subscriber with the new authentication system.
+
 RedirectBundle
 --------------
 
