@@ -32,24 +32,12 @@ class FormHandler implements FormHandlerInterface
 
     public function __construct(
         ContainerInterface $container,
-        EntityManagerInterface $em = null,
-        FormFactoryInterface $formFactory = null,
-        RouterInterface $router = null,
-        EventDispatcherInterface $eventDispatcher = null
+        EntityManagerInterface $em,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->container = $container;
-
-        if (null === $em) {
-            trigger_deprecation('kunstmaan/form-bundle', '6.3', 'Not passing the required services to "%s" is deprecated and those parameters will be required in 7.0. Injected the required services in the constructor instead.', __METHOD__);
-
-            $this->em = $this->container->get('doctrine.orm.entity_manager');
-            $this->formFactory = $this->container->get('form.factory');
-            $this->router = $this->container->get('router');
-            $this->eventDispatcher = $this->container->get('event_dispatcher');
-
-            return;
-        }
-
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->router = $router;

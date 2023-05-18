@@ -14,71 +14,18 @@ use Symfony\Component\Routing\RequestContext;
 
 class RedirectRouterTest extends TestCase
 {
-    private const MAIN_ROUTER = 'main';
-    private const OTHER_DOMAIN_ROUTER = 'other';
-
-    /** @var RedirectRouter[] */
-    private $routers;
-
-    protected function setUp(): void
-    {
-        $firstDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
-        $firstDomainConfiguration->method('getHost')->willReturn('sub.domain.com');
-
-        $secondDomainConfiguration = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
-        $secondDomainConfiguration->method('getHost')->willReturn('other.domain.com');
-
-        $repository = $this->createMock(RedirectRepository::class);
-        $repository->method('findAll')->willReturn([
-            $this->getRedirect(1, 'test1', '/target1', false, null),
-            $this->getRedirect(2, 'test2', '/target2', true, null),
-            $this->getRedirect(3, 'test3', '/target3', true, 'sub.domain.com'),
-            $this->getRedirect(4, 'test4', '/target4', true, 'other.domain.com'),
-            $this->getRedirect(5, 'test5', '/targét5', true, null),
-            $this->getRedirect(6, 'tést6', '/target6', true, null),
-            $this->getRedirect(7, '/wildcard/*', '/prefix/', true, null),
-        ]);
-
-        $this->routers[self::MAIN_ROUTER] = new RedirectRouter($repository, $firstDomainConfiguration);
-        $this->routers[self::OTHER_DOMAIN_ROUTER] = new RedirectRouter($repository, $secondDomainConfiguration);
-
-        $this->routers[self::MAIN_ROUTER]->enableImprovedRouter(true);
-        $this->routers[self::OTHER_DOMAIN_ROUTER]->enableImprovedRouter(true);
-    }
-
     public function testGetRouteCollection()
     {
-        $this->assertEquals(6, $this->routers[self::MAIN_ROUTER]->getRouteCollection()->count());
-        $this->assertEquals(6, $this->routers[self::OTHER_DOMAIN_ROUTER]->getRouteCollection()->count());
+        $router = new RedirectRouter($this->createMock(RedirectRepository::class), $this->createMock(DomainConfigurationInterface::class));
+        $this->assertEquals(0, $router->getRouteCollection()->count());
     }
 
     public function testGenerateUnknownRoute()
     {
         $this->expectException(RouteNotFoundException::class);
-        $this->routers[self::MAIN_ROUTER]->generate('test');
-    }
 
-    /**
-     * @group legacy
-     * @dataProvider urlProvider
-     */
-    public function testRedirects(string $requestUrl, ?string $expectedRedirectUrl, string $routerType = self::MAIN_ROUTER)
-    {
-        if (null === $expectedRedirectUrl) {
-            $this->expectException(ResourceNotFoundException::class);
-        }
-
-        $context = new RequestContext();
-        $router = $this->routers[$routerType];
-        $router->enableImprovedRouter(false);
-
-        $router->setContext($context->fromRequest(Request::create($requestUrl)));
-        $redirect = $router->match($requestUrl);
-
-        if (null !== $expectedRedirectUrl) {
-            $this->assertSame($expectedRedirectUrl, $redirect['path']);
-            $this->assertSame('Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction', $redirect['_controller']);
-        }
+        $router = new RedirectRouter($this->createMock(RedirectRepository::class), $this->createMock(DomainConfigurationInterface::class));
+        $router->generate('test');
     }
 
     /**
@@ -100,7 +47,6 @@ class RedirectRouterTest extends TestCase
             ->willReturn($redirect);
 
         $router = new RedirectRouter($repository, $firstDomainConfiguration);
-        $router->enableImprovedRouter(true);
 
         $context = new RequestContext();
         $router->setContext($context->fromRequest(Request::create($requestUrl)));
@@ -109,21 +55,6 @@ class RedirectRouterTest extends TestCase
         if (null !== $expectedRedirectUrl) {
             $this->assertSame($expectedRedirectUrl, $redirectResult['path']);
         }
-    }
-
-    public function urlProvider(): array
-    {
-        return [
-            ['/test1', '/target1'],
-            ['/test2', '/target2'],
-            ['/test3', '/target3'],
-            ['/test4', '/target4', self::OTHER_DOMAIN_ROUTER],
-            ['/test5', '/targét5'],
-            ['/tést6', '/target6'],
-            ['/wildcard/abc', '/prefix/abc'],
-            ['/wildcard/abc/def', '/prefix/abc/def'],
-            ['/unkown-redirect', null],
-        ];
     }
 
     public function urlProviderForImprovedRouter(): iterable
