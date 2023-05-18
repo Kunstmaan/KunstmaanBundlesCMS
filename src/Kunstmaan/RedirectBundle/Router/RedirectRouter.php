@@ -4,7 +4,6 @@ namespace Kunstmaan\RedirectBundle\Router;
 
 use Doctrine\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Repository\RedirectRepository;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -26,12 +25,6 @@ class RedirectRouter implements RouterInterface
 
     /** @var DomainConfigurationInterface */
     private $domainConfiguration;
-
-    /**
-     * @internal
-     * @var bool
-     */
-    private $enableImprovedRouter = false;
 
     public function __construct(ObjectRepository $redirectRepository, DomainConfigurationInterface $domainConfiguration)
     {
@@ -100,103 +93,9 @@ class RedirectRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
-        if (\is_null($this->routeCollection)) {
-            // NEXT_MAJOR: Remove initRoutes logic
-            $this->routeCollection = new RouteCollection();
-            $this->initRoutes();
-        }
-
-        return $this->routeCollection;
-    }
-
-    private function initRoutes()
-    {
-        $redirects = $this->redirectRepository->findAll();
-        $domain = $this->domainConfiguration->getHost();
-
-        /** @var Redirect $redirect */
-        foreach ($redirects as $redirect) {
-            // Check for wildcard routing and adjust as required
-            if ($this->isWildcardRedirect($redirect)) {
-                $route = $this->createWildcardRoute($redirect);
-            } else {
-                $route = $this->createRoute($redirect);
-            }
-
-            // Only add the route when the domain matches or the domain is empty
-            if ($redirect->getDomain() === $domain || !$redirect->getDomain()) {
-                $this->routeCollection->add(
-                    '_redirect_route_' . $redirect->getId(),
-                    $route
-                );
-            }
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    private function isWildcardRedirect(Redirect $redirect)
-    {
-        $origin = $redirect->getOrigin();
-        $matchSegment = substr($origin, 0, -1);
-        if (substr($origin, -2) === '/*') {
-            return $this->isPathInfoWildcardMatch($matchSegment);
-        }
-
-        return false;
-    }
-
-    private function isPathInfoWildcardMatch($matchSegment)
-    {
-        $path = $this->context->getPathInfo();
-
-        return strstr($path, $matchSegment);
-    }
-
-    /**
-     * @return Route
-     */
-    private function createRoute(Redirect $redirect)
-    {
-        $needsUtf8 = false;
-        foreach ([$redirect->getOrigin(), $redirect->getTarget()] as $item) {
-            if (preg_match('/[\x80-\xFF]/', $item)) {
-                $needsUtf8 = true;
-
-                break;
-            }
-        }
-
-        return new Route(
-            $redirect->getOrigin(), [
-                '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
-                'path' => $redirect->getTarget(),
-                'permanent' => $redirect->isPermanent(),
-            ], [], ['utf8' => $needsUtf8]);
-    }
-
-    /**
-     * @return Route
-     */
-    private function createWildcardRoute(Redirect $redirect)
-    {
-        $origin = $redirect->getOrigin();
-        $target = $redirect->getTarget();
-        $url = $this->context->getPathInfo();
-        $needsUtf8 = preg_match('/[\x80-\xFF]/', $redirect->getTarget());
-
-        $origin = rtrim($origin, '/*');
-        $target = rtrim($target, '/');
-        $targetPath = str_replace($origin, $target, $url);
-
-        $this->context->setPathInfo($targetPath);
-
-        return new Route($url, [
-            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
-            'path' => $targetPath,
-            'permanent' => $redirect->isPermanent(),
-        ], [], ['utf8' => $needsUtf8]);
+        // The route collection will always be populated with matched redirects based on the current request. If this
+        // method is called before the url matching has been executed, the collection will be empty.
+        return $this->routeCollection ?? new RouteCollection();
     }
 
     public function getContext(): RequestContext
@@ -218,12 +117,6 @@ class RedirectRouter implements RouterInterface
 
     private function initRouteCollection(string $pathInfo): void
     {
-        if (false === $this->enableImprovedRouter) {
-            trigger_deprecation('kunstmaan/redirect-bundle', '6.3', 'Not enabling the improved router is deprecated and the changed and improved redirect logic will be the default in 7.0. Set the "kunstmaan_redirect.enable_improved_router" config to true.');
-
-            return;
-        }
-
         if (null !== $this->routeCollection) {
             return;
         }
@@ -260,15 +153,5 @@ class RedirectRouter implements RouterInterface
         ], [], ['utf8' => $needsUtf8]);
 
         $this->routeCollection->add('_redirect_route_' . $redirect->getId(), $route);
-    }
-
-    /**
-     * NEXT_MAJOR: Remove method/property
-     *
-     * @interal
-     */
-    public function enableImprovedRouter(bool $enabled): void
-    {
-        $this->enableImprovedRouter = $enabled;
     }
 }
