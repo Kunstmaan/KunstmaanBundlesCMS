@@ -6,6 +6,11 @@ General
 
 - The supported Symfony version is 5.4.
 
+FormBundle
+----------
+
+- Not passing the required services to `Kunstmaan\FormBundle\Helper\FormHandler::__construct` is deprecated and those parameters will be required in 7.0. Injected the required services in the constructor instead.
+
 MultidomainBundle
 -----------------
 

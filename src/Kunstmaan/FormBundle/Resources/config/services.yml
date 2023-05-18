@@ -11,7 +11,12 @@ services:
 
     kunstmaan_form.form_handler:
         class: Kunstmaan\FormBundle\Helper\FormHandler
-        arguments: ['@service_container']
+        arguments:
+            - '@service_container'
+            - '@doctrine.orm.entity_manager'
+            - '@form.factory'
+            - '@router'
+            - '@event_dispatcher'
         public: true
 
     kunstmaan_form.configure_sub_actions_menu_listener:
