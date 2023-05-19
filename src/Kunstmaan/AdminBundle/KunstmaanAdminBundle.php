@@ -13,13 +13,10 @@ use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * KunstmaanAdminBundle
- */
 class KunstmaanAdminBundle extends Bundle
 {
     /**
-     * @param ContainerBuilder $container A ContainerBuilder instance
+     * @return void
      */
     public function build(ContainerBuilder $container)
     {

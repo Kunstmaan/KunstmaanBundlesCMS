@@ -13,6 +13,8 @@ class MediaValidator extends ConstraintValidator
     /**
      * @param MediaObject $value
      *
+     * @return void
+     *
      * @throws ConstraintDefinitionException
      */
     public function validate($value, Constraint $constraint)
@@ -48,7 +50,7 @@ class MediaValidator extends ConstraintValidator
         $this->validateDimensions($value, $constraint);
     }
 
-    private function validateMimeType(MediaObject $value, $allowedMimeTypes)
+    private function validateMimeType(MediaObject $value, $allowedMimeTypes): bool
     {
         $mimeType = strtolower($value->getContentType());
 
@@ -68,7 +70,7 @@ class MediaValidator extends ConstraintValidator
         return false;
     }
 
-    private function validateDimensions(MediaObject $value, Media $constraint)
+    private function validateDimensions(MediaObject $value, Media $constraint): void
     {
         $height = $value->getMetadataValue('original_height');
         $width = $value->getMetadataValue('original_width');

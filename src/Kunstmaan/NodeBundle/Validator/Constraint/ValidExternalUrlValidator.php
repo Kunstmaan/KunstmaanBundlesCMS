@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 final class ValidExternalUrlValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (strpos($value, '#') === 0) {
             return;

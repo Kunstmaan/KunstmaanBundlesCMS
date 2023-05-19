@@ -22,11 +22,17 @@ class BundleVersionDataCollector extends AbstractDataCollector
         $this->cache = $cache;
     }
 
+    /**
+     * @return array
+     */
     public function getAccessRoles()
     {
         return ['ROLE_SUPER_ADMIN'];
     }
 
+    /**
+     * @return array
+     */
     public function collectData()
     {
         $this->versionChecker->periodicallyCheck();
@@ -42,6 +48,9 @@ class BundleVersionDataCollector extends AbstractDataCollector
         ];
     }
 
+    /**
+     * @return void
+     */
     public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         if (!$this->isEnabled()) {
@@ -69,11 +78,17 @@ class BundleVersionDataCollector extends AbstractDataCollector
         return 'kuma_bundle_versions';
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return $this->versionChecker->isEnabled();
     }
 
+    /**
+     * @return void
+     */
     public function reset()
     {
         $this->data = [];
