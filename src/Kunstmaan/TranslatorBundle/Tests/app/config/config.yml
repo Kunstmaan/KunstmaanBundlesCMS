@@ -13,6 +13,9 @@ kunstmaan_admin:
     multi_language: true
     required_locales: 'nl|fr|en'
     default_locale: 'nl'
+    authentication:
+        mailer:
+            service: Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService
 
 kunstmaan_translator:
     managed_locales: ['nl','en','de']

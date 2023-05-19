@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
@@ -42,6 +44,11 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'multi_language' => true,
             'required_locales' => 'nl|fr|en',
             'default_locale' => 'nl',
+            'authentication' => [
+                'mailer' => [
+                    'service' => SymfonyMailerService::class, // NEXT_MAJOR remove this config as it will be the default
+                ],
+            ],
         ]);
 
         $this->assertContainerBuilderHasParameter('version_checker.url', 'https://kunstmaancms.be/version-check');
@@ -98,6 +105,11 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'multi_language' => true,
             'required_locales' => 'nl|fr|en',
             'default_locale' => 'nl',
+            'authentication' => [
+                'mailer' => [
+                    'service' => SymfonyMailerService::class, // NEXT_MAJOR remove this config as it will be the default
+                ],
+            ],
         ];
 
         if (array_key_exists($excludeKey, $requiredConfig)) {

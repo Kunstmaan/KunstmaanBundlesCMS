@@ -168,6 +168,12 @@ class KunstmaanAdminExtension extends Extension
 
         $loader->load('authentication.yml');
 
+        if (null === $config['authentication']['mailer']['service']) {
+            trigger_deprecation('kunstmaan/admin-bundle', '6.3', 'The default value of "kunstmaan_admin.authentication.mailer.service" will change from "%s" to "%s" in 7.0, set the config to "%s" to avoid issues when upgrading to 7.0.', SwiftmailerService::class, SymfonyMailerService::class, SymfonyMailerService::class);
+        }
+
+        $config['authentication']['mailer']['service'] ??= SwiftmailerService::class;
+
         $container->setAlias('kunstmaan_admin.authentication.mailer', $config['authentication']['mailer']['service']);
 
         // Validate mailer config
@@ -181,6 +187,10 @@ class KunstmaanAdminExtension extends Extension
 
         if ($config['authentication']['mailer']['service'] === SwiftmailerService::class && !class_exists(SwiftmailerBundle::class)) {
             throw new LogicException('Swiftmailer support for the authentication mailer cannot be enabled as the component is not installed. Try running "composer require symfony/swiftmailer-bundle".');
+        }
+
+        if ($config['authentication']['mailer']['service'] === SwiftmailerService::class) {
+            trigger_deprecation('kunstmaan/admin-bundle', '6.3', 'The swiftmailer service for config "kunstmaan_admin.authentication.mailer.service" is deprecated, use "%s" service instead.', SymfonyMailerService::class);
         }
 
         // Cleanup mailer services
