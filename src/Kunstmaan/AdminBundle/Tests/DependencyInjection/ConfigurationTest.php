@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\DependencyInjection;
 use Kunstmaan\AdminBundle\DependencyInjection\Configuration;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -45,7 +46,7 @@ class ConfigurationTest extends TestCase
             'user_class' => User::class,
             'group_class' => Group::class,
             'mailer' => [
-                'service' => null,
+                'service' => SymfonyMailerService::class,
                 'from_address' => 'kunstmaancms@myproject.dev',
                 'from_name' => 'Kunstmaan CMS',
             ],

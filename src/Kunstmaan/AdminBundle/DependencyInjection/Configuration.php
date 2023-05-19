@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -35,7 +36,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('mailer')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('service')->defaultNull()->end() // NEXT_MAJOR: switch default value to SymfonyMailerService::class
+                                ->scalarNode('service')->defaultValue(SymfonyMailerService::class)->end()
                                 ->scalarNode('from_address')->defaultValue('kunstmaancms@myproject.dev')->end()
                                 ->scalarNode('from_name')->defaultValue('Kunstmaan CMS')->end()
                                 ->end()

@@ -497,14 +497,4 @@ class KunstmaanGenerator extends Generator
     {
         return $this->container->getParameter('kernel.project_dir') . '/assets';
     }
-
-    /**
-     * NEXT_MAJOR: remove method.
-     *
-     * @internal
-     */
-    protected function isSymfony4()
-    {
-        return true;
-    }
 }

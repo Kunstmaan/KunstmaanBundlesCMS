@@ -37,9 +37,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.iconChooser.init();
         kunstmaanbundles.bulkActions.init();
         kunstmaanbundles.appLoading.init();
-        kunstmaanbundles.colorpicker.init();
         kunstmaanbundles.charactersLeft.init();
-        kunstmaanbundles.rangeslider.init();
         kunstmaanbundles.googleOAuth.init();
         kunstmaanbundles.appNodeVersionLock.init();
         kunstmaanbundles.appEntityVersionLock.init();
@@ -54,8 +52,6 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.advancedSelect.init();
         // Init new tooltips
         kunstmaanbundles.tooltip.init();
-        // Init new colorpickers
-        kunstmaanbundles.colorpicker.init();
         // Init new datepickers
         kunstmaanbundles.datepicker.reInit();
     };
