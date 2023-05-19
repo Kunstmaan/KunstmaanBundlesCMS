@@ -4,9 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use Kunstmaan\AdminBundle\Attribute\AsMenuAdaptor;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService;
 use Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService;
-use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -168,46 +166,20 @@ class KunstmaanAdminExtension extends Extension
 
         $loader->load('authentication.yml');
 
-        if (null === $config['authentication']['mailer']['service']) {
-            trigger_deprecation('kunstmaan/admin-bundle', '6.3', 'The default value of "kunstmaan_admin.authentication.mailer.service" will change from "%s" to "%s" in 7.0, set the config to "%s" to avoid issues when upgrading to 7.0.', SwiftmailerService::class, SymfonyMailerService::class, SymfonyMailerService::class);
-        }
-
-        $config['authentication']['mailer']['service'] ??= SwiftmailerService::class;
-
         $container->setAlias('kunstmaan_admin.authentication.mailer', $config['authentication']['mailer']['service']);
 
         // Validate mailer config
-        if (!class_exists(SwiftmailerBundle::class) && !class_exists(Mailer::class)) {
-            throw new LogicException('No mail integration found to enable the authentication mailer. Try running "composer require symfony/mailer" or "composer require symfony/swiftmailer-bundle".');
+        if (!class_exists(Mailer::class)) {
+            throw new LogicException('No mail integration found to enable the authentication mailer. Try running "composer require symfony/mailer".');
         }
 
         if ($config['authentication']['mailer']['service'] === SymfonyMailerService::class && !class_exists(Mailer::class)) {
             throw new LogicException('Symfony mailer support for the authentication mailer cannot be enabled as the component is not installed. Try running "composer require symfony/mailer".');
         }
 
-        if ($config['authentication']['mailer']['service'] === SwiftmailerService::class && !class_exists(SwiftmailerBundle::class)) {
-            throw new LogicException('Swiftmailer support for the authentication mailer cannot be enabled as the component is not installed. Try running "composer require symfony/swiftmailer-bundle".');
-        }
-
-        if ($config['authentication']['mailer']['service'] === SwiftmailerService::class) {
-            trigger_deprecation('kunstmaan/admin-bundle', '6.3', 'The swiftmailer service for config "kunstmaan_admin.authentication.mailer.service" is deprecated, use "%s" service instead.', SymfonyMailerService::class);
-        }
-
         // Cleanup mailer services
-        if (!class_exists(SwiftmailerBundle::class)) {
-            $container->removeDefinition(SwiftmailerService::class);
-        }
-
         if (!class_exists(Mailer::class)) {
             $container->removeDefinition(SymfonyMailerService::class);
-        }
-
-        if ($container->hasDefinition(SwiftmailerService::class)) {
-            $definition = $container->getDefinition(SwiftmailerService::class);
-            $definition
-                ->setArgument(4, $config['authentication']['mailer']['from_address'])
-                ->setArgument(5, $config['authentication']['mailer']['from_name'])
-            ;
         }
 
         $mailerAddress = $container->getDefinition('kunstmaan_admin.mailer.default_sender');

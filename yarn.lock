@@ -1810,13 +1810,6 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
-bootstrap-colorpicker@^2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/bootstrap-colorpicker/-/bootstrap-colorpicker-2.5.3.tgz#b50aff8590fbaa6b5aa63a5624e4213f1659a49d"
-  integrity sha512-xdllX8LSMvKULs3b8JrgRXTvyvjkSMHHHVuHjjN5FNMqr6kRe5NPiMHFmeAFjlgDF73MspikudLuEwR28LbzLw==
-  dependencies:
-    jquery ">=1.10"
-
 bootstrap-sass@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.4.1.tgz#6843c73b1c258a0ac5cb2cc6f6f5285b664a8e9a"
@@ -5206,7 +5199,7 @@ jquery.typewatch@^3.0.0:
   resolved "https://registry.yarnpkg.com/jquery.typewatch/-/jquery.typewatch-3.0.0.tgz#cb4580c3f2c1d46434ec1788d2698d1b87a5dd1d"
   integrity sha512-ilAYTK5Gztn8NIzGH2fsV38o3NrCks7EmKgS3I9oqavVFXUwDjNcbIsrPobunnP4nmttQDXHSsoLw1R0aUvy/Q==
 
-jquery@>=1.10, jquery@>=1.9.1, jquery@^3.5.1:
+jquery@>=1.9.1, jquery@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==

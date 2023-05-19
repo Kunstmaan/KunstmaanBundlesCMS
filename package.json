@@ -63,7 +63,6 @@
     "@fortawesome/fontawesome-free": "^5.5.0",
     "@snipsonian/scss": "1.8.2",
     "svgxuse": "^1.2.6",
-    "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-sass": "^3.4.1",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
     "cropperjs": "^1.5.6",
