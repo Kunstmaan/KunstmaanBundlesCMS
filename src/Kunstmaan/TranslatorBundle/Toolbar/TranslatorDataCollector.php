@@ -72,6 +72,9 @@ class TranslatorDataCollector extends AbstractDataCollector
         return ['data' => $data];
     }
 
+    /**
+     * @return void
+     */
     public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {
@@ -107,6 +110,9 @@ class TranslatorDataCollector extends AbstractDataCollector
         return true;
     }
 
+    /**
+     * @return void
+     */
     public function reset()
     {
         $this->data = [];

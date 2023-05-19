@@ -54,6 +54,8 @@ class PasswordRestrictionsValidator extends ConstraintValidator
      *
      * @param string     $value      The value that should be validated
      * @param Constraint $constraint The constraint for the validation
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
@@ -89,7 +91,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
     /**
      * @param string $value
      */
-    private function validateMinLength($value)
+    private function validateMinLength($value): void
     {
         if (\strlen($value) < $this->minLength) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MIN_LENGTH)
@@ -102,7 +104,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
     /**
      * @param string $value
      */
-    private function validateMaxLength($value)
+    private function validateMaxLength($value): void
     {
         if (\strlen($value) > $this->maxLength) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MAX_LENGTH)
@@ -115,7 +117,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
     /**
      * @param string $value
      */
-    private function validateMinDigits($value)
+    private function validateMinDigits($value): void
     {
         if (preg_match_all('/\d/', $value) < $this->minDigits) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MIN_DIGITS)
@@ -128,7 +130,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
     /**
      * @param string $value
      */
-    private function validateMinUppercase($value)
+    private function validateMinUppercase($value): void
     {
         if (preg_match_all('/[A-Z]/', $value) < $this->minUppercase) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MIN_UPPERCASE)
@@ -141,7 +143,7 @@ class PasswordRestrictionsValidator extends ConstraintValidator
     /**
      * @param string $value
      */
-    private function validateMinSpecialCharacters($value)
+    private function validateMinSpecialCharacters($value): void
     {
         if (preg_match_all('/[^a-zA-Z0-9]/', $value) < $this->minSpecialCharacters) {
             $this->context->buildViolation(PasswordRestrictions::MESSAGE_MIN_SPECIAL_CHARACTERS)

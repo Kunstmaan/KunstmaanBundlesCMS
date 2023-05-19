@@ -35,7 +35,7 @@ class NodeDataCollector extends AbstractDataCollector
     }
 
     /**
-     * @return array|null
+     * @return array
      */
     public function collectData()
     {
@@ -57,6 +57,9 @@ class NodeDataCollector extends AbstractDataCollector
         return [];
     }
 
+    /**
+     * @return void
+     */
     public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {
@@ -92,6 +95,9 @@ class NodeDataCollector extends AbstractDataCollector
         return true;
     }
 
+    /**
+     * @return void
+     */
     public function reset()
     {
         $this->data = [];
