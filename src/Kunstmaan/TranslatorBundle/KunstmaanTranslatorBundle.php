@@ -8,6 +8,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KunstmaanTranslatorBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

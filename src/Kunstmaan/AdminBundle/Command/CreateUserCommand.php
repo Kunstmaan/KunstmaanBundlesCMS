@@ -140,15 +140,7 @@ EOT
         return 0;
     }
 
-    /**
-     * Interacts with the user.
-     *
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         if (!$input->getArgument('username')) {
             $question = new Question('Please choose a username:');

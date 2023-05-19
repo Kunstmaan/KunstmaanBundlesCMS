@@ -116,11 +116,7 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * Sets the request context.
-     *
-     * @param RequestContext $context The context
-     *
-     * @api
+     * @return void
      */
     public function setContext(RequestContext $context)
     {
