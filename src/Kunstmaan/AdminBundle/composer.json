@@ -52,7 +52,7 @@
         "symfony/yaml": "^5.4",
         "twig/twig": "^1.40|^2.9",
         "twig/extensions": "~1.0",
-        "sensio/framework-extra-bundle": "^5.0|^6.0"
+        "sensio/framework-extra-bundle": "^6.0"
     },
     "suggest": {
         "kunstmaan/translator-bundle": "^5.9|^6.0",
