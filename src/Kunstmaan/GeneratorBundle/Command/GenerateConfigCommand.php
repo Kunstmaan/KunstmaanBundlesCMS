@@ -4,6 +4,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\ConfigGenerator;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Generates config files
@@ -34,7 +35,9 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {
@@ -123,7 +126,7 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
      */
     protected function createGenerator()
     {
-        $filesystem = $this->getContainer()->get('filesystem');
+        $filesystem = new Filesystem();
         $registry = $this->getContainer()->get('doctrine');
 
         return new ConfigGenerator($filesystem, $registry, '/config', $this->assistant, $this->getContainer(), $this->newAuthentication);

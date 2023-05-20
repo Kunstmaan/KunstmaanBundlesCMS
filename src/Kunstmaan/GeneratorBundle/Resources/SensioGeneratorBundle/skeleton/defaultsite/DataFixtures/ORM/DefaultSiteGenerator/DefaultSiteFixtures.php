@@ -761,14 +761,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         return 51;
     }
 
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null): void
     {
         $this->container = $container;
     }

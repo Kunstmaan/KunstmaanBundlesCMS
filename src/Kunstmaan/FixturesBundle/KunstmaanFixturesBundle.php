@@ -11,6 +11,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KunstmaanFixturesBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

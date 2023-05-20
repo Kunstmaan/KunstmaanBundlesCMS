@@ -7,6 +7,7 @@ use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -45,7 +46,9 @@ class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {
@@ -180,7 +183,7 @@ EOT
      */
     protected function createGenerator()
     {
-        $filesystem = $this->getContainer()->get('filesystem');
+        $filesystem = new Filesystem();
         $registry = $this->getContainer()->get('doctrine');
 
         return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant, $this->getContainer(), $this->doctrineHelper);
