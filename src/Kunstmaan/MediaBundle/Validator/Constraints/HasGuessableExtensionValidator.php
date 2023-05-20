@@ -21,6 +21,8 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     }
 
     /**
+     * @return void
+     *
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
      */

@@ -59,24 +59,12 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
         $pageCreator->createPage($sitemapPage, $translations, $options);
     }
 
-    /**
-     * Get the order of this fixture
-     *
-     * @return int
-     */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 90;
     }
 
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null): void
     {
         $this->container = $container;
     }

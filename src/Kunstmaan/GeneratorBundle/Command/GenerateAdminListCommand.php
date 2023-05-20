@@ -21,7 +21,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {
@@ -86,10 +88,7 @@ EOT
     }
 
     /**
-     * Interacts with the user.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {

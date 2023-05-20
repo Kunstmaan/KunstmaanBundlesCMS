@@ -10,6 +10,7 @@ use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Generates a SearchPage based on the KunstmaanNodeSearchBundle
@@ -27,7 +28,9 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {
@@ -94,6 +97,9 @@ EOT
         return 0;
     }
 
+    /**
+     * @return void
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $questionHelper = $this->getQuestionHelper();
@@ -105,6 +111,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new SearchPageGenerator($this->getContainer()->get('filesystem'), '/searchpage', $this->getContainer()->getParameter('kernel.project_dir'), $this->doctrineHelper);
+        return new SearchPageGenerator(new Filesystem(), '/searchpage', $this->getContainer()->getParameter('kernel.project_dir'), $this->doctrineHelper);
     }
 }
