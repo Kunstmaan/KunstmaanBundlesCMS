@@ -8,6 +8,7 @@ use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * GenerateAdminTestsCommand
@@ -57,6 +58,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new AdminTestsGenerator($this->getContainer(), $this->getContainer()->get('filesystem'), '/admintests');
+        return new AdminTestsGenerator($this->getContainer(), new Filesystem(), '/admintests');
     }
 }

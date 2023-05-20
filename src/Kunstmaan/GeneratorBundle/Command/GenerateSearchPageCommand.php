@@ -10,6 +10,7 @@ use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Generates a SearchPage based on the KunstmaanNodeSearchBundle
@@ -110,6 +111,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new SearchPageGenerator($this->getContainer()->get('filesystem'), '/searchpage', $this->getContainer()->getParameter('kernel.project_dir'), $this->doctrineHelper);
+        return new SearchPageGenerator(new Filesystem(), '/searchpage', $this->getContainer()->getParameter('kernel.project_dir'), $this->doctrineHelper);
     }
 }
