@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper;
 
 use Kunstmaan\AdminBundle\Entity\UserInterface;
+use Monolog\LogRecord;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -28,9 +29,11 @@ class UserProcessor
     }
 
     /**
+     * NEXT_MAJOR Remove parameter union type when monolog 2 support is removed
+     *
      * @return array
      */
-    public function processRecord(array $record)
+    public function processRecord(array|LogRecord $record)
     {
         if (\is_null($this->user)) {
             if (($this->tokenStorage !== null) && ($this->tokenStorage->getToken() !== null) && ($this->tokenStorage->getToken()->getUser() instanceof UserInterface)) {
@@ -42,6 +45,15 @@ class UserProcessor
             }
         }
 
-        return array_merge($record, $this->record);
+        if (isset($this->record['extra']['user'])) {
+            if ($record instanceof LogRecord) {
+                $record->extra['user'] = $this->record['extra']['user'];
+            } else {
+                // NEXT_MAJOR Remove when monolog 2 support is removed
+                $record = array_merge($record, $this->record);
+            }
+        }
+
+        return $record;
     }
 }

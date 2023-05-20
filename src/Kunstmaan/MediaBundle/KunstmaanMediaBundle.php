@@ -6,13 +6,10 @@ use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * KunstmaanMediaBundle
- */
 class KunstmaanMediaBundle extends Bundle
 {
     /**
-     * @param ContainerBuilder $container A ContainerBuilder instance
+     * @return void
      */
     public function build(ContainerBuilder $container)
     {

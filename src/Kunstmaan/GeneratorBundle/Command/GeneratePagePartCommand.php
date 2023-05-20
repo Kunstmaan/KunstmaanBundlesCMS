@@ -4,6 +4,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -42,7 +43,9 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     private $behatTest;
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {
@@ -185,7 +188,7 @@ EOT
      */
     protected function createGenerator()
     {
-        $filesystem = $this->getContainer()->get('filesystem');
+        $filesystem = new Filesystem();
         $registry = $this->getContainer()->get('doctrine');
 
         return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer());

@@ -7,11 +7,11 @@ use Kunstmaan\SearchBundle\DependencyInjection\Compiler\SearchProviderCompilerPa
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * KunstmaanSearchBundle
- */
 class KunstmaanSearchBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

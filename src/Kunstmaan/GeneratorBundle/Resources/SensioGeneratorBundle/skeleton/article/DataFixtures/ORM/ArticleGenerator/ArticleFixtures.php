@@ -135,24 +135,12 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
         }
     }
 
-    /**
-     * Get the order of this fixture
-     *
-     * @return int
-     */
-    public function getOrder()
+    public function getOrder(): int
 {
     return 60;
 }
 
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null): void
 {
     $this->container = $container;
 }

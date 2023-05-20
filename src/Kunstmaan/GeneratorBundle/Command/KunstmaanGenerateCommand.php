@@ -29,10 +29,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     protected $assistant;
 
     /**
-     * Interacts with the user.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
