@@ -4,11 +4,9 @@ services:
         tags:
             -  { name: kunstmaan_admin.menu.adaptor }
 
-    kunstmaan_mailer: '@swiftmailer.mailer'
-
     kunstmaan_form.form_mailer:
         class: Kunstmaan\FormBundle\Helper\FormMailer
-        arguments: ['@kunstmaan_mailer', '@twig', '@request_stack']
+        arguments: ['@mailer', '@twig', '@request_stack']
         public: true
 
     kunstmaan_form.form_handler:
