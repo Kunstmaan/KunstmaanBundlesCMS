@@ -222,7 +222,7 @@
 
                     {% if adminlist.count > 0 %}
                         {% if adminlist.pagerfanta.haveToPaginate() %}
-                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
                         {% else %}
                             <div class="row row--padded"></div>
                         {% endif %}
@@ -292,7 +292,7 @@
                             {% endfor %}
                         </div>
                         {% if adminlist.pagerfanta.haveToPaginate() %}
-                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
                         {% endif %}
                         <p id="dnd-area-link" class="text--muted">
                             <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}

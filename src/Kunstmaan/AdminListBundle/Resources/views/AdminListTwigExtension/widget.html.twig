@@ -158,7 +158,7 @@
 {% endif %}
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
 {% endif %}
 
 {% for item in adminlist.items(extraparams) %}
