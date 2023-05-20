@@ -196,7 +196,7 @@ class PagePartAdmin
         }
 
         // Sort pageparts again
-        $sequences = $request->request->get($this->context . '_sequence');
+        $sequences = $request->request->all($this->context . '_sequence');
         if (!\is_null($sequences)) {
             $tempPageparts = $this->pageParts;
             $this->pageParts = [];
@@ -241,7 +241,7 @@ class PagePartAdmin
         $ppRefRepo = $this->em->getRepository(PagePartRef::class);
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
-        $sequences = $request->request->get($this->context . '_sequence', []);
+        $sequences = $request->request->all($this->context . '_sequence');
         $sequencescount = \count($sequences);
         for ($i = 0; $i < $sequencescount; ++$i) {
             $pagePartRefId = $sequences[$i];
