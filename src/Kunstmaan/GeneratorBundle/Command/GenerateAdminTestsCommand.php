@@ -16,6 +16,8 @@ class GenerateAdminTestsCommand extends GeneratorCommand
 {
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {

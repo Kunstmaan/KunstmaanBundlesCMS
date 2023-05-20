@@ -42,6 +42,11 @@ final class InstallCommand extends GeneratorCommand
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @return void
+     */
     protected function configure()
     {
         $this
@@ -73,6 +78,9 @@ final class InstallCommand extends GeneratorCommand
         $this->assistant->setInput($input);
     }
 
+    /**
+     * @return void
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $this->initAssistant($input, $output);

@@ -54,7 +54,9 @@ class GenerateFormPageCommand extends KunstmaanGenerateCommand
     private $generateFormPageParts;
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {

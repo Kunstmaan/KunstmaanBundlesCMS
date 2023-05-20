@@ -47,7 +47,9 @@ class GeneratePageCommand extends KunstmaanGenerateCommand
     private $parentPages = [];
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {

@@ -19,7 +19,9 @@ class GenerateLayoutCommand extends KunstmaanGenerateCommand
     private $browserSyncUrl;
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {

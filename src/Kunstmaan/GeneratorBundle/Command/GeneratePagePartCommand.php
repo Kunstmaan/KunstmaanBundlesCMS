@@ -42,7 +42,9 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     private $behatTest;
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {

@@ -25,6 +25,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
      *
      * @param ContainerInterface|null $container A ContainerInterface instance or null
      *
+     * @return void
+     *
      * @api
      */
     public function setContainer(ContainerInterface $container = null)

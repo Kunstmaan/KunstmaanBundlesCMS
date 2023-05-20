@@ -27,7 +27,9 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {
@@ -94,6 +96,9 @@ EOT
         return 0;
     }
 
+    /**
+     * @return void
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $questionHelper = $this->getQuestionHelper();

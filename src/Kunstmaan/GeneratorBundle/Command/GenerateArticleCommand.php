@@ -67,7 +67,9 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
     }
 
     /**
-     * @see Command
+     * {@inheritdoc}
+     *
+     * @return void
      */
     protected function configure()
     {

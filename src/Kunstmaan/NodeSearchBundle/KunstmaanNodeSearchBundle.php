@@ -6,11 +6,11 @@ use Kunstmaan\NodeSearchBundle\DependencyInjection\Compiler\NodeSearcherCompiler
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * KunstmaanNodeSearchBundle
- */
 class KunstmaanNodeSearchBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new NodeSearcherCompilerPass());
