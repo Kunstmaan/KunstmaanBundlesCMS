@@ -17,8 +17,8 @@
         "kunstmaan/adminlist-bundle": "^5.9|^6.0",
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
-        "pagerfanta/core": "^2.4",
-        "pagerfanta/twig": "^2.4"
+        "pagerfanta/core": "^3.8",
+        "pagerfanta/twig": "^3.8"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",

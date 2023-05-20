@@ -24,8 +24,8 @@
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/search-bundle": "^5.9|^6.0",
-        "pagerfanta/core": "^2.4",
-        "pagerfanta/twig": "^2.4",
+        "pagerfanta/core": "^3.8",
+        "pagerfanta/twig": "^3.8",
         "ruflin/elastica": "^7.0"
     },
     "require-dev": {

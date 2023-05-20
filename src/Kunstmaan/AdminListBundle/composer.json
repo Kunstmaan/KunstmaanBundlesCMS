@@ -17,10 +17,10 @@
         "openspout/openspout": "^4.0",
         "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/utilities-bundle": "^5.10|^6.0",
-        "pagerfanta/core": "^2.4",
-        "pagerfanta/doctrine-orm-adapter": "^2.4",
-        "pagerfanta/doctrine-dbal-adapter": "^2.7",
-        "pagerfanta/twig": "^2.4"
+        "pagerfanta/core": "^3.8",
+        "pagerfanta/doctrine-orm-adapter": "^3.8",
+        "pagerfanta/doctrine-dbal-adapter": "^3.8",
+        "pagerfanta/twig": "^3.8"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
