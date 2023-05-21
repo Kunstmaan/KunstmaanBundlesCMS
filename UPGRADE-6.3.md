@@ -9,6 +9,8 @@ General
   To avoid any BC breaks the `Kunstmaan\FormBundle\Helper\FormMailer` still uses swiftmailer as the default mailer. 
   If you want to supress the deprecation warning, alias `@kunstmaan_mailer` to the symfony mailer service. 
   In 7.0 `@kunstmaan_mailer` will be removed and the symfony mailer will be used by default.
+- We replaced the abandoned `twig/extensions` packages by the replacement sub packages. If you use any of the twig filters/functions
+  of the `twig/extensions` package, make sure to require the necessary replacement package in your project.
 
 AdminBundle
 -----------

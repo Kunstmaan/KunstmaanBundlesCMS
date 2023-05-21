@@ -50,8 +50,7 @@
         "symfony/twig-bundle": "^5.4",
         "symfony/validator": "^5.4",
         "symfony/yaml": "^5.4",
-        "twig/twig": "^1.40|^2.9",
-        "twig/extensions": "~1.0",
+        "twig/twig": "^3.6",
         "sensio/framework-extra-bundle": "^6.0"
     },
     "suggest": {
