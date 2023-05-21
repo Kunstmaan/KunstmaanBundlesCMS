@@ -54,7 +54,7 @@
                             {% if searchresult['highlight'] is defined %}
                                 {{ searchresult['highlight']['content'][0] | raw }}
                             {% else %}
-                                {{ searchresult['_source']['content'] | truncate(300) | escape('html') }}
+                                {{ searchresult['_source']['content'] | u.truncate(300) | escape('html') }}
                             {% endif %}
                         </p>
                         <nav class="breadcrumb">

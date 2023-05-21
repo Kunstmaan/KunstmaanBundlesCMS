@@ -23,10 +23,7 @@ final class AdminBundleTwigExtension extends AbstractExtension implements Global
         $this->requiredLocales = $requiredLocales;
     }
 
-    /**
-     * @return array
-     */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'websitetitle' => $this->websiteTitle,

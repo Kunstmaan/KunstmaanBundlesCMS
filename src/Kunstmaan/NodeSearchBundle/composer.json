@@ -26,7 +26,9 @@
         "kunstmaan/search-bundle": "^5.9|^6.0",
         "pagerfanta/core": "^3.8",
         "pagerfanta/twig": "^3.8",
-        "ruflin/elastica": "^7.0"
+        "ruflin/elastica": "^7.0",
+        "twig/extra-bundle": "^3.6",
+        "twig/string-extra": "^3.6"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
