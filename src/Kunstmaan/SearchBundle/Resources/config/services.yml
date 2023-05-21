@@ -52,6 +52,3 @@ services:
         tags:
             - { name: console.command }
 
-    Twig\Extensions\TextExtension:
-        tags:
-            - { name: twig.extension }
