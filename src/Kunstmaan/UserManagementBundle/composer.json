@@ -14,7 +14,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/adminlist-bundle": "^5.9|^6.0"
     },
