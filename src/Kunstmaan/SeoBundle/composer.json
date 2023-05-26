@@ -15,10 +15,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.0",
-        "kunstmaan/admin-bundle": "^5.9|^6.0",
-        "kunstmaan/media-bundle": "^5.9|^6.0",
-        "kunstmaan/node-bundle": "^5.9|^6.0",
-        "kunstmaan/utilities-bundle": "^5.9|^6.0"
+        "kunstmaan/admin-bundle": "^6.3|^7.0",
+        "kunstmaan/media-bundle": "^6.3|^7.0",
+        "kunstmaan/node-bundle": "^6.3|^7.0",
+        "kunstmaan/utilities-bundle": "^6.3|^7.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",

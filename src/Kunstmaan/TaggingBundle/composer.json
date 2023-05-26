@@ -15,10 +15,10 @@
     "require": {
         "php": "^8.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
-        "kunstmaan/admin-bundle": "^5.9|^6.0",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
-        "kunstmaan/node-bundle": "^5.9|^6.0",
-        "kunstmaan/pagepart-bundle": "^5.9|^6.0"
+        "kunstmaan/admin-bundle": "^6.3|^7.0",
+        "kunstmaan/adminlist-bundle": "^6.3|^7.0",
+        "kunstmaan/node-bundle": "^6.3|^7.0",
+        "kunstmaan/pagepart-bundle": "^6.3|^7.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",

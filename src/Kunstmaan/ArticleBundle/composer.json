@@ -14,9 +14,9 @@
     ],
     "require": {
         "php": "^8.0",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
-        "kunstmaan/node-bundle": "^5.9|^6.0",
-        "kunstmaan/pagepart-bundle": "^5.9|^6.0",
+        "kunstmaan/adminlist-bundle": "^6.3|^7.0",
+        "kunstmaan/node-bundle": "^6.3|^7.0",
+        "kunstmaan/pagepart-bundle": "^6.3|^7.0",
         "pagerfanta/core": "^2.4",
         "pagerfanta/twig": "^2.4"
     },
