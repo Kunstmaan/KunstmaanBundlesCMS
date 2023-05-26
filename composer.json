@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "symfony/acl-bundle": "^2.0",
         "symfony/cache": "^5.4",
         "symfony/config": "^5.4",

@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "openspout/openspout": "^4.0",
         "kunstmaan/admin-bundle": "^6.1",
         "kunstmaan/utilities-bundle": "^5.10|^6.0",

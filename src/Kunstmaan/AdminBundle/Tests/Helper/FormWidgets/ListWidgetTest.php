@@ -14,8 +14,7 @@ class ListWidgetTest extends TestCase
 {
     public function testWidget()
     {
-        $views = new \ArrayIterator();
-        $views->vars = ['errors' => [new FormError('bang')]];
+        $views['vars'] = ['errors' => [new FormError('bang')]];
         $view = new FakeView();
         $view->offsetSet('a', $views);
 
