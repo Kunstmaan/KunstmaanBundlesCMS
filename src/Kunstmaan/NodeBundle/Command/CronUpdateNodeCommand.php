@@ -61,7 +61,7 @@ final class CronUpdateNodeCommand extends Command
 
                     // Set user security context
                     $user = $queuedNodeTranslationAction->getUser();
-                    $runAsToken = new UsernamePasswordToken($user, null, 'foo', $user->getRoles());
+                    $runAsToken = new UsernamePasswordToken($user, 'foo', $user->getRoles());
                     $this->tokenStorage->setToken($runAsToken);
 
                     $nodeTranslation = $queuedNodeTranslationAction->getNodeTranslation();

@@ -27,13 +27,13 @@
         "kunstmaan/node-bundle": "^5.9|^6.0",
         "kunstmaan/pagepart-bundle": "^5.9|^6.0",
         "kunstmaan/utilities-bundle": "^5.9|^6.0",
-        "symfony/string": "^5.4",
-        "symfony/mime": "^5.4"
+        "symfony/string": "^5.4|^6.2",
+        "symfony/mime": "^5.4|^6.2"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^6.1",
+        "symfony/phpunit-bridge": "^6.2",
         "phpunit/phpunit": "^9.5.5"
     },
     "conflict": {

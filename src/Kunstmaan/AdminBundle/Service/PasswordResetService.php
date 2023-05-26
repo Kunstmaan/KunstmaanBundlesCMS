@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class PasswordResetService
 {
@@ -36,7 +36,7 @@ class PasswordResetService
         $user = $this->userManager->findUserByUsernameOrEmail($email);
 
         if (null === $user) {
-            throw new UsernameNotFoundException(sprintf('No user not found with identifier "%s"', $email));
+            throw new UserNotFoundException(sprintf('No user not found with identifier "%s"', $email));
         }
 
         $this->userManager->setResetToken($user);

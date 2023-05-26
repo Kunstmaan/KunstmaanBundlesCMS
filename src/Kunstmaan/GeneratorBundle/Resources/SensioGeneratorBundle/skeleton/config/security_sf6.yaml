@@ -2,7 +2,7 @@ acl:
     connection: default
 
 security:
-    encoders:
+    password_hashers:
         Kunstmaan\AdminBundle\Entity\UserInterface: bcrypt
 
     role_hierarchy:
@@ -25,8 +25,7 @@ security:
             logout:
                 path: kunstmaan_admin_logout
                 target: KunstmaanAdminBundle_homepage
-                csrf_token_generator: 'security.csrf.token_manager'
-            anonymous: true
+                csrf_token_manager: 'security.csrf.token_manager'
             remember_me:
                 secret:   "%kernel.secret%"
                 lifetime: 604800
@@ -37,6 +36,6 @@ security:
             security: false
 
     access_control:
-        - { path: ^/([^/]*)/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/([^/]*)/admin/password-reset, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/([^/]*)/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/([^/]*)/admin/password-reset, role: PUBLIC_ACCESS }
         - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }
