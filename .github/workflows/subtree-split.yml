@@ -5,6 +5,7 @@ on:
         branches:
             - '5.*'
             - '6.*'
+            - '7.*'
     create:
         tags:
             - '*'
