@@ -42,9 +42,6 @@ EOT
             ->setName('kuma:generate:layout');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         if (!$this->isSubCommand()) {
@@ -54,9 +51,6 @@ EOT
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         if (!$this->isSubCommand()) {
@@ -73,9 +67,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         if (!$this->isSubCommand()) {

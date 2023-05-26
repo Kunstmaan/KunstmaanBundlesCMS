@@ -101,17 +101,11 @@ class OnExitIntentRule extends AbstractRule
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsObjectClass()
     {
         return 'OnExitIntentRule';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsProperties()
     {
         return [
@@ -121,9 +115,6 @@ class OnExitIntentRule extends AbstractRule
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsFilePath()
     {
         return '/bundles/kunstmaanleadgeneration/js/rule/OnExitIntentRule.js';

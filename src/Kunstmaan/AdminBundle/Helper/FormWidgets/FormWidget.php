@@ -37,7 +37,7 @@ class FormWidget implements FormWidgetInterface
     /**
      * @var FormHelper
      */
-    private $formHelper = null;
+    private $formHelper;
 
     /**
      * @var string
@@ -126,9 +126,6 @@ class FormWidget implements FormWidgetInterface
         return $this->template;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
@@ -147,7 +144,6 @@ class FormWidget implements FormWidgetInterface
     /**
      * @param string $name
      * @param string $type
-     * @param mixed  $data
      * @param array  $options
      *
      * @return FormWidget

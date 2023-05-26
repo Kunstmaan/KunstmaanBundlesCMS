@@ -86,9 +86,6 @@ EOQ;
         return null;
     }
 
-    /**
-     * @return mixed
-     */
     public function resetAllFlags()
     {
         return $this->createQueryBuilder('t')
@@ -98,9 +95,6 @@ EOQ;
             ->execute();
     }
 
-    /**
-     * @return mixed
-     */
     public function getTranslationsByLocalesAndDomains($locales, $domains)
     {
         $em = $this->getEntityManager();
@@ -128,8 +122,6 @@ EOQ;
 
     /**
      * @param null $entity
-     *
-     * @return mixed
      */
     public function flush($entity = null)
     {
@@ -140,9 +132,6 @@ EOQ;
         return $this->getEntityManager()->flush();
     }
 
-    /**
-     * @return mixed
-     */
     public function persist($entity)
     {
         return $this->getEntityManager()->persist($entity);
@@ -236,8 +225,6 @@ EOQ;
      * Removes all translations with the given translation id
      *
      * @param string $translationId
-     *
-     * @return mixed
      */
     public function removeTranslations($translationId)
     {
@@ -267,8 +254,6 @@ EOQ;
 
     /**
      * @param string $domain
-     *
-     * @return mixed
      */
     public function findDeprecatedTranslationsBeforeDate(\DateTime $date, $domain)
     {

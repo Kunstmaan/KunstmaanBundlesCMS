@@ -111,8 +111,6 @@ class AdminList
     }
 
     /**
-     * @param mixed $item
-     *
      * @return bool
      */
     public function canEdit($item)
@@ -142,8 +140,6 @@ class AdminList
     }
 
     /**
-     * @param mixed $item
-     *
      * @return array
      */
     public function getEditUrlFor($item)
@@ -157,8 +153,6 @@ class AdminList
     }
 
     /**
-     * @param mixed $item
-     *
      * @return array
      */
     public function getDeleteUrlFor($item)
@@ -175,8 +169,6 @@ class AdminList
     }
 
     /**
-     * @param mixed $item
-     *
      * @return bool
      */
     public function canDelete($item)
@@ -203,8 +195,6 @@ class AdminList
     /**
      * @param object|array $object    The object
      * @param string       $attribute The attribute
-     *
-     * @return mixed
      */
     public function getValue($object, $attribute)
     {

@@ -107,9 +107,6 @@ class LinkPagePart extends AbstractPagePart
         return '@KunstmaanPagePart/LinkPagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return LinkPagePartAdminType::class;

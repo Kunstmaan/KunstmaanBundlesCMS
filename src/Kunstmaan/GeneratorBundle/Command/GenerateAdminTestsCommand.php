@@ -14,9 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateAdminTestsCommand extends GeneratorCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -37,8 +34,6 @@ EOT
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

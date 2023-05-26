@@ -9,9 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class BanType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -25,8 +22,6 @@ class BanType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function getBlockPrefix()

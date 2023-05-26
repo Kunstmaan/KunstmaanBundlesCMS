@@ -17,7 +17,7 @@ class AdminPanel
     /**
      * @var AdminPanelActionInterface[]
      */
-    private $actions = null;
+    private $actions;
 
     /**
      * Add admin panel adaptor

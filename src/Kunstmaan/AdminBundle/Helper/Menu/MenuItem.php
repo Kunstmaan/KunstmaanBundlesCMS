@@ -65,7 +65,7 @@ class MenuItem
     /**
      * @var MenuItem[]
      */
-    private $children = null;
+    private $children;
 
     /**
      * @var array

@@ -44,8 +44,6 @@ class SimpleItemAction implements ItemActionInterface
     }
 
     /**
-     * @param mixed $item
-     *
      * @return string
      */
     public function getUrlFor($item)
@@ -59,8 +57,6 @@ class SimpleItemAction implements ItemActionInterface
     }
 
     /**
-     * @param mixed $item
-     *
      * @return string
      */
     public function getIconFor($item)
@@ -69,8 +65,6 @@ class SimpleItemAction implements ItemActionInterface
     }
 
     /**
-     * @param mixed $item
-     *
      * @return string
      */
     public function getLabelFor($item)

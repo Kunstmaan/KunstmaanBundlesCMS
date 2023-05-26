@@ -9,14 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class DeepCloneAndSaveEvent extends Event
 {
-    /**
-     * @var mixed
-     */
     private $entity;
 
-    /**
-     * @var mixed
-     */
     private $clonedEntity;
 
     /**
@@ -30,8 +24,6 @@ final class DeepCloneAndSaveEvent extends Event
     }
 
     /**
-     * @param mixed $clonedEntity
-     *
      * @return DeepCloneAndSaveEvent
      */
     public function setClonedEntity($clonedEntity)
@@ -41,17 +33,12 @@ final class DeepCloneAndSaveEvent extends Event
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getClonedEntity()
     {
         return $this->clonedEntity;
     }
 
     /**
-     * @param mixed $entity
-     *
      * @return DeepCloneAndSaveEvent
      */
     public function setEntity($entity)
@@ -61,9 +48,6 @@ final class DeepCloneAndSaveEvent extends Event
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEntity()
     {
         return $this->entity;

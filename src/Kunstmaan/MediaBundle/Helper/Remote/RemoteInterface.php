@@ -11,8 +11,6 @@ interface RemoteInterface
 
     /**
      * @param string $name
-     *
-     * @return mixed
      */
     public function setName($name);
 
@@ -23,8 +21,6 @@ interface RemoteInterface
 
     /**
      * @param string $copyright
-     *
-     * @return mixed
      */
     public function setCopyright($copyright);
 
@@ -35,8 +31,6 @@ interface RemoteInterface
 
     /**
      * @param string $description
-     *
-     * @return mixed
      */
     public function setDescription($description);
 
@@ -47,8 +41,6 @@ interface RemoteInterface
 
     /**
      * @param string $code
-     *
-     * @return mixed
      */
     public function setCode($code);
 
@@ -59,8 +51,6 @@ interface RemoteInterface
 
     /**
      * @param string $url
-     *
-     * @return mixed
      */
     public function setThumbnailUrl($url);
 
@@ -71,8 +61,6 @@ interface RemoteInterface
 
     /**
      * @param string $type
-     *
-     * @return mixed
      */
     public function setType($type);
 }

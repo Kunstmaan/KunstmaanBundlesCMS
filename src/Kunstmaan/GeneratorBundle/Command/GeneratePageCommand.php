@@ -62,17 +62,11 @@ EOT
             ->setName('kuma:generate:page');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan page generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('Page generation');
@@ -102,9 +96,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {

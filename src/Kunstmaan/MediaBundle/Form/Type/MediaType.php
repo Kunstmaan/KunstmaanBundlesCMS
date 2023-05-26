@@ -96,9 +96,6 @@ class MediaType extends AbstractType
         return 'media';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');

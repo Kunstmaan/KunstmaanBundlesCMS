@@ -571,8 +571,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @param array|object $item       The item
      * @param string       $columnName The column name
-     *
-     * @return mixed
      */
     public function getValue($item, $columnName)
     {
@@ -715,8 +713,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      * You can override this method to do some custom things you need to do when adding an entity
      *
      * @param object $entity
-     *
-     * @return mixed
      */
     public function decorateNewEntity($entity)
     {

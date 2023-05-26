@@ -109,8 +109,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $object
-     *
      * @return bool
      */
     public function canHandle($object)
@@ -212,9 +210,6 @@ class FileHandler extends AbstractMediaHandler
         $media->setRemovedFromFileSystem(true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMedia(Media $media)
     {
         $this->saveMedia($media);
@@ -239,8 +234,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $data
-     *
      * @return Media
      */
     public function createNew($data)
@@ -264,9 +257,6 @@ class FileHandler extends AbstractMediaHandler
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShowTemplate(Media $media)
     {
         return '@KunstmaanMedia/Media/File/show.html.twig';

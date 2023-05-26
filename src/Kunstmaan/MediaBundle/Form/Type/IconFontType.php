@@ -81,9 +81,6 @@ class IconFontType extends AbstractType
         $builder->setAttribute('loader_data', $options['loader_data']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['loader'] = $form->getConfig()->getAttribute('loader');

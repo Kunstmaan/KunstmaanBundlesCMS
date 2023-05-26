@@ -74,9 +74,6 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return AbstractArticlePageAdminType::class;

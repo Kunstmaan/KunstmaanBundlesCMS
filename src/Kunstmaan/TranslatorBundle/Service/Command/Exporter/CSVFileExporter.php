@@ -13,9 +13,6 @@ class CSVFileExporter implements FileExporterInterface
     /** @var array */
     private $locales;
 
-    /**
-     * {@inheritdoc}
-     */
     public function export(array $translations)
     {
         $handle = fopen('php://temp', 'rb+');
@@ -67,9 +64,6 @@ class CSVFileExporter implements FileExporterInterface
         $this->locales = $locales;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($format)
     {
         return 'csv' === $format;

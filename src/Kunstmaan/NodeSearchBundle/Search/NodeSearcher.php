@@ -25,7 +25,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     /**
      * @var TokenStorageInterface
      */
-    protected $tokenStorage = null;
+    protected $tokenStorage;
 
     /**
      * @var DomainConfigurationInterface
@@ -66,7 +66,6 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
-     * @param mixed  $query
      * @param string $type
      *
      * @return mixed|void

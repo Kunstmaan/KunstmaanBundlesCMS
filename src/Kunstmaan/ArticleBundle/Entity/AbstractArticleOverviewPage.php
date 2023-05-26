@@ -22,9 +22,6 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPagePartAdminConfigurations()
     {
         return [new AbstractArticleOverviewPagePagePartAdminConfigurator()];
@@ -32,8 +29,6 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
 
     /**
      * Return the Article repository
-     *
-     * @return mixed
      */
     abstract public function getArticleRepository(EntityManagerInterface $em);
 

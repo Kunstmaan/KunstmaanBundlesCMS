@@ -57,9 +57,6 @@ class RawHTMLPagePart extends AbstractPagePart
         return '@KunstmaanPagePart/RawHTMLPagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return RawHTMLPagePartAdminType::class;

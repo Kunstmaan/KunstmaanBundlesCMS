@@ -10,12 +10,12 @@ class PermissionDefinition
     /**
      * @var string
      */
-    private $entity = null;
+    private $entity;
 
     /**
      * @var string
      */
-    private $alias = null;
+    private $alias;
 
     /**
      * @var array

@@ -49,14 +49,8 @@ abstract class AbstractMediaHandler
      */
     abstract public function getFormType();
 
-    /**
-     * @param mixed $media
-     */
     abstract public function canHandle($media);
 
-    /**
-     * @return mixed
-     */
     abstract public function getFormHelper(Media $media);
 
     abstract public function prepareMedia(Media $media);
@@ -68,8 +62,6 @@ abstract class AbstractMediaHandler
     abstract public function removeMedia(Media $media);
 
     /**
-     * @param mixed $data
-     *
      * @return Media
      */
     abstract public function createNew($data);

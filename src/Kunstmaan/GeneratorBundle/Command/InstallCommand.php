@@ -32,9 +32,6 @@ final class InstallCommand extends GeneratorCommand
     /** @var bool */
     private $shouldStop = false;
 
-    /**
-     * @param string $rootDir
-     */
     public function __construct(string $projectDir)
     {
         $this->projectDir = $projectDir;

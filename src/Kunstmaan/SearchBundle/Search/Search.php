@@ -47,33 +47,21 @@ class Search implements SearchProviderInterface
         return $this->searchProviderChain->getProvider($this->activeProvider);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createIndex($indexName)
     {
         return $this->getActiveProvider()->createIndex($this->indexNamePrefix . $indexName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIndex($indexName)
     {
         return $this->getActiveProvider()->getIndex($this->indexNamePrefix . $indexName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClient()
     {
         return $this->getActiveProvider()->getClient();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
         $indexName = strtolower($indexName);
@@ -86,9 +74,6 @@ class Search implements SearchProviderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addDocument($uid, $document, $indexType, $indexName)
     {
         $indexName = strtolower($indexName);
@@ -101,9 +86,6 @@ class Search implements SearchProviderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addDocuments($documents, $indexName = '', $indexType = '')
     {
         $indexName = strtolower($indexName);
@@ -111,9 +93,6 @@ class Search implements SearchProviderInterface
         return $this->getActiveProvider()->addDocuments($documents, $indexName, $indexType);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteDocument($indexName, $indexType, $uid)
     {
         $indexName = strtolower($indexName);
@@ -121,9 +100,6 @@ class Search implements SearchProviderInterface
         return $this->getActiveProvider()->deleteDocument($this->indexNamePrefix . $indexName, $indexType, $uid);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
         $indexName = strtolower($indexName);
@@ -131,9 +107,6 @@ class Search implements SearchProviderInterface
         return $this->getActiveProvider()->deleteDocuments($this->indexNamePrefix . $indexName, $indexType, $ids);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteIndex($indexName)
     {
         $indexName = strtolower($indexName);
@@ -141,9 +114,6 @@ class Search implements SearchProviderInterface
         return $this->getActiveProvider()->deleteIndex($this->indexNamePrefix . $indexName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'Search';

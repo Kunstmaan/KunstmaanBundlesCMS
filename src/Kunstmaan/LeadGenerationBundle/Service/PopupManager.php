@@ -17,7 +17,7 @@ class PopupManager
     /**
      * @var array|null
      */
-    private $popups = null;
+    private $popups;
 
     /**
      * @var EntityManager

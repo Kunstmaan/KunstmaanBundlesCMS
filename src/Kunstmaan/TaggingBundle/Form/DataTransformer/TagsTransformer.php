@@ -15,9 +15,6 @@ class TagsTransformer implements DataTransformerInterface
         $this->tagManager = $tagManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform($value)
     {
         $result = [];
@@ -33,9 +30,6 @@ class TagsTransformer implements DataTransformerInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($value)
     {
         $result = new ArrayCollection();

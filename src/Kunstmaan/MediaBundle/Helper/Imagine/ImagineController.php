@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ImagineController extends \Liip\ImagineBundle\Controller\ImagineController
 {
     /**
-     * {@inheritdoc}
-     *
      * @return RedirectResponse
      */
     public function filterAction(Request $request, $path, $filter)
@@ -23,8 +21,6 @@ class ImagineController extends \Liip\ImagineBundle\Controller\ImagineController
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return RedirectResponse
      */
     public function filterRuntimeAction(Request $request, $hash, $path, $filter)

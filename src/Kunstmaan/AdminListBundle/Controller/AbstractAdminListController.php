@@ -496,8 +496,6 @@ abstract class AbstractAdminListController extends AbstractController
 
     /**
      * Sets the sort weight on a new item. Can be overridden if a non-default sorting implementation is being used.
-     *
-     * @return mixed
      */
     protected function setSortWeightOnNewItem(AdminListConfiguratorInterface $configurator, $item)
     {

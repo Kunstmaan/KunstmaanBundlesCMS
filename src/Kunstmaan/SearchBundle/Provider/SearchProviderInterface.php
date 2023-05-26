@@ -13,8 +13,6 @@ interface SearchProviderInterface
 
     /**
      * Return the client object
-     *
-     * @return mixed
      */
     public function getClient();
 
@@ -27,8 +25,6 @@ interface SearchProviderInterface
 
     /**
      * Return the index object
-     *
-     * @return mixed
      */
     public function getIndex($indexName);
 
@@ -36,11 +32,8 @@ interface SearchProviderInterface
      * Create a document
      *
      * @param string $uid
-     * @param mixed  $document
      * @param string $indexName
      * @param string $indexType
-     *
-     * @return mixed
      */
     public function createDocument($document, $uid, $indexName = '', $indexType = '');
 
@@ -58,11 +51,8 @@ interface SearchProviderInterface
     /**
      * Add a collection of documents at once
      *
-     * @param mixed  $documents
      * @param string $indexName Name of the index
      * @param string $indexType Type of the index the document is located
-     *
-     * @return mixed
      */
     public function addDocuments($documents, $indexName = '', $indexType = '');
 

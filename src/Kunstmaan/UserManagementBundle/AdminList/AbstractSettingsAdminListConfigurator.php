@@ -25,9 +25,6 @@ abstract class AbstractSettingsAdminListConfigurator extends AbstractDoctrineORM
         return sprintf('KunstmaanUserManagementBundle_settings_%ss_%s', strtolower($this->getEntityName()), $suffix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAdminType($item)
     {
         return null;

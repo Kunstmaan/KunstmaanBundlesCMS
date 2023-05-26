@@ -43,17 +43,11 @@ class LocaleBlacklistRule extends AbstractRule
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsObjectClass()
     {
         return 'LocaleBlacklistRule';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsProperties()
     {
         return [
@@ -69,9 +63,6 @@ class LocaleBlacklistRule extends AbstractRule
         return 'kunstmaan_lead_generation.rule.service.localeruleservice';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsFilePath()
     {
         return '/bundles/kunstmaanleadgeneration/js/rule/LocaleBlacklistRule.js';

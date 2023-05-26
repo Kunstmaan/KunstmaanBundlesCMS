@@ -6,9 +6,6 @@ use Pagerfanta\Adapter\AdapterInterface;
 
 interface SearcherRequestAdapterInterface extends AdapterInterface
 {
-    /**
-     * @return mixed
-     */
     public function getSuggestions();
 
     /**

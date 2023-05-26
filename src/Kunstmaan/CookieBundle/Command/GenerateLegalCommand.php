@@ -67,17 +67,11 @@ EOT
             ->setName('kuma:generate:legal');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan legal generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('Legal structure generation');
@@ -90,9 +84,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         $this->assistant->writeLine(["This command helps you to generate a legal structure for your website.\n"]);

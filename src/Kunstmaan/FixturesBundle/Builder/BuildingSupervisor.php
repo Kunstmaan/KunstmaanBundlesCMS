@@ -75,9 +75,6 @@ class BuildingSupervisor
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getFixtures()
     {
         return $this->fixtures;

@@ -145,9 +145,6 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         return sprintf('%s_settings_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAdminType($item)
     {
         return null;

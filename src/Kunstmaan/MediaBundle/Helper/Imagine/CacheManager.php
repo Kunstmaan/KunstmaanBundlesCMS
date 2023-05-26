@@ -7,8 +7,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
 {
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function generateUrl($path, $filter, array $runtimeConfig = [], $resolver = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_URL)
@@ -39,8 +37,6 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function resolve($path, $filter, $resolver = null)
@@ -52,8 +48,6 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function getBrowserPath($path, $filter, array $runtimeConfig = [], $resolver = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_URL)

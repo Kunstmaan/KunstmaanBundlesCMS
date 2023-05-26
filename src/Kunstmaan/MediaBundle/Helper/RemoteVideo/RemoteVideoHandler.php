@@ -71,15 +71,13 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $object
-     *
      * @return bool
      */
     public function canHandle($object)
     {
         if (
-            \is_string($object) ||
-            ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)
+            \is_string($object)
+            || ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)
         ) {
             return true;
         }
@@ -166,9 +164,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMedia(Media $media)
     {
     }
@@ -189,8 +184,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $data
-     *
      * @return Media
      */
     public function createNew($data)
@@ -253,9 +246,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShowTemplate(Media $media)
     {
         return '@KunstmaanMedia/Media/RemoteVideo/show.html.twig';

@@ -168,9 +168,6 @@ class Exception extends AbstractEntity
         return $this->events;
     }
 
-    /**
-     * @param int $triggered
-     */
     public function setEvents($events)
     {
         $this->events = $events;
