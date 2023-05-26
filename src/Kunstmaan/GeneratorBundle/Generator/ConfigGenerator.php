@@ -13,13 +13,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
  */
 class ConfigGenerator extends KunstmaanGenerator
 {
-    /** @var bool */
-    private $newAuthentication;
-
-    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container = null, bool $newAuthentication = false)
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container = null)
     {
         parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
-        $this->newAuthentication = $newAuthentication;
     }
 
     /**

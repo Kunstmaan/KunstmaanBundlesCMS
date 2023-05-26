@@ -23,13 +23,9 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     /** @var bool */
     private $overwriteFosHttpCache;
 
-    /** @var bool */
-    private $newAuthentication;
-
-    public function __construct(string $projectDir, bool $newAuthentication = false)
+    public function __construct(string $projectDir)
     {
         $this->projectDir = $projectDir;
-        $this->newAuthentication = $newAuthentication;
 
         parent::__construct();
     }
@@ -118,6 +114,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
         $filesystem = new Filesystem();
         $registry = $this->getContainer()->get('doctrine');
 
-        return new ConfigGenerator($filesystem, $registry, '/config', $this->assistant, $this->getContainer(), $this->newAuthentication);
+        return new ConfigGenerator($filesystem, $registry, '/config', $this->assistant, $this->getContainer());
     }
 }

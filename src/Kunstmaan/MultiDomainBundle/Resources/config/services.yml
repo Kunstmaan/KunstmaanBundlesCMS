@@ -19,9 +19,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    kunstmaan_multi_domain.host_override_cleanup:
-        class: Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler
-
     kunstmaan_multi_domain.domain_configuration:
         class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
         arguments: ['@request_stack', '%kunstmaan_admin.multi_language%', '%kunstmaan_admin.default_locale%', '%kunstmaan_admin.required_locales%', '@kunstmaan_admin.adminroute.helper', '@doctrine.orm.entity_manager', '%kunstmaan_multi_domain.hosts%']
