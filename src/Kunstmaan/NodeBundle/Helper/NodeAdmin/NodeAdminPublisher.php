@@ -228,8 +228,6 @@ class NodeAdminPublisher
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
      * @param BaseUser         $user            The user
-     *
-     * @return mixed
      */
     public function createPublicVersion(
         HasNodeInterface $page,

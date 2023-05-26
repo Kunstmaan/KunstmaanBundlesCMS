@@ -56,10 +56,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected $container;
 
     /** @var AclProviderInterface */
-    protected $aclProvider = null;
+    protected $aclProvider;
 
     /** @var LoggerInterface */
-    protected $logger = null;
+    protected $logger;
 
     /** @var IndexablePagePartsService */
     protected $indexablePagePartsService;
@@ -77,7 +77,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected $numberOfReplicas;
 
     /** @var Node */
-    protected $currentTopNode = null;
+    protected $currentTopNode;
 
     /** @var array */
     protected $nodeRefs = [];
@@ -603,8 +603,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
                 if (
-                    $securityIdentity instanceof RoleSecurityIdentity &&
-                    ($ace->getMask() & MaskBuilder::MASK_VIEW != 0)
+                    $securityIdentity instanceof RoleSecurityIdentity
+                    && ($ace->getMask() & MaskBuilder::MASK_VIEW != 0)
                 ) {
                     $roles[] = $securityIdentity->getRole();
                 }
@@ -617,9 +617,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         return $roles;
     }
 
-    /**
-     * @return mixed
-     */
     private function getNodeRefPage(NodeVersion $publicNodeVersion)
     {
         $refEntityName = $publicNodeVersion->getRefEntityName();

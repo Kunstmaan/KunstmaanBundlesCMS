@@ -75,9 +75,6 @@ class VideoPagePart extends AbstractPagePart
         return '@KunstmaanMediaPagePart/VideoPagePart/admin-view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return VideoPagePartAdminType::class;

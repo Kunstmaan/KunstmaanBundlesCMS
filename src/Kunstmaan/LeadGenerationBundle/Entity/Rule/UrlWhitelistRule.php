@@ -43,17 +43,11 @@ class UrlWhitelistRule extends AbstractRule
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsObjectClass()
     {
         return 'UrlWhitelistRule';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsProperties()
     {
         return [
@@ -61,9 +55,6 @@ class UrlWhitelistRule extends AbstractRule
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsFilePath()
     {
         return '/bundles/kunstmaanleadgeneration/js/rule/UrlWhitelistRule.js';

@@ -26,8 +26,6 @@ class Method implements PropertyParserInterface
      * @param array $references
      * @param array $additional
      *
-     * @return mixed
-     *
      * @throws \Exception
      */
     public function parse($value, $providers, $references = [], $additional = [])

@@ -21,8 +21,6 @@ class Range implements SpecParserInterface
     /**
      * Parse provided value into new data
      *
-     * @return mixed
-     *
      * @throws \Exception
      */
     public function parse(Fixture $fixture, array $fixtures, $spec)

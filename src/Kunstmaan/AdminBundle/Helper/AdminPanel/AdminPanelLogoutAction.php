@@ -15,7 +15,7 @@ final class AdminPanelLogoutAction implements AdminPanelActionInterface
     /** @var string */
     private $template = '@KunstmaanAdmin/AdminPanel/_admin_panel_logout_action.html.twig';
 
-    public function __construct(string $url, string $label, ?string $icon = null, ?string $template = null)
+    public function __construct(string $url, string $label, string $icon = null, string $template = null)
     {
         $this->logoutUrl = $url;
         $this->label = $label;

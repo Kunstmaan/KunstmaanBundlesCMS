@@ -70,7 +70,7 @@ class RedirectRouterTest extends TestCase
         yield 'Unknown redirect' => ['/unkown-redirect', null, null];
     }
 
-    private function getRedirect(int $id, string $origin, string $target, bool $permanent = false, ?string $domain = null): Redirect
+    private function getRedirect(int $id, string $origin, string $target, bool $permanent = false, string $domain = null): Redirect
     {
         $redirect = new Redirect();
         $redirect

@@ -167,8 +167,6 @@ class AnalyticsConfigRepository extends EntityRepository
 
     /**
      * saves the config name
-     *
-     * @param string $profileId
      */
     public function saveConfigName($name, $id = false)
     {

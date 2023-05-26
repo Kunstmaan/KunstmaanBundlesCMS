@@ -21,8 +21,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function getName($refName)
     {
@@ -31,8 +29,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function getIcon($refName)
     {
@@ -47,8 +43,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function isHiddenFromTree($refName)
     {
@@ -63,8 +57,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function isIndexable($refName)
     {
@@ -80,8 +72,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function getSearchType($refName)
     {
@@ -96,8 +86,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function isStructureNode($refName)
     {
@@ -135,8 +123,6 @@ class PagesConfiguration
 
     /**
      * @param string $refName
-     *
-     * @return mixed
      */
     public function isHomePage($refName)
     {
@@ -169,8 +155,6 @@ class PagesConfiguration
      * @param string         $ref
      * @param string         $name
      * @param callable|mixed $default
-     *
-     * @return mixed
      */
     private function getValue($ref, $name, $default = null)
     {

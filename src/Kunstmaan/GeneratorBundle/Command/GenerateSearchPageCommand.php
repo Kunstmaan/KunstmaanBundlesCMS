@@ -28,8 +28,6 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     protected function configure()

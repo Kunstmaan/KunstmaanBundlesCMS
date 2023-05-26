@@ -19,9 +19,6 @@ abstract class AbstractDataCollector extends BaseDataCollector implements DataCo
      */
     protected $adminRouteHelper;
 
-    /**
-     * @return mixed
-     */
     public function getTemplate()
     {
         return $this->template;

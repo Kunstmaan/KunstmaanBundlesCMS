@@ -35,8 +35,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     protected function configure()
@@ -63,17 +61,11 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
             ->setName('kuma:generate:config');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan config generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('Config generation');
@@ -90,9 +82,6 @@ class GenerateConfigCommand extends KunstmaanGenerateCommand
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         $this->assistant->writeLine(["This helps you to set all default config files needed to run KunstmaanCMS.\n"]);

@@ -139,8 +139,6 @@ class PagePartRefRepository extends EntityRepository
      * @param HasPagePartsInterface $page              The page
      * @param string                $pagepartClassname The classname of the pagepart
      * @param string                $context           The context
-     *
-     * @return mixed
      */
     public function countPagePartsOfType(HasPagePartsInterface $page, $pagepartClassname, $context = 'main')
     {

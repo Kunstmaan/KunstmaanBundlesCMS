@@ -18,8 +18,6 @@ class ExceptionRepository extends EntityRepository
     }
 
     /**
-     * @return mixed
-     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */

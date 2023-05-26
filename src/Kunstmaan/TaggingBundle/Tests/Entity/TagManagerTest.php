@@ -37,10 +37,7 @@ class Query extends AbstractQuery
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function getResult($hydrationMode = self::HYDRATE_OBJECT)
+    public function getResult($hydrationMode = self::HYDRATE_OBJECT): mixed
     {
         return new ArrayCollection();
     }

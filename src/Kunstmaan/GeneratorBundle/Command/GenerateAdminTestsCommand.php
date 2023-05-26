@@ -16,8 +16,6 @@ use Symfony\Component\Filesystem\Filesystem;
 class GenerateAdminTestsCommand extends GeneratorCommand
 {
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     protected function configure()
@@ -40,8 +38,6 @@ EOT
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)

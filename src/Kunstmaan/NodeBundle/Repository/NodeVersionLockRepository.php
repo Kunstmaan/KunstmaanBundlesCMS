@@ -42,8 +42,6 @@ class NodeVersionLockRepository extends \Doctrine\ORM\EntityRepository
      * Get locks that are passed the threshold.
      *
      * @param int $threshold
-     *
-     * @return mixed
      */
     public function getExpiredLocks(NodeTranslation $nodeTranslation, $threshold)
     {

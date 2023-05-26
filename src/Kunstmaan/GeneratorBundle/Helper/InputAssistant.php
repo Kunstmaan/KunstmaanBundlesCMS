@@ -152,8 +152,6 @@ class InputAssistant
 
     /**
      * Replaces '\' with '/'.
-     *
-     * @return mixed
      */
     private function fixNamespace($namespace)
     {

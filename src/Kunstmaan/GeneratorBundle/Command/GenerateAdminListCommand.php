@@ -21,8 +21,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     protected function configure()
