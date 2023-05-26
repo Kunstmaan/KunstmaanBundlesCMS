@@ -158,8 +158,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function getPathQueryBuilder($node)
@@ -172,8 +170,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function getRootNodesQueryBuilder($sortByField = null, $direction = 'asc')
@@ -186,8 +182,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function childrenQueryBuilder(
@@ -205,8 +199,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function getLeafsQueryBuilder($root = null, $sortByField = null, $direction = 'ASC')
@@ -219,8 +211,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function getNextSiblingsQueryBuilder($node, $includeSelf = false)
@@ -233,8 +223,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function getPrevSiblingsQueryBuilder($node, $includeSelf = false)
@@ -247,8 +235,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return QueryBuilder
      */
     public function getNodesHierarchyQueryBuilder(
@@ -265,8 +251,6 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array
      */
     public function getNodesHierarchy($node = null, $direct = false, array $options = [], $includeNode = false)

@@ -57,9 +57,6 @@ class TextPagePart extends AbstractPagePart
         return '@KunstmaanPagePart/TextPagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return TextPagePartAdminType::class;

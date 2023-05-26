@@ -29,8 +29,6 @@ class BooleanFilterTypeTest extends BaseDbalFilterTest
     }
 
     /**
-     * @param mixed $value
-     *
      * @dataProvider applyDataProvider
      */
     public function testApply($value)

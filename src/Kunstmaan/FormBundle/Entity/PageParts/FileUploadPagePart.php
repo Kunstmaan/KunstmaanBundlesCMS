@@ -129,8 +129,6 @@ class FileUploadPagePart extends AbstractFormPagePart
 
     /**
      * Returns the view used in the frontend
-     *
-     * @return mixed
      */
     public function getDefaultView()
     {

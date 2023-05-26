@@ -174,9 +174,6 @@ class EmailPagePart extends AbstractFormPagePart
         $fields->append($efsf);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return EmailPagePartAdminType::class;

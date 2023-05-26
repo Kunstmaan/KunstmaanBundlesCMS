@@ -91,8 +91,6 @@ class KunstmaanAdminExtension extends Extension
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function getNamespace()
@@ -101,8 +99,6 @@ class KunstmaanAdminExtension extends Extension
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string|false
      */
     public function getXsdValidationBasePath()

@@ -82,9 +82,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDeleteUrlFor($item)
     {
         return [

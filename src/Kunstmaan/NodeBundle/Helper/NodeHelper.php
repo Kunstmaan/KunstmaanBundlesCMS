@@ -473,9 +473,6 @@ class NodeHelper
         return null;
     }
 
-    /**
-     * @return mixed
-     */
     protected function getAdminUser()
     {
         $user = $this->getUser();

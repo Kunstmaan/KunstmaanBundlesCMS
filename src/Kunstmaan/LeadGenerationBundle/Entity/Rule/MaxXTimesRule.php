@@ -44,17 +44,11 @@ class MaxXTimesRule extends AbstractRule
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsObjectClass()
     {
         return 'MaxXTimesRule';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsProperties()
     {
         return [
@@ -62,9 +56,6 @@ class MaxXTimesRule extends AbstractRule
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsFilePath()
     {
         return '/bundles/kunstmaanleadgeneration/js/rule/MaxXTimesRule.js';

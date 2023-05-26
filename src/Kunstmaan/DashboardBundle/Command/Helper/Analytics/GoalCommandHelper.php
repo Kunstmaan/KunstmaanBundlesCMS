@@ -59,9 +59,6 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         return [$part1, $part2];
     }
 
-    /**
-     * @return mixed
-     */
     private function requestGoalResults(AnalyticsOverview $overview, $metrics, $dimensions)
     {
         $timestamps = $this->getTimestamps($overview);

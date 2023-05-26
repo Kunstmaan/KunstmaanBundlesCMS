@@ -70,17 +70,11 @@ EOT
             ->setName('kuma:generate:default-site');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan default site generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('Site generation');
@@ -166,9 +160,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
     }

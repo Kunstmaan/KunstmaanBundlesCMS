@@ -24,9 +24,6 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         $this->filterConfig = $filterConfig;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFileUrl($path, $filter)
     {
         $filterConf = $this->filterConfig->get($filter);
@@ -45,8 +42,6 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function resolve($path, $filter)

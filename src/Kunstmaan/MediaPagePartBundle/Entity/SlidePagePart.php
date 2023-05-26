@@ -67,9 +67,6 @@ class SlidePagePart extends AbstractPagePart
         return '@KunstmaanMediaPagePart/SlidePagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return SlidePagePartAdminType::class;

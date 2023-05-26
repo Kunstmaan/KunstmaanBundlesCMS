@@ -23,12 +23,12 @@ class MenuBuilder
     /**
      * @var TopMenuItem[]
      */
-    private $topMenuItems = null;
+    private $topMenuItems;
 
     /**
      * @var MenuItem|null
      */
-    private $currentCache = null;
+    private $currentCache;
 
     /** @var RequestStack */
     private $requestStack;

@@ -69,17 +69,11 @@ EOT
             ->setName('kuma:generate:formpage');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan formpage generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('FormPage generation');
@@ -127,9 +121,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {

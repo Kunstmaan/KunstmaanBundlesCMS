@@ -76,8 +76,6 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     /**
      * Return the url to edit the given $item
      *
-     * @param mixed $item
-     *
      * @return array
      */
     public function getEditUrlFor($item)
@@ -126,8 +124,6 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     /**
      * Configure if it's possible to delete the given $item
      *
-     * @param mixed $item
-     *
      * @return bool
      */
     public function canDelete($item)
@@ -137,8 +133,6 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
 
     /**
      * Get the delete url for the given $item
-     *
-     * @param mixed $item
      *
      * @return array
      */

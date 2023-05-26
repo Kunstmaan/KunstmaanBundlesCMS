@@ -39,9 +39,6 @@ class SlugType extends AbstractType
         return 'slug';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $nodeTranslation = $form->getParent()->getData();

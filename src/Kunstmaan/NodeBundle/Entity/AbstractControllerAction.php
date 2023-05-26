@@ -76,9 +76,6 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return ControllerActionAdminType::class;

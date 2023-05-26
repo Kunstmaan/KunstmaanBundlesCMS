@@ -49,17 +49,11 @@ EOT
             ->setName('kuma:generate:form-pageparts');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan default form pageparts generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('Default Form PageParts generation');
@@ -91,9 +85,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {

@@ -42,9 +42,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         $this->aggregations = [];
     }
 
-    /**
-     * @return mixed
-     */
     public function getSuggestions()
     {
         if (!isset($this->suggests)) {

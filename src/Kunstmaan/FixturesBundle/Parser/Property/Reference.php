@@ -22,8 +22,6 @@ class Reference implements PropertyParserInterface
      * Parse provided value into new data
      *
      * @param array $references
-     *
-     * @return mixed
      */
     public function parse($value, $providers = [], $references = [])
     {

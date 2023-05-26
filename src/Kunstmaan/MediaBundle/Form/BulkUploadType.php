@@ -9,9 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BulkUploadType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
@@ -29,17 +26,12 @@ class BulkUploadType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('accept', null);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function getBlockPrefix()

@@ -42,8 +42,6 @@ class EntityVersionLockRepository extends EntityRepository
      * Get locks that are passed the threshold.
      *
      * @param int $threshold
-     *
-     * @return mixed
      */
     public function getExpiredLocks(LockableEntity $entity, $threshold)
     {
