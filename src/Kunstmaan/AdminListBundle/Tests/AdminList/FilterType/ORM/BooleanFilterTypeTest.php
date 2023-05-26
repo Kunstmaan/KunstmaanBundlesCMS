@@ -29,8 +29,6 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
     }
 
     /**
-     * @param mixed $value
-     *
      * @dataProvider applyDataProvider
      */
     public function testApply($value)

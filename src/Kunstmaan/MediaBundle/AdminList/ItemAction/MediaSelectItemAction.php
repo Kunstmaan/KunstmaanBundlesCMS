@@ -7,8 +7,6 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 class MediaSelectItemAction implements ItemActionInterface
 {
     /**
-     * @param mixed $item
-     *
      * @return array
      */
     public function getUrlFor($item)
@@ -17,8 +15,6 @@ class MediaSelectItemAction implements ItemActionInterface
     }
 
     /**
-     * @param mixed $item
-     *
      * @return string
      */
     public function getLabelFor($item)
@@ -27,8 +23,6 @@ class MediaSelectItemAction implements ItemActionInterface
     }
 
     /**
-     * @param mixed $item
-     *
      * @return string
      */
     public function getIconFor($item)

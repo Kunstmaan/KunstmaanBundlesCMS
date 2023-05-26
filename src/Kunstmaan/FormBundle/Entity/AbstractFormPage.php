@@ -172,9 +172,6 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return AbstractFormPageAdminType::class;

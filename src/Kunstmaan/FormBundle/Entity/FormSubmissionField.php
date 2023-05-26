@@ -191,33 +191,21 @@ abstract class FormSubmissionField
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getFormSubmission()
     {
         return $this->formSubmission;
     }
 
-    /**
-     * @param mixed $formSubmission
-     */
     public function setFormSubmission($formSubmission)
     {
         $this->formSubmission = $formSubmission;
     }
 
-    /**
-     * @return mixed
-     */
     public function getInternalName()
     {
         return $this->internalName;
     }
 
-    /**
-     * @param mixed $internalName
-     */
     public function setInternalName($internalName)
     {
         $this->internalName = $internalName;

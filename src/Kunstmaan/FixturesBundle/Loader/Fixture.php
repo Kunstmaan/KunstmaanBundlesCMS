@@ -41,17 +41,12 @@ class Fixture
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
     }
 
     /**
-     * @param mixed $name
-     *
      * @return Fixture
      */
     public function setName($name)
@@ -61,17 +56,12 @@ class Fixture
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getClass()
     {
         return $this->class;
     }
 
     /**
-     * @param mixed $class
-     *
      * @return Fixture
      */
     public function setClass($class)
@@ -81,9 +71,6 @@ class Fixture
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getProperties()
     {
         return $this->properties;
@@ -95,8 +82,6 @@ class Fixture
     }
 
     /**
-     * @param mixed $properties
-     *
      * @return Fixture
      */
     public function setProperties($properties)
@@ -106,17 +91,12 @@ class Fixture
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getParameters()
     {
         return $this->parameters;
     }
 
     /**
-     * @param mixed $parameters
-     *
      * @return Fixture
      */
     public function setParameters($parameters)
@@ -126,17 +106,12 @@ class Fixture
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTranslations()
     {
         return $this->translations;
     }
 
     /**
-     * @param mixed $translations
-     *
      * @return Fixture
      */
     public function setTranslations($translations)
@@ -171,17 +146,12 @@ class Fixture
         $this->additionalEntities[$name] = $value;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEntity()
     {
         return $this->entity;
     }
 
     /**
-     * @param mixed $entity
-     *
      * @return Fixture
      */
     public function setEntity($entity)
@@ -191,17 +161,12 @@ class Fixture
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSpec()
     {
         return $this->spec;
     }
 
     /**
-     * @param mixed $spec
-     *
      * @return Fixture
      */
     public function setSpec($spec)

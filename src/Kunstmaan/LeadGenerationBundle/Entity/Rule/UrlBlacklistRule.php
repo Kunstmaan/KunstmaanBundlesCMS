@@ -43,17 +43,11 @@ class UrlBlacklistRule extends AbstractRule
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsObjectClass()
     {
         return 'UrlBlacklistRule';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsProperties()
     {
         return [
@@ -61,9 +55,6 @@ class UrlBlacklistRule extends AbstractRule
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsFilePath()
     {
         return '/bundles/kunstmaanleadgeneration/js/rule/UrlBlacklistRule.js';

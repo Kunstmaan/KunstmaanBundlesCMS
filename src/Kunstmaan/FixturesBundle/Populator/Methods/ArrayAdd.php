@@ -22,7 +22,6 @@ class ArrayAdd implements MethodInterface
     /**
      * finds the method used to append values to the named property
      *
-     * @param mixed  $object
      * @param string $property
      *
      * @return string|null

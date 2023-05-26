@@ -75,9 +75,6 @@ class AudioPagePart extends AbstractPagePart
         return '@KunstmaanMediaPagePart/AudioPagePart/admin-view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return AudioPagePartAdminType::class;

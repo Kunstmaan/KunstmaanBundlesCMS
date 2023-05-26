@@ -16,8 +16,6 @@ class Loader implements LoaderInterface
     private $catalogues = [];
 
     /**
-     * {@inheritdoc}
-     *
      * @return MessageCatalogue
      */
     public function load($resource, $locale, $domain = 'messages')

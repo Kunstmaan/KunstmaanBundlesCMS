@@ -6,10 +6,10 @@ namespace Kunstmaan\PagePartBundle\PageTemplate;
  * PageTemplate
  *
  * new PageTemplate("Content page", array(
-                new Row(array(new Region("top",12))),
-                new Row(array(new Region("left",2), new Region("main",10))),
-                new Row(array(new Region("bottom",12)))
-                ));
+ * new Row(array(new Region("top",12))),
+ * new Row(array(new Region("left",2), new Region("main",10))),
+ * new Row(array(new Region("bottom",12)))
+ * ));
  */
 class PageTemplate implements PageTemplateInterface
 {

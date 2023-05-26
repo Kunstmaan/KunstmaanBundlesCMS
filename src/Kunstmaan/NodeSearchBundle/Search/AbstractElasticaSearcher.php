@@ -29,9 +29,6 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     protected $query;
 
-    /**
-     * @var mixed
-     */
     protected $data;
 
     /**
@@ -50,10 +47,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
     }
 
     /**
-     * @param mixed  $query
      * @param string $contentType
-     *
-     * @return mixed
      */
     abstract public function defineSearch($query, $contentType);
 
@@ -142,8 +136,6 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
     }
 
     /**
-     * @param mixed $data
-     *
      * @return SearcherInterface
      */
     public function setData($data)
@@ -154,7 +146,6 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
     }
 
     /**
-     * @return mixed
      * @return SearcherInterface
      */
     public function getData()

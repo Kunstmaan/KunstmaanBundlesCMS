@@ -29,9 +29,6 @@ class TocPagePart extends AbstractPagePart
         return '@KunstmaanPagePart/TocPagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return TocPagePartAdminType::class;

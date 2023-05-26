@@ -114,9 +114,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
         return $this->getTitle();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return PageAdminType::class;

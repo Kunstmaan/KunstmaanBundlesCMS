@@ -114,8 +114,6 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     }
 
     /**
-     * @param mixed $item
-     *
      * @return array
      */
     public function getEditUrlFor($item)
@@ -166,8 +164,6 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
 
     /**
      * Returns all overview pages
-     *
-     * @return mixed
      */
     public function getOverviewPages()
     {

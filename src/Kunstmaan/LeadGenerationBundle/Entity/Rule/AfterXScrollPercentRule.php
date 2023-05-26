@@ -44,17 +44,11 @@ class AfterXScrollPercentRule extends AbstractRule
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsObjectClass()
     {
         return 'AfterXScrollPercentRule';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsProperties()
     {
         return [
@@ -62,9 +56,6 @@ class AfterXScrollPercentRule extends AbstractRule
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJsFilePath()
     {
         return '/bundles/kunstmaanleadgeneration/js/rule/AfterXScrollPercentRule.js';

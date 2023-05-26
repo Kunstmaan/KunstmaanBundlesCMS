@@ -13,8 +13,6 @@ interface PropertyParserInterface
 
     /**
      * Parse provided value into new data
-     *
-     * @return mixed
      */
     public function parse($value, $providers, $references);
 }

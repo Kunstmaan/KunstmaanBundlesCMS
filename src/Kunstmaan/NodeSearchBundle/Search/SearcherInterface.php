@@ -18,10 +18,7 @@ interface SearcherInterface
     public function getSuggestions();
 
     /**
-     * @param mixed  $query
      * @param string $type
-     *
-     * @return mixed
      */
     public function defineSearch($query, $type);
 
@@ -34,14 +31,11 @@ interface SearcherInterface
     public function setPagination($offset, $size);
 
     /**
-     * @param mixed $data
-     *
      * @return SearcherInterface
      */
     public function setData($data);
 
     /**
-     * @return mixed
      * @return SearcherInterface
      */
     public function getData();
@@ -71,8 +65,6 @@ interface SearcherInterface
     public function getContentType();
 
     /**
-     * @param string $indexName
-     *
      * @return SearcherInterface
      */
     public function setIndexName($name);

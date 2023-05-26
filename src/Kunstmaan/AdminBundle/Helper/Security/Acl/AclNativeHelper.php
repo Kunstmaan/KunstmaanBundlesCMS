@@ -20,17 +20,17 @@ class AclNativeHelper
     /**
      * @var EntityManager
      */
-    private $em = null;
+    private $em;
 
     /**
      * @var TokenStorageInterface
      */
-    private $tokenStorage = null;
+    private $tokenStorage;
 
     /**
      * @var RoleHierarchyInterface
      */
-    private $roleHierarchy = null;
+    private $roleHierarchy;
 
     /**
      * @var bool

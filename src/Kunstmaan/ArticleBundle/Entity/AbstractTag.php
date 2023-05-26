@@ -55,17 +55,11 @@ abstract class AbstractTag extends AbstractEntity implements Translatable
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLocale()
     {
         return $this->locale;
     }
 
-    /**
-     * @param mixed $locale
-     */
     public function setLocale($locale)
     {
         $this->locale = $locale;
