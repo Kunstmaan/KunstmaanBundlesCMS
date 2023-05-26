@@ -19,7 +19,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.0",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
+        "kunstmaan/adminlist-bundle": "^6.3|^7.0",
         "openspout/openspout": "^4.0"
     },
     "require-dev": {

@@ -18,10 +18,10 @@
     "require": {
         "php": "^8.0",
         "doctrine/orm": "^2.13",
-        "kunstmaan/admin-bundle": "^5.9|^6.0",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
-        "kunstmaan/generator-bundle": "^5.9|^6.0",
-        "kunstmaan/config-bundle": "^5.9|^6.0"
+        "kunstmaan/admin-bundle": "^6.3|^7.0",
+        "kunstmaan/adminlist-bundle": "^6.3|^7.0",
+        "kunstmaan/generator-bundle": "^6.3|^7.0",
+        "kunstmaan/config-bundle": "^6.3|^7.0"
     },
     "autoload": {
         "psr-4": {

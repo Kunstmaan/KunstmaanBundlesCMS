@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "kunstmaan/admin-bundle": "^5.9|^6.0"
+        "kunstmaan/admin-bundle": "^6.3|^7.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",

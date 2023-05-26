@@ -15,8 +15,8 @@
     "require": {
         "php": "^8.0",
         "openspout/openspout": "^4.0",
-        "kunstmaan/admin-bundle": "^6.1",
-        "kunstmaan/utilities-bundle": "^5.10|^6.0",
+        "kunstmaan/admin-bundle": "^6.3|^7.0",
+        "kunstmaan/utilities-bundle": "^6.3|^7.0",
         "pagerfanta/core": "^2.4",
         "pagerfanta/doctrine-orm-adapter": "^2.4",
         "pagerfanta/doctrine-dbal-adapter": "^2.7",
@@ -27,9 +27,9 @@
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
         "phpunit/phpunit": "^9.5.5",
         "symfony/phpunit-bridge": "^6.1",
-        "kunstmaan/form-bundle": "^5.9|^6.0",
-        "kunstmaan/menu-bundle": "^5.9|^6.0",
-        "kunstmaan/translator-bundle": "^5.9|^6.0"
+        "kunstmaan/form-bundle": "^6.3|^7.0",
+        "kunstmaan/menu-bundle": "^6.3|^7.0",
+        "kunstmaan/translator-bundle": "^6.3|^7.0"
     },
     "conflict": {
         "doctrine/persistence": "<1.3"
