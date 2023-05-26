@@ -136,8 +136,6 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * @param mixed $item
-     *
      * @return array
      */
     public function getEditUrlFor($item)

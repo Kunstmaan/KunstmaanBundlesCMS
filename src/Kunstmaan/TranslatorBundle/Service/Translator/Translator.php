@@ -32,9 +32,6 @@ class Translator extends SymfonyTranslator
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function warmUp($cacheDir): array
     {
         return [];
@@ -90,8 +87,6 @@ class Translator extends SymfonyTranslator
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     protected function loadCatalogue($locale)

@@ -95,9 +95,6 @@ class HeaderPagePart extends AbstractPagePart
         return '@KunstmaanPagePart/HeaderPagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return HeaderPagePartAdminType::class;

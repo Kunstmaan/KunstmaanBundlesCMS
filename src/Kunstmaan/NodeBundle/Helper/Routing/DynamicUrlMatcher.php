@@ -29,8 +29,6 @@ class DynamicUrlMatcher extends UrlMatcher
 
     /**
      * Check if url exists
-     *
-     * @param string $pathInfo
      */
     public function match($pathinfo): array
     {

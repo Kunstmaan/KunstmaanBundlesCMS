@@ -28,8 +28,6 @@ class ImageHandler extends FileHandler
     }
 
     /**
-     * @param mixed $object
-     *
      * @return bool
      */
     public function canHandle($object)
@@ -41,9 +39,6 @@ class ImageHandler extends FileHandler
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShowTemplate(Media $media)
     {
         return '@KunstmaanMedia/Media/Image/show.html.twig';

@@ -75,9 +75,6 @@ class DownloadPagePart extends AbstractPagePart
         return '@KunstmaanMediaPagePart/DownloadPagePart/admin-view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return DownloadPagePartAdminType::class;

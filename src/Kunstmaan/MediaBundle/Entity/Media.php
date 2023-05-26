@@ -120,9 +120,6 @@ class Media extends AbstractEntity
     #[ORM\JoinColumn(name: 'folder_id', referencedColumnName: 'id')]
     protected $folder;
 
-    /**
-     * @var mixed
-     */
     protected $content;
 
     /**
@@ -365,7 +362,6 @@ class Media extends AbstractEntity
      * Set the specified metadata value
      *
      * @param string $key
-     * @param mixed  $value
      *
      * @return Media
      */
@@ -439,8 +435,6 @@ class Media extends AbstractEntity
     /**
      * Set content
      *
-     * @param mixed $content
-     *
      * @return Media
      */
     public function setContent($content)
@@ -453,8 +447,6 @@ class Media extends AbstractEntity
 
     /**
      * Get content
-     *
-     * @return mixed
      */
     public function getContent()
     {

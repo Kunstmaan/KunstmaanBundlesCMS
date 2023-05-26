@@ -24,22 +24,22 @@ class AclHelper
     /**
      * @var EntityManager
      */
-    private $em = null;
+    private $em;
 
     /**
      * @var TokenStorageInterface
      */
-    private $tokenStorage = null;
+    private $tokenStorage;
 
     /**
      * @var QuoteStrategy
      */
-    private $quoteStrategy = null;
+    private $quoteStrategy;
 
     /**
      * @var RoleHierarchyInterface
      */
-    private $roleHierarchy = null;
+    private $roleHierarchy;
 
     /**
      * @var bool

@@ -29,9 +29,6 @@ class ToTopPagePart extends AbstractPagePart
         return '@KunstmaanPagePart/ToTopPagePart/view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return ToTopPagePartAdminType::class;

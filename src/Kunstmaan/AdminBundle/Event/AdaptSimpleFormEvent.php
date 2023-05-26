@@ -83,9 +83,6 @@ final class AdaptSimpleFormEvent extends Event
         $this->formType = $type;
     }
 
-    /**
-     * @return mixed
-     */
     public function getData()
     {
         return $this->data;

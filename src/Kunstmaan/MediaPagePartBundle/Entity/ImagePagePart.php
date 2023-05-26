@@ -165,9 +165,6 @@ class ImagePagePart extends AbstractPagePart
         return '@KunstmaanMediaPagePart/ImagePagePart/admin-view.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAdminType()
     {
         return ImagePagePartAdminType::class;

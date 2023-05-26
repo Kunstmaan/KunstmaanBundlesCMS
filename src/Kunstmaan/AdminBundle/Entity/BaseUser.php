@@ -203,8 +203,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return static
      */
     public function setEnabled($boolean)
@@ -245,17 +243,11 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getGoogleId()
     {
         return $this->googleId;
     }
 
-    /**
-     * @param mixed $googleId
-     */
     public function setGoogleId($googleId)
     {
         $this->googleId = $googleId;
@@ -293,8 +285,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     abstract public function getFormTypeClass();
 
     /**
-     * {@inheritdoc}
-     *
      * @return bool
      */
     public function isAccountNonLocked()
@@ -370,8 +360,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return static
      */
     public function setRoles(array $roles)
@@ -453,8 +441,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return static
      */
     public function addRole($role)
@@ -472,8 +458,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array
      */
     public function getGroupNames()
@@ -487,8 +471,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return bool
      */
     public function hasGroup($name)
@@ -497,8 +479,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return static
      */
     public function addGroup(GroupInterface $group)
@@ -511,8 +491,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return static
      */
     public function removeGroup(GroupInterface $group)
@@ -584,7 +562,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     /**
      * @return static
      */
-    public function setLastLogin(?\DateTime $lastLogin = null)
+    public function setLastLogin(\DateTime $lastLogin = null)
     {
         $this->lastLogin = $lastLogin;
 
@@ -606,9 +584,6 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
         $this->createdBy = $createdBy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEqualTo(BaseUserInterface $user): bool
     {
         if (!$user instanceof self) {
@@ -638,17 +613,11 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize()
     {
         return serialize($this->__serialize());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize($serialized)
     {
         $this->__unserialize(unserialize($serialized));

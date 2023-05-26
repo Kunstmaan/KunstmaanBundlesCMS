@@ -124,8 +124,6 @@ class MediaManager
     }
 
     /**
-     * @param mixed $data
-     *
      * @return Media
      */
     public function createNew($data)

@@ -211,10 +211,10 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        return !\is_null($request) &&
-        $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
-        $request->hasPreviousSession() &&
-        $request->getSession()->has(self::OVERRIDE_HOST);
+        return !\is_null($request)
+        && $this->adminRouteHelper->isAdminRoute($request->getRequestUri())
+        && $request->hasPreviousSession()
+        && $request->getSession()->has(self::OVERRIDE_HOST);
     }
 
     /**
@@ -224,10 +224,10 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        return !\is_null($request) &&
-        $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
-        $request->hasPreviousSession() &&
-        $request->getSession()->has(self::SWITCH_HOST);
+        return !\is_null($request)
+        && $this->adminRouteHelper->isAdminRoute($request->getRequestUri())
+        && $request->hasPreviousSession()
+        && $request->getSession()->has(self::SWITCH_HOST);
     }
 
     /**

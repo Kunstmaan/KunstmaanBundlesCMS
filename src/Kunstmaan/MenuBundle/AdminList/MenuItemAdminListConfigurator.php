@@ -68,8 +68,6 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     /**
      * @param array|object $item       The item
      * @param string       $columnName The column name
-     *
-     * @return mixed
      */
     public function getValue($item, $columnName)
     {
@@ -110,8 +108,6 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      * You can override this method to do some custom things you need to do when adding an entity
      *
      * @param object $entity
-     *
-     * @return mixed
      */
     public function decorateNewEntity($entity)
     {

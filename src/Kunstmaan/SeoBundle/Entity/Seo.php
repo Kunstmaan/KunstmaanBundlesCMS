@@ -311,9 +311,6 @@ class Seo extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgDescription()
     {
         return $this->ogDescription;
@@ -331,9 +328,6 @@ class Seo extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgImage()
     {
         return $this->ogImage;
@@ -351,9 +345,6 @@ class Seo extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgTitle()
     {
         return $this->ogTitle;
@@ -371,57 +362,36 @@ class Seo extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgType()
     {
         return $this->ogType;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgArticleAuthor()
     {
         return $this->ogArticleAuthor;
     }
 
-    /**
-     * @param mixed $ogArticleAuthor
-     */
     public function setOgArticleAuthor($ogArticleAuthor)
     {
         $this->ogArticleAuthor = $ogArticleAuthor;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgArticlePublisher()
     {
         return $this->ogArticlePublisher;
     }
 
-    /**
-     * @param mixed $ogArticlePublisher
-     */
     public function setOgArticlePublisher($ogArticlePublisher)
     {
         $this->ogArticlePublisher = $ogArticlePublisher;
     }
 
-    /**
-     * @return mixed
-     */
     public function getOgArticleSection()
     {
         return $this->ogArticleSection;
     }
 
-    /**
-     * @param mixed $ogArticleSection
-     */
     public function setOgArticleSection($ogArticleSection)
     {
         $this->ogArticleSection = $ogArticleSection;

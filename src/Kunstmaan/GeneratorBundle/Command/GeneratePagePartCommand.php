@@ -43,8 +43,6 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     private $behatTest;
 
     /**
-     * {@inheritdoc}
-     *
      * @return void
      */
     protected function configure()
@@ -60,17 +58,11 @@ EOT
             ->setName('kuma:generate:pagepart');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getWelcomeText()
     {
         return 'Welcome to the Kunstmaan pagepart generator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute()
     {
         $this->assistant->writeSection('PagePart generation');
@@ -88,9 +80,6 @@ EOT
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doInteract()
     {
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {

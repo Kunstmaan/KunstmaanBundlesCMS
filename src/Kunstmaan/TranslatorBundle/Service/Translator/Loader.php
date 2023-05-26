@@ -15,9 +15,6 @@ class Loader implements LoaderInterface
 
     private $catalogues = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($resource, $locale, $domain = 'messages'): MessageCatalogue
     {
         if (!isset($this->catalogues[$locale])) {

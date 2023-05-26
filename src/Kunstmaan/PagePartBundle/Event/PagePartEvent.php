@@ -16,7 +16,7 @@ final class PagePartEvent extends Event
     /**
      * @var Response
      */
-    private $response = null;
+    private $response;
 
     public function __construct(PagePartInterface $pagePart)
     {

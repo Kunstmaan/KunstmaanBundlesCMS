@@ -43,15 +43,13 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $object
-     *
      * @return bool
      */
     public function canHandle($object)
     {
         if (
-            \is_string($object) ||
-            ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)
+            \is_string($object)
+            || ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)
         ) {
             return true;
         }
@@ -104,9 +102,6 @@ class RemoteSlideHandler extends AbstractMediaHandler
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateMedia(Media $media)
     {
     }
@@ -127,8 +122,6 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param mixed $data
-     *
      * @return Media
      */
     public function createNew($data)
@@ -159,9 +152,6 @@ class RemoteSlideHandler extends AbstractMediaHandler
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShowTemplate(Media $media)
     {
         return '@KunstmaanMedia/Media/RemoteSlide/show.html.twig';

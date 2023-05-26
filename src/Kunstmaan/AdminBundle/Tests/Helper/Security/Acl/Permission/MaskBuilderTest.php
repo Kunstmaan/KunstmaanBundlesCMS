@@ -11,8 +11,6 @@ use PHPUnit\Framework\TestCase;
 class MaskBuilderTest extends TestCase
 {
     /**
-     * @param mixed $invalidMask
-     *
      * @dataProvider getInvalidConstructorData
      */
     public function testSlugify($invalidMask)

@@ -9,9 +9,6 @@ use Symfony\Component\Yaml\Dumper;
  */
 class YamlFileExporter implements FileExporterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function export(array $translations)
     {
         $ymlDumper = new Dumper();
@@ -19,9 +16,6 @@ class YamlFileExporter implements FileExporterInterface
         return $ymlDumper->dump($translations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($format)
     {
         return 'yml' === $format;
