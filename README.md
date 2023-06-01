@@ -19,7 +19,7 @@ Please refer to the documentation at [https://kunstmaancms.be/documentation](htt
 
 ## Sponsors
 
-<a href="https://blackfire.io/docs/introduction?utm_source=kunstmaancms&utm_medium=github_readme&utm_campaign=logo"><img src="https://i.imgur.com/1kne4jO.png" alt="Blackfire.io" width="254" height="64"></a>
+<a href="https://blackfire.io?utm_source=kunstmaancms&utm_medium=github_readme&utm_campaign=logo"><img src="https://i.imgur.com/1kne4jO.png" alt="Blackfire.io" width="254" height="64"></a>
 
 
 ## Contributing
