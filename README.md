@@ -17,18 +17,22 @@ Please refer to the documentation at [https://kunstmaancms.be/documentation](htt
 
 ![Screenshot](https://kunstmaancms.be/assets/content-management-system-kunstmaan.jpg)
 
-### Contributing
+## Sponsors
+
+<a href="https://blackfire.io/docs/introduction?utm_source=kunstmaancms&utm_medium=github_readme&utm_campaign=logo"><img src="https://github.com/Kunstmaan/KunstmaanBundlesCMS/assets/1374857/1169d182-9372-4dca-8910-d546efe4bc17" alt="Blackfire.io" width="254" height="64">
+
+## Contributing
 
 We love contributions! We've provide you with a [Contribution Guide](http://kunstmaanbundlescms.readthedocs.io/en/latest/contributing/) to get you started.
 If you're submitting a pull request, please follow the guidelines in the [Submitting pull requests](http://kunstmaanbundlescms.readthedocs.io/en/latest/contributing/pull-requests/)
 documentation and be sure to read our [Coding Standards](http://kunstmaanbundlescms.readthedocs.io/en/latest/contributing/coding-standards/) as well.
 
-### Community
+## Community
 Want to talk to fellow contributors? There's always people eager to chat in our slack channel!
 
 [![Join our slack channel](https://kunstmaancms.be/assets/slack.png) Join our Slack Channel!](https://kunstmaancms.be/slack-invite)
 
-### Browser support
+## Browser support
 
 We support at least the 2 last versions of Chrome / Firefox / Safari / Edge and IE11. We also support the most current mobile browsers.
 
