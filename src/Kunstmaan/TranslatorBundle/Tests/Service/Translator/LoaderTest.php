@@ -13,7 +13,6 @@ class LoaderTest extends TestCase
     const TEST_DATA_LOCALE = 'en';
     const TEST_DATA_KEYWORD = 'validation.ok';
     const TEST_DATA_TEXT = 'Everything ok';
-    private Loader $loader;
 
     private Loader $loader;
 
