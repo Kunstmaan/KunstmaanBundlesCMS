@@ -13,6 +13,7 @@ class LoaderTest extends TestCase
     const TEST_DATA_LOCALE = 'en';
     const TEST_DATA_KEYWORD = 'validation.ok';
     const TEST_DATA_TEXT = 'Everything ok';
+    private Loader $loader;
 
     public function setUp(): void
     {
@@ -27,7 +28,6 @@ class LoaderTest extends TestCase
         $translationRepository = $this->createMock(TranslationRepository::class);
         $translationRepository->method('findBy')->willReturn([$translation]);
 
-        /* @var Loader loader */
         $this->loader = new Loader();
         $this->loader->setTranslationRepository($translationRepository);
     }
