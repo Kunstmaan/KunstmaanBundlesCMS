@@ -2,8 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper;
 
+use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Schema\DefaultSchemaManagerFactory;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
@@ -20,7 +22,12 @@ class UrlHelperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]);
+        $configuration = new Configuration();
+        // NEXT_MAJOR: Remove check when dbal 2 support is removed.
+        if (method_exists($configuration, 'setSchemaManagerFactory')) {
+            $configuration->setSchemaManagerFactory(new DefaultSchemaManagerFactory());
+        }
+        $this->connection = DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true], $configuration);
         $this->createSchema();
 
         $this->connection->transactional(

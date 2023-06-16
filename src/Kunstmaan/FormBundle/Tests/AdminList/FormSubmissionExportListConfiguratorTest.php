@@ -68,7 +68,7 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
             ->getMock();
 
         $query->expects($this->any())
-            ->method('iterate')
+            ->method('toIterable')
             ->willReturn($submissions);
 
         $methods = [
