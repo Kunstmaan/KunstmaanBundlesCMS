@@ -19,6 +19,11 @@ AdminBundle
 - The `Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService` authentication mailer service is deprecated, use `Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService` instead.
 - The default value of `kunstmaan_admin.authentication.mailer.service` will change to `Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService` in 7.0.
 
+CookieBundle
+------------
+
+- The `Kunstmaan\CookieBundle\Controller\LegalController::legalPageAction` method is deprecated and will be removed. Is replaced by `Kunstmaan\CookieBundle\ViewDataProvider\LegalPageViewDataProvider`.
+
 FormBundle
 ----------
 
