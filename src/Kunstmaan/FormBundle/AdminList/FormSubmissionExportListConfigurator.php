@@ -96,7 +96,7 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     }
 
     /**
-     * @return \Iterator
+     * @return iterable
      */
     public function getIterator()
     {
@@ -120,7 +120,7 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
             ->setParameter('node', $this->nodeTranslation->getNode()->getId())
             ->setParameter('lang', $this->nodeTranslation->getLang())
             ->addOrderBy('fs.created', 'DESC');
-        $iterableResult = $qb->getQuery()->iterate();
+        $iterableResult = $qb->getQuery()->toIterable();
         $isHeaderWritten = false;
 
         $collection = new ArrayCollection();

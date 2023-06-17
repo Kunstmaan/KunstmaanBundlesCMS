@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
@@ -167,7 +168,7 @@ class AclHelper
         }
 
         $objectIdentifierColumn = 'o.object_identifier';
-        if ($databasePlatform->getName() === 'postgresql') {
+        if ($databasePlatform instanceof PostgreSQLPlatform) {
             $objectIdentifierColumn .= '::BIGINT';
         }
 
@@ -175,12 +176,9 @@ class AclHelper
 SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
 INNER JOIN acl_classes c ON c.id = o.class_id
 LEFT JOIN acl_entries e ON (
-    e.class_id = o.class_id AND (e.object_identity_id = o.id
-    OR {$databasePlatform->getIsNullExpression('e.object_identity_id')})
+    e.class_id = o.class_id AND (e.object_identity_id = o.id OR e.object_identity_id IS NULL)
 )
-LEFT JOIN acl_security_identities s ON (
-s.id = e.security_identity_id
-)
+LEFT JOIN acl_security_identities s ON (s.id = e.security_identity_id)
 WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0

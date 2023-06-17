@@ -28,6 +28,7 @@ doctrine:
             default:
                 driver:   pdo_sqlite
                 path:     "%kernel.cache_dir%/test.db"
+                use_savepoints: true
     orm:
         default_entity_manager:   default
         entity_managers:

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
@@ -23,18 +24,14 @@ class AclWalker extends SqlWalker
         $alias = $this->getQuery()->getHint('acl.entityRootTableDqlAlias');
         $tableAlias = $this->getSQLTableAlias($name, $alias);
         $extraQuery = $this->getQuery()->getHint('acl.extra.query');
-
-        switch ($this->getConnection()->getDatabasePlatform()->getName()) {
-            case 'postgresql':
-                $tempAclView = <<<tempAclView
-JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id::integer
-tempAclView;
-                break;
-            default:
-                $tempAclView = <<<tempAclView
+        $tempAclView = <<<tempAclView
 JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
 tempAclView;
-                break;
+
+        if ($this->getConnection()->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            $tempAclView = <<<tempAclView
+JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id::integer
+tempAclView;
         }
 
         return $sql . ' ' . $tempAclView;

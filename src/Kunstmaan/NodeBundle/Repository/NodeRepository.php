@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Repository;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -266,20 +268,25 @@ class NodeRepository extends NestedTreeRepository
     ) {
         $connection = $this->_em->getConnection();
         $qb = $connection->createQueryBuilder();
-        $databasePlatformName = $connection->getDatabasePlatform()->getName();
+        $databasePlatform = $connection->getDatabasePlatform();
         $createIfStatement = static function (
             $expression,
             $trueValue,
             $falseValue
-        ) use ($databasePlatformName) {
-            switch ($databasePlatformName) {
-                case 'sqlite':
+        ) use ($databasePlatform) {
+            $defaultStatement = 'IF(%s, %s, %s)';
+            if (null === $databasePlatform) {
+                return sprintf($defaultStatement, $expression, $trueValue, $falseValue);
+            }
+
+            switch (get_class($databasePlatform)) {
+                case SqlitePlatform::class:
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
                     break;
-                case 'postgresql':
+                case PostgreSQLPlatform::class:
                     return sprintf('COALESCE(%s, %s)', $falseValue, $trueValue);
                 default:
-                    $statement = 'IF(%s, %s, %s)';
+                    $statement = $defaultStatement;
             }
 
             return sprintf($statement, $expression, $trueValue, $falseValue);
@@ -301,7 +308,7 @@ SQL;
             ->where('n.deleted = false')
             ->addGroupBy('n.id');
 
-        if ($databasePlatformName === 'postgresql') {
+        if ($databasePlatform instanceof PostgreSQLPlatform) {
             $qb->addGroupBy('t.url')
                 ->addGroupby('t.id')
                 ->addGroupby('v.weight')

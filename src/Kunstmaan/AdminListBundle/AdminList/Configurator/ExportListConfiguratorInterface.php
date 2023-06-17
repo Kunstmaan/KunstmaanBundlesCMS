@@ -10,6 +10,7 @@ interface ExportListConfiguratorInterface
 
     public function buildIterator();
 
+    /** @return iterable */
     public function getIterator();
 
     public function buildFilters();
