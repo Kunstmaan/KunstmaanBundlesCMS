@@ -104,6 +104,9 @@ final class LegalController extends AbstractController
         return $response;
     }
 
+    /**
+     * @deprecated since 6.3. Replaced by \Kunstmaan\CookieBundle\ViewDataProvider\LegalPageViewDataProvider.
+     */
     public function legalPageAction(Request $request)
     {
         if (!$this->cookieHelper->isGrantedForCookieBundle($request)) {
