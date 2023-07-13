@@ -5,6 +5,7 @@ autoload.php
 /vendor/
 node_modules/
 npm-debug.log
+.build/rector
 *~
 *test.db
 **/Tests/unit/app/cache

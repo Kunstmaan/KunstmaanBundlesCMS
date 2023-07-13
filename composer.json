@@ -90,7 +90,8 @@
         "phpunit/phpunit": "^9.5.5",
         "phpstan/phpstan": "^1.1",
         "phpstan/phpstan-doctrine": "^1.0",
-        "php-cs-fixer/shim": "^3.11"
+        "php-cs-fixer/shim": "^3.11",
+        "rector/rector": "^0.17.5"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",
