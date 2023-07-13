@@ -38,21 +38,17 @@ class TaggableTraitTest extends TestCase
         $object = new Random();
 
         $object->setTags(new ArrayCollection());
-        $object->setTagLoader(function () {
-            return new ArrayCollection();
-        });
+        $object->setTagLoader(fn() => new ArrayCollection());
 
         $this->assertInstanceOf(ArrayCollection::class, $object->getTags());
-        $this->assertEquals(Random::class, $object->getTaggableType());
-        $this->assertEquals(5, $object->getTaggableId());
+        $this->assertSame(Random::class, $object->getTaggableType());
+        $this->assertSame(5, $object->getTaggableId());
     }
 
     public function testTagsByClosureLoader()
     {
         $object = new Random();
-        $object->setTagLoader(function () {
-            return new ArrayCollection();
-        });
+        $object->setTagLoader(fn() => new ArrayCollection());
         $this->assertInstanceOf(ArrayCollection::class, $object->getTags());
     }
 }

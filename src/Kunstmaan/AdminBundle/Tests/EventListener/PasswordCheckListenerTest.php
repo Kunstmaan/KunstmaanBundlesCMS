@@ -60,12 +60,10 @@ class PasswordCheckListenerTest extends TestCase
         $listener->onKernelRequest($event);
     }
 
-    public function requestDataProvider()
+    public function requestDataProvider(): \Iterator
     {
-        return [
-            ['/en/random', false, 0],
-            ['/en/admin/', true, 2],
-            ['/en/admin/preview/', true, 2],
-        ];
+        yield ['/en/random', false, 0];
+        yield ['/en/admin/', true, 2];
+        yield ['/en/admin/preview/', true, 2];
     }
 }

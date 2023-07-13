@@ -15,13 +15,12 @@ use PHPUnit\Framework\TestCase;
 
 class Configurator extends AbstractArticlePageAdminListConfigurator
 {
-    /** @var EntityRepository */
-    private $repo;
-
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, $repo)
+    /**
+     * @param EntityRepository $repo
+     */
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, private $repo)
     {
         parent::__construct($em, $aclHelper, $locale, $permission);
-        $this->repo = $repo;
     }
 
     /**
@@ -48,14 +47,14 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
     protected function setUp(): void
     {
         $em = $this->createMock(EntityManager::class);
-        $em->expects($this->any())
+        $em
             ->method($this->anything())
             ->willReturn($em);
 
         $acl = $this->createMock(AclHelper::class);
 
         $repo = $this->createMock(EntityRepository::class);
-        $repo->expects($this->any())
+        $repo
             ->method($this->anything())
             ->willReturn([['fake' => 'array']]);
 
@@ -68,10 +67,10 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
     public function testGetters()
     {
-        $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
-        $this->assertEquals('AbstractArticlePage', $this->object->getEntityName());
-        $this->assertEquals('@KunstmaanArticle/AbstractArticlePageAdminList/list.html.twig', $this->object->getListTemplate());
-        $this->assertEquals('KunstmaanArticleBundle:AbstractArticlePage', $this->object->getRepositoryName());
+        $this->assertSame('KunstmaanArticleBundle', $this->object->getBundleName());
+        $this->assertSame('AbstractArticlePage', $this->object->getEntityName());
+        $this->assertSame('@KunstmaanArticle/AbstractArticlePageAdminList/list.html.twig', $this->object->getListTemplate());
+        $this->assertSame('KunstmaanArticleBundle:AbstractArticlePage', $this->object->getRepositoryName());
     }
 
     public function testBuildFields()
@@ -96,18 +95,18 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $this->assertCount(2, $url);
         $this->assertArrayHasKey('path', $url);
         $this->assertArrayHasKey('params', $url);
-        $this->assertEquals('KunstmaanNodeBundle_nodes_edit', $url['path']);
+        $this->assertSame('KunstmaanNodeBundle_nodes_edit', $url['path']);
         $this->assertCount(1, $url['params']);
-        $this->assertEquals(1314, $url['params']['id']);
+        $this->assertSame(1314, $url['params']['id']);
 
         $url = $this->object->getDeleteUrlFor($item);
 
         $this->assertCount(2, $url);
         $this->assertArrayHasKey('path', $url);
         $this->assertArrayHasKey('params', $url);
-        $this->assertEquals('KunstmaanNodeBundle_nodes_delete', $url['path']);
+        $this->assertSame('KunstmaanNodeBundle_nodes_delete', $url['path']);
         $this->assertCount(1, $url['params']);
-        $this->assertEquals(1314, $url['params']['id']);
+        $this->assertSame(1314, $url['params']['id']);
     }
 
     /**
@@ -117,11 +116,11 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
     {
         $em = $this->createMock(EntityManager::class);
         $qb = $this->createMock(QueryBuilder::class);
-        $em->expects($this->any())
+        $em
             ->method('createQueryBuilder')
             ->willReturn($qb);
 
-        $em->expects($this->any())
+        $em
             ->method('getRepository')
             ->willReturn($em);
 
@@ -150,11 +149,11 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $em = $this->createMock(EntityManager::class);
         $repo = $this->createMock(EntityRepository::class);
 
-        $em->expects($this->any())
+        $em
             ->method('getRepository')
             ->willReturn($repo);
 
-        $repo->expects($this->any())
+        $repo
             ->method('getClassName')
             ->willReturn(Configurator::class);
 
@@ -168,7 +167,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $prop = $mirror->getProperty('em');
         $prop->setAccessible(true);
         $prop->setValue($this->object, $em);
-        $this->assertEquals(Configurator::class, $this->object->getEntityClassName());
+        $this->assertSame(Configurator::class, $this->object->getEntityClassName());
     }
 
     /**
@@ -184,7 +183,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $prop->setAccessible(true);
 
         $repo = $this->createMock(EntityRepository::class);
-        $repo->expects($this->any())
+        $repo
             ->method($this->anything())
             ->willReturn([]);
 

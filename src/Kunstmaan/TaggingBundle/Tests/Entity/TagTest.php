@@ -19,12 +19,12 @@ class TagTest extends TestCase
         $object->setName('Nigel Farage');
         $object->setTranslatableLocale('en');
 
-        $this->assertEquals(666, $object->getId());
-        $this->assertEquals('Nigel Farage', $object->getName());
-        $this->assertEquals('en', $object->getTranslatableLocale());
+        $this->assertSame(666, $object->getId());
+        $this->assertSame('Nigel Farage', $object->getName());
+        $this->assertSame('en', $object->getTranslatableLocale());
         $this->assertInstanceOf(\DateTime::class, $object->getCreatedAt());
         $this->assertInstanceOf(\DateTime::class, $object->getUpdatedAt());
-        $this->assertEquals(TagAdminType::class, $object->getDefaultAdminType());
-        $this->assertEquals('Nigel Farage', $object->__toString());
+        $this->assertSame(TagAdminType::class, $object->getDefaultAdminType());
+        $this->assertSame('Nigel Farage', $object->__toString());
     }
 }

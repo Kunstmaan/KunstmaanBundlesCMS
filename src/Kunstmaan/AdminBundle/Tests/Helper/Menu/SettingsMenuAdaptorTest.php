@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
@@ -16,10 +17,7 @@ class SettingsMenuAdaptorTest extends TestCase
     /** @var AuthorizationCheckerInterface (mock) */
     private $authorizationCheckerInterface;
 
-    /**
-     * @var bool
-     */
-    private $isEnabledVersionChecker = true;
+    private bool $isEnabledVersionChecker = true;
 
     public function setUp(): void
     {
@@ -37,7 +35,6 @@ class SettingsMenuAdaptorTest extends TestCase
         /** @var Request $request */
         $request = new Request([], [], ['_route' => $requestRoute]);
         $this->authorizationCheckerInterface
-            ->expects($this->any())
             ->method('isGranted')
             ->willReturn($granted);
 
@@ -48,12 +45,12 @@ class SettingsMenuAdaptorTest extends TestCase
         $this->assertContainsOnlyInstancesOf(MenuItem::class, $children);
 
         if (null !== $expectedLabel) {
-            $this->assertEquals($expectedLabel, $children[0]->getLabel());
+            $this->assertSame($expectedLabel, $children[0]->getLabel());
         }
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|SettingsMenuAdaptor
+     * @return MockObject|SettingsMenuAdaptor
      */
     public function setUpSettingsMenuAdaptorMock()
     {
@@ -72,12 +69,11 @@ class SettingsMenuAdaptorTest extends TestCase
         $this->assertInstanceOf(MenuAdaptorInterface::class, $settingsMenuAdaptorMock);
     }
 
-    public function provider()
+    public function provider(): \Iterator
     {
         /** @var TopMenuItem $parent */
         $parent = $this->createMock(TopMenuItem::class);
         $parent
-            ->expects($this->any())
             ->method('getRoute')
             ->willReturn('KunstmaanAdminBundle_settings')
         ;
@@ -85,17 +81,13 @@ class SettingsMenuAdaptorTest extends TestCase
         /** @var TopMenuItem $parentWithOtherRoute */
         $parentWithOtherRoute = $this->createMock(TopMenuItem::class);
         $parentWithOtherRoute
-            ->expects($this->any())
             ->method('getRoute')
             ->willReturn('KunstmaanAdminBundle_other')
         ;
-
-        return [
-            'with no parent and no route' => [null, 'KunstmaanAdminBundle_settings', 1, 'settings.title', true],
-            'with parent and route is settings but not granted' => [$parent, 'kunstmaanadminbundle_admin_exception', 1, 'settings.exceptions.title', false],
-            'with parent and route is settings and first active' => [$parent, 'KunstmaanAdminBundle_settings_bundle_version', 2, 'settings.version.bundle', true],
-            'with parent and route is settings and second active' => [$parent, 'kunstmaanadminbundle_admin_exception', 2, 'settings.version.bundle', true],
-            'with parent and route is not settings' => [$parentWithOtherRoute, '', 0, null, true],
-        ];
+        yield 'with no parent and no route' => [null, 'KunstmaanAdminBundle_settings', 1, 'settings.title', true];
+        yield 'with parent and route is settings but not granted' => [$parent, 'kunstmaanadminbundle_admin_exception', 1, 'settings.exceptions.title', false];
+        yield 'with parent and route is settings and first active' => [$parent, 'KunstmaanAdminBundle_settings_bundle_version', 2, 'settings.version.bundle', true];
+        yield 'with parent and route is settings and second active' => [$parent, 'kunstmaanadminbundle_admin_exception', 2, 'settings.version.bundle', true];
+        yield 'with parent and route is not settings' => [$parentWithOtherRoute, '', 0, null, true];
     }
 }

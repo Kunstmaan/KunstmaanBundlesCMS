@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
+use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,6 +31,6 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\TocPagePart', $resolve['data_class']);
+        $this->assertSame(TocPagePart::class, $resolve['data_class']);
     }
 }

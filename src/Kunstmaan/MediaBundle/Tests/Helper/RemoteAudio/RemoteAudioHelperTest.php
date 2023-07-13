@@ -27,6 +27,6 @@ class RemoteAudioHelperTest extends TestCase
 
     public function testGetMedia()
     {
-        $this->assertEquals(RemoteAudioHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
+        $this->assertSame(RemoteAudioHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
     }
 }

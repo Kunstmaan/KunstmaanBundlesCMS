@@ -14,13 +14,13 @@ class AbstractFormPagePartTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->object = $this->getMockForAbstractClass("Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart");
+        $this->object = $this->getMockForAbstractClass(AbstractFormPagePart::class);
     }
 
     public function testGetUniqueId()
     {
         $object = $this->object;
-        $this->assertSame(str_replace('\\', '', get_class($object)), $object->getUniqueId());
+        $this->assertSame(str_replace('\\', '', $object::class), $object->getUniqueId());
     }
 
     public function testSetGetLabel()
@@ -28,7 +28,7 @@ class AbstractFormPagePartTest extends TestCase
         $object = $this->object;
         $value = 'Some label';
         $object->setLabel($value);
-        $this->assertEquals($value, $object->getLabel());
+        $this->assertSame($value, $object->getLabel());
     }
 
     public function testGetAdminView()

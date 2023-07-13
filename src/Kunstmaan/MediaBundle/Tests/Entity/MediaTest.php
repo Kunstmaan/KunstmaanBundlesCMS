@@ -21,36 +21,36 @@ class MediaTest extends TestCase
     public function testSetFileSize()
     {
         $this->object->setFileSize(45);
-        $this->assertEquals('45b', $this->object->getFileSize());
+        $this->assertSame('45b', $this->object->getFileSize());
         $this->object->setFileSize(64 * 1024);
-        $this->assertEquals('64kb', $this->object->getFileSize());
+        $this->assertSame('64kb', $this->object->getFileSize());
         $this->object->setFileSize(64 * 1024 * 1024);
-        $this->assertEquals('64mb', $this->object->getFileSize());
+        $this->assertSame('64mb', $this->object->getFileSize());
     }
 
     public function testGetSetUuid()
     {
         $this->object->setUuid('abc');
-        $this->assertEquals('abc', $this->object->getUuid());
+        $this->assertSame('abc', $this->object->getUuid());
     }
 
     public function testGetSetName()
     {
         $this->object->setName('name.jpg');
-        $this->assertEquals('name.jpg', $this->object->getName());
+        $this->assertSame('name.jpg', $this->object->getName());
     }
 
     public function testGetSetLocation()
     {
         $this->object->setLocation('local');
-        $this->assertEquals('local', $this->object->getLocation());
+        $this->assertSame('local', $this->object->getLocation());
     }
 
     public function testGetSetContentType()
     {
         $this->object->setContentType('image/jpeg');
-        $this->assertEquals('image/jpeg', $this->object->getContentType());
-        $this->assertEquals('jpeg', $this->object->getContentTypeShort());
+        $this->assertSame('image/jpeg', $this->object->getContentType());
+        $this->assertSame('jpeg', $this->object->getContentTypeShort());
     }
 
     public function testGetSetCreatedAt()
@@ -70,7 +70,7 @@ class MediaTest extends TestCase
     public function testGetContent()
     {
         $this->object->setContent('content');
-        $this->assertEquals('content', $this->object->getContent());
+        $this->assertSame('content', $this->object->getContent());
     }
 
     public function testGetSetFolder()
@@ -78,7 +78,7 @@ class MediaTest extends TestCase
         $folder = new Folder();
         $folder->setId(45);
         $this->object->setFolder($folder);
-        $this->assertEquals(45, $this->object->getFolder()->getId());
+        $this->assertSame(45, $this->object->getFolder()->getId());
     }
 
     public function testGetSetDeleted()
@@ -94,35 +94,35 @@ class MediaTest extends TestCase
         $this->object->setTranslatableLocale('en');
         $meta = ['original_width' => 320, 'original_height' => 200];
         $this->object->setMetadata($meta);
-        $this->assertEquals($meta, $this->object->getMetadata());
-        $this->assertEquals(320, $this->object->getMetadataValue('original_width'));
-        $this->assertEquals(200, $this->object->getMetadataValue('original_height'));
+        $this->assertSame($meta, $this->object->getMetadata());
+        $this->assertSame(320, $this->object->getMetadataValue('original_width'));
+        $this->assertSame(200, $this->object->getMetadataValue('original_height'));
         $this->object->setMetadataValue('original_width', 640);
-        $this->assertEquals(640, $this->object->getMetadataValue('original_width'));
+        $this->assertSame(640, $this->object->getMetadataValue('original_width'));
     }
 
     public function testGetSetUrl()
     {
         $this->object->setUrl('http://domain.tld/path/name.ext');
-        $this->assertEquals('http://domain.tld/path/name.ext', $this->object->getUrl());
+        $this->assertSame('http://domain.tld/path/name.ext', $this->object->getUrl());
     }
 
     public function testGetSetOriginalFilename()
     {
         $this->object->setOriginalFilename('name.ext');
-        $this->assertEquals('name.ext', $this->object->getOriginalFilename());
+        $this->assertSame('name.ext', $this->object->getOriginalFilename());
     }
 
     public function testGetSetCopyright()
     {
         $this->object->setCopyright('(c) 2014 Kunstmaan All rights reserved');
-        $this->assertEquals('(c) 2014 Kunstmaan All rights reserved', $this->object->getCopyright());
+        $this->assertSame('(c) 2014 Kunstmaan All rights reserved', $this->object->getCopyright());
     }
 
     public function testGetSetDescription()
     {
         $this->object->setDescription('Description of this picture');
-        $this->assertEquals('Description of this picture', $this->object->getDescription());
+        $this->assertSame('Description of this picture', $this->object->getDescription());
     }
 
     public function testGetSetRemoved()
@@ -136,7 +136,7 @@ class MediaTest extends TestCase
         $this->object->setFileSize(null);
         $this->assertEmpty($this->object->getFileSize());
         $this->object->setFileSize(123);
-        $this->assertEquals(123, $this->object->getFileSizeBytes());
+        $this->assertSame(123, $this->object->getFileSizeBytes());
     }
 
     public function testPreUpdate()
@@ -149,6 +149,6 @@ class MediaTest extends TestCase
     {
         $this->object->setOriginalFilename('spongebob.jpg');
         $this->object->prePersist();
-        $this->assertEquals('spongebob.jpg', $this->object->getName());
+        $this->assertSame('spongebob.jpg', $this->object->getName());
     }
 }

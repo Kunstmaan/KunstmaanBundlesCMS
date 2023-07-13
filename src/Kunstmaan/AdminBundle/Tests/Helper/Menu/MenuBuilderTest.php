@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class MenuBuilderTest extends TestCase
 {
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|MenuBuilder
+     * @return MockObject|MenuBuilder
      */
     public function setUpMenuBuilderMock(?array $methods)
     {
@@ -47,14 +48,12 @@ class MenuBuilderTest extends TestCase
     {
         $menuItemMock = $this->createMock(MenuItem::class);
         $menuItemMock
-            ->expects($this->any())
             ->method('getActive')
             ->willReturn(true)
         ;
 
         $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
-            ->expects($this->any())
             ->method('getChildren')
             ->will($this->onConsecutiveCalls([$menuItemMock], []))
         ;
@@ -68,14 +67,12 @@ class MenuBuilderTest extends TestCase
     {
         $menuItemMock = $this->createMock(TopMenuItem::class);
         $menuItemMock
-            ->expects($this->any())
             ->method('getActive')
             ->willReturn(true)
         ;
 
         $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
-            ->expects($this->any())
             ->method('getChildren')
             ->will($this->onConsecutiveCalls([$menuItemMock], []))
         ;
@@ -87,7 +84,6 @@ class MenuBuilderTest extends TestCase
     {
         $menuItemMock = $this->createMock(MenuItem::class);
         $menuItemMock
-            ->expects($this->any())
             ->method('getActive')
             ->willReturn(true)
         ;
@@ -99,7 +95,6 @@ class MenuBuilderTest extends TestCase
 
         $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
-            ->expects($this->any())
             ->method('getChildren')
             ->will($this->onConsecutiveCalls([$menuItemMock], []))
         ;
@@ -111,14 +106,12 @@ class MenuBuilderTest extends TestCase
     {
         $menuItemMock = $this->createMock(TopMenuItem::class);
         $menuItemMock
-            ->expects($this->any())
             ->method('getActive')
             ->willReturn(false)
         ;
 
         $menuBuilderMock = $this->setUpMenuBuilderMock(['getChildren']);
         $menuBuilderMock
-            ->expects($this->any())
             ->method('getChildren')
             ->will($this->onConsecutiveCalls([$menuItemMock], []))
         ;

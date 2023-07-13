@@ -15,11 +15,11 @@ class LocaleWhitelistRuleTest extends TestCase
         $rule->setPopup(new Popup());
         $rule->setLocale('en');
 
-        $this->assertEquals('en', $rule->getLocale());
-        $this->assertEquals('LocaleWhitelistRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/LocaleWhitelistRule.js', $rule->getJsFilePath());
-        $this->assertEquals(LocaleWhiteListAdminType::class, $rule->getAdminType());
-        $this->assertEquals('kunstmaan_lead_generation.rule.service.localeruleservice', $rule->getService());
+        $this->assertSame('en', $rule->getLocale());
+        $this->assertSame('LocaleWhitelistRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/LocaleWhitelistRule.js', $rule->getJsFilePath());
+        $this->assertSame(LocaleWhiteListAdminType::class, $rule->getAdminType());
+        $this->assertSame('kunstmaan_lead_generation.rule.service.localeruleservice', $rule->getService());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
         $this->assertIsArray($rule->getJsProperties());
     }

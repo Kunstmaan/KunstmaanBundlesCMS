@@ -62,10 +62,10 @@ class FileFormSubmissionFieldTest extends TestCase
         $object->setUrl('https://nasa.gov');
         $object->setUuid('123');
 
-        $this->assertEquals($fileName, $object->getFileName());
-        $this->assertEquals('https://nasa.gov', $object->getUrl());
-        $this->assertEquals('123', $object->getUuid());
-        $this->assertEquals(FileFormSubmissionType::class, $object->getDefaultAdminType());
+        $this->assertSame($fileName, $object->getFileName());
+        $this->assertSame('https://nasa.gov', $object->getUrl());
+        $this->assertSame('123', $object->getUuid());
+        $this->assertSame(FileFormSubmissionType::class, $object->getDefaultAdminType());
     }
 
     public function testGetSubmissionTemplate()
@@ -85,7 +85,7 @@ class FileFormSubmissionFieldTest extends TestCase
 
         $file->method('getClientOriginalName')->willReturn('example-name.pdf');
 
-        $file->expects($this->any())->method('move');
+        $file->method('move');
 
         $object->file = $file;
         $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/');
@@ -104,7 +104,7 @@ class FileFormSubmissionFieldTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $container->expects($this->any())
+        $container
             ->method('getParameter')
             ->willReturn('whatever');
 

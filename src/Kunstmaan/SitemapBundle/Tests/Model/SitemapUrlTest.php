@@ -25,13 +25,11 @@ class SitemapUrlTest extends TestCase
         }
     }
 
-    public function priorityDataProvider()
+    public function priorityDataProvider(): \Iterator
     {
-        return [
-            [0.0, false],
-            [-1.0, true],
-            [1.0, false],
-            [1.2, true],
-        ];
+        yield [0.0, false];
+        yield [-1.0, true];
+        yield [1.0, false];
+        yield [1.2, true];
     }
 }

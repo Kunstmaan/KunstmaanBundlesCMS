@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Exporter;
 
+use Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter;
 use Kunstmaan\TranslatorBundle\DependencyInjection\Compiler\KunstmaanTranslatorCompilerPass;
 use Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
@@ -18,12 +19,12 @@ class ExporterTest extends AbstractCompilerPassTestCase
     private function registerDefinations()
     {
         $svcId = 'kunstmaan_translator.service.exporter.exporter';
-        $svc = new Definition('Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter');
+        $svc = new Definition(Exporter::class);
         $svc->setPublic(true);
         $this->setDefinition($svcId, $svc);
 
         $svcId = 'kunstmaan_translator.service.exporter.yaml';
-        $svc = new Definition('Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter');
+        $svc = new Definition(YamlFileExporter::class);
         $svc->addTag('translation.exporter', ['alias' => 'yml']);
         $this->setDefinition($svcId, $svc);
     }
@@ -33,7 +34,7 @@ class ExporterTest extends AbstractCompilerPassTestCase
         $this->registerDefinations();
         $this->compile();
 
-        $this->assertContainerBuilderHasService('kunstmaan_translator.service.exporter.exporter', 'Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter');
+        $this->assertContainerBuilderHasService('kunstmaan_translator.service.exporter.exporter', Exporter::class);
     }
 
     /**
@@ -48,7 +49,7 @@ class ExporterTest extends AbstractCompilerPassTestCase
 
         /** @var Exporter $exporter */
         $exporter = $exporterService->getExporterByExtension('yml');
-        $this->assertInstanceOf('\Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter', $exporter);
+        $this->assertInstanceOf('\\' . YamlFileExporter::class, $exporter);
     }
 
     /**

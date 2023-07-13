@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Tests\DependencyInjection;
 
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Kunstmaan\NodeSearchBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,7 @@ class ConfigurationTest extends TestCase
     use ConfigurationTestCaseTrait;
 
     /**
-     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
+     * @return ConfigurationInterface
      */
     protected function getConfiguration()
     {

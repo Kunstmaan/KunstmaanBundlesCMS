@@ -37,24 +37,20 @@ class ValidExternalUrlValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function getValidUrls()
+    public function getValidUrls(): \Iterator
     {
-        return [
-            ['http://www.example.com'],
-            ['https://example.com'],
-            ['#'],
-            ['#anchor-name'],
-            ['#!'],
-        ];
+        yield ['http://www.example.com'];
+        yield ['https://example.com'];
+        yield ['#'];
+        yield ['#anchor-name'];
+        yield ['#!'];
     }
 
-    public function getInvalidUrls()
+    public function getInvalidUrls(): \Iterator
     {
-        return [
-            ['example.com'],
-            ['www.example.com'],
-            ['!#'],
-            ['abc#anchor-name'],
-        ];
+        yield ['example.com'];
+        yield ['www.example.com'];
+        yield ['!#'];
+        yield ['abc#anchor-name'];
     }
 }

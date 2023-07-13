@@ -17,11 +17,11 @@ class AnalyticsGoalTest extends TestCase
         $entity->setVisits(7);
         $entity->setChartData('blahblah');
 
-        $this->assertEquals(666, $entity->getId());
-        $this->assertEquals(5, $entity->getOverview());
-        $this->assertEquals(6, $entity->getPosition());
-        $this->assertEquals('Donald Trump', $entity->getName());
-        $this->assertEquals(7, $entity->getVisits());
-        $this->assertEquals('blahblah', $entity->getChartData());
+        $this->assertSame(666, $entity->getId());
+        $this->assertSame(5, $entity->getOverview());
+        $this->assertSame(6, $entity->getPosition());
+        $this->assertSame('Donald Trump', $entity->getName());
+        $this->assertSame(7, $entity->getVisits());
+        $this->assertSame('blahblah', $entity->getChartData());
     }
 }

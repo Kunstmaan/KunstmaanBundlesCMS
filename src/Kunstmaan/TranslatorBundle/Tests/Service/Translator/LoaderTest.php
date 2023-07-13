@@ -9,10 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 class LoaderTest extends TestCase
 {
-    const TEST_DATA_DOMAIN = 'validation';
-    const TEST_DATA_LOCALE = 'en';
-    const TEST_DATA_KEYWORD = 'validation.ok';
-    const TEST_DATA_TEXT = 'Everything ok';
+    public const TEST_DATA_DOMAIN = 'validation';
+    public const TEST_DATA_LOCALE = 'en';
+    public const TEST_DATA_KEYWORD = 'validation.ok';
+    public const TEST_DATA_TEXT = 'Everything ok';
     private Loader $loader;
 
     public function setUp(): void
@@ -36,7 +36,7 @@ class LoaderTest extends TestCase
     {
         $catalogue = $this->loader->load('', self::TEST_DATA_LOCALE, self::TEST_DATA_DOMAIN);
         $messages = $catalogue->all(self::TEST_DATA_DOMAIN);
-        $this->assertEquals(self::TEST_DATA_TEXT, $messages[self::TEST_DATA_KEYWORD]);
-        $this->assertEquals(self::TEST_DATA_LOCALE, $catalogue->getLocale());
+        $this->assertSame(self::TEST_DATA_TEXT, $messages[self::TEST_DATA_KEYWORD]);
+        $this->assertSame(self::TEST_DATA_LOCALE, $catalogue->getLocale());
     }
 }

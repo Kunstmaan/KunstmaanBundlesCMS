@@ -9,10 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbstractArticlePageAdminTypeTest extends TestCase
 {
-    /**
-     * @var AbstractArticlePageAdminType
-     */
-    private $object;
+    private AbstractArticlePageAdminType $object;
 
     public function setUp(): void
     {
@@ -22,7 +19,7 @@ class AbstractArticlePageAdminTypeTest extends TestCase
 
     public function testBlockPrefix()
     {
-        $this->assertEquals('AbstractArticlePage', $this->object->getBlockPrefix());
+        $this->assertSame('AbstractArticlePage', $this->object->getBlockPrefix());
     }
 
     public function testConfigureOptions()

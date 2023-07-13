@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
+use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use PHPUnit\Framework\TestCase;
 
@@ -19,16 +20,16 @@ class TocPagePartTest extends TestCase
 
     public function testToString()
     {
-        $this->assertEquals('TocPagePart', $this->object->__toString());
+        $this->assertSame('TocPagePart', $this->object->__toString());
     }
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('@KunstmaanPagePart/TocPagePart/view.html.twig', $this->object->getDefaultView());
+        $this->assertSame('@KunstmaanPagePart/TocPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals('Kunstmaan\PagePartBundle\Form\TocPagePartAdminType', $this->object->getDefaultAdminType());
+        $this->assertSame(TocPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

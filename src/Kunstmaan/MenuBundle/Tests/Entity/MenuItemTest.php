@@ -50,14 +50,14 @@ class MenuItemTest extends TestCase
         $item->setRgt(7);
 
         $this->assertInstanceOf(Menu::class, $item->getMenu());
-        $this->assertEquals('Rubber Chicken', $item->getType());
+        $this->assertSame('Rubber Chicken', $item->getType());
         $this->assertInstanceOf(NodeTranslation::class, $item->getNodeTranslation());
-        $this->assertEquals('Buy Bitcoin Cash!', $item->getTitle());
-        $this->assertEquals('https://nasa.gov', $item->getUrl());
+        $this->assertSame('Buy Bitcoin Cash!', $item->getTitle());
+        $this->assertSame('https://nasa.gov', $item->getUrl());
         $this->assertTrue($item->isNewWindow());
-        $this->assertEquals(5, $item->getLft());
-        $this->assertEquals(6, $item->getLvl());
-        $this->assertEquals(7, $item->getRgt());
+        $this->assertSame(5, $item->getLft());
+        $this->assertSame(6, $item->getLvl());
+        $this->assertSame(7, $item->getRgt());
     }
 
     public function testGetDisplayUrl()
@@ -70,10 +70,10 @@ class MenuItemTest extends TestCase
         $item->setUrl('https://bitcoinwisdom.com');
         $item->setNodeTranslation($nodeTranslation);
 
-        $this->assertEquals('https://nasa.gov', $item->getDisplayUrl());
+        $this->assertSame('https://nasa.gov', $item->getDisplayUrl());
 
         $item->setType(BaseMenuItem::TYPE_URL_LINK);
-        $this->assertEquals('https://bitcoinwisdom.com', $item->getDisplayUrl());
+        $this->assertSame('https://bitcoinwisdom.com', $item->getDisplayUrl());
     }
 
     public function testGetDisplayTitle()
@@ -84,13 +84,13 @@ class MenuItemTest extends TestCase
         $nodeTranslation->setTitle('Node');
         $item->setType(BaseMenuItem::TYPE_PAGE_LINK);
         $item->setNodeTranslation($nodeTranslation);
-        $this->assertEquals('Node', $item->getDisplayTitle());
+        $this->assertSame('Node', $item->getDisplayTitle());
 
         $item->setTitle('Hello');
-        $this->assertEquals('Hello', $item->getDisplayTitle());
+        $this->assertSame('Hello', $item->getDisplayTitle());
 
         $item->setType(BaseMenuItem::TYPE_URL_LINK);
-        $this->assertEquals('Hello', $item->getDisplayTitle());
+        $this->assertSame('Hello', $item->getDisplayTitle());
     }
 
     public function testIsOnline()

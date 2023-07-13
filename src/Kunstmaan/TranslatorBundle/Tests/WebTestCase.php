@@ -18,7 +18,7 @@ class WebTestCase extends BaseWebTestCase
     public static function assertRedirect($response, $location)
     {
         self::assertTrue($response->isRedirect(), 'Response is not a redirect, got status code: ' . $response->getStatusCode());
-        self::assertEquals('http://localhost' . $location, $response->headers->get('Location'));
+        self::assertResponseRedirects('http://localhost' . $location);
     }
 
     public static function setUpBeforeClass(): void
@@ -59,15 +59,15 @@ class WebTestCase extends BaseWebTestCase
         return new $class(
             static::getVarDir(),
             $options['test_case'],
-            isset($options['root_config']) ? $options['root_config'] : 'config.yml',
-            isset($options['environment']) ? $options['environment'] : strtolower(static::getVarDir() . $options['test_case']),
-            isset($options['debug']) ? $options['debug'] : true
+            $options['root_config'] ?? 'config.yml',
+            $options['environment'] ?? strtolower(static::getVarDir() . $options['test_case']),
+            $options['debug'] ?? true
         );
     }
 
     protected static function getVarDir()
     {
-        return 'FB' . substr(strrchr(\get_called_class(), '\\'), 1);
+        return 'FB' . substr(strrchr(static::class, '\\'), 1);
     }
 
     protected static function loadFixtures(ContainerInterface $container)

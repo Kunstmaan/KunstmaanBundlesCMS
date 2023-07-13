@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
@@ -41,11 +43,11 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
     protected function getMockedEntityManager()
     {
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -63,11 +65,11 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
             [new FormSubmission()],
             [new FormSubmission()],
         ];
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')
+        $query = $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $query->expects($this->any())
+        $query
             ->method('iterate')
             ->willReturn($submissions);
 
@@ -75,12 +77,12 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
             'select', 'from', 'innerJoin', 'andWhere', 'setParameter', 'addOrderBy',
         ];
         foreach ($methods as $method) {
-            $queryBuilder->expects($this->any())
+            $queryBuilder
                 ->method($method)
                 ->willReturn($queryBuilder);
         }
 
-        $queryBuilder->expects($this->any())
+        $queryBuilder
             ->method('getQuery')
             ->willReturn($query);
 
@@ -107,8 +109,8 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
     public function testGetStringValue()
     {
         $this->assertNull($this->object->buildFilters());
-        $this->assertEquals('', $this->object->getStringValue([], 'fail'));
-        $this->assertEquals('pass', $this->object->getStringValue(['test' => 'pass'], 'test'));
+        $this->assertSame('', $this->object->getStringValue([], 'fail'));
+        $this->assertSame('pass', $this->object->getStringValue(['test' => 'pass'], 'test'));
     }
 
     public function testBuildExportFields()
@@ -128,6 +130,6 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
         $this->assertCount(1, $first);
         $first = $first[0];
         $this->assertArrayHasKey('check', $first);
-        $this->assertEquals('true', $first['check']);
+        $this->assertSame('true', $first['check']);
     }
 }

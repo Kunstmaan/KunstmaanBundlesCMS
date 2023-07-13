@@ -18,12 +18,10 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
         $this->object = new DateTimeFilterType('datetime', 'e');
     }
 
-    public static function applyDataProvider(): array
+    public static function applyDataProvider(): \Iterator
     {
-        return [
-            ['before', '<= :var_datetime', ['date' => '14/04/2014', 'time' => '09:00'], '2014-04-14 09:00'],
-            ['after', '> :var_datetime', ['date' => '14/04/2014', 'time' => '10:00'], '2014-04-14 10:00'],
-        ];
+        yield ['before', '<= :var_datetime', ['date' => '14/04/2014', 'time' => '09:00'], '2014-04-14 09:00'];
+        yield ['after', '> :var_datetime', ['date' => '14/04/2014', 'time' => '10:00'], '2014-04-14 10:00'];
     }
 
     public function testBindRequest()
@@ -37,7 +35,7 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
         $uniqueId = 'datetime';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(
+        $this->assertSame(
             ['comparator' => 'before', 'value' => ['date' => '14/04/2014', 'time' => '09:00']],
             $data
         );
@@ -51,7 +49,7 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
      *
      * @dataProvider applyDataProvider
      */
-    public function testApply($comparator, $whereClause, $value, $testValue)
+    public function testApply($comparator, $whereClause, mixed $value, mixed $testValue)
     {
         $qb = $this->getQueryBuilder();
         $qb->select('*')
@@ -59,13 +57,13 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
         $this->object->setQueryBuilder($qb);
         $this->object->apply(['comparator' => $comparator, 'value' => $value], 'datetime');
 
-        $this->assertEquals("SELECT * FROM entity e WHERE e.datetime $whereClause", $qb->getSQL());
+        $this->assertSame("SELECT * FROM entity e WHERE e.datetime $whereClause", $qb->getSQL());
         $this->assertEquals($testValue, $qb->getParameter('var_datetime'));
     }
 
     public function testGetTemplate()
     {
-        $this->assertEquals(
+        $this->assertSame(
             '@KunstmaanAdminList/FilterType/dateTimeFilter.html.twig',
             $this->object->getTemplate()
         );

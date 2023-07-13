@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
+use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
 use PHPUnit\Framework\TestCase;
 
@@ -19,16 +20,16 @@ class LinePagePartTest extends TestCase
 
     public function testToString()
     {
-        $this->assertEquals('LinePagePart', $this->object->__toString());
+        $this->assertSame('LinePagePart', $this->object->__toString());
     }
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('@KunstmaanPagePart/LinePagePart/view.html.twig', $this->object->getDefaultView());
+        $this->assertSame('@KunstmaanPagePart/LinePagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals('Kunstmaan\PagePartBundle\Form\LinePagePartAdminType', $this->object->getDefaultAdminType());
+        $this->assertSame(LinePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

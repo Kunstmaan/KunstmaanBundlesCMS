@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
+use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,6 +31,6 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\HeaderPagePart', $resolve['data_class']);
+        $this->assertSame(HeaderPagePart::class, $resolve['data_class']);
     }
 }

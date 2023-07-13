@@ -15,8 +15,7 @@ use Kunstmaan\TranslatorBundle\Entity\Translation;
  */
 final class TranslationDataFixture implements FixtureInterface
 {
-    /** @var Generator */
-    private $faker;
+    private Generator $faker;
 
     public function __construct()
     {

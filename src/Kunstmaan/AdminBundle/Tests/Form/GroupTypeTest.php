@@ -21,6 +21,6 @@ class GroupTypeTest extends TestCase
         /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
-        $this->assertEquals('group', $type->getBlockPrefix());
+        $this->assertSame('group', $type->getBlockPrefix());
     }
 }

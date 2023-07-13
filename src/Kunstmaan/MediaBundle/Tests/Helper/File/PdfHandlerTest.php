@@ -23,7 +23,7 @@ class PdfHandlerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->pdfTransformer = $this->createMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
+        $this->pdfTransformer = $this->createMock(PreviewTransformerInterface::class);
         $this->filesDir = realpath(__DIR__ . '/../../Files');
 
         $this->object = new PdfHandler(1, new MimeTypes());
@@ -32,7 +32,7 @@ class PdfHandlerTest extends TestCase
 
     public function testGetType()
     {
-        $this->assertEquals(PdfHandler::TYPE, $this->object->getType());
+        $this->assertSame(PdfHandler::TYPE, $this->object->getType());
     }
 
     public function testCanHandlePdfFiles()
@@ -57,7 +57,6 @@ class PdfHandlerTest extends TestCase
     public function testGetImageUrl()
     {
         $this->pdfTransformer
-            ->expects($this->any())
             ->method('getPreviewFilename')
             ->willReturn('/media.pdf.jpg');
 
@@ -70,7 +69,7 @@ class PdfHandlerTest extends TestCase
         $fileSystem->touch($previewFilename);
         $media->setUrl('/media.pdf');
         $this->object->setWebPath(sys_get_temp_dir());
-        $this->assertEquals('/media.pdf.jpg', $this->object->getImageUrl($media, ''));
+        $this->assertSame('/media.pdf.jpg', $this->object->getImageUrl($media, ''));
         $fileSystem->remove($previewFilename);
     }
 }

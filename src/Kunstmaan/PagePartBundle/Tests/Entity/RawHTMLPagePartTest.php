@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
+use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
 use PHPUnit\Framework\TestCase;
 
@@ -20,22 +21,22 @@ class RawHTMLPagePartTest extends TestCase
 
     public function testToString()
     {
-        $this->assertEquals('RawHTMLPagePart ' . htmlentities($this->object->getContent()), $this->object->__toString());
+        $this->assertSame('RawHTMLPagePart ' . htmlentities($this->object->getContent()), $this->object->__toString());
     }
 
     public function testGetDefaultView()
     {
-        $this->assertEquals('@KunstmaanPagePart/RawHTMLPagePart/view.html.twig', $this->object->getDefaultView());
+        $this->assertSame('@KunstmaanPagePart/RawHTMLPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testSetGetContent()
     {
         $this->object->setContent('tèst content with s3ç!àL');
-        $this->assertEquals('tèst content with s3ç!àL', $this->object->getContent());
+        $this->assertSame('tèst content with s3ç!àL', $this->object->getContent());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals('Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType', $this->object->getDefaultAdminType());
+        $this->assertSame(RawHTMLPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

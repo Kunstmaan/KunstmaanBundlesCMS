@@ -23,9 +23,9 @@ class RobotsTest extends TestCase
         $this->object->setId(11);
         $this->object->setRobotsTxt('*');
 
-        $this->assertEquals(11, $this->object->getId());
-        $this->assertEquals('*', $this->object->getRobotsTxt());
-        $this->assertEquals(RobotsType::class, $this->object->getDefaultAdminType());
-        $this->assertEquals('Robots', $this->object->__toString());
+        $this->assertSame(11, $this->object->getId());
+        $this->assertSame('*', $this->object->getRobotsTxt());
+        $this->assertSame(RobotsType::class, $this->object->getDefaultAdminType());
+        $this->assertSame('Robots', $this->object->__toString());
     }
 }

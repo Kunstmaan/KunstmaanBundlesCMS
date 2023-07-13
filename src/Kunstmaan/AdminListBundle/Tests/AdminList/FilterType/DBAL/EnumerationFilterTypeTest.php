@@ -25,7 +25,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(['comparator' => 'in', 'value' => [1, 2]], $data);
+        $this->assertSame(['comparator' => 'in', 'value' => [1, 2]], $data);
     }
 
     /**
@@ -36,7 +36,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
      *
      * @dataProvider applyDataProvider
      */
-    public function testApply($comparator, $whereClause, $value, $testValue)
+    public function testApply($comparator, $whereClause, mixed $value, mixed $testValue)
     {
         $qb = $this->getQueryBuilder();
         $qb->select('*')
@@ -44,18 +44,16 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
         $this->object->setQueryBuilder($qb);
         $this->object->apply(['comparator' => $comparator, 'value' => $value], 'enumeration');
 
-        $this->assertEquals("SELECT * FROM entity e WHERE e.enumeration $whereClause", $qb->getSQL());
+        $this->assertSame("SELECT * FROM entity e WHERE e.enumeration $whereClause", $qb->getSQL());
         if ($testValue) {
             $this->assertEquals($value, $qb->getParameter('var_enumeration'));
         }
     }
 
-    public static function applyDataProvider(): array
+    public static function applyDataProvider(): \Iterator
     {
-        return [
-          ['in', 'IN (:var_enumeration)', [1, 2], true],
-          ['notin', 'NOT IN (:var_enumeration)', [1, 2], true],
-        ];
+        yield ['in', 'IN (:var_enumeration)', [1, 2], true];
+        yield ['notin', 'NOT IN (:var_enumeration)', [1, 2], true];
     }
 
     public function testGetComparator()
@@ -64,7 +62,7 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
         $data = [];
         $uniqueId = 'enumeration';
         $this->object->bindRequest($request, $data, $uniqueId);
-        $this->assertEquals('in', $this->object->getComparator());
+        $this->assertSame('in', $this->object->getComparator());
     }
 
     public function testGetValue()
@@ -78,6 +76,6 @@ class EnumerationFilterTypeTest extends BaseDbalFilterTest
 
     public function testGetTemplate()
     {
-        $this->assertEquals('@KunstmaanAdminList/FilterType/enumerationFilter.html.twig', $this->object->getTemplate());
+        $this->assertSame('@KunstmaanAdminList/FilterType/enumerationFilter.html.twig', $this->object->getTemplate());
     }
 }

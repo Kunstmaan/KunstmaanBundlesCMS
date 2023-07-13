@@ -15,10 +15,10 @@ class UrlWhitelistRuleTest extends TestCase
         $rule->setPopup(new Popup());
         $rule->setUrls('https://nasa.gov');
 
-        $this->assertEquals('https://nasa.gov', $rule->getUrls());
-        $this->assertEquals('UrlWhitelistRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/UrlWhitelistRule.js', $rule->getJsFilePath());
-        $this->assertEquals(UrlWhiteListAdminType::class, $rule->getAdminType());
+        $this->assertSame('https://nasa.gov', $rule->getUrls());
+        $this->assertSame('UrlWhitelistRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/UrlWhitelistRule.js', $rule->getJsFilePath());
+        $this->assertSame(UrlWhiteListAdminType::class, $rule->getAdminType());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
         $this->assertIsArray($rule->getJsProperties());
     }

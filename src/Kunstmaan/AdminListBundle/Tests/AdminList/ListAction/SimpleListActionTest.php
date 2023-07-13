@@ -11,9 +11,9 @@ class SimpleListActionTest extends TestCase
     {
         $object = new SimpleListAction(['http://www.domain.com/action'], 'Label', 'icon.png', 'template.html.twig');
 
-        $this->assertEquals('http://www.domain.com/action', $object->getUrl()[0]);
-        $this->assertEquals('icon.png', $object->getIcon());
-        $this->assertEquals('Label', $object->getLabel());
-        $this->assertEquals('template.html.twig', $object->getTemplate());
+        $this->assertSame('http://www.domain.com/action', $object->getUrl()[0]);
+        $this->assertSame('icon.png', $object->getIcon());
+        $this->assertSame('Label', $object->getLabel());
+        $this->assertSame('template.html.twig', $object->getTemplate());
     }
 }

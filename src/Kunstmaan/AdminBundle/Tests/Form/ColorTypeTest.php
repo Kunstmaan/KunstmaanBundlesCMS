@@ -19,7 +19,7 @@ class ColorTypeTest extends TestCase
         $resolver->expects($this->once())->method('setDefaults')->willReturn($resolver);
         /* @var OptionsResolver $resolver */
         $colorType->configureOptions($resolver);
-        $this->assertEquals(TextType::class, $colorType->getParent());
-        $this->assertEquals('color', $colorType->getBlockPrefix());
+        $this->assertSame(TextType::class, $colorType->getParent());
+        $this->assertSame('color', $colorType->getBlockPrefix());
     }
 }

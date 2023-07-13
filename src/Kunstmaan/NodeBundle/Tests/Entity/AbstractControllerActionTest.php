@@ -31,9 +31,9 @@ class AbstractControllerActionTest extends TestCase
         $entity = $this->createMock(HasNodeInterface::class);
         $action->setParent($entity);
 
-        $this->assertEquals(5, $action->getId());
-        $this->assertEquals('Global Economic Meltdown - The Movie', $action->getTitle());
-        $this->assertInstanceOf(\get_class($entity), $action->getParent());
-        $this->assertEquals(ControllerActionAdminType::class, $action->getDefaultAdminType());
+        $this->assertSame(5, $action->getId());
+        $this->assertSame('Global Economic Meltdown - The Movie', $action->getTitle());
+        $this->assertInstanceOf($entity::class, $action->getParent());
+        $this->assertSame(ControllerActionAdminType::class, $action->getDefaultAdminType());
     }
 }

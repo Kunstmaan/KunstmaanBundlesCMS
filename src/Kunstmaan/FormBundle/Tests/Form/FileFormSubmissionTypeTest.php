@@ -9,15 +9,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileFormSubmissionTypeTest extends TypeTestCase
 {
-    /**
-     * @var UploadedFile
-     */
-    private $file;
+    private string|bool $file;
 
-    /**
-     * @var UploadedFile
-     */
-    private $image;
+    private UploadedFile $image;
 
     public function setUp(): void
     {

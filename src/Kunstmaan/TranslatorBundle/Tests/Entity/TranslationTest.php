@@ -9,11 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 class TranslationTest extends TestCase
 {
-    const TEST_DATA_ID = 666;
-    const TEST_DATA_FILE = 'messages.en.yml';
-    const TEST_DATA_KEYWORD = 'hello.world';
-    const TEST_DATA_TEXT = 'hello world';
-    const TEST_DATA_DOMAIN = 'messages';
+    public const TEST_DATA_ID = 666;
+    public const TEST_DATA_FILE = 'messages.en.yml';
+    public const TEST_DATA_KEYWORD = 'hello.world';
+    public const TEST_DATA_TEXT = 'hello world';
+    public const TEST_DATA_DOMAIN = 'messages';
 
     protected $object;
 
@@ -36,22 +36,22 @@ class TranslationTest extends TestCase
 
     public function testGetSet()
     {
-        $this->assertEquals(self::TEST_DATA_ID, $this->object->getId());
+        $this->assertSame(self::TEST_DATA_ID, $this->object->getId());
         $this->assertInstanceOf(\DateTime::class, $this->object->getCreatedAt());
         $this->assertInstanceOf(\DateTime::class, $this->object->getUpdatedAt());
-        $this->assertEquals(self::TEST_DATA_FILE, $this->object->getFile());
-        $this->assertEquals(Translation::FLAG_UPDATED, $this->object->getFlag());
+        $this->assertSame(self::TEST_DATA_FILE, $this->object->getFile());
+        $this->assertSame(Translation::FLAG_UPDATED, $this->object->getFlag());
 
         $this->object->setFlag(Translation::FLAG_NEW);
-        $this->assertEquals(Translation::FLAG_NEW, $this->object->getFlag());
+        $this->assertSame(Translation::FLAG_NEW, $this->object->getFlag());
     }
 
     public function testGetTranslationModel()
     {
         $translationModel = $this->object->getTranslationModel(self::TEST_DATA_ID);
         $this->assertInstanceOf(\Kunstmaan\TranslatorBundle\Model\Translation::class, $translationModel);
-        $this->assertEquals(self::TEST_DATA_KEYWORD, $translationModel->getKeyword());
-        $this->assertEquals(self::TEST_DATA_DOMAIN, $translationModel->getDomain());
+        $this->assertSame(self::TEST_DATA_KEYWORD, $translationModel->getKeyword());
+        $this->assertSame(self::TEST_DATA_DOMAIN, $translationModel->getDomain());
 
         $texts = $translationModel->getTexts();
         $this->assertInstanceOf(ArrayCollection::class, $texts);

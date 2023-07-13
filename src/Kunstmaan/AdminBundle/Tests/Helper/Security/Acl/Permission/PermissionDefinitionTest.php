@@ -26,19 +26,19 @@ class PermissionDefinitionTest extends TestCase
     public function testSetGetAlias()
     {
         $this->object->setAlias('alias');
-        $this->assertEquals('alias', $this->object->getAlias());
+        $this->assertSame('alias', $this->object->getAlias());
     }
 
     public function testSetGetEntity()
     {
         $this->object->setEntity('entity');
-        $this->assertEquals('entity', $this->object->getEntity());
+        $this->assertSame('entity', $this->object->getEntity());
     }
 
     public function testSetGetPermissions()
     {
         $this->object->setPermissions(['EDIT', 'VIEW', 'DELETE']);
-        $this->assertEquals(['EDIT', 'VIEW', 'DELETE'], $this->object->getPermissions());
+        $this->assertSame(['EDIT', 'VIEW', 'DELETE'], $this->object->getPermissions());
     }
 
     public function testSetPermissionsWithInvalidData()

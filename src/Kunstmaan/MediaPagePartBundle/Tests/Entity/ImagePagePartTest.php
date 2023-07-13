@@ -30,7 +30,7 @@ class ImagePagePartTest extends TestCase
     public function testSetGetLink()
     {
         $this->object->setLink('abc');
-        $this->assertEquals('abc', $this->object->getLink());
+        $this->assertSame('abc', $this->object->getLink());
     }
 
     public function testSetGetMedia()
@@ -39,40 +39,40 @@ class ImagePagePartTest extends TestCase
         $media->setUrl('https://nasa.gov/spongebob.jpg');
         $media->setId(5);
         $this->object->setMedia($media);
-        $this->assertEquals(5, $this->object->getMedia()->getId());
-        $this->assertEquals(5, $this->object->getMedia()->__toString());
-        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
+        $this->assertSame(5, $this->object->getMedia()->getId());
+        $this->assertSame(5, $this->object->getMedia()->__toString());
+        $this->assertSame('https://nasa.gov/spongebob.jpg', $this->object->__toString());
         $pp = new ImagePagePart();
-        $this->assertEquals('', $pp->__toString());
+        $this->assertSame('', $pp->__toString());
     }
 
     public function testSetGetAlttext()
     {
         $this->object->setAltText('bcd');
-        $this->assertEquals('bcd', $this->object->getAltText());
+        $this->assertSame('bcd', $this->object->getAltText());
     }
 
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals('@KunstmaanMediaPagePart/ImagePagePart/view.html.twig', $defaultView);
+        $this->assertSame('@KunstmaanMediaPagePart/ImagePagePart/view.html.twig', $defaultView);
     }
 
     public function testGetAdminView()
     {
         $defaultView = $this->object->getAdminView();
-        $this->assertEquals('@KunstmaanMediaPagePart/ImagePagePart/admin-view.html.twig', $defaultView);
+        $this->assertSame('@KunstmaanMediaPagePart/ImagePagePart/admin-view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(ImagePagePartAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(ImagePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testEmptyUrl()
     {
         $media = new Media();
         $this->object->setMedia($media);
-        $this->assertEquals('', $this->object->__toString());
+        $this->assertSame('', $this->object->__toString());
     }
 }

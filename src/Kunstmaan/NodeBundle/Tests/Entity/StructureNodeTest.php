@@ -53,9 +53,9 @@ class StructureNodeTest extends TestCase
     {
         $node = new TestStructureNode();
         $node->setTitle('The Title');
-        $this->assertEquals('The Title', $node->getPageTitle());
-        $this->assertEquals('The Title', $node->getTitle());
-        $this->assertEquals('The Title', $node->__toString());
+        $this->assertSame('The Title', $node->getPageTitle());
+        $this->assertSame('The Title', $node->getTitle());
+        $this->assertSame('The Title', $node->__toString());
     }
 
     public function testGetSetParent()
@@ -63,12 +63,12 @@ class StructureNodeTest extends TestCase
         $entity = $this->createMock(HasNodeInterface::class);
         $node = new TestStructureNode();
         $node->setParent($entity);
-        $this->assertInstanceOf(\get_class($entity), $node->getParent());
+        $this->assertInstanceOf($entity::class, $node->getParent());
     }
 
     public function testGetDefaultAdminType()
     {
         $node = new TestStructureNode();
-        $this->assertEquals(PageAdminType::class, $node->getDefaultAdminType());
+        $this->assertSame(PageAdminType::class, $node->getDefaultAdminType());
     }
 }

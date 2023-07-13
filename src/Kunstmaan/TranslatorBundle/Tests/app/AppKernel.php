@@ -26,18 +26,15 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
  */
 class AppKernel extends Kernel
 {
-    private $varDir;
-
     private $testCase;
 
     private $rootConfig;
 
-    public function __construct($varDir, $testCase, $rootConfig, $environment, $debug)
+    public function __construct(private $varDir, $testCase, $rootConfig, $environment, $debug)
     {
         if (!is_dir(__DIR__ . '/' . $testCase)) {
             throw new \InvalidArgumentException(sprintf('The test case "%s" does not exist.', $testCase));
         }
-        $this->varDir = $varDir;
         $this->testCase = $testCase;
 
         $fs = new Filesystem();

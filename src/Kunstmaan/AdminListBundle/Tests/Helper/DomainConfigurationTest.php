@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\Helper;
 
+use Symfony\Component\HttpFoundation\RequestStack;
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,7 @@ class DomainConfigurationTest extends TestCase
 
     public function setUp(): void
     {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock(RequestStack::class);
         $this->object = new DomainConfiguration($requestStack, true, 'nl', 'nl|fr|en');
     }
 

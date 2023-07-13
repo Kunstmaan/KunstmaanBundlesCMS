@@ -13,10 +13,10 @@ class MaxXTimesRuleTest extends TestCase
         $rule = new MaxXTimesRule();
         $rule->setTimes(13);
 
-        $this->assertEquals(13, $rule->getTimes());
-        $this->assertEquals('MaxXTimesRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/MaxXTimesRule.js', $rule->getJsFilePath());
-        $this->assertEquals(MaxXTimeAdminType::class, $rule->getAdminType());
+        $this->assertSame(13, $rule->getTimes());
+        $this->assertSame('MaxXTimesRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/MaxXTimesRule.js', $rule->getJsFilePath());
+        $this->assertSame(MaxXTimeAdminType::class, $rule->getAdminType());
         $this->assertIsArray($rule->getJsProperties());
     }
 }

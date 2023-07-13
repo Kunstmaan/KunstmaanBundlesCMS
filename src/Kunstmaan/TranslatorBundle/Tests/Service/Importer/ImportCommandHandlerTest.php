@@ -7,7 +7,7 @@ use Kunstmaan\TranslatorBundle\Tests\WebTestCase;
 
 class ImportCommandHandlerTest extends WebTestCase
 {
-    private $importCommandHandler;
+    private ?object $importCommandHandler = null;
 
     public function setUp(): void
     {
@@ -30,7 +30,7 @@ class ImportCommandHandlerTest extends WebTestCase
             ->setGlobals(true)
             ->setDefaultBundle(false);
 
-        $this->assertEquals(7, $this->importCommandHandler->executeImportCommand($importCommand));
+        $this->assertSame(7, $this->importCommandHandler->executeImportCommand($importCommand));
     }
 
     public function testdetermineLocalesToImport()
@@ -43,7 +43,7 @@ class ImportCommandHandlerTest extends WebTestCase
             ->setDefaultBundle(false);
 
         $locales = $this->importCommandHandler->determineLocalesToImport($importCommand);
-        $this->assertEquals(['nl', 'en', 'de'], $locales);
+        $this->assertSame(['nl', 'en', 'de'], $locales);
     }
 
     public function testParseRequestedLocalesMulti()
@@ -51,7 +51,7 @@ class ImportCommandHandlerTest extends WebTestCase
         $locale = 'nl,De,   FR';
         $expectedArray = ['nl', 'de', 'fr'];
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
-        $this->assertEquals($expectedArray, $locales);
+        $this->assertSame($expectedArray, $locales);
     }
 
     public function testParseRequestedLocalesSingle()
@@ -59,7 +59,7 @@ class ImportCommandHandlerTest extends WebTestCase
         $locale = 'dE';
         $expectedArray = ['de'];
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
-        $this->assertEquals($expectedArray, $locales);
+        $this->assertSame($expectedArray, $locales);
     }
 
     public function testParseRequestedLocalesArray()
@@ -67,7 +67,7 @@ class ImportCommandHandlerTest extends WebTestCase
         $locale = ['dE', 'NL', 'es'];
         $expectedArray = ['de', 'nl', 'es'];
         $locales = $this->importCommandHandler->parseRequestedLocales($locale);
-        $this->assertEquals($expectedArray, $locales);
+        $this->assertSame($expectedArray, $locales);
     }
 
     public function testImportSf4TranslationFiles()
@@ -79,6 +79,6 @@ class ImportCommandHandlerTest extends WebTestCase
             ->setGlobals(true)
             ->setDefaultBundle('own');
 
-        $this->assertEquals(7, $this->importCommandHandler->importBundleTranslationFiles($importCommand));
+        $this->assertSame(7, $this->importCommandHandler->importBundleTranslationFiles($importCommand));
     }
 }

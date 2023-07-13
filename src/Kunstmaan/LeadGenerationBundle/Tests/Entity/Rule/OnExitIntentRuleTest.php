@@ -15,14 +15,14 @@ class OnExitIntentRuleTest extends TestCase
         $rule->setSensitivity(2);
         $rule->setTimer(3);
 
-        $this->assertEquals(13, $rule->getDelay());
-        $this->assertEquals(2, $rule->getSensitivity());
-        $this->assertEquals(3, $rule->getTimer());
-        $this->assertEquals('OnExitIntentRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/OnExitIntentRule.js', $rule->getJsFilePath());
-        $this->assertEquals(OnExitIntentRule::class, $rule->getFullClassname());
-        $this->assertEquals('OnExitIntentRule', $rule->getClassname());
-        $this->assertEquals(OnExitIntentAdminType::class, $rule->getAdminType());
+        $this->assertSame(13, $rule->getDelay());
+        $this->assertSame(2, $rule->getSensitivity());
+        $this->assertSame(3, $rule->getTimer());
+        $this->assertSame('OnExitIntentRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/OnExitIntentRule.js', $rule->getJsFilePath());
+        $this->assertSame(OnExitIntentRule::class, $rule->getFullClassname());
+        $this->assertSame('OnExitIntentRule', $rule->getClassname());
+        $this->assertSame(OnExitIntentAdminType::class, $rule->getAdminType());
         $this->assertIsArray($rule->getJsProperties());
         $this->assertNull($rule->getService());
         $this->assertNull($rule->getId());

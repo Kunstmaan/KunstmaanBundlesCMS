@@ -14,8 +14,8 @@ class DashboardConfigurationTest extends TestCase
         $entity->setTitle('Number of the beast');
         $entity->setContent('Iron Maiden');
 
-        $this->assertEquals(666, $entity->getId());
-        $this->assertEquals('Number of the beast', $entity->getTitle());
-        $this->assertEquals('Iron Maiden', $entity->getContent());
+        $this->assertSame(666, $entity->getId());
+        $this->assertSame('Number of the beast', $entity->getTitle());
+        $this->assertSame('Iron Maiden', $entity->getContent());
     }
 }

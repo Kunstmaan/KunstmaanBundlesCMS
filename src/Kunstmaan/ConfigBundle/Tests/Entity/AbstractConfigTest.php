@@ -30,6 +30,6 @@ class AbstractConfigTest extends TestCase
         $entity = new Config();
 
         $this->assertIsArray($entity->getRoles());
-        $this->assertEquals('ROLE_SUPER_ADMIN', $entity->getRoles()[0]);
+        $this->assertSame('ROLE_SUPER_ADMIN', $entity->getRoles()[0]);
     }
 }

@@ -22,7 +22,7 @@ class FormMailerTest extends TestCase
     {
         $this->expectDeprecation('Since kunstmaan/form-bundle 6.3: Passing a "\Swift_Mailer" instance for the first parameter in "Kunstmaan\FormBundle\Helper\FormMailer::__construct" is deprecated and a Symfony mailer instance will be required in 7.0.');
 
-        $mailer = $this->createMock(\Swift_Mailer::class);
+        $mailer = $this->createMock(MailerInterface::class);
         $twig = $this->createMock(Environment::class);
         $request = $this->createMock(Request::class);
         $requestStack = $this->createMock(RequestStack::class);

@@ -36,7 +36,7 @@ class NodeIteratorTest extends TestCase
 
         $this->assertTrue($iterator->valid());
         $this->assertFalse($iterator->hasChildren());
-        $this->assertEquals(1, $iterator->key());
+        $this->assertSame(1, $iterator->key());
         $iterator->next();
 
         $this->assertTrue($iterator->valid());

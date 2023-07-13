@@ -2,6 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
+use Doctrine\DBAL\Connection;
+use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Doctrine\ORM\Internal\Hydration\ScalarHydrator;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Result;
 use Doctrine\ORM\Configuration;
@@ -57,75 +62,75 @@ class AclHelperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $this->em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $conn = $this->getMockBuilder('Doctrine\DBAL\Connection')
+        $conn = $this->getMockBuilder(Connection::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $conn->expects($this->any())
+        $conn
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        $conn->expects($this->any())
+        $conn
             ->method('getDatabasePlatform')
             ->willReturn(new MySQL57Platform());
 
-        $conn->expects($this->any())
+        $conn
             ->method('executeQuery')
             ->will($this->returnValue($this->createMock(Result::class)));
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getConnection')
             ->will($this->returnValue($conn));
 
         /* @var $conf Configuration */
-        $conf = $this->getMockBuilder('Doctrine\ORM\Configuration')
+        $conf = $this->getMockBuilder(Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         /* @var $strat QuoteStrategy */
-        $strat = $this->getMockBuilder('Doctrine\ORM\Mapping\QuoteStrategy')
+        $strat = $this->getMockBuilder(QuoteStrategy::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $strat->expects($this->any())
+        $strat
             ->method('getTableName')
             ->will($this->returnValue('rootTable'));
 
-        $conf->expects($this->any())
+        $conf
             ->method('getQuoteStrategy')
             ->will($this->returnValue($strat));
 
-        $conf->expects($this->any())
+        $conf
             ->method('getDefaultQueryHints')
             ->willReturn([]);
 
-        $conf->expects($this->any())
+        $conf
             ->method('isSecondLevelCacheEnabled')
             ->willReturn(false);
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getConfiguration')
             ->will($this->returnValue($conf));
 
         /* @var $meta ClassMetadata */
-        $meta = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')
+        $meta = $this->getMockBuilder(ClassMetadata::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getClassMetadata')
             ->will($this->returnValue($meta));
 
-        $this->tokenStorage = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
+        $this->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)
             ->getMock();
 
-        $this->token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\AbstractToken');
+        $this->token = $this->createMock(AbstractToken::class);
 
-        $this->tokenStorage->expects($this->any())
+        $this->tokenStorage
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
@@ -139,19 +144,19 @@ class AclHelperTest extends TestCase
     public function testApply()
     {
         /* @var $queryBuilder QueryBuilder */
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $query = new Query($this->em);
         $query->setParameter('paramName', 'paramValue', 'paramType');
-        $queryBuilder->expects($this->any())
+        $queryBuilder
             ->method('getQuery')
             ->will($this->returnValue($query));
 
         $queryBuilder->expects($this->once())
             ->method('getRootEntities')
-            ->will($this->returnValue(['Kunstmaan\NodeBundle\Entity\Node']));
+            ->will($this->returnValue([Node::class]));
 
         $queryBuilder->expects($this->once())
             ->method('getRootAliases')
@@ -159,7 +164,7 @@ class AclHelperTest extends TestCase
 
         $user = new User();
         $user->setUsername('MyUser');
-        $this->token->expects($this->any())
+        $this->token
             ->method('getUser')
             ->will($this->returnValue($user));
 
@@ -174,15 +179,15 @@ class AclHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node');
+        $permissionDef = new PermissionDefinition(['view'], Node::class);
 
         /* @var $query Query */
         $query = $this->object->apply($queryBuilder, $permissionDef);
 
-        $this->assertEquals(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
-        $this->assertEquals($permissionDef->getEntity(), $query->getHint('acl.root.entity'));
-        $this->assertEquals('rootTable', $query->getHint('acl.entityRootTableName'));
-        $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
+        $this->assertSame(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
+        $this->assertSame($permissionDef->getEntity(), $query->getHint('acl.root.entity'));
+        $this->assertSame('rootTable', $query->getHint('acl.entityRootTableName'));
+        $this->assertSame('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
         $this->assertStringContainsString('ROLE_SUBJECT', $aclQuery);
@@ -194,19 +199,19 @@ class AclHelperTest extends TestCase
     public function testApplyAnonymous()
     {
         /* @var $queryBuilder QueryBuilder */
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $query = new Query($this->em);
         $query->setParameter('paramName', 'paramValue', 'paramType');
-        $queryBuilder->expects($this->any())
+        $queryBuilder
             ->method('getQuery')
             ->will($this->returnValue($query));
 
         $queryBuilder->expects($this->once())
             ->method('getRootEntities')
-            ->will($this->returnValue(['Kunstmaan\NodeBundle\Entity\Node']));
+            ->will($this->returnValue([Node::class]));
 
         $queryBuilder->expects($this->once())
             ->method('getRootAliases')
@@ -223,19 +228,19 @@ class AclHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $this->token->expects($this->any())
+        $this->token
             ->method('getUser')
             ->will($this->returnValue(method_exists(FirewallConfig::class, 'getAuthenticators') ? null : 'anon.'));
 
-        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node');
+        $permissionDef = new PermissionDefinition(['view'], Node::class);
 
         /* @var $query Query */
         $query = $this->object->apply($queryBuilder, $permissionDef);
 
-        $this->assertEquals(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
-        $this->assertEquals($permissionDef->getEntity(), $query->getHint('acl.root.entity'));
-        $this->assertEquals('rootTable', $query->getHint('acl.entityRootTableName'));
-        $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
+        $this->assertSame(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
+        $this->assertSame($permissionDef->getEntity(), $query->getHint('acl.root.entity'));
+        $this->assertSame('rootTable', $query->getHint('acl.entityRootTableName'));
+        $this->assertSame('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
         $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
@@ -257,11 +262,11 @@ class AclHelperTest extends TestCase
         $user = new User();
         $user->setUsername('MyUser');
 
-        $this->token->expects($this->any())
+        $this->token
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        $hydrator = $this->getMockBuilder('Doctrine\ORM\Internal\Hydration\ScalarHydrator')
+        $hydrator = $this->getMockBuilder(ScalarHydrator::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -274,25 +279,25 @@ class AclHelperTest extends TestCase
             ->method('hydrateAll')
             ->will($this->returnValue($rows));
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('newHydrator')
             ->will($this->returnValue($hydrator));
 
         /* @var $query NativeQuery */
         $query = new NativeQuery($this->em);
         $query->setSQL('SELECT * FROM table');
-        $query->setResultSetMapping(new Query\ResultSetMapping());
+        $query->setResultSetMapping(new ResultSetMapping());
 
         $this->em->expects($this->once())
             ->method('createNativeQuery')
             ->will($this->returnValue($query));
 
-        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+        $permissionDef = new PermissionDefinition(['view'], Node::class, 'n');
 
         /* @var $result array */
         $result = $this->object->getAllowedEntityIds($permissionDef);
 
-        $this->assertEquals([1, 9], $result);
+        $this->assertSame([1, 9], $result);
     }
 
     public function testGetAllowedEntityIdsNoEntity()

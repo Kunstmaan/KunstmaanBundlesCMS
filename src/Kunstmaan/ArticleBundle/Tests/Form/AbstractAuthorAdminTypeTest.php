@@ -15,6 +15,6 @@ class AbstractAuthorAdminTypeTest extends TestCase
         $builder->expects($this->exactly(2))->method('add')->willReturn($builder);
         $entity->buildForm($builder, []);
 
-        $this->assertEquals('abstactauthor_form', $entity->getBlockPrefix());
+        $this->assertSame('abstactauthor_form', $entity->getBlockPrefix());
     }
 }

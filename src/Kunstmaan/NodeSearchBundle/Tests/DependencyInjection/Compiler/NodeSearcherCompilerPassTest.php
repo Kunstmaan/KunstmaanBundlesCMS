@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Tests\DependencyInjection\Compiler;
 
+use Kunstmaan\NodeSearchBundle\Services\SearchService;
 use Kunstmaan\NodeSearchBundle\DependencyInjection\Compiler\NodeSearcherCompilerPass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,7 +14,7 @@ class NodeSearcherCompilerPassTest extends TestCase
     {
         $container = new ContainerBuilder();
 
-        $container->register('kunstmaan_node_search.search.service', 'Kunstmaan\NodeSearchBundle\Services\SearchService')
+        $container->register('kunstmaan_node_search.search.service', SearchService::class)
             ->setArguments([new Reference('service_container'), new Reference('request_stack'), 10, []])
         ;
 
@@ -29,6 +30,6 @@ class NodeSearcherCompilerPassTest extends TestCase
         ];
 
         $this->assertCount(4, $arguments);
-        $this->assertEquals($expected, array_keys($arguments[3]));
+        $this->assertSame($expected, array_keys($arguments[3]));
     }
 }

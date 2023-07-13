@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Tests\DependencyInjection;
 
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Kunstmaan\UserManagementBundle\AdminList\UserAdminListConfigurator;
 use Kunstmaan\UserManagementBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
@@ -12,7 +13,7 @@ class ConfigurationTest extends TestCase
     use ConfigurationTestCaseTrait;
 
     /**
-     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
+     * @return ConfigurationInterface
      */
     protected function getConfiguration()
     {

@@ -22,19 +22,19 @@ class RedirectTest extends TestCase
     public function testGetSetDomain()
     {
         $this->object->setDomain('domain.com');
-        $this->assertEquals('domain.com', $this->object->getDomain());
+        $this->assertSame('domain.com', $this->object->getDomain());
     }
 
     public function testGetSetOrigin()
     {
         $this->object->setOrigin('origin');
-        $this->assertEquals('origin', $this->object->getOrigin());
+        $this->assertSame('origin', $this->object->getOrigin());
     }
 
     public function testGetSetTarget()
     {
         $this->object->setTarget('target');
-        $this->assertEquals('target', $this->object->getTarget());
+        $this->assertSame('target', $this->object->getTarget());
     }
 
     public function testGetSetPermanent()

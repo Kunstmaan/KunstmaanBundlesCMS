@@ -16,13 +16,13 @@ class RecurringEveryXTimeRuleTest extends TestCase
         $rule->setMinutes(12);
         $rule->setTimes(13);
 
-        $this->assertEquals(10, $rule->getDays());
-        $this->assertEquals(11, $rule->getHours());
-        $this->assertEquals(12, $rule->getMinutes());
-        $this->assertEquals(13, $rule->getTimes());
-        $this->assertEquals('RecurringEveryXTimeRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/RecurringEveryXTimeRule.js', $rule->getJsFilePath());
-        $this->assertEquals(RecurringEveryXTimeAdminType::class, $rule->getAdminType());
+        $this->assertSame(10, $rule->getDays());
+        $this->assertSame(11, $rule->getHours());
+        $this->assertSame(12, $rule->getMinutes());
+        $this->assertSame(13, $rule->getTimes());
+        $this->assertSame('RecurringEveryXTimeRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/RecurringEveryXTimeRule.js', $rule->getJsFilePath());
+        $this->assertSame(RecurringEveryXTimeAdminType::class, $rule->getAdminType());
         $this->assertIsArray($rule->getJsProperties());
     }
 }

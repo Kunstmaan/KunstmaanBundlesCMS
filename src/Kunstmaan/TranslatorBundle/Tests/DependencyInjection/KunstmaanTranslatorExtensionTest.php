@@ -2,16 +2,14 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\DependencyInjection;
 
+use Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle;
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KunstmaanTranslatorExtensionTest extends TestCase
 {
-    /**
-     * @var KunstmaanTranslatorExtension
-     */
-    private $extension;
+    private KunstmaanTranslatorExtension $extension;
 
     public function setUp(): void
     {
@@ -50,7 +48,7 @@ class KunstmaanTranslatorExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.root_dir', 'src/Kunstmaan/TranslatorBundle');
         $container->setParameter('kernel.project_dir', 'src/Kunstmaan/TranslatorBundle');
-        $container->setParameter('kernel.bundles', [new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle()]);
+        $container->setParameter('kernel.bundles', [new KunstmaanTranslatorBundle()]);
         $container->setParameter('kernel.debug', true);
         $container->setParameter('kunstmaan_admin.default_locale', 'en');
 

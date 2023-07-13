@@ -26,12 +26,12 @@ class StringFormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $value = 'test';
         $object->setValue($value);
-        $this->assertEquals($value, $object->getValue());
+        $this->assertSame($value, $object->getValue());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(StringFormSubmissionType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(StringFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
     public function testToString()

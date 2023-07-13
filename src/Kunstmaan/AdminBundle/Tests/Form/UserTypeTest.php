@@ -21,8 +21,8 @@ class UserTypeTest extends TestCase
         /* @var OptionsResolver $resolver */
         $type->configureOptions($resolver);
         $type->setCanEditAllFields(true);
-        $this->assertEquals(FormType::class, $type->getParent());
-        $this->assertEquals('user', $type->getBlockPrefix());
+        $this->assertSame(FormType::class, $type->getParent());
+        $this->assertSame('user', $type->getBlockPrefix());
 
         $builder = $this->createMock(FormBuilder::class);
 

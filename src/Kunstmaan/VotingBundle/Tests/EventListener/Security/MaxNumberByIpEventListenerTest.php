@@ -15,7 +15,7 @@ class MaxNumberByIpEventListenerTest extends TestCase
     /**
      * @param int $voteNumber
      *
-     * @return \Kunstmaan\VotingBundle\Services\RepositoryResolver
+     * @return RepositoryResolver
      */
     protected function mockRepositoryResolver($returnNull, $voteNumber = 0)
     {
@@ -24,14 +24,14 @@ class MaxNumberByIpEventListenerTest extends TestCase
         if (!$returnNull) {
             $mockedRepository = $this->createMock(AbstractVoteRepository::class);
 
-            $mockedRepository->expects($this->any())
+            $mockedRepository
              ->method('countByReferenceAndByIp')
              ->willReturn($voteNumber);
         }
 
         $mockedResolver = $this->createMock(RepositoryResolver::class);
 
-        $mockedResolver->expects($this->any())
+        $mockedResolver
              ->method('getRepositoryForEvent')
              ->willReturn($mockedRepository);
 
@@ -70,15 +70,11 @@ class MaxNumberByIpEventListenerTest extends TestCase
 
     /**
      * Data for test on vote
-     *
-     * @return array
      */
-    public function dataTestOnVote()
+    public function dataTestOnVote(): \Iterator
     {
-        return [
-            [2, 2, true],
-            [2, 1, false],
-            [2, 3, true],
-        ];
+        yield [2, 2, true];
+        yield [2, 1, false];
+        yield [2, 3, true];
     }
 }

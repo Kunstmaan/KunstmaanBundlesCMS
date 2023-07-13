@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Router;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use PHPUnit\Framework\TestCase;
@@ -17,20 +20,20 @@ class SlugRouterTest extends TestCase
     {
         $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1), $this->getEntityManager(), 'admin');
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en'], UrlGeneratorInterface::ABSOLUTE_URL);
-        $this->assertEquals('http://domain.tld/en/some-uri', $url);
+        $this->assertSame('http://domain.tld/en/some-uri', $url);
 
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en'], UrlGeneratorInterface::ABSOLUTE_PATH);
-        $this->assertEquals('/en/some-uri', $url);
+        $this->assertSame('/en/some-uri', $url);
     }
 
     public function testGenerateSingleLanguage()
     {
         $object = new SlugRouter($this->getDomainConfiguration(), $this->getRequestStack(1), $this->getEntityManager(), 'admin');
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'nl'], UrlGeneratorInterface::ABSOLUTE_URL);
-        $this->assertEquals('http://domain.tld/some-uri', $url);
+        $this->assertSame('http://domain.tld/some-uri', $url);
 
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'nl'], UrlGeneratorInterface::ABSOLUTE_PATH);
-        $this->assertEquals('/some-uri', $url);
+        $this->assertSame('/some-uri', $url);
     }
 
     public function testSetContext()
@@ -47,8 +50,8 @@ class SlugRouterTest extends TestCase
         $object = new SlugRouter($this->getDomainConfiguration(true), $this->getRequestStack(1), $this->getEntityManager($nodeTranslation), 'admin');
         $result = $object->match('/en/some-uri');
 
-        $this->assertEquals('some-uri', $result['url']);
-        $this->assertEquals('en', $result['_locale']);
+        $this->assertSame('some-uri', $result['url']);
+        $this->assertSame('en', $result['_locale']);
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
     }
 
@@ -70,7 +73,7 @@ class SlugRouterTest extends TestCase
 
     private function getDomainConfiguration($multiLanguage = false)
     {
-        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock(DomainConfigurationInterface::class);
         $domainConfiguration->method('getHost')
             ->willReturn('domain.tld');
 
@@ -97,7 +100,7 @@ class SlugRouterTest extends TestCase
 
     private function getEntityManager($nodeTranslation = null)
     {
-        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock(EntityManagerInterface::class);
         $em
             ->method('getRepository')
             ->with($this->equalTo(NodeTranslation::class))
@@ -108,7 +111,7 @@ class SlugRouterTest extends TestCase
 
     private function getNodeTranslationRepository($nodeTranslation = null)
     {
-        $repository = $this->getMockBuilder('Kunstmaan\NodeBundle\Repository\NodeTranslationRepository')
+        $repository = $this->getMockBuilder(NodeTranslationRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $repository

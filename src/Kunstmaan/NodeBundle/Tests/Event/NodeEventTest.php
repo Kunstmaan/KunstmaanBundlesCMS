@@ -26,7 +26,7 @@ class NodeEventTest extends TestCase
 
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
-        $this->assertInstanceOf(\get_class($page), $event->getPage());
+        $this->assertInstanceOf($page::class, $event->getPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
 
         $event->setNode($node);
@@ -37,7 +37,7 @@ class NodeEventTest extends TestCase
 
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
-        $this->assertInstanceOf(\get_class($page), $event->getPage());
+        $this->assertInstanceOf($page::class, $event->getPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
         $this->assertInstanceOf(Response::class, $event->getResponse());
     }

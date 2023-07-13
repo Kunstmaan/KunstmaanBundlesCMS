@@ -22,14 +22,14 @@ class FolderTest extends TestCase
     public function testGetSetName()
     {
         $this->object->setName('name');
-        $this->assertEquals('name', $this->object->getName());
-        $this->assertEquals('name', $this->object->__toString());
+        $this->assertSame('name', $this->object->getName());
+        $this->assertSame('name', $this->object->__toString());
     }
 
     public function testGetSetRel()
     {
         $this->object->setRel('rel');
-        $this->assertEquals('rel', $this->object->getRel());
+        $this->assertSame('rel', $this->object->getRel());
     }
 
     public function testGetSetCreatedAt()
@@ -52,7 +52,7 @@ class FolderTest extends TestCase
         $parent = new Folder();
         $parent->setId(45);
         $this->object->setParent($parent);
-        $this->assertEquals(45, $this->object->getParent()->getId());
+        $this->assertSame(45, $this->object->getParent()->getId());
     }
 
     public function testGetSetDeleted()
@@ -66,7 +66,7 @@ class FolderTest extends TestCase
     public function testGetSetTranslatableLocale()
     {
         $this->object->setTranslatableLocale('nl');
-        $this->assertEquals('nl', $this->object->getTranslatableLocale());
+        $this->assertSame('nl', $this->object->getTranslatableLocale());
     }
 
     public function testGetParents()
@@ -182,28 +182,28 @@ class FolderTest extends TestCase
     public function testGetSetInternalName()
     {
         $this->object->setInternalName('internal_name');
-        $this->assertEquals('internal_name', $this->object->getInternalName());
+        $this->assertSame('internal_name', $this->object->getInternalName());
     }
 
     public function testGetSetLeft()
     {
-        $this->assertEquals(0, $this->object->getLeft());
+        $this->assertSame(0, $this->object->getLeft());
         $this->object->setLeft(1);
-        $this->assertEquals(1, $this->object->getLeft());
+        $this->assertSame(1, $this->object->getLeft());
     }
 
     public function testGetSetRight()
     {
-        $this->assertEquals(0, $this->object->getRight());
+        $this->assertSame(0, $this->object->getRight());
         $this->object->setRight(2);
-        $this->assertEquals(2, $this->object->getRight());
+        $this->assertSame(2, $this->object->getRight());
     }
 
     public function testGetSetLevel()
     {
-        $this->assertEquals(0, $this->object->getLevel());
+        $this->assertSame(0, $this->object->getLevel());
         $this->object->setLevel(1);
-        $this->assertEquals(1, $this->object->getLevel());
+        $this->assertSame(1, $this->object->getLevel());
     }
 
     public function testGetOptionLabel()
@@ -212,6 +212,6 @@ class FolderTest extends TestCase
             ->setName('Test')
             ->setLevel(2);
 
-        $this->assertEquals('-- Test', $this->object->getOptionLabel());
+        $this->assertSame('-- Test', $this->object->getOptionLabel());
     }
 }

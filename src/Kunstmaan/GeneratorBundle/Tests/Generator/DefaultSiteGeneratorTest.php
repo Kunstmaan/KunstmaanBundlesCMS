@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
@@ -20,7 +23,7 @@ class DefaultSiteGeneratorTest extends TestCase
         $filesystem->remove($path);
 
         $bundle = $this->getBundle($path);
-        $container = $this->createMock('Symfony\Component\DependencyInjection\Container');
+        $container = $this->createMock(Container::class);
         $container
             ->expects($this->atLeastOnce())
             ->method('getParameter')
@@ -63,21 +66,18 @@ class DefaultSiteGeneratorTest extends TestCase
 
     protected function getBundle($path)
     {
-        $bundle = $this->createMock('Symfony\Component\HttpKernel\Bundle\BundleInterface');
+        $bundle = $this->createMock(BundleInterface::class);
         $bundle
-            ->expects($this->any())
             ->method('getNamespace')
             ->will($this->returnValue('Kunstmaan\TestBundle'))
         ;
 
         $bundle
-            ->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('KunstmaanTestBundle'))
         ;
 
         $bundle
-            ->expects($this->any())
             ->method('getPath')
             ->will($this->returnValue($path))
         ;
@@ -92,7 +92,7 @@ class DefaultSiteGeneratorTest extends TestCase
 
     protected function getAssistant()
     {
-        $output = $this->createMock('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->createMock(OutputInterface::class);
 
         $commandAssistant = new CommandAssistant();
         $commandAssistant->setOutput($output);

@@ -15,6 +15,6 @@ class NodeSearchTest extends TestCase
         $search->setBoost(3.141);
 
         $this->assertInstanceOf(Node::class, $search->getNode());
-        $this->assertEquals(3.141, $search->getBoost());
+        $this->assertSame(3.141, $search->getBoost());
     }
 }

@@ -18,9 +18,9 @@ class PageTemplateConfigurationTest extends TestCase
         $config->setPageEntityName(PageTemplate::class);
         $config->setPageTemplate('string!');
 
-        $this->assertEquals(5, $config->getPageId());
-        $this->assertEquals(PageTemplate::class, $config->getPageEntityName());
-        $this->assertEquals('string!', $config->getPageTemplate());
+        $this->assertSame(5, $config->getPageId());
+        $this->assertSame(PageTemplate::class, $config->getPageEntityName());
+        $this->assertSame('string!', $config->getPageTemplate());
 
         $em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
@@ -32,14 +32,14 @@ class PageTemplateConfigurationTest extends TestCase
 
         $testNode = $this->createMock(AbstractPage::class);
 
-        $repo->expects($this->any())
+        $repo
             ->method('find')
             ->willReturn($testNode);
 
-        $em->expects($this->any())
+        $em
             ->method('getRepository')
             ->willReturn($repo);
 
-        $this->assertInstanceOf(\get_class($testNode), $config->getPage($em));
+        $this->assertInstanceOf($testNode::class, $config->getPage($em));
     }
 }

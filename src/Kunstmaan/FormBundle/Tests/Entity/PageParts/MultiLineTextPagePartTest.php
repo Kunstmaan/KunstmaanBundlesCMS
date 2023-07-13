@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class MultiLineTextPagePartTest extends TestCase
         $object = $this->object;
         $regex = '.*example.*';
         $object->setRegex($regex);
-        $this->assertEquals($regex, $object->getRegex());
+        $this->assertSame($regex, $object->getRegex());
     }
 
     public function testSetGetErrorMessageRegex()
@@ -32,7 +33,7 @@ class MultiLineTextPagePartTest extends TestCase
         $object = $this->object;
         $message = 'Some example error message';
         $object->setErrorMessageRegex($message);
-        $this->assertEquals($message, $object->getErrorMessageRegex());
+        $this->assertSame($message, $object->getErrorMessageRegex());
     }
 
     public function testGetDefaultView()
@@ -48,27 +49,27 @@ class MultiLineTextPagePartTest extends TestCase
         $object->setRequired(true);
         $object->setRegex('.*example.*');
 
-        $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $formBuilder->expects($this->any())
+        $formBuilder
             ->method('getData')
             ->willReturn([]);
 
         $fields = new \ArrayObject();
         $object->setErrorMessageRequired('required');
         $object->setErrorMessageRegex('regex');
-        $this->assertEquals(0, count($fields));
+        $this->assertCount(0, $fields);
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(count($fields) > 0);
-        $this->assertEquals('required', $object->getErrorMessageRequired());
+        $this->assertGreaterThan(0, count($fields));
+        $this->assertSame('required', $object->getErrorMessageRequired());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(MultiLineTextPagePartAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(MultiLineTextPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testGetSetRequired()

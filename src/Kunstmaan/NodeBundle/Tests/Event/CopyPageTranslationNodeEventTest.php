@@ -23,9 +23,9 @@ class CopyPageTranslationNodeEventTest extends TestCase
 
         $event = new CopyPageTranslationNodeEvent($node, $nodeTranslation, $nodeVersion, $page, $nodeTranslation, $nodeVersion, $page, 'nl');
 
-        $this->assertEquals('nl', $event->getOriginalLanguage());
+        $this->assertSame('nl', $event->getOriginalLanguage());
         $this->assertInstanceOf(NodeTranslation::class, $event->getOriginalNodeTranslation());
-        $this->assertInstanceOf(\get_class($page), $event->getOriginalPage());
+        $this->assertInstanceOf($page::class, $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
 
         $event->setOriginalLanguage('nl');
@@ -33,9 +33,9 @@ class CopyPageTranslationNodeEventTest extends TestCase
         $event->setOriginalNodeVersion($nodeVersion);
         $event->setOriginalPage($page);
 
-        $this->assertEquals('nl', $event->getOriginalLanguage());
+        $this->assertSame('nl', $event->getOriginalLanguage());
         $this->assertInstanceOf(NodeTranslation::class, $event->getOriginalNodeTranslation());
-        $this->assertInstanceOf(\get_class($page), $event->getOriginalPage());
+        $this->assertInstanceOf($page::class, $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
     }
 }

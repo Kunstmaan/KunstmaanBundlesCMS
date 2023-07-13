@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
+use Kunstmaan\AdminBundle\Form\UserType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Entity\GroupInterface;
 use Kunstmaan\AdminBundle\Entity\User;
@@ -24,13 +25,13 @@ class UserTest extends TestCase
     {
         $object = new User();
         $object->setId(1);
-        $this->assertEquals(1, $object->getId());
+        $this->assertSame(1, $object->getId());
     }
 
     public function testGetSetId()
     {
         $this->object->setId(3);
-        $this->assertEquals(3, $this->object->getId());
+        $this->assertSame(3, $this->object->getId());
     }
 
     public function testGetGroupIds()
@@ -52,7 +53,7 @@ class UserTest extends TestCase
         /* @var $group2 GroupInterface */
         $this->object->addGroup($group2);
 
-        $this->assertEquals([1, 2], $this->object->getGroupIds());
+        $this->assertSame([1, 2], $this->object->getGroupIds());
     }
 
     public function testGetGroups()
@@ -88,23 +89,23 @@ class UserTest extends TestCase
         $user->setGoogleId('g0oGl3');
         $user->setEnabled(true);
 
-        $this->assertEquals('en', $user->getAdminLocale());
-        $this->assertEquals('g0oGl3', $user->getGoogleId());
+        $this->assertSame('en', $user->getAdminLocale());
+        $this->assertSame('g0oGl3', $user->getGoogleId());
         $this->assertTrue($user->isPasswordChanged());
         $this->assertTrue($user->isAccountNonLocked());
-        $this->assertEquals('Kunstmaan\AdminBundle\Form\UserType', $user->getFormTypeClass());
+        $this->assertSame(UserType::class, $user->getFormTypeClass());
     }
 
     public function testLoadValidatorMetadata()
     {
         $meta = new ClassMetadata(User::class);
         User::loadValidatorMetadata($meta);
-        $this->assertEquals('Kunstmaan\AdminBundle\Entity\User', $meta->getClassName());
-        $this->assertEquals('User', $meta->getDefaultGroup());
+        $this->assertSame(User::class, $meta->getClassName());
+        $this->assertSame('User', $meta->getDefaultGroup());
         $props = $meta->getConstrainedProperties();
         $this->assertCount(3, $props);
-        $this->assertEquals('username', $props[0]);
-        $this->assertEquals('plainPassword', $props[1]);
-        $this->assertEquals('email', $props[2]);
+        $this->assertSame('username', $props[0]);
+        $this->assertSame('plainPassword', $props[1]);
+        $this->assertSame('email', $props[2]);
     }
 }

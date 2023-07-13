@@ -24,12 +24,10 @@ class AbstractAdminListConfiguratorTest extends TestCase
     {
         $this->abstractAdminListConfMock = $this->getMockForAbstractClass(AbstractAdminListConfigurator::class);
         $this->abstractAdminListConfMock
-            ->expects($this->any())
             ->method('getBundleName')
             ->willReturn('Bundle')
         ;
         $this->abstractAdminListConfMock
-            ->expects($this->any())
             ->method('getEntityName')
             ->willReturn('MyEntity')
         ;
@@ -37,7 +35,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetRepositoryName()
     {
-        $this->assertEquals('Bundle:MyEntity', $this->abstractAdminListConfMock->getRepositoryName());
+        $this->assertSame('Bundle:MyEntity', $this->abstractAdminListConfMock->getRepositoryName());
     }
 
     public function testBuildExportFields()
@@ -64,7 +62,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $this->assertArrayHasKey('My Entity', $addUrl);
         $this->assertArrayHasKey('path', $addUrl['My Entity']);
         $this->assertArrayHasKey('params', $addUrl['My Entity']);
-        $this->assertEquals('bundle_admin_myentity_add', $addUrl['My Entity']['path']);
+        $this->assertSame('bundle_admin_myentity_add', $addUrl['My Entity']['path']);
         $this->assertContains('paramTest', $addUrl['My Entity']['params']);
     }
 
@@ -73,9 +71,9 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $exportUrl = $this->abstractAdminListConfMock->getExportUrl();
         $this->assertArrayHasKey('path', $exportUrl);
         $this->assertArrayHasKey('params', $exportUrl);
-        $this->assertEquals('bundle_admin_myentity_export', $exportUrl['path']);
+        $this->assertSame('bundle_admin_myentity_export', $exportUrl['path']);
         $this->assertArrayHasKey('_format', $exportUrl['params']);
-        $this->assertEquals('csv', $exportUrl['params']['_format']);
+        $this->assertSame('csv', $exportUrl['params']['_format']);
     }
 
     public function testGetViewUrlFor()
@@ -85,9 +83,9 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $viewUrl = $this->abstractAdminListConfMock->getViewUrlFor($item);
         $this->assertArrayHasKey('path', $viewUrl);
         $this->assertArrayHasKey('params', $viewUrl);
-        $this->assertEquals('bundle_admin_myentity_view', $viewUrl['path']);
+        $this->assertSame('bundle_admin_myentity_view', $viewUrl['path']);
         $this->assertArrayHasKey('id', $viewUrl['params']);
-        $this->assertEquals('999', $viewUrl['params']['id']);
+        $this->assertSame('999', $viewUrl['params']['id']);
 
         // from object
         $item = new class() {
@@ -98,7 +96,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
         };
         $viewUrl = $this->abstractAdminListConfMock->getViewUrlFor($item);
         $this->assertArrayHasKey('params', $viewUrl);
-        $this->assertEquals(3, $viewUrl['params']['id']);
+        $this->assertSame(3, $viewUrl['params']['id']);
     }
 
     public function testGetIndexUrl()
@@ -106,7 +104,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $indexUrl = $this->abstractAdminListConfMock->getIndexUrl();
         $this->assertArrayHasKey('path', $indexUrl);
         $this->assertArrayHasKey('params', $indexUrl);
-        $this->assertEquals('bundle_admin_myentity', $indexUrl['path']);
+        $this->assertSame('bundle_admin_myentity', $indexUrl['path']);
         $this->assertIsArray($indexUrl['params']);
     }
 
@@ -119,13 +117,13 @@ class AbstractAdminListConfiguratorTest extends TestCase
             }
         };
 
-        $this->assertEquals('TestType', $this->abstractAdminListConfMock->getAdminType($entity));
+        $this->assertSame('TestType', $this->abstractAdminListConfMock->getAdminType($entity));
     }
 
     public function testGetAdminTypeAlreadySet()
     {
         $this->abstractAdminListConfMock->setAdminType('TestType');
-        $this->assertEquals('TestType', $this->abstractAdminListConfMock->getAdminType(new \stdClass()));
+        $this->assertSame('TestType', $this->abstractAdminListConfMock->getAdminType(new \stdClass()));
     }
 
     public function testGetAdminTypeNotExistsInEntity()
@@ -215,7 +213,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetLimit()
     {
-        $this->assertEquals(10, $this->abstractAdminListConfMock->getLimit());
+        $this->assertSame(10, $this->abstractAdminListConfMock->getLimit());
     }
 
     public function testGetSortFields()
@@ -266,21 +264,21 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetListTemplate()
     {
-        $this->assertEquals('@KunstmaanAdminList/Default/list.html.twig', $this->abstractAdminListConfMock->getListTemplate());
+        $this->assertSame('@KunstmaanAdminList/Default/list.html.twig', $this->abstractAdminListConfMock->getListTemplate());
     }
 
     public function testSetListTemplate()
     {
         $template = 'test_template';
         $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->setListTemplate($template));
-        $this->assertEquals($template, $this->abstractAdminListConfMock->getListTemplate());
+        $this->assertSame($template, $this->abstractAdminListConfMock->getListTemplate());
     }
 
     public function testGetValue()
     {
         $columnName = 'foo';
-        $this->assertEquals('bar', $this->abstractAdminListConfMock->getValue(['foo' => 'bar'], $columnName));
-        $this->assertEquals('', $this->abstractAdminListConfMock->getValue(['foz' => 'bar'], $columnName));
+        $this->assertSame('bar', $this->abstractAdminListConfMock->getValue(['foo' => 'bar'], $columnName));
+        $this->assertSame('', $this->abstractAdminListConfMock->getValue(['foz' => 'bar'], $columnName));
 
         $item = new class() {
             public function getFoo()
@@ -289,29 +287,28 @@ class AbstractAdminListConfiguratorTest extends TestCase
             }
         };
 
-        $this->assertEquals('bar', $this->abstractAdminListConfMock->getValue($item, $columnName));
-        $this->assertEquals(sprintf('undefined function [get/is/has]%s()', $columnName), $this->abstractAdminListConfMock->getValue(new \stdClass(), $columnName));
+        $this->assertSame('bar', $this->abstractAdminListConfMock->getValue($item, $columnName));
+        $this->assertSame(sprintf('undefined function [get/is/has]%s()', $columnName), $this->abstractAdminListConfMock->getValue(new \stdClass(), $columnName));
     }
 
     public function testgetStringValue()
     {
         // value = string
         $columnName = 'foo';
-        $this->assertEquals('true', $this->abstractAdminListConfMock->getStringValue(['foo' => true], $columnName));
+        $this->assertSame('true', $this->abstractAdminListConfMock->getStringValue(['foo' => true], $columnName));
 
         // value = DateTime
         $value = new \DateTime();
-        $this->assertEquals($value->format('Y-m-d H:i:s'), $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
+        $this->assertSame($value->format('Y-m-d H:i:s'), $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
 
         // value = empty PersistentCollection
         $emMock = $this->createMock(EntityManagerInterface::class);
         $value = new PersistentCollection($emMock, 'ClassName', new ArrayCollection());
-        $this->assertEquals('', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
+        $this->assertSame('', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
 
         // value = PersistentCollection
         $emMock = $this->createMock(EntityManagerInterface::class);
         $emMock
-            ->expects($this->any())
             ->method('getUnitOfWork')
             ->willReturn($this->createMock(UnitOfWork::class))
         ;
@@ -329,43 +326,43 @@ class AbstractAdminListConfiguratorTest extends TestCase
                 return 'baz';
             }
         });
-        $this->assertEquals('bar, baz', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
+        $this->assertSame('bar, baz', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
 
         // value = array
         $value = ['bar', 'baz'];
-        $this->assertEquals('bar, baz', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
+        $this->assertSame('bar, baz', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
 
         // value = non of the above
         $value = 'baz';
-        $this->assertEquals('baz', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
+        $this->assertSame('baz', $this->abstractAdminListConfMock->getStringValue(['foo' => $value], $columnName));
     }
 
     public function testSetGetAddTemplate()
     {
         $value = 'test_template';
         $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->setAddTemplate($value));
-        $this->assertEquals($value, $this->abstractAdminListConfMock->getAddTemplate());
+        $this->assertSame($value, $this->abstractAdminListConfMock->getAddTemplate());
     }
 
     public function testSetGetViewTemplate()
     {
         $value = 'test_template';
         $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->setViewTemplate($value));
-        $this->assertEquals($value, $this->abstractAdminListConfMock->getViewTemplate());
+        $this->assertSame($value, $this->abstractAdminListConfMock->getViewTemplate());
     }
 
     public function testSetGetEditTemplate()
     {
         $value = 'test_template';
         $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->setEditTemplate($value));
-        $this->assertEquals($value, $this->abstractAdminListConfMock->getEditTemplate());
+        $this->assertSame($value, $this->abstractAdminListConfMock->getEditTemplate());
     }
 
     public function testSetGetDeleteTemplate()
     {
         $value = 'test_template';
         $this->assertInstanceOf(AbstractAdminListConfigurator::class, $this->abstractAdminListConfMock->setDeleteTemplate($value));
-        $this->assertEquals($value, $this->abstractAdminListConfMock->getDeleteTemplate());
+        $this->assertSame($value, $this->abstractAdminListConfMock->getDeleteTemplate());
     }
 
     public function testDecorateNewEntity()
@@ -474,12 +471,12 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetPathByConvention()
     {
-        $this->assertEquals('bundle_admin_myentity_test', $this->abstractAdminListConfMock->getPathByconvention('test'));
+        $this->assertSame('bundle_admin_myentity_test', $this->abstractAdminListConfMock->getPathByconvention('test'));
     }
 
     public function testGetControllerPath()
     {
-        $this->assertEquals('Bundle:MyEntity', $this->abstractAdminListConfMock->getControllerPath());
+        $this->assertSame('Bundle:MyEntity', $this->abstractAdminListConfMock->getControllerPath());
     }
 
     public function testGetExtraParameters()

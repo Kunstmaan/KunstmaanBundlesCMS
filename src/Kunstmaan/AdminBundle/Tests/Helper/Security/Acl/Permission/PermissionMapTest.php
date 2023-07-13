@@ -22,7 +22,7 @@ class PermissionMapTest extends TestCase
         $map = new PermissionMap();
         $mask = $map->getMasks(PermissionMap::PERMISSION_DELETE, null);
 
-        $this->assertEquals([MaskBuilder::MASK_DELETE], $mask);
+        $this->assertSame([MaskBuilder::MASK_DELETE], $mask);
     }
 
     public function testContains()
@@ -37,7 +37,7 @@ class PermissionMapTest extends TestCase
     {
         $map = new PermissionMap();
 
-        $this->assertEquals(['VIEW', 'EDIT', 'DELETE', 'PUBLISH', 'UNPUBLISH'], $map->getPossiblePermissions());
+        $this->assertSame(['VIEW', 'EDIT', 'DELETE', 'PUBLISH', 'UNPUBLISH'], $map->getPossiblePermissions());
     }
 
     public function testGetMaskBuilder()

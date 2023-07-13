@@ -28,7 +28,7 @@ class SlugSecurityEventTest extends TestCase
 
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
-        $this->assertInstanceOf(\get_class($page), $event->getEntity());
+        $this->assertInstanceOf($page::class, $event->getEntity());
         $this->assertInstanceOf(Request::class, $event->getRequest());
     }
 }

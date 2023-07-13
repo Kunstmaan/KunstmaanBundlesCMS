@@ -31,24 +31,24 @@ class PagePartRefTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repo->expects($this->any())
+        $repo
             ->method('find')
             ->willReturn(new PagePart());
 
-        $em->expects($this->any())
+        $em
             ->method('getRepository')
             ->willReturn($repo);
 
-        $this->assertEquals(1, $part->getId());
-        $this->assertEquals(2, $part->getPageId());
-        $this->assertEquals(PagePartRef::class, $part->getPageEntityname());
+        $this->assertSame(1, $part->getId());
+        $this->assertSame(2, $part->getPageId());
+        $this->assertSame(PagePartRef::class, $part->getPageEntityname());
         $this->assertInstanceOf(\DateTime::class, $part->getCreated());
         $this->assertInstanceOf(\DateTime::class, $part->getUpdated());
-        $this->assertEquals('a string', $part->getContext());
-        $this->assertEquals(3, $part->getSequencenumber());
-        $this->assertEquals('4', $part->getPagePartId());
-        $this->assertEquals(PagePartRef::class, $part->getPagePartEntityname());
-        $this->assertEquals('pagepartref in context a string', $part->__toString());
+        $this->assertSame('a string', $part->getContext());
+        $this->assertSame(3, $part->getSequencenumber());
+        $this->assertSame('4', $part->getPagePartId());
+        $this->assertSame(PagePartRef::class, $part->getPagePartEntityname());
+        $this->assertSame('pagepartref in context a string', $part->__toString());
         $this->assertInstanceOf(PagePart::class, $part->getPagePart($em));
     }
 }

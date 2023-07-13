@@ -13,8 +13,8 @@ class AbstractSearchPageTest extends TestCase
     public function testGetters()
     {
         $page = new class() extends AbstractSearchPage {};
-        $this->assertEquals('@KunstmaanNodeSearch/AbstractSearchPage/view.html.twig', $page->getDefaultView());
-        $this->assertEquals('kunstmaan_node_search.search.node', $page->getSearcher());
+        $this->assertSame('@KunstmaanNodeSearch/AbstractSearchPage/view.html.twig', $page->getDefaultView());
+        $this->assertSame('kunstmaan_node_search.search.node', $page->getSearcher());
         $this->assertFalse($page->isIndexable());
         $this->assertIsArray($page->getPossibleChildTypes());
     }

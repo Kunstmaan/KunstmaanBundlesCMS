@@ -11,12 +11,12 @@ class ClassLookupTest extends TestCase
     public function testGetClass()
     {
         $class = ClassLookup::getClass(new Response());
-        $this->assertEquals(Response::class, $class);
+        $this->assertSame(Response::class, $class);
     }
 
     public function testGetClassName()
     {
         $class = ClassLookup::getClassName(new Response());
-        $this->assertEquals('Response', $class);
+        $this->assertSame('Response', $class);
     }
 }

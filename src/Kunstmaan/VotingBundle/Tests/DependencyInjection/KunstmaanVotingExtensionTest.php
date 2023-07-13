@@ -8,17 +8,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KunstmaanVotingExtensionTest extends TestCase
 {
-    /**
-     * @var KunstmaanVotingExtension
-     */
-    private $extension;
+    private KunstmaanVotingExtension $extension;
 
     /**
      * Root name of the configuration
-     *
-     * @var string
      */
-    private $root;
+    private string $root;
 
     public function setUp(): void
     {
@@ -38,13 +33,13 @@ class KunstmaanVotingExtensionTest extends TestCase
 
         $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
-            $this->assertEquals(2, $actions['up_vote']['default_value']);
+            $this->assertSame(2, $actions['up_vote']['default_value']);
         }
         if (isset($actions['down_vote'])) {
-            $this->assertEquals(-2, $actions['down_vote']['default_value']);
+            $this->assertSame(-2, $actions['down_vote']['default_value']);
         }
         if (isset($actions['facebook_like'])) {
-            $this->assertEquals(2, $actions['facebook_like']['default_value']);
+            $this->assertSame(2, $actions['facebook_like']['default_value']);
         }
     }
 
@@ -57,13 +52,13 @@ class KunstmaanVotingExtensionTest extends TestCase
 
         $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
-            $this->assertEquals(1, $actions['up_vote']['default_value']);
+            $this->assertSame(1, $actions['up_vote']['default_value']);
         }
         if (isset($actions['down_vote'])) {
-            $this->assertEquals(-1, $actions['down_vote']['default_value']);
+            $this->assertSame(-1, $actions['down_vote']['default_value']);
         }
         if (isset($actions['facebook_like'])) {
-            $this->assertEquals(1, $actions['facebook_like']['default_value']);
+            $this->assertSame(1, $actions['facebook_like']['default_value']);
         }
     }
 
@@ -87,13 +82,13 @@ class KunstmaanVotingExtensionTest extends TestCase
 
         $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
-            $this->assertEquals(2, $actions['up_vote']['default_value']);
+            $this->assertSame(2, $actions['up_vote']['default_value']);
         }
         if (isset($actions['down_vote'])) {
-            $this->assertEquals(-5, $actions['down_vote']['default_value']);
+            $this->assertSame(-5, $actions['down_vote']['default_value']);
         }
         if (isset($actions['facebook_like'])) {
-            $this->assertEquals(1, $actions['facebook_like']['default_value']);
+            $this->assertSame(1, $actions['facebook_like']['default_value']);
         }
     }
 

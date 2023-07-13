@@ -21,7 +21,7 @@ class AbstractPagePartTest extends TestCase
     public function testGetViews()
     {
         $part = new PagePart();
-        $this->assertEquals('', $part->getAdminView());
-        $this->assertEquals('', $part->getView());
+        $this->assertSame('', $part->getAdminView());
+        $this->assertSame('', $part->getView());
     }
 }

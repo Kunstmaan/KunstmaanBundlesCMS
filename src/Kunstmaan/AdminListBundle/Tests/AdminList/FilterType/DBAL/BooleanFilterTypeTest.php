@@ -25,7 +25,7 @@ class BooleanFilterTypeTest extends BaseDbalFilterTest
         $uniqueId = 'boolean';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(['value' => 'true'], $data);
+        $this->assertSame(['value' => 'true'], $data);
     }
 
     /**
@@ -39,19 +39,17 @@ class BooleanFilterTypeTest extends BaseDbalFilterTest
         $this->object->setQueryBuilder($qb);
         $this->object->apply(['value' => $value], 'boolean');
 
-        $this->assertEquals("SELECT * FROM entity e WHERE e.boolean = $value", $qb->getSQL());
+        $this->assertSame("SELECT * FROM entity e WHERE e.boolean = $value", $qb->getSQL());
     }
 
-    public static function applyDataProvider(): array
+    public static function applyDataProvider(): \Iterator
     {
-        return [
-            ['true'],
-            ['false'],
-        ];
+        yield ['true'];
+        yield ['false'];
     }
 
     public function testGetTemplate()
     {
-        $this->assertEquals('@KunstmaanAdminList/FilterType/booleanFilter.html.twig', $this->object->getTemplate());
+        $this->assertSame('@KunstmaanAdminList/FilterType/booleanFilter.html.twig', $this->object->getTemplate());
     }
 }

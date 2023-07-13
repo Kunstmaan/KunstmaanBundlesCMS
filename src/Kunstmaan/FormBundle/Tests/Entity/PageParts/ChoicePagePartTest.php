@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -32,26 +33,26 @@ class ChoicePagePartTest extends TestCase
         $object->setChoices('choice1\nchoice2');
         $object->setRequired(true);
 
-        $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $formBuilder->expects($this->any())
+        $formBuilder
             ->method('getData')
             ->willReturn([]);
 
         $fields = new \ArrayObject();
 
-        $this->assertEquals(0, count($fields));
+        $this->assertCount(0, $fields);
         $object->setErrorMessageRequired('invalid!');
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(count($fields) > 0);
+        $this->assertGreaterThan(0, count($fields));
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(ChoicePagePartAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(ChoicePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testSetGetExpanded()
@@ -75,7 +76,7 @@ class ChoicePagePartTest extends TestCase
         $object = $this->object;
         $choices = ['test1' => 'test1', 'test2' => 'test2'];
         $object->setChoices($choices);
-        $this->assertEquals($choices, $object->getChoices());
+        $this->assertSame($choices, $object->getChoices());
     }
 
     public function testGettersAndSetters()
@@ -86,8 +87,8 @@ class ChoicePagePartTest extends TestCase
         $object->setRequired(true);
         $object->setErrorMessageRequired('fix your code!');
 
-        $this->assertEquals($value, $object->getEmptyValue());
+        $this->assertSame($value, $object->getEmptyValue());
         $this->assertTrue($object->getRequired());
-        $this->assertEquals('fix your code!', $object->getErrorMessageRequired());
+        $this->assertSame('fix your code!', $object->getErrorMessageRequired());
     }
 }

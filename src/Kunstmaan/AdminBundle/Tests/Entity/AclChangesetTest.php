@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +22,7 @@ class AclChangesetTest extends TestCase
     public function testConstruct()
     {
         $object = new AclChangeset();
-        $this->assertEquals(AclChangeset::STATUS_NEW, $object->getStatus());
+        $this->assertSame(AclChangeset::STATUS_NEW, $object->getStatus());
     }
 
     public function testSetAndGetChangeset()
@@ -29,7 +30,7 @@ class AclChangesetTest extends TestCase
         $changeset = ['ROLE_ADMIN' => ['ADD' => ['VIEW', 'EDIT'], 'DEL' => 'PUBLISH']];
         $this->object->setChangeset($changeset);
 
-        $this->assertEquals($changeset, $this->object->getChangeset());
+        $this->assertSame($changeset, $this->object->getChangeset());
     }
 
     public function testSetAndGetCreated()
@@ -56,8 +57,8 @@ class AclChangesetTest extends TestCase
         $entity->method('__toString')->willReturn('1');
 
         $this->object->setRef($entity);
-        $this->assertEquals(1, $this->object->getRefId());
-        $this->assertEquals(\get_class($entity), $this->object->getRefEntityName());
+        $this->assertSame(1, $this->object->getRefId());
+        $this->assertInstanceOf($this->object->getRefEntityName(), $entity);
     }
 
     public function testSetAndGetStatus()
@@ -65,23 +66,23 @@ class AclChangesetTest extends TestCase
         $yesterday = new \DateTime('yesterday');
         $this->object->setLastModified($yesterday);
 
-        $this->assertEquals(AclChangeset::STATUS_NEW, $this->object->getStatus());
+        $this->assertSame(AclChangeset::STATUS_NEW, $this->object->getStatus());
 
         $this->object->setStatus(AclChangeset::STATUS_RUNNING);
-        $this->assertNotEquals(AclChangeset::STATUS_NEW, $this->object->getStatus());
-        $this->assertEquals(AclChangeset::STATUS_RUNNING, $this->object->getStatus());
+        $this->assertNotSame(AclChangeset::STATUS_NEW, $this->object->getStatus());
+        $this->assertSame(AclChangeset::STATUS_RUNNING, $this->object->getStatus());
         $this->assertNotEquals($yesterday, $this->object->getLastModified());
     }
 
     public function testSetAndGetPid()
     {
         $this->object->setPid(10);
-        $this->assertEquals(10, $this->object->getPid());
+        $this->assertSame(10, $this->object->getPid());
     }
 
     public function testSetAndGetUser()
     {
-        $user = new \Kunstmaan\AdminBundle\Entity\User();
+        $user = new User();
         $this->object->setUser($user);
 
         $this->assertEquals($user, $this->object->getUser());

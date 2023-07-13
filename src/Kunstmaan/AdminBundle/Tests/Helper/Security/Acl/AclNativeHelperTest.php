@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
+use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -57,42 +59,42 @@ class AclNativeHelperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $this->em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->conn = $this->getMockBuilder('Doctrine\DBAL\Connection')
+        $this->conn = $this->getMockBuilder(Connection::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->conn->expects($this->any())
+        $this->conn
             ->method('getDatabase')
             ->will($this->returnValue('myDatabase'));
 
-        $this->conn->expects($this->any())
+        $this->conn
             ->method('getDatabasePlatform')
             ->willReturn(new MySQL57Platform());
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getConnection')
             ->will($this->returnValue($this->conn));
 
         /* @var $meta ClassMetadata */
-        $meta = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')
+        $meta = $this->getMockBuilder(ClassMetadata::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getClassMetadata')
             ->will($this->returnValue($meta));
 
-        $this->tokenStorage = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
+        $this->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)
             ->getMock();
 
-        $this->token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\AbstractToken')
+        $this->token = $this->getMockBuilder(AbstractToken::class)
             ->getMock();
 
-        $this->tokenStorage->expects($this->any())
+        $this->tokenStorage
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
@@ -130,11 +132,11 @@ class AclNativeHelperTest extends TestCase
         $user = new User();
         $user->setUsername('MyUser');
 
-        $this->token->expects($this->any())
+        $this->token
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+        $permissionDef = new PermissionDefinition(['view'], Node::class, 'n');
 
         /* @var $qb QueryBuilder */
         $qb = $this->object->apply($queryBuilder, $permissionDef);
@@ -170,11 +172,11 @@ class AclNativeHelperTest extends TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
-        $this->token->expects($this->any())
+        $this->token
             ->method('getUser')
             ->will($this->returnValue(method_exists(FirewallConfig::class, 'getAuthenticators') ? null : 'anon.'));
 
-        $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+        $permissionDef = new PermissionDefinition(['view'], Node::class, 'n');
 
         /* @var $qb QueryBuilder */
         $qb = $this->object->apply($queryBuilder, $permissionDef);

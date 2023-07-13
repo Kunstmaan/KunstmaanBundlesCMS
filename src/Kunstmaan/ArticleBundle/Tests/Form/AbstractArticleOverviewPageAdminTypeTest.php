@@ -13,7 +13,7 @@ class AbstractArticleOverviewPageAdminTypeTest extends TestCase
     /**
      * @var AbstractArticlePageAdminType
      */
-    private $object;
+    private AbstractArticleOverviewPageAdminType $object;
 
     public function setUp(): void
     {
@@ -23,7 +23,7 @@ class AbstractArticleOverviewPageAdminTypeTest extends TestCase
 
     public function testBlockPrefix()
     {
-        $this->assertEquals('AbstractArticleOverviewPage', $this->object->getBlockPrefix());
+        $this->assertSame('AbstractArticleOverviewPage', $this->object->getBlockPrefix());
     }
 
     public function testConfigureOptions()

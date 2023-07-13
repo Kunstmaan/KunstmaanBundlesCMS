@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
+use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +23,7 @@ class ToTopPagePartTest extends TestCase
      */
     public function testToString()
     {
-        $this->assertEquals('ToTopPagePart', $this->object->__toString());
+        $this->assertSame('ToTopPagePart', $this->object->__toString());
     }
 
     /**
@@ -30,11 +31,11 @@ class ToTopPagePartTest extends TestCase
      */
     public function testGetDefaultView()
     {
-        $this->assertEquals('@KunstmaanPagePart/ToTopPagePart/view.html.twig', $this->object->getDefaultView());
+        $this->assertSame('@KunstmaanPagePart/ToTopPagePart/view.html.twig', $this->object->getDefaultView());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals('Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType', $this->object->getDefaultAdminType());
+        $this->assertSame(ToTopPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

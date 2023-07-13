@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Tests\Services;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
 use Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare;
@@ -23,7 +24,7 @@ class RepositoryResolverTest extends TestCase
      */
     public function testGetRepositoryForEvent($event, $repositoryname)
     {
-        $mockEm = $this->createMock('Doctrine\ORM\EntityManager');
+        $mockEm = $this->createMock(EntityManager::class);
 
         $mockEm->expects($this->once())
                  ->method('getRepository')
@@ -34,16 +35,13 @@ class RepositoryResolverTest extends TestCase
         $resolver->getRepositoryForEvent($event);
     }
 
-    public function dataRepositoryEvent()
+    public function dataRepositoryEvent(): \Iterator
     {
         $request = new Request();
-
-        return [
-            [new DownVoteEvent($request, 'xxx', 1), DownVote::class],
-            [new UpVoteEvent($request, 'xxx', 1), UpVote::class],
-            [new FacebookLikeEvent($request, 'xxx', 1), FacebookLike::class],
-            [new FacebookSendEvent($request, 'xxx', 1), FacebookSend::class],
-            [new LinkedInShareEvent($request, 'xxx', 1), LinkedInShare::class],
-        ];
+        yield [new DownVoteEvent($request, 'xxx', 1), DownVote::class];
+        yield [new UpVoteEvent($request, 'xxx', 1), UpVote::class];
+        yield [new FacebookLikeEvent($request, 'xxx', 1), FacebookLike::class];
+        yield [new FacebookSendEvent($request, 'xxx', 1), FacebookSend::class];
+        yield [new LinkedInShareEvent($request, 'xxx', 1), LinkedInShare::class];
     }
 }

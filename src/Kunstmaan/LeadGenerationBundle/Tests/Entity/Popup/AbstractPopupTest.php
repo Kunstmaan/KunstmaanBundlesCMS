@@ -21,14 +21,14 @@ class AbstractPopupTest extends TestCase
         $popup->addRule($rule2);
 
         $this->assertInstanceOf(ArrayCollection::class, $popup->getRules());
-        $this->assertEquals(2, $popup->getRuleCount());
+        $this->assertSame(2, $popup->getRuleCount());
         $popup->removeRule($rule2);
-        $this->assertEquals(1, $popup->getRuleCount());
-        $this->assertEquals('delboy1978uk', $popup->getName());
-        $this->assertEquals(256, $popup->getId());
-        $this->assertEquals(652, $popup->getHtmlId());
-        $this->assertEquals(Popup::class, $popup->getFullClassname());
-        $this->assertEquals('Popup', $popup->getClassname());
+        $this->assertSame(1, $popup->getRuleCount());
+        $this->assertSame('delboy1978uk', $popup->getName());
+        $this->assertSame(256, $popup->getId());
+        $this->assertSame(652, $popup->getHtmlId());
+        $this->assertSame(Popup::class, $popup->getFullClassname());
+        $this->assertSame('Popup', $popup->getClassname());
         $this->assertNull($popup->getAvailableRules());
     }
 }

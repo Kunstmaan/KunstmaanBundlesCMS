@@ -2,6 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
+use Kunstmaan\AdminBundle\Entity\AclChangeset;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Acl\Domain\Entry;
+use Symfony\Component\Security\Acl\Domain\Acl;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -65,7 +70,7 @@ class PermissionAdminTest extends TestCase
 
     public function testGetAllRoles()
     {
-        $roleRepo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+        $roleRepo = $this->getMockBuilder(EntityRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $roleRepo->expects($this->once())
@@ -97,22 +102,21 @@ class PermissionAdminTest extends TestCase
         $retrievalStrategy
             ->expects($this->once())
             ->method('getObjectIdentity')
-            ->will($this->throwException(new \Symfony\Component\Security\Acl\Exception\AclNotFoundException()));
+            ->will($this->throwException(new AclNotFoundException()));
         $dispatcher = $this->getEventDispatcher();
         $shell = $this->getShell();
         $kernel = $this->getKernel();
         $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         $permissions = ['PERMISSION1', 'PERMISSION2'];
-        $permissionMap = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
+        $permissionMap = $this->createMock(PermissionMapInterface::class);
         $permissionMap
-            ->expects($this->any())
             ->method('getPossiblePermissions')
             ->will($this->returnValue($permissions));
         $entity = $this->getEntity();
         /* @var $permissionMap PermissionMapInterface */
         $object->initialize($entity, $permissionMap);
-        $this->assertEquals($permissions, $object->getPossiblePermissions());
+        $this->assertSame($permissions, $object->getPossiblePermissions());
     }
 
     public function testCreateAclChangeset()
@@ -120,7 +124,7 @@ class PermissionAdminTest extends TestCase
         $em = $this->getEntityManager();
         $em->expects($this->once())
             ->method('persist')
-            ->with($this->isInstanceOf('Kunstmaan\AdminBundle\Entity\AclChangeset'));
+            ->with($this->isInstanceOf(AclChangeset::class));
         $em->expects($this->once())
             ->method('flush');
         $context = $this->getTokenStorage();
@@ -133,7 +137,7 @@ class PermissionAdminTest extends TestCase
 
         $entity = $this->getEntity();
         /* @var $user User */
-        $user = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\User')
+        $user = $this->getMockBuilder(User::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -145,7 +149,7 @@ class PermissionAdminTest extends TestCase
      */
     public function getEntityManager(): EntityManager
     {
-        return $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        return $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -155,7 +159,7 @@ class PermissionAdminTest extends TestCase
      */
     public function getAclProvider(): AclProviderInterface
     {
-        return $this->createMock('Symfony\Component\Security\Acl\Model\MutableAclProviderInterface');
+        return $this->createMock(MutableAclProviderInterface::class);
     }
 
     /**
@@ -163,7 +167,7 @@ class PermissionAdminTest extends TestCase
      */
     public function getTokenStorage(): TokenStorageInterface
     {
-        return $this->createMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        return $this->createMock(TokenStorageInterface::class);
     }
 
     /**
@@ -171,7 +175,7 @@ class PermissionAdminTest extends TestCase
      */
     public function getOidRetrievalStrategy(): ObjectIdentityRetrievalStrategyInterface
     {
-        return $this->createMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
+        return $this->createMock(ObjectIdentityRetrievalStrategyInterface::class);
     }
 
     /**
@@ -179,7 +183,7 @@ class PermissionAdminTest extends TestCase
      */
     public function getEventDispatcher(): EventDispatcherInterface
     {
-        return $this->createMock('Symfony\Component\EventDispatcher\EventDispatcher');
+        return $this->createMock(EventDispatcher::class);
     }
 
     public function getShell(): Shell
@@ -211,19 +215,17 @@ class PermissionAdminTest extends TestCase
 
         $securityIdentity = new RoleSecurityIdentity('ROLE_TEST');
 
-        $entity = $this->getMockBuilder('Symfony\Component\Security\Acl\Domain\Entry')
+        $entity = $this->getMockBuilder(Entry::class)
             ->disableOriginalConstructor()
             ->getMock();
         $entity
-            ->expects($this->any())
             ->method('getSecurityIdentity')
             ->will($this->returnValue($securityIdentity));
         $entity
-            ->expects($this->any())
             ->method('getMask')
             ->will($this->returnValue(1));
 
-        $acl = $this->getMockBuilder('Symfony\Component\Security\Acl\Domain\Acl')
+        $acl = $this->getMockBuilder(Acl::class)
             ->disableOriginalConstructor()
             ->getMock();
         $acl->expects($this->atLeastOnce())
@@ -238,7 +240,7 @@ class PermissionAdminTest extends TestCase
             ->will($this->returnValue($acl));
 
         $retrievalStrategy = $this->getOidRetrievalStrategy();
-        $objectIdentity = $this->createMock('Symfony\Component\Security\Acl\Model\ObjectIdentityInterface');
+        $objectIdentity = $this->createMock(ObjectIdentityInterface::class);
         $retrievalStrategy
             ->expects($this->atLeastOnce())
             ->method('getObjectIdentity')
@@ -256,7 +258,7 @@ class PermissionAdminTest extends TestCase
      */
     public function getEntity(): AbstractEntity
     {
-        return $this->getMockForAbstractClass('Kunstmaan\AdminBundle\Entity\AbstractEntity');
+        return $this->getMockForAbstractClass(AbstractEntity::class);
     }
 
     /**
@@ -267,7 +269,7 @@ class PermissionAdminTest extends TestCase
         $object = $this->getPermissionAdmin();
         $entity = $this->getEntity();
         /* @var $permissionMap PermissionMapInterface */
-        $permissionMap = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
+        $permissionMap = $this->createMock(PermissionMapInterface::class);
         $object->initialize($entity, $permissionMap);
 
         return $object;
@@ -292,7 +294,7 @@ class PermissionAdminTest extends TestCase
         $token->expects($this->once())->method('getUser')->willReturn(new User());
         $request = $this->createMock(Request::class);
         $request->request = $this->createMock(Request::class);
-        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' => ['VIEW']]], true));
+        $request->request->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' => ['VIEW']]], true));
 
         $mirror = new \ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('tokenStorage');

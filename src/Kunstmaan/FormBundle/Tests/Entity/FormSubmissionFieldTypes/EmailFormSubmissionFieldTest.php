@@ -26,12 +26,12 @@ class EmailFormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $value = 'test@test.be';
         $object->setValue($value);
-        $this->assertEquals($value, $object->getValue());
+        $this->assertSame($value, $object->getValue());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(EmailFormSubmissionType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(EmailFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
     public function testToString()

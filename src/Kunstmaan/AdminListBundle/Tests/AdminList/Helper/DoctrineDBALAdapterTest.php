@@ -14,10 +14,8 @@ class DoctrineDBALAdapterTest extends TestCase
 {
     use ExpectDeprecationTrait;
 
-    /** @var Connection */
-    private $connection;
-    /** @var QueryBuilder */
-    private $qb;
+    private Connection $connection;
+    private QueryBuilder $qb;
 
     protected function setUp(): void
     {

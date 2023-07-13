@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\Service;
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use PHPUnit\Framework\TestCase;
@@ -23,36 +24,36 @@ class ExportServiceTest extends TestCase
     public function testGetSupportedExtensions()
     {
         $extensions = ExportService::getSupportedExtensions();
-        $this->assertEquals(['Csv' => 'csv', 'Ods' => 'ods', 'Excel' => 'xlsx'], $extensions);
+        $this->assertSame(['Csv' => 'csv', 'Ods' => 'ods', 'Excel' => 'xlsx'], $extensions);
     }
 
     public function testGetDownloadableResponseReturnsStreamedResponseWithExcel()
     {
         /** @var ExportableInterface $adminList */
-        $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+        $adminList = $this->createMock(ExportableInterface::class);
 
         $response = $this->object->getDownloadableResponse($adminList, ExportService::XLSX);
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
+        $this->assertInstanceOf(StreamedResponse::class, $response);
     }
 
     public function testGetDownloadableResponseReturnsStreamedResponseWithOds()
     {
         /** @var ExportableInterface $adminList */
-        $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+        $adminList = $this->createMock(ExportableInterface::class);
 
         $response = $this->object->getDownloadableResponse($adminList, ExportService::ODS);
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
+        $this->assertInstanceOf(StreamedResponse::class, $response);
     }
 
     public function testGetDownloadableResponseReturnsStreamedResponseWithCsv()
     {
         /** @var ExportableInterface $adminList */
-        $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+        $adminList = $this->createMock(ExportableInterface::class);
 
         $response = $this->object->getDownloadableResponse($adminList, ExportService::CSV);
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
+        $this->assertInstanceOf(StreamedResponse::class, $response);
     }
 }

@@ -16,10 +16,10 @@ class BooleanFormSubmissionFieldTest extends TestCase
         $object = new BooleanFormSubmissionField();
         $object->setValue(true);
         $this->assertTrue($object->getValue());
-        $this->assertEquals('true', $object->__toString());
-        $this->assertEquals(BooleanFormSubmissionType::class, $object->getDefaultAdminType());
+        $this->assertSame('true', $object->__toString());
+        $this->assertSame(BooleanFormSubmissionType::class, $object->getDefaultAdminType());
         $object->setValue(false);
         $this->assertFalse($object->getValue());
-        $this->assertEquals('false', $object->__toString());
+        $this->assertSame('false', $object->__toString());
     }
 }

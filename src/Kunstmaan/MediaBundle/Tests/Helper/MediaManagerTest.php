@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
+use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,17 +19,14 @@ class MediaManagerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', [0]);
+        $this->defaultHandler = $this->getMockForAbstractClass(AbstractMediaHandler::class, [0]);
         $this->defaultHandler
-            ->expects($this->any())
             ->method('canHandle')
             ->willReturn(true);
         $this->defaultHandler
-            ->expects($this->any())
             ->method('getName')
             ->willReturn('DefaultHandler');
         $this->defaultHandler
-            ->expects($this->any())
             ->method('getType')
             ->willReturn('any/type');
         $this->object = new MediaManager();
@@ -186,7 +184,7 @@ class MediaManagerTest extends TestCase
     public function testGetFolderAddActions()
     {
         $actions = [];
-        $this->assertEquals($actions, $this->object->getFolderAddActions());
+        $this->assertSame($actions, $this->object->getFolderAddActions());
 
         $actions = ['action1', 'action2'];
         $handler = $this->getCustomHandler();
@@ -195,7 +193,7 @@ class MediaManagerTest extends TestCase
             ->method('getAddFolderActions')
             ->willReturn($actions);
         $this->object->addHandler($handler);
-        $this->assertEquals($actions, $this->object->getFolderAddActions());
+        $this->assertSame($actions, $this->object->getFolderAddActions());
     }
 
     /**
@@ -206,21 +204,18 @@ class MediaManagerTest extends TestCase
      */
     protected function getCustomHandler($media = null, $name = null)
     {
-        $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', [1]);
+        $handler = $this->getMockForAbstractClass(AbstractMediaHandler::class, [1]);
         if (empty($name)) {
             $name = 'CustomHandler';
         }
         $handler
-            ->expects($this->any())
             ->method('getName')
             ->willReturn($name);
         $handler
-            ->expects($this->any())
             ->method('getType')
             ->willReturn('custom/type');
         if (!\is_null($media)) {
             $handler
-                ->expects($this->any())
                 ->method('canHandle')
                 ->with($this->equalTo($media))
                 ->willReturn(true);

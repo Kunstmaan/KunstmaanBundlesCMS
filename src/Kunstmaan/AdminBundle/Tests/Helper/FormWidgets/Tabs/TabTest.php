@@ -34,14 +34,14 @@ class TabTest extends TestCase
         $tab->persist($em);
 
         $tab->setIdentifier(666);
-        $this->assertEquals('Title', $tab->getTitle());
+        $this->assertSame('Title', $tab->getTitle());
         $tab->setTitle('Title 2');
 
-        $this->assertEquals('@KunstmaanAdmin/Tabs/tab.html.twig', $tab->getTemplate());
+        $this->assertSame('@KunstmaanAdmin/Tabs/tab.html.twig', $tab->getTemplate());
         $tab->setTemplate('new.twig');
-        $this->assertEquals('new.twig', $tab->getTemplate());
-        $this->assertEquals(666, $tab->getIdentifier());
-        $this->assertEquals('Title 2', $tab->getTitle());
+        $this->assertSame('new.twig', $tab->getTemplate());
+        $this->assertSame(666, $tab->getIdentifier());
+        $this->assertSame('Title 2', $tab->getTitle());
         $this->assertInstanceOf(FormWidget::class, $tab->getWidget());
         $this->assertCount(5, $tab->getExtraParams(new Request()));
         $this->assertCount(5, $tab->getFormErrors($view));

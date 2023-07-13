@@ -88,7 +88,7 @@ class AdminListTest extends TestCase
 
     public function testGetCount()
     {
-        $this->assertEquals(666, $this->adminList->getCount());
+        $this->assertSame(666, $this->adminList->getCount());
     }
 
     public function testGetItems()
@@ -177,23 +177,23 @@ class AdminListTest extends TestCase
     public function testGetValue()
     {
         $object = new \stdClass();
-        $this->assertEquals('test', $this->adminList->getValue($object, 'test'));
+        $this->assertSame('test', $this->adminList->getValue($object, 'test'));
     }
 
     public function testGetStringValue()
     {
         $object = new \stdClass();
-        $this->assertEquals('stringtest', $this->adminList->getStringValue($object, 'test'));
+        $this->assertSame('stringtest', $this->adminList->getStringValue($object, 'test'));
     }
 
     public function testGetOrderBy()
     {
-        $this->assertEquals('name', $this->adminList->getOrderBy());
+        $this->assertSame('name', $this->adminList->getOrderBy());
     }
 
     public function testGetOrderDirection()
     {
-        $this->assertEquals('up', $this->adminList->getOrderDirection());
+        $this->assertSame('up', $this->adminList->getOrderDirection());
     }
 
     public function testGetItemActions()

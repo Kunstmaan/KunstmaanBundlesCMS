@@ -18,7 +18,7 @@ class RedirectRouterTest extends TestCase
     private const OTHER_DOMAIN_ROUTER = 'other';
 
     /** @var RedirectRouter[] */
-    private $routers;
+    private array $routers;
 
     protected function setUp(): void
     {
@@ -48,8 +48,8 @@ class RedirectRouterTest extends TestCase
 
     public function testGetRouteCollection()
     {
-        $this->assertEquals(6, $this->routers[self::MAIN_ROUTER]->getRouteCollection()->count());
-        $this->assertEquals(6, $this->routers[self::OTHER_DOMAIN_ROUTER]->getRouteCollection()->count());
+        $this->assertSame(6, $this->routers[self::MAIN_ROUTER]->getRouteCollection()->count());
+        $this->assertSame(6, $this->routers[self::OTHER_DOMAIN_ROUTER]->getRouteCollection()->count());
     }
 
     public function testGenerateUnknownRoute()
@@ -111,19 +111,17 @@ class RedirectRouterTest extends TestCase
         }
     }
 
-    public function urlProvider(): array
+    public function urlProvider(): \Iterator
     {
-        return [
-            ['/test1', '/target1'],
-            ['/test2', '/target2'],
-            ['/test3', '/target3'],
-            ['/test4', '/target4', self::OTHER_DOMAIN_ROUTER],
-            ['/test5', '/targét5'],
-            ['/tést6', '/target6'],
-            ['/wildcard/abc', '/prefix/abc'],
-            ['/wildcard/abc/def', '/prefix/abc/def'],
-            ['/unkown-redirect', null],
-        ];
+        yield ['/test1', '/target1'];
+        yield ['/test2', '/target2'];
+        yield ['/test3', '/target3'];
+        yield ['/test4', '/target4', self::OTHER_DOMAIN_ROUTER];
+        yield ['/test5', '/targét5'];
+        yield ['/tést6', '/target6'];
+        yield ['/wildcard/abc', '/prefix/abc'];
+        yield ['/wildcard/abc/def', '/prefix/abc/def'];
+        yield ['/unkown-redirect', null];
     }
 
     public function urlProviderForImprovedRouter(): iterable

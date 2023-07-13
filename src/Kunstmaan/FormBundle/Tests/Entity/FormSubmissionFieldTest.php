@@ -28,7 +28,7 @@ class FormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $id = 123;
         $object->setId($id);
-        $this->assertEquals($id, $object->getId());
+        $this->assertSame($id, $object->getId());
     }
 
     public function testSetGetFieldName()
@@ -36,7 +36,7 @@ class FormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $fieldName = 'someFieldName';
         $object->setFieldName($fieldName);
-        $this->assertEquals($fieldName, $object->getFieldName());
+        $this->assertSame($fieldName, $object->getFieldName());
     }
 
     public function testSetGetLabel()
@@ -44,7 +44,7 @@ class FormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $label = 'Some label';
         $object->setLabel($label);
-        $this->assertEquals($label, $object->getLabel());
+        $this->assertSame($label, $object->getLabel());
     }
 
     public function testSetGetSequence()
@@ -52,7 +52,7 @@ class FormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $label = 'Some label';
         $object->setSequence($label);
-        $this->assertEquals($label, $object->getSequence());
+        $this->assertSame($label, $object->getSequence());
     }
 
     public function testSetGetSubmission()
@@ -63,13 +63,13 @@ class FormSubmissionFieldTest extends TestCase
         $object->setSubmission($submission);
         $retrievedSubmission = $object->getSubmission();
         $this->assertEquals($submission, $retrievedSubmission);
-        $this->assertEquals($submission->getId(), $retrievedSubmission->getId());
+        $this->assertSame($submission->getId(), $retrievedSubmission->getId());
     }
 
     public function testToString()
     {
         $plainObject = new Plain();
         $stringValue = $plainObject->__toString();
-        $this->assertEquals('FormSubmission Field', $stringValue);
+        $this->assertSame('FormSubmission Field', $stringValue);
     }
 }

@@ -44,12 +44,10 @@ class AdminLocaleListenerTest extends TestCase
         $listener->onKernelRequest($event);
     }
 
-    public function requestDataProvider()
+    public function requestDataProvider(): \Iterator
     {
-        return [
-            ['/en/admin/', true, 1],
-            ['/en/whatever/', false, 0],
-            ['/en/admin/preview/', true, 1],
-        ];
+        yield ['/en/admin/', true, 1];
+        yield ['/en/whatever/', false, 0];
+        yield ['/en/admin/preview/', true, 1];
     }
 }

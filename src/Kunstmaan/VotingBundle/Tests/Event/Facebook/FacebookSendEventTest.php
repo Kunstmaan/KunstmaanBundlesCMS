@@ -18,6 +18,6 @@ class FacebookSendEventTest extends TestCase
 
         $this->assertInstanceOf(Request::class, $event->getRequest());
         $this->assertInstanceOf(Response::class, $event->getReference());
-        $this->assertEquals(100, $event->getValue());
+        $this->assertSame(100, $event->getValue());
     }
 }

@@ -26,7 +26,7 @@ class KunstmaanSearchExtensionTest extends AbstractExtensionTestCase
 
         $this->assertIsArray($analyzers);
         $this->assertArrayHasKey('ar', $analyzers);
-        $this->assertEquals('arabic', $analyzers['ar']['analyzer']);
+        $this->assertSame('arabic', $analyzers['ar']['analyzer']);
     }
 
     public function testConnectionHostWithnoConfig()

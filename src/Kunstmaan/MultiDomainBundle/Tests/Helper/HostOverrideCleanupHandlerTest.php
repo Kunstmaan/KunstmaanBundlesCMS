@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 
+use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +22,7 @@ class HostOverrideCleanupHandlerTest extends TestCase
 
     public function testLogoutWithoutOverride()
     {
-        if (!interface_exists(\Symfony\Component\Security\Http\Logout\LogoutHandlerInterface::class)) {
+        if (!interface_exists(LogoutHandlerInterface::class)) {
             $this->markTestSkipped('This test should only run on symfony 5.4 and lower');
         }
 
@@ -29,7 +31,7 @@ class HostOverrideCleanupHandlerTest extends TestCase
         $object = new HostOverrideCleanupHandler();
         $request = Request::create('/');
         $response = new Response();
-        $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token = $this->createMock(TokenInterface::class);
 
         $object->logout($request, $response, $token);
 
@@ -41,7 +43,7 @@ class HostOverrideCleanupHandlerTest extends TestCase
      */
     public function testLogoutWithOverride()
     {
-        if (!interface_exists(\Symfony\Component\Security\Http\Logout\LogoutHandlerInterface::class)) {
+        if (!interface_exists(LogoutHandlerInterface::class)) {
             $this->markTestSkipped('This test should only run on symfony 5.4 and lower');
         }
 
@@ -56,7 +58,7 @@ class HostOverrideCleanupHandlerTest extends TestCase
         $request->cookies->set($session->getName(), null);
 
         $response = new Response();
-        $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token = $this->createMock(TokenInterface::class);
 
         $object->logout($request, $response, $token);
 

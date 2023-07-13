@@ -7,10 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class SlugifierTest extends TestCase
 {
-    /**
-     * @var Slugifier
-     */
-    private $slugifier;
+    private Slugifier $slugifier;
 
     public function setUp(): void
     {
@@ -25,24 +22,20 @@ class SlugifierTest extends TestCase
      */
     public function testSlugify($text, $result)
     {
-        $this->assertEquals($result, $this->slugifier->slugify($text));
+        $this->assertSame($result, $this->slugifier->slugify($text));
     }
 
     /**
      * Provides data to the {@link testSlugify} function
-     *
-     * @return array
      */
-    public function getSlugifyData()
+    public function getSlugifyData(): \Iterator
     {
-        return [
-            ['', ''],
-            ['test', 'test'],
-            ['een titel met spaties', 'een-titel-met-spaties'],
-            ['à partir d\'aujourd\'hui', 'a-partir-daujourdhui'],
-            ['CaPs ShOulD be LoweRCasEd', 'caps-should-be-lowercased'],
-            ['áàäåéèëíìïóòöúùüñßæ', 'aaaaeeeiiiooouuunssae'],
-            ['polish-ążśźęćńół', 'polish-azszecnol'],
-        ];
+        yield ['', ''];
+        yield ['test', 'test'];
+        yield ['een titel met spaties', 'een-titel-met-spaties'];
+        yield ['à partir d\'aujourd\'hui', 'a-partir-daujourdhui'];
+        yield ['CaPs ShOulD be LoweRCasEd', 'caps-should-be-lowercased'];
+        yield ['áàäåéèëíìïóòöúùüñßæ', 'aaaaeeeiiiooouuunssae'];
+        yield ['polish-ążśźęćńół', 'polish-azszecnol'];
     }
 }

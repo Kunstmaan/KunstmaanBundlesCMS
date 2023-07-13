@@ -25,7 +25,6 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     {
         $this->connectionMock = $this->createMock(Connection::class);
         $this->connectionMock
-            ->expects($this->any())
             ->method('executeQuery')
             ->willReturn(interface_exists(DriverStatement::class) ? $this->createMock(Statement::class) : $this->createMock(Result::class))
         ;
@@ -39,7 +38,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineDBALadminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertSame('bundle_admin_myentity_' . AbstractDoctrineDBALadminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
         $this->assertContains(888, $editUrl['params']);
     }
 
@@ -51,7 +50,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineDBALAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertSame('bundle_admin_myentity_' . AbstractDoctrineDBALAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
         $this->assertContains(888, $editUrl['params']);
     }
 
@@ -69,7 +68,6 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
 
         $filterBuilderMock = $this->createMock(FilterBuilder::class);
         $filterBuilderMock
-            ->expects($this->any())
             ->method('getCurrentFilters')
             ->willReturn([
                 new Filter('foo', ['type' => $abstractDBALFilterTypeMock, 'options' => []], 'uid'),
@@ -77,7 +75,6 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         ;
 
         $abstractMock
-            ->expects($this->any())
             ->method('getFilterBuilder')
             ->willReturn($filterBuilderMock)
         ;
@@ -133,12 +130,10 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
         /** @var AbstractDoctrineDBALAdminListConfigurator $abstractMock */
         $abstractMock = $this->getMockForAbstractClass(AbstractDoctrineDBALAdminListConfigurator::class, [$this->connectionMock], '', true, true, true, $methods);
         $abstractMock
-            ->expects($this->any())
             ->method('getBundleName')
             ->willReturn('Bundle')
         ;
         $abstractMock
-            ->expects($this->any())
             ->method('getEntityName')
             ->willReturn('MyEntity')
         ;

@@ -21,7 +21,7 @@ class RangeTypeTest extends TestCase
 
         /* @var OptionsResolver $resolver */
         $colorType->configureOptions($resolver);
-        $this->assertEquals(IntegerType::class, $colorType->getParent());
-        $this->assertEquals('range', $colorType->getBlockPrefix());
+        $this->assertSame(IntegerType::class, $colorType->getParent());
+        $this->assertSame('range', $colorType->getBlockPrefix());
     }
 }

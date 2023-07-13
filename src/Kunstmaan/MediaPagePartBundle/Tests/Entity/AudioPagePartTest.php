@@ -26,34 +26,34 @@ class AudioPagePartTest extends TestCase
         $media->setUrl('https://nasa.gov/spongebob.jpg');
         $media->setId(5);
         $this->object->setMedia($media);
-        $this->assertEquals(5, $this->object->getMedia()->getId());
-        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
+        $this->assertSame(5, $this->object->getMedia()->getId());
+        $this->assertSame('https://nasa.gov/spongebob.jpg', $this->object->__toString());
         $pp = new AudioPagePart();
-        $this->assertEquals('', $pp->__toString());
+        $this->assertSame('', $pp->__toString());
     }
 
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals('@KunstmaanMediaPagePart/AudioPagePart/view.html.twig', $defaultView);
+        $this->assertSame('@KunstmaanMediaPagePart/AudioPagePart/view.html.twig', $defaultView);
     }
 
     public function testGetAdminView()
     {
         $defaultView = $this->object->getAdminView();
-        $this->assertEquals('@KunstmaanMediaPagePart/AudioPagePart/admin-view.html.twig', $defaultView);
+        $this->assertSame('@KunstmaanMediaPagePart/AudioPagePart/admin-view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()
     {
         $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertEquals(AudioPagePartAdminType::class, $defaultAdminType);
+        $this->assertSame(AudioPagePartAdminType::class, $defaultAdminType);
     }
 
     public function testEmptyUrl()
     {
         $media = new Media();
         $this->object->setMedia($media);
-        $this->assertEquals('', $this->object->__toString());
+        $this->assertSame('', $this->object->__toString());
     }
 }

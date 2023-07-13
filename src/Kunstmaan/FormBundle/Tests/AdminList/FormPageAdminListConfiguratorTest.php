@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -13,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class FormPageAdminListConfiguratorTest extends TestCase
 {
-    const PERMISSION_VIEW = 'view';
+    public const PERMISSION_VIEW = 'view';
 
     /**
      * @var FormPageAdminListConfigurator
@@ -23,13 +24,13 @@ class FormPageAdminListConfiguratorTest extends TestCase
     protected function setUp(): void
     {
         $em = $this->getMockedEntityManager();
-        $aclHelper = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper');
+        $aclHelper = $this->createMock(AclHelper::class);
 
         $this->object = new FormPageAdminListConfigurator($em, $aclHelper, self::PERMISSION_VIEW);
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
     protected function getMockedEntityManager()
     {
@@ -53,7 +54,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
 
     public function testAdaptQueryBuilder()
     {
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -74,10 +75,10 @@ class FormPageAdminListConfiguratorTest extends TestCase
         $item = $this->createMock(AbstractPage::class);
         $item->method('getId')->willReturn(123);
 
-        $this->assertEquals('', $this->object->getAddUrlFor([]));
-        $this->assertEquals('KunstmaanNodeBundle', $this->object->getBundleName());
-        $this->assertEquals('NodeTranslation', $this->object->getEntityName());
-        $this->assertEquals('KunstmaanFormBundle:FormSubmissions', $this->object->getControllerPath());
+        $this->assertSame('', $this->object->getAddUrlFor([]));
+        $this->assertSame('KunstmaanNodeBundle', $this->object->getBundleName());
+        $this->assertSame('NodeTranslation', $this->object->getEntityName());
+        $this->assertSame('KunstmaanFormBundle:FormSubmissions', $this->object->getControllerPath());
         $this->assertCount(0, $this->object->getDeleteUrlFor($item));
         $this->assertCount(1, $this->object->getIndexUrl());
         $this->assertCount(2, $this->object->getEditUrlFor($item));

@@ -1,13 +1,22 @@
 <?php
 
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle;
+use Kunstmaan\AdminBundle\KunstmaanAdminBundle;
+use Kunstmaan\AdminListBundle\KunstmaanAdminListBundle;
+use Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle;
+use Symfony\Bundle\AclBundle\AclBundle;
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 return [
-    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-    new Symfony\Bundle\TwigBundle\TwigBundle(),
-    new Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle(),
-    new \Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
-    new \Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
-    new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
-    new \Symfony\Bundle\AclBundle\AclBundle(),
-    new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+    new FrameworkBundle(),
+    new SecurityBundle(),
+    new TwigBundle(),
+    new KunstmaanUtilitiesBundle(),
+    new KunstmaanAdminBundle(),
+    new KunstmaanAdminListBundle(),
+    new KunstmaanTranslatorBundle(),
+    new AclBundle(),
+    new DoctrineBundle(),
 ];

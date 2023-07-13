@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\TranslatorBundle\Tests\Repository;
 
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Kunstmaan\TranslatorBundle\Tests\WebTestCase;
 
 class TranslationRepositoryTest extends WebTestCase
 {
-    /** @var TranslationRepository */
-    private $translationRepository;
+    private ?object $translationRepository = null;
 
     public function setUp(): void
     {
@@ -45,8 +45,8 @@ class TranslationRepositoryTest extends WebTestCase
     public function testGetTranslationsByLocalesAndDomains()
     {
         $result = $this->translationRepository->getTranslationsByLocalesAndDomains(['nl'], ['messages']);
-        $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
-        $this->assertGreaterThan(0, \count($result));
+        $this->assertInstanceOf(Translation::class, $result[0]);
+        $this->assertGreaterThan(0, is_countable($result) ? \count($result) : 0);
     }
 
     /**
@@ -55,7 +55,7 @@ class TranslationRepositoryTest extends WebTestCase
     public function testFindAllNotDisabled()
     {
         $result = $this->translationRepository->findAllNotDisabled('nl');
-        $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
+        $this->assertInstanceOf(Translation::class, $result[0]);
         $this->assertGreaterThan(0, \count($result));
     }
 
@@ -65,7 +65,7 @@ class TranslationRepositoryTest extends WebTestCase
     public function testFindAllDeprecated()
     {
         $result = $this->translationRepository->findDeprecatedTranslationsBeforeDate(new \DateTime('+5 minutes'), 'messages');
-        $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
-        $this->assertGreaterThan(0, \count($result));
+        $this->assertInstanceOf(Translation::class, $result[0]);
+        $this->assertGreaterThan(0, is_countable($result) ? \count($result) : 0);
     }
 }

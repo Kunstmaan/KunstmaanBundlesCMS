@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\SeoBundle\Tests\Twig;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\SeoBundle\Repository\SeoRepository;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +21,7 @@ class TwigExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->emMock = $this->createMock('\Doctrine\ORM\EntityManager');
+        $this->emMock = $this->createMock('\\' . EntityManager::class);
     }
 
     public function testShouldReturnNameForEntityWhenNoSEO()
@@ -32,7 +35,7 @@ class TwigExtensionTest extends TestCase
 
         $result = $object->getTitleFor($this->entityMock);
 
-        $this->assertEquals($name, $result);
+        $this->assertSame($name, $result);
     }
 
     public function testShouldReturnNameForEntityWhenSEOWithTitleFound()
@@ -47,7 +50,7 @@ class TwigExtensionTest extends TestCase
 
         $result = $object->getTitleFor($this->entityMock);
 
-        $this->assertEquals($name, $result);
+        $this->assertSame($name, $result);
     }
 
     public function testGetImageDimensionsWithValidFile()
@@ -109,7 +112,7 @@ class TwigExtensionTest extends TestCase
      */
     protected function entityWithName($name)
     {
-        $this->entityMock = $this->createMock('Kunstmaan\NodeBundle\Entity\AbstractPage');
+        $this->entityMock = $this->createMock(AbstractPage::class);
         $this->entityMock->expects($this->once())->method('getTitle')->willReturn($name);
     }
 
@@ -126,7 +129,7 @@ class TwigExtensionTest extends TestCase
     protected function ensureSeoRepoMock()
     {
         if (\is_null($this->seoRepoMock)) {
-            $this->seoRepoMock = $this->createMock('Kunstmaan\SeoBundle\Repository\SeoRepository');
+            $this->seoRepoMock = $this->createMock(SeoRepository::class);
         }
     }
 

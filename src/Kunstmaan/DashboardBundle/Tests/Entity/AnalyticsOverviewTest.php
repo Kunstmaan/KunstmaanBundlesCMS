@@ -31,24 +31,24 @@ class AnalyticsOverviewTest extends TestCase
         $entity->setChartData([]);
         $entity->setGoals([$goal]);
 
-        $this->assertEquals('Donald Trump', $entity->getTitle());
-        $this->assertEquals(5, $entity->getConfig());
-        $this->assertEquals(6, $entity->getStartOffset());
-        $this->assertEquals(7, $entity->getTimespan());
-        $this->assertEquals(8, $entity->getSessions());
-        $this->assertEquals(9, $entity->getUsers());
-        $this->assertEquals(10, $entity->getPageviews());
-        $this->assertEquals(11, $entity->getPagesPerSession());
-        $this->assertEquals(12, $entity->getAvgSessionDuration());
-        $this->assertEquals(2017, $entity->getUseYear());
-        $this->assertEquals(13, $entity->getChartDataMaxValue());
-        $this->assertEquals(14, $entity->getSegment());
-        $this->assertEquals(15, $entity->getReturningUsers());
-        $this->assertEquals(1.23, $entity->getNewUsers());
+        $this->assertSame('Donald Trump', $entity->getTitle());
+        $this->assertSame(5, $entity->getConfig());
+        $this->assertSame(6, $entity->getStartOffset());
+        $this->assertSame(7, $entity->getTimespan());
+        $this->assertSame(8, $entity->getSessions());
+        $this->assertSame(9, $entity->getUsers());
+        $this->assertSame(10, $entity->getPageviews());
+        $this->assertSame(11, $entity->getPagesPerSession());
+        $this->assertSame(12, $entity->getAvgSessionDuration());
+        $this->assertSame(2017, $entity->getUseYear());
+        $this->assertSame(13, $entity->getChartDataMaxValue());
+        $this->assertSame(14, $entity->getSegment());
+        $this->assertSame(15, $entity->getReturningUsers());
+        $this->assertSame(1.23, $entity->getNewUsers());
         $this->assertIsArray($entity->getChartData());
         $this->assertIsArray($entity->getGoals());
-        $this->assertEquals(188, $entity->getReturningUsersPercentage());
-        $this->assertEquals(15.0, $entity->getNewUsersPercentage());
+        $this->assertSame(188, $entity->getReturningUsersPercentage());
+        $this->assertSame(15.0, $entity->getNewUsersPercentage());
         $this->assertIsArray($entity->getActiveGoals());
     }
 }

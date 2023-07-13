@@ -26,13 +26,11 @@ class SearchViewRendererTest extends TestCase
         self::assertEquals($exptectedOutput, $searchViewRenderer->removeHtml($input));
     }
 
-    public function htmlDataProvider()
+    public function htmlDataProvider(): \Iterator
     {
-        return [
-            ['le élève est ûn garçön', 'le élève est ûn garçön'],
-            ['Hello world!', 'Hello world!'],
-            ['<html><body><p>Hello world!</p></body></html>', 'Hello world!'],
-            ['<div><b>le élève est ûn garçön</b></div>', 'le élève est ûn garçön'],
-        ];
+        yield ['le élève est ûn garçön', 'le élève est ûn garçön'];
+        yield ['Hello world!', 'Hello world!'];
+        yield ['<html><body><p>Hello world!</p></body></html>', 'Hello world!'];
+        yield ['<div><b>le élève est ûn garçön</b></div>', 'le élève est ûn garçön'];
     }
 }

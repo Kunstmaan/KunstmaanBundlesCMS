@@ -25,7 +25,7 @@ class StringFilterTypeTest extends BaseDbalFilterTest
         $uniqueId = 'string';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(['comparator' => 'equals', 'value' => 'TheStringValue'], $data);
+        $this->assertSame(['comparator' => 'equals', 'value' => 'TheStringValue'], $data);
     }
 
     /**
@@ -36,7 +36,7 @@ class StringFilterTypeTest extends BaseDbalFilterTest
      *
      * @dataProvider applyDataProvider
      */
-    public function testApply($comparator, $whereClause, $value, $testValue)
+    public function testApply($comparator, $whereClause, mixed $value, mixed $testValue)
     {
         $qb = $this->getQueryBuilder();
         $qb->select('*')
@@ -44,24 +44,22 @@ class StringFilterTypeTest extends BaseDbalFilterTest
         $this->object->setQueryBuilder($qb);
         $this->object->apply(['comparator' => $comparator, 'value' => $value], 'string');
 
-        $this->assertEquals("SELECT * FROM entity e WHERE e.string $whereClause", $qb->getSQL());
+        $this->assertSame("SELECT * FROM entity e WHERE e.string $whereClause", $qb->getSQL());
         $this->assertEquals($testValue, $qb->getParameter('var_string'));
     }
 
-    public static function applyDataProvider(): array
+    public static function applyDataProvider(): \Iterator
     {
-        return [
-            ['equals', '= :var_string', 'AStringValue1', 'AStringValue1'],
-            ['notequals', '<> :var_string', 'AStringValue2', 'AStringValue2'],
-            ['contains', 'LIKE :var_string', 'AStringValue3', '%AStringValue3%'],
-            ['doesnotcontain', 'NOT LIKE :var_string', 'AStringValue4', '%AStringValue4%'],
-            ['startswith', 'LIKE :var_string', 'AStringValue5', 'AStringValue5%'],
-            ['endswith', 'LIKE :var_string', 'AStringValue6', '%AStringValue6'],
-        ];
+        yield ['equals', '= :var_string', 'AStringValue1', 'AStringValue1'];
+        yield ['notequals', '<> :var_string', 'AStringValue2', 'AStringValue2'];
+        yield ['contains', 'LIKE :var_string', 'AStringValue3', '%AStringValue3%'];
+        yield ['doesnotcontain', 'NOT LIKE :var_string', 'AStringValue4', '%AStringValue4%'];
+        yield ['startswith', 'LIKE :var_string', 'AStringValue5', 'AStringValue5%'];
+        yield ['endswith', 'LIKE :var_string', 'AStringValue6', '%AStringValue6'];
     }
 
     public function testGetTemplate()
     {
-        $this->assertEquals('@KunstmaanAdminList/FilterType/stringFilter.html.twig', $this->object->getTemplate());
+        $this->assertSame('@KunstmaanAdminList/FilterType/stringFilter.html.twig', $this->object->getTemplate());
     }
 }

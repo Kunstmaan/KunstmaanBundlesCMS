@@ -30,7 +30,7 @@ class TextFormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $value = 'test';
         $object->setValue($value);
-        $this->assertEquals($value, $object->getValue());
+        $this->assertSame($value, $object->getValue());
     }
 
     /**
@@ -38,7 +38,7 @@ class TextFormSubmissionFieldTest extends TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(TextFormSubmissionType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(TextFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
     /**

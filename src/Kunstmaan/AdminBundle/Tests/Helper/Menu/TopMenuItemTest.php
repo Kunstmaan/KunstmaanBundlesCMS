@@ -11,7 +11,7 @@ class TopMenuItemTest extends TestCase
     public function testGetSetRole()
     {
         /* @var $menuBuilder MenuBuilder */
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $object = new TopMenuItem($menuBuilder);

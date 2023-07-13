@@ -35,9 +35,9 @@ class AdaptSimpleFormEventTest extends TestCase
         $this->object->setOptions([]);
         $this->assertEmpty($this->object->getOptions());
 
-        $this->assertEquals(EmailPagePart::class, $this->object->getFormType());
+        $this->assertSame(EmailPagePart::class, $this->object->getFormType());
         $this->object->setFormType('randomFormType');
-        $this->assertEquals('randomFormType', $this->object->getFormType());
+        $this->assertSame('randomFormType', $this->object->getFormType());
 
         $this->object->setRequest(new Request());
         $this->assertInstanceOf(Request::class, $this->object->getRequest());

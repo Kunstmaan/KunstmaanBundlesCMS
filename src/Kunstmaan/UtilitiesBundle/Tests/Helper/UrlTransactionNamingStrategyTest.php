@@ -16,6 +16,6 @@ class UrlTransactionNamingStrategyTest extends TestCase
         $request = new Request();
         $strategy = new UrlTransactionNamingStrategy();
         $name = $strategy->getTransactionName($request);
-        $this->assertEquals('/', $name);
+        $this->assertSame('/', $name);
     }
 }

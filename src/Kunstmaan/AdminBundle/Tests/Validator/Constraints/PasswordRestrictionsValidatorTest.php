@@ -12,11 +12,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
  */
 class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 {
-    const PARAMETER_MIN_LENGTH = 8;
-    const PARAMETER_MAX_LENGTH = 16;
-    const PARAMETER_MIN_DIGITS = 3;
-    const PARAMETER_MIN_UPPERCASE = 2;
-    const PARAMETER_MIN_SPECIAL_CHARACTERS = 1;
+    public const PARAMETER_MIN_LENGTH = 8;
+    public const PARAMETER_MAX_LENGTH = 16;
+    public const PARAMETER_MIN_DIGITS = 3;
+    public const PARAMETER_MIN_UPPERCASE = 2;
+    public const PARAMETER_MIN_SPECIAL_CHARACTERS = 1;
 
     protected function createValidator(): PasswordRestrictionsValidator
     {
@@ -151,57 +151,45 @@ class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    public function dataPasswordsWithAllParameters(): array
+    public function dataPasswordsWithAllParameters(): \Iterator
     {
-        return [
-            ['ABcdef789!'],
-            ['AB123!q', PasswordRestrictions::MESSAGE_MIN_LENGTH, ['{{ min_length }}' => self::PARAMETER_MIN_LENGTH], PasswordRestrictions::INVALID_MIN_LENGTH_ERROR],
-            ['AB123!q541kkjhghvhb451', PasswordRestrictions::MESSAGE_MAX_LENGTH, ['{{ max_length }}' => self::PARAMETER_MAX_LENGTH], PasswordRestrictions::INVALID_MAX_LENGTH_ERROR],
-            ['abCDEFG*', PasswordRestrictions::MESSAGE_MIN_DIGITS, ['{{ min_digits }}' => self::PARAMETER_MIN_DIGITS], PasswordRestrictions::INVALID_MIN_DIGITS_ERROR],
-            ['ab123efg!', PasswordRestrictions::MESSAGE_MIN_UPPERCASE, ['{{ min_uppercase }}' => self::PARAMETER_MIN_UPPERCASE], PasswordRestrictions::INVALID_MIN_UPPERCASE_ERROR],
-            ['AB123efg', PasswordRestrictions::MESSAGE_MIN_SPECIAL_CHARACTERS, ['{{ min_special_characters }}' => self::PARAMETER_MIN_SPECIAL_CHARACTERS], PasswordRestrictions::INVALID_MIN_SPECIAL_CHARACTERS_ERROR],
-        ];
+        yield ['ABcdef789!'];
+        yield ['AB123!q', PasswordRestrictions::MESSAGE_MIN_LENGTH, ['{{ min_length }}' => self::PARAMETER_MIN_LENGTH], PasswordRestrictions::INVALID_MIN_LENGTH_ERROR];
+        yield ['AB123!q541kkjhghvhb451', PasswordRestrictions::MESSAGE_MAX_LENGTH, ['{{ max_length }}' => self::PARAMETER_MAX_LENGTH], PasswordRestrictions::INVALID_MAX_LENGTH_ERROR];
+        yield ['abCDEFG*', PasswordRestrictions::MESSAGE_MIN_DIGITS, ['{{ min_digits }}' => self::PARAMETER_MIN_DIGITS], PasswordRestrictions::INVALID_MIN_DIGITS_ERROR];
+        yield ['ab123efg!', PasswordRestrictions::MESSAGE_MIN_UPPERCASE, ['{{ min_uppercase }}' => self::PARAMETER_MIN_UPPERCASE], PasswordRestrictions::INVALID_MIN_UPPERCASE_ERROR];
+        yield ['AB123efg', PasswordRestrictions::MESSAGE_MIN_SPECIAL_CHARACTERS, ['{{ min_special_characters }}' => self::PARAMETER_MIN_SPECIAL_CHARACTERS], PasswordRestrictions::INVALID_MIN_SPECIAL_CHARACTERS_ERROR];
     }
 
-    public function dataPasswordsToShort(): array
+    public function dataPasswordsToShort(): \Iterator
     {
-        return [
-            ['password'],
-            ['ABC?123', PasswordRestrictions::MESSAGE_MIN_LENGTH, ['{{ min_length }}' => self::PARAMETER_MIN_LENGTH], PasswordRestrictions::INVALID_MIN_LENGTH_ERROR],
-            ['admin', PasswordRestrictions::MESSAGE_MIN_LENGTH, ['{{ min_length }}' => self::PARAMETER_MIN_LENGTH], PasswordRestrictions::INVALID_MIN_LENGTH_ERROR],
-        ];
+        yield ['password'];
+        yield ['ABC?123', PasswordRestrictions::MESSAGE_MIN_LENGTH, ['{{ min_length }}' => self::PARAMETER_MIN_LENGTH], PasswordRestrictions::INVALID_MIN_LENGTH_ERROR];
+        yield ['admin', PasswordRestrictions::MESSAGE_MIN_LENGTH, ['{{ min_length }}' => self::PARAMETER_MIN_LENGTH], PasswordRestrictions::INVALID_MIN_LENGTH_ERROR];
     }
 
-    public function dataPasswordsToLong(): array
+    public function dataPasswordsToLong(): \Iterator
     {
-        return [
-            ['correct!'],
-            ['thispasswordistolong', PasswordRestrictions::MESSAGE_MAX_LENGTH, ['{{ max_length }}' => self::PARAMETER_MAX_LENGTH], PasswordRestrictions::INVALID_MAX_LENGTH_ERROR],
-        ];
+        yield ['correct!'];
+        yield ['thispasswordistolong', PasswordRestrictions::MESSAGE_MAX_LENGTH, ['{{ max_length }}' => self::PARAMETER_MAX_LENGTH], PasswordRestrictions::INVALID_MAX_LENGTH_ERROR];
     }
 
-    public function dataPasswordsMinimumDigits(): array
+    public function dataPasswordsMinimumDigits(): \Iterator
     {
-        return [
-            ['withdigits123'],
-            ['nodigits', PasswordRestrictions::MESSAGE_MIN_DIGITS, ['{{ min_digits }}' => self::PARAMETER_MIN_DIGITS], PasswordRestrictions::INVALID_MIN_DIGITS_ERROR],
-        ];
+        yield ['withdigits123'];
+        yield ['nodigits', PasswordRestrictions::MESSAGE_MIN_DIGITS, ['{{ min_digits }}' => self::PARAMETER_MIN_DIGITS], PasswordRestrictions::INVALID_MIN_DIGITS_ERROR];
     }
 
-    public function dataPasswordsMinimumUppercase(): array
+    public function dataPasswordsMinimumUppercase(): \Iterator
     {
-        return [
-            ['PassworD'],
-            ['password', PasswordRestrictions::MESSAGE_MIN_UPPERCASE, ['{{ min_uppercase }}' => self::PARAMETER_MIN_UPPERCASE], PasswordRestrictions::INVALID_MIN_UPPERCASE_ERROR],
-        ];
+        yield ['PassworD'];
+        yield ['password', PasswordRestrictions::MESSAGE_MIN_UPPERCASE, ['{{ min_uppercase }}' => self::PARAMETER_MIN_UPPERCASE], PasswordRestrictions::INVALID_MIN_UPPERCASE_ERROR];
     }
 
-    public function dataPasswordsMinimumSpecialCharacters(): array
+    public function dataPasswordsMinimumSpecialCharacters(): \Iterator
     {
-        return [
-            ['password!'],
-            ['password', PasswordRestrictions::MESSAGE_MIN_SPECIAL_CHARACTERS, ['{{ min_special_characters }}' => self::PARAMETER_MIN_SPECIAL_CHARACTERS], PasswordRestrictions::INVALID_MIN_SPECIAL_CHARACTERS_ERROR],
-        ];
+        yield ['password!'];
+        yield ['password', PasswordRestrictions::MESSAGE_MIN_SPECIAL_CHARACTERS, ['{{ min_special_characters }}' => self::PARAMETER_MIN_SPECIAL_CHARACTERS], PasswordRestrictions::INVALID_MIN_SPECIAL_CHARACTERS_ERROR];
     }
 
     /**

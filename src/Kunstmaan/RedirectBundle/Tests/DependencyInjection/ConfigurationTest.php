@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Kunstmaan\RedirectBundle\DependencyInjection\Configuration;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
@@ -12,7 +13,7 @@ class ConfigurationTest extends TestCase
     use ConfigurationTestCaseTrait;
 
     /**
-     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
+     * @return ConfigurationInterface
      */
     protected function getConfiguration()
     {

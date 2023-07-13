@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\SearchBundle\Tests\DependencyInjection\Configuration;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Kunstmaan\SearchBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +36,7 @@ class ConfigurationTest extends TestCase
     public function testConfigWithInvalidConnectionDriver()
     {
         $this->expectExceptionMessage('Invalid configuration for path "kunstmaan_search.connection.driver": Invalid search driver "elasticsearch"');
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
         $array = [
             'connection' => [
                 'driver' => 'elasticsearch',

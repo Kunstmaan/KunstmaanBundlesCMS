@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +28,7 @@ class GroupTest extends TestCase
 
     public function testToString()
     {
-        $this->assertEquals('group', $this->object->__toString());
+        $this->assertSame('group', $this->object->__toString());
     }
 
     public function testGetRoles()
@@ -36,7 +37,7 @@ class GroupTest extends TestCase
         $role = $this->getRole();
         $this->object->addRole($role);
 
-        $this->assertEquals(['role1'], $this->object->getRoles());
+        $this->assertSame(['role1'], $this->object->getRoles());
     }
 
     public function testGetRolesCollection()
@@ -45,7 +46,7 @@ class GroupTest extends TestCase
         $role = $this->getRole();
         $this->object->addRole($role);
 
-        $collection = new \Doctrine\Common\Collections\ArrayCollection();
+        $collection = new ArrayCollection();
         $collection->add($role);
 
         $this->assertEquals($collection, $this->object->getRolesCollection());
@@ -110,22 +111,22 @@ class GroupTest extends TestCase
         $role2 = $this->getRole('role2');
         $role3 = $this->getRole('role3');
 
-        $roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $roles = new ArrayCollection();
         $roles->add($role1);
         $roles->add($role2);
         $roles->add($role3);
 
         $this->object->setRolesCollection($roles);
-        $this->assertEquals(3, $this->object->getRolesCollection()->count());
+        $this->assertSame(3, $this->object->getRolesCollection()->count());
     }
 
     public function testConstructorAndGetSetName()
     {
         $object = new Group('testgroup');
-        $this->assertEquals('testgroup', $object->getName());
+        $this->assertSame('testgroup', $object->getName());
 
         $object->setName('group2');
-        $this->assertEquals('group2', $object->getName());
+        $this->assertSame('group2', $object->getName());
     }
 
     public function testValidateGroupWithoutRole()
@@ -169,10 +170,10 @@ class GroupTest extends TestCase
      */
     protected function getRole($name = 'role1'): Role
     {
-        $role = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\Role')
+        $role = $this->getMockBuilder(Role::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $role->expects($this->any())
+        $role
             ->method('getRole')
             ->will($this->returnValue($name));
 

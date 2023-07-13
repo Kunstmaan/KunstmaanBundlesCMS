@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\Service;
 
+use Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository;
+use Kunstmaan\AdminListBundle\Repository\LockableEntityRepository;
+use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminListBundle\Entity\EntityVersionLock;
 use Kunstmaan\AdminListBundle\Entity\LockableEntity;
@@ -14,7 +17,7 @@ class EntityVersionLockServiceTest extends TestCase
 {
     use ExpectDeprecationTrait;
 
-    protected static $TEST_CLASS = 'Kunstmaan\\AdminListBundle\\Tests\\Model\\TestLockableEntityInterfaceImplementation';
+    protected static $TEST_CLASS = TestLockableEntityInterfaceImplementation::class;
 
     protected static $TEST_NEW_ENTITY_ID = '1';
 
@@ -89,19 +92,16 @@ class EntityVersionLockServiceTest extends TestCase
             [$entity, self::$THRESHOLD, $this->user, [$entityVersionLock]],
             [$outDatedEntity, self::$THRESHOLD, $this->user, []],
         ];
-        $mockLockRepository = $this->getMockBuilder('Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository')
+        $mockLockRepository = $this->getMockBuilder(EntityVersionLockRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $mockLockRepository
-            ->expects($this->any())
             ->method('findOneBy')
             ->will($this->returnValue($entityVersionLock));
         $mockLockRepository
-            ->expects($this->any())
             ->method('getExpiredLocks')
             ->will($this->returnValue([$expiredEntityVersionLock]));
         $mockLockRepository
-            ->expects($this->any())
             ->method('getLocksForLockableEntity')
             ->will($this->returnValueMap($locksMap));
 
@@ -110,11 +110,10 @@ class EntityVersionLockServiceTest extends TestCase
             [self::$TEST_ENTITY_ID, self::$TEST_CLASS, $entity],
             [self::$ALTERNATIVE_TEST_ENTITY_ID, self::$TEST_CLASS, $outDatedEntity],
         ];
-        $mockLockableRepository = $this->getMockBuilder('Kunstmaan\AdminListBundle\Repository\LockableEntityRepository')
+        $mockLockableRepository = $this->getMockBuilder(LockableEntityRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $mockLockableRepository
-            ->expects($this->any())
             ->method('getOrCreate')
             ->will($this->returnValueMap($lockableMap));
 
@@ -122,11 +121,10 @@ class EntityVersionLockServiceTest extends TestCase
             [EntityVersionLock::class, $mockLockRepository],
             [LockableEntity::class, $mockLockableRepository],
         ];
-        $mockObjectManager = $this->getMockBuilder('Doctrine\Persistence\ObjectManager')
+        $mockObjectManager = $this->getMockBuilder(ObjectManager::class)
             ->disableOriginalConstructor()
             ->getMock();
         $mockObjectManager
-            ->expects($this->any())
             ->method('getRepository')
             ->will($this->returnValueMap($repositoryMap));
 

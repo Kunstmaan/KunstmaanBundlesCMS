@@ -2,6 +2,11 @@
 
 namespace Kunstmaan\MultiDomainBundle\Tests\Router;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use PHPUnit\Framework\TestCase;
@@ -17,10 +22,10 @@ class DomainBasedLocaleRouterTest extends TestCase
         $request = $this->getRequest();
         $object = $this->getDomainBasedLocaleRouter($request);
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en_GB'], UrlGeneratorInterface::ABSOLUTE_URL);
-        $this->assertEquals('http://multilangdomain.tld/en/some-uri', $url);
+        $this->assertSame('http://multilangdomain.tld/en/some-uri', $url);
 
         $url = $object->generate('_slug', ['url' => 'some-uri', '_locale' => 'en_GB'], UrlGeneratorInterface::ABSOLUTE_PATH);
-        $this->assertEquals('/en/some-uri', $url);
+        $this->assertSame('/en/some-uri', $url);
     }
 
     public function testGenerateWithOtherSite()
@@ -29,10 +34,10 @@ class DomainBasedLocaleRouterTest extends TestCase
         $request->setLocale('nl_BE');
         $object = $this->getDomainBasedLocaleRouter($request);
         $url = $object->generate('_slug', ['url' => 'some-uri', 'otherSite' => 'https://cia.gov'], UrlGeneratorInterface::ABSOLUTE_URL);
-        $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
+        $this->assertSame('http://multilangdomain.tld/nl/some-uri', $url);
 
         $url = $object->generate('_slug', ['url' => 'some-uri'], UrlGeneratorInterface::ABSOLUTE_PATH);
-        $this->assertEquals('/nl/some-uri', $url);
+        $this->assertSame('/nl/some-uri', $url);
     }
 
     public function testGenerateWithLocaleBasedOnCurrentRequest()
@@ -41,10 +46,10 @@ class DomainBasedLocaleRouterTest extends TestCase
         $request->setLocale('nl_BE');
         $object = $this->getDomainBasedLocaleRouter($request);
         $url = $object->generate('_slug', ['url' => 'some-uri'], UrlGeneratorInterface::ABSOLUTE_URL);
-        $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
+        $this->assertSame('http://multilangdomain.tld/nl/some-uri', $url);
 
         $url = $object->generate('_slug', ['url' => 'some-uri'], UrlGeneratorInterface::ABSOLUTE_PATH);
-        $this->assertEquals('/nl/some-uri', $url);
+        $this->assertSame('/nl/some-uri', $url);
     }
 
     public function testMatchWithNodeTranslation()
@@ -53,8 +58,8 @@ class DomainBasedLocaleRouterTest extends TestCase
         $nodeTranslation = new NodeTranslation();
         $object = $this->getDomainBasedLocaleRouter($request, $nodeTranslation);
         $result = $object->match('/en/some-uri');
-        $this->assertEquals('some-uri', $result['url']);
-        $this->assertEquals('en_GB', $result['_locale']);
+        $this->assertSame('some-uri', $result['url']);
+        $this->assertSame('en_GB', $result['_locale']);
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
     }
 
@@ -71,7 +76,7 @@ class DomainBasedLocaleRouterTest extends TestCase
      */
     public function testAddMultiLangSlugRoute()
     {
-        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock(DomainConfigurationInterface::class);
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
 
@@ -87,7 +92,7 @@ class DomainBasedLocaleRouterTest extends TestCase
         $domainConfiguration->method('getFrontendLocales')
             ->willReturn(['nl', 'en']);
 
-        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
+        $node = $this->createMock(Node::class);
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
@@ -113,7 +118,7 @@ class DomainBasedLocaleRouterTest extends TestCase
      */
     public function testGetRouteCollection()
     {
-        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock(DomainConfigurationInterface::class);
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
 
@@ -129,7 +134,7 @@ class DomainBasedLocaleRouterTest extends TestCase
         $domainConfiguration->method('getFrontendLocales')
             ->willReturn(['nl', 'en']);
 
-        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
+        $node = $this->createMock(Node::class);
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
@@ -152,15 +157,15 @@ class DomainBasedLocaleRouterTest extends TestCase
 
     private function getRequestStack($request)
     {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
-        $requestStack->expects($this->any())->method('getMainRequest')->willReturn($request);
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->method('getMainRequest')->willReturn($request);
 
         return $requestStack;
     }
 
     private function getDomainConfiguration()
     {
-        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock(DomainConfigurationInterface::class);
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
 
@@ -176,7 +181,7 @@ class DomainBasedLocaleRouterTest extends TestCase
         $domainConfiguration->method('getFrontendLocales')
             ->willReturn(['nl', 'en']);
 
-        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
+        $node = $this->createMock(Node::class);
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
@@ -193,7 +198,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
     private function getEntityManager($nodeTranslation = null)
     {
-        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock(EntityManagerInterface::class);
         $em
             ->method('getRepository')
             ->with($this->equalTo(NodeTranslation::class))
@@ -204,7 +209,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
     private function getNodeTranslationRepository($nodeTranslation = null)
     {
-        $repository = $this->getMockBuilder('Kunstmaan\NodeBundle\Repository\NodeTranslationRepository')
+        $repository = $this->getMockBuilder(NodeTranslationRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $repository

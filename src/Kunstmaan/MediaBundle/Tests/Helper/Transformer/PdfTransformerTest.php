@@ -60,7 +60,7 @@ class PdfTransformerTest extends TestCase
         $transformer = new PdfTransformer(new \Imagick());
         $absolutePath = $transformer->apply($pdfFilename);
 
-        $this->assertEquals($jpgFilename, $absolutePath);
+        $this->assertSame($jpgFilename, $absolutePath);
         $this->assertFileExists($jpgFilename);
         $this->assertNotEmpty(file_get_contents($jpgFilename));
     }
@@ -79,7 +79,7 @@ class PdfTransformerTest extends TestCase
         $transformer = new PdfTransformer(new \Imagick());
         $absolutePath = $transformer->apply($pdfFilename);
 
-        $this->assertEquals($jpgFilename, $absolutePath);
+        $this->assertSame($jpgFilename, $absolutePath);
         $this->assertEmpty(file_get_contents($jpgFilename));
     }
 
@@ -88,7 +88,7 @@ class PdfTransformerTest extends TestCase
         $pdfFilename = $this->tempDir . '/sample.pdf';
         $jpgFilename = $pdfFilename . '.jpg';
 
-        $this->assertEquals($jpgFilename, $this->object->getPreviewFilename($pdfFilename));
+        $this->assertSame($jpgFilename, $this->object->getPreviewFilename($pdfFilename));
     }
 
     private function removeTempDir()

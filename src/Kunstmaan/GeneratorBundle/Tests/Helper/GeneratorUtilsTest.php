@@ -26,31 +26,31 @@ class GeneratorUtilsTest extends TestCase
     public function testCleanPrefixShouldConvertToLowercase()
     {
         $response = GeneratorUtils::cleanPrefix('TEST');
-        $this->assertEquals('test_', $response);
+        $this->assertSame('test_', $response);
     }
 
     public function testCleanPrefixShouldAppendUnderscore()
     {
         $response = GeneratorUtils::cleanPrefix('test');
-        $this->assertEquals('test_', $response);
+        $this->assertSame('test_', $response);
     }
 
     public function testCleanPrefixShouldAppendUnderscoreOnlyWhenNeeded()
     {
         $response = GeneratorUtils::cleanPrefix('test_');
-        $this->assertEquals('test_', $response);
+        $this->assertSame('test_', $response);
     }
 
     public function testCleanPrefixShouldLeaveUnderscoresInPlace()
     {
         $response = GeneratorUtils::cleanPrefix('test_bundle');
-        $this->assertEquals('test_bundle_', $response);
+        $this->assertSame('test_bundle_', $response);
     }
 
     public function testCleanPrefixShouldLeaveSingleUnderscore()
     {
         $response = GeneratorUtils::cleanPrefix('test____');
-        $this->assertEquals('test_', $response);
+        $this->assertSame('test_', $response);
     }
 
     public function testShouldConvertOnlyUnderscoresToNull()

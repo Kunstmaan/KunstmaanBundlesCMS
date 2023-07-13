@@ -23,6 +23,6 @@ class SitesAdminPanelAdaptorTest extends TestCase
         $this->assertCount(1, $actions);
 
         $action = $actions[0];
-        $this->assertEquals('KunstmaanMultiDomainBundle_switch_site', $action->getUrl()['path']);
+        $this->assertSame('KunstmaanMultiDomainBundle_switch_site', $action->getUrl()['path']);
     }
 }

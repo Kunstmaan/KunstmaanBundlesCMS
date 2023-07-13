@@ -15,9 +15,9 @@ class AbstractAuthorTest extends TestCase
         $entity->setLink('https://nasa.gov');
         $entity->setName('NASA');
 
-        $this->assertEquals(666, $entity->getId());
-        $this->assertEquals('https://nasa.gov', $entity->getLink());
-        $this->assertEquals('NASA', $entity->getName());
-        $this->assertEquals('NASA', $entity->__toString());
+        $this->assertSame(666, $entity->getId());
+        $this->assertSame('https://nasa.gov', $entity->getLink());
+        $this->assertSame('NASA', $entity->getName());
+        $this->assertSame('NASA', $entity->__toString());
     }
 }

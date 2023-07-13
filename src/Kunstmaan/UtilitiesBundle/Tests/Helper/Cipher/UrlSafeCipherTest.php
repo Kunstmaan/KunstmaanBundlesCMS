@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class UrlSafeCipherTest extends TestCase
 {
-    const SECRET = 'secret';
-    const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
+    public const SECRET = 'secret';
+    public const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
 
     /**
      * @var UrlSafeCipher
@@ -36,8 +36,8 @@ class UrlSafeCipherTest extends TestCase
     public function testEncryptDecrypt()
     {
         $encryptedValue = $this->cipher->encrypt(self::CONTENT);
-        $this->assertNotEquals(self::CONTENT, $encryptedValue);
+        $this->assertNotSame(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
-        $this->assertEquals(self::CONTENT, $decryptedValue);
+        $this->assertSame(self::CONTENT, $decryptedValue);
     }
 }

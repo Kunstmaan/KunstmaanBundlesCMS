@@ -15,9 +15,9 @@ class AnalyticsSegmentTest extends TestCase
         $entity->setConfig(5);
         $entity->setoverviews([]);
 
-        $this->assertEquals('Donald Trump', $entity->getName());
-        $this->assertEquals('query', $entity->getQuery());
-        $this->assertEquals(5, $entity->getConfig());
+        $this->assertSame('Donald Trump', $entity->getName());
+        $this->assertSame('query', $entity->getQuery());
+        $this->assertSame(5, $entity->getConfig());
         $this->assertIsArray($entity->getoverviews());
     }
 }

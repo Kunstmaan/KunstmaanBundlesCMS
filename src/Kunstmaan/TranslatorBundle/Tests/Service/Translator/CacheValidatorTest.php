@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class CacheValidatorTest extends TestCase
 {
-    private $cacheValidator;
+    private CacheValidator $cacheValidator;
 
-    private $cacheDir = __DIR__ . '/../../app/cache';
+    private string $cacheDir = __DIR__ . '/../../app/cache';
 
     public function setUp(): void
     {

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
+use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
 use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,6 +31,6 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\LinkPagePart', $resolve['data_class']);
+        $this->assertSame(LinkPagePart::class, $resolve['data_class']);
     }
 }

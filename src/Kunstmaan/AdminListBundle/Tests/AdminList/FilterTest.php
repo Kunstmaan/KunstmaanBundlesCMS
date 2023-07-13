@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
+use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
 use PHPUnit\Framework\TestCase;
@@ -26,9 +27,9 @@ class FilterTest extends TestCase
         $filterDef = ['type' => new StringFilterType('string', 'b'), 'options' => [], 'filtername' => 'filterName'];
         $object = new Filter('columnName', $filterDef, 'string');
 
-        $this->assertEquals('columnName', $object->getColumnName());
-        $this->assertEquals('string', $object->getUniqueId());
-        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface', $object->getType());
+        $this->assertSame('columnName', $object->getColumnName());
+        $this->assertSame('string', $object->getUniqueId());
+        $this->assertInstanceOf(FilterTypeInterface::class, $object->getType());
     }
 
     public function testBindRequest()
@@ -36,7 +37,7 @@ class FilterTest extends TestCase
         $request = new Request(['filter_comparator_string' => 'equals', 'filter_value_string' => 'TheStringValue']);
         $this->object->bindRequest($request);
 
-        $this->assertEquals(['comparator' => 'equals', 'value' => 'TheStringValue'], $this->object->getData());
+        $this->assertSame(['comparator' => 'equals', 'value' => 'TheStringValue'], $this->object->getData());
     }
 
     public function testGetOptions()

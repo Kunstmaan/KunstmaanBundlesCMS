@@ -83,31 +83,27 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    public function dataMimeTypes()
+    public function dataMimeTypes(): \Iterator
     {
-        return [
-            ['image/png', ['image/png']],
-            ['image/png', ['image/jpg', 'image/png']],
-            ['image/png', ['image/*']],
-            ['image/PNG', ['image/png']],
-            ['image/png', ['image/PNG']],
-            ['image/png', ['image/jpg'], 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.', ['{{ type }}' => '"image/png"', '{{ types }}' => '"image/jpg"'], Media::INVALID_MIME_TYPE_ERROR],
-            ['image/png', ['application/*'], 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.', ['{{ type }}' => '"image/png"', '{{ types }}' => '"application/*"'], Media::INVALID_MIME_TYPE_ERROR],
-        ];
+        yield ['image/png', ['image/png']];
+        yield ['image/png', ['image/jpg', 'image/png']];
+        yield ['image/png', ['image/*']];
+        yield ['image/PNG', ['image/png']];
+        yield ['image/png', ['image/PNG']];
+        yield ['image/png', ['image/jpg'], 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.', ['{{ type }}' => '"image/png"', '{{ types }}' => '"image/jpg"'], Media::INVALID_MIME_TYPE_ERROR];
+        yield ['image/png', ['application/*'], 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.', ['{{ type }}' => '"image/png"', '{{ types }}' => '"application/*"'], Media::INVALID_MIME_TYPE_ERROR];
     }
 
-    public function dataDimensions()
+    public function dataDimensions(): \Iterator
     {
         // image size is 100x100
-        return [
-            ['minHeight', 100],
-            ['maxHeight', 100],
-            ['minWidth', 100],
-            ['maxWidth', 100],
-            ['minWidth', 200, 'The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.', ['{{ width }}' => 100, '{{ min_width }}' => 200], Media::TOO_NARROW_ERROR],
-            ['maxWidth', 50, 'The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.', ['{{ width }}' => 100, '{{ max_width }}' => 50], Media::TOO_WIDE_ERROR],
-            ['minHeight', 200, 'The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.', ['{{ height }}' => 100, '{{ min_height }}' => 200], Media::TOO_LOW_ERROR],
-            ['maxHeight', 50, 'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.', ['{{ height }}' => 100, '{{ max_height }}' => 50], Media::TOO_HIGH_ERROR],
-        ];
+        yield ['minHeight', 100];
+        yield ['maxHeight', 100];
+        yield ['minWidth', 100];
+        yield ['maxWidth', 100];
+        yield ['minWidth', 200, 'The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.', ['{{ width }}' => 100, '{{ min_width }}' => 200], Media::TOO_NARROW_ERROR];
+        yield ['maxWidth', 50, 'The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.', ['{{ width }}' => 100, '{{ max_width }}' => 50], Media::TOO_WIDE_ERROR];
+        yield ['minHeight', 200, 'The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.', ['{{ height }}' => 100, '{{ min_height }}' => 200], Media::TOO_LOW_ERROR];
+        yield ['maxHeight', 50, 'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.', ['{{ height }}' => 100, '{{ max_height }}' => 50], Media::TOO_HIGH_ERROR];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Tests\DependencyInjection\Compiler;
 
+use Kunstmaan\MediaBundle\Helper\Imagine\CacheManager;
 use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -42,7 +43,7 @@ class MediaHandlerCompilerPassTest extends AbstractCompilerPassTestCase
 
     public function testLiipImageTaggedResolvers()
     {
-        $this->setDefinition('Kunstmaan\MediaBundle\Helper\Imagine\CacheManager', new Definition());
+        $this->setDefinition(CacheManager::class, new Definition());
 
         $testResolver = new Definition();
         $testResolver->addTag('liip_imagine.cache.resolver', ['resolver' => 'test']);
@@ -51,7 +52,7 @@ class MediaHandlerCompilerPassTest extends AbstractCompilerPassTestCase
         $this->compile();
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
-            'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager',
+            CacheManager::class,
             'addResolver',
             ['test', new Reference('test_resolver')]
         );

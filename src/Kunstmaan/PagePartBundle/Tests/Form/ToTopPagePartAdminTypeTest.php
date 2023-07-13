@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
+use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,6 +31,6 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\ToTopPagePart', $resolve['data_class']);
+        $this->assertSame(ToTopPagePart::class, $resolve['data_class']);
     }
 }

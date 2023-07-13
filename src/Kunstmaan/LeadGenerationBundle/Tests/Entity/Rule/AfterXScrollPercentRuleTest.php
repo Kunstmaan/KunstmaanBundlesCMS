@@ -13,10 +13,10 @@ class AfterXScrollPercentRuleTest extends TestCase
         $rule = new AfterXScrollPercentRule();
         $rule->setPercentage(10);
 
-        $this->assertEquals(10, $rule->getPercentage());
-        $this->assertEquals('AfterXScrollPercentRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/AfterXScrollPercentRule.js', $rule->getJsFilePath());
-        $this->assertEquals(AfterXScrollPercentRuleAdminType::class, $rule->getAdminType());
+        $this->assertSame(10, $rule->getPercentage());
+        $this->assertSame('AfterXScrollPercentRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/AfterXScrollPercentRule.js', $rule->getJsFilePath());
+        $this->assertSame(AfterXScrollPercentRuleAdminType::class, $rule->getAdminType());
         $this->assertIsArray($rule->getJsProperties());
     }
 }

@@ -18,6 +18,6 @@ class DashboardConfigurationTypeTest extends TestCase
         /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
-        $this->assertEquals('dashboardconfiguration', $type->getBlockPrefix());
+        $this->assertSame('dashboardconfiguration', $type->getBlockPrefix());
     }
 }

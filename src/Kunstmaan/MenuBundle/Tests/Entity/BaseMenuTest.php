@@ -19,9 +19,9 @@ class BaseMenuTest extends TestCase
         $menu->setName('Vladimir Putin');
         $menu->setItems(new ArrayCollection([$item]));
 
-        $this->assertEquals('en', $menu->getLocale());
-        $this->assertEquals(5, $menu->getId());
-        $this->assertEquals('Vladimir Putin', $menu->getName());
+        $this->assertSame('en', $menu->getLocale());
+        $this->assertSame(5, $menu->getId());
+        $this->assertSame('Vladimir Putin', $menu->getName());
         $this->assertInstanceOf(ArrayCollection::class, $menu->getItems());
         $this->assertCount(1, $menu->getItems());
 

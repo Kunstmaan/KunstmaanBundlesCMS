@@ -18,7 +18,7 @@ class QueuedNodeTranslationActionTest extends TestCase
         $this->assertInstanceOf(\DateTime::class, $queuedNodeTranslationAction->getDate());
 
         $queuedNodeTranslationAction->setAction('some-action');
-        $this->assertEquals('some-action', $queuedNodeTranslationAction->getAction());
+        $this->assertSame('some-action', $queuedNodeTranslationAction->getAction());
 
         $queuedNodeTranslationAction->setUser($user);
         $this->assertInstanceOf(User::class, $queuedNodeTranslationAction->getUser());

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
@@ -24,19 +25,15 @@ class FolderManagerTest extends TestCase
      */
     protected $object;
 
-    /**
-     * @var array
-     */
-    private $parents;
+    private array $parents;
 
     protected function setUp(): void
     {
-        $this->repository = $this->getMockBuilder('Kunstmaan\MediaBundle\Repository\FolderRepository')
+        $this->repository = $this->getMockBuilder(FolderRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->repository
-            ->expects($this->any())
             ->method('getParentIds')
             ->willReturn([1, 2]);
 
@@ -49,7 +46,6 @@ class FolderManagerTest extends TestCase
         $this->parents = [$folder1, $folder2];
 
         $this->repository
-            ->expects($this->any())
             ->method('getPath')
             ->willReturn([$folder1, $folder2]);
 
@@ -57,7 +53,6 @@ class FolderManagerTest extends TestCase
         $rootFolder->setId(1);
 
         $this->repository
-            ->expects($this->any())
             ->method('getFolder')
             ->with($this->equalTo(1))
             ->willReturn($rootFolder);
@@ -87,7 +82,7 @@ class FolderManagerTest extends TestCase
             ->with($this->equalTo(1));
 
         $rootFolder = $this->object->getRootFolderFor($this->folder);
-        $this->assertEquals(1, $rootFolder->getId());
+        $this->assertSame(1, $rootFolder->getId());
     }
 
     public function testGetParentIds()
@@ -97,7 +92,7 @@ class FolderManagerTest extends TestCase
             ->method('getParentIds')
             ->with($this->equalTo($this->folder));
 
-        $this->assertEquals([1, 2], $this->object->getParentIds($this->folder));
+        $this->assertSame([1, 2], $this->object->getParentIds($this->folder));
     }
 
     public function testGetParents()

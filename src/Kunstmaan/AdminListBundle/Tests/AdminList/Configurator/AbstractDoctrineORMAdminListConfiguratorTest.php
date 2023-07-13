@@ -30,7 +30,6 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
     {
         $queryMock = $this->createMock(AbstractQuery::class);
         $queryMock
-            ->expects($this->any())
             ->method('iterate')
             ->willReturn($this->createMock(\Iterator::class))
         ;
@@ -38,33 +37,28 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->emMock = $this->createMock(EntityManagerInterface::class);
         $this->aclHelperMock = $this->createMock(AclHelper::class);
         $this->aclHelperMock
-            ->expects($this->any())
             ->method('apply')
             ->willReturn($queryMock)
         ;
 
         $queryBuilderMock = $this->createMock(QueryBuilder::class);
         $queryBuilderMock
-            ->expects($this->any())
             ->method('getQuery')
             ->willReturn($queryMock)
         ;
 
         $entityRepositoryMock = $this->createMock(EntityRepository::class);
         $entityRepositoryMock
-            ->expects($this->any())
             ->method('createQueryBuilder')
             ->willReturn($queryBuilderMock)
         ;
 
         $this->emMock
-            ->expects($this->any())
             ->method('getRepository')
             ->with('Bundle:MyEntity')
             ->willReturn($entityRepositoryMock)
         ;
         $this->emMock
-            ->expects($this->any())
             ->method('getClassMetadata')
             ->willReturn($this->createMock(ClassMetadata::class))
         ;
@@ -85,7 +79,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertSame('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
         $this->assertContains(747, $editUrl['params']);
     }
 
@@ -104,7 +98,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertSame('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
         $this->assertContains(747, $editUrl['params']);
     }
 
@@ -135,7 +129,6 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 
         $filterBuilderMock = $this->createMock(FilterBuilder::class);
         $filterBuilderMock
-            ->expects($this->any())
             ->method('getCurrentFilters')
             ->willReturn([
                 new Filter('foo', ['type' => $abstractORMFilterTypeMock, 'options' => []], 'uid'),
@@ -145,7 +138,6 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
         $abstractMock = $this->setUpAbstractMock(['getFilterBuilder']);
         $abstractMock
-            ->expects($this->any())
             ->method('getFilterBuilder')
             ->willReturn($filterBuilderMock)
         ;
@@ -165,7 +157,6 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
             ->method('bindRequest')
         ;
         $filterBuilderMock
-            ->expects($this->any())
             ->method('getCurrentFilters')
             ->willReturn([])
         ;
@@ -240,12 +231,10 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
         $abstractMock = $this->getMockForAbstractClass(AbstractDoctrineORMAdminListConfigurator::class, [$this->emMock], '', true, true, true, $methods);
         $abstractMock
-            ->expects($this->any())
             ->method('getBundleName')
             ->willReturn('Bundle')
         ;
         $abstractMock
-            ->expects($this->any())
             ->method('getEntityName')
             ->willReturn('MyEntity')
         ;

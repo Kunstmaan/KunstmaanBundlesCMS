@@ -24,7 +24,7 @@ class FilterBuilderTest extends TestCase
     {
         $result = $this->object->add('columnName', new StringFilterType('string', 'e'), 'filterName', ['option1' => 'value1']);
 
-        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\FilterBuilder', $result);
+        $this->assertInstanceOf(FilterBuilder::class, $result);
     }
 
     public function testGet()
@@ -35,9 +35,9 @@ class FilterBuilderTest extends TestCase
         $this->assertArrayHasKey('type', $definition);
         $this->assertArrayHasKey('filtername', $definition);
         $this->assertArrayHasKey('options', $definition);
-        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType', $definition['type']);
-        $this->assertEquals('filterName', $definition['filtername']);
-        $this->assertEquals(['option1' => 'value1'], $definition['options']);
+        $this->assertInstanceOf(StringFilterType::class, $definition['type']);
+        $this->assertSame('filterName', $definition['filtername']);
+        $this->assertSame(['option1' => 'value1'], $definition['options']);
         $this->assertTrue(\is_array($this->object->getCurrentParameters()));
         $this->assertTrue(\is_array($this->object->getCurrentFilters()));
     }
@@ -72,9 +72,9 @@ class FilterBuilderTest extends TestCase
     public function testBindRequest()
     {
         $session = $this->createMock(Session::class);
-        $session->expects($this->any())->method('has')->with('filter_')->willReturn(false);
-        $session->expects($this->any())->method('has')->willReturn(true);
-        $session->expects($this->any())->method('get')->willReturn(['filter_columnname' => ['something' => 'columnName']]);
+        $session->method('has')->with('filter_')->willReturn(false);
+        $session->method('has')->willReturn(true);
+        $session->method('get')->willReturn(['filter_columnname' => ['something' => 'columnName']]);
         $request = new Request();
         $request->setSession($session);
 

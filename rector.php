@@ -14,7 +14,35 @@ use Rector\PHPUnit\Rector\Class_\PreferPHPUnitThisCallRector;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->parallel();
     $rectorConfig->paths([
-        __DIR__.'/src/Kunstmaan',
+        __DIR__.'/src/Kunstmaan/AdminBundle/Tests',
+        __DIR__.'/src/Kunstmaan/AdminListBundle/Tests',
+        __DIR__.'/src/Kunstmaan/ArticleBundle/Tests',
+        __DIR__.'/src/Kunstmaan/BehatBundle/Tests',
+        __DIR__.'/src/Kunstmaan/CacheBundle/Tests',
+        __DIR__.'/src/Kunstmaan/ConfigBundle/Tests',
+        __DIR__.'/src/Kunstmaan/CookieBundle/Tests',
+        __DIR__.'/src/Kunstmaan/DashboardBundle/Tests',
+        __DIR__.'/src/Kunstmaan/FixturesBundle/Tests',
+        __DIR__.'/src/Kunstmaan/FormBundle/Tests',
+        __DIR__.'/src/Kunstmaan/GeneratorBundle/Tests',
+        __DIR__.'/src/Kunstmaan/LeadGenerationBundle/Tests',
+        __DIR__.'/src/Kunstmaan/MediaBundle/Tests',
+        __DIR__.'/src/Kunstmaan/MediaBundle/Tests',
+        __DIR__.'/src/Kunstmaan/MediaPagePartBundle/Tests',
+        __DIR__.'/src/Kunstmaan/MenuBundle/Tests',
+        __DIR__.'/src/Kunstmaan/MultiDomainBundle/Tests',
+        __DIR__.'/src/Kunstmaan/NodeBundle/Tests',
+        __DIR__.'/src/Kunstmaan/NodeSearchBundle/Tests',
+        __DIR__.'/src/Kunstmaan/PagePartBundle/Tests',
+        __DIR__.'/src/Kunstmaan/RedirectBundle/Tests',
+        __DIR__.'/src/Kunstmaan/SearchBundle/Tests',
+        __DIR__.'/src/Kunstmaan/SeoBundle/Tests',
+        __DIR__.'/src/Kunstmaan/SitemapBundle/Tests',
+        __DIR__.'/src/Kunstmaan/TaggingBundle/Tests',
+        __DIR__.'/src/Kunstmaan/TranslatorBundle/Tests',
+        __DIR__.'/src/Kunstmaan/UserManagementBundle/Tests',
+        __DIR__.'/src/Kunstmaan/UtilitiesBundle/Tests',
+        __DIR__.'/src/Kunstmaan/VotingBundle/Tests',
     ]);
 
     $rectorConfig->cacheDirectory('.build/rector');

@@ -27,6 +27,6 @@ class RemoteSlideHelperTest extends TestCase
 
     public function testGetMedia()
     {
-        $this->assertEquals(RemoteSlideHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
+        $this->assertSame(RemoteSlideHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
     }
 }

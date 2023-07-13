@@ -11,7 +11,7 @@ class UrlValidatorTest extends TestCase
     /**
      * @var URLValidator|MockObject
      */
-    private $validatorMock;
+    private MockObject $validatorMock;
 
     protected function setUp(): void
     {
@@ -42,38 +42,32 @@ class UrlValidatorTest extends TestCase
         $this->assertSame($result, $this->validatorMock->isInternalMediaLink($link));
     }
 
-    public function emailAddressProvider()
+    public function emailAddressProvider(): \Iterator
     {
-        return [
-            ['abc', false],
-            ['test@example.com', 'test@example.com'],
-            ['test@local', false],
-        ];
+        yield ['abc', false];
+        yield ['test@example.com', 'test@example.com'];
+        yield ['test@local', false];
     }
 
-    public function internalLinkProvider()
+    public function internalLinkProvider(): \Iterator
     {
-        return [
-            ['[NT:123]', false],
-            ['[NT123]', true],
-            ['[NTABC]', false],
-            ['[NT123ABC]', false],
-            ['[host_a:NT123]', true],
-            ['http://www.google.com', false],
-            ['[NT123][M20]', true],
-        ];
+        yield ['[NT:123]', false];
+        yield ['[NT123]', true];
+        yield ['[NTABC]', false];
+        yield ['[NT123ABC]', false];
+        yield ['[host_a:NT123]', true];
+        yield ['http://www.google.com', false];
+        yield ['[NT123][M20]', true];
     }
 
-    public function internalMediaLinkProvider()
+    public function internalMediaLinkProvider(): \Iterator
     {
-        return [
-            ['[M:123]', false],
-            ['[M123]', true],
-            ['[MABC]', false],
-            ['[M123ABC]', false],
-            ['[host_a:M23]', true],
-            ['http://www.google.com', false],
-            ['[M123][NT20]', true],
-        ];
+        yield ['[M:123]', false];
+        yield ['[M123]', true];
+        yield ['[MABC]', false];
+        yield ['[M123ABC]', false];
+        yield ['[host_a:M23]', true];
+        yield ['http://www.google.com', false];
+        yield ['[M123][NT20]', true];
     }
 }

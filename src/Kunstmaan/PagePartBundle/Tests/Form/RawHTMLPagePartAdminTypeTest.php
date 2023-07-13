@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
+use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -30,6 +31,6 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart', $resolve['data_class']);
+        $this->assertSame(RawHTMLPagePart::class, $resolve['data_class']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\VersionCheck;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -17,12 +18,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VersionCheckTest extends TestCase
 {
-    /** @var \PHPUnit\Framework\MockObject\MockObject|RequestStack */
-    private $requestStack;
-    /** @var \PHPUnit\Framework\MockObject\MockObject|TranslatorInterface */
+    /** @var MockObject|RequestStack */
+    private RequestStack $requestStack;
+    /** @var MockObject|TranslatorInterface */
     private $translator;
-    /** @var ArrayAdapter */
-    private $cache;
+    private ArrayAdapter $cache;
 
     public function setUp(): void
     {
@@ -35,7 +35,7 @@ class VersionCheckTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|VersionChecker
+     * @return MockObject|VersionChecker
      */
     public function setUpVersionCheckerMock(?array $methods, string $projectDir = null)
     {
@@ -90,7 +90,6 @@ class VersionCheckTest extends TestCase
 
         $this->translator = $this->createMock(Translator::class);
         $this->translator
-            ->expects($this->any())
             ->method('trans')
             ->willReturn('translated')
         ;
@@ -110,15 +109,12 @@ class VersionCheckTest extends TestCase
         }
     }
 
-    public function provider()
+    public function provider(): \Iterator
     {
         $baseDir = __DIR__ . '/testdata';
-
-        return [
-            'composer.lock ok' => [$baseDir . '/composer_ok', 'instanceOf', \stdClass::class],
-            'composer.lock broken' => [$baseDir . '/composer_broken', 'exception', 'translated (#4)'],
-            'composer.lock bundleless' => [$baseDir . '/composer_bundleless', 'exception', 'translated'],
-            'composer.lock not found' => [$baseDir . '/composer_not_there', 'exception', 'translated'],
-        ];
+        yield 'composer.lock ok' => [$baseDir . '/composer_ok', 'instanceOf', \stdClass::class];
+        yield 'composer.lock broken' => [$baseDir . '/composer_broken', 'exception', 'translated (#4)'];
+        yield 'composer.lock bundleless' => [$baseDir . '/composer_bundleless', 'exception', 'translated'];
+        yield 'composer.lock not found' => [$baseDir . '/composer_not_there', 'exception', 'translated'];
     }
 }

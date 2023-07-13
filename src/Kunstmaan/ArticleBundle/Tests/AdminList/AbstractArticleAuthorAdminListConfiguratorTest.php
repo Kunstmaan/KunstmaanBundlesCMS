@@ -17,7 +17,7 @@ class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
     protected function setUp(): void
     {
         $em = $this->createMock(EntityManager::class);
-        $em->expects($this->any())
+        $em
             ->method($this->anything())
             ->willReturn($em);
 
@@ -28,8 +28,8 @@ class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
 
     public function testGetters()
     {
-        $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
-        $this->assertEquals('AbstractArticleAuthor', $this->object->getEntityName());
+        $this->assertSame('KunstmaanArticleBundle', $this->object->getBundleName());
+        $this->assertSame('AbstractArticleAuthor', $this->object->getEntityName());
     }
 
     public function testBuildFields()

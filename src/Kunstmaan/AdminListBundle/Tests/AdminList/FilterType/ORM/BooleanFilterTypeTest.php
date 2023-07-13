@@ -25,7 +25,7 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
         $uniqueId = 'boolean';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(['value' => 'true'], $data);
+        $this->assertSame(['value' => 'true'], $data);
     }
 
     /**
@@ -39,19 +39,17 @@ class BooleanFilterTypeTest extends BaseOrmFilterTest
         $this->object->setQueryBuilder($qb);
         $this->object->apply(['value' => $value], 'boolean');
 
-        $this->assertEquals("SELECT b FROM Entity b WHERE b.boolean = $value", $qb->getDQL());
+        $this->assertSame("SELECT b FROM Entity b WHERE b.boolean = $value", $qb->getDQL());
     }
 
-    public static function applyDataProvider(): array
+    public static function applyDataProvider(): \Iterator
     {
-        return [
-            ['true'],
-            ['false'],
-        ];
+        yield ['true'];
+        yield ['false'];
     }
 
     public function testGetTemplate()
     {
-        $this->assertEquals('@KunstmaanAdminList/FilterType/booleanFilter.html.twig', $this->object->getTemplate());
+        $this->assertSame('@KunstmaanAdminList/FilterType/booleanFilter.html.twig', $this->object->getTemplate());
     }
 }

@@ -12,11 +12,11 @@ use PHPUnit\Framework\TestCase;
 
 class ExportCommandHandlerTest extends TestCase
 {
-    const TEST_DATA_DOMAIN = 'messages';
-    const TEST_DATA_LOCALE = 'en';
-    const TEST_DATA_EXT = 'yml';
+    public const TEST_DATA_DOMAIN = 'messages';
+    public const TEST_DATA_LOCALE = 'en';
+    public const TEST_DATA_EXT = 'yml';
 
-    private $exportCommandHandler;
+    private ExportCommandHandler $exportCommandHandler;
 
     public function setUp(): void
     {

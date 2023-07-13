@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\ExportList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
@@ -22,18 +24,18 @@ class AdminListFactoryTest extends TestCase
     public function testCreateList()
     {
         /* @var AdminListConfiguratorInterface $mockConfig */
-        $mockConfig = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface');
+        $mockConfig = $this->createMock(AdminListConfiguratorInterface::class);
         $list = $this->object->createList($mockConfig);
 
-        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\AdminList', $list);
+        $this->assertInstanceOf(AdminList::class, $list);
     }
 
     public function testCreateExportList()
     {
         /* @var ExportListConfiguratorInterface $mockConfig */
-        $mockConfig = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface');
+        $mockConfig = $this->createMock(ExportListConfiguratorInterface::class);
         $list = $this->object->createExportList($mockConfig);
 
-        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\ExportList', $list);
+        $this->assertInstanceOf(ExportList::class, $list);
     }
 }

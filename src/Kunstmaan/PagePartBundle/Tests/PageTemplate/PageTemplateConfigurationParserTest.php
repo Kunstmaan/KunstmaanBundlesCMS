@@ -24,7 +24,7 @@ class PageTemplateConfigurationParserTest extends TestCase
 
         $result = $pageTemplateConfigurationParser->parse('contentpage');
         $this->assertInstanceOf(PageTemplate::class, $result);
-        $this->assertEquals('Content page', $result->getName());
+        $this->assertSame('Content page', $result->getName());
     }
 
     public function testParseSymfony3Flow()
@@ -36,6 +36,6 @@ class PageTemplateConfigurationParserTest extends TestCase
 
         $result = $pageTemplateConfigurationParser->parse('MyWebsiteBundle:test');
         $this->assertInstanceOf(PageTemplate::class, $result);
-        $this->assertEquals('Test page', $result->getName());
+        $this->assertSame('Test page', $result->getName());
     }
 }

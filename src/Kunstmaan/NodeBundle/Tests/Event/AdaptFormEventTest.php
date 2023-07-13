@@ -28,7 +28,7 @@ class AdaptFormEventTest extends TestCase
 
         $this->assertInstanceOf(Request::class, $event->getRequest());
         $this->assertInstanceOf(TabPane::class, $event->getTabPane());
-        $this->assertEquals(5, $event->getPage());
+        $this->assertSame(5, $event->getPage());
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());

@@ -15,7 +15,7 @@ class AbstractArticleOverviewPageTest extends TestCase
                 return null;
             }
         };
-        $this->assertEquals('@KunstmaanArticle/AbstractArticleOverviewPage/view.html.twig', $entity->getDefaultView());
+        $this->assertSame('@KunstmaanArticle/AbstractArticleOverviewPage/view.html.twig', $entity->getDefaultView());
         $this->assertIsArray($entity->getPossibleChildTypes());
         $this->assertIsArray($entity->getPagePartAdminConfigurations());
     }

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor;
@@ -15,8 +16,7 @@ class SimpleMenuAdaptorTest extends TestCase
     /** @var AuthorizationCheckerInterface (mock) */
     private $authorizationCheckerInterface;
 
-    /** @var array */
-    private $menuItems;
+    private array $menuItems;
 
     public function setUp(): void
     {
@@ -25,7 +25,7 @@ class SimpleMenuAdaptorTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|SimpleMenuAdaptor
+     * @return MockObject|SimpleMenuAdaptor
      */
     public function setUpSimpleMenuAdaptorMock()
     {
@@ -76,7 +76,7 @@ class SimpleMenuAdaptorTest extends TestCase
 
         $this->assertCount(1, $children);
         $this->assertContainsOnlyInstancesOf(TopMenuItem::class, $children);
-        $this->assertEquals('menu_item', $children[0]->getLabel());
+        $this->assertSame('menu_item', $children[0]->getLabel());
     }
 
     public function testHasInterface()
@@ -85,19 +85,15 @@ class SimpleMenuAdaptorTest extends TestCase
         $this->assertInstanceOf(MenuAdaptorInterface::class, $simpleMenuAdaptorMock);
     }
 
-    public function provider()
+    public function provider(): \Iterator
     {
         /** @var TopMenuItem $parent */
         $parent = $this->createMock(TopMenuItem::class);
         $parent
-            ->expects($this->any())
             ->method('getRoute')
             ->willReturn('test_route')
         ;
-
-        return [
-            'with no parent' => [null, null],
-            'with parent' => [$parent, 'test_route'],
-        ];
+        yield 'with no parent' => [null, null];
+        yield 'with parent' => [$parent, 'test_route'];
     }
 }

@@ -25,34 +25,34 @@ class DownloadPagePartTest extends TestCase
         $media->setUrl('https://nasa.gov/spongebob.jpg');
         $media->setId(5);
         $this->object->setMedia($media);
-        $this->assertEquals(5, $this->object->getMedia()->getId());
-        $this->assertEquals(5, $this->object->getMedia()->__toString());
-        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
+        $this->assertSame(5, $this->object->getMedia()->getId());
+        $this->assertSame(5, $this->object->getMedia()->__toString());
+        $this->assertSame('https://nasa.gov/spongebob.jpg', $this->object->__toString());
         $pp = new DownloadPagePart();
-        $this->assertEquals('', $pp->__toString());
+        $this->assertSame('', $pp->__toString());
     }
 
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals('@KunstmaanMediaPagePart/DownloadPagePart/view.html.twig', $defaultView);
+        $this->assertSame('@KunstmaanMediaPagePart/DownloadPagePart/view.html.twig', $defaultView);
     }
 
     public function testGetAdminView()
     {
         $defaultView = $this->object->getAdminView();
-        $this->assertEquals('@KunstmaanMediaPagePart/DownloadPagePart/admin-view.html.twig', $defaultView);
+        $this->assertSame('@KunstmaanMediaPagePart/DownloadPagePart/admin-view.html.twig', $defaultView);
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(DownloadPagePartAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(DownloadPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testEmptyUrl()
     {
         $media = new Media();
         $this->object->setMedia($media);
-        $this->assertEquals('', $this->object->__toString());
+        $this->assertSame('', $this->object->__toString());
     }
 }

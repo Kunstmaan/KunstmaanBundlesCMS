@@ -22,18 +22,18 @@ class FieldTest extends TestCase
     public function testConstruct()
     {
         $object = new Field('name', 'header', true, 'template.html.twig');
-        $this->assertEquals('name', $object->getName());
-        $this->assertEquals('header', $object->getHeader());
+        $this->assertSame('name', $object->getName());
+        $this->assertSame('header', $object->getHeader());
         $this->assertTrue($object->isSortable());
-        $this->assertEquals('template.html.twig', $object->getTemplate());
+        $this->assertSame('template.html.twig', $object->getTemplate());
     }
 
     public function testConstructorDefaultValues()
     {
         $object = new Field('name', 'header');
 
-        $this->assertEquals('name', $object->getName());
-        $this->assertEquals('header', $object->getHeader());
+        $this->assertSame('name', $object->getName());
+        $this->assertSame('header', $object->getHeader());
         $this->assertFalse($object->isSortable());
         $this->assertNull($object->getTemplate());
         $this->assertNull($object->getAlias());
@@ -41,12 +41,12 @@ class FieldTest extends TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('name', $this->object->getName());
+        $this->assertSame('name', $this->object->getName());
     }
 
     public function testGetHeader()
     {
-        $this->assertEquals('header', $this->object->getHeader());
+        $this->assertSame('header', $this->object->getHeader());
     }
 
     public function testIsSortable()
@@ -56,7 +56,7 @@ class FieldTest extends TestCase
 
     public function testGetTemplate()
     {
-        $this->assertEquals('template.html.twig', $this->object->getTemplate());
+        $this->assertSame('template.html.twig', $this->object->getTemplate());
     }
 
     public function testHasGetAlias()
@@ -66,8 +66,8 @@ class FieldTest extends TestCase
         $this->assertInstanceOf(FieldAlias::class, $alias);
         $this->object = new Field('name', 'header', true, 'template.html.twig');
         $this->assertFalse($this->object->hasAlias());
-        $this->assertEquals('ALIAS', $alias->getAbbr());
-        $this->assertEquals('test', $alias->getRelation());
+        $this->assertSame('ALIAS', $alias->getAbbr());
+        $this->assertSame('test', $alias->getRelation());
     }
 
     public function testGetAliasObject()
@@ -75,7 +75,7 @@ class FieldTest extends TestCase
         $item = new \stdClass();
         $item->test = 123;
         $val = $this->object->getAliasObj($item);
-        $this->assertEquals(123, $val);
+        $this->assertSame(123, $val);
     }
 
     /**
@@ -84,7 +84,7 @@ class FieldTest extends TestCase
     public function testGetColumnName()
     {
         $column = $this->object->getColumnName('ALIAS.ABCDEF');
-        $this->assertEquals('ABCDEF', $column);
+        $this->assertSame('ABCDEF', $column);
         $this->expectException(\Exception::class);
         $this->object->getColumnName('OMG.CRASH');
     }

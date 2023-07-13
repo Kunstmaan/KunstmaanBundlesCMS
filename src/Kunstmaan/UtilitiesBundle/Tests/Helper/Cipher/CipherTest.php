@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class CipherTest extends TestCase
 {
-    const SECRET = 'secret';
-    const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
+    public const SECRET = 'secret';
+    public const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
 
     /**
      * @var Cipher
@@ -33,9 +33,9 @@ class CipherTest extends TestCase
     public function testEncryptAndDecrypt()
     {
         $encryptedValue = $this->cipher->encrypt(self::CONTENT);
-        $this->assertNotEquals(self::CONTENT, $encryptedValue);
+        $this->assertNotSame(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
-        $this->assertEquals(self::CONTENT, $decryptedValue);
+        $this->assertSame(self::CONTENT, $decryptedValue);
     }
 
     public function testException()

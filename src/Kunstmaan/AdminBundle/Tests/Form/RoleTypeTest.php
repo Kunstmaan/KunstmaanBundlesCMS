@@ -18,6 +18,6 @@ class RoleTypeTest extends TestCase
         /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
-        $this->assertEquals('role', $type->getBlockPrefix());
+        $this->assertSame('role', $type->getBlockPrefix());
     }
 }

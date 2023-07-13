@@ -26,7 +26,7 @@ class DateFilterTypeTest extends BaseOrmFilterTest
         $uniqueId = 'date';
         $this->object->bindRequest($request, $data, $uniqueId);
 
-        $this->assertEquals(['comparator' => 'before', 'value' => '01/01/2012'], $data);
+        $this->assertSame(['comparator' => 'before', 'value' => '01/01/2012'], $data);
     }
 
     /**
@@ -37,7 +37,7 @@ class DateFilterTypeTest extends BaseOrmFilterTest
      *
      * @dataProvider applyDataProvider
      */
-    public function testApply($comparator, $whereClause, $value, $testValue)
+    public function testApply($comparator, $whereClause, mixed $value, mixed $testValue)
     {
         $qb = $this->getQueryBuilder();
 
@@ -46,21 +46,19 @@ class DateFilterTypeTest extends BaseOrmFilterTest
         $this->object->setQueryBuilder($qb);
         $this->object->apply(['comparator' => $comparator, 'value' => $value], 'date');
 
-        $this->assertEquals("SELECT b FROM Entity b WHERE b.date $whereClause", $qb->getDQL());
+        $this->assertSame("SELECT b FROM Entity b WHERE b.date $whereClause", $qb->getDQL());
         $this->assertEquals($testValue, $qb->getParameter('var_date')->getValue());
     }
 
-    public static function applyDataProvider(): array
+    public static function applyDataProvider(): \Iterator
     {
-        return [
-            ['before', '<= :var_date', '20/12/2012', '2012-12-20'],
-            ['after', '> :var_date', '21/12/2012', '2012-12-21'],
-        ];
+        yield ['before', '<= :var_date', '20/12/2012', '2012-12-20'];
+        yield ['after', '> :var_date', '21/12/2012', '2012-12-21'];
     }
 
     public function testGetTemplate()
     {
-        $this->assertEquals('@KunstmaanAdminList/FilterType/dateFilter.html.twig', $this->object->getTemplate());
+        $this->assertSame('@KunstmaanAdminList/FilterType/dateFilter.html.twig', $this->object->getTemplate());
     }
 
     /**
@@ -73,13 +71,13 @@ class DateFilterTypeTest extends BaseOrmFilterTest
         $method = $mirror->getMethod('getAlias');
         $method->setAccessible(true);
         $alias = $method->invoke($this->object);
-        $this->assertEquals('', $alias);
+        $this->assertSame('', $alias);
         $this->object = new DateFilterType('date', 'hello.');
         $mirror = new \ReflectionClass(DateFilterType::class);
         $method = $mirror->getMethod('getAlias');
         $method->setAccessible(true);
         $alias = $method->invoke($this->object);
-        $this->assertEquals('hello.', $alias);
+        $this->assertSame('hello.', $alias);
     }
 
     /**

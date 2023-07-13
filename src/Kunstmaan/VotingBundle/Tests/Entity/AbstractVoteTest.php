@@ -19,16 +19,16 @@ class AbstractVoteTest extends TestCase
         $object->setReference('ref');
         $object->setTimestamp($time);
 
-        $this->assertEquals(666, $object->getId());
-        $this->assertEquals(999, $object->getValue());
-        $this->assertEquals('8.8.8.8', $object->getIp());
-        $this->assertEquals('something', $object->getMeta());
-        $this->assertEquals('ref', $object->getReference());
+        $this->assertSame(666, $object->getId());
+        $this->assertSame(999, $object->getValue());
+        $this->assertSame('8.8.8.8', $object->getIp());
+        $this->assertSame('something', $object->getMeta());
+        $this->assertSame('ref', $object->getReference());
         $this->assertInstanceOf(\DateTime::class, $object->getTimestamp());
 
         $object = new FacebookLike();
         $object->prePersist();
         $this->assertInstanceOf(\DateTime::class, $object->getTimestamp());
-        $this->assertEquals(FacebookLike::DEFAULT_VALUE, $object->getValue());
+        $this->assertSame(FacebookLike::DEFAULT_VALUE, $object->getValue());
     }
 }

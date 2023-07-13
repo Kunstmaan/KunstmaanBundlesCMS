@@ -23,7 +23,7 @@ class SubmitButtonPagePartTest extends TestCase
         $object = $this->object;
         $label = 'Test label';
         $object->setLabel($label);
-        $this->assertEquals($label, $object->getLabel());
+        $this->assertSame($label, $object->getLabel());
     }
 
     public function testToString()
@@ -49,6 +49,6 @@ class SubmitButtonPagePartTest extends TestCase
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(SubmitButtonPagePartAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(SubmitButtonPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

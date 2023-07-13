@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\EventListener;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
@@ -19,24 +21,21 @@ use PHPUnit\Framework\TestCase;
 class CloneListenerTest extends TestCase
 {
     /**
-     * @var \Doctrine\ORM\EntityManager|MockObject
+     * @var EntityManager|MockObject
      */
     private $em;
 
     /**
      * @var PagePartAdminConfiguratorInterface
      */
-    private $configurator;
+    private PagePartAdminConfigurator $configurator;
 
     /**
-     * @var \Doctrine\ORM\EntityRepository|MockObject
+     * @var EntityRepository|MockObject
      */
     private $repo;
 
-    /**
-     * @var CloneListener
-     */
-    private $object;
+    private CloneListener $object;
 
     /**
      * @var PagePartConfigurationReaderInterface|MockObject
@@ -50,7 +49,7 @@ class CloneListenerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+        $this->em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -58,7 +57,7 @@ class CloneListenerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getRepository')
             ->with($this->equalTo(PagePartRef::class))
             ->willReturn($this->repo);
@@ -68,12 +67,10 @@ class CloneListenerTest extends TestCase
 
         $this->reader = $this->createMock(PagePartConfigurationReaderInterface::class);
         $this->reader
-            ->expects($this->any())
             ->method('getPagePartAdminConfigurators')
             ->willReturn([$this->configurator]);
 
         $this->reader
-            ->expects($this->any())
             ->method('getPagePartContexts')
             ->willReturn([$this->configurator->getContext()]);
 
@@ -103,11 +100,11 @@ class CloneListenerTest extends TestCase
         /** @var HasPageTemplateInterface|MockObject $clone */
         $clone = clone $entity;
 
-        $entity->expects($this->any())
+        $entity
             ->method('getId')
             ->willReturn(1);
 
-        $clone->expects($this->any())
+        $clone
             ->method('getId')
             ->willReturn(2);
 

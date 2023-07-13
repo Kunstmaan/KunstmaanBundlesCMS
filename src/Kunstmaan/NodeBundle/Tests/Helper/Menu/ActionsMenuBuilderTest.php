@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Knp\Menu\Integration\Symfony\RoutingExtension;
@@ -26,17 +27,17 @@ class ActionsMenuBuilderTest extends TestCase
     protected function setUp(): void
     {
         /* @var UrlGeneratorInterface $urlGenerator */
-        $urlGenerator = $this->createMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $routingExtension = new RoutingExtension($urlGenerator);
         $factory = new MenuFactory();
         $factory->addExtension($routingExtension);
         $em = $this->getMockedEntityManager();
         /* @var EventDispatcherInterface $dispatcher */
-        $dispatcher = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
         /* @var RouterInterface $router */
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $authorizationChecker = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        $authorizationChecker->expects($this->any())
+        $router = $this->createMock(RouterInterface::class);
+        $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authorizationChecker
             ->method('isGranted')
             ->willReturn(true);
 
@@ -44,7 +45,7 @@ class ActionsMenuBuilderTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      *
      * @throws \Exception
      */
@@ -77,7 +78,7 @@ class ActionsMenuBuilderTest extends TestCase
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
 
-        $this->assertEquals('page-sub-actions', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-sub-actions', $menu->getChildrenAttribute('class'));
     }
 
     public function testCreateActionsMenuDraft()
@@ -104,7 +105,7 @@ class ActionsMenuBuilderTest extends TestCase
             $this->assertNull($menu->getChild('action.delete'));
         }
 
-        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     public function testCreateActionsMenuPublic()
@@ -145,7 +146,7 @@ class ActionsMenuBuilderTest extends TestCase
             $this->assertNull($menu->getChild('action.delete'));
         }
 
-        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     public function testCreateActionsMenuNonEditable()
@@ -169,7 +170,7 @@ class ActionsMenuBuilderTest extends TestCase
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
 
-        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     public function testCreateTopActionsMenu()
@@ -183,8 +184,8 @@ class ActionsMenuBuilderTest extends TestCase
         $this->builder->setActiveNodeVersion($nodeVersion);
 
         $menu = $this->builder->createTopActionsMenu();
-        $this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
-        $this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
+        $this->assertSame('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-main-actions-top', $menu->getChildrenAttribute('id'));
     }
 
     public function testSetGetActiveNodeVersion()
@@ -210,7 +211,7 @@ class ActionsMenuBuilderTest extends TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.delete'));
 
-        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     public function testShouldShowRecopyButtonWhenTheNodeHasTranslations()
@@ -241,6 +242,6 @@ class ActionsMenuBuilderTest extends TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.recopyfromlanguage'));
 
-        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertSame('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 }

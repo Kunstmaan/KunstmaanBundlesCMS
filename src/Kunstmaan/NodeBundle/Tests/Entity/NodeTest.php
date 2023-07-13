@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
+use Kunstmaan\NodeBundle\Form\NodeAdminType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -35,7 +36,7 @@ class NodeTest extends TestCase
         $children->add($child);
         $this->object->setChildren($children);
 
-        $this->assertEquals(1, $this->object->getChildren()->count());
+        $this->assertSame(1, $this->object->getChildren()->count());
         $this->assertEquals($children, $this->object->getChildren());
         $this->assertTrue($this->object->getChildren()->contains($child));
     }
@@ -50,7 +51,7 @@ class NodeTest extends TestCase
         $children->add($deletedChild);
         $this->object->setChildren($children);
 
-        $this->assertEquals(1, $this->object->getChildren()->count());
+        $this->assertSame(1, $this->object->getChildren()->count());
         $this->assertTrue($this->object->getChildren()->contains($child));
         $this->assertFalse($this->object->getChildren()->contains($deletedChild));
     }
@@ -60,7 +61,7 @@ class NodeTest extends TestCase
         $child = new Node();
         $this->object->addNode($child);
         $this->assertEquals($this->object, $child->getParent());
-        $this->assertEquals(1, $this->object->getChildren()->count());
+        $this->assertSame(1, $this->object->getChildren()->count());
     }
 
     public function testGetSetNodeTranslations()
@@ -70,7 +71,7 @@ class NodeTest extends TestCase
         $translations->add($translation);
         $this->object->setNodeTranslations($translations);
 
-        $this->assertEquals(1, $this->object->getNodeTranslations(true)->count());
+        $this->assertSame(1, $this->object->getNodeTranslations(true)->count());
         $this->assertEquals($translations, $this->object->getNodeTranslations(true));
         $this->assertTrue($this->object->getNodeTranslations(true)->contains($translation));
     }
@@ -85,8 +86,8 @@ class NodeTest extends TestCase
         $translation2->setOnline(false);
         $this->object->addNodeTranslation($translation2);
 
-        $this->assertEquals(2, $this->object->getNodeTranslations(true)->count());
-        $this->assertEquals(1, $this->object->getNodeTranslations()->count());
+        $this->assertSame(2, $this->object->getNodeTranslations(true)->count());
+        $this->assertSame(1, $this->object->getNodeTranslations()->count());
     }
 
     public function testGetNodeTranslation()
@@ -132,18 +133,18 @@ class NodeTest extends TestCase
     {
         $entity = $this->createMock(HasNodeInterface::class);
         $this->object->setRef($entity);
-        $this->assertEquals(\get_class($entity), $this->object->getRefEntityName());
+        $this->assertInstanceOf($this->object->getRefEntityName(), $entity);
     }
 
     public function testSetInternalName()
     {
         $this->object->setInternalName('AnInternalName');
-        $this->assertEquals('AnInternalName', $this->object->getInternalName());
+        $this->assertSame('AnInternalName', $this->object->getInternalName());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals('Kunstmaan\NodeBundle\Form\NodeAdminType', $this->object->getDefaultAdminType());
+        $this->assertSame(NodeAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testToString()
@@ -152,7 +153,7 @@ class NodeTest extends TestCase
         $this->object->setId(1);
         $this->object->setRef($entity);
 
-        $this->assertEquals('node 1, refEntityName: ' . \get_class($entity), $this->object->__toString());
+        $this->assertSame('node 1, refEntityName: ' . $entity::class, $this->object->__toString());
     }
 
     public function testGetSetLeftRightLevel()
@@ -168,8 +169,8 @@ class NodeTest extends TestCase
         $property->setAccessible(true);
         $property->setValue($this->object, 13);
 
-        $this->assertEquals(11, $this->object->getLeft());
-        $this->assertEquals(12, $this->object->getRight());
-        $this->assertEquals(13, $this->object->getLevel());
+        $this->assertSame(11, $this->object->getLeft());
+        $this->assertSame(12, $this->object->getRight());
+        $this->assertSame(13, $this->object->getLevel());
     }
 }

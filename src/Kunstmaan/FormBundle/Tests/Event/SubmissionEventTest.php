@@ -20,6 +20,6 @@ class SubmissionEventTest extends TestCase
         $event = new SubmissionEvent($submission, $page);
         $this->assertInstanceOf(FormSubmission::class, $event->getSubmission());
         $this->assertEquals($page, $event->getPage());
-        $this->assertEquals(1, $event->getSubmission()->getId());
+        $this->assertSame(1, $event->getSubmission()->getId());
     }
 }

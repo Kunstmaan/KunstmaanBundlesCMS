@@ -23,7 +23,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(ChoiceFormSubmissionType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(ChoiceFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
     public function testToString()
@@ -32,13 +32,13 @@ class ChoiceFormSubmissionFieldTest extends TestCase
         $this->assertNotNull($stringValue);
         $this->assertIsString($stringValue);
         $object = $this->object;
-        $object->setChoices(['delboy1978uk' => 123456789]);
+        $object->setChoices(['delboy1978uk' => 123_456_789]);
         $object->setValue('delboy1978uk');
         $string = $object->__toString();
-        $this->assertEquals('123456789', $string);
+        $this->assertSame('123456789', $string);
         $object->setValue(['delboy1978uk', 'numkil', 'sandergo90', 'dezinc']);
         $string = $object->__toString();
-        $this->assertEquals('123456789, numkil, sandergo90, dezinc', $string);
+        $this->assertSame('123456789, numkil, sandergo90, dezinc', $string);
     }
 
     public function testIsNull()
@@ -56,7 +56,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $value = ['test' => 'test'];
         $object->setValue($value);
-        $this->assertEquals($value, $object->getValue());
+        $this->assertSame($value, $object->getValue());
     }
 
     public function testSetGetExpanded()
@@ -80,7 +80,7 @@ class ChoiceFormSubmissionFieldTest extends TestCase
         $object = $this->object;
         $choices = ['test1' => 'test1', 'test2' => 'test2'];
         $object->setChoices($choices);
-        $this->assertEquals($choices, $object->getChoices());
+        $this->assertSame($choices, $object->getChoices());
     }
 
     public function testSetGetRequired()

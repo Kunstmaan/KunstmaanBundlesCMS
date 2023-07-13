@@ -9,15 +9,13 @@ class SimpleItemActionTest extends TestCase
 {
     public function testConstruct()
     {
-        $object = new SimpleItemAction(function ($item) {
-            return 'http://www.domain.com/action';
-        }, 'icon.png', 'Label', 'template.html.twig');
+        $object = new SimpleItemAction(fn($item) => 'http://www.domain.com/action', 'icon.png', 'Label', 'template.html.twig');
 
         $item = new \stdClass();
-        $this->assertEquals('http://www.domain.com/action', $object->getUrlFor($item));
-        $this->assertEquals('icon.png', $object->getIconFor($item));
-        $this->assertEquals('Label', $object->getLabelFor($item));
-        $this->assertEquals('template.html.twig', $object->getTemplate());
+        $this->assertSame('http://www.domain.com/action', $object->getUrlFor($item));
+        $this->assertSame('icon.png', $object->getIconFor($item));
+        $this->assertSame('Label', $object->getLabelFor($item));
+        $this->assertSame('template.html.twig', $object->getTemplate());
 
         $object = new SimpleItemAction('not callable', 'icon.png', 'Label', 'template.html.twig');
         $this->assertNull($object->getUrlFor($item));

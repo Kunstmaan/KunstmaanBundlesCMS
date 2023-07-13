@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -23,22 +24,22 @@ class EmailPagePartTest extends TestCase
     {
         $object = $this->object;
         $object->setErrorMessageRequired('');
-        $this->assertEquals('', $object->getErrorMessageRequired());
+        $this->assertSame('', $object->getErrorMessageRequired());
 
         $message = 'Some example required message';
         $object->setErrorMessageRequired($message);
-        $this->assertEquals($message, $object->getErrorMessageRequired());
+        $this->assertSame($message, $object->getErrorMessageRequired());
     }
 
     public function testSetErrorMessageInvalid()
     {
         $object = $this->object;
         $object->setErrorMessageInvalid('');
-        $this->assertEquals('', $object->getErrorMessageInvalid());
+        $this->assertSame('', $object->getErrorMessageInvalid());
 
         $message = 'Some example invalid message';
         $object->setErrorMessageInvalid($message);
-        $this->assertEquals($message, $object->getErrorMessageInvalid());
+        $this->assertSame($message, $object->getErrorMessageInvalid());
     }
 
     public function testGetDefaultView()
@@ -53,11 +54,11 @@ class EmailPagePartTest extends TestCase
         $object = $this->object;
         $object->setRequired(true);
 
-        $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $formBuilder->expects($this->any())
+        $formBuilder
             ->method('getData')
             ->willReturn([]);
 
@@ -65,15 +66,15 @@ class EmailPagePartTest extends TestCase
 
         $object->setErrorMessageRequired('form error!');
         $object->setErrorMessageInvalid('not valid');
-        $this->assertEquals(0, count($fields));
+        $this->assertCount(0, $fields);
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(count($fields) > 0);
+        $this->assertGreaterThan(0, count($fields));
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(EmailPagePartAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(EmailPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testRequired()

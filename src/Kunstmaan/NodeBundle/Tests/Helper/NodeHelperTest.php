@@ -68,14 +68,6 @@ class TestType extends AbstractType
         $builder->add('id', HiddenType::class);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'test';
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -92,8 +84,7 @@ class NodeHelperTest extends TestCase
     /** @var MockObject|NodeRepository */
     private $repository;
 
-    /** @var NodeHelper */
-    private $nodeHelper;
+    private NodeHelper $nodeHelper;
 
     /** @var MockObject|NodeAdminPublisher */
     private $nodeAdminPublisher;
@@ -107,11 +98,9 @@ class NodeHelperTest extends TestCase
     /** @var MockObject|CloneHelper */
     private $cloneHelper;
 
-    /** @var string */
-    private $locale = 'en';
+    private string $locale = 'en';
 
-    /** @var User */
-    private $user;
+    private ?User $user = null;
 
     public function setUp(): void
     {
@@ -215,8 +204,8 @@ class NodeHelperTest extends TestCase
         $result = $this->nodeHelper->createPage(TestPage::class, $title, $this->locale, $nodeHomePage);
 
         $this->assertInstanceOf(NodeTranslation::class, $result);
-        $this->assertEquals(2, $result->getWeight());
-        $this->assertEquals($title, $result->getTitle());
+        $this->assertSame(2, $result->getWeight());
+        $this->assertSame($title, $result->getTitle());
     }
 
     public function testDeletePage()
@@ -374,7 +363,7 @@ class NodeHelperTest extends TestCase
         $result = $this->nodeHelper->createDraftVersion($page, $nodeTranslation, $originalNodeVersion);
 
         $this->assertInstanceOf(NodeVersion::class, $result);
-        $this->assertEquals(NodeVersion::DRAFT_VERSION, $result->getType());
+        $this->assertSame(NodeVersion::DRAFT_VERSION, $result->getType());
         $this->assertEquals($publicNodeVersion, $result->getOrigin());
     }
 
@@ -743,6 +732,6 @@ class NodeHelperTest extends TestCase
             $title = $tabs[0]->getTitle();
         }
 
-        $this->assertEquals('tab1_title', $title);
+        $this->assertSame('tab1_title', $title);
     }
 }

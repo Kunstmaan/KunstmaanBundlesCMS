@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
+use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -32,7 +33,7 @@ class NodeTranslationTest extends TestCase
     public function testSetGetLang()
     {
         $this->object->setLang('nl');
-        $this->assertEquals('nl', $this->object->getLang());
+        $this->assertSame('nl', $this->object->getLang());
     }
 
     public function testSetIsOnline()
@@ -44,13 +45,13 @@ class NodeTranslationTest extends TestCase
     public function testSetGetTitle()
     {
         $this->object->setTitle('A node translation title');
-        $this->assertEquals('A node translation title', $this->object->getTitle());
+        $this->assertSame('A node translation title', $this->object->getTitle());
     }
 
     public function testSetGetSlug()
     {
         $this->object->setSlug('a-node-translation-slug');
-        $this->assertEquals('a-node-translation-slug', $this->object->getSlug());
+        $this->assertSame('a-node-translation-slug', $this->object->getSlug());
     }
 
     public function testGetFullSlug()
@@ -64,7 +65,7 @@ class NodeTranslationTest extends TestCase
             ->setSlug('child-node-slug');
         $childNode->addNodeTranslation($childNodeTrans);
 
-        $this->assertEquals('parent-node-slug/child-node-slug', $childNodeTrans->getFullSlug());
+        $this->assertSame('parent-node-slug/child-node-slug', $childNodeTrans->getFullSlug());
     }
 
     public function testGetFullSlugWithEmptySlug()
@@ -95,7 +96,7 @@ class NodeTranslationTest extends TestCase
         $nodeVersion2->setType('draft');
         $nodeVersions->add($nodeVersion2);
         $this->object->setNodeVersions($nodeVersions);
-        $this->assertEquals(2, $this->object->getNodeVersions()->count());
+        $this->assertSame(2, $this->object->getNodeVersions()->count());
     }
 
     public function testAddGetNodeVersion()
@@ -117,19 +118,19 @@ class NodeTranslationTest extends TestCase
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals('Kunstmaan\NodeBundle\Form\NodeTranslationAdminType', $this->object->getDefaultAdminType());
+        $this->assertSame(NodeTranslationAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testSetGetUrl()
     {
         $this->object->setUrl('parent/child-url');
-        $this->assertEquals('parent/child-url', $this->object->getUrl());
+        $this->assertSame('parent/child-url', $this->object->getUrl());
     }
 
     public function testSetGetWeight()
     {
         $this->object->setWeight(10);
-        $this->assertEquals(10, $this->object->getWeight());
+        $this->assertSame(10, $this->object->getWeight());
     }
 
     private function getNodeWithTranslation($lang, $title, $slug, $nodeId = null)
@@ -166,8 +167,8 @@ class NodeTranslationTest extends TestCase
         $this->object->setUpdated($tomorrow);
         $this->assertInstanceOf(\DateTime::class, $this->object->getCreated());
         $this->assertInstanceOf(\DateTime::class, $this->object->getUpdated());
-        $this->assertEquals('2014-09-18', $this->object->getCreated()->format('Y-m-d'));
-        $this->assertEquals('2014-09-19', $this->object->getUpdated()->format('Y-m-d'));
+        $this->assertSame('2014-09-18', $this->object->getCreated()->format('Y-m-d'));
+        $this->assertSame('2014-09-19', $this->object->getUpdated()->format('Y-m-d'));
     }
 
     public function testGetSetRef()
@@ -183,11 +184,11 @@ class NodeTranslationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repo->expects($this->any())
+        $repo
             ->method('find')
             ->willReturn($entity);
 
-        $em->expects($this->any())
+        $em
             ->method('getRepository')
             ->willReturn($repo);
 

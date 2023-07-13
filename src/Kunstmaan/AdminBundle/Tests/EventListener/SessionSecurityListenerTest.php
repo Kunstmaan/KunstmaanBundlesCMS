@@ -30,10 +30,10 @@ class SessionSecurityListenerTest extends TestCase
 
         $request->expects($this->once())->method('hasSession')->willReturn(true);
         $request->expects($this->exactly(2))->method('getSession')->willReturn($session);
-        $request->server->expects($this->any())->method('get')->will($this->onConsecutiveCalls('Session ip', 'kuma_ua'));
-        $request->headers->expects($this->any())->method('get')->willReturn('kuma_ua');
+        $request->server->method('get')->will($this->onConsecutiveCalls('Session ip', 'kuma_ua'));
+        $request->headers->method('get')->willReturn('kuma_ua');
         $session->expects($this->once())->method('isStarted')->willReturn(true);
-        $session->expects($this->any())->method('has')->willReturn(true);
+        $session->method('has')->willReturn(true);
 
         $listener = new SessionSecurityListener(true, true, $logger);
         $listener->onKernelRequest($event);
@@ -55,8 +55,8 @@ class SessionSecurityListenerTest extends TestCase
 
         $request->expects($this->once())->method('hasSession')->willReturn(true);
         $request->expects($this->exactly(2))->method('getSession')->willReturn($session);
-        $request->server->expects($this->any())->method('get')->will($this->onConsecutiveCalls('Session ip', 'kuma_ua'));
-        $request->headers->expects($this->any())->method('get')->willReturn('kuma_ua');
+        $request->server->method('get')->will($this->onConsecutiveCalls('Session ip', 'kuma_ua'));
+        $request->headers->method('get')->willReturn('kuma_ua');
         $session->expects($this->once())->method('isStarted')->willReturn(true);
         $session->expects($this->exactly(2))->method('has')->willReturn(false);
 
@@ -81,8 +81,8 @@ class SessionSecurityListenerTest extends TestCase
         $request->expects($this->once())->method('hasSession')->willReturn(true);
         $request->expects($this->exactly(2))->method('getSession')->willReturn($session);
         $request->expects($this->once())->method('getClientIp')->willReturn('95.154.243.5');
-        $request->server->expects($this->any())->method('get')->willReturn('');
-        $request->headers->expects($this->any())->method('get')->willReturn('kuma_ua');
+        $request->server->method('get')->willReturn('');
+        $request->headers->method('get')->willReturn('kuma_ua');
         $session->expects($this->once())->method('isStarted')->willReturn(true);
         $session->expects($this->exactly(2))->method('has')->willReturn(false);
 

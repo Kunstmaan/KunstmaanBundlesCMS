@@ -7,7 +7,7 @@ use Kunstmaan\TranslatorBundle\Tests\WebTestCase;
 
 class MigrationsServiceTest extends WebTestCase
 {
-    private $migrationsService;
+    private ?object $migrationsService = null;
 
     public function setUp(): void
     {
@@ -25,7 +25,7 @@ class MigrationsServiceTest extends WebTestCase
     public function testGetDiffSqlArray()
     {
         $result = $this->migrationsService->getDiffSqlArray();
-        $this->assertGreaterThanOrEqual(1, \count($result));
+        $this->assertGreaterThanOrEqual(1, is_countable($result) ? \count($result) : 0);
         $this->assertStringStartsWith('INSERT INTO "kuma_translation"', $result[0]);
     }
 }

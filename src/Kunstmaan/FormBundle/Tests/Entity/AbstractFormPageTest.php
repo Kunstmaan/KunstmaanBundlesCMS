@@ -18,7 +18,7 @@ class AbstractFormPageTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->object = $this->getMockForAbstractClass('Kunstmaan\FormBundle\Entity\AbstractFormPage');
+        $this->object = $this->getMockForAbstractClass(AbstractFormPage::class);
     }
 
     public function testSetGetThanks()
@@ -26,7 +26,7 @@ class AbstractFormPageTest extends TestCase
         $object = $this->object;
         $value = 'thanks';
         $object->setThanks($value);
-        $this->assertEquals($value, $object->getThanks());
+        $this->assertSame($value, $object->getThanks());
     }
 
     public function testSetGetSubject()
@@ -34,7 +34,7 @@ class AbstractFormPageTest extends TestCase
         $object = $this->object;
         $value = 'some subject';
         $object->setSubject($value);
-        $this->assertEquals($value, $object->getSubject());
+        $this->assertSame($value, $object->getSubject());
     }
 
     public function testSetGetToEmail()
@@ -42,7 +42,7 @@ class AbstractFormPageTest extends TestCase
         $object = $this->object;
         $value = 'example@example.com';
         $object->setToEmail($value);
-        $this->assertEquals($value, $object->getToEmail());
+        $this->assertSame($value, $object->getToEmail());
     }
 
     public function testSetGetFromEmail()
@@ -50,12 +50,12 @@ class AbstractFormPageTest extends TestCase
         $object = $this->object;
         $value = 'example@example.com';
         $object->setFromEmail($value);
-        $this->assertEquals($value, $object->getFromEmail());
+        $this->assertSame($value, $object->getFromEmail());
     }
 
     public function testGetDefaultAdminType()
     {
-        $this->assertEquals(AbstractFormPageAdminType::class, $this->object->getDefaultAdminType());
+        $this->assertSame(AbstractFormPageAdminType::class, $this->object->getDefaultAdminType());
     }
 
     public function testGetFormElementsContext()
@@ -73,7 +73,7 @@ class AbstractFormPageTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $router->expects($this->any())
+        $router
             ->method('generate')
             ->willReturn('https://nasa.gov');
 
@@ -84,6 +84,6 @@ class AbstractFormPageTest extends TestCase
         $context['slug'] = 'snail-soup-with-celery';
 
         $action = $obj->generateThankYouUrl($router, $context);
-        $this->assertEquals('https://nasa.gov', $action);
+        $this->assertSame('https://nasa.gov', $action);
     }
 }

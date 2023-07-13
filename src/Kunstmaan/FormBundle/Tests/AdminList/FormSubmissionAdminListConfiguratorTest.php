@@ -31,7 +31,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
     protected function getMockedEntityManager()
     {
@@ -55,7 +55,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
 
     public function testAdaptQueryBuilder()
     {
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -80,9 +80,9 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $item = $this->createMock(AbstractPage::class);
         $item->method('getId')->willReturn(123);
 
-        $this->assertEquals('', $this->object->getAddUrlFor([]));
-        $this->assertEquals('KunstmaanFormBundle', $this->object->getBundleName());
-        $this->assertEquals('FormSubmission', $this->object->getEntityName());
+        $this->assertSame('', $this->object->getAddUrlFor([]));
+        $this->assertSame('KunstmaanFormBundle', $this->object->getBundleName());
+        $this->assertSame('FormSubmission', $this->object->getEntityName());
         $this->assertCount(0, $this->object->getDeleteUrlFor($item));
         $this->assertCount(2, $this->object->getIndexUrl());
         $this->assertCount(2, $this->object->getEditUrlFor($item));

@@ -20,9 +20,9 @@ class SimpleBulkActionTest extends TestCase
     public function testGetters()
     {
         $this->assertCount(1, $this->object->getUrl());
-        $this->assertEquals('https://cia.gov', $this->object->getUrl()[0]);
-        $this->assertEquals('CIA', $this->object->getLabel());
-        $this->assertEquals('fa-check', $this->object->getIcon());
-        $this->assertEquals('some.twig', $this->object->getTemplate());
+        $this->assertSame('https://cia.gov', $this->object->getUrl()[0]);
+        $this->assertSame('CIA', $this->object->getLabel());
+        $this->assertSame('fa-check', $this->object->getIcon());
+        $this->assertSame('some.twig', $this->object->getTemplate());
     }
 }

@@ -15,6 +15,6 @@ class IndexNodeEventTest extends TestCase
         $event = new IndexNodeEvent($page, ['test' => 'value']);
 
         $this->assertCount(1, $event->doc);
-        $this->assertInstanceOf(\get_class($page), $event->getPage());
+        $this->assertInstanceOf($page::class, $event->getPage());
     }
 }

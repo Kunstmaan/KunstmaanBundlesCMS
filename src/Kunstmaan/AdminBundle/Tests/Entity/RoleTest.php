@@ -19,18 +19,18 @@ class RoleTest extends TestCase
 
     public function testConstruct()
     {
-        $this->assertEquals('ROLE_TEST', $this->object->getRole());
+        $this->assertSame('ROLE_TEST', $this->object->getRole());
     }
 
     public function testGetSetRole()
     {
         $this->object->setRole('ROLE_CUSTOM');
-        $this->assertEquals('ROLE_CUSTOM', $this->object->getRole());
+        $this->assertSame('ROLE_CUSTOM', $this->object->getRole());
     }
 
     public function testToString()
     {
-        $this->assertEquals('ROLE_TEST', $this->object->__toString());
+        $this->assertSame('ROLE_TEST', $this->object->__toString());
     }
 
     public function testGetId()

@@ -47,6 +47,6 @@ class ExportListTest extends TestCase
     public function testGetStringValue()
     {
         $object = new \stdClass();
-        $this->assertEquals('stringtest', $this->exportList->getStringValue($object, 'test'));
+        $this->assertSame('stringtest', $this->exportList->getStringValue($object, 'test'));
     }
 }

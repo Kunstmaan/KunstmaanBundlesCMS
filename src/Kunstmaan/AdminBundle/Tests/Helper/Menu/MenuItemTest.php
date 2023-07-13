@@ -17,7 +17,7 @@ class MenuItemTest extends TestCase
     protected function setUp(): void
     {
         /* @var $menuBuilder MenuBuilder */
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -27,7 +27,7 @@ class MenuItemTest extends TestCase
     public function testGetMenu()
     {
         /* @var $menuBuilder MenuBuilder */
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -38,19 +38,19 @@ class MenuItemTest extends TestCase
     public function testGetSetLabel()
     {
         $this->object->setLabel('label');
-        $this->assertEquals('label', $this->object->getLabel());
+        $this->assertSame('label', $this->object->getLabel());
     }
 
     public function testGetSetUniqueId()
     {
         $this->object->setUniqueId('uniqueId');
-        $this->assertEquals('uniqueId', $this->object->getUniqueId());
+        $this->assertSame('uniqueId', $this->object->getUniqueId());
     }
 
     public function testGetSetRole()
     {
         $this->object->setRole('ROLE_CUSTOM');
-        $this->assertEquals('ROLE_CUSTOM', $this->object->getRole());
+        $this->assertSame('ROLE_CUSTOM', $this->object->getRole());
     }
 
     public function testGetSetChildren()
@@ -93,7 +93,7 @@ class MenuItemTest extends TestCase
     public function testGetSetParent()
     {
         /* @var $menuBuilder MenuBuilder */
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $parent = new MenuItem($menuBuilder);
@@ -106,15 +106,15 @@ class MenuItemTest extends TestCase
         $params = ['id' => 5];
         $this->object->setRoute('ARoute', $params);
 
-        $this->assertEquals('ARoute', $this->object->getRoute());
-        $this->assertEquals($params, $this->object->getRouteParams());
+        $this->assertSame('ARoute', $this->object->getRoute());
+        $this->assertSame($params, $this->object->getRouteParams());
     }
 
     public function testGetSetRouteParams()
     {
         $params = ['id' => 1];
         $this->object->setRouteParams($params);
-        $this->assertEquals($params, $this->object->getRouteParams());
+        $this->assertSame($params, $this->object->getRouteParams());
     }
 
     public function testGetChildren()
@@ -125,7 +125,7 @@ class MenuItemTest extends TestCase
         $child2->setAppearInNavigation(true);
         $children = [$child1, $child2];
 
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $menuBuilder->expects($this->once())
@@ -147,7 +147,7 @@ class MenuItemTest extends TestCase
         $child2->setAppearInNavigation(false);
         $children = [$child1, $child2];
 
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $menuBuilder->expects($this->once())
@@ -167,7 +167,7 @@ class MenuItemTest extends TestCase
         $child2 = new TopMenuItem($this->object->getMenu());
         $children = [$child1, $child2];
 
-        $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
+        $menuBuilder = $this->getMockBuilder(MenuBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $menuBuilder->expects($this->once())
@@ -185,7 +185,7 @@ class MenuItemTest extends TestCase
     {
         $attributes = ['attribute1' => 1, 'attribute2' => 2];
         $this->object->addAttributes($attributes);
-        $this->assertEquals($attributes, $this->object->getAttributes());
+        $this->assertSame($attributes, $this->object->getAttributes());
     }
 
     public function testGetSetActive()
@@ -203,6 +203,6 @@ class MenuItemTest extends TestCase
     public function testGetSetWeight()
     {
         $this->object->setWeight(10);
-        $this->assertEquals(10, $this->object->getWeight());
+        $this->assertSame(10, $this->object->getWeight());
     }
 }

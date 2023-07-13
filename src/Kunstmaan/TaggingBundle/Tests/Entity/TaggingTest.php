@@ -20,9 +20,9 @@ class TaggingTest extends TestCase
         $object->setResourceId(667);
         $object->setTag(new Tag());
 
-        $this->assertEquals(666, $object->getId());
-        $this->assertEquals(667, $object->getResourceId());
-        $this->assertEquals('something', $object->getResourceType());
+        $this->assertSame(666, $object->getId());
+        $this->assertSame(667, $object->getResourceId());
+        $this->assertSame('something', $object->getResourceType());
         $this->assertInstanceOf(\DateTime::class, $object->getCreatedAt());
         $this->assertInstanceOf(\DateTime::class, $object->getUpdatedAt());
         $this->assertInstanceOf(Tag::class, $object->getTag());

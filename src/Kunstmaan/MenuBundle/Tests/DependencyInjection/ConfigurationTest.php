@@ -2,6 +2,11 @@
 
 namespace Kunstmaan\MenuBundle\Tests\DependencyInjection;
 
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Kunstmaan\MenuBundle\Entity\Menu;
+use Kunstmaan\MenuBundle\Entity\MenuItem;
+use Kunstmaan\MenuBundle\AdminList\MenuAdminListConfigurator;
+use Kunstmaan\MenuBundle\Form\MenuItemAdminType;
 use Kunstmaan\MenuBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +16,7 @@ class ConfigurationTest extends TestCase
     use ConfigurationTestCaseTrait;
 
     /**
-     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
+     * @return ConfigurationInterface
      */
     protected function getConfiguration()
     {
@@ -22,12 +27,12 @@ class ConfigurationTest extends TestCase
     {
         $array = [
             'menus' => [],
-            'menu_entity' => 'Kunstmaan\MenuBundle\Entity\Menu',
-            'menuitem_entity' => 'Kunstmaan\MenuBundle\Entity\MenuItem',
-            'menu_adminlist' => 'Kunstmaan\MenuBundle\AdminList\MenuAdminListConfigurator',
+            'menu_entity' => Menu::class,
+            'menuitem_entity' => MenuItem::class,
+            'menu_adminlist' => MenuAdminListConfigurator::class,
             'menuitem_adminlist' => 'Kunstmaan\MenuBundle\AdminListConfigurator',
             'menu_form' => 'Kunstmaan\MenuBundle\Form\MenuAdminType',
-            'menuitem_form' => 'Kunstmaan\MenuBundle\Form\MenuItemAdminType',
+            'menuitem_form' => MenuItemAdminType::class,
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

@@ -26,7 +26,7 @@ class PagePartConfigurationParserTest extends TestCase
 
         $result = $pagePartConfigurationParser->parse('main');
         $this->assertInstanceOf(PagePartAdminConfiguratorInterface::class, $result);
-        $this->assertEquals('Main content', $result->getName());
+        $this->assertSame('Main content', $result->getName());
     }
 
     public function testParseSymfony3Flow()
@@ -38,7 +38,7 @@ class PagePartConfigurationParserTest extends TestCase
 
         $result = $pagePartConfigurationParser->parse('MyWebsiteBundle:main');
         $this->assertInstanceOf(PagePartAdminConfiguratorInterface::class, $result);
-        $this->assertEquals('Main content', $result->getName());
+        $this->assertSame('Main content', $result->getName());
     }
 
     public function testPresetExtendsBundle()

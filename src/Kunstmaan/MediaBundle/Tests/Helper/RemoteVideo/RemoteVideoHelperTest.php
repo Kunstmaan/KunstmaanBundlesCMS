@@ -27,6 +27,6 @@ class RemoteVideoHelperTest extends TestCase
 
     public function testGetMedia()
     {
-        $this->assertEquals(RemoteVideoHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
+        $this->assertSame(RemoteVideoHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
     }
 }

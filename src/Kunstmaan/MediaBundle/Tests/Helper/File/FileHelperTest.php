@@ -29,7 +29,7 @@ class FileHelperTest extends TestCase
     public function testGetSetName()
     {
         $this->object->setName('name');
-        $this->assertEquals('name', $this->object->getName());
+        $this->assertSame('name', $this->object->getName());
     }
 
     public function testGetSetFile()
@@ -51,19 +51,19 @@ class FileHelperTest extends TestCase
     public function testGetSetCopyright()
     {
         $this->object->setCopyright('copyright');
-        $this->assertEquals('copyright', $this->object->getCopyright());
+        $this->assertSame('copyright', $this->object->getCopyright());
     }
 
     public function testGetSetDescription()
     {
         $this->object->setDescription('description');
-        $this->assertEquals('description', $this->object->getDescription());
+        $this->assertSame('description', $this->object->getDescription());
     }
 
     public function testGetSetOriginalFilename()
     {
         $this->object->setOriginalFilename('image.jpg');
-        $this->assertEquals('image.jpg', $this->object->getOriginalFilename());
+        $this->assertSame('image.jpg', $this->object->getOriginalFilename());
     }
 
     public function testGetMedia()

@@ -21,14 +21,14 @@ class AnalyticsConfigTest extends TestCase
         $entity->setLastUpdate(new \DateTime());
         $entity->setDisableGoals(true);
 
-        $this->assertEquals(666, $entity->getId());
+        $this->assertSame(666, $entity->getId());
         $this->assertIsArray($entity->getOverviews());
         $this->assertIsArray($entity->getSegments());
-        $this->assertEquals('Donald Trump', $entity->getName());
-        $this->assertEquals('blahblah', $entity->getToken());
-        $this->assertEquals('blahblah2', $entity->getPropertyId());
-        $this->assertEquals('blahblah3', $entity->getAccountId());
-        $this->assertEquals('blahblah4', $entity->getProfileId());
+        $this->assertSame('Donald Trump', $entity->getName());
+        $this->assertSame('blahblah', $entity->getToken());
+        $this->assertSame('blahblah2', $entity->getPropertyId());
+        $this->assertSame('blahblah3', $entity->getAccountId());
+        $this->assertSame('blahblah4', $entity->getProfileId());
         $this->assertInstanceOf(\DateTime::class, $entity->getLastUpdate());
         $this->assertTrue($entity->getDisableGoals());
     }

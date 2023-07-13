@@ -7,11 +7,11 @@ use Symfony\Component\Finder\Finder;
 
 class ImporterTest extends WebTestCase
 {
-    private $rootDir;
+    private bool|string|int|float|\UnitEnum|array|null $rootDir = null;
 
-    private $importer;
+    private ?object $importer = null;
 
-    private $translationRepository;
+    private ?object $translationRepository = null;
 
     public function setUp(): void
     {
@@ -34,7 +34,7 @@ class ImporterTest extends WebTestCase
         }
 
         $translation = $this->translationRepository->findOneBy(['keyword' => 'newdomain.name', 'locale' => 'de']);
-        $this->assertEquals('a new domain', $translation->getText());
+        $this->assertSame('a new domain', $translation->getText());
     }
 
     /**
@@ -47,7 +47,7 @@ class ImporterTest extends WebTestCase
         }
 
         $translation = $this->translationRepository->findOneBy(['keyword' => 'headers.frontpage', 'locale' => 'en']);
-        $this->assertEquals('a not yet updated frontpage header', $translation->getText());
+        $this->assertSame('a not yet updated frontpage header', $translation->getText());
     }
 
     /**
@@ -60,7 +60,7 @@ class ImporterTest extends WebTestCase
         }
 
         $translation = $this->translationRepository->findOneBy(['keyword' => 'headers.frontpage', 'locale' => 'en']);
-        $this->assertEquals('FrontPage', $translation->getText());
+        $this->assertSame('FrontPage', $translation->getText());
     }
 
     public function getNewDomainTestFinder()

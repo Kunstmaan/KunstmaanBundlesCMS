@@ -22,8 +22,8 @@ class WysiwygTypeTest extends TypeTestCase
         /* @var FormBuilder $builder */
         $wysiwygType->buildForm($builder, []);
 
-        $this->assertEquals(TextareaType::class, $wysiwygType->getParent());
-        $this->assertEquals('wysiwyg', $wysiwygType->getBlockPrefix());
+        $this->assertSame(TextareaType::class, $wysiwygType->getParent());
+        $this->assertSame('wysiwyg', $wysiwygType->getBlockPrefix());
     }
 
     public function testEditorModeOptionIsMissingByDefault()

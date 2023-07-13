@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use PHPUnit\Framework\TestCase;
@@ -31,28 +32,28 @@ class CheckboxPagePartTest extends TestCase
         $object = $this->object;
         $object->setRequired(true);
 
-        $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $formBuilder->expects($this->any())
+        $formBuilder
             ->method('getData')
             ->willReturn([]);
 
         $fields = new \ArrayObject();
 
-        $this->assertEquals(0, count($fields));
+        $this->assertCount(0, $fields);
         $object->setErrorMessageRequired('omg sort it out');
         /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(count($fields) > 0);
+        $this->assertGreaterThan(0, count($fields));
     }
 
     public function testGetDefaultAdminType()
     {
         $adminType = $this->object->getDefaultAdminType();
         $this->assertNotNull($adminType);
-        $this->assertEquals(CheckboxPagePartAdminType::class, $adminType);
+        $this->assertSame(CheckboxPagePartAdminType::class, $adminType);
     }
 
     public function testErrorMessage()
@@ -60,6 +61,6 @@ class CheckboxPagePartTest extends TestCase
         $object = $this->object;
         $msg = 'fill in the form properly';
         $object->setErrorMessageRequired($msg);
-        $this->assertEquals($msg, $object->getErrorMessageRequired());
+        $this->assertSame($msg, $object->getErrorMessageRequired());
     }
 }

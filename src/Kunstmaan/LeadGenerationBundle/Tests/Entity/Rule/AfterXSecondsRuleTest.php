@@ -13,10 +13,10 @@ class AfterXSecondsRuleTest extends TestCase
         $rule = new AfterXSecondsRule();
         $rule->setSeconds(10);
 
-        $this->assertEquals(10, $rule->getSeconds());
-        $this->assertEquals('AfterXSecondsRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/AfterXSecondsRule.js', $rule->getJsFilePath());
-        $this->assertEquals(AfterXSecondsAdminType::class, $rule->getAdminType());
+        $this->assertSame(10, $rule->getSeconds());
+        $this->assertSame('AfterXSecondsRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/AfterXSecondsRule.js', $rule->getJsFilePath());
+        $this->assertSame(AfterXSecondsAdminType::class, $rule->getAdminType());
         $this->assertIsArray($rule->getJsProperties());
     }
 }

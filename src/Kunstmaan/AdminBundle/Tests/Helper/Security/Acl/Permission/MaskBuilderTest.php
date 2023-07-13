@@ -36,28 +36,26 @@ class MaskBuilderTest extends TestCase
     /**
      * Provides data to the {@link testSlugify} function
      */
-    public function getInvalidConstructorData(): array
+    public function getInvalidConstructorData(): \Iterator
     {
-        return [
-            [234.463],
-            ['asdgasdf'],
-            [[]],
-            [new \stdClass()],
-        ];
+        yield [234.463];
+        yield ['asdgasdf'];
+        yield [[]];
+        yield [new \stdClass()];
     }
 
     public function testConstructorWithoutArguments()
     {
         $builder = new MaskBuilder();
 
-        $this->assertEquals(0, $builder->get());
+        $this->assertSame(0, $builder->get());
     }
 
     public function testConstructor()
     {
         $builder = new MaskBuilder(123456);
 
-        $this->assertEquals(123456, $builder->get());
+        $this->assertSame(123456, $builder->get());
     }
 
     public function testAddAndRemove()
@@ -70,44 +68,44 @@ class MaskBuilderTest extends TestCase
             ->add('puBLisH');
         $mask = $builder->get();
 
-        $this->assertEquals(MaskBuilder::MASK_VIEW, $mask & MaskBuilder::MASK_VIEW);
-        $this->assertEquals(MaskBuilder::MASK_EDIT, $mask & MaskBuilder::MASK_EDIT);
-        $this->assertEquals(MaskBuilder::MASK_PUBLISH, $mask & MaskBuilder::MASK_PUBLISH);
-        $this->assertEquals(0, $mask & MaskBuilder::MASK_DELETE);
-        $this->assertEquals(0, $mask & MaskBuilder::MASK_UNPUBLISH);
+        $this->assertSame(MaskBuilder::MASK_VIEW, $mask & MaskBuilder::MASK_VIEW);
+        $this->assertSame(MaskBuilder::MASK_EDIT, $mask & MaskBuilder::MASK_EDIT);
+        $this->assertSame(MaskBuilder::MASK_PUBLISH, $mask & MaskBuilder::MASK_PUBLISH);
+        $this->assertSame(0, $mask & MaskBuilder::MASK_DELETE);
+        $this->assertSame(0, $mask & MaskBuilder::MASK_UNPUBLISH);
 
         $builder->remove('edit')->remove('PUblish');
         $mask = $builder->get();
-        $this->assertEquals(0, $mask & MaskBuilder::MASK_EDIT);
-        $this->assertEquals(0, $mask & MaskBuilder::MASK_PUBLISH);
-        $this->assertEquals(MaskBuilder::MASK_VIEW, $mask & MaskBuilder::MASK_VIEW);
+        $this->assertSame(0, $mask & MaskBuilder::MASK_EDIT);
+        $this->assertSame(0, $mask & MaskBuilder::MASK_PUBLISH);
+        $this->assertSame(MaskBuilder::MASK_VIEW, $mask & MaskBuilder::MASK_VIEW);
     }
 
     public function testGetPattern()
     {
         $builder = new MaskBuilder();
-        $this->assertEquals(MaskBuilder::ALL_OFF, $builder->getPattern());
+        $this->assertSame(MaskBuilder::ALL_OFF, $builder->getPattern());
 
         $builder->add('view');
-        $this->assertEquals(str_repeat('.', 31) . 'V', $builder->getPattern());
+        $this->assertSame(str_repeat('.', 31) . 'V', $builder->getPattern());
 
         $builder->add('publish');
-        $this->assertEquals(str_repeat('.', 27) . 'P...V', $builder->getPattern());
+        $this->assertSame(str_repeat('.', 27) . 'P...V', $builder->getPattern());
 
         $builder->add(1 << 10);
-        $this->assertEquals(str_repeat('.', 21) . MaskBuilder::ON . '.....P...V', $builder->getPattern());
+        $this->assertSame(str_repeat('.', 21) . MaskBuilder::ON . '.....P...V', $builder->getPattern());
     }
 
     public function testReset()
     {
         $builder = new MaskBuilder();
-        $this->assertEquals(0, $builder->get());
+        $this->assertSame(0, $builder->get());
 
         $builder->add('view');
-        $this->assertTrue($builder->get() > 0);
+        $this->assertGreaterThan(0, $builder->get());
 
         $builder->reset();
-        $this->assertEquals(0, $builder->get());
+        $this->assertSame(0, $builder->get());
     }
 
     public function testAddWithInvalidMask()
@@ -127,10 +125,10 @@ class MaskBuilderTest extends TestCase
     public function testGetCode()
     {
         $code = MaskBuilder::getCode(MaskBuilder::MASK_DELETE);
-        $this->assertEquals(MaskBuilder::CODE_DELETE, $code);
+        $this->assertSame(MaskBuilder::CODE_DELETE, $code);
 
         $code = MaskBuilder::getCode(MaskBuilder::MASK_UNPUBLISH);
-        $this->assertEquals(MaskBuilder::CODE_UNPUBLISH, $code);
+        $this->assertSame(MaskBuilder::CODE_UNPUBLISH, $code);
     }
 
     public function testGetCodeWithInvalidMask()

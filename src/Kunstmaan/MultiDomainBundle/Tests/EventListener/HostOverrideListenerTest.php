@@ -116,7 +116,6 @@ class HostOverrideListenerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $adminRouteHelper
-            ->expects($this->any())
             ->method('isAdminRoute')
             ->willReturnMap($adminRouteReturnValueMap);
 

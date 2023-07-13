@@ -15,10 +15,10 @@ class UrlBlacklistRuleTest extends TestCase
         $rule->setPopup(new Popup());
         $rule->setUrls('https://nasa.gov');
 
-        $this->assertEquals('https://nasa.gov', $rule->getUrls());
-        $this->assertEquals('UrlBlacklistRule', $rule->getJsObjectClass());
-        $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/UrlBlacklistRule.js', $rule->getJsFilePath());
-        $this->assertEquals(UrlBlackListAdminType::class, $rule->getAdminType());
+        $this->assertSame('https://nasa.gov', $rule->getUrls());
+        $this->assertSame('UrlBlacklistRule', $rule->getJsObjectClass());
+        $this->assertSame('/bundles/kunstmaanleadgeneration/js/rule/UrlBlacklistRule.js', $rule->getJsFilePath());
+        $this->assertSame(UrlBlackListAdminType::class, $rule->getAdminType());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
         $this->assertIsArray($rule->getJsProperties());
     }

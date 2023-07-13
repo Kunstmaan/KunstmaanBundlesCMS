@@ -27,8 +27,8 @@ class TabPaneTest extends TestCase
         $tab = new Tab('properties', new FormWidget());
 
         $request = new Request([], ['currenttab' => $tab->getTitle()]);
-        $form->expects($this->any())->method('createView')->willReturn($view);
-        $form->expects($this->any())->method('isValid')->willReturn(true);
+        $form->method('createView')->willReturn($view);
+        $form->method('isValid')->willReturn(true);
         $builder->expects($this->once())->method('getForm')->willReturn($form);
         $factory->expects($this->once())->method('createBuilder')->willReturn($builder);
         $tab2 = clone $tab;

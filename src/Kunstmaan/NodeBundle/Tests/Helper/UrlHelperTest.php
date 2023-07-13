@@ -15,8 +15,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class UrlHelperTest extends TestCase
 {
-    /** @var Connection */
-    private $connection;
+    private Connection $connection;
 
     protected function setUp(): void
     {
@@ -42,7 +41,7 @@ class UrlHelperTest extends TestCase
 
         $urlHelper = new URLHelper($em, $router, $logger, $domainConfig);
 
-        $this->assertEquals('mailto:test@example.com', $urlHelper->replaceUrl('test@example.com'));
+        $this->assertSame('mailto:test@example.com', $urlHelper->replaceUrl('test@example.com'));
     }
 
     public function testReplaceUrlWithInternalLink()
@@ -54,13 +53,13 @@ class UrlHelperTest extends TestCase
         $domainConfig = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
 
         $urlHelper = new URLHelper($em, $router, new NullLogger(), $domainConfig);
-        $this->assertEquals('/abc-3', $urlHelper->replaceUrl('[NT3]'));
+        $this->assertSame('/abc-3', $urlHelper->replaceUrl('[NT3]'));
 
         // Remove all records to test cached result on second call
         $this->connection->executeStatement('DELETE FROM kuma_node_translations');
 
         // Second call to replaceUrl should not execute query again
-        $this->assertEquals('/abc-3', $urlHelper->replaceUrl('[NT3]'));
+        $this->assertSame('/abc-3', $urlHelper->replaceUrl('[NT3]'));
     }
 
     public function testReplaceUrlWithMediaLink()
@@ -72,13 +71,13 @@ class UrlHelperTest extends TestCase
         $domainConfig = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
 
         $urlHelper = new URLHelper($em, $router, new NullLogger(), $domainConfig);
-        $this->assertEquals('/uploads/media/3/test.svg', $urlHelper->replaceUrl('[M3]'));
+        $this->assertSame('/uploads/media/3/test.svg', $urlHelper->replaceUrl('[M3]'));
 
         // Remove all records to test cached result on second call
         $this->connection->executeStatement('DELETE FROM kuma_media');
 
         // Second call to replaceUrl should not execute query again
-        $this->assertEquals('/uploads/media/3/test.svg', $urlHelper->replaceUrl('[M3]'));
+        $this->assertSame('/uploads/media/3/test.svg', $urlHelper->replaceUrl('[M3]'));
     }
 
     private function createSchema(): void

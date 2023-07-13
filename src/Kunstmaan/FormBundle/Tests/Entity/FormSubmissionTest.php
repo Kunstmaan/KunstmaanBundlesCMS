@@ -24,7 +24,7 @@ class FormSubmissionTest extends TestCase
         $object = $this->object;
         $id = 123;
         $object->setId($id);
-        $this->assertEquals($id, $object->getId());
+        $this->assertSame($id, $object->getId());
     }
 
     public function testSetGetIpAddress()
@@ -32,7 +32,7 @@ class FormSubmissionTest extends TestCase
         $object = $this->object;
         $ip = '127.0.0.1';
         $object->setIpAddress($ip);
-        $this->assertEquals($ip, $object->getIpAddress());
+        $this->assertSame($ip, $object->getIpAddress());
     }
 
     public function testSetGetNode()
@@ -43,7 +43,7 @@ class FormSubmissionTest extends TestCase
         $object->setNode($node);
         $retrievedNode = $object->getNode();
         $this->assertEquals($node, $retrievedNode);
-        $this->assertEquals($node->getId(), $retrievedNode->getId());
+        $this->assertSame($node->getId(), $retrievedNode->getId());
     }
 
     public function testSetGetLang()
@@ -51,7 +51,7 @@ class FormSubmissionTest extends TestCase
         $object = $this->object;
         $lang = 'nl';
         $object->setLang($lang);
-        $this->assertEquals($lang, $object->getLang());
+        $this->assertSame($lang, $object->getLang());
     }
 
     public function testSetGetCreated()

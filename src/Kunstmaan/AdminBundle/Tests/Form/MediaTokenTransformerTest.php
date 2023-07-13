@@ -30,7 +30,7 @@ class MediaTokenTransformerTest extends TestCase
 
         $expectReversed = str_replace("\n", '', $expectReversed);
 
-        $this->assertEquals($expected, $transformed);
-        $this->assertEquals($expectReversed, $reversed);
+        $this->assertSame($expected, $transformed);
+        $this->assertSame($expectReversed, $reversed);
     }
 }
