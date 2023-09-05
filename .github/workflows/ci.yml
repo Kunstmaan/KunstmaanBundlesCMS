@@ -33,7 +33,7 @@ jobs:
                         symfony: '^4.4'
 
         steps:
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v4
 
             -   name: Set-up env variables
                 run: |
@@ -77,6 +77,6 @@ jobs:
         name: Validate composer files
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - run: sh ./.build/validate-composer.sh || exit $?
