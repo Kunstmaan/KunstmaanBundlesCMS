@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\PagePartBundle\Dto\PagePartDeleteInfo;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Event\Events;
 use Kunstmaan\PagePartBundle\Event\PagePartEvent;
@@ -15,10 +16,8 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
-/**
- * PagePartAdmin
- */
 class PagePartAdmin
 {
     /**
@@ -27,7 +26,7 @@ class PagePartAdmin
     protected $configurator;
 
     /**
-     * @var EntityManager|EntityManagerInterface
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -142,19 +141,24 @@ class PagePartAdmin
 
     public function preBindRequest(Request $request)
     {
-        // Fetch all sub-entities that should be removed
+        /** @var array<string, list<PagePartDeleteInfo>> $subPagePartsToDelete */
         $subPagePartsToDelete = [];
+        // Fetch all sub-entities that should be removed
         foreach (array_keys($request->request->all()) as $key) {
-            // Example value: delete_pagepartadmin_74_tags_3
-            if (preg_match('/^delete_pagepartadmin_(\\d+)_(\\w+)_(\\d+)$/i', $key, $matches)) {
-                $subPagePartsToDelete[$matches[1]][] = ['name' => $matches[2], 'id' => $matches[3]];
+            if (!str_starts_with($key, 'delete_pagepartadmin_')) {
+                continue;
             }
+
+            preg_match('#^delete_pagepartadmin_(\d+)_(.*)#', $key, $ppInfo);
+            preg_match_all('#([a-zA-Z0-9]+)_(\\d+)#', $ppInfo[2], $matches, PREG_SET_ORDER);
+
+            $subPagePartsToDelete[$ppInfo[1]][] = $this->getDeleteInfo($matches);
         }
 
         $doFlush = false;
         foreach ($this->pagePartRefs as $pagePartRef) {
             // Remove pageparts
-            if ('true' == $request->request->get($pagePartRef->getId() . '_deleted')) {
+            if ('true' === $request->request->get($pagePartRef->getId() . '_deleted')) {
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
                 $this->em->remove($pagePart);
                 $this->em->remove($pagePartRef);
@@ -167,14 +171,12 @@ class PagePartAdmin
             if (\array_key_exists($pagePartRef->getId(), $subPagePartsToDelete)) {
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
                 foreach ($subPagePartsToDelete[$pagePartRef->getId()] as $deleteInfo) {
-                    /** @var EntityInterface[] $objects */
-                    $objects = \call_user_func([$pagePart, 'get' . ucfirst($deleteInfo['name'])]);
+                    /** @var EntityInterface $deleteObject */
+                    $deleteObject = $this->getObjectForDeletion($pagePart, $deleteInfo);
 
-                    foreach ($objects as $object) {
-                        if ($object->getId() == $deleteInfo['id']) {
-                            $this->em->remove($object);
-                            $doFlush = true;
-                        }
+                    if (null !== $deleteObject) {
+                        $this->em->remove($deleteObject);
+                        $doFlush = true;
                     }
                 }
             }
@@ -186,7 +188,7 @@ class PagePartAdmin
 
         // Create the objects for the new pageparts
         $this->newPageParts = [];
-        $newRefIds = $request->request->get($this->context . '_new');
+        $newRefIds = $request->request->all($this->context . '_new');
 
         if (\is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
@@ -197,7 +199,7 @@ class PagePartAdmin
 
         // Sort pageparts again
         $sequences = $request->request->all($this->context . '_sequence');
-        if (!\is_null($sequences)) {
+        if ($sequences !== []) {
             $tempPageparts = $this->pageParts;
             $this->pageParts = [];
             foreach ($sequences as $sequence) {
@@ -365,5 +367,45 @@ class PagePartAdmin
     public function getClassName($pagepart)
     {
         return \get_class($pagepart);
+    }
+
+    private function getDeleteInfo(array $deleteKeyMatches): ?PagePartDeleteInfo
+    {
+        $currentItem = array_shift($deleteKeyMatches);
+        if (null === $currentItem) {
+            return null;
+        }
+
+        return new PagePartDeleteInfo($currentItem[1], $currentItem[2], $this->getDeleteInfo($deleteKeyMatches));
+    }
+
+    private function getObjectForDeletion($obj, PagePartDeleteInfo $deleteInfo): ?object
+    {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+
+        /** @var Collection<EntityInterface> $objects */
+        $objects = $propertyAccessor->getValue($obj, $deleteInfo->getName());
+        $object = null;
+        if ($deleteInfo->hasNestedDeleteInfo()) {
+            // When a nested item is deleted the id passed is the collection array key instead of the entity id.
+            $object = $objects->get($deleteInfo->getId());
+        } else {
+            foreach ($objects as $data) {
+                if ($data->getId() == $deleteInfo->getId()) {
+                    $object = $data;
+                    break;
+                }
+            }
+        }
+
+        if ($object === null) {
+            return null;
+        }
+
+        if (!$deleteInfo->hasNestedDeleteInfo()) {
+            return $object;
+        }
+
+        return $this->getObjectForDeletion($object, $deleteInfo->getNestedDeleteInfo());
     }
 }

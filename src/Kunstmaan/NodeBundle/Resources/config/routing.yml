@@ -11,4 +11,4 @@ KunstmaanNodeBundle_nodes:
 KunstmaanNodeBundle_urlchooser_replace:
     prefix:   /%kunstmaan_admin.admin_prefix%/url-replace
     path: /replace
-    defaults: { _controller: kunstmaan_node.url_replace.controller:replaceURLAction }
+    defaults: { _controller: kunstmaan_node.url_replace.controller::replaceURLAction }

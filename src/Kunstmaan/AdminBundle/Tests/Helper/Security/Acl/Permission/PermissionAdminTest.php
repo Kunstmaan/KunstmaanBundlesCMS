@@ -276,9 +276,7 @@ class PermissionAdminTest extends TestCase
     public function testBindRequestReturnsTrueWhenNoChanges()
     {
         $object = $this->getInitializedPermissionAdmin();
-        $request = $this->createMock(Request::class);
-        $request->request = $this->createMock(Request::class);
-        $request->request->expects($this->once())->method('get')->willReturn('');
+        $request = new Request();
         $object->bindRequest($request);
     }
 
@@ -290,9 +288,7 @@ class PermissionAdminTest extends TestCase
         $object = $this->getInitializedPermissionAdmin();
         $token = $this->createMock(PreAuthenticatedToken::class);
         $token->expects($this->once())->method('getUser')->willReturn(new User());
-        $request = $this->createMock(Request::class);
-        $request->request = $this->createMock(Request::class);
-        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' => ['VIEW']]], true));
+        $request = new Request([], ['permission-hidden-fields' => ['ADMIN' => ['ADD' => ['VIEW']]], 'applyRecursive' => true]);
 
         $mirror = new \ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('tokenStorage');
