@@ -53,9 +53,8 @@ final class FolderController extends AbstractController
 
     /**
      * @param int $folderId The folder id
-     *
-     * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_show")
      */
+    #[Route(path: '/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_show')]
     public function showAction(Request $request, $folderId): Response
     {
         $session = $request->getSession();
@@ -114,10 +113,9 @@ final class FolderController extends AbstractController
     /**
      * @param int $folderId
      *
-     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_delete", methods={"POST"})
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/delete/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_delete', methods: ['POST'])]
     public function deleteAction(Request $request, $folderId)
     {
         if (!$this->isCsrfTokenValid('media-folder-delete', $request->request->get('token'))) {
@@ -163,10 +161,9 @@ final class FolderController extends AbstractController
     /**
      * @param int $folderId
      *
-     * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_sub_create", methods={"GET", "POST"})
-     *
      * @return Response
      */
+    #[Route(path: '/subcreate/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_sub_create', methods: ['GET', 'POST'])]
     public function subCreateAction(Request $request, $folderId)
     {
         /* @var Folder $parent */
@@ -212,10 +209,9 @@ final class FolderController extends AbstractController
     /**
      * @param int $folderId
      *
-     * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_empty", methods={"GET", "POST"})
-     *
      * @return Response
      */
+    #[Route(path: '/empty/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_empty', methods: ['GET', 'POST'])]
     public function emptyAction(Request $request, $folderId)
     {
         /* @var Folder $folder */
@@ -256,10 +252,9 @@ final class FolderController extends AbstractController
     }
 
     /**
-     * @Route("/reorder", name="KunstmaanMediaBundle_folder_reorder")
-     *
      * @return JsonResponse
      */
+    #[Route(path: '/reorder', name: 'KunstmaanMediaBundle_folder_reorder')]
     public function reorderAction(Request $request)
     {
         $folders = [];

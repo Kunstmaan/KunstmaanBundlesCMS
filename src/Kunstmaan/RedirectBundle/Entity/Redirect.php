@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *     }
  * )
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
- * @UniqueEntity(fields={"origin", "domain"})
  */
 #[ORM\Table(name: 'kuma_redirects')]
 #[ORM\UniqueConstraint(name: 'kuma_redirects_idx_domain_origin', columns: ['domain', 'origin'])]
@@ -37,9 +36,9 @@ class Redirect extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="origin", type="string", length=255)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'origin', type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $origin;
 
     /**
@@ -54,9 +53,9 @@ class Redirect extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="target", type="text")
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'target', type: 'text')]
+    #[Assert\NotBlank]
     private $target;
 
     /**
@@ -183,9 +182,7 @@ class Redirect extends AbstractEntity
         return $this;
     }
 
-    /**
-     * @Assert\Callback
-     */
+    #[Assert\Callback]
     public function validate(ExecutionContextInterface $context)
     {
         if ($this->getOrigin() === $this->getTarget()) {

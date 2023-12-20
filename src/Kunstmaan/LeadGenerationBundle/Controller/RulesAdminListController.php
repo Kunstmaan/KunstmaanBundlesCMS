@@ -6,6 +6,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\RulesAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class RulesAdminListController extends AbstractAdminListController
@@ -27,23 +28,16 @@ final class RulesAdminListController extends AbstractAdminListController
         return $this->configurator;
     }
 
-    /**
-     * The detail action
-     *
-     * @Route("/{popup}/rules", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail")
-     */
+    #[Route(path: '/{popup}/rules', requirements: ['popup' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail')]
     public function detailAction(Request $request, $popup)
     {
         return parent::doIndexAction($this->getAdminListConfigurator($popup), $request);
     }
 
     /**
-     * The add action
-     *
-     * @Route("/{popup}/add", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_add", methods={"GET", "POST"})
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '/{popup}/add', requirements: ['popup' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request, $popup)
     {
         $type = $request->query->get('type');
@@ -52,28 +46,22 @@ final class RulesAdminListController extends AbstractAdminListController
     }
 
     /**
-     * The edit action
-     *
      * @param int $id
      *
-     * @Route("/{popup}/rules/{id}/edit", requirements={"popup" = "\d+", "rule" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit", methods={"GET", "POST"})
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '/{popup}/rules/{id}/edit', requirements: ['popup' => '\d+', 'rule' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $id, $popup)
     {
         return parent::doEditAction($this->getAdminListConfigurator($popup), $id, $request);
     }
 
     /**
-     * The delete action
-     *
      * @param int $id
      *
-     * @Route("/{popup}/rules/{id}/delete", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete", methods={"GET", "POST"})
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '/{popup}/rules/{id}/delete', requirements: ['popup' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete', methods: ['GET', 'POST'])]
     public function deleteAction(Request $request, $id, $popup)
     {
         return parent::doDeleteAction($this->getAdminListConfigurator($popup), $id, $request);

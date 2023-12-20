@@ -20,9 +20,7 @@ final class SecurityController
         $this->twig = $twig;
     }
 
-    /**
-     * @Route("/login", name="kunstmaan_admin_login", methods={"GET", "POST"})
-     */
+    #[Route(path: '/login', name: 'kunstmaan_admin_login', methods: ['GET', 'POST'])]
     public function loginAction()
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
@@ -34,9 +32,7 @@ final class SecurityController
         ]));
     }
 
-    /**
-     * @Route("/logout", name="kunstmaan_admin_logout")
-     */
+    #[Route(path: '/logout', name: 'kunstmaan_admin_logout')]
     public function logoutAction()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');

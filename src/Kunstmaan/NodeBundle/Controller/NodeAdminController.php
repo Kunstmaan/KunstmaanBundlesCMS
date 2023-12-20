@@ -121,9 +121,7 @@ final class NodeAdminController extends AbstractController
         $this->pageCloningHelper = $this->container->get(PageCloningHelper::class);
     }
 
-    /**
-     * @Route("/", name="KunstmaanNodeBundle_nodes")
-     */
+    #[Route(path: '/', name: 'KunstmaanNodeBundle_nodes')]
     public function indexAction(Request $request): Response
     {
         $this->init($request);
@@ -160,19 +158,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/copyfromotherlanguage",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage",
-     *      methods={"GET"}
-     * )
-     *
      * @param int $id The node id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/copyfromotherlanguage', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_copyfromotherlanguage', methods: ['GET'])]
     public function copyFromOtherLanguageAction(Request $request, $id)
     {
         $this->init($request);
@@ -211,19 +201,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/recopyfromotherlanguage",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage",
-     *      methods={"POST"}
-     * )
-     *
      * @param int $id The node id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/recopyfromotherlanguage', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_recopyfromotherlanguage', methods: ['POST'])]
     public function recopyFromOtherLanguageAction(Request $request, $id)
     {
         if (!$this->isCsrfTokenValid('recopy-from-language', $request->request->get('token'))) {
@@ -265,19 +247,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/createemptypage",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_createemptypage",
-     *      methods={"GET"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/createemptypage', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_createemptypage', methods: ['GET'])]
     public function createEmptyPageAction(Request $request, $id)
     {
         $this->init($request);
@@ -307,16 +281,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/publish", requirements={"id" =
-     *                         "\d+"},
-     *                         name="KunstmaanNodeBundle_nodes_publish", methods={"GET", "POST"})
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/publish', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_publish', methods: ['GET', 'POST'])]
     public function publishAction(Request $request, $id)
     {
         $this->init($request);
@@ -331,19 +300,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/unpublish",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_unpublish",
-     *      methods={"GET", "POST"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/unpublish', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_unpublish', methods: ['GET', 'POST'])]
     public function unPublishAction(Request $request, $id)
     {
         $this->init($request);
@@ -358,19 +319,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/unschedulepublish",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_unschedule_publish",
-     *      methods={"GET", "POST"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/unschedulepublish', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_unschedule_publish', methods: ['GET', 'POST'])]
     public function unSchedulePublishAction(Request $request, $id)
     {
         $this->init($request);
@@ -390,19 +343,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/delete",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_delete",
-     *      methods={"POST"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_delete', methods: ['POST'])]
     public function deleteAction(Request $request, $id)
     {
         $this->init($request);
@@ -449,19 +394,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/duplicate",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_duplicate",
-     *      methods={"POST"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/duplicate', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_duplicate', methods: ['POST'])]
     public function duplicateAction(Request $request, $id)
     {
         if (!$this->isCsrfTokenValid('node-duplicate', $request->request->get('token'))) {
@@ -522,16 +459,7 @@ final class NodeAdminController extends AbstractController
         return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $nodeNewPage->getId()]);
     }
 
-    /**
-     * @Route(
-     *      "/{id}/duplicate-with-children",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_duplicate_with_children",
-     *      methods={"POST"}
-     * )
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/{id}/duplicate-with-children', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_duplicate_with_children', methods: ['POST'])]
     public function duplicateWithChildrenAction(Request $request, $id)
     {
         if (!$this->isCsrfTokenValid('node-duplicate-with-children', $request->request->get('token'))) {
@@ -553,21 +481,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/revert",
-     *      requirements={"id" = "\d+"},
-     *      defaults={"subaction" = "public"},
-     *      name="KunstmaanNodeBundle_nodes_revert",
-     *      methods={"GET"}
-     * )
-     *
      * @param int $id The node id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
-     * @throws \InvalidArgumentException
      */
+    #[Route(path: '/{id}/revert', requirements: ['id' => '\d+'], defaults: ['subaction' => 'public'], name: 'KunstmaanNodeBundle_nodes_revert', methods: ['GET'])]
     public function revertAction(Request $request, $id)
     {
         $this->init($request);
@@ -633,20 +551,11 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/add",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanNodeBundle_nodes_add",
-     *      methods={"POST"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
-     * @throws \InvalidArgumentException
      */
+    #[Route(path: '/{id}/add', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_add', methods: ['POST'])]
     public function addAction(Request $request, $id)
     {
         $this->init($request);
@@ -697,13 +606,9 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage", methods={"POST"})
-     *
      * @return RedirectResponse
-     *
-     * @throws AccessDeniedException
-     * @throws \InvalidArgumentException
      */
+    #[Route(path: '/add-homepage', name: 'KunstmaanNodeBundle_nodes_add_homepage', methods: ['POST'])]
     public function addHomepageAction(Request $request)
     {
         $this->init($request);
@@ -741,12 +646,9 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route("/reorder", name="KunstmaanNodeBundle_nodes_reorder", methods={"POST"})
-     *
      * @return string
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/reorder', name: 'KunstmaanNodeBundle_nodes_reorder', methods: ['POST'])]
     public function reorderAction(Request $request)
     {
         $this->init($request);
@@ -803,19 +705,10 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/{subaction}",
-     *      requirements={"id" = "\d+"},
-     *      defaults={"subaction" = "public"},
-     *      name="KunstmaanNodeBundle_nodes_edit",
-     *      methods={"GET", "POST"}
-     * )
-     *
      * @param int    $id        The node id
      * @param string $subaction The subaction (draft|public)
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/{subaction}', requirements: ['id' => '\d+'], defaults: ['subaction' => 'public'], name: 'KunstmaanNodeBundle_nodes_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $id, $subaction): Response
     {
         $this->init($request);
@@ -1022,14 +915,9 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "checkNodeVersionLock/{id}/{public}",
-     *      requirements={"id" = "\d+", "public" = "(0|1)"},
-     *      name="KunstmaanNodeBundle_nodes_versionlock_check"
-     * )
-     *
      * @return JsonResponse
      */
+    #[Route(path: 'checkNodeVersionLock/{id}/{public}', requirements: ['id' => '\d+', 'public' => '(0|1)'], name: 'KunstmaanNodeBundle_nodes_versionlock_check')]
     public function checkNodeVersionLockAction(Request $request, $id, $public)
     {
         $nodeVersionIsLocked = false;

@@ -20,11 +20,11 @@ class Cookie extends AbstractEntity
      * @var string
      *
      * @Gedmo\Translatable()
-     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
     #[Gedmo\Translatable]
+    #[Assert\NotBlank]
     private $name;
 
     /**
@@ -38,21 +38,21 @@ class Cookie extends AbstractEntity
     private $description;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Kunstmaan\CookieBundle\Entity\CookieType", inversedBy="cookies")
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
      */
     #[ORM\ManyToOne(targetEntity: CookieType::class, inversedBy: 'cookies')]
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id', nullable: false)]
+    #[Assert\NotBlank]
     private $type;
 
     /**
      * @var string
      *
-     * @Assert\NotNull()
      * @ORM\Column(name="domain", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'domain', type: 'string', length: 255, nullable: true)]
+    #[Assert\NotNull]
     private $domain;
 
     /**

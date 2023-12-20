@@ -19,9 +19,9 @@ class StringFormSubmissionField extends FormSubmissionField
 {
     /**
      * @ORM\Column(name="sfsf_value", type="string")
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'sfsf_value', type: 'string')]
+    #[Assert\Length(max: 255)]
     protected $value;
 
     /**

@@ -46,27 +46,27 @@ class Translation
 
     /**
      * @ORM\Column(type="integer", name="translation_id", nullable=true)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'translation_id', type: 'integer', nullable: true)]
+    #[Assert\NotBlank]
     protected $translationId;
 
     /**
      * The translations keyword to use in your template or call from the translator
      *
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'keyword', type: 'string', nullable: true)]
+    #[Assert\NotBlank]
     protected $keyword;
 
     /**
      * The translations keyword to use in your template or call from the translator
      *
      * @ORM\Column(type="string", length=5, nullable=true)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'locale', type: 'string', length: 5, nullable: true)]
+    #[Assert\NotBlank]
     protected $locale;
 
     /**
@@ -91,17 +91,17 @@ class Translation
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'text', type: 'text', nullable: true)]
+    #[Assert\NotBlank]
     protected $text;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=60)
      */
     #[ORM\Column(name: 'domain', type: 'string', length: 60, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 60)]
     protected $domain;
 
     /**

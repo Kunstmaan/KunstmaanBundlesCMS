@@ -37,41 +37,31 @@ final class TagAdminListController extends AbstractAdminListController
         return $this->configurator;
     }
 
-    /**
-     * @Route("/", name="kunstmaantaggingbundle_admin_tag")
-     */
+    #[Route(path: '/', name: 'kunstmaantaggingbundle_admin_tag')]
     public function indexAction(Request $request): Response
     {
         return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
-    /**
-     * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add", methods={"GET", "POST"})
-     */
+    #[Route(path: '/add', name: 'kunstmaantaggingbundle_admin_tag_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request): Response
     {
         return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
-    /**
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}/edit', requirements: ['id' => '\d+'], name: 'kunstmaantaggingbundle_admin_tag_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
-    /**
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_delete", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'kunstmaantaggingbundle_admin_tag_delete', methods: ['GET', 'POST'])]
     public function deleteAction(Request $request, $id): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
-    /**
-     * @Route("/autocomplete.{_format}", name="kunstmaantaggingbundle_admin_tag_autocomplete", defaults={"_format" = "json"})
-     */
+    #[Route(path: '/autocomplete.{_format}', name: 'kunstmaantaggingbundle_admin_tag_autocomplete', defaults: ['_format' => 'json'])]
     public function autocompleteAction(Request $request): Response
     {
         $search = $request->query->get('term');

@@ -26,9 +26,7 @@ final class PasswordResetController extends AbstractController
         $this->userManager = $userManager;
     }
 
-    /**
-     * @Route("/password-reset/request", name="kunstmaan_admin_reset_password", methods={"GET", "POST"})
-     */
+    #[Route(path: '/password-reset/request', name: 'kunstmaan_admin_reset_password', methods: ['GET', 'POST'])]
     public function requestAction(Request $request)
     {
         $form = $this->createForm(PasswordRequestType::class);
@@ -49,9 +47,7 @@ final class PasswordResetController extends AbstractController
         return $this->render('@KunstmaanAdmin/authentication/password_reset/request.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/password-reset/confirm/{token}", name="kunstmaan_admin_reset_password_confirm", methods={"GET", "POST"})
-     */
+    #[Route(path: '/password-reset/confirm/{token}', name: 'kunstmaan_admin_reset_password_confirm', methods: ['GET', 'POST'])]
     public function confirmAction(Request $request, string $token)
     {
         /** @var UserInterface|null $user */

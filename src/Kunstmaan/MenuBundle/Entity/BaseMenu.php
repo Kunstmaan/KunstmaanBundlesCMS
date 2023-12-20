@@ -17,20 +17,20 @@ class BaseMenu extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=25, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=25)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 25, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 25)]
     protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="locale", type="string", length=5, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=5)
      */
     #[ORM\Column(name: 'locale', type: 'string', length: 5, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 5)]
     protected $locale;
 
     /**

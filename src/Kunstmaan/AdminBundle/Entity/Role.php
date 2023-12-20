@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
- * @UniqueEntity("role")
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'kuma_roles')]
@@ -27,10 +26,10 @@ class Role
     protected $id;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", name="role", unique=true, length=70)
      */
     #[ORM\Column(name: 'role', type: 'string', unique: true, length: 70)]
+    #[Assert\NotBlank]
     protected $role;
 
     /**

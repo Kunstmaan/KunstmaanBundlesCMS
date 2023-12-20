@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -60,9 +59,7 @@ final class UsersController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/", name="KunstmaanUserManagementBundle_settings_users")
-     */
+    #[Route(path: '/', name: 'KunstmaanUserManagementBundle_settings_users')]
     public function listAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -94,9 +91,7 @@ final class UsersController extends AbstractController
         return new $userClassName();
     }
 
-    /**
-     * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add", methods={"GET", "POST"})
-     */
+    #[Route(path: '/add', name: 'KunstmaanUserManagementBundle_settings_users_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -143,11 +138,8 @@ final class UsersController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit", methods={"GET", "POST"})
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/edit', requirements: ['id' => '\d+'], name: 'KunstmaanUserManagementBundle_settings_users_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $id): Response
     {
         // The logged in user should be able to change his own password/username/email and not for other users
@@ -215,9 +207,7 @@ final class UsersController extends AbstractController
         return $this->render('@KunstmaanUserManagement/Users/edit.html.twig', $params);
     }
 
-    /**
-     * @Route("/form-delete/{id}", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_form_delete", methods={"POST"})
-     */
+    #[Route(path: '/form-delete/{id}', requirements: ['id' => '\d+'], name: 'KunstmaanUserManagementBundle_settings_users_form_delete', methods: ['POST'])]
     public function deleteFormAction(Request $request, $id): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
