@@ -6,6 +6,16 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.2.0...6.2.1
 
+## 6.2.5 / 2023-12-20
+
+* [AllBundles] Apply latest fixers of php-cs-fixer [#3287](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3287) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix orm attribute for user confirmation_token [#3266](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3266) ([@dannyvw](https://github.com/dannyvw))
+* [NodeBundle] Throw not found exception if node is not found [#3265](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3265) ([@dannyvw](https://github.com/dannyvw))
+* [GeneratorBundle] Only enable tty on platforms supporting it [#3260](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3260) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Fix PHP Deprecated:  trim(): Passing null to parameter #1 [#3254](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3254) ([@tarjei](https://github.com/tarjei))
+* [GeneratorBundle] Bump bootstrap-sass which had .math calculation errors [#3253](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3253) ([@FVKVN](https://github.com/FVKVN))
+* Bump actions/cache from 3.2.4 to 3.2.5 [#3252](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3252) ([@dependabot[bot]](https://github.com/apps/dependabot))
+
 ## 6.2.4 / 2023-02-09
 
 * [AllBundles] Update default php-cs-fixer config for v3.14 [#3248](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3248) ([@acrobat](https://github.com/acrobat))
