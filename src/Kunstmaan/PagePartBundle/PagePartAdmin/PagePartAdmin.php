@@ -188,7 +188,7 @@ class PagePartAdmin
 
         // Create the objects for the new pageparts
         $this->newPageParts = [];
-        $newRefIds = $request->request->get($this->context . '_new');
+        $newRefIds = $request->request->all($this->context . '_new');
 
         if (\is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
