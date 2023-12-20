@@ -3,6 +3,7 @@
 namespace Kunstmaan\RedirectBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -90,5 +91,11 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function getEntityName()
     {
         return 'Redirect';
+    }
+
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder->orderBy('b.id', 'ASC');
     }
 }
