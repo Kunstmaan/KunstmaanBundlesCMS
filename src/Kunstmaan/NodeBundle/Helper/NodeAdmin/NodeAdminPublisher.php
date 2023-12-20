@@ -80,7 +80,7 @@ class NodeAdminPublisher
      *
      * @param BaseUser|null $user
      *
-     *  @throws AccessDeniedException
+     * @throws AccessDeniedException
      */
     public function publish(NodeTranslation $nodeTranslation, $user = null)
     {

@@ -53,8 +53,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     }
 
     /**
-     * @param BaseUser $userToExclude
-     * @param bool     $isPublicNodeVersion
+     * @param bool $isPublicNodeVersion
      *
      * @return array
      */
@@ -107,8 +106,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
     /**
      * When editing a node, check if there is a lock for this node translation.
      *
-     * @param bool     $isPublicVersion
-     * @param BaseUser $userToExclude
+     * @param bool $isPublicVersion
      *
      * @return NodeVersionLock[]
      */

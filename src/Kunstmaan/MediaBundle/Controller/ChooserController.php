@@ -145,7 +145,7 @@ final class ChooserController extends AbstractController
         ];
 
         $forms = [];
-        foreach ($this->mediaManager->getFolderAddActions()  as $addAction) {
+        foreach ($this->mediaManager->getFolderAddActions() as $addAction) {
             $forms[$addAction['type']] = $this->createTypeFormView($this->mediaManager, $addAction['type']);
         }
 

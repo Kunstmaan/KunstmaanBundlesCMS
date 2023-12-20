@@ -224,8 +224,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get createdAd
-     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -234,8 +232,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set createdAd
-     *
      * @param \DateTime $createdAt
      *
      * @return Folder
@@ -248,8 +244,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get updatedAt
-     *
      * @return \DateTime
      */
     public function getUpdatedAt()
@@ -258,8 +252,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set updatedAt
-     *
      * @param \DateTime $updatedAt
      *
      * @return Folder
@@ -272,7 +264,7 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @return Folder[]:
+     * @return Folder[]
      */
     public function getParents()
     {
@@ -287,8 +279,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get parent
-     *
      * @return Folder
      */
     public function getParent()
@@ -297,10 +287,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set parent
-     *
-     * @param Folder $parent
-     *
      * @return Folder
      */
     public function setParent(Folder $parent = null)
@@ -311,8 +297,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Add a child
-     *
      * @return Folder
      */
     public function addChild(Folder $child)
@@ -324,8 +308,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Add file
-     *
      * @return Folder
      */
     public function addMedia(Media $media)
@@ -336,8 +318,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get media
-     *
      * @param bool $includeDeleted
      *
      * @return ArrayCollection
@@ -376,8 +356,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get child folders
-     *
      * @param bool $includeDeleted
      *
      * @return ArrayCollection

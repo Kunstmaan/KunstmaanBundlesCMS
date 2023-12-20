@@ -56,8 +56,6 @@ class Cookie extends AbstractEntity
     private $domain;
 
     /**
-     * Set name
-     *
      * @param string $name
      *
      * @return Cookie
@@ -70,8 +68,6 @@ class Cookie extends AbstractEntity
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -80,8 +76,6 @@ class Cookie extends AbstractEntity
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      *
      * @return Cookie
@@ -94,8 +88,6 @@ class Cookie extends AbstractEntity
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -104,10 +96,6 @@ class Cookie extends AbstractEntity
     }
 
     /**
-     * Set type
-     *
-     * @param CookieType $type
-     *
      * @return Cookie
      */
     public function setType(CookieType $type = null)
@@ -118,8 +106,6 @@ class Cookie extends AbstractEntity
     }
 
     /**
-     * Get type
-     *
      * @return CookieType
      */
     public function getType()
