@@ -69,21 +69,16 @@ class PagePartCreatorService
     /**
      * Add a single pagepart to an existing page for a specific language, in an optional position.
      *
-     * @param mixed(Node|string)  $nodeOrInternalName
-     *                                                A Node instance or the internal name.
-     *                                                When the internal name is passed we'll get the node instance.
-     *                                                Based on the language we'll locate the correct Page instance.
-     * @param pagePartInterface $pagePart
-     *                                    A completely configured pagepart for this language
-     * @param string            $language
-     *                                    The languagecode. nl|fr|en|.. . Just one.
-     * @param string            $context
-     *                                    Where you want the pagepart to be
-     * @param mixed(integer\NULL) $position
-     *                                                Leave null if you want to append at the end.
-     *                                                Otherwise set a position you would like and it'll inject the pagepart in that position.
-     *                                                It won't override pageparts but it will rather inject itself in that position and
-     *                                                push the other pageparts down.
+     * @param Node|string       $nodeOrInternalName A Node instance or the internal name.
+     *                                              When the internal name is passed we'll get the node instance.
+     *                                              Based on the language we'll locate the correct Page instance.
+     * @param pagePartInterface $pagePart           A completely configured pagepart for this language
+     * @param string            $language           The languagecode. nl|fr|en|.. . Just one.
+     * @param string            $context            Where you want the pagepart to be
+     * @param int|null          $position           Leave null if you want to append at the end.
+     *                                              Otherwise set a position you would like and it'll inject the pagepart in that position.
+     *                                              It won't override pageparts but it will rather inject itself in that position and
+     *                                              push the other pageparts down.
      */
     public function addPagePartToPage($nodeOrInternalName, PagePartInterface $pagePart, $language, $context = 'main', $position = null)
     {
@@ -109,10 +104,8 @@ class PagePartCreatorService
     /**
      * A helper function to more easily append multiple pageparts in different manners.
      *
-     * @param mixed(Node|string) $nodeOrInternalName
-     *                                               The node that you'd like to append the pageparts to. It's also possible to provide an internalname.
-     * @param array $structure
-     *                         The structure array is something like this:
+     * @param Node|string $nodeOrInternalName The node that you'd like to append the pageparts to. It's also possible to provide an internalname.
+     * @param array       $structure          The structure array is something like this:
      *
      *      array('main' => array(
      *          function() { return new DummyPagePart('A') }, function() { return new DummyPagePart('B') }
@@ -126,8 +119,7 @@ class PagePartCreatorService
      *      You can also include variables in the pagepart arrays if you want.
      *
      *      Or optionally you can use the results of the getCreatorArgumentsForPagePartAndProperties function instead of an anonymous function.
-     * @param string $language
-     *                         The language of the translation you want to append to
+     * @param string $language The language of the translation you want to append to
      *
      * @throws \LogicException
      */
@@ -165,9 +157,9 @@ class PagePartCreatorService
     }
 
     /**
-     * @param mixed(Node|string) $nodeOrInternalName
-     * @param string $language
-     * @param string $templateName
+     * @param Node|string $nodeOrInternalName
+     * @param string      $language
+     * @param string      $templateName
      */
     public function setPageTemplate($nodeOrInternalName, $language, $templateName)
     {

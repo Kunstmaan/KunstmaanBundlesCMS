@@ -134,8 +134,6 @@ class MenuBuilder
     /**
      * Get immediate children of the specified menu item
      *
-     * @param MenuItem $parent
-     *
      * @return MenuItem[]
      */
     public function getChildren(MenuItem $parent = null)

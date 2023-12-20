@@ -207,7 +207,6 @@ final class NodeTwigExtension extends AbstractExtension
 
     /**
      * @param string $locale
-     * @param Node   $node
      * @param bool   $includeHiddenFromNav
      *
      * @return NodeMenu

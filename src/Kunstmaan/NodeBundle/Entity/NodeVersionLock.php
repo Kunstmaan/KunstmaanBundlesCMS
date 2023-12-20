@@ -115,8 +115,6 @@ class NodeVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set nodeTranslation
      *
-     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
-     *
      * @return NodeVersionLock
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation = null)

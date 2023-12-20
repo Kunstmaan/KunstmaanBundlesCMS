@@ -11,9 +11,8 @@ class NodeVersionLockRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Check if there is a nodetranslation lock that's not passed the 30 minute threshold.
      *
-     * @param bool     $isPublicVersion
-     * @param int      $threshold
-     * @param BaseUser $userToExclude
+     * @param bool $isPublicVersion
+     * @param int  $threshold
      *
      * @return NodeVersionLock[]
      */
