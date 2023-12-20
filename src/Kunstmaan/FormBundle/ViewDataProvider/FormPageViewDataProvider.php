@@ -7,6 +7,7 @@ namespace Kunstmaan\FormBundle\ViewDataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FormBundle\Helper\FormHandlerInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -36,7 +37,19 @@ final class FormPageViewDataProvider implements PageViewDataProviderInterface
         }
 
         $thanksParam = $request->query->get('thanks');
-        $entity = $nodeTranslation->getRef($this->em);
+
+        $entity = null;
+        $version = $request->query->get('version');
+        if (!empty($version) && is_numeric($version)) {
+            $nodeVersion = $this->em->getRepository(NodeVersion::class)->find($version);
+            if (!\is_null($nodeVersion)) {
+                $entity = $nodeVersion->getRef($this->em);
+            }
+        }
+        if (!$entity) {
+            $entity = $nodeTranslation->getRef($this->em);
+        }
+
         $renderContext['nodetranslation'] = $nodeTranslation;
         $renderContext['slug'] = $request->attributes->get('url');
         $renderContext['page'] = $entity;
