@@ -129,8 +129,7 @@ class NodeHelper
     }
 
     /**
-     * @param bool    $isStructureNode
-     * @param TabPane $tabPane
+     * @param bool $isStructureNode
      *
      * @return NodeTranslation
      */

@@ -78,12 +78,14 @@ class SeoType extends AbstractType
                 function ($original) {
                     // string to array
                     $array = explode(',', $original ?? '');
+
                     // trim all the values
                     return array_map('trim', $array);
                 },
                 function ($submitted) {
                     // trim all the values
                     $value = array_map('trim', $submitted);
+
                     // join together
                     return implode(',', $value);
                 }
