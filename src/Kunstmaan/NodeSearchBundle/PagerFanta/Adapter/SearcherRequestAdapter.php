@@ -79,8 +79,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     }
 
     /**
-     * @param ResultSet $result
-     *
      * @return array|ResultSet
      */
     protected function processResponse(ResultSet $result = null)

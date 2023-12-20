@@ -341,7 +341,6 @@ SQL;
     /**
      * Get all parents of a given node. We can go multiple levels up.
      *
-     * @param Node   $node
      * @param string $lang
      *
      * @return Node[]
@@ -386,7 +385,6 @@ SQL;
     /**
      * Get the root node of a given node.
      *
-     * @param Node   $node
      * @param string $lang
      *
      * @return Node

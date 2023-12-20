@@ -121,9 +121,6 @@ class NodeMenu
         $this->locale = $locale;
     }
 
-    /**
-     * @param Node $currentNode
-     */
     public function setCurrentNode(Node $currentNode = null)
     {
         $this->currentNode = $currentNode;
