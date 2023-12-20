@@ -186,7 +186,7 @@ class PagePartAdmin
 
         // Create the objects for the new pageparts
         $this->newPageParts = [];
-        $newRefIds = $request->request->get($this->context . '_new');
+        $newRefIds = $request->request->all($this->context . '_new');
 
         if (\is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
@@ -197,7 +197,7 @@ class PagePartAdmin
 
         // Sort pageparts again
         $sequences = $request->request->all($this->context . '_sequence');
-        if (!\is_null($sequences)) {
+        if ($sequences !== []) {
             $tempPageparts = $this->pageParts;
             $this->pageParts = [];
             foreach ($sequences as $sequence) {
