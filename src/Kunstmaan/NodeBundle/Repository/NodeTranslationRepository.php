@@ -42,9 +42,8 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get max children weight
      *
-     * @param Node   $parentNode
-     * @param string $lang       (optional) Only return max weight for the
-     *                           given language
+     * @param string $lang (optional) Only return max weight for the
+     *                     given language
      *
      * @return int
      */
@@ -64,9 +63,8 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get min children weight
      *
-     * @param Node   $parentNode
-     * @param string $lang       (optional) Only return min weight for the
-     *                           given language
+     * @param string $lang (optional) Only return min weight for the
+     *                     given language
      *
      * @return int
      */
