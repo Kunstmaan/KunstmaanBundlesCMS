@@ -18,9 +18,7 @@ final class IconFontController extends AbstractController
         $this->iconFontManager = $iconFontManager;
     }
 
-    /**
-     * @Route("/chooser", name="KunstmaanMediaBundle_icon_font_chooser")
-     */
+    #[Route(path: '/chooser', name: 'KunstmaanMediaBundle_icon_font_chooser')]
     public function iconFontChooserAction(Request $request): Response
     {
         $loader = $request->query->get('loader');

@@ -64,19 +64,19 @@ class NodeTranslation extends AbstractEntity
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Regex("/^[a-zA-Z0-9\-_\/]+$/")
-     * @Assert\Length(max="255")
      */
     #[ORM\Column(name: 'slug', type: 'string', nullable: true)]
+    #[Assert\Regex('/^[a-zA-Z0-9\-_\/]+$/')]
+    #[Assert\Length(max: '255')]
     protected $slug;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\Length(max="1000")
      */
     #[ORM\Column(name: 'url', type: 'text', nullable: true)]
+    #[Assert\Length(max: '1000')]
     protected $url;
 
     /**
@@ -92,12 +92,12 @@ class NodeTranslation extends AbstractEntity
     /**
      * @var ArrayCollection
      *
-     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"created" = "ASC"})
      */
     #[ORM\OneToMany(targetEntity: NodeVersion::class, mappedBy: 'nodeTranslation')]
     #[ORM\OrderBy(['created' => 'ASC'])]
+    #[Assert\Valid]
     protected $nodeVersions;
 
     /**

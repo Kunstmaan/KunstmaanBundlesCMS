@@ -34,9 +34,7 @@ final class PagePartAdminController extends AbstractController
         $this->fullContainer = $container;
     }
 
-    /**
-     * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
-     */
+    #[Route(path: '/newPagePart', name: 'KunstmaanPagePartBundle_admin_newpagepart')]
     public function newPagePartAction(Request $request): Response
     {
         $pageId = $request->query->get('pageid');

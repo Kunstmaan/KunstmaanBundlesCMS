@@ -54,9 +54,9 @@ class ChoicePagePart extends AbstractFormPagePart
      * multiple options are set to false.
      *
      * @ORM\Column(type="string", name="empty_value", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'empty_value', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $emptyValue;
 
     /**
@@ -71,9 +71,9 @@ class ChoicePagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $errorMessageRequired;
 
     /**

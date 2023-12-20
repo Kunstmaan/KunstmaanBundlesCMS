@@ -54,10 +54,9 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Non-persistent storage of upload file
      *
-     * @Assert\File(maxSize="6000000")
-     *
      * @var UploadedFile
      */
+    #[Assert\File(maxSize: '6000000')]
     public $file;
 
     /**

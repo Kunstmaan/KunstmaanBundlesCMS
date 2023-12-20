@@ -33,18 +33,18 @@ class EmailPagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $errorMessageRequired;
 
     /**
      * Error message shows when the value is invalid
      *
      * @ORM\Column(type="string", name="error_message_invalid", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'error_message_invalid', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $errorMessageInvalid;
 
     /**

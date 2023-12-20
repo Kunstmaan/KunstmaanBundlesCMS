@@ -18,10 +18,10 @@ class AfterXSecondsRule extends AbstractRule
      * @var int
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'seconds', type: 'integer')]
+    #[Assert\NotBlank]
+    #[Assert\GreaterThanOrEqual(0)]
     private $seconds;
 
     /**

@@ -14,11 +14,11 @@ abstract class AbstractCategory extends AbstractEntity implements Translatable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
      * @Gedmo\Translatable
      */
     #[ORM\Column(name: 'name', type: 'string', length: 255)]
     #[Gedmo\Translatable]
+    #[Assert\NotBlank]
     protected $name;
 
     /**
@@ -36,8 +36,6 @@ abstract class AbstractCategory extends AbstractEntity implements Translatable
     protected $deletedAt;
 
     /**
-     * Set name
-     *
      * @param string $name
      */
     public function setName($name)
@@ -46,8 +44,6 @@ abstract class AbstractCategory extends AbstractEntity implements Translatable
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()

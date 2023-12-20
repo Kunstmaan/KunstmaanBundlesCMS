@@ -42,9 +42,8 @@ final class FormSubmissionsController extends AbstractController
 
     /**
      * The index action will use an admin list to list all the form pages
-     *
-     * @Route("/", name="KunstmaanFormBundle_formsubmissions")
      */
+    #[Route(path: '/', name: 'KunstmaanFormBundle_formsubmissions')]
     public function indexAction(Request $request): Response
     {
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
@@ -62,9 +61,8 @@ final class FormSubmissionsController extends AbstractController
      * The list action will use an admin list to list all the form submissions related to the given $nodeTranslationId
      *
      * @param int $nodeTranslationId
-     *
-     * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list", methods={"GET", "POST"})
      */
+    #[Route(path: '/list/{nodeTranslationId}', requirements: ['nodeTranslationId' => '\d+'], name: 'KunstmaanFormBundle_formsubmissions_list', methods: ['GET', 'POST'])]
     public function listAction(Request $request, $nodeTranslationId): Response
     {
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
@@ -86,10 +84,8 @@ final class FormSubmissionsController extends AbstractController
      *
      * @param int $nodeTranslationId The node translation id
      * @param int $submissionId      The submission id
-     *
-     * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" =
-     *                                                    "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit", methods={"GET", "POST"})
      */
+    #[Route(path: '/list/{nodeTranslationId}/{submissionId}', requirements: ['nodeTranslationId' => '\d+', 'submissionId' => '\d+'], name: 'KunstmaanFormBundle_formsubmissions_list_edit', methods: ['GET', 'POST'])]
     public function editAction($nodeTranslationId, $submissionId): Response
     {
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
@@ -115,11 +111,9 @@ final class FormSubmissionsController extends AbstractController
      *
      * @param int $nodeTranslationId
      *
-     * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" =
-     *                                                 "csv|xlsx|ods"}, name="KunstmaanFormBundle_formsubmissions_export", methods={"GET"})
-     *
      * @return Response
      */
+    #[Route(path: '/export/{nodeTranslationId}.{_format}', requirements: ['nodeTranslationId' => '\d+', '_format' => 'csv|xlsx|ods'], name: 'KunstmaanFormBundle_formsubmissions_export', methods: ['GET'])]
     public function exportAction($nodeTranslationId, $_format)
     {
         /** @var NodeTranslation $nodeTranslation */
@@ -134,17 +128,11 @@ final class FormSubmissionsController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "/{id}/delete",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanFormBundle_formsubmissions_delete",
-     *      methods={"POST"}
-     * )
-     *
      * @param int $id
      *
      * @return RedirectResponse
      */
+    #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanFormBundle_formsubmissions_delete', methods: ['POST'])]
     public function deleteAction(Request $request, $id)
     {
         $submission = $this->em->getRepository(FormSubmission::class)->find($id);

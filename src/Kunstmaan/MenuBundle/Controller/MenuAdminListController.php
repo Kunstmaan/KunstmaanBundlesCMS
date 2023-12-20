@@ -9,6 +9,7 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\MenuBundle\Service\MenuService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class MenuAdminListController extends AbstractAdminListController
@@ -50,10 +51,9 @@ final class MenuAdminListController extends AbstractAdminListController
     }
 
     /**
-     * @Route("/", name="kunstmaanmenubundle_admin_menu")
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '/', name: 'kunstmaanmenubundle_admin_menu')]
     public function indexAction(Request $request)
     {
         // Make sure we have a menu for each possible locale

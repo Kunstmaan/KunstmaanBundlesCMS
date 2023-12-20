@@ -89,10 +89,10 @@ class Node extends AbstractEntity implements GedmoNode
     /**
      * @var ArrayCollection
      *
-     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */
     #[ORM\OneToMany(targetEntity: NodeTranslation::class, mappedBy: 'node')]
+    #[Assert\Valid]
     protected $nodeTranslations;
 
     /**

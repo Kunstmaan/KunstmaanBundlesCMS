@@ -39,9 +39,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         $this->translator = $translator;
     }
 
-    /**
-     * @Route("/updateData", name="KunstmaanDashboardBundle_analytics_update")
-     */
+    #[Route(path: '/updateData', name: 'KunstmaanDashboardBundle_analytics_update')]
     public function runUpdateAction(Request $request)
     {
         $configId = $request->query->get('configId');
@@ -63,9 +61,8 @@ final class GoogleAnalyticsAJAXController extends AbstractController
 
     /**
      * Return an ajax response with all data for an overview
-     *
-     * @Route("/getOverview/{id}", requirements={"id" = "\d+"}, name="KunstmaanDashboardBundle_analytics_overview_ajax")
      */
+    #[Route(path: '/getOverview/{id}', requirements: ['id' => '\d+'], name: 'KunstmaanDashboardBundle_analytics_overview_ajax')]
     public function getOverviewAction($id)
     {
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
@@ -113,10 +110,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     }
 
     /* =============================== ACCOUNT =============================== */
-
-    /**
-     * @Route("/accounts/", name="kunstmaan_dashboard_ajax_accounts")
-     */
+    #[Route(path: '/accounts/', name: 'kunstmaan_dashboard_ajax_accounts')]
     public function getAccountsAction(Request $request)
     {
         $configId = $request->query->get('configId');
@@ -129,9 +123,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse($accounts, 200, ['Content-Type' => 'application/json']);
     }
 
-    /**
-     * @Route("/account/save", name="kunstmaan_dashboard_ajax_account_save")
-     */
+    #[Route(path: '/account/save', name: 'kunstmaan_dashboard_ajax_account_save')]
     public function saveAccountAction(Request $request)
     {
         $accountId = $request->query->get('id');
@@ -141,10 +133,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     }
 
     /* =============================== PROPERTY =============================== */
-
-    /**
-     * @Route("/properties/", name="kunstmaan_dashboard_ajax_properties")
-     */
+    #[Route(path: '/properties/', name: 'kunstmaan_dashboard_ajax_properties')]
     public function getPropertiesAction(Request $request)
     {
         $accountId = $request->query->get('accountId');
@@ -158,9 +147,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse($properties, 200, ['Content-Type' => 'application/json']);
     }
 
-    /**
-     * @Route("/property/save", name="kunstmaan_dashboard_ajax_property_save")
-     */
+    #[Route(path: '/property/save', name: 'kunstmaan_dashboard_ajax_property_save')]
     public function savePropertyAction(Request $request)
     {
         $propertyId = $request->query->get('id');
@@ -170,10 +157,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     }
 
     /* =============================== PROFILE =============================== */
-
-    /**
-     * @Route("/profiles/", name="kunstmaan_dashboard_ajax_profiles")
-     */
+    #[Route(path: '/profiles/', name: 'kunstmaan_dashboard_ajax_profiles')]
     public function getProfilesAction(Request $request)
     {
         $accountId = $request->query->get('accountId');
@@ -188,9 +172,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse($profiles, 200, ['Content-Type' => 'application/json']);
     }
 
-    /**
-     * @Route("/profile/save", name="kunstmaan_dashboard_ajax_profile_save")
-     */
+    #[Route(path: '/profile/save', name: 'kunstmaan_dashboard_ajax_profile_save')]
     public function saveProfileAction(Request $request)
     {
         $propertyId = $request->query->get('id');
@@ -200,10 +182,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     }
 
     /* =============================== CONFIG =============================== */
-
-    /**
-     * @Route("/config/save", name="kunstmaan_dashboard_ajax_config_save")
-     */
+    #[Route(path: '/config/save', name: 'kunstmaan_dashboard_ajax_config_save')]
     public function saveConfigAction(Request $request)
     {
         // get params
@@ -241,9 +220,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse();
     }
 
-    /**
-     * @Route("/config/remove", name="kunstmaan_dashboard_ajax_config_remove")
-     */
+    #[Route(path: '/config/remove', name: 'kunstmaan_dashboard_ajax_config_remove')]
     public function removeConfigAction(Request $request)
     {
         // get params
@@ -257,9 +234,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse();
     }
 
-    /**
-     * @Route("/config/get", name="kunstmaan_dashboard_ajax_config_get")
-     */
+    #[Route(path: '/config/get', name: 'kunstmaan_dashboard_ajax_config_get')]
     public function getConfigAction(Request $request)
     {
         $config = $this->em->getRepository(AnalyticsConfig::class)->findFirst();
@@ -275,10 +250,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
     }
 
     /* =============================== SEGMENT =============================== */
-
-    /**
-     * @Route("/segment/add/", name="kunstmaan_dashboard_ajax_segment_add")
-     */
+    #[Route(path: '/segment/add/', name: 'kunstmaan_dashboard_ajax_segment_add')]
     public function addSegmentAction(Request $request)
     {
         $configId = $request->query->get('configId');
@@ -303,9 +275,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse();
     }
 
-    /**
-     * @Route("/segment/delete", name="kunstmaan_dashboard_ajax_segment_delete")
-     */
+    #[Route(path: '/segment/delete', name: 'kunstmaan_dashboard_ajax_segment_delete')]
     public function deleteSegmentAction(Request $request)
     {
         $id = $request->query->get('id');
@@ -314,9 +284,7 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         return new JsonResponse();
     }
 
-    /**
-     * @Route("/segment/edit", name="kunstmaan_dashboard_ajax_segment_edit")
-     */
+    #[Route(path: '/segment/edit', name: 'kunstmaan_dashboard_ajax_segment_edit')]
     public function editSegmentAction(Request $request)
     {
         $id = $request->query->get('id');

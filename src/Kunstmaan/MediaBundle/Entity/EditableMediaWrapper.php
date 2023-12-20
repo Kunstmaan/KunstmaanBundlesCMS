@@ -19,10 +19,10 @@ class EditableMediaWrapper extends AbstractEntity
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media", cascade={"persist"})
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: Media::class, cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
+    #[Assert\NotNull]
     private $media;
 
     /**

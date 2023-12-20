@@ -25,9 +25,8 @@ final class VarnishController extends AbstractController
 
     /**
      * Generates the varnish ban form.
-     *
-     * @Route("/settings/varnish", name="kunstmaancachebundle_varnish_settings_ban")
      */
+    #[Route(path: '/settings/varnish', name: 'kunstmaancachebundle_varnish_settings_ban')]
     public function indexAction(Request $request): Response
     {
         $this->checkPermission();
@@ -54,10 +53,9 @@ final class VarnishController extends AbstractController
     /**
      * Ban route from varnish
      *
-     * @Route("/varnish/ban/{node}", name="kunstmaancachebundle_varnish_ban")
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/varnish/ban/{node}', name: 'kunstmaancachebundle_varnish_ban')]
     public function banAction(Node $node)
     {
         $this->checkPermission();

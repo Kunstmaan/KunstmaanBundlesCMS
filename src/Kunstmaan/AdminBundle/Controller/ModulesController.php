@@ -8,9 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ModulesController extends AbstractController
 {
-    /**
-     * @Route("/", name="KunstmaanAdminBundle_modules")
-     */
+    #[Route(path: '/', name: 'KunstmaanAdminBundle_modules')]
     public function indexAction(): Response
     {
         return $this->render('@KunstmaanAdmin/Modules/index.html.twig');

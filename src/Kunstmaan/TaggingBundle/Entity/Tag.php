@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TaggingBundle\Repository\TagRepository")
  * @ORM\Table(name="kuma_tags")
- * @UniqueEntity("name")
  */
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\Table(name: 'kuma_tags')]

@@ -21,9 +21,8 @@ final class UrlReplaceController
 
     /**
      * Render a url with the twig url replace filter
-     *
-     * @Route("/replace", name="KunstmaanNodeBundle_urlchooser_replace", condition="request.isXmlHttpRequest()")
      */
+    #[Route(path: '/replace', name: 'KunstmaanNodeBundle_urlchooser_replace', condition: 'request.isXmlHttpRequest()')]
     public function replaceURLAction(Request $request)
     {
         $response = new JsonResponse();

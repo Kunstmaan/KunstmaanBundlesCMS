@@ -18,37 +18,37 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'minutes', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private $minutes;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'hours', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private $hours;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'days', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private $days;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'times', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\NotBlank]
     private $times;
 
     /**

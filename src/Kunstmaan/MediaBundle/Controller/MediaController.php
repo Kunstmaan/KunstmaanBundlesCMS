@@ -40,10 +40,9 @@ final class MediaController extends AbstractController
     /**
      * @param int $mediaId
      *
-     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_show")
-     *
      * @return Response
      */
+    #[Route(path: '/{mediaId}', requirements: ['mediaId' => '\d+'], name: 'KunstmaanMediaBundle_media_show')]
     public function showAction(Request $request, $mediaId)
     {
         /* @var Media $media */
@@ -80,10 +79,9 @@ final class MediaController extends AbstractController
     /**
      * @param int $mediaId
      *
-     * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_delete", methods={"POST"})
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '/delete/{mediaId}', requirements: ['mediaId' => '\d+'], name: 'KunstmaanMediaBundle_media_delete', methods: ['POST'])]
     public function deleteAction(Request $request, $mediaId)
     {
         if (!$this->isCsrfTokenValid('media-delete', $request->request->get('token'))) {
@@ -118,9 +116,8 @@ final class MediaController extends AbstractController
 
     /**
      * @param int $folderId
-     *
-     * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload")
      */
+    #[Route(path: 'bulkupload/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_bulk_upload')]
     public function bulkUploadAction($folderId): Response
     {
         /* @var Folder $folder */
@@ -132,10 +129,9 @@ final class MediaController extends AbstractController
     /**
      * @param int $folderId
      *
-     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit", methods={"POST"})
-     *
      * @return JsonResponse
      */
+    #[Route(path: 'bulkuploadsubmit/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_bulk_upload_submit', methods: ['POST'])]
     public function bulkUploadSubmitAction(Request $request, $folderId)
     {
         // Settings
@@ -288,10 +284,9 @@ final class MediaController extends AbstractController
     /**
      * @param int $folderId
      *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload", methods={"GET", "POST"})
-     *
      * @return JsonResponse
      */
+    #[Route(path: 'drop/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_drop_upload', methods: ['GET', 'POST'])]
     public function dropAction(Request $request, $folderId)
     {
         /* @var Folder $folder */
@@ -327,9 +322,8 @@ final class MediaController extends AbstractController
     /**
      * @param int    $folderId The folder id
      * @param string $type     The type
-     *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create", methods={"GET", "POST"})
      */
+    #[Route(path: 'create/{folderId}/{type}', requirements: ['folderId' => '\d+', 'type' => '.+'], name: 'KunstmaanMediaBundle_media_create', methods: ['GET', 'POST'])]
     public function createAction(Request $request, $folderId, $type): Response
     {
         $responseOrData = $this->createAndRedirect($request, $folderId, $type, 'KunstmaanMediaBundle_folder_show');
@@ -409,10 +403,9 @@ final class MediaController extends AbstractController
      * @param int    $folderId The folder id
      * @param string $type     The type
      *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create", methods={"POST"})
-     *
      * @return array|RedirectResponse
      */
+    #[Route(path: 'create/modal/{folderId}/{type}', requirements: ['folderId' => '\d+', 'type' => '.+'], name: 'KunstmaanMediaBundle_media_modal_create', methods: ['POST'])]
     public function createModalAction(Request $request, $folderId, $type)
     {
         $cKEditorFuncNum = $request->query->get('CKEditorFuncNum');
@@ -437,10 +430,9 @@ final class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/bulk-move", name="KunstmaanMediaBundle_media_bulk_move")
-     *
      * @return JsonResponse|Response
      */
+    #[Route(path: '/bulk-move', name: 'KunstmaanMediaBundle_media_bulk_move')]
     public function bulkMoveAction(Request $request)
     {
         $mediaRepo = $this->em->getRepository(Media::class);

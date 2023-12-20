@@ -26,9 +26,7 @@ abstract class AbstractNewsletterController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/{popup}", name="popup_newsletter_index", requirements={"popup": "\d+"})
-     */
+    #[Route(path: '/{popup}', name: 'popup_newsletter_index', requirements: ['popup' => '\d+'])]
     public function indexAction($popup)
     {
         // NEXT_MAJOR remove getDoctrine fallback
@@ -44,10 +42,9 @@ abstract class AbstractNewsletterController extends AbstractController
     }
 
     /**
-     * @Route("/{popup}/subscribe", name="popup_newsletter_subscribe", requirements={"popup": "\d+"}, methods={"POST"})
-     *
      * @return Response
      */
+    #[Route(path: '/{popup}/subscribe', name: 'popup_newsletter_subscribe', requirements: ['popup' => '\d+'], methods: ['POST'])]
     public function subscribeAction(Request $request, $popup)
     {
         // NEXT_MAJOR remove getDoctrine fallback

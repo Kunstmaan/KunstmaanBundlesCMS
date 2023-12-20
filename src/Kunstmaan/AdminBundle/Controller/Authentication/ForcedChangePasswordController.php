@@ -21,9 +21,7 @@ final class ForcedChangePasswordController extends AbstractController
         $this->userManager = $userManager;
     }
 
-    /**
-     * @Route("/change-password", name="kunstmaan_admin_forced_change_password", methods={"GET", "POST"})
-     */
+    #[Route(path: '/change-password', name: 'kunstmaan_admin_forced_change_password', methods: ['GET', 'POST'])]
     public function formAction(Request $request): Response
     {
         $user = $this->getUser();
@@ -45,9 +43,7 @@ final class ForcedChangePasswordController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/change-password/success", name="kunstmaan_admin_forced_change_password_success", methods={"GET"})
-     */
+    #[Route(path: '/change-password/success', name: 'kunstmaan_admin_forced_change_password_success', methods: ['GET'])]
     public function successAction(): Response
     {
         return $this->render('@KunstmaanAdmin/authentication/forced_change_password/success.html.twig', [
