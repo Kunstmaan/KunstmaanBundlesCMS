@@ -32,7 +32,10 @@ class Translator extends SymfonyTranslator
         }
     }
 
-    public function warmUp($cacheDir): array
+    /**
+     * @param string|null $buildDir
+     */
+    public function warmUp(string $cacheDir /* , string $buildDir = null */): array
     {
         return [];
     }

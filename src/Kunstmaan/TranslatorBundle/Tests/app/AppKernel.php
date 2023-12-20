@@ -85,6 +85,15 @@ class AppKernel extends Kernel
             if (class_exists(Passport::class) && !class_exists(ChainUserChecker::class)) {
                 $containerBuilder->prependExtensionConfig('security', ['enable_authenticator_manager' => true]);
             }
+
+            // Only set these config options on 6.2+
+            if (class_exists(ChainUserChecker::class)) {
+                $containerBuilder->prependExtensionConfig('framework', [
+                    'handle_all_throwables' => true,
+                    'php_errors' => ['log' => true],
+                    'annotations' => ['enabled' => false],
+                ]);
+            }
         });
     }
 

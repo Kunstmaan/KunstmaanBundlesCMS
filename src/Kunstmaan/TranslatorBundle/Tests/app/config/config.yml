@@ -7,6 +7,8 @@ framework:
     router:
         resource: "%kernel.project_dir%/config/routing.yml"
         utf8: true
+    validation:
+        email_validation_mode: html5
 
 kunstmaan_admin:
     website_title: 'PHPUnit test app'
