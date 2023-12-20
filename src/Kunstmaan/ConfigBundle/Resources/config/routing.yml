@@ -1,4 +1,4 @@
 kunstmaanconfigbundle_default:
     path:      /%kunstmaan_admin.admin_prefix%/settings/config/{internalName}
     defaults:
-        _controller: kunstmaan_config.controller.config:indexAction
+        _controller: kunstmaan_config.controller.config::indexAction
