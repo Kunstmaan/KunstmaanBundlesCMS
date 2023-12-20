@@ -57,14 +57,11 @@ final class MenuItemAdminListController extends AbstractAdminListController
     }
 
     /**
-     * The index action
-     *
      * @param int $menuid
      *
      * @return Response
-     *
-     * @Route("/{menuid}/items", name="kunstmaanmenubundle_admin_menuitem")
      */
+    #[Route(path: '/{menuid}/items', name: 'kunstmaanmenubundle_admin_menuitem')]
     public function indexAction(Request $request, $menuid)
     {
         $menuRepo = $this->em->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'));
@@ -104,52 +101,40 @@ final class MenuItemAdminListController extends AbstractAdminListController
     }
 
     /**
-     * The add action
-     *
-     * @Route("/{menuid}/items/add", name="kunstmaanmenubundle_admin_menuitem_add", methods={"GET", "POST"})
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '/{menuid}/items/add', name: 'kunstmaanmenubundle_admin_menuitem_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request, $menuid)
     {
         return parent::doAddAction($this->getAdminListConfigurator($request, $menuid), null, $request);
     }
 
     /**
-     * The edit action
-     *
      * @param int $id
      *
-     * @Route("{menuid}/items/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaanmenubundle_admin_menuitem_edit", methods={"GET", "POST"})
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '{menuid}/items/{id}/edit', requirements: ['id' => '\d+'], name: 'kunstmaanmenubundle_admin_menuitem_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $menuid, $id)
     {
         return parent::doEditAction($this->getAdminListConfigurator($request, $menuid, $id), $id, $request);
     }
 
     /**
-     * The delete action
-     *
      * @param int $id
      *
-     * @Route("{menuid}/items/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaanmenubundle_admin_menuitem_delete", methods={"GET", "POST"})
-     *
-     * @return array
+     * @return Response
      */
+    #[Route(path: '{menuid}/items/{id}/delete', requirements: ['id' => '\d+'], name: 'kunstmaanmenubundle_admin_menuitem_delete', methods: ['GET', 'POST'])]
     public function deleteAction(Request $request, $menuid, $id)
     {
         return parent::doDeleteAction($this->getAdminListConfigurator($request, $menuid), $id, $request);
     }
 
     /**
-     * Move an item up in the list.
-     *
-     * @Route("{menuid}/items/{item}/move-up", name="kunstmaanmenubundle_admin_menuitem_move_up", methods={"GET"})
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '{menuid}/items/{item}/move-up', name: 'kunstmaanmenubundle_admin_menuitem_move_up', methods: ['GET'])]
     public function moveUpAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
@@ -166,12 +151,9 @@ final class MenuItemAdminListController extends AbstractAdminListController
     }
 
     /**
-     * Move an item down in the list.
-     *
-     * @Route("{menuid}/items/{item}/move-down", name="kunstmaanmenubundle_admin_menuitem_move_down", methods={"GET"})
-     *
      * @return RedirectResponse
      */
+    #[Route(path: '{menuid}/items/{item}/move-down', name: 'kunstmaanmenubundle_admin_menuitem_move_down', methods: ['GET'])]
     public function moveDownAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();

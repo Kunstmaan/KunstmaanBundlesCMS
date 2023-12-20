@@ -18,27 +18,27 @@ class OnExitIntentRule extends AbstractRule
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'sensitivity', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private $sensitivity;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'timer', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private $timer;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'delay', type: 'integer', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private $delay;
 
     /**

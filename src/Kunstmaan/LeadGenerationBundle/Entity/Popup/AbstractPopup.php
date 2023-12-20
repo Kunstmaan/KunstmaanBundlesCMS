@@ -14,12 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kuma_popup")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @UniqueEntity(fields={"name"})
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'kuma_popup')]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
+#[UniqueEntity(fields: ['name'])]
 #[UniqueEntity(fields: ['name'])]
 abstract class AbstractPopup implements EntityInterface
 {
@@ -37,18 +37,18 @@ abstract class AbstractPopup implements EntityInterface
      * @var string an unique name for each popup
      *
      * @ORM\Column(type="string", name="name", unique=true)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'name', type: 'string', unique: true)]
+    #[Assert\NotBlank]
     protected $name;
 
     /**
      * @var string the html element id of the popup
      *
      * @ORM\Column(type="string", name="html_id")
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'html_id', type: 'string')]
+    #[Assert\NotBlank]
     protected $htmlId;
 
     /**

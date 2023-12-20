@@ -23,11 +23,11 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
      * @var string
      *
      * @Gedmo\Translatable()
-     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 255, nullable: true)]
     #[Gedmo\Translatable]
+    #[Assert\NotBlank]
     private $name;
 
     /**
@@ -53,10 +53,10 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="internal_name", type="string", length=255, nullable=true)
      */
     #[ORM\Column(name: 'internal_name', type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private $internalName;
 
     /**
@@ -87,8 +87,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
      * @return CookieType
@@ -101,8 +99,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -111,8 +107,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Set shortDescription
-     *
      * @param string $shortDescription
      *
      * @return CookieType
@@ -125,8 +119,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get shortDescription
-     *
      * @return string
      */
     public function getShortDescription()
@@ -135,8 +127,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Set longDescription
-     *
      * @param string $longDescription
      *
      * @return CookieType
@@ -149,8 +139,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get longDescription
-     *
      * @return string
      */
     public function getLongDescription()
@@ -159,8 +147,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Set internalName
-     *
      * @param string $internalName
      *
      * @return CookieType
@@ -173,8 +159,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get internalName
-     *
      * @return string
      */
     public function getInternalName()
@@ -183,8 +167,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Set weight
-     *
      * @param int $weight
      *
      * @return CookieType
@@ -197,8 +179,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get weight
-     *
      * @return int
      */
     public function getWeight()
@@ -207,8 +187,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Set alwaysOn
-     *
      * @param bool $alwaysOn
      *
      * @return CookieType
@@ -221,8 +199,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get alwaysOn
-     *
      * @return bool
      */
     public function isAlwaysOn()
@@ -231,8 +207,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get alwaysOn
-     *
      * @return bool
      */
     public function getAlwaysOn()
@@ -261,8 +235,6 @@ class CookieType extends AbstractEntity implements OverviewNavigationInterface
     }
 
     /**
-     * Get cookies
-     *
      * @return Collection
      */
     public function getCookies()

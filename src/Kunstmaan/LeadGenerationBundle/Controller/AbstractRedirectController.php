@@ -17,9 +17,7 @@ abstract class AbstractRedirectController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/{popup}", name="redirect_index", requirements={"popup": "\d+"})
-     */
+    #[Route(path: '/{popup}', name: 'redirect_index', requirements: ['popup' => '\d+'])]
     public function indexAction($popup)
     {
         /** @var AbstractPopup $thePopup */

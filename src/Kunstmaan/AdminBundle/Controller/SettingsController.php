@@ -7,7 +7,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class SettingsController extends AbstractController
 {
@@ -22,13 +21,7 @@ final class SettingsController extends AbstractController
         $this->logger = $logger;
     }
 
-    /**
-     * Index page for the settings
-     *
-     * @Route("/", name="KunstmaanAdminBundle_settings")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/', name: 'KunstmaanAdminBundle_settings')]
     public function indexAction(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -36,13 +29,7 @@ final class SettingsController extends AbstractController
         return $this->render('@KunstmaanAdmin/Settings/index.html.twig');
     }
 
-    /**
-     * Show bundles version update information
-     *
-     * @Route("/bundle-version", name="KunstmaanAdminBundle_settings_bundle_version")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/bundle-version', name: 'KunstmaanAdminBundle_settings_bundle_version')]
     public function bundleVersionAction(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');

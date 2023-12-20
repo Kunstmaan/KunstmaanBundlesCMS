@@ -21,9 +21,9 @@ class SubmitButtonPagePart extends AbstractPagePart
      * The label on the submit button
      *
      * @ORM\Column(type="string", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'label', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $label;
 
     /**

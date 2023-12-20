@@ -26,9 +26,7 @@ final class TranslatorCommandController extends AbstractController
         $this->translator = $translator;
     }
 
-    /**
-     * @Route("/clear-cache", name="KunstmaanTranslatorBundle_command_clear_cache")
-     */
+    #[Route(path: '/clear-cache', name: 'KunstmaanTranslatorBundle_command_clear_cache')]
     public function clearCacheAction()
     {
         $this->resourceCacher->flushCache();
@@ -41,9 +39,7 @@ final class TranslatorCommandController extends AbstractController
         return $this->redirectToRoute('KunstmaanTranslatorBundle_settings_translations');
     }
 
-    /**
-     * @Route("/import", name="KunstmaanTranslatorBundle_command_import")
-     */
+    #[Route(path: '/import', name: 'KunstmaanTranslatorBundle_command_import')]
     public function importAction()
     {
         $importCommand = new ImportCommand();
@@ -63,9 +59,7 @@ final class TranslatorCommandController extends AbstractController
         return $this->redirectToRoute('KunstmaanTranslatorBundle_settings_translations');
     }
 
-    /**
-     * @Route("/import-forced", name="KunstmaanTranslatorBundle_command_import_forced")
-     */
+    #[Route(path: '/import-forced', name: 'KunstmaanTranslatorBundle_command_import_forced')]
     public function importForcedAction()
     {
         $importCommand = new ImportCommand();

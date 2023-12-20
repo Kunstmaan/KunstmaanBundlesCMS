@@ -13,9 +13,8 @@ class TextWithLocale
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $locale;
 
     /**

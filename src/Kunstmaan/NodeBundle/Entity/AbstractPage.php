@@ -16,19 +16,19 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'title', type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     protected $title;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true, name="page_title", length=255)
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'page_title', type: 'string', nullable: true, length: 255)]
+    #[Assert\Length(max: 255)]
     protected $pageTitle;
 
     /**
@@ -37,8 +37,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     protected $parent;
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return AbstractPage
@@ -51,8 +49,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -61,8 +57,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Set pagetitle
-     *
      * @param string $pageTitle
      *
      * @return AbstractPage
@@ -75,8 +69,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Get pagetitle
-     *
      * @return string
      */
     public function getPageTitle()

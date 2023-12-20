@@ -33,14 +33,9 @@ final class EntityLockCheckController extends AbstractController
     }
 
     /**
-     * @Route(
-     *      "check/{id}/{repository}",
-     *      requirements={"id" = "\d+"},
-     *      name="KunstmaanAdminListBundle_entity_lock_check"
-     * )
-     *
      * @return JsonResponse
      */
+    #[Route(path: 'check/{id}/{repository}', requirements: ['id' => '\d+'], name: 'KunstmaanAdminListBundle_entity_lock_check')]
     public function checkAction(Request $request, $id, $repository)
     {
         $entityIsLocked = false;

@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class GoogleAnalyticsController extends AbstractController
 {
@@ -35,9 +34,8 @@ final class GoogleAnalyticsController extends AbstractController
 
     /**
      * The index action will render the main screen the users see when they log in in to the admin
-     *
-     * @Route("/", name="KunstmaanDashboardBundle_widget_googleanalytics")
      */
+    #[Route(path: '/', name: 'KunstmaanDashboardBundle_widget_googleanalytics')]
     public function widgetAction(Request $request): Response
     {
         $params['redirect_uri'] = $this->container->get('router')->generate('KunstmaanDashboardBundle_setToken', [], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -93,11 +91,7 @@ final class GoogleAnalyticsController extends AbstractController
         return $this->render('@KunstmaanDashboard/GoogleAnalytics/widget.html.twig', $params);
     }
 
-    /**
-     * @Route("/setToken/", name="KunstmaanDashboardBundle_setToken")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/setToken/', name: 'KunstmaanDashboardBundle_setToken')]
     public function setTokenAction(Request $request): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -116,11 +110,7 @@ final class GoogleAnalyticsController extends AbstractController
         return $this->redirectToRoute('KunstmaanDashboardBundle_widget_googleanalytics');
     }
 
-    /**
-     * @Route("/config", name="KunstmaanDashboardBundle_Config")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/config', name: 'KunstmaanDashboardBundle_Config')]
     public function configAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -157,11 +147,7 @@ final class GoogleAnalyticsController extends AbstractController
         return $this->render('@KunstmaanDashboard/GoogleAnalytics/setupcontainer.html.twig', $params);
     }
 
-    /**
-     * @Route("/resetProfile", name="KunstmaanDashboardBundle_analytics_resetProfile")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/resetProfile', name: 'KunstmaanDashboardBundle_analytics_resetProfile')]
     public function resetProfileAction(): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -171,11 +157,7 @@ final class GoogleAnalyticsController extends AbstractController
         return $this->redirectToRoute('KunstmaanDashboardBundle_ProfileSelection');
     }
 
-    /**
-     * @Route("/resetProperty", name="KunstmaanDashboardBundle_analytics_resetProperty")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/resetProperty', name: 'KunstmaanDashboardBundle_analytics_resetProperty')]
     public function resetPropertyAction(): RedirectResponse
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');

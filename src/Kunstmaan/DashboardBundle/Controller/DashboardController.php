@@ -21,10 +21,9 @@ final class DashboardController extends AbstractController
     /**
      * The index action will render the main screen the users see when they log in in to the admin
      *
-     * @Route("/", name="kunstmaan_dashboard")
-     *
      * @return Response
      */
+    #[Route(path: '/', name: 'kunstmaan_dashboard')]
     public function indexAction(Request $request)
     {
         $widgets = $this->widgetManager->getWidgets();

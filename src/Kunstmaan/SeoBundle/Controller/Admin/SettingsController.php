@@ -27,9 +27,8 @@ final class SettingsController extends AbstractController
 
     /**
      * Generates the robots administration form and fills it with a default value if needed.
-     *
-     * @Route(path="/", name="KunstmaanSeoBundle_settings_robots")
      */
+    #[Route(path: '/', name: 'KunstmaanSeoBundle_settings_robots')]
     public function robotsSettingsAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');

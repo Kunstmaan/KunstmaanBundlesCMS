@@ -25,10 +25,10 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     /**
      * The thank you text to be shown when the form was successfully submitted
      *
-     * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
      */
     #[ORM\Column(name: 'thanks', type: 'text', nullable: true)]
+    #[Assert\NotBlank]
     protected $thanks;
 
     /**
@@ -43,9 +43,9 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * The sender of the administrative email
      *
      * @ORM\Column(type="string", name="from_email", nullable=true)
-     * @Assert\Email()
      */
     #[ORM\Column(name: 'from_email', type: 'string', nullable: true)]
+    #[Assert\Email]
     protected $fromEmail;
 
     /**

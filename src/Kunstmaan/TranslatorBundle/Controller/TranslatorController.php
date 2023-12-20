@@ -43,9 +43,7 @@ final class TranslatorController extends AbstractAdminListController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
-     */
+    #[Route(path: '/', name: 'KunstmaanTranslatorBundle_settings_translations')]
     public function indexAction(Request $request): Response
     {
         $configurator = $this->getAdminListConfigurator();
@@ -74,11 +72,8 @@ final class TranslatorController extends AbstractAdminListController
      * @param string $keyword
      * @param string $domain
      * @param string $locale
-     *
-     * @throws \Doctrine\ORM\OptimisticLockException
-     *
-     * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add", methods={"GET", "POST"})
      */
+    #[Route(path: '/add', name: 'KunstmaanTranslatorBundle_settings_translations_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request, $keyword = '', $domain = '', $locale = ''): Response
     {
         $configurator = $this->getAdminListConfigurator();
@@ -124,13 +119,7 @@ final class TranslatorController extends AbstractAdminListController
         ]);
     }
 
-    /**
-     * The edit action
-     *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit", methods={"GET", "POST"})
-     *
-     * @throws \InvalidArgumentException
-     */
+    #[Route(path: '/{id}/edit', requirements: ['id' => '\d+'], name: 'KunstmaanTranslatorBundle_settings_translations_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $id): Response
     {
         $configurator = $this->getAdminListConfigurator();
@@ -185,9 +174,7 @@ final class TranslatorController extends AbstractAdminListController
         ]);
     }
 
-    /**
-     * @Route("upload", name="KunstmaanTranslatorBundle_settings_translations_upload", methods={"GET", "POST"})
-     */
+    #[Route(path: 'upload', name: 'KunstmaanTranslatorBundle_settings_translations_upload', methods: ['GET', 'POST'])]
     public function uploadFileAction(Request $request): Response
     {
         /** @var FormBuilderInterface $uploadForm */
@@ -214,9 +201,8 @@ final class TranslatorController extends AbstractAdminListController
 
     /**
      * @param string $_format
-     *
-     * @Route("/export.{_format}", requirements={"_format" = "csv|ods|xlsx"}, name="KunstmaanTranslatorBundle_settings_translations_export", methods={"GET", "POST"})
      */
+    #[Route(path: '/export.{_format}', requirements: ['_format' => 'csv|ods|xlsx'], name: 'KunstmaanTranslatorBundle_settings_translations_export', methods: ['GET', 'POST'])]
     public function exportAction(Request $request, $_format): Response
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
@@ -242,9 +228,7 @@ final class TranslatorController extends AbstractAdminListController
         return $this->redirectToRoute($editUrl['path'], $editUrl['params']);
     }
 
-    /**
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete", methods={"POST"})
-     */
+    #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanTranslatorBundle_settings_translations_delete', methods: ['POST'])]
     public function deleteAction(Request $request, $id): RedirectResponse
     {
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
@@ -279,10 +263,9 @@ final class TranslatorController extends AbstractAdminListController
     }
 
     /**
-     * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit", methods={"POST"})
-     *
      * @return JsonResponse|Response
      */
+    #[Route(path: '/inline-edit', name: 'KunstmaanTranslatorBundle_settings_translations_inline_edit', methods: ['POST'])]
     public function inlineEditAction(Request $request)
     {
         $values = $request->request->all();

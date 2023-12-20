@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class SiteSwitchController
 {
@@ -26,13 +25,9 @@ final class SiteSwitchController
     }
 
     /**
-     * @Route("/switch-site", name="KunstmaanMultiDomainBundle_switch_site", methods={"GET"})
-     *
      * @return Response
-     *
-     * @throws AccessDeniedException
-     * @throws NotFoundHttpException
      */
+    #[Route(path: '/switch-site', name: 'KunstmaanMultiDomainBundle_switch_site', methods: ['GET'])]
     public function switchAction(Request $request)
     {
         $host = $request->query->get('host');

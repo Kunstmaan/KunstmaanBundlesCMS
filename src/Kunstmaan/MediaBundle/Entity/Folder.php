@@ -42,10 +42,10 @@ class Folder extends AbstractEntity implements GedmoNode
      *
      * @Gedmo\Translatable
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'name', type: 'string')]
     #[Gedmo\Translatable]
+    #[Assert\NotBlank]
     protected $name;
 
     /**

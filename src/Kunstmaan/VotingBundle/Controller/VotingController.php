@@ -24,9 +24,7 @@ final class VotingController extends AbstractController
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @Route("/voting-upvote", name="voting_upvote")
-     */
+    #[Route(path: '/voting-upvote', name: 'voting_upvote')]
     public function upVoteAction(Request $request): Response
     {
         $reference = $request->query->get('reference');
@@ -36,9 +34,7 @@ final class VotingController extends AbstractController
         return $this->render('@KunstmaanVoting/UpDown/voted.html.twig');
     }
 
-    /**
-     * @Route("/voting-downvote", name="voting_downvote")
-     */
+    #[Route(path: '/voting-downvote', name: 'voting_downvote')]
     public function downVoteAction(Request $request): Response
     {
         $reference = $request->query->get('reference');
@@ -48,9 +44,7 @@ final class VotingController extends AbstractController
         return $this->render('@KunstmaanVoting/UpDown/voted.html.twig');
     }
 
-    /**
-     * @Route("/voting-facebooklike", name="voting_facebooklike")
-     */
+    #[Route(path: '/voting-facebooklike', name: 'voting_facebooklike')]
     public function facebookLikeAction(Request $request)
     {
         $response = $request->query->get('response');
@@ -58,9 +52,7 @@ final class VotingController extends AbstractController
         $this->eventDispatcher->dispatch(new FacebookLikeEvent($request, $response, $value), Events::FACEBOOK_LIKE);
     }
 
-    /**
-     * @Route("/voting-facebooksend", name="voting_facebooksend")
-     */
+    #[Route(path: '/voting-facebooksend', name: 'voting_facebooksend')]
     public function facebookSendAction(Request $request)
     {
         $response = $request->query->get('response');
@@ -68,9 +60,7 @@ final class VotingController extends AbstractController
         $this->eventDispatcher->dispatch(new FacebookSendEvent($request, $response, $value), Events::FACEBOOK_SEND);
     }
 
-    /**
-     * @Route("/voting-linkedinshare", name="voting_linkedinshare")
-     */
+    #[Route(path: '/voting-linkedinshare', name: 'voting_linkedinshare')]
     public function linkedInShareAction(Request $request)
     {
         $reference = $request->query->get('reference');

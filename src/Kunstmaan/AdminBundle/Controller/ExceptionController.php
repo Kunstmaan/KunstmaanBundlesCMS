@@ -24,23 +24,16 @@ final class ExceptionController extends AbstractAdminListController
         return $this->configurator;
     }
 
-    /**
-     * @Route("/", name="kunstmaanadminbundle_admin_exception")
-     */
+    #[Route(path: '/', name: 'kunstmaanadminbundle_admin_exception')]
     public function indexAction(Request $request)
     {
         return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
-     * @Route("/resolve_all", name="kunstmaanadminbundle_admin_exception_resolve_all", methods={"POST"})
-     *
      * @return RedirectResponse
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \InvalidArgumentException
      */
+    #[Route(path: '/resolve_all', name: 'kunstmaanadminbundle_admin_exception_resolve_all', methods: ['POST'])]
     public function resolveAllAction(Request $request)
     {
         if (!$this->isCsrfTokenValid('exception-resolve_all', $request->request->get('token'))) {
@@ -60,14 +53,9 @@ final class ExceptionController extends AbstractAdminListController
     }
 
     /**
-     * @Route("/toggle_resolve/{id}", name="kunstmaanadminbundle_admin_exception_toggle_resolve", methods={"POST"})
-     *
      * @return RedirectResponse
-     *
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \InvalidArgumentException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
      */
+    #[Route(path: '/toggle_resolve/{id}', name: 'kunstmaanadminbundle_admin_exception_toggle_resolve', methods: ['POST'])]
     public function toggleResolveAction(Request $request, Exception $model)
     {
         if (!$this->isCsrfTokenValid('exception-resolve-item', $request->request->get('token'))) {
