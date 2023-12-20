@@ -43,7 +43,7 @@
     "gulp-inject": "^4.2.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rev": "^9.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-uglify": "^2.1.2",
     "gulp-util": "^3.0.8",
@@ -51,6 +51,7 @@
     "node-notifier": "^9.0.0",
     "postcss-reporter": "^3.0.0",
     "postcss-scss": "^1.0.6",
+    "sass": "^1.69.5",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^4.1.0",
@@ -62,7 +63,6 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
     "@snipsonian/scss": "1.8.2",
-    "svgxuse": "^1.2.6",
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-sass": "^3.4.1",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
@@ -75,9 +75,10 @@
     "picturefill": "^3.0.2",
     "plupload": "^2.3.6",
     "select2": "^4.0.3",
+    "smoothscroll-polyfill": "^0.4.2",
     "sortablejs": "^1.8.1",
+    "svgxuse": "^1.2.6",
     "velocity-animate": "^1.5.2",
-    "x-editable": "^1.5.1",
-    "smoothscroll-polyfill": "^0.4.2"
+    "x-editable": "^1.5.1"
   }
 }

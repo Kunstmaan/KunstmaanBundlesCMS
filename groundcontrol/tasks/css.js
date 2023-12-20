@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import sass from 'gulp-sass';
+import dartSass from 'sass';
 import notifier from 'node-notifier';
 import sourcemaps from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
@@ -7,6 +7,8 @@ import rev from 'gulp-rev';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
 import debug from 'gulp-debug';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass(dartSass);
 
 export function createCssLocalTask({ src = undefined, dest = undefined }) {
     return function cssLocal() {
