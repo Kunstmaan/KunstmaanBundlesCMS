@@ -27,10 +27,10 @@ class Group implements GroupInterface
     protected $id;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     #[ORM\Column(name: 'name', type: 'string')]
+    #[Assert\NotBlank]
     protected $name;
 
     /**
@@ -226,9 +226,7 @@ class Group implements GroupInterface
         return $this;
     }
 
-    /**
-     * @Assert\Callback()
-     */
+    #[Assert\Callback]
     public function isGroupValid(ExecutionContextInterface $context)
     {
         if (!(\count($this->getRoles()) > 0)) {

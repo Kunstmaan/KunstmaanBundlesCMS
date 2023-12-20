@@ -33,27 +33,27 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      * Error message shows when the page part is required and nothing is filled in
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'error_message_required', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $errorMessageRequired;
 
     /**
      * If set the entered value will be matched with this regular expression
      *
      * @ORM\Column(type="string", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'regex', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $regex;
 
     /**
      * If a regular expression is set and it doesn't match with the given value, this error message will be shown
      *
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
-     * @Length(max=255)
      */
     #[ORM\Column(name: 'error_message_regex', type: 'string', nullable: true)]
+    #[Length(max: 255)]
     protected $errorMessageRegex;
 
     /**

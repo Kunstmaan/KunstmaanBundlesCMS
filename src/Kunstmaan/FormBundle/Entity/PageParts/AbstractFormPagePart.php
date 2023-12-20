@@ -14,13 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
     /**
-     * The label
-     *
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'label', type: 'string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     protected $label;
 
     /**

@@ -36,9 +36,8 @@ final class DefaultController extends AbstractController
 
     /**
      * The index action will render the main screen the users see when they log in in to the admin
-     *
-     * @Route("/", name="KunstmaanAdminBundle_homepage")
      */
+    #[Route(path: '/', name: 'KunstmaanAdminBundle_homepage')]
     public function indexAction(): Response
     {
         if ($this->parameterBag->has('kunstmaan_admin.dashboard_route')) {
@@ -56,9 +55,8 @@ final class DefaultController extends AbstractController
 
     /**
      * The admin of the index page
-     *
-     * @Route("/adminindex", name="KunstmaanAdminBundle_homepage_admin")
      */
+    #[Route(path: '/adminindex', name: 'KunstmaanAdminBundle_homepage_admin')]
     public function editIndexAction(Request $request): Response
     {
         /* @var $em EntityManager */

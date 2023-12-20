@@ -14,7 +14,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          @ORM\Index(name="idx_exception_is_resolved", columns={"is_resolved"})
  *      }
  * )
- * @UniqueEntity("hash")
  * @ORM\HasLifecycleCallbacks()
  */
 #[ORM\Entity(repositoryClass: ExceptionRepository::class)]
@@ -22,6 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Index(name: 'idx_exception_is_resolved', columns: ['is_resolved'])]
 #[UniqueEntity('hash')]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity('hash')]
 class Exception extends AbstractEntity
 {
     /**

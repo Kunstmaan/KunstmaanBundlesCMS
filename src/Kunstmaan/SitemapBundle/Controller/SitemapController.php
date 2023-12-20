@@ -32,9 +32,8 @@ final class SitemapController extends AbstractController
      * This will generate a sitemap for the specified locale.
      * Use the mode parameter to select in which mode the sitemap should be
      * generated. At this moment only XML is supported
-     *
-     * @Route("/sitemap-{locale}.{_format}", name="KunstmaanSitemapBundle_sitemap", requirements={"_format" = "xml"})
      */
+    #[Route(path: '/sitemap-{locale}.{_format}', name: 'KunstmaanSitemapBundle_sitemap', requirements: ['_format' => 'xml'])]
     public function sitemapAction($locale): Response
     {
         $nodeMenu = $this->nodeMenu;
@@ -59,9 +58,8 @@ final class SitemapController extends AbstractController
      * https://support.google.com/webmasters/answer/75712?rd=1 Use the mode
      * parameter to select in which mode the sitemap should be generated. At
      * this moment only XML is supported
-     *
-     * @Route("/sitemap.{_format}", name="KunstmaanSitemapBundle_sitemapindex", requirements={"_format" = "xml"})
      */
+    #[Route(path: '/sitemap.{_format}', name: 'KunstmaanSitemapBundle_sitemapindex', requirements: ['_format' => 'xml'])]
     public function sitemapIndexAction(Request $request): Response
     {
         $locales = $this->domainConfiguration->getBackendLocales();

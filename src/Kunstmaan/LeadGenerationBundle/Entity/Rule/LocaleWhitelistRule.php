@@ -18,9 +18,9 @@ class LocaleWhitelistRule extends AbstractRule
      * @var string
      *
      * @ORM\Column(name="locale", type="text", nullable=true)
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'locale', type: 'text', nullable: true)]
+    #[Assert\NotBlank]
     private $locale;
 
     /**

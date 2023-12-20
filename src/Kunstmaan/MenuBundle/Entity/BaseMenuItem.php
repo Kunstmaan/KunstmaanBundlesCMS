@@ -31,22 +31,22 @@ abstract class BaseMenuItem extends AbstractEntity
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MenuBundle\Entity\Menu", inversedBy="items")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
-     * @Assert\NotNull()
      * @Gedmo\TreeRoot(identifierMethod="getMenu")
      */
     #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'items')]
     #[ORM\JoinColumn(name: 'menu_id', referencedColumnName: 'id')]
     #[Gedmo\TreeRoot(identifierMethod: 'getMenu')]
+    #[Assert\NotNull]
     protected $menu;
 
     /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=15, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=15)
      */
     #[ORM\Column(name: 'type', type: 'string', length: 15, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 15)]
     protected $type;
 
     /**
@@ -63,18 +63,18 @@ abstract class BaseMenuItem extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="title", type="string", nullable=true)
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'title', type: 'string', nullable: true)]
+    #[Assert\Length(max: 255)]
     protected $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", nullable=true)
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'url', type: 'string', nullable: true)]
+    #[Assert\Length(max: 255)]
     protected $url;
 
     /**
@@ -339,9 +339,7 @@ abstract class BaseMenuItem extends AbstractEntity
         return false;
     }
 
-    /**
-     * @Assert\Callback
-     */
+    #[Assert\Callback]
     public function validateEntity(ExecutionContextInterface $context)
     {
         if ($this->getType() == self::TYPE_PAGE_LINK && !$this->getNodeTranslation()) {

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -39,11 +38,7 @@ final class RolesController extends AbstractController
         $this->slugifier = $slugifier;
     }
 
-    /**
-     * @Route("/", name="KunstmaanUserManagementBundle_settings_roles")
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/', name: 'KunstmaanUserManagementBundle_settings_roles')]
     public function listAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -56,11 +51,7 @@ final class RolesController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add", methods={"GET", "POST"})
-     *
-     * @throws AccessDeniedException
-     */
+    #[Route(path: '/add', name: 'KunstmaanUserManagementBundle_settings_roles_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -92,11 +83,8 @@ final class RolesController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_edit", methods={"GET", "POST"})
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/edit', requirements: ['id' => '\d+'], name: 'KunstmaanUserManagementBundle_settings_roles_edit', methods: ['GET', 'POST'])]
     public function editAction(Request $request, $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -130,11 +118,8 @@ final class RolesController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @Route ("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_delete", methods={"POST"})
-     *
-     * @throws AccessDeniedException
      */
+    #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanUserManagementBundle_settings_roles_delete', methods: ['POST'])]
     public function deleteAction(Request $request, $id): RedirectResponse
     {
         $configurator = new RoleAdminListConfigurator($this->em);

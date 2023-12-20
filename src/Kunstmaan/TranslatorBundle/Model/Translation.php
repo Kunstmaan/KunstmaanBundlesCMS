@@ -8,21 +8,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Translation
 {
     /**
-     * The translation domain
-     *
-     * @Assert\NotBlank()
-     *
      * @var string
      */
+    #[Assert\NotBlank]
     protected $domain;
 
     /**
-     * The translation keyword
-     *
-     * @Assert\NotBlank()
-     *
      * @var string
      */
+    #[Assert\NotBlank]
     protected $keyword;
 
     /**

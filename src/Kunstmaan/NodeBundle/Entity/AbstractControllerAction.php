@@ -7,18 +7,15 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * AbstractControllerAction
- */
 abstract class AbstractControllerAction extends AbstractEntity implements HasNodeInterface
 {
     /**
      * @var string
      *
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'title', type: 'string')]
+    #[Assert\NotBlank]
     protected $title;
 
     /**
@@ -35,8 +32,6 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     protected $parent;
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return AbstractControllerAction
@@ -49,8 +44,6 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()

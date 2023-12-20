@@ -32,9 +32,7 @@ final class WidgetsController extends AbstractController
         $this->aclHelper = $aclHelper;
     }
 
-    /**
-     * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
-     */
+    #[Route(path: '/ckselecturl', name: 'KunstmaanNodeBundle_ckselecturl')]
     public function ckSelectLinkAction(Request $request): Response
     {
         $params = $this->getTemplateParameters($request);
@@ -44,11 +42,7 @@ final class WidgetsController extends AbstractController
         return $this->render('@KunstmaanNode/Widgets/selectLink.html.twig', $params);
     }
 
-    /**
-     * Select a link
-     *
-     * @Route("/selecturl", name="KunstmaanNodeBundle_selecturl")
-     */
+    #[Route(path: '/selecturl', name: 'KunstmaanNodeBundle_selecturl')]
     public function selectLinkAction(Request $request): Response
     {
         $params = $this->getTemplateParameters($request);
@@ -58,11 +52,7 @@ final class WidgetsController extends AbstractController
         return $this->render('@KunstmaanNode/Widgets/selectLink.html.twig', $params);
     }
 
-    /**
-     * Select a link
-     *
-     * @Route("/select-nodes-lazy", name="KunstmaanNodeBundle_nodes_lazy")
-     */
+    #[Route(path: '/select-nodes-lazy', name: 'KunstmaanNodeBundle_nodes_lazy')]
     public function selectNodesLazy(Request $request): JsonResponse
     {
         $locale = $request->getLocale();
@@ -88,9 +78,8 @@ final class WidgetsController extends AbstractController
 
     /**
      * Search action in url chooser popup
-     *
-     * @Route("/select-nodes-lazy_search", name="KunstmaanNodeBundle_nodes_lazy_search")
      */
+    #[Route(path: '/select-nodes-lazy_search', name: 'KunstmaanNodeBundle_nodes_lazy_search')]
     public function selectNodesLazySearch(Request $request): JsonResponse
     {
         $locale = $request->getLocale();
