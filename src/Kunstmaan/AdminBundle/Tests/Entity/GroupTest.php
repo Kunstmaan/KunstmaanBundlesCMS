@@ -133,18 +133,13 @@ class GroupTest extends TestCase
         $group = new Group('test');
 
         $validatorBuilder = Validation::createValidatorBuilder();
-        if (method_exists(ValidatorBuilder::class, 'setDoctrineAnnotationReader')) {
-            $validatorBuilder
-                ->enableAnnotationMapping(true)
-                ->addDefaultDoctrineAnnotationReader()
-            ;
+        if (method_exists(ValidatorBuilder::class, 'enableAttributeMapping')) {
+            $validatorBuilder->enableAttributeMapping();
         } else {
-            $validatorBuilder
-                ->enableAnnotationMapping()
-            ;
+            $validatorBuilder->enableAnnotationMapping();
         }
-
         $validator = $validatorBuilder->getValidator();
+
         $violations = $validator->validate($group);
 
         $this->assertCount(1, $violations);
@@ -155,9 +150,13 @@ class GroupTest extends TestCase
         $group = new Group('test');
         $group->addRole(new Role('role'));
 
-        $validator = Validation::createValidatorBuilder()
-            ->enableAnnotationMapping(method_exists(ValidatorBuilder::class, 'setDoctrineAnnotationReader') ? true : null)
-            ->getValidator();
+        $validatorBuilder = Validation::createValidatorBuilder();
+        if (method_exists(ValidatorBuilder::class, 'enableAttributeMapping')) {
+            $validatorBuilder->enableAttributeMapping();
+        } else {
+            $validatorBuilder->enableAnnotationMapping();
+        }
+        $validator = $validatorBuilder->getValidator();
 
         $violations = $validator->validate($group);
 

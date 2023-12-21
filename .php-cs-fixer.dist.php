@@ -5,8 +5,10 @@ $finder = (new PhpCsFixer\Finder())
     ->exclude([
         'src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle',
         'src/Kunstmaan/CookieBundle/Resources/skeleton',
-        'node_modules'
+        'node_modules',
     ])
+    // Temporary exclude translator class to avoid removing warmUp parameter docblock which is needed to silence a deprecation.
+    ->notPath('src/Kunstmaan/TranslatorBundle/Service/Translator/Translator.php')
 ;
 
 return (new PhpCsFixer\Config())
