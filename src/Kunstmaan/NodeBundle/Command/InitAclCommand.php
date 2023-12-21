@@ -14,6 +14,7 @@ use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Basic initialization of ACL entries for all nodes.
@@ -70,6 +71,11 @@ final class InitAclCommand extends Command
 
             $securityIdentity = new RoleSecurityIdentity('IS_AUTHENTICATED_ANONYMOUSLY');
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
+
+            if (defined(AuthenticatedVoter::PUBLIC_ACCESS)) {
+                $securityIdentity = new RoleSecurityIdentity(AuthenticatedVoter::PUBLIC_ACCESS);
+                $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
+            }
 
             $securityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
             $acl->insertObjectAce(
