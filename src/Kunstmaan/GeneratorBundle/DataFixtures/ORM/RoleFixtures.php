@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\Role;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Fixture for creation the basic roles
@@ -16,6 +17,7 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     const REFERENCE_ADMIN_ROLE = 'admin-role';
     const REFERENCE_SUPERADMIN_ROLE = 'superadmin-role';
     const REFERENCE_GUEST_ROLE = 'guest-role';
+    const REFERENCE_PUBLIC_ACCESS_ROLE = 'public-role';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -26,6 +28,10 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $role2 = $this->createRole($manager, 'ROLE_ADMIN');
         $role3 = $this->createRole($manager, 'ROLE_SUPER_ADMIN');
         $role4 = $this->createRole($manager, 'IS_AUTHENTICATED_ANONYMOUSLY');
+        $role5 = null;
+        if (defined(AuthenticatedVoter::PUBLIC_ACCESS)) {
+            $role5 = $this->createRole($manager, AuthenticatedVoter::PUBLIC_ACCESS);
+        }
 
         $manager->flush();
 
@@ -33,6 +39,9 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference(self::REFERENCE_ADMIN_ROLE, $role2);
         $this->addReference(self::REFERENCE_SUPERADMIN_ROLE, $role3);
         $this->addReference(self::REFERENCE_GUEST_ROLE, $role4);
+        if (null !== $role5) {
+            $this->addReference(self::REFERENCE_PUBLIC_ACCESS_ROLE, $role5);
+        }
     }
 
     /**
