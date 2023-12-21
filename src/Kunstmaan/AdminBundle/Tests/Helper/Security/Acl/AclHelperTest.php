@@ -188,6 +188,7 @@ class AclHelperTest extends TestCase
         $this->assertStringContainsString('ROLE_SUBJECT', $aclQuery);
         $this->assertStringContainsString('ROLE_KING', $aclQuery);
         $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
+        $this->assertStringContainsString('PUBLIC_ACCESS', $aclQuery);
         $this->assertStringContainsString('MyUser', $aclQuery);
     }
 
@@ -239,6 +240,7 @@ class AclHelperTest extends TestCase
 
         $aclQuery = $query->getHint('acl.extra.query');
         $this->assertStringContainsString('IS_AUTHENTICATED_ANONYMOUSLY', $aclQuery);
+        $this->assertStringContainsString('PUBLIC_ACCESS', $aclQuery);
     }
 
     public function testGetAllowedEntityIds()
