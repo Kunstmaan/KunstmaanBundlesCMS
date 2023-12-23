@@ -28,6 +28,8 @@ class DashboardWidget
     {
         $annotationReader = new AnnotationReader();
         $reflectionMethod = new \ReflectionMethod($this->controller, 'widgetAction');
+
+        // NEXT_MAJOR Remove annotation support
         $methodAnnotations = $annotationReader->getMethodAnnotations($reflectionMethod);
         foreach ($methodAnnotations as $annotation) {
             if ($annotation instanceof Route) {
@@ -39,6 +41,16 @@ class DashboardWidget
             }
         }
 
-        throw new \Exception('There is no route annotation');
+        $methodRouteAttributes = $reflectionMethod->getAttributes(Route::class, \ReflectionAttribute::IS_INSTANCEOF);
+        if ($methodRouteAttributes === []) {
+            throw new \Exception('There is no route annotation or attribute');
+        }
+
+        $attributeInstance = $methodRouteAttributes[0]->newInstance();
+        if (null === $attributeInstance->getName()) {
+            throw new \Exception('The name is not configured in the attribute');
+        }
+
+        return $attributeInstance->getName();
     }
 }
