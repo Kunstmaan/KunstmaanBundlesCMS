@@ -98,7 +98,7 @@ abstract class AbstractAnalysisFactory implements AnalysisFactoryInterface
     public function addNGramTokenizer()
     {
         $this->tokenizers['kuma_ngram'] = [
-            'type' => 'nGram',
+            'type' => 'ngram',
             'min_gram' => 4,
             'max_gram' => 30,
             'token_chars' => ['letter', 'digit', 'punctuation'],
