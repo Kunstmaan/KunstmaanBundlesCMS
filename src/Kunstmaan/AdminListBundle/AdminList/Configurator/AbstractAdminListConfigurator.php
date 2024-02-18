@@ -372,7 +372,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addField($name, $header, $sort, $template = null, FieldAlias $alias = null)
+    public function addField($name, $header, $sort, $template = null, ?FieldAlias $alias = null)
     {
         $this->fields[] = new Field($name, $header, $sort, $template, $alias);
 
@@ -387,7 +387,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addExportField($name, $header, $template = null, FieldAlias $alias = null)
+    public function addExportField($name, $header, $template = null, ?FieldAlias $alias = null)
     {
         $this->exportFields[] = new Field($name, $header, false, $template, $alias);
 
@@ -404,7 +404,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function addFilter(
         $columnName,
-        FilterTypeInterface $type = null,
+        ?FilterTypeInterface $type = null,
         $filterName = null,
         array $options = []
     ) {

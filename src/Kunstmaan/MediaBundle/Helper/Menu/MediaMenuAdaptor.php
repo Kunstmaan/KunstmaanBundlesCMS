@@ -28,7 +28,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
         $this->repo = $repo;
     }
 
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         if (\is_null($parent)) {
             // Add menu item for root gallery

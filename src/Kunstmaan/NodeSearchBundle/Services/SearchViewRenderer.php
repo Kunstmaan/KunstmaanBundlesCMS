@@ -48,7 +48,7 @@ class SearchViewRenderer
         return $this->removeHtml($html);
     }
 
-    public function renderCustomSearchView(NodeTranslation $nodeTranslation, SearchViewTemplateInterface $page, ContainerInterface $container = null)
+    public function renderCustomSearchView(NodeTranslation $nodeTranslation, SearchViewTemplateInterface $page, ?ContainerInterface $container = null)
     {
         $renderContext = new RenderContext([
             'locale' => $nodeTranslation->getLang(),

@@ -81,7 +81,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     /**
      * @return array|ResultSet
      */
-    protected function processResponse(ResultSet $result = null)
+    protected function processResponse(?ResultSet $result = null)
     {
         $this->hits = [];
         if (\is_null($result)) {

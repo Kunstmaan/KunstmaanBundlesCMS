@@ -46,7 +46,7 @@ class ExceptionDataCollector extends AbstractDataCollector
     /**
      * @return void
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null)
     {
         if (false === $this->isEnabled()) {
             $this->data = false;

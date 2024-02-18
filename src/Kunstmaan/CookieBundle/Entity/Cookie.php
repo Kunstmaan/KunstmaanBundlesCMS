@@ -98,7 +98,7 @@ class Cookie extends AbstractEntity
     /**
      * @return Cookie
      */
-    public function setType(CookieType $type = null)
+    public function setType(?CookieType $type = null)
     {
         $this->type = $type;
 

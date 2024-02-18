@@ -72,7 +72,7 @@ class AdminLocaleListener implements EventSubscriberInterface
         }
     }
 
-    private function isAdminToken($providerKey, TokenInterface $token = null): bool
+    private function isAdminToken($providerKey, ?TokenInterface $token = null): bool
     {
         if (null === $token) {
             return false;

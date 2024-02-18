@@ -129,7 +129,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->load(array_merge($this->getRequiredConfig(), ['authentication' => ['mailer' => ['service' => SwiftmailerService::class]]]));
     }
 
-    private function getRequiredConfig(string $excludeKey = null)
+    private function getRequiredConfig(?string $excludeKey = null)
     {
         $requiredConfig = [
             'website_title' => 'Example title',
