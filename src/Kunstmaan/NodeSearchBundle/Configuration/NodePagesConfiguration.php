@@ -327,7 +327,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $ngramDiff = 1;
         if (isset($analysers['tokenizer']) && count($analysers['tokenizer']) > 0) {
             foreach ($analysers['tokenizer'] as $tokenizer) {
-                if ($tokenizer['type'] === 'nGram') {
+                if (\strtolower($tokenizer['type']) === 'ngram') {
                     $diff = $tokenizer['max_gram'] - $tokenizer['min_gram'];
 
                     $ngramDiff = $diff > $ngramDiff ? $diff : $ngramDiff;
