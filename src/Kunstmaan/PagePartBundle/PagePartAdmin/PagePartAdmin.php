@@ -70,7 +70,7 @@ class PagePartAdmin
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(PagePartAdminConfiguratorInterface $configurator, EntityManagerInterface $em, HasPagePartsInterface $page, $context = null, ContainerInterface $container = null)
+    public function __construct(PagePartAdminConfiguratorInterface $configurator, EntityManagerInterface $em, HasPagePartsInterface $page, $context = null, ?ContainerInterface $container = null)
     {
         if (!($page instanceof EntityInterface)) {
             throw new \InvalidArgumentException('Page must be an instance of EntityInterface.');

@@ -32,7 +32,7 @@ final class AdminListEvent extends Event
     /**
      * @param object $entity
      */
-    public function __construct($entity, Request $request, FormInterface $form = null)
+    public function __construct($entity, Request $request, ?FormInterface $form = null)
     {
         $this->entity = $entity;
         $this->request = $request;

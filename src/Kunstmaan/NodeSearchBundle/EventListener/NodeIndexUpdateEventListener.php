@@ -28,7 +28,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     /** @var array */
     private $entityChangeSet;
 
-    public function __construct(NodePagesConfiguration $nodePagesConfiguration, EntityManagerInterface $em = null)
+    public function __construct(NodePagesConfiguration $nodePagesConfiguration, ?EntityManagerInterface $em = null)
     {
         $this->nodePagesConfiguration = $nodePagesConfiguration;
         $this->em = $em;

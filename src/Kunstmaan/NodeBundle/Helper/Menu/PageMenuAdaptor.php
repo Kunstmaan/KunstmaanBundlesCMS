@@ -69,8 +69,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     public function adaptChildren(
         MenuBuilder $menu,
         array &$children,
-        MenuItem $parent = null,
-        Request $request = null
+        ?MenuItem $parent = null,
+        ?Request $request = null
     ) {
         if (null === $parent) {
             $menuItem = new TopMenuItem($menu);

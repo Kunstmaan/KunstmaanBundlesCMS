@@ -22,7 +22,7 @@ class CookieMenuAdaptor implements MenuAdaptorInterface
      * @param MenuItem    $parent    The parent Menu item
      * @param Request     $request   The Request
      */
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         if (null !== $parent && 'KunstmaanAdminBundle_modules' === $parent->getRoute()) {
             $this->addMenuItem(
@@ -63,7 +63,7 @@ class CookieMenuAdaptor implements MenuAdaptorInterface
      * @param string $uniqueId
      * @param string $label
      */
-    private function addMenuItem(MenuBuilder $menu, array &$children, MenuItem $parent, Request $request = null, $route, $uniqueId, $label)
+    private function addMenuItem(MenuBuilder $menu, array &$children, MenuItem $parent, ?Request $request = null, $route, $uniqueId, $label)
     {
         $menuItem = new TopMenuItem($menu);
         $menuItem
