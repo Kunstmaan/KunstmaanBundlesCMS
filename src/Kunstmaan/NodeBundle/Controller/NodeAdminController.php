@@ -5,9 +5,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
-use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
@@ -126,26 +124,7 @@ final class NodeAdminController extends AbstractController
     {
         $this->init($request);
 
-        $nodeAdminListConfigurator = new NodeAdminListConfigurator(
-            $this->em,
-            $this->aclHelper,
-            $this->locale,
-            PermissionMap::PERMISSION_VIEW,
-            $this->authorizationChecker
-        );
-
-        $locale = $this->locale;
-        $acl = $this->authorizationChecker;
-        $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
-            if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
-                return [
-                    'path' => '_slug_preview',
-                    'params' => ['_locale' => $locale, 'url' => $item->getUrl()],
-                ];
-            }
-        };
-        $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
-        $nodeAdminListConfigurator->setDomainConfiguration($this->domainConfiguration);
+        $nodeAdminListConfigurator = $this->getAdminListConfigurator();
         $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN'));
 
         /** @var AdminList $adminlist */
@@ -155,6 +134,43 @@ final class NodeAdminController extends AbstractController
         return $this->render('@KunstmaanNode/Admin/list.html.twig', [
             'adminlist' => $adminlist,
         ]);
+    }
+
+    #[Route(path: '/{nodeId}/items', name: 'KunstmaanNodeBundle_nodes_items')]
+    public function itemsAction(Request $request, int $nodeId): Response
+    {
+        $this->init($request);
+
+        $node = $this->em->getRepository(Node::class)->find($nodeId);
+        if (!$node) {
+            throw $this->createNotFoundException(sprintf('No node found for id "%s"', $nodeId));
+        }
+
+        $nodeAdminListConfigurator = $this->getAdminListConfigurator($node);
+
+        /** @var AdminList $adminlist */
+        $adminlist = $this->container->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
+        $adminlist->bindRequest($request);
+
+        return $this->render('@KunstmaanNode/Admin/list.html.twig', [
+            'adminlist' => $adminlist,
+        ]);
+    }
+
+    public function getAdminListConfigurator(?Node $node = null): NodeAdminListConfigurator
+    {
+        $nodeAdminListConfigurator = new NodeAdminListConfigurator(
+            $this->em,
+            $this->aclHelper,
+            $this->locale,
+            PermissionMap::PERMISSION_VIEW,
+            $this->authorizationChecker,
+            $node
+        );
+
+        $nodeAdminListConfigurator->setDomainConfiguration($this->domainConfiguration);
+
+        return $nodeAdminListConfigurator;
     }
 
     /**
