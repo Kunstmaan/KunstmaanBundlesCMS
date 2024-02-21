@@ -42,11 +42,7 @@
         {% endif %}
     {% endif %}
 
-    {% if page is defined %}
-        {%  set hideSidebar = hideSidebarInNodeEditAdmin(page) %}
-    {%  else  %}
-        {%  set hideSidebar = false %}
-    {%  endif %}
+    {% set hideSidebar = hideSidebarInNodeEditAdmin(page|default(null)) %}
 
     <!-- Main Content -->
     <main role="main" id="app__main" class="container-fluid app__main{% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">

@@ -53,6 +53,7 @@ class ConfigurationTest extends TestCase
                 'from_name' => 'Kunstmaan CMS',
             ],
         ],
+        'hide_sidebar' => false,
     ];
 
     protected function getConfiguration(): ConfigurationInterface
@@ -85,6 +86,7 @@ class ConfigurationTest extends TestCase
                 'min_length' => 16,
                 'max_length' => 26,
             ],
+            'hide_sidebar' => true,
         ];
 
         $expected = array_merge(self::DEFAULT_EXPECTED_CONFIG, [
@@ -97,6 +99,7 @@ class ConfigurationTest extends TestCase
                 'min_length' => 16,
                 'max_length' => 26,
             ],
+            'hide_sidebar' => true,
         ]);
         $expected['authentication']['enable_new_authentication'] = true;
 

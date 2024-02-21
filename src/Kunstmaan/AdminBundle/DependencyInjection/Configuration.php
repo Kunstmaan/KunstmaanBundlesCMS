@@ -46,8 +46,8 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('service')->defaultNull()->end() // NEXT_MAJOR: switch default value to SymfonyMailerService::class
                                 ->scalarNode('from_address')->defaultValue('kunstmaancms@myproject.dev')->end()
                                 ->scalarNode('from_name')->defaultValue('Kunstmaan CMS')->end()
-                                ->end()
                             ->end()
+                        ->end()
                     ->end()
                 ->end()
                 ->scalarNode('dashboard_route')->end()
@@ -100,7 +100,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('password_restrictions')
-                ->addDefaultsIfNotSet()
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->integerNode('min_digits')->defaultNull()->end()
                         ->integerNode('min_uppercase')->defaultNull()->end()
@@ -108,6 +108,8 @@ class Configuration implements ConfigurationInterface
                         ->integerNode('min_length')->defaultNull()->end()
                         ->integerNode('max_length')->defaultNull()->end()
                     ->end()
+                ->end()
+                ->booleanNode('hide_sidebar')->defaultFalse()->end()
             ->end();
 
         return $treeBuilder;
