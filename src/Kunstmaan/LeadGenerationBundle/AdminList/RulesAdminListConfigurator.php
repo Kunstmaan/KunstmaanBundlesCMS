@@ -105,7 +105,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
 
     public function getValue($item, $columnName)
     {
-        if ($columnName == 'jsProperties') {
+        if ($columnName === 'jsProperties') {
             return json_encode($item->getJsProperties());
         }
 

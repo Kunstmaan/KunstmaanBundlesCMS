@@ -251,11 +251,11 @@ EOT
     protected function askForDummydata()
     {
         $dummydataOption = $this->assistant->getOption('dummydata');
-        if ($dummydataOption != 'y' && $dummydataOption != 'n') {
+        if ($dummydataOption !== 'y' && $dummydataOption !== 'n') {
             $dummydataOption = $this->assistant->askConfirmation("\nDo you want to generate data fixtures to populate your database ? (y/n)\n", 'n', '?', false);
         }
 
-        return $dummydataOption == 'y';
+        return $dummydataOption === 'y';
     }
 
     /**
@@ -264,11 +264,11 @@ EOT
     protected function askForCategories()
     {
         $categoryOption = $this->assistant->getOption('with-category');
-        if ($categoryOption != 'y' && $categoryOption != 'n') {
+        if ($categoryOption !== 'y' && $categoryOption !== 'n') {
             $categoryOption = $this->assistant->askConfirmation("\nDo you want to use categories ? (y/n)\n", 'y', '?', true);
         }
 
-        return $categoryOption == 'y';
+        return $categoryOption === 'y';
     }
 
     /**
@@ -277,11 +277,11 @@ EOT
     protected function askForTags()
     {
         $tagOption = $this->assistant->getOption('with-tag');
-        if ($tagOption != 'y' && $tagOption != 'n') {
+        if ($tagOption !== 'y' && $tagOption !== 'n') {
             $tagOption = $this->assistant->askConfirmation("\nDo you want to use tags ? (y/n)\n", 'y', '?', true);
         }
 
-        return $tagOption == 'y';
+        return $tagOption === 'y';
     }
 
     /**
@@ -290,10 +290,10 @@ EOT
     protected function askForAuthor()
     {
         $authorOption = $this->assistant->getOption('with-author');
-        if ($authorOption != 'y' && $authorOption != 'n') {
+        if ($authorOption !== 'y' && $authorOption !== 'n') {
             $authorOption = $this->assistant->askConfirmation("\nDo you want to use authors ? (y/n)\n", 'y', '?', true);
         }
 
-        return $authorOption == 'y';
+        return $authorOption === 'y';
     }
 }
