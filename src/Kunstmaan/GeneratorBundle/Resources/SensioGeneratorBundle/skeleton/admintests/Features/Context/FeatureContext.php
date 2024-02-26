@@ -308,7 +308,7 @@ class FeatureContext extends AbstractContext
         foreach ($records as $field => $value) {
             //We need this check when adding additionally filters
             //because the filter_columnname[] is the same for all the filter lines
-            if ($additionally && $field == 'filter_columnname[]') {
+            if ($additionally && $field === 'filter_columnname[]') {
                 $filterFields = $this->getSession()->getPage()->findAll('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
                 $filterField = $filterFields[count($filterFields) - 1];
             } else {

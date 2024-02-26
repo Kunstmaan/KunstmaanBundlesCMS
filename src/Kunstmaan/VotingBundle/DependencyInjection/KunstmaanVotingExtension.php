@@ -49,7 +49,7 @@ class KunstmaanVotingExtension extends Extension
         // When no values are defined, initialize with defaults
         foreach ($possibleActions as $action) {
             if (!isset($config['actions'][$action]) || !\is_array($config['actions'][$action])) {
-                $config['actions'][$action]['default_value'] = ($action == 'down_vote' ? -1 * $votingDefaultValue : $votingDefaultValue);
+                $config['actions'][$action]['default_value'] = ($action === 'down_vote' ? -1 * $votingDefaultValue : $votingDefaultValue);
             }
         }
 

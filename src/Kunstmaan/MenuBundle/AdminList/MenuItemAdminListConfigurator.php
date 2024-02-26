@@ -71,15 +71,15 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getValue($item, $columnName)
     {
-        if ($columnName == 'title') {
+        if ($columnName === 'title') {
             return $item->getDisplayTitle();
         }
 
-        if ($columnName == 'online') {
+        if ($columnName === 'online') {
             return $item;
         }
 
-        if ($columnName == 'type') {
+        if ($columnName === 'type') {
             if ($item->getType() == MenuItem::TYPE_PAGE_LINK) {
                 return 'Page link';
             }
@@ -87,7 +87,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             return 'External link';
         }
 
-        if ($columnName == 'url') {
+        if ($columnName === 'url') {
             return $item;
         }
 
