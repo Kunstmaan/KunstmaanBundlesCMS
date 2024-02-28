@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\AdminList\ExceptionAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
