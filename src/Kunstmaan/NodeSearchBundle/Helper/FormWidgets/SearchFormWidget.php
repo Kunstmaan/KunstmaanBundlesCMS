@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
@@ -17,7 +17,7 @@ class SearchFormWidget extends FormWidget
     /** @var NodeSearch */
     private $nodeSearch;
 
-    public function __construct(Node $node, EntityManager $em)
+    public function __construct(Node $node, EntityManagerInterface $em)
     {
         $this->node = $node;
         $this->nodeSearch = $em->getRepository(NodeSearch::class)->findOneByNode($this->node);
@@ -40,7 +40,7 @@ class SearchFormWidget extends FormWidget
         $this->data['node_search'] = $form['node_search']['boost'];
     }
 
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
         $nodeSearch = $em->getRepository(NodeSearch::class)->findOneByNode($this->node);
 

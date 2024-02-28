@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeBundle\Tests\Helper;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Helper\URLHelper;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +35,7 @@ class UrlHelperTest extends TestCase
 
     public function testReplaceUrlWithEmail()
     {
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder(EntityManagerInterface::class)->disableOriginalConstructor()->getMock();
         $router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $domainConfig = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
@@ -47,7 +47,7 @@ class UrlHelperTest extends TestCase
 
     public function testReplaceUrlWithInternalLink()
     {
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder(EntityManagerInterface::class)->disableOriginalConstructor()->getMock();
         $em->expects($this->once())->method('getConnection')->willReturn($this->connection);
         $router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $router->method('generate')->with('_slug', ['url' => 'abc-3'])->willReturn('/abc-3');
@@ -65,7 +65,7 @@ class UrlHelperTest extends TestCase
 
     public function testReplaceUrlWithMediaLink()
     {
-        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder(EntityManagerInterface::class)->disableOriginalConstructor()->getMock();
         $em->expects($this->once())->method('getConnection')->willReturn($this->connection);
         $router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $router->method('generate')->with('_slug', ['url' => 'abc'])->willReturn('/abc');

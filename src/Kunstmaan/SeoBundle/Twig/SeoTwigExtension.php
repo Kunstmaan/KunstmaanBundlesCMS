@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\SeoBundle\Entity\Seo;
@@ -17,7 +17,7 @@ use Twig\TwigFunction;
 final class SeoTwigExtension extends AbstractExtension
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -41,7 +41,7 @@ final class SeoTwigExtension extends AbstractExtension
      */
     private $requestCache;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

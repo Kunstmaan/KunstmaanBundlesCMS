@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
@@ -69,7 +69,7 @@ class PermissionsFormWidget extends FormWidget
         $this->permissionAdmin->bindRequest($request);
     }
 
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
     }
 

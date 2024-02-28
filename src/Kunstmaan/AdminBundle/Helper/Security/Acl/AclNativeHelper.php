@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 class AclNativeHelper
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -38,11 +38,11 @@ class AclNativeHelper
     private $permissionsEnabled;
 
     /**
-     * @param EntityManager          $em           The entity manager
+     * @param EntityManagerInterface $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security context
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;

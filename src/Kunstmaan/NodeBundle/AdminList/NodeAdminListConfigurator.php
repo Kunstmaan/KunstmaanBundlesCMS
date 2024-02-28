@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -47,14 +47,12 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     protected $authorizationChecker;
 
     /**
-     * @param EntityManager $em         The entity
-     *                                  manager
-     * @param AclHelper     $aclHelper  The ACL helper
-     * @param string        $locale     The current
-     *                                  locale
-     * @param string        $permission The permission
+     * @param EntityManagerInterface $em         The entity manager
+     * @param AclHelper              $aclHelper  The ACL helper
+     * @param string                 $locale     The current locale
+     * @param string                 $permission The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;

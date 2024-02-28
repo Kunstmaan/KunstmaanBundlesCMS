@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -22,7 +22,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     protected $permission;
 
     /**
-     * @param EntityManager $em         The entity manager
+     * @param EntityManagerInterface $em         The entity manager
      * @param AclHelper     $aclHelper  The ACL helper
      * @param string        $permission The permission
      */

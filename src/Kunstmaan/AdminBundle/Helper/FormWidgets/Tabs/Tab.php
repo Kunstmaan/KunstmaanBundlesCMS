@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -92,7 +92,7 @@ class Tab implements TabInterface
         $this->widget->bindRequest($request);
     }
 
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
         $this->widget->persist($em);
     }

@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
@@ -56,7 +55,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class NodeAdminController extends AbstractController
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -1029,13 +1028,13 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @param EntityManager   $em       The Entity Manager
-     * @param BaseUser        $user     The user who deletes the children
-     * @param string          $locale   The locale that was used
-     * @param ArrayCollection $children The children array
+     * @param EntityManagerInterface   $em       The Entity Manager
+     * @param BaseUser                 $user     The user who deletes the children
+     * @param string                   $locale   The locale that was used
+     * @param ArrayCollection          $children The children array
      */
     private function deleteNodeChildren(
-        EntityManager $em,
+        EntityManagerInterface $em,
         BaseUser $user,
         $locale,
         ArrayCollection $children

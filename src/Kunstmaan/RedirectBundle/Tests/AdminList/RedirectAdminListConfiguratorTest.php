@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class RedirectAdminListConfiguratorTest extends TestCase
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

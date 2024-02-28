@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SeoBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -537,7 +537,7 @@ class Seo extends AbstractEntity
     /**
      * @return AbstractEntity
      */
-    public function getRef(EntityManager $em)
+    public function getRef(EntityManagerInterface $em)
     {
         return $em->getRepository($this->getRefEntityName())->find($this->getRefId());
     }

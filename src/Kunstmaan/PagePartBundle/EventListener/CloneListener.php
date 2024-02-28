@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
@@ -17,7 +16,7 @@ use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 class CloneListener
 {
     /**
-     * @var EntityManager|EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 

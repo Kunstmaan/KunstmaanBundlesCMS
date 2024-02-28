@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -17,7 +17,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     private $domainConfiguration;
 
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper, DomainConfigurationInterface $domainConfiguration)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper, DomainConfigurationInterface $domainConfiguration)
     {
         parent::__construct($em, $aclHelper);
 

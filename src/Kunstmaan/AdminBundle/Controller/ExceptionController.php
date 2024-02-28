@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\AdminList\ExceptionAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
@@ -62,7 +62,6 @@ final class ExceptionController extends AbstractAdminListController
             return new RedirectResponse($this->generateUrl('kunstmaanadminbundle_admin_exception'));
         }
 
-        /* @var EntityManager $em */
         $em = $this->getEntityManager();
 
         $this->getAdminListConfigurator();

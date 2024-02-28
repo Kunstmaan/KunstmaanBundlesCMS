@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FixturesBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\FixturesBundle\Populator\Populator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -38,7 +38,7 @@ class PageBuilder implements BuilderInterface
     private $pagesConfiguration;
 
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         ACLPermissionCreatorService $aclPermissionCreatorService,
         Populator $populator,
         Slugifier $slugifier,

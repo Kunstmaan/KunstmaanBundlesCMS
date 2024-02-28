@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\FixturesBundle\Provider;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation as NodeBundleNodeTranslation;
 
 class NodeTranslation
 {
     private $nodeTransRepo;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->nodeTransRepo = $em->getRepository(NodeBundleNodeTranslation::class);
     }

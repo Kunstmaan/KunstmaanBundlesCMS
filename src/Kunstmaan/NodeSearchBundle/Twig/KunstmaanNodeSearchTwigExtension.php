@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
@@ -14,7 +14,7 @@ use Twig\TwigFunction;
 final class KunstmaanNodeSearchTwigExtension extends AbstractExtension
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -23,7 +23,7 @@ final class KunstmaanNodeSearchTwigExtension extends AbstractExtension
      */
     private $indexablePagePartsService;
 
-    public function __construct(EntityManager $em, IndexablePagePartsService $indexablePagePartsService)
+    public function __construct(EntityManagerInterface $em, IndexablePagePartsService $indexablePagePartsService)
     {
         $this->em = $em;
         $this->indexablePagePartsService = $indexablePagePartsService;

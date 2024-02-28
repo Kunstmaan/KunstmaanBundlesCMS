@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
@@ -29,7 +29,7 @@ class RepositoryResolver
     /**
      * @param object $em entity manager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
