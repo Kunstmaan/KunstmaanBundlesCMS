@@ -139,7 +139,7 @@ class NodeHelper
         NodeVersion $nodeVersion,
         HasNodeInterface $page,
         $isStructureNode,
-        TabPane $tabPane = null
+        ?TabPane $tabPane = null
     ) {
         $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),
@@ -182,7 +182,7 @@ class NodeHelper
         $refEntityType,
         $pageTitle,
         $locale,
-        Node $parentNode = null)
+        ?Node $parentNode = null)
     {
         $user = $this->getAdminUser();
 

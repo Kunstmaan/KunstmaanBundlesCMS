@@ -13,7 +13,7 @@ use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 
 class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null)
+    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
     }

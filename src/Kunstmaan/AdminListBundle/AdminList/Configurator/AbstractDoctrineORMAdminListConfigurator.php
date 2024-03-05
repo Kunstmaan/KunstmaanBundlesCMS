@@ -43,7 +43,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     protected $aclHelper;
 
-    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper = null)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper = null)
     {
         $this->em = $em;
         $this->aclHelper = $aclHelper;

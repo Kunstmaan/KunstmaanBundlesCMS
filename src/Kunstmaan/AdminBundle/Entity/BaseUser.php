@@ -565,7 +565,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
     /**
      * @return static
      */
-    public function setLastLogin(\DateTime $lastLogin = null)
+    public function setLastLogin(?\DateTime $lastLogin = null)
     {
         $this->lastLogin = $lastLogin;
 

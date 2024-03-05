@@ -14,7 +14,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     /** @var LogoutUrlGenerator|null */
     private $logoutUrlGenerator;
 
-    public function __construct(TokenStorageInterface $tokenStorage, LogoutUrlGenerator $logoutUrlGenerator = null)
+    public function __construct(TokenStorageInterface $tokenStorage, ?LogoutUrlGenerator $logoutUrlGenerator = null)
     {
         $this->tokenStorage = $tokenStorage;
         $this->logoutUrlGenerator = $logoutUrlGenerator;

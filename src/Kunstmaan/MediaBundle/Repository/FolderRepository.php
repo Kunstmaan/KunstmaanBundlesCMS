@@ -306,7 +306,7 @@ class FolderRepository extends NestedTreeRepository
      *
      * @return QueryBuilder
      */
-    public function selectFolderQueryBuilder(Folder $ignoreSubtree = null)
+    public function selectFolderQueryBuilder(?Folder $ignoreSubtree = null)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('f');

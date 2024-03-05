@@ -115,7 +115,7 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
      *
      * @return static
      */
-    public function setLastLogin(\DateTime $time = null);
+    public function setLastLogin(?\DateTime $time = null);
 
     /**
      * Never use this to check if this user has access to anything!

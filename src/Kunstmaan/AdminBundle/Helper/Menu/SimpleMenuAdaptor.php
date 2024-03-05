@@ -23,7 +23,7 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
         $this->menuItems = $menuItems;
     }
 
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         foreach ($this->menuItems as $item) {
             if (false === $this->parentMatches($parent, $item)) {

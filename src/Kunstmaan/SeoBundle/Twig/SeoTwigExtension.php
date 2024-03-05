@@ -128,7 +128,7 @@ final class SeoTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getTitleForPageOrDefault(AbstractPage $entity = null, $default = null)
+    public function getTitleForPageOrDefault(?AbstractPage $entity = null, $default = null)
     {
         if (\is_null($entity)) {
             return $default;
@@ -183,7 +183,7 @@ final class SeoTwigExtension extends AbstractExtension
     /**
      * @return string|null
      */
-    private function getSeoTitle(AbstractPage $entity = null)
+    private function getSeoTitle(?AbstractPage $entity = null)
     {
         if (\is_null($entity)) {
             return null;

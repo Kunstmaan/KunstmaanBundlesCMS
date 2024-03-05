@@ -47,7 +47,7 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return int
      */
-    public function getMaxChildrenWeight(Node $parentNode = null, $lang = null)
+    public function getMaxChildrenWeight(?Node $parentNode = null, $lang = null)
     {
         $maxWeight = $this->getNodeTranslationsQueryBuilder($lang)
             ->select('max(nt.weight)')
@@ -68,7 +68,7 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return int
      */
-    public function getMinChildrenWeight(Node $parentNode = null, $lang = null)
+    public function getMinChildrenWeight(?Node $parentNode = null, $lang = null)
     {
         $minWeight = $this->getNodeTranslationsQueryBuilder($lang)
             ->select('min(nt.weight)')
@@ -220,7 +220,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationForSlug(
         $slug,
-        NodeTranslation $parentNode = null
+        ?NodeTranslation $parentNode = null
     ) {
         if (empty($slug)) {
             return $this->getNodeTranslationForSlugPart(null, $slug);
@@ -244,7 +244,7 @@ class NodeTranslationRepository extends EntityRepository
      * @return NodeTranslation|null
      */
     private function getNodeTranslationForSlugPart(
-        NodeTranslation $parentNode = null,
+        ?NodeTranslation $parentNode = null,
         $slugPart = ''
     ) {
         $qb = $this->createQueryBuilder('t')
@@ -297,8 +297,8 @@ class NodeTranslationRepository extends EntityRepository
         $urlSlug,
         $locale = '',
         $includeDeleted = false,
-        NodeTranslation $toExclude = null,
-        Node $rootNode = null
+        ?NodeTranslation $toExclude = null,
+        ?Node $rootNode = null
     ) {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 'v')
@@ -362,8 +362,8 @@ class NodeTranslationRepository extends EntityRepository
         $urlSlug,
         $locale = '',
         $includeDeleted = false,
-        NodeTranslation $toExclude = null,
-        Node $rootNode = null
+        ?NodeTranslation $toExclude = null,
+        ?Node $rootNode = null
     ) {
         $translations = $this->getAllNodeTranslationsForUrl($urlSlug, $locale, $includeDeleted, $toExclude, $rootNode);
 

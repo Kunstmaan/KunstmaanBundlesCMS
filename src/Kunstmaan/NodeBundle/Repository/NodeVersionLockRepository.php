@@ -16,7 +16,7 @@ class NodeVersionLockRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return NodeVersionLock[]
      */
-    public function getLocksForNodeTranslation(NodeTranslation $nodeTranslation, $isPublicVersion, $threshold, BaseUser $userToExclude = null)
+    public function getLocksForNodeTranslation(NodeTranslation $nodeTranslation, $isPublicVersion, $threshold, ?BaseUser $userToExclude = null)
     {
         $qb = $this->createQueryBuilder('nvl')
             ->select('nvl')

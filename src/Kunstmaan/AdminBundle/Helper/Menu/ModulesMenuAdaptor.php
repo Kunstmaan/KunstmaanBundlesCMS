@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ModulesMenuAdaptor implements MenuAdaptorInterface
 {
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         if (\is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
