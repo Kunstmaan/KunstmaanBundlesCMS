@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\Configurator;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ForwardCompatibility\DriverStatement;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Statement;
@@ -24,6 +25,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     public function setUp(): void
     {
         $this->connectionMock = $this->createMock(Connection::class);
+        $this->connectionMock->method('getDatabasePlatform')->willReturn(new MySQLPlatform());
         $this->connectionMock
             ->expects($this->any())
             ->method('executeQuery')
