@@ -1,10 +1,13 @@
 {% extends '@KunstmaanAdmin/authentication/layout.html.twig' %}
 
 {% block login_content %}
+    {% block login_content_title %}
     <h2 class="app-login__form-title">
         {% set translatedWebsiteTitle = websitetitle|trans %}
         {{ 'security.login.title'|trans({'%websitetitle%': translatedWebsiteTitle}) }}
     </h2>
+    {% endblock %}
+    {% block login_content_form %}
     <form id="app__login__form" action="" method="post">
         {% if error %}
             <div class="alert alert-danger">
@@ -50,4 +53,5 @@
             </button>
         </div>
     </form>
+    {% endblock %}
 {% endblock login_content %}
