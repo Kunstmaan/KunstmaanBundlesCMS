@@ -139,7 +139,7 @@ final class ChooserController extends AbstractController
             'folder' => $folder,
             'adminlist' => $adminList,
             'subform' => $subForm->createView(),
-            ...$customViewVars
+            ...$customViewVars,
         ];
 
         $forms = [];
