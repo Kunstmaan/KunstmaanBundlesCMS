@@ -29,7 +29,7 @@ class AclVoter extends BaseAclVoter
     /** @var bool */
     private $permissionsEnabled;
 
-    public function __construct(AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy, SecurityIdentityRetrievalStrategyInterface $sidRetrievalStrategy, PermissionMapInterface $permissionMap, LoggerInterface $logger = null, $allowIfObjectIdentityUnavailable = true, $permissionsEnabled = true)
+    public function __construct(AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy, SecurityIdentityRetrievalStrategyInterface $sidRetrievalStrategy, PermissionMapInterface $permissionMap, ?LoggerInterface $logger = null, $allowIfObjectIdentityUnavailable = true, $permissionsEnabled = true)
     {
         parent::__construct($aclProvider, $oidRetrievalStrategy, $sidRetrievalStrategy, $permissionMap, $logger, $allowIfObjectIdentityUnavailable);
         $this->permissionsEnabled = $permissionsEnabled;

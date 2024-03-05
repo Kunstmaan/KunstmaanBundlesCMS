@@ -28,7 +28,7 @@ abstract class AbstractPagePart extends AbstractEntity implements PagePartInterf
      *
      * @return string
      */
-    public function getView(HasPagePartsInterface $page = null)
+    public function getView(?HasPagePartsInterface $page = null)
     {
         return $this->getDefaultView();
     }

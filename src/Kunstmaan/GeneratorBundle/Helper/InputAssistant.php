@@ -46,7 +46,7 @@ class InputAssistant
      *
      * @return string The namespace. But it's also been set on the InputInterface.
      */
-    public function askForNamespace(array $text = null)
+    public function askForNamespace(?array $text = null)
     {
         $namespace = $this->input->hasOption('namespace') ? $this->input->getOption('namespace') : null;
 
@@ -168,7 +168,7 @@ class InputAssistant
      *
      * @return string The prefix. But it's also been set on the InputInterface.
      */
-    public function askForPrefix(array $text = null, $namespace = null)
+    public function askForPrefix(?array $text = null, $namespace = null)
     {
         $prefix = $this->input->hasOption('prefix') ? $this->input->getOption('prefix') : null;
 

@@ -32,10 +32,10 @@ class FormHandler implements FormHandlerInterface
 
     public function __construct(
         ContainerInterface $container,
-        EntityManagerInterface $em,
-        FormFactoryInterface $formFactory,
-        RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher
+        ?EntityManagerInterface $em,
+        ?FormFactoryInterface $formFactory,
+        ?RouterInterface $router,
+        ?EventDispatcherInterface $eventDispatcher
     ) {
         $this->container = $container;
         $this->em = $em;

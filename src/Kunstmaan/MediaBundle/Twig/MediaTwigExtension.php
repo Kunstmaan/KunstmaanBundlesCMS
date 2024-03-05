@@ -28,7 +28,7 @@ final class MediaTwigExtension extends AbstractExtension
         ];
     }
 
-    public function getCroppedImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', string $filter = null)
+    public function getCroppedImage(EditableMediaWrapper $editableMediaWrapper, string $view = '', ?string $filter = null)
     {
         if ($filter) {
             return $this->manipulateImageService->cropImage($editableMediaWrapper, $view, $filter);

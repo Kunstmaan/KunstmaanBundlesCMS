@@ -49,7 +49,7 @@ final class AdaptFormEvent extends Event
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
      */
-    public function __construct(Request $request, TabPane $tabPane, $page = null, Node $node = null, NodeTranslation $nodeTranslation = null, NodeVersion $nodeVersion = null)
+    public function __construct(Request $request, TabPane $tabPane, $page = null, ?Node $node = null, ?NodeTranslation $nodeTranslation = null, ?NodeVersion $nodeVersion = null)
     {
         $this->request = $request;
         $this->tabPane = $tabPane;

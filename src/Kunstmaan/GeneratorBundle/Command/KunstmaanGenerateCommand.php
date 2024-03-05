@@ -133,7 +133,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @return string The prefix. But it's also been set on the InputInterface.
      */
-    protected function askForPrefix(array $text = null, $namespace = null)
+    protected function askForPrefix(?array $text = null, $namespace = null)
     {
         $prefix = $this->assistant->getOptionOrDefault('prefix', null);
 

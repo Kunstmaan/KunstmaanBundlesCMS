@@ -61,7 +61,7 @@ class KunstmaanGenerator extends Generator
         ManagerRegistry $registry,
         $skeletonDir,
         CommandAssistant $assistant,
-        ContainerInterface $container = null
+        ?ContainerInterface $container = null
     ) {
         $this->filesystem = $filesystem;
         $this->registry = $registry;

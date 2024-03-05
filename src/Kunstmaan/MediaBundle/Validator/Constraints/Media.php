@@ -75,18 +75,18 @@ class Media extends Constraint
      */
     public function __construct(
         array $options = [],
-        array $groups = null,
+        ?array $groups = null,
         $payload = null,
-        int $minHeight = null,
-        int $maxHeight = null,
-        int $minWidth = null,
-        int $maxWidth = null,
-        array $mimeTypes = null,
-        string $minHeightMessage = null,
-        string $maxHeightMessage = null,
-        string $minWidthMessage = null,
-        string $maxWidthMessage = null,
-        string $mimeTypesMessage = null
+        ?int $minHeight = null,
+        ?int $maxHeight = null,
+        ?int $minWidth = null,
+        ?int $maxWidth = null,
+        ?array $mimeTypes = null,
+        ?string $minHeightMessage = null,
+        ?string $maxHeightMessage = null,
+        ?string $minWidthMessage = null,
+        ?string $maxWidthMessage = null,
+        ?string $mimeTypesMessage = null
     ) {
         parent::__construct($options, $groups, $payload);
 

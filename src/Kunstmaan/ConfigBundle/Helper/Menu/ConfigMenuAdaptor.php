@@ -29,7 +29,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         if (!\is_null($parent) && 'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             // Load all the kunstmaan_config entities and create a menu item for them.

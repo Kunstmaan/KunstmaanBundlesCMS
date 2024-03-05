@@ -91,7 +91,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
     }
 
-    private function getRequiredConfig(string $excludeKey = null)
+    private function getRequiredConfig(?string $excludeKey = null)
     {
         $requiredConfig = [
             'website_title' => 'Example title',

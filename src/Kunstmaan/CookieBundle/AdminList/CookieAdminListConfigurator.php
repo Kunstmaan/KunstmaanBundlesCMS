@@ -24,7 +24,7 @@ class CookieAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurat
      */
     private $domainConfiguration;
 
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null, DomainConfigurationInterface $domainConfiguration = null)
+    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null, ?DomainConfigurationInterface $domainConfiguration = null)
     {
         parent::__construct($em, $aclHelper);
 

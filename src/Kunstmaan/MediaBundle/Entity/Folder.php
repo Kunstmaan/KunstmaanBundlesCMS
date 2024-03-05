@@ -289,7 +289,7 @@ class Folder extends AbstractEntity implements GedmoNode
     /**
      * @return Folder
      */
-    public function setParent(Folder $parent = null)
+    public function setParent(?Folder $parent = null)
     {
         $this->parent = $parent;
 

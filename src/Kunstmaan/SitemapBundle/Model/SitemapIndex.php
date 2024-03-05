@@ -14,7 +14,7 @@ final class SitemapIndex
      */
     private $lastModified;
 
-    public function __construct(string $url, \DateTimeInterface $lastModified = null)
+    public function __construct(string $url, ?\DateTimeInterface $lastModified = null)
     {
         $this->url = $url;
         $this->lastModified = $lastModified;
