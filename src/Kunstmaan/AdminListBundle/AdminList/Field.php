@@ -38,7 +38,7 @@ class Field
      * @param string     $template The template
      * @param FieldAlias $alias    The alias
      */
-    public function __construct($name, $header, $sort = false, $template = null, FieldAlias $alias = null)
+    public function __construct($name, $header, $sort = false, $template = null, ?FieldAlias $alias = null)
     {
         $this->name = $name;
         $this->header = $header;

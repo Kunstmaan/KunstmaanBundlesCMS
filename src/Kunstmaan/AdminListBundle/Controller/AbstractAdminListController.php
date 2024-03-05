@@ -74,7 +74,7 @@ abstract class AbstractAdminListController extends AbstractController
      *
      * @throws AccessDeniedHttpException
      */
-    protected function doExportAction(AdminListConfiguratorInterface $configurator, $_format, Request $request = null)
+    protected function doExportAction(AdminListConfiguratorInterface $configurator, $_format, ?Request $request = null)
     {
         if (!$configurator->canExport()) {
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');

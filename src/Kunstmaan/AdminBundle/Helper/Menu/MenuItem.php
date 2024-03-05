@@ -180,7 +180,7 @@ class MenuItem
      *
      * @return MenuItem
      */
-    public function setParent(MenuItem $parent = null)
+    public function setParent(?MenuItem $parent = null)
     {
         $this->parent = $parent;
 

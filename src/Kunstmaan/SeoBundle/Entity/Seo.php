@@ -319,7 +319,7 @@ class Seo extends AbstractEntity
     /**
      * @return Seo
      */
-    public function setOgImage(Media $ogImage = null)
+    public function setOgImage(?Media $ogImage = null)
     {
         $this->ogImage = $ogImage;
 

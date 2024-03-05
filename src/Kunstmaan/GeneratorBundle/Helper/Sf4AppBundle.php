@@ -57,7 +57,7 @@ final class Sf4AppBundle implements BundleInterface
         return $this->projectDir . '/src';
     }
 
-    public function setContainer(ContainerInterface $container = null): void
+    public function setContainer(?ContainerInterface $container = null): void
     {
         // no-op
     }

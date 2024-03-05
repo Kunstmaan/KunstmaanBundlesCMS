@@ -114,7 +114,7 @@ class CommandAssistant
         $question,
         $validator,
         $defaultValue = null,
-        array $autoComplete = null
+        ?array $autoComplete = null
     ) {
         $validationQuestion = new Question(
             $this->getQuestionHelper()->getQuestion($question, $defaultValue),
@@ -151,7 +151,7 @@ class CommandAssistant
         );
     }
 
-    public function ask($question, $default = null, array $autoComplete = null)
+    public function ask($question, $default = null, ?array $autoComplete = null)
     {
         $askQuestion = new Question(
             $this->questionHelper->getQuestion($question, $default), $default

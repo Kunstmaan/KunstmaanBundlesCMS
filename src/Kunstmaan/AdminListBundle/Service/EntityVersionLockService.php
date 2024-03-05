@@ -96,7 +96,7 @@ class EntityVersionLockService
     /**
      * @return array
      */
-    public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, UserInterface $userToExclude = null)
+    public function getUsersWithEntityVersionLock(LockableEntityInterface $entity, ?UserInterface $userToExclude = null)
     {
         /** @var LockableEntity $lockable */
         $lockable = $this->getLockableEntity($entity);
@@ -125,7 +125,7 @@ class EntityVersionLockService
      *
      * @return EntityVersionLock[]
      */
-    protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, UserInterface $userToExclude = null)
+    protected function getEntityVersionLocksByLockableEntity(LockableEntity $entity, ?UserInterface $userToExclude = null)
     {
         /** @var EntityVersionLockRepository $objectRepository */
         $objectRepository = $this->objectManager->getRepository(EntityVersionLock::class);

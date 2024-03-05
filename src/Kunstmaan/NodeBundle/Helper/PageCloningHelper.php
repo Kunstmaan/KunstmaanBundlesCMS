@@ -54,7 +54,7 @@ class PageCloningHelper
     /**
      * @throws AccessDeniedException
      */
-    public function duplicateWithChildren($id, string $locale, BaseUser $user, string $title = null): Node
+    public function duplicateWithChildren($id, string $locale, BaseUser $user, ?string $title = null): Node
     {
         /* @var Node $parentNode */
         $originalNode = $this->em->getRepository(Node::class)->find($id);

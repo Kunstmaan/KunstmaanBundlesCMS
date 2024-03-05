@@ -28,7 +28,7 @@ interface PagePartInterface extends EntityInterface
      *
      * @return string
      */
-    public function getView(HasPagePartsInterface $page = null);
+    public function getView(?HasPagePartsInterface $page = null);
 
     /**
      * Returns the default backend form type for the page part.

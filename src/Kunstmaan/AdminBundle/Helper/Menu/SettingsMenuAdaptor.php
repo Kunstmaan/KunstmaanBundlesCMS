@@ -29,7 +29,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
         $this->exceptionLoggingEnabled = $exceptionLoggingEnabled;
     }
 
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         if (\is_null($parent)) {
             $menuItem = new TopMenuItem($menu);

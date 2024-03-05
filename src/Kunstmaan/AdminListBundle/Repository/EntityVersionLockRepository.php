@@ -18,7 +18,7 @@ class EntityVersionLockRepository extends EntityRepository
      *
      * @return LockableEntity[]
      */
-    public function getLocksForLockableEntity(LockableEntity $entity, $threshold, UserInterface $userToExclude = null)
+    public function getLocksForLockableEntity(LockableEntity $entity, $threshold, ?UserInterface $userToExclude = null)
     {
         $qb = $this->createQueryBuilder('evl')
             ->select('evl')

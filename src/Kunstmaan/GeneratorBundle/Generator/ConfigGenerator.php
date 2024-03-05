@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Authenticator\AccessTokenAuthenticator;
  */
 class ConfigGenerator extends KunstmaanGenerator
 {
-    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container = null)
+    public function __construct(Filesystem $filesystem, ManagerRegistry $registry, $skeletonDir, CommandAssistant $assistant, ?ContainerInterface $container = null)
     {
         parent::__construct($filesystem, $registry, $skeletonDir, $assistant, $container);
     }

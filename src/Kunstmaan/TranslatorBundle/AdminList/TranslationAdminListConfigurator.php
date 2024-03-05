@@ -86,7 +86,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         return $this->exportFields;
     }
 
-    public function addExportField($name, $header, $template = null, FieldAlias $alias = null)
+    public function addExportField($name, $header, $template = null, ?FieldAlias $alias = null)
     {
         $this->exportFields[] = new Field($name, $header);
 
