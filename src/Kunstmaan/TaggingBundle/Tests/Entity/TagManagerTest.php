@@ -8,7 +8,7 @@ use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Result;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr;
@@ -158,7 +158,7 @@ class TagManagerTest extends TestCase
             ->method('getResult')
             ->willReturn([]);
 
-        $em = $this->getMockBuilder(EntityManagerInterface::class)
+        $em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -196,7 +196,7 @@ class TagManagerTest extends TestCase
 
     public function testFindByIdReturnsNull()
     {
-        $em = $this->getMockBuilder(EntityManagerInterface::class)
+        $em = $this->getMockBuilder(EntityManager::class)
         ->disableOriginalConstructor()
         ->getMock();
 
