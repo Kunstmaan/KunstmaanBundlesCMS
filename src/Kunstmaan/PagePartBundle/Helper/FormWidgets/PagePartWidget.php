@@ -85,7 +85,7 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @param EntityManagerInterface$em The entity manager
+     * @param EntityManagerInterface $em The entity manager
      */
     public function persist(EntityManagerInterface $em)
     {

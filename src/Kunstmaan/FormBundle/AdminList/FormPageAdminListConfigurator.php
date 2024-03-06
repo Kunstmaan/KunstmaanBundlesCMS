@@ -23,8 +23,8 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
 
     /**
      * @param EntityManagerInterface $em         The entity manager
-     * @param AclHelper     $aclHelper  The ACL helper
-     * @param string        $permission The permission
+     * @param AclHelper              $aclHelper  The ACL helper
+     * @param string                 $permission The permission
      */
     public function __construct(EntityManagerInterface $em, AclHelper $aclHelper, $permission)
     {

@@ -1028,10 +1028,10 @@ final class NodeAdminController extends AbstractController
     }
 
     /**
-     * @param EntityManagerInterface   $em       The Entity Manager
-     * @param BaseUser                 $user     The user who deletes the children
-     * @param string                   $locale   The locale that was used
-     * @param ArrayCollection          $children The children array
+     * @param EntityManagerInterface $em       The Entity Manager
+     * @param BaseUser               $user     The user who deletes the children
+     * @param string                 $locale   The locale that was used
+     * @param ArrayCollection        $children The children array
      */
     private function deleteNodeChildren(
         EntityManagerInterface $em,

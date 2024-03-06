@@ -24,8 +24,8 @@ class ConfigureActionsMenuListener
     private $router;
 
     /**
-     * @param EntityManagerInterface   $em     The entity manager
-     * @param RouterInterface          $router The router
+     * @param EntityManagerInterface $em     The entity manager
+     * @param RouterInterface        $router The router
      */
     public function __construct(EntityManagerInterface $em, RouterInterface $router)
     {

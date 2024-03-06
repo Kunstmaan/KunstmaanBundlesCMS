@@ -26,9 +26,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     protected $deletableFormsubmissions;
 
     /**
-     * @param EntityManagerInterface   $em                       The entity manager
-     * @param NodeTranslation          $nodeTranslation          The node translation
-     * @param bool                     $deletableFormsubmissions Can formsubmissions be deleted or not
+     * @param EntityManagerInterface $em                       The entity manager
+     * @param NodeTranslation        $nodeTranslation          The node translation
+     * @param bool                   $deletableFormsubmissions Can formsubmissions be deleted or not
      */
     public function __construct(EntityManagerInterface $em, $nodeTranslation, $deletableFormsubmissions = false)
     {
