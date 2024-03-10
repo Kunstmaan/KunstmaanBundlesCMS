@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -46,6 +47,8 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     protected $authorizationChecker;
 
+    private ?Node $node = null;
+
     /**
      * @param EntityManager $em         The entity
      *                                  manager
@@ -54,7 +57,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      *                                  locale
      * @param string        $permission The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker, ?Node $node = null)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
@@ -66,6 +69,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
                 'n'
             )
         );
+        $this->node = $node;
     }
 
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
@@ -109,6 +113,39 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
                 '@KunstmaanNode/Admin/list_action_button.html.twig'
             )
         );
+    }
+
+    public function buildItemActions(): void
+    {
+        $locale = $this->locale;
+        $acl = $this->authorizationChecker;
+
+        $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
+            if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
+                return [
+                    'path' => '_slug_preview',
+                    'params' => ['_locale' => $locale, 'url' => $item->getUrl()],
+                ];
+            }
+        };
+        $this->addSimpleItemAction('action.preview', $itemRoute, 'eye');
+
+        $nodeItemsRoute = function (EntityInterface $item) use ($acl) {
+            $node = $item->getNode();
+            if (!$acl->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
+                return null;
+            }
+
+            if ($node->getChildren()->count() === 0) {
+                return null;
+            }
+
+            return [
+                'path' => 'KunstmaanNodeBundle_nodes_items',
+                'params' => ['nodeId' => $node->getId()],
+            ];
+        };
+        $this->addSimpleItemAction('action.list_nodes', $nodeItemsRoute, 'th-list');
     }
 
     /**
@@ -242,6 +279,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
             ->setParameter('deleted', false)
             ->addOrderBy('b.updated', 'DESC')
             ->setParameter('lang', $this->locale);
+
+        if ($this->node instanceof Node) {
+            $queryBuilder->andWhere('n.parent = :parent')
+                ->setParameter('parent', $this->node->getId());
+        }
 
         if (!$this->domainConfiguration) {
             return;

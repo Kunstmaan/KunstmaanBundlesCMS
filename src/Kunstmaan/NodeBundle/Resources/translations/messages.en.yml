@@ -13,6 +13,7 @@ action:
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
     duplicate_with_children: "Duplicate with sub pages"
+    list_nodes: "List nodes"
 
 modal:
     sourcelanguage: "Source language"
