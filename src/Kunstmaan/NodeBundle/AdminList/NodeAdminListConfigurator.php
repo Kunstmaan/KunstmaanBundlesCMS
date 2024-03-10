@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
@@ -15,6 +15,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -50,14 +51,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     private ?Node $node = null;
 
     /**
-     * @param EntityManager $em         The entity
-     *                                  manager
-     * @param AclHelper     $aclHelper  The ACL helper
-     * @param string        $locale     The current
-     *                                  locale
-     * @param string        $permission The permission
+     * @param string $locale     The current locale
+     * @param string $permission The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker, ?Node $node = null)
+    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker, ?Node $node = null)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
@@ -222,19 +219,32 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
+     * @deprecated since 6.4. Use the `getEntityClass` method instead.
+     *
      * @return string
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/node-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanNodeBundle';
     }
 
     /**
+     * @deprecated since 6.4. Use the `getEntityClass` method instead.
+     *
      * @return string
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/node-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'NodeTranslation';
+    }
+
+    public function getEntityClass(): string
+    {
+        return NodeTranslation::class;
     }
 
     /**
@@ -246,14 +256,16 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getPathByConvention($suffix = null)
     {
-        if (empty($suffix)) {
-            return sprintf('%s_nodes', $this->getBundleName());
+        if (null === $suffix || $suffix === '') {
+            return 'KunstmaanNodeBundle_nodes';
         }
 
-        return sprintf('%s_nodes_%s', $this->getBundleName(), $suffix);
+        return sprintf('KunstmaanNodeBundle_nodes_%s', $suffix);
     }
 
     /**
+     * @deprecated since 6.4. There is no replacement for this method.
+     *
      * Override controller path (because actions for different entities are
      * defined in a single Settings controller).
      *
@@ -261,6 +273,8 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getControllerPath()
     {
+        trigger_deprecation('kunstmaan/node-bundle', '6.4', 'Method deprecated and will be removed in 7.0. There is no replacement for this method.');
+
         return 'KunstmaanNodeBundle:NodeAdmin';
     }
 

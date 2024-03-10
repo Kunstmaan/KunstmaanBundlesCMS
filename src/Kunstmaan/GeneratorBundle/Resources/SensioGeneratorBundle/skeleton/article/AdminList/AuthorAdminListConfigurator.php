@@ -2,17 +2,13 @@
 
 namespace {{ namespace }}\AdminList;
 
+use {{ namespace }}\Entity\{{ entity_class }}Author;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
 
 class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAuthorAdminListConfigurator
 {
-    public function getBundleName(): string
+    public function getEntityClass(): string
     {
-        return '{{ bundle.getName() }}';
-    }
-
-    public function getEntityName(): string
-    {
-        return '{{ entity_class }}Author';
+        return {{ entity_class }}Author::class;
     }
 }

@@ -20,6 +20,9 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
 
     private $questionHelper;
 
+    /** @var class-string */
+    private $entityFqcn;
+
     /**
      * @param string $skeletonDir The directory of the skeleton
      */
@@ -43,6 +46,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadata $metadata, OutputInterface $output, $sortField)
     {
+        $this->entityFqcn = $entity;
         $parts = explode('\\', $entity);
         $entityName = array_pop($parts);
         $generateAdminType = !method_exists($entity, 'getAdminType');
@@ -106,6 +110,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
                 'namespace' => $bundle->getNamespace(),
                 'bundle' => $bundle,
                 'entity_class' => $entityName,
+                'entity_fqcn' => $this->entityFqcn,
                 'fields' => $this->getFieldsWithFilterTypeFromMetadata($metadata),
                 'generate_admin_type' => $generateAdminType,
                 'sortField' => $sortField,

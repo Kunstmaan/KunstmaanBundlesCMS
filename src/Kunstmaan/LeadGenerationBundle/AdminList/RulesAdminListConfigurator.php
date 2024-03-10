@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 
 class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -119,6 +120,8 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/lead-generation-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanLeadGenerationBundle';
     }
 
@@ -129,7 +132,14 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/lead-generation-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Rule\AbstractRule';
+    }
+
+    public function getEntityClass(): string
+    {
+        return AbstractRule::class;
     }
 
     /**
