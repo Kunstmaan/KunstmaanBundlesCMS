@@ -173,21 +173,11 @@ services:
         tags:
             - { name: cache.pool }
 
-    kunstmaan_admin.form.type.color:
-        class: Kunstmaan\AdminBundle\Form\ColorType
-        tags:
-            - { name: form.type }
-
     kunstmaan_admin.doctrine_mapping.listener:
         class: Kunstmaan\AdminBundle\EventListener\MappingListener
         arguments: ['%kunstmaan_admin.user_class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
-
-    kunstmaan_admin.form.type.range:
-        class: Kunstmaan\AdminBundle\Form\RangeType
-        tags:
-            - { name: form.type }
 
     kunstmaan_admin.session_security:
         class: Kunstmaan\AdminBundle\EventListener\SessionSecurityListener
@@ -223,6 +213,8 @@ services:
 
     kunstmaan_admin.sidebar.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\SidebarTwigExtension
+        arguments:
+            - '%kunstmaan_admin.hide_sidebar%'
         tags:
             - { name: twig.extension }
 
