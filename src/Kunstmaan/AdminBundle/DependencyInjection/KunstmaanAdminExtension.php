@@ -97,6 +97,8 @@ class KunstmaanAdminExtension extends Extension
         $container->setParameter('kunstmaan_admin.multi_language', $config['multi_language']);
         $container->setParameter('kunstmaan_admin.required_locales', $config['required_locales']);
         $container->setParameter('requiredlocales', $config['required_locales']); // Keep old parameter for to keep BC with routing config
+
+        $container->setParameter('kunstmaan_admin.hide_sidebar', $config['hide_sidebar']);
     }
 
     /**
