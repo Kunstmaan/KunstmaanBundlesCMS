@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
+use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
@@ -43,23 +44,36 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     }
 
     /**
+     * @deprecated since 6.4. Use the `getEntityClass` method instead.
+     *
      * Return current bundle name.
      *
      * @return string
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/article-bundle', '6.4', 'Method "%s" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanArticleBundle';
     }
 
     /**
+     * @deprecated since 6.4. Use the `getEntityClass` method instead.
+     *
      * Return current entity name.
      *
      * @return string
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/article-bundle', '6.4', 'Method "%s" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'AbstractArticlePage';
+    }
+
+    public function getEntityClass(): string
+    {
+        return AbstractArticlePage::class;
     }
 
     /**

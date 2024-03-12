@@ -12,8 +12,8 @@ You will need to create 2 classes. A pageAdminListConfigurator and a pageAdminst
 ##### Configurator
 
 
-Create your ProjectPageAdminListConfigurator class in the AdminList folder in your Bundle and extend from the AbstractPageAdminListConfigurator. Override the 3 abstract methods :
-getBundleName, getEntityName and getReadableName
+Create your ProjectPageAdminListConfigurator class in the AdminList folder in your Bundle and extend from the AbstractPageAdminListConfigurator. Override the 2 abstract methods :
+getEntityClass and getReadableName
 
 ```PHP
 <?php
@@ -27,27 +27,10 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractPageAdminListConfig
  */
 class ProjectPageAdminListConfigurator extends AbstractPageAdminListConfigurator
 {
-
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass() : string
     {
-        return 'YourProjectWebsiteBundle';
+        return App\Your\Entity::class;
     }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'ProjectPage';
-    }
-
 
     /**
      *  Get readable name
@@ -58,8 +41,6 @@ class ProjectPageAdminListConfigurator extends AbstractPageAdminListConfigurator
     {
         return 'Project page';
     }
-
-
 }
 
 ```

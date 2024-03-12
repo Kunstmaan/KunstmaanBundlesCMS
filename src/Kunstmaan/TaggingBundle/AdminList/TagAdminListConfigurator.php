@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\TaggingBundle\Entity\Tag;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
@@ -45,6 +46,8 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/tagging-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanTaggingBundle';
     }
 
@@ -55,6 +58,13 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/tagging-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Tag';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Tag::class;
     }
 }
