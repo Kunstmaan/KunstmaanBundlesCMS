@@ -19,6 +19,7 @@ use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Kunstmaan\AdminListBundle\Service\ExportService;
+use Kunstmaan\AdminListBundle\Utils\EntityDetails;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
@@ -345,7 +346,7 @@ abstract class AbstractAdminListController extends AbstractController
         /** @var SlugifierInterface $slugifier */
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
 
-        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify(method_exists($configurator, 'getEntityClass') ? EntityDetails::getEntityPart($configurator->getEntityClass()) : $configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));

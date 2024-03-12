@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -81,8 +82,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $item->method('getId')->willReturn(123);
 
         $this->assertEquals('', $this->object->getAddUrlFor([]));
-        $this->assertEquals('KunstmaanFormBundle', $this->object->getBundleName());
-        $this->assertEquals('FormSubmission', $this->object->getEntityName());
+        $this->assertEquals(FormSubmission::class, $this->object->getEntityClass());
         $this->assertCount(0, $this->object->getDeleteUrlFor($item));
         $this->assertCount(2, $this->object->getIndexUrl());
         $this->assertCount(2, $this->object->getEditUrlFor($item));

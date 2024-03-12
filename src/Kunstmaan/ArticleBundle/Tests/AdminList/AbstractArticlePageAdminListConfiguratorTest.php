@@ -7,11 +7,13 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
+use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 class Configurator extends AbstractArticlePageAdminListConfigurator
 {
@@ -24,9 +26,6 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
         $this->repo = $repo;
     }
 
-    /**
-     * @return bool
-     */
     public function getOverviewPageRepository()
     {
         return $this->repo;
@@ -35,6 +34,8 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
 
 class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+
     /**
      * @var AbstractArticlePageAdminListConfigurator
      */
@@ -66,12 +67,23 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $this->object = new Configurator($em, $acl, 'nl', 'admin', $repo);
     }
 
-    public function testGetters()
+    /**
+     * @group legacy
+     */
+    public function testDeprecatedGetters()
     {
+        $this->expectDeprecation('Since kunstmaan/article-bundle 6.4: Method "Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator::getBundleName" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.');
+        $this->expectDeprecation('Since kunstmaan/article-bundle 6.4: Method "Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator::getEntityName" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.');
+
         $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
         $this->assertEquals('AbstractArticlePage', $this->object->getEntityName());
+    }
+
+    public function testGetters()
+    {
+        $this->assertEquals(AbstractArticlePage::class, $this->object->getEntityClass());
         $this->assertEquals('@KunstmaanArticle/AbstractArticlePageAdminList/list.html.twig', $this->object->getListTemplate());
-        $this->assertEquals('KunstmaanArticleBundle:AbstractArticlePage', $this->object->getRepositoryName());
+        $this->assertEquals(AbstractArticlePage::class, $this->object->getRepositoryName());
     }
 
     public function testBuildFields()

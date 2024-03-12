@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 
 class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -50,6 +51,8 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/lead-generation-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanLeadGenerationBundle';
     }
 
@@ -60,7 +63,14 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/lead-generation-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Popup\AbstractPopup';
+    }
+
+    public function getEntityClass(): string
+    {
+        return AbstractPopup::class;
     }
 
     /**

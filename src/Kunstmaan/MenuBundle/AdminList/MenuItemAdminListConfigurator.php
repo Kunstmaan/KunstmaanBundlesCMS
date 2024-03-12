@@ -45,6 +45,8 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/menu-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanMenuBundle';
     }
 
@@ -55,7 +57,14 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/menu-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'MenuItem';
+    }
+
+    public function getEntityClass(): string
+    {
+        return MenuItem::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $qb)

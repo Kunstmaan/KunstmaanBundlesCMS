@@ -60,7 +60,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->emMock
             ->expects($this->any())
             ->method('getRepository')
-            ->with('Bundle:MyEntity')
+            ->with('App\\Entity\\Blog')
             ->willReturn($entityRepositoryMock)
         ;
         $this->emMock
@@ -72,7 +72,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 
     public function testGetEditUrl()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $abstractMock = $this->setUpAdminlistConfigurator();
 
         $item = new class() {
             public function getId()
@@ -85,13 +85,13 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertEquals('app_admin_blog_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
         $this->assertContains(747, $editUrl['params']);
     }
 
     public function testGetDeleteUrl()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $abstractMock = $this->setUpAdminlistConfigurator();
 
         $item = new class() {
             public function getId()
@@ -104,20 +104,20 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertEquals('app_admin_blog_' . AbstractDoctrineORMAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
         $this->assertContains(747, $editUrl['params']);
     }
 
     public function testGetPagerFanta()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $abstractMock = $this->setUpAdminlistConfigurator();
 
         $this->assertInstanceOf(Pagerfanta::class, $abstractMock->getPagerfanta());
     }
 
     public function testGetQueryDefault()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $abstractMock = $this->setUpAdminlistConfigurator();
 
         // default
         $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
@@ -142,22 +142,16 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
             ])
         ;
 
-        /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
-        $abstractMock = $this->setUpAbstractMock(['getFilterBuilder']);
-        $abstractMock
-            ->expects($this->any())
-            ->method('getFilterBuilder')
-            ->willReturn($filterBuilderMock)
-        ;
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator(['getFilterBuilder']);
+        $adminlistConfigurator->setFilterBuilder($filterBuilderMock);
 
-        $abstractMock->addFilter('foo');
-        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
+        $adminlistConfigurator->addFilter('foo');
+        $this->assertInstanceOf(AbstractQuery::class, $adminlistConfigurator->getQuery());
     }
 
     public function testGetQueryWithOrderBy()
     {
-        /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
-        $abstractMock = $this->setUpAbstractMock(['getFilterBuilder']);
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator(['getFilterBuilder']);
 
         $filterBuilderMock = $this->createMock(FilterBuilder::class);
         $filterBuilderMock
@@ -170,11 +164,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
             ->willReturn([])
         ;
 
-        $abstractMock
-            ->expects($this->exactly(2))
-            ->method('getFilterBuilder')
-            ->willReturn($filterBuilderMock)
-        ;
+        $adminlistConfigurator->setFilterBuilder($filterBuilderMock);
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->setConstructorArgs([['page' => 1], [], ['_route' => 'testroute']])
@@ -201,13 +191,13 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
             ->willReturn($sessionMock)
         ;
 
-        $abstractMock->bindRequest($requestMock);
-        $this->assertInstanceOf(AbstractQuery::class, $abstractMock->getQuery());
+        $adminlistConfigurator->bindRequest($requestMock);
+        $this->assertInstanceOf(AbstractQuery::class, $adminlistConfigurator->getQuery());
     }
 
     public function testGetQueryWithPermissionDefAndAcl()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $abstractMock = $this->setUpAdminlistConfigurator();
 
         /** @var PermissionDefinition $permissionDefinitionMock */
         $permissionDefinitionMock = $this->createMock(PermissionDefinition::class);
@@ -217,7 +207,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 
     public function testSetGetPermissionDefinition()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $abstractMock = $this->setUpAdminlistConfigurator();
 
         /** @var PermissionDefinition $permissionDefinitionMock */
         $permissionDefinitionMock = $this->createMock(PermissionDefinition::class);
@@ -227,29 +217,43 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 
     public function testSetGetEntityManager()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator();
 
         /** @var EntityManagerInterface $emMock */
         $emMock = $this->createMock(EntityManagerInterface::class);
-        $this->assertInstanceOf(AbstractDoctrineORMAdminListConfigurator::class, $abstractMock->setEntityManager($emMock));
-        $this->assertInstanceOf(EntityManagerInterface::class, $abstractMock->getEntityManager());
+        $this->assertInstanceOf(AbstractDoctrineORMAdminListConfigurator::class, $adminlistConfigurator->setEntityManager($emMock));
+        $this->assertInstanceOf(EntityManagerInterface::class, $adminlistConfigurator->getEntityManager());
     }
 
-    public function setUpAbstractMock(array $methods = [])
+    public function setUpAdminlistConfigurator(): AbstractDoctrineORMAdminListConfigurator
     {
-        /** @var AbstractDoctrineORMAdminListConfigurator $abstractMock */
-        $abstractMock = $this->getMockForAbstractClass(AbstractDoctrineORMAdminListConfigurator::class, [$this->emMock], '', true, true, true, $methods);
-        $abstractMock
-            ->expects($this->any())
-            ->method('getBundleName')
-            ->willReturn('Bundle')
-        ;
-        $abstractMock
-            ->expects($this->any())
-            ->method('getEntityName')
-            ->willReturn('MyEntity')
-        ;
+        return new class($this->emMock) extends AbstractDoctrineORMAdminListConfigurator {
+            public function buildFields()
+            {
+                $this->addField('hello', 'hello', true);
+                $this->addField('world', 'world', true);
+            }
 
-        return $abstractMock;
+            public function getEntityClass(): string
+            {
+                return \App\Entity\Blog::class;
+            }
+
+            public function getBundleName()
+            {
+                return 'App';
+            }
+
+            public function getEntityName()
+            {
+                return 'Blog';
+            }
+        };
     }
+}
+
+namespace App\Entity;
+
+class Blog
+{
 }

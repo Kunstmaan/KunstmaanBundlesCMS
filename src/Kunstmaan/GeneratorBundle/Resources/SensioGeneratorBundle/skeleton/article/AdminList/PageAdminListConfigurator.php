@@ -9,14 +9,9 @@ use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
 
 class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdminListConfigurator
 {
-    public function getBundleName(): string
+    public function getEntityClass(): string
     {
-        return '{{ bundle.getName() }}';
-    }
-
-    public function getEntityName(): string
-    {
-        return 'Pages\{{ entity_class }}Page';
+        return {{ entity_class }}Page::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder): void
