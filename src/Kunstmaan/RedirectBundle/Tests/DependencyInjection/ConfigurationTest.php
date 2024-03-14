@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
+use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 use Kunstmaan\RedirectBundle\DependencyInjection\Configuration;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
@@ -24,6 +25,7 @@ class ConfigurationTest extends TestCase
 
         $this->assertProcessedConfigurationEquals([$array], [
             'redirect_entity' => Redirect::class,
+            'redirect_adminlist' => RedirectAdminListConfigurator::class,
             'enable_improved_router' => true,
         ]);
     }

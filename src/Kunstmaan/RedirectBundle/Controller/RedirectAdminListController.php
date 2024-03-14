@@ -5,7 +5,6 @@ namespace Kunstmaan\RedirectBundle\Controller;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
-use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +24,8 @@ final class RedirectAdminListController extends AbstractAdminListController
     public function getAdminListConfigurator(): AdminListConfiguratorInterface
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->domainConfiguration);
+            $configuratorClass = $this->getParameter('kunstmaan_redirect.adminlist.redirect_configurator.class');
+            $this->configurator = new $configuratorClass($this->getEntityManager(), null, $this->domainConfiguration);
         }
 
         return $this->configurator;
