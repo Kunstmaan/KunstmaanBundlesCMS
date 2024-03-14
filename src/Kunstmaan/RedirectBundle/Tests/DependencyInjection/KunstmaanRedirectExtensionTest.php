@@ -24,12 +24,10 @@ class KunstmaanRedirectExtensionTest extends AbstractExtensionTestCase
     {
         $this->load([
             'redirect_entity' => 'RedirectTestEntity',
-            'redirect_adminlist' => 'RedirectAdminListConfigurator',
             'enable_improved_router' => true,
         ]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_redirect.redirect.class', 'RedirectTestEntity');
-        $this->assertContainerBuilderHasParameter('kunstmaan_redirect.adminlist.redirect_configurator.class', 'RedirectAdminListConfigurator');
     }
 
     public function testDefaultRedirectClassParameter()

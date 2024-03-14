@@ -21,7 +21,6 @@ class KunstmaanRedirectExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('kunstmaan_redirect.redirect.class', $config['redirect_entity']);
-        $container->setParameter('kunstmaan_redirect.adminlist.redirect_configurator.class', $config['redirect_adminlist']);
 
         $enableImprovedRouter = $config['enable_improved_router'] ?? false;
         $container->setParameter('.kunstmaan_redirect.enable_improved_router', $enableImprovedRouter);

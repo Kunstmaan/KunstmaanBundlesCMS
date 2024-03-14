@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\RedirectBundle\DependencyInjection;
 
-use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -20,7 +19,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('redirect_entity')->defaultValue(Redirect::class)->end()
-                ->scalarNode('redirect_adminlist')->defaultValue(RedirectAdminListConfigurator::class)->end()
                 ->booleanNode('enable_improved_router')->defaultFalse()->end()
             ->end()
         ;
