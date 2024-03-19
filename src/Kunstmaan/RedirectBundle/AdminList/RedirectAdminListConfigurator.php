@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 
 class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
@@ -80,6 +81,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/redirect-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanRedirectBundle';
     }
 
@@ -90,12 +93,28 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/redirect-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Redirect';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Redirect::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         parent::adaptQueryBuilder($queryBuilder);
         $queryBuilder->orderBy('b.id', 'ASC');
+    }
+
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaanredirectbundle_admin_redirect';
+        }
+
+        return sprintf('kunstmaanredirectbundle_admin_redirect_%s', $suffix);
     }
 }

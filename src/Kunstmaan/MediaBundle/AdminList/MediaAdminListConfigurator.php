@@ -12,6 +12,7 @@ use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaEditItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaSelectItemAction;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
@@ -133,6 +134,8 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/media-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanMediaBundle';
     }
 
@@ -143,7 +146,14 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/media-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Media';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Media::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)

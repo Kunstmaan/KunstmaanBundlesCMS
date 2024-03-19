@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Kunstmaan\AdminListBundle\Utils\EntityDetails;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -18,6 +19,8 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 /**
  * Abstract admin list configurator, this implements the most common functionality from the
  * AdminListConfiguratorInterface and ExportListConfiguratorInterface
+ *
+ * @method string getEntityClass()
  */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
@@ -108,18 +111,30 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     protected $orderDirection = '';
 
     /**
+     * @deprecated since 6.4 and will be removed in 7.0. Implement the `getEntityClass` method instead.
+     *
      * Return current bundle name.
      *
      * @return string
      */
-    abstract public function getBundleName();
+    public function getBundleName()
+    {
+        // No-op
+        throw new \RuntimeException(sprintf('The "%s" method is no-op since 6.4 and will be removed in 7.0. Implement the `getEntityClass` method instead.', __METHOD__));
+    }
 
     /**
+     * @deprecated since 6.4 and will be removed in 7.0. Implement the `getEntityClass` method instead.
+     *
      * Return current entity name.
      *
      * @return string
      */
-    abstract public function getEntityName();
+    public function getEntityName()
+    {
+        // No-op
+        throw new \RuntimeException(sprintf('The "%s" method is no-op since 6.4 and will be removed in 7.0. Implement the `getEntityClass` method instead.', __METHOD__));
+    }
 
     /**
      * Return default repository name.
@@ -128,7 +143,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getRepositoryName()
     {
-        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+        if (!method_exists($this, 'getEntityClass')) {
+            trigger_deprecation('kunstmaan/adminlist-bundle', '6.4', 'Relying on "getBundleName" and "getEntityName" in your adminlist configurator is deprecated and will be removed in 7.0. Implement the "getEntityClass" method in your adminlist configurator instead.');
+
+            return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+        }
+
+        return $this->getEntityClass();
     }
 
     /**
@@ -195,7 +216,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
-        $friendlyName = explode('\\', $this->getEntityName());
+        $friendlyName = explode('\\', method_exists($this, 'getEntityClass') ? $this->getEntityClass() : $this->getEntityName());
         $friendlyName = array_pop($friendlyName);
         $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
         $a = preg_split($re, $friendlyName);
@@ -822,22 +843,40 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getPathByConvention($suffix = null)
     {
-        $entityName = strtolower($this->getEntityName());
-        $entityName = str_replace('\\', '_', $entityName);
-        if (empty($suffix)) {
-            return sprintf('%s_admin_%s', strtolower($this->getBundleName()), $entityName);
+        // NEXT_MAJOR Remove if
+        if (!method_exists($this, 'getEntityClass')) {
+            trigger_deprecation('kunstmaan/adminlist-bundle', '6.4', 'Relying on "getBundleName" and "getEntityName" in your adminlist configurator is deprecated and will be removed in 7.0. Implement the "getEntityClass" method in your adminlist configurator instead.');
+
+            $entityName = strtolower($this->getEntityName());
+            $entityName = str_replace('\\', '_', $entityName);
+            if (empty($suffix)) {
+                return sprintf('%s_admin_%s', strtolower($this->getBundleName()), $entityName);
+            }
+
+            return sprintf('%s_admin_%s_%s', strtolower($this->getBundleName()), $entityName, $suffix);
         }
 
-        return sprintf('%s_admin_%s_%s', strtolower($this->getBundleName()), $entityName, $suffix);
+        $rootNamespace = strtolower(EntityDetails::getRootNamespace($this->getEntityClass()));
+        $entityPart = EntityDetails::getEntityPart($this->getEntityClass());
+
+        $entityName = strtolower($entityPart);
+        $entityName = str_replace('\\', '_', $entityName);
+        if (null === $suffix || $suffix === '') {
+            return sprintf('%s_admin_%s', $rootNamespace, $entityName);
+        }
+
+        return sprintf('%s_admin_%s_%s', $rootNamespace, $entityName, $suffix);
     }
 
     /**
-     * Get controller path.
+     * @deprecated since 6.4 and will be removed in 7.0. There is no replacement for this method.
      *
      * @return string
      */
     public function getControllerPath()
     {
+        trigger_deprecation('kunstmaan/adminlist-bundle', '6.4', 'Method deprecated and will be removed in 7.0. There is no replacement for this method.');
+
         return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
     }
 

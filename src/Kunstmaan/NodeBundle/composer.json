@@ -17,7 +17,7 @@
         "doctrine/dbal": "^2.13.1|^3.4",
         "gedmo/doctrine-extensions": "^2.4.34|^3.1.0",
         "kunstmaan/admin-bundle": "^6.1",
-        "kunstmaan/adminlist-bundle": "^5.9|^6.0",
+        "kunstmaan/adminlist-bundle": "^6.4",
         "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/expression-language": "^5.4",
         "symfony-cmf/routing-bundle": "^2.1"

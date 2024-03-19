@@ -7,6 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\MenuBundle\Entity\Menu;
 
 class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -55,6 +56,8 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/menu-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanMenuBundle';
     }
 
@@ -65,7 +68,14 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/menu-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Menu';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Menu::class;
     }
 
     /**

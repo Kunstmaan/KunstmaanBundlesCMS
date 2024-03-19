@@ -10,6 +10,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * Adminlist configuration to list all the form pages
@@ -146,6 +147,8 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/form-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanNodeBundle';
     }
 
@@ -154,7 +157,14 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/form-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'NodeTranslation';
+    }
+
+    public function getEntityClass(): string
+    {
+        return NodeTranslation::class;
     }
 
     /**

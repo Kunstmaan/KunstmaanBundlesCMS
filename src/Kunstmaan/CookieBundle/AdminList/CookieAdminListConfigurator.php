@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
+use Kunstmaan\CookieBundle\Entity\Cookie;
 use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\CookieBundle\Form\CookieAdminType;
 
@@ -97,23 +98,36 @@ class CookieAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurat
     }
 
     /**
+     * @deprecated since 6.4 and will be removed in 7.0. Use the `getEntityClass` method instead.
+     *
      * Get bundle name
      *
      * @return string
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/cookie-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanCookieBundle';
     }
 
     /**
+     * @deprecated since 6.4 and will be removed in 7.0. Use the `getEntityClass` method instead.
+     *
      * Get entity name
      *
      * @return string
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/cookie-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'Cookie';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Cookie::class;
     }
 
     /**
