@@ -143,7 +143,7 @@ final class FormSubmissionsController extends AbstractController
         $configurator = new FormSubmissionAdminListConfigurator($this->em, $nt, $this->getParameter('kunstmaan_form.deletable_formsubmissions'));
 
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify(method_exists($configurator, 'getEntityClass') ? $configurator->getEntityClass() : $configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityClass()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));

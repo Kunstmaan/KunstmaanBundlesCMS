@@ -113,30 +113,6 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         return parent::getValue($item, $columnName);
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/lead-generation-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanLeadGenerationBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/lead-generation-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'Rule\AbstractRule';
-    }
-
     public function getEntityClass(): string
     {
         return AbstractRule::class;

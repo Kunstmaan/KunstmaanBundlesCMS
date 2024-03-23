@@ -172,26 +172,6 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
         return ['path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => ['nodeTranslationId' => $this->nodeTranslation->getId()]];
     }
 
-    /**
-     * @return string
-     */
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/form-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanFormBundle';
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/form-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'FormSubmission';
-    }
-
     public function getEntityClass(): string
     {
         return FormSubmission::class;

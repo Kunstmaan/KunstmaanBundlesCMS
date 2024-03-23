@@ -49,7 +49,7 @@
     {% if adminmenu.current %}
         {% set title = adminmenu.current.label | trans %}
     {% else %}
-        {% set title = adminlist.configurator.getEntityName() %}
+        {% set title = adminlist.configurator.getEntityClass() %}
     {% endif %}
 
     {% if adminlistconfigurator.overviewPage %}

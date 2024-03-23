@@ -238,16 +238,6 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
             {
                 return \App\Entity\Blog::class;
             }
-
-            public function getBundleName()
-            {
-                return 'App';
-            }
-
-            public function getEntityName()
-            {
-                return 'Blog';
-            }
         };
     }
 }

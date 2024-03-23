@@ -26,16 +26,6 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
         $this->addField('role', 'kuma_user.role.adminlist.header.role', true);
     }
 
-    /**
-     * Get repository name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Role';
-    }
-
     public function getEntityClass(): string
     {
         return Role::class;

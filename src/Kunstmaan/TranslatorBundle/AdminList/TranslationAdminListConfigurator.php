@@ -150,28 +150,9 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         return null;
     }
 
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/translator-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanTranslatorBundle';
-    }
-
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/translator-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'Translation';
-    }
-
     public function getEntityClass(): string
     {
         return Translation::class;
-    }
-
-    public function getControllerPath()
-    {
-        return 'KunstmaanTranslatorBundle:Index';
     }
 
     /**

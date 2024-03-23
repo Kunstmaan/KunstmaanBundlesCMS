@@ -142,39 +142,9 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/form-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanNodeBundle';
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/form-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'NodeTranslation';
-    }
-
     public function getEntityClass(): string
     {
         return NodeTranslation::class;
-    }
-
-    /**
-     * Override controller path (because actions for different entities are defined in a single Settings controller).
-     *
-     * @return string
-     */
-    public function getControllerPath()
-    {
-        return 'KunstmaanFormBundle:FormSubmissions';
     }
 
     /**

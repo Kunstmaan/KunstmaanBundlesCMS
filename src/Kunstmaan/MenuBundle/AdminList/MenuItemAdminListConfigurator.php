@@ -38,30 +38,6 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         $this->addField('newWindow', 'kuma_menu.menu_item.adminlist.field.new_window', false);
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/menu-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanMenuBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/menu-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'MenuItem';
-    }
-
     public function getEntityClass(): string
     {
         return MenuItem::class;

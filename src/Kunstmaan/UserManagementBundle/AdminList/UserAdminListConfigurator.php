@@ -59,16 +59,6 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
         return false;
     }
 
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'User';
-    }
-
     public function getEntityClass(): string
     {
         return User::class;

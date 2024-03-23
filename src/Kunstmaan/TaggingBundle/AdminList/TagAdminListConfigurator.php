@@ -39,30 +39,6 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_tagging.adminlist.filter.name');
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/tagging-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanTaggingBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/tagging-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'Tag';
-    }
-
     public function getEntityClass(): string
     {
         return Tag::class;
