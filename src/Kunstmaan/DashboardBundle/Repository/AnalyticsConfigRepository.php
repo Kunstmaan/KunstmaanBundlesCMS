@@ -42,9 +42,9 @@ class AnalyticsConfigRepository extends EntityRepository
 
         return $em->getRepository(AnalyticsOverview::class)
             ->findBy([
-                    'config' => $config,
-                    'segment' => null,
-                ]);
+                'config' => $config,
+                'segment' => null,
+            ]);
     }
 
     /**

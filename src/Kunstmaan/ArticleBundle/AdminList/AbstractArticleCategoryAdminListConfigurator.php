@@ -7,6 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\ArticleBundle\Entity\AbstractCategory;
 
 /**
  * The AdminList configurator for the AbstractArticleAuthor
@@ -19,23 +20,36 @@ class AbstractArticleCategoryAdminListConfigurator extends AbstractDoctrineORMAd
     }
 
     /**
+     * @deprecated since 6.4. Use the `getEntityClass` method instead.
+     *
      * Return current bundle name.
      *
      * @return string
      */
     public function getBundleName()
     {
+        trigger_deprecation('kunstmaan/article-bundle', '6.4', 'Method "%s" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'KunstmaanArticleBundle';
     }
 
     /**
+     * @deprecated since 6.4. Use the `getEntityClass` method instead.
+     *
      * Return current entity name.
      *
      * @return string
      */
     public function getEntityName()
     {
+        trigger_deprecation('kunstmaan/article-bundle', '6.4', 'Method "%s" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
+
         return 'AbstractArticleCategory';
+    }
+
+    public function getEntityClass(): string
+    {
+        return AbstractCategory::class;
     }
 
     /**

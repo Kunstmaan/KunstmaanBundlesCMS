@@ -21,7 +21,7 @@ class KunstmaanLeadGenerationExtensionTest extends AbstractExtensionTestCase
         $this->load([
             'popup_types' => ['abc'],
             'debug' => true,
-         ]);
+        ]);
 
         $this->assertContainerBuilderHasParameter('kunstmaan_lead_generation.popup_types');
         $this->assertContainerBuilderHasParameter('kunstmaan_lead_generation.debug', true);

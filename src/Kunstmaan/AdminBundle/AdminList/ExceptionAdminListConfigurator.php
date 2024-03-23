@@ -41,7 +41,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
         $listRoute = [
             'path' => 'kunstmaanadminbundle_admin_exception_resolve_all',
             'params' => [],
-       ];
+        ];
 
         $this->addListAction(
             new SimpleListAction(

@@ -65,7 +65,7 @@ class ImagePagePartAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+            'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
         ]);
     }
 }
