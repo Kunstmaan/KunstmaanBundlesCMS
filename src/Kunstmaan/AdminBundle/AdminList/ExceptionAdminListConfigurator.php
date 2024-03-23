@@ -41,7 +41,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
         $listRoute = [
             'path' => 'kunstmaanadminbundle_admin_exception_resolve_all',
             'params' => [],
-       ];
+        ];
 
         $this->addListAction(
             new SimpleListAction(
@@ -103,13 +103,8 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
         return false;
     }
 
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanAdminBundle';
-    }
-
-    public function getEntityName()
-    {
-        return 'Exception';
+        return Exception::class;
     }
 }

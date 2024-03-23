@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Kunstmaan\AdminListBundle\Utils\EntityDetails;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -108,18 +109,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     protected $orderDirection = '';
 
     /**
-     * Return current bundle name.
-     *
-     * @return string
+     * @return class-string
      */
-    abstract public function getBundleName();
-
-    /**
-     * Return current entity name.
-     *
-     * @return string
-     */
-    abstract public function getEntityName();
+    abstract public function getEntityClass(): string;
 
     /**
      * Return default repository name.
@@ -128,7 +120,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getRepositoryName()
     {
-        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+        return $this->getEntityClass();
     }
 
     /**
@@ -195,7 +187,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
-        $friendlyName = explode('\\', $this->getEntityName());
+        $friendlyName = explode('\\', $this->getEntityClass());
         $friendlyName = array_pop($friendlyName);
         $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
         $a = preg_split($re, $friendlyName);
@@ -822,23 +814,17 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getPathByConvention($suffix = null)
     {
-        $entityName = strtolower($this->getEntityName());
+        $rootNamespace = strtolower(EntityDetails::getRootNamespace($this->getEntityClass()));
+        $rootNamespace = str_replace('\\bundle\\', '', $rootNamespace);
+        $entityPart = EntityDetails::getEntityPart($this->getEntityClass());
+
+        $entityName = strtolower($entityPart);
         $entityName = str_replace('\\', '_', $entityName);
-        if (empty($suffix)) {
-            return sprintf('%s_admin_%s', strtolower($this->getBundleName()), $entityName);
+        if (null === $suffix || $suffix === '') {
+            return sprintf('%s_admin_%s', $rootNamespace, $entityName);
         }
 
-        return sprintf('%s_admin_%s_%s', strtolower($this->getBundleName()), $entityName, $suffix);
-    }
-
-    /**
-     * Get controller path.
-     *
-     * @return string
-     */
-    public function getControllerPath()
-    {
-        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+        return sprintf('%s_admin_%s_%s', $rootNamespace, $entityName, $suffix);
     }
 
     /**

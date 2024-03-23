@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
@@ -26,13 +27,8 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
         $this->addField('roles', 'kuma_user.group.adminlist.header.roles', false);
     }
 
-    /**
-     * Get repository name
-     *
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityClass(): string
     {
-        return 'Group';
+        return Group::class;
     }
 }

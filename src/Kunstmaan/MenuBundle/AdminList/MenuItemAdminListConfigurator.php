@@ -38,24 +38,9 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         $this->addField('newWindow', 'kuma_menu.menu_item.adminlist.field.new_window', false);
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanMenuBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'MenuItem';
+        return MenuItem::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $qb)

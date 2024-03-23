@@ -7,6 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\MenuBundle\Entity\Menu;
 
 class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -48,24 +49,9 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_menu.menu.adminlist.filter.name');
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanMenuBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Menu';
+        return Menu::class;
     }
 
     /**
@@ -104,5 +90,19 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $queryBuilder
             ->andWhere('b.locale = :locale')
             ->setParameter('locale', $this->locale);
+    }
+
+    /**
+     * @param string|null $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaanmenubundle_admin_menu';
+        }
+
+        return sprintf('kunstmaanmenubundle_admin_menu_%s', $suffix);
     }
 }

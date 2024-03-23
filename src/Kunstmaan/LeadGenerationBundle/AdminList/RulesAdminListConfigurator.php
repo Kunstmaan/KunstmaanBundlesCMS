@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 
 class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -112,24 +113,9 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         return parent::getValue($item, $columnName);
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanLeadGenerationBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Rule\AbstractRule';
+        return AbstractRule::class;
     }
 
     /**

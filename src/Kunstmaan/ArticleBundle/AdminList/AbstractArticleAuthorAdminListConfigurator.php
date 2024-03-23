@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\ArticleBundle\Entity\AbstractAuthor;
 
 /**
  * The AdminList configurator for the AbstractArticleAuthor
@@ -31,24 +32,9 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
         $this->locale = $locale;
     }
 
-    /**
-     * Return current bundle name.
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanArticleBundle';
-    }
-
-    /**
-     * Return current entity name.
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'AbstractArticleAuthor';
+        return AbstractAuthor::class;
     }
 
     /**

@@ -35,37 +35,36 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
 
     public function testGetEditUrl()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator();
 
-        $editUrl = $abstractMock->getEditUrlFor(['id' => 888]);
+        $editUrl = $adminlistConfigurator->getEditUrlFor(['id' => 888]);
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineDBALadminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
+        $this->assertEquals('app_admin_user_' . AbstractDoctrineDBALadminListConfigurator::SUFFIX_EDIT, $editUrl['path']);
         $this->assertContains(888, $editUrl['params']);
     }
 
     public function testGetDeleteUrl()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator();
 
-        $editUrl = $abstractMock->getDeleteUrlFor(['id' => 888]);
+        $editUrl = $adminlistConfigurator->getDeleteUrlFor(['id' => 888]);
         $this->assertIsArray($editUrl);
         $this->assertArrayHasKey('path', $editUrl);
         $this->assertArrayHasKey('params', $editUrl);
-        $this->assertEquals('bundle_admin_myentity_' . AbstractDoctrineDBALAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
+        $this->assertEquals('app_admin_user_' . AbstractDoctrineDBALAdminListConfigurator::SUFFIX_DELETE, $editUrl['path']);
         $this->assertContains(888, $editUrl['params']);
     }
 
     public function testGetPagerFanta()
     {
-        $abstractMock = $this->setUpAbstractMock();
-        $this->assertInstanceOf(Pagerfanta::class, $abstractMock->getPagerfanta());
+        $this->assertInstanceOf(Pagerfanta::class, $this->setUpAdminlistConfigurator()->getPagerfanta());
     }
 
     public function testGetQueryBuilderAndIterator()
     {
-        $abstractMock = $this->setUpAbstractMock(['getFilterBuilder']);
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator();
 
         $abstractDBALFilterTypeMock = $this->createMock(AbstractDBALFilterType::class);
 
@@ -78,11 +77,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
             ])
         ;
 
-        $abstractMock
-            ->expects($this->any())
-            ->method('getFilterBuilder')
-            ->willReturn($filterBuilderMock)
-        ;
+        $adminlistConfigurator->setFilterBuilder($filterBuilderMock);
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->setConstructorArgs([['page' => 1], [], ['_route' => 'testroute']])
@@ -109,42 +104,46 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
             ->willReturn($sessionMock)
         ;
 
-        $abstractMock->bindRequest($requestMock);
-        $this->assertInstanceOf(QueryBuilder::class, $abstractMock->getQueryBuilder());
-        $this->assertInstanceOf(\Traversable::class, $abstractMock->getIterator());
+        $adminlistConfigurator->bindRequest($requestMock);
+        $this->assertInstanceOf(QueryBuilder::class, $adminlistConfigurator->getQueryBuilder());
+        $this->assertInstanceOf(\Traversable::class, $adminlistConfigurator->getIterator());
     }
 
     public function testSetGetCountField()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator();
 
-        $this->assertInstanceOf(AbstractDoctrineDBALAdminListConfigurator::class, $abstractMock->setCountField('foo'));
-        $this->assertIsString($abstractMock->getCountField());
+        $this->assertInstanceOf(AbstractDoctrineDBALAdminListConfigurator::class, $adminlistConfigurator->setCountField('foo'));
+        $this->assertIsString($adminlistConfigurator->getCountField());
     }
 
     public function testSetGetDistinctCount()
     {
-        $abstractMock = $this->setUpAbstractMock();
+        $adminlistConfigurator = $this->setUpAdminlistConfigurator();
 
-        $this->assertInstanceOf(AbstractDoctrineDBALAdminListConfigurator::class, $abstractMock->setUseDistinctCount(false));
-        $this->assertFalse($abstractMock->getUseDistinctCount());
+        $this->assertInstanceOf(AbstractDoctrineDBALAdminListConfigurator::class, $adminlistConfigurator->setUseDistinctCount(false));
+        $this->assertFalse($adminlistConfigurator->getUseDistinctCount());
     }
 
-    public function setUpAbstractMock(array $methods = [])
+    public function setUpAdminlistConfigurator(): AbstractDoctrineDBALAdminListConfigurator
     {
-        /** @var AbstractDoctrineDBALAdminListConfigurator $abstractMock */
-        $abstractMock = $this->getMockForAbstractClass(AbstractDoctrineDBALAdminListConfigurator::class, [$this->connectionMock], '', true, true, true, $methods);
-        $abstractMock
-            ->expects($this->any())
-            ->method('getBundleName')
-            ->willReturn('Bundle')
-        ;
-        $abstractMock
-            ->expects($this->any())
-            ->method('getEntityName')
-            ->willReturn('MyEntity')
-        ;
+        return new class($this->connectionMock) extends AbstractDoctrineDBALAdminListConfigurator {
+            public function buildFields()
+            {
+                $this->addField('hello', 'hello', true);
+                $this->addField('world', 'world', true);
+            }
 
-        return $abstractMock;
+            public function getEntityClass(): string
+            {
+                return \App\Entity\User::class;
+            }
+        };
     }
+}
+
+namespace App\Entity;
+
+class User
+{
 }

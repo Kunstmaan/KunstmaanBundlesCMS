@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
+use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
@@ -24,9 +25,6 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
         $this->repo = $repo;
     }
 
-    /**
-     * @return bool
-     */
     public function getOverviewPageRepository()
     {
         return $this->repo;
@@ -68,10 +66,9 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
     public function testGetters()
     {
-        $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
-        $this->assertEquals('AbstractArticlePage', $this->object->getEntityName());
+        $this->assertEquals(AbstractArticlePage::class, $this->object->getEntityClass());
         $this->assertEquals('@KunstmaanArticle/AbstractArticlePageAdminList/list.html.twig', $this->object->getListTemplate());
-        $this->assertEquals('KunstmaanArticleBundle:AbstractArticlePage', $this->object->getRepositoryName());
+        $this->assertEquals(AbstractArticlePage::class, $this->object->getRepositoryName());
     }
 
     public function testBuildFields()

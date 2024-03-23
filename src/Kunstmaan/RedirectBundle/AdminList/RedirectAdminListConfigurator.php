@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 
 class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
@@ -73,29 +74,23 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         return parent::getValue($item, $columnName);
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanRedirectBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Redirect';
+        return Redirect::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         parent::adaptQueryBuilder($queryBuilder);
         $queryBuilder->orderBy('b.id', 'ASC');
+    }
+
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaanredirectbundle_admin_redirect';
+        }
+
+        return sprintf('kunstmaanredirectbundle_admin_redirect_%s', $suffix);
     }
 }

@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
+use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
@@ -42,24 +43,9 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         );
     }
 
-    /**
-     * Return current bundle name.
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanArticleBundle';
-    }
-
-    /**
-     * Return current entity name.
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'AbstractArticlePage';
+        return AbstractArticlePage::class;
     }
 
     /**

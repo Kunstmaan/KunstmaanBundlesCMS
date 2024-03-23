@@ -124,7 +124,7 @@ final class GroupsController extends AbstractController
     {
         $configurator = new GroupAdminListConfigurator($this->em);
 
-        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($configurator->getEntityClass()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);

@@ -4,6 +4,7 @@ namespace {{ namespace }}\AdminList;
 
 use Doctrine\ORM\EntityManager;
 
+use {{ entity_fqcn }};
 use {{ namespace }}\Form\{{ entity_class }}AdminType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
@@ -36,14 +37,9 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
 {% endfor %}
     }
 
-    public function getBundleName(): string
+    public function getEntityClass(): string
     {
-        return '{{ bundle.getName() }}';
-    }
-
-    public function getEntityName(): string
-    {
-        return '{{ entity_class }}';
+        return {{ entity_class }}::class;
     }
 {% if sortField %}
 

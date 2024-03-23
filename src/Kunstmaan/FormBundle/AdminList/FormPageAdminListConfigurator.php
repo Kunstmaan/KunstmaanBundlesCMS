@@ -10,6 +10,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * Adminlist configuration to list all the form pages
@@ -141,30 +142,9 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanNodeBundle';
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'NodeTranslation';
-    }
-
-    /**
-     * Override controller path (because actions for different entities are defined in a single Settings controller).
-     *
-     * @return string
-     */
-    public function getControllerPath()
-    {
-        return 'KunstmaanFormBundle:FormSubmissions';
+        return NodeTranslation::class;
     }
 
     /**

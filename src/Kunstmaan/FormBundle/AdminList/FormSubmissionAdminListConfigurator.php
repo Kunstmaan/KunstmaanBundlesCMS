@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
@@ -171,20 +172,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
         return ['path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => ['nodeTranslationId' => $this->nodeTranslation->getId()]];
     }
 
-    /**
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanFormBundle';
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'FormSubmission';
+        return FormSubmission::class;
     }
 
     /**

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 
 class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -43,24 +44,9 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->addFilter('htmlId', new ORM\StringFilterType('htmlId'), 'kuma_lead_generation.popup.list.filter.html_id');
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanLeadGenerationBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Popup\AbstractPopup';
+        return AbstractPopup::class;
     }
 
     /**

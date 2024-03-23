@@ -33,7 +33,7 @@ class LinePagePartAdminType extends AbstractType
     {
         $resolver->setDefaults(
             [
-              'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
             ]
         );
     }

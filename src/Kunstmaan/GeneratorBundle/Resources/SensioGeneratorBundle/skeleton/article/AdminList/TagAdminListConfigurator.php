@@ -2,6 +2,7 @@
 
 namespace {{ namespace }}\AdminList;
 
+use {{ namespace }}\Entity\{{ entity_class }}Tag;
 use {{ namespace }}\Form\{{ entity_class }}TagAdminType;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -15,13 +16,8 @@ class {{ entity_class }}TagAdminListConfigurator extends AbstractArticleTagAdmin
         $this->setAdminType({{ entity_class }}TagAdminType::class);
     }
 
-    public function getBundleName(): string
+    public function getEntityClass(): string
     {
-        return '{{ bundle.getName() }}';
-    }
-
-    public function getEntityName(): string
-    {
-        return '{{ entity_class }}Tag';
+        return {{ entity_class }}Tag::class;
     }
 }

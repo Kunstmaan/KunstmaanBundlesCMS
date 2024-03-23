@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\TaggingBundle\Entity\Tag;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
@@ -38,23 +39,8 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_tagging.adminlist.filter.name');
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanTaggingBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Tag';
+        return Tag::class;
     }
 }

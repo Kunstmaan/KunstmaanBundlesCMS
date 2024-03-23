@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
@@ -25,13 +26,8 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
         $this->addField('role', 'kuma_user.role.adminlist.header.role', true);
     }
 
-    /**
-     * Get repository name
-     *
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityClass(): string
     {
-        return 'Role';
+        return Role::class;
     }
 }

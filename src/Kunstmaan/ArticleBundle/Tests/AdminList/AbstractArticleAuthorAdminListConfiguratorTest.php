@@ -5,6 +5,7 @@ namespace Kunstmaan\ArticleBundle\Tests\AdminList;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
+use Kunstmaan\ArticleBundle\Entity\AbstractAuthor;
 use PHPUnit\Framework\TestCase;
 
 class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
@@ -28,8 +29,7 @@ class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
 
     public function testGetters()
     {
-        $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
-        $this->assertEquals('AbstractArticleAuthor', $this->object->getEntityName());
+        $this->assertEquals(AbstractAuthor::class, $this->object->getEntityClass());
     }
 
     public function testBuildFields()

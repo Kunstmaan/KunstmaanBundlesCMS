@@ -138,11 +138,11 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      */
     public function getPathByConvention($suffix = null)
     {
-        if (empty($suffix)) {
-            return sprintf('%s_settings_%ss', $this->getBundleName(), strtolower($this->getEntityName()));
+        if (null === $suffix || $suffix === '') {
+            return 'KunstmaanTranslatorBundle_settings_translations';
         }
 
-        return sprintf('%s_settings_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
+        return sprintf('KunstmaanTranslatorBundle_settings_translations_%s', $suffix);
     }
 
     public function getAdminType($item)
@@ -150,19 +150,9 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         return null;
     }
 
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanTranslatorBundle';
-    }
-
-    public function getEntityName()
-    {
-        return 'Translation';
-    }
-
-    public function getControllerPath()
-    {
-        return 'KunstmaanTranslatorBundle:Index';
+        return Translation::class;
     }
 
     /**

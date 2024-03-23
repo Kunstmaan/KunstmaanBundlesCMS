@@ -7,6 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\ArticleBundle\Entity\AbstractCategory;
 
 /**
  * The AdminList configurator for the AbstractArticleAuthor
@@ -18,24 +19,9 @@ class AbstractArticleCategoryAdminListConfigurator extends AbstractDoctrineORMAd
         parent::__construct($em, $aclHelper);
     }
 
-    /**
-     * Return current bundle name.
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanArticleBundle';
-    }
-
-    /**
-     * Return current entity name.
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'AbstractArticleCategory';
+        return AbstractCategory::class;
     }
 
     /**

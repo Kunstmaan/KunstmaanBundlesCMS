@@ -168,16 +168,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     }
 
     /**
-     * Return default repository name.
-     *
-     * @return string
-     */
-    public function getRepositoryName()
-    {
-        return sprintf('%s:%s\%s', $this->getBundleName(), 'Pages', $this->getEntityName());
-    }
-
-    /**
      * @return EntityInterface
      */
     abstract public function getOverviewPageClass();

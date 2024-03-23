@@ -7,6 +7,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
+use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\CookieBundle\Form\CookieTypeAdminType;
 
 /**
@@ -42,24 +43,9 @@ class CookieTypeAdminListConfigurator extends AbstractDoctrineORMAdminListConfig
         $this->addFilter('internalName', new ORM\StringFilterType('internalName'), 'kuma.cookie.adminlists.cookie_type.internal_name');
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanCookieBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'CookieType';
+        return CookieType::class;
     }
 
     /**

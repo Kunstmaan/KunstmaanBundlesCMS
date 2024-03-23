@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use PHPUnit\Framework\TestCase;
 
 class FormPageAdminListConfiguratorTest extends TestCase
@@ -75,9 +76,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
         $item->method('getId')->willReturn(123);
 
         $this->assertEquals('', $this->object->getAddUrlFor([]));
-        $this->assertEquals('KunstmaanNodeBundle', $this->object->getBundleName());
-        $this->assertEquals('NodeTranslation', $this->object->getEntityName());
-        $this->assertEquals('KunstmaanFormBundle:FormSubmissions', $this->object->getControllerPath());
+        $this->assertEquals(NodeTranslation::class, $this->object->getEntityClass());
         $this->assertCount(0, $this->object->getDeleteUrlFor($item));
         $this->assertCount(1, $this->object->getIndexUrl());
         $this->assertCount(2, $this->object->getEditUrlFor($item));

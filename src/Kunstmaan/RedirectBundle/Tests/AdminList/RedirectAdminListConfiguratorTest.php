@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
+use Kunstmaan\RedirectBundle\Entity\Redirect;
 use PHPUnit\Framework\TestCase;
 
 class RedirectAdminListConfiguratorTest extends TestCase
@@ -68,13 +69,8 @@ class RedirectAdminListConfiguratorTest extends TestCase
         $this->object->buildFilters();
     }
 
-    public function testGetBundleName()
+    public function testGetEntityClass()
     {
-        $this->assertEquals('KunstmaanRedirectBundle', $this->object->getBundleName());
-    }
-
-    public function testGetEntityName()
-    {
-        $this->assertEquals('Redirect', $this->object->getEntityName());
+        $this->assertSame(Redirect::class, $this->object->getEntityClass());
     }
 }

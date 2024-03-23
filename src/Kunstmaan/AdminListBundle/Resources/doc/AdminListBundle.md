@@ -75,12 +75,12 @@ The first parameter of the addField() method is the fieldname, second one is the
     }
 ```
 
-And at last we add our Entity name
+And at last we add our Entity class
 
 ```PHP
-    public function getEntityName()
+    public function getEntityClass(): string
     {
-        return 'Document';
+        return App\Entity\Document::class;
     }
 }
 ```

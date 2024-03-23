@@ -12,6 +12,7 @@ use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaEditItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaSelectItemAction;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
@@ -126,24 +127,9 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         }
     }
 
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
+    public function getEntityClass(): string
     {
-        return 'KunstmaanMediaBundle';
-    }
-
-    /**
-     * Get entity name
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return 'Media';
+        return Media::class;
     }
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
