@@ -81,9 +81,9 @@ EOT
         $generator->generate($bundle, $prefix, $rootDir, $createPage, $output);
 
         $output->writeln([
-                'Make sure you update your database first before you test the pagepart:',
-                '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', ]
+            'Make sure you update your database first before you test the pagepart:',
+            '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', ]
         );
 
         if ($createPage) {

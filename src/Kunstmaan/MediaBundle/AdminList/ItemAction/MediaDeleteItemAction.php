@@ -25,8 +25,8 @@ class MediaDeleteItemAction implements ItemActionInterface
     public function getUrlFor($item)
     {
         return [
-          'path' => 'KunstmaanMediaBundle_media_delete',
-          'params' => ['mediaId' => $item->getId(), 'redirectUrl' => $this->redirectUrl],
+            'path' => 'KunstmaanMediaBundle_media_delete',
+            'params' => ['mediaId' => $item->getId(), 'redirectUrl' => $this->redirectUrl],
         ];
     }
 
