@@ -160,6 +160,11 @@ class Folder extends AbstractEntity implements GedmoNode
     #[ORM\Column(name: 'deleted', type: 'boolean')]
     protected $deleted;
 
+    /**
+     * @var GedmoNode|null
+     */
+    private $sibling;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -526,6 +531,16 @@ class Folder extends AbstractEntity implements GedmoNode
     public function getLevel()
     {
         return $this->lvl;
+    }
+
+    public function setSibling(GedmoNode $node): void
+    {
+        $this->sibling = $node;
+    }
+
+    public function getSibling(): ?GedmoNode
+    {
+        return $this->sibling;
     }
 
     /**
