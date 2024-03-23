@@ -49,7 +49,7 @@ class DownloadPagePartAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart',
+            'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart',
         ]);
     }
 }
