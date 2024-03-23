@@ -24,10 +24,6 @@ $general:               "#{$root}/img/general";
 {% if demosite %}
 /* Font folders
    ========================================================================== */
-{% if not groundcontrol %}
 $iconfont-path:         "~scssRootDir/../fonts/iconfont/fonts";
-{% else %}
-$iconfont-path:         "#{$root}/fonts/iconfont/fonts";
-{% endif %}
 $webfont-path:          "#{$root}/fonts/webfont/fonts";
 {% endif %}

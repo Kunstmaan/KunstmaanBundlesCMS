@@ -240,21 +240,6 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * @deprecated since 6.4. There is no replacement for this method.
-     *
-     * Override controller path (because actions for different entities are
-     * defined in a single Settings controller).
-     *
-     * @return string
-     */
-    public function getControllerPath()
-    {
-        trigger_deprecation('kunstmaan/node-bundle', '6.4', 'Method deprecated and will be removed in 7.0. There is no replacement for this method.');
-
-        return 'KunstmaanNodeBundle:NodeAdmin';
-    }
-
-    /**
      * @param QueryBuilder $queryBuilder The query builder
      */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)

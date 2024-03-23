@@ -1,7 +1,4 @@
-{% set pathPrefix = '../ui/scss/' %}
-{% if not groundcontrol -%}
 {% set pathPrefix = '~scssRootDir/' %}
-{% endif %}
 @charset "UTF-8";
 
 /* ==========================================================================
