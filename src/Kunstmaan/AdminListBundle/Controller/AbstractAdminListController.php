@@ -19,7 +19,6 @@ use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Kunstmaan\AdminListBundle\Service\ExportService;
-use Kunstmaan\AdminListBundle\Utils\EntityDetails;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;

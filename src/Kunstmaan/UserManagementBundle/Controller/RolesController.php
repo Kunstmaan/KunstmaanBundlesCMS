@@ -124,7 +124,7 @@ final class RolesController extends AbstractController
     {
         $configurator = new RoleAdminListConfigurator($this->em);
 
-        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify(method_exists($configurator, 'getEntityClass') ? $configurator->getEntityClass() : $configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
