@@ -857,6 +857,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         }
 
         $rootNamespace = strtolower(EntityDetails::getRootNamespace($this->getEntityClass()));
+        $rootNamespace = str_replace('\\bundle\\', '', $rootNamespace);
         $entityPart = EntityDetails::getEntityPart($this->getEntityClass());
 
         $entityName = strtolower($entityPart);
