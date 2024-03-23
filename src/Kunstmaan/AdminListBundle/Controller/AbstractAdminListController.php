@@ -346,7 +346,7 @@ abstract class AbstractAdminListController extends AbstractController
         /** @var SlugifierInterface $slugifier */
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
 
-        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify(method_exists($configurator, 'getEntityClass') ? EntityDetails::getEntityPart($configurator->getEntityClass()) : $configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify(method_exists($configurator, 'getEntityClass') ? $configurator->getEntityClass() : $configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));

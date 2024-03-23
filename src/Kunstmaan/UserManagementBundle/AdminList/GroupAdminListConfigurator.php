@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
@@ -34,5 +35,10 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     public function getEntityName()
     {
         return 'Group';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Group::class;
     }
 }
