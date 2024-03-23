@@ -68,8 +68,8 @@ final class EntityLockCheckController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return [
-                'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
-                'translator' => TranslatorInterface::class,
-            ] + parent::getSubscribedServices();
+            'kunstmaan_entity.admin_entity.entity_version_lock_service' => EntityVersionLockService::class,
+            'translator' => TranslatorInterface::class,
+        ] + parent::getSubscribedServices();
     }
 }

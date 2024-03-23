@@ -53,8 +53,8 @@ class EnumerationFilterTypeTest extends BaseOrmFilterTest
     public static function applyDataProvider(): array
     {
         return [
-          ['in', 'IN(:var_enumeration)', [1, 2], true],
-          ['notin', 'NOT IN(:var_enumeration)', [1, 2], true],
+            ['in', 'IN(:var_enumeration)', [1, 2], true],
+            ['notin', 'NOT IN(:var_enumeration)', [1, 2], true],
         ];
     }
 
