@@ -218,30 +218,6 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         return [];
     }
 
-    /**
-     * @deprecated since 6.4. Use the `getEntityClass` method instead.
-     *
-     * @return string
-     */
-    public function getBundleName()
-    {
-        trigger_deprecation('kunstmaan/node-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'KunstmaanNodeBundle';
-    }
-
-    /**
-     * @deprecated since 6.4. Use the `getEntityClass` method instead.
-     *
-     * @return string
-     */
-    public function getEntityName()
-    {
-        trigger_deprecation('kunstmaan/node-bundle', '6.4', 'The "%s" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.', __METHOD__);
-
-        return 'NodeTranslation';
-    }
-
     public function getEntityClass(): string
     {
         return NodeTranslation::class;

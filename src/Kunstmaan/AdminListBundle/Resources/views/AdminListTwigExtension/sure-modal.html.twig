@@ -12,7 +12,7 @@
                 </h3>
             </div>
             <form action="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" method="POST">
-                <input type="hidden" name="token" value="{{ csrf_token('delete-'~(attribute(adminlist.configurator, 'getEntityClass') ? adminlist.configurator.entityClass : adminlist.configurator.entityName)|slugify) }}"/>
+                <input type="hidden" name="token" value="{{ csrf_token('delete-'~adminlist.configurator.entityClass|slugify) }}"/>
 
                 <!-- Body -->
                 <div class="modal-body">

@@ -8,12 +8,9 @@ use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 class RedirectAdminListConfiguratorTest extends TestCase
 {
-    use ExpectDeprecationTrait;
-
     /**
      * @var EntityManager
      */
@@ -70,26 +67,6 @@ class RedirectAdminListConfiguratorTest extends TestCase
             );
         $this->object->setFilterBuilder($filterBuilder);
         $this->object->buildFilters();
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testGetBundleName()
-    {
-        $this->expectDeprecation('Since kunstmaan/redirect-bundle 6.4: The "Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::getBundleName" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.');
-
-        $this->assertEquals('KunstmaanRedirectBundle', $this->object->getBundleName());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testGetEntityName()
-    {
-        $this->expectDeprecation('Since kunstmaan/redirect-bundle 6.4: The "Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::getEntityName" method is deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.');
-
-        $this->assertEquals('Redirect', $this->object->getEntityName());
     }
 
     public function testGetEntityClass()

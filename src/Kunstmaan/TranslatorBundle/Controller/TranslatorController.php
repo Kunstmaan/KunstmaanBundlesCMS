@@ -232,7 +232,7 @@ final class TranslatorController extends AbstractAdminListController
     public function deleteAction(Request $request, $id): RedirectResponse
     {
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
-        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify(method_exists($this->getAdminListConfigurator(), 'getEntityClass') ? $this->getAdminListConfigurator()->getEntityClass() : $this->getAdminListConfigurator()->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($this->getAdminListConfigurator()->getEntityClass()), $request->request->get('token'))) {
             return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
         }
 

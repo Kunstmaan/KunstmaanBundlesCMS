@@ -34,24 +34,4 @@ abstract class AbstractSettingsAdminListConfigurator extends AbstractDoctrineORM
     {
         return null;
     }
-
-    /**
-     * Get bundle name
-     *
-     * @return string
-     */
-    public function getBundleName()
-    {
-        return 'KunstmaanAdminBundle';
-    }
-
-    /**
-     * Override controller path (because actions for different entities are defined in a single Settings controller)
-     *
-     * @return string
-     */
-    public function getControllerPath()
-    {
-        return 'KunstmaanUserManagementBundle:Settings';
-    }
 }

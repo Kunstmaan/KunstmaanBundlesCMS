@@ -13,7 +13,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 class Configurator extends AbstractArticlePageAdminListConfigurator
 {
@@ -34,8 +33,6 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
 
 class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 {
-    use ExpectDeprecationTrait;
-
     /**
      * @var AbstractArticlePageAdminListConfigurator
      */
@@ -65,18 +62,6 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         /* @var EntityManager $em */
         /* @var AclHelper $acl */
         $this->object = new Configurator($em, $acl, 'nl', 'admin', $repo);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedGetters()
-    {
-        $this->expectDeprecation('Since kunstmaan/article-bundle 6.4: Method "Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator::getBundleName" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.');
-        $this->expectDeprecation('Since kunstmaan/article-bundle 6.4: Method "Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator::getEntityName" deprecated and will be removed in 7.0. Use the "getEntityClass" method instead.');
-
-        $this->assertEquals('KunstmaanArticleBundle', $this->object->getBundleName());
-        $this->assertEquals('AbstractArticlePage', $this->object->getEntityName());
     }
 
     public function testGetters()
