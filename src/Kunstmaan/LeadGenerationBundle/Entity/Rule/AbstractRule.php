@@ -83,7 +83,7 @@ abstract class AbstractRule
      * When the javascript code needs some properties that are not available in this entity, you can create a custom
      * service that implements the RuleServiceInterface to append extra properties.
      *
-     * @return RuleServiceInterface|null
+     * @return string|null
      */
     public function getService()
     {
@@ -114,7 +114,8 @@ abstract class AbstractRule
     /**
      * Get the rule admin type
      *
-     * @return AbstractRuleAdminType
+     * @phpstan-return class-string<AbstractRuleAdminType>
+     * @return string
      */
     abstract public function getAdminType();
 }

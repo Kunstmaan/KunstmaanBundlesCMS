@@ -16,7 +16,7 @@ interface FormHandlerInterface
      * @param Request           $request The request
      * @param RenderContext     $context The render context
      *
-     * @return RedirectResponse|void|null
+     * @return RedirectResponse|null
      */
     public function handleForm(FormPageInterface $page, Request $request, RenderContext $context);
 }
