@@ -205,7 +205,7 @@ class FormSubmission implements EntityInterface
     /**
      * Returns the list of fields with their values
      *
-     * @return FormSubmissionField[];
+     * @return ArrayCollection<FormSubmissionField>
      */
     public function getFields()
     {
@@ -215,7 +215,7 @@ class FormSubmission implements EntityInterface
     /**
      * A string representation of this form submission
      *
-     * @return string;
+     * @return string
      */
     public function __toString()
     {

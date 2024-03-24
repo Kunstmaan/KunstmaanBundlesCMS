@@ -66,12 +66,11 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         $this->domainConfiguration = $domainConfiguration;
     }
 
-    public function adaptChildren(
-        MenuBuilder $menu,
-        array &$children,
-        ?MenuItem $parent = null,
-        ?Request $request = null
-    ) {
+    /**
+     * @return void
+     */
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
+    {
         if (null === $parent) {
             $menuItem = new TopMenuItem($menu);
             $menuItem

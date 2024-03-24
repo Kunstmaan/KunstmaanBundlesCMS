@@ -125,7 +125,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * Return an iterator for all items that matches the current filtering
      *
-     * @return \Iterator
+     * @return iterable
      */
     public function getIterator()
     {
