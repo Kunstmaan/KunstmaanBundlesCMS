@@ -67,7 +67,7 @@ EOT
             ->setName('kuma:generate:legal');
     }
 
-    protected function getWelcomeText()
+    protected function getWelcomeText(): string|array
     {
         return 'Welcome to the Kunstmaan legal generator';
     }
@@ -104,10 +104,8 @@ EOT
 
     /**
      * Get the generator.
-     *
-     * @return LegalGenerator
      */
-    protected function createGenerator()
+    protected function createGenerator(): LegalGenerator
     {
         return new LegalGenerator($this->fileSystem, $this->registry, '/legal', $this->assistant, $this->getContainer());
     }

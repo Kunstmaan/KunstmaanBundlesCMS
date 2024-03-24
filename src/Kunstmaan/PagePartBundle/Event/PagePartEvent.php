@@ -23,10 +23,7 @@ final class PagePartEvent extends Event
         $this->pagePart = $pagePart;
     }
 
-    /**
-     * @return PagePartInterface
-     */
-    public function getPagePart()
+    public function getPagePart(): PagePartInterface
     {
         return $this->pagePart;
     }
@@ -36,10 +33,7 @@ final class PagePartEvent extends Event
         $this->pagePart = $pagePart;
     }
 
-    /**
-     * @return Response
-     */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }

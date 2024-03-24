@@ -137,10 +137,7 @@ class RedirectRouter implements RouterInterface
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isWildcardRedirect(Redirect $redirect)
+    private function isWildcardRedirect(Redirect $redirect): bool
     {
         $origin = $redirect->getOrigin();
         $matchSegment = substr($origin, 0, -1);
@@ -158,10 +155,7 @@ class RedirectRouter implements RouterInterface
         return strstr($path, $matchSegment);
     }
 
-    /**
-     * @return Route
-     */
-    private function createRoute(Redirect $redirect)
+    private function createRoute(Redirect $redirect): Route
     {
         $needsUtf8 = false;
         foreach ([$redirect->getOrigin(), $redirect->getTarget()] as $item) {
@@ -180,10 +174,7 @@ class RedirectRouter implements RouterInterface
             ], [], ['utf8' => $needsUtf8]);
     }
 
-    /**
-     * @return Route
-     */
-    private function createWildcardRoute(Redirect $redirect)
+    private function createWildcardRoute(Redirect $redirect): Route
     {
         $origin = $redirect->getOrigin();
         $target = $redirect->getTarget();

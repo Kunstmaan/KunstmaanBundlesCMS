@@ -170,7 +170,7 @@ class NodeTranslationListener
      *
      * @return NodeTranslation|bool returns the node when all is well because it has to be saved
      */
-    private function updateUrl(NodeTranslation $nodeTranslation, EntityManagerInterface $em)
+    private function updateUrl(NodeTranslation $nodeTranslation, EntityManagerInterface $em): NodeTranslation|bool
     {
         $result = $this->ensureUniqueUrl($nodeTranslation, $em);
 
@@ -209,10 +209,8 @@ class NodeTranslationListener
      *                                            This is modified in place.
      * @param EntityManagerInterface $em          The entity manager
      * @param array                  $flashes     The flash messages array
-     *
-     * @return bool
      */
-    private function ensureUniqueUrl(NodeTranslation $translation, EntityManagerInterface $em, array $flashes = [])
+    private function ensureUniqueUrl(NodeTranslation $translation, EntityManagerInterface $em, array $flashes = []): bool
     {
         // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
         $nodeVersion = $translation->getPublicNodeVersion();
@@ -316,7 +314,7 @@ class NodeTranslationListener
      *
      * @return string incremented string
      */
-    private function incrementString($string, $append = '-v')
+    private function incrementString($string, $append = '-v'): string
     {
         $finalDigitGrabberRegex = '/\d+$/';
         $matches = [];
@@ -334,10 +332,7 @@ class NodeTranslationListener
         return $string . $append . '1';
     }
 
-    /**
-     * @return bool
-     */
-    private function isInRequestScope()
+    private function isInRequestScope(): bool
     {
         return $this->requestStack && $this->requestStack->getMasterRequest();
     }

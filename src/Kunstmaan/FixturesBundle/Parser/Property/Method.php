@@ -87,10 +87,7 @@ class Method implements PropertyParserInterface
         return str_replace($pattern, $result, $value);
     }
 
-    /**
-     * @return array
-     */
-    private function findArguments($parameters, $additional)
+    private function findArguments($parameters, $additional): array
     {
         $arguments = [];
         if (count($parameters) == 0) {
@@ -114,10 +111,7 @@ class Method implements PropertyParserInterface
         return $arguments;
     }
 
-    /**
-     * @return object|null
-     */
-    private function typeHintChecker(\ReflectionParameter $parameter, $parameters)
+    private function typeHintChecker(\ReflectionParameter $parameter, $parameters): ?object
     {
         $class = $parameter->getClass();
         $typeHint = null;
@@ -138,7 +132,7 @@ class Method implements PropertyParserInterface
     /**
      * @return mixed|null
      */
-    private function getArgumentByName(\ReflectionParameter $parameter, $parameters)
+    private function getArgumentByName(\ReflectionParameter $parameter, $parameters): mixed
     {
         foreach ($parameters as $name => $item) {
             $paramName = $parameter->getName();

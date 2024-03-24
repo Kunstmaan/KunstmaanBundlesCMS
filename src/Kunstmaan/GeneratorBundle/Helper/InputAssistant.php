@@ -137,10 +137,8 @@ class InputAssistant
 
     /**
      * Returns a list of namespaces as array with a forward slash to split the namespace & bundle.
-     *
-     * @return array
      */
-    private function getNamespaceAutoComplete(Kernel $kernel)
+    private function getNamespaceAutoComplete(Kernel $kernel): array
     {
         $ret = [];
         foreach ($kernel->getBundles() as $k => $v) {
@@ -218,10 +216,8 @@ class InputAssistant
      * Converts something like Namespace\BundleNameBundle to namspace_bundlenamebundle.
      *
      * @param string $namespace
-     *
-     * @return string
      */
-    private function convertNamespaceToSnakeCase($namespace)
+    private function convertNamespaceToSnakeCase($namespace): string
     {
         if (is_null($namespace)) {
             return null;

@@ -93,10 +93,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
         $this->nodePagesConfiguration->deleteNodeTranslation($event->getNodeTranslation());
     }
 
-    /**
-     * @return bool
-     */
-    private function hasOfflineParents(NodeTranslation $nodeTranslation)
+    private function hasOfflineParents(NodeTranslation $nodeTranslation): bool
     {
         $lang = $nodeTranslation->getLang();
         $node = $nodeTranslation->getNode();

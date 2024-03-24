@@ -44,11 +44,9 @@ class ActionsMenuBuilderTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\ORM\EntityManager
-     *
      * @throws \Exception
      */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
     {
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('find')->willReturn(null);

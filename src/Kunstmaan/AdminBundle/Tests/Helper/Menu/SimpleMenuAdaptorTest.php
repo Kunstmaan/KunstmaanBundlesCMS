@@ -24,10 +24,7 @@ class SimpleMenuAdaptorTest extends TestCase
         $this->menuItems = [];
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|SimpleMenuAdaptor
-     */
-    public function setUpSimpleMenuAdaptorMock()
+    public function setUpSimpleMenuAdaptorMock(): \PHPUnit\Framework\MockObject\MockObject|SimpleMenuAdaptor
     {
         $simpleMenuAdaptorMock = $this->getMockBuilder(SimpleMenuAdaptor::class)
             ->setConstructorArgs([$this->authorizationCheckerInterface, $this->menuItems])

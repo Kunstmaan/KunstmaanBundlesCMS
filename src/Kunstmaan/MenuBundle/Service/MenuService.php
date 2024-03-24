@@ -71,10 +71,7 @@ class MenuService
         $this->em->flush();
     }
 
-    /**
-     * @return array
-     */
-    private function getLocales()
+    private function getLocales(): array
     {
         return $this->domainConfiguration->getBackendLocales();
     }

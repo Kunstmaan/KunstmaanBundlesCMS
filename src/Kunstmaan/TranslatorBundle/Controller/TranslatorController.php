@@ -248,10 +248,7 @@ final class TranslatorController extends AbstractAdminListController
         $this->adminListConfigurator = $adminListConfigurator;
     }
 
-    /**
-     * @return AbstractAdminListConfigurator
-     */
-    public function getAdminListConfigurator()
+    public function getAdminListConfigurator(): AbstractAdminListConfigurator
     {
         $locales = $this->getParameter('kuma_translator.managed_locales');
 
@@ -262,11 +259,8 @@ final class TranslatorController extends AbstractAdminListController
         return $this->adminListConfigurator;
     }
 
-    /**
-     * @return JsonResponse|Response
-     */
     #[Route(path: '/inline-edit', name: 'KunstmaanTranslatorBundle_settings_translations_inline_edit', methods: ['POST'])]
-    public function inlineEditAction(Request $request)
+    public function inlineEditAction(Request $request): JsonResponse|Response
     {
         $values = $request->request->all();
 

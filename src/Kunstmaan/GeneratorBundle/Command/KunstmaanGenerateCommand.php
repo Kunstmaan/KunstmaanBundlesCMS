@@ -181,10 +181,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * Converts something like Namespace\BundleNameBundle to namespace_bundlenamebundle.
      *
      * @param string $namespace
-     *
-     * @return string
      */
-    private function convertNamespaceToSnakeCase($namespace)
+    private function convertNamespaceToSnakeCase($namespace): string
     {
         if (is_null($namespace)) {
             return null;
@@ -313,10 +311,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @param string $dir
      * @param string $file
-     *
-     * @return array|null
      */
-    private function getSectionInfo($dir, $file)
+    private function getSectionInfo($dir, $file): ?array
     {
         $info = null;
 
@@ -528,10 +524,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * Get all the available types.
      *
      * @param bool $niceNames
-     *
-     * @return array
      */
-    private function getTypes($niceNames = false)
+    private function getTypes($niceNames = false): array
     {
         $counter = 1;
 
@@ -556,10 +550,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
     /**
      * Get all available media types.
-     *
-     * @return array
      */
-    private function getMediaTypes()
+    private function getMediaTypes(): array
     {
         $counter = 1;
 

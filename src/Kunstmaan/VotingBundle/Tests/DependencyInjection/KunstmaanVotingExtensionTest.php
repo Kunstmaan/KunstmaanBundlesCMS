@@ -97,18 +97,12 @@ class KunstmaanVotingExtensionTest extends TestCase
         }
     }
 
-    /**
-     * @return KunstmaanVotingExtension
-     */
-    protected function getExtension()
+    protected function getExtension(): KunstmaanVotingExtension
     {
         return new KunstmaanVotingExtension();
     }
 
-    /**
-     * @return ContainerBuilder
-     */
-    private function getContainer()
+    private function getContainer(): ContainerBuilder
     {
         return new ContainerBuilder();
     }

@@ -25,10 +25,8 @@ class Setter implements MethodInterface
      * return the name of the setter for a given property
      *
      * @param string $property
-     *
-     * @return string
      */
-    private function setterFor($property)
+    private function setterFor($property): string
     {
         return "set{$property}";
     }

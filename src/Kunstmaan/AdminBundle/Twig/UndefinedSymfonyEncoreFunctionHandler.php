@@ -13,10 +13,7 @@ use Twig\TwigFunction;
  */
 final class UndefinedSymfonyEncoreFunctionHandler
 {
-    /**
-     * @return TwigFunction|false
-     */
-    public static function handle(string $name)
+    public static function handle(string $name): TwigFunction|false
     {
         if ($name !== 'encore_entry_exists') {
             return false;

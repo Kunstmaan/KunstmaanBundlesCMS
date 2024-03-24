@@ -16,10 +16,7 @@ final class RulesAdminListController extends AbstractAdminListController
      */
     private $configurator;
 
-    /**
-     * @return AdminListConfiguratorInterface
-     */
-    public function getAdminListConfigurator($id)
+    public function getAdminListConfigurator($id): AdminListConfiguratorInterface
     {
         if (!isset($this->configurator)) {
             $this->configurator = new RulesAdminListConfigurator($this->getEntityManager(), null, $id);
@@ -34,11 +31,8 @@ final class RulesAdminListController extends AbstractAdminListController
         return parent::doIndexAction($this->getAdminListConfigurator($popup), $request);
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/{popup}/add', requirements: ['popup' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_add', methods: ['GET', 'POST'])]
-    public function addAction(Request $request, $popup)
+    public function addAction(Request $request, $popup): Response
     {
         $type = $request->query->get('type');
 
@@ -47,22 +41,18 @@ final class RulesAdminListController extends AbstractAdminListController
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '/{popup}/rules/{id}/edit', requirements: ['popup' => '\d+', 'rule' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit', methods: ['GET', 'POST'])]
-    public function editAction(Request $request, $id, $popup)
+    public function editAction(Request $request, $id, $popup): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator($popup), $id, $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '/{popup}/rules/{id}/delete', requirements: ['popup' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete', methods: ['GET', 'POST'])]
-    public function deleteAction(Request $request, $id, $popup)
+    public function deleteAction(Request $request, $id, $popup): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator($popup), $id, $request);
     }

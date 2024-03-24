@@ -175,11 +175,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id The node id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/copyfromotherlanguage', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_copyfromotherlanguage', methods: ['GET'])]
-    public function copyFromOtherLanguageAction(Request $request, $id)
+    public function copyFromOtherLanguageAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $node */
@@ -218,11 +216,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id The node id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/recopyfromotherlanguage', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_recopyfromotherlanguage', methods: ['POST'])]
-    public function recopyFromOtherLanguageAction(Request $request, $id)
+    public function recopyFromOtherLanguageAction(Request $request, $id): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('recopy-from-language', $request->request->get('token'))) {
             return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $id]);
@@ -264,11 +260,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/createemptypage', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_createemptypage', methods: ['GET'])]
-    public function createEmptyPageAction(Request $request, $id)
+    public function createEmptyPageAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $node */
@@ -298,11 +292,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/publish', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_publish', methods: ['GET', 'POST'])]
-    public function publishAction(Request $request, $id)
+    public function publishAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $node */
@@ -317,11 +309,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/unpublish', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_unpublish', methods: ['GET', 'POST'])]
-    public function unPublishAction(Request $request, $id)
+    public function unPublishAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $node */
@@ -336,11 +326,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/unschedulepublish', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_unschedule_publish', methods: ['GET', 'POST'])]
-    public function unSchedulePublishAction(Request $request, $id)
+    public function unSchedulePublishAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
 
@@ -360,11 +348,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_delete', methods: ['POST'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $node */
@@ -411,11 +397,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/duplicate', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_duplicate', methods: ['POST'])]
-    public function duplicateAction(Request $request, $id)
+    public function duplicateAction(Request $request, $id): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('node-duplicate', $request->request->get('token'))) {
             return $this->redirectToRoute($this->generateUrl('KunstmaanNodeBundle_nodes_edit', ['id' => $id]));
@@ -498,11 +482,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id The node id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/revert', requirements: ['id' => '\d+'], defaults: ['subaction' => 'public'], name: 'KunstmaanNodeBundle_nodes_revert', methods: ['GET'])]
-    public function revertAction(Request $request, $id)
+    public function revertAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $node */
@@ -568,11 +550,9 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/add', requirements: ['id' => '\d+'], name: 'KunstmaanNodeBundle_nodes_add', methods: ['POST'])]
-    public function addAction(Request $request, $id)
+    public function addAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
         /* @var Node $parentNode */
@@ -621,11 +601,8 @@ final class NodeAdminController extends AbstractController
         return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $nodeNewPage->getId()]);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[Route(path: '/add-homepage', name: 'KunstmaanNodeBundle_nodes_add_homepage', methods: ['POST'])]
-    public function addHomepageAction(Request $request)
+    public function addHomepageAction(Request $request): RedirectResponse
     {
         $this->init($request);
 
@@ -661,11 +638,8 @@ final class NodeAdminController extends AbstractController
         return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $nodeNewPage->getId()]);
     }
 
-    /**
-     * @return string
-     */
     #[Route(path: '/reorder', name: 'KunstmaanNodeBundle_nodes_reorder', methods: ['POST'])]
-    public function reorderAction(Request $request)
+    public function reorderAction(Request $request): string
     {
         $this->init($request);
         $nodes = [];
@@ -930,11 +904,8 @@ final class NodeAdminController extends AbstractController
         ]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route(path: 'checkNodeVersionLock/{id}/{public}', requirements: ['id' => '\d+', 'public' => '(0|1)'], name: 'KunstmaanNodeBundle_nodes_versionlock_check')]
-    public function checkNodeVersionLockAction(Request $request, $id, $public)
+    public function checkNodeVersionLockAction(Request $request, $id, $public): JsonResponse
     {
         $nodeVersionIsLocked = false;
         $message = '';
@@ -966,10 +937,8 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param bool $isPublic
-     *
-     * @return bool
      */
-    private function isNodeVersionLocked(NodeTranslation $nodeTranslation, $isPublic)
+    private function isNodeVersionLocked(NodeTranslation $nodeTranslation, $isPublic): bool
     {
         if ($this->getParameter('kunstmaan_node.lock_enabled')) {
             /** @var NodeVersionLockHelper $nodeVersionLockHelper */
@@ -1096,10 +1065,8 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param string $type
-     *
-     * @return HasNodeInterface
      */
-    private function createNewPage(Request $request, $type)
+    private function createNewPage(Request $request, $type): HasNodeInterface
     {
         /* @var HasNodeInterface $newPage */
         $newPage = new $type();
@@ -1119,11 +1086,9 @@ final class NodeAdminController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return string
-     *
      * @throw InvalidArgumentException
      */
-    private function validatePageType($request)
+    private function validatePageType($request): string
     {
         $type = $request->request->get('type') ?? $request->query->get('type');
 
@@ -1134,10 +1099,7 @@ final class NodeAdminController extends AbstractController
         return $type;
     }
 
-    /**
-     * @return Response
-     */
-    private function renderNodeNotTranslatedPage(Node $node)
+    private function renderNodeNotTranslatedPage(Node $node): Response
     {
         // try to find a parent node with the correct translation, if there is none allow copy.
         // if there is a parent but it doesn't have the language to copy to don't allow it
@@ -1173,10 +1135,8 @@ final class NodeAdminController extends AbstractController
 
     /**
      * @param object $event
-     *
-     * @return object
      */
-    private function dispatch($event, string $eventName)
+    private function dispatch($event, string $eventName): object
     {
         return $this->container->get('event_dispatcher')->dispatch($event, $eventName);
     }

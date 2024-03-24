@@ -201,10 +201,8 @@ class MediaManagerTest extends TestCase
     /**
      * @param object $media
      * @param string $name
-     *
-     * @return MockObject
      */
-    protected function getCustomHandler($media = null, $name = null)
+    protected function getCustomHandler($media = null, $name = null): MockObject
     {
         $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', [1]);
         if (empty($name)) {

@@ -31,10 +31,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $this->object = new FormSubmissionAdminListConfigurator($em, $nt);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
     {
         $configuration = $this->createMock(Configuration::class);
         $configuration->method('getQuoteStrategy')->willReturn(null);
