@@ -111,9 +111,9 @@ class ConfigHelper
 
         foreach ($accounts as $account) {
             $data[$account->getName()] = [
-                    'accountId' => $account->getId(),
-                    'accountName' => $account->getName(),
-                ];
+                'accountId' => $account->getId(),
+                'accountName' => $account->getName(),
+            ];
         }
         ksort($data);
 
@@ -183,9 +183,9 @@ class ConfigHelper
             $profiles = $this->getProfiles($accountId, $property->getId());
             if (\count($profiles) > 0) {
                 $data[$property->getName()] = [
-                        'propertyId' => $property->getId(),
-                        'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
-                    ];
+                    'propertyId' => $property->getId(),
+                    'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
+                ];
             }
         }
         ksort($data);
@@ -262,10 +262,10 @@ class ConfigHelper
         if (\is_array($profiles->getItems())) {
             foreach ($profiles->getItems() as $profile) {
                 $data[$profile->name] = [
-                            'profileId' => $profile->id,
-                            'profileName' => $profile->name,
-                            'created' => $profile->created,
-                        ];
+                    'profileId' => $profile->id,
+                    'profileName' => $profile->name,
+                    'created' => $profile->created,
+                ];
             }
         }
         ksort($data);
@@ -352,14 +352,14 @@ class ConfigHelper
         foreach ($profileSegments as $segment) {
             if ($segment->type == 'BUILT_IN') {
                 $builtin[] = [
-                        'name' => $segment->name,
-                        'query' => $segment->segmentId,
-                    ];
+                    'name' => $segment->name,
+                    'query' => $segment->segmentId,
+                ];
             } else {
                 $own[] = [
-                        'name' => $segment->name,
-                        'query' => $segment->segmentId,
-                    ];
+                    'name' => $segment->name,
+                    'query' => $segment->segmentId,
+                ];
             }
         }
 

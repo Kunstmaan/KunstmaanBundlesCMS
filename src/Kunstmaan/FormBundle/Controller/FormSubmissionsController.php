@@ -181,13 +181,13 @@ final class FormSubmissionsController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return [
-                'kunstmaan_admin.acl.helper' => AclHelper::class,
-                'kunstmaan_adminlist.factory' => AdminListFactory::class,
-                'kunstmaan_adminlist.service.export' => ExportService::class,
-                'request_stack' => RequestStack::class,
-                'translator' => TranslatorInterface::class,
-                'logger' => LoggerInterface::class,
-                'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
-            ] + parent::getSubscribedServices();
+            'kunstmaan_admin.acl.helper' => AclHelper::class,
+            'kunstmaan_adminlist.factory' => AdminListFactory::class,
+            'kunstmaan_adminlist.service.export' => ExportService::class,
+            'request_stack' => RequestStack::class,
+            'translator' => TranslatorInterface::class,
+            'logger' => LoggerInterface::class,
+            'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
+        ] + parent::getSubscribedServices();
     }
 }

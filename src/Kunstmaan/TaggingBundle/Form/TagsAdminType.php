@@ -44,12 +44,12 @@ class TagsAdminType extends AbstractType
         }
 
         return [
-          'choices' => $result,
-          'multiple' => true,
-          'required' => false,
-          'attr' => [
-            'class' => 'js-advanced-select form-control advanced-select',
-          ],
+            'choices' => $result,
+            'multiple' => true,
+            'required' => false,
+            'attr' => [
+                'class' => 'js-advanced-select form-control advanced-select',
+            ],
         ];
     }
 

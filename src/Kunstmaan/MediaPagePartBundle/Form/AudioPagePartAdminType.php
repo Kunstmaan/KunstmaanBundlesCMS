@@ -51,7 +51,7 @@ class AudioPagePartAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\AudioPagePart',
+            'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\AudioPagePart',
         ]);
     }
 }

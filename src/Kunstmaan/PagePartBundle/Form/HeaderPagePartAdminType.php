@@ -22,9 +22,9 @@ class HeaderPagePartAdminType extends AbstractType
             'niv',
             ChoiceType::class,
             [
-              'label' => 'pagepart.header.type',
-              'choices' => ['Header 1' => '1', 'Header 2' => '2', 'Header 3' => '3', 'Header 4' => '4', 'Header 5' => '5', 'Header 6' => '6'],
-              'required' => true,
+                'label' => 'pagepart.header.type',
+                'choices' => ['Header 1' => '1', 'Header 2' => '2', 'Header 3' => '3', 'Header 4' => '4', 'Header 5' => '5', 'Header 6' => '6'],
+                'required' => true,
             ]
         );
         $builder->add('title', TextType::class, [
@@ -48,7 +48,7 @@ class HeaderPagePartAdminType extends AbstractType
     {
         $resolver->setDefaults(
             [
-              'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
             ]
         );
     }
