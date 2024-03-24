@@ -50,80 +50,60 @@ final class CopyPageTranslationNodeEvent extends NodeEvent
 
     /**
      * @param string $originalLanguage
-     *
-     * @return CopyPageTranslationNodeEvent
      */
-    public function setOriginalLanguage($originalLanguage)
+    public function setOriginalLanguage($originalLanguage): CopyPageTranslationNodeEvent
     {
         $this->originalLanguage = $originalLanguage;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalLanguage()
+    public function getOriginalLanguage(): string
     {
         return $this->originalLanguage;
     }
 
     /**
      * @param NodeTranslation $originalNodeTranslation
-     *
-     * @return CopyPageTranslationNodeEvent
      */
-    public function setOriginalNodeTranslation($originalNodeTranslation)
+    public function setOriginalNodeTranslation($originalNodeTranslation): CopyPageTranslationNodeEvent
     {
         $this->originalNodeTranslation = $originalNodeTranslation;
 
         return $this;
     }
 
-    /**
-     * @return NodeTranslation
-     */
-    public function getOriginalNodeTranslation()
+    public function getOriginalNodeTranslation(): NodeTranslation
     {
         return $this->originalNodeTranslation;
     }
 
     /**
      * @param HasNodeInterface $originalPage
-     *
-     * @return CopyPageTranslationNodeEvent
      */
-    public function setOriginalPage($originalPage)
+    public function setOriginalPage($originalPage): CopyPageTranslationNodeEvent
     {
         $this->originalPage = $originalPage;
 
         return $this;
     }
 
-    /**
-     * @return HasNodeInterface
-     */
-    public function getOriginalPage()
+    public function getOriginalPage(): HasNodeInterface
     {
         return $this->originalPage;
     }
 
     /**
      * @param NodeVersion $originalNodeVersion
-     *
-     * @return CopyPageTranslationNodeEvent
      */
-    public function setOriginalNodeVersion($originalNodeVersion)
+    public function setOriginalNodeVersion($originalNodeVersion): CopyPageTranslationNodeEvent
     {
         $this->originalNodeVersion = $originalNodeVersion;
 
         return $this;
     }
 
-    /**
-     * @return NodeVersion
-     */
-    public function getOriginalNodeVersion()
+    public function getOriginalNodeVersion(): NodeVersion
     {
         return $this->originalNodeVersion;
     }

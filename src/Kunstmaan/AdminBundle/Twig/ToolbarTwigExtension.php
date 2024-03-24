@@ -16,17 +16,14 @@ final class ToolbarTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('block_render', [$this, 'renderBlock'], ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function renderBlock(Environment $env, $template, $block, $context)
+    public function renderBlock(Environment $env, $template, $block, $context): string
     {
         $template = $env->load($template);
         $context = $env->mergeGlobals($context);
@@ -34,10 +31,7 @@ final class ToolbarTwigExtension extends AbstractExtension
         return $template->renderBlock($block, $context);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'toolbar_twig_extension';
     }

@@ -180,10 +180,7 @@ class SearchService
         return '"' . $query . '"';
     }
 
-    /**
-     * @return int
-     */
-    private function getRequestedPage(Request $request)
+    private function getRequestedPage(Request $request): int
     {
         $pageNumber = $request->query->getInt('page', 1);
         if (!$pageNumber || $pageNumber < 1) {

@@ -275,10 +275,7 @@ class FileHandler extends AbstractMediaHandler
         ];
     }
 
-    /**
-     * @return string
-     */
-    private function getFilePath(Media $media)
+    private function getFilePath(Media $media): string
     {
         $filename = $media->getOriginalFilename();
         $filename = str_replace(['/', '\\', '%'], '', $filename);
@@ -300,10 +297,7 @@ class FileHandler extends AbstractMediaHandler
         );
     }
 
-    /**
-     * @return string
-     */
-    private function getFileFolderPath(Media $media)
+    private function getFileFolderPath(Media $media): string
     {
         return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
     }

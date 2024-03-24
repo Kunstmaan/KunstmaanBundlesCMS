@@ -24,19 +24,14 @@ final class EntityLockCheckController extends AbstractController
 
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
-     *
-     * @return \Doctrine\Persistence\ObjectManager|object
      */
-    protected function getEntityManager()
+    protected function getEntityManager(): EntityManagerInterface
     {
         return $this->em;
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route(path: 'check/{id}/{repository}', requirements: ['id' => '\d+'], name: 'KunstmaanAdminListBundle_entity_lock_check')]
-    public function checkAction(Request $request, $id, $repository)
+    public function checkAction(Request $request, $id, $repository): JsonResponse
     {
         $entityIsLocked = false;
         $message = '';

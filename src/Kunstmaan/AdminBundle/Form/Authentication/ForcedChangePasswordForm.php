@@ -20,10 +20,7 @@ final class ForcedChangePasswordForm extends AbstractType
         $this->userClass = $userClass;
     }
 
-    /**
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('current_password', PasswordType::class, [
@@ -54,10 +51,7 @@ final class ForcedChangePasswordForm extends AbstractType
         ;
     }
 
-    /**
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('data_class', $this->userClass);
     }

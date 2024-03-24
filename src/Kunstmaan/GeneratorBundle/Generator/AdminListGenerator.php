@@ -187,15 +187,12 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     /**
      * @return string[]
      */
-    private function getFieldsFromMetadata(ClassMetadata $metadata)
+    private function getFieldsFromMetadata(ClassMetadata $metadata): array
     {
         return GeneratorUtils::getFieldsFromMetadata($metadata);
     }
 
-    /**
-     * @return array
-     */
-    private function getFieldsWithFilterTypeFromMetadata(ClassMetadata $metadata)
+    private function getFieldsWithFilterTypeFromMetadata(ClassMetadata $metadata): array
     {
         $mapping = [
             'string' => 'ORM\StringFilterType',

@@ -52,11 +52,9 @@ final class VarnishController extends AbstractController
 
     /**
      * Ban route from varnish
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/varnish/ban/{node}', name: 'kunstmaancachebundle_varnish_ban')]
-    public function banAction(Node $node)
+    public function banAction(Node $node): RedirectResponse
     {
         $this->checkPermission();
 

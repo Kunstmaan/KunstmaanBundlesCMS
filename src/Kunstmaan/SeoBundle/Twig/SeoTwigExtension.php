@@ -51,7 +51,7 @@ final class SeoTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('render_seo_metadata_for', [$this, 'renderSeoMetadataFor'], ['is_safe' => ['html'], 'needs_environment' => true]),
@@ -69,10 +69,8 @@ final class SeoTwigExtension extends AbstractExtension
      *
      * @param string $url
      * @param string $host
-     *
-     * @return string
      */
-    public function getAbsoluteUrl($url, $host = null)
+    public function getAbsoluteUrl($url, $host = null): string
     {
         $validUrl = filter_var($url, FILTER_VALIDATE_URL);
         $host = rtrim($host, '/');
@@ -90,10 +88,7 @@ final class SeoTwigExtension extends AbstractExtension
         return false;
     }
 
-    /**
-     * @return Seo
-     */
-    public function getSeoFor(AbstractPage $entity)
+    public function getSeoFor(AbstractPage $entity): Seo
     {
         $key = md5(\get_class($entity) . $entity->getId());
 
@@ -112,7 +107,7 @@ final class SeoTwigExtension extends AbstractExtension
      *
      * @return string The page title. Will look in the SEO meta first, then the NodeTranslation, then the page.
      */
-    public function getTitleFor(AbstractPage $entity)
+    public function getTitleFor(AbstractPage $entity): string
     {
         $arr = [];
 
@@ -125,10 +120,8 @@ final class SeoTwigExtension extends AbstractExtension
 
     /**
      * @param string|null $default if given we'll return this text if no SEO title was found
-     *
-     * @return string
      */
-    public function getTitleForPageOrDefault(?AbstractPage $entity = null, $default = null)
+    public function getTitleForPageOrDefault(?AbstractPage $entity = null, $default = null): string
     {
         if (\is_null($entity)) {
             return $default;
@@ -149,10 +142,8 @@ final class SeoTwigExtension extends AbstractExtension
      * @param AbstractEntity $entity      The entity
      * @param mixed          $currentNode The current node
      * @param string         $template    The template
-     *
-     * @return string
      */
-    public function renderSeoMetadataFor(Environment $environment, AbstractEntity $entity, $currentNode = null, $template = '@KunstmaanSeo/SeoTwigExtension/metadata.html.twig')
+    public function renderSeoMetadataFor(Environment $environment, AbstractEntity $entity, $currentNode = null, $template = '@KunstmaanSeo/SeoTwigExtension/metadata.html.twig'): string
     {
         $seo = $this->getSeoFor($entity);
         $template = $environment->load($template);
@@ -166,10 +157,7 @@ final class SeoTwigExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function getPreferredValue(array $values)
+    protected function getPreferredValue(array $values): string
     {
         foreach ($values as $v) {
             if (!\is_null($v) && !empty($v)) {
@@ -180,10 +168,7 @@ final class SeoTwigExtension extends AbstractExtension
         return '';
     }
 
-    /**
-     * @return string|null
-     */
-    private function getSeoTitle(?AbstractPage $entity = null)
+    private function getSeoTitle(?AbstractPage $entity = null): ?string
     {
         if (\is_null($entity)) {
             return null;
@@ -202,10 +187,8 @@ final class SeoTwigExtension extends AbstractExtension
 
     /**
      * Gets the Website title defined in your parameters.
-     *
-     * @return string
      */
-    public function getWebsiteTitle()
+    public function getWebsiteTitle(): string
     {
         return $this->websiteTitle;
     }
@@ -214,20 +197,15 @@ final class SeoTwigExtension extends AbstractExtension
      * Sets the Website title defined in your parameters.
      *
      * @param string $websiteTitle the website title
-     *
-     * @return self
      */
-    public function setWebsiteTitle($websiteTitle)
+    public function setWebsiteTitle($websiteTitle): \Kunstmaan\SeoBundle\Twig\SeoTwigExtension
     {
         $this->websiteTitle = $websiteTitle;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getImageDimensions($src)
+    public function getImageDimensions($src): array
     {
         list($width, $height) = $this->getImageSize($src);
 
@@ -239,10 +217,7 @@ final class SeoTwigExtension extends AbstractExtension
         $this->requestCache = $cacheService;
     }
 
-    /**
-     * @return CacheItemPoolInterface
-     */
-    public function getRequestCache()
+    public function getRequestCache(): CacheItemPoolInterface
     {
         return $this->requestCache;
     }

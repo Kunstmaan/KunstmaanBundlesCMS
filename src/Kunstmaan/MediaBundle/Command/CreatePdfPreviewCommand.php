@@ -80,10 +80,8 @@ final class CreatePdfPreviewCommand extends Command
      *
      * Override this to check for x or y and return false if the command can not
      * run properly under the current conditions.
-     *
-     * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enablePdfPreview;
     }

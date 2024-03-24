@@ -15,10 +15,7 @@ final class RenderContext extends \ArrayObject
     /** @var Response|null */
     private $response;
 
-    /**
-     * @return string
-     */
-    public function getView()
+    public function getView(): string
     {
         return $this->view;
     }

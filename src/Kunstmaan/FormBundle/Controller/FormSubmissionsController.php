@@ -110,11 +110,9 @@ final class FormSubmissionsController extends AbstractController
      * Export as CSV of all the form submissions for the given $nodeTranslationId
      *
      * @param int $nodeTranslationId
-     *
-     * @return Response
      */
     #[Route(path: '/export/{nodeTranslationId}.{_format}', requirements: ['nodeTranslationId' => '\d+', '_format' => 'csv|xlsx|ods'], name: 'KunstmaanFormBundle_formsubmissions_export', methods: ['GET'])]
-    public function exportAction($nodeTranslationId, $_format)
+    public function exportAction($nodeTranslationId, $_format): Response
     {
         /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
@@ -129,11 +127,9 @@ final class FormSubmissionsController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanFormBundle_formsubmissions_delete', methods: ['POST'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $submission = $this->em->getRepository(FormSubmission::class)->find($id);
 

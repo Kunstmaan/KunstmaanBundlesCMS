@@ -96,11 +96,9 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
      */
-    private function getValue(string $name)
+    private function getValue(string $name): array
     {
         if (isset($this->presets[$name])) {
             return $this->presets[$name];

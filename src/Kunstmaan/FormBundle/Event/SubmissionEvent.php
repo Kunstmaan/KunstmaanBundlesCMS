@@ -24,18 +24,12 @@ final class SubmissionEvent extends Event
         $this->page = $page;
     }
 
-    /**
-     * @return FormSubmission
-     */
-    public function getSubmission()
+    public function getSubmission(): FormSubmission
     {
         return $this->submission;
     }
 
-    /**
-     * @return FormPageInterface
-     */
-    public function getPage()
+    public function getPage(): FormPageInterface
     {
         return $this->page;
     }

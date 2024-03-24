@@ -30,11 +30,8 @@ final class ExceptionController extends AbstractAdminListController
         return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[Route(path: '/resolve_all', name: 'kunstmaanadminbundle_admin_exception_resolve_all', methods: ['POST'])]
-    public function resolveAllAction(Request $request)
+    public function resolveAllAction(Request $request): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('exception-resolve_all', $request->request->get('token'))) {
             return new RedirectResponse($this->generateUrl('kunstmaanadminbundle_admin_exception'));
@@ -52,11 +49,8 @@ final class ExceptionController extends AbstractAdminListController
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[Route(path: '/toggle_resolve/{id}', name: 'kunstmaanadminbundle_admin_exception_toggle_resolve', methods: ['POST'])]
-    public function toggleResolveAction(Request $request, Exception $model)
+    public function toggleResolveAction(Request $request, Exception $model): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('exception-resolve-item', $request->request->get('token'))) {
             return new RedirectResponse($this->generateUrl('kunstmaanadminbundle_admin_exception'));

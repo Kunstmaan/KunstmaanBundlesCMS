@@ -59,26 +59,17 @@ final class AdaptFormEvent extends Event
         $this->nodeVersion = $nodeVersion;
     }
 
-    /**
-     * @return Node
-     */
-    public function getNode()
+    public function getNode(): Node
     {
         return $this->node;
     }
 
-    /**
-     * @return NodeTranslation
-     */
-    public function getNodeTranslation()
+    public function getNodeTranslation(): NodeTranslation
     {
         return $this->nodeTranslation;
     }
 
-    /**
-     * @return NodeVersion
-     */
-    public function getNodeVersion()
+    public function getNodeVersion(): NodeVersion
     {
         return $this->nodeVersion;
     }
@@ -88,10 +79,7 @@ final class AdaptFormEvent extends Event
         return $this->page;
     }
 
-    /**
-     * @return TabPane
-     */
-    public function getTabPane()
+    public function getTabPane(): TabPane
     {
         return $this->tabPane;
     }

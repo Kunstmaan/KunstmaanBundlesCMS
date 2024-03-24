@@ -28,10 +28,8 @@ final class MenuTwigExtension extends AbstractExtension
 
     /**
      * Get Twig functions defined in this extension.
-     *
-     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('get_admin_menu', [$this, 'getAdminMenu']),
@@ -41,10 +39,8 @@ final class MenuTwigExtension extends AbstractExtension
 
     /**
      * Return the admin menu MenuBuilder.
-     *
-     * @return MenuBuilder
      */
-    public function getAdminMenu()
+    public function getAdminMenu(): MenuBuilder
     {
         return $this->menuBuilder;
     }
@@ -54,7 +50,7 @@ final class MenuTwigExtension extends AbstractExtension
      *
      * @return AdminPanelActionInterface[]
      */
-    public function getAdminPanelActions()
+    public function getAdminPanelActions(): array
     {
         return $this->adminPanel->getAdminPanelActions();
     }

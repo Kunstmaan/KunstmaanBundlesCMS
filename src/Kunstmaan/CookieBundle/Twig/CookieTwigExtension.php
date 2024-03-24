@@ -35,7 +35,7 @@ final class CookieTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('get_cookie_types', [$this, 'getCookieTypes']),
@@ -63,7 +63,7 @@ final class CookieTwigExtension extends AbstractExtension
     /**
      * @return array|CookieType[]
      */
-    public function getCookieTypes()
+    public function getCookieTypes(): array
     {
         return $this->em->getRepository(CookieType::class)->findAll();
     }
@@ -71,17 +71,14 @@ final class CookieTwigExtension extends AbstractExtension
     /**
      * @return array|mixed
      */
-    public function getLegalCookie(Request $request)
+    public function getLegalCookie(Request $request): mixed
     {
         $legalCookie = $this->cookieHelper->getLegalCookie($request);
 
         return null !== $legalCookie && isset($legalCookie['cookies']) ? $legalCookie['cookies'] : [];
     }
 
-    /**
-     * @return string
-     */
-    public function getVisitorType(Request $request)
+    public function getVisitorType(Request $request): string
     {
         $cookieConfig = $this->em->getRepository(CookieConfig::class)->findLatestConfig();
 
@@ -110,20 +107,15 @@ final class CookieTwigExtension extends AbstractExtension
 
     /**
      * @param string $internalName
-     *
-     * @return bool
      */
-    public function isLegalCookieEnabled(Request $request, $internalName)
+    public function isLegalCookieEnabled(Request $request, $internalName): bool
     {
         $cookie = $this->getLegalCookie($request);
 
         return isset($cookie[$internalName]) && true === $cookie[$internalName];
     }
 
-    /**
-     * @return bool
-     */
-    public function isGrantedForCookieBundle(Request $request)
+    public function isGrantedForCookieBundle(Request $request): bool
     {
         return $this->cookieHelper->isGrantedForCookieBundle($request);
     }

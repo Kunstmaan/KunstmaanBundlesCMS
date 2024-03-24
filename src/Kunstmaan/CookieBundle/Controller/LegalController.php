@@ -31,11 +31,9 @@ final class LegalController extends AbstractController
 
     /**
      * @Entity("node", expr="repository.getNodeByInternalName(internal_name)")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/modal/{internal_name}', name: 'kunstmaancookiebundle_legal_modal')]
-    public function switchTabAction(Request $request, Node $node)
+    public function switchTabAction(Request $request, Node $node): \Symfony\Component\HttpFoundation\Response
     {
         $page = $node->getNodeTranslation($request->getLocale())->getRef($this->em);
 
@@ -50,11 +48,9 @@ final class LegalController extends AbstractController
 
     /**
      * @ParamConverter("cookieType", options={"mapping": {"internalName": "internalName"}})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/detail/{internalName}', name: 'kunstmaancookiebundle_legal_detail', methods: ['GET'], condition: 'request.isXmlHttpRequest()')]
-    public function cookieDetailAction(Request $request, CookieType $cookieType)
+    public function cookieDetailAction(Request $request, CookieType $cookieType): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render(
             '@KunstmaanCookie/CookieBar/_detail.html.twig',
@@ -64,11 +60,8 @@ final class LegalController extends AbstractController
         );
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route(path: '/toggle-cookies', name: 'kunstmaancookiebundle_legal_toggle_cookies')]
-    public function toggleCookiesAction(Request $request)
+    public function toggleCookiesAction(Request $request): JsonResponse
     {
         $cookieTypes = $request->request->all();
 
@@ -84,11 +77,8 @@ final class LegalController extends AbstractController
         return $response;
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route(path: '/toggle-all-cookies', name: 'kunstmaancookiebundle_legal_toggle_all_cookies')]
-    public function toggleAllCookiesAction(Request $request)
+    public function toggleAllCookiesAction(Request $request): JsonResponse
     {
         $legalCookie = $this->cookieHelper->findOrCreateLegalCookie($request);
 

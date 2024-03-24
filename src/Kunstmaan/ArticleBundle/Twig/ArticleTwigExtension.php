@@ -35,7 +35,7 @@ final class ArticleTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -57,10 +57,8 @@ final class ArticleTwigExtension extends AbstractExtension
      * Get tags array for view.
      *
      * @param string $className
-     *
-     * @return array
      */
-    public function getTags(Request $request, $className)
+    public function getTags(Request $request, $className): array
     {
         $context = [];
 
@@ -80,10 +78,8 @@ final class ArticleTwigExtension extends AbstractExtension
      * Get categories array for view.
      *
      * @param string $className
-     *
-     * @return array
      */
-    public function getCategories(Request $request, $className)
+    public function getCategories(Request $request, $className): array
     {
         $context = [];
 
@@ -105,10 +101,8 @@ final class ArticleTwigExtension extends AbstractExtension
      * @param string $locale
      * @param array  $parameters
      * @param int    $referenceType
-     *
-     * @return string
      */
-    public function getArticleTagRouterPath($slug, $tag, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function getArticleTagRouterPath($slug, $tag, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         $routeName = sprintf('_slug_tag_%s', $locale);
 
@@ -121,20 +115,15 @@ final class ArticleTwigExtension extends AbstractExtension
      * @param string $locale
      * @param array  $parameters
      * @param int    $referenceType
-     *
-     * @return string
      */
-    public function getArticleCategoryRouterPath($slug, $category, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function getArticleCategoryRouterPath($slug, $category, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         $routeName = sprintf('_slug_category_%s', $locale);
 
         return $this->getArticleRouterPath($routeName, 'category', $slug, $category, $locale, $parameters, $referenceType);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'article_twig_extension';
     }
@@ -147,10 +136,8 @@ final class ArticleTwigExtension extends AbstractExtension
      * @param string $locale
      * @param array  $parameters
      * @param int    $referenceType
-     *
-     * @return string
      */
-    protected function getArticleRouterPath($routeName, $type, $slug, $tagOrCategory, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    protected function getArticleRouterPath($routeName, $type, $slug, $tagOrCategory, $locale, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if (!$this->articleRouteExists($type, $locale)) {
             $routeName = '_slug';
@@ -171,10 +158,8 @@ final class ArticleTwigExtension extends AbstractExtension
     /**
      * @param string $type
      * @param string $locale
-     *
-     * @return bool
      */
-    protected function articleRouteExists($type, $locale)
+    protected function articleRouteExists($type, $locale): bool
     {
         $routeName = sprintf('_slug_%s_%s', $type, $locale);
 

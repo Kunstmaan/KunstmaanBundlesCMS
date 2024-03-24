@@ -10,10 +10,8 @@ final class DateByLocaleExtension extends AbstractExtension
 {
     /**
      * Get Twig filters defined in this extension.
-     *
-     * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
@@ -28,10 +26,8 @@ final class DateByLocaleExtension extends AbstractExtension
      * @param string $dateType The date type
      * @param string $timeType The time type
      * @param string $pattern  The pattern to use
-     *
-     * @return string
      */
-    public static function localeDateFilter($date, $locale = 'nl', $dateType = 'medium', $timeType = 'none', $pattern = null)
+    public static function localeDateFilter($date, $locale = 'nl', $dateType = 'medium', $timeType = 'none', $pattern = null): string
     {
         $values = [
             'none' => DateFormatter::NONE,

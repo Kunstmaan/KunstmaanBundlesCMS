@@ -39,10 +39,7 @@ final class InstallCommand extends GeneratorCommand
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kuma:install')
@@ -73,10 +70,7 @@ final class InstallCommand extends GeneratorCommand
         $this->assistant->setInput($input);
     }
 
-    /**
-     * @return void
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $this->initAssistant($input, $output);
 
@@ -111,10 +105,7 @@ final class InstallCommand extends GeneratorCommand
         $output->writeln('<info>Installation start</info>');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->shouldStop) {
             return 1;

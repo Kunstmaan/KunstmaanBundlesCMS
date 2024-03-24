@@ -112,11 +112,9 @@ final class FolderController extends AbstractController
 
     /**
      * @param int $folderId
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/delete/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_delete', methods: ['POST'])]
-    public function deleteAction(Request $request, $folderId)
+    public function deleteAction(Request $request, $folderId): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('media-folder-delete', $request->request->get('token'))) {
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', ['folderId' => $folderId]));
@@ -160,11 +158,9 @@ final class FolderController extends AbstractController
 
     /**
      * @param int $folderId
-     *
-     * @return Response
      */
     #[Route(path: '/subcreate/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_sub_create', methods: ['GET', 'POST'])]
-    public function subCreateAction(Request $request, $folderId)
+    public function subCreateAction(Request $request, $folderId): Response
     {
         /* @var Folder $parent */
         $parent = $this->em->getRepository(Folder::class)->getFolder($folderId);
@@ -208,11 +204,9 @@ final class FolderController extends AbstractController
 
     /**
      * @param int $folderId
-     *
-     * @return Response
      */
     #[Route(path: '/empty/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_empty', methods: ['GET', 'POST'])]
-    public function emptyAction(Request $request, $folderId)
+    public function emptyAction(Request $request, $folderId): Response
     {
         /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
@@ -251,11 +245,8 @@ final class FolderController extends AbstractController
         ]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route(path: '/reorder', name: 'KunstmaanMediaBundle_folder_reorder')]
-    public function reorderAction(Request $request)
+    public function reorderAction(Request $request): JsonResponse
     {
         $folders = [];
         $nodeIds = $request->request->get('nodes');

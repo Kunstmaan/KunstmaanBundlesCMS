@@ -60,10 +60,8 @@ class ConfigHelper
 
     /**
      * Get the token from the database
-     *
-     * @return string
      */
-    private function getToken($configId = false)
+    private function getToken($configId = false): string
     {
         if (!$this->token || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */

@@ -428,10 +428,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
     /**
      * Returns true if we detect the site uses the locale.
-     *
-     * @return bool
      */
-    private function isMultiLangEnvironment()
+    private function isMultiLangEnvironment(): bool
     {
         // use the multilanguage parameter, if it exists
         if ($this->container->hasParameter('kunstmaan_admin.multi_language')) {

@@ -22,10 +22,7 @@ final class RedirectAdminListController extends AbstractAdminListController
         $this->domainConfiguration = $domainConfiguration;
     }
 
-    /**
-     * @return AdminListConfiguratorInterface
-     */
-    public function getAdminListConfigurator()
+    public function getAdminListConfigurator(): AdminListConfiguratorInterface
     {
         if (!isset($this->configurator)) {
             $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->domainConfiguration);
@@ -34,53 +31,41 @@ final class RedirectAdminListController extends AbstractAdminListController
         return $this->configurator;
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/', name: 'kunstmaanredirectbundle_admin_redirect')]
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/add', name: 'kunstmaanredirectbundle_admin_redirect_add', methods: ['GET', 'POST'])]
-    public function addAction(Request $request)
+    public function addAction(Request $request): Response
     {
         return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '/{id}', requirements: ['id' => '\d+'], name: 'kunstmaanredirectbundle_admin_redirect_edit', methods: ['GET', 'POST'])]
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'kunstmaanredirectbundle_admin_redirect_delete', methods: ['GET', 'POST'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * @param string $_format
-     *
-     * @return Response
      */
     #[Route(path: '/export.{_format}', requirements: ['_format' => 'csv|xlsx|ods'], name: 'kunstmaanredirectbundle_admin_redirect_export', methods: ['GET', 'POST'])]
-    public function exportAction(Request $request, $_format)
+    public function exportAction(Request $request, $_format): Response
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }

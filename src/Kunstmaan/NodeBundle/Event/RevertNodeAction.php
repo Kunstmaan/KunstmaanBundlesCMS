@@ -42,40 +42,30 @@ final class RevertNodeAction extends NodeEvent
 
     /**
      * @param NodeVersion $originNodeVersion
-     *
-     * @return RevertNodeAction
      */
-    public function setOriginNodeVersion($originNodeVersion)
+    public function setOriginNodeVersion($originNodeVersion): RevertNodeAction
     {
         $this->originNodeVersion = $originNodeVersion;
 
         return $this;
     }
 
-    /**
-     * @return NodeVersion
-     */
-    public function getOriginNodeVersion()
+    public function getOriginNodeVersion(): NodeVersion
     {
         return $this->originNodeVersion;
     }
 
     /**
      * @param HasNodeInterface $originPage
-     *
-     * @return RevertNodeAction
      */
-    public function setOriginPage($originPage)
+    public function setOriginPage($originPage): RevertNodeAction
     {
         $this->originPage = $originPage;
 
         return $this;
     }
 
-    /**
-     * @return HasNodeInterface
-     */
-    public function getOriginPage()
+    public function getOriginPage(): HasNodeInterface
     {
         return $this->originPage;
     }

@@ -39,34 +39,22 @@ final class AdminListEvent extends Event
         $this->form = $form;
     }
 
-    /**
-     * @return object
-     */
-    public function getEntity()
+    public function getEntity(): object
     {
         return $this->entity;
     }
 
-    /**
-     * @return Request
-     */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
 
-    /**
-     * @return FormInterface|null
-     */
-    public function getForm()
+    public function getForm(): ?FormInterface
     {
         return $this->form;
     }
 
-    /**
-     * @return Response
-     */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }

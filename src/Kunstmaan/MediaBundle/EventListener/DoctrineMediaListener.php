@@ -36,10 +36,8 @@ class DoctrineMediaListener
 
     /**
      * @param object $entity
-     *
-     * @return bool
      */
-    private function prepareMedia($entity)
+    private function prepareMedia($entity): bool
     {
         if (!$entity instanceof Media) {
             return false;

@@ -11,10 +11,7 @@ class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
-    /**
-     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
-     */
-    protected function getConfiguration()
+    protected function getConfiguration(): \Symfony\Component\Config\Definition\ConfigurationInterface
     {
         return new Configuration();
     }
@@ -73,22 +70,22 @@ class ConfigurationTest extends TestCase
 
 class ValidConfigEntity implements ConfigurationInterface
 {
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return 'whatever';
     }
 
-    public function getInternalName()
+    public function getInternalName(): string
     {
         return 'whatever';
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return 'whatever';
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return [];
     }

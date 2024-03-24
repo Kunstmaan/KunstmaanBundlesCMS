@@ -236,10 +236,8 @@ EOT
 
     /**
      * Get all the available default templates.
-     *
-     * @return array
      */
-    private function getTemplateList()
+    private function getTemplateList(): array
     {
         $templates = $this->getAvailableTemplates($this->bundle);
 
