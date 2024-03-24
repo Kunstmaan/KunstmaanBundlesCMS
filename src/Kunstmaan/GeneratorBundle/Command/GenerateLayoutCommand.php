@@ -38,7 +38,6 @@ EOT
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle where we need to create the layout in')
             ->addOption('subcommand', '', InputOption::VALUE_OPTIONAL, 'Whether the command is called from an other command or not')
             ->addOption('demosite', '', InputOption::VALUE_NONE, 'Pass this parameter when the demosite styles/javascipt should be generated')
-            ->addOption('groundcontrol', '', InputOption::VALUE_NONE, 'Pass this parameter to use Groundcontrol in favor of Webpack Encore')
             ->addOption('browsersync', '', InputOption::VALUE_OPTIONAL, 'The URI that will be used for browsersync to connect')
             ->setName('kuma:generate:layout');
     }
@@ -59,7 +58,7 @@ EOT
         }
 
         $rootDir = $this->getApplication()->getKernel()->getProjectDir() . '/';
-        $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'), $this->browserSyncUrl, $this->assistant->getOption('groundcontrol'));
+        $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'), $this->browserSyncUrl);
 
         if (!$this->isSubCommand()) {
             $this->assistant->writeSection('Layout successfully created', 'bg=green;fg=black');
@@ -80,10 +79,6 @@ EOT
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('layout', $bundleNamespace);
         $this->browserSyncUrl = $this->assistant->getOptionOrDefault('browsersync', null);
-
-        if (null === $this->browserSyncUrl && $this->assistant->getOption('groundcontrol', null)) {
-            $this->browserSyncUrl = $this->assistant->ask('Which URL would you like to configure for browserSync?', 'https://myproject.dev');
-        }
     }
 
     /**

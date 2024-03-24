@@ -5,8 +5,4 @@
    Never add styles directly to this file
    ========================================================================== */
 
-{% if groundcontrol %}
-$base-image-path:       "../../build/img/legal/svg/";
-{% else %}
 $base-image-path:       "~scssRootDir/../img/legal/svg/";
-{% endif %}

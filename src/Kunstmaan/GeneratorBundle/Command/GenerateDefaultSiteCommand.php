@@ -30,11 +30,6 @@ class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
      */
     private $demosite;
 
-    /**
-     * @var bool
-     */
-    private $groundcontrol;
-
     /** @var DoctrineHelper */
     private $doctrineHelper;
 
@@ -65,7 +60,6 @@ EOT
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace to generate the default website in')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('demosite', '', InputOption::VALUE_NONE, 'Whether to generate a website with demo contents or a basic website')
-            ->addOption('groundcontrol', '', InputOption::VALUE_NONE, 'Whether to use Webpack Encore or Groundcontrol as FE build tools')
             ->addOption('browsersync', '', InputOption::VALUE_OPTIONAL, 'The URI that will be used for browsersync to connect')
             ->addOption('articleoverviewpageparent', '', InputOption::VALUE_OPTIONAL, 'Shortnames of the pages that can have the article overview page as a child (comma separated)')
             ->setName('kuma:generate:default-site');
@@ -99,18 +93,12 @@ EOT
 
         $browserSyncUrl = $this->assistant->getOptionOrDefault('browsersync', null);
 
-        /*
-         * If we need to generate Groundcontrol or Webpack Encore
-         */
-        $this->groundcontrol = $this->assistant->getOption('groundcontrol');
-
         // First we generate the layout if it is not yet generated
         $command = $this->getApplication()->find('kuma:generate:layout');
         $arguments = [
             'command' => 'kuma:generate:layout',
             '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
             '--demosite' => $this->demosite,
-            '--groundcontrol' => $this->groundcontrol,
             '--browsersync' => $browserSyncUrl,
             '--subcommand' => true,
         ];

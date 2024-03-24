@@ -35,69 +35,24 @@ class LayoutGenerator extends KunstmaanGenerator
     private $browserSyncUrl;
 
     /**
-     * @var bool
-     */
-    private $groundcontrol;
-
-    /**
      * Generate the basic layout.
      *
      * @param BundleInterface $bundle  The bundle
      * @param string          $rootDir The root directory of the application
      */
-    public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl, $groundcontrol)
+    public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl)
     {
         $this->bundle = $bundle;
         $this->rootDir = $rootDir;
         $this->demosite = $demosite;
         $this->browserSyncUrl = $browserSyncUrl;
-        $this->groundcontrol = $groundcontrol;
 
         $this->shortBundleName = '@' . str_replace('Bundle', '', $bundle->getName());
 
         $this->generateSharedConfigFiles();
-        if ($groundcontrol) {
-            $this->generateGroundcontrolFiles();
-        } else {
-            $this->generateWebpackEncoreFiles();
-        }
+        $this->generateWebpackEncoreFiles();
         $this->generateAssets();
         $this->generateTemplate();
-    }
-
-    /**
-     * Generate the groundcontrol(gulp) configuration files.
-     */
-    private function generateGroundcontrolFiles()
-    {
-        $this->renderFiles(
-            $this->skeletonDir . '/groundcontrol/bin/',
-            $this->rootDir . '/groundcontrol/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            'gulpfile.babel.js',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            '.babelrc',
-            [],
-            true
-        );
-        $this->renderSingleFile(
-            $this->skeletonDir . '/groundcontrol/',
-            $this->rootDir,
-            'package.json',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
-            true
-        );
-        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
     }
 
     /**
@@ -130,7 +85,7 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Generate shared (groundcontrol & webpack encore) configuration files.
+     * Generate shared webpack encore configuration files.
      */
     private function generateSharedConfigFiles()
     {
@@ -178,28 +133,26 @@ class LayoutGenerator extends KunstmaanGenerator
     {
         $sourceDir = $this->skeletonDir;
 
-        if (!$this->groundcontrol) {
-            $this->removeDirectory($this->getAssetsDir($this->bundle));
-        }
+        $this->removeDirectory($this->getAssetsDir($this->bundle));
 
         $relPath = '/Resources/ui/';
         $this->copyFiles($sourceDir . $relPath, $this->getAssetsDir($this->bundle) . '/ui', true);
         $this->renderFiles(
             $sourceDir . $relPath . '/js/',
             $this->getAssetsDir($this->bundle) . '/ui/js/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
         $this->renderFiles(
             $sourceDir . $relPath . '/scss/',
             $this->getAssetsDir($this->bundle) . '/ui/scss/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
         $this->renderFiles(
             $sourceDir . '/Resources/admin/',
             $this->getAssetsDir($this->bundle) . '/admin/',
-            ['bundle' => $this->bundle, 'demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
+            ['bundle' => $this->bundle, 'demosite' => $this->demosite],
             true
         );
 
@@ -268,16 +221,14 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->removeDirectory($this->getAssetsDir($this->bundle) . '/ui/scss/helpers/mixins/');
         }
 
-        if (!$this->groundcontrol) {
-            $this->renderSingleFile(
-                $sourceDir . $relPath . 'js/',
-                $this->getAssetsDir($this->bundle) . '/ui/',
-                'app.js',
-                ['demosite' => $this->demosite, 'groundcontrol' => $this->groundcontrol],
-                true
-            );
-            $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/js/app.js');
-        }
+        $this->renderSingleFile(
+            $sourceDir . $relPath . 'js/',
+            $this->getAssetsDir($this->bundle) . '/ui/',
+            'app.js',
+            ['demosite' => $this->demosite],
+            true
+        );
+        $this->removeFile($this->getAssetsDir($this->bundle) . '/ui/js/app.js');
 
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
@@ -295,7 +246,6 @@ class LayoutGenerator extends KunstmaanGenerator
                 'bundle' => $this->bundle,
                 'demosite' => $this->demosite,
                 'shortBundleName' => $this->shortBundleName,
-                'groundcontrol' => $this->groundcontrol,
             ],
             true
         );
@@ -306,11 +256,7 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_demositemessage.html.twig');
         }
 
-        if ($this->groundcontrol) {
-            $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_js.html.twig');
-        } else {
-            $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_js_footer.html.twig');
-        }
+        $this->removeFile($this->getTemplateDir($this->bundle) . '/Layout/_js_footer.html.twig');
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
     }
