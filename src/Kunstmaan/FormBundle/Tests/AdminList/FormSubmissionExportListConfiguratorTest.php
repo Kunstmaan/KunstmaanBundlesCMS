@@ -40,10 +40,7 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
         $this->object = new FormSubmissionExportListConfigurator($em, $nt, $translator);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
     {
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()

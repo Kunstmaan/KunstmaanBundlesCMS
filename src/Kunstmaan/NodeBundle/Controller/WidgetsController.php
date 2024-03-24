@@ -106,10 +106,8 @@ final class WidgetsController extends AbstractController
     /**
      * Get the parameters needed in the template. This is common for the
      * default link chooser and the cke link chooser.
-     *
-     * @return array
      */
-    private function getTemplateParameters(Request $request)
+    private function getTemplateParameters(Request $request): array
     {
         // When the media bundle is available, we show a link in the header to the media chooser
         $allBundles = $this->getParameter('kernel.bundles');
@@ -133,10 +131,8 @@ final class WidgetsController extends AbstractController
      * Determine if current node is a structure node.
      *
      * @param string $refEntityName
-     *
-     * @return bool
      */
-    protected function isStructureNode($refEntityName)
+    protected function isStructureNode($refEntityName): bool
     {
         $structureNode = false;
         if (class_exists($refEntityName)) {
@@ -154,10 +150,8 @@ final class WidgetsController extends AbstractController
      * @param string                 $locale
      * @param Node[]|ArrayCollection $rootNodes
      * @param int                    $depth
-     *
-     * @return array
      */
-    protected function nodesToArray($locale, $rootNodes, $depth = 2)
+    protected function nodesToArray($locale, $rootNodes, $depth = 2): array
     {
         $isMultiDomain = $this->domainConfiguration->isMultiDomainHost();
         $switchedHost = $this->domainConfiguration->getHostSwitched();

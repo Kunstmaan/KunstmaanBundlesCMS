@@ -14,10 +14,8 @@ class MaxNumberByIpEventListenerTest extends TestCase
 {
     /**
      * @param int $voteNumber
-     *
-     * @return \Kunstmaan\VotingBundle\Services\RepositoryResolver
      */
-    protected function mockRepositoryResolver($returnNull, $voteNumber = 0)
+    protected function mockRepositoryResolver($returnNull, $voteNumber = 0): \Kunstmaan\VotingBundle\Services\RepositoryResolver
     {
         $mockedRepository = null;
 
@@ -70,10 +68,8 @@ class MaxNumberByIpEventListenerTest extends TestCase
 
     /**
      * Data for test on vote
-     *
-     * @return array
      */
-    public function dataTestOnVote()
+    public function dataTestOnVote(): array
     {
         return [
             [2, 2, true],

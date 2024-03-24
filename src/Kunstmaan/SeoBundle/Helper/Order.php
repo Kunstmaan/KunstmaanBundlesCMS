@@ -183,10 +183,8 @@ class Order
 
     /**
      * Loops over the OrderItems and accumulates the value of the given property. Can also be a getter.
-     *
-     * @return int|string
      */
-    private function accumulatePropertyOnOrderItems($property)
+    private function accumulatePropertyOnOrderItems($property): int|string
     {
         if (\count($this->orderItems) == 0) {
             return '';

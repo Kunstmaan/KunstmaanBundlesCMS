@@ -318,10 +318,8 @@ class DomainConfiguration extends BaseDomainConfiguration
 
     /**
      * @param string|null $host
-     *
-     * @return string|null
      */
-    private function getRealHost($host = null)
+    private function getRealHost($host = null): ?string
     {
         if (!$host) {
             $host = $this->getHost();

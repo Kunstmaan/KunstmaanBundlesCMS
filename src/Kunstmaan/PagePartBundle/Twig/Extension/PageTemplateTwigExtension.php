@@ -20,10 +20,7 @@ final class PageTemplateTwigExtension extends AbstractExtension
         $this->templateConfiguration = $templateConfiguration;
     }
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('render_pagetemplate', [$this, 'renderPageTemplate'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
@@ -32,10 +29,7 @@ final class PageTemplateTwigExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function renderPageTemplate(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = [])
+    public function renderPageTemplate(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = []): string
     {
         $pageTemplates = $this->templateConfiguration->getPageTemplates($page);
 
@@ -48,18 +42,13 @@ final class PageTemplateTwigExtension extends AbstractExtension
 
     /**
      * @param HasPageTemplateInterface $page The page
-     *
-     * @return string
      */
-    public function getPageTemplate(HasPageTemplateInterface $page)
+    public function getPageTemplate(HasPageTemplateInterface $page): string
     {
         return $this->templateConfiguration->findOrCreateFor($page)->getPageTemplate();
     }
 
-    /**
-     * @return string
-     */
-    public function renderPageTemplateConfiguration(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = [])
+    public function renderPageTemplateConfiguration(Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = []): string
     {
         $pageTemplates = $this->templateConfiguration->getPageTemplates($page);
 
@@ -70,10 +59,7 @@ final class PageTemplateTwigExtension extends AbstractExtension
         return $template->render(array_merge(['pageTemplate' => $pageTemplate], $twigContext));
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'pagetemplate_twig_extension';
     }

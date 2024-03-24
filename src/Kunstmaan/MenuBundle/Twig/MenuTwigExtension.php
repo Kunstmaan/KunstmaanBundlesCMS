@@ -32,7 +32,7 @@ final class MenuTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -53,10 +53,8 @@ final class MenuTwigExtension extends AbstractExtension
      * @param string $name
      * @param string $lang
      * @param array  $options
-     *
-     * @return string
      */
-    public function getMenu(Environment $environment, $name, $lang, $options = [])
+    public function getMenu(Environment $environment, $name, $lang, $options = []): string
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 
@@ -75,10 +73,8 @@ final class MenuTwigExtension extends AbstractExtension
      *
      * @param string $name
      * @param string $lang
-     *
-     * @return array
      */
-    public function getMenuItems($name, $lang)
+    public function getMenuItems($name, $lang): array
     {
         /** @var MenuItem $menuRepo */
         $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
@@ -99,10 +95,8 @@ final class MenuTwigExtension extends AbstractExtension
 
     /**
      * Get the default options to render the html.
-     *
-     * @return array
      */
-    private function getDefaultOptions()
+    private function getDefaultOptions(): array
     {
         return [
             'decorate' => true,

@@ -126,10 +126,7 @@ class SessionSecurityListener
         return $this->ip;
     }
 
-    /**
-     * @return array|string
-     */
-    private function getUserAgent(Request $request)
+    private function getUserAgent(Request $request): array|string
     {
         if (!$this->userAgent) {
             $this->userAgent = $request->headers->get('User-Agent');

@@ -8,11 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class CookieMenuController extends AbstractController
 {
-    /**
-     * @return RedirectResponse
-     */
     #[Route(path: '/', name: 'kunstmaancookiebundle_admin_cookies')]
-    public function cookiesAction()
+    public function cookiesAction(): RedirectResponse
     {
         return $this->redirectToRoute('kunstmaancookiebundle_admin_cookietype');
     }

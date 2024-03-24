@@ -66,10 +66,8 @@ final class ConfigController
      * Generates the site config administration form and fills it with a default value if needed.
      *
      * @param string $internalName
-     *
-     * @return Response
      */
-    public function indexAction(Request $request, $internalName)
+    public function indexAction(Request $request, $internalName): Response
     {
         /**
          * @var AbstractConfig
@@ -116,11 +114,9 @@ final class ConfigController
      *
      * @param string $internalName
      *
-     * @return AbstractConfig
-     *
      * @throws NotFoundHttpException
      */
-    private function getConfigEntityByInternalName($internalName)
+    private function getConfigEntityByInternalName($internalName): AbstractConfig
     {
         foreach ($this->configuration['entities'] as $class) {
             /** @var AbstractConfig $entity */

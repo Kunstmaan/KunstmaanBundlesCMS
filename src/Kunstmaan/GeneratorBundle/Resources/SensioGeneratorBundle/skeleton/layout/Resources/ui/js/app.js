@@ -1,7 +1,4 @@
-{% set pathPrefix = './' %}
-{% if not groundcontrol -%}
 {% set pathPrefix = './js/' %}
-{% endif %}
 import 'picturefill';
 {% if demosite %}
 import 'velocity-animate';
@@ -11,10 +8,8 @@ import cbSidebarToggle from 'cargobay/src/sidebar-toggle/js/jquery.sidebar-toggl
 import cbToggle from 'cargobay/src/toggle/js/jquery.toggle';
 {% endif %}
 
-{% if not groundcontrol %}
 import './scss/style.scss';
 
-{% endif %}
 {% if demosite %}
 import search from '{{ pathPrefix }}search';
 import demoMsg from '{{ pathPrefix }}demoMsg';

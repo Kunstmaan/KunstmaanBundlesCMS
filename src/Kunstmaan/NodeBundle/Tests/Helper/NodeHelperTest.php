@@ -42,10 +42,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class TestPage extends AbstractPage implements HasNodeInterface, PageTabInterface
 {
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }
@@ -53,7 +50,7 @@ class TestPage extends AbstractPage implements HasNodeInterface, PageTabInterfac
     /**
      * @return PageTab[]
      */
-    public function getTabs()
+    public function getTabs(): array
     {
         return [
             new PageTab('tab1_name', 'tab1_title', TestType::class),
@@ -651,10 +648,7 @@ class NodeHelperTest extends TestCase
             ->getMock();
     }
 
-    /**
-     * @return NodeHelper
-     */
-    private function createNodeHelper()
+    private function createNodeHelper(): NodeHelper
     {
         $this->user = new User();
 
@@ -686,10 +680,8 @@ class NodeHelperTest extends TestCase
 
     /**
      * @param string $title
-     *
-     * @return array
      */
-    private function createNodeEntities($title = 'Test page')
+    private function createNodeEntities($title = 'Test page'): array
     {
         $testPage = new TestPage();
         $testPage->setTitle($title);

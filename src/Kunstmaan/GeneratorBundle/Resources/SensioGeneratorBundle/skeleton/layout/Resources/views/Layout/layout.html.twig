@@ -38,11 +38,9 @@
 
     {# CSS #}
     {% include 'Layout/_css.html.twig' %}
-<% if not groundcontrol %>
 
     {# JS #}
     {% include 'Layout/_js.html.twig' %}
-<% endif %>
 </head>
 {% endapply %}
 
@@ -94,12 +92,6 @@
         {% include 'Layout/_cookieconsent.html.twig' %}
     {% endblock %}
 
-<% if groundcontrol %>
-    {# JS Footer #}
-    {% block jsBundle %}
-        {% include 'Layout/_js_footer.html.twig' %}
-    {% endblock %}
-<% endif %>
 <% if demosite %>
     </div>
 

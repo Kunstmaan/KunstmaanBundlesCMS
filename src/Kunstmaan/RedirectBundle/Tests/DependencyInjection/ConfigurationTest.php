@@ -11,10 +11,7 @@ class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
-    /**
-     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
-     */
-    protected function getConfiguration()
+    protected function getConfiguration(): \Symfony\Component\Config\Definition\ConfigurationInterface
     {
         return new Configuration();
     }

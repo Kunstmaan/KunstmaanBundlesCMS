@@ -17,7 +17,7 @@ final class TabsTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('tabs_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
@@ -28,10 +28,8 @@ final class TabsTwigExtension extends AbstractExtension
      * @param TabPane $tabPane  The tab pane
      * @param array   $options  The extra options
      * @param string  $template The template
-     *
-     * @return string
      */
-    public function renderWidget(Environment $env, TabPane $tabPane, $options = [], $template = '@KunstmaanAdmin/TabsTwigExtension/widget.html.twig')
+    public function renderWidget(Environment $env, TabPane $tabPane, $options = [], $template = '@KunstmaanAdmin/TabsTwigExtension/widget.html.twig'): string
     {
         $template = $env->load($template);
 

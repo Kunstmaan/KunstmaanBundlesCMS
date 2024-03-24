@@ -24,10 +24,7 @@ final class MenuAdminListController extends AbstractAdminListController
         $this->menuService = $menuService;
     }
 
-    /**
-     * @return AbstractAdminListConfigurator
-     */
-    public function getAdminListConfigurator(Request $request)
+    public function getAdminListConfigurator(Request $request): AbstractAdminListConfigurator
     {
         if (!isset($this->configurator)) {
             $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menu_configurator.class');
@@ -50,11 +47,8 @@ final class MenuAdminListController extends AbstractAdminListController
         return $this->configurator;
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/', name: 'kunstmaanmenubundle_admin_menu')]
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         // Make sure we have a menu for each possible locale
         $this->menuService->makeSureMenusExist();

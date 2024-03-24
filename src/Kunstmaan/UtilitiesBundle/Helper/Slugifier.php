@@ -14,10 +14,8 @@ final class Slugifier implements SlugifierInterface
      *
      * @param string $text
      * @param string $delimiter
-     *
-     * @return string
      */
-    public function slugify($text, $delimiter = '-')
+    public function slugify($text, $delimiter = '-'): string
     {
         return Transliterator::transliterate($text, $delimiter);
     }

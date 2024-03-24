@@ -25,10 +25,7 @@ final class IndexNodeEvent extends Event
         $this->page = $page;
     }
 
-    /**
-     * @return HasNodeInterface
-     */
-    public function getPage()
+    public function getPage(): HasNodeInterface
     {
         return $this->page;
     }

@@ -36,10 +36,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     private $demosite;
 
-    /**
-     * @var bool
-     */
-    private $groundControl;
     /** @var DoctrineHelper */
     private $doctrineHelper;
 
@@ -56,13 +52,12 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      * @param string $rootDir
      * @param bool   $demosite
      */
-    public function generate(BundleInterface $bundle, $prefix, $rootDir, $demosite = false, $groundControl = false)
+    public function generate(BundleInterface $bundle, $prefix, $rootDir, $demosite = false)
     {
         $this->bundle = $bundle;
         $this->prefix = GeneratorUtils::cleanPrefix($prefix);
         $this->rootDir = $rootDir;
         $this->demosite = $demosite;
-        $this->groundControl = $groundControl;
 
         $parameters = [
             'namespace' => $this->bundle->getNamespace(),
@@ -71,7 +66,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             'prefix' => $this->prefix,
             'demosite' => $this->demosite,
             'multilanguage' => $this->isMultiLangEnvironment(),
-            'groundcontrol' => $this->groundControl,
             'canUseAttributes' => Kernel::VERSION_ID >= 50200,
             'canUseEntityAttributes' => $this->doctrineHelper->doesClassUsesAttributes('App\\Entity\\Unkown' . uniqid()),
         ];
@@ -383,10 +377,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
     /**
      * Returns true if we detect the site uses the locale.
-     *
-     * @return bool
      */
-    private function isMultiLangEnvironment()
+    private function isMultiLangEnvironment(): bool
     {
         // use the multilanguage parameter, if it exists
         if ($this->container->hasParameter('kunstmaan_admin.multi_language')) {
