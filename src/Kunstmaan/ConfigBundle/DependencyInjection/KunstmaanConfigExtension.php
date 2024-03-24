@@ -9,10 +9,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanConfigExtension extends Extension
 {
-    /**
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $backendConfiguration = $this->processConfiguration(new Configuration(), $configs);
         $container->setParameter('kunstmaan_config', $backendConfiguration);

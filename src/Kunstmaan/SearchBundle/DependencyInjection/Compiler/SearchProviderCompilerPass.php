@@ -13,10 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class SearchProviderCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('kunstmaan_search.search_provider_chain')) {
             return;

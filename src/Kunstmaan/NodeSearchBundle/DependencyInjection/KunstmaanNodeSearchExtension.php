@@ -10,10 +10,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanNodeSearchExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -36,12 +33,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
         $container->setParameter('kunstmaan_node_search.contexts', $config['contexts']);
     }
 
-    /**
-     * Allow an extension to prepend the extension configurations.
-     *
-     * @return void
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $mapping = [
             'mapping' => [
