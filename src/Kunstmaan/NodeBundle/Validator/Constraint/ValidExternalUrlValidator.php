@@ -11,7 +11,11 @@ final class ValidExternalUrlValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint): void
     {
-        if (strpos($value, '#') === 0) {
+        if (!is_string($value)) {
+            return;
+        }
+
+        if (str_starts_with($value, '#')) {
             return;
         }
 
