@@ -10,10 +10,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanFormExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -24,10 +21,7 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
         $loader->load('services.yml');
     }
 
-    /**
-     * @return void
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('form_submission_rootdir')) {
             $container->setParameter('form_submission_rootdir',

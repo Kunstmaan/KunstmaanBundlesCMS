@@ -11,10 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KunstmaanFixturesBundle extends Bundle
 {
-    /**
-     * @return void
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

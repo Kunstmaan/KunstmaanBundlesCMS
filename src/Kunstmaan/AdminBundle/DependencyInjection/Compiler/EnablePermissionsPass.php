@@ -7,10 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnablePermissionsPass implements CompilerPassInterface
 {
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if ($container->hasParameter('kunstmaan_node.permissions.enabled')) {
             $permissionsEnabledParameter = $container->getParameter('kunstmaan_node.permissions.enabled');

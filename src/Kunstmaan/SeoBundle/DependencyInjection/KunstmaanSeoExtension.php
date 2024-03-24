@@ -12,10 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class KunstmaanSeoExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -31,10 +28,7 @@ class KunstmaanSeoExtension extends Extension implements PrependExtensionInterfa
         }
     }
 
-    /**
-     * @return void
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);

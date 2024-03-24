@@ -14,10 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class KunstmaanMediaExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -63,10 +60,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         }
     }
 
-    /**
-     * @return void
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('kunstmaan_media.upload_dir')) {
             $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
