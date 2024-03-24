@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TestStructureNode extends StructureNode
 {
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }
@@ -26,7 +26,7 @@ class TestStructureNode extends StructureNode
 
 class TestNode extends AbstractPage
 {
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }

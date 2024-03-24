@@ -52,10 +52,7 @@ class SettingsMenuAdaptorTest extends TestCase
         }
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|SettingsMenuAdaptor
-     */
-    public function setUpSettingsMenuAdaptorMock()
+    public function setUpSettingsMenuAdaptorMock(): \PHPUnit\Framework\MockObject\MockObject|SettingsMenuAdaptor
     {
         $simpleMenuAdaptorMock = $this->getMockBuilder(SettingsMenuAdaptor::class)
             ->setConstructorArgs([$this->authorizationCheckerInterface, $this->isEnabledVersionChecker])

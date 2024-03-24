@@ -21,7 +21,7 @@ final class AdminRouteHelperTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('is_admin_route', [$this, 'isAdminRoute']),
@@ -30,20 +30,16 @@ final class AdminRouteHelperTwigExtension extends AbstractExtension
 
     /**
      * Lets the adminroutehelper determine wether the URI is an admin route
-     *
-     * @return bool
      */
-    public function isAdminRoute($URI)
+    public function isAdminRoute($URI): bool
     {
         return $this->adminRouteHelper->isAdminRoute($URI);
     }
 
     /**
      * Get the Twig extension name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'admin_route_helper_twig_extension';
     }

@@ -52,10 +52,8 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     /**
      * @param string $path
      * @param string $format
-     *
-     * @return string
      */
-    private function changeFileExtension($path, $format)
+    private function changeFileExtension($path, $format): string
     {
         if (!$format) {
             return $path;

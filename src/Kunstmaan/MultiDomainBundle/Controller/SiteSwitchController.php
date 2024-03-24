@@ -24,11 +24,8 @@ final class SiteSwitchController
         $this->urlGenerator = $urlGenerator;
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/switch-site', name: 'KunstmaanMultiDomainBundle_switch_site', methods: ['GET'])]
-    public function switchAction(Request $request)
+    public function switchAction(Request $request): Response
     {
         $host = $request->query->get('host');
         $hosts = $this->domainConfiguration->getFullHostConfig();

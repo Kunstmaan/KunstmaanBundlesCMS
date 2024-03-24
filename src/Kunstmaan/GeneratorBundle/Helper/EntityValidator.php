@@ -12,11 +12,9 @@ final class EntityValidator
      *
      * @param string $entity
      *
-     * @return string
-     *
      * @throws \InvalidArgumentException
      */
-    public static function validate($entity)
+    public static function validate($entity): string
     {
         $classFound = class_exists($entity);
 

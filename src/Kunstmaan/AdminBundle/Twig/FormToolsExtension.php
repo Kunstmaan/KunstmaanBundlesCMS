@@ -21,10 +21,8 @@ final class FormToolsExtension extends AbstractExtension
 
     /**
      * Get Twig functions defined in this extension.
-     *
-     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('form_errors_recursive', [$this, 'getErrorMessages']),
@@ -34,10 +32,8 @@ final class FormToolsExtension extends AbstractExtension
 
     /**
      * Return if there are error messages.
-     *
-     * @return bool
      */
-    public function hasErrorMessages(FormView $formView)
+    public function hasErrorMessages(FormView $formView): bool
     {
         return $this->formHelper->hasRecursiveErrorMessages($formView);
     }
@@ -47,10 +43,8 @@ final class FormToolsExtension extends AbstractExtension
      *
      * @param FormView[]|FormView $formViews The form views
      * @param array               &$errors   The errors
-     *
-     * @return array
      */
-    public function getErrorMessages($formViews, array &$errors = [])
+    public function getErrorMessages($formViews, array &$errors = []): array
     {
         return $this->formHelper->getRecursiveErrorMessages($formViews, $errors);
     }

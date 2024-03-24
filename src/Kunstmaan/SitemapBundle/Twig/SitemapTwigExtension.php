@@ -13,7 +13,7 @@ final class SitemapTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('hide_from_sitemap', [$this, 'isHiddenFromSitemap']),
@@ -23,10 +23,8 @@ final class SitemapTwigExtension extends AbstractExtension
 
     /**
      * Returns true when the item should be hidden from the sitemap
-     *
-     * @return \Kunstmaan\NodeBundle\Helper\NodeMenuItem
      */
-    public function isHiddenFromSitemap(NodeMenuItem $item)
+    public function isHiddenFromSitemap(NodeMenuItem $item): \Kunstmaan\NodeBundle\Helper\NodeMenuItem
     {
         if (is_subclass_of($item->getNode()->getRefEntityName(), 'Kunstmaan\\SitemapBundle\\Helper\\HiddenFromSitemapInterface')) {
             $page = $item->getPage();
@@ -39,10 +37,8 @@ final class SitemapTwigExtension extends AbstractExtension
 
     /**
      * Returns true when the children of the item should be hidden from the sitemap
-     *
-     * @return bool
      */
-    public function isHiddenChildrenFromSitemap(NodeMenuItem $item)
+    public function isHiddenChildrenFromSitemap(NodeMenuItem $item): bool
     {
         if (is_subclass_of($item->getNode()->getRefEntityName(), 'Kunstmaan\\SitemapBundle\\Helper\\HiddenFromSitemapInterface')) {
             $page = $item->getPage();

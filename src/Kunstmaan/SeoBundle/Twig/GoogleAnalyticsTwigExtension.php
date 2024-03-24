@@ -31,7 +31,7 @@ final class GoogleAnalyticsTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -82,7 +82,7 @@ final class GoogleAnalyticsTwigExtension extends AbstractExtension
      *
      * @throws Error when the Google Analytics ID is nowhere to be found
      */
-    public function renderInitialize(Environment $environment, $options = null)
+    public function renderInitialize(Environment $environment, $options = null): string
     {
         if (\is_null($options)) {
             $options = [];
@@ -107,7 +107,7 @@ final class GoogleAnalyticsTwigExtension extends AbstractExtension
     /**
      * @return string the HTML rendered
      */
-    public function renderECommerceTracking(Environment $environment, Order $order)
+    public function renderECommerceTracking(Environment $environment, Order $order): string
     {
         $order = $this->orderPreparer->prepare($order);
         $options = $this->orderConverter->convert($order);
@@ -137,10 +137,8 @@ final class GoogleAnalyticsTwigExtension extends AbstractExtension
      *
      * @param array  $arr    the array to check
      * @param string $option the key in the $arr array
-     *
-     * @return bool
      */
-    private function isOptionSet($arr, $option)
+    private function isOptionSet($arr, $option): bool
     {
         return !isset($arr[$option]) || !empty($arr[$option]);
     }

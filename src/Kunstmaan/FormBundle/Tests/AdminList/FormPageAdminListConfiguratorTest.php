@@ -29,10 +29,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
         $this->object = new FormPageAdminListConfigurator($em, $aclHelper, self::PERMISSION_VIEW);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
     {
         $configuration = $this->createMock(Configuration::class);
         $configuration->method('getQuoteStrategy')->willReturn(null);

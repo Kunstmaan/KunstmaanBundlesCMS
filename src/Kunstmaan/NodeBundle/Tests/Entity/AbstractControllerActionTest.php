@@ -9,12 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 class Action extends AbstractControllerAction
 {
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }
 
-    public function isStructureNode()
+    public function isStructureNode(): bool
     {
         return false;
     }

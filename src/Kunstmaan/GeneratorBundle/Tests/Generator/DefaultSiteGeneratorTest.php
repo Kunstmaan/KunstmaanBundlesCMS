@@ -24,7 +24,7 @@ class DefaultSiteGeneratorTest extends TestCase
         $container
             ->expects($this->atLeastOnce())
             ->method('getParameter')
-            ->will($this->returnValueMap([['multilanguage', true], ['kernel.project_dir', $path]]))
+            ->will($this->returnValueMap([['kunstmaan_admin.multi_language', true], ['kernel.project_dir', $path]]))
         ;
         $container
             ->expects($this->once())

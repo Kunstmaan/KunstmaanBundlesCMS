@@ -34,18 +34,12 @@ class KunstmaanTranslatorExtensionTest extends TestCase
         $this->assertFalse($container->hasParameter('kuma_translator.enabled'));
     }
 
-    /**
-     * @return KunstmaanTranslatorExtension
-     */
-    protected function getExtension()
+    protected function getExtension(): KunstmaanTranslatorExtension
     {
         return new KunstmaanTranslatorExtension();
     }
 
-    /**
-     * @return ContainerBuilder
-     */
-    private function getContainer()
+    private function getContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.root_dir', 'src/Kunstmaan/TranslatorBundle');

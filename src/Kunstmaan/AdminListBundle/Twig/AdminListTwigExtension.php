@@ -19,7 +19,7 @@ final class AdminListTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
@@ -31,7 +31,7 @@ final class AdminListTwigExtension extends AbstractExtension
     /**
      * @return TwigTest[]
      */
-    public function getTests()
+    public function getTests(): array
     {
         return [
             new TwigTest('instanceof', [$this, 'isInstanceOf']),
@@ -41,10 +41,8 @@ final class AdminListTwigExtension extends AbstractExtension
     /**
      * @param object $object
      * @param string $class
-     *
-     * @return bool
      */
-    public function isInstanceOf($object, $class)
+    public function isInstanceOf($object, $class): bool
     {
         return $object instanceof $class;
     }
@@ -74,7 +72,7 @@ final class AdminListTwigExtension extends AbstractExtension
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
+    public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = []): string
     {
         $filterBuilder = $view->getFilterBuilder();
 
@@ -115,7 +113,7 @@ final class AdminListTwigExtension extends AbstractExtension
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function renderThumbWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
+    public function renderThumbWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = []): string
     {
         $filterBuilder = $view->getFilterBuilder();
 
@@ -131,10 +129,7 @@ final class AdminListTwigExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getSupportedExtensions()
+    public function getSupportedExtensions(): array
     {
         return ExportService::getSupportedExtensions();
     }

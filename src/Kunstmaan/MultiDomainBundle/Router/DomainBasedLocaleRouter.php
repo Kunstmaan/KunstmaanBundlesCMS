@@ -137,10 +137,7 @@ class DomainBasedLocaleRouter extends SlugRouter
         return $this->cachedNodeTranslations[$key];
     }
 
-    /**
-     * @return bool
-     */
-    private function isMultiDomainHost()
+    private function isMultiDomainHost(): bool
     {
         return $this->domainConfiguration->isMultiDomainHost();
     }
@@ -152,10 +149,7 @@ class DomainBasedLocaleRouter extends SlugRouter
         return $this->domainConfiguration->getFrontendLocales($host);
     }
 
-    /**
-     * @return array
-     */
-    private function getLocaleMap()
+    private function getLocaleMap(): array
     {
         return array_combine(
             $this->getFrontendLocales(),
@@ -163,10 +157,7 @@ class DomainBasedLocaleRouter extends SlugRouter
         );
     }
 
-    /**
-     * @return array
-     */
-    private function getReverseLocaleMap()
+    private function getReverseLocaleMap(): array
     {
         return array_combine(
             $this->getBackendLocales(),

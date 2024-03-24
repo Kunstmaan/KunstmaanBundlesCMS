@@ -47,12 +47,10 @@ final class SlugController extends AbstractController
      * @param string  $url     The url
      * @param bool    $preview Show in preview mode
      *
-     * @return Response|array
-     *
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
      */
-    public function slugAction(Request $request, $url = null, $preview = false)
+    public function slugAction(Request $request, $url = null, $preview = false): Response|array
     {
         $locale = $request->getLocale();
 
@@ -135,10 +133,8 @@ final class SlugController extends AbstractController
 
     /**
      * @param bool $preview
-     *
-     * @return \Kunstmaan\NodeBundle\Entity\HasNodeInterface
      */
-    private function getPageEntity(Request $request, $preview, EntityManagerInterface $em, NodeTranslation $nodeTranslation)
+    private function getPageEntity(Request $request, $preview, EntityManagerInterface $em, NodeTranslation $nodeTranslation): \Kunstmaan\NodeBundle\Entity\HasNodeInterface
     {
         /* @var HasNodeInterface $entity */
         $entity = null;

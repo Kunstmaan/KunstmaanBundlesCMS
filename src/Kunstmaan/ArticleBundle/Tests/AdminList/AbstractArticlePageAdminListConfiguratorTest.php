@@ -25,7 +25,7 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
         $this->repo = $repo;
     }
 
-    public function getOverviewPageRepository()
+    public function getOverviewPageRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->repo;
     }

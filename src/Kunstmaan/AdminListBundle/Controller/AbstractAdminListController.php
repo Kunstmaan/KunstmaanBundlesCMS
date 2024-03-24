@@ -553,10 +553,8 @@ abstract class AbstractAdminListController extends AbstractController
 
     /**
      * @param object $event
-     *
-     * @return object
      */
-    private function dispatch($event, string $eventName)
+    private function dispatch($event, string $eventName): object
     {
         return $this->container->get('event_dispatcher')->dispatch($event, $eventName);
     }

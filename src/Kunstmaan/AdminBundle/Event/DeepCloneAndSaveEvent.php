@@ -23,10 +23,7 @@ final class DeepCloneAndSaveEvent extends Event
         $this->clonedEntity = $clonedEntity;
     }
 
-    /**
-     * @return DeepCloneAndSaveEvent
-     */
-    public function setClonedEntity($clonedEntity)
+    public function setClonedEntity($clonedEntity): DeepCloneAndSaveEvent
     {
         $this->clonedEntity = $clonedEntity;
 
@@ -38,10 +35,7 @@ final class DeepCloneAndSaveEvent extends Event
         return $this->clonedEntity;
     }
 
-    /**
-     * @return DeepCloneAndSaveEvent
-     */
-    public function setEntity($entity)
+    public function setEntity($entity): DeepCloneAndSaveEvent
     {
         $this->entity = $entity;
 

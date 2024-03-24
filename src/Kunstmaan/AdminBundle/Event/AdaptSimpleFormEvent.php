@@ -41,10 +41,7 @@ final class AdaptSimpleFormEvent extends Event
         $this->options = $options;
     }
 
-    /**
-     * @return TabPane|null
-     */
-    public function getTabPane()
+    public function getTabPane(): ?TabPane
     {
         return $this->tabPane;
     }
@@ -54,10 +51,7 @@ final class AdaptSimpleFormEvent extends Event
         $this->tabPane = $tabPane;
     }
 
-    /**
-     * @return Request
-     */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
@@ -67,10 +61,7 @@ final class AdaptSimpleFormEvent extends Event
         $this->request = $request;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormType()
+    public function getFormType(): string
     {
         return $this->formType;
     }
@@ -93,10 +84,7 @@ final class AdaptSimpleFormEvent extends Event
         $this->data = $data;
     }
 
-    /**
-     * @return array
-     */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

@@ -12,10 +12,7 @@ final class PagePartAdminTwigExtension extends AbstractExtension
     /** @var bool */
     private $usesExtendedPagePartChooser = false;
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('pagepartadmin_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
@@ -42,7 +39,7 @@ final class PagePartAdminTwigExtension extends AbstractExtension
      *
      * @return string The html markup
      */
-    public function renderWidget(Environment $env, PagePartAdmin $ppAdmin, $form = null, array $parameters = [], $templateName = null)
+    public function renderWidget(Environment $env, PagePartAdmin $ppAdmin, $form = null, array $parameters = [], $templateName = null): string
     {
         if ($templateName === null) {
             $templateName = '@KunstmaanPagePart/PagePartAdminTwigExtension/widget.html.twig';
@@ -60,10 +57,8 @@ final class PagePartAdminTwigExtension extends AbstractExtension
 
     /**
      * Get usesExtendedPagePartChooser.
-     *
-     * @return bool
      */
-    public function getUsesExtendedPagePartChooser()
+    public function getUsesExtendedPagePartChooser(): bool
     {
         return $this->usesExtendedPagePartChooser;
     }

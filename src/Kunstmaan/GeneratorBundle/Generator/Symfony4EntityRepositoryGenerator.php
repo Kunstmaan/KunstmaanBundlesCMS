@@ -25,10 +25,7 @@ class <repository> extends ServiceEntityRepository
 }
 ';
 
-    /**
-     * @return string
-     */
-    public function generateEntityRepositoryClass(string $entityClass, string $repositoryClass)
+    public function generateEntityRepositoryClass(string $entityClass, string $repositoryClass): string
     {
         $variables = [
             '<namespace>' => $this->generateEntityRepositoryNamespace($repositoryClass),
@@ -62,18 +59,12 @@ class <repository> extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return bool|string
-     */
-    private function generateEntityRepositoryNamespace(string $repositoryClassName)
+    private function generateEntityRepositoryNamespace(string $repositoryClassName): bool|string
     {
         return substr($repositoryClassName, 0, strrpos($repositoryClassName, '\\'));
     }
 
-    /**
-     * @return bool|string
-     */
-    private function generateEntityName(string $entityClassName)
+    private function generateEntityName(string $entityClassName): bool|string
     {
         return substr(strrchr($entityClassName, '\\'), 1);
     }
@@ -82,10 +73,8 @@ class <repository> extends ServiceEntityRepository
      * Generates the class name
      *
      * @param string $fullClassName
-     *
-     * @return string
      */
-    private function generateClassName($fullClassName)
+    private function generateClassName($fullClassName): string
     {
         $namespace = $this->getClassNamespace($fullClassName);
 
@@ -105,7 +94,7 @@ class <repository> extends ServiceEntityRepository
      *
      * @return string $namespace
      */
-    private function getClassNamespace($fullClassName)
+    private function getClassNamespace($fullClassName): string
     {
         $namespace = substr($fullClassName, 0, strrpos($fullClassName, '\\'));
 
