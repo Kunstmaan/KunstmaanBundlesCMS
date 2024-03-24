@@ -45,7 +45,7 @@ final class AdminPanelLogoutAction implements AdminPanelActionInterface
         return $this->label;
     }
 
-    public function getTemplate(): string
+    public function getTemplate(): ?string
     {
         return $this->template;
     }

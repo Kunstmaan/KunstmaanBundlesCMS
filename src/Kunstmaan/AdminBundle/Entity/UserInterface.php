@@ -15,8 +15,6 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function getId();
 
     /**
-     * Sets the username.
-     *
      * @param string $username
      *
      * @return static
@@ -31,15 +29,11 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setSalt($salt);
 
     /**
-     * Gets email.
-     *
-     * @return string
+     * @return string|null
      */
     public function getEmail();
 
     /**
-     * Sets the email.
-     *
      * @param string $email
      *
      * @return static
@@ -47,15 +41,11 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setEmail($email);
 
     /**
-     * Gets the plain password.
-     *
-     * @return string
+     * @return string|null
      */
     public function getPlainPassword();
 
     /**
-     * Sets the plain password.
-     *
      * @param string $password
      *
      * @return static
@@ -72,8 +62,6 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setPassword($password);
 
     /**
-     * Tells if the the given user has the super admin role.
-     *
      * @return bool
      */
     public function isSuperAdmin();
@@ -86,8 +74,6 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setEnabled($boolean);
 
     /**
-     * Sets the super admin status.
-     *
      * @param bool $boolean
      *
      * @return static
@@ -95,15 +81,11 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setSuperAdmin($boolean);
 
     /**
-     * Gets the confirmation token.
-     *
      * @return string|null
      */
     public function getConfirmationToken();
 
     /**
-     * Sets the confirmation token.
-     *
      * @param string|null $confirmationToken
      *
      * @return static
@@ -141,8 +123,6 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function setRoles(array $roles);
 
     /**
-     * Adds a role to the user.
-     *
      * @param string $role
      *
      * @return static
@@ -150,8 +130,6 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function addRole($role);
 
     /**
-     * Removes a role to the user.
-     *
      * @param string $role
      *
      * @return static
@@ -182,15 +160,11 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     public function hasGroup($name);
 
     /**
-     * Add a group to the user groups.
-     *
      * @return static
      */
     public function addGroup(GroupInterface $group);
 
     /**
-     * Remove a group from the user groups.
-     *
      * @return static
      */
     public function removeGroup(GroupInterface $group);

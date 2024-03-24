@@ -116,16 +116,6 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     }
 
     /**
-     * Configure the types of items you can add
-     *
-     * @return string
-     */
-    public function getAddUrlFor(array $params = [])
-    {
-        return '';
-    }
-
-    /**
      * Configure if it's possible to delete the given $item
      *
      * @return bool
@@ -165,7 +155,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     /**
      * Get the url to export the listed items
      *
-     * @return array|string
+     * @return array
      */
     public function getExportUrl()
     {
