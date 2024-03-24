@@ -54,14 +54,10 @@ EOT
     }
 
     /**
-     * Executes the command.
-     *
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
-     * @return int|void|null
-     *
-     * @throws \RuntimeException
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

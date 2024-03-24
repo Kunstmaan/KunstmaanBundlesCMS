@@ -14,10 +14,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class SearchConfigurationCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('kunstmaan_search.search_configuration_chain')) {
             return;

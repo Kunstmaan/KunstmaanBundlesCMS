@@ -11,10 +11,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanTranslatorExtension extends Extension
 {
-    /**
-     * @return void
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -47,7 +44,7 @@ class KunstmaanTranslatorExtension extends Extension
         $container->getDefinition('kunstmaan_translator.datacollector')->setDecoratedService('translator');
     }
 
-    public function setTranslationConfiguration($config, $container)
+    public function setTranslationConfiguration($config, $container): void
     {
         $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator')->setPublic(true);
         $container->setAlias('translator.default', 'kunstmaan_translator.service.translator.translator')->setPublic(true);
@@ -69,7 +66,7 @@ class KunstmaanTranslatorExtension extends Extension
      * $this->registerTranslatorConfiguration($config['translator'], $container);
      * Used to load all other translation files
      */
-    public function registerTranslatorConfiguration($config, $container)
+    public function registerTranslatorConfiguration($config, $container): void
     {
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
 

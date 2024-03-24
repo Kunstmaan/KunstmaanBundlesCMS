@@ -8,7 +8,7 @@ namespace Kunstmaan\AdminListBundle\AdminList\ItemAction;
 interface ItemActionInterface
 {
     /**
-     * @return array
+     * @return array|null
      */
     public function getUrlFor($item);
 

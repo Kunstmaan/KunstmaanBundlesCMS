@@ -12,6 +12,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurat
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -30,32 +32,32 @@ class AbstractAdminListConfiguratorTest extends TestCase
                 $this->addField('world', 'world', true);
             }
 
-            public function getEditUrlFor($item)
-            {
-                return 'edit';
-            }
-
-            public function getDeleteUrlFor($item)
-            {
-                return 'delete';
-            }
-
-            public function getCount()
-            {
-                return 0;
-            }
-
-            public function getItems()
+            public function getEditUrlFor($item): array
             {
                 return [];
             }
 
-            public function getPagerfanta()
+            public function getDeleteUrlFor($item): array
             {
-                // no-op
+                return [];
             }
 
-            public function getIterator()
+            public function getCount(): int
+            {
+                return 0;
+            }
+
+            public function getItems(): array
+            {
+                return [];
+            }
+
+            public function getPagerfanta(): Pagerfanta
+            {
+                return new Pagerfanta(new ArrayAdapter([]));
+            }
+
+            public function getIterator(): iterable
             {
                 return [];
             }

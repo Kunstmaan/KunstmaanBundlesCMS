@@ -14,12 +14,7 @@ class Configuration implements ConfigurationInterface
     ];
     private const DEFAULT_FOCUS_POINT_CLASSES = ['top-left', 'top-center', 'top-right', 'center-left', 'center', 'center-right', 'bottom-left', 'bottom-center', 'bottom-right'];
 
-    /**
-     * Generates the configuration tree.
-     *
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('kunstmaan_media');
         $rootNode = $treeBuilder->getRootNode();

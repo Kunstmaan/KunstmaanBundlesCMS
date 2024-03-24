@@ -9,10 +9,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('kunstmaan_page_part');
         $rootNode = $treeBuilder->getRootNode();
@@ -71,7 +68,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function evaluateRows(&$child, $name)
+    protected function evaluateRows(&$child, $name): void
     {
         $child = $this->getRowNode($name)->finalize($child);
     }

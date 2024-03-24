@@ -15,12 +15,12 @@ interface AdminPanelActionInterface
     public function getLabel();
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIcon();
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTemplate();
 }

@@ -18,17 +18,7 @@ use Symfony\Component\Mailer\Mailer;
 
 class KunstmaanAdminExtension extends Extension
 {
-    /**
-     * Loads a specific configuration.
-     *
-     * @param array            $configs   An array of configuration values
-     * @param ContainerBuilder $container A ContainerBuilder instance
-     *
-     * @return void
-     *
-     * @throws \InvalidArgumentException When provided tag is not defined in this extension
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
@@ -99,23 +89,17 @@ class KunstmaanAdminExtension extends Extension
         $container->setParameter('kunstmaan_admin.hide_sidebar', $config['hide_sidebar']);
     }
 
-    /**
-     * @return string
-     */
-    public function getNamespace()
+    public function getNamespace(): string
     {
         return 'https://kunstmaancms.be/schema/dic/admin';
     }
 
-    /**
-     * @return string|false
-     */
-    public function getXsdValidationBasePath()
+    public function getXsdValidationBasePath(): string
     {
         return __DIR__ . '/../Resources/config/schema';
     }
 
-    private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems)
+    private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems): void
     {
         $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [
             new Reference('security.authorization_checker'),
@@ -126,12 +110,7 @@ class KunstmaanAdminExtension extends Extension
         $container->setDefinition('kunstmaan_admin.menu.adaptor.simple', $definition);
     }
 
-    /**
-     * @param string $urlSlice
-     *
-     * @return string
-     */
-    protected function normalizeUrlSlice($urlSlice)
+    protected function normalizeUrlSlice(string $urlSlice): string
     {
         /* Get rid of exotic characters that would break the url */
         $urlSlice = filter_var($urlSlice, FILTER_SANITIZE_URL);
@@ -145,7 +124,7 @@ class KunstmaanAdminExtension extends Extension
         return $urlSlice;
     }
 
-    private function registerExceptionLoggingConfiguration(array $config, ContainerBuilder $container)
+    private function registerExceptionLoggingConfiguration(array $config, ContainerBuilder $container): void
     {
         if ($this->isConfigEnabled($container, $config)) {
             return;
@@ -158,7 +137,7 @@ class KunstmaanAdminExtension extends Extension
         $definition->setArgument(2, false);
     }
 
-    private function configureAuthentication(array $config, ContainerBuilder $container, LoaderInterface $loader)
+    private function configureAuthentication(array $config, ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->setParameter('kunstmaan_admin.enable_new_cms_authentication', true);
 

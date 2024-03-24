@@ -8,10 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KunstmaanNodeSearchBundle extends Bundle
 {
-    /**
-     * @return void
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new NodeSearcherCompilerPass());
     }

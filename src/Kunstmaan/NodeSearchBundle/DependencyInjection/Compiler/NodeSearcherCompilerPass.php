@@ -8,10 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class NodeSearcherCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has('kunstmaan_node_search.search.service')) {
             return;

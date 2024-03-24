@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +37,7 @@ interface FormWidgetInterface
     /**
      * @param string $identifier
      *
-     * @return TabInterface
+     * @return static
      */
     public function setIdentifier($identifier);
 

@@ -128,7 +128,7 @@ class AbstractDoctrineDBALAdminListConfiguratorTest extends TestCase
     public function setUpAdminlistConfigurator(): AbstractDoctrineDBALAdminListConfigurator
     {
         return new class($this->connectionMock) extends AbstractDoctrineDBALAdminListConfigurator {
-            public function buildFields()
+            public function buildFields(): void
             {
                 $this->addField('hello', 'hello', true);
                 $this->addField('world', 'world', true);
