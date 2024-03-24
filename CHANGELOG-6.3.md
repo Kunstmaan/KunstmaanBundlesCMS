@@ -6,6 +6,13 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.3.0...6.3.1
 
+## 6.3.1 / 2024-03-24
+
+* [AllBundles] Fix php-cs-fixer issues [#3353](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3353) ([@acrobat](https://github.com/acrobat))
+* [AdminListBundle] Fix doctrine related unit tests [#3345](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3345) ([@acrobat](https://github.com/acrobat))
+* Apply nullable_type_declaration_for_default_null_value and skip fully_qualified_strict_types [#3332](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3332) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Symfony 6 compatibility fixes [#3322](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3322) ([@acrobat](https://github.com/acrobat))
+
 ## 6.3.0 / 2023-12-20
 
 * [CookieBundle] Deprecate entity controller action method [#3297](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3297) ([@acrobat](https://github.com/acrobat))
