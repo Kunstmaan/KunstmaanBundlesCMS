@@ -45,6 +45,7 @@ class ValidExternalUrlValidatorTest extends ConstraintValidatorTestCase
             ['#'],
             ['#anchor-name'],
             ['#!'],
+            [null], // Test with mixed values, validation is skipped
         ];
     }
 
