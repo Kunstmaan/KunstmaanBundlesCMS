@@ -36,28 +36,20 @@ final class ConfigureActionMenuEvent extends Event
         $this->activeNodeVersion = $activeNodeVersion;
     }
 
-    /**
-     * @return FactoryInterface
-     */
-    public function getFactory()
+    public function getFactory(): FactoryInterface
     {
         return $this->factory;
     }
 
-    /**
-     * @return ItemInterface
-     */
-    public function getMenu()
+    public function getMenu(): ItemInterface
     {
         return $this->menu;
     }
 
     /**
      * Get activeNodeVersion
-     *
-     * @return NodeVersion
      */
-    public function getActiveNodeVersion()
+    public function getActiveNodeVersion(): NodeVersion
     {
         return $this->activeNodeVersion;
     }

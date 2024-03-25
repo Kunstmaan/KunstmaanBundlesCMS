@@ -79,10 +79,8 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
      * get all overviews of a segment
      *
      * @param int $segmentId
-     *
-     * @return array
      */
-    private function getOverviewsOfSegment($segmentId)
+    private function getOverviewsOfSegment($segmentId): array
     {
         // get specified segment
         $segmentRepository = $this->em->getRepository(AnalyticsSegment::class);
@@ -100,10 +98,8 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
      * get all overviews of a config
      *
      * @param int $configId
-     *
-     * @return array
      */
-    private function getOverviewsOfConfig($configId)
+    private function getOverviewsOfConfig($configId): array
     {
         // get specified config
         $configRepository = $this->em->getRepository(AnalyticsConfig::class);
@@ -119,10 +115,8 @@ final class GoogleAnalyticsOverviewsListCommand extends Command
 
     /**
      * get all overviews
-     *
-     * @return array
      */
-    private function getAllOverviews()
+    private function getAllOverviews(): array
     {
         // get all overviews
         $overviewRepository = $this->em->getRepository(AnalyticsOverview::class);

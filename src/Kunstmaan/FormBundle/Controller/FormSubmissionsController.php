@@ -110,11 +110,9 @@ final class FormSubmissionsController extends AbstractController
      * Export as CSV of all the form submissions for the given $nodeTranslationId
      *
      * @param int $nodeTranslationId
-     *
-     * @return Response
      */
     #[Route(path: '/export/{nodeTranslationId}.{_format}', requirements: ['nodeTranslationId' => '\d+', '_format' => 'csv|xlsx|ods'], name: 'KunstmaanFormBundle_formsubmissions_export', methods: ['GET'])]
-    public function exportAction($nodeTranslationId, $_format)
+    public function exportAction($nodeTranslationId, $_format): Response
     {
         /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
@@ -129,11 +127,9 @@ final class FormSubmissionsController extends AbstractController
 
     /**
      * @param int $id
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'KunstmaanFormBundle_formsubmissions_delete', methods: ['POST'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $submission = $this->em->getRepository(FormSubmission::class)->find($id);
 
@@ -143,7 +139,7 @@ final class FormSubmissionsController extends AbstractController
         $configurator = new FormSubmissionAdminListConfigurator($this->em, $nt, $this->getParameter('kunstmaan_form.deletable_formsubmissions'));
 
         $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify($configurator->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $slugifier->slugify(method_exists($configurator, 'getEntityClass') ? $configurator->getEntityClass() : $configurator->getEntityName()), $request->request->get('token'))) {
             $indexUrl = $configurator->getIndexUrl();
 
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
@@ -181,13 +177,13 @@ final class FormSubmissionsController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return [
-                'kunstmaan_admin.acl.helper' => AclHelper::class,
-                'kunstmaan_adminlist.factory' => AdminListFactory::class,
-                'kunstmaan_adminlist.service.export' => ExportService::class,
-                'request_stack' => RequestStack::class,
-                'translator' => TranslatorInterface::class,
-                'logger' => LoggerInterface::class,
-                'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
-            ] + parent::getSubscribedServices();
+            'kunstmaan_admin.acl.helper' => AclHelper::class,
+            'kunstmaan_adminlist.factory' => AdminListFactory::class,
+            'kunstmaan_adminlist.service.export' => ExportService::class,
+            'request_stack' => RequestStack::class,
+            'translator' => TranslatorInterface::class,
+            'logger' => LoggerInterface::class,
+            'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
+        ] + parent::getSubscribedServices();
     }
 }

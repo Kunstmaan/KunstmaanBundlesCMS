@@ -7,6 +7,7 @@ use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class TwigExtensionTest extends TestCase
 {
@@ -27,6 +28,7 @@ class TwigExtensionTest extends TestCase
 
         $this->entityWithName($name);
         $this->noSeoFound();
+        $this->wireUpSeoRepo();
 
         $object = $this->getTwigExtension();
 
@@ -118,7 +120,7 @@ class TwigExtensionTest extends TestCase
         $this->ensureSeoRepoMock();
         $this->seoRepoMock->expects($this->once())
             ->method('findOrCreateFor')
-            ->willReturn(null);
+            ->willReturn(new Seo());
 
         $this->wireUpSeoRepo();
     }
@@ -160,6 +162,7 @@ class TwigExtensionTest extends TestCase
     {
         $extension = new SeoTwigExtension($this->emMock);
         $extension->setWebsiteTitle('Example website name');
+        $extension->setRequestCache(new ArrayAdapter());
 
         return $extension;
     }

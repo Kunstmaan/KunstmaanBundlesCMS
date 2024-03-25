@@ -32,7 +32,7 @@ class FormPageAdminListConfiguratorTest extends TestCase
     /**
      * @return EntityManagerInterface
      */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): EntityManagerInterface
     {
         $configuration = $this->createMock(Configuration::class);
         $configuration->method('getQuoteStrategy')->willReturn(null);

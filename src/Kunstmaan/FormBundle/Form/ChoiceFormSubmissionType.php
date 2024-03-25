@@ -35,7 +35,6 @@ class ChoiceFormSubmissionType extends AbstractType
             }
         );
         $fieldOptions['choices'] = array_flip($fieldOptions['choices']);
-        $fieldOptions['empty_data'] = null;
 
         $builder->add('value', ChoiceType::class, $fieldOptions);
     }

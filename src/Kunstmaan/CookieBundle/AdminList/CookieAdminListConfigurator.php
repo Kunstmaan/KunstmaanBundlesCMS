@@ -69,10 +69,7 @@ class CookieAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurat
             ->innerJoin('b.type', 't');
     }
 
-    /**
-     * @return array
-     */
-    private function getCookieTypes()
+    private function getCookieTypes(): array
     {
         $cookieTypes = [];
         foreach ($this->em->getRepository(CookieType::class)->findAll() as $cookieType) {

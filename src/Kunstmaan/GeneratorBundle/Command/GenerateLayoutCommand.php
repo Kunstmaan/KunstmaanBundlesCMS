@@ -101,10 +101,8 @@ EOT
 
     /**
      * Check that the command is ran as sub command or not.
-     *
-     * @return bool
      */
-    private function isSubCommand()
+    private function isSubCommand(): bool
     {
         return $this->assistant->getOptionOrDefault('subcommand', false);
     }

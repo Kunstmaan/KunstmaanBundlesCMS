@@ -85,8 +85,8 @@ class DateTimeFilterTypeTest extends BaseOrmFilterTest
 
         $badData = [
             'value' => [
-               'date' => 'oopsNotADate',
-               'time' => 'oopsNotATime',
+                'date' => 'oopsNotADate',
+                'time' => 'oopsNotATime',
             ],
             'comparator' => 'true',
         ];

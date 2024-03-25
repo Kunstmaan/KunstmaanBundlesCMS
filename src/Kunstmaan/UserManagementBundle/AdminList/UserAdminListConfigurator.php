@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\UserManagementBundle\AdminList\ItemAction\UserDeleteItemAction;
@@ -66,5 +67,10 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     public function getEntityName()
     {
         return 'User';
+    }
+
+    public function getEntityClass(): string
+    {
+        return User::class;
     }
 }

@@ -253,10 +253,8 @@ class PageBuilder implements BuilderInterface
     /**
      * @param string $parentPageClass
      * @param string $childPageClass
-     *
-     * @return bool
      */
-    private function canHaveChild($parentPageClass, $childPageClass)
+    private function canHaveChild($parentPageClass, $childPageClass): bool
     {
         $childTypes = $this->pagesConfiguration->getPossibleChildTypes($parentPageClass);
 

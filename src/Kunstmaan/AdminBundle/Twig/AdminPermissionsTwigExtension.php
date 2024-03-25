@@ -15,7 +15,7 @@ final class AdminPermissionsTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('permissionsadmin_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
@@ -28,10 +28,8 @@ final class AdminPermissionsTwigExtension extends AbstractExtension
      * @param PermissionAdmin $permissionAdmin The permission admin
      * @param FormView        $form            The form
      * @param array           $parameters      Extra parameters
-     *
-     * @return string
      */
-    public function renderWidget(Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = [])
+    public function renderWidget(Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = []): string
     {
         $template = $env->load('@KunstmaanAdmin/PermissionsAdminTwigExtension/widget.html.twig');
 

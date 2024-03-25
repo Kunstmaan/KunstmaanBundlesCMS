@@ -22,7 +22,7 @@ final class PagesConfigurationTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             'get_possible_child_types' => new TwigFunction(
@@ -36,18 +36,13 @@ final class PagesConfigurationTwigExtension extends AbstractExtension
 
     /**
      * @param string|HasNodeInterface $reference
-     *
-     * @return array
      */
-    public function getPossibleChildTypes($reference)
+    public function getPossibleChildTypes($reference): array
     {
         return $this->pagesConfiguration->getPossibleChildTypes($reference);
     }
 
-    /**
-     * @return array
-     */
-    public function getHomepageTypes()
+    public function getHomepageTypes(): array
     {
         return $this->pagesConfiguration->getHomepageTypes();
     }

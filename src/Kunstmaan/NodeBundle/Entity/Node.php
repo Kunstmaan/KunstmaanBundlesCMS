@@ -127,6 +127,11 @@ class Node extends AbstractEntity implements GedmoNode
     #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
     protected $internalName;
 
+    /**
+     * @var GedmoNode|null
+     */
+    private $sibling;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -415,6 +420,16 @@ class Node extends AbstractEntity implements GedmoNode
     public function getLevel()
     {
         return $this->lvl;
+    }
+
+    public function setSibling(GedmoNode $node): void
+    {
+        $this->sibling = $node;
+    }
+
+    public function getSibling(): ?GedmoNode
+    {
+        return $this->sibling;
     }
 
     /**

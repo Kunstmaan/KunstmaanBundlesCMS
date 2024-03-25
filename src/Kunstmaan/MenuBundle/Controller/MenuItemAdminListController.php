@@ -35,10 +35,8 @@ final class MenuItemAdminListController extends AbstractAdminListController
     /**
      * @param int $menuid
      * @param int $entityId
-     *
-     * @return AbstractAdminListConfigurator
      */
-    public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
+    public function getAdminListConfigurator(Request $request, $menuid, $entityId = null): AbstractAdminListConfigurator
     {
         if (!isset($this->configurator)) {
             $menu = $this->em->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'))->find($menuid);
@@ -58,11 +56,9 @@ final class MenuItemAdminListController extends AbstractAdminListController
 
     /**
      * @param int $menuid
-     *
-     * @return Response
      */
     #[Route(path: '/{menuid}/items', name: 'kunstmaanmenubundle_admin_menuitem')]
-    public function indexAction(Request $request, $menuid)
+    public function indexAction(Request $request, $menuid): Response
     {
         $menuRepo = $this->em->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'));
 
@@ -100,42 +96,32 @@ final class MenuItemAdminListController extends AbstractAdminListController
         return parent::doIndexAction($configurator, $request);
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/{menuid}/items/add', name: 'kunstmaanmenubundle_admin_menuitem_add', methods: ['GET', 'POST'])]
-    public function addAction(Request $request, $menuid)
+    public function addAction(Request $request, $menuid): Response
     {
         return parent::doAddAction($this->getAdminListConfigurator($request, $menuid), null, $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '{menuid}/items/{id}/edit', requirements: ['id' => '\d+'], name: 'kunstmaanmenubundle_admin_menuitem_edit', methods: ['GET', 'POST'])]
-    public function editAction(Request $request, $menuid, $id)
+    public function editAction(Request $request, $menuid, $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator($request, $menuid, $id), $id, $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '{menuid}/items/{id}/delete', requirements: ['id' => '\d+'], name: 'kunstmaanmenubundle_admin_menuitem_delete', methods: ['GET', 'POST'])]
-    public function deleteAction(Request $request, $menuid, $id)
+    public function deleteAction(Request $request, $menuid, $id): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator($request, $menuid), $id, $request);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[Route(path: '{menuid}/items/{item}/move-up', name: 'kunstmaanmenubundle_admin_menuitem_move_up', methods: ['GET'])]
-    public function moveUpAction(Request $request, $menuid, $item)
+    public function moveUpAction(Request $request, $menuid, $item): RedirectResponse
     {
         $em = $this->getEntityManager();
         $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
@@ -150,11 +136,8 @@ final class MenuItemAdminListController extends AbstractAdminListController
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[Route(path: '{menuid}/items/{item}/move-down', name: 'kunstmaanmenubundle_admin_menuitem_move_down', methods: ['GET'])]
-    public function moveDownAction(Request $request, $menuid, $item)
+    public function moveDownAction(Request $request, $menuid, $item): RedirectResponse
     {
         $em = $this->getEntityManager();
         $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));

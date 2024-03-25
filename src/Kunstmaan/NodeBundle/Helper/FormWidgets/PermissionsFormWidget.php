@@ -92,7 +92,7 @@ class PermissionsFormWidget extends FormWidget
     /**
      * @param string $identifier
      *
-     * @return self
+     * @return static
      */
     public function setIdentifier($identifier)
     {

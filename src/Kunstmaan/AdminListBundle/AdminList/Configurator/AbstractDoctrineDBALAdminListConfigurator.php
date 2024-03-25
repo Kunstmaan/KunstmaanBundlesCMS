@@ -129,7 +129,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /**
      * Return an iterable statement or int for all items that matches the current filtering
      *
-     * @return \Traversable|int
+     * @return iterable
      */
     public function getIterator()
     {

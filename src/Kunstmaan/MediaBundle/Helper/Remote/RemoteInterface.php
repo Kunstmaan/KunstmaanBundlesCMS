@@ -35,7 +35,7 @@ interface RemoteInterface
     public function setDescription($description);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCode();
 
@@ -45,7 +45,7 @@ interface RemoteInterface
     public function setCode($code);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getThumbnailUrl();
 
@@ -55,7 +55,7 @@ interface RemoteInterface
     public function setThumbnailUrl($url);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getType();
 

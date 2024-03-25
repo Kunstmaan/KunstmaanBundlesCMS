@@ -19,10 +19,7 @@ final class SlugSecurityEvent extends Event
     /** @var Request|null */
     private $request;
 
-    /**
-     * @return Node|null
-     */
-    public function getNode()
+    public function getNode(): ?Node
     {
         return $this->node;
     }
@@ -37,10 +34,7 @@ final class SlugSecurityEvent extends Event
         return $this;
     }
 
-    /**
-     * @return NodeTranslation|null
-     */
-    public function getNodeTranslation()
+    public function getNodeTranslation(): ?NodeTranslation
     {
         return $this->nodeTranslation;
     }
@@ -55,10 +49,7 @@ final class SlugSecurityEvent extends Event
         return $this;
     }
 
-    /**
-     * @return HasNodeInterface|null
-     */
-    public function getEntity()
+    public function getEntity(): ?HasNodeInterface
     {
         return $this->entity;
     }
@@ -73,10 +64,7 @@ final class SlugSecurityEvent extends Event
         return $this;
     }
 
-    /**
-     * @return Request|null
-     */
-    public function getRequest()
+    public function getRequest(): ?Request
     {
         return $this->request;
     }

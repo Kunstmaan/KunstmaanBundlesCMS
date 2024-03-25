@@ -81,10 +81,8 @@ final class UsersController extends AbstractController
 
     /**
      * Get an instance of the admin user class.
-     *
-     * @return BaseUser
      */
-    private function getUserClassInstance()
+    private function getUserClassInstance(): BaseUser
     {
         $userClassName = $this->getParameter('kunstmaan_admin.user_class');
 

@@ -50,80 +50,60 @@ final class RecopyPageTranslationNodeEvent extends NodeEvent
 
     /**
      * @param string $originalLanguage
-     *
-     * @return RecopyPageTranslationNodeEvent
      */
-    public function setOriginalLanguage($originalLanguage)
+    public function setOriginalLanguage($originalLanguage): RecopyPageTranslationNodeEvent
     {
         $this->originalLanguage = $originalLanguage;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalLanguage()
+    public function getOriginalLanguage(): string
     {
         return $this->originalLanguage;
     }
 
     /**
      * @param NodeTranslation $originalNodeTranslation
-     *
-     * @return RecopyPageTranslationNodeEvent
      */
-    public function setOriginalNodeTranslation($originalNodeTranslation)
+    public function setOriginalNodeTranslation($originalNodeTranslation): RecopyPageTranslationNodeEvent
     {
         $this->originalNodeTranslation = $originalNodeTranslation;
 
         return $this;
     }
 
-    /**
-     * @return NodeTranslation
-     */
-    public function getOriginalNodeTranslation()
+    public function getOriginalNodeTranslation(): NodeTranslation
     {
         return $this->originalNodeTranslation;
     }
 
     /**
      * @param HasNodeInterface $originalPage
-     *
-     * @return RecopyPageTranslationNodeEvent
      */
-    public function setOriginalPage($originalPage)
+    public function setOriginalPage($originalPage): RecopyPageTranslationNodeEvent
     {
         $this->originalPage = $originalPage;
 
         return $this;
     }
 
-    /**
-     * @return HasNodeInterface
-     */
-    public function getOriginalPage()
+    public function getOriginalPage(): HasNodeInterface
     {
         return $this->originalPage;
     }
 
     /**
      * @param NodeVersion $originalNodeVersion
-     *
-     * @return RecopyPageTranslationNodeEvent
      */
-    public function setOriginalNodeVersion($originalNodeVersion)
+    public function setOriginalNodeVersion($originalNodeVersion): RecopyPageTranslationNodeEvent
     {
         $this->originalNodeVersion = $originalNodeVersion;
 
         return $this;
     }
 
-    /**
-     * @return NodeVersion
-     */
-    public function getOriginalNodeVersion()
+    public function getOriginalNodeVersion(): NodeVersion
     {
         return $this->originalNodeVersion;
     }

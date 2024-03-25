@@ -38,7 +38,7 @@ final class ConfigTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -49,10 +49,8 @@ final class ConfigTwigExtension extends AbstractExtension
 
     /**
      * @param string $internalName Internal name of the site config entity
-     *
-     * @return AbstractConfig
      */
-    public function getConfigByInternalName($internalName)
+    public function getConfigByInternalName($internalName): AbstractConfig
     {
         if (\in_array($internalName, $this->configs)) {
             return $this->configs[$internalName];

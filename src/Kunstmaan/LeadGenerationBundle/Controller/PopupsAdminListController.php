@@ -18,10 +18,7 @@ final class PopupsAdminListController extends AbstractAdminListController
      */
     private $configurator;
 
-    /**
-     * @return AdminListConfiguratorInterface
-     */
-    public function getAdminListConfigurator($listAction = false)
+    public function getAdminListConfigurator($listAction = false): AdminListConfiguratorInterface
     {
         if (!isset($this->configurator)) {
             $this->configurator = new PopupAdminListConfigurator($this->getEntityManager());
@@ -40,42 +37,32 @@ final class PopupsAdminListController extends AbstractAdminListController
         return $this->configurator;
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/', name: 'kunstmaanleadgenerationbundle_admin_popup_abstractpopup')]
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         return parent::doIndexAction($this->getAdminListConfigurator(true), $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '/{id}/delete', requirements: ['id' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_popup_abstractpopup_delete', methods: ['GET', 'POST'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): Response
     {
         return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * @param int $id
-     *
-     * @return Response
      */
     #[Route(path: '/{id}/edit', requirements: ['id' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_popup_abstractpopup_edit', methods: ['GET', 'POST'])]
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
-    /**
-     * @return Response
-     */
     #[Route(path: '/add', name: 'kunstmaanleadgenerationbundle_admin_popup_abstractpopup_add', methods: ['GET', 'POST'])]
-    public function addAction(Request $request)
+    public function addAction(Request $request): Response
     {
         $type = $request->query->get('type');
 

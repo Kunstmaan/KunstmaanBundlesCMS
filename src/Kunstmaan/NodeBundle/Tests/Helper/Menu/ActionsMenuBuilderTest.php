@@ -44,11 +44,9 @@ class ActionsMenuBuilderTest extends TestCase
     }
 
     /**
-     * @return EntityManagerInterface
-     *
      * @throws \Exception
      */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): EntityManagerInterface
     {
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('find')->willReturn(null);

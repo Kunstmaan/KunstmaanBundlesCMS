@@ -136,7 +136,7 @@ class Tab implements TabInterface
     /**
      * @param string $identifier
      *
-     * @return TabInterface
+     * @return static
      */
     public function setIdentifier($identifier)
     {

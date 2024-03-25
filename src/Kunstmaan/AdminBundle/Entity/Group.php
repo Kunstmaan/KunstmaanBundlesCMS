@@ -139,7 +139,7 @@ class Group implements GroupInterface
      *
      * @param Role $role
      *
-     * @return GroupInterface
+     * @return static
      *
      * @throws \InvalidArgumentException
      */
@@ -161,7 +161,7 @@ class Group implements GroupInterface
      *
      * @param string $role
      *
-     * @return GroupInterface
+     * @return static
      */
     public function removeRole($role)
     {
@@ -178,7 +178,7 @@ class Group implements GroupInterface
      *
      * @param Role[] $roles array of Role objects
      *
-     * @return GroupInterface
+     * @return static
      */
     public function setRoles(array $roles)
     {
@@ -193,7 +193,7 @@ class Group implements GroupInterface
     /**
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
      *
-     * @return GroupInterface
+     * @return static
      */
     public function setRolesCollection(Collection $collection)
     {
@@ -217,7 +217,7 @@ class Group implements GroupInterface
      *
      * @param string $name New name of the group
      *
-     * @return GroupInterface
+     * @return static
      */
     public function setName($name)
     {

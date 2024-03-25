@@ -128,10 +128,8 @@ class Importer
 
     /**
      * @param bool $force
-     *
-     * @return bool
      */
-    private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
+    private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false): bool
     {
         if (\strlen($keyword) > 255) {
             return false;

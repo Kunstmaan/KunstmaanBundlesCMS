@@ -330,10 +330,8 @@ class PermissionAdmin
      *
      * @param AclInterface $acl  The AclInterface
      * @param string       $role The role
-     *
-     * @return bool|int
      */
-    private function getObjectAceIndex(AclInterface $acl, $role)
+    private function getObjectAceIndex(AclInterface $acl, $role): bool|int
     {
         $objectAces = $acl->getObjectAces();
         /* @var $ace AuditableEntryInterface */
@@ -352,10 +350,8 @@ class PermissionAdmin
      *
      * @param AclInterface $acl   The acl interface
      * @param int          $index The index
-     *
-     * @return bool|int
      */
-    private function getMaskAtIndex(AclInterface $acl, $index)
+    private function getMaskAtIndex(AclInterface $acl, $index): bool|int
     {
         $objectAces = $acl->getObjectAces();
         /* @var $ace AuditableEntryInterface */

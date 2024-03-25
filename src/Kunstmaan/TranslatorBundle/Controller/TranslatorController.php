@@ -232,7 +232,7 @@ final class TranslatorController extends AbstractAdminListController
     public function deleteAction(Request $request, $id): RedirectResponse
     {
         $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
-        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify($this->getAdminListConfigurator()->getEntityName()), $request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-' . $this->slugifier->slugify(method_exists($this->getAdminListConfigurator(), 'getEntityClass') ? $this->getAdminListConfigurator()->getEntityClass() : $this->getAdminListConfigurator()->getEntityName()), $request->request->get('token'))) {
             return $this->redirectToRoute($indexUrl['path'], $indexUrl['params'] ?? []);
         }
 
@@ -248,10 +248,7 @@ final class TranslatorController extends AbstractAdminListController
         $this->adminListConfigurator = $adminListConfigurator;
     }
 
-    /**
-     * @return AbstractAdminListConfigurator
-     */
-    public function getAdminListConfigurator()
+    public function getAdminListConfigurator(): AbstractAdminListConfigurator
     {
         $locales = $this->getParameter('kuma_translator.managed_locales');
 
@@ -262,11 +259,8 @@ final class TranslatorController extends AbstractAdminListController
         return $this->adminListConfigurator;
     }
 
-    /**
-     * @return JsonResponse|Response
-     */
     #[Route(path: '/inline-edit', name: 'KunstmaanTranslatorBundle_settings_translations_inline_edit', methods: ['POST'])]
-    public function inlineEditAction(Request $request)
+    public function inlineEditAction(Request $request): JsonResponse|Response
     {
         $values = $request->request->all();
 
