@@ -21,6 +21,7 @@ class AdminListEventTest extends TestCase
         $this->assertInstanceOf(Form::class, $event->getForm());
         $this->assertInstanceOf(\DateTime::class, $event->getEntity());
         $this->assertInstanceOf(Request::class, $event->getRequest());
+        $this->assertNull($event->getResponse());
 
         $event->setResponse(new Response());
 

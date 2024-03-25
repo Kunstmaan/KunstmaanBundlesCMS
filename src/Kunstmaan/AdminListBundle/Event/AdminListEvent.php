@@ -25,7 +25,7 @@ final class AdminListEvent extends Event
     protected $request;
 
     /**
-     * @var Response
+     * @var Response|null
      */
     protected $response;
 
@@ -54,7 +54,7 @@ final class AdminListEvent extends Event
         return $this->form;
     }
 
-    public function getResponse(): Response
+    public function getResponse(): ?Response
     {
         return $this->response;
     }
