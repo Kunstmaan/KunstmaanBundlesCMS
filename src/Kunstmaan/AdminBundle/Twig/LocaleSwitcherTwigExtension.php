@@ -21,10 +21,8 @@ final class LocaleSwitcherTwigExtension extends AbstractExtension
 
     /**
      * Get Twig functions defined in this extension.
-     *
-     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('localeswitcher_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
@@ -39,10 +37,8 @@ final class LocaleSwitcherTwigExtension extends AbstractExtension
      * @param array  $locales    The locales
      * @param string $route      The route
      * @param array  $parameters The route parameters
-     *
-     * @return string
      */
-    public function renderWidget(Environment $env, $locales, $route, array $parameters = [])
+    public function renderWidget(Environment $env, $locales, $route, array $parameters = []): string
     {
         $template = $env->load(
             '@KunstmaanAdmin/LocaleSwitcherTwigExtension/widget.html.twig'
@@ -59,18 +55,12 @@ final class LocaleSwitcherTwigExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getLocales()
+    public function getLocales(): array
     {
         return $this->domainConfiguration->getFrontendLocales();
     }
 
-    /**
-     * @return array
-     */
-    public function getBackendLocales($switchedHost = null)
+    public function getBackendLocales($switchedHost = null): array
     {
         return $this->domainConfiguration->getBackendLocales($switchedHost);
     }

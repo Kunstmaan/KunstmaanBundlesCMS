@@ -49,10 +49,8 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
      *
      * @param ObjectManager $manager The object manager
      * @param string        $name    The name of the role
-     *
-     * @return Role
      */
-    private function createRole(ObjectManager $manager, $name)
+    private function createRole(ObjectManager $manager, $name): Role
     {
         $role = new Role($name);
         $manager->persist($role);

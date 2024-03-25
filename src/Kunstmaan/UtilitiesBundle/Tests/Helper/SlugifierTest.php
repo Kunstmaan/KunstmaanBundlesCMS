@@ -30,10 +30,8 @@ class SlugifierTest extends TestCase
 
     /**
      * Provides data to the {@link testSlugify} function
-     *
-     * @return array
      */
-    public function getSlugifyData()
+    public function getSlugifyData(): array
     {
         return [
             ['', ''],

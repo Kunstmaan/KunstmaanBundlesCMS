@@ -55,10 +55,8 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
      * This builds a Region out of the rawRegion from the Yaml
      *
      * @param array $rawRegion
-     *
-     * @return Region
      */
-    private function buildRegion($rawRegion)
+    private function buildRegion($rawRegion): Region
     {
         $children = [];
         $rows = [];
@@ -85,10 +83,8 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
      * This builds a Row out of the rawRow from the Yaml
      *
      * @param array $rawRow
-     *
-     * @return Row
      */
-    private function buildRow($rawRow)
+    private function buildRow($rawRow): Row
     {
         $regions = [];
 
@@ -100,11 +96,9 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
      */
-    private function getRawData($name)
+    private function getRawData($name): array
     {
         if (isset($this->presets[$name])) {
             return $this->presets[$name];

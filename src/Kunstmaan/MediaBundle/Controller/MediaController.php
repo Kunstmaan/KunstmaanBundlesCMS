@@ -39,11 +39,9 @@ final class MediaController extends AbstractController
 
     /**
      * @param int $mediaId
-     *
-     * @return Response
      */
     #[Route(path: '/{mediaId}', requirements: ['mediaId' => '\d+'], name: 'KunstmaanMediaBundle_media_show')]
-    public function showAction(Request $request, $mediaId)
+    public function showAction(Request $request, $mediaId): Response
     {
         /* @var Media $media */
         $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
@@ -78,11 +76,9 @@ final class MediaController extends AbstractController
 
     /**
      * @param int $mediaId
-     *
-     * @return RedirectResponse
      */
     #[Route(path: '/delete/{mediaId}', requirements: ['mediaId' => '\d+'], name: 'KunstmaanMediaBundle_media_delete', methods: ['POST'])]
-    public function deleteAction(Request $request, $mediaId)
+    public function deleteAction(Request $request, $mediaId): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('media-delete', $request->request->get('token'))) {
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
@@ -128,11 +124,9 @@ final class MediaController extends AbstractController
 
     /**
      * @param int $folderId
-     *
-     * @return JsonResponse
      */
     #[Route(path: 'bulkuploadsubmit/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_bulk_upload_submit', methods: ['POST'])]
-    public function bulkUploadSubmitAction(Request $request, $folderId)
+    public function bulkUploadSubmitAction(Request $request, $folderId): JsonResponse
     {
         // Settings
         if (\ini_get('upload_tmp_dir')) {
@@ -283,11 +277,9 @@ final class MediaController extends AbstractController
 
     /**
      * @param int $folderId
-     *
-     * @return JsonResponse
      */
     #[Route(path: 'drop/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_drop_upload', methods: ['GET', 'POST'])]
-    public function dropAction(Request $request, $folderId)
+    public function dropAction(Request $request, $folderId): JsonResponse
     {
         /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
@@ -339,10 +331,8 @@ final class MediaController extends AbstractController
      * @param string $type        The type
      * @param string $redirectUrl The url where we want to redirect to on success
      * @param array  $extraParams The extra parameters that will be passed wen redirecting
-     *
-     * @return array|RedirectResponse
      */
-    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false)
+    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false): array|RedirectResponse
     {
         /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
@@ -402,11 +392,9 @@ final class MediaController extends AbstractController
     /**
      * @param int    $folderId The folder id
      * @param string $type     The type
-     *
-     * @return array|RedirectResponse
      */
     #[Route(path: 'create/modal/{folderId}/{type}', requirements: ['folderId' => '\d+', 'type' => '.+'], name: 'KunstmaanMediaBundle_media_modal_create', methods: ['POST'])]
-    public function createModalAction(Request $request, $folderId, $type)
+    public function createModalAction(Request $request, $folderId, $type): array|RedirectResponse
     {
         $cKEditorFuncNum = $request->query->get('CKEditorFuncNum');
         $linkChooser = $request->query->get('linkChooser');
@@ -429,11 +417,8 @@ final class MediaController extends AbstractController
         );
     }
 
-    /**
-     * @return JsonResponse|Response
-     */
     #[Route(path: '/bulk-move', name: 'KunstmaanMediaBundle_media_bulk_move')]
-    public function bulkMoveAction(Request $request)
+    public function bulkMoveAction(Request $request): JsonResponse|Response
     {
         $mediaRepo = $this->em->getRepository(Media::class);
         $form = $this->createForm(BulkMoveMediaType::class);

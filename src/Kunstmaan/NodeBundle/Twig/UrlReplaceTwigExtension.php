@@ -18,10 +18,7 @@ final class UrlReplaceTwigExtension extends AbstractExtension
         $this->urlHelper = $urlHelper;
     }
 
-    /**
-     * @return array
-     */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('replace_url', [$this, 'replaceUrl']),

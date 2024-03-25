@@ -148,10 +148,8 @@ class RemoteVideoHandler extends AbstractMediaHandler
      *
      * @param string $str string
      * @param string $sub substring
-     *
-     * @return bool
      */
-    private function endsWith($str, $sub)
+    private function endsWith($str, $sub): bool
     {
         return substr($str, \strlen($str) - \strlen($sub)) === $sub;
     }

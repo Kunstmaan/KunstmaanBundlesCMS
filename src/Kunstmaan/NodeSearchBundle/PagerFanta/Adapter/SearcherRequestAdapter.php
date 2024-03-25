@@ -119,10 +119,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         return true;
     }
 
-    /**
-     * @return ResultSet
-     */
-    private function getResponse()
+    private function getResponse(): ResultSet
     {
         if (\is_null($this->response)) {
             $this->response = $this->searcher->search();

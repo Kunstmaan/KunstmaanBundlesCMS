@@ -51,10 +51,8 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
      * @param ObjectManager $manager The object manager
      * @param string        $name    The name of the group
      * @param array         $roles   The roles connected to this group
-     *
-     * @return Group
      */
-    private function createGroup(ObjectManager $manager, $name, array $roles = [])
+    private function createGroup(ObjectManager $manager, $name, array $roles = []): Group
     {
         $group = new Group($name);
         foreach ($roles as $role) {

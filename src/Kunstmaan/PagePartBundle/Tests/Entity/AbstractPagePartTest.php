@@ -7,12 +7,14 @@ use PHPUnit\Framework\TestCase;
 
 class PagePart extends AbstractPagePart
 {
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
+        return '';
     }
 
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
+        return '';
     }
 }
 

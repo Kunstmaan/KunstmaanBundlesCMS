@@ -23,17 +23,11 @@ use PHPUnit\Framework\TestCase;
 
 class Query extends AbstractQuery
 {
-    /**
-     * @return string
-     */
-    public function getSQL()
+    public function getSQL(): string
     {
     }
 
-    /**
-     * @return Result|int
-     */
-    protected function _doExecute()
+    protected function _doExecute(): Result|int
     {
     }
 
@@ -47,23 +41,17 @@ class FakePage extends AbstractPage implements Taggable
 {
     use TaggableTrait;
 
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getTaggableId()
+    public function getTaggableId(): string
     {
         return 777;
     }
 
-    /**
-     * @return string
-     */
-    public function getTaggableType()
+    public function getTaggableType(): string
     {
         return self::class;
     }

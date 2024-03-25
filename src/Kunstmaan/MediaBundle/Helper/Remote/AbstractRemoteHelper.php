@@ -76,7 +76,7 @@ abstract class AbstractRemoteHelper
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCode()
     {

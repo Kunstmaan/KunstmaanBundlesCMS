@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NonAbstractFormPageAdminType extends AbstractFormPageAdminType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
@@ -23,12 +23,12 @@ class NonAbstractFormPageAdminType extends AbstractFormPageAdminType
 
 class FormPage extends AbstractFormPage
 {
-    public function getPossibleChildTypes()
+    public function getPossibleChildTypes(): array
     {
         return null;
     }
 
-    public function getPagePartAdminConfigurations()
+    public function getPagePartAdminConfigurations(): array
     {
         return [
             [
@@ -42,7 +42,7 @@ class FormPage extends AbstractFormPage
         ];
     }
 
-    public function getDefaultView()
+    public function getDefaultView(): string
     {
         return 'some.twig';
     }

@@ -23,10 +23,8 @@ class ArrayAdd implements MethodInterface
      * finds the method used to append values to the named property
      *
      * @param string $property
-     *
-     * @return string|null
      */
-    private function findAdderMethod($object, $property)
+    private function findAdderMethod($object, $property): ?string
     {
         if (is_callable([$object, $method = 'add' . $property])) {
             return $method;

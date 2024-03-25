@@ -175,7 +175,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
     }
 
     /**
-     * @return QueryBuilder|null
+     * @return QueryBuilder
      */
     public function getQueryBuilder()
     {

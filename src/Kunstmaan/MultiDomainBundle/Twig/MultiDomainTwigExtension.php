@@ -20,10 +20,8 @@ final class MultiDomainTwigExtension extends AbstractExtension
 
     /**
      * Get Twig functions defined in this extension.
-     *
-     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('get_multi_domain_hosts', [$this, 'getMultiDomainHosts']),
@@ -44,26 +42,17 @@ final class MultiDomainTwigExtension extends AbstractExtension
         return null;
     }
 
-    /**
-     * @return array
-     */
-    public function getMultiDomainHosts()
+    public function getMultiDomainHosts(): array
     {
         return $this->domainConfiguration->getHosts();
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrentHost()
+    public function getCurrentHost(): string
     {
         return $this->domainConfiguration->getHost();
     }
 
-    /**
-     * @return array
-     */
-    public function getCurrentFullHost()
+    public function getCurrentFullHost(): array
     {
         return $this->domainConfiguration->getFullHost();
     }

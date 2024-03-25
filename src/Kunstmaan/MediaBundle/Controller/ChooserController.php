@@ -154,10 +154,8 @@ final class ChooserController extends AbstractController
 
     /**
      * @param string $type
-     *
-     * @return \Symfony\Component\Form\FormView
      */
-    private function createTypeFormView(MediaManager $mediaManager, $type)
+    private function createTypeFormView(MediaManager $mediaManager, $type): \Symfony\Component\Form\FormView
     {
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();

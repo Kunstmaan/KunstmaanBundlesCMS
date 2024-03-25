@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
@@ -33,5 +34,10 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     public function getEntityName()
     {
         return 'Role';
+    }
+
+    public function getEntityClass(): string
+    {
+        return Role::class;
     }
 }

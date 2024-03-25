@@ -68,10 +68,8 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
     /**
      * @param string $path
      * @param string $format
-     *
-     * @return string
      */
-    private function changeFileExtension($path, $format)
+    private function changeFileExtension($path, $format): string
     {
         if (!$format) {
             return $path;

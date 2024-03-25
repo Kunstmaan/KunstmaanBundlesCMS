@@ -44,7 +44,7 @@ class SimpleItemAction implements ItemActionInterface
     }
 
     /**
-     * @return string
+     * @return array|null
      */
     public function getUrlFor($item)
     {

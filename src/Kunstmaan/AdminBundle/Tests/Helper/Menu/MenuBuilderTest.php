@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class MenuBuilderTest extends TestCase
 {
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|MenuBuilder
-     */
-    public function setUpMenuBuilderMock(?array $methods)
+    public function setUpMenuBuilderMock(?array $methods): \PHPUnit\Framework\MockObject\MockObject|MenuBuilder
     {
         $menuBuilderMock = $this->getMockBuilder(MenuBuilder::class)
             ->setConstructorArgs([$this->createMock(RequestStack::class)])

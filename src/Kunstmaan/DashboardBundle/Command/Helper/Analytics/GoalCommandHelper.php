@@ -7,10 +7,7 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 {
-    /**
-     * @return array
-     */
-    private function getAllGoals()
+    private function getAllGoals(): array
     {
         // Get the goals from the saved profile. These are a maximum of 20 goals.
         $goals = $this
@@ -32,10 +29,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         return false;
     }
 
-    /**
-     * @return array
-     */
-    private function prepareMetrics()
+    private function prepareMetrics(): array
     {
         $goals = $this->getAllGoals();
         if (!$goals) {

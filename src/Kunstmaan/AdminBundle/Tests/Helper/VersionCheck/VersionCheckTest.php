@@ -34,10 +34,7 @@ class VersionCheckTest extends TestCase
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|VersionChecker
-     */
-    public function setUpVersionCheckerMock(?array $methods, ?string $projectDir = null)
+    public function setUpVersionCheckerMock(?array $methods, ?string $projectDir = null): \PHPUnit\Framework\MockObject\MockObject|VersionChecker
     {
         $versionCheckerMock = $this->getMockBuilder(VersionChecker::class)
             ->setConstructorArgs([$this->cache, $this->translator, $this->requestStack, 'url', 300, true, $projectDir ?? 'project_dir', 'website_title'])

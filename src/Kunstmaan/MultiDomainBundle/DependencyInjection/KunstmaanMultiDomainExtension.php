@@ -57,10 +57,8 @@ class KunstmaanMultiDomainExtension extends Extension
 
     /**
      * Convert config hosts array to a usable format
-     *
-     * @return array
      */
-    private function getHostConfigurations($hosts)
+    private function getHostConfigurations($hosts): array
     {
         $hostConfigurations = [];
         foreach ($hosts as $name => $settings) {
@@ -83,10 +81,8 @@ class KunstmaanMultiDomainExtension extends Extension
 
     /**
      * Return uri to actual locale mappings
-     *
-     * @return array
      */
-    private function getHostLocales($localeSettings)
+    private function getHostLocales($localeSettings): array
     {
         $hostLocales = [];
         foreach ($localeSettings as $key => $localeMapping) {
@@ -98,10 +94,8 @@ class KunstmaanMultiDomainExtension extends Extension
 
     /**
      * Return the extra data configured for each locale
-     *
-     * @return array
      */
-    private function getLocalesExtra($localeSettings)
+    private function getLocalesExtra($localeSettings): array
     {
         $localesExtra = [];
         foreach ($localeSettings as $key => $localeMapping) {

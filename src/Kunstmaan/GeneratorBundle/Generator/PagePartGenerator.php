@@ -543,10 +543,8 @@ class PagePartGenerator extends KunstmaanGenerator
      * Camel case string to space delimited string that will be used for form labels.
      *
      * @param string $text
-     *
-     * @return string
      */
-    private function labelCase($text)
+    private function labelCase($text): string
     {
         return ucfirst(str_replace('_', ' ', Container::underscore($text)));
     }

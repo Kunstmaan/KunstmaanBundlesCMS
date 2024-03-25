@@ -58,7 +58,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      *
      * @return int total number of files imported
      */
-    private function importGlobalTranslationFiles(ImportCommand $importCommand)
+    private function importGlobalTranslationFiles(ImportCommand $importCommand): int
     {
         $baseDir = $this->kernel->getProjectDir();
         $locales = $this->determineLocalesToImport($importCommand);
@@ -95,7 +95,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      *
      * @return int total number of files imported
      */
-    private function importAllBundlesTranslationFiles(ImportCommand $importCommand)
+    private function importAllBundlesTranslationFiles(ImportCommand $importCommand): int
     {
         $bundles = array_map('strtolower', array_keys($this->kernel->getBundles()));
         $imported = 0;
@@ -118,7 +118,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      *
      * @return int The total number of imported files
      */
-    private function importCustomBundlesTranslationFiles(ImportCommand $importCommand)
+    private function importCustomBundlesTranslationFiles(ImportCommand $importCommand): int
     {
         $imported = 0;
 
@@ -140,7 +140,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      *
      * @return int total number of files imported
      */
-    private function importSingleBundleTranslationFiles(ImportCommand $importCommand)
+    private function importSingleBundleTranslationFiles(ImportCommand $importCommand): int
     {
         $this->validateBundleName($importCommand->getDefaultBundle());
         $bundles = array_change_key_case($this->kernel->getBundles(), CASE_LOWER);
@@ -162,7 +162,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      *
      * @return int total number of files imported
      */
-    private function importTranslationFiles(Finder $finder, $force = false)
+    private function importTranslationFiles(Finder $finder, $force = false): int
     {
         if (!$finder instanceof Finder) {
             return false;

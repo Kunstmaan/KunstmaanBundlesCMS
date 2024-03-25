@@ -7,17 +7,17 @@ use PHPUnit\Framework\TestCase;
 
 class Config extends AbstractConfig
 {
-    public function getDefaultAdminType()
+    public function getDefaultAdminType(): string
     {
         return null;
     }
 
-    public function getInternalName()
+    public function getInternalName(): string
     {
         return null;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return null;
     }

@@ -6,7 +6,7 @@
             {% if adminmenu.current %}
                 {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
             {% else %}
-                {{ adminlist.configurator.getEntityName() }}
+                {{ attribute(adminlist.configurator, 'getEntityClass') ? adminlist.configurator.getEntityClass() : adminlist.configurator.getEntityName() }}
             {% endif %}
         </h1>
     </div>

@@ -31,10 +31,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $this->object = new FormSubmissionAdminListConfigurator($em, $nt);
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getMockedEntityManager()
+    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
     {
         $configuration = $this->createMock(Configuration::class);
         $configuration->method('getQuoteStrategy')->willReturn(null);
@@ -81,7 +78,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $item = $this->createMock(AbstractPage::class);
         $item->method('getId')->willReturn(123);
 
-        $this->assertEquals('', $this->object->getAddUrlFor([]));
+        $this->assertIsArray($this->object->getAddUrlFor());
         $this->assertEquals(FormSubmission::class, $this->object->getEntityClass());
         $this->assertCount(0, $this->object->getDeleteUrlFor($item));
         $this->assertCount(2, $this->object->getIndexUrl());

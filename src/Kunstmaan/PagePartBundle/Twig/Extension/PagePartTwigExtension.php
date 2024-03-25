@@ -23,10 +23,7 @@ final class PagePartTwigExtension extends AbstractExtension
         $this->em = $em;
     }
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('render_pageparts', [$this, 'renderPageParts'], ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]),
@@ -40,10 +37,8 @@ final class PagePartTwigExtension extends AbstractExtension
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context
      * @param array                 $parameters  Some extra parameters
-     *
-     * @return string
      */
-    public function renderPageParts(Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = [])
+    public function renderPageParts(Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = []): string
     {
         $template = $env->load('@KunstmaanPagePart/PagePartTwigExtension/widget.html.twig');
         /* @var $entityRepository PagePartRefRepository */
@@ -63,7 +58,7 @@ final class PagePartTwigExtension extends AbstractExtension
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(HasPagePartsInterface $page, $context = 'main')
+    public function getPageParts(HasPagePartsInterface $page, $context = 'main'): array
     {
         /** @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository(PagePartRef::class);
@@ -73,10 +68,8 @@ final class PagePartTwigExtension extends AbstractExtension
 
     /**
      * @param string $context
-     *
-     * @return bool
      */
-    public function hasPageParts(HasPagePartsInterface $page, $context = 'main')
+    public function hasPageParts(HasPagePartsInterface $page, $context = 'main'): bool
     {
         return $this->em->getRepository(PagePartRef::class)->hasPageParts($page, $context);
     }
