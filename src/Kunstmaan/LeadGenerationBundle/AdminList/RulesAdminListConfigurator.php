@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -20,7 +20,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     /**
      * @param int $id The if of the popup
      */
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper, $id)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper, $id)
     {
         parent::__construct($em, $aclHelper);
 

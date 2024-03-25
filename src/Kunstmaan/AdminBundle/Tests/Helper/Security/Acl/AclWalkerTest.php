@@ -6,7 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
@@ -40,7 +40,7 @@ class AclWalkerTest extends TestCase
         $conn = $this->createMock(Connection::class);
         $conn->expects($this->any())->method('getDatabasePlatform')->willReturn($platform);
 
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $query = $this->createMock(AbstractQuery::class);
         $mapping = $this->createMock(ResultSetMapping::class);
         $result = $this->createMock(ParserResult::class);

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\CookieBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -25,7 +25,7 @@ class CookieAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurat
      */
     private $domainConfiguration;
 
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null, ?DomainConfigurationInterface $domainConfiguration = null)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper = null, ?DomainConfigurationInterface $domainConfiguration = null)
     {
         parent::__construct($em, $aclHelper);
 

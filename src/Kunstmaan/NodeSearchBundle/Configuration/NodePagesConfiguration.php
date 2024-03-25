@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Configuration;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Elastica\Index;
 use Elastica\Mapping;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
@@ -47,7 +47,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /** @var array */
     protected $analyzerLanguages;
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     protected $em;
 
     /** @var array */

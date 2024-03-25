@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -175,7 +175,7 @@ class NodeTranslationTest extends TestCase
         $entity = new NodeVersion();
         $entity->setType(NodeVersion::PUBLIC_VERSION);
 
-        $em = $this->getMockBuilder(EntityManager::class)
+        $em = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 

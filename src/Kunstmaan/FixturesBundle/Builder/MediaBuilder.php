@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\MediaBundle\Entity\Folder;
@@ -24,7 +23,7 @@ class MediaBuilder implements BuilderInterface
 
     private $folder;
 
-    public function __construct(EntityManager $em, FileHandler $fileHandler, MimeTypes $mimeTypes)
+    public function __construct(EntityManagerInterface $em, FileHandler $fileHandler, MimeTypes $mimeTypes)
     {
         $this->em = $em;
         $this->fileHandler = $fileHandler;

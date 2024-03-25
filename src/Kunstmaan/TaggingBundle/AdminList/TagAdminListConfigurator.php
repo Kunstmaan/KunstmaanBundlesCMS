@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TaggingBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
@@ -12,10 +12,10 @@ use Kunstmaan\TaggingBundle\Form\TagAdminType;
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
+     * @param EntityManagerInterface $em        The entity manager
+     * @param AclHelper              $aclHelper The acl helper
      */
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
         $this->setAdminType(TagAdminType::class);

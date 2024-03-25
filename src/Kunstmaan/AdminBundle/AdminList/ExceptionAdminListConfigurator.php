@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\Exception;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -13,7 +13,7 @@ use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 
 class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
     }

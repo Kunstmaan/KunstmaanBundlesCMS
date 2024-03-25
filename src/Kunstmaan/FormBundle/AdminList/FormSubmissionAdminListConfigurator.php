@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -27,11 +27,11 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     protected $deletableFormsubmissions;
 
     /**
-     * @param EntityManager   $em                       The entity manager
-     * @param NodeTranslation $nodeTranslation          The node translation
-     * @param bool            $deletableFormsubmissions Can formsubmissions be deleted or not
+     * @param EntityManagerInterface $em                       The entity manager
+     * @param NodeTranslation        $nodeTranslation          The node translation
+     * @param bool                   $deletableFormsubmissions Can formsubmissions be deleted or not
      */
-    public function __construct(EntityManager $em, $nodeTranslation, $deletableFormsubmissions = false)
+    public function __construct(EntityManagerInterface $em, $nodeTranslation, $deletableFormsubmissions = false)
     {
         parent::__construct($em);
         $this->nodeTranslation = $nodeTranslation;

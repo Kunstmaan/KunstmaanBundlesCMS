@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
@@ -36,7 +36,7 @@ class PermissionAdmin
     protected $resource;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -81,7 +81,7 @@ class PermissionAdmin
     protected $shellHelper;
 
     /**
-     * @param EntityManager                            $em                   The EntityManager
+     * @param EntityManagerInterface                   $em                   The EntityManager
      * @param TokenStorageInterface                    $tokenStorage         The token storage
      * @param AclProviderInterface                     $aclProvider          The ACL provider
      * @param ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy The object retrieval strategy
@@ -90,7 +90,7 @@ class PermissionAdmin
      * @param KernelInterface                          $kernel               The kernel
      */
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         TokenStorageInterface $tokenStorage,
         AclProviderInterface $aclProvider,
         ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy,

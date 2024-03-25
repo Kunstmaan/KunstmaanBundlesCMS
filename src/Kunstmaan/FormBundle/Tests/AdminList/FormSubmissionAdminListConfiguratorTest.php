@@ -3,7 +3,7 @@
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
 use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
@@ -31,7 +31,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $this->object = new FormSubmissionAdminListConfigurator($em, $nt);
     }
 
-    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
+    protected function getMockedEntityManager(): EntityManagerInterface
     {
         $configuration = $this->createMock(Configuration::class);
         $configuration->method('getQuoteStrategy')->willReturn(null);
@@ -41,7 +41,7 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
         $repository->method('findBy')->willReturn(null);
         $repository->method('findOneBy')->willReturn(null);
 
-        $emMock = $this->createMock(EntityManager::class);
+        $emMock = $this->createMock(EntityManagerInterface::class);
         $emMock->method('getRepository')->willReturn($repository);
         $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
         $emMock->method('getConfiguration')->willReturn($configuration);

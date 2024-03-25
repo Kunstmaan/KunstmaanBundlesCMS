@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
@@ -59,7 +58,6 @@ final class DefaultController extends AbstractController
     #[Route(path: '/adminindex', name: 'KunstmaanAdminBundle_homepage_admin')]
     public function editIndexAction(Request $request): Response
     {
-        /* @var $em EntityManager */
         $em = $this->managerRegistry->getManager();
 
         /* @var DashboardConfiguration $dashboardConfiguration */

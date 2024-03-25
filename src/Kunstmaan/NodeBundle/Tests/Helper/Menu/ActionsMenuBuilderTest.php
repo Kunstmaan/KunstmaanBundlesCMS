@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Knp\Menu\MenuFactory;
@@ -46,14 +46,14 @@ class ActionsMenuBuilderTest extends TestCase
     /**
      * @throws \Exception
      */
-    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
+    protected function getMockedEntityManager(): EntityManagerInterface
     {
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('find')->willReturn(null);
         $repository->method('findBy')->willReturn(null);
         $repository->method('findOneBy')->willReturn(null);
 
-        $emMock = $this->createMock(EntityManager::class);
+        $emMock = $this->createMock(EntityManagerInterface::class);
         $emMock->method('getRepository')->willReturn($repository);
         $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
         $emMock->method('persist')->willReturn(null);

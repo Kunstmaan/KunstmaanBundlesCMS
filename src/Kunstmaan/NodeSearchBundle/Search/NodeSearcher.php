@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Search;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
@@ -34,7 +34,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     protected $domainConfiguration;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -53,7 +53,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         $this->domainConfiguration = $domainConfiguration;
     }
 
-    public function setEntityManager(EntityManager $em)
+    public function setEntityManager(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

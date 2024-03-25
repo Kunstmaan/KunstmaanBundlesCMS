@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
@@ -15,7 +15,7 @@ class RedirectAdminListConfiguratorTest extends TestCase
     use ExpectDeprecationTrait;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

@@ -89,7 +89,7 @@ Bulk actions are actions that can be applied to multiple adminlist items at once
 To add a bulk action, add the following lines to your adminlistConfigurator `__construct` method
 
 ```PHP
-public function __construct(EntityManager $em, AclHelper $aclHelper = null)
+public function __construct(EntityManagerInterface $em, AclHelper $aclHelper = null)
     {
         ...
         $bulkPath = array('path' => 'acmewebsitebundle_route_name', 'params' => array());

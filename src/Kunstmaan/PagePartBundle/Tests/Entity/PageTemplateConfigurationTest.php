@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
@@ -22,7 +22,7 @@ class PageTemplateConfigurationTest extends TestCase
         $this->assertEquals(PageTemplate::class, $config->getPageEntityName());
         $this->assertEquals('string!', $config->getPageTemplate());
 
-        $em = $this->getMockBuilder(EntityManager::class)
+        $em = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
