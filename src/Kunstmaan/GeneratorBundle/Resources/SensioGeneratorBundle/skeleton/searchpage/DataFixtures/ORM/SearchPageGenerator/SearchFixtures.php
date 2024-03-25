@@ -52,7 +52,7 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
         $translations = array();
         foreach ($languages as $lang) {
-            if ($lang == 'nl') {
+            if ($lang === 'nl') {
                 $title = 'Zoeken';
             } else {
                 $title = 'Search';

@@ -197,7 +197,7 @@ class InputAssistant
                 $this->input->setOption('prefix', $prefix);
             }
 
-            if ($prefix == '') {
+            if ($prefix === '') {
                 break;
             }
 

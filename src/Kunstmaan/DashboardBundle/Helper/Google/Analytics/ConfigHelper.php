@@ -348,7 +348,7 @@ class ConfigHelper
         $builtin = [];
         $own = [];
         foreach ($profileSegments as $segment) {
-            if ($segment->type == 'BUILT_IN') {
+            if ($segment->type === 'BUILT_IN') {
                 $builtin[] = [
                     'name' => $segment->name,
                     'query' => $segment->segmentId,

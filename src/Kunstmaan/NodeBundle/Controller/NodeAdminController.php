@@ -727,7 +727,7 @@ final class NodeAdminController extends AbstractController
 
         /* @var HasNodeInterface $page */
         $page = null;
-        $draft = ($subaction == 'draft');
+        $draft = ($subaction === 'draft');
         $saveAsDraft = $request->request->get('saveasdraft');
         if ((!$draft && !empty($saveAsDraft)) || ($draft && \is_null($draftNodeVersion))) {
             // Create a new draft version
@@ -744,7 +744,7 @@ final class NodeAdminController extends AbstractController
             $nodeVersion = $draftNodeVersion;
             $page = $nodeVersion->getRef($this->em);
         } else {
-            if ($request->getMethod() == 'POST') {
+            if ($request->getMethod() === 'POST') {
                 $nodeVersionIsLocked = $this->isNodeVersionLocked($nodeTranslation, true);
 
                 // Check the version timeout and make a new nodeversion if the timeout is passed
@@ -816,7 +816,7 @@ final class NodeAdminController extends AbstractController
 
         $tabPane->buildForm();
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
             $tabPane->bindRequest($request);
 
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
@@ -831,7 +831,7 @@ final class NodeAdminController extends AbstractController
                     $nodeTranslation->setSlug('');
                 }
                 $nodeVersion->setUpdated(new \DateTime());
-                if ($nodeVersion->getType() == 'public') {
+                if ($nodeVersion->getType() === 'public') {
                     $nodeTranslation->setUpdated($nodeVersion->getUpdated());
                 }
                 $this->em->persist($nodeTranslation);

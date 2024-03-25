@@ -193,16 +193,16 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
             $textValue = $textComparator = null;
             foreach ($filters as $filter) {
-                if ($filter->getType() instanceof EnumerationFilterType && $filter->getColumnName() == 'locale') {
+                if ($filter->getType() instanceof EnumerationFilterType && $filter->getColumnName() === 'locale') {
                     // Override default enumeration filter handling ... catch selected locales here
                     $data = $filter->getData();
                     $comparator = $filter->getType()->getComparator();
-                    if ($comparator == 'in') {
+                    if ($comparator === 'in') {
                         $locales = $data['value'];
-                    } elseif ($comparator == 'notin') {
+                    } elseif ($comparator === 'notin') {
                         $locales = array_diff($this->locales, $data['value']);
                     }
-                } elseif ($filter->getType() instanceof StringFilterType && $filter->getColumnName() == 'text') {
+                } elseif ($filter->getType() instanceof StringFilterType && $filter->getColumnName() === 'text') {
                     // Override default text filter handling ...
                     $data = $filter->getData();
                     $textValue = $data['value'];
@@ -307,7 +307,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             // Apply sorting
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
-                $this->queryBuilder->orderBy($orderBy, $this->orderDirection == 'DESC' ? 'DESC' : 'ASC');
+                $this->queryBuilder->orderBy($orderBy, $this->orderDirection === 'DESC' ? 'DESC' : 'ASC');
             }
         }
 

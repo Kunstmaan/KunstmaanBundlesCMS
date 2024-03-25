@@ -98,7 +98,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
 
             $translations = array();
             foreach ($languages as $lang) {
-                if ($lang == 'nl') {
+                if ($lang === 'nl') {
                     $title = $fakerNL->sentence;
                 } else {
                     $title = $fakerEN->sentence;

@@ -336,55 +336,55 @@ class PagePartGenerator extends KunstmaanGenerator
                                     $attr = $field->vars['attr'];
                                     $blocks = $field->vars['block_prefixes'];
 
-                                    if ($name == 'title' || $name == 'pageTitle') {
+                                    if ($name === 'title' || $name === 'pageTitle') {
                                         continue;
                                     }
 
-                                    if ($blocks[1] == 'hidden') {
+                                    if ($blocks[1] === 'hidden') {
                                         // do nothing
-                                    } elseif ($blocks[1] == 'choice' && $blocks[1] == 'entity') {
+                                    } elseif ($blocks[1] === 'choice' && $blocks[1] === 'entity') {
                                         // do nothing
-                                    } elseif ($blocks[1] == 'datetime') {
+                                    } elseif ($blocks[1] === 'datetime') {
                                         $pageFields[]['datetime'] = [
                                             'label' => $this->labelCase($name),
                                             'date_random' => DateTime::date('d/m/Y'),
                                             'time_random' => DateTime::time('H:i'),
                                         ];
-                                    } elseif ($blocks[1] == 'number') {
+                                    } elseif ($blocks[1] === 'number') {
                                         $pageFields[]['decimal'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Base::randomFloat(2, 0, 99999),
                                         ];
-                                    } elseif ($blocks[1] == 'integer') {
+                                    } elseif ($blocks[1] === 'integer') {
                                         $pageFields[]['integer'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Base::randomNumber(3000, 99999),
                                         ];
-                                    } elseif ($blocks[1] == 'checkbox') {
+                                    } elseif ($blocks[1] === 'checkbox') {
                                         $pageFields[]['boolean'] = [
                                             'label' => $this->labelCase($name),
                                         ];
-                                    } elseif ($blocks[1] == 'media') {
+                                    } elseif ($blocks[1] === 'media') {
                                         $id = (count($images) > 0 ? $images[0]->getId() : 1);
                                         $pageFields[]['media'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => $id,
                                         ];
-                                    } elseif ($blocks[2] == 'urlchooser') {
+                                    } elseif ($blocks[2] === 'urlchooser') {
                                         $pageFields[]['link'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => 'http://www.' . strtolower(Lorem::word()) . '.com',
                                         ];
-                                    } elseif ($blocks[2] == 'textarea' && array_key_exists(
+                                    } elseif ($blocks[2] === 'textarea' && array_key_exists(
                                         'class',
                                         $attr
-                                    ) && $attr['class'] == 'js-rich-editor rich-editor'
+                                    ) && $attr['class'] === 'js-rich-editor rich-editor'
                                     ) {
                                         $pageFields[]['rich_text'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Lorem::sentence(),
                                         ];
-                                    } elseif ($blocks[2] == 'textarea' || $blocks[1] == 'text') {
+                                    } elseif ($blocks[2] === 'textarea' || $blocks[1] === 'text') {
                                         $pageFields[]['text'] = [
                                             'label' => $this->labelCase($name),
                                             'random' => Lorem::word(),

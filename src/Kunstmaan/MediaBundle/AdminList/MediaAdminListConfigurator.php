@@ -119,7 +119,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildItemActions()
     {
-        if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {
+        if ($this->request->get('_route') === 'KunstmaanMediaBundle_chooser_show_folder') {
             $this->addItemAction(new MediaSelectItemAction());
         } else {
             $this->addItemAction(new MediaEditItemAction());
@@ -164,7 +164,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
             ->setParameter('deleted', false)
             ->orderBy('b.updatedAt', 'DESC');
 
-        if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {
+        if ($this->request->get('_route') === 'KunstmaanMediaBundle_chooser_show_folder') {
             $type = $this->request->query->get('type');
             if ($type) {
                 switch ($type) {

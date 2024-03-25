@@ -28,7 +28,7 @@ class MappingListener
         $entityName = (string) $classMetadata->getName();
 
         // We dynamically set the user class that was configured in the configuration
-        if ($entityName == 'Kunstmaan\AdminBundle\Entity\AclChangeset') {
+        if ($entityName === 'Kunstmaan\AdminBundle\Entity\AclChangeset') {
             $mapping = [
                 'fieldName' => 'user',
                 'targetEntity' => $this->className,
