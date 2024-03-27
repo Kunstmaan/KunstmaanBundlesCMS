@@ -24,7 +24,7 @@ final class SitemapTwigExtension extends AbstractExtension
     /**
      * Returns true when the item should be hidden from the sitemap
      */
-    public function isHiddenFromSitemap(NodeMenuItem $item): \Kunstmaan\NodeBundle\Helper\NodeMenuItem
+    public function isHiddenFromSitemap(NodeMenuItem $item): bool
     {
         if (is_subclass_of($item->getNode()->getRefEntityName(), 'Kunstmaan\\SitemapBundle\\Helper\\HiddenFromSitemapInterface')) {
             $page = $item->getPage();
