@@ -23,7 +23,7 @@ class RedirectRepository extends EntityRepository
         ;
 
         $redirectId = method_exists($qb, 'executeQuery') ? $qb->executeQuery()->fetchOne() : $qb->execute()->fetchColumn();
-        if (null === $redirectId) {
+        if (!$redirectId) {
             return null;
         }
 
