@@ -207,13 +207,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
 
-    # This doctrine listener needs to be registered so the "kunstmaan_node.node_menu" service works correctly.
-    Gedmo\Tree\TreeListener:
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ "@annotation_reader" ] ]
-
     kunstmaan_node.node_menu:
         class: Kunstmaan\NodeBundle\Helper\NodeMenu
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@kunstmaan_admin.acl.helper', '@kunstmaan_admin.domain_configuration']

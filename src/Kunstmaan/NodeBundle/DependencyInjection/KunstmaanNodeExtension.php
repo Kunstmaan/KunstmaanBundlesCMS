@@ -58,5 +58,15 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $twigConfig['globals']['publish_later_stepping'] = $config['publish_later_stepping'];
         $twigConfig['globals']['unpublish_later_stepping'] = $config['unpublish_later_stepping'];
         $container->prependExtensionConfig('twig', $twigConfig);
+
+        $stofDoctrineExtensionsConfig = [
+            'orm' => [
+                'default' => [
+                    'tree' => true,
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('stof_doctrine_extensions', $stofDoctrineExtensionsConfig);
     }
 }
