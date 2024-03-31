@@ -6,6 +6,12 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.0.0...7.0.1
 
+## 7.0.1 / 2024-03-31
+
+* [GeneratorBundle] FE setup fixes for cms-skeleton install [#3373](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3373) ([@acrobat](https://github.com/acrobat))
+* [DashboardBundle] Fix incorrect return type in analytics config helper [#3372](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3372) ([@acrobat](https://github.com/acrobat))
+* [GeneratorBundle] Fix incorrect getEntityClass declaration of bike adminlist [#3371](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3371) ([@acrobat](https://github.com/acrobat))
+
 ## 7.0.0 / 2024-03-31
 
 * [RedirectBundle] Cleanup redirect adminlist deprecation [#3369](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3369) ([@acrobat](https://github.com/acrobat))
