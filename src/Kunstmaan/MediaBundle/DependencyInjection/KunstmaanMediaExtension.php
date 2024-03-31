@@ -82,6 +82,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             'orm' => [
                 'default' => [
                     'translatable' => true,
+                    'tree' => true,
                 ],
             ],
         ];
