@@ -6,6 +6,12 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.4.0...6.4.1
 
+## 6.4.0 / 2024-03-31
+
+* [RedirectBundle] Remove unnecessary query [#3367](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3367) ([@dannyvw](https://github.com/dannyvw))
+* [SitemapBundle] Fix return type for hidden from sitemap [#3365](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3365) ([@dannyvw](https://github.com/dannyvw))
+* [AdminListBundle] Fix response return type [#3362](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3362) ([@dannyvw](https://github.com/dannyvw))
+
 ## 6.4.0-alpha1 / 2024-03-24
 
 * [NodeBundle] Fix php8 deprecation in ExternalUrlValidator [#3361](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3361) ([@acrobat](https://github.com/acrobat))
