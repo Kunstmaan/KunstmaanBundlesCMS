@@ -20,12 +20,12 @@
     "require": {
         "php": "^8.1",
         "ruflin/elastica": "^7.0",
-        "symfony/config": "^5.4|^6.4",
-        "symfony/console": "^5.4|^6.4",
-        "symfony/dependency-injection": "^5.4|^6.4",
-        "symfony/framework-bundle": "^5.4|^6.4",
-        "symfony/http-kernel": "^5.4|^6.4",
-        "symfony/yaml": "^5.4|^6.4",
+        "symfony/config": "^6.4",
+        "symfony/console": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/framework-bundle": "^6.4",
+        "symfony/http-kernel": "^6.4",
+        "symfony/yaml": "^6.4",
         "twig/extra-bundle": "^3.6",
         "twig/string-extra": "^3.6"
     },

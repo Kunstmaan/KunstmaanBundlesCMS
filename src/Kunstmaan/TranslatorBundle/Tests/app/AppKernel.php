@@ -18,7 +18,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\User\ChainUserChecker;
-use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * App Test Kernel for functional tests.
@@ -81,10 +80,7 @@ class AppKernel extends Kernel
     {
         $loader->load($this->rootConfig);
         $loader->load(function (ContainerBuilder $containerBuilder) {
-            // Only add "enable_authenticator_manager" on supporting symfony 5 versions but not on 6.2 because the option is deprecated.
-            if (class_exists(Passport::class) && !class_exists(ChainUserChecker::class)) {
-                $containerBuilder->prependExtensionConfig('security', ['enable_authenticator_manager' => true]);
-            }
+            $containerBuilder->prependExtensionConfig('security', ['enable_authenticator_manager' => true]);
 
             // Only set these config options on 6.2+
             if (class_exists(ChainUserChecker::class)) {
