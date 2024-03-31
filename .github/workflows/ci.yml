@@ -27,6 +27,11 @@ jobs:
                         php: '8.2'
                         symfony: '^5.4'
 
+                    # Test latest php with LTS versions.
+                    -   deps: 'lts'
+                        php: '8.2'
+                        symfony: '^6.4'
+
         steps:
             -   uses: actions/checkout@v4
 
