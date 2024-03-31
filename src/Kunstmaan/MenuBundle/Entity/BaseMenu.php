@@ -4,15 +4,24 @@ namespace Kunstmaan\MenuBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass()
  */
 #[ORM\MappedSuperclass]
-class BaseMenu extends AbstractEntity
+class BaseMenu
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="bigint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
+    protected $id;
+
     /**
      * @var string
      *
@@ -44,6 +53,26 @@ class BaseMenu extends AbstractEntity
     public function __construct()
     {
         $this->items = new ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id The unique identifier
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -116,5 +145,15 @@ class BaseMenu extends AbstractEntity
     public function removeItem(MenuItem $item)
     {
         $this->items->removeElement($item);
+    }
+
+    /**
+     * Return string representation of entity
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->getId();
     }
 }

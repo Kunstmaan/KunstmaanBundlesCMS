@@ -4,7 +4,6 @@ namespace Kunstmaan\MenuBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -13,7 +12,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\MappedSuperclass()
  */
 #[ORM\MappedSuperclass]
-abstract class BaseMenuItem extends AbstractEntity
+abstract class BaseMenuItem
 {
     const TYPE_PAGE_LINK = 'page_link';
     const TYPE_URL_LINK = 'url_link';
@@ -25,6 +24,16 @@ abstract class BaseMenuItem extends AbstractEntity
         self::TYPE_PAGE_LINK,
         self::TYPE_URL_LINK,
     ];
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="bigint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'bigint')]
+    #[ORM\GeneratedValue('AUTO')]
+    protected $id;
 
     /**
      * @var Menu
@@ -114,6 +123,26 @@ abstract class BaseMenuItem extends AbstractEntity
     #[Gedmo\TreeRight]
     #[ORM\Column(name: 'rgt', type: 'integer')]
     protected $rgt;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id The unique identifier
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * @return Menu
@@ -358,5 +387,15 @@ abstract class BaseMenuItem extends AbstractEntity
                   ->addViolation();
             }
         }
+    }
+
+    /**
+     * Return string representation of entity
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->getId();
     }
 }
