@@ -17,7 +17,7 @@ class AnalyticsConfigRepository extends EntityRepository
     {
         // Backwards compatibility: select the first config, still used in the dashboard, specified config ids are set in the dashboard collection bundle
         $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c');
+        $query = $em->createQuery('SELECT c FROM Kunstmaan\DashboardBundle\Entity\AnalyticsConfig c');
         $result = $query->getResult();
         // if no configs exist, create a new one
         if (!$result && $createNew) {

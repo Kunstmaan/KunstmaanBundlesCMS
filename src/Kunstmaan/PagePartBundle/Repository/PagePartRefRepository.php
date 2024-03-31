@@ -145,7 +145,7 @@ class PagePartRefRepository extends EntityRepository
         $em = $this->getEntityManager();
         $pageClassname = ClassLookup::getClass($page);
 
-        $sql = 'SELECT COUNT(pp.id) FROM KunstmaanPagePartBundle:PagePartRef pp
+        $sql = 'SELECT COUNT(pp.id) FROM Kunstmaan\PagePartBundle\Entity\PagePartRef pp
                  WHERE pp.pageEntityname = :pageEntityname
                    AND pp.pageId = :pageId
                    AND pp.pagePartEntityname = :pagePartEntityname
@@ -171,7 +171,7 @@ class PagePartRefRepository extends EntityRepository
         $em = $this->getEntityManager();
         $pageClassname = ClassLookup::getClass($page);
 
-        $sql = 'SELECT COUNT(pp.id) FROM KunstmaanPagePartBundle:PagePartRef pp
+        $sql = 'SELECT COUNT(pp.id) FROM Kunstmaan\PagePartBundle\Entity\PagePartRef pp
                  WHERE pp.pageEntityname = :pageEntityname
                    AND pp.pageId = :pageId
                    AND pp.context = :context';
