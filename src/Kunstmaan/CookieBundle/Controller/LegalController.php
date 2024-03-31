@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\CookieBundle\Helper\LegalCookieHelper;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class LegalController extends AbstractController
@@ -20,21 +20,17 @@ final class LegalController extends AbstractController
     /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * LegalController constructor.
-     */
     public function __construct(LegalCookieHelper $cookieHelper, EntityManagerInterface $em)
     {
         $this->cookieHelper = $cookieHelper;
         $this->em = $em;
     }
 
-    /**
-     * @Entity("node", expr="repository.getNodeByInternalName(internal_name)")
-     */
     #[Route(path: '/modal/{internal_name}', name: 'kunstmaancookiebundle_legal_modal')]
-    public function switchTabAction(Request $request, Node $node): \Symfony\Component\HttpFoundation\Response
-    {
+    public function switchTabAction(
+        Request $request,
+        #[MapEntity(expr: 'repository.getNodeByInternalName(internal_name)')] Node $node
+    ): Response {
         $page = $node->getNodeTranslation($request->getLocale())->getRef($this->em);
 
         return $this->render(
@@ -46,11 +42,8 @@ final class LegalController extends AbstractController
         );
     }
 
-    /**
-     * @ParamConverter("cookieType", options={"mapping": {"internalName": "internalName"}})
-     */
     #[Route(path: '/detail/{internalName}', name: 'kunstmaancookiebundle_legal_detail', methods: ['GET'], condition: 'request.isXmlHttpRequest()')]
-    public function cookieDetailAction(Request $request, CookieType $cookieType): \Symfony\Component\HttpFoundation\Response
+    public function cookieDetailAction(#[MapEntity(mapping: ['internalName' => 'internalName'])] CookieType $cookieType): Response
     {
         return $this->render(
             '@KunstmaanCookie/CookieBar/_detail.html.twig',

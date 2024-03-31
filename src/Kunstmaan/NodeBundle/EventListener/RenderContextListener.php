@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 
@@ -73,13 +73,7 @@ class RenderContextListener
             // the SensioFrameworkExtraBundle kernel.view will handle everything else
             $event->setControllerResult((array) $parameters);
 
-            $template = new Template([]);
-            $template->setTemplate($entity->getDefaultView());
-
-            $controllerBits = explode('::', $request->attributes->get('_controller'));
-            $action = array_pop($controllerBits);
-
-            $template->setOwner([$controllerBits, $action]);
+            $template = new Template($entity->getDefaultView());
 
             $request->attributes->set('_template', $template);
         }

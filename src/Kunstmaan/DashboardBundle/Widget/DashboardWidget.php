@@ -26,18 +26,20 @@ class DashboardWidget
 
     public function resolvedController()
     {
-        $annotationReader = new AnnotationReader();
         $reflectionMethod = new \ReflectionMethod($this->controller, 'widgetAction');
 
-        // NEXT_MAJOR Remove annotation support
-        $methodAnnotations = $annotationReader->getMethodAnnotations($reflectionMethod);
-        foreach ($methodAnnotations as $annotation) {
-            if ($annotation instanceof Route) {
-                if (null === $annotation->getName()) {
-                    throw new \Exception('The name is not configured in the annotation');
-                }
+        if (class_exists(AnnotationReader::class)) {
+            // NEXT_MAJOR Remove annotation support
+            $annotationReader = new AnnotationReader();
+            $methodAnnotations = $annotationReader->getMethodAnnotations($reflectionMethod);
+            foreach ($methodAnnotations as $annotation) {
+                if ($annotation instanceof Route) {
+                    if (null === $annotation->getName()) {
+                        throw new \Exception('The name is not configured in the annotation');
+                    }
 
-                return $annotation->getName();
+                    return $annotation->getName();
+                }
             }
         }
 

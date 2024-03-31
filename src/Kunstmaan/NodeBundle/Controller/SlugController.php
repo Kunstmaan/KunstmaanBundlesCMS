@@ -13,7 +13,7 @@ use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -122,10 +122,7 @@ final class SlugController extends AbstractController
             throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', \get_class($entity)));
         }
 
-        $template = new Template([]);
-        $template->setTemplate($view);
-        $template->setOwner([SlugController::class, 'slugAction']);
-
+        $template = new Template($view);
         $request->attributes->set('_template', $template);
 
         return $renderContext->getArrayCopy();

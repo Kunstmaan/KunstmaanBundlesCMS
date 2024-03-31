@@ -97,7 +97,7 @@ use Your\Bundle\AdminList\DocumentAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 
 class DocumentAdminController extends AbstractAdminListController
 {
@@ -121,10 +121,8 @@ class DocumentAdminController extends AbstractAdminListController
 The first method will simply list your Entities.
 
 ```PHP
-    /**
-     * @Route("/", name="yourbundle_admin_document")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-     */
+    #[Route('/', name: 'yourbundle_admin_document')]
+    #[Template('KunstmaanAdminListBundle:Default:list.html.twig')]
     public function indexAction(Request $request)
     {
         return parent::doIndexAction($this->getAdminListConfigurator(), $request);
@@ -134,14 +132,9 @@ The first method will simply list your Entities.
 The add action method will build the form to add a new entity.
 
 ```PHP
-    /**
-     * The add action
-     *
-     * @Route("/add", name="yourbundle_admin_document_add", methods={"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
-     * @return array
-     */
-    public function addAction(Request $request)
+    #[Route('/add', name: 'yourbundle_admin_document_add', methods: ['GET', 'POST'])]
+    #[Template('KunstmaanAdminListBundle:Default:add_or_edit.html.twig')]
+    public function addAction(Request $request): Response
     {
         return parent::doAddAction($this->getAdminListConfigurator($request), $request);
     }
@@ -150,15 +143,9 @@ The add action method will build the form to add a new entity.
 The edit action method will build and process the edit form.
 
 ```PHP
-    /**
-     * @throws NotFoundHttpException
-     * @internal param $eid
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="yourbundle_admin_document_edit", methods={"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
-     */
-    public function editAction(Request $request, $id)
+    #[Route('/{id}/edit', name: 'yourbundle_admin_document_edit', requirements: ['id', '\d+'], methods: ['GET', 'POST'])]
+    #[Template('KunstmaanAdminListBundle:Default:add_or_edit.html.twig')]
+    public function editAction(Request $request, $id): Response
     {
         return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
@@ -167,12 +154,8 @@ The edit action method will build and process the edit form.
 The delete action will handle the deletion of your Entity.
 
 ```PHP
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws NotFoundHttpException
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="yourbundle_admin_document_delete", methods={"GET", "POST"})
-     */
-    public function deleteAction(Request $request, $id)
+    #[Route('/{id}/delete', name: 'yourbundle_admin_document_delete', requirements: ['id', '\d+'], methods: ['GET', 'POST'])]
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
@@ -181,12 +164,9 @@ The delete action will handle the deletion of your Entity.
 To export your Entities, there's the export action method.
 
 ```PHP
-    /**
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="yourbundle_document_export", methods={"GET", "POST"})
-     *
-     * @return array
-     */
-    public function exportAction(Request $request, $_format) {
+    #[Route('/export.{_format}', name: 'yourbundle_document_export', requirements: ['_format', 'csv'], methods: ['GET', 'POST'])]
+    public function exportAction(Request $request, $_format): Response 
+    {
         $em = $this->getEntityManager();
         return parent::doExportAction(new DocumentAdminListConfigurator($em), $_format, $request);
     }
