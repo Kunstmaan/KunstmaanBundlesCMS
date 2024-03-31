@@ -21,19 +21,19 @@
         "php": "^8.1",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fakerphp/faker": "^1.15",
-        "kunstmaan/admin-bundle": "^6.3|^7.0",
-        "kunstmaan/media-bundle": "^6.3|^7.0",
-        "kunstmaan/menu-bundle": "^6.3|^7.0",
-        "kunstmaan/node-bundle": "^6.3|^7.0",
-        "kunstmaan/pagepart-bundle": "^6.3|^7.0",
-        "kunstmaan/utilities-bundle": "^6.3|^7.0",
-        "symfony/string": "^5.4|^6.2",
-        "symfony/mime": "^5.4|^6.2"
+        "kunstmaan/admin-bundle": "^7.0",
+        "kunstmaan/media-bundle": "^7.0",
+        "kunstmaan/menu-bundle": "^7.0",
+        "kunstmaan/node-bundle": "^7.0",
+        "kunstmaan/pagepart-bundle": "^7.0",
+        "kunstmaan/utilities-bundle": "^7.0",
+        "symfony/string": "^5.4|^6.4",
+        "symfony/mime": "^5.4|^6.4"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^4.2.1",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^6.2",
+        "symfony/phpunit-bridge": "^7.0",
         "phpunit/phpunit": "^9.5.5"
     },
     "conflict": {

@@ -20,13 +20,13 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^8.1",
-    "kunstmaan/admin-bundle": "^6.3|^7.0",
-    "kunstmaan/adminlist-bundle": "^6.3|^7.0"
+    "kunstmaan/admin-bundle": "^7.0",
+    "kunstmaan/adminlist-bundle": "^7.0"
   },
   "require-dev": {
     "matthiasnoback/symfony-config-test": "^4.2.1",
     "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-    "symfony/phpunit-bridge": "^6.2",
+    "symfony/phpunit-bridge": "^7.0",
     "phpunit/phpunit": "^9.5.5"
   },
   "autoload": {
