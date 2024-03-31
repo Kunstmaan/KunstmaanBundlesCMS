@@ -50,8 +50,7 @@
         "symfony/twig-bundle": "^6.4",
         "symfony/validator": "^6.4",
         "symfony/yaml": "^6.4",
-        "twig/twig": "^3.6",
-        "sensio/framework-extra-bundle": "^6.0"
+        "twig/twig": "^3.6"
     },
     "suggest": {
         "kunstmaan/translator-bundle": "^7.0",
