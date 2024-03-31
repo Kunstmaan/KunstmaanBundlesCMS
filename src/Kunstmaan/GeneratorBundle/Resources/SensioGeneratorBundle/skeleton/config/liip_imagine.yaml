@@ -10,6 +10,10 @@ liip_imagine:
                     - "%kernel.project_dir%/public"
                     # If you are working with a capistrano like setup you need the following line
                     # - "%kernel.project_dir%/../../shared/public"
+
+    twig:
+        mode: lazy
+
     driver: imagick
     data_loader: default
     filter_sets:
