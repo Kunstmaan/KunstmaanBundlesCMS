@@ -4,6 +4,9 @@ namespace {{ namespace }}\Repository;
 
 use Doctrine\ORM\Query;
 use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
 {
@@ -39,9 +42,9 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
     public function getArticlesQuery($lang, $offset, $limit{% if uses_category %}, array $category = null{% endif %}{% if uses_tag %}, array $tag = null{% endif %})
     {
         $qb = $this->createQueryBuilder('a')
-            ->innerJoin('KunstmaanNodeBundle:NodeVersion', 'v', 'WITH', 'a.id = v.refId')
-            ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
-            ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
+            ->innerJoin(NodeVersion::class, 'v', 'WITH', 'a.id = v.refId')
+            ->innerJoin(NodeTranslation::class, 't', 'WITH', 't.publicNodeVersion = v.id')
+            ->innerJoin(Node::class, 'n', 'WITH', 't.node = n.id')
             ->where('t.online = :online')
             ->setParameter('online', true)
             ->andWhere('n.deleted = :deleted')
