@@ -35,7 +35,7 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addFilter('price', new ORM\NumberFilterType('price'), 'Price');
     }
 
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return Bike::class;
     }
