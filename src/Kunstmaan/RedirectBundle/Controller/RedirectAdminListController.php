@@ -2,10 +2,8 @@
 
 namespace Kunstmaan\RedirectBundle\Controller;
 
-use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
-use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,28 +11,18 @@ use Symfony\Component\Routing\Annotation\Route;
 final class RedirectAdminListController extends AbstractAdminListController
 {
     /**
-     * @var DomainConfigurationInterface|AdminListConfiguratorInterface
+     * @var AdminListConfiguratorInterface
      */
     private $configurator;
 
-    /**
-     * @param DomainConfigurationInterface|AdminListConfiguratorInterface $configurator
-     */
-    public function __construct(/**AdminListConfiguratorInterface*/ $configurator)
+    public function __construct(AdminListConfiguratorInterface $configurator)
     {
         $this->configurator = $configurator;
-        if (!$configurator instanceof AdminListConfiguratorInterface) {
-            trigger_deprecation('kunstmaan/redirect-bundle', '6.4', 'Passing a "DomainConfigurationInterface" instance for the first parameter in "%s" is deprecated and a AdminListConfiguratorInterface instance will be required in 7.0.', __METHOD__);
-        }
     }
 
     public function getAdminListConfigurator(): AdminListConfiguratorInterface
     {
-        if ($this->configurator instanceof AdminListConfiguratorInterface) {
-            return $this->configurator;
-        }
-
-        return new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->configurator);
+        return $this->configurator;
     }
 
     #[Route(path: '/', name: 'kunstmaanredirectbundle_admin_redirect')]
