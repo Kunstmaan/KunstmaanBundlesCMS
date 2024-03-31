@@ -6,6 +6,11 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.0.0...7.0.1
 
+## 7.0.0 / 2024-03-31
+
+* [RedirectBundle] Cleanup redirect adminlist deprecation [#3369](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3369) ([@acrobat](https://github.com/acrobat))
+* [AdminBundle] Restore undefined encore twig function handler [#3368](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3368) ([@acrobat](https://github.com/acrobat))
+
 ## 7.0.0-alpha1 / 2024-03-24
 
 * [AllBundles] Add return types to bundle config files [#3359](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3359) ([@acrobat](https://github.com/acrobat))
