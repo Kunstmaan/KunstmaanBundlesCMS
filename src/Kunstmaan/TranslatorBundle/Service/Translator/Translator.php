@@ -86,10 +86,7 @@ class Translator extends SymfonyTranslator
         }
     }
 
-    /**
-     * @return void
-     */
-    protected function loadCatalogue($locale)
+    protected function loadCatalogue($locale): void
     {
         if ($this->options['debug'] === true) {
             $this->options['cache_dir'] = null; // disable caching for debug

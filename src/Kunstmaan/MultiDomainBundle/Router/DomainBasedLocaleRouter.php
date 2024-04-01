@@ -169,10 +169,8 @@ class DomainBasedLocaleRouter extends SlugRouter
      * Getter for routeCollection
      *
      * Override slug router
-     *
-     * @return \Symfony\Component\Routing\RouteCollection
      */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         if (($this->otherSite && $this->isMultiLanguage($this->otherSite['host'])) || (!$this->otherSite && $this->isMultiLanguage())) {
             if (!$this->routeCollectionMultiLanguage) {

@@ -88,10 +88,8 @@ class RedirectRouter implements RouterInterface
 
     /**
      * Gets the RouteCollection instance associated with this Router.
-     *
-     * @return \Symfony\Component\Routing\RouteCollection A RouteCollection instance
      */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         // The route collection will always be populated with matched redirects based on the current request. If this
         // method is called before the url matching has been executed, the collection will be empty.
@@ -103,10 +101,7 @@ class RedirectRouter implements RouterInterface
         return $this->context;
     }
 
-    /**
-     * @return void
-     */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
