@@ -7,10 +7,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class MediaTokenTransformer implements DataTransformerInterface
 {
-    /**
-     * @return string
-     */
-    public function transform($content)
+    public function transform($content): string
     {
         if ($content === null || !$content || !trim($content)) {
             return '';
@@ -38,10 +35,7 @@ class MediaTokenTransformer implements DataTransformerInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    public function reverseTransform($content)
+    public function reverseTransform($content): string
     {
         if ($content === null || !trim($content)) {
             return '';
