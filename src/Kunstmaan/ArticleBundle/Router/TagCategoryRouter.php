@@ -8,10 +8,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TagCategoryRouter extends SlugRouter
 {
-    /**
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         if (!\is_null($this->routeCollection)) {
             return $this->routeCollection;
