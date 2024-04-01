@@ -6,6 +6,10 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.0.0...7.0.1
 
+## 7.0.2 / 2024-04-01
+
+* [AllBundles] Convert extra phpdoc return types [#3382](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3382) ([@acrobat](https://github.com/acrobat))
+
 ## 7.0.1 / 2024-03-31
 
 * [GeneratorBundle] FE setup fixes for cms-skeleton install [#3373](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3373) ([@acrobat](https://github.com/acrobat))

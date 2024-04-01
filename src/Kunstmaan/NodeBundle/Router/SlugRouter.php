@@ -106,10 +106,7 @@ class SlugRouter implements RouterInterface
         return $this->context;
     }
 
-    /**
-     * @return void
-     */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
@@ -131,12 +128,7 @@ class SlugRouter implements RouterInterface
         return $this->urlGenerator->generate($name, $parameters, $referenceType);
     }
 
-    /**
-     * Getter for routeCollection
-     *
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         if (\is_null($this->routeCollection)) {
             $this->routeCollection = new RouteCollection();
