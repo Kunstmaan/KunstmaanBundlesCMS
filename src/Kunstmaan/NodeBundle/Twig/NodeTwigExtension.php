@@ -112,11 +112,9 @@ final class NodeTwigExtension extends AbstractExtension
      * @param int    $nodeId
      * @param string $lang
      */
-    public function getNodeTranslationByNodeId($nodeId, $lang): NodeTranslation
+    public function getNodeTranslationByNodeId($nodeId, $lang): ?NodeTranslation
     {
-        $repo = $this->em->getRepository(NodeTranslation::class);
-
-        return $repo->getNodeTranslationByNodeId($nodeId, $lang);
+        return $this->em->getRepository(NodeTranslation::class)->getNodeTranslationByNodeId($nodeId, $lang);
     }
 
     public function getPageByNodeTranslation(NodeTranslation $nodeTranslation): ?object
@@ -129,7 +127,7 @@ final class NodeTwigExtension extends AbstractExtension
         return $this->em->getRepository(Node::class)->getNodeFor($page);
     }
 
-    public function getNodeTranslationFor(PageInterface $page): NodeTranslation
+    public function getNodeTranslationFor(PageInterface $page): ?NodeTranslation
     {
         return $this->em->getRepository(NodeTranslation::class)->getNodeTranslationFor($page);
     }

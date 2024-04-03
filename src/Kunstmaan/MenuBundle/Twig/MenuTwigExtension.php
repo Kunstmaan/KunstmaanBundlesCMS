@@ -54,7 +54,7 @@ final class MenuTwigExtension extends AbstractExtension
      * @param string $lang
      * @param array  $options
      */
-    public function getMenu(Environment $environment, $name, $lang, $options = []): string
+    public function getMenu(Environment $environment, $name, $lang, $options = []): string|array
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 
