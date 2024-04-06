@@ -4,6 +4,7 @@ namespace Kunstmaan\MenuBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\MappedSuperclass()
  */
 #[ORM\MappedSuperclass]
-abstract class BaseMenuItem
+abstract class BaseMenuItem implements EntityInterface
 {
     const TYPE_PAGE_LINK = 'page_link';
     const TYPE_URL_LINK = 'url_link';
