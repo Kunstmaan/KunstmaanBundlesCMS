@@ -2,7 +2,7 @@
 
 {{ bundle.getName()|lower }}_{{ entity_class|lower }}page_admin_list:
     resource: '@{{ bundle.getName() }}/Controller/{{ entity_class }}PageAdminListController.php'
-    type:     annotation
+    type: attribute
     prefix:   /{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}page/
     requirements:
          _locale: "%requiredlocales%"

@@ -158,7 +158,7 @@ EOT
 
         $code = sprintf("%s:\n", strtolower($bundle->getName()) . '_' . strtolower($entityClass) . '_admin_list');
         $code .= sprintf("    resource: '@%s/Controller/%sAdminListController.php'\n", $bundle->getName(), $entityClass);
-        $code .= "    type:     annotation\n";
+        $code .= "    type: attribute\n";
         $code .= sprintf("    prefix:   %s/%s/%s/\n", $prefix, $adminKey, strtolower($entityClass));
         if ($multilang) {
             $code .= "    requirements:\n";

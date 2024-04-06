@@ -275,7 +275,7 @@ Add the following lines to your routing.yml.
 ```YAML
 YourBundle_documents:
     resource: "@YourBundle/Controller/DocumentAdminController.php"
-    type: annotation
+    type: attribute
     prefix: /{_locale}/%kunstmaan_admin.admin_prefix%/documents
     requirements:
         _locale: "%requiredlocales%"

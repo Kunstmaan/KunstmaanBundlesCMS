@@ -1,5 +1,5 @@
 KunstmaanMediaBundle_pagepartadmin:
     resource: '@KunstmaanPagePartBundle/Controller/PagePartAdminController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%
 

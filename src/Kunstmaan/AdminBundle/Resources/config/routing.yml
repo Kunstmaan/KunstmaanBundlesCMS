@@ -1,34 +1,34 @@
 KunstmaanAdminBundle_default:
     resource: '@KunstmaanAdminBundle/Controller/DefaultController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%
 
 KunstmaanAdminBundle_modules:
     resource: '@KunstmaanAdminBundle/Controller/ModulesController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/modules
 
 KunstmaanAdminBundle_settings:
     resource: '@KunstmaanAdminBundle/Controller/SettingsController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings
 
 KunstmaanAdminBundle_settings_exception:
     resource: '@KunstmaanAdminBundle/Controller/ExceptionController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/exception
 
 KunstmaanAdminBundle_security:
     resource: '@KunstmaanAdminBundle/Controller/Authentication/SecurityController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%
 
 KunstmaanAdminBundle_resetting:
     resource: '@KunstmaanAdminBundle/Controller/Authentication/PasswordResetController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%
 
 KunstmaanAdminBundle_change_password:
     resource: '@KunstmaanAdminBundle/Controller/Authentication/ForcedChangePasswordController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%
