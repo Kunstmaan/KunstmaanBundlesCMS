@@ -6,6 +6,11 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.1.0...7.1.1
 
+## 7.1.0 / 2024-04-06
+
+* [MenuBundle] Fix menu entities [#3386](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3386) ([@dannyvw](https://github.com/dannyvw))
+* [AllBundles] Fix incorrect return types [#3385](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3385) ([@delboy1978uk](https://github.com/delboy1978uk))
+
 ## 7.1.0-alpha2 / 2024-03-31
 
 * [AllBundles] Add Symfony 6 ci build [#3380](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3380) ([@acrobat](https://github.com/acrobat))
