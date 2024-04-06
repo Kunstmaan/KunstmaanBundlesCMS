@@ -6,6 +6,10 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.4.0...6.4.1
 
+## 6.4.1 / 2024-04-06
+
+* [AllBundles] Fix incorrect return types [#3385](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3385) ([@delboy1978uk](https://github.com/delboy1978uk))
+
 ## 6.4.0 / 2024-03-31
 
 * [RedirectBundle] Remove unnecessary query [#3367](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3367) ([@dannyvw](https://github.com/dannyvw))
