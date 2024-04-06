@@ -1,9 +1,9 @@
 kunstmaanmenubundle_menu_admin_list:
     resource: '@KunstmaanMenuBundle/Controller/MenuAdminListController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/menu/
 
 kunstmaanmenubundle_menuitem_admin_list:
     resource: '@KunstmaanMenuBundle/Controller/MenuItemAdminListController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/menu/

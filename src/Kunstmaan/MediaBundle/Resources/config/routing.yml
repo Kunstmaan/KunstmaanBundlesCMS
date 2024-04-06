@@ -1,19 +1,19 @@
 KunstmaanMediaBundle_media:
     resource: '@KunstmaanMediaBundle/Controller/MediaController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/media
 
 KunstmaanMediaBundle_media_chooser:
     resource: '@KunstmaanMediaBundle/Controller/ChooserController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/media
 
 KunstmaanMediaBundle_media_folder:
     resource: '@KunstmaanMediaBundle/Controller/FolderController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/media/folder
 
 KunstmaanMediaBundle_icon_font:
     resource: '@KunstmaanMediaBundle/Controller/IconFontController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/media/icon-font

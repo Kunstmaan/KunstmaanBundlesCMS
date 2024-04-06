@@ -1,12 +1,12 @@
 {{ bundle.name|lower }}_default:
     resource: '@{{ bundle.name }}/Controller/DefaultController.php'
-    type:     annotation
+    type: attribute
     prefix:   /
 
 {% if demosite %}
 {{ bundle.name|lower }}_bike_admin_list:
     resource: '@{{ bundle.name }}/Controller/BikeAdminListController.php'
-    type:     annotation
+    type: attribute
     prefix:   /{_locale}/%kunstmaan_admin.admin_prefix%/bike/
     requirements:
          _locale: "%requiredlocales%"

@@ -1,5 +1,5 @@
 ################ VARNISH ################
 kunstmaancachebundle_varnish:
     resource: "@KunstmaanCacheBundle/Controller/VarnishController.php"
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%

@@ -107,7 +107,7 @@ Add the following lines to your routing.yml.
 ```YAML
 YourBundle_documents:
     resource: '@YourBundle/Controller/ProjectPageAdminListController.php'
-    type:     annotation
+    type: attribute
     prefix:   /{_locale}/admin/projectpage/
     requirements:
          _locale: "%requiredlocales%"

@@ -1,11 +1,11 @@
 KunstmaanTranslatorBundle_translations:
     resource: '@KunstmaanTranslatorBundle/Controller/TranslatorController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/translations
 
 KunstmaanTranslatorBundle_translations_commands:
     resource: '@KunstmaanTranslatorBundle/Controller/TranslatorCommandController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/translations
 
 #KunstmaanTranslatorBundle_settings_translations_add:

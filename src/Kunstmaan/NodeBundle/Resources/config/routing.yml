@@ -1,11 +1,11 @@
 KunstmaanNodeBundle_widgets:
     resource: '@KunstmaanNodeBundle/Controller/WidgetsController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/nodewidgets
 
 KunstmaanNodeBundle_nodes:
     resource: '@KunstmaanNodeBundle/Controller/NodeAdminController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/nodes
 
 KunstmaanNodeBundle_urlchooser_replace:

@@ -1,4 +1,4 @@
 KunstmaanTaggingBundle_admin_tag:
     resource: '@KunstmaanTaggingBundle/Controller/TagAdminListController.php'
-    type:     annotation
+    type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/tags/
