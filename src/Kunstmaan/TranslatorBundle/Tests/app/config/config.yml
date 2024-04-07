@@ -32,9 +32,13 @@ doctrine:
                 path:     "%kernel.cache_dir%/test.db"
                 use_savepoints: true
     orm:
+        enable_lazy_ghost_objects: true
+        controller_resolver:
+            auto_mapping: false
         default_entity_manager:   default
         entity_managers:
             default:
                 connection:       default
+                report_fields_where_declared: true
                 mappings:
                     KunstmaanTranslatorBundle: ~
