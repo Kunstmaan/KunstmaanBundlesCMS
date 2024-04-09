@@ -64,6 +64,9 @@ services:
             - { name: console.command }
 
     Kunstmaan\GeneratorBundle\DataFixtures\ORM\UserFixtures:
+        arguments:
+            - '@Kunstmaan\AdminBundle\Service\UserManager'
+            - '%kunstmaan_admin.default_admin_locale%'
         tags:
             - { name: doctrine.fixture.orm }
 

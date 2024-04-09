@@ -2,28 +2,39 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\SearchPageGenerator;
 
+use {{ namespace }}\Entity\Pages\SearchPage;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use {{ namespace }}\Entity\Pages\SearchPage;
-
-/**
- * SearchFixtures
- */
-class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface, ORMFixtureInterface
+class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container = null;
+    private EntityManagerInterface $em;
+    private PageCreatorService $pageCreator;
+    private SlugifierInterface $slugifier;
+    private bool $isMultiLanguage;
+    private string $requiredLocales;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        PageCreatorService $pageCreator,
+        SlugifierInterface $slugifier,
+        #[Autowire('%kunstmaan_admin.multi_language%')] bool $isMultiLanguage,
+        #[Autowire('%kunstmaan_admin.required_locales%')] string $requiredLocales,
+    ) {
+        $this->em = $em;
+        $this->pageCreator = $pageCreator;
+        $this->slugifier = $slugifier;
+        $this->isMultiLanguage = $isMultiLanguage;
+        $this->requiredLocales = $requiredLocales;
+    }
 
     /**
      * Load data fixtures with the passed EntityManager.
@@ -32,19 +43,15 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function load(ObjectManager $manager)
     {
-        if ($this->container->getParameter('kunstmaan_admin.multi_language')) {
-            $languages = explode('|', $this->container->getParameter('kunstmaan_admin.required_locales'));
+        if ($this->isMultiLanguage) {
+            $languages = explode('|', $this->requiredLocales);
         }
         if (!is_array($languages) || count($languages) < 1) {
             $languages = array('en');
         }
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
-        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-
         // Create article overview page
-        $nodeRepo = $em->getRepository(Node::class);
+        $nodeRepo = $this->em->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $searchPage = new SearchPage();
@@ -61,8 +68,7 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
             $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
                 $translation->setTitle($title);
                 $translation->setWeight(50);
-                $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-                $translation->setSlug($slugifier->slugify($title));
+                $translation->setSlug($this->slugifier->slugify($title));
             });
         }
 
@@ -74,7 +80,7 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
             'creator' => 'Admin'
         );
 
-        $pageCreator->createPage($searchPage, $translations, $options);
+        $this->pageCreator->createPage($searchPage, $translations, $options);
     }
 
     /**
@@ -86,17 +92,4 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
     {
         return 70;
     }
-
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
 }
