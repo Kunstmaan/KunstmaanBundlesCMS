@@ -334,7 +334,7 @@ class NodeTranslationListener
 
     private function isInRequestScope(): bool
     {
-        return $this->requestStack && $this->requestStack->getMasterRequest();
+        return $this->requestStack && $this->requestStack->getMainRequest();
     }
 
     private function getFlashBag()
