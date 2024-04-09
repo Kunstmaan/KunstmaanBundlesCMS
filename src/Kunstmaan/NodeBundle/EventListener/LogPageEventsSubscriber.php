@@ -7,7 +7,7 @@ use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
-use Symfony\Bridge\Monolog\Logger;
+use Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -28,10 +28,6 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
      */
     private $user;
 
-    /**
-     * @param Logger                $logger       The logger
-     * @param TokenStorageInterface $tokenStorage The security token storage
-     */
     public function __construct(Logger $logger, TokenStorageInterface $tokenStorage)
     {
         $this->logger = $logger;

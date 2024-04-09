@@ -37,7 +37,7 @@
         "symfony/form": "^6.4",
         "symfony/http-foundation": "^6.4",
         "symfony/http-kernel": "^6.4",
-        "symfony/monolog-bridge": "^6.4",
+        "symfony/monolog-bundle": "^3.10",
         "symfony/mailer": "^6.4",
         "symfony/options-resolver": "^6.4",
         "symfony/property-access": "^6.4",

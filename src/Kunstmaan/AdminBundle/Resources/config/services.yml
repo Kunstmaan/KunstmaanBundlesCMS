@@ -138,8 +138,9 @@ services:
         arguments: ['%kernel.logs_dir%/kunstmaan_%kernel.environment%.log', 10]
 
     kunstmaan_admin.logger:
-        class: Symfony\Bridge\Monolog\Logger
-        arguments: [kunstmaan]
+        parent: monolog.logger_prototype
+        arguments:
+            index_0: 'kunstmaan'
         calls:
             - [pushHandler, ['@kunstmaan_admin.logger.handler']]
 
