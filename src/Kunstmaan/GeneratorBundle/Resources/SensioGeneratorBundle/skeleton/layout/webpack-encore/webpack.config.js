@@ -80,10 +80,6 @@ Encore
         files: ['./assets/**/*.scss'],
     }))
 
-    .configureBabel((config) => {
-        config.plugins.push('@babel/plugin-proposal-class-properties');
-    })
-
     // enables @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
         // eslint-disable-next-line no-param-reassign
