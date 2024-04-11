@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
@@ -29,9 +32,9 @@ class DoctrineMediaListener
         $this->mediaManager = $mediaManager;
     }
 
-    public function prePersist(LifecycleEventArgs $eventArgs)
+    public function prePersist(PrePersistEventArgs $eventArgs)
     {
-        $this->prepareMedia($eventArgs->getEntity());
+        $this->prepareMedia($eventArgs->getObject());
     }
 
     /**
@@ -50,15 +53,15 @@ class DoctrineMediaListener
 
     public function preUpdate(PreUpdateEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
+        $entity = $eventArgs->getObject();
         if ($this->prepareMedia($entity)) {
             // Hack ? Don't know, that's the behaviour Doctrine 2 seems to want
             // See : http://www.doctrine-project.org/jira/browse/DDC-1020
-            $em = $eventArgs->getEntityManager();
+            $em = $eventArgs->getObjectManager();
             $uow = $em->getUnitOfWork();
             $uow->recomputeSingleEntityChangeSet(
                 $em->getClassMetadata(ClassLookup::getClass($entity)),
-                $eventArgs->getEntity()
+                $eventArgs->getObject()
             );
 
             // local media is soft-deleted or soft-delete is reverted
@@ -77,9 +80,9 @@ class DoctrineMediaListener
         }
     }
 
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function postPersist(PostPersistEventArgs $eventArgs)
     {
-        $this->saveMedia($eventArgs->getEntity(), true);
+        $this->saveMedia($eventArgs->getObject(), true);
     }
 
     /**
@@ -109,12 +112,12 @@ class DoctrineMediaListener
         }
     }
 
-    public function postUpdate(LifecycleEventArgs $eventArgs)
+    public function postUpdate(PostUpdateEventArgs $eventArgs)
     {
-        $this->saveMedia($eventArgs->getEntity());
+        $this->saveMedia($eventArgs->getObject());
     }
 
-    public function preRemove(LifecycleEventArgs $eventArgs)
+    public function preRemove(PreRemoveEventArgs $eventArgs)
     {
     }
 }

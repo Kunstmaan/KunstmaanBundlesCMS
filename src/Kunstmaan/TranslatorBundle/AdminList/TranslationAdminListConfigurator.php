@@ -212,8 +212,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                 $this->locales
             ));
 
-            $identifierQuoteCharacter = $this->connection->getDatabasePlatform()->getIdentifierQuoteCharacter();
-            $quotedTextColumnName = $identifierQuoteCharacter . 'text' . $identifierQuoteCharacter;
+            $quotedTextColumnName = $this->connection->quoteIdentifier('text');
 
             // Add join for every locale
             foreach ($this->locales as $locale) {

@@ -88,7 +88,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
             $adapter = new DbalQueryAdapter($this->getQueryBuilder(), function (QueryBuilder $queryBuilder): void {
                 $distinctString = $this->getUseDistinctCount() ? 'DISTINCT ' : '';
                 $queryBuilder->select('COUNT(' . $distinctString . $this->getCountField() . ') AS total_results')
-                    ->resetQueryPart('orderBy')
+                    ->resetOrderBy()
                     ->setMaxResults(1);
             });
 
