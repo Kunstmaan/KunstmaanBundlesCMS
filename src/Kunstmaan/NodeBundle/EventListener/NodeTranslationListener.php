@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\MappingException;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
@@ -62,7 +63,7 @@ class NodeTranslationListener
         }
     }
 
-    public function preUpdate(PrePersistEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getObject();
 
