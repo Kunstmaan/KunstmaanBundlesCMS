@@ -2,40 +2,34 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\LegalGenerator;
 
+use {{ namespace }}\Entity\Pages\LegalFolderPage;
+use {{ namespace }}\Entity\Pages\LegalPage;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
+use Gedmo\Translatable\Entity\Translation;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Service\UserManager;
 use Kunstmaan\CookieBundle\Entity\Cookie;
 use Kunstmaan\CookieBundle\Entity\CookieType;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
-use \Symfony\Component\HttpKernel\Kernel;
-use Doctrine\ORM\EntityManagerInterface;
-use Gedmo\Translatable\Entity\Repository\TranslationRepository;
-use Gedmo\Translatable\Entity\Translation;
-use {{ namespace }}\Entity\Pages\LegalFolderPage;
-use {{ namespace }}\Entity\Pages\LegalPage;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class DefaultFixtures
- */
-class DefaultFixtures extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface, FixtureGroupInterface
+class DefaultFixtures extends Fixture implements OrderedFixtureInterface, FixtureGroupInterface
 {
     // Username that is used for creating pages
     const ADMIN_USERNAME = 'pagecreator';
-
-    /** @var ContainerInterface */
-    private $container;
 
     /** @var ObjectManager */
     private $manager;
@@ -67,6 +61,36 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
     /** @var TranslationRepository */
     private $translationRepo;
 
+    private string $projectDir;
+    private UserManager $userManager;
+    private string $secret;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        PageCreatorService $pageCreator,
+        PagePartCreatorService $pagePartCreator,
+        MediaCreatorService $mediaCreator,
+        TranslatorInterface $translator,
+        SlugifierInterface $slugifier,
+        UserManager $userManager,
+        #[Autowire('%requiredlocales%')] string $requiredLocales,
+        #[Autowire('%kunstmaan_admin.default_locale%')] string $defaultLocale,
+        #[Autowire('%kernel.project_dir%')] string $projectDir,
+        #[Autowire('%kernel.secret%')] string $secret,
+    ) {
+        $this->em = $em;
+        $this->pageCreator = $pageCreator;
+        $this->pagePartCreator = $pagePartCreator;
+        $this->mediaCreator = $mediaCreator;
+        $this->translator = $translator;
+        $this->slugifier = $slugifier;
+        $this->requiredLocales = explode('|', $requiredLocales);
+        $this->defaultLocale = $defaultLocale;
+        $this->projectDir = $projectDir;
+        $this->userManager = $userManager;
+        $this->secret = $secret;
+    }
+
     /**
      * Load data fixtures with the passed EntityManager.
      *
@@ -76,14 +100,6 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
     {
         $this->manager = $manager;
 
-        $this->pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $this->mediaCreator = $this->container->get('kunstmaan_media.media_creator_service');
-        $this->pagePartCreator = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
-        $this->translator = $this->container->get('translator.default');
-        $this->slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-        $this->requiredLocales = explode('|', $this->container->getParameter('kunstmaan_admin.required_locales'));
-        $this->defaultLocale = $this->container->getParameter('kunstmaan_admin.default_locale');
-        $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->translationRepo = $this->em->getRepository(Translation::class);
 
         $this->checkPageCreator();
@@ -271,7 +287,7 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
             $pageparts = [];
 
             $folder = $this->manager->getRepository(Folder::class)->findOneBy(['rel' => 'image']);
-            $imgDir = $this->container->getParameter('kernel.project_dir').'/assets/ui/img/legal/';
+            $imgDir = $this->projectDir.'/assets/ui/img/legal/';
 
             $icon = $this->mediaCreator->createFile($imgDir.'cookie.svg', $folder->getId());
             $pageparts['legal_header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
@@ -469,14 +485,6 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
     }
 
     /**
-     * @param ContainerInterface|null $container
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
      * Check if we already have a page creator user, if not create one.
      */
     private function checkPageCreator()
@@ -488,9 +496,9 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Contai
             $user->setEmail(sprintf('%s@admin.com', self::ADMIN_USERNAME));
             $user->setUsername(self::ADMIN_USERNAME);
             $user->setEnabled(1);
-            $user->setPlainPassword($this->container->getParameter('kernel.secret'));
+            $user->setPlainPassword($this->secret);
 
-            $this->container->get('kunstmaan_admin.user_manager')->updateUser($user);
+            $this->userManager->updateUser($user);
 
             $user->setPasswordChanged(true);
 

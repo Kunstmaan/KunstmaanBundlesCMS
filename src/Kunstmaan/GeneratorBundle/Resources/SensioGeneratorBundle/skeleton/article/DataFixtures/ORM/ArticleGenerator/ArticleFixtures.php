@@ -5,28 +5,44 @@ namespace {{ namespace }}\DataFixtures\ORM\ArticleGenerator;
 use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Provider\DateTime;
 use Faker\Provider\Lorem;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use {{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage;
 use {{ namespace }}\Entity\Pages\{{ entity_class }}Page;
 use {{ namespace }}\Entity\{{ entity_class }}Author;
 
-/**
- * {{ entity_class }}ArticleFixtures
- */
-class {{ entity_class }}ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface, ORMFixtureInterface
+class {{ entity_class }}ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container = null;
+    private EntityManagerInterface $em;
+    private PageCreatorService $pageCreator;
+    private PagePartCreatorService $pagePartCreator;
+    private SlugifierInterface $slugifier;
+    private bool $isMultiLanguage;
+    private string $requiredLocales;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        PageCreatorService $pageCreator,
+        PagePartCreatorService $pagePartCreator,
+        SlugifierInterface $slugifier,
+        #[Autowire('%kunstmaan_admin.multi_language%')] bool $isMultiLanguage,
+        #[Autowire('%kunstmaan_admin.required_locales%')] string $requiredLocales,
+    ) {
+        $this->em = $em;
+        $this->pageCreator = $pageCreator;
+        $this->pagePartCreator = $pagePartCreator;
+        $this->slugifier = $slugifier;
+        $this->isMultiLanguage = $isMultiLanguage;
+        $this->requiredLocales = $requiredLocales;
+    }
 
     /**
      * Load data fixtures with the passed EntityManager.
@@ -34,25 +50,20 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
-{
-    if ($this->container->getParameter('kunstmaan_admin.multi_language')) {
-        $languages = explode('|', $this->container->getParameter('kunstmaan_admin.required_locales'));
-    }
-    if (!is_array($languages) || count($languages) < 1) {
-        $languages = array('en');
-    }
+    {
+        if ($this->isMultiLanguage) {
+            $languages = explode('|', $this->requiredLocales);
+        }
+        if (!is_array($languages) || count($languages) < 1) {
+            $languages = array('en');
+        }
 
-    $em = $this->container->get('doctrine.orm.entity_manager');
+        // Create article overview page
+        $nodeRepo = $this->em->getRepository(Node::class);
+        $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
-    $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-    $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
-
-    // Create article overview page
-    $nodeRepo = $em->getRepository(Node::class);
-    $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
-
-    $overviewPage = new {{ entity_class }}OverviewPage();
-	$overviewPage->setTitle('{{ entity_class }}');
+        $overviewPage = new {{ entity_class }}OverviewPage();
+        $overviewPage->setTitle('{{ entity_class }}');
 
         $translations = array();
         foreach ($languages as $lang) {
@@ -60,8 +71,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title) {
                 $translation->setTitle($title);
                 $translation->setWeight(30);
-                $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-                $translation->setSlug($slugifier->slugify($title));
+                $translation->setSlug($this->slugifier->slugify($title));
             });
         }
 
@@ -72,27 +82,26 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             'creator' => 'admin'
         );
 
-        $pageCreator->createPage($overviewPage, $translations, $options);
+        $this->pageCreator->createPage($overviewPage, $translations, $options);
 
-	$fakerNL = Factory::create('nl_BE');
-	$fakerEN = Factory::create('en_US');
+        $fakerNL = Factory::create('nl_BE');
+        $fakerEN = Factory::create('en_US');
 
         // Create articles
-	for ($i=1; $i<=6; $i++) {
-
-        {% if uses_author %}
-        // Create author
-        $author = new {{ entity_class }}Author();
-	    $author->setName($fakerNL->name);
-	    $manager->persist($author);
-	    $manager->flush();
-        {% endif %}
+        for ($i=1; $i<=6; $i++) {
+            {% if uses_author %}
+            // Create author
+            $author = new {{ entity_class }}Author();
+            $author->setName($fakerNL->name);
+            $manager->persist($author);
+            $manager->flush();
+            {% endif %}
 
             $articlePage = new {{ entity_class }}Page();
-	    $articlePage->setTitle(Lorem::sentence(6));
-	    {% if uses_author %}
+            $articlePage->setTitle(Lorem::sentence(6));
+            {% if uses_author %}
             $articlePage->setAuthor($author);
-        {% endif %}
+            {% endif %}
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
@@ -107,8 +116,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
                 $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {
                     $translation->setTitle($title);
                     $translation->setWeight(100 + $i);
-                    $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
-                    $translation->setSlug($slugifier->slugify($title));
+                    $translation->setSlug($this->slugifier->slugify($title));
                 });
             }
 
@@ -119,29 +127,24 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
                 'creator' => 'admin'
             );
 
-            $articlePage = $pageCreator->createPage($articlePage, $translations, $options);
+            $articlePage = $this->pageCreator->createPage($articlePage, $translations, $options);
 
             foreach ($languages as $lang) {
                 $pageparts = array(
                     'main' => array(
-                        $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\TextPagePart',
+                        $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\TextPagePart',
                             array('setContent' => '<p>'.Lorem::paragraph(15).'</p>' . '<p>'.Lorem::paragraph(25).'</p>' .'<p>'.Lorem::paragraph(10).'</p>')
                         )
                     )
                 );
 
-                $ppCreatorService->addPagePartsToPage($articlePage, $pageparts, $lang);
+                $this->pagePartCreator->addPagePartsToPage($articlePage, $pageparts, $lang);
             }
         }
     }
 
     public function getOrder(): int
-{
-    return 60;
-}
-
-    public function setContainer(ContainerInterface $container = null): void
-{
-    $this->container = $container;
-}
+    {
+        return 60;
+    }
 }

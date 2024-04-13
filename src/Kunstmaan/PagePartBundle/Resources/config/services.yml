@@ -1,4 +1,7 @@
 services:
+    # Autowire aliases
+    Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService: '@kunstmaan_pageparts.pagepart_creator_service'
+
     kunstmaan_pagepart.pageparts:
         class: 'Kunstmaan\PagePartBundle\PagePartAdmin\Builder'
 

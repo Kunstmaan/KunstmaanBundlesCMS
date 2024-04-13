@@ -15,9 +15,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 {% if demosite %}
 use {{ namespace }}\Entity\Bike;
 {% endif %}
@@ -30,20 +28,12 @@ use {{ namespace }}\Entity\Pages\HomePage;
 use {{ namespace }}\Entity\Pages\SearchPage;
 {% endif %}
 
-/**
- * DefaultSiteFixtures
- */
-class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface, ORMFixtureInterface
+class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ORMFixtureInterface
 {
     /**
      * Username that is used for creating pages
      */
     const ADMIN_USERNAME = 'admin';
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container = null;
 
     /**
      * @var ObjectManager
@@ -73,6 +63,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /** @var array */
     private $pageUrls;
 
+    private string $projectDir;
+
+    public function __construct(
+        PageCreatorService $pageCreator,
+        PagePartCreatorService $pagePartCreator,
+        MediaCreatorService $mediaCreator,
+        #[Autowire('%requiredlocales%')] string $requiredLocales,
+        #[Autowire('%kernel.project_dir%')] string $projectDir,
+    ) {
+        $this->pageCreator = $pageCreator;
+        $this->pagePartCreator = $pagePartCreator;
+        $this->mediaCreator = $mediaCreator;
+        $this->requiredLocales = explode('|', $requiredLocales);
+        $this->projectDir = $projectDir;
+    }
+
     /**
      * Load data fixtures with the passed EntityManager.
      *
@@ -81,11 +87,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
-
-        $this->pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $this->pagePartCreator = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
-        $this->mediaCreator = $this->container->get('kunstmaan_media.media_creator_service');
-	    $this->requiredLocales = explode('|', $this->container->getParameter('requiredlocales'));
 
         $this->createTranslations();
         $this->createMedia();
@@ -737,8 +738,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createVideoFile($name, $code, $folder)
     {
         // Hack for media bundle issue
-        $dir = $this->container->get('kernel')->getProjectDir();
-        chdir($dir . '/public');
+        chdir($this->projectDir . '/public');
         $media = new Media();
         $media->setFolder($folder);
         $media->setName($name);
@@ -746,7 +746,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $helper->setCode($code);
         $helper->setType('youtube');
         $this->manager->getRepository(Media::class)->save($media);
-        chdir($dir);
+        chdir($this->projectDir);
 
         return $media;
     }
@@ -759,11 +759,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     public function getOrder()
     {
         return 51;
-    }
-
-    public function setContainer(ContainerInterface $container = null): void
-    {
-        $this->container = $container;
     }
 
     {% if demosite %}
