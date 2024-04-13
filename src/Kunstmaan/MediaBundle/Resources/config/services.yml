@@ -1,6 +1,7 @@
 services:
     # Autowire aliases
     Kunstmaan\MediaBundle\Helper\MediaManager: '@kunstmaan_media.media_manager'
+    Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService: '@kunstmaan_media.media_creator_service'
 
     kunstmaan_media.media_manager:
         class: Kunstmaan\MediaBundle\Helper\MediaManager
