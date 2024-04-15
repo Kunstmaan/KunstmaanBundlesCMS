@@ -80,4 +80,18 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         return true;
     }
+
+    /**
+     * @param string|null $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaanleadgenerationbundle_admin_popup_abstractpopup';
+        }
+
+        return sprintf('kunstmaanleadgenerationbundle_admin_popup_abstractpopup_%s', $suffix);
+    }
 }
