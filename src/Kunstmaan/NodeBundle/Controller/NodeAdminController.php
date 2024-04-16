@@ -639,7 +639,7 @@ final class NodeAdminController extends AbstractController
     }
 
     #[Route(path: '/reorder', name: 'KunstmaanNodeBundle_nodes_reorder', methods: ['POST'])]
-    public function reorderAction(Request $request): string
+    public function reorderAction(Request $request): Response
     {
         $this->init($request);
         $nodes = [];
