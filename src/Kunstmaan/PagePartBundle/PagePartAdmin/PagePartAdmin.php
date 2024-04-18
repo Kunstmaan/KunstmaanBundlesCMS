@@ -265,7 +265,7 @@ class PagePartAdmin
             }
 
             if (isset($pagePart)) {
-                $this->container->get('event_dispatcher')->dispatch(new PagePartEvent($pagePart), Events::POST_PERSIST);
+                $this->container->get('event_dispatcher')->dispatch(new PagePartEvent($pagePart, $this->page), Events::POST_PERSIST);
             }
         }
     }
