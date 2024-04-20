@@ -6,6 +6,14 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.1.0...7.1.1
 
+## 7.1.1 / 2024-04-20
+
+* [NodeBundle] Fix node reorder [#3408](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3408) ([@dannyvw](https://github.com/dannyvw))
+* [TaggingBundle] fixed base route name [#3404](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3404) ([@virtualize](https://github.com/virtualize))
+* [LeadGenerationBundle] fixed route and type handling [#3403](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3403) ([@virtualize](https://github.com/virtualize))
+* [AdminBundle] Added missing security translations de (german) [#3405](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3405) ([@virtualize](https://github.com/virtualize))
+* [NodeBundle] Fix incorrect requeststack method for symfony 6.4 [#3396](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3396) ([@acrobat](https://github.com/acrobat))
+
 ## 7.1.0 / 2024-04-06
 
 * [MenuBundle] Fix menu entities [#3386](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3386) ([@dannyvw](https://github.com/dannyvw))
