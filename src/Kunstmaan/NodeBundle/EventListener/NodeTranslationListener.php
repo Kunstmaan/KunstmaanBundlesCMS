@@ -58,7 +58,7 @@ class NodeTranslationListener
         $entity = $args->getObject();
 
         if ($entity instanceof NodeTranslation) {
-            $this->setSlugWhenEmpty($entity, $args->getEntityManager());
+            $this->setSlugWhenEmpty($entity, $args->getObjectManager());
             $this->ensureSlugIsSlugified($entity);
         }
     }
@@ -68,7 +68,7 @@ class NodeTranslationListener
         $entity = $args->getObject();
 
         if ($entity instanceof NodeTranslation) {
-            $this->setSlugWhenEmpty($entity, $args->getEntityManager());
+            $this->setSlugWhenEmpty($entity, $args->getObjectManager());
             $this->ensureSlugIsSlugified($entity);
         }
     }

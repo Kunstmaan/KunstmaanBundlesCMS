@@ -3,12 +3,11 @@
 namespace Kunstmaan\NodeSearchBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * EventListener which will be triggered when a Node has been updated in order to update its related documents
@@ -16,9 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterface
 {
-    /** @var ContainerInterface */
-    private $container;
-
     /** @var EntityManagerInterface */
     private $em;
 
@@ -34,13 +30,13 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
         $this->em = $em;
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
     {
         if ($args->getObject() instanceof NodeTranslation) {
             // unfortunately we have to keep a state to see what has changed
             $this->entityChangeSet = [
                 'nodeTranslationId' => $args->getObject()->getId(),
-                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject()),
+                'changeSet' => $args->getObjectManager()->getUnitOfWork()->getEntityChangeSet($args->getObject()),
             ];
         }
     }
