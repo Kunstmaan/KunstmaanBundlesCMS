@@ -5,9 +5,9 @@ namespace Kunstmaan\TranslatorBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KunstmaanTranslatorExtension extends Extension
 {
