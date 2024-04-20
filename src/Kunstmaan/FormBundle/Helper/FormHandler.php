@@ -82,7 +82,9 @@ class FormHandler implements FormHandlerInterface
             }
         }
         $context['frontendform'] = $form->createView();
+        /* @deprecated frontendformobject view variable is deprecated in 7.2 and will be removed in 8.0. There is no replacement for this variable. */
         $context['frontendformobject'] = $form;
+        $context['isSubmitted'] = $form->isSubmitted();
 
         return null;
     }
