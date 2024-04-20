@@ -21,6 +21,10 @@ final class ValidExternalUrlValidator extends ConstraintValidator
 
         $urlValidator = new UrlValidator();
         $urlValidator->initialize($this->context);
-        $urlValidator->validate($value, new Url());
+        $options = [];
+        if (property_exists(Url::class, 'requireTld')) {
+            $options = ['requireTld' => true];
+        }
+        $urlValidator->validate($value, new Url($options));
     }
 }
