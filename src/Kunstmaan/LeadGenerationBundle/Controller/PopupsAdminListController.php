@@ -64,7 +64,9 @@ final class PopupsAdminListController extends AbstractAdminListController
     #[Route(path: '/add', name: 'kunstmaanleadgenerationbundle_admin_popup_abstractpopup_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request): Response
     {
-        $type = $request->query->get('type');
+        $type = $request->isMethod('post')
+            ? $request->request->get('type')
+            : $request->query->get('type');
 
         return parent::doAddAction($this->getAdminListConfigurator(), $type, $request);
     }
