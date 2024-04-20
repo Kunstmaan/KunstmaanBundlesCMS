@@ -1,134 +1,189 @@
----
+# Pages
 pages:
-  title: Seiten
-  parts: SeitenTeile
-  draft: Entwurf
-  pagenottranslated: Diese Seite ist nicht übersetzt
-  copyfrom: Aus anderer Sprache kopieren
-  createemptypage: Als leere Seite erstellen
-  movingconfirmation: Sie verschieben "%title%" nach "%target%". Sind Sie sicher?
+    title: Seiten
+    parts: SeitenTeile
+    draft: Entwurf
+    pagenottranslated: Diese Seite ist nicht übersetzt
+    copyfrom: Aus anderer Sprache kopieren
+    createemptypage: Als leere Seite erstellen
+    movingconfirmation: Sie verschieben "%title%" nach "%target%". Sind Sie sicher?
+
+security:
+    general:
+        logged_in_as: 'Angemeldet als %username%'
+        logout: 'Abmelden'
+    login:
+        title: 'Auf %websitetitle% anmelden'
+        username: Benutzername
+        password: Passwort
+        submit: Absenden
+        remember_me: Angemeldet bleiben
+        logged_in_as: 'Angemeldet als %username%'
+        logout: 'Abmelden'
+    resetting:
+        mail:
+            subject: 'Passwort zurücksetzen'
+            content:
+                description: Falls Sie Ihr Passwort vergessen haben oder ein neues setzen möchten,<br />klicken Sie bitte den untenstehenden Link
+                footer: Wenn Sie keine Passwortrücksetzung angefordert haben, können Sie diese E-Mail ignorieren. Nur eine Person mit Zugang zu Ihren E-Mails kann Ihr Passwort zurücksetzen.
+                link: Passwort zurücksetzen
+                powered_by: Unterstützt durch
+                title: Passwort zurücksetzen
+        send_email_success: 'Es wurde eine E-Mail an Ihre Adresse gesendet'
+        user_not_found: 'Benutzer nicht gefunden'
+        password_set_success: 'Ihr Passwort wurde geändert.'
+        email: 'Benutzername oder E-Mail-Adresse'
+        reset: 'Passwort zurücksetzen'
+    change_password:
+        form:
+            current_password: 'Aktuelles Passwort'
+            new_password: 'Neues Passwort'
+            new_password_confirmation: 'Neues Passwort wiederholen'
+            submit: 'Passwort ändern'
+        success:
+            continue: Anmelden
+            message: 'Das Passwort für "%username%" wurde geändert.'
+
+# Modules
 modules:
-  title: Module
+    title: Module
+
+# Settings
 settings:
-  title: Einstellungen
-  maintanance: Wartung
-  scheduled: Geplante Aufgaben
-  version:
-    bundle: Bundle Versionen
-    composer_lock_not_found: Keine composer.lock im Projekt Root gefunden.
-    error_parsing_composer: Fehler beim Parsen der composer.lock Datei, kein gültiges JSON.
-    error: Beim Abrufen der Versionen trat ein Fehler auf. Bitte später erneut versuchen.
-    moreinfo: Zum Aktualisieren composer update ausführen. Bei Konflikten müssen eventuell weitere Bundles aktualisiert.
-    uptodate: ist aktuell
-    toupdate: kann aktualisiert werden auf
-    unknown: unbekannte Version
-  exceptions:
-    title: Ausnahmen
-    code: Code
-    url: URL
-    urlReferer: URL Referrer
-    createdAt: Erstellt am
-    isResolved: Behoben
-    events: Events
-    resolved: Behoben
-    unresolved: Nicht behoben
-    resolve_all: Alle beheben
+    title: Einstellungen
+    maintanance: Wartung
+    scheduled: Geplante Aufgaben
+    version:
+        bundle: Bundle Versionen
+        composer_lock_not_found: Keine composer.lock im Projekt Root gefunden.
+        error_parsing_composer: Fehler beim Parsen der composer.lock Datei, kein gültiges JSON.
+        error: Beim Abrufen der Versionen trat ein Fehler auf. Bitte später erneut versuchen.
+        moreinfo: Zum Aktualisieren composer update ausführen. Bei Konflikten müssen eventuell weitere Bundles aktualisiert.
+        uptodate: ist aktuell
+        toupdate: kann aktualisiert werden auf
+        unknown: unbekannte Version
+    exceptions:
+        title: Ausnahmen
+        code: Code
+        url: URL
+        urlReferer: URL Referrer
+        createdAt: Erstellt am
+        isResolved: Behoben
+        events: Events
+        resolved: Behoben
+        unresolved: Nicht behoben
+        resolve_all: Alle beheben
+
+# Tools
 tools:
-  title: Helfer
-  clear_frontend_cache: Frontend Cache löschen
-  clear_backend_cache: Frontend Cache löschen
-  clear_all_caches: Alle Caches löschen
-  shutdown: Herunterfahren
+    title: Helfer
+    clear_frontend_cache: Frontend Cache löschen
+    clear_backend_cache: Frontend Cache löschen
+    clear_all_caches: Alle Caches löschen
+    shutdown: Herunterfahren
+
+# Search
 search:
-  title: Suche
+    title: Suche
+
+# Forms
 form:
-  cancel: Abrechen
-  delete: Löschen
-  deletesure: Sind Sie sicher, Sie wollen diese löschen?
-  edit: Bearbeiten
-  add: Neu
-  'add.%subject%': 'Neu %subject%'
-  save: Speichern
-  publish: Publizieren
-  unpublish: Depublizieren
-  saveasdraft: Entwurf Speichern
-  name: Name
-  type: Typ
-  error: Fehler
-  warning: Warnung
-  headsup: Achtung
-  forgot:
-    password: Passwort vergessen.
-  permissions: Rechte
-  properties: Eigentschaften
-  createdat: Erstellt
-  updatedat: Aktualisiert
-  actions: Aktionen
-  addfilter: Filter hinzufügen
-  choosetypefilter: Filter aktiv
-  versions: Versionen
-  button:
-    dropdown:
-      more: Mehr
-    filter:
-      clear: Zurücksetzen
-      filter: Filter
-omnext:
-  home: Startseite
-  title: Willkommen!
-  welcome: Willkommen.
-  information: <strong>Information.</strong> Keine neuen Benachrichtigungen vorhanden.
-permissions:
-  you_made_changes: Sie haben Änderungen an den Berechtigungen dieser Seite vorgenommen.
-  apply_recursively: Änderungen rekursiv für alle Unterseiten übernehmen
-  review_changes: Änderungen überprüfen
-  changes: Berechtigungs-Änderungen
-  permissions_added: 'Die folgende Berechtigung wird <strong>hinzugefügt</strong>:'
-  permissions_removed: 'Die folgende Berechtigung wird <strong>entfernt</strong>:'
-  role_name: Rollenname
-errors:
-  oauth:
-    invalid: Anmelden über Google OAuth nicht möglich. Möglicherweise ist die Domain nicht erlaubt.
-kuma_admin:
-  flash_type:
-    success: Erfolg
-    warning: Warnung
+    cancel: Abrechen
+    delete: Löschen
+    deletesure: Sind Sie sicher, Sie wollen diese löschen?
+    edit: Bearbeiten
+    add: Neu
+    'add.%subject%': 'Neu %subject%'
+    save: Speichern
+    publish: Publizieren
+    unpublish: Depublizieren
+    saveasdraft: Entwurf Speichern
+    name: Name
+    type: Typ
     error: Fehler
-    info: Information
-    danger: Achtung
-  dashboard:
-    configuration:
-      title:
-        label: Titel
-      content:
-        label: Inhalt (pures HTML)
-  edit:
-    flash:
-      success: Die Willkommens-Seite wurde bearbeitet!
-  password_check:
-    flash:
-      error: Das Passwort wurde noch nicht geändert
-  ga_ajax_controller:
-    flash:
-      success: Erfolgreich gespeichert!
-  media:
-    flash:
-      'deleted_success.%medianame%': Eintrag "%medianame%" wurde gelöscht!
-      drop_success: Datei wurde erfolgreich hochgeladen!
-      drop_unrecognized: Es konnte nicht erkannt werden, was Sie abgelegt haben!
-  login:
-    forgot_password: Passwort vergessen
-    invalid_credentials: Falsches Passwort oder falsche E-Mail Adresse
+    warning: Warnung
+    headsup: Achtung
+    forgot:
+        password: Passwort vergessen.
+    permissions: Rechte
+    properties: Eigentschaften
+    createdat: Erstellt
+    updatedat: Aktualisiert
+    actions: Aktionen
+    addfilter: Filter hinzufügen
+    choosetypefilter: Filter aktiv
+    versions: Versionen
+    button:
+        dropdown:
+            more: Mehr
+        filter:
+            clear: Zurücksetzen
+            filter: Filter
+
+omnext:
+    home: Startseite
+    title: Willkommen!
+    welcome: Willkommen.
+    information: <strong>Information.</strong> Keine neuen Benachrichtigungen vorhanden.
+
+permissions:
+    you_made_changes: Sie haben Änderungen an den Berechtigungen dieser Seite vorgenommen.
+    apply_recursively: Änderungen rekursiv für alle Unterseiten übernehmen
+    review_changes: Änderungen überprüfen
+    changes: Berechtigungs-Änderungen
+    permissions_added: 'Die folgende Berechtigung wird <strong>hinzugefügt</strong>:'
+    permissions_removed: 'Die folgende Berechtigung wird <strong>entfernt</strong>:'
+    role_name: Rollenname
+
+errors:
+    oauth:
+        invalid: Anmelden über Google OAuth nicht möglich. Möglicherweise ist die Domain nicht erlaubt.
+
+kuma_admin:
+    flash_type:
+        success: Erfolg
+        warning: Warnung
+        error: Fehler
+        info: Information
+        danger: Achtung
+    dashboard:
+        configuration:
+            title:
+                label: Titel
+            content:
+                label: Inhalt (pures HTML)
+    edit:
+        flash:
+            success: Die Willkommens-Seite wurde bearbeitet!
+    password_check:
+        flash:
+            error: Das Passwort wurde noch nicht geändert
+    ga_ajax_controller:
+        flash:
+            success: Erfolgreich gespeichert!
+    media:
+        flash:
+            'deleted_success.%medianame%': Eintrag "%medianame%" wurde gelöscht!
+            drop_success: Datei wurde erfolgreich hochgeladen!
+            drop_unrecognized: Es konnte nicht erkannt werden, was Sie abgelegt haben!
+    login:
+        forgot_password: Passwort vergessen
+        invalid_credentials: Falsches Passwort oder falsche E-Mail Adresse
+
 kuma_js:
-  auto_collapse:
-    more_button_label: Mehr
+    auto_collapse:
+        more_button_label: Mehr
+
 toolbar:
-  bundle_version:
-    unknown: Unbekannt
-    uptodate: Aktuell
-    toupdate: Nicht aktuell
-    version: Bundle-Version
-    status: Bundle-Status
-  exception:
-    title: Ausnahmen
-    message: "Ausnahme <strong>%X</strong> ausgelöst von <strong>%Y%</strong> Event(s)"
+    bundle_version:
+        unknown: Unbekannt
+        uptodate: Aktuell
+        toupdate: Nicht aktuell
+        version: Bundle-Version
+        status: Bundle-Status
+        error: Error while fetching version information.
+    exception:
+        info:
+            exceptions: Ausnahmen
+            events: Ereignisse
+        title: Ausnahmen
