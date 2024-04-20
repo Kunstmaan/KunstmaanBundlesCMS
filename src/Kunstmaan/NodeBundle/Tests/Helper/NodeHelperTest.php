@@ -33,7 +33,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -711,7 +711,7 @@ class NodeHelperTest extends TestCase
     public function testPageShouldHaveTab()
     {
         $request = new Request();
-        $request->request = new ParameterBag();
+        $request->request = new InputBag();
 
         $formFactory = $this->getMockBuilder(FormFactory::class)
             ->disableOriginalConstructor()

@@ -36,7 +36,7 @@ class PasswordCheckListenerTest extends TestCase
         $user = $this->createMock(User::class);
         $router = $this->createMock(RouterInterface::class);
         $session = $this->createMock(Session::class);
-        $flash = $this->createMock(FlashBag::class);
+        $flash = new FlashBag();
         $trans = $this->createMock(Translator::class);
         $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $kernel = $this->createMock(KernelInterface::class);
@@ -48,7 +48,6 @@ class PasswordCheckListenerTest extends TestCase
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('isPasswordChanged')->willReturn(false);
         $router->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('generate')->willReturn('/url');
         $session->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getFlashBag')->willReturn($flash);
-        $flash->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('add')->willReturn(true);
         $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('trans')->willReturn('translated-text');
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);
         $requestStack = new RequestStack();

@@ -2,10 +2,15 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\Configurator;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\ArrayHydrator;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -28,11 +33,16 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
 
     public function setUp(): void
     {
-        $queryMock = $this->createMock(AbstractQuery::class);
+        $conn = $this->createMock(Connection::class);
+        $conn->method('getDatabasePlatform')->willReturn(new MySQLPlatform());
+        $emMock = $this->createMock(EntityManagerInterface::class);
+        $emMock->method('getConnection')->willReturn($conn);
+
+        $queryMock = $this->createMock(Query::class);
         $queryMock
             ->expects($this->any())
             ->method('iterate')
-            ->willReturn($this->createMock(\Iterator::class))
+            ->willReturn(new IterableResult(new ArrayHydrator($emMock)))
         ;
 
         $this->emMock = $this->createMock(EntityManagerInterface::class);

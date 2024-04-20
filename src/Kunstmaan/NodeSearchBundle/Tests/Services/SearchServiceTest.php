@@ -24,9 +24,8 @@ class SearchServiceTest extends TestCase
         $parameterBag = new ParameterBag();
         $parameterBag->set('_entity', $entity);
 
-        $request = $this->createMock(Request::class);
+        $request = new Request();
         $request->attributes = $parameterBag;
-        $request->query = $parameterBag;
 
         $container = $this->createMock(ContainerInterface::class);
         $container->method('get')->with('unknown_searcher')->willThrowException(new ServiceNotFoundException('unknown_searcher'));

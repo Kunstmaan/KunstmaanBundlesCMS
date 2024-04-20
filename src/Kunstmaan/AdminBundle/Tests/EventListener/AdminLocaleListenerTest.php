@@ -33,7 +33,7 @@ class AdminLocaleListenerTest extends TestCase
 
         $storage->expects($this->exactly($tokenStorageCallCount))->method('getToken')->willReturn($token);
         $user->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('getAdminLocale')->willReturn(null);
-        $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('setLocale')->willReturn(null);
+        $trans->expects($this->exactly($shouldPerformCheck ? 1 : 0))->method('setLocale');
         $adminRouteHelper->method('isAdminRoute')->willReturn($shouldPerformCheck);
 
         $listener = new AdminLocaleListener($storage, $trans, $adminRouteHelper, 'en');
