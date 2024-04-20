@@ -6,6 +6,12 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/6.4.0...6.4.1
 
+## 6.4.2 / 2024-04-20
+
+* [NodeBundle] Fix node reorder [#3408](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3408) ([@dannyvw](https://github.com/dannyvw))
+* [TaggingBundle] fixed base route name [#3404](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3404) ([@virtualize](https://github.com/virtualize))
+* [LeadGenerationBundle] fixed route and type handling [#3403](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3403) ([@virtualize](https://github.com/virtualize))
+
 ## 6.4.1 / 2024-04-06
 
 * [AllBundles] Fix incorrect return types [#3385](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3385) ([@delboy1978uk](https://github.com/delboy1978uk))
