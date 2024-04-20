@@ -43,4 +43,18 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     {
         return Tag::class;
     }
+
+    /**
+     * @param string|null $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaantaggingbundle_admin_tag';
+        }
+
+        return sprintf('kunstmaantaggingbundle_admin_tag_%s', $suffix);
+    }
 }

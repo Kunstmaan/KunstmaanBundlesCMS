@@ -34,7 +34,9 @@ final class RulesAdminListController extends AbstractAdminListController
     #[Route(path: '/{popup}/add', requirements: ['popup' => '\d+'], name: 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_add', methods: ['GET', 'POST'])]
     public function addAction(Request $request, $popup): Response
     {
-        $type = $request->query->get('type');
+        $type = $request->isMethod('post')
+            ? $request->request->get('type')
+            : $request->query->get('type');
 
         return parent::doAddAction($this->getAdminListConfigurator($popup), $type, $request);
     }
