@@ -148,6 +148,10 @@ class MenuBuilder
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }
 
+        usort($result, function ($a, $b) {
+            return $a->getWeight() <=> $b->getWeight();
+        });
+
         return $result;
     }
 
