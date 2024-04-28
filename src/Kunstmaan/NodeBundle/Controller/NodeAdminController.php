@@ -644,7 +644,7 @@ final class NodeAdminController extends AbstractController
         $this->init($request);
         $nodes = [];
         $nodeIds = $request->request->all('nodes');
-        $changeParents = $request->request->get('parent');
+        $changeParents = $request->request->all('parent');
 
         foreach ($nodeIds as $id) {
             /* @var Node $node */
