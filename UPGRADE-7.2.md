@@ -5,3 +5,8 @@ FormBundle
 -----------
 
 - The frontendformobject view variable of form pagepart templates is deprecated and will be removed in 8.0. There is no replacement for this variable.
+
+PagePartBundle
+--------------
+
+- Not passing a HasPagePartsInterface as second parameter in PagePartEvent is deprecated and will be required in 8.0.
