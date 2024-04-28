@@ -21,7 +21,11 @@ class Loader implements LoaderInterface
             $catalogue = new MessageCatalogue($locale);
             $translations = $this->translationRepository->findBy(['locale' => $locale]);
             foreach ($translations as $translation) {
-                $catalogue->set($translation->getKeyword(), $translation->getText(), $translation->getDomain());
+                $catalogue->set(
+                    (string) $translation->getKeyword(),
+                    (string) $translation->getText(),
+                    (string) $translation->getDomain()
+                );
             }
             $this->catalogues[$locale] = $catalogue;
         } else {
