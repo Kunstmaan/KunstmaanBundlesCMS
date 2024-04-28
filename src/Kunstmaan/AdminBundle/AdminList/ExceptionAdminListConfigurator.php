@@ -107,4 +107,18 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
     {
         return Exception::class;
     }
+
+    /**
+     * @param string|null $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaanadminbundle_admin_exception';
+        }
+
+        return sprintf('kunstmaanadminbundle_admin_exception_%s', $suffix);
+    }
 }
