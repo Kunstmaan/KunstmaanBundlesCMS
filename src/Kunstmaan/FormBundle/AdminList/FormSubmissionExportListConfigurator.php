@@ -125,9 +125,8 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
 
         $collection = new ArrayCollection();
         $i = 0;
-        foreach ($iterableResult as $row) {
+        foreach ($iterableResult as $submission) {
             /* @var FormSubmission $submission */
-            $submission = $row[0];
 
             // Write row data
             $data = [

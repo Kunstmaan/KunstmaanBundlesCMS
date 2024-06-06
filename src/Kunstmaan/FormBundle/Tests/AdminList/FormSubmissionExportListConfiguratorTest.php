@@ -56,9 +56,9 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
         ]));
 
         $submissions = [
-            [$sub],
-            [new FormSubmission()],
-            [new FormSubmission()],
+            $sub,
+            new FormSubmission(),
+            new FormSubmission(),
         ];
         $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')
             ->disableOriginalConstructor()
