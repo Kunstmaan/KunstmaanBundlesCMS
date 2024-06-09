@@ -137,4 +137,18 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         return 1000;
     }
+
+    /**
+     * @param string|null $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (null === $suffix || $suffix === '') {
+            return 'kunstmaanmenubundle_admin_menuitem';
+        }
+
+        return sprintf('kunstmaanmenubundle_admin_menuitem_%s', $suffix);
+    }
 }
