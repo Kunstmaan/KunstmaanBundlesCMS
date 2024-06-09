@@ -52,7 +52,7 @@ final class MultiDomainTwigExtension extends AbstractExtension
         return $this->domainConfiguration->getHost();
     }
 
-    public function getCurrentFullHost(): array
+    public function getCurrentFullHost(): ?array
     {
         return $this->domainConfiguration->getFullHost();
     }
