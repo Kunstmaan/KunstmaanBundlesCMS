@@ -152,7 +152,9 @@ class PagePartAdmin
             preg_match('#^delete_pagepartadmin_(\d+)_(.*)#', $key, $ppInfo);
             preg_match_all('#([a-zA-Z0-9]+)_(\\d+)#', $ppInfo[2], $matches, PREG_SET_ORDER);
 
-            $subPagePartsToDelete[$ppInfo[1]][] = $this->getDeleteInfo($matches);
+            if (count($matches) > 0) {
+                $subPagePartsToDelete[$ppInfo[1]][] = $this->getDeleteInfo($matches);
+            }
         }
 
         $doFlush = false;
