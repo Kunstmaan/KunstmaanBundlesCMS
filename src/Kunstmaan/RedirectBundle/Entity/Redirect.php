@@ -35,10 +35,11 @@ class Redirect extends AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="origin", type="string", length=255)
+     * @ORM\Column(name="origin", type="string", length=500)
      */
-    #[ORM\Column(name: 'origin', type: 'string', length: 255)]
+    #[ORM\Column(name: 'origin', type: 'string', length: 500)]
     #[Assert\NotBlank]
+    #[Assert\Length(max: 500)]
     private $origin;
 
     /**
