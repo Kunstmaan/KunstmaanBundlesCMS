@@ -35,7 +35,7 @@ final class MultiDomainTwigExtension extends AbstractExtension
     {
         $extraData = $this->domainConfiguration->getExtraData();
 
-        if ($extraData[$key]) {
+        if (isset($extraData[$key])) {
             return $extraData[$key];
         }
 
