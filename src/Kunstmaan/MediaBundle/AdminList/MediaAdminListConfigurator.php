@@ -134,8 +134,11 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->andWhere('b.folder = :folder')
-            ->setParameter('folder', $this->folder->getId())
+        $folders = $this->folder->fetchChildIds();
+        $folders[] = $this->folder->getId();
+
+        $queryBuilder->andWhere('b.folder in (:folders)')
+            ->setParameter('folders', $folders)
             ->andWhere('b.deleted = :deleted')
             ->setParameter('deleted', false)
             ->orderBy('b.updatedAt', 'DESC');
