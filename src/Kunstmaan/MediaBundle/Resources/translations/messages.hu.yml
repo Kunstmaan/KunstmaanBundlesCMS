@@ -130,6 +130,7 @@ media:
         type: Típus
         updated_at: Dátum
         filesize: Fájlméret (byte-ban)
+        sub_folder: Almappák bevonása
   form:
     remote:
       name:
