@@ -451,6 +451,12 @@ final class NodeAdminController extends AbstractController
 
         $this->aclManager->updateNodeAcl($originalNode, $nodeNewPage);
 
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $this->dispatch(
+            new NodeEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage),
+            Events::ADD_NODE
+        );
+
         $this->addFlash(
             FlashTypes::SUCCESS,
             $this->container->get('translator')->trans('kuma_node.admin.duplicate.flash.success')
