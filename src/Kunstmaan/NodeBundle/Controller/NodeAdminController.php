@@ -301,7 +301,6 @@ final class NodeAdminController extends AbstractController
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $request = $this->container->get('request_stack')->getCurrentRequest();
         $this->nodePublisher->handlePublish($request, $nodeTranslation);
 
         return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $node->getId()]);
@@ -318,7 +317,6 @@ final class NodeAdminController extends AbstractController
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $request = $this->container->get('request_stack')->getCurrentRequest();
         $this->nodePublisher->handleUnpublish($request, $nodeTranslation);
 
         return $this->redirectToRoute('KunstmaanNodeBundle_nodes_edit', ['id' => $node->getId()]);
@@ -412,8 +410,6 @@ final class NodeAdminController extends AbstractController
 
         // Check with Acl
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
-
-        $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $originalNodeTranslations = $originalNode->getNodeTranslation($this->locale, true);
         $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
@@ -1153,7 +1149,6 @@ final class NodeAdminController extends AbstractController
             'form.factory' => FormFactoryInterface::class,
             'kunstmaan_adminlist.factory' => AdminListFactory::class,
             'kunstmaan_admin.clone.helper' => CloneHelper::class,
-            'request_stack' => RequestStack::class,
             'kunstmaan_node.actions_menu_builder' => ActionsMenuBuilder::class,
             'kunstmaan_node.admin_node.node_version_lock_helper' => NodeVersionLockHelper::class,
             'translator' => TranslatorInterface::class,
