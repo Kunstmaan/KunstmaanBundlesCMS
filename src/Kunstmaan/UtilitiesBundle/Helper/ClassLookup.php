@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\UtilitiesBundle\Helper;
 
-use Doctrine\Common\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
 
 /**
  * Helper for looking up the classname, not the ORM proxy
