@@ -395,6 +395,18 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
+     * @return array<int>
+     */
+    public function fetchChildIds(): array
+    {
+        $ids = $this->getChildren()->map(function (Folder $child) {
+            return array_merge([$child->getId()], $child->fetchChildIds());
+        })->toArray();
+
+        return array_merge(...$ids);
+    }
+
+    /**
      * @return bool
      */
     public function isDeleted()

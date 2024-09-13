@@ -130,6 +130,7 @@ media:
         type: Typ
         updated_at: Data
         filesize: Rozmiar (w bajtach)
+        sub_folders: Uwzględnij podfoldery
   form:
     remote:
       name:

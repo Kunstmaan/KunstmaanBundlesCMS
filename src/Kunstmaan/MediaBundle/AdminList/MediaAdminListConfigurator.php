@@ -8,6 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ChangeableLimitInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\Traits\ChangeableLimitTrait;
+use Kunstmaan\MediaBundle\AdminList\FilterType\SubFolderFilterType;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaEditItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaSelectItemAction;
@@ -77,6 +78,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'media.adminlist.configurator.filter.type');
         $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'media.adminlist.configurator.filter.updated_at');
         $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'media.adminlist.configurator.filter.filesize');
+        $this->addFilter('subFolders', new SubFolderFilterType($this->folder, 'folder'), 'media.adminlist.configurator.filter.sub_folder');
     }
 
     /**
@@ -134,8 +136,8 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
 
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->andWhere('b.folder = :folder')
-            ->setParameter('folder', $this->folder->getId())
+        $queryBuilder->andWhere('b.folder in (:folders)')
+            ->setParameter('folders', [$this->folder->getId()])
             ->andWhere('b.deleted = :deleted')
             ->setParameter('deleted', false)
             ->orderBy('b.updatedAt', 'DESC');

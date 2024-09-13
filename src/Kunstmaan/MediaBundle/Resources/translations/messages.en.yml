@@ -160,6 +160,7 @@ media:
                 type:       Type
                 updated_at: Date
                 filesize:   Filesize (in bytes)
+                sub_folder: Include subfolders
 
     form:
         remote:

@@ -152,6 +152,7 @@ media:
         type: Type
         updated_at: Datum
         filesize: Bestandsformaat (in bytes)
+        sub_folder: In subfolders
   form:
     remote:
       name:

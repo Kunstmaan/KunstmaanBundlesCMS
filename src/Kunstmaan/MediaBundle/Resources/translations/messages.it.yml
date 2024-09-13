@@ -130,6 +130,7 @@ media:
         type: Type
         updated_at: Date
         filesize: Filesize (in bytes)
+        sub_folder: Includi sottocartelle
   form:
     remote:
       name:

@@ -130,6 +130,7 @@ media:
         type: Typ
         updated_at: Datum
         filesize: Dateigröße (in Byte)
+        sub_folder: Unterordner einbeziehen
   form:
     remote:
       name:
