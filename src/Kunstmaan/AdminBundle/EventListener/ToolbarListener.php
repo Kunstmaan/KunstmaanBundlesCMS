@@ -87,7 +87,7 @@ class ToolbarListener implements EventSubscriberInterface
         ContainerInterface $container,
         AdminRouteHelper $adminRouteHelper,
         array $providerKeys,
-        $adminFirewallName = 'main'
+        $adminFirewallName = 'main',
     ) {
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;

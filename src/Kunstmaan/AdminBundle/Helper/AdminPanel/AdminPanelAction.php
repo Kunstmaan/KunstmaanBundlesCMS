@@ -34,7 +34,7 @@ class AdminPanelAction implements AdminPanelActionInterface
         array $url,
         $label,
         $icon = null,
-        $template = null
+        $template = null,
     ) {
         $this->url = $url;
         $this->label = $label;

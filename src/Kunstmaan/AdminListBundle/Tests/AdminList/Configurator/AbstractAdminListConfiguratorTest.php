@@ -25,7 +25,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->adminListConfigurator = new class() extends AbstractAdminListConfigurator {
+        $this->adminListConfigurator = new class extends AbstractAdminListConfigurator {
             public function buildFields()
             {
                 $this->addField('hello', 'hello', true);
@@ -123,7 +123,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $this->assertEquals('999', $viewUrl['params']['id']);
 
         // from object
-        $item = new class() {
+        $item = new class {
             public function getId()
             {
                 return 3;
@@ -145,7 +145,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
 
     public function testGetAdminTypeExistsInEntity()
     {
-        $entity = new class() {
+        $entity = new class {
             public function getAdminType()
             {
                 return 'TestType';
@@ -315,7 +315,7 @@ class AbstractAdminListConfiguratorTest extends TestCase
         $this->assertEquals('bar', $this->adminListConfigurator->getValue(['foo' => 'bar'], $columnName));
         $this->assertEquals('', $this->adminListConfigurator->getValue(['foz' => 'bar'], $columnName));
 
-        $item = new class() {
+        $item = new class {
             public function getFoo()
             {
                 return 'bar';
@@ -350,13 +350,13 @@ class AbstractAdminListConfiguratorTest extends TestCase
         ;
 
         $value = new PersistentCollection($emMock, 'ClassName', new ArrayCollection());
-        $value->add(new class() {
+        $value->add(new class {
             public function getName()
             {
                 return 'bar';
             }
         });
-        $value->add(new class() {
+        $value->add(new class {
             public function getName()
             {
                 return 'baz';

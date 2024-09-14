@@ -43,7 +43,7 @@ class PageBuilder implements BuilderInterface
         Populator $populator,
         Slugifier $slugifier,
         PagesConfiguration $pagesConfiguration,
-        string $userClass
+        string $userClass,
     ) {
         $this->manager = $em;
         $this->nodeRepo = $em->getRepository(Node::class);

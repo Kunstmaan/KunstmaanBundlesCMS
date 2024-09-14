@@ -87,7 +87,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         array $roles = [],
         array $groups = [],
         $enabled = false,
-        $changed = false
+        $changed = false,
     ) {
         $user = $this->container->get('kunstmaan_admin.user_manager')->createUser();
         $user->setUsername($username);

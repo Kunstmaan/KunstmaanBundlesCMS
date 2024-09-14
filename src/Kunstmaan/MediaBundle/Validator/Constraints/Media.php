@@ -86,7 +86,7 @@ class Media extends Constraint
         ?string $maxHeightMessage = null,
         ?string $minWidthMessage = null,
         ?string $maxWidthMessage = null,
-        ?string $mimeTypesMessage = null
+        ?string $mimeTypesMessage = null,
     ) {
         parent::__construct($options, $groups, $payload);
 

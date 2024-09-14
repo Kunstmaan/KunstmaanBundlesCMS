@@ -58,7 +58,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         EntityManagerInterface $em,
         AclNativeHelper $aclNativeHelper,
         PagesConfiguration $pagesConfiguration,
-        DomainConfigurationInterface $domainConfiguration
+        DomainConfigurationInterface $domainConfiguration,
     ) {
         $this->em = $em;
         $this->aclNativeHelper = $aclNativeHelper;
@@ -128,7 +128,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         $lang,
         $permission,
         AclNativeHelper $aclNativeHelper,
-        $includeHiddenFromNav
+        $includeHiddenFromNav,
     ) {
         if (null === $this->treeNodes) {
             $repo = $this->em->getRepository(Node::class);
@@ -193,7 +193,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         array &$children,
         array $nodes,
         ?MenuItem $parent,
-        array $activeNodeIds
+        array $activeNodeIds,
     ) {
         foreach ($nodes as $child) {
             $menuItem = new MenuItem($menu);

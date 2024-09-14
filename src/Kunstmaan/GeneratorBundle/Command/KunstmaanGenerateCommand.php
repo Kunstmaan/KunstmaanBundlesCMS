@@ -215,7 +215,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $objectName,
         $namespace = null,
         $questionMoreBundles = "\nIn which bundle do you want to create the %s",
-        $questionOneBundle = "The %s will be created for the <comment>%s</comment> bundle.\n"
+        $questionOneBundle = "The %s will be created for the <comment>%s</comment> bundle.\n",
     ) {
         return new Sf4AppBundle($this->getContainer()->getParameter('kernel.project_dir'));
     }
@@ -235,7 +235,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         BundleInterface $bundle,
         $multiple = false,
         $context = null,
-        $defaultSections = []
+        $defaultSections = [],
     ) {
         $allSections = $this->getAvailableSections($bundle, $context, $defaultSections);
         $sections = [];
@@ -589,7 +589,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $maxHeight = null,
         $minWidth = null,
         $maxWidth = null,
-        $mimeTypes = null
+        $mimeTypes = null,
     ) {
         $fields = [];
         switch ($type) {

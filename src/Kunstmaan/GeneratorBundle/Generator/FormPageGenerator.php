@@ -77,7 +77,7 @@ class FormPageGenerator extends KunstmaanGenerator
         $template,
         array $sections,
         array $parentPages,
-        $generateFormPageParts
+        $generateFormPageParts,
     ) {
         $this->bundle = $bundle;
         $this->entity = $entity;

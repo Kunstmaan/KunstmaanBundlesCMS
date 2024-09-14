@@ -43,7 +43,7 @@ class NodeTranslationListener
         LoggerInterface $logger,
         SlugifierInterface $slugifier,
         DomainConfigurationInterface $domainConfiguration,
-        PagesConfiguration $pagesConfiguration
+        PagesConfiguration $pagesConfiguration,
     ) {
         $this->requestStack = $requestStack;
         $this->logger = $logger;
