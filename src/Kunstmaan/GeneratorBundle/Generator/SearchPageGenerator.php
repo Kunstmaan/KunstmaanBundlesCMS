@@ -55,7 +55,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $prefix,
         $rootDir,
         $createPage,
-        OutputInterface $output
+        OutputInterface $output,
     ) {
         $parameters = [
             'namespace' => $bundle->getNamespace(),
@@ -81,7 +81,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         BundleInterface $bundle,
         array $parameters,
         $rootDir,
-        OutputInterface $output
+        OutputInterface $output,
     ) {
         $dirPath = $this->rootDir . '/templates';
         $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
@@ -107,7 +107,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     public function generateEntities(
         BundleInterface $bundle,
         array $parameters,
-        OutputInterface $output
+        OutputInterface $output,
     ) {
         $dirPath = sprintf(
             '%s/Entity/Pages/',
@@ -141,7 +141,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     public function generateFixtures(
         BundleInterface $bundle,
         array $parameters,
-        OutputInterface $output
+        OutputInterface $output,
     ) {
         $dirPath = $bundle->getPath() . '/DataFixtures/ORM/SearchPageGenerator/';
         $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/SearchPageGenerator/';
@@ -173,7 +173,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $fullSkeletonDir,
         $dirPath,
         $className,
-        array $parameters
+        array $parameters,
     ) {
         $classPath = sprintf('%s/%s.php', $dirPath, $className);
         if (file_exists($classPath)) {
