@@ -56,7 +56,7 @@ class SlugRouter implements RouterInterface
         DomainConfigurationInterface $domainConfiguration,
         RequestStack $requestStack,
         EntityManagerInterface $em,
-        string $adminKey
+        string $adminKey,
     ) {
         $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
         $this->domainConfiguration = $domainConfiguration;

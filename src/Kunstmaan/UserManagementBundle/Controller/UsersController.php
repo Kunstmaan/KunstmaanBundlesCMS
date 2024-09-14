@@ -49,7 +49,7 @@ final class UsersController extends AbstractController
         ParameterBagInterface $parameterBag,
         UserManager $userManager,
         EventDispatcherInterface $eventDispatcher,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
     ) {
         $this->translator = $translator;
         $this->adminListFactory = $adminListFactory;

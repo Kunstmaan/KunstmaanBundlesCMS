@@ -61,7 +61,7 @@ class KunstmaanGenerator extends Generator
         ManagerRegistry $registry,
         $skeletonDir,
         CommandAssistant $assistant,
-        ?ContainerInterface $container = null
+        ?ContainerInterface $container = null,
     ) {
         $this->filesystem = $filesystem;
         $this->registry = $registry;
@@ -105,7 +105,7 @@ class KunstmaanGenerator extends Generator
         $namePrefix,
         $dbPrefix,
         $extendClass = null,
-        $withRepository = false
+        $withRepository = false,
     ) {
         // configure the bundle (needed if the bundle does not contain any Entities yet)
         $config = $this->registry->getManager(null)->getConfiguration();
@@ -187,7 +187,7 @@ class KunstmaanGenerator extends Generator
         $entityName,
         $entityPrefix,
         array $fields,
-        $extendClass = '\Symfony\Component\Form\AbstractType'
+        $extendClass = '\Symfony\Component\Form\AbstractType',
     ) {
         $className = $entityName . 'AdminType';
         $savePath = $bundle->getPath() . '/Form/' . $entityPrefix . '/' . $className . '.php';

@@ -78,7 +78,7 @@ class ActionsMenuBuilder
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration,
         $enableExportPageTemplate = true,
-        bool $showDuplicateWithChildren = false
+        bool $showDuplicateWithChildren = false,
     ) {
         $this->factory = $factory;
         $this->em = $em;

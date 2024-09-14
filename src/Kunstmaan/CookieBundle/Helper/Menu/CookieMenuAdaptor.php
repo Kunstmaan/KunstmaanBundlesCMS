@@ -58,11 +58,6 @@ class CookieMenuAdaptor implements MenuAdaptorInterface
         }
     }
 
-    /**
-     * @param string $route
-     * @param string $uniqueId
-     * @param string $label
-     */
     private function addMenuItem(MenuBuilder $menu, array &$children, MenuItem $parent, ?Request $request, string $route, string $uniqueId, string $label)
     {
         $menuItem = new TopMenuItem($menu);

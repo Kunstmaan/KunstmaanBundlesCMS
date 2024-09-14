@@ -427,7 +427,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $columnName,
         ?FilterTypeInterface $type = null,
         $filterName = null,
-        array $options = []
+        array $options = [],
     ) {
         $this->getFilterBuilder()->add($columnName, $type, $filterName, $options);
 

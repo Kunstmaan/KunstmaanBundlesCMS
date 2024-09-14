@@ -36,7 +36,7 @@ class SlugSecurityListener
         EntityManager $entityManager,
         AuthorizationCheckerInterface $authorizationChecker,
         NodeMenu $nodeMenu,
-        $permissionsEnabled = true
+        $permissionsEnabled = true,
     ) {
         $this->em = $entityManager;
         $this->authorizationChecker = $authorizationChecker;

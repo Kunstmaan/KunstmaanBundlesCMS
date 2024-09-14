@@ -50,7 +50,7 @@ class NodeListener
         PagePartAdminFactory $pagePartAdminFactory,
         PageTemplateConfigurationReaderInterface $templateReader,
         PagePartConfigurationReaderInterface $pagePartReader,
-        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+        PageTemplateConfigurationService $pageTemplateConfiguratiorService,
     ) {
         $this->em = $em;
         $this->pagePartAdminFactory = $pagePartAdminFactory;

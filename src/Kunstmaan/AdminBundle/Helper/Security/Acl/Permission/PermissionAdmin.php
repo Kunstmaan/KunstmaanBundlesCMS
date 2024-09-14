@@ -96,7 +96,7 @@ class PermissionAdmin
         ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy,
         EventDispatcherInterface $eventDispatcher,
         Shell $shellHelper,
-        KernelInterface $kernel
+        KernelInterface $kernel,
     ) {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;

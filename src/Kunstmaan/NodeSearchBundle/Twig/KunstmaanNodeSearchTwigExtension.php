@@ -65,7 +65,7 @@ final class KunstmaanNodeSearchTwigExtension extends AbstractExtension
         array $twigContext,
         HasPagePartsInterface $page,
         $contextName = 'main',
-        array $parameters = []
+        array $parameters = [],
     ) {
         $template = $env->load('@KunstmaanNodeSearch/PagePart/view.html.twig');
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);

@@ -9,7 +9,7 @@ class AbstractArticleOverviewPageTest extends TestCase
 {
     public function testGettersAndSetters()
     {
-        $entity = new class() extends AbstractArticleOverviewPage {
+        $entity = new class extends AbstractArticleOverviewPage {
             public function getArticleRepository($em)
             {
                 return null;
