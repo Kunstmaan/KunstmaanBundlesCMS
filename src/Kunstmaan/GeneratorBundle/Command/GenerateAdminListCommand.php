@@ -138,7 +138,7 @@ EOT
         InputInterface $input,
         OutputInterface $output,
         Bundle $bundle,
-        $entityClass
+        $entityClass,
     ) {
         $adminKey = $this->getContainer()->getParameter('kunstmaan_admin.admin_prefix');
         $auto = true;

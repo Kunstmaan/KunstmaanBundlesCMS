@@ -105,7 +105,7 @@ class NodeMenu
         EntityManagerInterface $em,
         TokenStorageInterface $tokenStorage,
         AclHelper $aclHelper,
-        DomainConfigurationInterface $domainConfiguration
+        DomainConfigurationInterface $domainConfiguration,
     ) {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
@@ -454,7 +454,7 @@ class NodeMenu
     public function getNodeByInternalName(
         $internalName,
         $parent = null,
-        $includeOffline = null
+        $includeOffline = null,
     ) {
         $this->init();
         $resultNode = null;

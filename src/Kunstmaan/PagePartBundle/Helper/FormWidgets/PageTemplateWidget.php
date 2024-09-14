@@ -72,7 +72,7 @@ class PageTemplateWidget extends FormWidget
         PagePartAdminFactory $pagePartAdminFactory,
         PageTemplateConfigurationReaderInterface $templateReader,
         PagePartConfigurationReaderInterface $pagePartReader,
-        PageTemplateConfigurationService $pageTemplateConfigurationService
+        PageTemplateConfigurationService $pageTemplateConfigurationService,
     ) {
         parent::__construct();
 

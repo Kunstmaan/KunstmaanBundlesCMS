@@ -961,7 +961,7 @@ final class NodeAdminController extends AbstractController
     private function createDraftVersion(
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,
-        NodeVersion $nodeVersion
+        NodeVersion $nodeVersion,
     ) {
         $publicPage = $this->container->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($page);
@@ -1023,7 +1023,7 @@ final class NodeAdminController extends AbstractController
         EntityManager $em,
         BaseUser $user,
         $locale,
-        ArrayCollection $children
+        ArrayCollection $children,
     ) {
         /* @var Node $childNode */
         foreach ($children as $childNode) {

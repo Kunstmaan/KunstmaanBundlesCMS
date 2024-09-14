@@ -377,7 +377,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         NodeTranslation $nodeTranslation,
         Node $node,
         NodeVersion $publicNodeVersion,
-        HasNodeInterface $page
+        HasNodeInterface $page,
     ) {
         $rootNode = $this->currentTopNode;
         if (!$rootNode) {

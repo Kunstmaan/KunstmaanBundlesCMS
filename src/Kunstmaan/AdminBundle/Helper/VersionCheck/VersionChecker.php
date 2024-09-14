@@ -47,7 +47,7 @@ class VersionChecker
         int $cacheTimeframe,
         bool $enabled,
         string $projectDir,
-        string $websiteTitle
+        string $websiteTitle,
     ) {
         $this->cache = $cache;
         $this->translator = $translator;

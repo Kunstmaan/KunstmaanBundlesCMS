@@ -34,7 +34,7 @@ class CloneListener
     public function __construct(
         EntityManagerInterface $em,
         PagePartConfigurationReaderInterface $pagePartReader,
-        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+        PageTemplateConfigurationService $pageTemplateConfiguratiorService,
     ) {
         $this->em = $em;
         $this->pagePartReader = $pagePartReader;
