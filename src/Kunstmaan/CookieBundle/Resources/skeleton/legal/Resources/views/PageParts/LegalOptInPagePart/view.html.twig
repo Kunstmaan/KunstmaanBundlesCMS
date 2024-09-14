@@ -1,5 +1,5 @@
 {% if frontendform is defined %}
-    {{ form_widget(frontendform['formwidget_'~resource.uniqueId], { 'attr' : {'bound' : frontendformobject.submitted } }) }}
+    {{ form_widget(frontendform['formwidget_'~resource.uniqueId], { 'attr' : {'bound' : isSubmitted } }) }}
 
     <a class="js-kmcc-extended-modal-button" data-target="legal_privacy_policy" data-url="{{ path('kunstmaancookiebundle_legal_modal', {'internal_name': 'legal_privacy_policy'}) }}">
         {{ 'kuma.cookie.pageparts.optin.policy' | trans }}
