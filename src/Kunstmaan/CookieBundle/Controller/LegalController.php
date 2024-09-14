@@ -29,7 +29,7 @@ final class LegalController extends AbstractController
     #[Route(path: '/modal/{internal_name}', name: 'kunstmaancookiebundle_legal_modal')]
     public function switchTabAction(
         Request $request,
-        #[MapEntity(expr: 'repository.getNodeByInternalName(internal_name)')] Node $node
+        #[MapEntity(expr: 'repository.getNodeByInternalName(internal_name)')] Node $node,
     ): Response {
         $page = $node->getNodeTranslation($request->getLocale())->getRef($this->em);
 

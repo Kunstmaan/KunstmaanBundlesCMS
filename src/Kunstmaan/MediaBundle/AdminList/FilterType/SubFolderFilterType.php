@@ -12,7 +12,7 @@ class SubFolderFilterType extends AbstractORMFilterType
 {
     public function __construct(
         private Folder $folder,
-        string $columnName
+        string $columnName,
     ) {
         parent::__construct($columnName);
     }
