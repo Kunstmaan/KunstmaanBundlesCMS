@@ -35,7 +35,7 @@ class FormHandler implements FormHandlerInterface
         ?EntityManagerInterface $em,
         ?FormFactoryInterface $formFactory,
         ?RouterInterface $router,
-        ?EventDispatcherInterface $eventDispatcher
+        ?EventDispatcherInterface $eventDispatcher,
     ) {
         $this->container = $container;
         $this->em = $em;

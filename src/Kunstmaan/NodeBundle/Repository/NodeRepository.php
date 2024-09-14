@@ -34,7 +34,7 @@ class NodeRepository extends NestedTreeRepository
         $lang,
         $permission,
         AclHelper $aclHelper,
-        $includeHiddenFromNav = false
+        $includeHiddenFromNav = false,
     ) {
         $result = $this->getChildNodes(
             null,
@@ -65,7 +65,7 @@ class NodeRepository extends NestedTreeRepository
         AclHelper $aclHelper,
         $includeHiddenFromNav = false,
         $includeHiddenWithInternalName = false,
-        $rootNode = null
+        $rootNode = null,
     ) {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 't', 'v')
@@ -199,7 +199,7 @@ class NodeRepository extends NestedTreeRepository
         HasNodeInterface $hasNode,
         $lang,
         BaseUser $owner,
-        $internalName = null
+        $internalName = null,
     ) {
         $em = $this->getEntityManager();
         $node = new Node();
@@ -264,7 +264,7 @@ class NodeRepository extends NestedTreeRepository
         $permission,
         AclNativeHelper $aclNativeHelper,
         $includeHiddenFromNav = false,
-        ?Node $rootNode = null
+        ?Node $rootNode = null,
     ) {
         $connection = $this->_em->getConnection();
         $qb = $connection->createQueryBuilder();
@@ -272,7 +272,7 @@ class NodeRepository extends NestedTreeRepository
         $createIfStatement = static function (
             $expression,
             $trueValue,
-            $falseValue
+            $falseValue,
         ) use ($databasePlatform) {
             $defaultStatement = 'IF(%s, %s, %s)';
             if (null === $databasePlatform) {
@@ -467,7 +467,7 @@ SQL;
         $internalName,
         $lang,
         $parentId = false,
-        $includeOffline = false
+        $includeOffline = false,
     ) {
         $qb = $this->createQueryBuilder('n')
             ->select('n', 't', 'v')

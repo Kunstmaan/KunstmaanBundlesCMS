@@ -52,7 +52,7 @@ final class ConfigController
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         array $configuration,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
     ) {
         $this->router = $router;
         $this->twig = $twig;

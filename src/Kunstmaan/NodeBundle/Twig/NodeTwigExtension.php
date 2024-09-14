@@ -43,7 +43,7 @@ final class NodeTwigExtension extends AbstractExtension
         EntityManagerInterface $em,
         UrlGeneratorInterface $generator,
         NodeMenu $nodeMenu,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->em = $em;
         $this->generator = $generator;

@@ -43,7 +43,7 @@ class NodeVersionRepository extends EntityRepository
         BaseUser $owner,
         ?NodeVersion $origin = null,
         $type = 'public',
-        $created = null
+        $created = null,
     ) {
         $em = $this->getEntityManager();
 

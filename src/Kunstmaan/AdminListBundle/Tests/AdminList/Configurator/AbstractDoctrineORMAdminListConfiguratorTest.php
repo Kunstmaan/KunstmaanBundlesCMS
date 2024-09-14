@@ -84,7 +84,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
     {
         $abstractMock = $this->setUpAdminlistConfigurator();
 
-        $item = new class() {
+        $item = new class {
             public function getId()
             {
                 return 747;
@@ -103,7 +103,7 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends TestCase
     {
         $abstractMock = $this->setUpAdminlistConfigurator();
 
-        $item = new class() {
+        $item = new class {
             public function getId()
             {
                 return 747;

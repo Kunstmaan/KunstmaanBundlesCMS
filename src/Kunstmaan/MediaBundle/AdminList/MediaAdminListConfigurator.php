@@ -48,7 +48,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         EntityManager $em,
         MediaManager $mediaManager,
         Folder $folder,
-        Request $request
+        Request $request,
     ) {
         parent::__construct($em);
 

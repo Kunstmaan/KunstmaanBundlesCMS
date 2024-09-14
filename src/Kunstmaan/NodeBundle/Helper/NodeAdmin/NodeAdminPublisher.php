@@ -65,7 +65,7 @@ class NodeAdminPublisher
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
         CloneHelper $cloneHelper,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
@@ -233,7 +233,7 @@ class NodeAdminPublisher
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,
         NodeVersion $nodeVersion,
-        BaseUser $user
+        BaseUser $user,
     ) {
         $newPublicPage = $this->cloneHelper->deepCloneAndSave($page);
         $newNodeVersion = $this->em->getRepository(NodeVersion::class)->createNodeVersionFor(

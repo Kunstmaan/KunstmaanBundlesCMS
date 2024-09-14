@@ -9,7 +9,7 @@ class AbstractAuthorTest extends TestCase
 {
     public function testGettersAndSetters()
     {
-        $entity = new class() extends AbstractAuthor {
+        $entity = new class extends AbstractAuthor {
         };
         $entity->setId(666);
         $entity->setLink('https://nasa.gov');

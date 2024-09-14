@@ -64,7 +64,7 @@ class PageGenerator extends KunstmaanGenerator
         array $fields,
         $template,
         array $sections,
-        array $parentPages
+        array $parentPages,
     ) {
         $this->bundle = $bundle;
         $this->entity = $entity;

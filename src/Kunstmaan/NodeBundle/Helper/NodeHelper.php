@@ -41,7 +41,7 @@ class NodeHelper
         NodeAdminPublisher $nodeAdminPublisher,
         TokenStorageInterface $tokenStorage,
         CloneHelper $cloneHelper,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
     ) {
         $this->em = $em;
         $this->nodeAdminPublisher = $nodeAdminPublisher;
@@ -60,7 +60,7 @@ class NodeHelper
     public function createDraftVersion(
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,
-        NodeVersion $nodeVersion
+        NodeVersion $nodeVersion,
     ) {
         $user = $this->getAdminUser();
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
@@ -139,7 +139,7 @@ class NodeHelper
         NodeVersion $nodeVersion,
         HasNodeInterface $page,
         $isStructureNode,
-        ?TabPane $tabPane = null
+        ?TabPane $tabPane = null,
     ) {
         $this->eventDispatcher->dispatch(
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page),

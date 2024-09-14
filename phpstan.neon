@@ -15,6 +15,7 @@ parameters:
         - src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle
         - src/Kunstmaan/CookieBundle/Resources/skeleton
         - src/Kunstmaan/CacheBundle # Temporary excluded for full rework
+        - src/Kunstmaan/FixturesBundle # Temporary excluded for full rework
         # Excluded deprecated classes/files
         - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
         - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php

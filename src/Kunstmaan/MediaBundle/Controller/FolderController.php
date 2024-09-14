@@ -41,7 +41,7 @@ final class FolderController extends AbstractController
         AdminListFactory $adminListFactory,
         RequestStack $requestStack,
         TranslatorInterface $translator,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
     ) {
         $this->mediaManager = $mediaManager;
         $this->folderManager = $folderManager;

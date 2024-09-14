@@ -220,7 +220,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationForSlug(
         $slug,
-        ?NodeTranslation $parentNode = null
+        ?NodeTranslation $parentNode = null,
     ) {
         if (empty($slug)) {
             return $this->getNodeTranslationForSlugPart(null, $slug);
@@ -245,7 +245,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     private function getNodeTranslationForSlugPart(
         ?NodeTranslation $parentNode = null,
-        $slugPart = ''
+        $slugPart = '',
     ) {
         $qb = $this->createQueryBuilder('t')
             ->select('t', 'v', 'n')
@@ -298,7 +298,7 @@ class NodeTranslationRepository extends EntityRepository
         $locale = '',
         $includeDeleted = false,
         ?NodeTranslation $toExclude = null,
-        ?Node $rootNode = null
+        ?Node $rootNode = null,
     ) {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 'v')
@@ -363,7 +363,7 @@ class NodeTranslationRepository extends EntityRepository
         $locale = '',
         $includeDeleted = false,
         ?NodeTranslation $toExclude = null,
-        ?Node $rootNode = null
+        ?Node $rootNode = null,
     ) {
         $translations = $this->getAllNodeTranslationsForUrl($urlSlug, $locale, $includeDeleted, $toExclude, $rootNode);
 
@@ -413,7 +413,7 @@ class NodeTranslationRepository extends EntityRepository
         HasNodeInterface $hasNode,
         $lang,
         Node $node,
-        BaseUser $owner
+        BaseUser $owner,
     ) {
         $em = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
@@ -464,7 +464,7 @@ class NodeTranslationRepository extends EntityRepository
         HasNodeInterface $hasNode,
         $lang,
         Node $node,
-        BaseUser $owner
+        BaseUser $owner,
     ) {
         $em = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
@@ -535,7 +535,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function hasParentNodeTranslationsForLanguage(
         NodeTranslation $nodeTranslation,
-        $language
+        $language,
     ) {
         $parentNode = $nodeTranslation->getNode()->getParent();
         if ($parentNode !== null) {
@@ -568,7 +568,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationByLanguageAndInternalName(
         $language,
-        $internalName
+        $internalName,
     ) {
         $qb = $this->createQueryBuilder('nt')
             ->select('nt', 'v')
