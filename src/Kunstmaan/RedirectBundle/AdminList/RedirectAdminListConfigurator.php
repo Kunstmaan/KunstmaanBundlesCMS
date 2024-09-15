@@ -67,7 +67,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getValue($item, $columnName)
     {
-        if ($columnName == 'domain' && !$item->getDomain()) {
+        if ($columnName === 'domain' && !$item->getDomain()) {
             return 'All domains';
         }
 

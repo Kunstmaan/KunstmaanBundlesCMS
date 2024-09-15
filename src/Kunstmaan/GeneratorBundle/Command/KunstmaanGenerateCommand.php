@@ -159,7 +159,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $defaultPrefix = GeneratorUtils::cleanPrefix($this->convertNamespaceToSnakeCase($namespace));
             $prefix = GeneratorUtils::cleanPrefix($this->assistant->ask('Tablename prefix', $defaultPrefix));
 
-            if ($prefix == '') {
+            if ($prefix === '') {
                 break;
             }
 
@@ -426,17 +426,17 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             }
 
             // If image type, force image media filter
-            if ($typeStrings[$typeId] == 'image') {
+            if ($typeStrings[$typeId] === 'image') {
                 $extra = 'image';
             }
 
             // If media type, ask for media filter
-            if ($typeStrings[$typeId] == 'media') {
+            if ($typeStrings[$typeId] === 'media') {
                 $mediaTypeId = $this->assistant->askSelect('Media filter', $mediaTypeSelect);
                 $extra = strtolower($mediaTypeSelect[$mediaTypeId]);
             }
 
-            if ($typeStrings[$typeId] == 'image' || $typeStrings[$typeId] == 'media') {
+            if ($typeStrings[$typeId] === 'image' || $typeStrings[$typeId] === 'media') {
                 // Ask the allowed mimetypes for the media ojbect
                 $mimeTypes = $this->assistant->ask('Do you want to limit the possible file types? Then specify a comma-seperated list of types (example: image/png,image/svg+xml), otherwise press ENTER',
                     null
@@ -455,7 +455,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'maxWidth' => null,
                 ];
 
-                if ($extra == 'image') {
+                if ($extra === 'image') {
                     $minHeight = $maxHeight = $minWidth = $maxWidth = null;
                     if ($this->assistant->askConfirmation('Do you want to add validation of the dimensions of the media object? (y/n)',
                         'n',
@@ -626,7 +626,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     $fields[$type][$subField] = [
                         'fieldName' => lcfirst(Container::camelize($name . '_' . $subField)),
                         'type' => 'string',
-                        'formType' => $subField == 'url' ? 'Kunstmaan\NodeBundle\Form\Type\URLChooserType' : TextType::class,
+                        'formType' => $subField === 'url' ? 'Kunstmaan\NodeBundle\Form\Type\URLChooserType' : TextType::class,
                         'nullable' => $allNullable,
                     ];
                 }

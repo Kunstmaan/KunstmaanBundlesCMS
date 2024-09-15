@@ -61,9 +61,9 @@ final class FolderController extends AbstractController
 
         // Check when user switches between thumb -and list view
         $viewMode = $request->query->get('viewMode');
-        if ($viewMode && $viewMode == 'list-view') {
+        if ($viewMode && $viewMode === 'list-view') {
             $session->set('media-list-view', true);
-        } elseif ($viewMode && $viewMode == 'thumb-view') {
+        } elseif ($viewMode && $viewMode === 'thumb-view') {
             $session->remove('media-list-view');
         }
 

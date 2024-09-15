@@ -17,7 +17,7 @@ class TranslationAdminType extends AbstractType
     {
         $intention = $options['csrf_token_id'];
         $options = [];
-        if ($intention == 'edit') {
+        if ($intention === 'edit') {
             $options = ['attr' => ['readonly' => true]];
         }
 
