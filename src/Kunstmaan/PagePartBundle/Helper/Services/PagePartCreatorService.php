@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Helper\Services;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -26,7 +25,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class PagePartCreatorService
 {
     /**
-     * @var EntityManagerInterface|EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -46,7 +45,7 @@ class PagePartCreatorService
     protected $nodeRepo;
 
     /**
-     * Sets the EntityManager dependency.
+     * Sets the EntityManagerInterface dependency.
      */
     public function setEntityManager(EntityManagerInterface $em)
     {

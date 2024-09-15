@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SeoBundle\Tests\DependencyInjection;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\SeoBundle\DependencyInjection\KunstmaanSeoExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
@@ -18,7 +18,7 @@ class KunstmaanSeoExtensionTest extends AbstractExtensionTestCase
     {
         parent::setUp();
 
-        $this->registerService('doctrine.orm.entity_manager', EntityManager::class);
+        $this->registerService('doctrine.orm.entity_manager', EntityManagerInterface::class);
         $this->registerService('kunstmaan_admin.clone.helper', CloneHelper::class);
         $this->registerService('security.authorization_checker', AuthorizationChecker::class);
         $this->registerService('translator', TranslatorInterface::class);

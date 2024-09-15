@@ -3,7 +3,7 @@
 namespace Kunstmaan\ArticleBundle\Tests\Repository;
 
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
@@ -30,7 +30,7 @@ class AbstractArticleOverviewPageRepositoryTest extends TestCase
         $qb->expects($this->exactly(2))->method('setParameter')->willReturn($qb);
         $qb->expects($this->once())->method('getQuery')->willReturn($query);
 
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $em->expects($this->once())->method('createQueryBuilder')->willReturn($qb);
 
         $entity = new Repo($em, new ClassMetadata(Article::class));

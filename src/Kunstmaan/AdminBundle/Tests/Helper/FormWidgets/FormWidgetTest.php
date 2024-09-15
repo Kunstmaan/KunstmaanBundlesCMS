@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +16,7 @@ class FormWidgetTest extends TestCase
     public function testWidget()
     {
         $builder = $this->createMock(FormBuilder::class);
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $em->expects($this->once())->method('persist')->willReturn(new User());
         $builder->expects($this->once())->method('getData');
         $builder->expects($this->atLeastOnce())->method('add');

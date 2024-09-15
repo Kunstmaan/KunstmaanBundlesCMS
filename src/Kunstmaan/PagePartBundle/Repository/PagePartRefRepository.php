@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Repository;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
@@ -113,12 +113,12 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param EntityManager         $em       The entity manager
-     * @param HasPagePartsInterface $fromPage The page from where you copy the pageparts
-     * @param HasPagePartsInterface $toPage   The page to where you want to copy the pageparts
-     * @param string                $context  The pagepart context
+     * @param EntityManagerInterface $em       The entity manager
+     * @param HasPagePartsInterface  $fromPage The page from where you copy the pageparts
+     * @param HasPagePartsInterface  $toPage   The page to where you want to copy the pageparts
+     * @param string                 $context  The pagepart context
      */
-    public function copyPageParts(EntityManager $em, HasPagePartsInterface $fromPage, HasPagePartsInterface $toPage, $context = 'main')
+    public function copyPageParts(EntityManagerInterface $em, HasPagePartsInterface $fromPage, HasPagePartsInterface $toPage, $context = 'main')
     {
         $fromPageParts = $this->getPageParts($fromPage, $context);
         $sequenceNumber = 1;

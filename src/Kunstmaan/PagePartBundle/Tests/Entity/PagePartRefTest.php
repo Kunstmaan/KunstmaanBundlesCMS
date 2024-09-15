@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ class PagePartRefTest extends TestCase
         $part->setPagePartId('4');
         $part->setPagePartEntityname(PagePartRef::class);
 
-        $em = $this->getMockBuilder(EntityManager::class)
+        $em = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 

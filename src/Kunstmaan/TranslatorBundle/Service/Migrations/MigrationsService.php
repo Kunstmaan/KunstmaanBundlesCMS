@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Migrations;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 class MigrationsService
@@ -15,7 +15,7 @@ class MigrationsService
     private $translationRepository;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $entityManager;
 

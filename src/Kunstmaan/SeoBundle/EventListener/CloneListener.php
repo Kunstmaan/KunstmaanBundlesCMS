@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SeoBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
@@ -14,7 +14,7 @@ use Kunstmaan\SeoBundle\Entity\Seo;
 class CloneListener
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -24,10 +24,10 @@ class CloneListener
     private $cloneHelper;
 
     /**
-     * @param EntityManager $em          The entity manager
-     * @param CloneHelper   $cloneHelper The clone helper
+     * @param EntityManagerInterface $em          The entity manager
+     * @param CloneHelper            $cloneHelper The clone helper
      */
-    public function __construct(EntityManager $em, CloneHelper $cloneHelper)
+    public function __construct(EntityManagerInterface $em, CloneHelper $cloneHelper)
     {
         $this->em = $em;
         $this->cloneHelper = $cloneHelper;

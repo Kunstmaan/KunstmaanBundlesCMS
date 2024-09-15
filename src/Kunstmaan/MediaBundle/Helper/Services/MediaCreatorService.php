@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
@@ -21,7 +21,7 @@ class MediaCreatorService
     protected $container;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

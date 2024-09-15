@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper\NodeAdmin;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
@@ -25,7 +25,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class NodeAdminPublisher
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -53,14 +53,14 @@ class NodeAdminPublisher
     private $translator;
 
     /**
-     * @param EntityManager                 $em                   The entity manager
+     * @param EntityManagerInterface        $em                   The entity manager
      * @param TokenStorageInterface         $tokenStorage         The security token storage
      * @param AuthorizationCheckerInterface $authorizationChecker The security authorization checker
      * @param EventDispatcherInterface      $eventDispatcher      The Event dispatcher
      * @param CloneHelper                   $cloneHelper          The clone helper
      */
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         TokenStorageInterface $tokenStorage,
         AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,

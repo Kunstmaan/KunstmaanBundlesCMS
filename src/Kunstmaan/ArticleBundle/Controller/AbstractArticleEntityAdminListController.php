@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
@@ -18,7 +18,7 @@ abstract class AbstractArticleEntityAdminListController extends AbstractAdminLis
     protected $configurator;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

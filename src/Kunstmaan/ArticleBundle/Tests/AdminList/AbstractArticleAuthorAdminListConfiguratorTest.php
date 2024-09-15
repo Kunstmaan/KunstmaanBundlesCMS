@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\ArticleBundle\Tests\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
 use Kunstmaan\ArticleBundle\Entity\AbstractAuthor;
@@ -20,7 +20,7 @@ class AbstractArticleAuthorAdminListConfiguratorTest extends TestCase
 
     protected function setUp(): void
     {
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $em->expects($this->any())
             ->method($this->anything())
             ->willReturn($em);

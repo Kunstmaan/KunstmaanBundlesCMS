@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\TaggingBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\TaggingBundle\Entity\Tag;
@@ -14,7 +14,7 @@ class CloneListener
 {
     protected $em;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

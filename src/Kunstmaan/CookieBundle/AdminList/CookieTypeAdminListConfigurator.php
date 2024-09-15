@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\CookieBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
@@ -15,10 +15,10 @@ use Kunstmaan\CookieBundle\Form\CookieTypeAdminType;
 class CookieTypeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
 {
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
+     * @param EntityManagerInterface $em        The entity manager
+     * @param AclHelper              $aclHelper The acl helper
      */
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
         $this->setAdminType(CookieTypeAdminType::class);

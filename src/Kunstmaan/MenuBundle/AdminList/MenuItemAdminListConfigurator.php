@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MenuBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -16,7 +16,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     private $menu;
 
-    public function __construct(EntityManager $em, ?AclHelper $aclHelper, Menu $menu)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper, Menu $menu)
     {
         parent::__construct($em, $aclHelper);
 

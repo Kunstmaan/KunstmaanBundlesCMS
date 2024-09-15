@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -13,7 +13,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 class NodeMenuItem
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 

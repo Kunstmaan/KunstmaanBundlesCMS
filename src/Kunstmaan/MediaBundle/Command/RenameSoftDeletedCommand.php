@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
@@ -16,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'kuma:media:rename-soft-deleted', description: 'Rename physical files for soft-deleted media.')]
 final class RenameSoftDeletedCommand extends Command
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     protected $em;
 
     /**

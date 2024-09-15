@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MenuBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 
 class MenuService
@@ -18,7 +18,7 @@ class MenuService
     private $domainConfiguration;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -27,7 +27,7 @@ class MenuService
      */
     private $menuEntityClass;
 
-    public function __construct(array $menuNames, DomainConfigurationInterface $domainConfiguration, EntityManager $em, $menuEntityClass)
+    public function __construct(array $menuNames, DomainConfigurationInterface $domainConfiguration, EntityManagerInterface $em, $menuEntityClass)
     {
         $this->menuNames = $menuNames;
         $this->domainConfiguration = $domainConfiguration;

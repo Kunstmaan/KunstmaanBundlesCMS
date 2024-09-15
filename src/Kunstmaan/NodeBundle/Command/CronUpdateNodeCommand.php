@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 final class CronUpdateNodeCommand extends Command
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 

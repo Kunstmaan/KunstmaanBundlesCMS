@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Tests\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -39,7 +39,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true), $em);
         $listener->onPostPersist($nodeEvent);
     }
@@ -77,7 +77,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false), $em);
         $listener->onPostPersist($nodeEvent);
     }
@@ -104,7 +104,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(false), $em);
         $listener->onPostPersist($nodeEvent);
     }
@@ -131,7 +131,7 @@ class NodeIndexUpdateEventListenerTest extends TestCase
 
         $nodeEvent->method('getNodeTranslation')->willReturn($nodeTranslation);
 
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $listener = new NodeIndexUpdateEventListener($this->getSearchConfiguration(true), $em);
         $listener->onPostPersist($nodeEvent);
     }

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,9 +49,9 @@ class ListWidget extends FormWidget
     }
 
     /**
-     * @param EntityManager $em The entity manager
+     * @param EntityManagerInterfacer $em The entity manager
      */
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
         foreach ($this->widgets as $widget) {
             $widget->persist($em);

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer;
@@ -15,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class CreatePdfPreviewCommand extends Command
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 

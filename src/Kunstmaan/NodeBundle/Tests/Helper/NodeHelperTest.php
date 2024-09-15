@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Kunstmaan\AdminBundle\Entity\User;
@@ -643,7 +642,7 @@ class NodeHelperTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->em = $this->getMockBuilder(EntityManager::class)
+        $this->em = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -110,7 +110,7 @@ class PageTemplateConfiguration extends AbstractEntity
     /**
      * @return PageInterface
      */
-    public function getPage(EntityManager $em)
+    public function getPage(EntityManagerInterface $em)
     {
         return $em->getRepository($this->getPageEntityName())->find($this->getPageId());
     }

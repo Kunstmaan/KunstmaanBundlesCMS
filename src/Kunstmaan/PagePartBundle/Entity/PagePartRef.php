@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
@@ -275,7 +275,7 @@ class PagePartRef
     /**
      * @return \Kunstmaan\PagePartBundle\Helper\PagePartInterface
      */
-    public function getPagePart(EntityManager $em)
+    public function getPagePart(EntityManagerInterface $em)
     {
         return $em->getRepository($this->getPagePartEntityname())->find($this->getPagePartId());
     }
