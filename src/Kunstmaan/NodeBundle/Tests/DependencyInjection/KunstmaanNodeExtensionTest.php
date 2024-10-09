@@ -29,5 +29,6 @@ class KunstmaanNodeExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_node.lock_enabled', false);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.version_timeout', 3600);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.url_chooser.lazy_increment', 2);
+        $this->assertContainerBuilderHasParameter('kunstmaan_node.enable_improved_urlchooser', false);
     }
 }

@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\DependencyInjection;
 
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
+use Kunstmaan\NodeBundle\Form\EventListener\URLChooserFormSubscriber;
+use Kunstmaan\NodeBundle\Form\EventListener\URLChooserLinkTypeSubscriber;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -40,8 +42,16 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $container->setParameter('kunstmaan_node.lock_threshold', $config['lock']['threshold']);
         $container->setParameter('kunstmaan_node.lock_enabled', $config['lock']['enabled']);
 
+        $enableImprovedUrlchooser = $config['enable_improved_urlchooser'];
+        $container->setParameter('kunstmaan_node.enable_improved_urlchooser', $enableImprovedUrlchooser);
+
         $loader->load('services.yml');
         $loader->load('commands.yml');
+
+        if ($enableImprovedUrlchooser) {
+            $container->removeDefinition(URLChooserFormSubscriber::class);
+            $container->removeDefinition(URLChooserLinkTypeSubscriber::class);
+        }
     }
 
     public function prepend(ContainerBuilder $container): void
