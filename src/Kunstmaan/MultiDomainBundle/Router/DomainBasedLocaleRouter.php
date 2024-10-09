@@ -60,6 +60,10 @@ class DomainBasedLocaleRouter extends SlugRouter
             unset($parameters['otherSite']);
         }
 
+        if (isset($parameters['_nodeTranslation'])) {
+            unset($parameters['_nodeTranslation']);
+        }
+
         return $this->urlGenerator->generate($name, $parameters, $referenceType);
     }
 

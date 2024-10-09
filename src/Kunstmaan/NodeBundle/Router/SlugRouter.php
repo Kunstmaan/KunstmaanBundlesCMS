@@ -125,6 +125,10 @@ class SlugRouter implements RouterInterface
             $this->getContext()
         );
 
+        if (isset($parameters['_nodeTranslation'])) {
+            unset($parameters['_nodeTranslation']);
+        }
+
         return $this->urlGenerator->generate($name, $parameters, $referenceType);
     }
 
