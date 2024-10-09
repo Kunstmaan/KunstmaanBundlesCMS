@@ -32,7 +32,7 @@ class DomainBasedLocaleRouter extends SlugRouter
      */
     public function generate($name, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        if ('_slug' === $name && $this->isMultiLanguage() && $this->isMultiDomainHost()) {
+        if ('_slug' === $name && $this->isMultiDomainHost() && $this->isMultiLanguage()) {
             $locale = isset($parameters['_locale']) ? $parameters['_locale'] : $this->getRequestLocale();
 
             $reverseLocaleMap = $this->getReverseLocaleMap();
@@ -96,13 +96,7 @@ class DomainBasedLocaleRouter extends SlugRouter
      */
     protected function getRequestLocale()
     {
-        $request = $this->getMasterRequest();
-        $locale = $this->getDefaultLocale();
-        if (!\is_null($request)) {
-            $locale = $request->getLocale();
-        }
-
-        return $locale;
+        return $this->getMasterRequest()?->getLocale() ?: $this->getDefaultLocale();
     }
 
     /**
