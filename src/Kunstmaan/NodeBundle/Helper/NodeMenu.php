@@ -66,26 +66,6 @@ class NodeMenu
     private $breadCrumb;
 
     /**
-     * @var Node[]
-     */
-    private $allNodes = [];
-
-    /**
-     * @var Node[]
-     */
-    private $childNodes = [];
-
-    /**
-     * @var Node[]
-     */
-    private $nodesByInternalName = [];
-
-    /**
-     * @var bool
-     */
-    private $initialized = false;
-
-    /**
      * @var NodeMenuItem
      */
     private $rootNodeMenuItem;
@@ -131,10 +111,6 @@ class NodeMenu
      */
     public function setPermission($permission)
     {
-        if ($this->permission !== $permission) {
-            // For now reset initialized flag when cached data has to be reset ...
-            $this->initialized = false;
-        }
         $this->permission = $permission;
     }
 
@@ -151,56 +127,7 @@ class NodeMenu
      */
     public function setIncludeHiddenFromNav($includeHiddenFromNav)
     {
-        if ($this->includeHiddenFromNav !== $includeHiddenFromNav) {
-            // For now reset initialized flag when cached data has to be reset ...
-            $this->initialized = false;
-        }
         $this->includeHiddenFromNav = $includeHiddenFromNav;
-    }
-
-    /**
-     * This method initializes the nodemenu only once, the method may be
-     * executed multiple times
-     */
-    private function init()
-    {
-        if ($this->initialized) {
-            return;
-        }
-
-        $this->allNodes = [];
-        $this->breadCrumb = null;
-        $this->childNodes = [];
-        $this->topNodeMenuItems = null;
-        $this->nodesByInternalName = [];
-
-        /* @var NodeRepository $repo */
-        $repo = $this->em->getRepository(Node::class);
-
-        // Get all possible menu items in one query (also fetch offline nodes)
-        $nodes = $repo->getChildNodes(
-            false,
-            $this->locale,
-            $this->permission,
-            $this->aclHelper,
-            $this->includeHiddenFromNav,
-            true,
-            $this->domainConfiguration->getRootNode()
-        );
-        foreach ($nodes as $node) {
-            $this->allNodes[$node->getId()] = $node;
-
-            if ($node->getParent()) {
-                $this->childNodes[$node->getParent()->getId()][] = $node;
-            } else {
-                $this->childNodes[0][] = $node;
-            }
-            $internalName = $node->getInternalName();
-            if ($internalName) {
-                $this->nodesByInternalName[$internalName][] = $node;
-            }
-        }
-        $this->initialized = true;
     }
 
     /**
@@ -208,29 +135,15 @@ class NodeMenu
      */
     public function getTopNodes()
     {
-        $this->init();
-        if (!\is_array($this->topNodeMenuItems)) {
-            $this->topNodeMenuItems = [];
-
-            // To be backwards compatible we need to create the top node MenuItems
-            if (\array_key_exists(0, $this->childNodes)) {
-                $topNodeMenuItems = $this->getTopNodeMenuItems();
-
-                $includeHiddenFromNav = $this->includeHiddenFromNav;
-                $this->topNodeMenuItems = array_filter(
-                    $topNodeMenuItems,
-                    function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
-                        if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
-                            return false;
-                        }
-
-                        return true;
-                    }
-                );
-            }
+        $rootNode = $this->domainConfiguration->getRootNode();
+        if (null === $rootNode) {
+            $rootNodes = $this->em->getRepository(Node::class)->getRootNodes();
+            $rootNode = $rootNodes[0];
         }
 
-        return $this->topNodeMenuItems;
+        return [
+            new NodeMenuItem($rootNode, $rootNode->getNodeTranslation($this->locale), null, $this),
+        ];
     }
 
     /**
@@ -306,37 +219,22 @@ class NodeMenu
      */
     public function getChildren(Node $node, $includeHiddenFromNav = true)
     {
-        $this->init();
-        $children = [];
+        $childNodes = $this->em->getRepository(Node::class)->getChildNodes(
+            $node->getId(),
+            $this->locale,
+            $this->permission,
+            $this->aclHelper,
+            $includeHiddenFromNav
+        );
 
-        if (\array_key_exists($node->getId(), $this->childNodes)) {
-            $nodes = $this->childNodes[$node->getId()];
-            /* @var Node $childNode */
-            foreach ($nodes as $childNode) {
-                $nodeTranslation = $childNode->getNodeTranslation(
-                    $this->locale,
-                    $this->includeOffline
-                );
-                if (!\is_null($nodeTranslation)) {
-                    $children[] = new NodeMenuItem(
-                        $childNode,
-                        $nodeTranslation,
-                        false,
-                        $this
-                    );
-                }
+        $children = [];
+        foreach ($childNodes as $childNode) {
+            $nt = $childNode->getNodeTranslation($this->locale);
+            if (null === $nt) {
+                continue;
             }
 
-            $children = array_filter(
-                $children,
-                function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
-                    if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
-                        return false;
-                    }
-
-                    return true;
-                }
-            );
+            $children[] = new NodeMenuItem($childNode, $nt, false, $this);
         }
 
         return $children;
@@ -345,35 +243,30 @@ class NodeMenu
     /**
      * @param bool $includeHiddenFromNav
      *
-     * @return array|\Kunstmaan\NodeBundle\Helper\NodeMenuItem[]
+     * @return NodeMenuItem[]
      */
     public function getSiblings(Node $node, $includeHiddenFromNav = true)
     {
-        $this->init();
-        $siblings = [];
-
-        if (false !== $parent = $this->getParent($node)) {
-            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
-
-            foreach ($siblings as $index => $child) {
-                if ($child === $node) {
-                    unset($siblings[$index]);
-                }
-            }
+        $parent = $this->getParent($node);
+        if (false === $parent) {
+            return [];
         }
 
-        return $siblings;
+        return array_filter(
+            $this->getChildren($parent, $includeHiddenFromNav),
+            static function (NodeMenuItem $item) use ($node) {
+                return $item->getNode() !== $node;
+            }
+        );
     }
 
     /**
      * @param bool $includeHiddenFromNav
      *
-     * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
+     * @return NodeMenuItem|false
      */
     public function getPreviousSibling(Node $node, $includeHiddenFromNav = true)
     {
-        $this->init();
-
         if (false !== $parent = $this->getParent($node)) {
             $siblings = $this->getChildren($parent, $includeHiddenFromNav);
 
@@ -390,20 +283,16 @@ class NodeMenu
     /**
      * @param bool $includeHiddenFromNav
      *
-     * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
+     * @return NodeMenuItem|false
      */
     public function getNextSibling(Node $node, $includeHiddenFromNav = true)
     {
-        $this->init();
-
         if (false !== $parent = $this->getParent($node)) {
             $siblings = $this->getChildren($parent, $includeHiddenFromNav);
 
+            $siblingCount = \count($siblings);
             foreach ($siblings as $index => $child) {
-                if ($child->getNode() === $node && (($index + 1) < \count(
-                    $siblings
-                ))
-                ) {
+                if ($child->getNode() === $node && (($index + 1) < $siblingCount)) {
                     return $siblings[$index + 1];
                 }
             }
@@ -413,20 +302,11 @@ class NodeMenu
     }
 
     /**
-     * @return NodeMenuItem
+     * @return Node|false
      */
     public function getParent(Node $node)
     {
-        $this->init();
-        if ($node->getParent() && \array_key_exists(
-            $node->getParent()->getId(),
-            $this->allNodes
-        )
-        ) {
-            return $this->allNodes[$node->getParent()->getId()];
-        }
-
-        return false;
+        return $node->getParent() ?? false;
     }
 
     /**
@@ -437,108 +317,40 @@ class NodeMenu
      */
     public function getNodeBySlug(NodeTranslation $parentNode, $slug)
     {
-        return $this->em->getRepository(NodeTranslation::class)
-            ->getNodeTranslationForSlug($slug, $parentNode);
+        return $this->em->getRepository(NodeTranslation::class)->getNodeTranslationForSlug($slug, $parentNode);
     }
 
     /**
-     * @param string                                        $internalName   The
-     *                                                                      internal
-     *                                                                      name
-     * @param NodeTranslation|NodeMenuItem|HasNodeInterface $parent         The
-     *                                                                      parent
+     * @param string                                        $internalName
+     * @param NodeTranslation|NodeMenuItem|HasNodeInterface $parent
      * @param bool                                          $includeOffline
      *
      * @return NodeMenuItem|null
      */
-    public function getNodeByInternalName(
-        $internalName,
-        $parent = null,
-        $includeOffline = null,
-    ) {
-        $this->init();
-        $resultNode = null;
+    public function getNodeByInternalName($internalName, $parent = null, $includeOffline = null)
+    {
+        trigger_deprecation('kunstmaan/node-bundle', '7.2', 'The "%s" method is deprecated and will be removed in 8.0. Use the "%s" repository method or the "get_node_by_internal_name" twig method instead.', __METHOD__, '\Kunstmaan\NodeBundle\Repository\NodeRepository::getNodesByInternalName');
 
-        if (\is_null($includeOffline)) {
-            $includeOffline = $this->includeOffline;
+        $repo = $this->em->getRepository(Node::class);
+        $includeOffline = $includeOffline ?? $this->includeOffline;
+
+        $parentId = false;
+        if ($parent instanceof NodeTranslation) {
+            $parentId = $parent->getNode()->getId();
+        } elseif ($parent instanceof NodeMenuItem) {
+            $parentId = $parent->getNode()->getId();
+        } elseif ($parent instanceof HasNodeInterface) {
+            $parentId = $repo->getNodeFor($parent)->getId();
         }
 
-        if (\array_key_exists($internalName, $this->nodesByInternalName)) {
-            $nodes = $this->nodesByInternalName[$internalName];
-            $nodes = array_filter(
-                $nodes,
-                function (Node $entry) use ($includeOffline) {
-                    if ($entry->isDeleted() && !$includeOffline) {
-                        return false;
-                    }
-
-                    return true;
-                }
-            );
-
-            if (!\is_null($parent)) {
-                $parentNode = null;
-                /** @var Node $parentNode */
-                if ($parent instanceof NodeTranslation) {
-                    $parentNode = $parent->getNode();
-                } elseif ($parent instanceof NodeMenuItem) {
-                    $parentNode = $parent->getNode();
-                } elseif ($parent instanceof HasNodeInterface) {
-                    $repo = $this->em->getRepository(
-                        Node::class
-                    );
-                    $parentNode = $repo->getNodeFor($parent);
-                }
-
-                // Look for a node with the same parent id
-                /** @var Node $node */
-                foreach ($nodes as $node) {
-                    if ($parentNode && $node->getParent()->getId() == $parentNode->getId()) {
-                        $resultNode = $node;
-
-                        break;
-                    }
-                }
-
-                // Look for a node that has an ancestor with the same parent id
-                if (\is_null($resultNode)) {
-                    /* @var Node $n */
-                    foreach ($nodes as $node) {
-                        $tempNode = $node;
-                        while (\is_null($resultNode) && !\is_null(
-                            $tempNode->getParent()
-                        )) {
-                            $tempParent = $tempNode->getParent();
-                            if ($parentNode && $tempParent->getId() == $parentNode->getId()) {
-                                $resultNode = $node;
-
-                                break;
-                            }
-                            $tempNode = $tempParent;
-                        }
-                    }
-                }
-            } elseif (\count($nodes) > 0) {
-                $resultNode = $nodes[0];
-            }
+        $nodes = $repo->getNodesByInternalName($internalName, $this->locale, $parentId, $includeOffline);
+        if (count($nodes) === 0) {
+            return null;
         }
 
-        if ($resultNode) {
-            $nodeTranslation = $resultNode->getNodeTranslation(
-                $this->locale,
-                $includeOffline
-            );
-            if (!\is_null($nodeTranslation)) {
-                return new NodeMenuItem(
-                    $resultNode,
-                    $nodeTranslation,
-                    false,
-                    $this
-                );
-            }
-        }
+        $returnNode = $nodes[0];
 
-        return null;
+        return new NodeMenuItem($returnNode, $returnNode->getNodeTranslation($this->locale), false, $this);
     }
 
     /**
@@ -584,10 +396,14 @@ class NodeMenu
     }
 
     /**
+     * @deprecated since 7.2. Use the tokenStorage service or twig global app.user variable
+     *
      * @return BaseUser
      */
     public function getUser()
     {
+        trigger_deprecation('kunstmaan/node-bundle', '7.2', 'The "%s" method is deprecated and will be removed in 8.0. Use the "security.token_storage" or retreive the user with the "app.user" global variable.', __METHOD__);
+
         return $this->tokenStorage->getToken()->getUser();
     }
 
@@ -604,6 +420,8 @@ class NodeMenu
      */
     public function getTokenStorage()
     {
+        trigger_deprecation('kunstmaan/node-bundle', '7.2', 'The "%s" method is deprecated and will be removed in 8.0.', __METHOD__);
+
         return $this->tokenStorage;
     }
 
@@ -612,6 +430,8 @@ class NodeMenu
      */
     public function getAclHelper()
     {
+        trigger_deprecation('kunstmaan/node-bundle', '7.2', 'The "%s" method is deprecated and will be removed in 8.0.', __METHOD__);
+
         return $this->aclHelper;
     }
 
@@ -651,33 +471,13 @@ class NodeMenu
     }
 
     /**
+     * @deprecated since 7.2.
      * @return bool
      */
     public function isInitialized()
     {
-        return $this->initialized;
-    }
+        trigger_deprecation('kunstmaan/node-bundle', '7.2', 'The "%s" method is deprecated and will be removed in 8.0.', __METHOD__);
 
-    private function getTopNodeMenuItems(): array
-    {
-        $topNodeMenuItems = [];
-        $topNodes = $this->childNodes[0];
-        /* @var Node $topNode */
-        foreach ($topNodes as $topNode) {
-            $nodeTranslation = $topNode->getNodeTranslation(
-                $this->locale,
-                $this->includeOffline
-            );
-            if (!\is_null($nodeTranslation)) {
-                $topNodeMenuItems[] = new NodeMenuItem(
-                    $topNode,
-                    $nodeTranslation,
-                    null,
-                    $this
-                );
-            }
-        }
-
-        return $topNodeMenuItems;
+        return true;
     }
 }
