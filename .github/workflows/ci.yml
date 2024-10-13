@@ -24,11 +24,6 @@ jobs:
 
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
-                        php: '8.2'
-                        symfony: '^6.4'
-
-                    # Test latest php with LTS versions.
-                    -   deps: 'lts'
                         php: '8.3'
                         symfony: '^6.4'
 
