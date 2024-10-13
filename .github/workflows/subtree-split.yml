@@ -39,7 +39,7 @@ jobs:
                     key: '${{ runner.os }}-splitsh-v101'
 
             -   name: Subtree split
-                uses: acrobat/subtree-splitter@v1.1.4
+                uses: acrobat/subtree-splitter@v1.1.5
                 with:
                     config-path: .build/subtree-splitter-config.json
                     batch-size: 1
