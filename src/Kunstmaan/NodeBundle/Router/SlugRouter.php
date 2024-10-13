@@ -186,7 +186,6 @@ class SlugRouter implements RouterInterface
             '_controller' => SlugController::class . '::slugAction',
             'preview' => true,
             'url' => '',
-            '_locale' => $this->getDefaultLocale(),
         ];
         $previewRequirements = [
             'url' => $this->getSlugPattern(),
@@ -194,8 +193,9 @@ class SlugRouter implements RouterInterface
 
         if ($this->isMultiLanguage()) {
             $previewPath = '/{_locale}' . $previewPath;
-            unset($previewDefaults['_locale']);
             $previewRequirements['_locale'] = $this->getEscapedLocales($this->getBackendLocales());
+        } else {
+            $previewDefaults['_locale'] = $this->getDefaultLocale();
         }
 
         return [
@@ -217,7 +217,6 @@ class SlugRouter implements RouterInterface
             '_controller' => SlugController::class . '::slugAction',
             'preview' => false,
             'url' => '',
-            '_locale' => $this->getDefaultLocale(),
         ];
         $slugRequirements = [
             'url' => $this->getSlugPattern(),
@@ -225,8 +224,9 @@ class SlugRouter implements RouterInterface
 
         if ($this->isMultiLanguage()) {
             $slugPath = '/{_locale}' . $slugPath;
-            unset($slugDefaults['_locale']);
             $slugRequirements['_locale'] = $this->getEscapedLocales($this->getFrontendLocales());
+        } else {
+            $slugDefaults['_locale'] = $this->getDefaultLocale();
         }
 
         return [
