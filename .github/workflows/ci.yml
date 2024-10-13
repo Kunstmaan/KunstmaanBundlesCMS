@@ -14,7 +14,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ['8.1', '8.2']
+                php: ['8.1', '8.2', '8.3']
                 deps: ['stable']
                 symfony: [''] # Don't lock to a specific symfony version by default
                 include:
@@ -24,7 +24,7 @@ jobs:
 
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
-                        php: '8.2'
+                        php: '8.3'
                         symfony: '^6.4'
 
         steps:
