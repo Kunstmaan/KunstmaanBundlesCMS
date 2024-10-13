@@ -13,9 +13,17 @@
                         {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
                         {% for name, ext in supported_export_extensions() %}
                             {% set exportparams = exportparams|merge({"_format": ext}) %}
+                            {% set iconName = name|lower %}
+                            {% if iconName == 'csv' %}
+                                {% set icon = 'fa-file-code' %}
+                            {% elseif iconName == 'excel' %}
+                                {% set icon = 'fa-file-excel' %}
+                            {% else %}
+                                {% set icon = 'fa-file' %}
+                            {% endif %}
                             <li>
                                 <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
-                                    <i class="fa fa-file-{{ name|lower }}"></i>
+                                    <i class="fa {{ icon }}"></i>
                                     {{ name }}
                                 </a>
                             </li>
