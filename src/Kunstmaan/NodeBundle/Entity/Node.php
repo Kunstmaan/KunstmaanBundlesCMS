@@ -280,9 +280,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get parent
-     *
-     * @return Node
+     * @return Node|null
      */
     public function getParent()
     {
