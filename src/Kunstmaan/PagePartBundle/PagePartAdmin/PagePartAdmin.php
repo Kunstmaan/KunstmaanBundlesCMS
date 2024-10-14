@@ -150,6 +150,10 @@ class PagePartAdmin
             }
 
             preg_match('#^delete_pagepartadmin_(\d+)_(.*)#', $key, $ppInfo);
+            // Skip not persisted sub entities
+            if (!isset($ppInfo[1], $ppInfo[2])) {
+                continue;
+            }
             preg_match_all('#([a-zA-Z0-9]+)_(\\d+)#', $ppInfo[2], $matches, PREG_SET_ORDER);
 
             if (count($matches) > 0) {
@@ -172,7 +176,11 @@ class PagePartAdmin
             // Remove sub-entities from pageparts
             if (\array_key_exists($pagePartRef->getId(), $subPagePartsToDelete)) {
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
+                /** @var PagePartDeleteInfo|null $deleteInfo */
                 foreach ($subPagePartsToDelete[$pagePartRef->getId()] as $deleteInfo) {
+                    if ($deleteInfo === null) {
+                        continue;
+                    }
                     /** @var EntityInterface $deleteObject */
                     $deleteObject = $this->getObjectForDeletion($pagePart, $deleteInfo);
 
