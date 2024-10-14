@@ -1,77 +1,135 @@
 {% block urlchooser_widget %}
     {% apply spaceless %}
-        {% set linkUrl = form.link_url.vars %}
+        {% set improvedUrlChooser = form.vars.improved_url_chooser|default(false) %}
+        {% if not improvedUrlChooser %}
+            {% set linkUrl = form.link_url.vars %}
+            <div id="{{ id }}-urlchooser-widget" class="urlchooser-wrapper" data-chooser-name="{{ full_name }}">
+                {% block urlChooserModal %}
+                    <!-- URL Chooser Modal -->
+                    <div class="js-ajax-modal modal fade" id="{{ linkUrl.id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ linkUrl.id }}">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
 
-        <div id="{{ id }}-urlchooser-widget" class="urlchooser-wrapper" data-chooser-name="{{ full_name }}">
-            <!-- URL Chooser Modal -->
-            <div class="js-ajax-modal modal fade" id="{{ linkUrl.id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ linkUrl.id }}">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+                                <!-- Header -->
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                    <h3 class="modal-title">
+                                        {{ 'kuma_node.widget.url_chooser' | trans }}
+                                    </h3>
+                                </div>
 
-                        <!-- Header -->
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <i class="fa fa-times"></i>
-                            </button>
-                            <h3 class="modal-title">
-                                {{ 'kuma_node.widget.url_chooser' | trans }}
-                            </h3>
+                                <!-- Body -->
+                                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+                            </div>
                         </div>
+                    </div>
+                {% endblock %}
 
-                        <!-- Body -->
-                        <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+                <div class="urlchooser">
+                    <div class="input-group">
+                        {% if form.link_type is defined %}
+                            {% set linkType = form.link_type %}
+                            {% set label = "pagepart.link.internal" | trans %}
+
+                            {% if linkType.vars.value %}
+                                {% for choice in linkType.vars.choices %}
+                                    {% if choice.value == linkType.vars.value %}
+                                        {% set label = choice.label | trans %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default urlchooser__link-type" data-toggle="dropdown" title="Select link type" data-target-id="">
+                                    {{ label }} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    {% for choice in linkType.vars.choices %}
+                                        <li data-name="{{ linkType.vars.full_name }}" data-id="{{ linkType.vars.id }}" class="{% if linkType.vars.attr is defined %}{{ linkType.vars.attr.class }}{% endif %}" data-value="{{ choice.value }}">
+                                            <a href="#" data-xhr>{{ choice.label | trans }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <input type="hidden" name="{{ linkType.vars.full_name }}" value="{{ linkType.vars.data }}" id="{{ linkType.vars.id }}" class="form-control">
+                            </div>
+                        {% endif %}
+                        <div id="{{ linkUrl.id }}-widget" class="input-group urlchooser-widget {% if form.link_type is defined %}urlchooser__link-url{% endif %}">
+                            {% if linkUrl.attr.choose_url is defined %}
+                                <input type="hidden" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}">
+                                <input type="text" disabled="disabled" class="form-control js-urlchooser-value" value="{{ linkUrl.value ? linkUrl.value|replace_url : '' }}">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ linkUrl.id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+                                        {{ 'kuma_node.widget.choose' | trans }}
+                                    </button>
+                                </span>
+                            {% else %}
+                                <input type="text" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}"{% if linkUrl.attr is defined and linkUrl.attr.placeholder is defined %} placeholder="{{ linkUrl.attr.placeholder }}"{% endif %}>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
+        {% else %}
+            {% set linkUrl = form.link_url.vars %}
 
-            <div class="urlchooser">
-                <div class="input-group">
-                    {% if form.link_type is defined %}
-                        {% set linkType = form.link_type %}
-                        {% set label = "pagepart.link.internal" | trans %}
+            {% set link_typeVars = form.link_type.vars %}
+            {% set buttonId = link_typeVars.id ~ '_button' %}
+            {% set choices = link_typeVars.choices %}
 
-                        {% if linkType.vars.value %}
-                            {% for choice in linkType.vars.choices %}
-                                {% if choice.value == linkType.vars.value %}
-                                    {% set label = choice.label | trans %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
+            {% set activeChoice = link_typeVars.value is not empty and link_typeVars.value in choices|keys ? choices[link_typeVars.value] : choices|first %}
+            <div id="{{ id }}-urlchooser-widget" class="urlchooser-wrapper" data-chooser-name="{{ full_name }}" data-link-type-id="{{ buttonId }}">
+                <div class="urlchooser">
+                    {{ form_widget(form.link_url) }}
+                    <div class="input-group">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-default urlchooser__link-type" data-toggle="dropdown" title="Select link type" data-target-id="">
-                                {{ label }} <span class="caret"></span>
+                            <button type="button" class="btn btn-default urlchooser__link-type" data-toggle="dropdown"
+                                    title="Select link type" data-target-id="">
+                                <span class="text">{{ activeChoice|trans }}</span>&nbsp;<span class="caret"></span>
                             </button>
+                            {{ form_widget(form.link_type, {'attr': {'data-button-id': buttonId}}) }}
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                {% for choice in linkType.vars.choices %}
-                                    <li data-name="{{ linkType.vars.full_name }}" data-id="{{ linkType.vars.id }}" class="{% if linkType.vars.attr is defined %}{{ linkType.vars.attr.class }}{% endif %}" data-value="{{ choice.value }}">
-                                        <a href="#">{{ choice.label | trans }}</a>
+                                {% for choiceValue, choiceLabel in choices %}
+                                    <li data-name="{{ link_typeVars.full_name }}"
+                                        data-id="{{ buttonId }}"
+                                        class="js-change-link-type" data-value="{{ choiceValue }}">
+                                        <a href="#">{{ choiceLabel | trans }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <input type="hidden" name="{{ linkType.vars.full_name }}" value="{{ linkType.vars.data }}" id="{{ linkType.vars.id }}" class="form-control">
                         </div>
-                    {% endif %}
-                    <div id="{{ linkUrl.id }}-widget" class="input-group urlchooser-widget {% if form.link_type is defined %}urlchooser__link-url{% endif %}">
-                        {% if linkUrl.attr.choose_url is defined %}
-                            <input type="hidden" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}">
-                            <input type="text" disabled="disabled" class="form-control js-urlchooser-value" value="{{ linkUrl.value ? linkUrl.value|replace_url : '' }}">
-                            <span class="input-group-btn">
-                        <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ linkUrl.id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
-                            {{ 'kuma_node.widget.choose' | trans }}
-                        </button>
-                    </span>
-                        {% else %}
-                            <input type="text" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}"{% if linkUrl.attr is defined and linkUrl.attr.placeholder is defined %} placeholder="{{ linkUrl.attr.placeholder }}"{% endif %}>
-                        {% endif %}
+                        {{ form_widget(form.choice_internal, {
+                            'attr': {'data-toggle-selector': buttonId, 'data-toggle-on': 'internal', 'class': link_typeVars.data != 'internal' ? 'hidden' : ''},
+                            'linkUrl': linkUrl,
+                            'linkTypeId': buttonId
+                        }) }}
+                        {{ form_widget(form.choice_external, { 'attr': {'data-toggle-selector': buttonId, 'data-toggle-on': 'external', 'class': link_typeVars.data != 'external' ? 'hidden' : ''}}) }}
+                        {{ form_widget(form.choice_email, { 'attr': {'data-toggle-selector': buttonId, 'data-toggle-on': 'email', 'class': link_typeVars.data != 'email' ? 'hidden' : ''}}) }}
                     </div>
                 </div>
             </div>
-
-        </div>
-
+        {% endif %}
     {% endapply %}
 {% endblock urlchooser_widget %}
+
+{% block internal_url_selector_widget %}
+    {{ block('urlChooserModal') }}
+
+    <div class="input-group urlchooser-widget urlchooser__link-url {% if attr.class is defined %}{{ attr.class }}{% endif %}" data-toggle-selector="{{ linkTypeId }}"
+        data-toggle-on="internal">
+        {{ form_widget(form.input, {'value': linkUrl.value ? linkUrl.value : '', 'id': form.vars.id}) }}
+        <input type="text" disabled="disabled" class="form-control js-urlchooser-value"
+            value="{{ form.parent.link_type.vars.value == 'internal' ?  (linkUrl.value ? linkUrl.value|replace_url : '') : '' }}">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal"
+                data-target="#{{ linkUrl.id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+                {{ 'kuma_node.widget.choose' | trans }}
+            </button>
+        </span>
+    </div>
+
+{% endblock %}
 
 {% block slug_widget %}
     {% apply spaceless %}

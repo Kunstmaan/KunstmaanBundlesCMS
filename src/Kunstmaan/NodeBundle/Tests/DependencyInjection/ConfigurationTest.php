@@ -30,6 +30,7 @@ class ConfigurationTest extends TestCase
                 'threshold' => 35,
             ],
             'enable_permissions' => true,
+            'enable_improved_urlchooser' => false,
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
