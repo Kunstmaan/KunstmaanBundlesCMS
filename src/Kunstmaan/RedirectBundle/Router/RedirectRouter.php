@@ -120,12 +120,26 @@ class RedirectRouter implements RouterInterface
             return;
         }
 
-        $routePath = str_contains($redirect->getOrigin(), '/*') ? $pathInfo : $redirect->getOrigin();
+        $origin = $redirect->getOrigin();
+        $routePath = str_contains($origin, '/*') ? $pathInfo : $origin;
         $targetPath = $redirect->getTarget();
-        if (str_contains($redirect->getOrigin(), '/*') && str_contains($redirect->getTarget(), '/*')) {
-            $origin = rtrim($redirect->getOrigin(), '/*');
+        if (str_contains($origin, '/*') && str_contains($redirect->getTarget(), '/*')) {
+            if ($origin === '/*' && $routePath === '/') { // exclude root path
+                return;
+            }
+
+            $origin = rtrim($origin, '/*');
             $target = rtrim($redirect->getTarget(), '/*');
-            $targetPath = str_replace($origin, $target, $pathInfo);
+            if ($origin === '') {
+                $targetPath = $target . $pathInfo;
+            } else {
+                $targetPath = str_replace($origin, $target, $pathInfo);
+            }
+        }
+
+        $queryString = $this->context->getQueryString();
+        if ($queryString) {
+            $targetPath .= '?' . $queryString;
         }
 
         $needsUtf8 = false;
