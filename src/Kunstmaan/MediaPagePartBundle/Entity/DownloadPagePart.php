@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -21,6 +22,7 @@ class DownloadPagePart extends AbstractPagePart
      */
     #[ORM\ManyToOne(targetEntity: Media::class)]
     #[ORM\JoinColumn(name: 'media_id', referencedColumnName: 'id')]
+    #[Assert\NotBlank]
     protected $media;
 
     /**
