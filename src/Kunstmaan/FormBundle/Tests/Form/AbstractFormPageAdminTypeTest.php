@@ -25,7 +25,7 @@ class FormPage extends AbstractFormPage
 {
     public function getPossibleChildTypes(): array
     {
-        return null;
+        return [];
     }
 
     public function getPagePartAdminConfigurations(): array
@@ -83,7 +83,7 @@ class AbstractFormPageAdminTypeTest extends TypeTestCase
         }
     }
 
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
         $mediaTokenTransformer = $this->createMock(MediaTokenTransformer::class);
         $mediaTokenTransformer->expects($this->once())
