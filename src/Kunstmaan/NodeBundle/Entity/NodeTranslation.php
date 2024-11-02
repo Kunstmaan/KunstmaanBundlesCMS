@@ -343,7 +343,7 @@ class NodeTranslation extends AbstractEntity
      */
     public function getNodeVersion($type)
     {
-        if ($type == 'public') {
+        if ($type === 'public') {
             return $this->publicNodeVersion;
         }
 
@@ -372,7 +372,7 @@ class NodeTranslation extends AbstractEntity
         $this->nodeVersions[] = $nodeVersion;
         $nodeVersion->setNodeTranslation($this);
 
-        if ($nodeVersion->getType() == 'public') {
+        if ($nodeVersion->getType() === 'public') {
             $this->publicNodeVersion = $nodeVersion;
         }
 

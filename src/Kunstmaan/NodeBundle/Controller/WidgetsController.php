@@ -59,7 +59,7 @@ final class WidgetsController extends AbstractController
         $id = $request->query->get('id');
         $depth = $this->getParameter('kunstmaan_node.url_chooser.lazy_increment');
 
-        if (!$id || $id == '#') {
+        if (!$id || $id === '#') {
             if ($this->domainConfiguration->isMultiDomainHost()) {
                 $switchedHost = $this->domainConfiguration->getHostSwitched();
                 $rootItems = [$this->domainConfiguration->getRootNode($switchedHost['host'])];

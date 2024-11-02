@@ -31,11 +31,11 @@ class Fixture
         $this->setClass($class);
 
         foreach ($specs as $spec => $data) {
-            if ($spec != 'translations' && $spec != 'parameters') {
+            if ($spec !== 'translations' && $spec !== 'parameters') {
                 $this->addProperty($spec, $data);
-            } elseif ($spec == 'translations') {
+            } elseif ($spec === 'translations') {
                 $this->setTranslations($data);
-            } elseif ($spec == 'parameters') {
+            } elseif ($spec === 'parameters') {
                 $this->setParameters($data);
             }
         }

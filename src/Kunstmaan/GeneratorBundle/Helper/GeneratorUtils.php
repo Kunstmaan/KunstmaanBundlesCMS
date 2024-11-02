@@ -28,7 +28,7 @@ class GeneratorUtils
 
         $result = preg_replace('/_*$/i', '', strtolower($prefixString)) . '_';
 
-        if ($result == '_') {
+        if ($result === '_') {
             return null;
         }
 
@@ -121,7 +121,7 @@ class GeneratorUtils
         }
 
         // Can't have a / at the end.
-        if (substr($pathInSkeleton, -1) == '/') {
+        if (substr($pathInSkeleton, -1) === '/') {
             $pathInSkeleton = rtrim($pathInSkeleton, '/');
         }
 

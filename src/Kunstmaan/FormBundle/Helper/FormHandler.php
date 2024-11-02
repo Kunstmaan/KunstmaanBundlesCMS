@@ -68,7 +68,7 @@ class FormHandler implements FormHandlerInterface
         }
 
         $form = $formBuilder->getForm();
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $formSubmission = new FormSubmission();

@@ -132,7 +132,7 @@ class PagePartContext implements Context
         $element = $field->getParent()->find('xpath', "//input[contains(@class, 'form_timepicker')]");
         $element->setValue($timeValue);
 
-        if ($element->getValue() == '') {
+        if ($element->getValue() === '') {
             $id = $element->getAttribute('id');
             if (!empty($id)) {
                 $javascript = "document.getElementById('" . $id . "').value='" . $timeValue . "';";
