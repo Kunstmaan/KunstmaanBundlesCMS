@@ -78,7 +78,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
 

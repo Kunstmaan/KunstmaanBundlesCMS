@@ -22,7 +22,7 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Load data fixtures with the passed EntityManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->repo = $manager->getRepository(Entity::class);
 
