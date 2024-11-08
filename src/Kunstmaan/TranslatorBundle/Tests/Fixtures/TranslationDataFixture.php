@@ -23,7 +23,7 @@ final class TranslationDataFixture implements FixtureInterface
         $this->faker = FakerFactory::create();
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->errorKeys($manager);
         $this->exceptionKeys($manager);
