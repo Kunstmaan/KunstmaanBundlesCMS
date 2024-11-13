@@ -76,6 +76,7 @@ class RedirectRouterTest extends TestCase
         yield 'Wildcard root origin to wildcard root target redirect with query params' => ['/test/abc/def?query=test', 'https://www.google.com/test/abc/def?query=test', $this->getRedirect(12, '/*', 'https://www.google.com/*')];
         yield 'Wildcard root origin to wildcard root target with root path should not redirect' => ['/', null, $this->getRedirect(13, '/*', 'https://www.google.com/*')];
         yield 'Redirect with query params' => ['/test?query=test', 'https://www.google.com/test?query=test', $this->getRedirect(14, '/test', 'https://www.google.com/test')];
+        yield 'Wildcard root origin to wildcard root target redirect with spaces' => ['/test/abc/%20def?query=test', 'https://www.google.com/test/abc/%20def?query=test', $this->getRedirect(15, '/*', 'https://www.google.com/*')];
     }
 
     private function getRedirect(int $id, string $origin, string $target, bool $permanent = false, ?string $domain = null): Redirect
