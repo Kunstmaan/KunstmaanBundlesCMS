@@ -78,7 +78,7 @@ class ExportService
 
             $iterator = $adminList->getIterator();
             foreach ($iterator as $item) {
-                if (\array_key_exists(0, $item)) {
+                if (\is_array($item) && \array_key_exists(0, $item)) {
                     $itemObject = $item[0];
                 } else {
                     $itemObject = $item;
