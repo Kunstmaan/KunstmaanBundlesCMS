@@ -151,7 +151,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 }
                 $parent_id = \is_null($nodeInfo['parent']) ? 0 : $nodeInfo['parent'];
                 unset($nodeInfo['parent']);
-                $this->treeNodes[$parent_id][] = $nodeInfo;
+                $this->treeNodes[$parent_id][$nodeInfo['id']] = $nodeInfo;
             }
             unset($allNodes);
         }
