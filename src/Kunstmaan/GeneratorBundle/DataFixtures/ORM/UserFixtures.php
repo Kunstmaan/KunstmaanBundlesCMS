@@ -112,10 +112,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
 
     /**
      * Get the order of this fixture
-     *
-     * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }
