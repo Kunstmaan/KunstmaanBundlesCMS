@@ -65,10 +65,8 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 
     /**
      * Get the order of this fixture
-     *
-     * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

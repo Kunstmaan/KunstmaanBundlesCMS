@@ -1,8 +1,8 @@
 # How to use the FixturesBundle
 
-You will still use the default doctrine fixtures way but instead of extending from the `Doctrine\Common\DataFixtures\AbstractFixture` class, 
+You will still use the default doctrine fixtures way but instead of extending from the `Doctrine\Common\DataFixtures\AbstractFixture` class,
 you will instead extend from the `Kunstmaan\FixturesBundle\Loader\FixtureLoader` class.
- 
+
 This is what your fixture class will look like:
 
 ```php
@@ -25,10 +25,8 @@ class YamlFixtures extends FixtureLoader implements OrderedFixtureInterface
 
     /**
      * Get the order of this fixture
-     *
-     * @return integer
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 50;
     }
@@ -103,7 +101,7 @@ So how do these yaml files look like?
 
 \Acme\SomeBundle\Entity\PageParts\ContactPagePart:
     contact_pp_{1..5}:
-        contacts: 
+        contacts:
             - @contact_ironman
             - @contact_blackwidow
             - @contact_thor
@@ -115,7 +113,7 @@ So how do these yaml files look like?
             fr: []
 
     contact_pp_{6..10}:
-        contacts: 
+        contacts:
             - @contact_hulk
             - @contact_captainamerica
             - @contact_hawkeye
@@ -147,16 +145,16 @@ to your fixture class and returning an array containing your providers or you ca
 ### Parsers
 
 Parsers are used to translate the yaml data into actual data. So something like ```@content<current()>``` will be transformed to an object by different parsers.
-By default you have the Method and the Reference parser for property data and the Listed and Range parser for specs. If you want to add your 
+By default you have the Method and the Reference parser for property data and the Listed and Range parser for specs. If you want to add your
 own parser, you can simply to that by tagging them with ```kunstmaan_fixtures.parser.property``` or ```kunstmaan_fixtures.parser.spec```
 
 ### Populators
 
-Does exactly what the name says. Populators will populate the entities once all the yaml data is parsed. If you want to add your own populator, 
+Does exactly what the name says. Populators will populate the entities once all the yaml data is parsed. If you want to add your own populator,
 simply tag it with ```kunstmaan_fixtures.populator```
 
 ### Builders
 
 With builders you can manipulate the behaviour during the creation of your entity. This can happen in three stages, preBuild, postBuild and postFlushBuild.
-During these stages you can manipulate your entity or add more entities like we do in the PageBuilder for instance. If you want to add your own builder, 
+During these stages you can manipulate your entity or add more entities like we do in the PageBuilder for instance. If you want to add your own builder,
 simply tag it with ```kunstmaan_fixtures.builder```
