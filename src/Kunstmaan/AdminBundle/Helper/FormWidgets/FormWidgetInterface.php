@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +20,9 @@ interface FormWidgetInterface
     public function bindRequest(Request $request);
 
     /**
-     * @param EntityManager $em The entity manager
+     * @param EntityManagerInterface $em The entity manager
      */
-    public function persist(EntityManager $em);
+    public function persist(EntityManagerInterface $em);
 
     /**
      * @return array

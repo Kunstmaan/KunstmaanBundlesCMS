@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -23,7 +22,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 final class InitAclCommand extends Command
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 

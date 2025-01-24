@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -168,9 +167,9 @@ class PageTemplateWidget extends FormWidget
     }
 
     /**
-     * @param EntityManager $em The entity manager
+     * @param EntityManagerInterface $em The entity manager
      */
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
         $em->persist($this->pageTemplateConfiguration);
         foreach ($this->widgets as $widget) {

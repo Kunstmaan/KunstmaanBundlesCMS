@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Result;
 use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\NativeQuery;
@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 class AclHelperTest extends TestCase
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\ListWidget;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ class ListWidgetTest extends TestCase
 
         $widget = $this->createMock(FormWidget::class);
         $builder = $this->createMock(FormBuilder::class);
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
 
         $widget->expects($this->exactly(2))->method('bindRequest')->willReturn(true);
         $widget->expects($this->exactly(2))->method('persist')->willReturn(true);

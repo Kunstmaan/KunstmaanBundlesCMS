@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\Role;
@@ -143,7 +143,7 @@ class PermissionAdminTest extends TestCase
     /**
      * Return entity manager mock
      */
-    public function getEntityManager(): EntityManager
+    public function getEntityManager(): EntityManagerInterface
     {
         return $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()

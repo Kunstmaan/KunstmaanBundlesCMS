@@ -4,7 +4,7 @@ namespace Kunstmaan\FormBundle\Tests\AdminList;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Configuration;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
@@ -40,7 +40,7 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
         $this->object = new FormSubmissionExportListConfigurator($em, $nt, $translator);
     }
 
-    protected function getMockedEntityManager(): \Doctrine\ORM\EntityManager
+    protected function getMockedEntityManager(): EntityManagerInterface
     {
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
@@ -89,7 +89,7 @@ class FormSubmissionExportListConfiguratorTest extends TestCase
         $repository->method('findBy')->willReturn(null);
         $repository->method('findOneBy')->willReturn(null);
 
-        $emMock = $this->createMock(EntityManager::class);
+        $emMock = $this->createMock(EntityManagerInterface::class);
         $emMock->method('getRepository')->willReturn($repository);
         $emMock->method('getClassMetaData')->willReturn((object) ['name' => 'aClass']);
         $emMock->method('getConfiguration')->willReturn($configuration);

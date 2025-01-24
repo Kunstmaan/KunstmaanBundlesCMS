@@ -46,7 +46,7 @@ This is based on the best practices described in the [Symfony Cookbook](http://s
 
 * PHPDoc blocks should be added for all classes, methods and functions (@Param, @return, @throws)
   * use "int" instead of "integer", "bool" instead of "boolean", PagePartRef[] instead of array(PagePartRef)
-  * use inline typecasting: /* @var EntityManager $em */ (be sure the "use" statement is also done at the top)
+  * use inline typecasting: /* @var EntityManagerInterface $em */ (be sure the "use" statement is also done at the top)
 * classes in the PHPDoc blocks should not be fully namespaced, but imported (use) at the top
 * @return should be removed, if the function doesn't return anything
 

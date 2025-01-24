@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\ArticleBundle\Tests\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -20,7 +20,7 @@ class Configurator extends AbstractArticlePageAdminListConfigurator
     /** @var EntityRepository */
     private $repo;
 
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, $repo)
+    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper, $locale, $permission, $repo)
     {
         parent::__construct($em, $aclHelper, $locale, $permission);
         $this->repo = $repo;
@@ -42,13 +42,13 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
     protected $object;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
     protected function setUp(): void
     {
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $em->expects($this->any())
             ->method($this->anything())
             ->willReturn($em);
@@ -62,7 +62,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
         $this->em = $em;
 
-        /* @var EntityManager $em */
+        /* @var EntityManagerInterface $em */
         /* @var AclHelper $acl */
         $this->object = new Configurator($em, $acl, 'nl', 'admin', $repo);
     }
@@ -127,7 +127,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
      */
     public function testGetQueryBuilder()
     {
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $qb = $this->createMock(QueryBuilder::class);
         $em->expects($this->any())
             ->method('createQueryBuilder')
@@ -159,7 +159,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
      */
     public function testEntityClassName()
     {
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $repo = $this->createMock(EntityRepository::class);
 
         $em->expects($this->any())

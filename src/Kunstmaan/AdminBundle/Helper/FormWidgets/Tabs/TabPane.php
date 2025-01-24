@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
@@ -93,9 +93,9 @@ class TabPane
     }
 
     /**
-     * @param EntityManager $em The entity manager
+     * @param EntityManagerInterface $em The entity manager
      */
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
         foreach ($this->tabs as $tab) {
             $tab->persist($em);

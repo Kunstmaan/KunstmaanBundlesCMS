@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
@@ -47,11 +47,11 @@ class AclHelper
     private $permissionsEnabled;
 
     /**
-     * @param EntityManager          $em           The entity manager
+     * @param EntityManagerInterface $em           The entity manager
      * @param TokenStorageInterface  $tokenStorage The security token storage
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, $permissionsEnabled = true)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ChangeableLimitInterface;
@@ -38,13 +38,13 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     private $request;
 
     /**
-     * @param EntityManager $em           The entity manager
-     * @param MediaManager  $mediaManager The media manager
-     * @param Folder        $folder       The current folder
-     * @param Request       $request      The request object
+     * @param EntityManagerInterface $em           The entity manager
+     * @param MediaManager           $mediaManager The media manager
+     * @param Folder                 $folder       The current folder
+     * @param Request                $request      The request object
      */
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         MediaManager $mediaManager,
         Folder $folder,
         Request $request,

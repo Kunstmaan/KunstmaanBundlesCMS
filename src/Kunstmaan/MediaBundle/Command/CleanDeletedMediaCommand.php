@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
@@ -17,7 +16,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 final class CleanDeletedMediaCommand extends Command
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 

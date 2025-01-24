@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\FormWidgets\Tabs;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
@@ -18,7 +18,7 @@ class TabTest extends TestCase
      */
     public function testTab()
     {
-        $em = $this->createMock(EntityManager::class);
+        $em = $this->createMock(EntityManagerInterface::class);
         $builder = $this->createMock(FormBuilder::class);
         $view = $this->createMock(FormView::class);
         $widget = $this->createMock(FormWidget::class);

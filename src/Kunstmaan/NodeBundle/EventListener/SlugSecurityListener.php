@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
@@ -18,7 +18,7 @@ class SlugSecurityListener
     protected $authorizationChecker;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -33,7 +33,7 @@ class SlugSecurityListener
     private $permissionsEnabled;
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         AuthorizationCheckerInterface $authorizationChecker,
         NodeMenu $nodeMenu,
         $permissionsEnabled = true,

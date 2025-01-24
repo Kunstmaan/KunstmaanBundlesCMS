@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
@@ -30,7 +30,7 @@ class ActionsMenuBuilder
     private $activeNodeVersion;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -72,7 +72,7 @@ class ActionsMenuBuilder
      */
     public function __construct(
         FactoryInterface $factory,
-        EntityManager $em,
+        EntityManagerInterface $em,
         RouterInterface $router,
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,

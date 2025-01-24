@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXScrollPercentRule;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule;
@@ -20,11 +20,11 @@ class PopupManager
     private $popups;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

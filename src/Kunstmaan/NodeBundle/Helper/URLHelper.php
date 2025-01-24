@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Validation\URLValidator;
 use Psr\Log\LoggerInterface;
@@ -16,7 +16,7 @@ class URLHelper
     use URLValidator;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -41,7 +41,7 @@ class URLHelper
      */
     private $domainConfiguration;
 
-    public function __construct(EntityManager $em, RouterInterface $router, LoggerInterface $logger, DomainConfigurationInterface $domainConfiguration)
+    public function __construct(EntityManagerInterface $em, RouterInterface $router, LoggerInterface $logger, DomainConfigurationInterface $domainConfiguration)
     {
         $this->em = $em;
         $this->router = $router;

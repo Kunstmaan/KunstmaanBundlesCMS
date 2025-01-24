@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -59,7 +59,7 @@ class NodeVersionTest extends TestCase
         $entity = $this->createMock(HasNodeInterface::class);
         $entity->method('getId')->willReturn(1);
 
-        $em = $this->getMockBuilder(EntityManager::class)
+        $em = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FormBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Symfony\Component\Routing\Router;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 class ConfigureActionsMenuListener
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -24,10 +24,10 @@ class ConfigureActionsMenuListener
     private $router;
 
     /**
-     * @param EntityManager   $em     The entity manager
-     * @param RouterInterface $router The router
+     * @param EntityManagerInterface $em     The entity manager
+     * @param RouterInterface        $router The router
      */
-    public function __construct(EntityManager $em, RouterInterface $router)
+    public function __construct(EntityManagerInterface $em, RouterInterface $router)
     {
         $this->router = $router;
         $this->em = $em;

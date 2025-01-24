@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -86,9 +85,9 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @param EntityManager $em The entity manager
+     * @param EntityManagerInterface $em The entity manager
      */
-    public function persist(EntityManager $em)
+    public function persist(EntityManagerInterface $em)
     {
         parent::persist($em);
 

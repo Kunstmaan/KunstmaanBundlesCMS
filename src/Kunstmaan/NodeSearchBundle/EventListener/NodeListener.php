@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeSearchBundle\Form\NodeSearchAdminType;
@@ -13,10 +13,10 @@ use Kunstmaan\NodeSearchBundle\Helper\FormWidgets\SearchFormWidget;
  */
 class NodeListener
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

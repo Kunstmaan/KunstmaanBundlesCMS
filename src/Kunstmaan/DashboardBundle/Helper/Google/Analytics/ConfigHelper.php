@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 
@@ -23,10 +23,10 @@ class ConfigHelper
     /** @var string */
     private $profileId = false;
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(ServiceHelper $serviceHelper, EntityManager $em)
+    public function __construct(ServiceHelper $serviceHelper, EntityManagerInterface $em)
     {
         $this->serviceHelper = $serviceHelper;
         $this->em = $em;
