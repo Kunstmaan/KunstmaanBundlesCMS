@@ -48,10 +48,13 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $loader->load('services.yml');
         $loader->load('commands.yml');
 
-        if ($enableImprovedUrlchooser) {
-            $container->removeDefinition(URLChooserFormSubscriber::class);
-            $container->removeDefinition(URLChooserLinkTypeSubscriber::class);
+        if (!$enableImprovedUrlchooser) {
+            trigger_deprecation('kunstmaan/node-bundle', '7.2', 'Not setting the "kunstmaan_node.enable_improved_urlchooser" config to true is deprecated, it will always be true in 8.0.');
+            return;
         }
+        
+        $container->removeDefinition(URLChooserFormSubscriber::class);
+        $container->removeDefinition(URLChooserLinkTypeSubscriber::class);
     }
 
     public function prepend(ContainerBuilder $container): void

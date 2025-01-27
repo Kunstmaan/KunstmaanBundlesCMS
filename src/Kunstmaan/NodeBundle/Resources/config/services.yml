@@ -57,7 +57,7 @@ services:
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         arguments:
-            $improvedUrlChooser: '%kunstmaan_node.enable_improved_urlchooser%'
+            - '%kunstmaan_node.enable_improved_urlchooser%'
         tags:
             - { name: 'form.type' }
 
