@@ -21,6 +21,9 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @internal
+ */
 abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 {
     /**

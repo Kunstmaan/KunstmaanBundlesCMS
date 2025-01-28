@@ -28,7 +28,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
     /**
      * Load data fixtures with the passed EntityManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $password = substr(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='), 0, 8);
 

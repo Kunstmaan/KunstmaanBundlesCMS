@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * Generates classes based on the AbstractArticle classes from KunstmaanArticleBundle
+ *
+ * @internal
  */
 class GenerateArticleCommand extends KunstmaanGenerateCommand
 {

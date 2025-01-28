@@ -10,8 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Generates a SearchPage using KunstmaanSearchBundle and
- * KunstmaanNodeSearchBundle
+ * @internal
  */
 class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {

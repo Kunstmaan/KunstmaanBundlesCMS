@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates a new formPage
+ * @internal
  */
 class GenerateFormPageCommand extends KunstmaanGenerateCommand
 {

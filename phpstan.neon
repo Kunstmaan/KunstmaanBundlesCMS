@@ -17,12 +17,6 @@ parameters:
         - src/Kunstmaan/CacheBundle # Temporary excluded for full rework
         - src/Kunstmaan/FixturesBundle # Temporary excluded for full rework
         # Excluded deprecated classes/files
-        - src/Kunstmaan/AdminBundle/Composer/ScriptHandler.php
-        - src/Kunstmaan/AdminBundle/EventListener/ConsoleExceptionListener.php
-        - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
-        - src/Kunstmaan/TranslatorBundle/Command/MigrationsDiffCommand.php
-        - src/Kunstmaan/TranslatorBundle/Service/Command/DiffCommand.php
-        - src/Kunstmaan/*/Event/*.php # Ignore the event classes until we get rid of the BC layer. The BC layer causes a weird phpstan error.
         - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
 
     ignoreErrors:

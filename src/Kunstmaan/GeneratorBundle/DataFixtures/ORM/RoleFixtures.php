@@ -22,7 +22,7 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     /**
      * Load data fixtures with the passed EntityManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $role1 = $this->createRole($manager, 'ROLE_PERMISSIONMANAGER');
         $role2 = $this->createRole($manager, 'ROLE_ADMIN');

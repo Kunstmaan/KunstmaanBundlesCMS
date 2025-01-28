@@ -49,7 +49,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         if ($this->isMultiLanguage) {
             $languages = explode('|', $this->requiredLocales);

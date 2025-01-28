@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * GeneratorUtils
+ * @internal
  */
 class GeneratorUtils
 {

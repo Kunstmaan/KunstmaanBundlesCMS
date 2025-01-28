@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Generates an Article section
+ * @internal
  */
 class ArticleGenerator extends KunstmaanGenerator
 {

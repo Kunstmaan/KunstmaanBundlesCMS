@@ -6,6 +6,15 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.0.0...7.0.1
 
+## 7.0.5 / 2024-11-01
+
+* [PagePartBundle] Delete nested (non-entity) sub-items [#3423](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3423) ([@jverdeyen](https://github.com/jverdeyen))
+* [MenuBundle] Override getPathByConvention function in MenuItemAdminListConfigurator [#3420](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3420) ([@KevinSleegers](https://github.com/KevinSleegers))
+* [MultidomainBundle] Fix getCurrentFullHost return type [#3419](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3419) ([@dannyvw](https://github.com/dannyvw))
+* [TranslatorBundle] Fixed MessageCatalogue strict type (string) parameters in Translator Loader [#3415](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3415) ([@jverdeyen](https://github.com/jverdeyen))
+* [AdminBundle] fixed base route name for exception admin lists [#3414](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3414) ([@virtualize](https://github.com/virtualize))
+* [NodeBundle] Fix node reorder parents [#3413](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3413) ([@dannyvw](https://github.com/dannyvw))
+
 ## 7.0.4 / 2024-04-20
 
 * [NodeBundle] Fix node reorder [#3408](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3408) ([@dannyvw](https://github.com/dannyvw))

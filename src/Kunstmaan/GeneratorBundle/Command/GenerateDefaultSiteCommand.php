@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates a default website based on Kunstmaan bundles
+ * @internal
  */
 class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
 {

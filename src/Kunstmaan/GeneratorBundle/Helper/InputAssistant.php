@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @deprecated the functions in this class should be moved to the KunstmaanGenerateCommand class
+ *
+ * @interal
  */
 class InputAssistant
 {

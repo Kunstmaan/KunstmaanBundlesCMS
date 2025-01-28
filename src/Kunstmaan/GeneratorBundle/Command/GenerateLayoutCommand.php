@@ -8,7 +8,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates de default layout
+ * @internal
  */
 class GenerateLayoutCommand extends KunstmaanGenerateCommand
 {

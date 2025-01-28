@@ -48,6 +48,13 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $loader->load('services.yml');
         $loader->load('commands.yml');
 
+        $enableImprovedRouter = $config['enable_improved_router'] ?? false;
+        if (!$enableImprovedRouter) {
+            trigger_deprecation('kunstmaan/node-bundle', '7.2', 'Not setting the "kunstmaan_node.enable_improved_router" config to true is deprecated, it will always be true in 8.0.');
+        }
+        $slugRouter = $container->findDefinition('kunstmaan_node.slugrouter');
+        $slugRouter->addMethodCall('enabledImprovedRouter', [$enableImprovedRouter]);
+
         if (!$enableImprovedUrlchooser) {
             trigger_deprecation('kunstmaan/node-bundle', '7.2', 'Not setting the "kunstmaan_node.enable_improved_urlchooser" config to true is deprecated, it will always be true in 8.0.');
             return;

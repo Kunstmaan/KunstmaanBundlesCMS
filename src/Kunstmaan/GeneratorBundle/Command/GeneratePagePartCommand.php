@@ -8,7 +8,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates a new pagepart
+ * @internal
  */
 class GeneratePagePartCommand extends KunstmaanGenerateCommand
 {

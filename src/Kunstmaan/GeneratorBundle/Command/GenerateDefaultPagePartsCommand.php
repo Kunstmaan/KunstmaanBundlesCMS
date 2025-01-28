@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates the default pageparts
+ * @internal
  */
 class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
 {

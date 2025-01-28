@@ -6,7 +6,7 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates all classes/files for a new formpage
+ * @internal
  */
 class FormPageGenerator extends KunstmaanGenerator
 {

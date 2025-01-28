@@ -16,7 +16,7 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Generates a KunstmaanAdminList
+ * @internal
  */
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {

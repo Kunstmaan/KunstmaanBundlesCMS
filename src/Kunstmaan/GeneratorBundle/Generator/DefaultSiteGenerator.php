@@ -13,6 +13,8 @@ use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a default website using several Kunstmaan bundles using default templates and assets
+ *
+ * @interal
  */
 class DefaultSiteGenerator extends KunstmaanGenerator
 {

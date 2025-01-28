@@ -16,7 +16,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
     /**
      * Load data fixtures with the passed EntityManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $gal = new Folder();
         $gal->setRel(Folder::TYPE_MEDIA);

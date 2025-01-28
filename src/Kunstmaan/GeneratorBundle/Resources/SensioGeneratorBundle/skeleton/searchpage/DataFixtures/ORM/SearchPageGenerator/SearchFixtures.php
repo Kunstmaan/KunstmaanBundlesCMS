@@ -41,7 +41,7 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         if ($this->isMultiLanguage) {
             $languages = explode('|', $this->requiredLocales);

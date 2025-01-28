@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * GenerateAdminTestsCommand
+ * @internal
  */
 class GenerateAdminTestsCommand extends GeneratorCommand
 {

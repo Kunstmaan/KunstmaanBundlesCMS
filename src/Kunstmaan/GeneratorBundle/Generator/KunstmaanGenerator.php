@@ -20,7 +20,7 @@ use Twig\Lexer;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * Contains all common generator logic.
+ * @internal
  */
 class KunstmaanGenerator extends Generator
 {

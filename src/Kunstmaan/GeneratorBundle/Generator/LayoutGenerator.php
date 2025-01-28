@@ -5,7 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates all layout files
+ * @internal
  */
 class LayoutGenerator extends KunstmaanGenerator
 {

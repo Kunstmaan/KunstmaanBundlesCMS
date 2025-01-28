@@ -132,9 +132,7 @@ class URLHelper
         );
         $nodeTranslation = $stmt->fetchAssociative();
 
-        $this->nodeTranslationCache[$nodeTranslationId] = $nodeTranslation;
-
-        return $nodeTranslation;
+        return $this->nodeTranslationCache[$nodeTranslationId] = $nodeTranslation ?: [];
     }
 
     private function getMedia($mediaId): array
@@ -149,8 +147,6 @@ class URLHelper
         );
         $media = $stmt->fetchAssociative();
 
-        $this->mediaCache[$mediaId] = $media;
-
-        return $media;
+        return $this->mediaCache[$mediaId] = $media ?: [];
     }
 }

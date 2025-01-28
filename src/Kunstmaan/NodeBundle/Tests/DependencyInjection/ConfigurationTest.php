@@ -31,6 +31,7 @@ class ConfigurationTest extends TestCase
             ],
             'enable_permissions' => true,
             'enable_improved_urlchooser' => false,
+            'enable_improved_router' => false,
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

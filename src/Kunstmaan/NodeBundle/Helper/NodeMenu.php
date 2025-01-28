@@ -277,8 +277,9 @@ class NodeMenu
     public function getCurrent()
     {
         $breadCrumb = $this->getBreadCrumb();
-        if (\count($breadCrumb) > 0) {
-            return $breadCrumb[\count($breadCrumb) - 1];
+        $totalBreadCrumbs = \count($breadCrumb);
+        if ($totalBreadCrumbs > 0) {
+            return $breadCrumb[$totalBreadCrumbs - 1];
         }
 
         return null;
@@ -398,12 +399,10 @@ class NodeMenu
 
         if (false !== $parent = $this->getParent($node)) {
             $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+            $totalSiblings = \count($siblings);
 
             foreach ($siblings as $index => $child) {
-                if ($child->getNode() === $node && (($index + 1) < \count(
-                    $siblings
-                ))
-                ) {
+                if ($child->getNode() === $node && (($index + 1) < $totalSiblings)) {
                     return $siblings[$index + 1];
                 }
             }

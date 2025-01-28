@@ -97,6 +97,7 @@ class DomainBasedLocaleRouterTest extends TestCase
         $request = $this->getRequest('http://singlelangdomain.tld/');
 
         $object = new DomainBasedLocaleRouter($domainConfiguration, $this->getRequestStack($request), $this->getEntityManager(new NodeTranslation()), 'admin');
+        $object->enabledImprovedRouter(true);
 
         $mirror = new \ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
@@ -140,6 +141,7 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         /** @var Container $container */
         $object = new DomainBasedLocaleRouter($domainConfiguration, $this->getRequestStack($request), $this->getEntityManager(new NodeTranslation()), 'admin');
+        $object->enabledImprovedRouter(true);
         $mirror = new \ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
         $property->setAccessible(true);
@@ -216,6 +218,9 @@ class DomainBasedLocaleRouterTest extends TestCase
 
     private function getDomainBasedLocaleRouter($request, $nodeTranslation = null)
     {
-        return new DomainBasedLocaleRouter($this->getDomainConfiguration(), $this->getRequestStack($request), $this->getEntityManager($nodeTranslation), 'admin');
+        $router = new DomainBasedLocaleRouter($this->getDomainConfiguration(), $this->getRequestStack($request), $this->getEntityManager($nodeTranslation), 'admin');
+        $router->enabledImprovedRouter(true);
+
+        return $router;
     }
 }

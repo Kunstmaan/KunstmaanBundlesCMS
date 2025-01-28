@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Generates a SearchPage based on the KunstmaanNodeSearchBundle
+ * @internal
  */
 class GenerateSearchPageCommand extends GenerateDoctrineCommand
 {

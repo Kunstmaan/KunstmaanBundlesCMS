@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Http\Authenticator\AccessTokenAuthenticator;
 
 /**
- * Generates all config files
+ * @internal
  */
 class ConfigGenerator extends KunstmaanGenerator
 {

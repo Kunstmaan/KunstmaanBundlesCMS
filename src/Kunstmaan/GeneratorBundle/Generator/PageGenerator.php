@@ -5,7 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates all classes/files for a new page
+ * @internal
  */
 class PageGenerator extends KunstmaanGenerator
 {

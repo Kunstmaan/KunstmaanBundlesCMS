@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Generates all classes/files for a new pagepart
+ * @internal
  */
 class PagePartGenerator extends KunstmaanGenerator
 {

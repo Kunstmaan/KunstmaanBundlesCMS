@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Generates config files
+ * @internal
  */
 class GenerateConfigCommand extends KunstmaanGenerateCommand
 {

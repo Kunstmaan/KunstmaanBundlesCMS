@@ -24,7 +24,7 @@ abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterfac
     /**
      * Load data fixtures with the passed EntityManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
         $options = $this->getOptions();

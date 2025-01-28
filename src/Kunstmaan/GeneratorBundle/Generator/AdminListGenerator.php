@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Generates all classes for an admin list
+ * @internal
  */
 class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {

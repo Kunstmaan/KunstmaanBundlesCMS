@@ -58,6 +58,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('enabled')->defaultFalse()->end()
                     ->end()
                 ->end()
+                ->booleanNode('enable_improved_router')->defaultFalse()->end()
             ->end();
 
         return $treeBuilder;

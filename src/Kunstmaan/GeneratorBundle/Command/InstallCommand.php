@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
 
 /**
- * Kunstmaan installer
+ * @internal
  */
 final class InstallCommand extends GeneratorCommand
 {
