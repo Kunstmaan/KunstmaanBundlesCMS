@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Url;
 
-/** 
+/**
  * @deprecated since 7.2 and will be removed in 8.0. Switch to the improved url chooser instead.
  */
 class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
