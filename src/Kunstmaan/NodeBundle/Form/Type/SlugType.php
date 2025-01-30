@@ -50,7 +50,7 @@ class SlugType extends AbstractType
         $view->vars['prefix'] = '';
         if ($parentNode !== null) {
             $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
-            $slug = $nodeTranslation->getSlugPart();
+            $slug = $nodeTranslation?->getSlugPart();
             if (!empty($slug)) {
                 $slug = rtrim($slug, '/') . '/';
             }
