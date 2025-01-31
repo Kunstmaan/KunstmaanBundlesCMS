@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: ruud
- * Date: 19/06/15
- * Time: 10:47
- */
-
 namespace Kunstmaan\FixturesBundle\Populator\Methods;
 
 class Setter implements MethodInterface
