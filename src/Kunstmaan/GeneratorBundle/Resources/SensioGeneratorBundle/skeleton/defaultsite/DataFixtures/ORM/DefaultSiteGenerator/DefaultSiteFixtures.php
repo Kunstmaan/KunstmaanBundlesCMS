@@ -753,10 +753,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
     /**
      * Get the order of this fixture
-     *
-     * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 51;
     }
