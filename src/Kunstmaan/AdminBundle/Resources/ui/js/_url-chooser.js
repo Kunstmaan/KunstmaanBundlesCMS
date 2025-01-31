@@ -2,7 +2,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.urlChooser = (function (window, undefined) {
 
-    var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser, endsWith;
+    var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser, endsWith, adaptUrl;
 
     var itemUrl, itemId, itemTitle, itemThumbPath, replacedUrl, $body = $('body');
 
@@ -140,7 +140,6 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
         }
     };
 
-
     // Save for Media-chooser
     saveMediaChooserModal = function (cke, isCropable) {
         if (!cke) {
@@ -201,7 +200,6 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
         }
     };
 
-
     // Get Url Parameters
     getUrlParam = function (paramName) {
         var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i'),
@@ -213,53 +211,72 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
     // Adapt the url chooser according to the selected link type.
     adaptUrlChooser = function () {
         $body.on('click', '.js-change-link-type', function (e) {
-                e.preventDefault();
-                var $form = $(this).closest('form'),
-                    $urlChooser = $(this).parents('.urlchooser-wrapper'),
-                    $urlChooserName = $urlChooser.data('chooser-name');
+            e.preventDefault();
 
-                var values = {};
+            if (e.target.getAttribute('data-xhr') === null) {
+                adaptUrl(e.target);
+                return;
+            }
 
-                $.each($form.serializeArray(), function (i, field) {
-                    // Only submit required values.
-                    if (field.name.indexOf('link_type') !== -1 || field.name.indexOf('link_url') !== -1) {
-                        if (field.name.indexOf($urlChooserName) !== -1 && field.name.indexOf('link_url') === -1) {
+            // deprecated, use adaptUrl(e.target) when enable_improved_urlchooser becomes standard
+            var $form = $(this).closest('form'),
+                $urlChooser = $(this).parents('.urlchooser-wrapper'),
+                $urlChooserName = $urlChooser.data('chooser-name');
+
+            var values = {};
+
+            $.each($form.serializeArray(), function (i, field) {
+                // Only submit required values.
+                if (field.name.indexOf('link_type') !== -1 || field.name.indexOf('link_url') !== -1) {
+                    if (field.name.indexOf($urlChooserName) !== -1 && field.name.indexOf('link_url') === -1) {
+                        values[field.name] = field.value;
+                    }
+                }
+                else {
+                    // Main sequence can not be submitted.
+                    if (field.name.indexOf('sequence') === -1) {
+                        // handle array values
+                        if (endsWith(field.name, '[]')) {
+                            if (typeof values[field.name] === 'undefined' || typeof values[field.name] === 'string') {
+                                values[field.name] = [field.value];
+                            } else {
+                                values[field.name].push(field.value);
+                            }
+                        } else {
                             values[field.name] = field.value;
                         }
                     }
-                    else {
-                        // Main sequence can not be submitted.
-                        if (field.name.indexOf('sequence') === -1) {
-                            // handle array values
-                            if (endsWith(field.name, '[]')) {
-                                if (typeof values[field.name] === 'undefined' || typeof values[field.name] === 'string') {
-                                    values[field.name] = [field.value];
-                                } else {
-                                    values[field.name].push(field.value);
-                                }
-                            } else {
-                                values[field.name] = field.value;
-                            }
-                        }
-                    }
-                });
+                }
+            });
 
-                // Add the selected li value.
-                values[$(this).data('name')] = $(this).data('value');
+            // Add the selected li value.
+            values[$(this).data('name')] = $(this).data('value');
 
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: $form.attr('method'),
-                    data: values,
-                    success: function (html) {
-                        $urlChooser.replaceWith(
-                            $(html).find('#' + $urlChooser.attr('id'))
-                        );
-                    }
-                });
-            }
-        );
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: values,
+                success: function (html) {
+                    $urlChooser.replaceWith(
+                        $(html).find('#' + $urlChooser.attr('id'))
+                    );
+                }
+            });
+        });
     };
+
+    adaptUrl = function (element) {
+        const urlChooser = element.closest('.urlchooser-wrapper');
+        const urlChooserText = urlChooser.querySelector('.urlchooser__link-type .text');
+        const newValue = element.closest('[data-value]').dataset.value;
+        const oldActive = urlChooser.querySelector('[data-toggle-on]:not(.hidden)');
+        const newActive = urlChooser.querySelector('[data-toggle-on="' + newValue + '"]');
+        const typeInput = urlChooser.querySelector('input[type="hidden"][data-button-id="'+urlChooser.getAttribute('data-link-type-id')+'"]');
+        typeInput.value = newValue;
+        urlChooserText.innerHTML = element.innerHTML;
+        oldActive.classList.add('hidden');
+        newActive.classList.remove('hidden');
+    }
 
     /* Polyfill String.prototype.endsWith() for IE */
     endsWith = function(string, search, this_len) {
@@ -273,5 +290,4 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
         init: init
     };
 
-})
-(window);
+})(window);
