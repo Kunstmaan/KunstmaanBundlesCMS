@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bart
- * Date: 09/10/15
- * Time: 14:38
- */
 
 namespace Kunstmaan\MenuBundle\Repository;
 
