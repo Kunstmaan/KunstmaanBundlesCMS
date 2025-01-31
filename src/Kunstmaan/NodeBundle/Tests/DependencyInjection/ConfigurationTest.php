@@ -30,6 +30,7 @@ class ConfigurationTest extends TestCase
                 'threshold' => 35,
             ],
             'enable_permissions' => true,
+            'enable_improved_urlchooser' => false,
             'enable_improved_router' => false,
         ];
 

@@ -48,6 +48,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('show_add_homepage')->defaultTrue()->end()
                 ->booleanNode('show_duplicate_with_children')->defaultFalse()->end()
                 ->booleanNode('enable_export_page_template')->defaultFalse()->end()
+                ->booleanNode('enable_improved_urlchooser')->defaultFalse()->end()
                 ->arrayNode('lock')
                     ->addDefaultsIfNotSet()
                     ->canBeEnabled()
