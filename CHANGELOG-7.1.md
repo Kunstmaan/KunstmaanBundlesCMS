@@ -6,6 +6,11 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.1.0...7.1.1
 
+## 7.1.3 / 2025-01-31
+
+* [TranslatorBundle] Backport fixtures load deprecation fix [#3467](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3467) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Upgrade phpstan to 2.0 [#3466](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3466) ([@acrobat](https://github.com/acrobat))
+
 ## 7.1.2 / 2024-11-01
 
 * [FormBundle] Fix form submission export [#3421](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3421) ([@dannyvw](https://github.com/dannyvw))
