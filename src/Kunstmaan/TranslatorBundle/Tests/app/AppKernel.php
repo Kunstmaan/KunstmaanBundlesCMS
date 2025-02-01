@@ -79,11 +79,15 @@ class AppKernel extends Kernel
     {
         $loader->load($this->rootConfig);
         $loader->load(function (ContainerBuilder $containerBuilder) {
-            $containerBuilder->prependExtensionConfig('framework', [
+            $config = [];
+            if (class_exists(\Symfony\Bundle\FrameworkBundle\Command\TranslationExtractCommand::class)) {
+                $config['property_info'] = ['with_constructor_extractor' => false];
+            }
+            $containerBuilder->prependExtensionConfig('framework', array_merge($config, [
                 'handle_all_throwables' => true,
                 'php_errors' => ['log' => true],
                 'annotations' => ['enabled' => false],
-            ]);
+            ]));
         });
     }
 
