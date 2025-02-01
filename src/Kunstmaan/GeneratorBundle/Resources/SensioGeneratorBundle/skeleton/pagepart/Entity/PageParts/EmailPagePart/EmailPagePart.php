@@ -148,13 +148,13 @@ class {{ pagepart }} extends AbstractFormPagePart
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
-            $constraints[] = new NotBlank($options);
+            $constraints[] = new NotBlank(...$options);
         }
         $options = [];
         if (!empty($this->errorMessageInvalid)) {
             $options['message'] = $this->getErrorMessageInvalid();
         }
-        $constraints[] = new Email($options);
+        $constraints[] = new Email(...$options);
 
         $formBuilder->add('formwidget_'.$this->getUniqueId(), EmailFormSubmissionType::class, [
             'label' => $this->getLabel(),

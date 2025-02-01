@@ -150,7 +150,7 @@ class {{ pagepart }} extends AbstractFormPagePart
             if (!empty($this->errorMessageRequired)) {
                 $options['message'] = $this->errorMessageRequired;
             }
-            $constraints[] = new NotBlank($options);
+            $constraints[] = new NotBlank(...$options);
         }
 
         $formBuilder->add('formwidget_'.$this->getUniqueId(), ChoiceFormSubmissionType::class, [
