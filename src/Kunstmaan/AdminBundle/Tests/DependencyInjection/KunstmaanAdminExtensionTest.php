@@ -91,6 +91,20 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasParameter('kunstmaan_admin.admin_exception_excludes', ['test_exclude_new_config']);
     }
 
+    public function testRemoveSessionSecurityListener()
+    {
+        $this->assertContainerBuilderNotHasService('kunstmaan_admin.session_security');
+
+        $this->load(array_merge($this->getRequiredConfig(), [
+            'session_security' => [
+                'ip_check' => true,
+                'user_agent_check' => true,
+            ],
+        ]));
+
+        $this->assertContainerBuilderHasService('kunstmaan_admin.session_security');
+    }
+
     private function getRequiredConfig(?string $excludeKey = null)
     {
         $requiredConfig = [
