@@ -13,7 +13,7 @@ if (class_exists(\Symfony\Component\Routing\Loader\AnnotationClassLoader::class)
         /**
          * @param string|null $buildDir
          */
-        public function warmUp(string $cacheDir/*, string $buildDir = null*/): array
+        public function warmUp(string $cacheDir/*, ?string $buildDir = null*/): array
         {
             return $this->doWarmup($cacheDir);
         }
@@ -24,7 +24,7 @@ if (class_exists(\Symfony\Component\Routing\Loader\AnnotationClassLoader::class)
      */
     trait WarmupTrait
     {
-        public function warmUp(string $cacheDir, string $buildDir = null): array
+        public function warmUp(string $cacheDir, ?string $buildDir = null): array
         {
             return $this->doWarmup($cacheDir, $buildDir);
         }
