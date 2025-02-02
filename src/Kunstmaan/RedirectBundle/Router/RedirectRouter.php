@@ -151,7 +151,7 @@ class RedirectRouter implements RouterInterface
             }
         }
 
-        $route = new Route($routePath, [
+        $route = new Route(urldecode($routePath), [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'path' => $targetPath,
             'permanent' => $redirect->isPermanent(),
