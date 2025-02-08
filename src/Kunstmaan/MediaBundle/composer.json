@@ -20,7 +20,7 @@
         "symfony/mime": "^6.4|^7.2",
         "knplabs/knp-gaufrette-bundle": "^0.9.0",
         "kunstmaan/adminlist-bundle": "^7.0",
-        "pagerfanta/twig": "^4.7"
+        "pagerfanta/twig": "^3.8|^4.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^5.1",
