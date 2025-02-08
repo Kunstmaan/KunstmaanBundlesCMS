@@ -57,7 +57,7 @@
 
         "knplabs/knp-menu-bundle": "^3.0",
         "guzzlehttp/guzzle": "^7.0",
-        "babdev/pagerfanta-bundle": "^4.0",
+        "babdev/pagerfanta-bundle": "^3.8|^4.0",
         "kunstmaan/google-api-custom": "~1.0",
         "gedmo/doctrine-extensions": "^2.4.34|^3.1.0",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
@@ -75,8 +75,8 @@
         "defuse/php-encryption": "^2.2",
         "doctrine/collections": "^1.6",
         "symfony/deprecation-contracts": "^2.5|^3.0",
-        "pagerfanta/doctrine-dbal-adapter": "^4.0",
-        "pagerfanta/doctrine-orm-adapter": "^4.0",
+        "pagerfanta/doctrine-dbal-adapter": "^3.8|^4.0",
+        "pagerfanta/doctrine-orm-adapter": "^3.8|^4.0",
         "symfony/maker-bundle": "^1.39"
     },
     "require-dev": {

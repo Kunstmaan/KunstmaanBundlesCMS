@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "babdev/pagerfanta-bundle": "^4.0",
+        "babdev/pagerfanta-bundle": "^3.8|^4.0",
         "doctrine/orm": "^2.13",
         "doctrine/dbal": "^3.8",
         "doctrine/doctrine-bundle": "^2.12",
