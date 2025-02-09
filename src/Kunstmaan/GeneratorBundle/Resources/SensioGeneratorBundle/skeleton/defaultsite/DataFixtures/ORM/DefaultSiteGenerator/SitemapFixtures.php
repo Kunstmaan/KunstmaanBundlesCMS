@@ -25,12 +25,7 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
         $this->requiredLocales = $requiredLocales;
     }
 
-    /**
-     * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $nodeRepo = $this->em->getRepository(Node::class);
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));

@@ -79,11 +79,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->projectDir = $projectDir;
     }
 
-    /**
-     * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
