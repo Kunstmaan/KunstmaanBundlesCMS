@@ -38,9 +38,9 @@ class ExceptionDataCollector extends AbstractDataCollector
             return [
                 'data' => $model,
             ];
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     /**
@@ -49,7 +49,7 @@ class ExceptionDataCollector extends AbstractDataCollector
     public function collect(Request $request, Response $response, ?\Throwable $exception = null)
     {
         if (false === $this->isEnabled()) {
-            $this->data = false;
+            $this->data = [];
         } else {
             $this->data = $this->collectData();
         }

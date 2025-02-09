@@ -78,7 +78,7 @@ class TranslatorDataCollector extends AbstractDataCollector
     public function collect(Request $request, Response $response, ?\Throwable $exception = null)
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {
-            $this->data = false;
+            $this->data = [];
         } else {
             $this->data = $this->collectData();
         }
