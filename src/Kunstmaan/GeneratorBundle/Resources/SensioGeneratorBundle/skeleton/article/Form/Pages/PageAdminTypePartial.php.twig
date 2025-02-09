@@ -2,7 +2,7 @@
         $builder->add('author');
 {% else %}
         $builder->add('{{ pluralType }}', EntityType::class, [
-            'class' => '{{ bundle.name }}:{{ entity_class }}{{ type }}',
+            'class' => {{ entity_class }}{{ type }}::class,
             'choice_label' => 'name',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('t')
