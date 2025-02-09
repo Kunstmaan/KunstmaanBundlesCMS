@@ -3,6 +3,8 @@
 namespace {{ namespace }}\Form\Pages;
 
 use {{ namespace }}\Entity\Pages\{{ entity_class }}Page;
+use {{ namespace }}\Entity\{{ entity_class }}Category;
+use {{ namespace }}\Entity\{{ entity_class }}Tag;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
