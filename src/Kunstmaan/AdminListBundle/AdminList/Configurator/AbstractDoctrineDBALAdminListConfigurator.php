@@ -85,11 +85,13 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getPagerfanta()
     {
         if (\is_null($this->pagerfanta)) {
-            $adapter = new DbalQueryAdapter($this->getQueryBuilder(), function (QueryBuilder $queryBuilder): void {
+            $adapter = new DbalQueryAdapter($this->getQueryBuilder(), function (QueryBuilder $queryBuilder): QueryBuilder {
                 $distinctString = $this->getUseDistinctCount() ? 'DISTINCT ' : '';
                 $queryBuilder->select('COUNT(' . $distinctString . $this->getCountField() . ') AS total_results')
                     ->resetOrderBy()
                     ->setMaxResults(1);
+
+                return $queryBuilder;
             });
 
             $this->pagerfanta = new Pagerfanta($adapter);
