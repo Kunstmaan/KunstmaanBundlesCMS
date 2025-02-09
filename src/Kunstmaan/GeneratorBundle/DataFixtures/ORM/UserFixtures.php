@@ -5,6 +5,7 @@ namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Service\UserManager;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -39,7 +40,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
             'admin@domain.com',
             $this->defaultAdminLocale,
             ['ROLE_SUPER_ADMIN'],
-            [$manager->merge($this->getReference(GroupFixtures::REFERENCE_SUPERADMINS_GROUP))],
+            [$this->getReference(GroupFixtures::REFERENCE_SUPERADMINS_GROUP, Group::class)],
             true,
             false
         );
