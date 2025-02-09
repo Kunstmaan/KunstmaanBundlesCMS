@@ -1,6 +1,5 @@
 {# Widgets #}
 {% block choice_widget_expanded %}
-{% apply spaceless %}
     <div {{ block('widget_container_attributes') }}>
         {% for child in form %}
             <div class="form-group">
@@ -9,12 +8,10 @@
             </div>
         {% endfor %}
     </div>
-{% endapply %}
 {% endblock choice_widget_expanded %}
 
 
 {% block choice_widget_collapsed %}
-{% apply spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
     <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}
         {%- if attr.placeholder is defined %} data-placeholder="{{ attr.placeholder|trans({}, translation_domain) }}"{% endif %}>
@@ -31,21 +28,17 @@
         {% set options = choices %}
         {{ block('choice_widget_options') }}
     </select>
-{% endapply %}
 {% endblock choice_widget_collapsed %}
 
 
 {% block form_widget_simple %}
-{% apply spaceless %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} {% if attr['maxlength'] is defined %}data-reinit-js='["charactersLeft"]' data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
-{% endapply %}
 {% endblock form_widget_simple %}
 
 
 {% block textarea_widget %}
-{% apply spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
     {% set reInitMethods = [] %}
     {% if attr['maxlength'] is defined %}
@@ -55,21 +48,17 @@
         {% set reInitMethods = reInitMethods|merge(['"richEditor"']) %}
     {% endif %}
     <textarea {{ block('widget_attributes') }} {% if reInitMethods|length > 0 %}data-reinit-js="[{{ reInitMethods|join(',') }}]"{% endif %} rows="5" {% if attr['maxlength'] is defined %} data-target="#counter-for-{{ form.vars.id }}" {% endif %}>{{ value }}</textarea>
-{% endapply %}
 {% endblock textarea_widget %}
 
 {% block wysiwyg_widget %}
-{% apply spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
     {% if attr['maxlength'] is defined %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
     {% endif %}
     <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
-{% endapply %}
 {% endblock wysiwyg_widget %}
 
 {% block checkbox_widget %}
-{% apply spaceless %}
     <div class="checkbox">
         {% if required %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -82,12 +71,10 @@
             {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-icon">*</span>{% endif %}
         </label>
     </div>
-{% endapply %}
 {% endblock checkbox_widget %}
 
 
 {% block radio_widget %}
-{% apply spaceless %}
     <div class="radio">
         {% if required and not compound %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -101,7 +88,6 @@
             {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-icon">*</span>{% endif %}
         </label>
     </div>
-{% endapply %}
 {% endblock radio_widget %}
 
 
@@ -109,7 +95,6 @@
 
 {# Labels #}
 {% block form_label %}
-{% apply spaceless %}
     {% if 'checkbox' not in block_prefixes and label is not same as(false) %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
         {% if not compound %}
@@ -127,15 +112,10 @@
             </label>
         {% endif %}
     {% endif %}
-{% endapply %}
 {% endblock form_label %}
-
-
-
 
 {# Rows #}
 {% block form_row %}
-{% apply spaceless %}
     {% set noMaxWidth = false %}
     {% if
         (attr['nested_form'] is defined and attr['nested_form'] == true)
@@ -240,9 +220,7 @@
         {{- form_help(form) -}}
         {{ form_errors(form) }}
     </div>
-{% endapply %}
 {% endblock form_row %}
-
 
 {# Misc #}
 {% block datetime_widget %}
@@ -251,7 +229,6 @@
         {{ block('base_datetime_widget') }}
     </div>
 {% endblock %}
-
 
 {% block date_widget %}
     <div class="date-widget">
@@ -267,7 +244,6 @@
 
 {% endblock date_widget %}
 
-
 {% block time_widget %}
     <div class="time-widget">
         {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
@@ -282,13 +258,10 @@
     </div>
 {% endblock time_widget %}
 
-
 {% block form_errors %}
-{% apply spaceless %}
     {% if errors|length > 0 %}
         {% for error in errors %}
             <span class="help-block text-danger">{{ error.message }}</span>
         {% endfor %}
     {% endif %}
-{% endapply %}
 {% endblock form_errors %}

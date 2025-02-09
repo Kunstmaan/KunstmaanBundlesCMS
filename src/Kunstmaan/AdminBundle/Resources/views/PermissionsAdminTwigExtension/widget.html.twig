@@ -37,7 +37,6 @@
     <div id="permissions-container" class="permissionscontainer" data-recursive="{% if recursiveSupport %}true{% else %}false{% endif %}" data-trans-perms-added='{{ "permissions.permissions_added"|trans|raw }}' data-trans-perms-removed='{{ "permissions.permissions_removed"|trans|raw }}'>
         <div id="permission-hidden-fields"></div>
 
-        {% apply spaceless %}
         <table class="table table-bordered table-striped">
             <thead>
                <tr>
@@ -63,6 +62,5 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% endapply %}
     </div>
 </div>
