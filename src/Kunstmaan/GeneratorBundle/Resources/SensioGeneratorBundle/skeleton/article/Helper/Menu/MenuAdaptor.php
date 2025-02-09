@@ -23,7 +23,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
         $this->em = $em;
     }
 
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null): void
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null): void
     {
         if (null === $this->overviewpageIds) {
             /** @var Node[] $overviewPageNodes */

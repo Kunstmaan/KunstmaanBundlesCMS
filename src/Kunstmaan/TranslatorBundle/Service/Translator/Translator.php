@@ -61,7 +61,7 @@ class Translator extends SymfonyTranslator
         }
     }
 
-    private function doWarmUp(string $cacheDir, string $buildDir = null): array
+    private function doWarmUp(string $cacheDir, ?string $buildDir = null): array
     {
         return [];
     }
