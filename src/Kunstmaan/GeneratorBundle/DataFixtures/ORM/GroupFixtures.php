@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\Role;
 
 /**
  * Fixture for creating the basic groups
@@ -22,20 +23,20 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $group1 = $this->createGroup($manager, 'Administrators', [
-            $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
-            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
+            $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE, Role::class),
+            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE, Role::class),
         ]);
 
-        $guestRoles = [$this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE)];
-        if ($this->hasReference(RoleFixtures::REFERENCE_PUBLIC_ACCESS_ROLE)) {
-            $guestRoles[] = $this->getReference(RoleFixtures::REFERENCE_PUBLIC_ACCESS_ROLE);
+        $guestRoles = [$this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE, Role::class)];
+        if ($this->hasReference(RoleFixtures::REFERENCE_PUBLIC_ACCESS_ROLE, Role::class)) {
+            $guestRoles[] = $this->getReference(RoleFixtures::REFERENCE_PUBLIC_ACCESS_ROLE, Role::class);
         }
         $group2 = $this->createGroup($manager, 'Guests', $guestRoles);
 
         $group3 = $this->createGroup($manager, 'Super administrators', [
-            $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
-            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
-            $this->getReference(RoleFixtures::REFERENCE_SUPERADMIN_ROLE),
+            $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE, Role::class),
+            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE, Role::class),
+            $this->getReference(RoleFixtures::REFERENCE_SUPERADMIN_ROLE, Role::class),
         ]);
 
         $manager->flush();
