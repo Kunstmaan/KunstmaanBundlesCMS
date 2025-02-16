@@ -6,6 +6,10 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.2.0...7.2.1
 
+## 7.2.1 / 2025-02-16
+
+* [GeneratorBundle] Bugfix incorrect form type class in article generator [#3494](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3494) ([@acrobat](https://github.com/acrobat))
+
 ## 7.2.0 / 2025-01-31
 
 * [GeneratorBundle] Add missing upgrade doc for generator bundle [#3469](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3469) ([@acrobat](https://github.com/acrobat))
