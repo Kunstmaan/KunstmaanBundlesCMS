@@ -6,6 +6,10 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.1.0...7.1.1
 
+## 7.1.4 / 2025-02-16
+
+* [GeneratorBundle] Bugfix incorrect form type class in article generator [#3494](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3494) ([@acrobat](https://github.com/acrobat))
+
 ## 7.1.3 / 2025-01-31
 
 * [TranslatorBundle] Backport fixtures load deprecation fix [#3467](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3467) ([@acrobat](https://github.com/acrobat))
