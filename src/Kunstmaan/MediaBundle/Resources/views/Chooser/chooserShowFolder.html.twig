@@ -190,10 +190,38 @@
                 </p>
             {% endif %}
         {% else %}
+            {{ adminthumb_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()['params']) }}
             {% if adminlist.count > 0 %}
+                <div class="row pull-left">
+                    <div class="col-xs-12">
+                        <div class="btn-group btn-group-md" role="group">
+                            <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                                {{ 'media.folder.sortby' | trans }} <i class="fa fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for field in adminlist.configurator.fields %}
+                                    <li>
+                                        <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': app.request.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
+                                            {{ field.header | trans }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="btn-group" role="group">
+                            {% include '@KunstmaanAdminList/AdminListTwigExtension/limit.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if adminlist.pagerfanta.haveToPaginate() %}
+                    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+                {% else %}
+                    <div class="row row--padded"></div>
+                {% endif %}
+
                 <div class="row">
-                    {% set counter = 1 %}
-                    {% for media in folder.media %}
+                    {% for media in adminlist.items %}
                         {% if not handler or handler.canHandle(media) %}
                             {% set usedHandler = mediamanager.getHandler(media) %}
                             {% set imageurl =  usedHandler.getImageUrl(media, app.request.basePath) %}
@@ -230,17 +258,15 @@
                             </div>
 
                             {# Clearfixes #}
-                            {% if counter is divisible by(2) %}
+                            {% if loop.index is divisible by(2) %}
                                 <div class="clearfix visible-sm-block"></div>
                             {% endif %}
-                            {% if counter is divisible by(3) %}
+                            {% if loop.index is divisible by(3) %}
                                 <div class="clearfix visible-md-block"></div>
                             {% endif %}
-                            {% if counter is divisible by(4) %}
+                            {% if loop.index is divisible by(4) %}
                                 <div class="clearfix visible-lg-block"></div>
                             {% endif %}
-
-                            {% set counter = counter+1 %}
                         {% endif %}
                     {% endfor %}
                 </div>
