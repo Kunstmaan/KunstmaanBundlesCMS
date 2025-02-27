@@ -91,6 +91,7 @@ final class PagePartAdminController extends AbstractController
             'page' => $pagePartAdmin->getPage(),
             'editmode' => true,
             'extended' => $extended,
+            'ppTypes' => $pagePartAdmin->getPossiblePagePartTypes(),
         ]);
     }
 }

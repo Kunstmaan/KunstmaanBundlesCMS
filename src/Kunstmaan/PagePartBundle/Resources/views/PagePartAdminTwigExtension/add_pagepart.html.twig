@@ -8,7 +8,7 @@
     {% else %}
         <select class="js-add-pp-select {% if first is defined and first %}js-add-pp-select--first{% endif %} form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
             <option value="">{{ 'Add a pagepart' | trans }}</option>
-            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+            {% for pagePartType in ppTypes %}
                 <option value="{{ pagePartType.class }}">{{ pagePartType.name|trans }}</option>
             {% endfor %}
         </select>
