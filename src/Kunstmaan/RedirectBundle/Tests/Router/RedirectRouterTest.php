@@ -76,6 +76,13 @@ class RedirectRouterTest extends TestCase
         yield 'Wildcard root origin to wildcard root target redirect with query params' => ['/test/abc/def?query=test', 'https://www.google.com/test/abc/def?query=test', $this->getRedirect(12, '/*', 'https://www.google.com/*')];
         yield 'Wildcard root origin to wildcard root target with root path should not redirect' => ['/', null, $this->getRedirect(13, '/*', 'https://www.google.com/*')];
         yield 'Redirect with query params' => ['/test?query=test', 'https://www.google.com/test?query=test', $this->getRedirect(14, '/test', 'https://www.google.com/test')];
+        yield 'Wildcard root origin to wildcard root target redirect with spaces' => ['/test/abc/%20def?query=test', 'https://www.google.com/test/abc/%20def?query=test', $this->getRedirect(15, '/*', 'https://www.google.com/*')];
+        yield 'Wildcard root origin to wildcard root target redirect with spaces unencoded' => ['/test/abc/ def?query=test', 'https://www.google.com/test/abc/ def?query=test', $this->getRedirect(16, '/*', 'https://www.google.com/*')];
+        yield 'Wildcard root origin to wildcard root target redirect with spaces unencoded, required UTF8, query parameter' => ['/documenten/2025bestand 2011 - 2022 (versie vóór kunstmaan).pdf?include=true', 'https://www.google.com/documenten/2025bestand 2011 - 2022 (versie vóór kunstmaan).pdf?include=true', $this->getRedirect(17, '/*', 'https://www.google.com/*')];
+        yield 'Redirect to external target redirect and query parameters' => ['/redirect?lorem=ipsum&var=ible', 'https://google.com?lorem=ipsum&var=ible', $this->getRedirect(18, '/redirect', 'https://google.com')];
+        yield 'Redirect to target redirect and query parameters' => ['/redirect?lorem=ipsum&var=ible', '/target-path', $this->getRedirect(19, '/redirect', '/target-path')];
+        yield 'Redirect with query parameter' => ['/redirect?lorem=ipsum&var=ible', '/target-path?foo=baz&lorem=ipsum&var=ible', $this->getRedirect(20, '/redirect', '/target-path?foo=baz')];
+        yield 'Redirect with query parameter to external target' => ['/redirect?lorem=ipsum&var=ible', 'https://google.com/target-path?foo=baz&lorem=ipsum&var=ible', $this->getRedirect(21, '/redirect', 'https://google.com/target-path?foo=baz')];
     }
 
     private function getRedirect(int $id, string $origin, string $target, bool $permanent = false, ?string $domain = null): Redirect
