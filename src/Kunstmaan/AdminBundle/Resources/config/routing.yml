@@ -2,21 +2,25 @@ KunstmaanAdminBundle_default:
     resource: '@KunstmaanAdminBundle/Controller/DefaultController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%
+    trailing_slash_on_root: false
 
 KunstmaanAdminBundle_modules:
     resource: '@KunstmaanAdminBundle/Controller/ModulesController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/modules
+    trailing_slash_on_root: false
 
 KunstmaanAdminBundle_settings:
     resource: '@KunstmaanAdminBundle/Controller/SettingsController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings
+    trailing_slash_on_root: false
 
 KunstmaanAdminBundle_settings_exception:
     resource: '@KunstmaanAdminBundle/Controller/ExceptionController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/exception
+    trailing_slash_on_root: false
 
 KunstmaanAdminBundle_security:
     resource: '@KunstmaanAdminBundle/Controller/Authentication/SecurityController.php'

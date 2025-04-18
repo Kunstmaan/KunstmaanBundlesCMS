@@ -1,4 +1,5 @@
 KunstmaanTaggingBundle_admin_tag:
     resource: '@KunstmaanTaggingBundle/Controller/TagAdminListController.php'
     type: attribute
-    prefix:   /%kunstmaan_admin.admin_prefix%/tags/
+    prefix:   /%kunstmaan_admin.admin_prefix%/tags
+    trailing_slash_on_root: false

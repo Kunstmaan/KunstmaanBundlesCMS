@@ -1,9 +1,10 @@
 kunstmaanmenubundle_menu_admin_list:
     resource: '@KunstmaanMenuBundle/Controller/MenuAdminListController.php'
     type: attribute
-    prefix:   /%kunstmaan_admin.admin_prefix%/menu/
+    prefix:   /%kunstmaan_admin.admin_prefix%/menu
+    trailing_slash_on_root: false
 
 kunstmaanmenubundle_menuitem_admin_list:
     resource: '@KunstmaanMenuBundle/Controller/MenuItemAdminListController.php'
     type: attribute
-    prefix:   /%kunstmaan_admin.admin_prefix%/menu/
+    prefix:   /%kunstmaan_admin.admin_prefix%/menu

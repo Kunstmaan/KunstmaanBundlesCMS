@@ -7,6 +7,7 @@ KunstmaanNodeBundle_nodes:
     resource: '@KunstmaanNodeBundle/Controller/NodeAdminController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/nodes
+    trailing_slash_on_root: false
 
 KunstmaanNodeBundle_urlchooser_replace:
     prefix:   /%kunstmaan_admin.admin_prefix%/url-replace
