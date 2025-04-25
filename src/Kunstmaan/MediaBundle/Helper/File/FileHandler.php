@@ -222,7 +222,9 @@ class FileHandler extends AbstractMediaHandler
         }
 
         $originalFile = $this->getOriginalFile($media);
-        $originalFile->setContent(file_get_contents($media->getContent()->getRealPath()));
+        $originalFile->setContent(file_get_contents($media->getContent()->getRealPath()), [
+            'contentType' => $media->getContentType(),
+        ]);
     }
 
     /**
