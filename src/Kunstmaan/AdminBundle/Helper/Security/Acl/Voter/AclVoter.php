@@ -18,6 +18,7 @@ use Symfony\Component\Security\Acl\Model\SecurityIdentityRetrievalStrategyInterf
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Acl\Voter\AclVoter as BaseAclVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 /**
  * This voter can be used as a base class for implementing your own permissions.
@@ -35,8 +36,16 @@ class AclVoter extends BaseAclVoter
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
-    public function vote(TokenInterface $token, $object, array $attributes): int
+    public function vote(TokenInterface $token, $object, array $attributes/*, ?Vote $vote = null*/): int
     {
+        // NEXT_MAJOR: Remove this when Synfony <7.3 support is removed.
+        $vote = null;
+        if (3 < \func_num_args()) {
+            $vote = func_get_arg(3);
+        } else if (class_exists(Vote::class)) {
+            $vote = new Vote();
+        }
+
         $attributeIsSupported = false;
         foreach ($attributes as $attribute) {
             if ($this->supportsAttribute($attribute)) {
@@ -54,6 +63,6 @@ class AclVoter extends BaseAclVoter
             return self::ACCESS_ABSTAIN;
         }
 
-        return parent::vote($token, $object, $attributes);
+        return parent::vote($token, $object, $attributes, $vote);
     }
 }

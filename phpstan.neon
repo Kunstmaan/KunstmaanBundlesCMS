@@ -22,6 +22,12 @@ parameters:
     ignoreErrors:
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR
 
+        -
+            message: '#^Method Symfony\\Component\\Security\\Acl\\Voter\\AclVoter\:\:vote\(\) invoked with 4 parameters, 3 required\.$#'
+            identifier: arguments.count
+            count: 1
+            path: src/Kunstmaan/AdminBundle/Helper/Security/Acl/Voter/AclVoter.php
+
         # Incorrect return types. Needs to be deprecated and removed in separate PR's
         - '#Method Kunstmaan\\AdminBundle\\Form\\UserType\:\:setCanEditAllFields\(\) should return bool but return statement is missing\.#'
         - '#Method Kunstmaan\\TranslatorBundle\\Service\\Command\\Exporter\\ExportCommandHandler\:\:executeExportCommand\(\) should return int but return statement is missing\.#'
