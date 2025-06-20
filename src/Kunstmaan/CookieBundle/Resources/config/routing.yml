@@ -1,19 +1,22 @@
 kunstmaancookiebundle_cookies_menu:
     resource: "@KunstmaanCookieBundle/Controller/CookieMenuController.php"
     type: attribute
-    prefix:   /cookies-menu/
+    prefix:   /cookies-menu
+    trailing_slash_on_root: false
 
 kunstmaancookiebundle_legal:
     resource: "@KunstmaanCookieBundle/Controller/LegalController.php"
     type: attribute
-    prefix:   /legal/
+    prefix:   /legal
 
 kunstmaancookiebundle_cookietype_admin_list:
     resource: '@KunstmaanCookieBundle/Controller/CookieTypeAdminListController.php'
     type: attribute
-    prefix:   /admin/cookietype/
+    prefix:   /admin/cookietype
+    trailing_slash_on_root: false
 
 kunstmaancookiebundle_cookie_admin_list:
     resource: '@KunstmaanCookieBundle/Controller/CookieAdminListController.php'
     type: attribute
-    prefix:   /admin/cookie/
+    prefix:   /admin/cookie
+    trailing_slash_on_root: false

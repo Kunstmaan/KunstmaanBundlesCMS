@@ -2,3 +2,4 @@ KunstmaanFormBundle_formsubmissions:
     resource: '@KunstmaanFormBundle/Controller/FormSubmissionsController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/formsubmissions
+    trailing_slash_on_root: false
