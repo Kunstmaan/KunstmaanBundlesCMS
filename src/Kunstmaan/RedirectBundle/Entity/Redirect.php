@@ -17,11 +17,15 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *     }
  * )
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Index(name="idx_domain_origin_pattern", columns={"domain", "origin_pattern"})
  */
 #[ORM\Table(name: 'kuma_redirects')]
 #[ORM\UniqueConstraint(name: 'kuma_redirects_idx_domain_origin', columns: ['domain', 'origin'])]
 #[ORM\Entity(repositoryClass: RedirectRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['origin', 'domain'])]
+#[ORM\Index(columns: ['domain', 'origin_pattern'], name: 'idx_domain_origin_pattern')]
 class Redirect extends AbstractEntity
 {
     /**
@@ -41,6 +45,14 @@ class Redirect extends AbstractEntity
     #[Assert\NotBlank]
     #[Assert\Length(max: 500)]
     private $origin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="origin_pattern", type="string", length=500, nullable=false, options={"default":""})
+     */
+    #[ORM\Column(name: 'origin_pattern', type: 'string', length: 500, nullable: false, options: ['default' => ''])]
+    private $originPattern;
 
     /**
      * @var string
@@ -113,6 +125,18 @@ class Redirect extends AbstractEntity
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    public function getOriginPattern(): string
+    {
+        return $this->originPattern;
+    }
+
+    public function setOriginPattern(string $originPattern): self
+    {
+        $this->originPattern = $originPattern;
+
+        return $this;
     }
 
     /**
@@ -191,5 +215,16 @@ class Redirect extends AbstractEntity
                 ->atPath('target')
                 ->addViolation();
         }
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateOriginPattern(): void
+    {
+        $this->originPattern = str_replace('*', '%', $this->origin);
     }
 }
