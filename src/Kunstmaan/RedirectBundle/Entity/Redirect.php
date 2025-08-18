@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['origin', 'domain'])]
 #[ORM\Index(columns: ['domain', 'origin_pattern'], name: 'idx_domain_origin_pattern')]
+#[ORM\Index(columns: ['origin_prefix'], name: 'idx_origin_prefix')]
 class Redirect extends AbstractEntity
 {
     /**
@@ -52,7 +53,15 @@ class Redirect extends AbstractEntity
      * @ORM\Column(name="origin_pattern", type="string", length=500, nullable=false, options={"default":""})
      */
     #[ORM\Column(name: 'origin_pattern', type: 'string', length: 500, nullable: false, options: ['default' => ''])]
-    private $originPattern;
+    private $originPattern = '';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="origin_prefix", type="string", length=255, nullable=true, options={"default":null})
+     */
+    #[ORM\Column(name: 'origin_prefix', type: 'string', length: 255, nullable: true, options: ['default' => null])]
+    private $originPrefix = null;
 
     /**
      * @var string
@@ -136,6 +145,16 @@ class Redirect extends AbstractEntity
     {
         $this->originPattern = $originPattern;
 
+        return $this;
+    }
+
+    public function getOriginPrefix(): ?string
+    {
+        return $this->originPrefix;
+    }
+
+    public function setOriginPrefix(?string $originPrefix): self
+    {
         return $this;
     }
 

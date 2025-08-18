@@ -13,35 +13,40 @@ class RedirectRepository extends EntityRepository
     {
         $conn = $this->_em->getConnection();
 
-        // Query 1: exact domain match
-        $qb1 = $this->createRedirectsQueryBuilder($conn)
-            ->where('domain = :domain')
-            ->andWhere(':path LIKE origin_pattern')
+        $qb = $conn->createQueryBuilder();
+        $qb->select('id')
+            ->from('kuma_redirects')
+            ->where(
+                $qb->expr()->and(
+                    $qb->expr()->like('origin_pattern', ':path'),
+                    $qb->expr()->eq('origin_prefix', 'LEFT(:path, CHAR_LENGTH(origin_prefix))'),
+                )
+            )
+            ->andWhere(
+                $qb->expr()->or(
+                    $qb->expr()->eq('domain', ':domain'),
+                    $qb->expr()->isNull('domain'),
+                    $qb->expr()->eq('domain', "''")
+                )
+            )
+            ->orderBy("CASE WHEN domain = :domain THEN 1 ELSE 0 END", "DESC")
+            ->setMaxResults(1)
             ->setParameter('path', $path)
             ->setParameter('domain', $domain);
 
-        // Query 2: empty or NULL domain match
-        $qb2 = $this->createRedirectsQueryBuilder($conn)
-            ->where('COALESCE(domain, \'\') = \'\'')
-            ->andWhere(':path LIKE origin_pattern')
-            ->setParameter('path', $path);
+        $statement = $conn->prepare($qb->getSQL());
+        foreach ($qb->getParameters() as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
 
-        $sql = sprintf(
-            '(%s) UNION ALL (%s) LIMIT 1',
-            $qb1->getSQL(),
-            $qb2->getSQL()
-        );
+        $redirectId = method_exists($statement, 'executeQuery')
+            ? $statement->executeQuery()->fetchOne()
+            : $statement->execute()->fetchColumn();
 
-        $redirectId = $conn->prepare($sql)->executeQuery($qb1->getParameters() + $qb2->getParameters())->fetchOne();
         if (!$redirectId) {
             return null;
         }
 
         return $this->find($redirectId);
-    }
-
-    private function createRedirectsQueryBuilder(Connection $connection): QueryBuilder
-    {
-        return $connection->createQueryBuilder()->select('id')->from('kuma_redirects');
     }
 }
