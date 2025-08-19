@@ -58,9 +58,9 @@ class Redirect extends AbstractEntity
     /**
      * @var string|null
      *
-     * @ORM\Column(name="origin_prefix", type="string", length=255, nullable=true, options={"default":null})
+     * @ORM\Column(name="origin_prefix", type="string", length=255, nullable=true, insertable: false, updatable: false, options={"default":null})
      */
-    #[ORM\Column(name: 'origin_prefix', type: 'string', length: 255, nullable: true, options: ['default' => null])]
+    #[ORM\Column(name: 'origin_prefix', type: 'string', length: 255, nullable: true, insertable: false, updatable: false, options: ['default' => null])]
     private $originPrefix = null;
 
     /**
