@@ -19,7 +19,7 @@ class RedirectRepository extends EntityRepository
             ->where(
                 $qb->expr()->and(
                     $qb->expr()->like('origin_pattern', ':path'),
-                    $qb->expr()->eq('origin_prefix', 'LEFT(:path, CHAR_LENGTH(origin_prefix))'),
+                    "REPLACE(origin_prefix, '%', '') = LEFT(:path, CHAR_LENGTH(REPLACE(origin_prefix, '%', '')))",
                 )
             )
             ->andWhere(
