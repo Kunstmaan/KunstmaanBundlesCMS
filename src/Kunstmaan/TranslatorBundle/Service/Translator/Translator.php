@@ -130,7 +130,7 @@ class Translator extends SymfonyTranslator
             return parent::trans($id, $parameters, $domain, $locale);
         }
 
-        $showTranslationsSource = $this->request->get('transSource');
+        $showTranslationsSource = $this->request->query->get('transSource');
         if ($showTranslationsSource !== null) {
             $trans = sprintf('%s (%s)', $id, $domain);
         } else {
