@@ -101,7 +101,6 @@ class DomainBasedLocaleRouterTest extends TestCase
 
         $mirror = new \ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
-        $property->setAccessible(true);
         $property->setValue($object, ['host' => 'https://cia.gov']);
         $collection = $object->getRouteCollection();
         $array = $collection->getIterator()->getArrayCopy();
@@ -144,7 +143,6 @@ class DomainBasedLocaleRouterTest extends TestCase
         $object->enabledImprovedRouter(true);
         $mirror = new \ReflectionClass(DomainBasedLocaleRouter::class);
         $property = $mirror->getProperty('otherSite');
-        $property->setAccessible(true);
         $property->setValue($object, ['host' => 'https://cia.gov']);
         $collection = $object->getRouteCollection();
         $array = $collection->getIterator()->getArrayCopy();

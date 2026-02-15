@@ -12,7 +12,6 @@ class Property implements MethodInterface
     public function set($object, $property, $value)
     {
         $refl = new \ReflectionProperty($object, $property);
-        $refl->setAccessible(true);
         $refl->setValue($object, $value);
     }
 }

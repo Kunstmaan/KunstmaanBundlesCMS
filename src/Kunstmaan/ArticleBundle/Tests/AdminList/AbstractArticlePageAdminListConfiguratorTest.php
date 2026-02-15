@@ -126,11 +126,9 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
         $mirror = new \ReflectionClass(Configurator::class);
         $method = $mirror->getMethod('getQueryBuilder');
-        $method->setAccessible(true);
 
         $mirror = new \ReflectionClass(Configurator::class);
         $prop = $mirror->getProperty('em');
-        $prop->setAccessible(true);
         $prop->setValue($this->object, $em);
 
         /* @var QueryBuilder $qb */
@@ -158,12 +156,7 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
         $this->em = $em;
 
         $mirror = new \ReflectionClass(Configurator::class);
-        $method = $mirror->getMethod('getQueryBuilder');
-        $method->setAccessible(true);
-
-        $mirror = new \ReflectionClass(Configurator::class);
         $prop = $mirror->getProperty('em');
-        $prop->setAccessible(true);
         $prop->setValue($this->object, $em);
         $this->assertEquals(Configurator::class, $this->object->getEntityClassName());
     }
@@ -178,7 +171,6 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
         $mirror = new \ReflectionClass(Configurator::class);
         $prop = $mirror->getProperty('repo');
-        $prop->setAccessible(true);
 
         $repo = $this->createMock(EntityRepository::class);
         $repo->expects($this->any())

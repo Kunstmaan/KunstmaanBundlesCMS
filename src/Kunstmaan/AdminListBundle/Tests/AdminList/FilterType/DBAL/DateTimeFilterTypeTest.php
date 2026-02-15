@@ -80,7 +80,6 @@ class DateTimeFilterTypeTest extends BaseDbalFilterTest
         $queryBuilder->expects($this->never())->method('setParameter');
         $mirror = new \ReflectionClass(DateTimeFilterType::class);
         $property = $mirror->getProperty('queryBuilder');
-        $property->setAccessible(true);
         $property->setValue($this->object, $queryBuilder);
 
         $badData = [
