@@ -19,7 +19,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const TYPE = 'file';
+    public const TYPE = 'file';
 
     /**
      * @var string
@@ -241,7 +241,7 @@ class FileHandler extends AbstractMediaHandler
     public function createNew($data)
     {
         if ($data instanceof File) {
-            /** @var $data File */
+            /** @var File $data */
             $media = new Media();
             if (method_exists($data, 'getClientOriginalName')) {
                 $media->setOriginalFilename($data->getClientOriginalName());

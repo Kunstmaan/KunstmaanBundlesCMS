@@ -37,12 +37,10 @@ class PagePartBuilder implements BuilderInterface
 
     public function preBuild(Fixture $fixture)
     {
-        return;
     }
 
     public function postBuild(Fixture $fixture)
     {
-        return;
     }
 
     public function postFlushBuild(Fixture $fixture)

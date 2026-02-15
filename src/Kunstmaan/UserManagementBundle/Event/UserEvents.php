@@ -9,19 +9,19 @@ final class UserEvents
      *
      * @var string
      */
-    const USER_EDIT_INITIALIZE = 'kunstmaan_usermanagement.edit.initialize';
+    public const USER_EDIT_INITIALIZE = 'kunstmaan_usermanagement.edit.initialize';
 
     /**
      * This event will be triggered on delete, after finding user
      *
      * @var string
      */
-    const USER_DELETE_INITIALIZE = 'kunstmaan_usermanagement.delete.initialize';
+    public const USER_DELETE_INITIALIZE = 'kunstmaan_usermanagement.delete.initialize';
 
     /**
      * This event will be triggered after succesfully deleting the user.
      *
      * @var string
      */
-    const AFTER_USER_DELETE = 'kunstmaan_usermanagement.delete.after';
+    public const AFTER_USER_DELETE = 'kunstmaan_usermanagement.delete.after';
 }

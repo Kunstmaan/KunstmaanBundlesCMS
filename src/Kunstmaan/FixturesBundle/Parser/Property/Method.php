@@ -4,7 +4,7 @@ namespace Kunstmaan\FixturesBundle\Parser\Property;
 
 class Method implements PropertyParserInterface
 {
-    const REGEX = '/<[a-zA-Z0-9]+\([^\)]*\)>/';
+    public const REGEX = '/<[a-zA-Z0-9]+\([^\)]*\)>/';
 
     /**
      * Check if this parser is applicable

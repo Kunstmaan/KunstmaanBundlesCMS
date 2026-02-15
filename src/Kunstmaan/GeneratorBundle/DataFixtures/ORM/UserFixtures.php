@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
-    const REFERENCE_ADMIN_USER = 'adminuser';
+    public const REFERENCE_ADMIN_USER = 'adminuser';
 
     private UserManager $userManager;
     private string $defaultAdminLocale;

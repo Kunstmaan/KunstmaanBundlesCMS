@@ -31,11 +31,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class Folder extends AbstractEntity implements GedmoNode
 {
-    const TYPE_FILES = 'files';
-    const TYPE_IMAGE = 'image';
-    const TYPE_MEDIA = 'media';
-    const TYPE_SLIDESHOW = 'slideshow';
-    const TYPE_VIDEO = 'video';
+    public const TYPE_FILES = 'files';
+    public const TYPE_IMAGE = 'image';
+    public const TYPE_MEDIA = 'media';
+    public const TYPE_SLIDESHOW = 'slideshow';
+    public const TYPE_VIDEO = 'video';
 
     /**
      * @var string

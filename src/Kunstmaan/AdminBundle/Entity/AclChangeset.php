@@ -26,22 +26,22 @@ class AclChangeset extends AbstractEntity
     /**
      * This changeset still needs to be applied
      */
-    const STATUS_NEW = 0;
+    public const STATUS_NEW = 0;
 
     /**
      * This changeset is currently being applied
      */
-    const STATUS_RUNNING = 1;
+    public const STATUS_RUNNING = 1;
 
     /**
      * This changeset is applied
      */
-    const STATUS_FINISHED = 2;
+    public const STATUS_FINISHED = 2;
 
     /**
      * Something went wrong while applying the changeset
      */
-    const STATUS_FAILED = 3;
+    public const STATUS_FAILED = 3;
 
     /**
      * @ORM\Column(type="bigint", name="ref_id")

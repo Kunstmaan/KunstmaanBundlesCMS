@@ -13,10 +13,10 @@ use Twig\Environment;
 
 class ExportService
 {
-    const CSV = 'csv';
-    const XLSX = 'xlsx';
-    const ODS = 'ods';
-    const SUPPORTED_EXTENSIONS = [
+    public const CSV = 'csv';
+    public const XLSX = 'xlsx';
+    public const ODS = 'ods';
+    public const SUPPORTED_EXTENSIONS = [
         'Csv' => self::CSV,
         'Ods' => self::ODS,
         'Excel' => self::XLSX,

@@ -15,14 +15,11 @@ class TagsTransformer implements DataTransformerInterface
         $this->tagManager = $tagManager;
     }
 
-    /**
-     * @return array
-     */
-    public function transform($value)
+    public function transform($value): array
     {
         $result = [];
 
-        if (!($value instanceof ArrayCollection)) {
+        if (!$value instanceof ArrayCollection) {
             return $result;
         }
 
@@ -33,10 +30,7 @@ class TagsTransformer implements DataTransformerInterface
         return $result;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ArrayCollection
     {
         $result = new ArrayCollection();
         $manager = $this->tagManager;

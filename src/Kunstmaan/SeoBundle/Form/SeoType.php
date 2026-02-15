@@ -14,12 +14,12 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class SeoType extends AbstractType
 {
-    const ROBOTS_NOINDEX = 'noindex';
-    const ROBOTS_NOFOLLOW = 'nofollow';
-    const ROBOTS_NOARCHIVE = 'noarchive';
-    const ROBOTS_NOSNIPPET = 'nosnippet';
-    const ROBOTS_NOTRANSLATE = 'notranslate';
-    const ROBOTS_NOIMAGEINDEX = 'noimageindex';
+    public const ROBOTS_NOINDEX = 'noindex';
+    public const ROBOTS_NOFOLLOW = 'nofollow';
+    public const ROBOTS_NOARCHIVE = 'noarchive';
+    public const ROBOTS_NOSNIPPET = 'nosnippet';
+    public const ROBOTS_NOTRANSLATE = 'notranslate';
+    public const ROBOTS_NOIMAGEINDEX = 'noimageindex';
 
     /**
      * @return void
