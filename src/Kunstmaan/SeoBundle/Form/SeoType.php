@@ -35,9 +35,7 @@ class SeoType extends AbstractType
                     'maxlength' => 70,
                 ],
                 'constraints' => [
-                    new Length([
-                        'max' => 70,
-                    ]),
+                    new Length(max: 70),
                 ],
             ])
             ->add('metaDescription', TextareaType::class, [
@@ -47,9 +45,7 @@ class SeoType extends AbstractType
                     'maxlength' => 300,
                 ],
                 'constraints' => [
-                    new Length([
-                        'max' => 300,
-                    ]),
+                    new Length(max: 300),
                 ],
             ]);
 

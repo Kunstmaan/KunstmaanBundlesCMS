@@ -292,7 +292,7 @@ final class MediaController extends AbstractController
             if ($request->files->get('file')) {
                 $drop = $request->files->get('file');
             } else {
-                $drop = $request->get('text');
+                $drop = $request->request->get('text');
             }
         }
         $media = $this->mediaManager->createNew($drop);

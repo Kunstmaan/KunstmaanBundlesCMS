@@ -3,7 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Widget;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DashboardWidget
 {
@@ -49,10 +49,10 @@ class DashboardWidget
         }
 
         $attributeInstance = $methodRouteAttributes[0]->newInstance();
-        if (null === $attributeInstance->getName()) {
+        if (null === $attributeInstance->name) {
             throw new \Exception('The name is not configured in the attribute');
         }
 
-        return $attributeInstance->getName();
+        return $attributeInstance->name;
     }
 }

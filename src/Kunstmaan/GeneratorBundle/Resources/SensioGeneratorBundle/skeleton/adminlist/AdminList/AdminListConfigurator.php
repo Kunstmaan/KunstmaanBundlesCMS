@@ -15,7 +15,7 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 
 class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator{% if sortField %} implements SortableInterface {% endif %}
 {
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null)
+    public function __construct(EntityManager $em, ?AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
 {% if generate_admin_type %}
