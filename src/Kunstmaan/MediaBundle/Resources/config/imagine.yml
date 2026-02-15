@@ -1,0 +1,11 @@
+services:
+    liip_imagine.cache.resolver.prototype.web_path:
+        class: '%liip_imagine.cache.resolver.web_path.class%'
+        public: true
+        abstract: true
+        arguments:
+            - '@filesystem'
+            - '@router.request_context'
+            - ~ # will be injected by WebPathResolverFactory
+            - ~ # will be injected by WebPathResolverFactory
+            - '@liip_imagine.filter.configuration'
