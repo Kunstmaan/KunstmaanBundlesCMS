@@ -20,7 +20,7 @@ class AbstractVote
      *
      * @var int
      */
-    const DEFAULT_VALUE = 1;
+    public const DEFAULT_VALUE = 1;
 
     /**
      * @ORM\Id

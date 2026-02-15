@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 #[ORM\MappedSuperclass]
 abstract class BaseMenuItem implements EntityInterface
 {
-    const TYPE_PAGE_LINK = 'page_link';
-    const TYPE_URL_LINK = 'url_link';
+    public const TYPE_PAGE_LINK = 'page_link';
+    public const TYPE_URL_LINK = 'url_link';
 
     /**
      * @var array

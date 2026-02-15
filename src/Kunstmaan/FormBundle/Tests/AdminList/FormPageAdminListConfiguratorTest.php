@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class FormPageAdminListConfiguratorTest extends TestCase
 {
-    const PERMISSION_VIEW = 'view';
+    public const PERMISSION_VIEW = 'view';
 
     /**
      * @var FormPageAdminListConfigurator

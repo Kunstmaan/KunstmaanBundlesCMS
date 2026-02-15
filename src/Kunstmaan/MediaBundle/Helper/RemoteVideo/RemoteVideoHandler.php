@@ -14,11 +14,11 @@ class RemoteVideoHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = 'remote/video';
+    public const CONTENT_TYPE = 'remote/video';
     /**
      * @var string
      */
-    const TYPE = 'video';
+    public const TYPE = 'video';
 
     /**
      * @var array

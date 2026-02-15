@@ -25,11 +25,11 @@ use Symfony\Component\Validator\Constraints\When;
  */
 class URLChooserType extends AbstractType
 {
-    const INTERNAL = 'internal';
+    public const INTERNAL = 'internal';
 
-    const EXTERNAL = 'external';
+    public const EXTERNAL = 'external';
 
-    const EMAIL = 'email';
+    public const EMAIL = 'email';
 
     public function __construct(private bool $improvedUrlChooser = false)
     {

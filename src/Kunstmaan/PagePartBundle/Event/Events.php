@@ -9,5 +9,5 @@ final class Events
      *
      * @var string
      */
-    const POST_PERSIST = 'kunstmaan_pagepart.postPersist';
+    public const POST_PERSIST = 'kunstmaan_pagepart.postPersist';
 }

@@ -14,9 +14,9 @@ class RemoteSlideHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = 'remote/slide';
+    public const CONTENT_TYPE = 'remote/slide';
 
-    const TYPE = 'slide';
+    public const TYPE = 'slide';
 
     /**
      * @return string

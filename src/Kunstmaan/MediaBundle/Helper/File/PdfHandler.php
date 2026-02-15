@@ -10,7 +10,7 @@ use Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface;
  */
 class PdfHandler extends FileHandler
 {
-    const TYPE = 'pdf';
+    public const TYPE = 'pdf';
 
     /** @var string */
     protected $webPath;

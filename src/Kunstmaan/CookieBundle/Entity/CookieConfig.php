@@ -15,11 +15,11 @@ use Kunstmaan\CookieBundle\Repository\CookieConfigRepository;
 #[ORM\Entity(repositoryClass: CookieConfigRepository::class)]
 class CookieConfig extends AbstractConfig
 {
-    const VISITOR_TYPE_INTERNAL = 'internal traffic';
+    public const VISITOR_TYPE_INTERNAL = 'internal traffic';
 
-    const VISITOR_TYPE_CLIENT = 'client traffic';
+    public const VISITOR_TYPE_CLIENT = 'client traffic';
 
-    const VISITOR_TYPE_NORMAL = 'normal traffic';
+    public const VISITOR_TYPE_NORMAL = 'normal traffic';
 
     /**
      * @var string

@@ -22,11 +22,11 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
-    const SUFFIX_ADD = 'add';
-    const SUFFIX_EDIT = 'edit';
-    const SUFFIX_EXPORT = 'export';
-    const SUFFIX_DELETE = 'delete';
-    const SUFFIX_VIEW = 'view';
+    public const SUFFIX_ADD = 'add';
+    public const SUFFIX_EDIT = 'edit';
+    public const SUFFIX_EXPORT = 'export';
+    public const SUFFIX_DELETE = 'delete';
+    public const SUFFIX_VIEW = 'view';
 
     /**
      * @var Field[]
