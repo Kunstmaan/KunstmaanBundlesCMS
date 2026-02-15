@@ -4,7 +4,7 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 
-if (class_exists(\Symfony\Component\Routing\Loader\AnnotationClassLoader::class)) {
+if (class_exists(\Symfony\Component\Security\Core\Security::class)) {
     /**
      * @internal
      */

@@ -28,7 +28,7 @@ if (class_exists(\Symfony\Component\Security\Core\Security::class)) {
      */
     trait AclVoterTrait
     {
-        public function vote(TokenInterface $token, $subject, array $attributes)
+        public function vote(TokenInterface $token, $subject, array $attributes): int
         {
             return $this->doVote($token, $subject, $attributes);
         }
@@ -79,7 +79,7 @@ class AclVoter extends BaseAclVoter
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
-    private function doVote(TokenInterface $token, $subject, array $attributes, ?Vote $vote = null): int
+    private function doVote(TokenInterface $token, $subject, array $attributes, /* ?Vote */ $vote = null): int
     {
         $attributeIsSupported = false;
         foreach ($attributes as $attribute) {
