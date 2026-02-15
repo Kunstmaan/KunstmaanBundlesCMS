@@ -38,9 +38,9 @@ class ExceptionDataCollector extends AbstractDataCollector
             return [
                 'data' => $model,
             ];
-        } else {
-            return [];
         }
+
+        return [];
     }
 
     /**

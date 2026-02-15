@@ -22,8 +22,8 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class NodeVersion extends AbstractEntity
 {
-    const DRAFT_VERSION = 'draft';
-    const PUBLIC_VERSION = 'public';
+    public const DRAFT_VERSION = 'draft';
+    public const PUBLIC_VERSION = 'public';
 
     /**
      * @var NodeTranslation

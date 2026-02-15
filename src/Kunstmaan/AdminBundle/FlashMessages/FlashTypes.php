@@ -7,9 +7,9 @@ namespace Kunstmaan\AdminBundle\FlashMessages;
  */
 class FlashTypes
 {
-    const SUCCESS = 'success';
-    const WARNING = 'warning';
+    public const SUCCESS = 'success';
+    public const WARNING = 'warning';
 
-    const INFO = 'info';
-    const DANGER = 'danger';
+    public const INFO = 'info';
+    public const DANGER = 'danger';
 }

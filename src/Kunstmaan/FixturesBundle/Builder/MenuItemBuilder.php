@@ -31,17 +31,13 @@ class MenuItemBuilder implements BuilderInterface
                 $fixture->getEntity()->setNodeTranslation($additionalEntities['translationNode_' . $properties['menu']->getLocale()]);
             }
         }
-
-        return;
     }
 
     public function postBuild(Fixture $fixture)
     {
-        return;
     }
 
     public function postFlushBuild(Fixture $fixture)
     {
-        return;
     }
 }

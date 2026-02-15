@@ -50,9 +50,9 @@ class MediaCreatorService
         // Get file from FilePath.
         $data = new File($filePath, true);
 
-        /** @var $media Media */
+        /** @var Media $media */
         $media = $fileHandler->createNew($data);
-        /** @var $folder Folder */
+        /** @var Folder $folder */
         $folder = $this->folderRepository->getFolder($folderId);
 
         $media->setFolder($folder);

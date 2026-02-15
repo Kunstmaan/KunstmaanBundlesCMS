@@ -9,11 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 class TranslationTest extends TestCase
 {
-    const TEST_DATA_ID = 666;
-    const TEST_DATA_FILE = 'messages.en.yml';
-    const TEST_DATA_KEYWORD = 'hello.world';
-    const TEST_DATA_TEXT = 'hello world';
-    const TEST_DATA_DOMAIN = 'messages';
+    public const TEST_DATA_ID = 666;
+    public const TEST_DATA_FILE = 'messages.en.yml';
+    public const TEST_DATA_KEYWORD = 'hello.world';
+    public const TEST_DATA_TEXT = 'hello world';
+    public const TEST_DATA_DOMAIN = 'messages';
 
     protected $object;
 

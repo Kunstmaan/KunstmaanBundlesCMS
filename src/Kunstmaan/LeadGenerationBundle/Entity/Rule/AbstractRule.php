@@ -114,8 +114,8 @@ abstract class AbstractRule
     /**
      * Get the rule admin type
      *
-     * @phpstan-return class-string<AbstractRuleAdminType>
      * @return string
+     * @phpstan-return class-string<AbstractRuleAdminType>
      */
     abstract public function getAdminType();
 }
