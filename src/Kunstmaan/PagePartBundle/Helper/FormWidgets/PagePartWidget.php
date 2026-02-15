@@ -125,7 +125,7 @@ class PagePartWidget extends FormWidget
     public function getExtraParams(Request $request)
     {
         $params = [];
-        $editPagePart = $request->get('edit');
+        $editPagePart = $request->query->get('edit');
         if (isset($editPagePart)) {
             $params['editpagepart'] = $editPagePart;
         }
