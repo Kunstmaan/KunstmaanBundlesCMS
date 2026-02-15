@@ -434,7 +434,10 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
 
     /**
      * Removes sensitive data from the user.
+     *
+     * NEXT_MAJOR: Remove this method when only Symfony 8 is supported.
      */
+    #[\Deprecated('This method is deprecated by Symfony, no replacement will be provided.', 'kunstmaan/admin-bundle:7.4')]
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
