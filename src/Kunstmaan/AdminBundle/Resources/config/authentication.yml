@@ -32,15 +32,6 @@ services:
             - '@event_dispatcher'
             - '@kunstmaan_admin.authentication.mailer'
 
-    Kunstmaan\AdminBundle\Service\AuthenticationMailer\SwiftmailerService:
-        arguments:
-            - '@mailer'
-            - '@twig'
-            - '@translator'
-            - '@router'
-            - ~ # Will be injected in the KunstmaanAdmin extension class
-            - ~ # Will be injected in the KunstmaanAdmin extension class
-
     Kunstmaan\AdminBundle\Service\AuthenticationMailer\SymfonyMailerService:
         arguments:
             - '@mailer.mailer'

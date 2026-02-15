@@ -114,7 +114,7 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
             'default_locale' => 'nl',
         ];
 
-        if (array_key_exists($excludeKey, $requiredConfig)) {
+        if ($excludeKey !== null && array_key_exists($excludeKey, $requiredConfig)) {
             unset($requiredConfig[$excludeKey]);
         }
 

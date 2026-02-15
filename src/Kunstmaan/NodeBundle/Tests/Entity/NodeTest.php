@@ -159,13 +159,10 @@ class NodeTest extends TestCase
     {
         $mirror = new \ReflectionClass(Node::class);
         $property = $mirror->getProperty('lft');
-        $property->setAccessible(true);
         $property->setValue($this->object, 11);
         $property = $mirror->getProperty('rgt');
-        $property->setAccessible(true);
         $property->setValue($this->object, 12);
         $property = $mirror->getProperty('lvl');
-        $property->setAccessible(true);
         $property->setValue($this->object, 13);
 
         $this->assertEquals(11, $this->object->getLeft());

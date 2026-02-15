@@ -2,11 +2,13 @@ kunstmaan_dashboard:
     resource: '@KunstmaanDashboardBundle/Controller/DashboardController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/dashboard
+    trailing_slash_on_root: false
 
 kunstmaan_dashboard_googleanalytics:
     resource: '@KunstmaanDashboardBundle/Controller/GoogleAnalyticsController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/dashboard/widget/googleanalytics
+    trailing_slash_on_root: false
 
 kunstmaan_dashboard_googleanalytics_AJAX:
     resource: '@KunstmaanDashboardBundle/Controller/GoogleAnalyticsAJAXController.php'

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Validator\Constraints;
 
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -73,8 +74,9 @@ class Media extends Constraint
     /**
      * @param array<string,mixed> $options
      */
+    #[HasNamedArguments]
     public function __construct(
-        array $options = [],
+        ?array $options = null,
         ?array $groups = null,
         $payload = null,
         ?int $minHeight = null,
@@ -88,6 +90,10 @@ class Media extends Constraint
         ?string $maxWidthMessage = null,
         ?string $mimeTypesMessage = null,
     ) {
+        if (\is_array($options)) {
+            trigger_deprecation('kunstmaan/media-bundle', '7.4', 'Passing an array of options to configure the "%s" constraint is deprecated, use named arguments instead.', static::class);
+        }
+
         parent::__construct($options, $groups, $payload);
 
         $this->minHeight = $minHeight ?? $this->minHeight;

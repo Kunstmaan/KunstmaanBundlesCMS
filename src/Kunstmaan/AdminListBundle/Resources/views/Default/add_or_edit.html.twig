@@ -4,23 +4,27 @@
 {% block extrabodyclasses %}{{ parent() }}{% if entityVersionLockCheck %} js-entity-version-lock{% endif %}{% endblock %}
 
 {% block header %}
-    {% if entityVersionLockCheck %}
-        <div class="hidden" id="js-entity-version-lock-data" data-check-interval="{{ entityVersionLockInterval }}" data-url="{{ path('KunstmaanAdminListBundle_entity_lock_check', {'id': entity.id, 'repository': adminlistconfigurator.getRepositoryName()}) }}">
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">
-                <i class="fa fa-times"></i>
-                </button>
-                <span class="message"></span>
+    {% block header_entity_version_lock %}
+        {% if entityVersionLockCheck %}
+            <div class="hidden" id="js-entity-version-lock-data" data-check-interval="{{ entityVersionLockInterval }}" data-url="{{ path('KunstmaanAdminListBundle_entity_lock_check', {'id': entity.id, 'repository': adminlistconfigurator.getRepositoryName()}) }}">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                    </button>
+                    <span class="message"></span>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    {% endblock %}
 
-    {% set formParams = {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}} %}
-    {% if tabPane is defined %}
-        {{ form_start(tabPane.formView, formParams) }}
-    {% else %}
-        {{ form_start(form, formParams) }}
-    {% endif %}
+    {% block header_form %}
+        {% set formParams = {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}} %}
+        {% if tabPane is defined %}
+            {{ form_start(tabPane.formView, formParams) }}
+        {% else %}
+            {{ form_start(form, formParams) }}
+        {% endif %}
+    {% endblock %}
     {{ parent() }}
 {% endblock %}
 
@@ -30,30 +34,36 @@
         <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
             <div class="btn-group">
                 {% block actions %}
-                    <button type="submit" class="btn btn-primary btn--raise-on-hover">
-                        {{ 'Save' | trans }}
-                    </button>
-                    <a href="{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}" class="btn btn-default btn--raise-on-hover">
-                        {{ 'form.cancel' | trans }}
-                    </a>
+                    {% block actions_submit %}
+                        <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'Save' | trans }}
+                        </button>
+                    {% endblock %}
+                    {% block actions_cancel %}
+                        <a href="{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}" class="btn btn-default btn--raise-on-hover">
+                            {{ 'form.cancel' | trans }}
+                        </a>
+                    {% endblock %}
 
-                    {% if adminlistconfigurator.hasItemActions() %}
-                        {% for itemAction in adminlistconfigurator.getItemActions() %}
-                            {% if itemAction.template is not null %}
-                                {% include itemAction.template with {'itemAction': itemAction} %}
-                            {% else %}
-                                {% set url = itemAction.getUrlFor(entity) %}
-                                {% if url %}
-                                    <a class="btn btn-default btn--raise-on-hover" href="{{ path(url["path"], url[("params")] ) }}">
-                                        {% if itemAction.getIconFor(entity) is not null %}
-                                            <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
-                                        {% endif %}
-                                        {{ itemAction.getLabelFor(entity) }}
-                                    </a>
+                    {% block actions_item_actions %}
+                        {% if adminlistconfigurator.hasItemActions() %}
+                            {% for itemAction in adminlistconfigurator.getItemActions() %}
+                                {% if itemAction.template is not null %}
+                                    {% include itemAction.template with {'itemAction': itemAction} %}
+                                {% else %}
+                                    {% set url = itemAction.getUrlFor(entity) %}
+                                    {% if url %}
+                                        <a class="btn btn-default btn--raise-on-hover" href="{{ path(url["path"], url[("params")] ) }}">
+                                            {% if itemAction.getIconFor(entity) is not null %}
+                                                <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
+                                            {% endif %}
+                                            {{ itemAction.getLabelFor(entity) }}
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endblock %}
                 {% endblock %}
             </div>
         </div>
@@ -71,16 +81,16 @@
 {% endblock %}
 
 {% block content %}
-        <!-- Fields -->
-        <fieldset class="form__fieldset--padded">
-            {% block form_content %}
-                {% if tabPane is defined %}
-                    {{ tabs_widget(tabPane) }}
-                {% else %}
-                    {{ form_rest(form) }}
-                {% endif %}
-            {% endblock %}
-        </fieldset>
+    <!-- Fields -->
+    <fieldset class="form__fieldset--padded">
+        {% block form_content %}
+            {% if tabPane is defined %}
+                {{ tabs_widget(tabPane) }}
+            {% else %}
+                {{ form_rest(form) }}
+            {% endif %}
+        {% endblock %}
+    </fieldset>
     {% if tabPane is defined %}
         {{ form_end(tabPane.formView) }}
     {% else %}

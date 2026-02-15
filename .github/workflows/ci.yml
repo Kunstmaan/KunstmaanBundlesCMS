@@ -14,7 +14,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ['8.1', '8.2', '8.3', '8.4']
+                php: ['8.1', '8.2', '8.3', '8.4', '8.5']
                 deps: ['stable']
                 symfony: [''] # Don't lock to a specific symfony version by default
                 include:
@@ -24,11 +24,16 @@ jobs:
 
                     # Test latest php with LTS versions.
                     -   deps: 'lts'
-                        php: '8.4'
+                        php: '8.5'
                         symfony: '^6.4'
 
+                    # Test latest php with LTS versions.
+                    -   deps: 'lts'
+                        php: '8.5'
+                        symfony: '^7.4'
+
         steps:
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@v5
 
             -   name: Set-up env variables
                 run: |
@@ -45,7 +50,7 @@ jobs:
                 id: composer-cache
                 run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-            -   uses: actions/cache@v4.2.0
+            -   uses: actions/cache@v4.3.0
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -72,6 +77,6 @@ jobs:
         name: Validate composer files
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
 
             - run: sh ./.build/validate-composer.sh || exit $?

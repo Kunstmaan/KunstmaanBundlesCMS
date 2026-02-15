@@ -54,7 +54,6 @@ class Parser
         $properties = $refl->getProperties();
 
         foreach ($properties as $property) {
-            $property->setAccessible(true);
             $value = $property->getValue($entity);
 
             foreach ($this->parsers as $parser) {

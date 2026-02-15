@@ -2,6 +2,7 @@ KunstmaanTranslatorBundle_translations:
     resource: '@KunstmaanTranslatorBundle/Controller/TranslatorController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/translations
+    trailing_slash_on_root: false
 
 KunstmaanTranslatorBundle_translations_commands:
     resource: '@KunstmaanTranslatorBundle/Controller/TranslatorCommandController.php'

@@ -63,56 +63,59 @@ class URLHelper
         }
 
         if ($this->isInternalLink($text)) {
-            preg_match_all("/\[(([a-z_A-Z\.]+):)?NT([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
+            preg_match_all('/\[(([a-z_A-Z\.]+):)?NT([0-9]+)\]/', $text, $matches, PREG_SET_ORDER);
 
-            if (\count($matches) > 0) {
-                foreach ($matches as $match) {
-                    $fullTag = $match[0];
-                    $hostId = $match[2];
+            foreach ($matches as $match) {
+                $fullTag = $match[0];
 
-                    $hostConfig = !empty($hostId) ? $this->domainConfiguration->getFullHostById($hostId) : null;
-                    $host = null !== $hostConfig && array_key_exists('host', $hostConfig) ? $hostConfig['host'] : null;
-                    $hostBaseUrl = $this->domainConfiguration->getHostBaseUrl($host);
+                $nodeTranslationId = $match[3];
+                $nodeTranslation = $this->getNodeTranslation($nodeTranslationId);
+                if (!$nodeTranslation) {
+                    $this->logger->error('No NodeTranslation found in the database when replacing url tag ' . $fullTag);
 
-                    $nodeTranslationId = $match[3];
-                    $nodeTranslation = $this->getNodeTranslation($nodeTranslationId);
-
-                    if ($nodeTranslation) {
-                        $urlParams = ['url' => $nodeTranslation['url']];
-                        // Only add locale if multilingual site
-                        if ($this->domainConfiguration->isMultiLanguage($host)) {
-                            $urlParams['_locale'] = $nodeTranslation['lang'];
-                        }
-
-                        // Only add other site, when having this.
-                        if ($hostId) {
-                            $urlParams['otherSite'] = $hostId;
-                        }
-
-                        $url = $this->router->generate('_slug', $urlParams);
-
-                        $text = str_replace($fullTag, $hostId ? $hostBaseUrl . $url : $url, $text);
-                    } else {
-                        $this->logger->error('No NodeTranslation found in the database when replacing url tag ' . $fullTag);
-                    }
+                    continue;
                 }
+
+                $hostId = $match[2];
+
+                $hostConfig = !empty($hostId) ? $this->domainConfiguration->getFullHostById($hostId) : null;
+                $host = $hostConfig['host'] ?? null;
+                if (!$host) {
+                    // Reduce multiple getHost calls
+                    $host = $this->domainConfiguration->getHost();
+                }
+
+                $hostBaseUrl = $this->domainConfiguration->getHostBaseUrl($host);
+
+                $urlParams = ['url' => $nodeTranslation['url']];
+                // Only add locale if multilingual site
+                if ($this->domainConfiguration->isMultiLanguage($host)) {
+                    $urlParams['_locale'] = $nodeTranslation['lang'];
+                }
+
+                // Only add other site, when having this.
+                if ($hostId) {
+                    $urlParams['otherSite'] = $hostId;
+                }
+
+                $url = $this->router->generate('_slug', $urlParams);
+
+                $text = str_replace($fullTag, $hostId ? $hostBaseUrl . $url : $url, $text);
             }
         }
 
         if ($this->isInternalMediaLink($text)) {
             preg_match_all("/\[(([a-z_A-Z]+):)?M([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
 
-            if (\count($matches) > 0) {
-                foreach ($matches as $match) {
-                    $fullTag = $match[0];
-                    $mediaId = $match[3];
+            foreach ($matches as $match) {
+                $fullTag = $match[0];
+                $mediaId = $match[3];
 
-                    $mediaItem = $this->getMedia($mediaId);
-                    if ($mediaItem) {
-                        $text = str_replace($fullTag, $mediaItem['url'], $text);
-                    } else {
-                        $this->logger->error('No Media found in the database when replacing url tag ' . $fullTag);
-                    }
+                $mediaItem = $this->getMedia($mediaId);
+                if ($mediaItem) {
+                    $text = str_replace($fullTag, $mediaItem['url'], $text);
+                } else {
+                    $this->logger->error('No Media found in the database when replacing url tag ' . $fullTag);
                 }
             }
         }
