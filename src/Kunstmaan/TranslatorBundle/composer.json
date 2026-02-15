@@ -24,10 +24,10 @@
     },
     "require-dev": {
         "doctrine/data-fixtures": "^1.5",
-        "matthiasnoback/symfony-config-test": "^4.2.1",
+        "matthiasnoback/symfony-config-test": "^5.1",
         "fakerphp/faker": "^1.15",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^7.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1",
+        "symfony/phpunit-bridge": "^7.2",
         "phpunit/phpunit": "^9.5.5"
     },
     "config": {

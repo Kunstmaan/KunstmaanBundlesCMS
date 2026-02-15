@@ -74,7 +74,6 @@ class DomainConfigurationTest extends TestCase
         $object = $this->getDomainConfiguration($request);
         $reflection = new \ReflectionClass(DomainConfiguration::class);
         $method = $reflection->getMethod('getHostOverride');
-        $method->setAccessible(true);
 
         $this->assertNull($method->invoke($object));
     }

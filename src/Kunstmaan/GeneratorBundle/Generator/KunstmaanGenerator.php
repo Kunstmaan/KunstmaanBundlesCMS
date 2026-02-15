@@ -10,7 +10,6 @@ use Doctrine\ORM\Tools\EntityRepositoryGenerator;
 use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -22,7 +21,7 @@ use Twig\Loader\FilesystemLoader;
 /**
  * @internal
  */
-class KunstmaanGenerator extends Generator
+class KunstmaanGenerator extends AbstractGenerator
 {
     /**
      * @var Filesystem

@@ -33,7 +33,7 @@ class NodeMenuTabTranslationAdminType extends AbstractType
                 'label' => 'kuma_node.form.menu_tab_translation.slug.label',
                 'required' => false,
                 'constraints' => [
-                    new Regex("/^[a-zA-Z0-9\-_\/]+$/"),
+                    new Regex(pattern: "/^[a-zA-Z0-9\-_\/]+$/"),
                 ],
             ]);
         }

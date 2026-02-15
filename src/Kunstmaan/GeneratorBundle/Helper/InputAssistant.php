@@ -2,8 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Helper;
 
-use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Kunstmaan\GeneratorBundle\Helper\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -83,7 +82,7 @@ class InputAssistant
         }
 
         $question = new Question($this->questionHelper->getQuestion('Bundle Namespace', $namespace), $namespace);
-        $question->setValidator(['Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace']);
+        $question->setValidator([Validators::class, 'validateBundleNamespace']);
         $question->setAutocompleterValues($namespaces);
         $namespace = $this->questionHelper->ask($this->input, $this->output, $question);
 
@@ -221,10 +220,6 @@ class InputAssistant
      */
     private function convertNamespaceToSnakeCase($namespace): string
     {
-        if (is_null($namespace)) {
-            return null;
-        }
-
         return str_replace('/', '_', strtolower($this->fixNamespace($namespace)));
     }
 }

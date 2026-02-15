@@ -105,24 +105,25 @@ class DomainBasedLocaleRouter extends SlugRouter
     protected function getNodeTranslation($matchResult)
     {
         $key = $matchResult['_controller'] . $matchResult['url'] . $matchResult['_locale'] . $matchResult['_route'];
-        if (!isset($this->cachedNodeTranslations[$key])) {
-            $rootNode = $this->domainConfiguration->getRootNode();
-
-            // Lookup node translation
-            $nodeTranslationRepo = $this->getNodeTranslationRepository();
-
-            /* @var NodeTranslation $nodeTranslation */
-            $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
-                $matchResult['url'],
-                $matchResult['_locale'],
-                false,
-                null,
-                $rootNode
-            );
-            $this->cachedNodeTranslations[$key] = $nodeTranslation;
+        if (\array_key_exists($key, $this->cachedNodeTranslations)) {
+            return $this->cachedNodeTranslations[$key];
         }
 
-        return $this->cachedNodeTranslations[$key];
+        $rootNode = $this->domainConfiguration->getRootNode();
+
+        // Lookup node translation
+        $nodeTranslationRepo = $this->getNodeTranslationRepository();
+
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
+            $matchResult['url'],
+            $matchResult['_locale'],
+            false,
+            null,
+            $rootNode
+        );
+
+        return $this->cachedNodeTranslations[$key] = $nodeTranslation;
     }
 
     private function isMultiDomainHost(): bool

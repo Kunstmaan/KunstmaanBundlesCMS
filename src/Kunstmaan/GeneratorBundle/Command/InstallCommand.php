@@ -3,8 +3,6 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
-use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +14,7 @@ use Symfony\Component\Process\Process;
 /**
  * @internal
  */
-final class InstallCommand extends GeneratorCommand
+final class InstallCommand extends AbstractGeneratorCommand
 {
     /**
      * @var int
@@ -72,8 +70,6 @@ final class InstallCommand extends GeneratorCommand
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $this->initAssistant($input, $output);
-
-        $questionHelper = new QuestionHelper();
 
         $outputStyle = new SymfonyStyle($input, $output);
         $outputStyle->writeln('<info>Installing KunstmaanCms...</info>');

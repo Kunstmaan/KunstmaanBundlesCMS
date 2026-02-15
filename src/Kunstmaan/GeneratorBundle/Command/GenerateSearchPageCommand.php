@@ -5,7 +5,6 @@ namespace Kunstmaan\GeneratorBundle\Command;
 use Kunstmaan\GeneratorBundle\Generator\SearchPageGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Symfony\Bundle\MakerBundle\Doctrine\DoctrineHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -15,7 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @internal
  */
-class GenerateSearchPageCommand extends GenerateDoctrineCommand
+class GenerateSearchPageCommand extends AbstractGeneratorCommand
 {
     /** @var DoctrineHelper */
     private $doctrineHelper;
@@ -58,15 +57,7 @@ EOT
             ->setName('kuma:generate:searchpage');
     }
 
-    /**
-     * Executes the command.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $questionHelper = $this->getQuestionHelper();
         $questionHelper->writeSection($output, 'Search Page Generation');

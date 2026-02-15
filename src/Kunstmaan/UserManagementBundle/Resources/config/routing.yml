@@ -2,13 +2,16 @@ KunstmaanUserManagementBundle_user_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/UsersController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/users
+    trailing_slash_on_root: false
 
 KunstmaanUserManagementBundle_group_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/GroupsController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/groups
+    trailing_slash_on_root: false
 
 KunstmaanUserManagementBundle_role_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/RolesController.php'
     type: attribute
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/roles
+    trailing_slash_on_root: false

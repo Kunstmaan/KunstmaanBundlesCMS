@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Kernel;
 /**
  * @internal
  */
-class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
+class SearchPageGenerator extends AbstractGenerator
 {
     /**
      * @var Filesystem

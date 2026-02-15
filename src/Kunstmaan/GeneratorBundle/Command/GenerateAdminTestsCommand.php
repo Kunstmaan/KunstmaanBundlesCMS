@@ -4,7 +4,6 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
 use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
-use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @internal
  */
-class GenerateAdminTestsCommand extends GeneratorCommand
+class GenerateAdminTestsCommand extends AbstractGeneratorCommand
 {
     /**
      * @return void
@@ -37,10 +36,7 @@ EOT
             ->setName('kuma:generate:admin-tests');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $questionHelper = $this->getQuestionHelper();
         $questionHelper->writeSection($output, 'Admin Tests Generation');

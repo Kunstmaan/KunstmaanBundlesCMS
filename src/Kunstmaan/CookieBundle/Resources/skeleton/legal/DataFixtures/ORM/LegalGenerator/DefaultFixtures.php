@@ -476,10 +476,8 @@ class DefaultFixtures extends Fixture implements OrderedFixtureInterface, Fixtur
 
     /**
      * Get the order of this fixture
-     *
-     * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 52;
     }

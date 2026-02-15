@@ -24,10 +24,11 @@ class HeaderPagePartTest extends TestCase
         $metadata = new ClassMetadata(HeaderPagePart::class);
 
         HeaderPagePart::loadValidatorMetadata($metadata);
-        $this->assertArrayHasKey('niv', $metadata->properties);
-        $this->assertInstanceOf(NotBlank::class, $metadata->properties['niv']->getConstraints()[0]);
-        $this->assertArrayHasKey('title', $metadata->properties);
-        $this->assertInstanceOf(NotBlank::class, $metadata->properties['title']->getConstraints()[0]);
+
+        $this->assertTrue($metadata->hasPropertyMetadata('niv'));
+        $this->assertInstanceOf(NotBlank::class, $metadata->getPropertyMetadata('niv')[0]->getConstraints()[0]);
+        $this->assertTrue($metadata->hasPropertyMetadata('title'));
+        $this->assertInstanceOf(NotBlank::class, $metadata->getPropertyMetadata('title')[0]->getConstraints()[0]);
     }
 
     public function testSetGetNiv()

@@ -12,7 +12,7 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 
 class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
 {
-    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper = null)
+    public function __construct(EntityManagerInterface $em, ?AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
 

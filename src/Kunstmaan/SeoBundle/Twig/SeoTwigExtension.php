@@ -227,12 +227,15 @@ final class SeoTwigExtension extends AbstractExtension
         try {
             $cache = $this->getRequestCache();
             if (null === $cache) {
-                return getimagesize($src);
+                return @getimagesize($src);
             }
 
             $cachedImageSizes = $cache->getItem(md5($src));
             if (!$cachedImageSizes->isHit()) {
-                $sizes = getimagesize($src);
+                $sizes = @getimagesize($src);
+                if (false === $sizes) {
+                    $sizes = [null, null];
+                }
 
                 $cachedImageSizes->set($sizes);
                 $cache->save($cachedImageSizes);

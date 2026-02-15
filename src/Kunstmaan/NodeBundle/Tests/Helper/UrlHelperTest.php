@@ -88,6 +88,26 @@ class UrlHelperTest extends TestCase
         $this->assertEquals('/uploads/media/3/test.svg', $urlHelper->replaceUrl('[M3]'));
     }
 
+    public function testReplaceUrlWithInternalMultiDomainLink()
+    {
+        $em = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
+        $em->expects($this->once())->method('getConnection')->willReturn($this->connection);
+        $router = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $router->method('generate')->with('_slug', ['url' => 'abc-3', 'otherSite' => 'test_host'])->willReturn('/abc-3');
+        $domainConfig = $this->getMockBuilder(DomainConfigurationInterface::class)->getMock();
+        $domainConfig->expects($this->exactly(2))->method('getFullHostById')->with('test_host')->willReturn(['id' => 'test_host', 'host' => 'testhost.tld']);
+        $domainConfig->expects($this->exactly(2))->method('getHostBaseUrl')->with('testhost.tld')->willReturn('https://testhost.tld');
+
+        $urlHelper = new URLHelper($em, $router, new NullLogger(), $domainConfig);
+        $this->assertEquals('https://testhost.tld/abc-3', $urlHelper->replaceUrl('[test_host:NT3]'));
+
+        // Remove all records to test cached result on second call
+        $this->connection->executeStatement('DELETE FROM kuma_node_translations');
+
+        // Second call to replaceUrl should not execute query again
+        $this->assertEquals('https://testhost.tld/abc-3', $urlHelper->replaceUrl('[test_host:NT3]'));
+    }
+
     private function createSchema(): void
     {
         $schema = new Schema();

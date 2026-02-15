@@ -21,7 +21,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
      *
      * @return array
      */
-    public function getArticles($lang = null, $offset = null, $limit = null{% if uses_category %}, array $category = null{% endif %}{% if uses_tag %}, array $tag = null{% endif %})
+    public function getArticles($lang = null, $offset = null, $limit = null{% if uses_category %}, ?array $category = null{% endif %}{% if uses_tag %}, ?array $tag = null{% endif %})
     {
         $q = $this->getArticlesQuery($lang, $offset ?? 0, $limit ?? 10{% if uses_category %}, $category{% endif %}{% if uses_tag %}, $tag{% endif %});
 
@@ -39,7 +39,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
      *
      * @return Query
      */
-    public function getArticlesQuery($lang, $offset, $limit{% if uses_category %}, array $category = null{% endif %}{% if uses_tag %}, array $tag = null{% endif %})
+    public function getArticlesQuery($lang, $offset, $limit{% if uses_category %}, ?array $category = null{% endif %}{% if uses_tag %}, ?array $tag = null{% endif %})
     {
         $qb = $this->createQueryBuilder('a')
             ->innerJoin(NodeVersion::class, 'v', 'WITH', 'a.id = v.refId')

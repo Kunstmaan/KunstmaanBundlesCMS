@@ -255,26 +255,26 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('username', new NotBlank(['groups' => ['Registration', 'Default']]));
+        $metadata->addPropertyConstraint('username', new NotBlank(groups: ['Registration', 'Default']));
         $metadata->addPropertyConstraints(
             'plainPassword',
             [
-                new NotBlank(['groups' => ['Registration']]),
-                new PasswordRestrictions(['groups' => ['Registration', 'Default']]),
+                new NotBlank(groups: ['Registration']),
+                new PasswordRestrictions(groups: ['Registration', 'Default']),
             ]
         );
-        $metadata->addPropertyConstraint('email', new NotBlank(['groups' => ['Registration', 'Default']]));
-        $metadata->addPropertyConstraint('email', new Email(['groups' => ['Registration', 'Default']]));
-        $metadata->addConstraint(new UniqueEntity([
-            'fields' => 'username',
-            'message' => 'errors.user.loginexists',
-            'groups' => ['Registration', 'Default'],
-        ]));
-        $metadata->addConstraint(new UniqueEntity([
-            'fields' => 'email',
-            'message' => 'errors.user.emailexists',
-            'groups' => ['Registration', 'Default'],
-        ]));
+        $metadata->addPropertyConstraint('email', new NotBlank(groups: ['Registration', 'Default']));
+        $metadata->addPropertyConstraint('email', new Email(groups: ['Registration', 'Default']));
+        $metadata->addConstraint(new UniqueEntity(
+            fields: 'username',
+            message: 'errors.user.loginexists',
+            groups: ['Registration', 'Default'],
+        ));
+        $metadata->addConstraint(new UniqueEntity(
+            fields: 'email',
+            message: 'errors.user.emailexists',
+            groups: ['Registration', 'Default'],
+        ));
     }
 
     /**

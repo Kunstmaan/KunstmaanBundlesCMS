@@ -18,18 +18,18 @@
         "doctrine/orm": "^2.13",
         "doctrine/dbal": "^3.8",
         "doctrine/doctrine-bundle": "^2.12",
-        "symfony/config": "^6.4",
-        "symfony/dependency-injection": "^6.4",
-        "symfony/event-dispatcher": "^6.4",
-        "symfony/framework-bundle": "^6.4",
-        "symfony/http-foundation": "^6.4",
-        "symfony/http-kernel": "^6.4",
-        "symfony/routing": "^6.4"
+        "symfony/config": "^6.4|^7.2",
+        "symfony/dependency-injection": "^6.4|^7.2",
+        "symfony/event-dispatcher": "^6.4|^7.2",
+        "symfony/framework-bundle": "^6.4|^7.2",
+        "symfony/http-foundation": "^6.4|^7.2",
+        "symfony/http-kernel": "^6.4|^7.2",
+        "symfony/routing": "^6.4|^7.2"
     },
     "require-dev": {
-        "matthiasnoback/symfony-config-test": "^4.2.1",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^7.0",
+        "matthiasnoback/symfony-config-test": "^5.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1",
+        "symfony/phpunit-bridge": "^7.2",
         "phpunit/phpunit": "^9.5.5"
     },
     "autoload": {

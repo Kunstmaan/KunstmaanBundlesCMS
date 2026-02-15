@@ -17,16 +17,16 @@
         "openspout/openspout": "^4.0",
         "kunstmaan/admin-bundle": "^7.0",
         "kunstmaan/utilities-bundle": "^7.0",
-        "pagerfanta/core": "^3.8",
-        "pagerfanta/doctrine-orm-adapter": "^3.8",
-        "pagerfanta/doctrine-dbal-adapter": "^3.8",
-        "pagerfanta/twig": "^3.8"
+        "pagerfanta/core": "^3.8|^4.0",
+        "pagerfanta/doctrine-dbal-adapter": "^3.8|^4.0",
+        "pagerfanta/doctrine-orm-adapter": "^3.8|^4.0",
+        "pagerfanta/twig": "^3.8|^4.0"
     },
     "require-dev": {
-        "matthiasnoback/symfony-config-test": "^4.2.1",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
+        "matthiasnoback/symfony-config-test": "^5.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1",
         "phpunit/phpunit": "^9.5.5",
-        "symfony/phpunit-bridge": "^7.0",
+        "symfony/phpunit-bridge": "^7.2",
         "kunstmaan/form-bundle": "^7.0",
         "kunstmaan/menu-bundle": "^7.0",
         "kunstmaan/translator-bundle": "^7.0"

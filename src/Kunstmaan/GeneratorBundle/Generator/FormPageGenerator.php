@@ -102,7 +102,7 @@ class FormPageGenerator extends KunstmaanGenerator
      */
     private function generatePageEntity()
     {
-        list($entityCode, $entityPath) = $this->generateEntity(
+        [$entityCode, $entityPath] = $this->generateEntity(
             $this->bundle,
             $this->entity,
             $this->fields,

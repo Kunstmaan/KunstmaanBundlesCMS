@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdminMenuAdaptor implements MenuAdaptorInterface
 {
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null): void
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null): void
     {
         if (null !== $request && null !== $parent && $parent->getRoute() === 'KunstmaanAdminBundle_modules') {
             $menuitem = new TopMenuItem($menu);

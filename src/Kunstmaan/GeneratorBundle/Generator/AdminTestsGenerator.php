@@ -3,7 +3,6 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
  *
  * @interal
  */
-class AdminTestsGenerator extends Generator
+class AdminTestsGenerator extends AbstractGenerator
 {
     /**
      * @var ContainerInterface

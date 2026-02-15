@@ -18,7 +18,6 @@
         "doctrine/inflector": "^1.4|^2.0",
         "doctrine/data-fixtures": "^1.5",
         "fakerphp/faker": "^1.15",
-        "kunstmaan/sensio-generator-bundle": "^3.2",
         "symfony/maker-bundle": "^1.39"
     },
     "require-dev": {
@@ -30,9 +29,9 @@
         "kunstmaan/media-pagepart-bundle": "^7.0",
         "kunstmaan/node-bundle": "^7.0",
         "kunstmaan/pagepart-bundle": "^7.0",
-        "matthiasnoback/symfony-config-test": "^4.2.1",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.2.1",
-        "symfony/phpunit-bridge": "^7.0",
+        "matthiasnoback/symfony-config-test": "^5.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1",
+        "symfony/phpunit-bridge": "^7.2",
         "phpunit/phpunit": "^9.5.5"
     },
     "conflict": {

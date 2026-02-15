@@ -4,8 +4,37 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 
+if (class_exists(\Symfony\Component\Routing\Loader\AnnotationClassLoader::class)) {
+    /**
+     * @internal
+     */
+    trait WarmupTrait
+    {
+        /**
+         * @param string|null $buildDir
+         */
+        public function warmUp(string $cacheDir/*, ?string $buildDir = null*/): array
+        {
+            return $this->doWarmup($cacheDir);
+        }
+    }
+} else {
+    /**
+     * @internal
+     */
+    trait WarmupTrait
+    {
+        public function warmUp(string $cacheDir, ?string $buildDir = null): array
+        {
+            return $this->doWarmup($cacheDir, $buildDir);
+        }
+    }
+}
+
 class Translator extends SymfonyTranslator
 {
+    use WarmupTrait;
+
     private $translationRepository;
 
     /**
@@ -32,10 +61,7 @@ class Translator extends SymfonyTranslator
         }
     }
 
-    /**
-     * @param string|null $buildDir
-     */
-    public function warmUp(string $cacheDir /* , string $buildDir = null */): array
+    private function doWarmUp(string $cacheDir, ?string $buildDir = null): array
     {
         return [];
     }

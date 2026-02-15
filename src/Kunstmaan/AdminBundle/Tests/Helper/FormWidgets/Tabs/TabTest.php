@@ -48,7 +48,6 @@ class TabTest extends TestCase
 
         $mirror = new \ReflectionClass(Tab::class);
         $method = $mirror->getMethod('getFormHelper');
-        $method->setAccessible(true);
         $helper = $method->invoke($tab);
         $this->assertInstanceOf(FormHelper::class, $helper);
     }

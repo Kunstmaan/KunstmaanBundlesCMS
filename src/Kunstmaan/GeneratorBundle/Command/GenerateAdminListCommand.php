@@ -6,19 +6,15 @@ use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 use Kunstmaan\GeneratorBundle\Helper\EntityValidator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Kunstmaan\GeneratorBundle\Helper\Sf4AppBundle;
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @internal
  */
-class GenerateAdminListCommand extends GenerateDoctrineCommand
+class GenerateAdminListCommand extends AbstractGeneratorCommand
 {
     /**
      * @return void
@@ -53,13 +49,7 @@ EOT
             ->setName('kuma:generate:adminlist');
     }
 
-    /**
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $questionHelper = $this->getQuestionHelper();
 
@@ -126,84 +116,6 @@ EOT
         }
     }
 
-    /**
-     * @param QuestionHelper  $questionHelper The question helper
-     * @param InputInterface  $input          The command input
-     * @param OutputInterface $output         The command output
-     * @param Bundle          $bundle         The bundle
-     * @param string          $entityClass    The classname of the entity
-     */
-    protected function updateRouting(
-        QuestionHelper $questionHelper,
-        InputInterface $input,
-        OutputInterface $output,
-        Bundle $bundle,
-        $entityClass,
-    ) {
-        $adminKey = $this->getContainer()->getParameter('kunstmaan_admin.admin_prefix');
-        $auto = true;
-        $multilang = false;
-        if ($input->isInteractive()) {
-            $confirmationQuestion = new ConfirmationQuestion(
-                $questionHelper->getQuestion('Is it a multilanguage site', 'yes', '?'), true
-            );
-            $multilang = $questionHelper->ask($input, $output, $confirmationQuestion);
-            $confirmationQuestion = new ConfirmationQuestion(
-                $questionHelper->getQuestion('Do you want to update the routing automatically', 'yes', '?'), true
-            );
-            $auto = $questionHelper->ask($input, $output, $confirmationQuestion);
-        }
-
-        $prefix = $multilang ? '/{_locale}' : '';
-
-        $code = sprintf("%s:\n", strtolower($bundle->getName()) . '_' . strtolower($entityClass) . '_admin_list');
-        $code .= sprintf("    resource: '@%s/Controller/%sAdminListController.php'\n", $bundle->getName(), $entityClass);
-        $code .= "    type: attribute\n";
-        $code .= sprintf("    prefix:   %s/%s/%s/\n", $prefix, $adminKey, strtolower($entityClass));
-        if ($multilang) {
-            $code .= "    requirements:\n";
-            $code .= "         _locale: \"%requiredlocales%\"\n";
-        }
-
-        if ($auto) {
-            $file = $bundle->getPath() . '/Resources/config/routing.yml';
-            $content = '';
-
-            if (file_exists($file)) {
-                $content = file_get_contents($file);
-            } elseif (!is_dir($dir = dirname($file))) {
-                mkdir($dir, 0777, true);
-            }
-
-            $content .= "\n";
-            $content .= $code;
-
-            if (false === file_put_contents($file, $content)) {
-                $output->writeln(
-                    $questionHelper->getHelperSet()->get('formatter')->formatBlock(
-                        'Failed adding the content automatically',
-                        'error'
-                    )
-                );
-            } else {
-                return;
-            }
-        }
-
-        $output->writeln('Add the following to your routing.yml');
-        $output->writeln('/*******************************/');
-        $output->write($code);
-        $output->writeln('/*******************************/');
-    }
-
-    /**
-     * KunstmaanTestBundle_TestEntity:
-     * resource: "@KunstmaanTestBundle/Controller/TestEntityAdminListController.php"
-     * type:     annotation
-     * prefix:   /{_locale}/%kunstmaan_admin.admin_prefix%/testentity/
-     * requirements:
-     * _locale: "%requiredlocales%"
-     */
     protected function createGenerator()
     {
         return new AdminListGenerator(GeneratorUtils::getFullSkeletonPath('adminlist'));

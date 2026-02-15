@@ -19,7 +19,7 @@ class NewsletterSubscriptionType extends AbstractPopupAdminType
             'label' => 'kuma_lead_generation.form.newsletter_subscription.email.label',
             'constraints' => [
                 new NotBlank(),
-                new Email(['checkMX' => false]),
+                new Email(),
             ],
         ]);
     }

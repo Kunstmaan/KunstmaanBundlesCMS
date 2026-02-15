@@ -44,11 +44,6 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
         $this->requiredLocales = $requiredLocales;
     }
 
-    /**
-     * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager): void
     {
         if ($this->isMultiLanguage) {
@@ -92,7 +87,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             {% if uses_author %}
             // Create author
             $author = new {{ entity_class }}Author();
-            $author->setName($fakerNL->name);
+            $author->setName($fakerNL->name());
             $manager->persist($author);
             $manager->flush();
             {% endif %}
@@ -108,9 +103,9 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             $translations = array();
             foreach ($languages as $lang) {
                 if ($lang == 'nl') {
-                    $title = $fakerNL->sentence;
+                    $title = $fakerNL->sentence();
                 } else {
-                    $title = $fakerEN->sentence;
+                    $title = $fakerEN->sentence();
                 }
 
                 $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {

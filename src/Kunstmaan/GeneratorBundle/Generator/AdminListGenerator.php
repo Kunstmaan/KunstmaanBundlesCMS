@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Kernel;
 /**
  * @internal
  */
-class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
+class AdminListGenerator extends AbstractGenerator
 {
     /**
      * @var string
