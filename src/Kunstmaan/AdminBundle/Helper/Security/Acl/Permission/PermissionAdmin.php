@@ -27,8 +27,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class PermissionAdmin
 {
-    const ADD = 'ADD';
-    const DELETE = 'DEL';
+    public const ADD = 'ADD';
+    public const DELETE = 'DEL';
 
     /**
      * @var AbstractEntity

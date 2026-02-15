@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LegalCookieHelper
 {
-    const LEGAL_COOKIE_NAME = 'legal_cookie';
-    const FUNCTIONAL_COOKIE_NAME = 'functional_cookie';
-    const DEFAULT_COOKIE_LIFETIME = 10 * 365 * 24 * 60 * 60; // 10 years
+    public const LEGAL_COOKIE_NAME = 'legal_cookie';
+    public const FUNCTIONAL_COOKIE_NAME = 'functional_cookie';
+    public const DEFAULT_COOKIE_LIFETIME = 10 * 365 * 24 * 60 * 60; // 10 years
 
     /** @var array */
     private $legalCookie;

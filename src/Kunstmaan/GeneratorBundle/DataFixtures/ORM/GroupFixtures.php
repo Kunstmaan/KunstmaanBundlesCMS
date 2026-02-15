@@ -12,9 +12,9 @@ use Kunstmaan\AdminBundle\Entity\Group;
  */
 class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
-    const REFERENCE_ADMINS_GROUP = 'admins-group';
-    const REFERENCE_GUESTS_GROUP = 'guests-group';
-    const REFERENCE_SUPERADMINS_GROUP = 'superadmins-group';
+    public const REFERENCE_ADMINS_GROUP = 'admins-group';
+    public const REFERENCE_GUESTS_GROUP = 'guests-group';
+    public const REFERENCE_SUPERADMINS_GROUP = 'superadmins-group';
 
     /**
      * Load data fixtures with the passed EntityManager

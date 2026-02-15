@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    const REFERENCE_ADMIN_USER = 'adminuser';
+    public const REFERENCE_ADMIN_USER = 'adminuser';
 
     /** @var ContainerInterface */
     private $container;

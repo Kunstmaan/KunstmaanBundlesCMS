@@ -10,7 +10,7 @@ use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 class TagManager extends BaseTagManager
 {
-    const TAGGING_HYDRATOR = 'taggingHydrator';
+    public const TAGGING_HYDRATOR = 'taggingHydrator';
 
     public function loadTagging(BaseTaggable $resource)
     {
@@ -109,7 +109,7 @@ class TagManager extends BaseTagManager
     public function findRelatedItems(Taggable $item, $class, $locale, $nbOfItems = 1)
     {
         $instance = new $class();
-        if (!($instance instanceof Taggable)) {
+        if (!$instance instanceof Taggable) {
             return null;
         }
 

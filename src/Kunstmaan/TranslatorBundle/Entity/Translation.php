@@ -28,11 +28,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class Translation
 {
-    const FLAG_NEW = 'new';
-    const FLAG_UPDATED = 'updated';
-    const STATUS_DEPRECATED = 'deprecated';
-    const STATUS_DISABLED = 'disabled';
-    const STATUS_ENABLED = 'enabled';
+    public const FLAG_NEW = 'new';
+    public const FLAG_UPDATED = 'updated';
+    public const STATUS_DEPRECATED = 'deprecated';
+    public const STATUS_DISABLED = 'disabled';
+    public const STATUS_ENABLED = 'enabled';
 
     /**
      * @ORM\Id

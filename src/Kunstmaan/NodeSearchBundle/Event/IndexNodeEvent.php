@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class IndexNodeEvent extends Event
 {
-    const EVENT_INDEX_NODE = 'kunstmaan_node_search.onIndexNode';
+    public const EVENT_INDEX_NODE = 'kunstmaan_node_search.onIndexNode';
 
     /**
      * @var array

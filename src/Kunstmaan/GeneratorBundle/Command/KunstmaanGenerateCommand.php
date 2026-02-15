@@ -259,9 +259,9 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         if ($multiple) {
             return $sections;
-        } else {
-            return count($sections) > 0 ? $sections[0] : null;
         }
+
+        return count($sections) > 0 ? $sections[0] : null;
     }
 
     /**
@@ -466,9 +466,9 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         $lengthValidation = function ($length) {
                             if ((is_numeric($length) && $length < 0) || (!is_numeric($length) && !empty($length))) {
                                 throw new \InvalidArgumentException(sprintf('"%s" is not a valid length', $length));
-                            } else {
-                                return $length;
                             }
+
+                            return $length;
                         };
 
                         $minHeight = $this->assistant->askAndValidate('What is the minimum height for the media object? (in pixels)',

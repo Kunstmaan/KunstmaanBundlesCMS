@@ -9,126 +9,126 @@ final class Events
      *
      * @var string
      */
-    const ADD_NODE = 'kunstmaan_node.addNode';
+    public const ADD_NODE = 'kunstmaan_node.addNode';
 
     /**
      * The addNode event occurs for a given node, after it's being reverted to a previous version.
      *
      * @var string
      */
-    const REVERT = 'kunstmaan_node.onRevert';
+    public const REVERT = 'kunstmaan_node.onRevert';
 
     /**
      * The preUnPublish event occurs for a given node, before it's unpublished.
      *
      * @var string
      */
-    const PRE_UNPUBLISH = 'kunstmaan_node.preUnPublish';
+    public const PRE_UNPUBLISH = 'kunstmaan_node.preUnPublish';
 
     /**
      * The postUnPublish event occurs for a given node, after it's unpublished.
      *
      * @var string
      */
-    const POST_UNPUBLISH = 'kunstmaan_node.postUnPublish';
+    public const POST_UNPUBLISH = 'kunstmaan_node.postUnPublish';
 
     /**
      * The prePublish event occurs for a given node, before it's published.
      *
      * @var string
      */
-    const PRE_PUBLISH = 'kunstmaan_node.prePublish';
+    public const PRE_PUBLISH = 'kunstmaan_node.prePublish';
 
     /**
      * The postPublish event occurs for a given node, after it's published.
      *
      * @var string
      */
-    const POST_PUBLISH = 'kunstmaan_node.postPublish';
+    public const POST_PUBLISH = 'kunstmaan_node.postPublish';
 
     /**
      * The preDelete event occurs for a given node, before it's deleted.
      *
      * @var string
      */
-    const PRE_DELETE = 'kunstmaan_node.preDelete';
+    public const PRE_DELETE = 'kunstmaan_node.preDelete';
 
     /**
      * The postDelete event occurs for a given node, after it's deleted.
      *
      * @var string
      */
-    const POST_DELETE = 'kunstmaan_node.postDelete';
+    public const POST_DELETE = 'kunstmaan_node.postDelete';
 
     /**
      * The preDuplicateWithChildren event occurs for a given node, before it's duplicated.
      *
      * @var string
      */
-    const PRE_DUPLICATE_WITH_CHILDREN = 'kunstmaan_node.preDuplicateWithChildren';
+    public const PRE_DUPLICATE_WITH_CHILDREN = 'kunstmaan_node.preDuplicateWithChildren';
 
     /**
      * The postDuplicateWithChildren event occurs for a given node, after it's duplicated.
      *
      * @var string
      */
-    const POST_DUPLICATE_WITH_CHILDREN = 'kunstmaan_node.postDuplicateWithChildren';
+    public const POST_DUPLICATE_WITH_CHILDREN = 'kunstmaan_node.postDuplicateWithChildren';
 
     /**
      * The adaptForm event occurs when building the form for the node.
      *
      * @var string
      */
-    const ADAPT_FORM = 'kunstmaan_node.adaptForm';
+    public const ADAPT_FORM = 'kunstmaan_node.adaptForm';
 
     /**
      * The prePersist event occurs for a given node, before the node is persisted.
      *
      * @var string
      */
-    const PRE_PERSIST = 'kunstmaan_node.prePersist';
+    public const PRE_PERSIST = 'kunstmaan_node.prePersist';
 
     /**
      * The postPersist event occurs for a given node, after the node is persisted.
      *
      * @var string
      */
-    const POST_PERSIST = 'kunstmaan_node.postPersist';
+    public const POST_PERSIST = 'kunstmaan_node.postPersist';
 
     /**
      * The createPublicVersion event occurs for a given node, when a public version is created.
      *
      * @var string
      */
-    const CREATE_PUBLIC_VERSION = 'kunstmaan_node.createPublicVersion';
+    public const CREATE_PUBLIC_VERSION = 'kunstmaan_node.createPublicVersion';
 
     /**
      * The createDraftVersion event occurs for a given node, when a draft version is created.
      *
      * @var string
      */
-    const CREATE_DRAFT_VERSION = 'kunstmaan_node.createDraftVersion';
+    public const CREATE_DRAFT_VERSION = 'kunstmaan_node.createDraftVersion';
 
     /**
      * The copyPageTranslation event occurs for a given node, after a page translation has been copied.
      *
      * @var string
      */
-    const COPY_PAGE_TRANSLATION = 'kunstmaan_node.copyPageTranslation';
+    public const COPY_PAGE_TRANSLATION = 'kunstmaan_node.copyPageTranslation';
 
     /**
      * The recopyPageTranslation event occurs for a given node, when a recopy from a language as being asked.
      *
      * @var string
      */
-    const RECOPY_PAGE_TRANSLATION = 'kunstmaan_node.recopyPageTranslation';
+    public const RECOPY_PAGE_TRANSLATION = 'kunstmaan_node.recopyPageTranslation';
 
     /**
      * The emptyPageTranslation event occurs for a given node, after a new page translation is created.
      *
      * @var string
      */
-    const ADD_EMPTY_PAGE_TRANSLATION = 'kunstmaan_node.emptyPageTranslation';
+    public const ADD_EMPTY_PAGE_TRANSLATION = 'kunstmaan_node.emptyPageTranslation';
 
     /**
      * This event will be triggered when creating the menu for the page sub actions.
@@ -136,7 +136,7 @@ final class Events
      *
      * @var string
      */
-    const CONFIGURE_SUB_ACTION_MENU = 'kunstmaan_node.configureSubActionMenu';
+    public const CONFIGURE_SUB_ACTION_MENU = 'kunstmaan_node.configureSubActionMenu';
 
     /**
      * This event will be triggered when creating the menu for the page actions.
@@ -144,12 +144,12 @@ final class Events
      *
      * @var string
      */
-    const CONFIGURE_ACTION_MENU = 'kunstmaan_node.configureActionMenu';
+    public const CONFIGURE_ACTION_MENU = 'kunstmaan_node.configureActionMenu';
 
     /**
      * This event will be triggered when the sluglistener needs to do security checks
      *
      * @var string
      */
-    const SLUG_SECURITY = 'kunstmaan_node.slug.security';
+    public const SLUG_SECURITY = 'kunstmaan_node.slug.security';
 }

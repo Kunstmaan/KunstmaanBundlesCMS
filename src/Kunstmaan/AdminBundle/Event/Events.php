@@ -13,14 +13,14 @@ final class Events
      *
      * @var string
      */
-    const DEEP_CLONE_AND_SAVE = 'kunstmaan_admin.onDeepCloneAndSave';
+    public const DEEP_CLONE_AND_SAVE = 'kunstmaan_admin.onDeepCloneAndSave';
 
     /**
      * The postDeepClone event occurs for a given entity after it has been deep cloned.
      *
      * @var string
      */
-    const POST_DEEP_CLONE_AND_SAVE = 'kunstmaan_admin.postDeepCloneAndSave';
+    public const POST_DEEP_CLONE_AND_SAVE = 'kunstmaan_admin.postDeepCloneAndSave';
 
     /**
      * The adapt_simple_form event occurs after a simple form is created, here it's possible to add a tabPane to a form without
@@ -28,7 +28,7 @@ final class Events
      *
      * @var string
      */
-    const ADAPT_SIMPLE_FORM = 'kunstmaan_admin.adaptSimpleForm';
+    public const ADAPT_SIMPLE_FORM = 'kunstmaan_admin.adaptSimpleForm';
 
-    const CHANGE_PASSWORD_COMPLETED = 'kunstmaan_admin.change_password.edit.completed';
+    public const CHANGE_PASSWORD_COMPLETED = 'kunstmaan_admin.change_password.edit.completed';
 }

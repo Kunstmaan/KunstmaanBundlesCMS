@@ -46,9 +46,9 @@ EOT
     {
         if (!$this->isSubCommand()) {
             return 'Welcome to the Kunstmaan layout generator';
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     protected function doExecute()
