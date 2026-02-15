@@ -30,7 +30,7 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
      */
     public function testMimeTypeMatches($contentType, $allowed, $message = null, array $parameters = [], $code = null)
     {
-        $constraint = new Media(['mimeTypes' => $allowed]);
+        $constraint = new Media(mimeTypes: $allowed);
         $media = (new MediaObject())->setContentType($contentType);
 
         $this->validator->validate($media, $constraint);
@@ -47,7 +47,7 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
 
     public function testSvgIsNotTestedForDimensions()
     {
-        $constraint = new Media(['minHeight' => 100]);
+        $constraint = new Media(minHeight: 100);
         $media = (new MediaObject())->setContentType('image/svg+xml');
 
         $this->validator->validate($media, $constraint);
@@ -65,7 +65,8 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
      */
     public function testDimensionsAreChecked($dimension, $value, $message = null, array $parameters = [], $code = null)
     {
-        $constraint = new Media([$dimension => $value]);
+        $options = [$dimension => $value];
+        $constraint = new Media(...$options);
         $media = (new MediaObject())
             ->setMetadataValue('original_width', 100)
             ->setMetadataValue('original_height', 100)

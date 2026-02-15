@@ -63,7 +63,7 @@ class AdminRouteHelper
             return false;
         }
 
-        $routeName = $request->get('_route');
+        $routeName = $request->attributes->get('_route');
 
         return $routeName === SlugRouter::$SLUG_PREVIEW;
     }
