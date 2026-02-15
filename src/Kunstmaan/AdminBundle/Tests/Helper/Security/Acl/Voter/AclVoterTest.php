@@ -23,36 +23,21 @@ class AclVoterTest extends TestCase
             ->willReturn(null)
         ;
 
-        $params = [$this->getToken(), null, ['VIEW', 'EDIT', 'DELETE']];
-        if (class_exists(Vote::class)) {
-            $params[] = new Vote();
-        }
-
-        $this->assertSame(VoterInterface::ACCESS_ABSTAIN, $voter->vote(...$params));
+        $this->assertSame(VoterInterface::ACCESS_ABSTAIN, $voter->vote($this->getToken(), null, ['VIEW', 'EDIT', 'DELETE'], new Vote()));
     }
 
     public function testVoteWithPermissionsDisabledAndUnsupportedAttribute()
     {
         [$voter] = $this->getVoter(true, false, false);
 
-        $params = [$this->getToken(), null, ['UNSUPPORTED']];
-        if (class_exists(Vote::class)) {
-            $params[] = new Vote();
-        }
-
-        $this->assertSame(VoterInterface::ACCESS_ABSTAIN, $voter->vote(...$params));
+        $this->assertSame(VoterInterface::ACCESS_ABSTAIN, $voter->vote($this->getToken(), null, ['UNSUPPORTED'], new Vote()));
     }
 
     public function testVoteWithPermissionsDisabledAndSupportedAttribute()
     {
         [$voter] = $this->getVoter(true, true, false);
 
-        $params = [$this->getToken(), null, ['VIEW', 'EDIT', 'DELETE']];
-        if (class_exists(Vote::class)) {
-            $params[] = new Vote();
-        }
-
-        $this->assertSame(VoterInterface::ACCESS_GRANTED, $voter->vote(...$params));
+        $this->assertSame(VoterInterface::ACCESS_GRANTED, $voter->vote($this->getToken(), null, ['VIEW', 'EDIT', 'DELETE'], new Vote()));
     }
 
     protected function getToken()

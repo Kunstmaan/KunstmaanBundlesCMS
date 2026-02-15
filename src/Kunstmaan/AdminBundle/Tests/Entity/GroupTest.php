@@ -6,7 +6,6 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\ValidatorBuilder;
 
 class GroupTest extends TestCase
 {
@@ -133,11 +132,7 @@ class GroupTest extends TestCase
         $group = new Group('test');
 
         $validatorBuilder = Validation::createValidatorBuilder();
-        if (method_exists(ValidatorBuilder::class, 'enableAttributeMapping')) {
-            $validatorBuilder->enableAttributeMapping();
-        } else {
-            $validatorBuilder->enableAnnotationMapping();
-        }
+        $validatorBuilder->enableAttributeMapping();
         $validator = $validatorBuilder->getValidator();
 
         $violations = $validator->validate($group);
@@ -151,11 +146,7 @@ class GroupTest extends TestCase
         $group->addRole(new Role('role'));
 
         $validatorBuilder = Validation::createValidatorBuilder();
-        if (method_exists(ValidatorBuilder::class, 'enableAttributeMapping')) {
-            $validatorBuilder->enableAttributeMapping();
-        } else {
-            $validatorBuilder->enableAnnotationMapping();
-        }
+        $validatorBuilder->enableAttributeMapping();
         $validator = $validatorBuilder->getValidator();
 
         $violations = $validator->validate($group);

@@ -20,6 +20,8 @@ parameters:
         - src/Kunstmaan/FixturesBundle # Temporary excluded for full rework
         # Excluded deprecated classes/files
         - src/Kunstmaan/GeneratorBundle/Helper/Sf4AppBundle.php # BC layer
+         # Ignore Symfony 7 deprecations for now, this will be fixed in separate PR's (cache warmup method)
+        - src/Kunstmaan/TranslatorBundle/Service/Translator/Translator.php
 
     ignoreErrors:
         - '#Constructor of class Kunstmaan\\MediaBundle\\AdminList\\MediaAdminListConfigurator has an unused parameter \$mediaManager\.#' # Will be fixed in separate PR
@@ -31,7 +33,13 @@ parameters:
         - '#Method Kunstmaan\\NodeSearchBundle\\Configuration\\NodePagesConfiguration\:\:(addPermissions|addSearchType)\(\) should return array but return statement is missing\.#'
         - '#Method Kunstmaan\\DashboardBundle\\Repository\\AnalyticsSegmentRepository\:\:deleteSegment\(\) should return bool\|Kunstmaan\\DashboardBundle\\Entity\\AnalyticsOverview but return statement is missing\.#'
 
-        # Symfony 6/7/8 BC layer
+        # Ignore Symfony 7 deprecations for now, this will be fixed in separate PR's
+        -
+            identifier: class.extendsFinalByPhpDoc
+            paths:
+                 - src/Kunstmaan/TranslatorBundle/Toolbar/DataCollectorTranslator.php
+
+        # Symfony 7/8 BC layer
         -
             message: '#^Method Symfony\\Component\\Security\\Acl\\Voter\\AclVoter\:\:vote\(\) invoked with 4 parameters, 3 required\.$#'
             path: src/Kunstmaan/AdminBundle/Helper/Security/Acl/Voter/AclVoter.php
