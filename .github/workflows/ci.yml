@@ -28,7 +28,7 @@ jobs:
                         symfony: '^6.4'
 
         steps:
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@v5
 
             -   name: Set-up env variables
                 run: |
@@ -45,7 +45,7 @@ jobs:
                 id: composer-cache
                 run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-            -   uses: actions/cache@v4.2.0
+            -   uses: actions/cache@v4.3.0
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -72,6 +72,6 @@ jobs:
         name: Validate composer files
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
 
             - run: sh ./.build/validate-composer.sh || exit $?
