@@ -13,11 +13,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
  */
 class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
-    const REFERENCE_PERMISSIONMANAGER_ROLE = 'permissionmanager-role';
-    const REFERENCE_ADMIN_ROLE = 'admin-role';
-    const REFERENCE_SUPERADMIN_ROLE = 'superadmin-role';
-    const REFERENCE_GUEST_ROLE = 'guest-role';
-    const REFERENCE_PUBLIC_ACCESS_ROLE = 'public-role';
+    public const REFERENCE_PERMISSIONMANAGER_ROLE = 'permissionmanager-role';
+    public const REFERENCE_ADMIN_ROLE = 'admin-role';
+    public const REFERENCE_SUPERADMIN_ROLE = 'superadmin-role';
+    public const REFERENCE_GUEST_ROLE = 'guest-role';
+    public const REFERENCE_PUBLIC_ACCESS_ROLE = 'public-role';
 
     /**
      * Load data fixtures with the passed EntityManager

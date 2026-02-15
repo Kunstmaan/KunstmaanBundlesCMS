@@ -189,15 +189,14 @@ class CommandAssistant
             }
 
             return $toReturn;
-        } else {
-            $value = $this->getQuestionHelper()->ask(
-                $this->input,
-                $this->output,
-                $bundleQuestion
-            );
-
-            return array_search($value, $bundleQuestion->getChoices());
         }
+        $value = $this->getQuestionHelper()->ask(
+            $this->input,
+            $this->output,
+            $bundleQuestion
+        );
+
+        return array_search($value, $bundleQuestion->getChoices());
     }
 
     public function setOption($name, $value)

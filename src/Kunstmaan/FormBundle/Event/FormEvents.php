@@ -11,5 +11,5 @@ final class FormEvents
      *
      * @var string
      */
-    const ADD_SUBMISSION = 'kunstmaan_form.add_submission';
+    public const ADD_SUBMISSION = 'kunstmaan_form.add_submission';
 }

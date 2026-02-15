@@ -19,9 +19,9 @@ use Twig\Environment;
 
 class ToolbarListener implements EventSubscriberInterface
 {
-    const DISABLED = 1;
+    public const DISABLED = 1;
 
-    const ENABLED = 2;
+    public const ENABLED = 2;
 
     /**
      * @var Environment

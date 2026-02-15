@@ -89,6 +89,5 @@ class MediaBuilder implements BuilderInterface
 
     public function postFlushBuild(Fixture $fixture)
     {
-        return;
     }
 }

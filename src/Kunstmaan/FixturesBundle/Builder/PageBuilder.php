@@ -66,7 +66,6 @@ class PageBuilder implements BuilderInterface
 
     public function preBuild(Fixture $fixture)
     {
-        return;
     }
 
     public function postBuild(Fixture $fixture)
@@ -245,9 +244,9 @@ class PageBuilder implements BuilderInterface
 
             // Replace the integer with the new digit.
             return preg_replace($finalDigitGrabberRegex, $digit, $string);
-        } else {
-            return $string . $append . '1';
         }
+
+        return $string . $append . '1';
     }
 
     /**

@@ -6,7 +6,7 @@ use Kunstmaan\FixturesBundle\Loader\Fixture;
 
 class Range implements SpecParserInterface
 {
-    const REGEX = '/{(\d)+\.\.(\d)+}$/';
+    public const REGEX = '/{(\d)+\.\.(\d)+}$/';
 
     /**
      * Check if this parser is applicable

@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class UrlSafeCipherTest extends TestCase
 {
-    const SECRET = 'secret';
-    const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
+    public const SECRET = 'secret';
+    public const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
 
     /**
      * @var UrlSafeCipher

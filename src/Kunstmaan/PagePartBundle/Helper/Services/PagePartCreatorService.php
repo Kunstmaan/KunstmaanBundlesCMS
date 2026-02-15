@@ -84,7 +84,7 @@ class PagePartCreatorService
     {
         // Find the correct page instance.
         $node = $this->getNode($nodeOrInternalName);
-        /** @var $translation NodeTranslation */
+        /** @var NodeTranslation $translation */
         $translation = $node->getNodeTranslation($language, true);
         /** @var HasPagePartsInterface $page */
         $page = $translation->getRef($this->em);
@@ -164,7 +164,7 @@ class PagePartCreatorService
     public function setPageTemplate($nodeOrInternalName, $language, $templateName)
     {
         $node = $this->getNode($nodeOrInternalName);
-        /** @var $translation NodeTranslation */
+        /** @var NodeTranslation $translation */
         $translation = $node->getNodeTranslation($language, true);
         /** @var HasPageTemplateInterface|EntityInterface $page */
         $page = $translation->getRef($this->em);

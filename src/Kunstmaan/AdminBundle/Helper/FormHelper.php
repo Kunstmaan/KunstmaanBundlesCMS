@@ -61,7 +61,7 @@ class FormHelper
 
             /**
              * @var FormView
-             * @var $error   FormError
+             * @var FormError $error
              */
             foreach ($viewErrors as $error) {
                 $template = $error->getMessageTemplate();

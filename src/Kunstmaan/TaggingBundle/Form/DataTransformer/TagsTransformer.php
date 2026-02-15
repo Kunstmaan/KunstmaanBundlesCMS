@@ -22,7 +22,7 @@ class TagsTransformer implements DataTransformerInterface
     {
         $result = [];
 
-        if (!($value instanceof ArrayCollection)) {
+        if (!$value instanceof ArrayCollection) {
             return $result;
         }
 

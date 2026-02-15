@@ -97,7 +97,7 @@ class FeatureContext extends MinkContext implements Context
     {
         if (4 === $event->getTestResult()) {
             $driver = $this->getSession()->getDriver();
-            if (!($driver instanceof Selenium2Driver)) {
+            if (!$driver instanceof Selenium2Driver) {
                 throw new UnsupportedDriverActionException('Taking screenshots is not supported by %s, use Selenium2Driver instead.', $driver);
             }
             $directory = 'build/behat/' . $event->getLogicalParent()->getFeature()->getTitle();

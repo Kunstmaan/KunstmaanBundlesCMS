@@ -16,8 +16,8 @@ use Kunstmaan\AdminBundle\Entity\BaseUser;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class QueuedNodeTranslationAction extends AbstractEntity
 {
-    const ACTION_PUBLISH = 'publish';
-    const ACTION_UNPUBLISH = 'unpublish';
+    public const ACTION_PUBLISH = 'publish';
+    public const ACTION_UNPUBLISH = 'unpublish';
 
     /**
      * @var NodeTranslation

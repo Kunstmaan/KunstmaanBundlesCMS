@@ -12,22 +12,22 @@ use Symfony\Component\Security\Acl\Permission\AbstractMaskBuilder;
  */
 class MaskBuilder extends AbstractMaskBuilder
 {
-    const MASK_VIEW = 1;          // 1 << 0
-    const MASK_EDIT = 4;          // 1 << 2
-    const MASK_DELETE = 8;          // 1 << 3
-    const MASK_PUBLISH = 16;         // 1 << 4
-    const MASK_UNPUBLISH = 32;         // 1 << 5
-    const MASK_IDDQD = 1073741823; // 1 << 0 | 1 << 1 | ... | 1 << 30
+    public const MASK_VIEW = 1;          // 1 << 0
+    public const MASK_EDIT = 4;          // 1 << 2
+    public const MASK_DELETE = 8;          // 1 << 3
+    public const MASK_PUBLISH = 16;         // 1 << 4
+    public const MASK_UNPUBLISH = 32;         // 1 << 5
+    public const MASK_IDDQD = 1073741823; // 1 << 0 | 1 << 1 | ... | 1 << 30
 
-    const CODE_VIEW = 'V';
-    const CODE_EDIT = 'E';
-    const CODE_DELETE = 'D';
-    const CODE_PUBLISH = 'P';
-    const CODE_UNPUBLISH = 'U';
+    public const CODE_VIEW = 'V';
+    public const CODE_EDIT = 'E';
+    public const CODE_DELETE = 'D';
+    public const CODE_PUBLISH = 'P';
+    public const CODE_UNPUBLISH = 'U';
 
-    const ALL_OFF = '................................';
-    const OFF = '.';
-    const ON = '*';
+    public const ALL_OFF = '................................';
+    public const OFF = '.';
+    public const ON = '*';
 
     /**
      * Returns a human-readable representation of the permission

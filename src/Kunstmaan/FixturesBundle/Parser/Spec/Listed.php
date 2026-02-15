@@ -6,7 +6,7 @@ use Kunstmaan\FixturesBundle\Loader\Fixture;
 
 class Listed implements SpecParserInterface
 {
-    const REGEX = '/{([^,]+,?)+}$/';
+    public const REGEX = '/{([^,]+,?)+}$/';
 
     /**
      * Check if this parser is applicable

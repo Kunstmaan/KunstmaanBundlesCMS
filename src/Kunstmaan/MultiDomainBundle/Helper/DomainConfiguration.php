@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class DomainConfiguration extends BaseDomainConfiguration
 {
-    const OVERRIDE_HOST = '_override_host';
-    const SWITCH_HOST = '_switch_host';
+    public const OVERRIDE_HOST = '_override_host';
+    public const SWITCH_HOST = '_switch_host';
 
     /**
      * @var array

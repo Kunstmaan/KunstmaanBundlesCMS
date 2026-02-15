@@ -12,11 +12,11 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
  */
 class PasswordRestrictionsValidatorTest extends ConstraintValidatorTestCase
 {
-    const PARAMETER_MIN_LENGTH = 8;
-    const PARAMETER_MAX_LENGTH = 16;
-    const PARAMETER_MIN_DIGITS = 3;
-    const PARAMETER_MIN_UPPERCASE = 2;
-    const PARAMETER_MIN_SPECIAL_CHARACTERS = 1;
+    public const PARAMETER_MIN_LENGTH = 8;
+    public const PARAMETER_MAX_LENGTH = 16;
+    public const PARAMETER_MIN_DIGITS = 3;
+    public const PARAMETER_MIN_UPPERCASE = 2;
+    public const PARAMETER_MIN_SPECIAL_CHARACTERS = 1;
 
     protected function createValidator(): PasswordRestrictionsValidator
     {
