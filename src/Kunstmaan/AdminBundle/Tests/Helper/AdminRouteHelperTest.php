@@ -99,6 +99,9 @@ class AdminRouteHelperTest extends TestCase
 
     private function getPreviewRequest()
     {
-        return Request::create('http://domain.tld/', 'GET', ['_route' => SlugRouter::$SLUG_PREVIEW]);
+        $request = Request::create('http://domain.tld/');
+        $request->attributes->set('_route', SlugRouter::$SLUG_PREVIEW);
+
+        return $request;
     }
 }

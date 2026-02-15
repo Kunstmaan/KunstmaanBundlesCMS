@@ -18,6 +18,48 @@ use Symfony\Component\Security\Acl\Model\SecurityIdentityRetrievalStrategyInterf
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Acl\Voter\AclVoter as BaseAclVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
+
+if (class_exists(\Symfony\Component\Security\Core\Security::class)) {
+    /**
+     * Symfony 6 support
+     *
+     * @internal
+     */
+    trait AclVoterTrait
+    {
+        public function vote(TokenInterface $token, $subject, array $attributes)
+        {
+            return $this->doVote($token, $subject, $attributes);
+        }
+    }
+} elseif (method_exists(TokenInterface::class, 'eraseCredentials')) {
+    /**
+     * Symfony 7 support
+     *
+     * @internal
+     */
+    trait AclVoterTrait
+    {
+        public function vote(TokenInterface $token, mixed $subject, array $attributes): int
+        {
+            return $this->doVote($token, $subject, $attributes);
+        }
+    }
+} else {
+    /**
+     * Symfony 8 support
+     *
+     * @internal
+     */
+    trait AclVoterTrait
+    {
+        public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
+        {
+            return $this->doVote($token, $subject, $attributes, $vote);
+        }
+    }
+}
 
 /**
  * This voter can be used as a base class for implementing your own permissions.
@@ -26,6 +68,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class AclVoter extends BaseAclVoter
 {
+    use AclVoterTrait;
+
     /** @var bool */
     private $permissionsEnabled;
 
@@ -35,7 +79,7 @@ class AclVoter extends BaseAclVoter
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
-    public function vote(TokenInterface $token, $object, array $attributes): int
+    private function doVote(TokenInterface $token, $subject, array $attributes, ?Vote $vote = null): int
     {
         $attributeIsSupported = false;
         foreach ($attributes as $attribute) {
@@ -54,6 +98,6 @@ class AclVoter extends BaseAclVoter
             return self::ACCESS_ABSTAIN;
         }
 
-        return parent::vote($token, $object, $attributes);
+        return parent::vote($token, $subject, $attributes, $vote);
     }
 }
