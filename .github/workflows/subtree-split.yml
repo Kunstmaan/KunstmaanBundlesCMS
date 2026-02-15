@@ -19,7 +19,7 @@ jobs:
         name: Sync commits
         if: github.repository == 'Kunstmaan/KunstmaanBundlesCMS'
         steps:
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@v6
                 with:
                     persist-credentials: false
                     fetch-depth: 0
