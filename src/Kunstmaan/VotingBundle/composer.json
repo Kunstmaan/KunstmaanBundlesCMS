@@ -14,17 +14,17 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "doctrine/orm": "^2.13",
         "doctrine/dbal": "^3.8",
         "doctrine/doctrine-bundle": "^2.12",
-        "symfony/config": "^6.4|^7.2",
-        "symfony/dependency-injection": "^6.4|^7.2",
-        "symfony/event-dispatcher": "^6.4|^7.2",
-        "symfony/framework-bundle": "^6.4|^7.2",
-        "symfony/http-foundation": "^6.4|^7.2",
-        "symfony/http-kernel": "^6.4|^7.2",
-        "symfony/routing": "^6.4|^7.2"
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/routing": "^7.4"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^5.1",

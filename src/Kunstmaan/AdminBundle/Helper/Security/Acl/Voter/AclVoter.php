@@ -20,20 +20,7 @@ use Symfony\Component\Security\Acl\Voter\AclVoter as BaseAclVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
-if (class_exists(\Symfony\Component\Security\Core\Security::class)) {
-    /**
-     * Symfony 6 support
-     *
-     * @internal
-     */
-    trait AclVoterTrait
-    {
-        public function vote(TokenInterface $token, $subject, array $attributes): int
-        {
-            return $this->doVote($token, $subject, $attributes);
-        }
-    }
-} elseif (method_exists(TokenInterface::class, 'eraseCredentials')) {
+if (method_exists(TokenInterface::class, 'eraseCredentials')) {
     /**
      * Symfony 7 support
      *
@@ -79,7 +66,7 @@ class AclVoter extends BaseAclVoter
         $this->permissionsEnabled = $permissionsEnabled;
     }
 
-    private function doVote(TokenInterface $token, $subject, array $attributes, /* ?Vote */ $vote = null): int
+    private function doVote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
     {
         $attributeIsSupported = false;
         foreach ($attributes as $attribute) {
