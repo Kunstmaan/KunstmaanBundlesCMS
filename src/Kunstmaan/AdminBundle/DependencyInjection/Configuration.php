@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('menu_item')
             ->children()
                 ->scalarNode('website_title')->defaultNull()->end()
-                ->booleanNode('multi_language')->isRequired()->defaultFalse()->end()
+                ->booleanNode('multi_language')->defaultFalse()->end()
                 ->scalarNode('required_locales')->isRequired()->end()
                 ->scalarNode('default_locale')->isRequired()->end()
                 ->arrayNode('authentication')

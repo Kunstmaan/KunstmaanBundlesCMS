@@ -1,5 +1,15 @@
 [
     {
+        "location": "Symfony\\Component\\Security\\Acl\\Voter\\AclVoter",
+        "message": "The \"Symfony\\Component\\Security\\Acl\\Voter\\AclVoter::vote()\" method will require a new \"Vote|null $vote\" argument in the next major version of its interface \"Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface\", not defining it is deprecated.",
+        "count": 1
+    },
+    {
+        "location": "Kunstmaan\\AdminBundle\\Helper\\Security\\Acl\\Voter\\AclVoter",
+        "message": "The \"Kunstmaan\\AdminBundle\\Helper\\Security\\Acl\\Voter\\AclVoter::vote()\" method will require a new \"Vote|null $vote\" argument in the next major version of its interface \"Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface\", not defining it is deprecated.",
+        "count": 1
+    },
+    {
         "location": "Kunstmaan\\TranslatorBundle\\Service\\Translator\\Translator",
         "message": "The \"Symfony\\Bundle\\FrameworkBundle\\Translation\\Translator\" class is considered final since Symfony 7.1. It may change without further notice as of its next major version. You should not extend it from \"Kunstmaan\\TranslatorBundle\\Service\\Translator\\Translator\".",
         "count": 1

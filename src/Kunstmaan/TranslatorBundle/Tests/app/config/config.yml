@@ -33,7 +33,7 @@ doctrine:
                 path:     "%kernel.cache_dir%/test.db"
                 use_savepoints: true
     orm:
-        enable_lazy_ghost_objects: true
+        enable_lazy_ghost_objects: false
         controller_resolver:
             auto_mapping: false
         default_entity_manager:   default

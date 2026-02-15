@@ -8,6 +8,8 @@ parameters:
     scanDirectories:
         - .build/stubs
 
+    reportUnmatchedIgnoredErrors: true
+
     excludePaths:
         - src/Kunstmaan/*/Tests/*
         - src/Kunstmaan/*/vendor/*
@@ -28,3 +30,8 @@ parameters:
         - '#Method Kunstmaan\\NodeSearchBundle\\PagerFanta\\Adapter\\SearcherRequestAdapter\:\:processResponse\(\) should return array\|Elastica\\ResultSet but return statement is missing\.#'
         - '#Method Kunstmaan\\NodeSearchBundle\\Configuration\\NodePagesConfiguration\:\:(addPermissions|addSearchType)\(\) should return array but return statement is missing\.#'
         - '#Method Kunstmaan\\DashboardBundle\\Repository\\AnalyticsSegmentRepository\:\:deleteSegment\(\) should return bool\|Kunstmaan\\DashboardBundle\\Entity\\AnalyticsOverview but return statement is missing\.#'
+
+        # Symfony 6/7/8 BC layer
+        -
+            message: '#^Method Symfony\\Component\\Security\\Acl\\Voter\\AclVoter\:\:vote\(\) invoked with 4 parameters, 3 required\.$#'
+            path: src/Kunstmaan/AdminBundle/Helper/Security/Acl/Voter/AclVoter.php

@@ -64,7 +64,7 @@ class PasswordCheckListener
             return;
         }
 
-        $route = $event->getRequest()->get('_route');
+        $route = $event->getRequest()->attributes->get('_route');
         if (null === $route || $route === 'kunstmaan_admin_forced_change_password') {
             return;
         }
