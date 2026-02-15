@@ -292,7 +292,6 @@ class PermissionAdminTest extends TestCase
 
         $mirror = new \ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('tokenStorage');
-        $property->setAccessible(true);
         $val = $property->getValue($object);
         $val->expects($this->once())->method('getToken')->willReturn($token);
 
@@ -314,7 +313,6 @@ class PermissionAdminTest extends TestCase
 
         $mirror = new \ReflectionClass(PermissionAdmin::class);
         $method = $mirror->getMethod('getMaskAtIndex');
-        $method->setAccessible(true);
 
         $this->assertFalse($method->invoke($object, $acl, 1));
 
@@ -349,10 +347,8 @@ class PermissionAdminTest extends TestCase
 
         $mirror = new \ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('tokenStorage');
-        $property->setAccessible(true);
         $property->setValue($object, $storage);
         $property = $mirror->getProperty('em');
-        $property->setAccessible(true);
         $property->setValue($object, $em);
 
         $roles = $object->getManageableRolesForPages();
@@ -387,7 +383,6 @@ class PermissionAdminTest extends TestCase
 
         $mirror = new \ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('aclProvider');
-        $property->setAccessible(true);
         $property->setValue($object, $provider);
 
         $entity = new Node();

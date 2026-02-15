@@ -11,6 +11,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
+use Kunstmaan\NodeBundle\Tests\Entity\Stubs\HomePage;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -22,6 +23,8 @@ class ActionsMenuBuilderTest extends TestCase
      * @var ActionsMenuBuilder
      */
     protected $builder;
+    /** @var HomePage */
+    private $homepageNodeRef;
 
     protected function setUp(): void
     {
@@ -41,6 +44,7 @@ class ActionsMenuBuilderTest extends TestCase
             ->willReturn(true);
 
         $this->builder = new ActionsMenuBuilder($factory, $em, $router, $dispatcher, $authorizationChecker, new PagesConfiguration([]));
+        $this->homepageNodeRef = (new Node())->setRef(new HomePage());
     }
 
     /**
@@ -81,7 +85,7 @@ class ActionsMenuBuilderTest extends TestCase
     public function testCreateActionsMenuDraft()
     {
         $nodeTranslation = new NodeTranslation();
-        $nodeTranslation->setNode(new Node());
+        $nodeTranslation->setNode($this->homepageNodeRef);
 
         $nodeVersion = new NodeVersion();
         $nodeVersion->setType('draft');
@@ -108,7 +112,7 @@ class ActionsMenuBuilderTest extends TestCase
     public function testCreateActionsMenuPublic()
     {
         $nodeTranslation = new NodeTranslation();
-        $nodeTranslation->setNode(new Node());
+        $nodeTranslation->setNode($this->homepageNodeRef);
 
         $nodeVersion = new NodeVersion();
         $nodeVersion->setType('public');
@@ -149,7 +153,7 @@ class ActionsMenuBuilderTest extends TestCase
     public function testCreateActionsMenuNonEditable()
     {
         $nodeTranslation = new NodeTranslation();
-        $nodeTranslation->setNode(new Node());
+        $nodeTranslation->setNode($this->homepageNodeRef);
 
         $nodeVersion = new NodeVersion();
         $nodeVersion->setType('public');
@@ -173,7 +177,7 @@ class ActionsMenuBuilderTest extends TestCase
     public function testCreateTopActionsMenu()
     {
         $nodeTranslation = new NodeTranslation();
-        $nodeTranslation->setNode(new Node());
+        $nodeTranslation->setNode($this->homepageNodeRef);
 
         $nodeVersion = new NodeVersion();
         $nodeVersion->setNodeTranslation($nodeTranslation);
@@ -197,6 +201,7 @@ class ActionsMenuBuilderTest extends TestCase
         $nodeTranslation = new NodeTranslation();
         $node = new Node();
         $node->setParent(new Node());
+        $node->setRef(new HomePage());
         $nodeTranslation->setNode($node);
 
         $nodeVersion = new NodeVersion();
@@ -214,6 +219,7 @@ class ActionsMenuBuilderTest extends TestCase
     public function testShouldShowRecopyButtonWhenTheNodeHasTranslations()
     {
         $node = new Node();
+        $node->setRef(new HomePage());
         $nodeTranslation = new NodeTranslation();
         $nodeTranslation->setLang('en');
 

@@ -71,7 +71,6 @@ class DateFilterTypeTest extends BaseDbalFilterTest
         $queryBuilder->expects($this->never())->method('setParameter');
         $mirror = new \ReflectionClass(DateFilterType::class);
         $property = $mirror->getProperty('queryBuilder');
-        $property->setAccessible(true);
         $property->setValue($this->object, $queryBuilder);
         $badData = [
             'value' => 'oopsNotADate',

@@ -71,13 +71,11 @@ class DateFilterTypeTest extends BaseOrmFilterTest
         $this->object = new DateFilterType('date', null);
         $mirror = new \ReflectionClass(DateFilterType::class);
         $method = $mirror->getMethod('getAlias');
-        $method->setAccessible(true);
         $alias = $method->invoke($this->object);
         $this->assertEquals('', $alias);
         $this->object = new DateFilterType('date', 'hello.');
         $mirror = new \ReflectionClass(DateFilterType::class);
         $method = $mirror->getMethod('getAlias');
-        $method->setAccessible(true);
         $alias = $method->invoke($this->object);
         $this->assertEquals('hello.', $alias);
     }
@@ -91,7 +89,6 @@ class DateFilterTypeTest extends BaseOrmFilterTest
         $queryBuilder->expects($this->never())->method('setParameter');
         $mirror = new \ReflectionClass(DateFilterType::class);
         $property = $mirror->getProperty('queryBuilder');
-        $property->setAccessible(true);
         $property->setValue($this->object, $queryBuilder);
         $badData = [
             'value' => 'oopsNotADate',
