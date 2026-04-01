@@ -15,7 +15,7 @@ class TagsTransformer implements DataTransformerInterface
         $this->tagManager = $tagManager;
     }
 
-    public function transform($value): array
+    public function transform(mixed $value): array
     {
         $result = [];
 
@@ -30,7 +30,7 @@ class TagsTransformer implements DataTransformerInterface
         return $result;
     }
 
-    public function reverseTransform($value): ArrayCollection
+    public function reverseTransform(mixed $value): ArrayCollection
     {
         $result = new ArrayCollection();
         $manager = $this->tagManager;
