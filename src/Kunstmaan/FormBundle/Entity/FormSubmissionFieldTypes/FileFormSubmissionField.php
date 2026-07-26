@@ -6,9 +6,11 @@ use Behat\Transliterator\Transliterator;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
+use Kunstmaan\FormBundle\Validator\Constraints\AllowedUploadExtension;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -57,6 +59,7 @@ class FileFormSubmissionField extends FormSubmissionField
      * @var UploadedFile
      */
     #[Assert\File(maxSize: '6000000')]
+    #[AllowedUploadExtension]
     public $file;
 
     /**
@@ -87,8 +90,10 @@ class FileFormSubmissionField extends FormSubmissionField
      * Move the file to the given uploadDir and save the filename
      *
      * @param string $uploadDir
+     * @param string $webDir
+     * @param string[] $allowedExtensions the allow-list of extensions the stored file may have; empty means no restriction
      */
-    public function upload($uploadDir, $webDir)
+    public function upload($uploadDir, $webDir, array $allowedExtensions = [])
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
@@ -96,9 +101,10 @@ class FileFormSubmissionField extends FormSubmissionField
         }
 
         // sanitize filename for security
-        $safeFileName = $this->getSafeFileName();
+        $safeFileName = $this->getSafeFileName($allowedExtensions);
 
-        $uuid = uniqid();
+        // use a non-guessable directory name so the stored file location cannot be predicted
+        $uuid = bin2hex(random_bytes(16));
         $this->setUuid($uuid);
 
         // move takes the target directory and then the target filename to move to
@@ -126,24 +132,37 @@ class FileFormSubmissionField extends FormSubmissionField
     {
         $uploadDir = $container->getParameter('form_submission_rootdir');
         $webDir = $container->getParameter('form_submission_webdir');
-        $this->upload($uploadDir, $webDir);
+        $allowedExtensions = $container->hasParameter('kunstmaan_form.file_upload.allowed_extensions')
+            ? $container->getParameter('kunstmaan_form.file_upload.allowed_extensions')
+            : [];
+        $this->upload($uploadDir, $webDir, $allowedExtensions);
     }
 
     /**
      * Create a safe file name for the uploaded file, so that it can be saved safely on the disk.
      *
+     * @param string[] $allowedExtensions the allow-list of extensions the stored file may have; empty means no restriction
+     *
      * @return string
      */
-    public function getSafeFileName()
+    public function getSafeFileName(array $allowedExtensions = [])
     {
-        $fileExtension = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $mimeTypeExtension = $this->file->guessExtension();
-        $newExtension = !empty($mimeTypeExtension) ? $mimeTypeExtension : $fileExtension;
+        $extension = $this->file->guessExtension();
+        if (null === $extension) {
+            throw new FileException('The type of the uploaded file could not be determined and is therefore not allowed.');
+        }
 
-        $baseName = !empty($fileExtension) ? basename($this->file->getClientOriginalName(), $fileExtension) : $this->file->getClientOriginalName();
+        if ([] !== $allowedExtensions && !\in_array(strtolower($extension), array_map('strtolower', $allowedExtensions), true)) {
+            throw new FileException(sprintf('The type of the uploaded file ("%s") is not allowed.', $extension));
+        }
+
+        $baseName = pathinfo($this->file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeBaseName = Transliterator::urlize($baseName);
+        if ('' === $safeBaseName) {
+            $safeBaseName = 'file';
+        }
 
-        return $safeBaseName . (!empty($newExtension) ? '.' . $newExtension : '');
+        return $safeBaseName . (!empty($extension) ? '.' . $extension : '');
     }
 
     /**
