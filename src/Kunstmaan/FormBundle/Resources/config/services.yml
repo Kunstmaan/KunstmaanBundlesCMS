@@ -4,6 +4,14 @@ services:
         tags:
             -  { name: kunstmaan_admin.menu.adaptor }
 
+    kunstmaan_form.validator.allowed_upload_extension:
+        class: Kunstmaan\FormBundle\Validator\Constraints\AllowedUploadExtensionValidator
+        arguments:
+            - '@mime_types'
+            - '%kunstmaan_form.file_upload.allowed_extensions%'
+        tags:
+            - { name: validator.constraint_validator, alias: kunstmaan_form.validator.allowed_upload_extension }
+
     kunstmaan_form.form_mailer:
         class: Kunstmaan\FormBundle\Helper\FormMailer
         arguments: ['@mailer', '@twig', '@request_stack']

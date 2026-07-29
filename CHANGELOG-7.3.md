@@ -6,6 +6,11 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.3.0...7.3.1
 
+## 7.3.1 / 2026-07-27
+
+* [FormBundle] Security fix [GHSA-j376-w3x3-q674](https://github.com/advisories/GHSA-j376-w3x3-q674) [3c25383](https://github.com/Kunstmaan/KunstmaanBundlesCMS/commit/3c253839429739bab01d9732cbc206534cfbdc7a) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Backport Symfony 7.4 deprecation fixes [#3535](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3535) ([@acrobat](https://github.com/acrobat))
+
 ## 7.3.0 / 2025-02-16
 
 * [AllBundles] Add php 8.4 to CI workflow [#3498](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3498) ([@acrobat](https://github.com/acrobat))
