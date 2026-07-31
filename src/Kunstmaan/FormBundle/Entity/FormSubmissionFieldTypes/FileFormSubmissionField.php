@@ -89,8 +89,8 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Move the file to the given uploadDir and save the filename
      *
-     * @param string $uploadDir
-     * @param string $webDir
+     * @param string   $uploadDir
+     * @param string   $webDir
      * @param string[] $allowedExtensions the allow-list of extensions the stored file may have; empty means no restriction
      */
     public function upload($uploadDir, $webDir, array $allowedExtensions = [])
