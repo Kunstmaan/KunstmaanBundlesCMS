@@ -10,7 +10,6 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
-use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -102,7 +101,6 @@ final class ChooserController extends AbstractController
         /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
-        /** @var AbstractMediaHandler $handler */
         $handler = null;
         if ($type && $type !== self::TYPE_ALL) {
             $handler = $this->mediaManager->getHandlerForType($type);

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class GoogleAnalyticsController extends AbstractController
 {
-    /** @var AnalyticsConfig */
+    /** @var ConfigHelper */
     private $analyticsConfig;
     /** @var ClientHelper */
     private $clientHelper;

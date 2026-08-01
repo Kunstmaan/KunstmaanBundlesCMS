@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
-use Kunstmaan\AdminListBundle\AdminList\ExportList;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
@@ -118,7 +117,6 @@ final class FormSubmissionsController extends AbstractController
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($nodeTranslationId);
         $translator = $this->container->get('translator');
 
-        /** @var ExportList $exportList */
         $configurator = new FormSubmissionExportListConfigurator($this->em, $nodeTranslation, $translator);
         $exportList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator);
 
