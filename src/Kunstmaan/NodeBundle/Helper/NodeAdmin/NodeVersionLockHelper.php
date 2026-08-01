@@ -82,14 +82,14 @@ class NodeVersionLockHelper
     protected function createNodeVersionLock(BaseUser $user, NodeTranslation $nodeTranslation, $isPublicVersion)
     {
         $lock = $this->objectManager->getRepository(NodeVersionLock::class)->findOneBy([
-            'owner' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
+            'owner' => $user->getUserIdentifier(),
             'nodeTranslation' => $nodeTranslation,
             'publicVersion' => $isPublicVersion,
         ]);
         if (!$lock) {
             $lock = new NodeVersionLock();
         }
-        $lock->setOwner(method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername());
+        $lock->setOwner($user->getUserIdentifier());
         $lock->setNodeTranslation($nodeTranslation);
         $lock->setPublicVersion($isPublicVersion);
         $lock->setCreatedAt(new \DateTime());

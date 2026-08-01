@@ -30,7 +30,7 @@ class NodeVersionLockRepository extends \Doctrine\ORM\EntityRepository
 
         if (!\is_null($userToExclude)) {
             $qb->andWhere('nvl.owner <> :owner')
-                ->setParameter('owner', method_exists($userToExclude, 'getUserIdentifier') ? $userToExclude->getUserIdentifier() : $userToExclude->getUsername())
+                ->setParameter('owner', $userToExclude->getUserIdentifier())
             ;
         }
 
