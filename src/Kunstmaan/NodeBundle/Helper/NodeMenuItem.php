@@ -209,7 +209,6 @@ class NodeMenuItem
     {
         if (\is_null($this->children)) {
             $children = $this->menu->getChildren($this->node, true);
-            /* @var NodeMenuItem $child */
             foreach ($children as $child) {
                 $child->setParent($this);
             }

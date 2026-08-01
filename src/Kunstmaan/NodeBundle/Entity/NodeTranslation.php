@@ -319,7 +319,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection<array-key, NodeVersion>
      */
     public function getNodeVersions()
     {
@@ -327,6 +327,8 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
+     * @param ArrayCollection<array-key, NodeVersion> $nodeVersions
+     *
      * @return NodeTranslation
      */
     public function setNodeVersions(ArrayCollection $nodeVersions)
@@ -351,7 +353,7 @@ class NodeTranslation extends AbstractEntity
 
         $max = \count($nodeVersions);
         for ($i = $max - 1; $i >= 0; --$i) {
-            /* @var NodeVersion $nodeVersion */
+            /** @var NodeVersion $nodeVersion */
             $nodeVersion = $nodeVersions[$i];
 
             if ($type == $nodeVersion->getType()) {

@@ -121,7 +121,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * @param int $folderId
      *
-     * @return object
+     * @return Folder
      *
      * @throws EntityNotFoundException
      */
@@ -135,6 +135,9 @@ class FolderRepository extends NestedTreeRepository
         return $folder;
     }
 
+    /**
+     * @return Folder
+     */
     public function getFirstTopFolder()
     {
         $folder = $this->findOneBy(['parent' => null]);

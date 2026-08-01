@@ -8,10 +8,8 @@ use Kunstmaan\AdminBundle\Repository\UserRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SeoBundle\Entity\Seo;
-use Kunstmaan\SeoBundle\Repository\SeoRepository;
 
 /**
  * Service to create new pages.
@@ -75,11 +73,9 @@ class PageCreatorService
 
         $em = $this->entityManager;
 
-        /** @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository(Node::class);
         /** @var UserRepository $userRepo */
         $userRepo = $em->getRepository($this->userEntityClass);
-        /* @var SeoRepository $seoRepo */
         try {
             $seoRepo = $em->getRepository(Seo::class);
         } catch (ORMException $e) {
@@ -105,7 +101,6 @@ class PageCreatorService
         $first = true;
         $rootNode = null;
 
-        /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo */
         $nodeTranslationRepo = $em->getRepository(NodeTranslation::class);
 
         foreach ($translations as $translation) {

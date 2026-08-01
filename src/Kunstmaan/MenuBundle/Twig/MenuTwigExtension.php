@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MenuBundle\Twig;
 
-use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
 use Kunstmaan\MenuBundle\Service\RenderService;
 use Twig\Environment;
@@ -76,7 +75,6 @@ final class MenuTwigExtension extends AbstractExtension
      */
     public function getMenuItems($name, $lang): array
     {
-        /** @var MenuItem $menuRepo */
         $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
         // Make sure the parent item is not offline

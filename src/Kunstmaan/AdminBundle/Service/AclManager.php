@@ -77,10 +77,9 @@ class AclManager
 
     public function applyAclChangesets()
     {
-        /* @var AclChangesetRepository $aclRepo */
+        /** @var AclChangesetRepository $aclRepo */
         $aclRepo = $this->em->getRepository(AclChangeset::class);
         do {
-            /* @var AclChangeset $changeset */
             $changeset = $aclRepo->findNewChangeset();
             if (\is_null($changeset)) {
                 break;

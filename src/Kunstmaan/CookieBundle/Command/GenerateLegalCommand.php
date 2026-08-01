@@ -11,10 +11,10 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 final class GenerateLegalCommand extends KunstmaanGenerateCommand
 {
-    /* @var BundleInterface */
+    /** @var BundleInterface */
     private $bundle;
 
-    /* @var string */
+    /** @var string */
     private $prefix;
 
     /** @var string */

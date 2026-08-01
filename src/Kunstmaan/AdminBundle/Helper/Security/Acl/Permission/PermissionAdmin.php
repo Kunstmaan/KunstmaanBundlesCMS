@@ -16,8 +16,6 @@ use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
-use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
-use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -122,10 +120,8 @@ class PermissionAdmin
         // Init permissions
         try {
             $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
-            /* @var $acl AclInterface */
             $acl = $this->aclProvider->findAcl($objectIdentity);
             $objectAces = $acl->getObjectAces();
-            /* @var $ace AuditableEntryInterface */
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
                 if ($securityIdentity instanceof RoleSecurityIdentity) {
@@ -284,10 +280,8 @@ class PermissionAdmin
         $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($entity);
 
         try {
-            /* @var $acl MutableAclInterface */
             $acl = $this->aclProvider->findAcl($objectIdentity);
         } catch (AclNotFoundException $e) {
-            /* @var $acl MutableAclInterface */
             $acl = $this->aclProvider->createAcl($objectIdentity);
         }
 
@@ -333,7 +327,6 @@ class PermissionAdmin
     private function getObjectAceIndex(AclInterface $acl, $role): bool|int
     {
         $objectAces = $acl->getObjectAces();
-        /* @var $ace AuditableEntryInterface */
         foreach ($objectAces as $index => $ace) {
             $securityIdentity = $ace->getSecurityIdentity();
             if (($securityIdentity instanceof RoleSecurityIdentity) && $securityIdentity->getRole() == $role) {
@@ -353,7 +346,6 @@ class PermissionAdmin
     private function getMaskAtIndex(AclInterface $acl, $index): bool|int
     {
         $objectAces = $acl->getObjectAces();
-        /* @var $ace AuditableEntryInterface */
         $ace = $objectAces[$index];
         $securityIdentity = $ace->getSecurityIdentity();
         if ($securityIdentity instanceof RoleSecurityIdentity) {

@@ -215,7 +215,7 @@ final class UsersController extends AbstractController
             return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users');
         }
 
-        /* @var UserInterface $user */
+        /** @var UserInterface $user */
         $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $this->eventDispatcher->dispatch(new DeleteUserInitializeEvent($user, $request), UserEvents::USER_DELETE_INITIALIZE);

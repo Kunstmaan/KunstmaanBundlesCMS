@@ -10,7 +10,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class NodeMenu
@@ -71,12 +70,12 @@ class NodeMenu
     private $allNodes = [];
 
     /**
-     * @var Node[]
+     * @var array<array-key, Node[]>
      */
     private $childNodes = [];
 
     /**
-     * @var Node[]
+     * @var array<array-key, Node[]>
      */
     private $nodesByInternalName = [];
 
@@ -174,7 +173,6 @@ class NodeMenu
         $this->topNodeMenuItems = null;
         $this->nodesByInternalName = [];
 
-        /* @var NodeRepository $repo */
         $repo = $this->em->getRepository(Node::class);
 
         // Get all possible menu items in one query (also fetch offline nodes)
@@ -244,13 +242,11 @@ class NodeMenu
 
         $this->breadCrumb = [];
 
-        /* @var NodeRepository $repo */
         $repo = $this->em->getRepository(Node::class);
 
         // Generate breadcrumb MenuItems - fetch *all* languages so you can link translations if needed
         $parentNodes = $repo->getAllParents($this->currentNode);
         $parentNodeMenuItem = null;
-        /* @var Node $parentNode */
         foreach ($parentNodes as $parentNode) {
             $nodeTranslation = $parentNode->getNodeTranslation(
                 $this->locale,
@@ -312,7 +308,6 @@ class NodeMenu
 
         if (\array_key_exists($node->getId(), $this->childNodes)) {
             $nodes = $this->childNodes[$node->getId()];
-            /* @var Node $childNode */
             foreach ($nodes as $childNode) {
                 $nodeTranslation = $childNode->getNodeTranslation(
                     $this->locale,
@@ -489,7 +484,6 @@ class NodeMenu
                 }
 
                 // Look for a node with the same parent id
-                /** @var Node $node */
                 foreach ($nodes as $node) {
                     if ($parentNode && $node->getParent()->getId() == $parentNode->getId()) {
                         $resultNode = $node;
@@ -500,7 +494,6 @@ class NodeMenu
 
                 // Look for a node that has an ancestor with the same parent id
                 if (\is_null($resultNode)) {
-                    /* @var Node $n */
                     foreach ($nodes as $node) {
                         $tempNode = $node;
                         while (\is_null($resultNode) && !\is_null(
@@ -660,7 +653,6 @@ class NodeMenu
     {
         $topNodeMenuItems = [];
         $topNodes = $this->childNodes[0];
-        /* @var Node $topNode */
         foreach ($topNodes as $topNode) {
             $nodeTranslation = $topNode->getNodeTranslation(
                 $this->locale,

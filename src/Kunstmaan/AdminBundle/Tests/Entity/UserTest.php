@@ -47,9 +47,7 @@ class UserTest extends TestCase
             ->method('getId')
             ->will($this->returnValue(2));
 
-        /* @var $group1 GroupInterface */
         $this->object->addGroup($group1);
-        /* @var $group2 GroupInterface */
         $this->object->addGroup($group2);
 
         $this->assertEquals([1, 2], $this->object->getGroupIds());
@@ -57,9 +55,7 @@ class UserTest extends TestCase
 
     public function testGetGroups()
     {
-        /* @var $group1 GroupInterface */
         $group1 = $this->createMock(GroupInterface::class);
-        /* @var $group2 GroupInterface */
         $group2 = $this->createMock(GroupInterface::class);
         $this->object->addGroup($group1);
         $this->object->addGroup($group2);

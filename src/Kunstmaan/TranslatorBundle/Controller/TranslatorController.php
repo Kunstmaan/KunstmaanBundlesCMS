@@ -4,7 +4,6 @@ namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
@@ -47,7 +46,6 @@ final class TranslatorController extends AbstractAdminListController
     {
         $configurator = $this->getAdminListConfigurator();
 
-        /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 

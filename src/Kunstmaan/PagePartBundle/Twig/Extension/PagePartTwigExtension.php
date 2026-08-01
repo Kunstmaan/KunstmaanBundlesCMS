@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
-use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -41,7 +40,6 @@ final class PagePartTwigExtension extends AbstractExtension
     public function renderPageParts(Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = []): string
     {
         $template = $env->load('@KunstmaanPagePart/PagePartTwigExtension/widget.html.twig');
-        /* @var $entityRepository PagePartRefRepository */
         $pageparts = $this->getPageParts($page, $contextName);
         $newTwigContext = array_merge($parameters, [
             'pageparts' => $pageparts,
@@ -60,10 +58,7 @@ final class PagePartTwigExtension extends AbstractExtension
      */
     public function getPageParts(HasPagePartsInterface $page, $context = 'main'): array
     {
-        /** @var PagePartRefRepository $entityRepository */
-        $entityRepository = $this->em->getRepository(PagePartRef::class);
-
-        return $entityRepository->getPageParts($page, $context);
+        return $this->em->getRepository(PagePartRef::class)->getPageParts($page, $context);
     }
 
     /**
