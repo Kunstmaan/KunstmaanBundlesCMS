@@ -163,9 +163,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get config
-     *
-     * @return int
+     * @return AnalyticsConfig
      */
     public function getConfig()
     {
@@ -173,9 +171,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set config
-     *
-     * @param int $config
+     * @param AnalyticsConfig $config
      *
      * @return self
      */
@@ -187,9 +183,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get segment
-     *
-     * @return int
+     * @return AnalyticsSegment
      */
     public function getSegment()
     {
@@ -197,9 +191,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set segment
-     *
-     * @param int $segment
+     * @param AnalyticsSegment $segment
      *
      * @return self
      */

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\DashboardBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsSegmentRepository;
@@ -119,7 +120,7 @@ class AnalyticsSegment extends AbstractEntity
     /**
      * Set overviews
      *
-     * @param array $overviews
+     * @param Collection<AnalyticsOverview> $overviews
      *
      * @return $this
      */
@@ -131,9 +132,7 @@ class AnalyticsSegment extends AbstractEntity
     }
 
     /**
-     * Get overviews
-     *
-     * @return AnalyticsGoal[]
+     * @return Collection<AnalyticsOverview>
      */
     public function getOverviews()
     {

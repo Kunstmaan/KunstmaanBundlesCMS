@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 
 interface UserInterface extends SymfonyUserInterface, \Serializable
@@ -139,7 +140,7 @@ interface UserInterface extends SymfonyUserInterface, \Serializable
     /**
      * Gets the groups granted to the user.
      *
-     * @return \Traversable
+     * @return Collection
      */
     public function getGroups();
 

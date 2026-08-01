@@ -477,7 +477,6 @@ class NodeMenu
 
             if (!\is_null($parent)) {
                 $parentNode = null;
-                /** @var Node $parentNode */
                 if ($parent instanceof NodeTranslation) {
                     $parentNode = $parent->getNode();
                 } elseif ($parent instanceof NodeMenuItem) {

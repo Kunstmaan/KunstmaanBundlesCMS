@@ -102,7 +102,7 @@ class Order
     }
 
     /**
-     * @var array(of OrderItem) An array of OrderItem objects
+     * @var OrderItem[] An array of OrderItem objects
      */
     public $orderItems = [];
 

@@ -5,7 +5,6 @@ namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
 use OpenSpout\Common\Entity\Row;
 use OpenSpout\Reader\Common\Creator\ReaderFactory;
-use OpenSpout\Reader\SheetInterface;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
@@ -89,7 +88,6 @@ class Importer
         }
         $sheets = $reader->getSheetIterator();
 
-        /** @var SheetInterface $sheet */
         $importedTranslations = 0;
         foreach ($sheets as $sheet) {
             $rows = $sheet->getRowIterator();
