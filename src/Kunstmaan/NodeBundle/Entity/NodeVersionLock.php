@@ -91,7 +91,7 @@ class NodeVersionLock extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set owner
      *
-     * @param string
+     * @param string $owner
      *
      * @return NodeVersionLock
      */

@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue([
                                 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'txt', 'csv', 'rtf', 'zip',
                                 'jpg', 'jpeg', 'png', 'gif', 'webp',
-                                'jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'jxl'
+                                'jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'jxl',
                             ])
                         ->end()
                     ->end()

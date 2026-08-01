@@ -26,7 +26,7 @@ final class GenerateLegalCommand extends KunstmaanGenerateCommand
     /** @var Filesystem */
     private $fileSystem;
 
-    /** @var RegistryInterface */
+    /** @var ManagerRegistry */
     private $registry;
 
     public function __construct(Filesystem $fileSystem, ManagerRegistry $registry)

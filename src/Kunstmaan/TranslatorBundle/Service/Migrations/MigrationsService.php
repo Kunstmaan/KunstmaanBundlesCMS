@@ -88,9 +88,9 @@ class MigrationsService
     /**
      * Build an sql insert into query by the paramters provided
      *
-     * @param ORM\Entity $entities        Result array with all entities to create an insert for
-     * @param string     $entityClassName Class of the specified entity (same as entities)
-     * @param array      $ignoreFields    fields not to use in the insert query
+     * @param object[] $entities        Result array with all entities to create an insert for
+     * @param string   $entityClassName Class of the specified entity (same as entities)
+     * @param array    $ignoreFields    fields not to use in the insert query
      *
      * @return string an insert sql query, of no result nul
      */

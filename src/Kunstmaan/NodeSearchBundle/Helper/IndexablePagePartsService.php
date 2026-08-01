@@ -16,7 +16,7 @@ class IndexablePagePartsService
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var [] */
+    /** @var array */
     private $contexts;
 
     /**
