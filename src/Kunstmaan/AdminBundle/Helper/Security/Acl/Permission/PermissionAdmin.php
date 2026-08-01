@@ -150,14 +150,13 @@ class PermissionAdmin
     /**
      * Get permission for specified role.
      *
-     * @param \Symfony\Component\Security\Core\Role\Role|string $role
+     * @param Role|string $role
      *
      * @return MaskBuilder|null
      */
     public function getPermission($role)
     {
-        // NEXT_MAJOR remove undefined classes from this check
-        if ($role instanceof \Symfony\Component\Security\Core\Role\Role || $role instanceof Role) {
+        if ($role instanceof Role) {
             $role = $role->getRole();
         }
 

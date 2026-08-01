@@ -100,7 +100,7 @@ class AclNativeHelper
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = ' . $databasePlatform->quoteStringLiteral(\get_class($user) . '-' . method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername());
+            $inString .= ' OR s.identifier = ' . $databasePlatform->quoteStringLiteral(\get_class($user) . '-' . $user->getUserIdentifier());
         }
 
         $objectIdentifierColumn = 'o.object_identifier';
