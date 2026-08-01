@@ -49,7 +49,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
                 'path' => 'KunstmaanUserManagementBundle_settings_users_edit',
                 'params' => ['id' => $user->getId()],
             ],
-            ucfirst(method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername()),
+            ucfirst($user->getUserIdentifier()),
             'user'
         );
     }

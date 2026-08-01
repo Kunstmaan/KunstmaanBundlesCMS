@@ -80,7 +80,7 @@ class EntityVersionLockServiceTest extends TestCase
         $entityVersionLock->setCreatedAt(new \DateTime());
 
         $expiredEntityVersionLock = new EntityVersionLock();
-        $expiredEntityVersionLock->setOwner(method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername());
+        $expiredEntityVersionLock->setOwner($user->getUserIdentifier());
         $expiredEntityVersionLock->setLockableEntity($outDatedEntity);
         $expiredEntityVersionLock->setCreatedAt(new \DateTime('-1 days'));
 
