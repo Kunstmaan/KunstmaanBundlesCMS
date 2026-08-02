@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class EmailPagePartTest extends TestCase
 {
@@ -66,7 +65,6 @@ class EmailPagePartTest extends TestCase
         $object->setErrorMessageRequired('form error!');
         $object->setErrorMessageInvalid('not valid');
         $this->assertEquals(0, count($fields));
-        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }

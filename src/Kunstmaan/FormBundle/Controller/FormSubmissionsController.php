@@ -47,7 +47,6 @@ final class FormSubmissionsController extends AbstractController
     {
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
-        /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList(
             new FormPageAdminListConfigurator($this->em, $aclHelper, PermissionMap::PERMISSION_VIEW)
         );

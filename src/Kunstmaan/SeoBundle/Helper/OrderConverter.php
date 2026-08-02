@@ -14,7 +14,6 @@ class OrderConverter
         $orderItems = [];
 
         foreach ($order->orderItems as $orderItem) {
-            /* @var OrderItem $orderItem */
             $orderItems[] = [
                 'sku' => $orderItem->getSKU(),
                 'quantity' => $this->formatNumber($orderItem->getQuantity()),

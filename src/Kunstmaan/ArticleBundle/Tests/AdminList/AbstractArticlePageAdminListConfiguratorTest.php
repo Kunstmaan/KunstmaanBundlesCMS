@@ -59,8 +59,6 @@ class AbstractArticlePageAdminListConfiguratorTest extends TestCase
 
         $this->em = $em;
 
-        /* @var EntityManager $em */
-        /* @var AclHelper $acl */
         $this->object = new Configurator($em, $acl, 'nl', 'admin', $repo);
     }
 

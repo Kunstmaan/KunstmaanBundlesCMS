@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class MultiLineTextPagePartTest extends TestCase
 {
@@ -60,7 +59,6 @@ class MultiLineTextPagePartTest extends TestCase
         $object->setErrorMessageRequired('required');
         $object->setErrorMessageRegex('regex');
         $this->assertEquals(0, count($fields));
-        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
         $this->assertEquals('required', $object->getErrorMessageRequired());

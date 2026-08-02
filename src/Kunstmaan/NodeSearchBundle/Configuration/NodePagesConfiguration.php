@@ -25,9 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
-use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
-use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 class NodePagesConfiguration implements SearchConfigurationInterface
@@ -600,11 +598,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         try {
             $objectIdentity = ObjectIdentity::fromDomainObject($object);
 
-            /* @var AclInterface $acl */
             $acl = $this->aclProvider->findAcl($objectIdentity);
             $objectAces = $acl->getObjectAces();
 
-            /* @var AuditableEntryInterface $ace */
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
                 if (

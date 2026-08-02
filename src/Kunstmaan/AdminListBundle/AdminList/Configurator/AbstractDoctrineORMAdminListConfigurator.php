@@ -7,7 +7,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Kunstmaan\AdminListBundle\AdminList\Filter;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter as OrmQueryAdapter;
@@ -143,9 +142,8 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
 
             // Apply filters
             $filters = $this->getFilterBuilder()->getCurrentFilters();
-            /* @var Filter $filter */
             foreach ($filters as $filter) {
-                /* @var AbstractORMFilterType $type */
+                /** @var AbstractORMFilterType $type */
                 $type = $filter->getType();
                 $type->setQueryBuilder($queryBuilder);
                 $filter->apply();

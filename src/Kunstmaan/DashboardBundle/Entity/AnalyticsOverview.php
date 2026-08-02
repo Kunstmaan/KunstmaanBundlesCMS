@@ -227,7 +227,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * @return array
+     * @return AnalyticsGoal[]
      */
     public function getActiveGoals()
     {

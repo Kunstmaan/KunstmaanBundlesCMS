@@ -150,7 +150,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
             // Apply filters
             $filters = $this->getFilterBuilder()->getCurrentFilters();
             foreach ($filters as $filter) {
-                /* @var AbstractDBALFilterType $type */
+                /** @var AbstractDBALFilterType $type */
                 $type = $filter->getType();
                 $type->setQueryBuilder($this->queryBuilder);
                 $filter->apply();

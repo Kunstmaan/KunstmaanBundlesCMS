@@ -95,6 +95,12 @@ EOQ;
             ->execute();
     }
 
+    /**
+     * @param array $locales
+     * @param array $domains
+     *
+     * @return Translation[]
+     */
     public function getTranslationsByLocalesAndDomains($locales, $domains)
     {
         $em = $this->getEntityManager();

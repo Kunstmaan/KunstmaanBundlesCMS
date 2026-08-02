@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -57,10 +56,9 @@ class MenuBuilder
         if ($this->currentCache !== null) {
             return $this->currentCache;
         }
-        /* @var $active MenuItem */
+
         $active = null;
         do {
-            /* @var MenuItem[] $children */
             $children = $this->getChildren($active);
             $foundActiveChild = false;
             foreach ($children as $child) {
@@ -120,7 +118,6 @@ class MenuBuilder
     public function getTopChildren()
     {
         if (\is_null($this->topMenuItems)) {
-            /* @var $request Request */
             $request = $this->requestStack->getCurrentRequest();
             $this->topMenuItems = [];
             foreach ($this->getAdaptors() as $menuAdaptor) {
@@ -141,7 +138,6 @@ class MenuBuilder
         if ($parent === null) {
             return $this->getTopChildren();
         }
-        /* @var $request Request */
         $request = $this->requestStack->getCurrentRequest();
         $result = [];
         foreach ($this->getAdaptors() as $menuAdaptor) {

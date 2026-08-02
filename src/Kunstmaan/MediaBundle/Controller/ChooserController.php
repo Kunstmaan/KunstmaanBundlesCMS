@@ -60,7 +60,6 @@ final class ChooserController extends AbstractController
 
         if (!$folderId) {
             // Redirect to the first top folder
-            /* @var Folder $firstFolder */
             $firstFolder = $this->em->getRepository(Folder::class)->getFirstTopFolder();
             $folderId = $firstFolder->getId();
         }
@@ -98,7 +97,7 @@ final class ChooserController extends AbstractController
             $session->remove('media-list-view');
         }
 
-        /* @var Folder $folder */
+        /** @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $handler = null;

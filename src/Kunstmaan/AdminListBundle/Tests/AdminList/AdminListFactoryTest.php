@@ -3,8 +3,6 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 use PHPUnit\Framework\TestCase;
 
 class AdminListFactoryTest extends TestCase
@@ -21,7 +19,6 @@ class AdminListFactoryTest extends TestCase
 
     public function testCreateList()
     {
-        /* @var AdminListConfiguratorInterface $mockConfig */
         $mockConfig = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface');
         $list = $this->object->createList($mockConfig);
 
@@ -30,7 +27,6 @@ class AdminListFactoryTest extends TestCase
 
     public function testCreateExportList()
     {
-        /* @var ExportListConfiguratorInterface $mockConfig */
         $mockConfig = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface');
         $list = $this->object->createExportList($mockConfig);
 

@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class CheckboxPagePartTest extends TestCase
 {
@@ -43,7 +42,6 @@ class CheckboxPagePartTest extends TestCase
 
         $this->assertEquals(0, count($fields));
         $object->setErrorMessageRequired('omg sort it out');
-        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }

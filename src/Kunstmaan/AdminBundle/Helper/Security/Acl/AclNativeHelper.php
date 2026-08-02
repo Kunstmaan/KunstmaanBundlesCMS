@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 /**
@@ -78,7 +77,6 @@ class AclNativeHelper
         }
         $mask = $builder->get();
 
-        /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
         $userRoles = [];
         $user = null;

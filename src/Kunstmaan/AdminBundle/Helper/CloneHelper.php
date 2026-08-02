@@ -28,6 +28,13 @@ class CloneHelper
         $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * @template T of object
+     *
+     * @param T $entity
+     *
+     * @return T
+     */
     public function deepCloneAndSave($entity)
     {
         $clonedEntity = clone $entity;

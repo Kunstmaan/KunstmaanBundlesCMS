@@ -65,7 +65,6 @@ class NodeHelper
         $user = $this->getAdminUser();
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
 
-        /* @var NodeVersion $publicNodeVersion */
         $publicNodeVersion = $this->em->getRepository(NodeVersion::class)
             ->createNodeVersionFor(
                 $publicPage,
@@ -194,7 +193,6 @@ class NodeHelper
             $newPage->setParent($parentPage);
         }
 
-        /* @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($newPage, $locale, $user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
         if (null !== $parentNode) {
@@ -280,7 +278,6 @@ class NodeHelper
         $sourcePage = $sourceNodeVersion->getRef($this->em);
         $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -324,7 +321,6 @@ class NodeHelper
         $this->em->persist($targetPage);
         $this->em->flush();
 
-        /* @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($targetPage, $locale, $user);
 
         $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
@@ -352,7 +348,6 @@ class NodeHelper
         $sourcePage = $sourceNodeVersion->getRef($this->em);
         $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->addDraftNodeVersionFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -385,7 +380,6 @@ class NodeHelper
         $refEntityName = $node->getRefEntityName();
         $targetPage = $this->createNewPage($refEntityName);
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -405,7 +399,7 @@ class NodeHelper
      */
     protected function createNewPage($entityType, $title = 'No title')
     {
-        /* @var HasNodeInterface $newPage */
+        /** @var HasNodeInterface $newPage */
         $newPage = new $entityType();
         $newPage->setTitle($title);
 
@@ -422,7 +416,7 @@ class NodeHelper
     {
         $children = $node->getChildren();
 
-        /* @var Node $childNode */
+        /** @var Node $childNode */
         foreach ($children as $childNode) {
             $childNodeTranslation = $childNode->getNodeTranslation($locale, true);
             $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
