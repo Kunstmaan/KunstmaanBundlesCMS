@@ -11,19 +11,19 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
  */
 class LegalGenerator extends KunstmaanGenerator
 {
-    /* @var BundleInterface */
+    /** @var BundleInterface */
     private $bundle;
 
-    /* @var string */
+    /** @var string */
     private $rootDir;
 
-    /* @var string */
+    /** @var string */
     private $prefix;
 
-    /* @var bool */
+    /** @var bool */
     private $demosite;
 
-    /* @var bool */
+    /** @var bool */
     private $overrideFiles;
 
     /**

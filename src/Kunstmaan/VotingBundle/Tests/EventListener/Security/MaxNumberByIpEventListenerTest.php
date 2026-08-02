@@ -33,7 +33,6 @@ class MaxNumberByIpEventListenerTest extends TestCase
              ->method('getRepositoryForEvent')
              ->willReturn($mockedRepository);
 
-        /* @var \Kunstmaan\VotingBundle\Services\RepositoryResolver $mockedResolver */
         return $mockedResolver;
     }
 

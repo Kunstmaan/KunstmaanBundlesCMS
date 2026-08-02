@@ -194,20 +194,15 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the node translation for a node
      *
-     * @return NodeTranslation
+     * @return NodeTranslation|null
      */
     public function getNodeTranslationFor(HasNodeInterface $hasNode)
     {
-        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()
             ->getRepository(NodeVersion::class)
             ->getNodeVersionFor($hasNode);
 
-        if (!\is_null($nodeVersion)) {
-            return $nodeVersion->getNodeTranslation();
-        }
-
-        return null;
+        return $nodeVersion?->getNodeTranslation();
     }
 
     /**

@@ -14,10 +14,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
  */
 class ACLPermissionCreatorService
 {
-    /* @var MutableAclProviderInterface $aclProvider */
+    /** @var MutableAclProviderInterface */
     protected $aclProvider;
 
-    /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
+    /** @var ObjectIdentityRetrievalStrategyInterface */
     protected $oidStrategy;
 
     public function __construct(MutableAclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidStrategy)

@@ -10,7 +10,6 @@ use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use PHPUnit\Framework\TestCase;
@@ -110,7 +109,6 @@ class PermissionAdminTest extends TestCase
             ->method('getPossiblePermissions')
             ->will($this->returnValue($permissions));
         $entity = $this->getEntity();
-        /* @var $permissionMap PermissionMapInterface */
         $object->initialize($entity, $permissionMap);
         $this->assertEquals($permissions, $object->getPossiblePermissions());
     }
@@ -132,7 +130,6 @@ class PermissionAdminTest extends TestCase
         $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         $entity = $this->getEntity();
-        /* @var $user User */
         $user = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\User')
             ->disableOriginalConstructor()
             ->getMock();
@@ -266,7 +263,6 @@ class PermissionAdminTest extends TestCase
     {
         $object = $this->getPermissionAdmin();
         $entity = $this->getEntity();
-        /* @var $permissionMap PermissionMapInterface */
         $permissionMap = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
         $object->initialize($entity, $permissionMap);
 

@@ -120,14 +120,14 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
             ->setParameter('node', $this->nodeTranslation->getNode()->getId())
             ->setParameter('lang', $this->nodeTranslation->getLang())
             ->addOrderBy('fs.created', 'DESC');
+
+        /** @var iterable<FormSubmission> $iterableResult */
         $iterableResult = $qb->getQuery()->toIterable();
         $isHeaderWritten = false;
 
         $collection = new ArrayCollection();
         $i = 0;
         foreach ($iterableResult as $submission) {
-            /* @var FormSubmission $submission */
-
             // Write row data
             $data = [
                 'id' => $submission->getId(),

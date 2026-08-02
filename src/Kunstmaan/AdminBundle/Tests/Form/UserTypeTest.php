@@ -18,7 +18,6 @@ class UserTypeTest extends TestCase
         $resolver->expects($this->once())->method('setDefaults')->willReturn($resolver);
         $resolver->expects($this->once())->method('addAllowedValues')->willReturn($resolver);
 
-        /* @var OptionsResolver $resolver */
         $type->configureOptions($resolver);
         $type->setCanEditAllFields(true);
         $this->assertEquals(FormType::class, $type->getParent());
@@ -30,7 +29,6 @@ class UserTypeTest extends TestCase
             ->method('add')
             ->willReturn($builder);
 
-        /* @var FormBuilder $builder */
         $type->buildForm($builder, [
             'langs' => [
                 'en', 'nl', 'es', 'de', 'fr',

@@ -6,13 +6,11 @@ use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 /**
@@ -70,7 +68,6 @@ class AclHelper
     {
         $aclAppliedQuery = clone $query;
         $params = $query->getParameters();
-        /* @var $param Parameter */
         foreach ($params as $param) {
             $aclAppliedQuery->setParameter($param->getName(), $param->getValue(), $param->getType());
         }
@@ -142,7 +139,6 @@ class AclHelper
         $mask = $query->getHint('acl.mask');
         $rootEntity = $databasePlatform->quoteStringLiteral($query->getHint('acl.root.entity'));
 
-        /* @var $token TokenInterface */
         $token = $this->tokenStorage->getToken();
         $userRoles = [];
         $user = null;

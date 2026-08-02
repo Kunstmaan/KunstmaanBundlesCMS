@@ -67,7 +67,6 @@ final class FolderController extends AbstractController
             $session->remove('media-list-view');
         }
 
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $adminListConfigurator = new MediaAdminListConfigurator($this->em, $this->mediaManager, $folder, $request);
@@ -120,7 +119,6 @@ final class FolderController extends AbstractController
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', ['folderId' => $folderId]));
         }
 
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
         $folderName = $folder->getName();
         $parentFolder = $folder->getParent();
@@ -162,7 +160,6 @@ final class FolderController extends AbstractController
     #[Route(path: '/subcreate/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_sub_create', methods: ['GET', 'POST'])]
     public function subCreateAction(Request $request, $folderId): Response
     {
-        /* @var Folder $parent */
         $parent = $this->em->getRepository(Folder::class)->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
@@ -208,7 +205,6 @@ final class FolderController extends AbstractController
     #[Route(path: '/empty/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_folder_empty', methods: ['GET', 'POST'])]
     public function emptyAction(Request $request, $folderId): Response
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $form = $this->createEmptyForm();
@@ -254,7 +250,6 @@ final class FolderController extends AbstractController
         $repository = $this->em->getRepository(Folder::class);
 
         foreach ($nodeIds as $id) {
-            /* @var Folder $folder */
             $folder = $repository->find($id);
             $folders[] = $folder;
         }

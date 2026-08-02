@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\AdminList;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
@@ -69,7 +68,6 @@ class FormSubmissionAdminListConfiguratorTest extends TestCase
             ->method('setParameter')
             ->will($this->returnSelf());
 
-        /* @var QueryBuilder $queryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder);
     }
 

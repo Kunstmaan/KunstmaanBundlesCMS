@@ -162,7 +162,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      */
     public function generateThankYouUrl(RouterInterface $router, RenderContext $context)
     {
-        /* @var NodeTranslation $nodeTranslation */
+        /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $context['nodetranslation'];
 
         return $router->generate('_slug', [

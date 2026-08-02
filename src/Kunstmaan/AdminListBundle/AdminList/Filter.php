@@ -41,7 +41,7 @@ class Filter
 
     public function bindRequest(Request $request)
     {
-        /* @var FilterTypeInterface $type */
+        /** @var FilterTypeInterface $type */
         $type = $this->filterDefinition['type'];
         $type->bindRequest($request, $this->data, $this->uniqueId);
     }

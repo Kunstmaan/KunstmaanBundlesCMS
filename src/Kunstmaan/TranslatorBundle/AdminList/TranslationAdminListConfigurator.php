@@ -189,7 +189,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                     $textValue = $data['value'];
                     $textComparator = $data['comparator'];
                 } else {
-                    /* @var AbstractDBALFilterType $type */
+                    /** @var AbstractDBALFilterType $type */
                     $type = $filter->getType();
                     $type->setQueryBuilder($this->queryBuilder);
                     $filter->apply();

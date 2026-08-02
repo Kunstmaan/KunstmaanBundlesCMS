@@ -43,7 +43,6 @@ final class MediaController extends AbstractController
     #[Route(path: '/{mediaId}', requirements: ['mediaId' => '\d+'], name: 'KunstmaanMediaBundle_media_show')]
     public function showAction(Request $request, $mediaId): Response
     {
-        /* @var Media $media */
         $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $folder = $media->getFolder();
 
@@ -84,7 +83,6 @@ final class MediaController extends AbstractController
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
         }
 
-        /* @var Media $media */
         $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
@@ -116,7 +114,6 @@ final class MediaController extends AbstractController
     #[Route(path: 'bulkupload/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_bulk_upload')]
     public function bulkUploadAction($folderId): Response
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         return $this->render('@KunstmaanMedia/Media/bulkUpload.html.twig', ['folder' => $folder]);
@@ -227,7 +224,6 @@ final class MediaController extends AbstractController
             \rename("{$filePath}.part", $filePath);
         }
 
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
@@ -281,7 +277,6 @@ final class MediaController extends AbstractController
     #[Route(path: 'drop/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_drop_upload', methods: ['GET', 'POST'])]
     public function dropAction(Request $request, $folderId): JsonResponse
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $drop = null;
@@ -334,7 +329,6 @@ final class MediaController extends AbstractController
      */
     private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false): array|RedirectResponse
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $handler = $this->mediaManager->getHandlerForType($type);
