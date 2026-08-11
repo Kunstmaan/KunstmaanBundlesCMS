@@ -137,13 +137,15 @@ class RedirectRouter implements RouterInterface
             }
         }
 
-        $queryString = $this->context->getQueryString();
-        if ($queryString) {
-            $targetPath .= '?' . $queryString;
+        $isExternalHost = !\str_starts_with($targetPath, '/');
+        $targetPathHasQueryString = \str_contains($targetPath, '?');
+        if (($isExternalHost || $targetPathHasQueryString) && ($queryString = $this->context->getQueryString())) {
+            $targetPath .= ($targetPathHasQueryString ? '&' : '?') . $queryString;
         }
 
         $needsUtf8 = false;
-        foreach ([$routePath, $targetPath] as $item) {
+        $decodedPath = urldecode($routePath);
+        foreach ([$routePath, $decodedPath, $targetPath] as $item) {
             if (preg_match('/[\x80-\xFF]/', $item)) {
                 $needsUtf8 = true;
 
@@ -151,7 +153,7 @@ class RedirectRouter implements RouterInterface
             }
         }
 
-        $route = new Route($routePath, [
+        $route = new Route($decodedPath, [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'path' => $targetPath,
             'permanent' => $redirect->isPermanent(),
