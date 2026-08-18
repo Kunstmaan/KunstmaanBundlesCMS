@@ -330,15 +330,13 @@ abstract class BaseMenuItem implements EntityInterface
      */
     public function getDisplayTitle()
     {
-        if ($this->getType() == self::TYPE_PAGE_LINK) {
-            if (!\is_null($this->getTitle())) {
-                return $this->getTitle();
-            }
+        $repeat = str_repeat("\xC2\xA0", $this->getLvl() * 2);
 
-            return $this->getNodeTranslation()->getTitle();
+        if ($this->getType() == self::TYPE_PAGE_LINK) {
+            return $repeat . ($this->getTitle() ?? $this->getNodeTranslation()->getTitle());
         }
 
-        return $this->getTitle();
+        return $repeat . $this->getTitle();
     }
 
     /**
