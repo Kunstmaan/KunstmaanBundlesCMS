@@ -83,6 +83,32 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
+    /**
+     * @dataProvider dataNonImageContentTypes
+     */
+    public function testDimensionsAreNotCheckedForNonImages(string $contentType)
+    {
+        $constraint = new Media(['minWidth' => 200]);
+        $media = (new MediaObject())
+            ->setMetadataValue('original_width', 100)
+            ->setMetadataValue('original_height', 100)
+            ->setContentType($contentType);
+
+        $this->validator->validate($media, $constraint);
+
+        $this->assertNoViolation();
+    }
+
+    public function dataNonImageContentTypes()
+    {
+        return [
+            'contains image' => ['application/x-image-thing'],
+            'no slash at all' => ['notanimageatall'],
+            'plain text' => ['text/plain'],
+            'pdf' => ['application/pdf'],
+        ];
+    }
+
     public function dataMimeTypes()
     {
         return [

@@ -43,7 +43,7 @@ class MediaValidator extends ConstraintValidator
             }
         }
 
-        if (!preg_match('^image\/*^', $mimeType) || $mimeType === 'image/svg+xml') {
+        if (!str_starts_with((string) $mimeType, 'image/') || $mimeType === 'image/svg+xml') {
             return;
         }
 
