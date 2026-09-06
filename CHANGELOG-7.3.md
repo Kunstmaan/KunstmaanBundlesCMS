@@ -6,9 +6,23 @@ This changelog references the relevant changes (bug and security fixes) done in 
 To get the diff for a specific change, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/kunstmaan/KunstmaanBundlesCMS/compare/7.3.0...7.3.1
 
+## 7.3.2 / 2026-09-06
+
+* [MediaBundle] Compare the image mime type case insensitively [#3562](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3562) ([@acrobat](https://github.com/acrobat))
+* [FormBundle] Remove duplicate image extensions from the upload allow list [#3561](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3561) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Fix image mime type check in the media validator [#3560](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3560) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Fix removal of empty media folders [#3559](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3559) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Harden the bulk upload file name handling [#3558](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3558) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Use phpstan symfony plugin [#3556](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3556) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Fix incorrect inline phpdoc notation and remove reduntant phpdoc typehints [#3555](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3555) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Remove outdated bc-layers [#3554](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3554) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Fix incorrect phdoc types [#3553](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3553) ([@acrobat](https://github.com/acrobat))
+* [AllBundles] Fix newly introduced codestyle issues [#3552](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3552) ([@acrobat](https://github.com/acrobat))
+* [MediaBundle] Security fix [GHSA-p279-5wcv-45vq](https://github.com/Kunstmaan/KunstmaanBundlesCMS/security/advisories/GHSA-p279-5wcv-45vq) [182ca36](https://github.com/Kunstmaan/KunstmaanBundlesCMS/commit/182ca36de8714fc6192149b96a07255de54e285c) ([@acrobat](https://github.com/acrobat))
+
 ## 7.3.1 / 2026-07-27
 
-* [FormBundle] Security fix [GHSA-j376-w3x3-q674](https://github.com/advisories/GHSA-j376-w3x3-q674) [3c25383](https://github.com/Kunstmaan/KunstmaanBundlesCMS/commit/3c253839429739bab01d9732cbc206534cfbdc7a) ([@acrobat](https://github.com/acrobat))
+* [FormBundle] Security fix [GHSA-j376-w3x3-q674](https://github.com/Kunstmaan/KunstmaanBundlesCMS/security/advisories/GHSA-j376-w3x3-q674) [3c25383](https://github.com/Kunstmaan/KunstmaanBundlesCMS/commit/3c253839429739bab01d9732cbc206534cfbdc7a) ([@acrobat](https://github.com/acrobat))
 * [AllBundles] Backport Symfony 7.4 deprecation fixes [#3535](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/3535) ([@acrobat](https://github.com/acrobat))
 
 ## 7.3.0 / 2025-02-16
