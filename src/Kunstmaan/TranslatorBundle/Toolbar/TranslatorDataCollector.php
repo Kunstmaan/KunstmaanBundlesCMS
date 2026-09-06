@@ -42,10 +42,10 @@ class TranslatorDataCollector extends AbstractDataCollector
 
         $options = [
             'filter_columnname' => [
-                'keyword',
+                1 => 'keyword',
             ],
             'filter_uniquefilterid' => [
-                1,
+                1 => 1,
             ],
             'filter_comparator_1' => 'equals',
             'filter' => 'filter',

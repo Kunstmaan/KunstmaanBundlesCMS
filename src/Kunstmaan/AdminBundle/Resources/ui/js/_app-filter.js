@@ -134,6 +134,11 @@ kunstmaanbundles.filter = (function($, window, undefined) {
             }
         });
 
+        // Key the column name and the unique id on the unique id itself, so both stay linked
+        // when the query parameters get reordered (eg. the querysort feature of Varnish).
+        $el.attr('name', 'filter_columnname[' + uniqueid + ']');
+        $el.parents('.js-filter-line').find('.js-unique-filter-id').attr('name', 'filter_uniquefilterid[' + uniqueid + ']');
+
         $el.parents('.js-filter-line').find('.js-filter-options').find('input:not(.js-unique-filter-id), select').each(function() {
             var name = $(this).attr('name');
 

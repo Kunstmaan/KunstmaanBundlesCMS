@@ -28,7 +28,7 @@
                     {% for columnname, value in filter.currentfilters %}
                         <div class="js-filter-line app__filter__line">
                             <div class="form-group">
-                                <select class="js-filter-select js-filter-dummy form-control" name="filter_columnname[]">
+                                <select class="js-filter-select js-filter-dummy form-control" name="filter_columnname[{{ value.uniqueid }}]">
                                     {% for defcolumnname, defvalue in filter.filterdefinitions %}
                                     {% if defvalue['filtername'] is defined %}
                                         {% set filtername = defvalue['filtername'] %}
@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="hidden" name="filter_uniquefilterid[]" class="js-unique-filter-id" value="{{value.uniqueid}}">
+                                <input type="hidden" name="filter_uniquefilterid[{{ value.uniqueid }}]" class="js-unique-filter-id" value="{{value.uniqueid}}">
                             </div>
 
                             <div class="form-group">
