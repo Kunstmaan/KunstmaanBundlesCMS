@@ -4,7 +4,10 @@ namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
 use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
 use OpenSpout\Common\Entity\Row;
-use OpenSpout\Reader\Common\Creator\ReaderFactory;
+use OpenSpout\Reader\CSV\Reader as CSVReader;
+use OpenSpout\Reader\ODS\Reader as ODSReader;
+use OpenSpout\Reader\ReaderInterface;
+use OpenSpout\Reader\XLSX\Reader as XLSXReader;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
@@ -36,7 +39,7 @@ class Importer
         }
 
         $filename = $file->getFilename();
-        list($domain, $locale, $extension) = explode('.', $filename);
+        [$domain, $locale, $extension] = explode('.', $filename);
 
         if (!isset($this->loaders[$extension]) || !$this->loaders[$extension] instanceof \Symfony\Component\Translation\Loader\LoaderInterface) {
             throw new \Exception(sprintf('Requested loader for extension .%s isnt set', $extension));
@@ -81,10 +84,10 @@ class Importer
         $requiredHeaders = array_merge($headers, $locales);
 
         try {
-            $reader = ReaderFactory::createFromFileByMimeType($file);
+            $reader = $this->createReaderFromFileByMimeType($file);
             $reader->open($file);
         } catch (\Exception $e) {
-            throw new LogicException('Format has to be either xlsx, ods or cvs');
+            throw new LogicException('Format has to be either xlsx, ods or cvs', 0, $e);
         }
         $sheets = $reader->getSheetIterator();
 
@@ -158,5 +161,17 @@ class Importer
     public function addLoader($format, LoaderInterface $loader)
     {
         $this->loaders[$format] = $loader;
+    }
+
+    private function createReaderFromFileByMimeType(string $path): ReaderInterface
+    {
+        $mimeType = mime_content_type($path);
+
+        return match ($mimeType) {
+            'application/csv', 'text/csv', 'text/plain' => new CSVReader(),
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => new XLSXReader(),
+            'application/vnd.oasis.opendocument.spreadsheet' => new ODSReader(),
+            default => throw new \RuntimeException(sprintf('No readers supporting the given type: "%s"', $mimeType)),
+        };
     }
 }
