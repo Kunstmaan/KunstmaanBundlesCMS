@@ -28,6 +28,7 @@ class MediaValidator extends ConstraintValidator
         }
 
         $mimeType = $value->getContentType();
+        $normalizedMimeType = strtolower((string) $mimeType);
 
         if ($constraint->mimeTypes) {
             $mimeTypes = (array) $constraint->mimeTypes;
@@ -43,7 +44,7 @@ class MediaValidator extends ConstraintValidator
             }
         }
 
-        if (!str_starts_with((string) $mimeType, 'image/') || $mimeType === 'image/svg+xml') {
+        if (!str_starts_with($normalizedMimeType, 'image/') || $normalizedMimeType === 'image/svg+xml') {
             return;
         }
 

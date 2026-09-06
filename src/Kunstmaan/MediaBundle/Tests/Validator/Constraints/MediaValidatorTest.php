@@ -109,6 +109,60 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
+    /**
+     * The allowed mime types are compared case insensitively, but the image check below it was not,
+     * so an uppercase content type passed the allow list and then skipped the dimension check.
+     *
+     * @dataProvider dataUppercaseImageContentTypes
+     */
+    public function testDimensionsAreCheckedRegardlessOfContentTypeCase(string $contentType)
+    {
+        $constraint = new Media(['minWidth' => 200]);
+        $media = (new MediaObject())
+            ->setMetadataValue('original_width', 100)
+            ->setMetadataValue('original_height', 100)
+            ->setContentType($contentType);
+
+        $this->validator->validate($media, $constraint);
+
+        $this->buildViolation($constraint->minWidthMessage)
+            ->setParameter('{{ width }}', 100)
+            ->setParameter('{{ min_width }}', 200)
+            ->setCode(Media::TOO_NARROW_ERROR)
+            ->assertRaised();
+    }
+
+    public function dataUppercaseImageContentTypes()
+    {
+        return [
+            'fully uppercase' => ['IMAGE/PNG'],
+            'uppercase type' => ['IMAGE/png'],
+            'mixed case' => ['Image/Jpeg'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataSvgContentTypes
+     */
+    public function testSvgIsNotTestedForDimensionsRegardlessOfCase(string $contentType)
+    {
+        $constraint = new Media(['minHeight' => 100]);
+        $media = (new MediaObject())->setContentType($contentType);
+
+        $this->validator->validate($media, $constraint);
+
+        $this->assertNoViolation();
+    }
+
+    public function dataSvgContentTypes()
+    {
+        return [
+            'lowercase' => ['image/svg+xml'],
+            'uppercase' => ['IMAGE/SVG+XML'],
+            'mixed case' => ['Image/Svg+Xml'],
+        ];
+    }
+
     public function dataMimeTypes()
     {
         return [
