@@ -196,13 +196,14 @@ class FileHandler extends AbstractMediaHandler
             $adapter->delete($fileKey);
         }
 
-        // Remove the files containing folder if there's nothing left
+        // Remove the files containing folder if there's nothing left.
         $folderPath = $this->getFileFolderPath($media);
-        if ($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
-            $allMyKeys = $adapter->keys();
-            $everythingfromdir = preg_grep('/' . $folderPath, $allMyKeys);
+        if ('' !== $folderPath && $adapter->isDirectory($folderPath)) {
+            $remainingKeys = array_filter($adapter->keys(), static function ($key) use ($folderPath) {
+                return str_starts_with($key, $folderPath);
+            });
 
-            if (\count($everythingfromdir) === 1) {
+            if ([] === $remainingKeys) {
                 $adapter->delete($folderPath);
             }
         }
@@ -299,6 +300,8 @@ class FileHandler extends AbstractMediaHandler
 
     private function getFileFolderPath(Media $media): string
     {
-        return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
+        $uuid = (string) $media->getUuid();
+
+        return '' === $uuid ? '' : $uuid . '/';
     }
 }
