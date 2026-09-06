@@ -35,7 +35,6 @@ class MediaControllerTest extends TestCase
     private function getSafeUploadFileName(string $fileName): ?string
     {
         $method = new \ReflectionMethod(MediaController::class, 'getSafeUploadFileName');
-        $method->setAccessible(true);
 
         return $method->invoke($this->controller, $fileName);
     }

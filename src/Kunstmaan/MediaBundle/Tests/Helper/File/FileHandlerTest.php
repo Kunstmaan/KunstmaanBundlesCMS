@@ -120,7 +120,6 @@ class FileHandlerTest extends TestCase
         $media->setOriginalFilename('My Photo.JPG');
 
         $method = new \ReflectionMethod(FileHandler::class, 'getFileFolderPath');
-        $method->setAccessible(true);
 
         $this->assertSame('abc123/', $method->invoke($this->object, $media));
     }
@@ -131,7 +130,6 @@ class FileHandlerTest extends TestCase
         $media->setOriginalFilename('orphan.jpg');
 
         $method = new \ReflectionMethod(FileHandler::class, 'getFileFolderPath');
-        $method->setAccessible(true);
 
         $this->assertSame('', $method->invoke($this->object, $media));
     }
