@@ -86,9 +86,45 @@ kunstmaan_media:
     enable_pdf_preview:   false
     blacklisted_extensions:
 
+        # Files with one of these extensions are stored as .txt. Matched case-insensitively.
         # Defaults:
         - php
+        - php3
+        - php4
+        - php5
+        - php6
+        - php7
+        - php8
+        - phps
+        - phpt
+        - pht
+        - phtm
+        - phtml
+        - phar
+        - inc
         - htaccess
+        - htpasswd
+        - htgroup
+        - shtml
+        - shtm
+        - cgi
+        - pl
+        - py
+        - rb
+        - sh
+        - asp
+        - aspx
+        - ashx
+        - asmx
+        - ascx
+        - jsp
+        - jspx
+        - cfm
+        - cfml
+
+    # Optional strict allow-list of media extensions. When empty (default) only the
+    # blacklist above is applied. The blacklist is always applied on top of this list.
+    allowed_extensions:          []
 ```
 
 ## MediaPagePartBundle
