@@ -89,7 +89,7 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
      */
     public function testDimensionsAreNotCheckedForNonImages(string $contentType)
     {
-        $constraint = new Media(['minWidth' => 200]);
+        $constraint = new Media(minWidth: 200);
         $media = (new MediaObject())
             ->setMetadataValue('original_width', 100)
             ->setMetadataValue('original_height', 100)
@@ -118,7 +118,7 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
      */
     public function testDimensionsAreCheckedRegardlessOfContentTypeCase(string $contentType)
     {
-        $constraint = new Media(['minWidth' => 200]);
+        $constraint = new Media(minWidth: 200);
         $media = (new MediaObject())
             ->setMetadataValue('original_width', 100)
             ->setMetadataValue('original_height', 100)
@@ -147,7 +147,7 @@ class MediaValidatorTest extends ConstraintValidatorTestCase
      */
     public function testSvgIsNotTestedForDimensionsRegardlessOfCase(string $contentType)
     {
-        $constraint = new Media(['minHeight' => 100]);
+        $constraint = new Media(minHeight: 100);
         $media = (new MediaObject())->setContentType($contentType);
 
         $this->validator->validate($media, $constraint);
