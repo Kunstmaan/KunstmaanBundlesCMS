@@ -9,6 +9,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -153,6 +154,12 @@ final class MediaController extends AbstractController
         } else {
             $fileName = \uniqid('file_', false);
         }
+
+        $fileName = $this->getSafeUploadFileName((string) $fileName);
+        if (null === $fileName) {
+            return $this->returnJsonError('107', 'Invalid file name');
+        }
+
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
         $chunk = 0;
@@ -255,6 +262,36 @@ final class MediaController extends AbstractController
         );
 
         return $response;
+    }
+
+    /**
+     * Strip any path information from a client supplied file name and normalise what is left.
+     *
+     * @return string|null The safe file name, or null when nothing usable remains
+     */
+    private function getSafeUploadFileName(string $fileName): ?string
+    {
+        $fileName = str_replace(['\\', "\0"], '', basename($fileName));
+
+        $parts = pathinfo($fileName);
+        $safeName = $this->container->get('kunstmaan_utilities.slugifier')->slugify($parts['filename'] ?? '');
+
+        if ('' === $safeName) {
+            return null;
+        }
+
+        if (isset($parts['extension']) && '' !== $parts['extension']) {
+            $safeName .= '.' . strtolower($parts['extension']);
+        }
+
+        return $safeName;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
+        ] + parent::getSubscribedServices();
     }
 
     private function returnJsonError($code, $message)
