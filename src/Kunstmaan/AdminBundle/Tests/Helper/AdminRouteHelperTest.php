@@ -18,6 +18,10 @@ class AdminRouteHelperTest extends TestCase
 
     protected static $ADMIN_URL = '/en/%s/nodes';
 
+    protected static $ADMIN_URL_WITHOUT_LOCALE = '/%s/nodes';
+
+    protected static $ADMIN_URL_WITH_FRONT_CONTROLLER = '/index.php/en/%s/nodes';
+
     protected static $PREVIEW_ADMIN_URL = '/en/%s/preview/blog/page/1';
 
     /**
@@ -31,6 +35,34 @@ class AdminRouteHelperTest extends TestCase
 
         $adminRouteHelper = $this->getAdminRouteHelper(self::$ALTERNATIVE_ADMIN_KEY);
         $result = $adminRouteHelper->isAdminRoute(sprintf(self::$ADMIN_URL, self::$ALTERNATIVE_ADMIN_KEY));
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @covers \Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
+     */
+    public function testIsAdminRouteReturnsTrueWhenAdminUrlWithoutLocale()
+    {
+        $adminRouteHelper = $this->getAdminRouteHelper(self::$ADMIN_KEY);
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$ADMIN_URL_WITHOUT_LOCALE, self::$ADMIN_KEY));
+        $this->assertTrue($result);
+
+        $adminRouteHelper = $this->getAdminRouteHelper(self::$ALTERNATIVE_ADMIN_KEY);
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$ADMIN_URL_WITHOUT_LOCALE, self::$ALTERNATIVE_ADMIN_KEY));
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @covers \Kunstmaan\AdminBundle\Helper\AdminRouteHelper::isAdminRoute
+     */
+    public function testIsAdminRouteReturnsTrueWhenAdminUrlWithFrontController()
+    {
+        $adminRouteHelper = $this->getAdminRouteHelper(self::$ADMIN_KEY);
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$ADMIN_URL_WITH_FRONT_CONTROLLER, self::$ADMIN_KEY));
+        $this->assertTrue($result);
+
+        $adminRouteHelper = $this->getAdminRouteHelper(self::$ALTERNATIVE_ADMIN_KEY);
+        $result = $adminRouteHelper->isAdminRoute(sprintf(self::$ADMIN_URL_WITH_FRONT_CONTROLLER, self::$ALTERNATIVE_ADMIN_KEY));
         $this->assertTrue($result);
     }
 

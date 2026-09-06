@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminRouteHelper
 {
-    protected static $ADMIN_MATCH_REGEX = '/^\/(app_[a-zA-Z]+\.php\/)?([a-zA-Z_-]{2,5}\/)?%s\/(.*)/';
+    protected static $ADMIN_MATCH_REGEX = '/^\/(?:index\.php\/)?(?:[a-zA-Z_-]{2,5}\/)?%s\//';
 
     /**
      * @var string
@@ -41,14 +41,8 @@ class AdminRouteHelper
             return false;
         }
 
-        preg_match(sprintf(self::$ADMIN_MATCH_REGEX, $this->adminKey), $url, $matches);
-
         // Check if path is part of admin area
-        if (\count($matches) === 0) {
-            return false;
-        }
-
-        return true;
+        return preg_match(sprintf(self::$ADMIN_MATCH_REGEX, $this->adminKey), $url) === 1;
     }
 
     /**
