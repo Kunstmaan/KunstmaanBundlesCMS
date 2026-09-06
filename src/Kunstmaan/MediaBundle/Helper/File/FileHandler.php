@@ -42,6 +42,14 @@ class FileHandler extends AbstractMediaHandler
     private $blacklistedExtensions = [];
 
     /**
+     * When not empty this acts as a strict allow list, files with an extension that is not in this
+     * list will be converted to txt.
+     *
+     * @var array
+     */
+    private $allowedExtensions = [];
+
+    /**
      * @var SlugifierInterface
      */
     private $slugifier;
@@ -67,6 +75,14 @@ class FileHandler extends AbstractMediaHandler
     public function setBlacklistedExtensions(array $blacklistedExtensions)
     {
         $this->blacklistedExtensions = $blacklistedExtensions;
+    }
+
+    /**
+     * Inject the allowed extensions, when empty only the blacklist is applied.
+     */
+    public function setAllowedExtensions(array $allowedExtensions)
+    {
+        $this->allowedExtensions = $allowedExtensions;
     }
 
     /**
@@ -281,21 +297,46 @@ class FileHandler extends AbstractMediaHandler
         $filename = $media->getOriginalFilename();
         $filename = str_replace(['/', '\\', '%'], '', $filename);
 
-        if (!empty($this->blacklistedExtensions)) {
-            $filename = preg_replace('/\.(' . implode('|', $this->blacklistedExtensions) . ')$/', '.txt', $filename);
+        $parts = pathinfo($filename);
+        $basename = $this->slugifier->slugify($parts['filename']);
+
+        if (!\array_key_exists('extension', $parts)) {
+            return sprintf('%s/%s', $media->getUuid(), $basename);
         }
 
-        $parts = pathinfo($filename);
-        $filename = $this->slugifier->slugify($parts['filename']);
-        if (\array_key_exists('extension', $parts)) {
-            $filename .= '.' . strtolower($parts['extension']);
+        // Normalise the extension before checking it. The file is always stored with a lowercased
+        // extension, so checking the extension as-is would let "shell.pHp" through the blacklist
+        // and still write it to disk as "shell.php".
+        $extension = strtolower($parts['extension']);
+
+        if (!$this->isAllowedExtension($extension)) {
+            $extension = 'txt';
         }
 
         return sprintf(
-            '%s/%s',
+            '%s/%s.%s',
             $media->getUuid(),
-            $filename
+            $basename,
+            $extension
         );
+    }
+
+    /**
+     * @param string $extension A lowercased file extension
+     */
+    private function isAllowedExtension(string $extension): bool
+    {
+        // The blacklist is applied even when an allow list is configured, so a project can never
+        // accidentally re-enable an executable extension through the allow list.
+        if (\in_array($extension, array_map('strtolower', $this->blacklistedExtensions), true)) {
+            return false;
+        }
+
+        if ([] === $this->allowedExtensions) {
+            return true;
+        }
+
+        return \in_array($extension, array_map('strtolower', $this->allowedExtensions), true);
     }
 
     private function getFileFolderPath(Media $media): string
