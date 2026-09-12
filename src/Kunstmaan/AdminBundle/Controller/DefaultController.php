@@ -57,6 +57,8 @@ final class DefaultController extends AbstractController
     #[Route(path: '/adminindex', name: 'KunstmaanAdminBundle_homepage_admin')]
     public function editIndexAction(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         $em = $this->managerRegistry->getManager();
 
         $dashboardConfiguration = $em
