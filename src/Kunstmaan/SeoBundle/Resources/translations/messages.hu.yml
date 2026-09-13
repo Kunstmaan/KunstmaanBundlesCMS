@@ -22,13 +22,13 @@ seo:
         section: OG cikk szekció
     twitter:
       title: Cím
-      title_info_text: A Twitter kártyád címe. Háttérbe szorítja a SEO Meta címet
+      title_info_text: Az X (Twitter) kártyád címe. Háttérbe szorítja a SEO Meta címet
       description: Leírás
-      description_info_text: A twitter kártyád leírása. Háttérbe szorítja a SEO Meta leírást
+      description_info_text: Az X (Twitter) kártyád leírása. Háttérbe szorítja a SEO Meta leírást
       sitehandle: Oldal kezelője
-      sitehandle_info_text: A weblap tulajdonos Twitter kezelője. Ez az érték szükséges ahhoz, hogy működjenek a twitter kártyák.
+      sitehandle_info_text: A weblap tulajdonos X (Twitter) kezelője. Ez az érték szükséges ahhoz, hogy működjenek az X (Twitter) kártyák.
       creatorhandle: Oldal létrehozója
-      creatorhandle_info_text: A page publisher Twitter handle-je.
+      creatorhandle_info_text: A page publisher X (Twitter) handle-je.
       image: Kép
     robots:
       noindex: No index
@@ -50,7 +50,7 @@ seo:
         label: Extra meta adat
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter
+    twittercards: X (Twitter)
   tab:
     seo:
       title: SEO

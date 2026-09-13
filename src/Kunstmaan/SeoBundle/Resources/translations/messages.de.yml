@@ -22,11 +22,11 @@ seo:
         section: OG Artikelbereich
     twitter:
       title: Titel
-      title_info_text: Der Titel der Twitter-Karte. Falls nicht angeben, wird der SEO Titel verwendet.
+      title_info_text: Der Titel der X (Twitter)-Karte. Falls nicht angeben, wird der SEO Titel verwendet.
       description: Beschreibung
-      description_info_text: Die Beschreibung der Twitter-Karte. Falls nicht angeben, wird die SEO Beschreibung verwendet
+      description_info_text: Die Beschreibung der X (Twitter)-Karte. Falls nicht angeben, wird die SEO Beschreibung verwendet
       sitehandle: Seiten-@-Benutzername
-      sitehandle_info_text: Twitter-@-Nutzername der Website-Organisation. Dieser Wert ist erforderlich, damit Twitter-Karten funktionieren.
+      sitehandle_info_text: X (Twitter)-@-Nutzername der Website-Organisation. Dieser Wert ist erforderlich, damit X (Twitter)-Karten funktionieren.
       creatorhandle: Ersteller-@-Benutzername
       creatorhandle_info_text: '@-Benutzername des Veröffentlichers'
       image: Bild
@@ -50,7 +50,7 @@ seo:
         label: Extra Metadaten
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter-Karten
+    twittercards: X (Twitter)-Karten
   tab:
     seo:
       title: SEO
