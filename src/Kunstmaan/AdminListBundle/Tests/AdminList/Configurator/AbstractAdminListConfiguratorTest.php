@@ -17,6 +17,7 @@ use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class AbstractAdminListConfiguratorTest extends TestCase
 {
@@ -488,6 +489,61 @@ class AbstractAdminListConfiguratorTest extends TestCase
         ;
 
         $abstractAdminListConfMock->bindRequest($requestMock);
+    }
+
+    /**
+     * @dataProvider orderByProvider
+     */
+    public function testBindRequestOnlyAllowsSortableFieldsAsOrderBy(string $orderBy, string $expected)
+    {
+        $request = new Request(['orderBy' => $orderBy], [], ['_route' => 'testroute']);
+        $request->setSession(new Session(new MockArraySessionStorage()));
+
+        $this->adminListConfigurator->buildFields();
+        $this->adminListConfigurator->bindRequest($request);
+
+        $this->assertSame($expected, $this->adminListConfigurator->getOrderBy());
+        $this->assertSame($expected, $request->getSession()->get('listconfig_testroute')['orderBy']);
+    }
+
+    public function orderByProvider(): iterable
+    {
+        yield 'sortable field' => ['hello', 'hello'];
+        yield 'other sortable field' => ['world', 'world'];
+        yield 'empty' => ['', ''];
+        yield 'unknown field' => ['password', ''];
+        yield 'sql injection' => ['hello, (SELECT SLEEP(5))', ''];
+        yield 'sql injection with closing bracket' => ['hello) DESC, (SELECT 1]', ''];
+        yield 'quote' => ["hello' OR 1=1", ''];
+    }
+
+    public function testBindRequestSanitizesOrderByFromSession()
+    {
+        $session = new Session(new MockArraySessionStorage());
+        $session->set('listconfig_testroute', ['page' => 1, 'orderBy' => 'hello; DROP TABLE users', 'orderDirection' => 'DESC']);
+
+        $request = new Request([], [], ['_route' => 'testroute']);
+        $request->setSession($session);
+
+        $this->adminListConfigurator->buildFields();
+        $this->adminListConfigurator->bindRequest($request);
+
+        $this->assertSame('', $this->adminListConfigurator->getOrderBy());
+        $this->assertSame('DESC', $this->adminListConfigurator->getOrderDirection());
+    }
+
+    public function testBindRequestKeepsValidOrderByFromSession()
+    {
+        $session = new Session(new MockArraySessionStorage());
+        $session->set('listconfig_testroute', ['page' => 1, 'orderBy' => 'world', 'orderDirection' => 'ASC']);
+
+        $request = new Request([], [], ['_route' => 'testroute']);
+        $request->setSession($session);
+
+        $this->adminListConfigurator->buildFields();
+        $this->adminListConfigurator->bindRequest($request);
+
+        $this->assertSame('world', $this->adminListConfigurator->getOrderBy());
     }
 
     public function testGetPage()
