@@ -744,8 +744,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $adminListName = 'listconfig_' . $request->attributes->get('_route');
 
         $this->page = $request->query->getInt('page', 1);
-        // Allow alphanumeric, _ & . in order by parameter!
-        $this->orderBy = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
+        $this->orderBy = $this->sanitizeOrderBy($request->query->get('orderBy', ''));
         $this->orderDirection = $request->query->getAlpha('orderDirection');
 
         // there is a session and the filter param is not set
@@ -756,7 +755,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             }
 
             if (!$query->has('orderBy')) {
-                $this->orderBy = $adminListSessionData['orderBy'];
+                $this->orderBy = $this->sanitizeOrderBy($adminListSessionData['orderBy'] ?? '');
             }
 
             if (!$query->has('orderDirection')) {
@@ -785,6 +784,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Only allow sorting on fields that were explicitly marked as sortable.
+     * The value is used unescaped in the ORDER BY clause of the query, so any
+     * value that is not a known sort field is discarded.
+     */
+    protected function sanitizeOrderBy($orderBy): string
+    {
+        if (!\is_string($orderBy) || $orderBy === '') {
+            return '';
+        }
+
+        // Allow alphanumeric, _ & . in order by parameter!
+        $orderBy = preg_replace('/[^a-zA-Z0-9_.]/', '', $orderBy);
+
+        if (!\in_array($orderBy, $this->getSortFields(), true)) {
+            return '';
+        }
+
+        return $orderBy;
     }
 
     /**
