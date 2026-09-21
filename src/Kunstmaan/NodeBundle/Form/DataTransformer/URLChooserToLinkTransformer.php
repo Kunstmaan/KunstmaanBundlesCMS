@@ -14,7 +14,7 @@ class URLChooserToLinkTransformer implements DataTransformerInterface
     {
     }
 
-    public function transform($value): array
+    public function transform(mixed $value): array
     {
         if (!$this->improvedUrlChooser) {
             return [
@@ -38,7 +38,7 @@ class URLChooserToLinkTransformer implements DataTransformerInterface
         ]);
     }
 
-    public function reverseTransform($value): ?string
+    public function reverseTransform(mixed $value): ?string
     {
         if (empty($value)) {
             return null;

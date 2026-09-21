@@ -56,7 +56,11 @@ class TagsListener
      */
     public function postUpdate(PostUpdateEventArgs $args)
     {
-        $this->postPersist($args);
+        $entity = $args->getObject();
+
+        if ($entity instanceof Taggable) {
+            $this->getTagManager()->saveTagging($entity);
+        }
     }
 
     public function postNodePersist(NodeEvent $event)
