@@ -105,13 +105,14 @@ class FilterBuilder
 
         $filterColumnNames = class_exists(InputBag::class) ? $request->query->all('filter_columnname') : $request->query->get('filter_columnname', []);
         $uniqueIds = class_exists(InputBag::class) ? $request->query->all('filter_uniquefilterid') : $request->query->get('filter_uniquefilterid', []);
-        $index = 0;
-        foreach ($filterColumnNames as $filterColumnName) {
-            $uniqueId = $uniqueIds[$index];
+        foreach ($filterColumnNames as $key => $filterColumnName) {
+            // The column names are keyed by the unique id of the filter they belong to, so both stay linked when the
+            // query parameters get reordered (eg. the querysort feature of Varnish). Urls in the legacy format, where
+            // both parameters were plain lists, are still matched on their position.
+            $uniqueId = $uniqueIds[$key] ?? $key;
             $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
             $this->currentFilters[] = $filter;
             $filter->bindRequest($request);
-            ++$index;
         }
     }
 

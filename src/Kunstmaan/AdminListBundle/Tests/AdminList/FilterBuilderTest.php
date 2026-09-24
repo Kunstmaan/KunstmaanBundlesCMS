@@ -119,5 +119,47 @@ class FilterBuilderTest extends TestCase
 
         $this->assertEquals($filterDef, $this->object->getFilterDefinitions());
         $this->assertCount(2, $this->object->getCurrentFilters());
+
+        $currentFilters = $this->object->getCurrentFilters();
+        $this->assertSame('column1', $currentFilters[0]->getColumnName());
+        $this->assertSame('1', $currentFilters[0]->getUniqueId());
+        $this->assertSame('column2', $currentFilters[1]->getColumnName());
+        $this->assertSame('2', $currentFilters[1]->getUniqueId());
+    }
+
+    public function testBindRequestFromQueryWithReorderedParameters()
+    {
+        // Query parameters can be reordered before they reach the application (eg. the querysort feature of
+        // Varnish), which should not change the filter a column name belongs to.
+        $queryData = [
+            'filter' => 'filter',
+            'filter_columnname' => [
+                2 => 'column2',
+                1 => 'column1',
+            ],
+            'filter_comparator_1' => 'equals',
+            'filter_comparator_2' => 'equals',
+            'filter_uniquefilterid' => [
+                1 => '1',
+                2 => '2',
+            ],
+            'filter_value_1' => 'value_1',
+            'filter_value_2' => 'value_2',
+        ];
+
+        $request = new Request($queryData);
+        $request->setSession($this->createMock(Session::class));
+
+        $this->object->add('column1', new StringFilterType('col1', 'e'), 'filter1Name', ['option1' => 'value1']);
+        $this->object->add('column2', new StringFilterType('col2', 'e'), 'filter2Name', ['option1' => 'value1']);
+
+        $this->object->bindRequest($request);
+
+        $currentFilters = $this->object->getCurrentFilters();
+        $this->assertCount(2, $currentFilters);
+        $this->assertSame('column2', $currentFilters[0]->getColumnName());
+        $this->assertSame('2', $currentFilters[0]->getUniqueId());
+        $this->assertSame('column1', $currentFilters[1]->getColumnName());
+        $this->assertSame('1', $currentFilters[1]->getUniqueId());
     }
 }
