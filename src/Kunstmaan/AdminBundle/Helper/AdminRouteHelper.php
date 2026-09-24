@@ -41,7 +41,9 @@ class AdminRouteHelper
             return false;
         }
 
-        preg_match(sprintf(self::$ADMIN_MATCH_REGEX, $this->adminKey), $url, $matches);
+        $path = rawurldecode(explode('?', $url, 2)[0]);
+
+        preg_match(sprintf(self::$ADMIN_MATCH_REGEX, $this->adminKey), $path, $matches);
 
         // Check if path is part of admin area
         if (\count($matches) === 0) {

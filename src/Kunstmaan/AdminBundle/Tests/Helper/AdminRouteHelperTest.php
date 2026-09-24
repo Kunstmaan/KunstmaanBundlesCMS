@@ -65,6 +65,29 @@ class AdminRouteHelperTest extends TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @dataProvider encodedUrlProvider
+     */
+    public function testIsAdminRouteMatchesTheDecodedPath(string $url, bool $expected)
+    {
+        $adminRouteHelper = $this->getAdminRouteHelper(self::$ADMIN_KEY);
+
+        $this->assertSame($expected, $adminRouteHelper->isAdminRoute($url));
+    }
+
+    public function encodedUrlProvider(): iterable
+    {
+        yield 'encoded admin key' => ['/%61dmin/nodes', true];
+        yield 'fully encoded admin key' => ['/%61%64%6d%69%6e/nodes', true];
+        yield 'encoded admin key with locale' => ['/en/%61dmin/nodes', true];
+        yield 'encoded admin key with front controller' => ['/app_dev.php/%61dmin/nodes', true];
+        yield 'encoded slash' => ['/en%2Fadmin/nodes', true];
+        yield 'query string' => ['/admin/nodes?foo=bar', true];
+        yield 'admin key only in query string' => ['/en/some_path?redirect=/admin/nodes', false];
+        yield 'double encoded admin key' => ['/%2561dmin/nodes', false];
+        yield 'encoded frontend url' => ['/en/%73ome_path/admin/nodes', false];
+    }
+
     public function testIsAdminRouteWorksWhenNoRequestInRequeststack()
     {
         $adminRouteHelper = new AdminRouteHelper(self::$ADMIN_KEY, new RequestStack());
