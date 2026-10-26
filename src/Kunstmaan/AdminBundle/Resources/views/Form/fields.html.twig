@@ -1,3 +1,7 @@
+{% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
+{% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
+{% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
+
 {# Widgets #}
 {% block choice_widget_expanded %}
     <div {{ block('widget_container_attributes') }}>
@@ -224,7 +228,6 @@
 
 {# Misc #}
 {% block datetime_widget %}
-    {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
     <div class="form-group date-time-group">
         {{ block('base_datetime_widget') }}
     </div>
@@ -232,7 +235,6 @@
 
 {% block date_widget %}
     <div class="date-widget">
-        {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
         {% if widget is defined and widget == 'single_text' %}
             <div class="js-datepicker" data-format="DD/MM/YYYY" data-reinit-js='["datepicker"]'>
                 {{ block('base_date_widget') }}
@@ -246,7 +248,6 @@
 
 {% block time_widget %}
     <div class="time-widget">
-        {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
         {% set type = 'text' %}
         {% if widget is defined and widget == 'single_text' %}
             <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>
