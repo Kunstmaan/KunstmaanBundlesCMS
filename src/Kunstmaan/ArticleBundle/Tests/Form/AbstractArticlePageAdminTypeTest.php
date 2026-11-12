@@ -37,7 +37,6 @@ class AbstractArticlePageAdminTypeTest extends TestCase
         $builder = $this->createMock(FormBuilder::class);
         $builder->expects($this->exactly(5))->method('add')->willReturn($builder);
 
-        /* @var FormBuilder $builder */
         $this->object->buildForm($builder, []);
     }
 }

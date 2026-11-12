@@ -47,6 +47,7 @@ class FormHandler implements FormHandlerInterface
     public function handleForm(FormPageInterface $page, Request $request, RenderContext $context)
     {
         $formBuilder = $this->formFactory->createBuilder(FormType::class);
+        /** @var \ArrayObject<array-key, FormSubmissionField> $fields */
         $fields = new \ArrayObject();
         $pageParts = $this->em->getRepository(PagePartRef::class)->getPageParts($page, $page->getFormElementsContext());
         foreach ($pageParts as $sequence => $pagePart) {
@@ -65,7 +66,6 @@ class FormHandler implements FormHandlerInterface
                 $formSubmission->setLang($request->getLocale());
                 $this->em->persist($formSubmission);
 
-                /* @var FormSubmissionField $field */
                 foreach ($fields as $field) {
                     $field->setSubmission($formSubmission);
                     $field->onValidPost($form, $formBuilder, $request, $this->container);
@@ -82,7 +82,9 @@ class FormHandler implements FormHandlerInterface
             }
         }
         $context['frontendform'] = $form->createView();
-        /* @deprecated frontendformobject view variable is deprecated in 7.2 and will be removed in 8.0. There is no replacement for this variable. */
+        /*
+         * @deprecated frontendformobject view variable is deprecated in 7.2 and will be removed in 8.0. There is no replacement for this variable.
+         */
         $context['frontendformobject'] = $form;
         $context['isSubmitted'] = $form->isSubmitted();
 

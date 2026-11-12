@@ -38,11 +38,9 @@ class CloneListener
         $originalEntity = $event->getEntity();
 
         if ($originalEntity instanceof AbstractEntity) {
-            /* @var Seo $seo */
             $seo = $this->em->getRepository(Seo::class)->findFor($originalEntity);
 
             if (!\is_null($seo)) {
-                /* @var Seo $clonedSeo */
                 $clonedSeo = $this->cloneHelper->deepCloneAndSave($seo);
                 $clonedSeo->setRef($event->getClonedEntity());
 

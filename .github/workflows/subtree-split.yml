@@ -19,19 +19,19 @@ jobs:
         name: Sync commits
         if: github.repository == 'Kunstmaan/KunstmaanBundlesCMS'
         steps:
-            -   uses: actions/checkout@v6
+            -   uses: actions/checkout@v7
                 with:
                     persist-credentials: false
                     fetch-depth: 0
 
-            -   uses: frankdejonge/use-github-token@1.1.0
+            -   uses: frankdejonge/use-github-token@1.1.1
                 with:
                     authentication: 'kunstmaanlabs:${{ secrets.SPLITTER_TOKEN }}'
                     user_name: 'Kunstmaan CMS'
                     user_email: 'cms@kunstmaan.be'
 
             -   name: Cache splitsh-lite
-                uses: actions/cache@v5.0.3
+                uses: actions/cache@v6.1.0
                 with:
                     path: |
                         ./splitsh

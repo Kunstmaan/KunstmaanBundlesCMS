@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class ChoicePagePartTest extends TestCase
 {
@@ -44,7 +43,6 @@ class ChoicePagePartTest extends TestCase
 
         $this->assertEquals(0, count($fields));
         $object->setErrorMessageRequired('invalid!');
-        /* @var FormBuilderInterface $formBuilder */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }

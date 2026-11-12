@@ -4,13 +4,9 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Result;
-use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -81,12 +77,10 @@ class AclHelperTest extends TestCase
             ->method('getConnection')
             ->will($this->returnValue($conn));
 
-        /* @var $conf Configuration */
         $conf = $this->getMockBuilder('Doctrine\ORM\Configuration')
             ->disableOriginalConstructor()
             ->getMock();
 
-        /* @var $strat QuoteStrategy */
         $strat = $this->getMockBuilder('Doctrine\ORM\Mapping\QuoteStrategy')
             ->disableOriginalConstructor()
             ->getMock();
@@ -111,7 +105,6 @@ class AclHelperTest extends TestCase
             ->method('getConfiguration')
             ->will($this->returnValue($conf));
 
-        /* @var $meta ClassMetadata */
         $meta = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')
             ->disableOriginalConstructor()
             ->getMock();
@@ -138,7 +131,6 @@ class AclHelperTest extends TestCase
 
     public function testApply()
     {
-        /* @var $queryBuilder QueryBuilder */
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -176,7 +168,6 @@ class AclHelperTest extends TestCase
 
         $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node');
 
-        /* @var $query Query */
         $query = $this->object->apply($queryBuilder, $permissionDef);
 
         $this->assertEquals(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
@@ -194,7 +185,6 @@ class AclHelperTest extends TestCase
 
     public function testApplyAnonymous()
     {
-        /* @var $queryBuilder QueryBuilder */
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -230,7 +220,6 @@ class AclHelperTest extends TestCase
 
         $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node');
 
-        /* @var $query Query */
         $query = $this->object->apply($queryBuilder, $permissionDef);
 
         $this->assertEquals(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
@@ -280,7 +269,6 @@ class AclHelperTest extends TestCase
             ->method('newHydrator')
             ->will($this->returnValue($hydrator));
 
-        /* @var $query NativeQuery */
         $query = new NativeQuery($this->em);
         $query->setSQL('SELECT * FROM table');
         $query->setResultSetMapping(new Query\ResultSetMapping());
@@ -291,7 +279,6 @@ class AclHelperTest extends TestCase
 
         $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
-        /* @var $result array */
         $result = $this->object->getAllowedEntityIds($permissionDef);
 
         $this->assertEquals([1, 9], $result);

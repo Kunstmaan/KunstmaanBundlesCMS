@@ -53,16 +53,13 @@ class FormHelper
                 $this->getRecursiveErrorMessages($formView, $errors);
             }
         } else {
+            /** @var \Traversable<FormError> $viewErrors */
             $viewErrors = $formViews->vars['errors'];
 
             if (\is_object($viewErrors) && $viewErrors instanceof \Traversable) {
                 $viewErrors = iterator_to_array($viewErrors);
             }
 
-            /**
-             * @var FormView
-             * @var FormError $error
-             */
             foreach ($viewErrors as $error) {
                 $template = $error->getMessageTemplate();
                 $parameters = $error->getMessageParameters();

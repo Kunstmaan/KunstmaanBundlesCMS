@@ -19,7 +19,6 @@ class WysiwygTypeTest extends TypeTestCase
         $builder = $this->createMock(FormBuilder::class);
         $builder->expects($this->once())->method('addModelTransformer')->willReturn($builder);
 
-        /* @var FormBuilder $builder */
         $wysiwygType->buildForm($builder, []);
 
         $this->assertEquals(TextareaType::class, $wysiwygType->getParent());

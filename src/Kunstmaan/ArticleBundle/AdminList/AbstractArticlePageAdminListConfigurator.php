@@ -104,7 +104,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function getEditUrlFor($item)
     {
-        /* @var Node $node */
+        /** @var Node $node */
         $node = $item->getNode();
 
         return [
@@ -122,7 +122,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function getDeleteUrlFor($item)
     {
-        /* @var Node $node */
+        /** @var Node $node */
         $node = $item->getNode();
 
         return [

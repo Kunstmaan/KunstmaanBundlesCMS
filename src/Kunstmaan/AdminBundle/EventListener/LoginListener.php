@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use Psr\Log\LoggerInterface;
@@ -34,11 +33,10 @@ class LoginListener
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        /* @var BaseUser $user */
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            $this->logger->info(sprintf('%s successfully logged in to the cms', method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername()));
+            $this->logger->info(sprintf('%s successfully logged in to the cms', $user->getUserIdentifier()));
             $this->versionChecker->periodicallyCheck();
         }
     }

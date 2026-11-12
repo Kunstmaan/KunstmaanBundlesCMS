@@ -36,7 +36,6 @@ use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Helper\PageCloningHelper;
 use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
-use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -179,7 +178,6 @@ final class NodeAdminController extends AbstractController
     public function copyFromOtherLanguageAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
@@ -191,7 +189,6 @@ final class NodeAdminController extends AbstractController
         $myLanguagePage = $this->container->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($otherLanguagePage);
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)
             ->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -224,7 +221,6 @@ final class NodeAdminController extends AbstractController
         }
 
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
@@ -235,7 +231,6 @@ final class NodeAdminController extends AbstractController
         $myLanguagePage = $this->container->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($otherLanguagePage);
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)
             ->addDraftNodeVersionFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -264,19 +259,17 @@ final class NodeAdminController extends AbstractController
     public function createEmptyPageAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
         $entityName = $node->getRefEntityName();
-        /* @var HasNodeInterface $myLanguagePage */
+        /** @var HasNodeInterface $myLanguagePage */
         $myLanguagePage = new $entityName();
         $myLanguagePage->setTitle('New page');
 
         $this->em->persist($myLanguagePage);
         $this->em->flush();
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository(NodeTranslation::class)
             ->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -296,7 +289,6 @@ final class NodeAdminController extends AbstractController
     public function publishAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
@@ -312,7 +304,6 @@ final class NodeAdminController extends AbstractController
     public function unPublishAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
@@ -329,7 +320,6 @@ final class NodeAdminController extends AbstractController
     {
         $this->init($request);
 
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
@@ -350,7 +340,6 @@ final class NodeAdminController extends AbstractController
     public function deleteAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
@@ -403,7 +392,6 @@ final class NodeAdminController extends AbstractController
         }
 
         $this->init($request);
-        /* @var Node $parentNode */
         $originalNode = $this->em->getRepository(Node::class)
             ->find($id);
 
@@ -430,7 +418,6 @@ final class NodeAdminController extends AbstractController
         $this->em->persist($newPage);
         $this->em->flush();
 
-        /* @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor(
             $newPage,
             $this->locale,
@@ -488,7 +475,6 @@ final class NodeAdminController extends AbstractController
     public function revertAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
@@ -499,19 +485,15 @@ final class NodeAdminController extends AbstractController
             throw new \InvalidArgumentException('No version was specified');
         }
 
-        /* @var NodeVersionRepository $nodeVersionRepo */
         $nodeVersionRepo = $this->em->getRepository(NodeVersion::class);
-        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $nodeVersionRepo->find($version);
 
         if (\is_null($nodeVersion)) {
             throw new \InvalidArgumentException('Version does not exist');
         }
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $page = $nodeVersion->getRef($this->em);
-        /* @var HasNodeInterface $clonedPage */
         $clonedPage = $this->container->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($page);
         $newNodeVersion = $nodeVersionRepo->createNodeVersionFor(
@@ -556,7 +538,7 @@ final class NodeAdminController extends AbstractController
     public function addAction(Request $request, $id): RedirectResponse
     {
         $this->init($request);
-        /* @var Node $parentNode */
+        /** @var Node $parentNode */
         $parentNode = $this->em->getRepository(Node::class)->find($id);
 
         // Check with Acl
@@ -570,7 +552,7 @@ final class NodeAdminController extends AbstractController
         $newPage = $this->createNewPage($request, $type);
         $newPage->setParent($parentPage);
 
-        /* @var Node $nodeNewPage */
+        /** @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository(Node::class)
             ->createNodeFor($newPage, $this->locale, $this->user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation(
@@ -614,7 +596,7 @@ final class NodeAdminController extends AbstractController
 
         $newPage = $this->createNewPage($request, $type);
 
-        /* @var Node $nodeNewPage */
+        /** @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository(Node::class)
             ->createNodeFor($newPage, $this->locale, $this->user);
         $nodeTranslation = $nodeNewPage->getNodeTranslation(
@@ -648,7 +630,7 @@ final class NodeAdminController extends AbstractController
         $changeParents = $request->request->all('parent');
 
         foreach ($nodeIds as $id) {
-            /* @var Node $node */
+            /** @var Node $node */
             $node = $this->em->getRepository(Node::class)->find($id);
             $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
             $nodes[] = $node;
@@ -665,7 +647,7 @@ final class NodeAdminController extends AbstractController
                 $this->em->flush();
             }
 
-            /* @var NodeTranslation $nodeTranslation */
+            /** @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $node->getNodeTranslation($this->locale, true);
 
             if ($nodeTranslation) {
@@ -703,7 +685,7 @@ final class NodeAdminController extends AbstractController
     public function editAction(Request $request, $id, $subaction): Response
     {
         $this->init($request);
-        /* @var Node $node */
+        /** @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
         if (!$node) {
             throw $this->createNotFoundException(sprintf('No node found for id "%s"', $id));
@@ -726,8 +708,6 @@ final class NodeAdminController extends AbstractController
         $draftNodeVersion = $nodeTranslation->getDraftNodeVersion();
         $nodeVersionIsLocked = false;
 
-        /* @var HasNodeInterface $page */
-        $page = null;
         $draft = ($subaction == 'draft');
         $saveAsDraft = $request->request->get('saveasdraft');
         if ((!$draft && !empty($saveAsDraft)) || ($draft && \is_null($draftNodeVersion))) {
@@ -912,7 +892,7 @@ final class NodeAdminController extends AbstractController
         $message = '';
         $this->init($request);
 
-        /* @var Node $node */
+        /** @var Node $node */
         $node = $this->em->getRepository(Node::class)->find($id);
 
         try {
@@ -966,8 +946,7 @@ final class NodeAdminController extends AbstractController
     ) {
         $publicPage = $this->container->get('kunstmaan_admin.clone.helper')
             ->deepCloneAndSave($page);
-        /* @var NodeVersion $publicNodeVersion */
-
+        /** @var NodeVersion $publicNodeVersion */
         $publicNodeVersion = $this->em->getRepository(
             NodeVersion::class
         )->createNodeVersionFor(
@@ -1026,7 +1005,7 @@ final class NodeAdminController extends AbstractController
         $locale,
         ArrayCollection $children,
     ) {
-        /* @var Node $childNode */
+        /** @var Node $childNode */
         foreach ($children as $childNode) {
             $childNodeTranslation = $childNode->getNodeTranslation(
                 $this->locale,
@@ -1069,7 +1048,7 @@ final class NodeAdminController extends AbstractController
      */
     private function createNewPage(Request $request, $type): HasNodeInterface
     {
-        /* @var HasNodeInterface $newPage */
+        /** @var HasNodeInterface $newPage */
         $newPage = new $type();
 
         $title = $request->request->get('title');

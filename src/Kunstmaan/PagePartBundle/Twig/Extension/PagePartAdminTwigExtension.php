@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
+use Symfony\Component\Form\FormView;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -33,7 +34,7 @@ final class PagePartAdminTwigExtension extends AbstractExtension
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
      * @param PagePartAdmin $ppAdmin      The pagepart admin to render
-     * @param Form          $form         The form
+     * @param FormView      $form         The form
      * @param array         $parameters   Additional variables passed to the template
      * @param string        $templateName
      *
@@ -55,18 +56,13 @@ final class PagePartAdminTwigExtension extends AbstractExtension
         ]));
     }
 
-    /**
-     * Get usesExtendedPagePartChooser.
-     */
     public function getUsesExtendedPagePartChooser(): bool
     {
         return $this->usesExtendedPagePartChooser;
     }
 
     /**
-     * Set usesExtendedPagePartChooser.
-     *
-     * @param bool the value to set
+     * @param bool $usesExtendedPagePartChooser
      */
     public function setUsesExtendedPagePartChooser($usesExtendedPagePartChooser)
     {

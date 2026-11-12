@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -51,7 +52,54 @@ class FileFormSubmissionFieldTest extends TestCase
         $object->file = $file;
         $safeName = $object->getSafeFileName();
 
-        $this->assertStringStartsWith('the-file-name.', $safeName);
+        $this->assertSame('the-file-name.jpg', $safeName);
+    }
+
+    public function testGetSafeFileNameUsesContentExtensionNotClientName()
+    {
+        // A jpg uploaded with a malicious .php client name must be stored as .jpg,
+        // never as .php. The stored extension is derived from the file content.
+        $file = new UploadedFile(__DIR__ . '/../../Resources/assets/example.jpg', 'evil.php');
+
+        $object = $this->object;
+        $object->file = $file;
+
+        $this->assertSame('evil.jpg', $object->getSafeFileName());
+    }
+
+    public function testGetSafeFileNameRejectsUnguessablePhpContent()
+    {
+        // PHP content is not guessable to a safe extension, so it must be refused
+        // outright instead of falling back to the client-supplied ".php" extension.
+        $file = new UploadedFile(__DIR__ . '/../../Resources/assets/php-shell-fixture', 'shell.php');
+
+        $object = $this->object;
+        $object->file = $file;
+
+        // Sanity check: the exploit relies on PHP content having no guessable extension.
+        $this->assertNull($file->guessExtension());
+
+        $this->expectException(FileException::class);
+        $this->expectExceptionMessage('The type of the uploaded file could not be determined and is therefore not allowed.');
+
+        $object->getSafeFileName();
+    }
+
+    public function testGetSafeFileNameEnforcesAllowListAtStorageLayer()
+    {
+        // Even if the validation constraint were bypassed, a guessable but disallowed
+        // type must never be written to disk.
+        $file = new UploadedFile(__DIR__ . '/../../Resources/assets/example.jpg', 'example.jpg');
+
+        $object = $this->object;
+        $object->file = $file;
+
+        // jpg is guessable and would normally be accepted ...
+        $this->assertSame('example.jpg', $object->getSafeFileName(['jpg', 'png']));
+
+        // ... but not when it is absent from the allow-list.
+        $this->expectException(FileException::class);
+        $object->getSafeFileName(['pdf']);
     }
 
     public function testGettersAndSetters()
@@ -84,6 +132,7 @@ class FileFormSubmissionFieldTest extends TestCase
             ->getMock();
 
         $file->method('getClientOriginalName')->willReturn('example-name.pdf');
+        $file->method('guessExtension')->willReturn('pdf');
 
         $file->expects($this->any())->method('move');
 

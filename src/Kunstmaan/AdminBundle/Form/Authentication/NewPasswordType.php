@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\Form\Authentication;
 
+use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictions;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class NewPasswordType extends AbstractType
 {
@@ -16,6 +18,10 @@ final class NewPasswordType extends AbstractType
                 'type' => PasswordType::class,
                 'required' => true,
                 'invalid_message' => 'errors.password.dontmatch',
+                'constraints' => [
+                    new NotBlank(),
+                    new PasswordRestrictions(),
+                ],
                 'first_options' => [
                     'label' => 'settings.user.password',
                 ],

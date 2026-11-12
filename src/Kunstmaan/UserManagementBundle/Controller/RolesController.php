@@ -89,7 +89,6 @@ final class RolesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var Role $role */
         $role = $this->em->getRepository(Role::class)->find($id);
         $form = $this->createForm(RoleType::class, $role);
 
@@ -132,7 +131,6 @@ final class RolesController extends AbstractController
 
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var Role $role */
         $role = $this->em->getRepository(Role::class)->find($id);
         if (!\is_null($role)) {
             $this->em->remove($role);

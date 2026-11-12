@@ -603,7 +603,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
         if ($result instanceof PersistentCollection) {
             $results = [];
-            /* @var Object $entry */
+            /** @var object $entry */
             foreach ($result as $entry) {
                 $results[] = $entry->getName();
             }

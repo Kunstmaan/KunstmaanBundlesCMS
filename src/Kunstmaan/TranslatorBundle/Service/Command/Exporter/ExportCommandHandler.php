@@ -56,7 +56,7 @@ class ExportCommandHandler extends AbstractCommandHandler
     /**
      * Convert an exportCommand into an array of translations
      *
-     * @return array an array of translations
+     * @return array<string, array<string, Translation>>
      */
     public function getTranslations(ExportCommand $exportCommand)
     {
@@ -64,7 +64,6 @@ class ExportCommandHandler extends AbstractCommandHandler
         $domains = $this->determineDomainsToImport($exportCommand);
 
         $translations = [];
-        /** @var Translation $translation */
         foreach ($this->translationRepository->getTranslationsByLocalesAndDomains($locales, $domains) as $translation) {
             // Sort by translation key.
             $translations[$translation->getKeyword()][$translation->getLocale()] = $translation;

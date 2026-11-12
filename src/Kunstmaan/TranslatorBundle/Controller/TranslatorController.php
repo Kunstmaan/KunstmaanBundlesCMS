@@ -4,7 +4,6 @@ namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AbstractAdminListController;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
@@ -14,7 +13,6 @@ use Kunstmaan\TranslatorBundle\Form\TranslationsFileUploadType;
 use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
 use Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -48,7 +46,6 @@ final class TranslatorController extends AbstractAdminListController
     {
         $configurator = $this->getAdminListConfigurator();
 
-        /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
@@ -177,7 +174,6 @@ final class TranslatorController extends AbstractAdminListController
     #[Route(path: 'upload', name: 'KunstmaanTranslatorBundle_settings_translations_upload', methods: ['GET', 'POST'])]
     public function uploadFileAction(Request $request): Response
     {
-        /** @var FormBuilderInterface $uploadForm */
         $form = $this->createForm(TranslationsFileUploadType::class);
         $configurator = $this->getAdminListConfigurator();
 

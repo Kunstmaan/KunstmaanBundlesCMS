@@ -114,8 +114,6 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
 
     private function getUsername(): string
     {
-        $user = $this->getUser();
-
-        return method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername();
+        return $this->getUser()->getUserIdentifier();
     }
 }

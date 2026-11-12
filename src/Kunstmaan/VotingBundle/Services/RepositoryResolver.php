@@ -21,14 +21,8 @@ use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
  */
 class RepositoryResolver
 {
-    /**
-     * Entity manager
-     */
     protected $em;
 
-    /**
-     * @param object $em entity manager
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;

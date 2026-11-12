@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class FormWidgetTest extends TestCase
@@ -37,7 +36,6 @@ class FormWidgetTest extends TestCase
         $widget->addType('test', TextType::class);
         $this->assertCount(2, $widget->getTypes());
 
-        /* @var FormBuilderInterface $builder */
         $widget->buildForm($builder);
     }
 }

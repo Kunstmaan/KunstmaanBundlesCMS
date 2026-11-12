@@ -5,7 +5,6 @@ namespace Kunstmaan\DashboardBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
@@ -72,7 +71,6 @@ final class GoogleAnalyticsAJAXController extends AbstractController
         // goals data
         $goals = [];
         foreach ($overview->getActiveGoals() as $key => $goal) {
-            /* @var AnalyticsGoal $goal */
             $goals[$key]['name'] = $goal->getName();
             $goals[$key]['visits'] = $goal->getVisits();
             $goals[$key]['id'] = $goal->getId();

@@ -40,7 +40,7 @@ final class EntityLockCheckController extends AbstractController
         $entity = $this->getEntityManager()->getRepository($repository)->find($id);
 
         try {
-            /** @var EntityVersionLockService $entityVersionLockservice */
+            /** @var EntityVersionLockService $entityVersionLockService */
             $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
             $entityIsLocked = $entityVersionLockService->isEntityLocked($this->getUser(), $entity);

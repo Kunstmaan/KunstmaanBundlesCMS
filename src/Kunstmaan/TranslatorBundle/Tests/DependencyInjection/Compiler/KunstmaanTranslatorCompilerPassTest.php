@@ -31,6 +31,8 @@ class KunstmaanTranslatorCompilerPassTest extends AbstractCompilerPassTestCase
         ]));
 
         $this->setDefinition('kunstmaan_translator.service.exporter.exporter', new Definition());
+        $this->setDefinition('kunstmaan_translator.datacollector', new Definition(\stdClass::class));
+        $this->setDefinition('translator.data_collector', new Definition(\stdClass::class));
 
         $this->compile();
 
@@ -51,5 +53,16 @@ class KunstmaanTranslatorCompilerPassTest extends AbstractCompilerPassTestCase
             'setExporters',
             [['someAlias' => new Reference($svcId)]]
         );
+
+        $this->assertContainerBuilderHasAlias('translator.data_collector', 'kunstmaan_translator.datacollector');
+    }
+
+    public function testDataCollectorIsNotAliasedWhenBundleIsDisabled()
+    {
+        $this->setDefinition('translator.data_collector', new Definition(\stdClass::class));
+
+        $this->compile();
+
+        $this->assertFalse($this->container->hasAlias('translator.data_collector'));
     }
 }

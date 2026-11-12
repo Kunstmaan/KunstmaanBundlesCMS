@@ -13,6 +13,11 @@ class CSVFileExporter implements FileExporterInterface
     /** @var array */
     private $locales;
 
+    /**
+     * @param array<string, array<string, Translation>> $translations
+     *
+     * @return Response
+     */
     public function export(array $translations)
     {
         $handle = fopen('php://temp', 'rb+');
@@ -31,7 +36,6 @@ class CSVFileExporter implements FileExporterInterface
             $firstTranslation = \array_shift($values);
             $row = [$key, $firstTranslation->getDomain()];
 
-            /* @var Translation $item */
             foreach ($this->locales as $locale) {
                 $locale = preg_replace_callback('/\_([a-z]+)/', function ($match) {
                     return '_' . strtoupper($match[1]);
@@ -59,11 +63,21 @@ class CSVFileExporter implements FileExporterInterface
         return $response;
     }
 
+    /**
+     * @param array $locales
+     *
+     * @return void
+     */
     public function setLocales($locales)
     {
         $this->locales = $locales;
     }
 
+    /**
+     * @param string $format
+     *
+     * @return bool
+     */
     public function supports($format)
     {
         return 'csv' === $format;

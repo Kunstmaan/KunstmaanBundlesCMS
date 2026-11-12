@@ -12,9 +12,6 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class ActionsMenuBuilderTest extends TestCase
 {
@@ -25,15 +22,12 @@ class ActionsMenuBuilderTest extends TestCase
 
     protected function setUp(): void
     {
-        /* @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->createMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
         $routingExtension = new RoutingExtension($urlGenerator);
         $factory = new MenuFactory();
         $factory->addExtension($routingExtension);
         $em = $this->getMockedEntityManager();
-        /* @var EventDispatcherInterface $dispatcher */
         $dispatcher = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        /* @var RouterInterface $router */
         $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $authorizationChecker = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $authorizationChecker->expects($this->any())

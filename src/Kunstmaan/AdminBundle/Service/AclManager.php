@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
@@ -61,7 +60,6 @@ class AclManager
         foreach ($nodes as $node) {
             $objectIdentity = $this->objectIdentityRetrievalStrategy->getObjectIdentity($node);
 
-            /** @var AclInterface $acl */
             $acl = $this->aclProvider->findAcl($objectIdentity);
             $securityIdentity = new RoleSecurityIdentity($role);
 
@@ -79,10 +77,9 @@ class AclManager
 
     public function applyAclChangesets()
     {
-        /* @var AclChangesetRepository $aclRepo */
+        /** @var AclChangesetRepository $aclRepo */
         $aclRepo = $this->em->getRepository(AclChangeset::class);
         do {
-            /* @var AclChangeset $changeset */
             $changeset = $aclRepo->findNewChangeset();
             if (\is_null($changeset)) {
                 break;

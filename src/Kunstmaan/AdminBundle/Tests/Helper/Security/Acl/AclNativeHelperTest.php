@@ -6,7 +6,6 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\UserInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
@@ -77,7 +76,6 @@ class AclNativeHelperTest extends TestCase
             ->method('getConnection')
             ->will($this->returnValue($this->conn));
 
-        /* @var $meta ClassMetadata */
         $meta = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')
             ->disableOriginalConstructor()
             ->getMock();
@@ -136,7 +134,6 @@ class AclNativeHelperTest extends TestCase
 
         $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
-        /* @var $qb QueryBuilder */
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
@@ -177,7 +174,6 @@ class AclNativeHelperTest extends TestCase
 
         $permissionDef = new PermissionDefinition(['view'], 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
-        /* @var $qb QueryBuilder */
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 

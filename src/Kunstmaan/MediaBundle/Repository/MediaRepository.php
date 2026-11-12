@@ -29,7 +29,7 @@ class MediaRepository extends EntityRepository
     /**
      * @param int $mediaId
      *
-     * @return object
+     * @return Media
      *
      * @throws EntityNotFoundException
      */

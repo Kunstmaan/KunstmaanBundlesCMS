@@ -115,13 +115,13 @@ final class UsersController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
-                $user->setCreatedBy(method_exists($this->getUser(), 'getUserIdentifier') ? $this->getUser()->getUserIdentifier() : $this->getUser()->getUsername());
+                $user->setCreatedBy($this->getUser()->getUserIdentifier());
                 $this->userManager->updateUser($user, true);
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->translator->trans('kuma_user.users.add.flash.success.%username%', [
-                        '%username%' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
+                        '%username%' => $user->getUserIdentifier(),
                     ])
                 );
 
@@ -185,7 +185,7 @@ final class UsersController extends AbstractController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->translator->trans('kuma_user.users.edit.flash.success.%username%', [
-                        '%username%' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
+                        '%username%' => $user->getUserIdentifier(),
                     ])
                 );
 
@@ -215,13 +215,13 @@ final class UsersController extends AbstractController
             return $this->redirectToRoute('KunstmaanUserManagementBundle_settings_users');
         }
 
-        /* @var UserInterface $user */
+        /** @var UserInterface $user */
         $user = $this->em->getRepository($this->getParameter('kunstmaan_admin.user_class'))->find($id);
         if (!\is_null($user)) {
             $this->eventDispatcher->dispatch(new DeleteUserInitializeEvent($user, $request), UserEvents::USER_DELETE_INITIALIZE);
 
-            $deletedUser = method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername();
-            $deletedBy = method_exists($this->getUser(), 'getUserIdentifier') ? $this->getUser()->getUserIdentifier() : $this->getUser()->getUsername();
+            $deletedUser = $user->getUserIdentifier();
+            $deletedBy = $this->getUser()->getUserIdentifier();
 
             $afterDeleteEvent = new AfterUserDeleteEvent($deletedUser, $deletedBy);
 
@@ -233,7 +233,7 @@ final class UsersController extends AbstractController
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->translator->trans('kuma_user.users.delete.flash.success.%username%', [
-                    '%username%' => method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername(),
+                    '%username%' => $user->getUserIdentifier(),
                 ])
             );
         }

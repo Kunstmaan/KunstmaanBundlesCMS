@@ -211,7 +211,6 @@ class NodeAdminPublisher
 
     public function unSchedulePublish(NodeTranslation $nodeTranslation)
     {
-        /* @var Node $node */
         $queuedNodeTranslationAction = $this->em->getRepository(QueuedNodeTranslationAction::class)
             ->findOneBy(['nodeTranslation' => $nodeTranslation]);
 

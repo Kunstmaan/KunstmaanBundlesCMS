@@ -22,13 +22,13 @@ seo:
         section: OG hoofdstuk
     twitter:
       title: Titel
-      title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
+      title_info_text: De titel van uw X (Twitter) card. Falls back to SEO Meta title
       description: Omschrijving
-      description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
-      sitehandle: Twitter site
-      sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
-      creatorhandle: Twitter auteur
-      creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
+      description_info_text: De omschrijving van uw X (Twitter) card. Falls back to SEO Meta description
+      sitehandle: X (Twitter) site
+      sitehandle_info_text: X (Twitter) handle van de website of uw organisatie. Deze waarde is verplicht om X (Twitter) cards te laten werken.
+      creatorhandle: X (Twitter) auteur
+      creatorhandle_info_text: X (Twitter) handle van de publisher van uw pagina.
       image: Foto
     robots:
       noindex: Geen index
@@ -50,7 +50,7 @@ seo:
         label: Extra metadata
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter Cards
+    twittercards: X (Twitter) Cards
   tab:
     seo:
       title: SEO

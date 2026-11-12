@@ -3,7 +3,6 @@
 namespace Kunstmaan\MultiDomainBundle\Router;
 
 use Kunstmaan\NodeBundle\Controller\SlugController;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -114,7 +113,6 @@ class DomainBasedLocaleRouter extends SlugRouter
         // Lookup node translation
         $nodeTranslationRepo = $this->getNodeTranslationRepository();
 
-        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
             $matchResult['url'],
             $matchResult['_locale'],

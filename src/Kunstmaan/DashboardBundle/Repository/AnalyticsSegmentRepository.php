@@ -36,7 +36,7 @@ class AnalyticsSegmentRepository extends EntityRepository
      * Initialise a segment by adding new overviews if they don't exist yet
      *
      * @param AnalyticsSegment $segment
-     * @param int              $configId
+     * @param int|false        $configId
      */
     public function initSegment($segment, $configId = false)
     {

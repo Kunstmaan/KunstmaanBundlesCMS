@@ -4,7 +4,6 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\CustomViewDataProviderInterface;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageViewDataProviderInterface;
@@ -54,7 +53,7 @@ final class SlugController extends AbstractController
     {
         $locale = $request->getLocale();
 
-        /* @var NodeTranslation $nodeTranslation */
+        /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
 
         // If no node translation -> 404
@@ -133,7 +132,6 @@ final class SlugController extends AbstractController
      */
     private function getPageEntity(Request $request, $preview, EntityManagerInterface $em, NodeTranslation $nodeTranslation): \Kunstmaan\NodeBundle\Entity\HasNodeInterface
     {
-        /* @var HasNodeInterface $entity */
         $entity = null;
         if ($preview) {
             $version = $request->query->get('version');
@@ -145,9 +143,7 @@ final class SlugController extends AbstractController
             }
         }
         if (\is_null($entity)) {
-            $entity = $nodeTranslation->getPublicNodeVersion()->getRef($em);
-
-            return $entity;
+            return $nodeTranslation->getPublicNodeVersion()->getRef($em);
         }
 
         return $entity;

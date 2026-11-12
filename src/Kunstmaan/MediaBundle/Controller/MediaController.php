@@ -9,6 +9,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\BulkMoveMediaType;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,7 +44,6 @@ final class MediaController extends AbstractController
     #[Route(path: '/{mediaId}', requirements: ['mediaId' => '\d+'], name: 'KunstmaanMediaBundle_media_show')]
     public function showAction(Request $request, $mediaId): Response
     {
-        /* @var Media $media */
         $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $folder = $media->getFolder();
 
@@ -84,7 +84,6 @@ final class MediaController extends AbstractController
             return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', ['mediaId' => $mediaId]));
         }
 
-        /* @var Media $media */
         $media = $this->em->getRepository(Media::class)->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
@@ -116,7 +115,6 @@ final class MediaController extends AbstractController
     #[Route(path: 'bulkupload/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_bulk_upload')]
     public function bulkUploadAction($folderId): Response
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         return $this->render('@KunstmaanMedia/Media/bulkUpload.html.twig', ['folder' => $folder]);
@@ -156,6 +154,12 @@ final class MediaController extends AbstractController
         } else {
             $fileName = \uniqid('file_', false);
         }
+
+        $fileName = $this->getSafeUploadFileName((string) $fileName);
+        if (null === $fileName) {
+            return $this->returnJsonError('107', 'Invalid file name');
+        }
+
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
         $chunk = 0;
@@ -227,7 +231,6 @@ final class MediaController extends AbstractController
             \rename("{$filePath}.part", $filePath);
         }
 
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
@@ -261,6 +264,36 @@ final class MediaController extends AbstractController
         return $response;
     }
 
+    /**
+     * Strip any path information from a client supplied file name and normalise what is left.
+     *
+     * @return string|null The safe file name, or null when nothing usable remains
+     */
+    private function getSafeUploadFileName(string $fileName): ?string
+    {
+        $fileName = str_replace(['\\', "\0"], '', basename($fileName));
+
+        $parts = pathinfo($fileName);
+        $safeName = $this->container->get('kunstmaan_utilities.slugifier')->slugify($parts['filename'] ?? '');
+
+        if ('' === $safeName) {
+            return null;
+        }
+
+        if (isset($parts['extension']) && '' !== $parts['extension']) {
+            $safeName .= '.' . strtolower($parts['extension']);
+        }
+
+        return $safeName;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            'kunstmaan_utilities.slugifier' => SlugifierInterface::class,
+        ] + parent::getSubscribedServices();
+    }
+
     private function returnJsonError($code, $message)
     {
         return new JsonResponse(
@@ -281,7 +314,6 @@ final class MediaController extends AbstractController
     #[Route(path: 'drop/{folderId}', requirements: ['folderId' => '\d+'], name: 'KunstmaanMediaBundle_media_drop_upload', methods: ['GET', 'POST'])]
     public function dropAction(Request $request, $folderId): JsonResponse
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $drop = null;
@@ -334,7 +366,6 @@ final class MediaController extends AbstractController
      */
     private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false): array|RedirectResponse
     {
-        /* @var Folder $folder */
         $folder = $this->em->getRepository(Folder::class)->getFolder($folderId);
 
         $handler = $this->mediaManager->getHandlerForType($type);

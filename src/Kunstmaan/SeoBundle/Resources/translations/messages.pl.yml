@@ -22,13 +22,13 @@ seo:
         section: OG Sekcja artykułu
     twitter:
       title: Tytuł
-      title_info_text: Tytuł wyświetlany na karcie twitter-a
+      title_info_text: Tytuł wyświetlany na karcie X (Twitter)
       description: Opis
-      description_info_text: Opis wyświetlany na karcie twitter-a
+      description_info_text: Opis wyświetlany na karcie X (Twitter)
       sitehandle: Witryna
-      sitehandle_info_text: Twoja strona Twitter. To pole jest wymagane aby uruchomić kartę Twitter.
+      sitehandle_info_text: Twoja strona X (Twitter). To pole jest wymagane aby uruchomić kartę X (Twitter).
       creatorhandle: Twórca
-      creatorhandle_info_text: Zarządca twojej strony Twitter.
+      creatorhandle_info_text: Zarządca twojej strony X (Twitter).
       image: Zdjęcie
     robots:
       noindex: Blokuj indeksowanie
@@ -50,7 +50,7 @@ seo:
         label: Dodatkowe meta dane
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter
+    twittercards: X (Twitter)
   tab:
     seo:
       title: SEO

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +15,6 @@ class MenuItemTest extends TestCase
 
     protected function setUp(): void
     {
-        /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -26,7 +24,6 @@ class MenuItemTest extends TestCase
 
     public function testGetMenu()
     {
-        /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -92,7 +89,6 @@ class MenuItemTest extends TestCase
 
     public function testGetSetParent()
     {
-        /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -132,7 +128,6 @@ class MenuItemTest extends TestCase
             ->method('getChildren')
             ->will($this->returnValue($children));
 
-        /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getChildren();
         $this->assertCount(2, $result);
@@ -154,7 +149,6 @@ class MenuItemTest extends TestCase
             ->method('getChildren')
             ->will($this->returnValue($children));
 
-        /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getNavigationChildren();
         $this->assertCount(1, $result);
@@ -174,7 +168,6 @@ class MenuItemTest extends TestCase
             ->method('getChildren')
             ->will($this->returnValue($children));
 
-        /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getTopChildren();
         $this->assertCount(1, $result);

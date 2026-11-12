@@ -103,7 +103,7 @@ class SocialType extends AbstractType
                 'label' => 'seo.form.twitter.creatorhandle',
                 'required' => false,
                 'attr' => [
-                    'info_text' => 'Twitter handle of your page publisher.',
+                    'info_text' => 'seo.form.twitter.creatorhandle_info_text',
                 ],
             ])
             ->add('twitterImage', MediaType::class, [

@@ -14,7 +14,6 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
-use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -146,7 +145,6 @@ class NodeTranslationListener
     {
         $children = $node->getNode()->getChildren();
         if (\count($children) > 0) {
-            /* @var Node $child */
             foreach ($children as $child) {
                 $translation = $child->getNodeTranslation($node->getLang(), true);
                 if ($translation) {
@@ -232,7 +230,6 @@ class NodeTranslationListener
             return true;
         }
 
-        /* @var NodeTranslationRepository $nodeTranslationRepository */
         $nodeTranslationRepository = $em->getRepository(NodeTranslation::class);
 
         if ($translation->getUrl() === $translation->getFullSlug()) {

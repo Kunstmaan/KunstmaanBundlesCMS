@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class CookieTypeAdminListController extends AbstractAdminListController
 {
-    /* @var AdminListConfiguratorInterface */
+    /** @var AdminListConfiguratorInterface */
     private $configurator;
 
     public function getAdminListConfigurator(): AdminListConfiguratorInterface

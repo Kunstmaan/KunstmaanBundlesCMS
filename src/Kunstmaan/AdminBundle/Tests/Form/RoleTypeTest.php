@@ -15,7 +15,6 @@ class RoleTypeTest extends TestCase
         $builder = $this->createMock(FormBuilder::class);
         $builder->expects($this->once())->method('add')->willReturn($builder);
 
-        /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
         $this->assertEquals('role', $type->getBlockPrefix());

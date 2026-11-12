@@ -49,7 +49,7 @@ class PageTemplate implements PageTemplateInterface
     }
 
     /**
-     * @return array
+     * @return Row[]
      */
     public function getRows()
     {
@@ -57,7 +57,7 @@ class PageTemplate implements PageTemplateInterface
     }
 
     /**
-     * @param row[] $rows
+     * @param Row[] $rows
      *
      * @return PageTemplate
      */

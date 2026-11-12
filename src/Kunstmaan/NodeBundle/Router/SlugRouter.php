@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Controller\SlugController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -309,20 +308,15 @@ class SlugRouter implements RouterInterface
     /**
      * @param array $matchResult
      *
-     * @return NodeTranslation
+     * @return NodeTranslation|null
      */
     protected function getNodeTranslation($matchResult)
     {
         // The route matches, now check if it actually exists (needed for proper chain router chaining!)
-        $nodeTranslationRepo = $this->getNodeTranslationRepository();
-
-        /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
+        return $this->getNodeTranslationRepository()->getNodeTranslationForUrl(
             $matchResult['url'],
             $matchResult['_locale']
         );
-
-        return $nodeTranslation;
     }
 
     /**
@@ -330,12 +324,7 @@ class SlugRouter implements RouterInterface
      */
     protected function getNodeTranslationRepository()
     {
-        /* @var NodeTranslationRepository $nodeTranslationRepo */
-        $nodeTranslationRepo = $this->em->getRepository(
-            NodeTranslation::class
-        );
-
-        return $nodeTranslationRepo;
+        return $this->em->getRepository(NodeTranslation::class);
     }
 
     /**

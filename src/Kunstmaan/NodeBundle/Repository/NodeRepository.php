@@ -118,14 +118,12 @@ class NodeRepository extends NestedTreeRepository
      */
     public function getNodeFor(HasNodeInterface $hasNode)
     {
-        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()->getRepository(
             NodeVersion::class
         )->getNodeVersionFor(
             $hasNode
         );
         if (!\is_null($nodeVersion)) {
-            /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $nodeVersion->getNodeTranslation();
             if (!\is_null($nodeTranslation)) {
                 return $nodeTranslation->getNode();
@@ -143,7 +141,6 @@ class NodeRepository extends NestedTreeRepository
      */
     public function getNodeForIdAndEntityname($id, $entityName)
     {
-        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()->getRepository(
             NodeVersion::class
         )->findOneBy(
@@ -211,7 +208,6 @@ class NodeRepository extends NestedTreeRepository
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
         if ($parent) {
-            /* @var NodeVersion $parentNodeVersion */
             $parentNodeVersion = $em->getRepository(
                 NodeVersion::class
             )->findOneBy(

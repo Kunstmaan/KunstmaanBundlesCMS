@@ -173,7 +173,7 @@ abstract class BaseUser implements UserInterface, EquatableInterface, PasswordAu
 
         $groupIds = [];
         if (\count($groups) > 0) {
-            /* @var $group GroupInterface */
+            /** @var GroupInterface $group */
             foreach ($groups as $group) {
                 $groupIds[] = $group->getId();
             }

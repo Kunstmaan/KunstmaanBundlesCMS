@@ -212,10 +212,7 @@ class PagePartCreatorService
         };
     }
 
-    /**
-     * @param mixed(string|Node) $nodeOrInternalName
-     */
-    private function getNode($nodeOrInternalName): object
+    private function getNode(string|Node $nodeOrInternalName): object
     {
         if (\is_string($nodeOrInternalName)) {
             return $this->nodeRepo->findOneBy(['internalName' => $nodeOrInternalName]);

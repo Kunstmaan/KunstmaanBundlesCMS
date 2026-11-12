@@ -89,7 +89,6 @@ final class GroupsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        /* @var Group $group */
         $group = $this->em->getRepository(Group::class)->find($id);
         $form = $this->createForm(GroupType::class, $group);
 

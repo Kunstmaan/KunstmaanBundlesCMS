@@ -32,7 +32,19 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->booleanNode('enable_pdf_preview')->defaultFalse()->end()
                 ->arrayNode('blacklisted_extensions')
-                    ->defaultValue(['php', 'htaccess'])
+                    ->info('Files with one of these extensions are stored as .txt. Matched case-insensitively.')
+                    ->defaultValue([
+                        'php', 'php3', 'php4', 'php5', 'php6', 'php7', 'php8',
+                        'phps', 'phpt', 'pht', 'phtm', 'phtml', 'phar', 'inc',
+                        'htaccess', 'htpasswd', 'htgroup',
+                        'shtml', 'shtm', 'cgi', 'pl', 'py', 'rb', 'sh',
+                        'asp', 'aspx', 'ashx', 'asmx', 'ascx', 'jsp', 'jspx', 'cfm', 'cfml',
+                    ])
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('allowed_extensions')
+                    ->info('Optional strict allow-list of media extensions. When empty (default) only the blacklist is applied.')
+                    ->defaultValue([])
                     ->prototype('scalar')->end()
                 ->end()
                 ->scalarNode('web_root')

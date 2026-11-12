@@ -11,7 +11,7 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * Get the first config from the database, creates a new entry if the config doesn't exist yet
      *
-     * @return AnalyticsConfig|bool
+     * @return AnalyticsConfig|false
      */
     public function findFirst($createNew = true)
     {
@@ -48,8 +48,6 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /**
-     * Create a new config
-     *
      * @return AnalyticsConfig
      */
     public function createConfig()
@@ -66,9 +64,7 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /**
-     * Flush a config
-     *
-     * @param int $id the config id
+     * @param int|false $id the config id
      */
     public function flushConfig($id = false)
     {
@@ -98,40 +94,47 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * Update the timestamp when data is collected
      *
-     * @param int $id
+     * @param int|false $id
      */
     public function setUpdated($id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setLastUpdate(new \DateTime());
         $em->persist($config);
         $em->flush();
     }
 
     /**
-     * saves the token
-     *
-     * @param string $token
+     * @param string    $token
+     * @param int|false $id
      */
     public function saveToken($token, $id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setToken($token);
         $em->persist($config);
         $em->flush();
     }
 
     /**
-     * saves the property id
-     *
-     * @param string $propertyId
+     * @param string    $propertyId
+     * @param int|false $id
      */
     public function savePropertyId($propertyId, $id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setPropertyId($propertyId);
         $em->persist($config);
         $em->flush();
@@ -140,52 +143,63 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * saves the account id
      *
-     * @param string $accountId
+     * @param string    $accountId
+     * @param int|false $id
      */
     public function saveAccountId($accountId, $id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setAccountId($accountId);
         $em->persist($config);
         $em->flush();
     }
 
     /**
-     * saves the profile id
-     *
-     * @param string $profileId
+     * @param string    $profileId
+     * @param int|false $id
      */
     public function saveProfileId($profileId, $id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setProfileId($profileId);
         $em->persist($config);
         $em->flush();
     }
 
     /**
-     * saves the config name
+     * @param string    $name
+     * @param int|false $id
      */
     public function saveConfigName($name, $id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setName($name);
         $em->persist($config);
         $em->flush();
     }
 
     /**
-     * Resets the profile id
-     *
-     * @param int $id
+     * @param int|false $id
      */
     public function resetProfileId($id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setProfileId('');
         $em->persist($config);
         $em->flush();
@@ -194,12 +208,15 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * Resets the  account id, property id and profile id
      *
-     * @param int $id
+     * @param int|false $id
      */
     public function resetPropertyId($id = false)
     {
         $em = $this->getEntityManager();
         $config = $id ? $this->find($id) : $this->findFirst();
+        if (false === $config) {
+            throw new \RuntimeException('No analytics config found.');
+        }
         $config->setAccountId('');
         $config->setProfileId('');
         $config->setPropertyId('');

@@ -170,11 +170,12 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
+     * @param NodeTranslation $item
+     *
      * @return array
      */
     public function getEditUrlFor($item)
     {
-        /* @var Node $node */
         $node = $item->getNode();
 
         return [
@@ -191,6 +192,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         return false;
     }
 
+    /**
+     * @param NodeTranslation $item
+     *
+     * @return bool
+     */
     public function canEdit($item)
     {
         return $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $item->getNode());
@@ -199,7 +205,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     /**
      * Return if current user can delete the specified item
      *
-     * @param array|object $item
+     * @param NodeTranslation $item
      *
      * @return bool
      */
@@ -209,7 +215,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * @param object $item
+     * @param NodeTranslation $item
      *
      * @return array
      */

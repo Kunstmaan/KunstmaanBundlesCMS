@@ -2,14 +2,12 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
@@ -51,7 +49,6 @@ abstract class AbstractAdminListController extends AbstractController
      */
     protected function doIndexAction(AdminListConfiguratorInterface $configurator, Request $request)
     {
-        /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
@@ -80,7 +77,6 @@ abstract class AbstractAdminListController extends AbstractController
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
-        /* @var AdminList $adminList */
         $adminList = $this->container->get('kunstmaan_adminlist.factory')->createExportList($configurator);
         $adminList->bindRequest($request);
 
@@ -102,7 +98,6 @@ abstract class AbstractAdminListController extends AbstractController
             throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
-        /* @var EntityManager $em */
         $em = $this->getEntityManager();
         $entityName = $type ?? $configurator->getRepositoryName();
 
@@ -192,7 +187,6 @@ abstract class AbstractAdminListController extends AbstractController
      */
     protected function doEditAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
-        /* @var EntityManager $em */
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
 
@@ -306,7 +300,6 @@ abstract class AbstractAdminListController extends AbstractController
 
     protected function doViewAction(AdminListConfiguratorInterface $configurator, $entityId, Request $request)
     {
-        /* @var EntityManager $em */
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {
@@ -351,7 +344,6 @@ abstract class AbstractAdminListController extends AbstractController
             return new RedirectResponse($this->generateUrl($indexUrl['path'], $indexUrl['params'] ?? []));
         }
 
-        /* @var $em EntityManager */
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {

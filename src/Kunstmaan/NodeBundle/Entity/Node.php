@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
@@ -169,7 +170,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @return ArrayCollection|Node[]
+     * @return Collection<array-key, Node>
      */
     public function getChildren()
     {
@@ -185,7 +186,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @param ArrayCollection $children
+     * @param Collection<array-key, Node> $children
      *
      * @return Node
      */
@@ -212,7 +213,7 @@ class Node extends AbstractEntity implements GedmoNode
     /**
      * @param bool $includeOffline
      *
-     * @return ArrayCollection|NodeTranslation[]
+     * @return ArrayCollection<array-key, NodeTranslation>
      */
     public function getNodeTranslations($includeOffline = false)
     {
@@ -242,7 +243,6 @@ class Node extends AbstractEntity implements GedmoNode
     public function getNodeTranslation($lang, $includeOffline = false)
     {
         $nodeTranslations = $this->getNodeTranslations($includeOffline);
-        /* @var NodeTranslation $nodeTranslation */
         foreach ($nodeTranslations as $nodeTranslation) {
             if ($lang == $nodeTranslation->getLang()) {
                 return $nodeTranslation;

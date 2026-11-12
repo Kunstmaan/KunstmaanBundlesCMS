@@ -66,7 +66,6 @@ EOT
                 if ('ROLE_' != substr($roleName, 0, 5)) {
                     $roleName = 'ROLE_' . $roleName;
                 }
-                /* @var Role $role */
                 $role = $this->em->getRepository(Role::class)->findOneBy(['role' => $roleName]);
                 $group->addRole($role);
             }

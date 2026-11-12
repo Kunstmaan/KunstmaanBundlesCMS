@@ -107,7 +107,7 @@ class Configuration implements ConfigurationInterface
         return $definition->getNode(true);
     }
 
-    protected function buildRegionNode(NodeDefinition $node)
+    protected function buildRegionNode(ArrayNodeDefinition $node)
     {
         return $node
             ->children()

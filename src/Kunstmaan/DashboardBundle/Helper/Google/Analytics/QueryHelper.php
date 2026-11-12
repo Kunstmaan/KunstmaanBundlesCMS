@@ -10,9 +10,6 @@ class QueryHelper
     /** @var ConfigHelper */
     private $configHelper;
 
-    /**
-     * @var ServiceHelper
-     */
     public function __construct(ServiceHelper $serviceHelper, ConfigHelper $configHelper)
     {
         $this->serviceHelper = $serviceHelper;

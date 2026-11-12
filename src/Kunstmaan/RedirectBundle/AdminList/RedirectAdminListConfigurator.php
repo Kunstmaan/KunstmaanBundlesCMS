@@ -60,8 +60,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * @param array|object $item       The item
-     * @param string       $columnName The column name
+     * @param Redirect $item       The item
+     * @param string   $columnName The column name
      *
      * @return string
      */

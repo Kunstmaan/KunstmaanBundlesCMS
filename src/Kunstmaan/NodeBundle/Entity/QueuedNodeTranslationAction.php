@@ -111,9 +111,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Get user
-     *
-     * @return string
+     * @return BaseUser
      */
     public function getUser()
     {

@@ -32,7 +32,6 @@ class GroupTest extends TestCase
 
     public function testGetRoles()
     {
-        /* @var $role Role */
         $role = $this->getRole();
         $this->object->addRole($role);
 
@@ -41,7 +40,6 @@ class GroupTest extends TestCase
 
     public function testGetRolesCollection()
     {
-        /* @var $role Role */
         $role = $this->getRole();
         $this->object->addRole($role);
 
@@ -53,7 +51,6 @@ class GroupTest extends TestCase
 
     public function testGetRole()
     {
-        /* @var $role Role */
         $role = $this->getRole();
         $this->object->addRole($role);
 
@@ -66,7 +63,6 @@ class GroupTest extends TestCase
 
     public function testHasRole()
     {
-        /* @var $role Role */
         $role = $this->getRole();
         $this->object->addRole($role);
 
@@ -76,7 +72,6 @@ class GroupTest extends TestCase
 
     public function testRemoveRole()
     {
-        /* @var $role Role */
         $role = $this->getRole();
         $this->object->addRole($role);
         $this->assertTrue($this->object->hasRole('role1'));
@@ -88,7 +83,6 @@ class GroupTest extends TestCase
     public function testAddRoleWithInvalidParameter()
     {
         $this->expectException(\InvalidArgumentException::class);
-        /* @var $role Role */
         $role = new \stdClass();
         $this->object->addRole($role);
     }

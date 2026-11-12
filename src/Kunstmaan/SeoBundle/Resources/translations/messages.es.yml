@@ -22,13 +22,13 @@ seo:
         section: OG Article Section
     twitter:
       title: Title
-      title_info_text: The title of your twitter card. Falls back to SEO Meta title
+      title_info_text: The title of your X (Twitter) card. Falls back to SEO Meta title
       description: Description
-      description_info_text: The description of your twitter card. Falls back to SEO Meta description
+      description_info_text: The description of your X (Twitter) card. Falls back to SEO Meta description
       sitehandle: Site Handle
-      sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
+      sitehandle_info_text: X (Twitter) handle of your website organisation. This value is required for X (Twitter) cards to work.
       creatorhandle: Creator Handle
-      creatorhandle_info_text: Twitter handle of your page publisher.
+      creatorhandle_info_text: X (Twitter) handle of your page publisher.
       image: Image
     robots:
       noindex: No index
@@ -50,7 +50,7 @@ seo:
         label: Extra metadata
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter Cards
+    twittercards: X (Twitter) Cards
   tab:
     seo:
       title: SEO

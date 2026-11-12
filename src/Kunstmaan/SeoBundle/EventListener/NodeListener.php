@@ -29,7 +29,6 @@ class NodeListener
     public function adaptForm(AdaptFormEvent $event)
     {
         if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
-            /* @var Seo $seo */
             $seo = $this->em->getRepository(Seo::class)->findOrCreateFor($event->getPage());
 
             $seoWidget = new FormWidget();

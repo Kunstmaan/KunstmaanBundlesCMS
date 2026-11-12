@@ -16,6 +16,7 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('kunstmaan_form.deletable_formsubmissions', $config['deletable_formsubmissions']);
+        $container->setParameter('kunstmaan_form.file_upload.allowed_extensions', $config['file_upload']['allowed_extensions']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
