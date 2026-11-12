@@ -5,11 +5,10 @@ namespace Kunstmaan\FixturesBundle\Loader;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Parser;
 
-abstract class FixtureLoader implements FixtureInterface, ContainerAwareInterface
+abstract class FixtureLoader implements FixtureInterface
 {
     /**
      * @var ObjectManager
